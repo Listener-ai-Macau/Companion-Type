@@ -1,0 +1,35 @@
+{
+  "name": "companion-type",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev:windows": "vite --config apps/windows/vite.config.ts",
+    "dev:mobile": "vite --config apps/mobile/vite.config.ts",
+    "build": "npm run build:windows && npm run build:mobile",
+    "build:windows": "tsc -p apps/windows/tsconfig.json && vite build --config apps/windows/vite.config.ts",
+    "build:mobile": "tsc -p apps/mobile/tsconfig.json && vite build --config apps/mobile/vite.config.ts",
+    "test": "npm run test:core",
+    "test:core": "node --experimental-strip-types packages/core/src/companionV1.test.ts",
+    "test:core:write-docs": "node --experimental-strip-types packages/core/src/companionV1.test.ts --write-docs",
+    "tauri:windows": "tauri --config apps/windows/src-tauri/tauri.conf.json",
+    "mobile:sync": "cap sync --config apps/mobile/capacitor.config.json"
+  },
+  "dependencies": {
+    "@capacitor/core": "^8.4.1",
+    "@tauri-apps/api": "^2.11.0",
+    "lucide-react": "^1.22.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.4.1",
+    "@tauri-apps/cli": "^2.11.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^5.2.0",
+    "typescript": "^5.6.3",
+    "vite": "^7.3.3"
+  }
+}
+
