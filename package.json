@@ -13,9 +13,12 @@
     "test:core": "node --experimental-strip-types packages/core/src/companionV1.test.ts",
     "test:core:write-docs": "node --experimental-strip-types packages/core/src/companionV1.test.ts --write-docs",
     "tauri:windows": "tauri --config apps/windows/src-tauri/tauri.conf.json",
-    "mobile:sync": "cap sync --config apps/mobile/capacitor.config.json"
+    "mobile:add:android": "npm run build:mobile && cap add android",
+    "mobile:sync": "npm run build:mobile && cap sync android",
+    "mobile:open:android": "cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.4.1",
     "@capacitor/core": "^8.4.1",
     "@tauri-apps/api": "^2.11.0",
     "lucide-react": "^1.22.0",
@@ -32,4 +35,3 @@
     "vite": "^7.3.3"
   }
 }
-

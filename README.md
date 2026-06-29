@@ -5,7 +5,7 @@ Companion Type is the standalone host app for Companion hardware.
 It keeps Companion-specific controls out of Listener Type and shares one V1 protocol model across:
 
 - `apps/windows`: Tauri Windows desktop shell.
-- `apps/mobile`: mobile React shell with Capacitor config.
+- `apps/mobile`: mobile React shell plus Capacitor Android project.
 - `packages/core`: Companion V1 GATT boundary, fixture state, control payloads, and tests.
 - `packages/ui`: reusable Companion dashboard UI.
 
@@ -17,8 +17,8 @@ npm run test
 npm run build
 npm run build:windows
 npm run build:mobile
+npm run mobile:sync
 cargo test --manifest-path apps/windows/src-tauri/Cargo.toml --lib --no-run
 ```
 
 The V1 hardware backend is still gated by real board validation. Until BLE is connected, both shells use deterministic fixture state.
-

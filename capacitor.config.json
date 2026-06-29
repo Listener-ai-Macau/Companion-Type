@@ -1,9 +1,11 @@
 {
   "appId": "ai.listener.companiontype",
   "appName": "Companion Type",
-  "webDir": "dist",
+  "webDir": "apps/mobile/dist",
   "server": {
     "androidScheme": "https"
+  },
+  "android": {
+    "path": "apps/mobile/android"
   }
 }
-
