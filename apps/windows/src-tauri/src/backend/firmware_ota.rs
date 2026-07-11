@@ -11,11 +11,11 @@ use super::ble_bridge::{CompanionBleBridge, CompanionOtaBleReport};
 
 const PACKAGE_TYPE: &str = "companion-firmware-ota";
 const HARDWARE_REVISION: &str = "NUCLEO-WB55RG";
-const FIRMWARE_CAPABILITY: &str = "denzic_ota_v1";
-const SERVICE_UUID: &str = "8f7a8007-7b7d-4f3d-9d6f-6c2d1b7c0000";
-const CONTROL_UUID: &str = "8f7a8002-7b7d-4f3d-9d6f-6c2d1b7c0000";
-const DATA_UUID: &str = "8f7a8004-7b7d-4f3d-9d6f-6c2d1b7c0000";
-const STATUS_UUID: &str = "8f7a8005-7b7d-4f3d-9d6f-6c2d1b7c0000";
+const FIRMWARE_CAPABILITY: &str = denzic_ota_core::PROTOCOL_NAME;
+const SERVICE_UUID: &str = denzic_ota_core::GATT_SERVICE_UUID;
+const CONTROL_UUID: &str = denzic_ota_core::GATT_CONTROL_UUID;
+const DATA_UUID: &str = denzic_ota_core::GATT_DATA_UUID;
+const STATUS_UUID: &str = denzic_ota_core::GATT_STATUS_UUID;
 const MAX_CHUNK_BYTES: u16 = 244;
 
 #[derive(Clone, Debug, Deserialize)]

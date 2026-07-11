@@ -21,10 +21,14 @@ use uuid::Uuid;
 
 const COMPANION_DEVICE_NAME_FILTER: &str = "companion";
 const RECORDING_SERVICE_UUID: Uuid = Uuid::from_u128(0x8f7a00037b7d4f3d9d6f6c2d1b7c0000);
-const COMPANION_OTA_V1_SERVICE_UUID: Uuid = Uuid::from_u128(0x8f7a80077b7d4f3d9d6f6c2d1b7c0000);
-const COMPANION_OTA_V1_CONTROL_UUID: Uuid = Uuid::from_u128(0x8f7a80027b7d4f3d9d6f6c2d1b7c0000);
-const COMPANION_OTA_V1_DATA_UUID: Uuid = Uuid::from_u128(0x8f7a80047b7d4f3d9d6f6c2d1b7c0000);
-const COMPANION_OTA_V1_STATUS_UUID: Uuid = Uuid::from_u128(0x8f7a80057b7d4f3d9d6f6c2d1b7c0000);
+const COMPANION_OTA_V1_SERVICE_UUID: Uuid =
+    Uuid::from_u128(denzic_ota_core::GATT_SERVICE_UUID_U128);
+const COMPANION_OTA_V1_CONTROL_UUID: Uuid =
+    Uuid::from_u128(denzic_ota_core::GATT_CONTROL_UUID_U128);
+const COMPANION_OTA_V1_DATA_UUID: Uuid =
+    Uuid::from_u128(denzic_ota_core::GATT_DATA_UUID_U128);
+const COMPANION_OTA_V1_STATUS_UUID: Uuid =
+    Uuid::from_u128(denzic_ota_core::GATT_STATUS_UUID_U128);
 const RECORDING_LIST_UUID: Uuid = Uuid::from_u128(0x8f7a30027b7d4f3d9d6f6c2d1b7c0000);
 const RECORDING_CHUNK_PULL_UUID: Uuid = Uuid::from_u128(0x8f7a30037b7d4f3d9d6f6c2d1b7c0000);
 const RECORDING_CHUNK_FINAL_FLAG: u8 = 0x01;
