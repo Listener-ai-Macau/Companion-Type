@@ -16,8 +16,17 @@ tauri-build = { version = "2", features = [] }
 [dependencies]
 tauri = { version = "~2.11", features = ["tray-icon"] }
 serde = { version = "1", features = ["derive"] }
+cpal = "0.15"
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "multipart", "rustls-tls"] }
+serde_json = "1"
+btleplug = "0.11"
+crc32fast = "1"
+futures = "0.3"
+sha2 = "0.10"
+tokio = { version = "1", features = ["rt", "sync", "time"] }
+uuid = "1"
+denzic-ota-core = { path = "../../../third_party/denzic-platform/ota/host/rust" }
 
 [features]
 default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
-

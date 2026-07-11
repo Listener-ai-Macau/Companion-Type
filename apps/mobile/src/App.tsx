@@ -6,6 +6,7 @@ import {
   type CompanionV1Snapshot,
   applyCompanionV1ControlFixture,
   createCompanionV1Fixture,
+  normalizeCompanionV1Snapshot,
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
 import '../../../packages/ui/src/companionUi.css';
@@ -62,10 +63,9 @@ export function App() {
 function readSnapshot(): CompanionV1Snapshot {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) return createCompanionV1Fixture({ deviceId: 'mobile-fixture-companion-v1' });
-  return JSON.parse(raw) as CompanionV1Snapshot;
+  return normalizeCompanionV1Snapshot(JSON.parse(raw) as CompanionV1Snapshot);
 }
 
 function writeSnapshot(snapshot: CompanionV1Snapshot) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
 }
-

@@ -10,6 +10,7 @@ apps/windows/src-tauri/gen/
 .env.*
 !.env.example
 docs/validation/
+test-results/
 *.msi
 *.dmg
 *.pkg
@@ -18,4 +19,3 @@ docs/validation/
 *.rpm
 *.zip
 *.sig
-

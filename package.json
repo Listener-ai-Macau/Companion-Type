@@ -12,7 +12,23 @@
     "test": "npm run test:core",
     "test:core": "node --experimental-strip-types packages/core/src/companionV1.test.ts",
     "test:core:write-docs": "node --experimental-strip-types packages/core/src/companionV1.test.ts --write-docs",
-    "tauri:windows": "tauri --config apps/windows/src-tauri/tauri.conf.json"
+    "verify:user-chain": "node --experimental-strip-types tools/verify_companion_type_user_chain.ts",
+    "verify:backend-shape": "node --experimental-strip-types tools/verify_companion_type_backend_shape.ts",
+    "verify:host-recording": "node --experimental-strip-types tools/verify_companion_type_host_recording.ts",
+    "verify:real-microphone": "node --experimental-strip-types tools/verify_companion_type_real_microphone.ts",
+    "verify:real-microphone-soak": "node --experimental-strip-types tools/verify_companion_type_real_microphone_soak.ts",
+    "verify:real-microphone-soak:popup": "pwsh -NoProfile -File tools/run_companion_type_real_microphone_soak_popup.ps1",
+    "verify:independent-asr": "node --experimental-strip-types tools/verify_companion_type_independent_asr_chain.ts",
+    "verify:long-meeting": "node --experimental-strip-types tools/verify_companion_type_long_meeting_chain.ts",
+    "verify:product-chain": "node --experimental-strip-types tools/verify_companion_type_product_chain.ts",
+    "verify:dirty-audit": "node --experimental-strip-types tools/verify_companion_type_dirty_audit.ts",
+    "verify:joint-acceptance": "node --experimental-strip-types tools/verify_companion_type_joint_acceptance.ts",
+    "verify:msi-install-smoke": "pwsh -NoProfile -File tools/verify_companion_type_msi_install_smoke.ps1",
+    "verify:installed-ui-sync": "pwsh -NoProfile -File tools/verify_companion_type_installed_ui_sync.ps1",
+    "verify:final-human-signoff": "pwsh -NoProfile -File tools/verify_companion_type_final_human_signoff.ps1",
+    "verify:browser-ui": "playwright test tools/verify_companion_type_browser_ui_chain.spec.cjs --reporter=line",
+    "tauri:windows": "tauri build --config apps/windows/src-tauri/tauri.conf.json",
+    "tauri:windows:dev": "tauri dev --config apps/windows/src-tauri/tauri.conf.json"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.11.0",
@@ -21,6 +37,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tauri-apps/cli": "^2.11.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
