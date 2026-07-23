@@ -515,10 +515,12 @@ fn transfer_native_firmware_ota(
     let _ = transport
         .runtime
         .block_on(async move { timeout(disconnect_timeout, peripheral.disconnect()).await });
-    result.map(|transfer| CompanionOtaBleReport {
-        device_id,
-        transfer,
-    })
+    result
+        .map(|transfer| CompanionOtaBleReport {
+            device_id,
+            transfer,
+        })
+        .map_err(String::from)
 }
 
 fn find_ota_characteristic(
