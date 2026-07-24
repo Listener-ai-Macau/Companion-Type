@@ -2,18 +2,21 @@
 //!
 //! This module intentionally does not shell out to Listener-Type. The first
 //! production adapters can plug in here without changing the app IPC surface.
+//! The OpenAI-compatible HTTP client itself lives in the platform
+//! `denzic-host-audio-v1-core` crate; this module keeps provider selection,
+//! env-var plumbing, and the Companion-specific guardrails.
 
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Duration;
 
-use reqwest::blocking::multipart;
-use serde_json::Value;
-
-const OPENAI_TRANSCRIPTION_ENDPOINT: &str = "https://api.openai.com/v1/audio/transcriptions";
-const DEFAULT_OPENAI_TRANSCRIBE_MODEL: &str = "gpt-4o-transcribe";
-const DEFAULT_MAX_UPLOAD_BYTES: u64 = 25 * 1024 * 1024;
+use denzic_host_audio_v1_core::asr::{normalize_transcript, BatchAsrProvider};
+use denzic_host_audio_v1_core::asr_openai::{OpenAiAsrConfig, OpenAiCompatibleAsr};
+use denzic_host_audio_v1_core::{
+    ASR_DEFAULT_MAX_UPLOAD_BYTES, ASR_DEFAULT_MODEL, ASR_OPENAI_TRANSCRIPTION_ENDPOINT,
+    ASR_REQUEST_TIMEOUT_SECONDS,
+};
 
 #[derive(Clone, Debug)]
 pub struct CompanionTranscript {
@@ -156,7 +159,7 @@ fn openai_provider_configured() -> bool {
 
 fn openai_compatible_transcript(audio: &Path) -> Result<CompanionTranscript, String> {
     let endpoint = std::env::var("COMPANION_TYPE_ASR_ENDPOINT")
-        .unwrap_or_else(|_| OPENAI_TRANSCRIPTION_ENDPOINT.to_string());
+        .unwrap_or_else(|_| ASR_OPENAI_TRANSCRIPTION_ENDPOINT.to_string());
     if endpoint.to_ascii_lowercase().contains("listener-type") {
         return Err("Companion-Type ASR endpoint must not reference listener-type".to_string());
     }
@@ -166,68 +169,28 @@ fn openai_compatible_transcript(audio: &Path) -> Result<CompanionTranscript, Str
             "OpenAI-compatible ASR requires COMPANION_TYPE_ASR_API_KEY or OPENAI_API_KEY"
                 .to_string()
         })?;
-    let model = std::env::var("COMPANION_TYPE_ASR_MODEL")
-        .unwrap_or_else(|_| DEFAULT_OPENAI_TRANSCRIBE_MODEL.to_string());
+    let model =
+        std::env::var("COMPANION_TYPE_ASR_MODEL").unwrap_or_else(|_| ASR_DEFAULT_MODEL.to_string());
     let max_upload = std::env::var("COMPANION_TYPE_ASR_MAX_UPLOAD_BYTES")
         .ok()
         .and_then(|value| value.parse::<u64>().ok())
-        .unwrap_or(DEFAULT_MAX_UPLOAD_BYTES);
-    let bytes = fs::metadata(audio)
-        .map_err(|err| format!("read audio metadata {}: {err}", audio.display()))?
-        .len();
-    if bytes > max_upload {
-        return Err(format!(
-            "audio file is {bytes} bytes, over ASR upload limit {max_upload}; use the host chunked long-meeting path"
-        ));
-    }
+        .unwrap_or(ASR_DEFAULT_MAX_UPLOAD_BYTES);
 
-    let form = multipart::Form::new()
-        .text("model", model.clone())
-        .text("response_format", "json")
-        .file("file", audio)
-        .map_err(|err| format!("attach audio file {}: {err}", audio.display()))?;
-    let response = reqwest::blocking::Client::builder()
-        .timeout(Duration::from_secs(120))
-        .build()
-        .map_err(|err| format!("build ASR HTTP client: {err}"))?
-        .post(&endpoint)
-        .bearer_auth(api_key)
-        .multipart(form)
-        .send()
-        .map_err(|err| format!("send ASR request to {endpoint}: {err}"))?;
-    let status = response.status();
-    let body = response
-        .text()
-        .map_err(|err| format!("read ASR response body: {err}"))?;
-    if !status.is_success() {
-        return Err(format!("ASR provider returned {status}: {}", body.trim()));
-    }
-    let text = normalize_transcript(&extract_text_from_asr_body(&body));
-    if text.is_empty() {
-        return Err("ASR provider returned no transcript text".to_string());
-    }
+    let mut config = OpenAiAsrConfig::new(endpoint, api_key);
+    config.model = model.clone();
+    config.max_upload_bytes = max_upload;
+    config.timeout = Duration::from_secs(ASR_REQUEST_TIMEOUT_SECONDS);
+    let provider = OpenAiCompatibleAsr::new(config);
+
+    let transcript = provider
+        .transcribe_file(audio)
+        .map_err(|err| err.to_string())?;
     Ok(CompanionTranscript {
-        text,
+        text: transcript.text,
         provider_id: "companion-type-openai-compatible-asr".to_string(),
         mode: format!("http-multipart:{model}"),
         evidence_path: None,
     })
-}
-
-fn extract_text_from_asr_body(body: &str) -> String {
-    if let Ok(value) = serde_json::from_str::<Value>(body) {
-        if let Some(text) = value.get("text").and_then(Value::as_str) {
-            return text.to_string();
-        }
-        if let Some(text) = value
-            .get("transcript")
-            .and_then(|transcript| transcript.get("text"))
-            .and_then(Value::as_str)
-        {
-            return text.to_string();
-        }
-    }
-    body.trim().to_string()
 }
 
 fn extract_transcript_from_stdout(stdout: &str) -> String {
@@ -264,15 +227,6 @@ fn split_command_args(value: &str) -> Vec<String> {
         args.push(current);
     }
     args
-}
-
-fn normalize_transcript(text: &str) -> String {
-    text.replace("\r\n", "\n")
-        .lines()
-        .map(str::trim)
-        .filter(|line| !line.is_empty())
-        .collect::<Vec<_>>()
-        .join("\n")
 }
 
 #[cfg(test)]

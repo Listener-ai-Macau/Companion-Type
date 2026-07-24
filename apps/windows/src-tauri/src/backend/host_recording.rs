@@ -2,21 +2,19 @@
 //!
 //! The product path is host-owned long recording. Firmware remains a short
 //! cache/trigger, while this backend records a 16 kHz mono WAV on the host.
+//! Capture, sample conversion, and the WAV container come from the platform
+//! `denzic-host-audio-v1-core` crate; this module keeps session management,
+//! file placement, the ratio resampler, and the synthetic fallback mode.
 
-use std::fs::{create_dir_all, File};
-use std::io::{Seek, SeekFrom, Write};
-use std::path::{Path, PathBuf};
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::{mpsc, Arc, Mutex};
-use std::thread::{self, JoinHandle};
-use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
+use std::fs::create_dir_all;
+use std::path::PathBuf;
+use std::sync::{Arc, Mutex};
+use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
-use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
-use cpal::{SampleFormat, StreamConfig};
+use denzic_host_audio_v1_core::capture::{CaptureOptions, CaptureSession};
+use denzic_host_audio_v1_core::wav::WavWriter;
+use denzic_host_audio_v1_core::PCM_SAMPLE_RATE_HZ as TARGET_SAMPLE_RATE;
 
-const TARGET_SAMPLE_RATE: u32 = 16_000;
-const TARGET_CHANNELS: u16 = 1;
-const BITS_PER_SAMPLE: u16 = 16;
 const SYNTHETIC_HZ: f32 = 440.0;
 
 #[derive(Clone, Debug)]
@@ -43,7 +41,7 @@ struct ActiveHostRecording {
 }
 
 enum ActiveHostRecordingMode {
-    Real(HostRecorderHandle),
+    Real(RealRecording),
     Synthetic,
 }
 
@@ -80,9 +78,9 @@ impl HostRecordingManager {
         let (mode, mode_label) = if requested_mode.eq_ignore_ascii_case("synthetic") {
             (ActiveHostRecordingMode::Synthetic, "synthetic".to_string())
         } else {
-            match HostRecorderHandle::start(path.clone()) {
-                Ok(handle) => (
-                    ActiveHostRecordingMode::Real(handle),
+            match RealRecording::start(path.clone()) {
+                Ok(recording) => (
+                    ActiveHostRecordingMode::Real(recording),
                     "host-microphone".to_string(),
                 ),
                 Err(err) if requested_mode.eq_ignore_ascii_case("real") => return Err(err),
@@ -145,8 +143,8 @@ impl Default for HostRecordingManager {
 fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecordingStop, String> {
     let elapsed_ms = recording.started_at.elapsed().as_millis().max(1) as u64;
     let (path, bytes, mode) = match recording.mode {
-        ActiveHostRecordingMode::Real(handle) => {
-            let stop = handle.stop()?;
+        ActiveHostRecordingMode::Real(real) => {
+            let stop = real.stop()?;
             (stop.path, stop.bytes, "host-microphone".to_string())
         }
         ActiveHostRecordingMode::Synthetic => {
@@ -206,194 +204,66 @@ fn sanitize_file_stem(value: &str) -> String {
     }
 }
 
-struct HostRecorderHandle {
-    stop_flag: Arc<AtomicBool>,
-    join_handle: Option<JoinHandle<Result<u64, String>>>,
+struct RealRecording {
+    session: CaptureSession,
     path: PathBuf,
 }
 
-struct HostRecorderStop {
+struct RealRecordingStop {
     path: PathBuf,
     bytes: u64,
 }
 
-impl HostRecorderHandle {
+impl RealRecording {
     fn start(path: PathBuf) -> Result<Self, String> {
-        let writer = Arc::new(Mutex::new(WavWriter::create(&path)?));
-        let stop_flag = Arc::new(AtomicBool::new(false));
-        let stop_for_thread = Arc::clone(&stop_flag);
-        let writer_for_thread = Arc::clone(&writer);
-        let (startup_tx, startup_rx) = mpsc::channel::<Result<(), String>>();
+        if let Some(parent) = path.parent() {
+            create_dir_all(parent).map_err(|err| format!("create wav parent {parent:?}: {err}"))?;
+        }
+        let writer = Arc::new(Mutex::new(
+            WavWriter::create(&path).map_err(|err| format!("create wav {path:?}: {err}"))?,
+        ));
+        let sink_writer = Arc::clone(&writer);
+        let resampler_slot = Arc::new(Mutex::new(None::<RatioResampler>));
+        let sink_resampler = Arc::clone(&resampler_slot);
 
-        let join_handle = thread::Builder::new()
-            .name("companion-type-host-recorder".to_string())
-            .spawn(move || run_audio_thread(stop_for_thread, writer_for_thread, startup_tx))
-            .map_err(|err| format!("spawn host recorder thread: {err}"))?;
+        let session = CaptureSession::start(
+            CaptureOptions {
+                device_name: None,
+                on_stream_error: Some(Arc::new(|err| {
+                    eprintln!("[companion-type-recorder] stream error: {err}");
+                })),
+            },
+            move |samples: &[f32], source_rate: u32| {
+                let mut slot = match sink_resampler.lock() {
+                    Ok(slot) => slot,
+                    Err(_) => return,
+                };
+                let resampler = slot
+                    .get_or_insert_with(|| RatioResampler::new(source_rate, TARGET_SAMPLE_RATE));
+                let resampled = resampler.process(samples);
+                if resampled.is_empty() {
+                    return;
+                }
+                if let Ok(mut writer) = sink_writer.lock() {
+                    let _ = writer.append_samples(&resampled);
+                }
+            },
+        )
+        .map_err(|err| err.to_string())?;
 
-        startup_rx
-            .recv_timeout(Duration::from_secs(5))
-            .map_err(|err| format!("host recorder startup timeout: {err}"))??;
-
-        Ok(Self {
-            stop_flag,
-            join_handle: Some(join_handle),
-            path,
-        })
+        Ok(Self { session, path })
     }
 
-    fn stop(mut self) -> Result<HostRecorderStop, String> {
-        self.stop_flag.store(true, Ordering::SeqCst);
-        self.join_handle
-            .take()
-            .ok_or_else(|| "host recorder thread already joined".to_string())?
-            .join()
-            .map_err(|_| "host recorder thread panicked".to_string())??;
+    fn stop(self) -> Result<RealRecordingStop, String> {
+        self.session.stop().map_err(|err| err.to_string())?;
         let bytes = std::fs::metadata(&self.path)
             .map_err(|err| format!("read wav metadata: {err}"))?
             .len();
-        Ok(HostRecorderStop {
+        Ok(RealRecordingStop {
             path: self.path,
             bytes,
         })
     }
-}
-
-fn run_audio_thread(
-    stop_flag: Arc<AtomicBool>,
-    writer: Arc<Mutex<WavWriter>>,
-    startup_tx: mpsc::Sender<Result<(), String>>,
-) -> Result<u64, String> {
-    let host = cpal::default_host();
-    let device = host
-        .default_input_device()
-        .ok_or_else(|| "no default input microphone".to_string());
-    let device = match device {
-        Ok(device) => device,
-        Err(err) => {
-            let _ = startup_tx.send(Err(err.clone()));
-            return Err(err);
-        }
-    };
-    let supported_config = match device.default_input_config() {
-        Ok(config) => config,
-        Err(err) => {
-            let message = format!("read default input config: {err}");
-            let _ = startup_tx.send(Err(message.clone()));
-            return Err(message);
-        }
-    };
-
-    let stream_config: StreamConfig = supported_config.clone().into();
-    let sample_rate = stream_config.sample_rate.0;
-    let channels = stream_config.channels as usize;
-    let err_fn = |err| eprintln!("[companion-type-recorder] stream error: {err}");
-
-    let stream_result = match supported_config.sample_format() {
-        SampleFormat::F32 => build_stream::<f32>(
-            &device,
-            &stream_config,
-            channels,
-            sample_rate,
-            writer,
-            err_fn,
-        ),
-        SampleFormat::I16 => build_stream::<i16>(
-            &device,
-            &stream_config,
-            channels,
-            sample_rate,
-            writer,
-            err_fn,
-        ),
-        SampleFormat::U16 => build_stream::<u16>(
-            &device,
-            &stream_config,
-            channels,
-            sample_rate,
-            writer,
-            err_fn,
-        ),
-        other => Err(format!("unsupported input sample format: {other:?}")),
-    };
-
-    let stream = match stream_result {
-        Ok(stream) => stream,
-        Err(err) => {
-            let _ = startup_tx.send(Err(err.clone()));
-            return Err(err);
-        }
-    };
-
-    if let Err(err) = stream.play() {
-        let message = format!("start input stream: {err}");
-        let _ = startup_tx.send(Err(message.clone()));
-        return Err(message);
-    }
-    let _ = startup_tx.send(Ok(()));
-
-    while !stop_flag.load(Ordering::SeqCst) {
-        thread::sleep(Duration::from_millis(25));
-    }
-    drop(stream);
-
-    Ok(0)
-}
-
-trait CompanionSample {
-    fn to_f32_sample(self) -> f32;
-}
-
-impl CompanionSample for f32 {
-    fn to_f32_sample(self) -> f32 {
-        self.clamp(-1.0, 1.0)
-    }
-}
-
-impl CompanionSample for i16 {
-    fn to_f32_sample(self) -> f32 {
-        self as f32 / i16::MAX as f32
-    }
-}
-
-impl CompanionSample for u16 {
-    fn to_f32_sample(self) -> f32 {
-        (self as f32 - 32768.0) / 32768.0
-    }
-}
-
-fn build_stream<T>(
-    device: &cpal::Device,
-    config: &StreamConfig,
-    channels: usize,
-    source_rate: u32,
-    writer: Arc<Mutex<WavWriter>>,
-    err_fn: impl Fn(cpal::StreamError) + Send + 'static,
-) -> Result<cpal::Stream, String>
-where
-    T: cpal::SizedSample + CompanionSample + Send + 'static,
-{
-    let mut resampler = RatioResampler::new(source_rate, TARGET_SAMPLE_RATE);
-    device
-        .build_input_stream(
-            config,
-            move |data: &[T], _| {
-                let mut mono = Vec::with_capacity(data.len() / channels.max(1));
-                for frame in data.chunks(channels.max(1)) {
-                    let sum: f32 = frame.iter().map(|sample| sample.to_f32_sample()).sum();
-                    mono.push(sum / frame.len().max(1) as f32);
-                }
-                let samples = resampler.process(&mono);
-                if samples.is_empty() {
-                    return;
-                }
-                if let Ok(mut writer) = writer.lock() {
-                    let _ = writer.write_samples(&samples);
-                }
-            },
-            err_fn,
-            None,
-        )
-        .map_err(|err| format!("build input stream: {err}"))
 }
 
 struct RatioResampler {
@@ -428,86 +298,9 @@ fn f32_to_i16(sample: f32) -> i16 {
     (sample.clamp(-1.0, 1.0) * i16::MAX as f32) as i16
 }
 
-struct WavWriter {
-    file: File,
-    data_bytes: u32,
-}
-
-impl WavWriter {
-    fn create(path: &Path) -> Result<Self, String> {
-        if let Some(parent) = path.parent() {
-            create_dir_all(parent).map_err(|err| format!("create wav parent {parent:?}: {err}"))?;
-        }
-        let mut file = File::create(path).map_err(|err| format!("create wav {path:?}: {err}"))?;
-        write_wav_header(&mut file, 0)?;
-        Ok(Self {
-            file,
-            data_bytes: 0,
-        })
-    }
-
-    fn write_samples(&mut self, samples: &[i16]) -> Result<(), String> {
-        for sample in samples {
-            self.file
-                .write_all(&sample.to_le_bytes())
-                .map_err(|err| format!("write wav sample: {err}"))?;
-            self.data_bytes = self.data_bytes.saturating_add(2);
-        }
-        Ok(())
-    }
-
-    fn finalize(&mut self) -> Result<u64, String> {
-        write_wav_header(&mut self.file, self.data_bytes)?;
-        self.file
-            .seek(SeekFrom::End(0))
-            .map_err(|err| format!("seek wav end: {err}"))
-    }
-}
-
-impl Drop for WavWriter {
-    fn drop(&mut self) {
-        let _ = self.finalize();
-    }
-}
-
-fn write_wav_header(file: &mut File, data_bytes: u32) -> Result<(), String> {
-    let byte_rate = TARGET_SAMPLE_RATE * TARGET_CHANNELS as u32 * BITS_PER_SAMPLE as u32 / 8;
-    let block_align = TARGET_CHANNELS * BITS_PER_SAMPLE / 8;
-    let riff_size = 36u32.saturating_add(data_bytes);
-
-    file.seek(SeekFrom::Start(0))
-        .map_err(|err| format!("seek wav header: {err}"))?;
-    file.write_all(b"RIFF")
-        .map_err(|err| format!("write riff: {err}"))?;
-    file.write_all(&riff_size.to_le_bytes())
-        .map_err(|err| format!("write riff size: {err}"))?;
-    file.write_all(b"WAVEfmt ")
-        .map_err(|err| format!("write wave fmt: {err}"))?;
-    file.write_all(&16u32.to_le_bytes())
-        .map_err(|err| format!("write fmt size: {err}"))?;
-    file.write_all(&1u16.to_le_bytes())
-        .map_err(|err| format!("write pcm tag: {err}"))?;
-    file.write_all(&TARGET_CHANNELS.to_le_bytes())
-        .map_err(|err| format!("write channels: {err}"))?;
-    file.write_all(&TARGET_SAMPLE_RATE.to_le_bytes())
-        .map_err(|err| format!("write sample rate: {err}"))?;
-    file.write_all(&byte_rate.to_le_bytes())
-        .map_err(|err| format!("write byte rate: {err}"))?;
-    file.write_all(&block_align.to_le_bytes())
-        .map_err(|err| format!("write block align: {err}"))?;
-    file.write_all(&BITS_PER_SAMPLE.to_le_bytes())
-        .map_err(|err| format!("write bits per sample: {err}"))?;
-    file.write_all(b"data")
-        .map_err(|err| format!("write data tag: {err}"))?;
-    file.write_all(&data_bytes.to_le_bytes())
-        .map_err(|err| format!("write data size: {err}"))?;
-    file.seek(SeekFrom::End(0))
-        .map_err(|err| format!("seek wav data end: {err}"))?;
-    Ok(())
-}
-
-fn write_synthetic_wav(path: &Path, duration_ms: u64) -> Result<(), String> {
-    let mut writer = WavWriter::create(path)?;
+fn write_synthetic_wav(path: &PathBuf, duration_ms: u64) -> Result<(), String> {
+    let mut writer =
+        WavWriter::create(path).map_err(|err| format!("create wav {path:?}: {err}"))?;
     let samples = (TARGET_SAMPLE_RATE as u64 * duration_ms / 1000).max(1);
     let mut chunk = Vec::<i16>::with_capacity(1024);
     for index in 0..samples {
@@ -516,14 +309,20 @@ fn write_synthetic_wav(path: &Path, duration_ms: u64) -> Result<(), String> {
             (t * SYNTHETIC_HZ * std::f32::consts::TAU).sin() * 0.18,
         ));
         if chunk.len() >= 1024 {
-            writer.write_samples(&chunk)?;
+            writer
+                .append_samples(&chunk)
+                .map_err(|err| format!("write wav sample: {err}"))?;
             chunk.clear();
         }
     }
     if !chunk.is_empty() {
-        writer.write_samples(&chunk)?;
+        writer
+            .append_samples(&chunk)
+            .map_err(|err| format!("write wav sample: {err}"))?;
     }
-    writer.finalize()?;
+    writer
+        .finalize()
+        .map_err(|err| format!("finalize wav {path:?}: {err}"))?;
     Ok(())
 }
 
@@ -583,7 +382,7 @@ mod tests {
             .start("real-mic-session", "Real Microphone Acceptance")
             .expect("real microphone recording should start");
         assert_eq!(start.mode, "host-microphone");
-        std::thread::sleep(Duration::from_millis(1800));
+        std::thread::sleep(std::time::Duration::from_millis(1800));
         let stop = manager
             .stop(Some("real-mic-session"))
             .expect("real microphone recording should stop")
@@ -634,7 +433,7 @@ mod tests {
             .start("real-mic-soak", "Real Microphone Soak")
             .expect("real microphone soak should start");
         assert_eq!(start.mode, "host-microphone");
-        std::thread::sleep(Duration::from_secs(requested_seconds));
+        std::thread::sleep(std::time::Duration::from_secs(requested_seconds));
         let stop = manager
             .stop(Some("real-mic-soak"))
             .expect("real microphone soak should stop")

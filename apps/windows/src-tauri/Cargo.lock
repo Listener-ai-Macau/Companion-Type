@@ -481,11 +481,10 @@ name = "companion-type"
 version = "0.1.0"
 dependencies = [
  "btleplug",
- "cpal",
  "crc32fast",
+ "denzic-host-audio-v1-core",
  "denzic-ota-core",
  "futures",
- "reqwest 0.12.28",
  "serde",
  "serde_json",
  "sha2",
@@ -759,6 +758,16 @@ dependencies = [
  "dbus",
  "libc",
  "tokio",
+]
+
+[[package]]
+name = "denzic-host-audio-v1-core"
+version = "0.1.0"
+dependencies = [
+ "cpal",
+ "reqwest 0.12.28",
+ "serde_json",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
