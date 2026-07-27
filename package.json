@@ -15,6 +15,8 @@
     "verify:user-chain": "node --experimental-strip-types tools/verify_companion_type_user_chain.ts",
     "verify:backend-shape": "node --experimental-strip-types tools/verify_companion_type_backend_shape.ts",
     "verify:host-recording": "node --experimental-strip-types tools/verify_companion_type_host_recording.ts",
+    "verify:mechanical-voice-minutes": "node --experimental-strip-types tools/verify_companion_type_mechanical_voice_minutes.ts",
+    "verify:virtual-owner-minutes": "node --experimental-strip-types tools/verify_companion_type_virtual_owner_minutes.ts",
     "verify:real-microphone": "node --experimental-strip-types tools/verify_companion_type_real_microphone.ts",
     "verify:real-microphone-soak": "node --experimental-strip-types tools/verify_companion_type_real_microphone_soak.ts",
     "verify:real-microphone-soak:popup": "pwsh -NoProfile -File tools/run_companion_type_real_microphone_soak_popup.ps1",
@@ -27,6 +29,7 @@
     "verify:installed-ui-sync": "pwsh -NoProfile -File tools/verify_companion_type_installed_ui_sync.ps1",
     "verify:final-human-signoff": "pwsh -NoProfile -File tools/verify_companion_type_final_human_signoff.ps1",
     "verify:browser-ui": "playwright test tools/verify_companion_type_browser_ui_chain.spec.cjs --reporter=line",
+    "verify:installed-user-journey": "playwright test tools/verify_companion_type_installed_user_journey.spec.cjs --reporter=line",
     "tauri:windows": "tauri build --config apps/windows/src-tauri/tauri.conf.json",
     "tauri:windows:dev": "tauri dev --config apps/windows/src-tauri/tauri.conf.json"
   },
