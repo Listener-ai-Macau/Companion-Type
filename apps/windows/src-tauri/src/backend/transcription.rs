@@ -11,6 +11,7 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Duration;
 
+use super::volcengine::{VolcengineCredentials, VolcengineSaucAsr};
 use denzic_host_audio_v1_core::asr::{normalize_transcript, BatchAsrProvider};
 use denzic_host_audio_v1_core::asr_openai::{OpenAiAsrConfig, OpenAiCompatibleAsr};
 use denzic_host_audio_v1_core::{
@@ -142,6 +143,10 @@ impl CompanionTranscriptionManager {
             reject_listener_type_command()?;
         }
 
+        if volcengine_provider_configured() {
+            return volcengine_transcript(audio);
+        }
+
         if openai_provider_configured() {
             return openai_compatible_transcript(audio);
         }
@@ -214,6 +219,38 @@ fn reject_listener_type_command() -> Result<(), String> {
         return Err("Companion-Type ASR command must not call listener-type".to_string());
     }
     Ok(())
+}
+
+fn volcengine_provider_configured() -> bool {
+    // Explicit opt-in only: COMPANION_TYPE_ASR_PROVIDER=volcengine gates this
+    // branch so it is never shadowed by a stray OPENAI_API_KEY (the OpenAI
+    // check below is greedy and matches on any of four env vars).
+    std::env::var("COMPANION_TYPE_ASR_PROVIDER")
+        .unwrap_or_default()
+        .eq_ignore_ascii_case("volcengine")
+        && std::env::var("COMPANION_TYPE_VOLC_APP_KEY").is_ok()
+        && std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY").is_ok()
+}
+
+fn volcengine_transcript(audio: &Path) -> Result<CompanionTranscript, String> {
+    let app_id = std::env::var("COMPANION_TYPE_VOLC_APP_KEY")
+        .map_err(|_| "COMPANION_TYPE_VOLC_APP_KEY is not set".to_string())?;
+    let access_token = std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY")
+        .map_err(|_| "COMPANION_TYPE_VOLC_ACCESS_KEY is not set".to_string())?;
+    let resource_id = std::env::var("COMPANION_TYPE_VOLC_RESOURCE_ID")
+        .unwrap_or_else(|_| VolcengineCredentials::default_resource_id().to_string());
+    let asr = VolcengineSaucAsr::new(VolcengineCredentials {
+        app_id,
+        access_token,
+        resource_id,
+    });
+    let text = asr.transcribe_file(audio)?;
+    Ok(CompanionTranscript {
+        text: normalize_transcript(&text),
+        provider_id: "companion-type-volcengine-asr".to_string(),
+        mode: "ws-sauc:bigmodel".to_string(),
+        evidence_path: None,
+    })
 }
 
 fn openai_provider_configured() -> bool {

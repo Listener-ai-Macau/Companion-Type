@@ -10,6 +10,7 @@ mod host_recording;
 mod minutes;
 mod privacy;
 mod transcription;
+mod volcengine;
 
 use std::sync::Mutex;
 
