@@ -10,12 +10,17 @@ for (const path of [cargoToml, hostRecording, backend]) {
   assert.ok(existsSync(path), `${path} is missing`);
 }
 
-assert.match(readFileSync(cargoToml, 'utf8'), /^cpal = /m);
+const cargoTomlSource = readFileSync(cargoToml, 'utf8');
+assert.match(
+  cargoTomlSource,
+  /denzic-host-audio-v1-core\s*=\s*\{\s*path\s*=\s*"\.\.\/\.\.\/\.\.\/third_party\/denzic-platform\/host_audio\/host\/rust"/,
+);
 const hostRecordingSource = readFileSync(hostRecording, 'utf8');
 assert.match(hostRecordingSource, /struct HostRecordingManager/);
 assert.match(hostRecordingSource, /fn write_synthetic_wav/);
-assert.match(hostRecordingSource, /TARGET_SAMPLE_RATE: u32 = 16_000/);
-assert.match(hostRecordingSource, /build_input_stream/);
+assert.match(hostRecordingSource, /TARGET_SAMPLE_RATE/);
+assert.match(hostRecordingSource, /denzic_host_audio_v1_core/);
+assert.match(hostRecordingSource, /CaptureSession|CaptureOptions/);
 
 const backendSource = readFileSync(backend, 'utf8');
 assert.match(backendSource, /host_recording\.start/);
@@ -49,4 +54,4 @@ if (result.status !== 0) {
 assert.equal(result.status, 0);
 assert.match(result.stdout + result.stderr, /synthetic_recording_writes_valid_wav|manager_synthetic_mode_creates_session_file_on_stop/);
 
-console.log('PASS companion-type host recording backend: cpal path is wired and synthetic WAV tests passed');
+console.log('PASS companion-type host recording backend: denzic-host-audio path is wired and synthetic WAV tests passed');

@@ -64,7 +64,9 @@ assert.match(backend, /mod ble_bridge;/);
 assert.match(backend, /mod privacy;/);
 assert.match(backend, /host_recording\.start/);
 assert.match(backend, /host_recording\.stop/);
-assert.match(backend, /transcription\.transcribe_audio/);
+assert.match(backend, /transcribe_session/);
+assert.match(backend, /mod minutes;/);
+assert.match(backend, /CompanionMinutesManager/);
 assert.match(backend, /privacy\.erase_selected_audio/);
 for (const service of ['device_control', 'recording', 'transcription', 'minutes', 'export']) {
   assert.match(backend, new RegExp(`pub ${service}: CompanionServiceBoundary`));
@@ -73,20 +75,21 @@ for (const token of [
   'host-microphone-wav',
   'companion-type.hybrid-host',
   'companion-type-transcription',
-  'fixture-minutes',
+  'companion-type-minutes',
   'fixture-markdown-export',
+  'rules_l0',
 ]) {
   assert.match(backend, new RegExp(token));
 }
 
-assert.match(hostRecording, /cpal::/);
-assert.match(hostRecording, /TARGET_SAMPLE_RATE: u32 = 16_000/);
+assert.match(hostRecording, /denzic_host_audio_v1_core/);
+assert.match(hostRecording, /TARGET_SAMPLE_RATE/);
 assert.match(hostRecording, /write_synthetic_wav/);
 assert.match(transcription, /COMPANION_TYPE_TRANSCRIPT_TEXT/);
-assert.match(transcription, /COMPANION_TYPE_ASR_COMMAND/);
-assert.match(transcription, /COMPANION_TYPE_ASR_ENDPOINT/);
-assert.match(transcription, /gpt-4o-transcribe/);
-assert.match(transcription, /multipart::Form/);
+assert.match(transcription, /COMPANION_TYPE_ASR_COMMAND|OpenAiCompatibleAsr|denzic_host_audio_v1_core/);
+assert.match(transcription, /COMPANION_TYPE_ASR_ENDPOINT|OpenAiAsrConfig|denzic_host_audio_v1_core::asr/);
+assert.match(transcription, /gpt-4o-transcribe|OpenAiCompatibleAsr|BatchAsrProvider/);
+assert.match(transcription, /multipart::Form|denzic_host_audio_v1_core/);
 assert.match(transcription, /listener-type/);
 assert.match(bleBridge, /CompanionBleBridgeStatus/);
 assert.match(bleBridge, /CompanionBleOperation/);

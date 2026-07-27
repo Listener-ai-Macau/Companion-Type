@@ -107,6 +107,7 @@ const artifacts = {
   typeNativeBleSyncLog: 'docs/validation/companion-type-native-ble-sync-smoke.log',
   typeNativeBleSyncSerialLog: 'docs/validation/companion-type-native-ble-sync-sw3-serial.log',
   typeInstalledUiSync: 'docs/validation/companion-type-installed-ui-sync.json',
+  typeInstalledUserJourney: 'docs/validation/companion-type-installed-user-journey.json',
   typeFinalHumanSignoff: 'docs/validation/companion-type-final-human-signoff.json',
   typeDirtyAudit: 'docs/validation/companion-type-dirty-audit.json',
   typeMsi: latestExtension(
@@ -134,6 +135,7 @@ const longMeeting = existsSync(artifacts.typeLongMeeting) ? readJson(artifacts.t
 const nativeBleSmoke = existsSync(artifacts.typeNativeBleSmoke) ? readJson(artifacts.typeNativeBleSmoke) : null;
 const nativeBleSyncPopup = existsSync(artifacts.typeNativeBleSyncPopup) ? readJson(artifacts.typeNativeBleSyncPopup) : null;
 const installedUiSync = existsSync(artifacts.typeInstalledUiSync) ? readJson(artifacts.typeInstalledUiSync) : null;
+const installedUserJourney = existsSync(artifacts.typeInstalledUserJourney) ? readJson(artifacts.typeInstalledUserJourney) : null;
 const finalHumanSignoff = existsSync(artifacts.typeFinalHumanSignoff) ? readJson(artifacts.typeFinalHumanSignoff) : null;
 const dirtyAudit = existsSync(artifacts.typeDirtyAudit) ? readJson(artifacts.typeDirtyAudit) : null;
 const buttonChain = artifacts.firmwareButtonChain ? readJson(artifacts.firmwareButtonChain) : null;
@@ -159,6 +161,7 @@ if (installedUiSync) assert.ok(
   String(installedUiSync.result).startsWith('PASS') || String(installedUiSync.result).startsWith('FAIL'),
   'installed UI sync result must be explicit',
 );
+if (installedUserJourney) assert.equal(installedUserJourney.result, 'PASS', 'installed user journey must pass when present');
 if (finalHumanSignoff) assert.ok(
   ['PASS', 'FAIL_HUMAN_REJECTED', 'PENDING_HUMAN_SIGNOFF', 'PENDING_TIMEOUT', 'PENDING_CLOSED'].includes(finalHumanSignoff.result),
   'final human signoff result must be explicit',
@@ -502,6 +505,41 @@ const items = [
         : null,
     },
     remainingGate: '当前按你的要求保留脏改，不回滚；最终交付前需要拆分/提交/保留策略。',
+  },
+  {
+    id: 8,
+    name: '安装版真实用户全程（CDP 自动化）',
+    status: installedUserJourney?.result === 'PASS'
+      ? 'PASS_INSTALLED_APP_REAL_USER_JOURNEY_CDP'
+      : installedUserJourney?.result === 'FAIL'
+        ? 'FAIL_INSTALLED_APP_USER_JOURNEY'
+        : 'PENDING_INSTALLED_APP_USER_JOURNEY',
+    evidence: [
+      fileEvidence(artifacts.typeInstalledUserJourney),
+      ...(installedUserJourney?.screenshots
+        ? Object.values(installedUserJourney.screenshots)
+            .map((s: any) => (s && s.path ? fileEvidence(s.path) : null))
+            .filter(Boolean)
+        : []),
+    ],
+    observed: installedUserJourney
+      ? {
+          result: installedUserJourney.result,
+          journeyMode: installedUserJourney.journeyMode,
+          syntheticMode: installedUserJourney.syntheticMode,
+          cdpEndpoint: installedUserJourney.cdpEndpoint,
+          installedExe: installedUserJourney.installedExe,
+          clicked: installedUserJourney.clicked,
+          markdownBytes: installedUserJourney.markdownBytes,
+          phase: installedUserJourney.phase,
+          error: installedUserJourney.error ?? null,
+        }
+      : null,
+    remainingGate: installedUserJourney?.result === 'PASS'
+      ? '已通过 CDP 对安装版 exe 跑完 扫描→连接→同步→导入→纪要→导出 全链；UI 点击触达真实 Tauri 命令与 Rust 后端，断言 ## Action Items。'
+      : installedUserJourney?.result === 'FAIL'
+        ? `安装版用户全程链最近一次在 ${installedUserJourney.phase} 失败：${installedUserJourney.error}。`
+        : '尚未在安装版 exe 上跑 verify:installed-user-journey；需先 npm run tauri:windows 并 verify:msi-install-smoke。',
   },
 ];
 
