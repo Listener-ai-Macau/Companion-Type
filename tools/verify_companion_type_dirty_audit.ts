@@ -71,7 +71,11 @@ const listenerTypeTouched = paths.some((path) => /(^|[\\/])Listener-Type([\\/]|$
 const report = {
   schema: 'companion_type.dirty_audit.v1',
   generatedAt: new Date().toISOString(),
-  result: listenerTypeTouched ? 'FAIL_LISTENER_TYPE_PATH_PRESENT' : 'PASS_DIRTY_WORKTREE_AUDITED',
+  result: listenerTypeTouched
+    ? 'FAIL_LISTENER_TYPE_PATH_PRESENT'
+    : entries.length > 0
+      ? 'PASS_DIRTY_WORKTREE_AUDITED'
+      : 'PASS_DIRTY_WORKTREE_CLEAN',
   repo: process.cwd(),
   branch: statusShort.stdout.split(/\r?\n/)[0] ?? '',
   dirty: entries.length > 0,
@@ -105,7 +109,7 @@ const report = {
 mkdirSync(dirname(OUT_JSON), { recursive: true });
 writeFileSync(OUT_JSON, `${JSON.stringify(report, null, 2)}\n`);
 
-if (report.result !== 'PASS_DIRTY_WORKTREE_AUDITED') {
+if (!report.result.startsWith('PASS_')) {
   console.error(`FAIL companion-type dirty audit: ${report.result}`);
   process.exit(1);
 }

@@ -166,7 +166,7 @@ if (finalHumanSignoff) assert.ok(
   ['PASS', 'FAIL_HUMAN_REJECTED', 'PENDING_HUMAN_SIGNOFF', 'PENDING_TIMEOUT', 'PENDING_CLOSED'].includes(finalHumanSignoff.result),
   'final human signoff result must be explicit',
 );
-if (dirtyAudit) assert.equal(dirtyAudit.result, 'PASS_DIRTY_WORKTREE_AUDITED', 'dirty audit must pass when present');
+if (dirtyAudit) assert.ok(['PASS_DIRTY_WORKTREE_AUDITED', 'PASS_DIRTY_WORKTREE_CLEAN'].includes(dirtyAudit.result), 'dirty audit must pass when present');
 assert.ok(buttonChain, 'latest SW3 button chain artifact is missing');
 assert.equal(buttonChain.status, 'PASS', 'latest passing SW3 button recording chain must pass');
 
@@ -483,9 +483,11 @@ const items = [
   {
     id: 7,
     name: '脏改整理与可审查交付',
-    status: dirtyAudit?.result === 'PASS_DIRTY_WORKTREE_AUDITED'
-      ? 'PASS_DIRTY_AUDIT_ARTIFACT_GENERATED__DIRTY_WORKTREE_REMAINS'
-      : 'PASS_AUDIT_GENERATED__DIRTY_WORKTREE_REMAINS',
+    status: dirtyAudit?.result === 'PASS_DIRTY_WORKTREE_CLEAN'
+      ? 'PASS_DIRTY_AUDIT_CLEAN_WORKTREE'
+      : dirtyAudit?.result === 'PASS_DIRTY_WORKTREE_AUDITED'
+        ? 'PASS_DIRTY_AUDIT_ARTIFACT_GENERATED__DIRTY_WORKTREE_REMAINS'
+        : 'PASS_AUDIT_GENERATED__DIRTY_WORKTREE_REMAINS',
     evidence: [
       { command: typeGitStatus.command.join(' '), exitCode: typeGitStatus.exitCode },
       { command: firmwareGitStatus.command.join(' '), exitCode: firmwareGitStatus.exitCode },
@@ -504,7 +506,9 @@ const items = [
         }
         : null,
     },
-    remainingGate: '当前按你的要求保留脏改，不回滚；最终交付前需要拆分/提交/保留策略。',
+    remainingGate: dirtyAudit?.result === 'PASS_DIRTY_WORKTREE_CLEAN'
+      ? '工作树已清理并拆分提交；无 Listener-Type 改动；可审查交付。'
+      : '当前按你的要求保留脏改，不回滚；最终交付前需要拆分/提交/保留策略。',
   },
   {
     id: 8,
