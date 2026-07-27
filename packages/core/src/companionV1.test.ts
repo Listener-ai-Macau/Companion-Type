@@ -73,7 +73,11 @@ const synced = applyCompanionV1ControlFixture(deviceConnected, {
   durationMs: 60000,
 });
 assert.equal(selectedCompanionHostSession(synced)?.source, 'deviceFlash');
+assert.equal(selectedCompanionHostSession(synced)?.status, 'captured');
+assert.equal(selectedCompanionHostSession(synced)?.pendingReason, 'needs_transcription');
 assert.equal(selectedCompanionHostSession(synced)?.chunks[0]?.status, 'synced');
+assert.match(synced.host.recordingPolicy.shortCaptureGuide, /Sync/);
+assert.match(synced.host.recordingPolicy.longMeetingGuide, /host microphone/i);
 
 assert.equal(characteristicForCompanionAction('speakerPrompt'), COMPANION_V1_GATT_BOUNDARY.speakerControlUuid);
 assert.equal(characteristicForCompanionAction('meetingImportTranscript'), COMPANION_V1_HOST_RECORDING_CHANNEL);
@@ -102,6 +106,7 @@ const stopped = applyCompanionV1ControlFixture(started, {
   durationMs: COMPANION_V1_LONG_MEETING_TARGET_SECONDS * 1000,
 });
 assert.equal(stopped.meeting.status, 'captured');
+assert.equal(selectedCompanionHostSession(stopped)?.pendingReason, 'needs_transcription');
 assert.equal(selectedCompanionHostSession(stopped)?.durationMs, 3600000);
 assert.equal(selectedCompanionHostSession(stopped)?.chunks.length, COMPANION_V1_ONE_HOUR_CHUNKS);
 assert.equal(
@@ -111,6 +116,12 @@ assert.equal(
 assert.ok(selectedCompanionHostSession(stopped)?.chunks.every((chunk) => chunk.durationMs <= 300000));
 assert.ok(selectedCompanionHostSession(stopped)?.chunks.every((chunk) => chunk.bytes < COMPANION_V1_ASR_UPLOAD_MAX_BYTES));
 
+const pendingTranscribe = applyCompanionV1ControlFixture(stopped, {
+  action: 'meetingTranscribeAudio',
+});
+assert.equal(selectedCompanionHostSession(pendingTranscribe)?.pendingReason, 'needs_transcription');
+assert.equal(pendingTranscribe.meeting.status, 'captured');
+
 const transcribed = applyCompanionV1ControlFixture(stopped, {
   action: 'meetingTranscribeAudio',
   transcriptText: fixtureTranscript,
@@ -118,15 +129,38 @@ const transcribed = applyCompanionV1ControlFixture(stopped, {
 assert.equal(transcribed.meeting.status, 'transcribed');
 assert.equal(transcribed.meeting.transcriptCount, 1);
 assert.equal(selectedCompanionHostSession(transcribed)?.transcriptSegments, 5);
+assert.equal(selectedCompanionHostSession(transcribed)?.pendingReason, null);
 assert.equal(transcribed.lastControl?.action, 'meetingTranscribeAudio');
 
 const minutesReady = applyCompanionV1ControlFixture(transcribed, { action: 'meetingGenerateMinutes' });
 const minutesSession = selectedCompanionHostSession(minutesReady);
 assert.equal(minutesReady.meeting.status, 'minutesReady');
+assert.equal(minutesSession?.pendingReason, null);
+assert.equal(minutesSession?.minutes?.source, 'rules_l0');
+assert.equal(minutesSession?.minutes?.quality, 'draft');
 assert.ok(minutesSession?.minutes?.summary[0].includes('weekly product meeting'));
 assert.equal(minutesSession?.minutes?.decisions.length, 1);
 assert.equal(minutesSession?.minutes?.actionItems.length, 2);
 assert.equal(minutesSession?.minutes?.questions.length, 1);
+
+const deviceMinutes = applyCompanionV1ControlFixture(
+  applyCompanionV1ControlFixture(synced, {
+    action: 'meetingImportTranscript',
+    transcriptText: fixtureTranscript,
+  }),
+  { action: 'meetingGenerateMinutes' },
+);
+assert.equal(selectedCompanionHostSession(deviceMinutes)?.source, 'deviceFlash');
+assert.equal(selectedCompanionHostSession(deviceMinutes)?.status, 'minutesReady');
+
+const demo = applyCompanionV1ControlFixture(createCompanionV1Fixture(), {
+  action: 'meetingLoadDemo',
+  title: '一键演示纪要',
+});
+assert.equal(demo.meeting.status, 'minutesReady');
+assert.equal(selectedCompanionHostSession(demo)?.status, 'minutesReady');
+assert.equal(selectedCompanionHostSession(demo)?.minutes?.source, 'rules_l0');
+assert.ok(selectedCompanionHostSession(demo)?.exportMarkdown.includes('## Action Items'));
 
 const exported = applyCompanionV1ControlFixture(minutesReady, { action: 'meetingExportMarkdown' });
 const exportedSession = selectedCompanionHostSession(exported);

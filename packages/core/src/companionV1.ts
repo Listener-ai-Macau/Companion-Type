@@ -50,6 +50,7 @@ export type CompanionV1ControlAction =
   | 'meetingTranscribeAudio'
   | 'meetingGenerateMinutes'
   | 'meetingExportMarkdown'
+  | 'meetingLoadDemo'
   | 'meetingResetSession'
   | 'privacyEraseAudio'
   | 'privacyEraseTranscript'
@@ -166,6 +167,13 @@ export type CompanionV1HostSessionStatus =
   | 'transcribed'
   | 'minutesReady';
 
+/** Why the host cannot finish minutes yet (null when unblocked). */
+export type CompanionV1SessionPendingReason =
+  | null
+  | 'needs_transcription'
+  | 'needs_network'
+  | 'needs_pull';
+
 export type CompanionV1AudioChunkStatus = 'open' | 'sealed' | 'synced' | 'erased';
 
 export interface CompanionV1AudioChunk {
@@ -200,6 +208,10 @@ export interface CompanionV1RecordingPolicy {
   deviceRole: 'triggerAndShortCache';
   longMeetingStrategy: 'hostChunkedWav';
   asrProviderMode: 'openaiCompatibleOrLocalCommand';
+  /** Short offline capture: device flash then Sync/pull. */
+  shortCaptureGuide: string;
+  /** Long meeting: host owns audio; device is trigger/status only. */
+  longMeetingGuide: string;
 }
 
 export interface CompanionV1ActionItem {
@@ -210,7 +222,9 @@ export interface CompanionV1ActionItem {
 
 export interface CompanionV1MeetingMinutes {
   generatedAt: string;
-  source: 'fixture';
+  /** rules_l0 = deterministic host extractor; llm later. */
+  source: 'rules_l0' | 'fixture';
+  quality: 'draft' | 'final';
   summary: string[];
   decisions: string[];
   actionItems: CompanionV1ActionItem[];
@@ -224,6 +238,8 @@ export interface CompanionV1HostSession {
   title: string;
   source: CompanionV1HostSessionSource;
   status: CompanionV1HostSessionStatus;
+  /** Blocker after capture (needs ASR, network, or device pull). */
+  pendingReason: CompanionV1SessionPendingReason;
   startedAt: string | null;
   stoppedAt: string | null;
   durationMs: number;
@@ -374,6 +390,10 @@ export function createDefaultHostState(): CompanionV1HostState {
       deviceRole: 'triggerAndShortCache',
       longMeetingStrategy: 'hostChunkedWav',
       asrProviderMode: 'openaiCompatibleOrLocalCommand',
+      shortCaptureGuide:
+        'Short: device flash cache (≤60s) → Sync/pull → host ASR → minutes',
+      longMeetingGuide:
+        'Long meeting: host microphone (5 min chunks); device is trigger/status only — not full-hour BLE pull',
     },
     activeSessionId: null,
     selectedSessionId: null,
@@ -475,7 +495,9 @@ export function applyCompanionV1ControlFixture(
         connected: true,
         lastSyncAt: now,
         recordingsAvailable: Math.max(0, next.device.recordingsAvailable - 1),
-        message: 'Device recording synced to host cache',
+        message: session.pendingReason === 'needs_transcription'
+          ? 'Device recording synced; session captured — needs transcription before minutes'
+          : 'Device recording synced to host cache',
       };
       next.connected = true;
       next.meeting = {
@@ -519,7 +541,12 @@ export function applyCompanionV1ControlFixture(
           { id: 'firmware', label: 'Firmware', status: 'pass', message: 'STM32CubeProgrammer or firmware helper ready' },
           { id: 'bluetooth', label: 'Bluetooth', status: next.device.supported ? 'pass' : 'warn', message: next.device.providerId },
           { id: 'microphone', label: 'Microphone', status: 'pass', message: 'Host WAV recorder ready' },
-          { id: 'asr', label: 'ASR', status: 'pass', message: next.host.recordingPolicy.asrProviderMode },
+          {
+            id: 'asr',
+            label: 'ASR',
+            status: 'pass',
+            message: `${next.host.recordingPolicy.asrProviderMode} (configure cloud/local before auto-transcribe)`,
+          },
           { id: 'privacy', label: 'Privacy', status: 'pass', message: next.privacy.policyLabel },
         ],
       };
@@ -543,6 +570,7 @@ export function applyCompanionV1ControlFixture(
       const durationMs = request.durationMs ?? Math.max(session.durationMs, 60000);
       updateHostSession(next, session.id, {
         status: 'captured',
+        pendingReason: session.transcriptText.trim() ? null : 'needs_transcription',
         stoppedAt: now,
         durationMs,
         chunks: sealSessionChunks(session, now, durationMs, request.audioBytes),
@@ -563,14 +591,20 @@ export function applyCompanionV1ControlFixture(
         const minutes = buildCompanionMeetingMinutes(session, now);
         updateHostSession(next, session.id, {
           status: 'minutesReady',
+          pendingReason: null,
           minutes,
           exportMarkdown: minutes.markdown,
           exportedAt: now,
+          retention: {
+            ...session.retention,
+            minutesCached: true,
+          },
         });
         next.meeting.status = 'minutesReady';
       } else {
         updateHostSession(next, session.id, {
           status: session.status === 'recording' ? 'captured' : session.status,
+          pendingReason: 'needs_transcription',
           stoppedAt: session.stoppedAt ?? now,
         });
         next.meeting.status = 'finalized';
@@ -580,38 +614,53 @@ export function applyCompanionV1ControlFixture(
       next.meeting.transcriptCount = countTranscriptSessions(next);
       break;
     }
-    case 'meetingImportTranscript':
+    case 'meetingImportTranscript': {
+      const session = requireSelectedSession(next, now, request);
+      const transcriptText = normalizeTranscript(request.transcriptText ?? '');
+      if (!transcriptText) {
+        throw new Error('Import requires non-empty transcript text.');
+      }
+      applyTranscriptToSession(next, session, transcriptText, true);
+      break;
+    }
     case 'meetingTranscribeAudio': {
       const session = requireSelectedSession(next, now, request);
       const transcriptText = normalizeTranscript(request.transcriptText ?? '');
-      if (!transcriptText) throw new Error('Transcript text is required before generating meeting minutes.');
-      updateHostSession(next, session.id, {
-        source: session.source === 'fixture' ? 'importedTranscript' : session.source,
-        status: 'transcribed',
-        transcriptText,
-        transcriptPreview: previewText(transcriptText),
-        transcriptSegments: splitTranscriptSegments(transcriptText).length,
-        retention: {
-          ...session.retention,
-          transcriptCached: true,
-        },
-      });
-      next.meeting = {
-        ...next.meeting,
-        active: false,
-        status: 'transcribed',
-        transcriptCount: countTranscriptSessions(next),
-      };
+      if (!transcriptText) {
+        // Soft path: audio is captured but no ASR provider/result yet.
+        const pending: CompanionV1SessionPendingReason = next.privacy.localOnly
+          ? 'needs_transcription'
+          : 'needs_network';
+        updateHostSession(next, session.id, {
+          status: 'captured',
+          pendingReason: pending,
+        });
+        next.meeting = {
+          ...next.meeting,
+          active: false,
+          status: 'captured',
+        };
+        break;
+      }
+      applyTranscriptToSession(next, session, transcriptText, false);
       break;
     }
     case 'meetingGenerateMinutes': {
       const session = requireSelectedSession(next, now, request);
       if (!session.transcriptText.trim()) {
-        throw new Error('Generate minutes requires an imported transcript.');
+        updateHostSession(next, session.id, {
+          status: 'captured',
+          pendingReason: 'needs_transcription',
+        });
+        next.meeting.status = 'captured';
+        throw new Error(
+          'Generate minutes requires a transcript. Import text or run Transcribe after configuring ASR.',
+        );
       }
       const minutes = buildCompanionMeetingMinutes(session, now);
       updateHostSession(next, session.id, {
         status: 'minutesReady',
+        pendingReason: null,
         minutes,
         exportMarkdown: minutes.markdown,
         retention: {
@@ -648,6 +697,67 @@ export function applyCompanionV1ControlFixture(
       };
       break;
     }
+    case 'meetingLoadDemo': {
+      // One-click owner demo: skip mic/ASR complexity, land on minutesReady.
+      const demoText = normalizeTranscript(
+        request.transcriptText
+          ?? [
+            'Decision: Companion host owns long meeting recordings.',
+            'Action owner: Chen due: Friday validates minutes export.',
+            'Question: should offline show needs_transcription?',
+          ].join('\n'),
+      );
+      const durationMs = request.durationMs ?? 15_000;
+      const session = createHostSession(
+        next,
+        {
+          action: 'meetingStart',
+          title: request.title ?? '一键演示纪要',
+          sessionId: request.sessionId,
+          audioPath: request.audioPath ?? 'demo://companion-type/mechanical-voice.wav',
+          audioBytes: request.audioBytes ?? estimatePcmBytes(durationMs),
+          durationMs,
+        },
+        now,
+      );
+      session.source = 'hostMicrophone';
+      session.status = 'minutesReady';
+      session.pendingReason = null;
+      session.startedAt = now;
+      session.stoppedAt = now;
+      session.durationMs = durationMs;
+      session.transcriptText = demoText;
+      session.transcriptPreview = previewText(demoText);
+      session.transcriptSegments = splitTranscriptSegments(demoText).length;
+      session.chunks = [
+        createAudioChunk(
+          `${session.id}-demo`,
+          session.audioPath,
+          now,
+          now,
+          durationMs,
+          session.audioBytes,
+          'sealed',
+        ),
+      ];
+      const minutes = buildCompanionMeetingMinutes(session, now);
+      session.minutes = minutes;
+      session.exportMarkdown = minutes.markdown;
+      session.exportedAt = now;
+      session.retention = createSessionRetention(true, true, true);
+      next.host.sessions = [session, ...next.host.sessions.filter((item) => item.id !== session.id)];
+      next.host.selectedSessionId = session.id;
+      next.host.activeSessionId = null;
+      next.meeting = {
+        ...next.meeting,
+        active: false,
+        status: 'minutesReady',
+        startedAt: null,
+        durationMs,
+        transcriptCount: countTranscriptSessions(next),
+      };
+      break;
+    }
     case 'meetingResetSession':
       next.host = createDefaultHostState();
       next.meeting = {
@@ -676,7 +786,8 @@ export function applyCompanionV1ControlFixture(
     case 'privacyEraseTranscript': {
       const session = requireSelectedSession(next, now, request);
       updateHostSession(next, session.id, {
-        status: session.audioPath ? 'captured' : 'idle',
+        status: session.audioPath || session.audioBytes ? 'captured' : 'idle',
+        pendingReason: session.audioPath || session.audioBytes ? 'needs_transcription' : null,
         transcriptText: '',
         transcriptPreview: '',
         transcriptSegments: 0,
@@ -689,7 +800,7 @@ export function applyCompanionV1ControlFixture(
           minutesCached: false,
         },
       });
-      next.meeting.status = session.audioPath ? 'captured' : 'idle';
+      next.meeting.status = session.audioPath || session.audioBytes ? 'captured' : 'idle';
       next.meeting.transcriptCount = countTranscriptSessions(next);
       next.privacy.lastEraseAt = now;
       break;
@@ -764,7 +875,8 @@ export function buildCompanionMeetingMinutes(
   const keywords = extractKeywords(session.transcriptText).slice(0, 10);
   const minutes: Omit<CompanionV1MeetingMinutes, 'markdown'> = {
     generatedAt,
-    source: 'fixture',
+    source: 'rules_l0',
+    quality: 'draft',
     summary: summary.length ? summary : ['No transcript content was available.'],
     decisions,
     actionItems,
@@ -774,6 +886,47 @@ export function buildCompanionMeetingMinutes(
   return {
     ...minutes,
     markdown: renderMinutesMarkdown(session, minutes),
+  };
+}
+
+export function describeSessionPendingReason(
+  reason: CompanionV1SessionPendingReason,
+): string | null {
+  switch (reason) {
+    case 'needs_transcription':
+      return 'Audio captured. Configure ASR or import a transcript, then generate minutes.';
+    case 'needs_network':
+      return 'Cloud ASR/minutes need network (or switch to local-only ASR).';
+    case 'needs_pull':
+      return 'Device has recordings that still need Sync/pull into the host.';
+    default:
+      return null;
+  }
+}
+
+function applyTranscriptToSession(
+  snapshot: CompanionV1Snapshot,
+  session: CompanionV1HostSession,
+  transcriptText: string,
+  fromImport: boolean,
+): void {
+  updateHostSession(snapshot, session.id, {
+    source: fromImport && session.source === 'fixture' ? 'importedTranscript' : session.source,
+    status: 'transcribed',
+    pendingReason: null,
+    transcriptText,
+    transcriptPreview: previewText(transcriptText),
+    transcriptSegments: splitTranscriptSegments(transcriptText).length,
+    retention: {
+      ...session.retention,
+      transcriptCached: true,
+    },
+  });
+  snapshot.meeting = {
+    ...snapshot.meeting,
+    active: false,
+    status: 'transcribed',
+    transcriptCount: countTranscriptSessions(snapshot),
   };
 }
 
@@ -795,9 +948,12 @@ export function characteristicForCompanionAction(action: CompanionV1ControlActio
     || action === 'meetingTranscribeAudio'
     || action === 'meetingGenerateMinutes'
     || action === 'meetingExportMarkdown'
+    || action === 'meetingLoadDemo'
     || action === 'meetingResetSession'
   ) {
-    return action === 'meetingGenerateMinutes' || action === 'meetingExportMarkdown'
+    return action === 'meetingGenerateMinutes'
+      || action === 'meetingExportMarkdown'
+      || action === 'meetingLoadDemo'
       ? COMPANION_V1_HOST_MINUTES_CHANNEL
       : COMPANION_V1_HOST_RECORDING_CHANNEL;
   }
@@ -839,6 +995,7 @@ function createHostSession(
     title: (request.title ?? 'Companion meeting').trim() || 'Companion meeting',
     source: suppliedAudioPath ? 'deviceFlash' : 'hostMicrophone',
     status: 'recording',
+    pendingReason: null,
     startedAt: now,
     stoppedAt: null,
     durationMs,
@@ -877,6 +1034,7 @@ function createSyncedDeviceSession(
   );
   session.source = 'deviceFlash';
   session.status = 'captured';
+  session.pendingReason = 'needs_transcription';
   session.startedAt = null;
   session.stoppedAt = now;
   session.durationMs = durationMs;
@@ -901,6 +1059,7 @@ function requireSelectedSession(
   }
   const session = createHostSession(snapshot, { ...request, action: 'meetingStart' }, now);
   session.status = 'captured';
+  session.pendingReason = 'needs_transcription';
   session.startedAt = null;
   session.stoppedAt = now;
   snapshot.host.sessions = [session, ...snapshot.host.sessions];
@@ -1139,6 +1298,7 @@ function renderMinutesMarkdown(
     `Generated: ${minutes.generatedAt}`,
     `Duration: ${formatDuration(session.durationMs)}`,
     `Source: ${session.source}`,
+    `Minutes engine: ${minutes.source} (${minutes.quality})`,
     '',
     '## Summary',
     ...minutes.summary.map((item) => `- ${item}`),
@@ -1190,6 +1350,7 @@ function hostOnlyAction(action: CompanionV1ControlAction): boolean {
     || action === 'meetingTranscribeAudio'
     || action === 'meetingGenerateMinutes'
     || action === 'meetingExportMarkdown'
+    || action === 'meetingLoadDemo'
     || action === 'meetingResetSession'
     || action === 'privacyEraseAudio'
     || action === 'privacyEraseTranscript'
@@ -1218,6 +1379,7 @@ function actionCommand(action: CompanionV1ControlAction): number {
     meetingExportMarkdown: 0x83,
     meetingResetSession: 0x84,
     meetingTranscribeAudio: 0x85,
+    meetingLoadDemo: 0x86,
     privacyEraseAudio: 0x90,
     privacyEraseTranscript: 0x91,
     privacyEraseAll: 0x92,
