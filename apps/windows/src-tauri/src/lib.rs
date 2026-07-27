@@ -36,6 +36,36 @@ pub fn run() {
             commands::get_companion_ble_bridge_status,
             commands::transfer_companion_firmware_ota
         ])
+        .setup(|app| {
+            // The main window is built here (not in tauri.conf.json) so we can inject
+            // WebView2 browser args for acceptance-test automation (e.g. CDP). The window
+            // matches the previous config: "Companion Type", 980x720, min 420x560.
+            let mut builder = tauri::webview::WebviewWindowBuilder::new(
+                app,
+                "main",
+                tauri::WebviewUrl::App("index.html".into()),
+            )
+            .title("Companion Type")
+            .inner_size(980.0, 720.0)
+            .min_inner_size(420.0, 560.0);
+
+            // Acceptance-test hook: only when COMPANION_TYPE_WEBVIEW_ARGS is set (e.g.
+            // "--remote-debugging-port=9223"). wry overrides its default browser args when this
+            // is used, so the standard --disable-features are re-added to keep the normal app
+            // behavior identical.
+            if let Ok(extra) = std::env::var("COMPANION_TYPE_WEBVIEW_ARGS") {
+                let extra = extra.trim();
+                if !extra.is_empty() {
+                    let combined = format!(
+                        "--disable-features=msWebOOUI,msPdfOOUI,msSmartScreenProtection {extra}"
+                    );
+                    builder = builder.additional_browser_args(&combined);
+                }
+            }
+
+            builder.build()?;
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running Companion Type");
 }

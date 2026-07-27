@@ -31,10 +31,25 @@ const COMPANION_OTA_V1_STATUS_UUID: Uuid =
     Uuid::from_u128(denzic_ota_core::GATT_STATUS_UUID_U128);
 const RECORDING_LIST_UUID: Uuid = Uuid::from_u128(0x8f7a30027b7d4f3d9d6f6c2d1b7c0000);
 const RECORDING_CHUNK_PULL_UUID: Uuid = Uuid::from_u128(0x8f7a30037b7d4f3d9d6f6c2d1b7c0000);
+const DELETE_PRIVACY_UUID: Uuid = Uuid::from_u128(0x8f7a60017b7d4f3d9d6f6c2d1b7c0000);
+const DELETE_PRIVACY_SCHEMA_VERSION: u8 = 1;
+const DELETE_PRIVACY_OP_DELETE_RECORDING: u8 = 1;
+const DELETE_PRIVACY_OP_DELETE_ALL: u8 = 2;
+const DELETE_PRIVACY_OP_FACTORY_WIPE: u8 = 3;
+const DELETE_PRIVACY_REFUSAL_FLAG: u16 = 0x0001;
+const DELETE_PRIVACY_REQUEST_BYTES: usize = 48;
 const RECORDING_CHUNK_FINAL_FLAG: u8 = 0x01;
+const RECORDING_CHUNK_COMPRESSED_IMA_FLAG: u8 = 0x02;
+const RECORDING_CHUNK_COMPACT_FLAG: u8 = 0x08;
 const RECORDING_CHUNK_ERROR_FLAG: u8 = 0x80;
+const RECORDING_REQ_COMPRESS_IMA: u8 = 0x02;
+const RECORDING_REQ_STREAM_ALL: u8 = 0x04;
 const RECORDING_LIST_ENTRY_BYTES: usize = 32;
-const RECORDING_CHUNK_HEADER_BYTES: usize = 56;
+/// Compact intermediate (no total_length on wire): schema..offset + crc = 20 B.
+const RECORDING_CHUNK_HEADER_COMPACT_BYTES: usize = 20;
+/// Legacy intermediate with total_length: 24 B.
+const RECORDING_CHUNK_HEADER_LEGACY_BASE_BYTES: usize = 24;
+const RECORDING_CHUNK_HEADER_FULL_BYTES: usize = 56;
 const RECORDING_CODEC_PCM16_MONO: u8 = 1;
 const RECORDING_SOURCE_MIC_SAI: u8 = 1;
 const PCM_SAMPLE_RATE_HZ: u32 = 16_000;
@@ -247,14 +262,20 @@ impl CompanionBleBridge {
                     device_id: Some(sync.device_id),
                     recording_path: sync.recording_path.clone(),
                     message: match &sync.recording_path {
-                        Some(path) => format!(
-                            "Native BLE pulled recording_id={} duration_ms={} bytes={} sha256={} -> {}",
-                            sync.recording_id.unwrap_or_default(),
-                            sync.duration_ms.unwrap_or_default(),
-                            sync.total_length.unwrap_or_default(),
-                            sync.sha256.clone().unwrap_or_default(),
-                            path
-                        ),
+                        Some(path) => {
+                            let base = format!(
+                                "Native BLE pulled recording_id={} duration_ms={} bytes={} sha256={} -> {}",
+                                sync.recording_id.unwrap_or_default(),
+                                sync.duration_ms.unwrap_or_default(),
+                                sync.total_length.unwrap_or_default(),
+                                sync.sha256.clone().unwrap_or_default(),
+                                path
+                            );
+                            match &sync.device_erase_status {
+                                Some(status) => format!("{base}; {status}"),
+                                None => base,
+                            }
+                        }
                         None => "Native BLE sync found no stored recordings on device".to_string(),
                     },
                 },
@@ -271,6 +292,49 @@ impl CompanionBleBridge {
         helper_operation(
             &self.status(),
             "Native BLE is unavailable; recording sync requires Windows BLE or COMPANION_TYPE_DEVICE_RECORDING_PATH.",
+        )
+    }
+
+    pub fn delete_all_privacy(&self, requested_device_id: Option<&str>) -> CompanionBleOperation {
+        if let Some(operation) = env_native_operation(
+            "Companion device privacy wipe acknowledged from configured environment",
+        ) {
+            return operation;
+        }
+        if native_ble_available() {
+            return match run_native_blocking(delete_privacy_native(
+                requested_device_id,
+                DELETE_PRIVACY_OP_DELETE_ALL,
+                0,
+                0,
+                [0u8; 32],
+            )) {
+                Ok(result) => CompanionBleOperation {
+                    provider_id: "companion-type-windows-ble".to_string(),
+                    mode: "windows-native-privacy-wipe".to_string(),
+                    ready: !result.refused,
+                    device_id: Some(result.device_id),
+                    recording_path: None,
+                    message: if result.refused {
+                        "Device refused delete_all_recordings (privacy locked or busy).".to_string()
+                    } else {
+                        "Device acknowledged delete_all_recordings; on-device recordings erased."
+                            .to_string()
+                    },
+                },
+                Err(err) => CompanionBleOperation {
+                    provider_id: "companion-type-windows-ble".to_string(),
+                    mode: "windows-native-privacy-wipe".to_string(),
+                    ready: false,
+                    device_id: None,
+                    recording_path: None,
+                    message: format!("Native BLE privacy wipe failed: {err}"),
+                },
+            };
+        }
+        helper_operation(
+            &self.status(),
+            "Native BLE is unavailable; on-device privacy wipe requires the Windows BLE provider.",
         )
     }
 
@@ -604,6 +668,26 @@ struct NativeRecordingSync {
     total_length: Option<u32>,
     sha256: Option<String>,
     recording_path: Option<String>,
+    device_erase_status: Option<String>,
+}
+
+#[derive(Clone, Debug)]
+struct NativeDeleteResult {
+    device_id: String,
+    operation: u8,
+    request_id: u32,
+    refused: bool,
+    recording_id: u32,
+    validated_total_length: u32,
+}
+
+#[derive(Clone, Debug)]
+struct DeletePrivacyResponse {
+    operation: u8,
+    flags: u16,
+    request_id: u32,
+    recording_id: u32,
+    validated_total_length: u32,
 }
 
 #[derive(Clone, Debug)]
@@ -773,6 +857,9 @@ async fn connect_native_device(requested_device_id: Option<&str>) -> Result<Nati
             })?
             .map_err(|err| format!("connect BLE device {device_id}: {err}"))?;
     }
+    // Best-effort Windows host CI preference (ThroughputOptimized ≈ 15 ms).
+    // Device also asks for 7.5 ms; host preference reduces variance (COMP-REQ-663).
+    request_windows_ble_throughput_params(&device.address);
     timeout(discover_timeout, device.peripheral.discover_services())
         .await
         .map_err(|_| {
@@ -783,6 +870,53 @@ async fn connect_native_device(requested_device_id: Option<&str>) -> Result<Nati
         })?
         .map_err(|err| format!("discover GATT services: {err}"))?;
     Ok(device)
+}
+
+/// Request WinRT `ThroughputOptimized` preferred connection parameters when possible.
+/// Uses a short Python one-shot so we do not add a Windows WinRT crate dependency.
+fn request_windows_ble_throughput_params(address: &str) {
+    if std::env::var("COMPANION_TYPE_SKIP_WINRT_CONN_PARAMS")
+        .map(|v| {
+            let t = v.trim();
+            t == "1" || t.eq_ignore_ascii_case("true")
+        })
+        .unwrap_or(false)
+    {
+        return;
+    }
+    let addr = address.trim();
+    if addr.is_empty() {
+        return;
+    }
+    // Prefer python launcher; ignore all failures (bench still works without this).
+    let py = r#"
+import asyncio, sys
+async def main(addr):
+    try:
+        from winrt.windows.devices.bluetooth import (
+            BluetoothLEDevice,
+            BluetoothLEPreferredConnectionParameters,
+        )
+    except Exception as exc:
+        print(f"winrt_import_skip={exc}", flush=True)
+        return
+    addr_int = int(addr.replace(":", "").replace("-", ""), 16)
+    ble = await BluetoothLEDevice.from_bluetooth_address_async(addr_int)
+    if ble is None:
+        print("winrt_device_none", flush=True)
+        return
+    result = ble.request_preferred_connection_parameters(
+        BluetoothLEPreferredConnectionParameters.throughput_optimized
+    )
+    params = ble.get_connection_parameters()
+    print(f"winrt_pref_ok result={result} params={params}", flush=True)
+asyncio.run(main(sys.argv[1]))
+"#;
+    let _ = std::process::Command::new("python")
+        .args(["-c", py, addr])
+        .stdout(std::process::Stdio::inherit())
+        .stderr(std::process::Stdio::null())
+        .status();
 }
 
 async fn connect_native_probe(
@@ -822,6 +956,166 @@ async fn sync_first_native_recording(
     result
 }
 
+async fn delete_privacy_native(
+    requested_device_id: Option<&str>,
+    operation: u8,
+    recording_id: u32,
+    total_length: u32,
+    validated_sha256: [u8; 32],
+) -> Result<NativeDeleteResult, String> {
+    let device = connect_native_device(requested_device_id).await?;
+    let result =
+        delete_privacy_on_device(&device, operation, recording_id, total_length, validated_sha256)
+            .await;
+    let _ = timeout(
+        env_timeout("COMPANION_TYPE_BLE_DISCONNECT_TIMEOUT_MS", 3_000),
+        device.peripheral.disconnect(),
+    )
+    .await;
+    result
+}
+
+async fn delete_privacy_on_device(
+    device: &NativeDevice,
+    operation: u8,
+    recording_id: u32,
+    total_length: u32,
+    validated_sha256: [u8; 32],
+) -> Result<NativeDeleteResult, String> {
+    let characteristics = device.peripheral.characteristics();
+    let char_delete = find_characteristic(&characteristics, DELETE_PRIVACY_UUID)?;
+    if !char_delete.properties.contains(CharPropFlags::WRITE) {
+        return Err("delete_privacy characteristic is not writable".to_string());
+    }
+    if !char_delete.properties.contains(CharPropFlags::NOTIFY) {
+        return Err("delete_privacy characteristic is not notifiable".to_string());
+    }
+
+    let request_id = next_delete_request_id();
+    let request = delete_privacy_request(
+        operation,
+        request_id,
+        recording_id,
+        total_length,
+        validated_sha256,
+    );
+
+    let read_timeout = env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS", 8_000);
+    let write_timeout = env_timeout("COMPANION_TYPE_BLE_WRITE_TIMEOUT_MS", 8_000);
+    let mut notifications = timeout(read_timeout, device.peripheral.notifications())
+        .await
+        .map_err(|_| {
+            format!(
+                "open BLE notification stream timed out after {}ms",
+                read_timeout.as_millis()
+            )
+        })?
+        .map_err(|err| format!("open BLE notification stream: {err}"))?;
+    timeout(read_timeout, device.peripheral.subscribe(&char_delete))
+        .await
+        .map_err(|_| {
+            format!(
+                "subscribe delete_privacy timed out after {}ms",
+                read_timeout.as_millis()
+            )
+        })?
+        .map_err(|err| format!("subscribe delete_privacy: {err}"))?;
+
+    timeout(
+        write_timeout,
+        device.peripheral.write(&char_delete, &request, WriteType::WithResponse),
+    )
+    .await
+    .map_err(|_| {
+        format!(
+            "write delete_privacy timed out after {}ms",
+            write_timeout.as_millis()
+        )
+    })?
+    .map_err(|err| format!("write delete_privacy: {err}"))?;
+
+    let notify_timeout = StdDuration::from_millis(
+        std::env::var("COMPANION_TYPE_BLE_NOTIFY_TIMEOUT_MS")
+            .ok()
+            .and_then(|value| value.parse::<u64>().ok())
+            .unwrap_or(15_000),
+    );
+    let response = timeout(notify_timeout, async {
+        loop {
+            let notification = notifications
+                .next()
+                .await
+                .ok_or_else(|| "delete_privacy notification stream ended".to_string())?;
+            if notification.uuid != DELETE_PRIVACY_UUID {
+                continue;
+            }
+            let parsed = parse_delete_privacy_response(&notification.value)?;
+            if parsed.request_id == request_id {
+                return Ok::<DeletePrivacyResponse, String>(parsed);
+            }
+        }
+    })
+    .await
+    .map_err(|_| format!("delete_privacy notify timeout for request_id={request_id}"))??;
+
+    let _ = device.peripheral.unsubscribe(&char_delete).await;
+    Ok(NativeDeleteResult {
+        device_id: device.device_id(),
+        operation: response.operation,
+        request_id: response.request_id,
+        refused: (response.flags & DELETE_PRIVACY_REFUSAL_FLAG) != 0,
+        recording_id: response.recording_id,
+        validated_total_length: response.validated_total_length,
+    })
+}
+
+fn delete_privacy_request(
+    operation: u8,
+    request_id: u32,
+    recording_id: u32,
+    total_length: u32,
+    validated_sha256: [u8; 32],
+) -> [u8; DELETE_PRIVACY_REQUEST_BYTES] {
+    let mut payload = [0u8; DELETE_PRIVACY_REQUEST_BYTES];
+    payload[0] = DELETE_PRIVACY_SCHEMA_VERSION;
+    payload[1] = operation;
+    payload[4..8].copy_from_slice(&request_id.to_le_bytes());
+    payload[8..12].copy_from_slice(&recording_id.to_le_bytes());
+    payload[12..16].copy_from_slice(&total_length.to_le_bytes());
+    payload[16..48].copy_from_slice(&validated_sha256);
+    payload
+}
+
+fn parse_delete_privacy_response(payload: &[u8]) -> Result<DeletePrivacyResponse, String> {
+    if payload.len() < 16 {
+        return Err(format!("delete_privacy response too short: {}", payload.len()));
+    }
+    if payload[0] != DELETE_PRIVACY_SCHEMA_VERSION {
+        return Err(format!(
+            "unexpected delete_privacy schema_version={}",
+            payload[0]
+        ));
+    }
+    Ok(DeletePrivacyResponse {
+        operation: payload[1],
+        flags: le_u16(payload, 2)?,
+        request_id: le_u32(payload, 4)?,
+        recording_id: le_u32(payload, 8)?,
+        validated_total_length: le_u32(payload, 12)?,
+    })
+}
+
+fn next_delete_request_id() -> u32 {
+    static COUNTER: std::sync::atomic::AtomicU32 = std::sync::atomic::AtomicU32::new(1);
+    COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed)
+}
+
+fn delete_after_sync_enabled() -> bool {
+    std::env::var("COMPANION_TYPE_DELETE_AFTER_SYNC")
+        .map(|value| truthy(&value))
+        .unwrap_or(false)
+}
+
 async fn sync_first_native_recording_inner(
     device: &NativeDevice,
 ) -> Result<NativeRecordingSync, String> {
@@ -835,6 +1129,7 @@ async fn sync_first_native_recording_inner(
             total_length: None,
             sha256: None,
             recording_path: None,
+            device_erase_status: None,
         });
     };
     if entry.codec != RECORDING_CODEC_PCM16_MONO {
@@ -850,23 +1145,65 @@ async fn sync_first_native_recording_inner(
     let pcm_bytes = pull_recording_bytes(&device.peripheral, &characteristics, &entry).await?;
     let sha256 = Sha256::digest(&pcm_bytes);
     let sha256_hex = hex_lower(&sha256);
-    if sha256[..8] != entry.sha256_prefix {
-        return Err(format!(
-            "recording SHA prefix mismatch: list={} host={}",
-            hex_lower(&entry.sha256_prefix),
-            &sha256_hex[..16]
-        ));
-    }
-    let crc32 = crc32fast::hash(&pcm_bytes);
-    if crc32 != entry.content_crc32 {
-        return Err(format!(
-            "recording CRC32 mismatch: list=0x{:08x} host=0x{crc32:08x}",
-            entry.content_crc32
-        ));
+    // IMA path is lossy: list SHA/CRC are of original device PCM, not decoded host PCM.
+    // Packet CRC + length already enforced inside pull. Only raw path must match list digests.
+    let compress = std::env::var("COMPANION_TYPE_BLE_COMPRESS")
+        .map(|v| {
+            let t = v.trim();
+            t == "1"
+                || t.eq_ignore_ascii_case("true")
+                || t.eq_ignore_ascii_case("on")
+                || t.eq_ignore_ascii_case("yes")
+        })
+        .unwrap_or(false);
+    if !compress {
+        if sha256[..8] != entry.sha256_prefix {
+            return Err(format!(
+                "recording SHA prefix mismatch: list={} host={}",
+                hex_lower(&entry.sha256_prefix),
+                &sha256_hex[..16]
+            ));
+        }
+        let crc32 = crc32fast::hash(&pcm_bytes);
+        if crc32 != entry.content_crc32 {
+            return Err(format!(
+                "recording CRC32 mismatch: list=0x{:08x} host=0x{crc32:08x}",
+                entry.content_crc32
+            ));
+        }
     }
 
     let path = native_recording_output_path(entry.recording_id)?;
     write_pcm16_wav(&path, &pcm_bytes)?;
+
+    let mut verified_sha256 = [0u8; 32];
+    verified_sha256.copy_from_slice(&sha256);
+    let device_erase_status = if delete_after_sync_enabled() {
+        match delete_privacy_on_device(
+            device,
+            DELETE_PRIVACY_OP_DELETE_RECORDING,
+            entry.recording_id,
+            entry.total_length,
+            verified_sha256,
+        )
+        .await
+        {
+            Ok(result) if result.refused => Some(format!(
+                "device refused delete-after-sync for recording_id={} (privacy locked or busy)",
+                entry.recording_id
+            )),
+            Ok(_) => Some(format!(
+                "device deleted recording_id={} after verified sync",
+                entry.recording_id
+            )),
+            Err(err) => Some(format!(
+                "delete-after-sync failed (audio already synced to host): {err}"
+            )),
+        }
+    } else {
+        None
+    };
+
     Ok(NativeRecordingSync {
         device_id: device.device_id(),
         recording_id: Some(entry.recording_id),
@@ -874,6 +1211,7 @@ async fn sync_first_native_recording_inner(
         total_length: Some(entry.total_length),
         sha256: Some(sha256_hex),
         recording_path: Some(path.to_string_lossy().to_string()),
+        device_erase_status,
     })
 }
 
@@ -936,39 +1274,215 @@ async fn pull_recording_bytes(
         })?
         .map_err(|err| format!("subscribe recording_chunk_pull: {err}"))?;
 
-    let chunk_bytes = std::env::var("COMPANION_TYPE_BLE_CHUNK_BYTES")
-        .ok()
-        .and_then(|value| value.parse::<u16>().ok())
-        .unwrap_or(180);
+    // Default product path: **非压缩** raw STREAM_ALL (COMP-REQ-662 wire ≥50 KB/s).
+    // Opt-in IMA: set COMPANION_TYPE_BLE_COMPRESS=1 (COMP-REQ-661 effective path).
+    // Device intermediate payload max is 220 B (ATT 244 − 24 B base header); firmware
+    // sizes STREAM_ALL packets itself — host only starts/resumes the stream.
+    // Note: full ATT 248 regressed Windows multi-notify (COMP-REQ-663 experiment).
+    let compress = std::env::var("COMPANION_TYPE_BLE_COMPRESS")
+        .map(|v| {
+            let t = v.trim();
+            t == "1"
+                || t.eq_ignore_ascii_case("true")
+                || t.eq_ignore_ascii_case("on")
+                || t.eq_ignore_ascii_case("yes")
+        })
+        .unwrap_or(false);
+    let req_flags = if compress {
+        RECORDING_REQ_COMPRESS_IMA | RECORDING_REQ_STREAM_ALL
+    } else {
+        RECORDING_REQ_STREAM_ALL
+    };
+
+    // Large raw pulls (~2 MB @ ~50–60 KB/s) need a long first-packet budget and
+    // enough idle before re-START; 400 ms raw idle was flaky under Windows CE.
     let notify_timeout = StdDuration::from_millis(
         std::env::var("COMPANION_TYPE_BLE_NOTIFY_TIMEOUT_MS")
             .ok()
             .and_then(|value| value.parse::<u64>().ok())
-            .unwrap_or(15_000),
+            .unwrap_or(if compress { 20_000 } else { 45_000 }),
     );
+    // Compress encodes on-device between packets; raw still needs margin after TX stalls.
+    let inter_default = if compress { 1_200 } else { 800 };
+    let inter_packet_timeout = StdDuration::from_millis(
+        std::env::var("COMPANION_TYPE_BLE_INTER_PACKET_TIMEOUT_MS")
+            .ok()
+            .and_then(|value| value.parse::<u64>().ok())
+            .unwrap_or(inter_default),
+    );
+    let link_settle_ms = std::env::var("COMPANION_TYPE_BLE_LINK_SETTLE_MS")
+        .ok()
+        .and_then(|value| value.parse::<u64>().ok())
+        .unwrap_or(if compress { 800 } else { 2_500 });
+    if link_settle_ms > 0 {
+        tokio::time::sleep(StdDuration::from_millis(link_settle_ms)).await;
+    }
+
     let mut offset = 0_u32;
     let mut expected_sequence = 0_u32;
     let mut data = Vec::<u8>::with_capacity(entry.total_length as usize);
+    let mut wire_bytes: u64 = 0;
     let mut final_sha256: Option<[u8; 32]> = None;
+    let mut pending: std::collections::BTreeMap<u32, RecordingChunk> =
+        std::collections::BTreeMap::new();
+    let transfer_started = std::time::Instant::now();
+    let write_type = if char_chunk_pull
+        .properties
+        .contains(CharPropFlags::WRITE_WITHOUT_RESPONSE)
+    {
+        WriteType::WithoutResponse
+    } else {
+        WriteType::WithResponse
+    };
+
+    let write_label = match write_type {
+        WriteType::WithoutResponse => "without_response",
+        WriteType::WithResponse => "with_response",
+    };
+    eprintln!(
+        "recording pull start pcm_total={} compress={} flags=0x{:02x} write={} (wire_rate=实际空中; effective_rate=等效PCM)",
+        entry.total_length, compress, req_flags, write_label
+    );
+
+    // One START with STREAM_ALL: device streams remaining PCM (raw or IMA).
+    let request = recording_chunk_pull_request_flags(
+        entry.recording_id,
+        0,
+        u16::MAX.min(entry.total_length.min(u32::from(u16::MAX)) as u16),
+        req_flags,
+    );
+    timeout(
+        write_timeout,
+        peripheral.write(&char_chunk_pull, &request, write_type),
+    )
+    .await
+    .map_err(|_| {
+        format!(
+            "write recording_chunk_pull start timed out after {}ms",
+            write_timeout.as_millis()
+        )
+    })?
+    .map_err(|err| format!("write recording_chunk_pull start: {err}"))?;
+
+    let first_deadline = std::time::Instant::now() + notify_timeout;
+    let mut last_rx = std::time::Instant::now();
+    let mut packets: u32 = 0;
 
     while offset < entry.total_length {
-        let remaining = entry.total_length - offset;
-        let requested = recording_chunk_requested_length(chunk_bytes, remaining);
-        let request = recording_chunk_pull_request(entry.recording_id, offset, requested);
-        timeout(
-            write_timeout,
-            peripheral.write(&char_chunk_pull, &request, WriteType::WithResponse),
-        )
-        .await
-        .map_err(|_| {
-            format!(
-                "write recording_chunk_pull offset={offset} timed out after {}ms",
-                write_timeout.as_millis()
-            )
-        })?
-        .map_err(|err| format!("write recording_chunk_pull offset={offset}: {err}"))?;
+        if let Some(mut chunk) = pending.remove(&offset) {
+            if chunk.flags & RECORDING_CHUNK_ERROR_FLAG != 0 {
+                return Err(format!(
+                    "recording chunk error at offset={offset}: code=0x{:08x}",
+                    chunk.packet_crc32
+                ));
+            }
+            if chunk.recording_id != entry.recording_id {
+                return Err("recording chunk id changed during transfer".to_string());
+            }
+            if chunk.packet_sequence != expected_sequence {
+                // re-START / prep discard can burn sequence without moving PCM offset.
+                // Offset is the stream cursor; accept a jump when byte_offset matches.
+                if packets == 0 || chunk.byte_offset == offset {
+                    expected_sequence = chunk.packet_sequence;
+                } else {
+                    return Err(format!(
+                        "recording packet sequence mismatch: got {}, expected {} offset={} pkt_off={}",
+                        chunk.packet_sequence,
+                        expected_sequence,
+                        offset,
+                        chunk.byte_offset
+                    ));
+                }
+            }
+            // Compact intermediate omits total_length on wire (0); CRC still uses list total.
+            if chunk.total_length == 0 {
+                chunk.total_length = entry.total_length;
+            } else if chunk.total_length != entry.total_length {
+                return Err("recording total_length changed during transfer".to_string());
+            }
+            if chunk.payload_length as usize != chunk.payload.len() {
+                return Err("recording chunk payload_length mismatch".to_string());
+            }
+            let packet_crc = recording_packet_crc32(&chunk);
+            if packet_crc != chunk.packet_crc32 {
+                return Err(format!(
+                    "recording packet CRC mismatch at offset={offset}: got 0x{packet_crc:08x}, expected 0x{:08x}",
+                    chunk.packet_crc32
+                ));
+            }
 
-        let chunk = timeout(notify_timeout, async {
+            wire_bytes += chunk.payload.len() as u64;
+            let pcm_piece = if chunk.flags & RECORDING_CHUNK_COMPRESSED_IMA_FLAG != 0 {
+                decode_ima_adpcm_frame(&chunk.payload)?
+            } else {
+                chunk.payload.clone()
+            };
+            if offset != chunk.byte_offset {
+                return Err(format!(
+                    "recording offset mismatch: host={offset} device={}",
+                    chunk.byte_offset
+                ));
+            }
+            data.extend_from_slice(&pcm_piece);
+            offset = offset.saturating_add(pcm_piece.len() as u32);
+            expected_sequence += 1;
+            packets += 1;
+            last_rx = std::time::Instant::now();
+
+            if packets % 50 == 0 || offset >= entry.total_length {
+                let elapsed = transfer_started.elapsed().as_secs_f64().max(0.001);
+                let wire_rate = (wire_bytes as f64 / 1024.0) / elapsed;
+                let effective_rate = (data.len() as f64 / 1024.0) / elapsed;
+                eprintln!(
+                    "recording pull progress pcm={}/{} wire={} packets={} wire_rate={:.1} KB/s effective_rate={:.1} KB/s compress={}",
+                    data.len(),
+                    entry.total_length,
+                    wire_bytes,
+                    packets,
+                    wire_rate,
+                    effective_rate,
+                    compress
+                );
+            }
+            if chunk.flags & RECORDING_CHUNK_FINAL_FLAG != 0 {
+                final_sha256 = Some(chunk.final_sha256);
+                break;
+            }
+            continue;
+        }
+
+        let wait = if packets > 0 {
+            let idle = last_rx.elapsed();
+            if idle >= inter_packet_timeout {
+                // Stream stalled — re-START from current PCM offset.
+                let resume = recording_chunk_pull_request_flags(
+                    entry.recording_id,
+                    offset,
+                    u16::MAX,
+                    req_flags,
+                );
+                timeout(
+                    write_timeout,
+                    peripheral.write(&char_chunk_pull, &resume, write_type),
+                )
+                .await
+                .map_err(|_| "resume write timed out".to_string())?
+                .map_err(|err| format!("resume write: {err}"))?;
+                last_rx = std::time::Instant::now();
+                continue;
+            }
+            inter_packet_timeout.saturating_sub(idle).min(StdDuration::from_millis(50))
+        } else if std::time::Instant::now() >= first_deadline {
+            return Err(format!(
+                "recording chunk notify timeout at offset={offset}"
+            ));
+        } else {
+            first_deadline
+                .saturating_duration_since(std::time::Instant::now())
+                .min(StdDuration::from_millis(50))
+        };
+
+        let chunk_result = timeout(wait, async {
             loop {
                 let notification = notifications
                     .next()
@@ -977,54 +1491,20 @@ async fn pull_recording_bytes(
                 if notification.uuid != RECORDING_CHUNK_PULL_UUID {
                     continue;
                 }
-                let parsed = parse_recording_chunk(&notification.value)?;
-                if parsed.byte_offset == offset {
-                    return Ok::<RecordingChunk, String>(parsed);
-                }
+                return parse_recording_chunk(&notification.value);
             }
         })
-        .await
-        .map_err(|_| format!("recording chunk notify timeout at offset={offset}"))??;
+        .await;
 
-        if chunk.flags & RECORDING_CHUNK_ERROR_FLAG != 0 {
-            return Err(format!(
-                "recording chunk returned error at offset={offset}: device_error_code=0x{:08x} device_total_length={} packet_sequence={} payload_length={} chunk_offset={}",
-                chunk.packet_crc32,
-                chunk.total_length,
-                chunk.packet_sequence,
-                chunk.payload_length,
-                chunk.byte_offset
-            ));
-        }
-        if chunk.recording_id != entry.recording_id {
-            return Err("recording chunk id changed during transfer".to_string());
-        }
-        if chunk.packet_sequence != expected_sequence {
-            return Err(format!(
-                "recording packet sequence mismatch: got {}, expected {}",
-                chunk.packet_sequence, expected_sequence
-            ));
-        }
-        if chunk.total_length != entry.total_length {
-            return Err("recording total_length changed during transfer".to_string());
-        }
-        if chunk.payload_length as usize != chunk.payload.len() {
-            return Err("recording chunk payload_length mismatch".to_string());
-        }
-        let packet_crc = recording_packet_crc32(&chunk);
-        if packet_crc != chunk.packet_crc32 {
-            return Err(format!(
-                "recording packet CRC mismatch at offset={offset}: got 0x{packet_crc:08x}, expected 0x{:08x}",
-                chunk.packet_crc32
-            ));
-        }
-
-        offset += u32::from(chunk.payload_length);
-        expected_sequence += 1;
-        data.extend_from_slice(&chunk.payload);
-        if chunk.flags & RECORDING_CHUNK_FINAL_FLAG != 0 {
-            final_sha256 = Some(chunk.final_sha256);
-            break;
+        match chunk_result {
+            Ok(Ok(parsed)) => {
+                last_rx = std::time::Instant::now();
+                if parsed.recording_id == entry.recording_id && parsed.byte_offset >= offset {
+                    pending.insert(parsed.byte_offset, parsed);
+                }
+            }
+            Ok(Err(err)) => return Err(err),
+            Err(_) => continue,
         }
     }
 
@@ -1039,13 +1519,37 @@ async fn pull_recording_bytes(
     let sha256 = Sha256::digest(&data);
     let final_sha256 =
         final_sha256.ok_or_else(|| "final recording chunk did not include SHA-256".to_string())?;
-    if sha256[..] != final_sha256 {
+    // Lossy IMA: length + packet CRC already enforced; raw path requires full SHA match.
+    if !compress && sha256[..] != final_sha256 {
         return Err(format!(
             "final SHA mismatch: device={} host={}",
             hex_lower(&final_sha256),
             hex_lower(&sha256)
         ));
     }
+    let elapsed = transfer_started.elapsed().as_secs_f64().max(0.001);
+    let wire_rate = (wire_bytes as f64 / 1024.0) / elapsed;
+    let effective_rate = (data.len() as f64 / 1024.0) / elapsed;
+    let ratio = if wire_bytes > 0 {
+        data.len() as f64 / wire_bytes as f64
+    } else {
+        0.0
+    };
+    let p1_wire_50 = wire_rate >= 50.0 && wire_bytes >= 102_400 && !compress;
+    let p1_product_50 = effective_rate >= 50.0 && data.len() as u64 >= 102_400;
+    eprintln!(
+        "recording pull done pcm={} wire={} packets={} 实际wire_rate={:.1} KB/s 等效effective_rate={:.1} KB/s ratio={:.2}x elapsed={:.3}s compress={} p1_wire_50={} p1_product_50={}",
+        data.len(),
+        wire_bytes,
+        packets,
+        wire_rate,
+        effective_rate,
+        ratio,
+        elapsed,
+        compress,
+        p1_wire_50,
+        p1_product_50
+    );
     Ok(data)
 }
 
@@ -1102,7 +1606,7 @@ fn parse_recording_list(payload: &[u8]) -> Result<Vec<RecordingEntry>, String> {
 }
 
 fn parse_recording_chunk(payload: &[u8]) -> Result<RecordingChunk, String> {
-    if payload.len() < RECORDING_CHUNK_HEADER_BYTES {
+    if payload.len() < RECORDING_CHUNK_HEADER_COMPACT_BYTES {
         return Err(format!("recording chunk too short: {}", payload.len()));
     }
     if payload[0] != 1 {
@@ -1111,35 +1615,130 @@ fn parse_recording_chunk(payload: &[u8]) -> Result<RecordingChunk, String> {
             payload[0]
         ));
     }
+    let flags = payload[1];
     let payload_length = le_u16(payload, 2)?;
-    let payload_end = RECORDING_CHUNK_HEADER_BYTES + payload_length as usize;
+    // FINAL/ERROR: 56B with SHA. Compact intermediate: 20B. Legacy intermediate: 24B.
+    let header_bytes = if flags & RECORDING_CHUNK_FINAL_FLAG != 0
+        || flags & RECORDING_CHUNK_ERROR_FLAG != 0
+    {
+        RECORDING_CHUNK_HEADER_FULL_BYTES
+    } else if flags & RECORDING_CHUNK_COMPACT_FLAG != 0 {
+        RECORDING_CHUNK_HEADER_COMPACT_BYTES
+    } else {
+        RECORDING_CHUNK_HEADER_LEGACY_BASE_BYTES
+    };
+    let payload_end = header_bytes + payload_length as usize;
     if payload.len() < payload_end {
         return Err("recording chunk payload truncated".to_string());
     }
     let mut final_sha256 = [0_u8; 32];
-    final_sha256.copy_from_slice(&payload[24..56]);
+    let (total_length, packet_crc32) = if header_bytes == RECORDING_CHUNK_HEADER_COMPACT_BYTES {
+        // total_length omitted; CRC still covers real total (filled by caller context).
+        (0_u32, le_u32(payload, 16)?)
+    } else {
+        if header_bytes == RECORDING_CHUNK_HEADER_FULL_BYTES {
+            final_sha256.copy_from_slice(&payload[24..56]);
+        }
+        (le_u32(payload, 16)?, le_u32(payload, 20)?)
+    };
     Ok(RecordingChunk {
-        flags: payload[1],
+        flags,
         payload_length,
         recording_id: le_u32(payload, 4)?,
         packet_sequence: le_u32(payload, 8)?,
         byte_offset: le_u32(payload, 12)?,
-        total_length: le_u32(payload, 16)?,
-        packet_crc32: le_u32(payload, 20)?,
+        total_length,
+        packet_crc32,
         final_sha256,
-        payload: payload[RECORDING_CHUNK_HEADER_BYTES..payload_end].to_vec(),
+        payload: payload[header_bytes..payload_end].to_vec(),
     })
 }
 
 fn recording_chunk_pull_request(recording_id: u32, offset: u32, requested_length: u16) -> [u8; 16] {
+    recording_chunk_pull_request_flags(recording_id, offset, requested_length, 0)
+}
+
+fn recording_chunk_pull_request_flags(
+    recording_id: u32,
+    offset: u32,
+    requested_length: u16,
+    flags: u8,
+) -> [u8; 16] {
     let mut payload = [0_u8; 16];
     payload[0] = 1;
-    payload[1] = 0;
+    payload[1] = flags;
     payload[2..4].copy_from_slice(&requested_length.to_le_bytes());
     payload[4..8].copy_from_slice(&recording_id.to_le_bytes());
     payload[8..12].copy_from_slice(&offset.to_le_bytes());
     payload[12..16].copy_from_slice(&0_u32.to_le_bytes());
     payload
+}
+
+/// Decode one companion IMA-ADPCM frame (6B header + nibbles) to LE i16 PCM bytes.
+fn decode_ima_adpcm_frame(frame: &[u8]) -> Result<Vec<u8>, String> {
+    const STEP: [i32; 89] = [
+        7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 19, 21, 23, 25, 28, 31, 34, 37, 41, 45, 50, 55, 60,
+        66, 73, 80, 88, 97, 107, 118, 130, 143, 157, 173, 190, 209, 230, 253, 279, 307, 337, 371,
+        408, 449, 494, 544, 598, 658, 724, 796, 876, 963, 1060, 1166, 1282, 1411, 1552, 1707,
+        1878, 2066, 2272, 2499, 2749, 3024, 3327, 3660, 4026, 4428, 4871, 5358, 5894, 6484, 7132,
+        7845, 8630, 9493, 10442, 11487, 12635, 13899, 15289, 16818, 18500, 20350, 22385, 24623,
+        27086, 29794, 32767,
+    ];
+    const INDEX: [i32; 16] = [-1, -1, -1, -1, 2, 4, 6, 8, -1, -1, -1, -1, 2, 4, 6, 8];
+    if frame.len() < 6 {
+        return Err("IMA-ADPCM frame too short".to_string());
+    }
+    let mut predictor = i16::from_le_bytes([frame[0], frame[1]]) as i32;
+    let mut step_index = frame[2] as i32;
+    if !(0..=88).contains(&step_index) {
+        return Err(format!("IMA-ADPCM bad step_index={step_index}"));
+    }
+    let sample_count = u16::from_le_bytes([frame[4], frame[5]]) as usize;
+    let nibble_bytes = sample_count.div_ceil(2);
+    if frame.len() < 6 + nibble_bytes {
+        return Err("IMA-ADPCM frame truncated".to_string());
+    }
+    let mut samples = Vec::with_capacity(sample_count);
+    let mut decode_nibble = |nibble: u8| {
+        let step = STEP[step_index as usize];
+        let mut delta = step >> 3;
+        if nibble & 4 != 0 {
+            delta += step;
+        }
+        if nibble & 2 != 0 {
+            delta += step >> 1;
+        }
+        if nibble & 1 != 0 {
+            delta += step >> 2;
+        }
+        if nibble & 8 != 0 {
+            delta = -delta;
+        }
+        predictor = (predictor + delta).clamp(-32768, 32767);
+        step_index = (step_index + INDEX[(nibble & 0x0f) as usize]).clamp(0, 88);
+        predictor as i16
+    };
+    for &packed in &frame[6..6 + nibble_bytes] {
+        if samples.len() >= sample_count {
+            break;
+        }
+        samples.push(decode_nibble(packed & 0x0f));
+        if samples.len() >= sample_count {
+            break;
+        }
+        samples.push(decode_nibble((packed >> 4) & 0x0f));
+    }
+    if samples.len() != sample_count {
+        return Err(format!(
+            "IMA-ADPCM sample count mismatch: got {} expected {sample_count}",
+            samples.len()
+        ));
+    }
+    let mut out = Vec::with_capacity(sample_count * 2);
+    for s in samples {
+        out.extend_from_slice(&s.to_le_bytes());
+    }
+    Ok(out)
 }
 
 fn recording_chunk_requested_length(chunk_bytes: u16, remaining: u32) -> u16 {
@@ -1150,6 +1749,16 @@ fn recording_chunk_requested_length(chunk_bytes: u16, remaining: u32) -> u16 {
         return chunk_bytes;
     }
     remaining as u16
+}
+
+/// Window request size (may exceed single ATT notify payload). Firmware may
+/// burst multiple notifies; current intermediate payload max is 224 B.
+fn recording_window_requested_length(window_bytes: u32, remaining: u32) -> u16 {
+    if remaining == 0 {
+        return 0;
+    }
+    let want = remaining.min(window_bytes).min(u32::from(u16::MAX));
+    want as u16
 }
 
 fn recording_packet_crc32(chunk: &RecordingChunk) -> u32 {
@@ -1343,10 +1952,52 @@ mod tests {
     }
 
     #[test]
+    fn recording_chunk_parser_accepts_intermediate_224_payload_compact_header() {
+        // COMP-REQ-663 compact intermediate: 20B header + up to 224B payload (no SHA).
+        let payload_bytes = vec![0xA5_u8; 224];
+        let mut chunk = RecordingChunk {
+            flags: RECORDING_CHUNK_COMPACT_FLAG,
+            payload_length: 224,
+            recording_id: 1,
+            packet_sequence: 42,
+            byte_offset: 9240,
+            total_length: 1_920_000,
+            packet_crc32: 0,
+            final_sha256: [0_u8; 32],
+            payload: payload_bytes.clone(),
+        };
+        chunk.packet_crc32 = recording_packet_crc32(&chunk);
+
+        let mut wire = Vec::new();
+        wire.push(1);
+        wire.push(chunk.flags);
+        wire.extend_from_slice(&chunk.payload_length.to_le_bytes());
+        wire.extend_from_slice(&chunk.recording_id.to_le_bytes());
+        wire.extend_from_slice(&chunk.packet_sequence.to_le_bytes());
+        wire.extend_from_slice(&chunk.byte_offset.to_le_bytes());
+        // Compact: no total_length on wire; CRC follows offset.
+        wire.extend_from_slice(&chunk.packet_crc32.to_le_bytes());
+        wire.extend_from_slice(&chunk.payload);
+        assert_eq!(wire.len(), RECORDING_CHUNK_HEADER_COMPACT_BYTES + 224);
+
+        let mut parsed = parse_recording_chunk(&wire).unwrap();
+        assert_eq!(parsed.flags & RECORDING_CHUNK_COMPACT_FLAG, RECORDING_CHUNK_COMPACT_FLAG);
+        assert_eq!(parsed.payload_length, 224);
+        assert_eq!(parsed.payload, payload_bytes);
+        assert_eq!(parsed.total_length, 0); // filled from list at pull time
+        parsed.total_length = 1_920_000;
+        assert_eq!(recording_packet_crc32(&parsed), parsed.packet_crc32);
+        assert_eq!(parsed.final_sha256, [0_u8; 32]);
+    }
+
+    #[test]
     fn recording_chunk_request_length_does_not_truncate_64k_remaining() {
         assert_eq!(recording_chunk_requested_length(180, 65_536), 180);
         assert_eq!(recording_chunk_requested_length(180, 179), 179);
         assert_eq!(recording_chunk_requested_length(180, 0), 0);
+        assert_eq!(recording_window_requested_length(1536, 65_536), 1536);
+        assert_eq!(recording_window_requested_length(1536, 200), 200);
+        assert_eq!(recording_window_requested_length(1536, 0), 0);
     }
 
     #[test]
@@ -1413,5 +2064,37 @@ mod tests {
             .expect("native sync did not return a WAV recording path");
         assert!(Path::new(path).exists(), "native sync WAV missing: {path}");
         println!("native_ble_recording_sync={}", sync.message);
+    }
+
+    #[test]
+    fn delete_privacy_request_encodes_firmware_contract_layout() {
+        let digest = Sha256::digest(b"companion privacy proof");
+        let sha: [u8; 32] = digest.into();
+        let request = delete_privacy_request(
+            DELETE_PRIVACY_OP_DELETE_ALL,
+            0x11223344,
+            0x55667788,
+            0x99aabbcc,
+            sha,
+        );
+        assert_eq!(request.len(), DELETE_PRIVACY_REQUEST_BYTES);
+        assert_eq!(request[0], DELETE_PRIVACY_SCHEMA_VERSION);
+        assert_eq!(request[1], DELETE_PRIVACY_OP_DELETE_ALL);
+        assert_eq!(&request[2..4], &[0u8, 0]);
+        assert_eq!(le_u32(&request, 4).unwrap(), 0x11223344);
+        assert_eq!(le_u32(&request, 8).unwrap(), 0x55667788);
+        assert_eq!(le_u32(&request, 12).unwrap(), 0x99aabbcc);
+        assert_eq!(&request[16..48], &sha[..]);
+
+        // synthetic device response echoes the same layout; flags bit0 is the refusal bit
+        let mut response = request;
+        response[2..4].copy_from_slice(&0u16.to_le_bytes());
+        let accepted = parse_delete_privacy_response(&response).unwrap();
+        assert_eq!(accepted.request_id, 0x11223344);
+        assert_eq!(accepted.flags & DELETE_PRIVACY_REFUSAL_FLAG, 0);
+
+        response[2..4].copy_from_slice(&DELETE_PRIVACY_REFUSAL_FLAG.to_le_bytes());
+        let refused = parse_delete_privacy_response(&response).unwrap();
+        assert_ne!(refused.flags & DELETE_PRIVACY_REFUSAL_FLAG, 0);
     }
 }

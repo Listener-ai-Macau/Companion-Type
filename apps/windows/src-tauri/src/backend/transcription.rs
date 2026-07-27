@@ -39,7 +39,15 @@ impl CompanionTranscriptionManager {
         if !audio.exists() {
             return Err(format!("audio path does not exist: {}", audio.display()));
         }
+        self.transcribe_existing_path(&audio)
+    }
 
+    /// Transcribe one primary path and optionally merge per-chunk files (long meetings).
+    pub fn transcribe_session(
+        &self,
+        primary_audio: Option<&str>,
+        chunk_paths: &[String],
+    ) -> Result<CompanionTranscript, String> {
         if let Ok(text) = std::env::var("COMPANION_TYPE_TRANSCRIPT_TEXT") {
             let text = normalize_transcript(&text);
             if !text.is_empty() {
@@ -52,7 +60,70 @@ impl CompanionTranscriptionManager {
             }
         }
 
-        if let Some(path) = transcript_sidecar(&audio) {
+        let mut real_paths = Vec::new();
+        for path in chunk_paths {
+            let p = PathBuf::from(path);
+            if p.exists() {
+                real_paths.push(p);
+            }
+        }
+        if let Some(primary) = primary_audio {
+            let p = PathBuf::from(primary);
+            if p.exists() && !real_paths.iter().any(|existing| existing == &p) {
+                // Prefer chunks when present; otherwise single primary.
+                if real_paths.is_empty() {
+                    real_paths.push(p);
+                }
+            }
+        }
+        if real_paths.is_empty() {
+            return Err(
+                "No transcribable audio path (missing host WAV / chunks). Import transcript or record first."
+                    .to_string(),
+            );
+        }
+        if real_paths.len() == 1 {
+            return self.transcribe_existing_path(&real_paths[0]);
+        }
+
+        let mut parts = Vec::new();
+        let mut providers = Vec::new();
+        for path in &real_paths {
+            let transcript = self.transcribe_existing_path(path)?;
+            providers.push(transcript.provider_id.clone());
+            parts.push(transcript.text);
+        }
+        Ok(CompanionTranscript {
+            text: normalize_transcript(&parts.join("\n")),
+            provider_id: "companion-type-chunk-merge".to_string(),
+            mode: format!(
+                "merged-{}-chunks:{}",
+                real_paths.len(),
+                providers
+                    .into_iter()
+                    .collect::<std::collections::BTreeSet<_>>()
+                    .into_iter()
+                    .collect::<Vec<_>>()
+                    .join("+")
+            ),
+            evidence_path: None,
+        })
+    }
+
+    fn transcribe_existing_path(&self, audio: &Path) -> Result<CompanionTranscript, String> {
+        if let Ok(text) = std::env::var("COMPANION_TYPE_TRANSCRIPT_TEXT") {
+            let text = normalize_transcript(&text);
+            if !text.is_empty() {
+                return Ok(CompanionTranscript {
+                    text,
+                    provider_id: "companion-type-env-transcript".to_string(),
+                    mode: "env-text".to_string(),
+                    evidence_path: None,
+                });
+            }
+        }
+
+        if let Some(path) = transcript_sidecar(audio) {
             let text = fs::read_to_string(&path)
                 .map_err(|err| format!("read transcript sidecar {}: {err}", path.display()))?;
             let text = normalize_transcript(&text);
@@ -72,11 +143,11 @@ impl CompanionTranscriptionManager {
         }
 
         if openai_provider_configured() {
-            return openai_compatible_transcript(&audio);
+            return openai_compatible_transcript(audio);
         }
 
         if std::env::var("COMPANION_TYPE_ASR_COMMAND").is_ok() {
-            return command_transcript(&audio);
+            return command_transcript(audio);
         }
 
         Err(
