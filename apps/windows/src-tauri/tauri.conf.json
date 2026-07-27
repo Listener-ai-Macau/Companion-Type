@@ -10,15 +10,7 @@
     "devUrl": "http://localhost:1421"
   },
   "app": {
-    "windows": [
-      {
-        "title": "Companion Type",
-        "width": 980,
-        "height": 720,
-        "minWidth": 420,
-        "minHeight": 560
-      }
-    ],
+    "windows": [],
     "security": {
       "csp": null
     }
