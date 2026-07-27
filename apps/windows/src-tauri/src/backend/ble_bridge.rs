@@ -1412,19 +1412,33 @@ async fn pull_recording_bytes(
             }
 
             wire_bytes += chunk.payload.len() as u64;
-            let pcm_piece = if chunk.flags & RECORDING_CHUNK_COMPRESSED_IMA_FLAG != 0 {
-                decode_ima_adpcm_frame(&chunk.payload)?
-            } else {
-                chunk.payload.clone()
-            };
             if offset != chunk.byte_offset {
                 return Err(format!(
                     "recording offset mismatch: host={offset} device={}",
                     chunk.byte_offset
                 ));
             }
-            data.extend_from_slice(&pcm_piece);
-            offset = offset.saturating_add(pcm_piece.len() as u32);
+            // Compress: defer IMA decode until after last notify so wall-clock wire
+            // is not inflated by host CPU (measure air throughput honestly).
+            let pcm_advance = if chunk.flags & RECORDING_CHUNK_COMPRESSED_IMA_FLAG != 0 {
+                if chunk.payload.len() < 6 {
+                    return Err("IMA frame too short for sample count".to_string());
+                }
+                let samples =
+                    u16::from_le_bytes([chunk.payload[4], chunk.payload[5]]) as u32;
+                samples.saturating_mul(2)
+            } else {
+                chunk.payload.len() as u32
+            };
+            if chunk.flags & RECORDING_CHUNK_COMPRESSED_IMA_FLAG != 0 {
+                // stash payload; decode after stream (see after loop)
+                data.extend_from_slice(&(pcm_advance as u32).to_le_bytes());
+                data.extend_from_slice(&(chunk.payload.len() as u32).to_le_bytes());
+                data.extend_from_slice(&chunk.payload);
+            } else {
+                data.extend_from_slice(&chunk.payload);
+            }
+            offset = offset.saturating_add(pcm_advance);
             expected_sequence += 1;
             packets += 1;
             last_rx = std::time::Instant::now();
@@ -1432,10 +1446,11 @@ async fn pull_recording_bytes(
             if packets % 50 == 0 || offset >= entry.total_length {
                 let elapsed = transfer_started.elapsed().as_secs_f64().max(0.001);
                 let wire_rate = (wire_bytes as f64 / 1024.0) / elapsed;
-                let effective_rate = (data.len() as f64 / 1024.0) / elapsed;
+                // pcm estimate during compress defer: use offset cursor
+                let effective_rate = (offset as f64 / 1024.0) / elapsed;
                 eprintln!(
                     "recording pull progress pcm={}/{} wire={} packets={} wire_rate={:.1} KB/s effective_rate={:.1} KB/s compress={}",
-                    data.len(),
+                    offset,
                     entry.total_length,
                     wire_bytes,
                     packets,
@@ -1508,7 +1523,35 @@ async fn pull_recording_bytes(
         }
     }
 
+    // Stop wall-clock for wire before optional host-side IMA decode.
+    let elapsed_air = transfer_started.elapsed().as_secs_f64().max(0.001);
     let _ = peripheral.unsubscribe(&char_chunk_pull).await;
+
+    if compress {
+        // data holds framed stash: [pcm_advance u32][payload_len u32][payload...]...
+        let mut decoded = Vec::with_capacity(entry.total_length as usize);
+        let mut i = 0usize;
+        while i + 8 <= data.len() {
+            let pcm_adv = u32::from_le_bytes(data[i..i + 4].try_into().unwrap()) as usize;
+            let plen = u32::from_le_bytes(data[i + 4..i + 8].try_into().unwrap()) as usize;
+            i += 8;
+            if i + plen > data.len() {
+                return Err("compressed frame stash truncated".to_string());
+            }
+            let frame = &data[i..i + plen];
+            i += plen;
+            let piece = decode_ima_adpcm_frame(frame)?;
+            if piece.len() != pcm_adv {
+                return Err(format!(
+                    "IMA pcm length mismatch: frame {} vs header {pcm_adv}",
+                    piece.len()
+                ));
+            }
+            decoded.extend_from_slice(&piece);
+        }
+        data = decoded;
+    }
+
     if data.len() != entry.total_length as usize {
         return Err(format!(
             "recording byte count mismatch: got {}, expected {}",
@@ -1527,7 +1570,7 @@ async fn pull_recording_bytes(
             hex_lower(&sha256)
         ));
     }
-    let elapsed = transfer_started.elapsed().as_secs_f64().max(0.001);
+    let elapsed = elapsed_air;
     let wire_rate = (wire_bytes as f64 / 1024.0) / elapsed;
     let effective_rate = (data.len() as f64 / 1024.0) / elapsed;
     let ratio = if wire_bytes > 0 {
