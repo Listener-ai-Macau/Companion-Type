@@ -304,6 +304,45 @@ fn extract_keywords(text: &str) -> Vec<String> {
     tokens
 }
 
+/// When the transcript carries speaker attribution ("说话人N: ..." lines, set
+/// by the diarization-aware transcription path), regroup all utterances by
+/// speaker for a "who said what" section. Returns None when the transcript has
+/// no speaker tags (single-speaker / diarization unavailable).
+fn render_speaker_section(transcript_text: &str) -> Option<String> {
+    let mut order: Vec<String> = Vec::new();
+    let mut groups: std::collections::HashMap<String, Vec<String>> =
+        std::collections::HashMap::new();
+    for line in transcript_text.lines() {
+        let trimmed = line.trim();
+        let Some(rest) = trimmed.strip_prefix("说话人") else {
+            continue;
+        };
+        let Some((label, text)) = rest.split_once(':') else {
+            continue;
+        };
+        if label.is_empty() || !label.chars().all(|c| c.is_ascii_digit()) {
+            continue;
+        }
+        let label = format!("说话人{}", label);
+        groups
+            .entry(label.clone())
+            .or_default()
+            .push(text.trim().to_string());
+        if !order.contains(&label) {
+            order.push(label);
+        }
+    }
+    if order.is_empty() {
+        return None;
+    }
+    let mut out = vec!["## 讨论纪要(按说话人)".to_string()];
+    for label in &order {
+        let joined = groups.get(label).map(|v| v.join(" ")).unwrap_or_default();
+        out.push(format!("- **{}**: {}", label, joined));
+    }
+    Some(out.join("\n"))
+}
+
 fn render_minutes_markdown(
     session: &CompanionV1HostSession,
     minutes: &CompanionV1MeetingMinutes,
@@ -366,6 +405,10 @@ fn render_minutes_markdown(
     } else {
         minutes.keywords.join(", ")
     });
+    if let Some(section) = render_speaker_section(&session.transcript_text) {
+        lines.push(String::new());
+        lines.push(section);
+    }
     lines.push(String::new());
     lines.join("\n")
 }
@@ -439,5 +482,29 @@ mod tests {
         assert!(!minutes.action_items.is_empty());
         assert!(!minutes.questions.is_empty());
         assert!(minutes.markdown.contains("## Action Items"));
+    }
+
+    #[test]
+    fn speaker_section_regroups_by_speaker() {
+        let section = render_speaker_section("说话人1: 甲\n说话人2: 乙\n说话人1: 丙").unwrap();
+        assert!(section.contains("## 讨论纪要(按说话人)"));
+        assert!(section.contains("**说话人1**: 甲 丙"));
+        assert!(section.contains("**说话人2**: 乙"));
+    }
+
+    #[test]
+    fn speaker_section_none_when_no_tags() {
+        assert!(render_speaker_section("普通转写文本，没有说话人标签。").is_none());
+    }
+
+    #[test]
+    fn minutes_markdown_includes_speaker_section_when_tagged() {
+        let session = session_with_text(
+            "说话人1: 决定：host owns minutes。\n说话人2: 行动：陈明负责验证。",
+        );
+        let minutes = rules_l0_minutes(&session, "now");
+        assert!(minutes.markdown.contains("## 讨论纪要(按说话人)"));
+        assert!(minutes.markdown.contains("**说话人1**"));
+        assert!(minutes.markdown.contains("**说话人2**"));
     }
 }

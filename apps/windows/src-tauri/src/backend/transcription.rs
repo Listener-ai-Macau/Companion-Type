@@ -11,7 +11,8 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Duration;
 
-use super::volcengine::{VolcengineCredentials, VolcengineSaucAsr};
+use super::diarization::{self, DiarizationSegment};
+use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr};
 use denzic_host_audio_v1_core::asr::{normalize_transcript, BatchAsrProvider};
 use denzic_host_audio_v1_core::asr_openai::{OpenAiAsrConfig, OpenAiCompatibleAsr};
 use denzic_host_audio_v1_core::{
@@ -244,13 +245,91 @@ fn volcengine_transcript(audio: &Path) -> Result<CompanionTranscript, String> {
         access_token,
         resource_id,
     });
-    let text = asr.transcribe_file(audio)?;
+    let (clean_text, utterances) = asr.transcribe_file(audio)?;
+
+    // When the speaker-verification models are available, diarize the same WAV
+    // and align each ASR utterance to the speaker segment it overlaps most. If
+    // that yields a non-empty speaker-tagged transcript, it becomes the
+    // transcript text so downstream minutes / preview carry speaker attribution
+    // (and the LLM minutes command gets richer `{transcript}` context).
+    // Otherwise fall back to the clean merged transcript.
+    let (text, mode) = match diarization::diarize(audio) {
+        Ok(segments) if !segments.is_empty() && !utterances.is_empty() => {
+            let tagged = render_speaker_tagged(&utterances, &segments);
+            if tagged.is_empty() {
+                (normalize_transcript(&clean_text), "ws-sauc:bigmodel".to_string())
+            } else {
+                (normalize_transcript(&tagged), "ws-sauc:bigmodel+diarized".to_string())
+            }
+        }
+        _ => (normalize_transcript(&clean_text), "ws-sauc:bigmodel".to_string()),
+    };
+
     Ok(CompanionTranscript {
-        text: normalize_transcript(&text),
+        text,
         provider_id: "companion-type-volcengine-asr".to_string(),
-        mode: "ws-sauc:bigmodel".to_string(),
+        mode,
         evidence_path: None,
     })
+}
+
+/// Pick the speaker id whose diarization segment has the greatest temporal
+/// overlap with this utterance. Falls back to the nearest segment by center
+/// distance when there is no overlap (e.g. a short utterance inside a VAD gap).
+fn assign_speaker(utt: &Utterance, segments: &[DiarizationSegment]) -> Option<usize> {
+    if segments.is_empty() {
+        return None;
+    }
+    let u_start = utt.start_ms as i64;
+    let u_end = utt.end_ms as i64;
+    let mut best_overlap: Option<(i64, usize)> = None;
+    for seg in segments {
+        let overlap = (u_end.min(seg.end_ms as i64) - u_start.max(seg.start_ms as i64)).max(0);
+        if overlap > 0 && best_overlap.map_or(true, |(b, _)| overlap > b) {
+            best_overlap = Some((overlap, seg.speaker));
+        }
+    }
+    if let Some((_, speaker)) = best_overlap {
+        return Some(speaker);
+    }
+    // No overlap: nearest segment by center distance.
+    let center = (u_start + u_end) / 2;
+    segments
+        .iter()
+        .min_by_key(|seg| {
+            let seg_center = (seg.start_ms as i64 + seg.end_ms as i64) / 2;
+            (seg_center - center).abs()
+        })
+        .map(|seg| seg.speaker)
+}
+
+/// Render a speaker-tagged transcript: each utterance becomes "说话人N: <text>",
+/// merging consecutive utterances from the same speaker onto one line. Speaker
+/// ids are 0-based internally and shown 1-based to humans. Timestamps come from
+/// the ASR provider; speakers come from diarization alignment.
+fn render_speaker_tagged(utterances: &[Utterance], segments: &[DiarizationSegment]) -> String {
+    let mut groups: Vec<(Option<usize>, String)> = Vec::new();
+    for utt in utterances {
+        let speaker = assign_speaker(utt, segments);
+        if let Some(last) = groups.last_mut() {
+            if last.0 == speaker {
+                last.1.push_str(&utt.text);
+                continue;
+            }
+        }
+        groups.push((speaker, utt.text.clone()));
+    }
+    groups
+        .into_iter()
+        .map(|(speaker, text)| {
+            let label = match speaker {
+                Some(id) => format!("说话人{}", id + 1),
+                None => "说话人?".to_string(),
+            };
+            format!("{}: {}", label, text)
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
 }
 
 fn openai_provider_configured() -> bool {
@@ -448,6 +527,74 @@ mod tests {
         std::env::remove_var("COMPANION_TYPE_ASR_ENDPOINT");
         std::env::remove_var("COMPANION_TYPE_ASR_API_KEY");
         std::env::remove_var("COMPANION_TYPE_ASR_MODEL");
+    }
+
+    #[test]
+    fn assign_speaker_picks_max_overlap() {
+        let segs = vec![
+            DiarizationSegment { start_ms: 0, end_ms: 1000, speaker: 0 },
+            DiarizationSegment { start_ms: 2000, end_ms: 3000, speaker: 1 },
+        ];
+        let u = Utterance { text: "x".into(), start_ms: 2500, end_ms: 2800 };
+        assert_eq!(assign_speaker(&u, &segs), Some(1));
+    }
+
+    #[test]
+    fn assign_speaker_falls_back_to_nearest_when_no_overlap() {
+        let segs = vec![
+            DiarizationSegment { start_ms: 0, end_ms: 1000, speaker: 0 },
+            DiarizationSegment { start_ms: 2000, end_ms: 3000, speaker: 1 },
+        ];
+        // Utterance sits in a VAD gap (1100-1200); nearest center is segment 0.
+        let u = Utterance { text: "x".into(), start_ms: 1100, end_ms: 1200 };
+        assert_eq!(assign_speaker(&u, &segs), Some(0));
+    }
+
+    #[test]
+    fn render_speaker_tagged_merges_consecutive_same_speaker() {
+        let segs = vec![
+            DiarizationSegment { start_ms: 0, end_ms: 1000, speaker: 0 },
+            DiarizationSegment { start_ms: 2000, end_ms: 3000, speaker: 1 },
+        ];
+        let utts = vec![
+            Utterance { text: "甲".into(), start_ms: 100, end_ms: 900 }, // -> 0
+            Utterance { text: "乙".into(), start_ms: 1100, end_ms: 1200 }, // gap -> 0
+            Utterance { text: "丙".into(), start_ms: 2100, end_ms: 2900 }, // -> 1
+        ];
+        let out = render_speaker_tagged(&utts, &segs);
+        assert!(out.contains("说话人1: 甲乙"), "out={out}");
+        assert!(out.contains("说话人2: 丙"), "out={out}");
+    }
+
+    #[test]
+    fn render_speaker_tagged_handles_empty() {
+        assert_eq!(render_speaker_tagged(&[], &[]), "");
+    }
+
+    /// End-to-end: volcengine transcription + sherpa-onnx diarization of the
+    /// 4-speaker zh meeting clip. The transcript text should be speaker-tagged
+    /// ("说话人1: ... / 说话人2: ..."). Requires real Volcengine credentials,
+    /// Listener's speaker-verification models, and the probe WAV.
+    #[test]
+    #[ignore = "requires volcengine creds + Listener speaker models + the 4-speaker probe WAV"]
+    fn volcengine_diarized_transcript_four_speaker() {
+        std::env::var("COMPANION_TYPE_VOLC_APP_KEY").expect("COMPANION_TYPE_VOLC_APP_KEY");
+        std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY").expect("COMPANION_TYPE_VOLC_ACCESS_KEY");
+        let wav = std::env::var("COMPANION_TYPE_DIARIZE_PROBE_WAV")
+            .unwrap_or_else(|_| "docs/validation/four-speakers-zh.wav".to_string());
+        let audio = PathBuf::from(&wav);
+        let transcript = CompanionTranscriptionManager::new()
+            .transcribe_audio(&audio.to_string_lossy())
+            .expect("transcript");
+        eprintln!("diarized_transcript:\n{}", transcript.text);
+        eprintln!("mode={}", transcript.mode);
+        assert!(
+            transcript.text.contains("说话人"),
+            "expected speaker tags: {}",
+            transcript.text
+        );
+        assert!(transcript.text.contains("说话人1"), "expected 说话人1: {}", transcript.text);
+        assert!(transcript.text.contains("说话人2"), "expected 说话人2: {}", transcript.text);
     }
 
     fn request_is_complete(request: &[u8]) -> bool {

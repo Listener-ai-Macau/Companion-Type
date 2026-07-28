@@ -225,8 +225,10 @@ impl VolcengineSaucAsr {
     }
 
     /// Read a 16 kHz / mono / 16-bit WAV, stream its PCM to Volcengine SAUC,
-    /// and return the final transcript text.
-    pub fn transcribe_file(&self, wav_path: &Path) -> Result<String, String> {
+    /// and return the final transcript text plus the timed utterances (when
+    /// the server returns them). The utterances carry start/end ms so the
+    /// caller can align them against diarization speaker segments.
+    pub fn transcribe_file(&self, wav_path: &Path) -> Result<(String, Vec<Utterance>), String> {
         let pcm = read_pcm16k_mono_wav(wav_path)?;
         // The transcription path is normally reached from a Tauri
         // spawn_blocking thread (no runtime context). Be defensive anyway: if
@@ -243,7 +245,7 @@ impl VolcengineSaucAsr {
         runtime.block_on(self.transcribe_pcm(&pcm))
     }
 
-    async fn transcribe_pcm(&self, pcm: &[u8]) -> Result<String, String> {
+    async fn transcribe_pcm(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
         if pcm.is_empty() {
             return Err("Volcengine ASR received empty PCM".to_string());
         }
@@ -297,7 +299,7 @@ impl VolcengineSaucAsr {
 
         // 2. Spawn the receive loop. It collects the best transcript text and
         //    resolves once the server signals the final frame (or errors).
-        let (final_tx, final_rx) = oneshot::channel::<Result<String, String>>();
+        let (final_tx, final_rx) = oneshot::channel::<Result<(String, Vec<Utterance>), String>>();
         tokio::spawn(async move {
             let outcome = run_receive_loop(&mut read).await;
             let _ = final_tx.send(outcome);
@@ -344,7 +346,7 @@ impl VolcengineSaucAsr {
         //    half here — the server still has to emit its final response,
         //    and a premature close makes it drop the transcript.
         match tokio::time::timeout(FINAL_RESULT_TIMEOUT, final_rx).await {
-            Ok(Ok(Ok(text))) => Ok(text),
+            Ok(Ok(Ok(pair))) => Ok(pair),
             Ok(Ok(Err(e))) => Err(e),
             Ok(Err(_)) => Err("Volcengine final-result channel closed".to_string()),
             Err(_) => Err(format!(
@@ -357,8 +359,9 @@ impl VolcengineSaucAsr {
 
 async fn run_receive_loop(
     read: &mut futures::stream::SplitStream<tokio_tungstenite::WebSocketStream<tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>>>,
-) -> Result<String, String> {
+) -> Result<(String, Vec<Utterance>), String> {
     let mut best_text = String::new();
+    let mut best_utterances: Vec<Utterance> = Vec::new();
     let mut saw_final = false;
     while let Some(msg) = read.next().await {
         match msg {
@@ -381,6 +384,13 @@ async fn run_receive_loop(
                                 best_text = text;
                             }
                         }
+                        // The final FullServerResponse carries the complete
+                        // utterance list with timing; keep the latest non-empty
+                        // one so diarization can align against it.
+                        let utterances = extract_utterances(&json);
+                        if !utterances.is_empty() {
+                            best_utterances = utterances;
+                        }
                     }
                     if parsed.is_final() {
                         saw_final = true;
@@ -394,7 +404,7 @@ async fn run_receive_loop(
         }
     }
     if !best_text.is_empty() {
-        Ok(best_text)
+        Ok((best_text, best_utterances))
     } else if saw_final {
         Err("Volcengine returned a final frame with no transcript text".to_string())
     } else {
@@ -438,27 +448,120 @@ fn build_first_frame_payload(connect_id: &str) -> Value {
     })
 }
 
-/// Pull the transcript text out of a server response, mirroring Listener's
-/// `volcengine_transcript::normalized_result`: prefer `result.text`, fall
-/// back to top-level `text`.
-fn extract_text(json: &Value) -> Option<String> {
-    let result = if let Some(r) = json.get("result") {
+/// One timed ASR utterance (text + millisecond bounds), used to align the
+/// transcript against diarization speaker segments.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Utterance {
+    pub text: String,
+    pub start_ms: u64,
+    pub end_ms: u64,
+}
+
+/// Resolve the `result` object from a server response, mirroring Listener's
+/// `volcengine_transcript::normalized_result`: unwrap `result` (object or
+/// array-of-one), fall back to the top-level object when it carries `text`.
+fn result_object(json: &Value) -> Option<&Value> {
+    if let Some(r) = json.get("result") {
         if r.is_object() {
-            r
-        } else if let Some(arr) = r.as_array() {
-            arr.first()?
-        } else {
-            return None;
+            return Some(r);
         }
-    } else if json.get("text").and_then(|v| v.as_str()).is_some() {
-        json
-    } else {
+        if let Some(arr) = r.as_array() {
+            return arr.first();
+        }
         return None;
-    };
-    result
+    }
+    if json.get("text").and_then(|v| v.as_str()).is_some() {
+        return Some(json);
+    }
+    None
+}
+
+/// Pull the transcript text out of a server response: prefer `result.text`,
+/// fall back to top-level `text`.
+fn extract_text(json: &Value) -> Option<String> {
+    result_object(json)?
         .get("text")
         .and_then(|v| v.as_str())
         .map(|s| s.to_string())
+}
+
+/// Extract timed utterances from a server response. Ported from Listener's
+/// `volcengine_transcript::transcript_segment_from_utterance`: the
+/// utterance-level `start_time` can be stale, so prefer word-level timing
+/// (`words[0].start_time` / `words[last].end_time`) and fall back to the
+/// utterance-level fields. Timestamps are milliseconds and may arrive as int
+/// or string. Utterances without usable timing are dropped.
+fn extract_utterances(json: &Value) -> Vec<Utterance> {
+    let Some(result) = result_object(json) else {
+        return Vec::new();
+    };
+    let Some(utterances) = result.get("utterances").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    let start_keys = ["start_time", "startTime", "start_ms"];
+    let end_keys = ["end_time", "endTime", "end_ms"];
+    let mut out = Vec::new();
+    for utt in utterances {
+        let Some(text) = utt.get("text").and_then(|t| t.as_str()) else {
+            continue;
+        };
+        let text = text.trim();
+        if text.is_empty() {
+            continue;
+        }
+        let Some(start_ms) = first_word_millis(utt, &start_keys)
+            .or_else(|| value_millis(utt, &start_keys))
+            .and_then(|ms| u64::try_from(ms.max(0)).ok())
+        else {
+            continue;
+        };
+        let end_ms = last_word_millis(utt, &end_keys)
+            .or_else(|| value_millis(utt, &end_keys))
+            .and_then(|ms| u64::try_from(ms.max(0)).ok())
+            .unwrap_or(start_ms)
+            .max(start_ms);
+        out.push(Utterance {
+            text: text.to_string(),
+            start_ms,
+            end_ms,
+        });
+    }
+    out
+}
+
+fn first_word_millis(value: &Value, keys: &[&str]) -> Option<i64> {
+    value
+        .get("words")
+        .and_then(|words| words.as_array())
+        .and_then(|words| words.iter().find_map(|word| value_millis(word, keys)))
+}
+
+fn last_word_millis(value: &Value, keys: &[&str]) -> Option<i64> {
+    value
+        .get("words")
+        .and_then(|words| words.as_array())
+        .and_then(|words| words.iter().rev().find_map(|word| value_millis(word, keys)))
+}
+
+fn value_millis(value: &Value, keys: &[&str]) -> Option<i64> {
+    keys.iter()
+        .filter_map(|key| value.get(*key))
+        .find_map(value_as_i64)
+}
+
+fn value_as_i64(value: &Value) -> Option<i64> {
+    if let Some(n) = value.as_i64() {
+        return Some(n);
+    }
+    if let Some(n) = value.as_u64() {
+        return i64::try_from(n).ok();
+    }
+    if let Some(n) = value.as_f64() {
+        if n.is_finite() {
+            return Some(n.round() as i64);
+        }
+    }
+    value.as_str()?.trim().parse::<i64>().ok()
 }
 
 fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
@@ -580,6 +683,52 @@ mod tests {
     }
 
     #[test]
+    fn extract_utterances_parses_int_and_string_timing() {
+        let v = serde_json::from_str::<Value>(
+            r#"{"result":{"text":"","utterances":[
+                {"text":"第一句。","start_time":0,"end_time":900},
+                {"text":"第二句。","start_time":"1200","end_time":"2100"}
+            ]}}"#,
+        )
+        .unwrap();
+        let utts = extract_utterances(&v);
+        assert_eq!(utts.len(), 2);
+        assert_eq!(utts[0], Utterance { text: "第一句。".into(), start_ms: 0, end_ms: 900 });
+        assert_eq!(utts[1], Utterance { text: "第二句。".into(), start_ms: 1200, end_ms: 2100 });
+    }
+
+    #[test]
+    fn extract_utterances_prefers_word_timing_when_utterance_start_is_stale() {
+        // Utterance start_time (1452) is stale; words[0].start_time (6372) is
+        // the real start. Port of Listener's "prefers word timing" behavior.
+        let v = serde_json::from_str::<Value>(
+            r#"{"result":{"text":"x","utterances":[{
+                "text":"需要记录蓝牙包数。",
+                "start_time":1452,"end_time":10402,
+                "words":[
+                    {"text":"需要","start_time":6372,"end_time":6452},
+                    {"text":"包数","start_time":10100,"end_time":10402}
+                ]
+            }]}}"#,
+        )
+        .unwrap();
+        let utts = extract_utterances(&v);
+        assert_eq!(utts.len(), 1);
+        assert_eq!(utts[0].start_ms, 6372);
+        assert_eq!(utts[0].end_ms, 10402);
+    }
+
+    #[test]
+    fn extract_utterances_empty_when_no_timing() {
+        // Utterances with text but no start_time at all are dropped.
+        let v = serde_json::from_str::<Value>(
+            r#"{"result":{"utterances":[{"text":"无时间戳。"}]}}"#,
+        )
+        .unwrap();
+        assert!(extract_utterances(&v).is_empty());
+    }
+
+    #[test]
     fn read_pcm_rejects_non_wav() {
         let dir = std::env::temp_dir().join("companion-type-volcengine-test");
         let _ = std::fs::create_dir_all(&dir);
@@ -615,9 +764,12 @@ mod tests {
             access_token: access_key,
             resource_id,
         });
-        let text = asr.transcribe_file(Path::new(&wav)).expect("real transcript");
+        let (text, utterances) = asr
+            .transcribe_file(Path::new(&wav))
+            .expect("real transcript");
         assert!(!text.trim().is_empty(), "transcript must be non-empty");
         eprintln!("volcengine_real_transcript={}", text);
+        eprintln!("volcengine_real_utterances={}", utterances.len());
     }
 
     /// Mechanical-voice physical-microphone end-to-end, mirroring Listener's
@@ -701,7 +853,7 @@ mod tests {
         );
 
         // 4. Transcribe the recorded WAV via Volcengine.
-        let transcript = asr
+        let (transcript, _utterances) = asr
             .transcribe_file(&stop.path)
             .expect("volcengine transcript of the microphone recording");
 
