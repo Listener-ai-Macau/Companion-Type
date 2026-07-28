@@ -5,6 +5,7 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+mod diarization;
 mod firmware_ota;
 mod host_recording;
 mod minutes;
