@@ -613,4 +613,177 @@ mod tests {
         assert!(!text.trim().is_empty(), "transcript must be non-empty");
         eprintln!("volcengine_real_transcript={}", text);
     }
+
+    /// Mechanical-voice physical-microphone end-to-end, mirroring Listener's
+    /// `run_mechanical_voice_diagnostic.ps1` (case a1/a2): SAPI synthesizes a
+    /// natural passage, plays it through the **speaker**, the **physical
+    /// microphone** records it via HostRecordingManager, the Volcengine
+    /// provider transcribes the recording, and we assert (a) the mic captured
+    /// non-silent audio (peak > 500, proving it heard the speaker not just room
+    /// noise) and (b) the transcript covers the stimulus text (LCS char ratio).
+    ///
+    /// This is the "mechanical voice simulates a person speaking, runs the
+    /// whole physical chain" AI evidence — distinct from probe (which feeds a
+    /// WAV directly to the provider, bypassing the microphone) and from the
+    /// human signoff (which requires a real human voice).
+    #[test]
+    #[ignore = "requires real Volcengine credentials + speaker + physical microphone"]
+    fn mechanical_voice_physical_microphone_e2e() {
+        let app_key = std::env::var("COMPANION_TYPE_VOLC_APP_KEY").expect("COMPANION_TYPE_VOLC_APP_KEY");
+        let access_key =
+            std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY").expect("COMPANION_TYPE_VOLC_ACCESS_KEY");
+        let resource_id = std::env::var("COMPANION_TYPE_VOLC_RESOURCE_ID")
+            .unwrap_or_else(|_| VolcengineCredentials::default_resource_id().to_string());
+        let stimulus = std::env::var("COMPANION_TYPE_MECH_STIMULUS").unwrap_or_else(|_| {
+            // Chinese passage + Huihui (zh-CN TTS): the Volcengine bigmodel is
+            // strongly zh-biased, so an English SAPI voice gets misrecognized
+            // as Chinese near-homophones after speaker->air->mic loss. A zh
+            // stimulus matches the provider's strong language.
+            "决定：会议主机负责记录今天的整场讨论。行动：陈明在周五之前完成纪要验证。问题：物理麦克风链路是否已经为正式会议做好准备。".to_string()
+        });
+        let record_seconds: u64 = std::env::var("COMPANION_TYPE_MECH_RECORD_SECONDS")
+            .ok()
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(12);
+
+        let asr = VolcengineSaucAsr::new(VolcengineCredentials {
+            app_id: app_key,
+            access_token: access_key,
+            resource_id,
+        });
+
+        // 1. SAPI-synthesize + play the stimulus through the speaker.
+        // Pass the stimulus to the child pwsh via env (avoids -Command quoting
+        // issues with free-form English text — `--` + the passage was parsed
+        // as a PowerShell statement and never reached $args[0]).
+        std::env::set_var("COMPANION_TYPE_MECH_STIMULUS", &stimulus);
+        let sapi_script = "Add-Type -AssemblyName System.Speech; \
+            $s = New-Object System.Speech.Synthesis.SpeechSynthesizer; \
+            try { $s.SelectVoice('Microsoft Huihui Desktop') } catch {}; \
+            $s.Rate = 2; \
+            $p = Join-Path $env:TEMP 'companion-type-mech-stimulus.wav'; \
+            $fmt = New-Object System.Speech.AudioFormat.SpeechAudioFormatInfo(16000, [System.Speech.AudioFormat.AudioBitsPerSample]::Sixteen, [System.Speech.AudioFormat.AudioChannel]::Mono); \
+            $s.SetOutputToWaveFile($p, $fmt); \
+            $s.Speak($env:COMPANION_TYPE_MECH_STIMULUS); \
+            $s.Dispose(); \
+            (New-Object Media.SoundPlayer $p).PlaySync()";
+        let mut sapi = std::process::Command::new("pwsh")
+            .args(["-NoProfile", "-Command", sapi_script])
+            .spawn()
+            .expect("spawn pwsh SAPI playback");
+
+        // 2. Record via HostRecordingManager (physical microphone).
+        std::env::set_var("COMPANION_TYPE_HOST_RECORDING_MODE", "real");
+        std::thread::sleep(std::time::Duration::from_millis(400)); // let the speaker ramp up
+        let recorder = crate::backend::host_recording::HostRecordingManager::new();
+        let _start = recorder
+            .start("mech-e2e", "Mechanical Voice E2E")
+            .expect("host recording start");
+        std::thread::sleep(std::time::Duration::from_secs(record_seconds));
+        let stop = recorder
+            .stop(Some("mech-e2e"))
+            .expect("host recording stop")
+            .expect("active recording was expected");
+        let _ = sapi.wait();
+
+        // 3. Assert the microphone captured non-silent audio (peak > 500).
+        let recorded = std::fs::read(&stop.path).expect("read recorded wav");
+        let (peak, rms) = pcm_peak_rms(&recorded);
+        assert!(
+            peak > 500,
+            "microphone captured near-silent audio (peak={peak}, rms={rms:.1}); check speaker is playing / mic is the default input"
+        );
+
+        // 4. Transcribe the recorded WAV via Volcengine.
+        let transcript = asr
+            .transcribe_file(&stop.path)
+            .expect("volcengine transcript of the microphone recording");
+
+        // 5. Coverage: LCS char ratio of normalized transcript vs stimulus.
+        let expected = normalize_text(&stimulus);
+        let actual = normalize_text(&transcript);
+        let coverage = lcs_ratio(&expected, &actual);
+
+        eprintln!("mech_e2e_stimulus={}", stimulus);
+        eprintln!("mech_e2e_transcript={}", transcript);
+        eprintln!(
+            "mech_e2e_peak={} rms={} duration_ms={} coverage={:.3}",
+            peak, rms, stop.duration_ms, coverage
+        );
+
+        assert!(!transcript.trim().is_empty(), "transcript is empty");
+        assert!(
+            coverage >= 0.55,
+            "transcript coverage {coverage:.3} below 0.55 threshold; transcript={transcript}"
+        );
+    }
+
+    fn normalize_text(text: &str) -> String {
+        text.chars()
+            .filter(|c| c.is_alphanumeric())
+            .collect::<String>()
+            .to_lowercase()
+    }
+
+    fn lcs_ratio(expected: &str, actual: &str) -> f64 {
+        if expected.is_empty() {
+            return 0.0;
+        }
+        let e: Vec<char> = expected.chars().collect();
+        let a: Vec<char> = actual.chars().collect();
+        let mut prev = vec![0usize; a.len() + 1];
+        for ec in &e {
+            let mut cur = vec![0usize; a.len() + 1];
+            for (j, ac) in a.iter().enumerate() {
+                cur[j + 1] = if ec == ac { prev[j] + 1 } else { prev[j + 1].max(cur[j]) };
+            }
+            prev = cur;
+        }
+        prev[a.len()] as f64 / e.len() as f64
+    }
+
+    fn pcm_peak_rms(wav: &[u8]) -> (i32, f64) {
+        if wav.len() < 12 || &wav[0..4] != b"RIFF" {
+            return (0, 0.0);
+        }
+        let mut offset = 12usize;
+        let mut data: Option<(usize, usize)> = None;
+        while offset + 8 <= wav.len() {
+            let id = &wav[offset..offset + 4];
+            let size = u32::from_le_bytes([
+                wav[offset + 4],
+                wav[offset + 5],
+                wav[offset + 6],
+                wav[offset + 7],
+            ]) as usize;
+            let body = offset + 8;
+            if id == b"data" {
+                let end = (body + size).min(wav.len());
+                data = Some((body, end - body));
+                break;
+            }
+            offset = body + size + (size & 1);
+        }
+        let (start, len) = match data {
+            Some(d) => d,
+            None => return (0, 0.0),
+        };
+        let end = (start + len).min(wav.len());
+        let mut peak: i32 = 0;
+        let mut sum_sq: f64 = 0.0;
+        let mut n: u64 = 0;
+        let mut i = start;
+        while i + 1 < end {
+            let s = i16::from_le_bytes([wav[i], wav[i + 1]]) as i32;
+            let a = s.abs();
+            if a > peak {
+                peak = a;
+            }
+            sum_sq += (s as f64) * (s as f64);
+            n += 1;
+            i += 2;
+        }
+        let rms = if n > 0 { (sum_sq / n as f64).sqrt() } else { 0.0 };
+        (peak, rms)
+    }
 }
