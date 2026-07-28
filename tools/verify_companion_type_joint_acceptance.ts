@@ -111,6 +111,7 @@ const artifacts = {
   typeInstalledUserJourney: 'docs/validation/companion-type-installed-user-journey.json',
   typeFinalHumanSignoff: 'docs/validation/companion-type-final-human-signoff.json',
   typeDirtyAudit: 'docs/validation/companion-type-dirty-audit.json',
+  typeOtaAcceptance: 'docs/validation/companion-type-ota-acceptance.json',
   typeMsi: latestExtension(
     'apps/windows/src-tauri/target/release/bundle/msi',
     '.msi',
@@ -140,6 +141,7 @@ const installedUiSync = existsSync(artifacts.typeInstalledUiSync) ? readJson(art
 const installedUserJourney = existsSync(artifacts.typeInstalledUserJourney) ? readJson(artifacts.typeInstalledUserJourney) : null;
 const finalHumanSignoff = existsSync(artifacts.typeFinalHumanSignoff) ? readJson(artifacts.typeFinalHumanSignoff) : null;
 const dirtyAudit = existsSync(artifacts.typeDirtyAudit) ? readJson(artifacts.typeDirtyAudit) : null;
+const otaAcceptance = existsSync(artifacts.typeOtaAcceptance) ? readJson(artifacts.typeOtaAcceptance) : null;
 const buttonChain = artifacts.firmwareButtonChain ? readJson(artifacts.firmwareButtonChain) : null;
 const latestButtonChainAttempt = artifacts.firmwareButtonChainLatest ? readJson(artifacts.firmwareButtonChainLatest) : null;
 const flashChain = artifacts.firmwareFlashChain ? readJson(artifacts.firmwareFlashChain) : null;
@@ -560,6 +562,33 @@ const items = [
       : installedUserJourney?.result === 'FAIL'
         ? `安装版用户全程链最近一次在 ${installedUserJourney.phase} 失败：${installedUserJourney.error}。`
         : '尚未在安装版 exe 上跑 verify:installed-user-journey；需先 npm run tauri:windows 并 verify:msi-install-smoke。',
+  },
+  {
+    id: 9,
+    name: 'OTA 固件升级（denzic_ota_v1 真板子）',
+    status: otaAcceptance?.result?.includes('PASS_DENZIC_OTA_V1')
+      ? 'PASS_OTA_REAL_BOARD_TRANSFER'
+      : otaAcceptance?.result?.includes('PARTIAL')
+        ? 'PARTIAL_OTA_PLATFORM_VERIFIED_BOARD_GAP'
+        : 'PENDING_OTA',
+    evidence: [
+      fileEvidence(artifacts.typeOtaAcceptance),
+    ],
+    observed: otaAcceptance
+      ? {
+          result: otaAcceptance.result,
+          protocol: otaAcceptance.transferResult?.protocol ?? null,
+          status: otaAcceptance.transferResult?.status ?? null,
+          firmwareBytes: otaAcceptance.transferResult?.firmwareBytes ?? null,
+          dataWrites: otaAcceptance.transferResult?.dataWrites ?? null,
+          deviceId: otaAcceptance.transferResult?.deviceId ?? null,
+        }
+      : null,
+    remainingGate: otaAcceptance?.result?.includes('PASS_DENZIC_OTA_V1')
+      ? 'Companion-Type OTA 已通过 denzic_ota_v1 协议在真板子上 transfer 完成（verify_companion_ble_ota.ps1 一键：SWD 擦 app 进 OTA loader + companion-type.exe transfer）。'
+      : otaAcceptance?.result?.includes('PARTIAL')
+        ? 'Companion-Type OTA 代码（denzic_ota_v1）已验通；板子端 OTA loader 缺口见 docs/validation/companion-type-ota-acceptance.json。'
+        : '尚未跑 OTA；运行 Companion-Firmware 的 verify_companion_ble_ota.ps1 从 Companion-Type exe 一键 OTA。',
   },
 ];
 
