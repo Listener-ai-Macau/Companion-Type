@@ -9,6 +9,7 @@ mod diarization;
 mod firmware_ota;
 mod host_recording;
 mod minutes;
+mod persistence;
 mod privacy;
 mod transcription;
 mod volcengine;
@@ -82,8 +83,15 @@ pub struct FixtureCompanionBackend {
 
 impl FixtureCompanionBackend {
     pub fn new() -> Self {
+        let mut snapshot = fixture_snapshot();
+        // Survive restarts: when a persisted state file exists, replace the
+        // fixture demo sessions with the real user sessions. First run (no
+        // file) keeps the fixture demo session.
+        if let Some(sessions) = persistence::load_sessions() {
+            snapshot.host.sessions = sessions;
+        }
         Self {
-            snapshot: Mutex::new(fixture_snapshot()),
+            snapshot: Mutex::new(snapshot),
             host_recording: HostRecordingManager::new(),
             transcription: CompanionTranscriptionManager::new(),
             minutes: CompanionMinutesManager::new(),
@@ -439,6 +447,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         }
 
         refresh_privacy_counts(&mut next);
+        persistence::save_sessions(&next.host.sessions);
         *snapshot = next.clone();
         Ok(next)
     }

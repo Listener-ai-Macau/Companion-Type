@@ -206,7 +206,7 @@ pub struct CompanionV1HostState {
     pub sessions: Vec<CompanionV1HostSession>,
 }
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1HostSession {
     pub id: String,
@@ -230,7 +230,7 @@ pub struct CompanionV1HostSession {
     pub retention: CompanionV1SessionRetention,
 }
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1AudioChunk {
     pub id: String,
@@ -242,7 +242,7 @@ pub struct CompanionV1AudioChunk {
     pub status: String,
 }
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1SessionRetention {
     pub audio_cached: bool,
@@ -253,7 +253,7 @@ pub struct CompanionV1SessionRetention {
     pub expires_at: Option<String>,
 }
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1ActionItem {
     pub text: String,
@@ -261,7 +261,7 @@ pub struct CompanionV1ActionItem {
     pub due: Option<String>,
 }
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1MeetingMinutes {
     pub generated_at: String,
