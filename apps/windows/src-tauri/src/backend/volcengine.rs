@@ -317,6 +317,12 @@ impl VolcengineSaucAsr {
                 .await
                 .map_err(|e| format!("send audio seq={seq}: {e}"))?;
             seq = seq.wrapping_add(1);
+            // Pace near real-time (~100 ms per 3200-byte frame). The SAUC
+            // bigmodel_async server ends the session if it does not receive the
+            // next audio packet within ~8 s; fast-bursting a long recording
+            // starves its VAD timeline and aborts with "timeout waiting next
+            // packet". Short clips survive a burst, long ones do not.
+            tokio::time::sleep(Duration::from_millis(100)).await;
         }
 
         // 4. End-of-stream frame: NegativeSequence + negative seq signals end.
