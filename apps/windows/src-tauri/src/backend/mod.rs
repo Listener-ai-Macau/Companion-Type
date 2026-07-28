@@ -6,6 +6,7 @@
 
 mod ble_bridge;
 mod diarization;
+mod export;
 mod firmware_ota;
 mod host_recording;
 mod minutes;
@@ -21,7 +22,7 @@ use serde::Serialize;
 use crate::companion_v1::{
     apply_fixture_control, fixture_snapshot, seal_companion_v1_session_chunks,
     CompanionV1AudioChunk, CompanionV1ControlAction, CompanionV1ControlRequest,
-    CompanionV1HostSession, CompanionV1Snapshot,
+    CompanionV1HostSession, CompanionV1Snapshot, CompanionV1UtteranceSegment,
 };
 use ble_bridge::CompanionBleBridge;
 pub use ble_bridge::CompanionBleBridgeStatus;
@@ -183,6 +184,10 @@ impl CompanionBackend for FixtureCompanionBackend {
         let mut transcription_note: Option<String> = None;
         let mut device_note: Option<String> = None;
         let mut privacy_report: Option<PrivacyEraseReport> = None;
+        // Timed speaker utterances from the transcription path, threaded to the
+        // session after the fixture reducer builds it (enables SRT export +
+        // playback sync). None for non-volcengine / failed transcription.
+        let mut transcript_utterances: Option<Vec<CompanionV1UtteranceSegment>> = None;
 
         match action {
             CompanionV1ControlAction::DeviceScan => {
@@ -285,6 +290,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                     ));
                     let mut request = request;
                     request.transcript_text = Some(transcript.text);
+                    transcript_utterances = Some(transcript.utterances);
                     if request.audio_path.is_none() {
                         request.audio_path = audio_path;
                     }
@@ -306,6 +312,14 @@ impl CompanionBackend for FixtureCompanionBackend {
             request
         };
         let mut next = apply_fixture_control(snapshot.clone(), request)?;
+
+        // Attach the timed speaker utterances from the transcription path to
+        // the selected session (the fixture reducer does not know about them).
+        if let Some(utterances) = transcript_utterances.take() {
+            if let Some(session) = selected_session_mut(&mut next) {
+                session.utterances = utterances;
+            }
+        }
 
         match action {
             CompanionV1ControlAction::DeviceScan
@@ -387,7 +401,10 @@ impl CompanionBackend for FixtureCompanionBackend {
                 }
             }
             CompanionV1ControlAction::MeetingGenerateMinutes
-            | CompanionV1ControlAction::MeetingExportMarkdown => {
+            | CompanionV1ControlAction::MeetingExportMarkdown
+            | CompanionV1ControlAction::MeetingExportTxt
+            | CompanionV1ControlAction::MeetingExportJson
+            | CompanionV1ControlAction::MeetingExportSrt => {
                 let generated_at = next.updated_at.clone();
                 let generated = selected_session(&next).and_then(|session| {
                     if session.transcript_text.trim().is_empty() {
@@ -399,7 +416,27 @@ impl CompanionBackend for FixtureCompanionBackend {
                 if let Some(generated) = generated {
                     if let Some(session) = selected_session_mut(&mut next) {
                         session.minutes = Some(generated.clone());
-                        session.export_markdown = generated.markdown.clone();
+                        // Pick the export format from the action. markdown /
+                        // generateMinutes keep the minutes markdown; txt/json/
+                        // srt render from the session. SRT with no utterance
+                        // timing falls back to markdown.
+                        session.export_markdown = match action {
+                            CompanionV1ControlAction::MeetingExportTxt => export::render_txt(session),
+                            CompanionV1ControlAction::MeetingExportJson => {
+                                export::render_json(session)
+                                    .unwrap_or_else(|_| generated.markdown.clone())
+                            }
+                            CompanionV1ControlAction::MeetingExportSrt => {
+                                let srt = export::render_srt(session);
+                                if srt.is_empty() {
+                                    generated.markdown.clone()
+                                } else {
+                                    srt
+                                }
+                            }
+                            _ => generated.markdown.clone(),
+                        };
+                        session.exported_at = Some(generated_at.clone());
                         session.status = "minutesReady".to_string();
                         session.pending_reason = None;
                         session.retention.minutes_cached = true;

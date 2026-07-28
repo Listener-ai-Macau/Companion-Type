@@ -456,6 +456,7 @@ mod tests {
             transcript_text: text.to_string(),
             transcript_preview: text.to_string(),
             transcript_segments: 3,
+            utterances: Vec::new(),
             minutes: None,
             export_markdown: String::new(),
             exported_at: None,

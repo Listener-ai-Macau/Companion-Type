@@ -224,6 +224,11 @@ pub struct CompanionV1HostSession {
     pub transcript_text: String,
     pub transcript_preview: String,
     pub transcript_segments: usize,
+    /// Timed, speaker-attributed utterances from the diarization-aware
+    /// transcription path. Empty for sessions transcribed before this field
+    /// existed or when diarization timing is unavailable.
+    #[serde(default)]
+    pub utterances: Vec<CompanionV1UtteranceSegment>,
     pub minutes: Option<CompanionV1MeetingMinutes>,
     pub export_markdown: String,
     pub exported_at: Option<String>,
@@ -275,6 +280,19 @@ pub struct CompanionV1MeetingMinutes {
     pub markdown: String,
 }
 
+/// One timed, speaker-attributed transcript utterance. Populated by the
+/// diarization-aware transcription path so exports can render timed formats
+/// (SRT subtitles) and the UI can show per-utterance speaker/timing. `speaker`
+/// is a 0-based diarization id; `None` when diarization could not attribute it.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1UtteranceSegment {
+    pub text: String,
+    pub start_ms: u64,
+    pub end_ms: u64,
+    pub speaker: Option<usize>,
+}
+
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1ControlEcho {
@@ -303,6 +321,9 @@ pub enum CompanionV1ControlAction {
     MeetingTranscribeAudio,
     MeetingGenerateMinutes,
     MeetingExportMarkdown,
+    MeetingExportTxt,
+    MeetingExportJson,
+    MeetingExportSrt,
     MeetingLoadDemo,
     MeetingResetSession,
     PrivacyEraseAudio,
@@ -645,7 +666,10 @@ pub fn apply_fixture_control(
             snapshot.meeting.status = "minutesReady".to_string();
             snapshot.meeting.transcript_count = count_transcript_sessions(&snapshot);
         }
-        CompanionV1ControlAction::MeetingExportMarkdown => {
+        CompanionV1ControlAction::MeetingExportMarkdown
+        | CompanionV1ControlAction::MeetingExportTxt
+        | CompanionV1ControlAction::MeetingExportJson
+        | CompanionV1ControlAction::MeetingExportSrt => {
             let index = ensure_selected_session(&mut snapshot, &request, &now);
             let minutes = snapshot.host.sessions[index]
                 .minutes
@@ -967,6 +991,7 @@ fn create_host_session(
         transcript_text: String::new(),
         transcript_preview: String::new(),
         transcript_segments: 0,
+        utterances: Vec::new(),
         minutes: None,
         export_markdown: String::new(),
         exported_at: None,
@@ -1491,6 +1516,9 @@ fn characteristic_for_action(action: CompanionV1ControlAction) -> &'static str {
         | CompanionV1ControlAction::MeetingResetSession => COMPANION_V1_HOST_RECORDING_CHANNEL,
         CompanionV1ControlAction::MeetingGenerateMinutes
         | CompanionV1ControlAction::MeetingExportMarkdown
+        | CompanionV1ControlAction::MeetingExportTxt
+        | CompanionV1ControlAction::MeetingExportJson
+        | CompanionV1ControlAction::MeetingExportSrt
         | CompanionV1ControlAction::MeetingLoadDemo => COMPANION_V1_HOST_MINUTES_CHANNEL,
         CompanionV1ControlAction::SpeakerPrompt | CompanionV1ControlAction::SpeakerStop => {
             COMPANION_V1_GATT_BOUNDARY.speaker_control_uuid
@@ -1565,6 +1593,9 @@ fn action_command(action: CompanionV1ControlAction) -> u8 {
         CompanionV1ControlAction::MeetingImportTranscript => 0x81,
         CompanionV1ControlAction::MeetingGenerateMinutes => 0x82,
         CompanionV1ControlAction::MeetingExportMarkdown => 0x83,
+        CompanionV1ControlAction::MeetingExportTxt => 0x87,
+        CompanionV1ControlAction::MeetingExportJson => 0x88,
+        CompanionV1ControlAction::MeetingExportSrt => 0x89,
         CompanionV1ControlAction::MeetingResetSession => 0x84,
         CompanionV1ControlAction::MeetingTranscribeAudio => 0x85,
         CompanionV1ControlAction::MeetingLoadDemo => 0x86,
@@ -1586,6 +1617,9 @@ fn host_only_action(action: CompanionV1ControlAction) -> bool {
             | CompanionV1ControlAction::MeetingTranscribeAudio
             | CompanionV1ControlAction::MeetingGenerateMinutes
             | CompanionV1ControlAction::MeetingExportMarkdown
+            | CompanionV1ControlAction::MeetingExportTxt
+            | CompanionV1ControlAction::MeetingExportJson
+            | CompanionV1ControlAction::MeetingExportSrt
             | CompanionV1ControlAction::MeetingLoadDemo
             | CompanionV1ControlAction::MeetingResetSession
             | CompanionV1ControlAction::PrivacyEraseAudio
