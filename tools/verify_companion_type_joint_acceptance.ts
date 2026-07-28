@@ -96,6 +96,7 @@ const artifacts = {
   typeBrowser: 'docs/validation/companion-type-browser-ui-chain.json',
   typeBrowserScreenshot: 'docs/validation/companion-type-browser-ui-chain.png',
   typeIndependentAsr: 'docs/validation/companion-type-independent-asr-chain.json',
+  typeRealOpenaiAsrProbe: 'docs/validation/companion-type-real-openai-asr-probe.json',
   typeRealMicrophone: 'docs/validation/companion-type-real-microphone.json',
   typeRealMicrophoneSoak: 'docs/validation/companion-type-real-microphone-soak.json',
   typeReleaseLaunch: 'docs/validation/companion-type-release-launch-smoke.json',
@@ -127,6 +128,7 @@ const artifacts = {
 const product = readJson(artifacts.typeProduct);
 const browser = readJson(artifacts.typeBrowser);
 const independentAsr = readJson(artifacts.typeIndependentAsr);
+const realOpenaiAsrProbe = existsSync(artifacts.typeRealOpenaiAsrProbe) ? readJson(artifacts.typeRealOpenaiAsrProbe) : null;
 const realMic = readJson(artifacts.typeRealMicrophone);
 const realMicSoak = existsSync(artifacts.typeRealMicrophoneSoak) ? readJson(artifacts.typeRealMicrophoneSoak) : null;
 const releaseLaunch = existsSync(artifacts.typeReleaseLaunch) ? readJson(artifacts.typeReleaseLaunch) : null;
@@ -359,19 +361,33 @@ const items = [
   {
     id: 3,
     name: '真实 ASR key 与真实音频',
-    status: env.openaiApiKey || env.companionAsrApiKey ? 'READY_FOR_REAL_ASR_RUN' : 'BLOCKED_EXTERNAL_KEY',
+    status: realOpenaiAsrProbe?.result?.includes('PASS_VOLCENGINE')
+      ? 'PASS_REAL_VOLCENGINE_TRANSCRIPT'
+      : env.openaiApiKey || env.companionAsrApiKey ? 'READY_FOR_REAL_ASR_RUN' : 'BLOCKED_EXTERNAL_KEY',
     evidence: [
       fileEvidence(artifacts.typeRealMicrophone),
       fileEvidence(artifacts.typeIndependentAsr),
+      fileEvidence(artifacts.typeRealOpenaiAsrProbe),
     ],
     observed: {
       realMicrophoneWav: realMic.wav,
       independentAsrMock: independentAsr.result,
       env,
+      realOpenaiAsrProbe: realOpenaiAsrProbe
+        ? {
+            result: realOpenaiAsrProbe.result,
+            provider: realOpenaiAsrProbe.provider,
+            endpoint: realOpenaiAsrProbe.endpoint,
+            transcript: realOpenaiAsrProbe.transcript,
+            transcriptLength: realOpenaiAsrProbe.transcriptLength,
+          }
+        : null,
     },
-    remainingGate: env.openaiApiKey || env.companionAsrApiKey
-      ? '运行真实 ASR provider 上传一段真实 WAV 并检查 transcript。'
-      : '需要设置 OPENAI_API_KEY 或 COMPANION_TYPE_ASR_API_KEY；当前不能诚实标记真实 ASR 通过。',
+    remainingGate: realOpenaiAsrProbe?.result?.includes('PASS_VOLCENGINE')
+      ? '真实云 ASR 已通过 Companion-Type 的火山 SAUC provider 转写出真实 transcript(证据 docs/validation/companion-type-real-openai-asr-probe.json)。'
+      : env.openaiApiKey || env.companionAsrApiKey
+        ? '运行真实 ASR provider 上传一段真实 WAV 并检查 transcript。'
+        : '需要设置 OPENAI_API_KEY 或 COMPANION_TYPE_ASR_API_KEY；当前不能诚实标记真实 ASR 通过。',
   },
   {
     id: 4,
