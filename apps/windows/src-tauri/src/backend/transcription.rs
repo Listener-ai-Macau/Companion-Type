@@ -11,7 +11,7 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Duration;
 
-use super::diarization::{self, DiarizationSegment};
+use super::diarization::{self, EmbeddingSegment};
 use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr};
 use denzic_host_audio_v1_core::asr::{normalize_transcript, BatchAsrProvider};
 use denzic_host_audio_v1_core::asr_openai::{OpenAiAsrConfig, OpenAiCompatibleAsr};
@@ -86,6 +86,13 @@ impl CompanionTranscriptionManager {
         }
         if real_paths.len() == 1 {
             return self.transcribe_existing_path(&real_paths[0]);
+        }
+
+        // Long meeting (multiple chunks): when Volcengine is the provider,
+        // diarize GLOBALLY across all chunks so speaker ids stay consistent —
+        // per-chunk diarization would renumber the same person in each chunk.
+        if volcengine_provider_configured() {
+            return volcengine_multi_chunk_transcript(&real_paths);
         }
 
         let mut parts = Vec::new();
@@ -233,7 +240,9 @@ fn volcengine_provider_configured() -> bool {
         && std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY").is_ok()
 }
 
-fn volcengine_transcript(audio: &Path) -> Result<CompanionTranscript, String> {
+/// Low-level: transcribe one WAV via Volcengine SAUC, returning the clean
+/// merged text and the timed utterances (no diarization yet).
+fn volcengine_transcribe(audio: &Path) -> Result<(String, Vec<Utterance>), String> {
     let app_id = std::env::var("COMPANION_TYPE_VOLC_APP_KEY")
         .map_err(|_| "COMPANION_TYPE_VOLC_APP_KEY is not set".to_string())?;
     let access_token = std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY")
@@ -245,79 +254,103 @@ fn volcengine_transcript(audio: &Path) -> Result<CompanionTranscript, String> {
         access_token,
         resource_id,
     });
-    let (clean_text, utterances) = asr.transcribe_file(audio)?;
-
-    // When the speaker-verification models are available, diarize the same WAV
-    // and align each ASR utterance to the speaker segment it overlaps most. If
-    // that yields a non-empty speaker-tagged transcript, it becomes the
-    // transcript text so downstream minutes / preview carry speaker attribution
-    // (and the LLM minutes command gets richer `{transcript}` context).
-    // Otherwise fall back to the clean merged transcript.
-    let (text, mode) = match diarization::diarize(audio) {
-        Ok(segments) if !segments.is_empty() && !utterances.is_empty() => {
-            let tagged = render_speaker_tagged(&utterances, &segments);
-            if tagged.is_empty() {
-                (normalize_transcript(&clean_text), "ws-sauc:bigmodel".to_string())
-            } else {
-                (normalize_transcript(&tagged), "ws-sauc:bigmodel+diarized".to_string())
-            }
-        }
-        _ => (normalize_transcript(&clean_text), "ws-sauc:bigmodel".to_string()),
-    };
-
-    Ok(CompanionTranscript {
-        text,
-        provider_id: "companion-type-volcengine-asr".to_string(),
-        mode,
-        evidence_path: None,
-    })
+    asr.transcribe_file(audio)
 }
 
-/// Pick the speaker id whose diarization segment has the greatest temporal
-/// overlap with this utterance. Falls back to the nearest segment by center
-/// distance when there is no overlap (e.g. a short utterance inside a VAD gap).
-fn assign_speaker(utt: &Utterance, segments: &[DiarizationSegment]) -> Option<usize> {
-    if segments.is_empty() {
+/// For each utterance, find the index of the speaker-embedding segment with the
+/// greatest temporal overlap (nearest by center distance as a fallback when the
+/// utterance sits in a VAD gap). The caller lifts that segment's embedding for
+/// GLOBAL clustering across chunks.
+fn utterance_embedding_index(utt: &Utterance, segs: &[EmbeddingSegment]) -> Option<usize> {
+    if segs.is_empty() {
         return None;
     }
     let u_start = utt.start_ms as i64;
     let u_end = utt.end_ms as i64;
-    let mut best_overlap: Option<(i64, usize)> = None;
-    for seg in segments {
+    let mut best: Option<(i64, usize)> = None;
+    for (i, seg) in segs.iter().enumerate() {
         let overlap = (u_end.min(seg.end_ms as i64) - u_start.max(seg.start_ms as i64)).max(0);
-        if overlap > 0 && best_overlap.map_or(true, |(b, _)| overlap > b) {
-            best_overlap = Some((overlap, seg.speaker));
+        if overlap > 0 && best.map_or(true, |(b, _)| overlap > b) {
+            best = Some((overlap, i));
         }
     }
-    if let Some((_, speaker)) = best_overlap {
-        return Some(speaker);
+    if let Some((_, i)) = best {
+        return Some(i);
     }
-    // No overlap: nearest segment by center distance.
     let center = (u_start + u_end) / 2;
-    segments
-        .iter()
-        .min_by_key(|seg| {
+    segs.iter()
+        .enumerate()
+        .min_by_key(|(_, seg)| {
             let seg_center = (seg.start_ms as i64 + seg.end_ms as i64) / 2;
             (seg_center - center).abs()
         })
-        .map(|seg| seg.speaker)
+        .map(|(i, _)| i)
 }
 
-/// Render a speaker-tagged transcript: each utterance becomes "说话人N: <text>",
+/// Collect (text, embedding) per utterance for one audio chunk: align each ASR
+/// utterance to its dominant VAD/embedding segment and lift that segment's
+/// embedding. Utterances VAD missed get no embedding (their speaker later falls
+/// back to "说话人?" at render time).
+fn collect_utterance_embeddings(
+    audio: &Path,
+    utterances: &[Utterance],
+) -> Vec<(String, Option<Vec<f32>>)> {
+    let segs = diarization::segment_embeddings(audio).unwrap_or_default();
+    utterances
+        .iter()
+        .map(|utt| {
+            let emb = utterance_embedding_index(utt, &segs).map(|i| segs[i].embedding.clone());
+            (utt.text.clone(), emb)
+        })
+        .collect()
+}
+
+/// Cluster per-utterance embeddings GLOBALLY and assign each utterance a
+/// speaker id. Because clustering runs once over every utterance (across all
+/// chunks), a speaker keeps the same id throughout a chunked long meeting —
+/// the fix for per-chunk 1/2/1/2 renumbering. Pure: no audio access, testable.
+fn cluster_utterances_by_speaker(
+    per_utterance: &[(String, Option<Vec<f32>>)],
+) -> Vec<(String, Option<usize>)> {
+    let mut embeddings: Vec<Vec<f32>> = Vec::new();
+    let mut emb_indices: Vec<Option<usize>> = Vec::with_capacity(per_utterance.len());
+    for (_, emb) in per_utterance {
+        match emb {
+            Some(e) => {
+                emb_indices.push(Some(embeddings.len()));
+                embeddings.push(e.clone());
+            }
+            None => emb_indices.push(None),
+        }
+    }
+    let speakers = if embeddings.is_empty() {
+        Vec::new()
+    } else {
+        diarization::cluster_speakers(&embeddings)
+    };
+    per_utterance
+        .iter()
+        .enumerate()
+        .map(|(i, (text, _))| {
+            let speaker = emb_indices[i].and_then(|gi| speakers.get(gi).copied());
+            (text.clone(), speaker)
+        })
+        .collect()
+}
+
+/// Render (text, speaker) pairs as a speaker-tagged transcript: "说话人N: <text>",
 /// merging consecutive utterances from the same speaker onto one line. Speaker
-/// ids are 0-based internally and shown 1-based to humans. Timestamps come from
-/// the ASR provider; speakers come from diarization alignment.
-fn render_speaker_tagged(utterances: &[Utterance], segments: &[DiarizationSegment]) -> String {
+/// ids are 0-based internally, shown 1-based to humans. None -> "说话人?".
+fn render_tagged(pairs: &[(String, Option<usize>)]) -> String {
     let mut groups: Vec<(Option<usize>, String)> = Vec::new();
-    for utt in utterances {
-        let speaker = assign_speaker(utt, segments);
+    for (text, speaker) in pairs {
         if let Some(last) = groups.last_mut() {
-            if last.0 == speaker {
-                last.1.push_str(&utt.text);
+            if last.0 == *speaker {
+                last.1.push_str(text);
                 continue;
             }
         }
-        groups.push((speaker, utt.text.clone()));
+        groups.push((*speaker, text.clone()));
     }
     groups
         .into_iter()
@@ -330,6 +363,53 @@ fn render_speaker_tagged(utterances: &[Utterance], segments: &[DiarizationSegmen
         })
         .collect::<Vec<_>>()
         .join("\n")
+}
+
+/// Build a CompanionTranscript from clean text + globally-clustered speaker
+/// pairs. If at least one utterance got a real speaker, the transcript text is
+/// the speaker-tagged form; otherwise it falls back to the clean merged text
+/// (single-speaker / no-models behavior unchanged).
+fn volcengine_transcript_from(
+    clean_text: &str,
+    per_utterance: &[(String, Option<Vec<f32>>)],
+) -> CompanionTranscript {
+    let pairs = cluster_utterances_by_speaker(per_utterance);
+    let any_speaker = pairs.iter().any(|(_, s)| s.is_some());
+    let (text, mode) = if any_speaker {
+        (
+            normalize_transcript(&render_tagged(&pairs)),
+            "ws-sauc:bigmodel+diarized".to_string(),
+        )
+    } else {
+        (normalize_transcript(clean_text), "ws-sauc:bigmodel".to_string())
+    };
+    CompanionTranscript {
+        text,
+        provider_id: "companion-type-volcengine-asr".to_string(),
+        mode,
+        evidence_path: None,
+    }
+}
+
+fn volcengine_transcript(audio: &Path) -> Result<CompanionTranscript, String> {
+    let (clean_text, utterances) = volcengine_transcribe(audio)?;
+    let per_utterance = collect_utterance_embeddings(audio, &utterances);
+    Ok(volcengine_transcript_from(&clean_text, &per_utterance))
+}
+
+/// Multi-chunk long-meeting path: transcribe each chunk, collect per-utterance
+/// embeddings from every chunk, then cluster GLOBALLY once so speaker ids stay
+/// consistent across chunks (instead of per-chunk renumbering). The tagged
+/// transcript follows chunk order, utterance order within each chunk.
+fn volcengine_multi_chunk_transcript(paths: &[PathBuf]) -> Result<CompanionTranscript, String> {
+    let mut per_utterance: Vec<(String, Option<Vec<f32>>)> = Vec::new();
+    let mut clean_parts: Vec<String> = Vec::new();
+    for path in paths {
+        let (text, utterances) = volcengine_transcribe(path)?;
+        clean_parts.push(text);
+        per_utterance.extend(collect_utterance_embeddings(path, &utterances));
+    }
+    Ok(volcengine_transcript_from(&clean_parts.join("\n"), &per_utterance))
 }
 
 fn openai_provider_configured() -> bool {
@@ -530,45 +610,61 @@ mod tests {
     }
 
     #[test]
-    fn assign_speaker_picks_max_overlap() {
+    fn utterance_embedding_index_picks_max_overlap() {
         let segs = vec![
-            DiarizationSegment { start_ms: 0, end_ms: 1000, speaker: 0 },
-            DiarizationSegment { start_ms: 2000, end_ms: 3000, speaker: 1 },
+            EmbeddingSegment { start_ms: 0, end_ms: 1000, embedding: vec![1.0] },
+            EmbeddingSegment { start_ms: 2000, end_ms: 3000, embedding: vec![2.0] },
         ];
         let u = Utterance { text: "x".into(), start_ms: 2500, end_ms: 2800 };
-        assert_eq!(assign_speaker(&u, &segs), Some(1));
+        assert_eq!(utterance_embedding_index(&u, &segs), Some(1));
     }
 
     #[test]
-    fn assign_speaker_falls_back_to_nearest_when_no_overlap() {
+    fn utterance_embedding_index_falls_back_to_nearest_when_no_overlap() {
         let segs = vec![
-            DiarizationSegment { start_ms: 0, end_ms: 1000, speaker: 0 },
-            DiarizationSegment { start_ms: 2000, end_ms: 3000, speaker: 1 },
+            EmbeddingSegment { start_ms: 0, end_ms: 1000, embedding: vec![1.0] },
+            EmbeddingSegment { start_ms: 2000, end_ms: 3000, embedding: vec![2.0] },
         ];
         // Utterance sits in a VAD gap (1100-1200); nearest center is segment 0.
         let u = Utterance { text: "x".into(), start_ms: 1100, end_ms: 1200 };
-        assert_eq!(assign_speaker(&u, &segs), Some(0));
+        assert_eq!(utterance_embedding_index(&u, &segs), Some(0));
     }
 
     #[test]
-    fn render_speaker_tagged_merges_consecutive_same_speaker() {
-        let segs = vec![
-            DiarizationSegment { start_ms: 0, end_ms: 1000, speaker: 0 },
-            DiarizationSegment { start_ms: 2000, end_ms: 3000, speaker: 1 },
+    fn cluster_utterances_keeps_speakers_consistent_across_chunks() {
+        // Two chunks, three utterances, two real speakers. A1 (chunk 1) and A2
+        // (chunk 2) are the SAME speaker (near-identical embedding); B1 is a
+        // different speaker. Global clustering must give A1 and A2 the SAME id
+        // even though they are fed as separate "chunks" — this is the fix for
+        // per-chunk speaker renumbering in long meetings.
+        let per: Vec<(String, Option<Vec<f32>>)> = vec![
+            ("A1".into(), Some(vec![1.0_f32, 0.0])),   // speaker A, chunk 1
+            ("B1".into(), Some(vec![0.0, 1.0])),       // speaker B, chunk 1
+            ("A2".into(), Some(vec![0.98, 0.19])),     // speaker A again, chunk 2
         ];
-        let utts = vec![
-            Utterance { text: "甲".into(), start_ms: 100, end_ms: 900 }, // -> 0
-            Utterance { text: "乙".into(), start_ms: 1100, end_ms: 1200 }, // gap -> 0
-            Utterance { text: "丙".into(), start_ms: 2100, end_ms: 2900 }, // -> 1
+        let pairs = cluster_utterances_by_speaker(&per);
+        assert_eq!(pairs[0].1, pairs[2].1, "A1 and A2 same speaker: {:?}", pairs);
+        assert_ne!(pairs[0].1, pairs[1].1, "A1 and B1 different speakers");
+        assert!(pairs.iter().all(|(_, s)| s.is_some()), "all assigned a speaker");
+    }
+
+    #[test]
+    fn render_tagged_merges_consecutive_same_speaker() {
+        let pairs = vec![
+            ("甲".to_string(), Some(0)),
+            ("乙".to_string(), Some(0)),
+            ("丙".to_string(), Some(1)),
         ];
-        let out = render_speaker_tagged(&utts, &segs);
+        let out = render_tagged(&pairs);
         assert!(out.contains("说话人1: 甲乙"), "out={out}");
         assert!(out.contains("说话人2: 丙"), "out={out}");
     }
 
     #[test]
-    fn render_speaker_tagged_handles_empty() {
-        assert_eq!(render_speaker_tagged(&[], &[]), "");
+    fn render_tagged_handles_empty_and_unknown_speaker() {
+        assert_eq!(render_tagged(&[]), "");
+        let out = render_tagged(&[("x".to_string(), None)]);
+        assert!(out.contains("说话人?"), "out={out}");
     }
 
     /// End-to-end: volcengine transcription + sherpa-onnx diarization of the

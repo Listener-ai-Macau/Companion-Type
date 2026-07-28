@@ -30,6 +30,18 @@ pub struct DiarizationSegment {
     pub speaker: usize,
 }
 
+/// A VAD speech segment with its extracted (normalized) speaker embedding.
+/// Exposed so the transcription layer can collect embeddings across MANY audio
+/// chunks and cluster them once globally — keeping speaker ids consistent
+/// across a chunked long meeting instead of re-clustering (and renumbering
+/// speakers) per chunk.
+#[derive(Debug, Clone)]
+pub struct EmbeddingSegment {
+    pub start_ms: u64,
+    pub end_ms: u64,
+    pub embedding: Vec<f32>,
+}
+
 // ===================== sherpa-onnx speaker-embedding FFI =====================
 
 #[repr(C)]
@@ -277,6 +289,15 @@ fn cosine(a: &[f32], b: &[f32]) -> f32 {
     a.iter().zip(b).map(|(x, y)| x * y).sum()
 }
 
+/// Cluster a set of speaker embeddings with the canonical Companion threshold
+/// (CLUSTER_COSINE_THRESHOLD). Public so callers that collect embeddings
+/// across many audio chunks can cluster them ONCE globally — this is what
+/// keeps speaker ids consistent across a chunked long meeting. Returns a
+/// speaker id (0-based) per embedding, in input order.
+pub fn cluster_speakers(embeddings: &[Vec<f32>]) -> Vec<usize> {
+    ahc_cluster(embeddings, CLUSTER_COSINE_THRESHOLD)
+}
+
 /// Agglomerative hierarchical clustering: start with each embedding as its own
 /// cluster, repeatedly merge the two clusters whose average-link cosine
 /// similarity is highest, as long as it is >= threshold. Returns a speaker id
@@ -336,9 +357,12 @@ fn avg_link(embeddings: &[Vec<f32>], a: &[usize], b: &[usize]) -> f32 {
 // ===================== diarize =====================
 
 /// Read a 16k/mono/16-bit WAV, slice it into speech segments via energy VAD,
-/// extract a speaker embedding per segment, cluster the embeddings, and return
-/// one DiarizationSegment per speech segment with a speaker id.
-pub fn diarize(wav_path: &Path) -> Result<Vec<DiarizationSegment>, String> {
+/// and return each segment with its start/end ms and extracted speaker
+/// embedding. No clustering happens here — callers can collect these across
+/// many chunks and cluster once with [`cluster_speakers`] so speaker ids stay
+/// consistent across a chunked long meeting. Segments whose embedding
+/// extraction fails (too short / noisy) are dropped.
+pub fn segment_embeddings(wav_path: &Path) -> Result<Vec<EmbeddingSegment>, String> {
     let pcm = read_pcm16k_mono_wav(wav_path)?;
     let samples: Vec<f32> = pcm
         .chunks_exact(2)
@@ -346,46 +370,45 @@ pub fn diarize(wav_path: &Path) -> Result<Vec<DiarizationSegment>, String> {
         .collect();
     let raw_segments = energy_vad(&samples);
     let min_samples = SAMPLE_RATE as usize * MIN_SEGMENT_MS / 1000;
-    let valid: Vec<(usize, usize)> = raw_segments
-        .into_iter()
-        .filter(|(s, e)| e - s >= min_samples)
-        .collect();
-    if valid.is_empty() {
-        return Ok(Vec::new());
-    }
-    let rt = runtime()?;
-    // Extract embedding per segment. Skip segments that fail (too short/noisy).
-    let mut embeddings: Vec<Vec<f32>> = Vec::new();
-    let mut seg_idx_to_emb: Vec<Option<usize>> = Vec::with_capacity(valid.len());
-    for (s, e) in &valid {
-        match rt.embedding(&samples[*s..*e]) {
-            Ok(emb) => {
-                seg_idx_to_emb.push(Some(embeddings.len()));
-                embeddings.push(emb);
-            }
-            Err(_) => seg_idx_to_emb.push(None),
-        }
-    }
-    if embeddings.is_empty() {
-        return Ok(Vec::new());
-    }
-    let speakers = ahc_cluster(&embeddings, CLUSTER_COSINE_THRESHOLD);
     let to_ms = |sample: usize| -> u64 {
         (sample as f32 / SAMPLE_RATE as f32 * 1000.0) as u64
     };
-    let out: Vec<DiarizationSegment> = valid
+    let rt = runtime()?;
+    let mut out = Vec::new();
+    for (s, e) in raw_segments
+        .into_iter()
+        .filter(|(s, e)| e - s >= min_samples)
+    {
+        if let Ok(emb) = rt.embedding(&samples[s..e]) {
+            out.push(EmbeddingSegment {
+                start_ms: to_ms(s),
+                end_ms: to_ms(e),
+                embedding: emb,
+            });
+        }
+    }
+    Ok(out)
+}
+
+/// Convenience for a single file: segment + cluster locally. For multi-chunk
+/// meetings, collect [`segment_embeddings`] across all chunks and cluster once
+/// with [`cluster_speakers`] so speaker ids stay consistent across chunks.
+pub fn diarize(wav_path: &Path) -> Result<Vec<DiarizationSegment>, String> {
+    let segs = segment_embeddings(wav_path)?;
+    if segs.is_empty() {
+        return Ok(Vec::new());
+    }
+    let embeddings: Vec<Vec<f32>> = segs.iter().map(|s| s.embedding.clone()).collect();
+    let speakers = ahc_cluster(&embeddings, CLUSTER_COSINE_THRESHOLD);
+    Ok(segs
         .iter()
         .enumerate()
-        .filter_map(|(i, (s, e))| {
-            let emb_idx = seg_idx_to_emb.get(i).copied().flatten()?;
-            Some(DiarizationSegment {
-                start_ms: to_ms(*s),
-                end_ms: to_ms(*e),
-                speaker: speakers[emb_idx],
-            })
+        .map(|(i, s)| DiarizationSegment {
+            start_ms: s.start_ms,
+            end_ms: s.end_ms,
+            speaker: speakers[i],
         })
-        .collect();
-    Ok(out)
+        .collect())
 }
 
 fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
