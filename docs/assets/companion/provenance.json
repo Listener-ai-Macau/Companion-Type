@@ -1,0 +1,22 @@
+{
+  "kind": "retained screen artwork, illustrative layout",
+  "hardwarePhoto": false,
+  "hardwareAcceptance": "NOT_RUN",
+  "sourceImages": {
+    "calm.png": {
+      "source": "Companion-Firmware/.cache/wba-visual-review/images/family-calm.png",
+      "sha256": "46d55f72e61d1ae0d4b3be902d7ca3d4de582d22fecb0ed9facc823fc48dd762",
+      "pixelsModified": false
+    },
+    "curious.png": {
+      "source": "Companion-Firmware/.cache/wba-visual-review/images/family-curious.png",
+      "sha256": "1b66049b19439bedfd75a9ab336d5be10304779e8b075e9a7161b22f471a54c5",
+      "pixelsModified": false
+    },
+    "recording.png": {
+      "source": "Companion-Firmware/.cache/wba-visual-review/images/cue-recording.png",
+      "sha256": "e2ac8c0806ef1da3609c60a71f8c0b815cd7ab7755704176fc8441b2e4d67b19",
+      "pixelsModified": false
+    }
+  }
+}
