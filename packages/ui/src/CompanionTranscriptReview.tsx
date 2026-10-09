@@ -1,0 +1,145 @@
+import { useEffect, useState } from 'react';
+import { Pencil, RotateCcw } from 'lucide-react';
+import {
+  companionReviewedTranscript, companionReviewedUtterances, companionSessionHasFinalTranscript,
+  companionTranscriptReviewIsStale, companionTranscriptReviewRevision, companionTranscriptSpeakerLabel,
+  type CompanionV1HostSession, type CompanionV1Snapshot, type CompanionV1UtteranceSegment,
+} from '@companion-type/core';
+import type { CompanionMeetingSaveRequest } from './CompanionDashboard';
+
+type Draft = {
+  sourceText: string; sourceUtterances: CompanionV1UtteranceSegment[]; revision: number;
+  text: string; rows: Array<{ text: string; speakerName: string }>; names: Record<number, string>;
+};
+function draftFrom(session: CompanionV1HostSession): Draft {
+  const stale = companionTranscriptReviewIsStale(session);
+  const review = stale ? null : session.transcriptReview;
+  return {
+    sourceText: session.transcriptText, sourceUtterances: structuredClone(session.utterances ?? []),
+    revision: session.transcriptReview?.revision ?? 0,
+    text: companionReviewedTranscript(session),
+    rows: companionReviewedUtterances(session).map((u, index) => ({ text: u.text,
+      speakerName: review?.utteranceEdits.find((e) => e.index === index)?.speakerName ?? '' })),
+    names: Object.fromEntries((review?.speakerNames ?? []).map((n) => [n.speaker, n.name])),
+  };
+}
+function stamp(ms: number) {
+  const seconds = Math.floor(ms / 1000);
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange }: {
+  session: CompanionV1HostSession; visible: boolean; blocked: boolean;
+  onSave?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
+  onUnsavedChange: (unsaved: boolean) => void;
+}) {
+  // Keep per-meeting drafts mounted even when the user switches content tabs.
+  const [drafts, setDrafts] = useState<Record<string, Draft>>({});
+  const [saving, setSaving] = useState<string | null>(null);
+  const [result, setResult] = useState<{ id: string; message: string } | null>(null);
+  const draft = drafts[session.id];
+  const stale = companionTranscriptReviewIsStale(session);
+  const revision = companionTranscriptReviewRevision(session);
+  const rows = draft?.sourceUtterances ?? companionReviewedUtterances(session);
+  const speakers = [...new Set(rows.flatMap((u) => u.speaker == null ? [] : [u.speaker]))].sort((a,b) => a-b);
+  const changedSource = draft && (draft.sourceText !== session.transcriptText
+    || JSON.stringify(draft.sourceUtterances) !== JSON.stringify(session.utterances ?? [])
+    || draft.revision !== (session.transcriptReview?.revision ?? 0));
+  const canEdit = Boolean(onSave && companionSessionHasFinalTranscript(session) && !blocked && !saving
+    && !['transcribing','generatingMinutes'].includes(session.recovery?.stage ?? ''));
+  useEffect(() => { onUnsavedChange(Object.keys(drafts).length > 0); }, [drafts, onUnsavedChange]);
+
+  function start() {
+    setDrafts((previous) => ({ ...previous, [session.id]: draftFrom(session) })); setResult(null);
+  }
+  function cancel(id: string) {
+    setDrafts((previous) => { const next = { ...previous }; delete next[id]; return next; });
+  }
+  function change(update: (draft: Draft) => Draft) {
+    setDrafts((previous) => ({ ...previous, [session.id]: update(previous[session.id]) }));
+  }
+  async function save(restoreOriginal = false) {
+    if (!onSave || saving || blocked) return;
+    const id = session.id;
+    const value = restoreOriginal ? draftFrom(session) : draft;
+    if (!value) return;
+    const transcriptReview = {
+      expectedTranscriptText: value.sourceText, expectedUtterances: value.sourceUtterances,
+      expectedRevision: value.revision, restoreOriginal,
+      text: !restoreOriginal && value.rows.length === 0 ? value.text : undefined,
+      utteranceEdits: restoreOriginal ? [] : value.rows.flatMap((row, index) => (
+        row.text.trim() !== value.sourceUtterances[index].text.trim() || row.speakerName.trim()
+          ? [{ index, text: row.text, speakerName: row.speakerName.trim() || undefined }] : []
+      )),
+      speakerNames: restoreOriginal ? [] : Object.entries(value.names).flatMap(([speaker,name]) => name.trim() ? [{ speaker: Number(speaker), name }] : []),
+    };
+    setSaving(id); setResult(null);
+    try {
+      const saved = await onSave({ sessionId: id, transcriptReview });
+      if (saved.host.persistence && saved.host.persistence.status !== 'ready') {
+        setResult({ id, message: '修订尚未保存到磁盘，草稿已保留。请先使用“重试保存”，不要关闭应用。' });
+      } else {
+        cancel(id);
+        setResult({ id, message: restoreOriginal ? '已恢复原始识别结果。已有纪要会继续提示是否需要更新。'
+          : '修订已保存在本机，原始识别结果仍保留。请在纪要页重新整理需要更新的版本。' });
+      }
+    } catch (error) {
+      setResult({ id, message: `${String(error)} 草稿仍保留。` });
+    } finally { setSaving(null); }
+  }
+
+  return <section className="ct-transcript-document" hidden={!visible} aria-label="转写核对">
+    <div className="ct-document-head"><strong>逐字稿</strong><span>{companionReviewedTranscript(session).length} 字{revision !== null ? ' · 已人工修订' : ''}</span></div>
+    <p className="ct-step-meta">可对照原音修正文字和说话人。回听位置与原始识别结果会保留。</p>
+    {stale ? <div className="ct-step-warn" role="status">原始转写已更新，旧修订已保留供核对，没有套用到新的时间轴。请重新核对，或恢复原始转写。
+      <details><summary>查看之前的修订</summary>
+        {session.transcriptReview?.text ? <p>{session.transcriptReview.text}</p> : session.transcriptReview?.sourceUtterances.map((u,i) => {
+          const edit = session.transcriptReview?.utteranceEdits.find((e) => e.index === i);
+          const name = edit?.speakerName || session.transcriptReview?.speakerNames.find((n) => n.speaker === u.speaker)?.name;
+          return <p key={i}>{stamp(u.startMs)} · {name || (u.speaker == null ? '' : `说话人${u.speaker + 1}`)} {edit?.text ?? u.text}</p>;
+        })}
+      </details></div> : null}
+    {draft ? <div className="ct-transcript-review-editor">
+      {changedSource ? <p className="ct-step-warn" role="status">后台内容已变化，当前草稿仍保留。请复制需要保留的修改，再载入最新内容核对。
+        <button type="button" className="ct-text-button" disabled={Boolean(saving)} onClick={start}>载入最新内容</button></p> : null}
+      {speakers.length ? <div className="ct-speaker-name-fields" aria-label="说话人名称">
+        {speakers.map((speaker) => <label key={speaker}>说话人{speaker+1}
+          <input aria-label={`说话人${speaker+1}名称`} maxLength={32} placeholder={`说话人${speaker+1}`}
+            value={draft.names[speaker] ?? ''} disabled={Boolean(saving)}
+            onChange={(e) => change((d) => ({ ...d, names: { ...d.names, [speaker]: e.target.value } }))} />
+        </label>)}
+      </div> : null}
+      {rows.length ? rows.map((source,index) => <div className="ct-transcript-review-row" key={index}>
+        <div className="ct-transcript-review-meta"><time>{stamp(source.startMs)}–{stamp(source.endMs)}</time>
+          <input aria-label={`第${index+1}段说话人`} maxLength={32} value={draft.rows[index].speakerName}
+            placeholder={source.speaker == null ? '此段说话人（可选）' : draft.names[source.speaker] || `说话人${source.speaker+1}`}
+            disabled={Boolean(saving)} onChange={(e) => change((d) => ({ ...d, rows: d.rows.map((row,i) => i===index ? { ...row, speakerName: e.target.value } : row) }))} />
+        </div>
+        <textarea aria-label={`第${index+1}段转写`} value={draft.rows[index].text} spellCheck={false} disabled={Boolean(saving)}
+          onChange={(e) => change((d) => ({ ...d, rows: d.rows.map((row,i) => i===index ? { ...row, text: e.target.value } : row) }))} />
+      </div>) : <textarea aria-label="修订转写全文" value={draft.text} spellCheck={false} disabled={Boolean(saving)}
+        onChange={(e) => change((d) => ({ ...d, text: e.target.value }))} />}
+      <div className="ct-button-row">
+        <button type="button" className="ct-action ct-action-primary" disabled={!canEdit || Boolean(changedSource)
+          || (draft.rows.length ? draft.rows.some((row) => !row.text.trim()) : !draft.text.trim())} onClick={() => void save()}>{saving === session.id ? '正在保存…' : '保存转写修订'}</button>
+        <button type="button" className="ct-action" disabled={Boolean(saving)} onClick={() => cancel(session.id)}>取消修订</button>
+      </div>
+    </div> : <>
+      <div className="ct-inline-edit-actions"><button type="button" className="ct-text-button" disabled={!canEdit}
+        title={!onSave ? '请在桌面版修订转写' : undefined} onClick={start}><Pencil size={14} />修订转写与说话人</button>
+        {revision !== null || stale ? <button type="button" className="ct-text-button" disabled={!canEdit} onClick={() => void save(true)}><RotateCcw size={14} />恢复原始转写</button> : null}
+      </div>
+      <div className="ct-transcript-lines">
+        {rows.length ? rows.map((u,index) => <div className="ct-reviewed-utterance" key={index}>
+          <div className="ct-transcript-review-meta"><time>{stamp(u.startMs)}–{stamp(u.endMs)}</time><strong>{companionTranscriptSpeakerLabel(session,index)}</strong></div>
+          <p>{u.text}</p>
+        </div>) : companionReviewedTranscript(session).split('\n').map((line,i) => <p key={i}>{line || '\u00a0'}</p>)}
+      </div>
+    </>}
+    {result?.id === session.id ? <p className="ct-step-meta" role="status">{result.message}</p> : null}
+    {session.transcriptReview ? <details className="ct-original-transcript"><summary>查看原始识别结果</summary>
+      <p className="ct-step-meta">原音和原始文字未被修订覆盖。人工修订不代表自动识别准确率已通过。</p>
+      <div className="ct-transcript-lines">{session.transcriptText.split('\n').map((line,i) => <p key={i}>{line}</p>)}</div>
+    </details> : null}
+  </section>;
+}

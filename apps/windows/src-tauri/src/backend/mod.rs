@@ -5,32 +5,545 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+use ble_bridge::CompanionBleOperation;
+#[cfg(windows)]
+mod ble_pairing;
+#[cfg(windows)]
+mod ble_throughput;
+pub(crate) use ble_bridge::owned_offline_recording_link;
+mod recording_capacity;
+mod recording_metrics;
+pub(crate) mod recording_bookmarks;
+pub(crate) mod meeting_notes;
+pub(crate) mod board_meeting;
+mod board_stop;
+pub(crate) mod recording_transfer;
+pub(crate) mod recording_sync;
+#[cfg(test)]
+#[path = "recording_sync/flow_tests.rs"]
+mod recording_sync_flow_tests;
+pub(crate) mod recording_wire;
+pub(crate) mod recording_discard;
+pub(crate) use ble_bridge::discard_oldest_recording;
+mod audio_decode;
+pub(crate) mod audio_export;
+mod audio_storage;
+pub(crate) mod audio_artifacts;
+pub(crate) mod audio_components;
+pub(crate) use audio_decode::decode_recording;
+pub(crate) use ble_bridge::pull_device_diagnostics;
+mod device_connection;
+pub(crate) mod hardware_identity;
+pub(crate) mod desktop_update;
 mod diarization;
-mod export;
+pub(crate) use diarization::model_files_present as speaker_model_files_present;
+pub(crate) use diarization::prepare_runtime as prepare_speaker_runtime;
+pub(crate) mod diagnostics;
+pub(crate) mod export;
+pub(crate) mod file_storage_probe;
+mod action_export;
+pub(crate) mod service_check;
+pub(crate) mod service_network_probe;
 mod firmware_ota;
 mod host_recording;
+mod live_asr;
 mod minutes;
+mod external_command;
+pub(crate) mod external_command_probe;
+#[cfg(windows)]
+mod ota_winrt;
 mod persistence;
+mod session_store;
+pub(crate) mod meeting_workspace;
+pub(crate) mod transcript_review;
 mod privacy;
+pub(crate) use privacy::verify_privacy_delete;
+pub mod product_settings;
+/// In-memory import/fixture coordinator; the board owns physical NOR storage.
+pub mod recording_ring;
 mod transcription;
+pub(crate) use transcription::verify_asr_cache;
+pub(crate) use transcription::verify_cache_privacy;
 mod volcengine;
 
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use serde::Serialize;
+use sha2::{Digest, Sha256};
 
 use crate::companion_v1::{
-    apply_fixture_control, fixture_snapshot, seal_companion_v1_session_chunks,
+    apply_control_at, apply_fixture_control, fixture_snapshot, seal_companion_v1_session_chunks,
     CompanionV1AudioChunk, CompanionV1ControlAction, CompanionV1ControlRequest,
-    CompanionV1HostSession, CompanionV1Snapshot, CompanionV1UtteranceSegment,
+    CompanionV1HostSession, CompanionV1MeetingRecovery, CompanionV1MinutesByMode, CompanionV1MinutesVariant,
+    CompanionV1OobeCheck, CompanionV1Snapshot, CompanionV1UtteranceSegment,
 };
-use ble_bridge::CompanionBleBridge;
+
+fn unix_time_ms() -> u64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_millis()
+        .try_into()
+        .unwrap_or(u64::MAX)
+}
+
+fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
+    if session.recovery.intent != "processMeeting" {
+        session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
+    }
+}
+
+fn pause_incomplete_host_recording(session: &mut CompanionV1HostSession, error: &str) {
+    arm_meeting_recovery(session);
+    session.status = "captured".to_string();
+    session.transcript_final = false;
+    session.audio_stored = session.audio_bytes > 44;
+    session.recovery.stage = "paused".to_string();
+    session.recovery.next_retry_at_unix_ms = None;
+    session.recovery.last_error = Some(format!("录音不完整：{error}。已保留现有文件，请检查录音后再处理。"));
+    session.pending_reason = Some("recovery_paused".to_string());
+}
+
+fn recovery_error_is_permanent(error: &str) -> bool {
+    if volcengine::is_no_speech_error(error) {
+        return true;
+    }
+    let error = error.to_ascii_lowercase();
+    [
+        "credential", "not configured", "missing", "invalid wav", "unsupported",
+        "authentication", "unauthorized", "forbidden", "does not exist",
+        "录音缺段", "录音分段重复", "长录音分段未完成", "truncated wav", "riff header",
+    ]
+    .iter()
+    .any(|needle| error.contains(needle))
+}
+
+fn schedule_recovery_failure(session: &mut CompanionV1HostSession, error: &str) {
+    arm_meeting_recovery(session);
+    if !matches!(
+        session.recovery.stage.as_str(),
+        "transcribing" | "generatingMinutes"
+    ) {
+        session.recovery.attempt_count = session.recovery.attempt_count.saturating_add(1);
+    }
+    session.recovery.last_error = Some(error.chars().take(512).collect());
+    let exhausted = session.recovery.attempt_count >= session.recovery.max_attempts.max(1);
+    if exhausted || recovery_error_is_permanent(error) {
+        session.recovery.stage = "paused".to_string();
+        session.recovery.next_retry_at_unix_ms = None;
+        session.pending_reason = Some(if volcengine::is_no_speech_error(error) {
+            "no_speech_detected"
+        } else {
+            "recovery_paused"
+        }.to_string());
+    } else {
+        let exponent = u32::from(session.recovery.attempt_count.saturating_sub(1)).min(4);
+        let delay_ms = 2_000u64.saturating_mul(1u64 << exponent).min(30_000);
+        session.recovery.stage = "retryBackoff".to_string();
+        session.recovery.next_retry_at_unix_ms = Some(unix_time_ms().saturating_add(delay_ms));
+        session.pending_reason = Some("recovery_retry_wait".to_string());
+    }
+}
+
+fn mark_recovery_transcribed(session: &mut CompanionV1HostSession) {
+    if session.recovery.intent == "processMeeting" {
+        session.recovery.stage = "pendingMinutes".to_string();
+        session.recovery.retry_stage = "minutes".to_string();
+        session.recovery.attempt_count = 0;
+        session.recovery.next_retry_at_unix_ms = None;
+        session.recovery.last_error = None;
+        session.pending_reason = None;
+    }
+}
+
+fn mark_recovery_complete(session: &mut CompanionV1HostSession) {
+    if session.recovery.intent == "processMeeting" {
+        session.recovery.stage = "complete".to_string();
+        session.recovery.retry_stage.clear();
+        session.recovery.attempt_count = 0;
+        session.recovery.next_retry_at_unix_ms = None;
+        session.recovery.last_error = None;
+        session.pending_reason = None;
+    }
+}
+
+fn minutes_variant(
+    minutes: &crate::companion_v1::CompanionV1MeetingMinutes,
+    partial_count: u32,
+) -> CompanionV1MinutesVariant {
+    CompanionV1MinutesVariant {
+        processing: minutes.processing.clone(),
+        source_review_revision: minutes.source_review_revision,
+        status: if minutes.llm_note.is_some() { "retryPending" } else { "minutesReady" }.to_string(),
+        markdown: minutes.markdown.clone(),
+        source: minutes.source.clone(),
+        quality: minutes.quality.clone(),
+        generated_at: Some(minutes.generated_at.clone()),
+        partial_count,
+    }
+}
+
+fn session_has_pending_dual_minutes(session: &CompanionV1HostSession) -> bool {
+    match (&session.minutes_by_mode.offline_store, &session.minutes_by_mode.online_live) {
+        (Some(offline), Some(online)) => [offline, online].into_iter().any(|variant| {
+            variant.status == "retryPending" || !transcript_review::minutes_current(session, variant.source_review_revision)
+                || variant.processing.as_ref().is_some_and(|p| !p.is_complete())
+        }),
+        _ => false,
+    }
+}
+
+// A sealed online meeting owns two independent products. Retry only failed
+// variants without changing the capture route, replaying ASR or replacing the
+// successful product (including its user edits and live partial count).
+fn refresh_minutes_products<F>(
+    session: &mut CompanionV1HostSession,
+    generated_at: &str,
+    mut generate: F,
+) -> Option<String>
+where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1MeetingMinutes,
+{
+    refresh_minutes_products_for_mode(session, generated_at, None, &mut generate)
+}
+
+fn refresh_minutes_products_for_mode<F>(session: &mut CompanionV1HostSession, generated_at: &str,
+    selected_mode: Option<&str>, mut generate: F) -> Option<String>
+where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1MeetingMinutes,
+{
+    let modes: Vec<String> = if let Some(mode) = selected_mode { vec![mode.to_string()] }
+    else if session_has_pending_dual_minutes(session) {
+        ["offlineStore", "onlineLive"].into_iter().filter(|mode| {
+            let variant = if *mode == "onlineLive" { &session.minutes_by_mode.online_live }
+                          else { &session.minutes_by_mode.offline_store };
+            variant.as_ref().is_some_and(|variant| variant.status == "retryPending"
+                || variant.processing.as_ref().is_some_and(|p| !p.is_complete())
+                || !transcript_review::minutes_current(session, variant.source_review_revision))
+        }).map(str::to_string).collect()
+    } else {
+        vec![session.meeting_mode.clone()]
+    };
+    let mut failure = None;
+    for mode in modes {
+        let mut input = session.clone();
+        input.meeting_mode = mode.clone();
+        let generated = generate(&input);
+        if failure.is_none() { failure = generated.llm_note.clone(); }
+        let partial_count = if mode == "onlineLive" {
+            session.minutes_by_mode.online_live.as_ref().map(|variant| variant.partial_count)
+                .unwrap_or_else(|| u32::from(!session.live_transcript_text.trim().is_empty()))
+        } else { 0 };
+        let variant = minutes_variant(&generated, partial_count);
+        if mode == "onlineLive" { session.minutes_by_mode.online_live = Some(variant); }
+        else { session.minutes_by_mode.offline_store = Some(variant); }
+        if mode == session.meeting_mode {
+            session.export_markdown = generated.markdown.clone();
+            session.exported_at = Some(generated_at.to_string());
+            session.minutes = Some(generated);
+        }
+    }
+    session.retention.minutes_cached = true;
+    let has_old_variant = [&session.minutes_by_mode.offline_store, &session.minutes_by_mode.online_live]
+        .into_iter().flatten().any(|variant| !transcript_review::minutes_current(session, variant.source_review_revision));
+    session.status = if failure.is_some() || has_old_variant { "transcribed" } else { "minutesReady" }.to_string();
+    if let Some(error) = failure.as_deref() {
+        schedule_recovery_failure(session, error);
+    } else if has_old_variant {
+        session.pending_reason = Some("minutes_source_changed".into());
+        session.recovery = Default::default();
+    } else {
+        session.pending_reason = None;
+        mark_recovery_complete(session);
+    }
+    failure
+}
+
+pub(crate) fn session_has_final_minutes_product(session: &CompanionV1HostSession) -> bool {
+    let mode_ready = if session.meeting_mode == "onlineLive" {
+        session.minutes_by_mode.online_live.as_ref()
+    } else {
+        session.minutes_by_mode.offline_store.as_ref()
+    };
+    session.status == "minutesReady"
+        && !session_has_pending_dual_minutes(session)
+        && [&session.minutes_by_mode.offline_store, &session.minutes_by_mode.online_live].into_iter()
+            .flatten().all(|variant| transcript_review::minutes_current(session, variant.source_review_revision)
+                && variant.processing.as_ref().is_none_or(|p| p.is_complete()))
+        && session.minutes.as_ref().is_some_and(|minutes| {
+            minutes.quality == "final"
+                && minutes.processing.as_ref().is_none_or(|p| p.is_complete())
+                && minutes.llm_note.is_none()
+                && !minutes.markdown.trim().is_empty()
+                && transcript_review::minutes_current(session, minutes.source_review_revision)
+        })
+        && mode_ready.is_some_and(|minutes| {
+            minutes.status == "minutesReady"
+                && minutes.quality == "final"
+                && minutes.processing.as_ref().is_none_or(|p| p.is_complete())
+                && !minutes.markdown.trim().is_empty()
+        })
+        && (session.recovery.intent == "none" || session.recovery.stage == "complete")
+}
+
+fn normalized_native_device_id(device_id: &str) -> Option<String> {
+    if !device_connection::stable_device_id(device_id) {
+        return None;
+    }
+    Some(
+        device_id
+            .chars()
+            .filter(|character| character.is_ascii_hexdigit())
+            .flat_map(char::to_lowercase)
+            .collect(),
+    )
+}
+
+fn device_recording_session_id(device_id: Option<&str>, recording_id: u32) -> String {
+    normalized_native_device_id(device_id.unwrap_or_default())
+        .map(|device| format!("device-{device}-recording-{recording_id}"))
+        .unwrap_or_else(|| format!("device-recording-{recording_id}"))
+}
+
+fn effective_device_target(
+    requested_device_id: Option<&str>,
+    current_device_id: Option<&str>,
+) -> Option<String> {
+    requested_device_id
+        .and_then(|value| {
+            let value = value.trim();
+            (!value.is_empty()).then(|| value.to_string())
+        })
+        .or_else(|| {
+            current_device_id.and_then(|value| {
+                let value = value.trim();
+                (!value.is_empty()).then(|| value.to_string())
+            })
+        })
+}
+
+fn verified_device_recording_ids(
+    snapshot: &CompanionV1Snapshot,
+    source_device_id: Option<&str>,
+) -> Vec<u32> {
+    verified_device_recording_ids_for_policy(
+        snapshot, source_device_id, ble_bridge::delete_after_sync_enabled())
+}
+
+fn retain_stopped_recording_checkpoint(
+    previous: &ble_bridge::CompanionBleOperation,
+    mut retried: ble_bridge::CompanionBleOperation,
+    device_id: &str,
+    recording_id: u32,
+) -> ble_bridge::CompanionBleOperation {
+    let same_source = |source: &str| device_connection::same_device_id(source, device_id);
+    if !previous.ready
+        || !previous.device_id.as_deref().is_some_and(same_source)
+        || retried.device_id.as_deref().is_some_and(|source| !same_source(source))
+        || !previous.recordings.iter().any(|item| item.recording_id == recording_id
+            && item.total_length > 0 && item.sha256.len() == 64)
+    {
+        return retried;
+    }
+    // A later reconnect failure or empty directory cannot undo an earlier
+    // durable host receipt. Nor can directory absence stand in for an ACK.
+    for item in &previous.recordings {
+        if retried.recordings.iter().any(|next| next.recording_id == item.recording_id
+            && (next.total_length != item.total_length || next.sha256 != item.sha256))
+        {
+            retried.ready = false;
+            retried.message.push_str("; stopped recording identity changed during retry");
+            return retried;
+        }
+    }
+    for item in &previous.recordings {
+        if let Some(next) = retried.recordings.iter_mut()
+            .find(|next| next.recording_id == item.recording_id)
+        {
+            next.device_reclaimed |= item.device_reclaimed;
+        } else {
+            retried.recordings.push(item.clone());
+        }
+    }
+    retried.ready = true;
+    retried.device_id = Some(device_id.to_string());
+    retried.recording_path = retried.recordings.iter()
+        .find(|item| item.recording_id == recording_id)
+        .map(|item| item.recording_path.clone());
+    retried.message.push_str(&format!(
+        "; durable STOP checkpoint retained; pending_device_consume={}; no missing ACK inferred",
+        retried.recordings.iter().filter(|item| !item.device_reclaimed).count()));
+    retried
+}
+
+fn verified_device_recording_ids_for_policy(
+    snapshot: &CompanionV1Snapshot,
+    source_device_id: Option<&str>,
+    delete_after_sync: bool,
+) -> Vec<u32> {
+    let Some(source_device_id) = source_device_id.filter(|id| device_connection::stable_device_id(id)) else {
+        return Vec::new();
+    };
+    snapshot
+        .host
+        .sessions
+        .iter()
+        .filter_map(|session| {
+            if session
+                .source_device_id
+                .as_deref()
+                .is_some_and(|source| device_connection::same_device_id(source, source_device_id))
+                // A durable host copy does not acknowledge physical reclaim.
+                // Keep an unacknowledged item eligible for the existing cursor
+                // retry. The explicit retain-on-device policy still skips it.
+                && (!delete_after_sync || session.device_reclaimed)
+                && session.device_total_length.is_some()
+                && session
+                    .device_sha256
+                    .as_deref()
+                    .is_some_and(|sha| sha.len() == 64)
+            {
+                session.device_recording_id
+            } else {
+                None
+            }
+        })
+        .collect()
+}
 pub use ble_bridge::CompanionBleBridgeStatus;
-pub use firmware_ota::{CompanionFirmwareOtaReport, CompanionFirmwareOtaRequest};
+pub(crate) use ble_bridge::{
+    record_board_online_live, record_board_online_live_controlled, BoardOnlineLiveReport,
+    BoardPartialConsumer, BoardPartialObserver, BoardRecordingObserver, BoardBookmarkObserver,
+};
+use ble_bridge::{
+    CompanionBleBridge, CompanionDeviceIdentity, CompanionMeetingControlReport,
+    CompanionSpeakerControlReport, CompanionSyncedRecording,
+};
+pub use firmware_ota::{
+    CompanionFirmwareOtaReport, CompanionFirmwareOtaRequest, CompanionOtaPackageValidation,
+};
 use host_recording::HostRecordingManager;
+use live_asr::LiveAsrHub;
 use minutes::CompanionMinutesManager;
 use privacy::{PrivacyEraseReport, PrivacyManager};
 pub(crate) use transcription::CompanionTranscriptionManager;
+
+/// Return (WAV file bytes, PCM duration ms) from a RIFF/WAVE file. Device sync
+/// must use the artifact it actually decoded instead of the old 60-second
+/// fixture default (which reported every pull as 1,920,000 bytes / 60,000 ms).
+fn wav_file_metrics(path: &str) -> Option<(u64, u64)> {
+    let bytes = std::fs::read(path).ok()?;
+    if bytes.len() < 12 || &bytes[0..4] != b"RIFF" || &bytes[8..12] != b"WAVE" {
+        return None;
+    }
+    let mut offset = 12usize;
+    let mut byte_rate = None;
+    let mut data_bytes = None;
+    while offset.checked_add(8)? <= bytes.len() {
+        let id = &bytes[offset..offset + 4];
+        let size = u32::from_le_bytes(bytes[offset + 4..offset + 8].try_into().ok()?) as usize;
+        let body = offset + 8;
+        let end = body.checked_add(size)?;
+        if end > bytes.len() {
+            return None;
+        }
+        if id == b"fmt " && size >= 12 {
+            byte_rate =
+                Some(u32::from_le_bytes(bytes[body + 8..body + 12].try_into().ok()?) as u64);
+        } else if id == b"data" {
+            data_bytes = Some(size as u64);
+        }
+        offset = end + (size & 1);
+    }
+    let rate = byte_rate?;
+    let payload = data_bytes?;
+    if rate == 0 {
+        return None;
+    }
+    Some((bytes.len() as u64, payload.saturating_mul(1000) / rate))
+}
+
+/// Reattach a sealed board WAV/Opus pair to the newest interrupted onlineLive
+/// row. Recovery is explicit: the caller supplies the exact recording id and
+/// WAV, while the durable length/hash are derived from the pulled Opus bytes.
+pub(crate) fn recover_persisted_board_recording(
+    recording_id: u32,
+    wav_path: &std::path::Path,
+) -> Result<String, String> {
+    let expected_suffix = format!("-device-recording-{recording_id}.wav");
+    let wav_name = wav_path
+        .file_name()
+        .and_then(|name| name.to_str())
+        .ok_or_else(|| format!("invalid recovery WAV path: {}", wav_path.display()))?;
+    if !wav_name.ends_with(&expected_suffix) {
+        return Err(format!(
+            "recovery WAV filename does not match recording_id={recording_id}: {wav_name}"
+        ));
+    }
+    let wav_path = wav_path
+        .canonicalize()
+        .map_err(|err| format!("canonicalize recovery WAV {}: {err}", wav_path.display()))?;
+    let opus_path = wav_path.with_extension("opus");
+    let opus = std::fs::read(&opus_path)
+        .map_err(|err| format!("read recovery Opus {}: {err}", opus_path.display()))?;
+    let total_length = u32::try_from(opus.len())
+        .map_err(|_| format!("recovery Opus is too large: {} bytes", opus.len()))?;
+    if total_length == 0 {
+        return Err("recovery Opus is empty".to_string());
+    }
+    let sha256 = format!("{:x}", Sha256::digest(&opus));
+    let (wav_bytes, duration_ms) = wav_file_metrics(&wav_path.to_string_lossy())
+        .ok_or_else(|| format!("recovery WAV is invalid: {}", wav_path.display()))?;
+    let mut sessions = persistence::load_sessions()
+        .ok_or_else(|| "recording library is unavailable for recovery".to_string())?;
+
+    let session = if let Some(index) = sessions
+        .iter()
+        .position(|session| session.device_recording_id == Some(recording_id))
+    {
+        &mut sessions[index]
+    } else {
+        sessions
+            .iter_mut()
+            .find(|session| {
+                session.device_recording_id.is_none()
+                    && session.meeting_mode == "onlineLive"
+                    && session
+                        .audio_path
+                        .as_deref()
+                        .is_some_and(|path| path.starts_with("board://"))
+                    && matches!(session.status.as_str(), "recording" | "captured")
+            })
+            .ok_or_else(|| {
+                format!("no interrupted onlineLive session can own recording_id={recording_id}")
+            })?
+    };
+    session.source = "deviceFlash".to_string();
+    session.status = "captured".to_string();
+    session.pending_reason = Some("needs_transcription".to_string());
+    board_meeting::retain_capture_dates(session);
+    session.duration_ms = duration_ms;
+    session.audio_path = Some(wav_path.to_string_lossy().to_string());
+    session.audio_bytes = wav_bytes;
+    session.audio_stored = true;
+    session.device_recording_id = Some(recording_id);
+    session.device_total_length = Some(total_length);
+    session.device_sha256 = Some(sha256);
+    session.device_reclaimed = false;
+    arm_meeting_recovery(session);
+    session.chunks = vec![audio_chunk(
+        format!("{}-board-recovered", session.id),
+        Some(wav_path.to_string_lossy().to_string()),
+        session.started_at.clone(),
+        session.stopped_at.clone(),
+        duration_ms,
+        wav_bytes,
+        "synced",
+    )];
+    session.retention.audio_cached = true;
+    let session_id = session.id.clone();
+    persistence::save_sessions_to(&persistence::state_file_path(), &sessions)?;
+    Ok(session_id)
+}
 
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -60,6 +573,10 @@ pub struct CompanionServiceBoundary {
 }
 
 pub trait CompanionBackend: Send + Sync {
+    fn save_meeting_note(&self, request: meeting_notes::Request) -> Result<CompanionV1Snapshot, String>;
+    fn save_bookmark(&self, request: recording_bookmarks::Request, stamp: Option<recording_bookmarks::LiveStamp>)
+        -> Result<CompanionV1Snapshot,String>;
+    fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String>;
     fn capabilities(&self) -> CompanionBackendCapabilities;
     fn ble_bridge_status(&self) -> CompanionBleBridgeStatus;
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String>;
@@ -67,38 +584,473 @@ pub trait CompanionBackend: Send + Sync {
         &self,
         request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String>;
+    fn record_meeting_recovery_failure(
+        &self,
+        session_id: &str,
+        retry_stage: &str,
+        error: &str,
+    ) -> Result<(), String>;
+    fn mark_meeting_exported(
+        &self,
+        session_id: &str,
+        meeting_mode: &str,
+    ) -> Result<(), String>;
+    fn automatic_reconnect_once(&self) -> Result<CompanionV1Snapshot, String>;
     fn transfer_firmware_ota(
         &self,
         request: CompanionFirmwareOtaRequest,
     ) -> Result<CompanionFirmwareOtaReport, String>;
+    fn validate_ota_package(
+        &self,
+        request: CompanionFirmwareOtaRequest,
+    ) -> Result<CompanionOtaPackageValidation, String>;
+    fn complete_board_online_live(
+        &self,
+        session_id: &str,
+        report: &BoardOnlineLiveReport,
+    ) -> Result<CompanionV1Snapshot, String>;
+    fn set_board_online_live_partial(
+        &self,
+        session_id: &str,
+        transcript: &str,
+    ) -> Result<CompanionV1Snapshot, String>;
+    fn bind_board_online_live_recording(&self, session_id: &str, device_id: &str, recording_id: u32, start_ack_at: &str)
+        -> Result<(), String>;
+    fn fail_board_online_live(
+        &self,
+        session_id: &str,
+        reason: &str,
+    ) -> Result<CompanionV1Snapshot, String>;
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+struct PendingMeetingStart {
+    session_id: String,
+    device_id: Option<String>,
+    max_seconds: u16,
+}
+
+fn reserve_pending_meeting_start(
+    pending: &mut Option<PendingMeetingStart>,
+    session_id: &str,
+    device_id: Option<&str>,
+    max_seconds: u16,
+) -> Result<u16, String> {
+    if let Some(existing) = pending.as_mut() {
+        if existing.session_id != session_id {
+            return Err(format!(
+                "meeting START outcome is still unknown for session {}; retry that session or disconnect it explicitly",
+                existing.session_id
+            ));
+        }
+        if let (Some(bound), Some(requested)) = (existing.device_id.as_deref(), device_id) {
+            if bound != requested {
+                return Err(format!(
+                    "meeting START retry is bound to device {bound}, not {requested}"
+                ));
+            }
+        } else if existing.device_id.is_none() {
+            existing.device_id = device_id.map(str::to_owned);
+        }
+        /* A retry must reproduce the original wire request exactly. The UI may
+         * have refreshed its duration control while the BLE outcome was
+         * unknown, but changing max_seconds under the same request id would be
+         * a request-id collision at the device. */
+        return Ok(existing.max_seconds);
+    }
+    *pending = Some(PendingMeetingStart {
+        session_id: session_id.to_string(),
+        device_id: device_id.map(str::to_owned),
+        max_seconds,
+    });
+    Ok(max_seconds)
+}
+
+fn meeting_start_rejection_is_definitive(error: &str) -> bool {
+    error.starts_with("board rejected V1 meeting command=1 ") || error.starts_with("recording preflight:")
+}
+
+fn recording_duration_seconds(duration_ms: Option<u64>) -> Result<u16,String> {
+    let ms=duration_ms.unwrap_or(60_000);
+    if ms==0 || ms>u64::from(u16::MAX)*1000 {
+        return Err("请输入有效的完整录音时长（1 秒至 65535 秒），不会自动截短".into());
+    }
+    Ok(((ms+999)/1000) as u16)
+}
+
+fn apply_device_identity(snapshot: &mut CompanionV1Snapshot, identity: &CompanionDeviceIdentity) {
+    snapshot.device.firmware_version = identity.firmware_version;
+    snapshot.device.build_id = identity.build_id;
+    snapshot.device.board_id = identity.board_id;
+    snapshot.device.mcu_uid = identity.mcu_uid.clone();
+    snapshot.device.ui_generation = identity.ui_generation;
+    snapshot.device.recording_capacity = identity.recording_capacity.clone();
+    if let Some(recording) = identity.recording {
+        snapshot.device.recording = recording;
+    }
+    snapshot.device.hardware_revision = match identity.board_id {
+        Some(0x5742_4155) => Some("COMPANION-WBA55-V1.1".to_string()),
+        _ => None,
+    };
+
+    snapshot.imu.supported = identity.imu_supported.unwrap_or(false);
+    snapshot.imu.online = identity.imu_online.unwrap_or(false);
+    snapshot.imu.sample_hz = identity.imu_sample_hz.unwrap_or(0);
+    snapshot.speaker.supported = identity.speaker_supported.unwrap_or(false);
+    snapshot.speaker.online = identity.speaker_online.unwrap_or(false);
+    snapshot.speaker.volume = identity.speaker_volume.unwrap_or(0).min(100);
+    snapshot.speaker.muted = snapshot.speaker.volume == 0;
+    snapshot.speaker.status = if identity.speaker_supported == Some(false) {
+        "notPopulated".to_string()
+    } else if identity.speaker_online == Some(true) {
+        "idle".to_string()
+    } else if identity.speaker_supported == Some(true) {
+        "error".to_string()
+    } else {
+        "unknown".to_string()
+    };
+}
+
+fn oobe_check(id: &str, label: &str, status: &str, message: impl Into<String>) -> CompanionV1OobeCheck {
+    CompanionV1OobeCheck {
+        id: id.to_string(),
+        label: label.to_string(),
+        status: status.to_string(),
+        message: message.into(),
+    }
+}
+
+fn oobe_checks_from_probe(
+    report: &ble_bridge::CompanionOobeProbeReport,
+) -> Vec<CompanionV1OobeCheck> {
+    let base_identity_complete = report.identity.firmware_version.is_some()
+        && report.identity.build_id.is_some()
+        && report.identity.board_id.is_some();
+    let identity_complete = base_identity_complete
+        && (report.identity.board_id != Some(0x5742_4155)
+            || (report.identity.mcu_uid.is_some() && report.identity.ui_generation.is_some()));
+    let firmware = if identity_complete {
+        oobe_check(
+            "firmware",
+            "固件与板卡身份",
+            "pass",
+            format!(
+                "FW=0x{:08x}, build=0x{:08x}, board=0x{:08x}, UID={}, UI={}",
+                report.identity.firmware_version.unwrap_or_default(),
+                report.identity.build_id.unwrap_or_default(),
+                report.identity.board_id.unwrap_or_default(),
+                report.identity.mcu_uid.as_deref().unwrap_or("legacy"),
+                report.identity.ui_generation.map_or_else(|| "legacy".to_string(), |value| value.to_string())
+            ),
+        )
+    } else if report.device_status_read {
+        oobe_check(
+            "firmware",
+            "固件与板卡身份",
+            "fail",
+            "DEVICE_STATUS 已读取，但身份字段不完整",
+        )
+    } else {
+        oobe_check(
+            "firmware",
+            "固件与板卡身份",
+            "fail",
+            "DEVICE_STATUS 未读到；设备可能未配对、未授权或固件协议不匹配",
+        )
+    };
+    let gatt = if report.missing_required_gatt.is_empty() {
+        oobe_check(
+            "gatt",
+            "核心 GATT",
+            "pass",
+            format!(
+                "发现 {} 个服务、{} 个特征；核心特征齐全",
+                report.service_count, report.characteristic_count
+            ),
+        )
+    } else {
+        oobe_check(
+            "gatt",
+            "核心 GATT",
+            "fail",
+            format!("缺少：{}", report.missing_required_gatt.join(", ")),
+        )
+    };
+    let recording_gatt_missing = report.missing_required_gatt.iter().any(|item| {
+        item.starts_with("meeting_") || item.starts_with("recording_")
+    });
+    let board_microphone = match (
+        recording_gatt_missing,
+        report.recording_list_error.as_deref(),
+    ) {
+        (false, None) => oobe_check(
+            "boardMicrophone",
+            "板端录音链路",
+            "warn",
+            format!(
+                "录音控制/目录接口可访问，设备内 {} 条录音；为避免副作用，本检查未启动麦克风实录",
+                report.recordings_available
+            ),
+        ),
+        (true, _) => oobe_check(
+            "boardMicrophone",
+            "板端录音链路",
+            "fail",
+            "录音/会议核心 GATT 不完整，未启动实录",
+        ),
+        (false, Some(error)) => oobe_check(
+            "boardMicrophone",
+            "板端录音链路",
+            "fail",
+            format!("录音目录不可读：{error}"),
+        ),
+    };
+    let clock = match (
+        report.clock_sync_evidence.as_deref(),
+        report.clock_sync_error.as_deref(),
+    ) {
+        (Some(evidence), _) => oobe_check("clock", "自动校时", "pass", evidence),
+        (_, Some(error)) => oobe_check("clock", "自动校时", "fail", error),
+        _ => oobe_check("clock", "自动校时", "fail", "未取得校时写后读回证据"),
+    };
+    let imu = match (
+        report.imu_status_read,
+        report.identity.imu_supported,
+        report.identity.imu_online,
+    ) {
+        (true, Some(true), Some(true)) => oobe_check(
+            "imu",
+            "IMU",
+            "pass",
+            format!("在线，采样率 {} Hz", report.identity.imu_sample_hz.unwrap_or_default()),
+        ),
+        (true, Some(false), _) => oobe_check("imu", "IMU", "warn", "固件明确报告未装配"),
+        (true, Some(true), _) => oobe_check("imu", "IMU", "fail", "已装配，但未在线"),
+        _ => oobe_check(
+            "imu",
+            "IMU",
+            "warn",
+            "IMU_STATUS 未读到；未判定为通过",
+        ),
+    };
+    let speaker = match (
+        report.speaker_status_read,
+        report.identity.speaker_supported,
+        report.identity.speaker_online,
+    ) {
+        (true, Some(true), Some(true)) => oobe_check(
+            "speaker",
+            "扬声器",
+            "pass",
+            format!("在线，音量 {}%（未播放测试音）", report.identity.speaker_volume.unwrap_or_default()),
+        ),
+        (true, Some(false), _) => {
+            oobe_check("speaker", "扬声器", "warn", "固件明确报告未装配")
+        }
+        (true, Some(true), _) => oobe_check("speaker", "扬声器", "fail", "已装配，但未在线"),
+        _ => oobe_check(
+            "speaker",
+            "扬声器",
+            "warn",
+            "SPEAKER_STATUS 未读到；未判定为通过",
+        ),
+    };
+    vec![
+        oobe_check(
+            "bluetooth",
+            "蓝牙连接",
+            "pass",
+            format!("已临时连接并完成服务发现，检查后已断开：{}", report.device_id),
+        ),
+        firmware,
+        gatt,
+        board_microphone,
+        clock,
+        imu,
+        speaker,
+        oobe_check(
+            "display",
+            "墨水屏",
+            "warn",
+            "未检查；当前固件没有可读的屏幕自检 GATT，需实板观察刷新",
+        ),
+        oobe_check(
+            "touch",
+            "触摸",
+            "warn",
+            "未检查；当前固件没有可读的触摸自检 GATT，需实板操作",
+        ),
+        oobe_check(
+            "power",
+            "电源与充电",
+            "warn",
+            "未检查；当前固件没有可读的电源/充电自检 GATT，需实板测量",
+        ),
+        oobe_check(
+            "remoteServices",
+            "ASR / 纪要服务",
+            "warn",
+            "本次硬件检查未调用录音、ASR 或纪要服务；请在真实会议链路中单独验收",
+        ),
+    ]
+}
+
+fn failed_oobe_checks(error: &str) -> Vec<CompanionV1OobeCheck> {
+    vec![
+        oobe_check("bluetooth", "蓝牙连接", "fail", error),
+        oobe_check("firmware", "固件与板卡身份", "fail", "未检查：设备连接失败"),
+        oobe_check("gatt", "核心 GATT", "fail", "未检查：设备连接失败"),
+        oobe_check(
+            "boardMicrophone",
+            "板端录音链路",
+            "warn",
+            "未检查；没有使用主机麦克风代替板端证据",
+        ),
+        oobe_check("clock", "自动校时", "fail", "未检查：设备连接失败"),
+        oobe_check("imu", "IMU", "warn", "未检查"),
+        oobe_check("speaker", "扬声器", "warn", "未检查；未播放测试音"),
+        oobe_check(
+            "display",
+            "墨水屏",
+            "warn",
+            "未检查；当前固件没有可读的屏幕自检 GATT",
+        ),
+        oobe_check(
+            "touch",
+            "触摸",
+            "warn",
+            "未检查；当前固件没有可读的触摸自检 GATT",
+        ),
+        oobe_check(
+            "power",
+            "电源与充电",
+            "warn",
+            "未检查；当前固件没有可读的电源/充电自检 GATT",
+        ),
+        oobe_check(
+            "remoteServices",
+            "ASR / 纪要服务",
+            "warn",
+            "未调用外部服务",
+        ),
+    ]
+}
+
+fn oobe_blocked_by_active_recording(
+    snapshot: &CompanionV1Snapshot,
+    live_asr_active: bool,
+) -> bool {
+    live_asr_active
+        || snapshot.meeting.active
+        || snapshot
+            .host
+            .sessions
+            .iter()
+            .any(|session| session.status == "recording")
+}
+
+fn apply_connection_preference(
+    snapshot: &mut CompanionV1Snapshot,
+    preference: &device_connection::DeviceConnectionPreference,
+) {
+    if !snapshot.device.connected {snapshot.device.recording_capacity=None;}
+    snapshot.device.remembered_device_id = preference.remembered_device_id.clone();
+    snapshot.device.auto_reconnect_enabled = preference.auto_reconnect_enabled;
+    snapshot.device.manual_disconnect = preference.manual_disconnect;
+    snapshot.device.last_connected_at = preference.last_connected_at.clone();
+}
+
+fn connection_timestamp() -> String {
+    unix_time_ms().to_string()
+}
+
+fn observation_timestamp() -> String {
+    chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true)
+}
+
+fn speaker_prompt_id(value: Option<&str>) -> Result<u8, String> {
+    match value.map(str::trim).filter(|value| !value.is_empty()) {
+        None | Some("confirm") | Some("0") => Ok(0),
+        Some("recordingStarted") | Some("1") => Ok(1),
+        Some("recordingStopped") | Some("2") => Ok(2),
+        Some("error") | Some("3") => Ok(3),
+        Some(value) => Err(format!("unsupported Companion speaker prompt_id: {value}")),
+    }
 }
 
 pub struct FixtureCompanionBackend {
     snapshot: Mutex<CompanionV1Snapshot>,
     host_recording: HostRecordingManager,
+    live_asr: Arc<LiveAsrHub>,
     transcription: CompanionTranscriptionManager,
     minutes: CompanionMinutesManager,
     ble_bridge: CompanionBleBridge,
     privacy: PrivacyManager,
+    pending_meeting_start: Mutex<Option<PendingMeetingStart>>,
+    connection_preference: Mutex<device_connection::DeviceConnectionPreference>,
 }
 
 impl FixtureCompanionBackend {
     pub fn new() -> Self {
         let mut snapshot = fixture_snapshot();
-        // Survive restarts: when a persisted state file exists, replace the
-        // fixture demo sessions with the real user sessions. First run (no
-        // file) keeps the fixture demo session.
-        if let Some(sessions) = persistence::load_sessions() {
+        let (sessions, storage) = persistence::load_sessions_with_status();
+        snapshot.host.persistence = storage;
+        if let Some(sessions) = sessions {
             snapshot.host.sessions = sessions;
+        } else if !cfg!(test) || snapshot.host.persistence.status == "blocked" {
+            snapshot.host.sessions.clear();
+            snapshot.host.selected_session_id = None;
+            snapshot.host.active_session_id = None;
         }
+        let connection_preference = device_connection::load();
+        snapshot.device.remembered_device_id = connection_preference.remembered_device_id.clone();
+        snapshot.device.auto_reconnect_enabled = connection_preference.auto_reconnect_enabled;
+        snapshot.device.manual_disconnect = connection_preference.manual_disconnect;
+        snapshot.device.last_connected_at = connection_preference.last_connected_at.clone();
+        snapshot.device.device_id = connection_preference.remembered_device_id.clone();
+        snapshot.device.connection_phase = if connection_preference.manual_disconnect {
+            "manualDisconnected"
+        } else if connection_preference.remembered_device_id.is_some() {
+            "offline"
+        } else {
+            "idle"
+        }
+        .to_string();
+        snapshot.source = if connection_preference.remembered_device_id.is_some() {
+            "lastKnown"
+        } else {
+            "unavailable"
+        };
         Self {
             snapshot: Mutex::new(snapshot),
             host_recording: HostRecordingManager::new(),
+            live_asr: Arc::new(LiveAsrHub::new()),
             transcription: CompanionTranscriptionManager::new(),
             minutes: CompanionMinutesManager::new(),
             ble_bridge: CompanionBleBridge::detect_default(),
             privacy: PrivacyManager::new(),
+            pending_meeting_start: Mutex::new(None),
+            connection_preference: Mutex::new(connection_preference),
         }
+    }
+
+    fn merge_live_asr_into_session(
+        session: &mut CompanionV1HostSession,
+        live: &live_asr::LiveAsrSnapshot,
+    ) {
+        if live.text.trim().is_empty() {
+            return;
+        }
+        session.live_transcript_text = live.text.clone();
+        session.transcript_text = live.text.clone();
+        session.transcript_final = false;
+        session.transcript_preview = live.text.chars().take(120).collect();
+        session.transcript_segments = live
+            .text
+            .split(|c: char| c == '\n' || c == '。' || c == '.')
+            .filter(|s| !s.trim().is_empty())
+            .count();
+        session.retention.transcript_cached = true;
     }
 }
 
@@ -109,6 +1061,75 @@ impl Default for FixtureCompanionBackend {
 }
 
 impl CompanionBackend for FixtureCompanionBackend {
+    fn save_meeting_note(&self, request: meeting_notes::Request) -> Result<CompanionV1Snapshot, String> {
+        let mut snapshot = self.snapshot.lock().map_err(|_| "会议库暂时不可用。")?;
+        if snapshot.host.persistence.status != "ready" { return Err("请先恢复或重试保存会议库；备注输入仍保留。".into()); }
+        let row = snapshot.host.sessions.iter_mut().find(|s| s.id == request.session_id).ok_or("这场会议已不存在，未修改其他会议。")?;
+        meeting_notes::commit(row, &request, &connection_timestamp())?;
+        snapshot.updated_at = connection_timestamp();
+        refresh_privacy_counts(&mut snapshot);
+        Ok(snapshot.clone())
+    }
+    fn save_bookmark(&self, request: recording_bookmarks::Request, stamp: Option<recording_bookmarks::LiveStamp>)
+        -> Result<CompanionV1Snapshot,String> {
+        use recording_bookmarks::{Action, CommitError};
+        let mut snapshot=self.snapshot.lock().map_err(|_| "会议库暂时不可用。")?;
+        if snapshot.host.persistence.status != "ready" {
+            return Err("请先重试保存或恢复会议库；重点输入仍保留。".into());
+        }
+        let mut candidate=snapshot.host.sessions.iter().find(|s| s.id == request.session_id)
+            .ok_or("这场会议已不存在，未修改其他会议。")?.clone();
+        if recording_bookmarks::duplicate(&candidate,&request)? { return Ok(snapshot.clone()); }
+        if request.expected_revision != candidate.bookmark_revision {
+            return Err("会议重点已变化；你的输入仍保留，请刷新后核对。".into());
+        }
+        let native_stamp = if request.action == Action::AddLive && stamp.is_none() {
+            if !snapshot.connected || !snapshot.device.connected {
+                return Err("设备连接已断开；请主动连接这台设备后再标记，当前录音和输入仍保留。".into());
+            }
+            if candidate.meeting_mode == "onlineLive" {
+                return Err("在线录音须由正在采集的连接取得时间；请等待连接恢复或收录后标记。".into());
+            }
+            Some(ble_bridge::live_recording_stamp(candidate.source_device_id.as_deref().ok_or("尚无设备录音身份。")?,
+                &candidate.id,candidate.device_recording_id.ok_or("设备尚未建立这场录音。")?)?)
+        } else { stamp };
+        let playback = if request.action == Action::AddAt {
+            let path=meeting_workspace::local_audio_path(&snapshot,&request.session_id)?;
+            Some(meeting_workspace::wav_duration_ms(&path)?)
+        } else { None };
+        recording_bookmarks::apply(&mut candidate,&request,native_stamp.as_ref(),playback,&connection_timestamp())?;
+        candidate.exported_at=None;
+        match recording_bookmarks::commit(&mut candidate,request.expected_revision) {
+            Err(CommitError::Conflict(error)) => return Err(error),
+            Err(CommitError::Storage(error)) => {
+                if let Some(row)=snapshot.host.sessions.iter_mut().find(|s| s.id == candidate.id) { *row=candidate; }
+                snapshot.host.persistence.status="unsaved".into();
+                snapshot.host.persistence.message=Some(format!("重点尚未保存到磁盘，请保留窗口并重试保存：{error}"));
+                return Err("重点尚未保存到磁盘；请保留窗口并重试保存，输入仍保留。".into());
+            }
+            Ok(()) => {}
+        }
+        if let Some(row)=snapshot.host.sessions.iter_mut().find(|s| s.id == candidate.id) { *row=candidate; }
+        snapshot.updated_at=connection_timestamp();
+        Ok(snapshot.clone())
+    }
+    fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String> {
+        let mut snapshot = self.snapshot.lock().map_err(|_| "会议库暂时不可用".to_string())?;
+        if snapshot.host.persistence.status != "ready" {
+            return Err("请先重试保存或恢复会议库，再修改会议。".into());
+        }
+        if snapshot.meeting.active || snapshot.device.recording || snapshot.host.sessions.iter().any(|s| s.status == "recording") {
+            return Err("请先结束当前录音，再修改会议。".into());
+        }
+        let session = snapshot.host.sessions.iter_mut().find(|s| s.id == request.session_id)
+            .ok_or("这场会议已不存在；未修改其他会议。")?;
+        meeting_workspace::edit_session(session, &request, &connection_timestamp())?;
+        snapshot.updated_at = connection_timestamp();
+        refresh_privacy_counts(&mut snapshot);
+        let _ = persistence::save_snapshot(&mut snapshot);
+        Ok(snapshot.clone())
+    }
+
     fn capabilities(&self) -> CompanionBackendCapabilities {
         let ble_status = self.ble_bridge.status();
         CompanionBackendCapabilities {
@@ -123,16 +1144,16 @@ impl CompanionBackend for FixtureCompanionBackend {
                 },
                 recording: CompanionServiceBoundary {
                     provider_id: "host-microphone-wav".to_string(),
-                    mode: "real-host-wav-with-synthetic-test-fallback".to_string(),
+                    mode: "real-host-wav+explicit-synthetic-tests".to_string(),
                     supported: true,
                     notes: "Records host microphone sessions as 16 kHz mono WAV files; tests can force synthetic mode."
                         .to_string(),
                 },
                 transcription: CompanionServiceBoundary {
                     provider_id: "companion-type-transcription".to_string(),
-                    mode: "env-sidecar-openai-compatible-or-command".to_string(),
+                    mode: "batch+onlineLive-streaming".to_string(),
                     supported: true,
-                    notes: "Transcribes selected session audio through Companion-Type owned providers, including OpenAI-compatible multipart ASR; listener-type.exe is not used."
+                    notes: "Batch ASR for offlineStore; onlineLive uses Volc SAUC mid-meeting streaming (mock via COMPANION_TYPE_LIVE_ASR_MOCK=1). listener-type.exe is not used."
                         .to_string(),
                 },
                 minutes: CompanionServiceBoundary {
@@ -157,22 +1178,43 @@ impl CompanionBackend for FixtureCompanionBackend {
     }
 
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String> {
-        self.snapshot
+        let live = self.live_asr.snapshot();
+        let mut guard = self
+            .snapshot
             .lock()
-            .map_err(|_| "Companion backend state lock failed".to_string())
-            .map(|snapshot| snapshot.clone())
+            .map_err(|_| "Companion backend state lock failed".to_string())?;
+        // While onlineLive recording, surface provisional stream text without a control click.
+        if live.active || !live.text.trim().is_empty() {
+            if let Some(session) = selected_session_mut(&mut guard) {
+                if session.meeting_mode == "onlineLive" && session.status == "recording" {
+                    Self::merge_live_asr_into_session(session, &live);
+                }
+            }
+        }
+        Ok(guard.clone())
     }
 
     fn apply_control(
         &self,
         mut request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String> {
-        if matches!(
-            request.action,
-            CompanionV1ControlAction::MeetingResetSession
-                | CompanionV1ControlAction::PrivacyEraseAll
-        ) {
-            self.host_recording.discard();
+        const AUTO_RECOVERY_PROMPT_ID: &str = "__companion_auto_recovery__";
+        let automatic_recovery = request.prompt_id.as_deref() == Some(AUTO_RECOVERY_PROMPT_ID);
+
+        // Default meeting mode from product settings / env when UI omits it.
+        if matches!(request.action, CompanionV1ControlAction::MeetingStart)
+            && request
+                .meeting_mode
+                .as_deref()
+                .map(str::trim)
+                .filter(|m| !m.is_empty())
+                .is_none()
+        {
+            let mode = std::env::var("COMPANION_TYPE_DEFAULT_MEETING_MODE")
+                .ok()
+                .filter(|m| m == "onlineLive" || m == "offlineStore")
+                .unwrap_or_else(|| product_settings::load_settings().default_meeting_mode);
+            request.meeting_mode = Some(mode);
         }
 
         let mut snapshot = self
@@ -180,16 +1222,550 @@ impl CompanionBackend for FixtureCompanionBackend {
             .lock()
             .map_err(|_| "Companion backend state lock failed".to_string())?;
         let action = request.action;
+        privacy::validate_control(&snapshot, &request, self.live_asr.snapshot().active)?;
+        if action == CompanionV1ControlAction::HostRetrySave {
+            if snapshot.host.persistence.status == "blocked" {
+                let (sessions, storage) = persistence::load_sessions_with_status();
+                snapshot.host.persistence = storage;
+                if snapshot.host.persistence.status == "blocked" {
+                    return Ok(snapshot.clone());
+                }
+                snapshot.host.sessions = sessions.unwrap_or_default();
+                snapshot.host.selected_session_id = snapshot.host.sessions.first().map(|s| s.id.clone());
+                snapshot.host.active_session_id = None;
+            }
+            if snapshot.host.persistence.status != "ready" {
+                for session in &mut snapshot.host.sessions {
+                    if session.status != "recording" {
+                        // A failed checkpoint may have consumed an attempt
+                        // before its worker could start. Do not leave a saved
+                        // but permanently in-flight recovery after Retry.
+                        persistence::reconcile_session_recovery(session);
+                    }
+                }
+            }
+            if persistence::save_snapshot(&mut snapshot).is_ok() {
+                snapshot.last_control = None;
+            }
+            refresh_privacy_counts(&mut snapshot);
+            return Ok(snapshot.clone());
+        }
+        // Keep STOP and read-only viewing available even when the disk failed.
+        // Network retries and edits resume only after the checkpoint is durable.
+        if snapshot.host.persistence.status != "ready"
+            && !matches!(action,
+                CompanionV1ControlAction::MeetingStop
+                | CompanionV1ControlAction::MeetingSelectSession
+                | CompanionV1ControlAction::DeviceConnect
+                | CompanionV1ControlAction::DeviceDisconnect
+                | CompanionV1ControlAction::SpeakerStop)
+        {
+            return Err("会议库尚未保存或恢复，请先使用提示中的重试按钮；当前内容仍可查看，录音仍可停止".into());
+        }
+        if action == CompanionV1ControlAction::MeetingResetSession {
+            self.host_recording.discard();
+            self.host_recording.set_pcm_sink(None);
+            let _ = self.live_asr.stop_and_take_text();
+        }
+        let original_selected_session_id = snapshot.host.selected_session_id.clone();
+        if snapshot.device.recording
+            && matches!(
+                action,
+                CompanionV1ControlAction::DeviceSyncRecordings
+                    | CompanionV1ControlAction::OobeRunChecks
+                    | CompanionV1ControlAction::SpeakerPrompt
+                    | CompanionV1ControlAction::SpeakerStop
+            )
+        {
+            return Err(
+                "设备正在录音；请先在设备上结束录音，再读取设备状态后继续"
+                    .to_string(),
+            );
+        }
+        if action == CompanionV1ControlAction::OobeRunChecks
+            && oobe_blocked_by_active_recording(&snapshot, self.live_asr.snapshot().active)
+        {
+            return Err(
+                "正在录音或在线转写，不能运行首次使用检查；请先停止并完成当前会议"
+                    .to_string(),
+            );
+        }
+        if action == CompanionV1ControlAction::PrivacyEraseAll
+            && oobe_blocked_by_active_recording(&snapshot, self.live_asr.snapshot().active)
+        {
+            return Err("正在录音或在线转写，不能清除本机资料；请先停止并完成当前会议".to_string());
+        }
+        if action == CompanionV1ControlAction::PrivacyEraseAll {
+            self.host_recording.discard();
+            self.host_recording.set_pcm_sink(None);
+            let _ = self.live_asr.stop_and_take_text();
+        }
+        if action == CompanionV1ControlAction::MeetingGenerateMinutes {
+            if request.meeting_mode.as_deref().is_some_and(|mode| !matches!(mode, "offlineStore" | "onlineLive")) {
+                return Err("不支持的纪要版本".into());
+            }
+            let target = if let Some(id) = request.session_id.as_deref() {
+                Some(
+                    snapshot
+                        .host
+                        .sessions
+                        .iter()
+                        .find(|session| session.id == id)
+                        .ok_or_else(|| format!("meeting target {id} is missing"))?,
+                )
+            } else {
+                selected_session(&snapshot)
+            };
+            if target.is_some_and(transcript_review::review_is_stale) {
+                return Err("原始转写已更新，请先核对保留的修订或恢复原始转写，再生成纪要。".into());
+            }
+            if target.is_some_and(|session| !transcript_review::final_transcript_available(session)) {
+                return Err("完整转写尚未保存，请先完成转写再生成纪要。".into());
+            }
+            if target.is_some_and(|session| {
+                let mode = request.meeting_mode.as_deref().unwrap_or(&session.meeting_mode);
+                let variant = if mode == "onlineLive" {
+                    session.minutes_by_mode.online_live.as_ref()
+                } else { session.minutes_by_mode.offline_store.as_ref() };
+                let manually_edited = variant.is_some_and(|v| v.source == "userEdited")
+                    || session.minutes.as_ref().is_some_and(|m| m.source == "userEdited");
+                let requested_ready = if request.meeting_mode.is_some() {
+                    variant.is_some_and(|v| v.status == "minutesReady" && v.quality == "final"
+                        && v.processing.as_ref().is_none_or(|p| p.is_complete())
+                        && transcript_review::minutes_current(session, v.source_review_revision))
+                } else { session_has_final_minutes_product(session) };
+                requested_ready && (automatic_recovery || !manually_edited)
+            }) {
+                return Ok(snapshot.clone());
+            }
+        }
+        if matches!(
+            action,
+            CompanionV1ControlAction::MeetingExportMarkdown
+                | CompanionV1ControlAction::MeetingExportTxt
+                | CompanionV1ControlAction::MeetingExportJson
+                | CompanionV1ControlAction::MeetingExportSrt
+                | CompanionV1ControlAction::MeetingExportActionsTodo
+                | CompanionV1ControlAction::MeetingExportActionsIcal
+        ) {
+            let target = if let Some(id) = request.session_id.as_deref() {
+                snapshot
+                    .host
+                    .sessions
+                    .iter()
+                    .find(|session| session.id == id)
+                    .ok_or_else(|| format!("meeting export target {id} is missing"))?
+            } else {
+                selected_session(&snapshot)
+                    .ok_or_else(|| "meeting export has no selected session".to_string())?
+            };
+            if request
+                .meeting_mode
+                .as_deref()
+                .is_some_and(|mode| mode != target.meeting_mode)
+            {
+                return Err("export meeting mode does not match the requested session".to_string());
+            }
+        }
+        if matches!(
+            action,
+            CompanionV1ControlAction::MeetingTranscribeAudio
+                | CompanionV1ControlAction::MeetingGenerateMinutes
+        ) {
+            let target_index = if let Some(id) = request.session_id.as_deref() {
+                Some(
+                    snapshot
+                        .host
+                        .sessions
+                        .iter()
+                        .position(|session| session.id == id)
+                        .ok_or_else(|| format!("meeting recovery target {id} is missing"))?,
+                )
+            } else {
+                selected_session(&snapshot).and_then(|selected| {
+                    snapshot
+                        .host
+                        .sessions
+                        .iter()
+                        .position(|session| session.id == selected.id)
+                })
+            };
+            let has_active_recording = snapshot.device.recording
+                || snapshot.meeting.active
+                || snapshot
+                    .host
+                    .sessions
+                    .iter()
+                    .any(|candidate| candidate.status == "recording");
+            if let Some(index) = target_index {
+                let session = &mut snapshot.host.sessions[index];
+                if automatic_recovery && session.recovery.intent != "processMeeting" {
+                    return Ok(snapshot.clone());
+                }
+                if session.recovery.intent == "processMeeting" {
+                    let already_done = if action
+                        == CompanionV1ControlAction::MeetingTranscribeAudio
+                    {
+                        session.transcript_final && !session.transcript_text.trim().is_empty()
+                    } else {
+                        false
+                    };
+                    if automatic_recovery {
+                        if has_active_recording || already_done {
+                            return Ok(snapshot.clone());
+                        }
+                        let due = session
+                            .recovery
+                            .next_retry_at_unix_ms
+                            .is_none_or(|due| due <= unix_time_ms());
+                        let expected_stage = if action
+                            == CompanionV1ControlAction::MeetingTranscribeAudio
+                        {
+                            session.recovery.stage == "pendingTranscription"
+                                || (session.recovery.stage == "retryBackoff"
+                                    && session.recovery.retry_stage == "transcription"
+                                    && due)
+                        } else {
+                            session.recovery.stage == "pendingMinutes"
+                                || (session.recovery.stage == "retryBackoff"
+                                    && session.recovery.retry_stage == "minutes"
+                                    && due)
+                        };
+                        if !expected_stage
+                            || session.recovery.requested_meeting_mode != session.meeting_mode
+                            || session.recovery.attempt_count
+                                >= session.recovery.max_attempts.max(1)
+                        {
+                            return Ok(snapshot.clone());
+                        }
+                    }
+                    if !already_done {
+                        if !automatic_recovery && session.recovery.stage == "paused" {
+                            // A user-visible manual Retry explicitly resumes a
+                            // paused job with a fresh bounded budget.
+                            session.recovery.attempt_count = 0;
+                        }
+                        session.recovery.retry_stage = if action
+                            == CompanionV1ControlAction::MeetingTranscribeAudio
+                        {
+                            "transcription"
+                        } else {
+                            "minutes"
+                        }
+                        .to_string();
+                        session.recovery.attempt_count =
+                            session.recovery.attempt_count.saturating_add(1);
+                        session.recovery.stage = if action
+                            == CompanionV1ControlAction::MeetingTranscribeAudio
+                        {
+                            "transcribing"
+                        } else {
+                            "generatingMinutes"
+                        }
+                        .to_string();
+                        session.recovery.next_retry_at_unix_ms = None;
+                        session.pending_reason = Some("recovery_processing".to_string());
+                        // Commit the consumed attempt before any external work.
+                        // A service may accept a call before a crash, so this is
+                        // local completed-stage deduplication rather than a
+                        // claim of remote exactly-once execution.
+                        persistence::save_snapshot(&mut snapshot)?;
+                    }
+                }
+            }
+        }
+        let device_meeting_target = board_meeting::device_control_target(&snapshot, &request)?;
+        let board_meeting_control = device_meeting_target.is_some();
+        if matches!(action, CompanionV1ControlAction::DeviceDisconnect) {
+            *self
+                .pending_meeting_start
+                .lock()
+                .map_err(|_| "pending meeting state lock failed".to_string())? = None;
+        }
+        if matches!(action, CompanionV1ControlAction::MeetingStart) && request.session_id.is_none()
+        {
+            request.session_id = if snapshot.meeting.active {
+                snapshot.host.active_session_id.clone()
+            } else if board_meeting_control {
+                self.pending_meeting_start
+                    .lock()
+                    .map_err(|_| "pending meeting state lock failed".to_string())?
+                    .as_ref()
+                    .map(|pending| pending.session_id.clone())
+                    .or_else(|| {
+                        Some(format!(
+                            "meeting-{}-{}",
+                            std::process::id(),
+                            std::time::SystemTime::now()
+                                .duration_since(std::time::UNIX_EPOCH)
+                                .unwrap_or_default()
+                                .as_micros()
+                        ))
+                    })
+            } else {
+                Some(format!(
+                    "meeting-{}-{}",
+                    std::process::id(),
+                    std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .unwrap_or_default()
+                        .as_micros()
+                ))
+            };
+        } else if matches!(
+            action,
+            CompanionV1ControlAction::MeetingStop | CompanionV1ControlAction::MeetingFinalize
+        ) && request.session_id.is_none()
+        {
+            request.session_id = snapshot
+                .host
+                .active_session_id
+                .clone()
+                .or_else(|| snapshot.host.selected_session_id.clone());
+        }
         let requested_session_id = request.session_id.clone();
+        if board_meeting_control && action == CompanionV1ControlAction::MeetingStop {
+            if let Some(session_id) = requested_session_id.as_deref() {
+                if board_stop::completed_retry(&mut snapshot, session_id)? {
+                    return Ok(snapshot.clone());
+                }
+            }
+        }
         let mut transcription_note: Option<String> = None;
+        let mut transcription_error: Option<String> = None;
         let mut device_note: Option<String> = None;
         let mut privacy_report: Option<PrivacyEraseReport> = None;
+        let mut synced_batch = Vec::new();
+        let mut meeting_device_report: Option<CompanionMeetingControlReport> = None;
+        let mut meeting_device_observed_at: Option<String> = None;
+        let mut meeting_device_recording: Option<CompanionSyncedRecording> = None;
+        let mut meeting_sync_paused = false;
+        let mut connected_device_identity: Option<CompanionDeviceIdentity> = None;
+        let mut reconnected_closed_owner: Option<ble_bridge::OwnedRecorder> = None;
+        let mut ble_name_report: Option<ble_bridge::CompanionBleNameReport> = None;
+        let mut speaker_device_report: Option<CompanionSpeakerControlReport> = None;
+        let mut oobe_probe: Option<Result<ble_bridge::CompanionOobeProbeReport, String>> = None;
         // Timed speaker utterances from the transcription path, threaded to the
         // session after the fixture reducer builds it (enables SRT export +
         // playback sync). None for non-volcengine / failed transcription.
         let mut transcript_utterances: Option<Vec<CompanionV1UtteranceSegment>> = None;
 
+        /* STOP keeps the original capture source across disconnections.
+         * Fail closed instead of letting the host reducer claim device audio. */
+        if board_meeting_control {
+            let command = match action {
+                CompanionV1ControlAction::MeetingStart => 1,
+                CompanionV1ControlAction::MeetingStop => 2,
+                CompanionV1ControlAction::MeetingFinalize => 3,
+                _ => unreachable!(),
+            };
+            let requested_device = device_meeting_target.as_ref()
+                .and_then(|target| target.device_id.clone());
+            let requested_device = requested_device.as_deref();
+            let expected_recording_id = device_meeting_target.as_ref()
+                .and_then(|target| target.recording_id);
+            let requested_max_seconds = if matches!(action, CompanionV1ControlAction::MeetingStart) {
+                recording_duration_seconds(request.duration_ms)?
+            } else {60};
+            let session_key = request
+                .session_id
+                .as_deref()
+                .ok_or_else(|| "V1 meeting control requires a stable session id".to_string())?;
+            let max_seconds = if matches!(action, CompanionV1ControlAction::MeetingStart) {
+                let mut pending = self
+                    .pending_meeting_start
+                    .lock()
+                    .map_err(|_| "pending meeting state lock failed".to_string())?;
+                reserve_pending_meeting_start(
+                    &mut pending,
+                    session_key,
+                    requested_device,
+                    requested_max_seconds,
+                )?
+            } else {
+                requested_max_seconds
+            };
+            let mut stopped_sync = None;
+            let report_result = if matches!(action, CompanionV1ControlAction::MeetingStop) {
+                let known_ids = verified_device_recording_ids(&snapshot, requested_device);
+                self.ble_bridge.stop_and_sync_recordings(requested_device, session_key,
+                    expected_recording_id.ok_or("原录音缺少设备录音编号，未发送停止命令。")?, &known_ids,
+                    |report, observed_at| {
+                        board_stop::observe(&mut snapshot, session_key, report, observed_at)?;
+                        // A failed pull or native cleanup must not lose the
+                        // actual STOP ACK or leave the original marked active.
+                        persistence::save_snapshot(&mut snapshot)
+                    })
+                    .map(|(report, observed_at, operation)| {
+                        // The checkpoint preserves the first STOP ACK. A
+                        // retry/receive time cannot rewrite capture history.
+                        meeting_device_observed_at = snapshot.host.sessions.iter()
+                            .find(|session| session.id == session_key)
+                            .and_then(|session| session.stopped_at.clone())
+                            .or(Some(observed_at));
+                        stopped_sync = Some(operation);
+                        report
+                    })
+            } else {
+                self.ble_bridge.meeting_control_idempotent(
+                    requested_device, command, max_seconds, session_key, expected_recording_id,
+                )
+            };
+            // Host observation of the actual ACK, not a fixture date or an
+            // estimate of when the board sampled its first microphone frame.
+            if meeting_device_observed_at.is_none() {
+                meeting_device_observed_at=Some(observation_timestamp());
+            }
+            let report = match report_result {
+                Ok(report) => report,
+                Err(error) => {
+                    if matches!(action, CompanionV1ControlAction::MeetingStart)
+                        && meeting_start_rejection_is_definitive(&error)
+                    {
+                        *self
+                            .pending_meeting_start
+                            .lock()
+                            .map_err(|_| "pending meeting state lock failed".to_string())? = None;
+                    }
+                    return Err(error);
+                }
+            };
+            {
+                let mut pending = self
+                    .pending_meeting_start
+                    .lock()
+                    .map_err(|_| "pending meeting state lock failed".to_string())?;
+                if pending
+                    .as_ref()
+                    .is_some_and(|item| item.session_id == session_key)
+                {
+                    *pending = None;
+                }
+            }
+            request.device_id = Some(report.device_id.clone());
+
+            if matches!(action, CompanionV1ControlAction::MeetingStop) {
+                let known_recording_ids =
+                    verified_device_recording_ids(&snapshot, Some(&report.device_id));
+                let mut operation = stopped_sync.unwrap_or_else(|| self
+                    .ble_bridge
+                    .sync_recordings(Some(&report.device_id), &known_recording_ids));
+                for _attempt in 2..=3 {
+                    let exact_ready = operation.ready
+                        && operation
+                            .recordings
+                            .iter()
+                            .any(|item| item.recording_id == report.meeting_id &&
+                                (!ble_bridge::delete_after_sync_enabled() || item.device_reclaimed));
+                    if exact_ready || operation.sync_paused {
+                        break;
+                    }
+                    std::thread::sleep(std::time::Duration::from_millis(1_500));
+                    let retried = self
+                        .ble_bridge
+                        .sync_recordings(Some(&report.device_id), &known_recording_ids);
+                    operation = retain_stopped_recording_checkpoint(
+                        &operation, retried, &report.device_id, report.meeting_id);
+                }
+                if !operation.ready {
+                    return Err(format!(
+                        "V1 STOP finalized recording_id={} but Type pull failed: {}",
+                        report.meeting_id, operation.message
+                    ));
+                }
+                meeting_sync_paused = operation.sync_paused;
+                synced_batch = operation.recordings.clone();
+                // A partial batch may contain a different complete recording.
+                // Only legacy helpers without a catalog may use their lone path.
+                let legacy_path = if !operation.sync_paused && operation.recordings.is_empty() {
+                    operation.recording_path.clone()
+                } else { None };
+                let recording = operation
+                    .recordings
+                    .into_iter()
+                    .find(|item| item.recording_id == report.meeting_id)
+                    .or_else(|| {
+                        legacy_path.as_ref().map(|path| CompanionSyncedRecording {
+                            recording_id: report.meeting_id,
+                            duration_ms: report.duration_ms,
+                            total_length: 0,
+                            sha256: String::new(),
+                            recording_path: path.clone(),
+                            device_reclaimed: false, capture_incomplete: false,
+                        })
+                    });
+                if let Some(recording) = recording {
+                    if let Some((wav_bytes, duration_ms)) = wav_file_metrics(&recording.recording_path) {
+                        request.audio_bytes = Some(wav_bytes);
+                        request.duration_ms = Some(duration_ms);
+                    } else {
+                        request.audio_bytes = Some(recording.total_length as u64);
+                        request.duration_ms = Some(recording.duration_ms as u64);
+                    }
+                    request.audio_path = Some(recording.recording_path.clone());
+                    meeting_device_recording = Some(recording);
+                } else if meeting_sync_paused {
+                    // The microphone really stopped. Preserve that ACK without
+                    // importing a fixture file or restarting the paused pull.
+                    request.audio_path = None;
+                    request.audio_bytes = Some(0);
+                    request.duration_ms = Some(u64::from(report.duration_ms));
+                } else {
+                    return Err(
+                        format!(
+                            "V1 STOP finalized recording_id={} but sync returned no matching recording",
+                            report.meeting_id
+                        )
+                    );
+                }
+            }
+            meeting_device_report = Some(report);
+        }
+
         match action {
+            CompanionV1ControlAction::ApplyBleName => {
+                if !snapshot.connected || !snapshot.device.connected {
+                    return Err("Connect and verify the Companion before saving its BLE name".to_string());
+                }
+                let name = request
+                    .ble_name
+                    .as_deref()
+                    .map(str::trim)
+                    .filter(|name| !name.is_empty())
+                    .unwrap_or(snapshot.ble_name.staged_name.as_str())
+                    .to_string();
+                if !crate::companion_v1::companion_ble_name_is_valid(&name) {
+                    return Err("BLE name must be printable ASCII, 1..29 bytes, without quotes, semicolon, equals or backslash".to_string());
+                }
+                let requested_device = request
+                    .device_id
+                    .as_deref()
+                    .or(snapshot.device.device_id.as_deref());
+                let report = self.ble_bridge.apply_ble_name(requested_device, &name)?;
+                request.ble_name = Some(name);
+                request.device_id = Some(report.device_id.clone());
+                ble_name_report = Some(report);
+            }
+            CompanionV1ControlAction::ResetBleName => {
+                if !snapshot.connected || !snapshot.device.connected {
+                    return Err("Connect and verify the Companion before resetting its BLE name".to_string());
+                }
+                let requested_device = request
+                    .device_id
+                    .as_deref()
+                    .or(snapshot.device.device_id.as_deref());
+                let report = self.ble_bridge.reset_ble_name(requested_device)?;
+                request.ble_name = Some(report.active_name.clone());
+                request.device_id = Some(report.device_id.clone());
+                ble_name_report = Some(report);
+            }
+            CompanionV1ControlAction::OobeRunChecks => {
+                let requested_device = request
+                    .device_id
+                    .as_deref()
+                    .or(snapshot.device.device_id.as_deref());
+                oobe_probe = Some(self.ble_bridge.oobe_probe(requested_device));
+            }
             CompanionV1ControlAction::DeviceScan => {
                 let operation = self.ble_bridge.scan();
                 if !operation.ready {
@@ -202,38 +1778,136 @@ impl CompanionBackend for FixtureCompanionBackend {
                 ));
             }
             CompanionV1ControlAction::DeviceConnect => {
-                let operation = self.ble_bridge.connect(request.device_id.as_deref());
+                request.device_id = effective_device_target(
+                    request.device_id.as_deref(),
+                    snapshot.device.device_id.as_deref(),
+                );
+                let known_recording_ids =
+                    verified_device_recording_ids(&snapshot, request.device_id.as_deref());
+                let owned_recording = owned_offline_recording_link(&snapshot, &request);
+                let operation = self
+                    .ble_bridge
+                    .connect_with_owned_recording(request.device_id.as_deref(), &known_recording_ids, owned_recording.as_ref());
                 if !operation.ready {
+                    snapshot.connected = false;
+                    snapshot.device.connected = false;
+                    snapshot.device.connection_phase = "offline".to_string();
+                    snapshot.device.message = operation.message.clone();
                     return Err(operation.message);
                 }
                 request.device_id = operation.device_id.clone();
+                connected_device_identity = operation.device_identity.clone();
+                if operation.mode == "windows-native-connect-auto-upload"
+                    && connected_device_identity.as_ref().is_some_and(|identity| identity.recording == Some(false))
+                {
+                    // An owned native probe accepts idle only after matching
+                    // the original control identity and sealed catalogue.
+                    reconnected_closed_owner = owned_recording;
+                }
+                synced_batch = operation.recordings.clone();
+                if operation.mode == "windows-native-connect-auto-upload" {
+                    snapshot.source = "firmware";
+                    if let Some(device_id) = operation.device_id.as_deref() {
+                        let mut preference = self
+                            .connection_preference
+                            .lock()
+                            .map_err(|_| "device connection preference lock failed".to_string())?;
+                        if preference.remember_native_success(device_id, connection_timestamp()) {
+                            device_connection::save(&preference)?;
+                            apply_connection_preference(&mut snapshot, &preference);
+                        }
+                    }
+                }
                 device_note = Some(format!(
                     "{} ({} / {})",
                     operation.message, operation.provider_id, operation.mode
                 ));
             }
+            CompanionV1ControlAction::DeviceDisconnect => {
+                let mut preference = self
+                    .connection_preference
+                    .lock()
+                    .map_err(|_| "device connection preference lock failed".to_string())?;
+                preference.mark_manual_disconnect();
+                device_connection::save(&preference)?;
+                ble_bridge::disconnect_retained_recording(snapshot.device.device_id.as_deref())?;
+                apply_connection_preference(&mut snapshot, &preference);
+                device_note = Some(
+                    "Manual disconnect saved; automatic reconnect remains suppressed until Connect or re-enable"
+                        .to_string(),
+                );
+            }
+            CompanionV1ControlAction::DeviceEnableAutoReconnect
+            | CompanionV1ControlAction::DeviceDisableAutoReconnect => {
+                let enabled = action == CompanionV1ControlAction::DeviceEnableAutoReconnect;
+                let mut preference = self
+                    .connection_preference
+                    .lock()
+                    .map_err(|_| "device connection preference lock failed".to_string())?;
+                preference.set_auto_reconnect(enabled);
+                device_connection::save(&preference)?;
+                apply_connection_preference(&mut snapshot, &preference);
+                device_note = Some(if enabled {
+                    "Automatic reconnect enabled for the remembered exact device".to_string()
+                } else {
+                    "Automatic reconnect disabled".to_string()
+                });
+            }
             CompanionV1ControlAction::DeviceSyncRecordings => {
-                let operation = self.ble_bridge.sync_recordings();
+                request.device_id = effective_device_target(
+                    request.device_id.as_deref(),
+                    snapshot.device.device_id.as_deref(),
+                );
+                let known_recording_ids =
+                    verified_device_recording_ids(&snapshot, request.device_id.as_deref());
+                let operation = self
+                    .ble_bridge
+                    .sync_recordings(request.device_id.as_deref(), &known_recording_ids);
                 if !operation.ready {
                     return Err(operation.message);
                 }
+                if operation.sync_paused && operation.recordings.is_empty() {
+                    observe_empty_sync_pause(&mut snapshot, &operation);
+                    let _ = persistence::save_snapshot(&mut snapshot);
+                    return Ok(snapshot.clone());
+                }
                 // Empty device list is a successful BLE call but not a product sync.
                 if operation.recording_path.is_none() && request.audio_path.is_none() {
-                    return Err(
-                        if operation.message.contains("no stored recordings") {
-                            "板子上没有录音。请先在设备上录一段短音频，再点「同步短录」。"
-                                .to_string()
-                        } else {
-                            format!(
-                                "同步未得到录音文件：{}。请确认板子已录完并仍有 list 条目。",
-                                operation.message
-                            )
-                        },
-                    );
+                    return Err(if operation.message.contains("no stored recordings") {
+                        "板子上没有录音。请先在设备上录一段短音频，再点「同步短录」。".to_string()
+                    } else {
+                        format!(
+                            "同步未得到录音文件：{}。请确认板子已录完并仍有 list 条目。",
+                            operation.message
+                        )
+                    });
                 }
                 request.device_id = operation.device_id.clone();
-                if request.audio_path.is_none() {
-                    request.audio_path = operation.recording_path.clone();
+                if operation.mode.starts_with("windows-native-")
+                    && operation.mode != "windows-native-env"
+                {
+                    snapshot.source = "firmware";
+                }
+                synced_batch = operation.recordings.clone();
+                if !operation.recordings.is_empty() {
+                    request.session_id = operation.recordings.last().map(|item|
+                        received_recording_target(&snapshot.host.sessions, operation.device_id.as_deref(), item));
+                    request.audio_path = operation
+                        .recordings
+                        .last()
+                        .map(|item| item.recording_path.clone());
+                } else {
+                    if request.audio_path.is_none() {
+                        request.audio_path = operation.recording_path.clone();
+                    }
+                    if request.duration_ms.is_none() || request.audio_bytes.is_none() {
+                        if let Some(path) = request.audio_path.as_deref() {
+                            if let Some((wav_bytes, duration_ms)) = wav_file_metrics(path) {
+                                request.audio_bytes.get_or_insert(wav_bytes);
+                                request.duration_ms.get_or_insert(duration_ms);
+                            }
+                        }
+                    }
                 }
                 device_note = Some(format!(
                     "{} ({} / {})",
@@ -243,40 +1917,152 @@ impl CompanionBackend for FixtureCompanionBackend {
             CompanionV1ControlAction::PrivacyEraseAudio => {
                 privacy_report = Some(self.privacy.erase_selected_audio(&snapshot));
             }
+            CompanionV1ControlAction::PrivacyEraseTranscript => {
+                privacy_report = Some(self.privacy.erase_selected_transcript(&snapshot));
+            }
+            CompanionV1ControlAction::PrivacyDeleteSession => {
+                let requested_session_id = request
+                    .session_id
+                    .as_deref()
+                    .map(str::trim)
+                    .filter(|id| !id.is_empty())
+                    .ok_or_else(|| "delete session requires an explicit sessionId".to_string())?;
+                if snapshot.host.selected_session_id.as_deref() != Some(requested_session_id) {
+                    return Err(format!(
+                        "delete target {requested_session_id} is no longer the selected session"
+                    ));
+                }
+                let session = snapshot
+                    .host
+                    .sessions
+                    .iter()
+                    .find(|session| session.id == requested_session_id)
+                    .ok_or_else(|| format!("delete target {requested_session_id} is missing"))?;
+                let board_extent = (
+                    session.device_recording_id,
+                    session.device_total_length,
+                    session.device_sha256.clone(),
+                    session.source_device_id.clone(),
+                    session.device_reclaimed,
+                );
+                match board_extent {
+                    (Some(recording_id), Some(total_length), Some(sha256), Some(source_device_id), false) => {
+                        let requested_device_id = request
+                            .device_id
+                            .as_deref()
+                            .or(snapshot.device.device_id.as_deref())
+                            .ok_or_else(|| {
+                                "source device is not selected; board recording was not deleted"
+                                    .to_string()
+                            })?;
+                        if !device_connection::same_device_id(&source_device_id, requested_device_id) {
+                            return Err(format!(
+                                "session belongs to device {source_device_id}, not {requested_device_id}; board recording was not deleted"
+                            ));
+                        }
+                        let operation = self.ble_bridge.delete_recording_exact(
+                            Some(&source_device_id),
+                            recording_id,
+                            total_length,
+                            &sha256,
+                        );
+                        if !operation.ready {
+                            return Err(operation.message);
+                        }
+                        // The exact board deletion has already succeeded. Keep
+                        // that fact across a local-file deletion failure so a
+                        // retry does not require the reclaimed extent again.
+                        if let Some(current) = snapshot.host.sessions.iter_mut()
+                            .find(|current| current.id == requested_session_id) {
+                            current.device_reclaimed = true;
+                        }
+                        persistence::save_snapshot(&mut snapshot)?;
+                        device_note = Some(operation.message);
+                    }
+                    (Some(_), Some(_), Some(_), _, true) => {
+                        device_note = Some(
+                            "Local session deleted; its exact board extent was already reclaimed"
+                                .to_string(),
+                        );
+                    }
+                    (Some(_), Some(_), Some(_), None, false) => {
+                        device_note = Some(
+                            "Local session deleted; legacy row has no source-device identity, so the board recording was left untouched"
+                                .to_string(),
+                        );
+                    }
+                    _ => {
+                        device_note = Some(
+                            "Local-only session deleted; no board extent was associated"
+                                .to_string(),
+                        );
+                    }
+                }
+                privacy_report = Some(self.privacy.erase_selected_audio(&snapshot));
+            }
             CompanionV1ControlAction::PrivacyEraseAll => {
                 privacy_report = Some(self.privacy.erase_all_audio(&snapshot));
-                let device_op = self.ble_bridge.delete_all_privacy(request.device_id.as_deref());
-                device_note = Some(if device_op.ready {
-                    format!("{} (device delete_all acknowledged)", device_op.message)
-                } else {
-                    format!("{} (device delete_all not applied)", device_op.message)
-                });
+                device_note = Some(
+                    "Only Type local data was cleared; use the device's local menu to clear recordings stored on the device"
+                        .to_string(),
+                );
+            }
+            CompanionV1ControlAction::SpeakerPrompt => {
+                if !snapshot.connected || !snapshot.speaker.supported {
+                    return Err("Connected device has not reported a populated speaker".to_string());
+                }
+                let prompt_id = speaker_prompt_id(request.prompt_id.as_deref())?;
+                let requested_device = request
+                    .device_id
+                    .as_deref()
+                    .or(snapshot.device.device_id.as_deref());
+                let report = self.ble_bridge.speaker_prompt(
+                    requested_device,
+                    snapshot.speaker.volume.min(100),
+                    prompt_id,
+                )?;
+                request.device_id = Some(report.device_id.clone());
+                speaker_device_report = Some(report);
+            }
+            CompanionV1ControlAction::SpeakerStop => {
+                return Err(
+                    "Connected WBA speaker exposes bounded product cues; remote stop is not supported by the firmware contract"
+                        .to_string(),
+                );
             }
             _ => {}
         }
 
+        let meeting_start_supplied_audio = action == CompanionV1ControlAction::MeetingStart
+            && request
+                .audio_path
+                .as_ref()
+                .map(|p| !p.trim().is_empty())
+                .unwrap_or(false);
+
         let request = if action == CompanionV1ControlAction::MeetingTranscribeAudio {
-            let session = selected_session(&snapshot);
-            let audio_path = request.audio_path.clone().or_else(|| {
-                session.and_then(|session| session.audio_path.clone())
-            });
-            let chunk_paths = session
-                .map(|session| {
-                    session
-                        .chunks
-                        .iter()
-                        .filter_map(|chunk| chunk.path.clone())
-                        .filter(|path| {
-                            let p = std::path::Path::new(path);
-                            p.exists() && !path.starts_with("host://") && !path.starts_with("device://")
-                        })
-                        .collect::<Vec<_>>()
-                })
-                .unwrap_or_default();
-            match self
-                .transcription
-                .transcribe_session(audio_path.as_deref(), &chunk_paths)
-            {
+            let session = request
+                .session_id
+                .as_deref()
+                .and_then(|id| snapshot.host.sessions.iter().find(|session| session.id == id))
+                .or_else(|| selected_session(&snapshot));
+            let audio_path = request
+                .audio_path
+                .clone()
+                .or_else(|| session.and_then(|session| session.audio_path.clone()));
+            let chunk_paths = session.map(transcription_chunk_paths).unwrap_or_default();
+            if session.is_some_and(|session| {
+                session.transcript_final && !session.transcript_text.trim().is_empty()
+            }) {
+                transcription_note = Some("existing durable transcript reused; ASR not repeated".to_string());
+                let mut request = request;
+                request.transcript_text = session.map(|session| session.transcript_text.clone());
+                request
+            } else {
+                match self
+                    .transcription
+                    .transcribe_session_owned(session.map(|s| s.id.as_str()).unwrap_or(""), audio_path.as_deref(), &chunk_paths)
+                {
                 Ok(transcript) => {
                     transcription_note = Some(format!(
                         "{} ({}){}",
@@ -297,6 +2083,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                     request
                 }
                 Err(err) => {
+                    transcription_error = Some(err.clone());
                     transcription_note = Some(format!(
                         "ASR unavailable ({err}); session marked needs_transcription"
                     ));
@@ -307,11 +2094,190 @@ impl CompanionBackend for FixtureCompanionBackend {
                     }
                     request
                 }
+                }
             }
         } else {
             request
         };
-        let mut next = apply_fixture_control(snapshot.clone(), request)?;
+        if let Some(identity) = connected_device_identity.as_ref() {
+            apply_device_identity(&mut snapshot, identity);
+        }
+        if let Some(owner) = reconnected_closed_owner.as_ref() {
+            owner.observe_closed(&mut snapshot)?;
+        }
+        if let Some(report) = privacy_report.as_ref().filter(|report| report.failed_files != 0) {
+            return Err(format!(
+                "本机资料尚未完全删除（{} 项失败）。会议记录和原音位置已保留，请解除文件占用后重试；已删除的文件不会恢复。",
+                report.failed_files
+            ));
+        }
+        let mut next = apply_control_at(snapshot.clone(), request.clone(), &observation_timestamp())?;
+        if action == CompanionV1ControlAction::MeetingStart && meeting_device_report.is_none()
+            && request.audio_path.as_deref().is_some_and(|path| path.starts_with("board://"))
+        {
+            // Creating the pending online session has not acknowledged START.
+            // Bind the actual observation when its recording is identified.
+            if let Some(session) = selected_session_mut(&mut next) {
+                session.started_at = None;
+                for chunk in &mut session.chunks { chunk.started_at = None; }
+            }
+            next.meeting.started_at = None;
+        }
+
+        if let Some(probe) = oobe_probe.as_ref() {
+            next.oobe.complete = true;
+            next.oobe.last_run_at = Some(next.updated_at.clone());
+            match probe {
+                Ok(report) => {
+                    next.source = "firmware";
+                    next.oobe.checks = oobe_checks_from_probe(report);
+                    // The OOBE probe is deliberately transactional: it
+                    // connects, reads/verifies, then disconnects. Reflect the
+                    // actual post-probe transport state instead of leaving a
+                    // stale "connected" badge in the UI.
+                    next.connected = false;
+                    next.device.connected = false;
+                    next.device.device_id = Some(report.device_id.clone());
+                    next.device.recordings_available = report.recordings_available as u32;
+                    next.device.message = format!(
+                        "首次使用检查完成并已断开：services={} characteristics={} recordings={}",
+                        report.service_count,
+                        report.characteristic_count,
+                        report.recordings_available
+                    );
+                    apply_device_identity(&mut next, &report.identity);
+                    if let Some(echo) = next.last_control.as_mut() {
+                        let failures = next
+                            .oobe
+                            .checks
+                            .iter()
+                            .filter(|check| check.status == "fail")
+                            .count();
+                        echo.accepted = failures == 0;
+                        echo.message = format!(
+                            "physical first-use check completed with {failures} failure(s); recording and remote services were not invoked"
+                        );
+                    }
+                }
+                Err(error) => {
+                    next.oobe.checks = failed_oobe_checks(error);
+                    next.connected = false;
+                    next.device.connected = false;
+                    next.device.message = format!("首次使用检查失败：{error}");
+                    if let Some(echo) = next.last_control.as_mut() {
+                        echo.accepted = false;
+                        echo.message = format!(
+                            "physical first-use check failed without recording or remote calls: {error}"
+                        );
+                    }
+                }
+            }
+        }
+
+        if let Some(report) = ble_name_report.as_ref() {
+            next.source = "firmware";
+            next.device.device_id = Some(report.device_id.clone());
+            next.connected = true;
+            next.device.connected = true;
+            next.device.connection_phase = "ready".to_string();
+            next.ble_name.active_name = report.active_name.clone();
+            next.ble_name.staged_name = report.active_name.clone();
+            next.ble_name.status = "applied".to_string();
+            next.ble_name.pending_restart = false;
+            if let Some(echo) = next.last_control.as_mut() {
+                echo.accepted = true;
+                echo.message = format!(
+                    "Device BLE name saved and read back as {:?}; transaction disconnected cleanly",
+                    report.active_name
+                );
+            }
+        }
+
+        // One BLE drain can contain multiple durable journal entries. The
+        // reducer historically accepted one audioPath, so merge every verified
+        // result here with a stable device-recording-{id} key. Reconnects are
+        // idempotent and never collapse the library to the last item.
+        if action == CompanionV1ControlAction::DeviceSyncRecordings && !synced_batch.is_empty() {
+            // The V1 fixture reducer creates a fresh session. Real sync must
+            // preserve the original meeting, edits and requested mode.
+            next.host.sessions = snapshot.host.sessions.clone();
+            // The operation reports the device that actually supplied these
+            // bytes. The reducer's previously selected device may differ.
+            next.device.device_id = request.device_id.clone();
+        }
+        let stopped_selection = if action == CompanionV1ControlAction::MeetingStop {
+            next.host.selected_session_id.clone()
+        } else { None };
+        merge_synced_recordings(&mut next, &synced_batch);
+        if stopped_selection.is_some() { next.host.selected_session_id = stopped_selection; }
+
+        if let Some(report) = meeting_device_report.as_ref() {
+            next.source = "firmware";
+            next.device.device_id = Some(report.device_id.clone());
+            next.device.connected = true;
+            next.connected = true;
+            next.meeting.active = report.state == 1;
+            next.meeting.duration_ms = report.duration_ms as u64;
+            next.meeting.status = if report.state == 1 {
+                "recording".to_string()
+            } else {
+                "captured".to_string()
+            };
+            if let Some(session) = selected_session_mut(&mut next) {
+                session.source = "boardDevice".to_string();
+                session.source_device_id = Some(report.device_id.clone());
+                if action == CompanionV1ControlAction::MeetingStart {
+                    let prior=snapshot.host.sessions.iter().find(|s|s.id==session.id);
+                    board_meeting::observe_start(session,prior,meeting_device_observed_at.as_deref().ok_or("尚未取得设备开始确认时间。")?);
+                }
+                if report.meeting_id != 0 {
+                    /* START already carries the authoritative flash recording
+                     * id.  Surface it immediately so the UI and board never
+                     * spend the active interval in two different identities. */
+                    session.device_recording_id = Some(report.meeting_id);
+                    session.duration_ms = report.duration_ms as u64;
+                }
+                if let Some(recording) = meeting_device_recording.as_ref() {
+                    board_meeting::attach_recording(session,recording,meeting_device_observed_at.as_deref().ok_or("尚未取得设备停止确认时间。")?)?;
+                    arm_meeting_recovery(session);
+                } else if meeting_sync_paused {
+                    board_meeting::pending_sync(session, report.meeting_id, report.duration_ms,
+                        meeting_device_observed_at.as_deref().ok_or("尚未取得设备停止确认时间。")?)?;
+                }
+            }
+            if let Some(session)=selected_session(&next) {
+                let started=session.started_at.clone();let duration=session.duration_ms;
+                next.meeting.started_at=started;
+                if meeting_device_recording.is_some() {next.meeting.duration_ms=duration;}
+            }
+            if let Some(echo) = next.last_control.as_mut() {
+                echo.accepted = report.last_error == 0;
+                echo.message = format!(
+                    "Companion V1 meeting real state={} request={} recording={} duration_ms={} sync={}",
+                    report.state,
+                    report.request_id,
+                    report.meeting_id,
+                    report.duration_ms,
+                    report.sync_state
+                );
+                if meeting_sync_paused {
+                    echo.message.push_str(&format!("；设备已停止录音。{}", recording_sync::PAUSED));
+                }
+            }
+        }
+
+        if let Some(report) = speaker_device_report.as_ref() {
+            next.device.device_id = Some(report.device_id.clone());
+            next.speaker.supported = true;
+            next.speaker.online = matches!(report.state, 2..=4);
+            next.speaker.volume = report.volume_percent;
+            next.speaker.muted = report.volume_percent == 0;
+            next.speaker.status = if report.state == 4 {
+                "idle".to_string()
+            } else {
+                "prompting".to_string()
+            };
+        }
 
         // Attach the timed speaker utterances from the transcription path to
         // the selected session (the fixture reducer does not know about them).
@@ -325,7 +2291,9 @@ impl CompanionBackend for FixtureCompanionBackend {
             CompanionV1ControlAction::DeviceScan
             | CompanionV1ControlAction::DeviceConnect
             | CompanionV1ControlAction::DeviceDisconnect
-            | CompanionV1ControlAction::DeviceSyncRecordings => {
+            | CompanionV1ControlAction::DeviceSyncRecordings
+            | CompanionV1ControlAction::DeviceEnableAutoReconnect
+            | CompanionV1ControlAction::DeviceDisableAutoReconnect => {
                 if let Some(echo) = next.last_control.as_mut() {
                     echo.message = device_note
                         .unwrap_or_else(|| "Companion device boundary completed".to_string());
@@ -336,12 +2304,12 @@ impl CompanionBackend for FixtureCompanionBackend {
                     let report = privacy_report.unwrap_or_default();
                     echo.message = match device_note.clone() {
                         Some(note) => format!(
-                            "privacy erase completed: {} deleted, {} skipped; {note}",
-                            report.deleted_files, report.skipped_files
+                            "privacy erase completed: {} deleted, {} skipped, {} unverified legacy cache files preserved; {note}",
+                            report.deleted_files, report.skipped_files, report.unverified_cache_files
                         ),
                         None => format!(
-                            "privacy erase completed: {} deleted, {} skipped",
-                            report.deleted_files, report.skipped_files
+                            "privacy erase completed: {} deleted, {} skipped, {} unverified legacy cache files preserved",
+                            report.deleted_files, report.skipped_files, report.unverified_cache_files
                         ),
                     };
                 }
@@ -350,21 +2318,69 @@ impl CompanionBackend for FixtureCompanionBackend {
                 if let Some(echo) = next.last_control.as_mut() {
                     let report = privacy_report.unwrap_or_default();
                     echo.message = format!(
-                        "privacy erase completed locally: {} deleted, {} skipped (on-device recording is removed at sync time when COMPANION_TYPE_DELETE_AFTER_SYNC=1; use Erase All to wipe on-device recordings)",
-                        report.deleted_files, report.skipped_files
+                        "privacy erase completed locally: {} deleted, {} skipped, {} retained for other meetings, {} unverified legacy cache files preserved; the on-device recording was not changed (delete this exact session explicitly, or use the device's local menu)",
+                        report.deleted_files, report.skipped_files, report.shared_files, report.unverified_cache_files
+                    );
+                }
+            }
+            CompanionV1ControlAction::PrivacyDeleteSession => {
+                if let Some(echo) = next.last_control.as_mut() {
+                    let report = privacy_report.unwrap_or_default();
+                    echo.message = format!(
+                        "selected recording deleted: {} local files, {} skipped, {} retained for other meetings, {} unverified legacy cache files preserved; {}",
+                        report.deleted_files,
+                        report.skipped_files,
+                        report.shared_files,
+                        report.unverified_cache_files,
+                        device_note.unwrap_or_else(|| "no board extent".to_string())
                     );
                 }
             }
             CompanionV1ControlAction::PrivacyEraseTranscript => {
                 if let Some(echo) = next.last_control.as_mut() {
-                    echo.message =
-                        "privacy erase completed: transcript and minutes cleared".to_string();
+                    let report = privacy_report.unwrap_or_default();
+                    echo.message = format!("transcript and minutes cleared: {} cache files deleted, {} retained for other meetings; {} unverified legacy cache files preserved", report.deleted_files, report.shared_files, report.unverified_cache_files);
                 }
             }
             CompanionV1ControlAction::MeetingStart => {
+                // Fixture always fills a placeholder audio_path; only skip the
+                // real host mic when the control request explicitly supplied a path
+                // (device sync / pre-seeded WAV tests).
                 if let Some(session) = selected_session_mut(&mut next) {
-                    if session.audio_path.is_none() {
-                        let start = self.host_recording.start(&session.id, &session.title)?;
+                    if !meeting_start_supplied_audio && meeting_device_report.is_none() {
+                        let online = session.meeting_mode == "onlineLive";
+                        let mut live_mode = "idle".to_string();
+                        if online {
+                            match self.live_asr.try_start_for_online_live() {
+                                Ok(true) => {
+                                    let hub = Arc::clone(&self.live_asr);
+                                    self.host_recording.set_pcm_sink(Some(Arc::new(move |pcm| {
+                                        hub.push_pcm_i16(pcm);
+                                    })));
+                                    live_mode = self.live_asr.snapshot().mode;
+                                }
+                                Ok(false) => {
+                                    self.host_recording.set_pcm_sink(None);
+                                    live_mode = self.live_asr.snapshot().mode;
+                                }
+                                Err(err) => {
+                                    self.host_recording.set_pcm_sink(None);
+                                    live_mode = format!("error:{err}");
+                                }
+                            }
+                        } else {
+                            let _ = self.live_asr.stop_and_take_text();
+                            self.host_recording.set_pcm_sink(None);
+                        }
+
+                        let start = match self.host_recording.start(&session.id, &session.title) {
+                            Ok(start) => start,
+                            Err(error) => {
+                                self.host_recording.set_pcm_sink(None);
+                                let _ = self.live_asr.stop_and_take_text();
+                                return Err(error);
+                            }
+                        };
                         session.audio_path = Some(start.path.to_string_lossy().to_string());
                         session.retention.audio_cached = true;
                         session.chunks = vec![audio_chunk(
@@ -379,20 +2395,36 @@ impl CompanionBackend for FixtureCompanionBackend {
                         session.source = "hostMicrophone".to_string();
                         if let Some(echo) = next.last_control.as_mut() {
                             echo.message = format!(
-                                "host recording started {} ({}) -> {}",
+                                "host recording started {} ({}) -> {}; liveAsr={}",
                                 start.session_id,
                                 start.mode,
-                                start.path.to_string_lossy()
+                                start.path.to_string_lossy(),
+                                live_mode
                             );
                         }
-                    } else if let Some(echo) = next.last_control.as_mut() {
-                        echo.message =
-                            "session uses supplied audioPath; host microphone was not started"
-                                .to_string();
+                    } else if meeting_device_report.is_none() {
+                        if let Some(echo) = next.last_control.as_mut() {
+                            echo.message =
+                                "session uses supplied audioPath; host microphone was not started"
+                                    .to_string();
+                        }
                     }
                 }
             }
             CompanionV1ControlAction::MeetingTranscribeAudio => {
+                let target = requested_or_selected_session_mut(
+                    &mut next,
+                    requested_session_id.as_deref(),
+                );
+                if let Some(session) = target {
+                    if let Some(error) = transcription_error.as_deref() {
+                        schedule_recovery_failure(session, error);
+                    } else if session.transcript_final
+                        && !session.transcript_text.trim().is_empty()
+                    {
+                        mark_recovery_transcribed(session);
+                    }
+                }
                 if let Some(echo) = next.last_control.as_mut() {
                     echo.message = format!(
                         "transcribed by Companion-Type provider {}",
@@ -400,100 +2432,795 @@ impl CompanionBackend for FixtureCompanionBackend {
                     );
                 }
             }
-            CompanionV1ControlAction::MeetingGenerateMinutes
-            | CompanionV1ControlAction::MeetingExportMarkdown
-            | CompanionV1ControlAction::MeetingExportTxt
-            | CompanionV1ControlAction::MeetingExportJson
-            | CompanionV1ControlAction::MeetingExportSrt => {
-                let generated_at = next.updated_at.clone();
-                let generated = selected_session(&next).and_then(|session| {
-                    if session.transcript_text.trim().is_empty() {
-                        None
-                    } else {
-                        Some(self.minutes.generate(session, &generated_at))
-                    }
-                });
-                if let Some(generated) = generated {
-                    if let Some(session) = selected_session_mut(&mut next) {
-                        session.minutes = Some(generated.clone());
-                        // Pick the export format from the action. markdown /
-                        // generateMinutes keep the minutes markdown; txt/json/
-                        // srt render from the session. SRT with no utterance
-                        // timing falls back to markdown.
-                        session.export_markdown = match action {
-                            CompanionV1ControlAction::MeetingExportTxt => export::render_txt(session),
-                            CompanionV1ControlAction::MeetingExportJson => {
-                                export::render_json(session)
-                                    .unwrap_or_else(|_| generated.markdown.clone())
-                            }
-                            CompanionV1ControlAction::MeetingExportSrt => {
-                                let srt = export::render_srt(session);
-                                if srt.is_empty() {
-                                    generated.markdown.clone()
-                                } else {
-                                    srt
-                                }
-                            }
-                            _ => generated.markdown.clone(),
-                        };
-                        session.exported_at = Some(generated_at.clone());
-                        session.status = "minutesReady".to_string();
-                        session.pending_reason = None;
-                        session.retention.minutes_cached = true;
-                    }
-                    next.meeting.status = "minutesReady".to_string();
-                    if let Some(echo) = next.last_control.as_mut() {
-                        echo.message =
-                            format!("minutes via {} ({})", generated.source, generated.quality);
+            CompanionV1ControlAction::MeetingImportTranscript => {
+                let target = requested_or_selected_session_mut(
+                    &mut next,
+                    requested_session_id.as_deref(),
+                );
+                if let Some(session) = target {
+                    if session.recovery.intent == "processMeeting"
+                        && session.transcript_final
+                        && !session.transcript_text.trim().is_empty()
+                    {
+                        mark_recovery_transcribed(session);
                     }
                 }
             }
+            CompanionV1ControlAction::MeetingGenerateMinutes => {
+                let generated_at = next.updated_at.clone();
+                // The fixture reducer creates a selected-mode L0 placeholder.
+                // Plan recovery from the durable pre-reducer products so that
+                // placeholder cannot erase a failed mode or a completed edit.
+                let input = requested_session_id.as_deref()
+                    .and_then(|id| snapshot.host.sessions.iter().find(|session| session.id == id))
+                    .or_else(|| selected_session(&snapshot)).cloned();
+                if let Some(mut session) = input.filter(|session| !session.transcript_text.trim().is_empty()) {
+                    let failure = refresh_minutes_products_for_mode(&mut session, &generated_at, request.meeting_mode.as_deref(),
+                        |input| self.minutes.generate(input, &generated_at));
+                    next.meeting.status = session.status.clone();
+                    if let Some(target) = next.host.sessions.iter_mut().find(|target| target.id == session.id) {
+                        *target = session;
+                    }
+                    if let Some(echo) = next.last_control.as_mut() {
+                        echo.message = match failure {
+                            Some(note) => format!("minutes recovery pending — {note}"),
+                            None => "minutes products saved; completed variants retained".to_string(),
+                        };
+                    }
+                }
+            }
+            CompanionV1ControlAction::MeetingExportMarkdown
+            | CompanionV1ControlAction::MeetingExportTxt
+            | CompanionV1ControlAction::MeetingExportJson
+            | CompanionV1ControlAction::MeetingExportSrt
+            | CompanionV1ControlAction::MeetingExportActionsTodo
+            | CompanionV1ControlAction::MeetingExportActionsIcal => {
+                if let Some(echo) = next.last_control.as_mut() {
+                    echo.message = "exported existing meeting content; transcription and minutes generation were not rerun"
+                        .to_string();
+                }
+            }
             CompanionV1ControlAction::MeetingStop | CompanionV1ControlAction::MeetingFinalize => {
-                if let Some(stop) = self.host_recording.stop(requested_session_id.as_deref())? {
-                    if let Some(session) = selected_session_mut(&mut next) {
-                        if session.id == stop.session_id {
-                            session.audio_path = Some(stop.path.to_string_lossy().to_string());
-                            session.duration_ms = stop.duration_ms.max(session.duration_ms);
-                            session.audio_bytes = stop.bytes;
-                            session.retention.audio_cached = true;
-                            let stopped_at = session
-                                .stopped_at
-                                .clone()
-                                .unwrap_or_else(|| "host-recording-stop".to_string());
-                            session.chunks = seal_companion_v1_session_chunks(
-                                session,
-                                &stopped_at,
-                                session.duration_ms,
-                                Some(stop.bytes),
-                            );
-                            session.source = "hostMicrophone".to_string();
+                let mut host_capture_error = None;
+                if meeting_device_report.is_none() {
+                    if let Some(stop) = self.host_recording.stop(requested_session_id.as_deref())? {
+                        host_capture_error = stop.capture_error.clone();
+                        if let Some(session) = selected_session_mut(&mut next) {
+                            if session.id == stop.session_id {
+                                session.audio_path = Some(stop.path.to_string_lossy().to_string());
+                                session.duration_ms = stop.duration_ms;
+                                session.audio_bytes = stop.bytes;
+                                session.audio_stored = true;
+                                session.retention.audio_cached = true;
+                                let stopped_at = session
+                                    .stopped_at
+                                    .clone()
+                                    .unwrap_or_else(|| "host-recording-stop".to_string());
+                                session.chunks = seal_companion_v1_session_chunks(
+                                    session,
+                                    &stopped_at,
+                                    session.duration_ms,
+                                    Some(stop.bytes),
+                                );
+                                session.source = "hostMicrophone".to_string();
+                                arm_meeting_recovery(session);
+                                if let Some(echo) = next.last_control.as_mut() {
+                                    echo.message = format!(
+                                        "host recording stopped ({}) {} bytes -> {}",
+                                        stop.mode,
+                                        stop.bytes,
+                                        stop.path.to_string_lossy()
+                                    );
+                                }
+                            }
+                        }
+                        next.meeting.duration_ms = stop.duration_ms;
+                    }
+                }
+
+                // onlineLive: finish mid-meeting stream first; batch only if still empty.
+                if meeting_device_report.is_none() {
+                    self.host_recording.set_pcm_sink(None);
+                    let live = self.live_asr.stop_and_take_text();
+                    let mode = selected_session(&next)
+                        .map(|s| s.meeting_mode.clone())
+                        .unwrap_or_default();
+                    if mode == "onlineLive" && host_capture_error.is_none() {
+                        if !live.text.trim().is_empty() {
+                            if let Some(session) = selected_session_mut(&mut next) {
+                                Self::merge_live_asr_into_session(session, &live);
+                                session.transcript_final = true;
+                                session.status = "transcribed".to_string();
+                                session.pending_reason = None;
+                                arm_meeting_recovery(session);
+                                mark_recovery_transcribed(session);
+                            }
+                            next.meeting.status = "transcribed".to_string();
+                            next.meeting.transcript_count =
+                                next.host
+                                    .sessions
+                                    .iter()
+                                    .filter(|s| !s.transcript_text.trim().is_empty())
+                                    .count() as u32;
                             if let Some(echo) = next.last_control.as_mut() {
                                 echo.message = format!(
-                                    "host recording stopped ({}) {} bytes -> {}",
-                                    stop.mode,
-                                    stop.bytes,
-                                    stop.path.to_string_lossy()
+                                    "onlineLive live stream closed via {} (partials={})",
+                                    live.mode, live.partial_count
                                 );
+                            }
+                        } else {
+                            let (audio, empty) = selected_session(&next)
+                                .map(|s| {
+                                    (
+                                        s.audio_path.clone(),
+                                        s.transcript_text.trim().is_empty()
+                                            && s.live_transcript_text.trim().is_empty(),
+                                    )
+                                })
+                                .unwrap_or((None, false));
+                            if empty {
+                                if let Some(path) = audio {
+                                    match self
+                                        .transcription
+                                        .transcribe_session_owned(next.host.selected_session_id.as_deref().unwrap_or(""), Some(path.as_str()), &[])
+                                    {
+                                        Ok(transcript) => {
+                                            if let Some(session) = selected_session_mut(&mut next) {
+                                                session.transcript_text = transcript.text.clone();
+                                                session.transcript_final = true;
+                                                session.live_transcript_text =
+                                                    transcript.text.clone();
+                                                session.transcript_preview =
+                                                    transcript.text.chars().take(120).collect();
+                                                session.transcript_segments = transcript
+                                                    .text
+                                                    .split(|c: char| {
+                                                        c == '\n' || c == '。' || c == '.'
+                                                    })
+                                                    .filter(|s| !s.trim().is_empty())
+                                                    .count();
+                                                session.status = "transcribed".to_string();
+                                                session.pending_reason = None;
+                                                session.retention.transcript_cached = true;
+                                                session.utterances = transcript.utterances;
+                                                arm_meeting_recovery(session);
+                                                mark_recovery_transcribed(session);
+                                            }
+                                            next.meeting.status = "transcribed".to_string();
+                                            next.meeting.transcript_count = next
+                                                .host
+                                                .sessions
+                                                .iter()
+                                                .filter(|s| !s.transcript_text.trim().is_empty())
+                                                .count()
+                                                as u32;
+                                            if let Some(echo) = next.last_control.as_mut() {
+                                                echo.message = format!(
+                                                    "onlineLive fallback batch via {} ({}); liveErr={:?}",
+                                                    transcript.provider_id,
+                                                    transcript.mode,
+                                                    live.error
+                                                );
+                                            }
+                                        }
+                                        Err(err) => {
+                                            if let Some(session) = selected_session_mut(&mut next) {
+                                                session.pending_reason =
+                                                    Some("needs_transcription".to_string());
+                                                session.status = "captured".to_string();
+                                            }
+                                            if let Some(echo) = next.last_control.as_mut() {
+                                                echo.message = format!(
+                                                    "onlineLive stop stored audio; ASR pending: {err}"
+                                                );
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-                    next.meeting.duration_ms = stop.duration_ms.max(next.meeting.duration_ms);
+                }
+                if let Some(error) = host_capture_error.as_deref() {
+                    if let Some(session) = selected_session_mut(&mut next) {
+                        pause_incomplete_host_recording(session, error);
+                    }
+                    next.meeting.status = "captured".to_string();
+                    if let Some(echo) = next.last_control.as_mut() {
+                        echo.message = format!("录音已停止，但音频不完整：{error}。已保留文件并暂停自动处理。");
+                    }
                 }
             }
             _ => {}
         }
 
+        if automatic_recovery {
+            next.host.selected_session_id = original_selected_session_id;
+        }
         refresh_privacy_counts(&mut next);
-        persistence::save_sessions(&next.host.sessions);
+        // Do not silently dismiss an existing storage warning on a read-only
+        // action. A stop must retain its real state even if saving fails.
+        if next.host.persistence.status == "ready" || action == CompanionV1ControlAction::MeetingStop {
+            let _ = persistence::save_snapshot(&mut next);
+        }
         *snapshot = next.clone();
         Ok(next)
+    }
+
+    fn automatic_reconnect_once(&self) -> Result<CompanionV1Snapshot, String> {
+        let preference = {
+            self
+                .connection_preference
+                .lock()
+                .map_err(|_| "device connection preference lock failed".to_string())?
+                .clone()
+        };
+        if !preference.can_automatically_reconnect() {
+            return self.snapshot();
+        }
+        let remembered_device_id = preference.remembered_device_id.ok_or_else(|| {
+            "automatic reconnect has no stable remembered device".to_string()
+        })?;
+        {
+            let mut snapshot = self
+                .snapshot
+                .lock()
+                .map_err(|_| "Companion backend state lock failed".to_string())?;
+            if oobe_blocked_by_active_recording(&snapshot, self.live_asr.snapshot().active) {
+                return Ok(snapshot.clone());
+            }
+            snapshot.device.connection_phase = "reconnecting".to_string();
+            snapshot.device.last_reconnect_attempt_at = Some(connection_timestamp());
+            snapshot.device.reconnect_attempt_count =
+                snapshot.device.reconnect_attempt_count.saturating_add(1);
+        }
+
+        let operation = self.ble_bridge.probe_remembered(&remembered_device_id);
+        let mut snapshot = self
+            .snapshot
+            .lock()
+            .map_err(|_| "Companion backend state lock failed".to_string())?;
+        let mut preference = self
+            .connection_preference
+            .lock()
+            .map_err(|_| "device connection preference lock failed".to_string())?;
+        let claim_still_current = preference.can_automatically_reconnect()
+            && preference
+                .remembered_device_id
+                .as_deref()
+                .is_some_and(|current| {
+                    device_connection::same_device_id(current, &remembered_device_id)
+                });
+        if !claim_still_current {
+            // The physical probe ran outside this state lock. A manual
+            // disconnect must also retire its late idle connection, without
+            // touching a newly owned active recording.
+            ble_bridge::disconnect_prepared_device(Some(&remembered_device_id))?;
+            snapshot.connected = false;
+            snapshot.device.connected = false;
+            snapshot.device.connection_phase = if preference.manual_disconnect {
+                "manualDisconnected"
+            } else {
+                "offline"
+            }
+            .to_string();
+            apply_connection_preference(&mut snapshot, &preference);
+            return Ok(snapshot.clone());
+        }
+        if !operation.ready {
+            snapshot.connected = false;
+            snapshot.device.connected = false;
+            snapshot.device.connection_phase = "offline".to_string();
+            snapshot.device.message = operation.message.clone();
+            return Err(operation.message);
+        }
+        let returned_device_id = operation.device_id.as_deref().ok_or_else(|| {
+            "remembered-device probe returned no native address".to_string()
+        })?;
+        if !device_connection::same_device_id(&remembered_device_id, returned_device_id) {
+            snapshot.connected = false;
+            snapshot.device.connected = false;
+            snapshot.device.connection_phase = "offline".to_string();
+            return Err("remembered-device probe returned a different device".to_string());
+        }
+        snapshot.connected = true;
+        snapshot.source = "firmware";
+        snapshot.device.connected = true;
+        snapshot.device.device_id = Some(returned_device_id.to_string());
+        snapshot.device.connection_phase = "ready".to_string();
+        snapshot.device.message = operation.message;
+        if let Some(identity) = operation.device_identity.as_ref() {
+            apply_device_identity(&mut snapshot, identity);
+        }
+        preference.remember_native_success(returned_device_id, connection_timestamp());
+        device_connection::save(&preference)?;
+        apply_connection_preference(&mut snapshot, &preference);
+        Ok(snapshot.clone())
+    }
+
+    fn record_meeting_recovery_failure(
+        &self,
+        session_id: &str,
+        retry_stage: &str,
+        error: &str,
+    ) -> Result<(), String> {
+        let mut snapshot = self
+            .snapshot
+            .lock()
+            .map_err(|_| "Companion backend state lock failed".to_string())?;
+        let session = snapshot
+            .host
+            .sessions
+            .iter_mut()
+            .find(|session| session.id == session_id)
+            .ok_or_else(|| format!("meeting recovery target {session_id} is missing"))?;
+        if session.recovery.intent != "processMeeting"
+            || matches!(session.recovery.stage.as_str(), "complete" | "paused")
+        {
+            return Ok(());
+        }
+        session.recovery.retry_stage = retry_stage.to_string();
+        schedule_recovery_failure(session, error);
+        persistence::save_snapshot(&mut snapshot)
+    }
+
+    fn mark_meeting_exported(
+        &self,
+        session_id: &str,
+        meeting_mode: &str,
+    ) -> Result<(), String> {
+        let mut snapshot = self
+            .snapshot
+            .lock()
+            .map_err(|_| "Companion backend state lock failed".to_string())?;
+        let session = snapshot
+            .host
+            .sessions
+            .iter_mut()
+            .find(|session| session.id == session_id)
+            .ok_or_else(|| format!("meeting export target {session_id} is missing"))?;
+        let mode_exists = match meeting_mode {
+            "offlineStore" => session.minutes_by_mode.offline_store.is_some(),
+            "onlineLive" => session.minutes_by_mode.online_live.is_some(),
+            _ => return Err(format!("unsupported meeting mode {meeting_mode}")),
+        } || (session.meeting_mode == meeting_mode
+            && session.minutes_by_mode.offline_store.is_none()
+            && session.minutes_by_mode.online_live.is_none());
+        if !mode_exists {
+            return Err(format!(
+                "meeting {session_id} no longer has a saved {meeting_mode} product"
+            ));
+        }
+        session.exported_at = Some(observation_timestamp());
+        persistence::save_snapshot(&mut snapshot)
     }
 
     fn transfer_firmware_ota(
         &self,
         request: CompanionFirmwareOtaRequest,
     ) -> Result<CompanionFirmwareOtaReport, String> {
+        if self.snapshot()?.device.recording {
+            return Err(
+                "设备正在录音；请先在设备上结束录音，再读取设备状态后执行固件升级"
+                    .to_string(),
+            );
+        }
         firmware_ota::transfer(&self.ble_bridge, request)
+    }
+
+    fn validate_ota_package(
+        &self,
+        request: CompanionFirmwareOtaRequest,
+    ) -> Result<CompanionOtaPackageValidation, String> {
+        firmware_ota::validate_ota_package(&request)
+    }
+
+    fn complete_board_online_live(
+        &self,
+        session_id: &str,
+        report: &BoardOnlineLiveReport,
+    ) -> Result<CompanionV1Snapshot, String> {
+        if report.sync_paused {
+            let mut snapshot = self.snapshot.lock()
+                .map_err(|_| "Companion backend state lock failed".to_string())?;
+            observe_paused_online_sync(&mut snapshot, session_id, report)?;
+            let _ = persistence::save_snapshot(&mut snapshot);
+            return Ok(snapshot.clone());
+        }
+        let final_path = report.final_recording_path.trim();
+        if final_path.is_empty() || !std::path::Path::new(final_path).is_file() {
+            return Err("board onlineLive completion is missing the pulled WAV".to_string());
+        }
+        if report.final_total_length == 0 || report.final_sha256.len() != 64 {
+            return Err("board onlineLive completion is missing durable identity".to_string());
+        }
+
+        let (wav_bytes, duration_ms) = wav_file_metrics(final_path).unwrap_or((
+            std::fs::metadata(final_path)
+                .map(|metadata| metadata.len())
+                .unwrap_or(0),
+            report
+                .partials
+                .last()
+                .map(|partial| u64::from(partial.duration_ms))
+                .unwrap_or(0),
+        ));
+
+        // Commit the sealed, integrity-checked board artifact before entering
+        // slow network ASR. A process exit during transcription must leave an
+        // actionable captured row, not an orphan WAV with a board:// index.
+        {
+            let mut snapshot = self
+                .snapshot
+                .lock()
+                .map_err(|_| "Companion backend state lock failed".to_string())?;
+            let session = snapshot
+                .host
+                .sessions
+                .iter_mut()
+                .find(|session| session.id == session_id)
+                .ok_or_else(|| format!("board onlineLive session {session_id} disappeared"))?;
+            board_meeting::observe_online_times(session, &report.device_id, report.recording_id,
+                &report.start_ack_at, &report.stop_ack_at)?;
+            session.source = "deviceFlash".to_string();
+            session.meeting_mode = "onlineLive".to_string();
+            session.status = "captured".to_string();
+            session.pending_reason = Some("needs_transcription".to_string());
+            session.duration_ms = duration_ms;
+            session.audio_path = Some(final_path.to_string());
+            session.audio_bytes = wav_bytes;
+            session.audio_stored = true;
+            session.device_recording_id = Some(report.recording_id);
+            session.capture_incomplete = report.capture_incomplete;
+            session.device_total_length = Some(report.final_total_length);
+            session.device_sha256 = Some(report.final_sha256.clone());
+            session.device_reclaimed = report.device_reclaimed;
+            arm_meeting_recovery(session);
+            session.recovery.retry_stage = "transcription".to_string();
+            session.recovery.attempt_count = session.recovery.attempt_count.saturating_add(1);
+            session.recovery.stage = "transcribing".to_string();
+            session.recovery.next_retry_at_unix_ms = None;
+            session.pending_reason = Some("recovery_processing".to_string());
+            session.chunks = vec![audio_chunk(
+                format!("{}-board-live", session.id),
+                Some(final_path.to_string()),
+                session.started_at.clone(),
+                session.stopped_at.clone(),
+                duration_ms,
+                wav_bytes,
+                "synced",
+            )];
+            session.retention.audio_cached = true;
+            recording_bookmarks::bind_received(session);
+            snapshot.host.active_session_id = None;
+            snapshot.host.selected_session_id = Some(session_id.to_string());
+            snapshot.meeting.active = false;
+            snapshot.meeting.status = "captured".to_string();
+            snapshot.meeting.duration_ms = duration_ms;
+            snapshot.updated_at = observation_timestamp();
+            refresh_privacy_counts(&mut snapshot);
+            persistence::save_snapshot(&mut snapshot)?;
+        }
+
+        // Batch the sealed WAV after STOP. This is deliberately independent of
+        // the live prefix consumer: a slow/failed partial never weakens the
+        // final transcript and the board audio remains the source of truth.
+        let final_transcript = match self.transcription.transcribe_audio_owned(session_id, final_path) {
+            Ok(transcript) if !transcript.text.trim().is_empty() => transcript,
+            result => {
+                let reason = match result {
+                    Ok(_) => "board onlineLive final ASR returned empty text".to_string(),
+                    Err(err) => err,
+                };
+                // Offline/network failure is not a recording failure. Persist
+                // the verified WAV + board identity first; the normal
+                // MeetingTranscribeAudio action can consume it after reconnect.
+                let mut snapshot = self
+                    .snapshot
+                    .lock()
+                    .map_err(|_| "Companion backend state lock failed".to_string())?;
+                let session = snapshot
+                    .host
+                    .sessions
+                    .iter_mut()
+                    .find(|session| session.id == session_id)
+                    .ok_or_else(|| format!("board onlineLive session {session_id} disappeared"))?;
+                session.source = "deviceFlash".to_string();
+                session.meeting_mode = "onlineLive".to_string();
+                session.status = if session.live_transcript_text.trim().is_empty() {
+                    "captured".to_string()
+                } else {
+                    "transcribed".to_string()
+                };
+                session.pending_reason = Some("needs_transcription".to_string());
+                session.duration_ms = duration_ms;
+                session.audio_path = Some(final_path.to_string());
+                session.audio_bytes = wav_bytes;
+                session.audio_stored = true;
+                session.device_recording_id = Some(report.recording_id);
+                session.capture_incomplete = report.capture_incomplete;
+                session.device_total_length = Some(report.final_total_length);
+                session.device_sha256 = Some(report.final_sha256.clone());
+                session.device_reclaimed = report.device_reclaimed;
+                session.chunks = vec![audio_chunk(
+                    format!("{}-board-live", session.id),
+                    Some(final_path.to_string()),
+                    session.started_at.clone(),
+                    session.stopped_at.clone(),
+                    duration_ms,
+                    wav_bytes,
+                    "synced",
+                )];
+                session.retention.audio_cached = true;
+                schedule_recovery_failure(session, &reason);
+                snapshot.host.active_session_id = None;
+                snapshot.host.selected_session_id = Some(session_id.to_string());
+                snapshot.meeting.active = false;
+                snapshot.meeting.status = "captured".to_string();
+                snapshot.meeting.duration_ms = duration_ms;
+                snapshot.updated_at = observation_timestamp();
+                if let Some(echo) = snapshot.last_control.as_mut() {
+                    echo.message = format!(
+                        "board onlineLive audio saved; final ASR pending after reconnect: {reason}"
+                    );
+                }
+                refresh_privacy_counts(&mut snapshot);
+                let _ = persistence::save_snapshot(&mut snapshot);
+                return Ok(snapshot.clone());
+            }
+        };
+
+        // Final ASR is a separate durable stage. Commit it before minutes so a
+        // crash or LLM failure retries minutes without submitting the WAV to
+        // ASR again.
+        {
+            let mut snapshot = self
+                .snapshot
+                .lock()
+                .map_err(|_| "Companion backend state lock failed".to_string())?;
+            let session = snapshot
+                .host
+                .sessions
+                .iter_mut()
+                .find(|session| session.id == session_id)
+                .ok_or_else(|| format!("board onlineLive session {session_id} disappeared"))?;
+            session.transcript_text = final_transcript.text.clone();
+            session.transcript_final = true;
+            session.transcript_preview = final_transcript.text.chars().take(120).collect();
+            session.transcript_segments = final_transcript
+                .text
+                .split(|ch: char| ch == '\n' || ch == '。' || ch == '.')
+                .filter(|segment| !segment.trim().is_empty())
+                .count();
+            session.utterances = final_transcript.utterances.clone();
+            session.retention.transcript_cached = true;
+            mark_recovery_transcribed(session);
+            session.recovery.attempt_count = 1;
+            session.recovery.retry_stage = "minutes".to_string();
+            session.recovery.stage = "generatingMinutes".to_string();
+            session.pending_reason = Some("recovery_processing".to_string());
+            snapshot.updated_at = observation_timestamp();
+            persistence::save_snapshot(&mut snapshot)?;
+        }
+
+        let base_session = {
+            let snapshot = self
+                .snapshot
+                .lock()
+                .map_err(|_| "Companion backend state lock failed".to_string())?;
+            snapshot
+                .host
+                .sessions
+                .iter()
+                .find(|session| session.id == session_id)
+                .cloned()
+                .ok_or_else(|| format!("board onlineLive session {session_id} is missing"))?
+        };
+        let generated_at = observation_timestamp();
+        let mut offline_input = base_session.clone();
+        offline_input.meeting_mode = "offlineStore".to_string();
+        offline_input.transcript_text = final_transcript.text.clone();
+        let offline_minutes = self.minutes.generate(&offline_input, &generated_at);
+
+        let mut online_input = base_session;
+        online_input.meeting_mode = "onlineLive".to_string();
+        if online_input.live_transcript_text.trim().is_empty() {
+            online_input.live_transcript_text = final_transcript.text.clone();
+        }
+        // Prefix/window partials are preview evidence, not additive deltas.
+        // The sealed WAV batch is authoritative for both final products.
+        online_input.transcript_text = final_transcript.text.clone();
+        let online_minutes = self.minutes.generate(&online_input, &generated_at);
+        let minutes_failure = online_minutes
+            .llm_note
+            .clone()
+            .or_else(|| offline_minutes.llm_note.clone());
+
+        let partial_count = report.partials.len() as u32;
+        let mut snapshot = self
+            .snapshot
+            .lock()
+            .map_err(|_| "Companion backend state lock failed".to_string())?;
+        let session = snapshot
+            .host
+            .sessions
+            .iter_mut()
+            .find(|session| session.id == session_id)
+            .ok_or_else(|| format!("board onlineLive session {session_id} disappeared"))?;
+        session.source = "deviceFlash".to_string();
+        session.meeting_mode = "onlineLive".to_string();
+        session.status = if minutes_failure.is_some() {
+            "transcribed"
+        } else {
+            "minutesReady"
+        }
+        .to_string();
+        session.duration_ms = duration_ms;
+        session.audio_path = Some(final_path.to_string());
+        session.audio_bytes = wav_bytes;
+        session.audio_stored = true;
+        session.device_recording_id = Some(report.recording_id);
+        session.capture_incomplete = report.capture_incomplete;
+        session.source_device_id = Some(report.device_id.clone());
+        session.device_total_length = Some(report.final_total_length);
+        session.device_sha256 = Some(report.final_sha256.clone());
+        session.device_reclaimed = report.device_reclaimed;
+        session.chunks = vec![audio_chunk(
+            format!("{}-board-live", session.id),
+            Some(final_path.to_string()),
+            session.started_at.clone(),
+            session.stopped_at.clone(),
+            duration_ms,
+            wav_bytes,
+            "synced",
+        )];
+        session.transcript_text = final_transcript.text.clone();
+        session.transcript_final = true;
+        if session.live_transcript_text.trim().is_empty() {
+            session.live_transcript_text = final_transcript.text.clone();
+        }
+        session.transcript_preview = final_transcript.text.chars().take(120).collect();
+        session.transcript_segments = final_transcript
+            .text
+            .split(|ch: char| ch == '\n' || ch == '。' || ch == '.')
+            .filter(|segment| !segment.trim().is_empty())
+            .count();
+        session.utterances = final_transcript.utterances;
+        session.minutes = Some(online_minutes.clone());
+        session.minutes_by_mode = CompanionV1MinutesByMode {
+            offline_store: Some(minutes_variant(&offline_minutes, 0)),
+            online_live: Some(minutes_variant(&online_minutes, partial_count)),
+        };
+        session.export_markdown = online_minutes.markdown;
+        session.exported_at = Some(generated_at.to_string());
+        session.retention.audio_cached = true;
+        session.retention.transcript_cached = true;
+        session.retention.minutes_cached = true;
+        arm_meeting_recovery(session);
+        if let Some(error) = minutes_failure.as_deref() {
+            schedule_recovery_failure(session, error);
+        } else {
+            mark_recovery_complete(session);
+        }
+        snapshot.host.active_session_id = None;
+        snapshot.host.selected_session_id = Some(session_id.to_string());
+        snapshot.meeting.active = false;
+        snapshot.meeting.status = if minutes_failure.is_some() {
+            "transcribed"
+        } else {
+            "minutesReady"
+        }
+        .to_string();
+        snapshot.meeting.duration_ms = duration_ms;
+        snapshot.updated_at = observation_timestamp();
+        snapshot.meeting.transcript_count = snapshot
+            .host
+            .sessions
+            .iter()
+            .filter(|item| !item.transcript_text.trim().is_empty())
+            .count() as u32;
+        refresh_privacy_counts(&mut snapshot);
+        let _ = persistence::save_snapshot(&mut snapshot);
+        Ok(snapshot.clone())
+    }
+
+    fn bind_board_online_live_recording(&self, session_id: &str, device_id: &str, recording_id: u32, start_ack_at: &str)
+        -> Result<(), String> {
+        chrono::DateTime::parse_from_rfc3339(start_ack_at)
+            .map_err(|_| "板端录音缺少实际开始确认时间。")?;
+        let mut snapshot = self.snapshot.lock().map_err(|_| "Companion backend state lock failed")?;
+        let session = snapshot.host.sessions.iter_mut().find(|s| s.id == session_id)
+            .ok_or("板端录音对应的会议已不存在，录音已请求停止。")?;
+        if session.status != "recording" || session.meeting_mode != "onlineLive"
+            || session.source_device_id.as_deref().is_some_and(|id| !device_connection::same_device_id(id, device_id))
+            || session.device_recording_id.is_some_and(|id| id != recording_id) {
+            return Err("板端录音与会议身份不一致，录音已请求停止。".into());
+        }
+        session.source_device_id = Some(device_id.into());
+        session.device_recording_id = Some(recording_id);
+        let prior = session.clone();
+        board_meeting::observe_start(session, Some(&prior), start_ack_at);
+        snapshot.meeting.started_at = session.started_at.clone();
+        snapshot.updated_at = observation_timestamp();
+        persistence::save_snapshot(&mut snapshot)
+    }
+
+    fn set_board_online_live_partial(
+        &self,
+        session_id: &str,
+        transcript: &str,
+    ) -> Result<CompanionV1Snapshot, String> {
+        let transcript = transcript.trim();
+        if transcript.is_empty() {
+            return Err("board onlineLive partial is empty".to_string());
+        }
+        let mut snapshot = self
+            .snapshot
+            .lock()
+            .map_err(|_| "Companion backend state lock failed".to_string())?;
+        let session = snapshot
+            .host
+            .sessions
+            .iter_mut()
+            .find(|session| session.id == session_id)
+            .ok_or_else(|| format!("board onlineLive session {session_id} is missing"))?;
+        if session.status != "recording" || session.meeting_mode != "onlineLive" {
+            return Err(format!(
+                "board onlineLive partial rejected for inactive session {session_id}"
+            ));
+        }
+        // Board ASR consumes a durable prefix (later a rolling window), so each
+        // result supersedes the previous preview. Appending would duplicate the
+        // same speech on every pull.
+        session.live_transcript_text = transcript.to_string();
+        session.transcript_text = transcript.to_string();
+        session.transcript_final = false;
+        session.transcript_preview = transcript.chars().take(120).collect();
+        session.transcript_segments = transcript
+            .split(|ch: char| ch == '\n' || ch == '。' || ch == '.')
+            .filter(|segment| !segment.trim().is_empty())
+            .count();
+        session.pending_reason = None;
+        session.retention.transcript_cached = true;
+        snapshot.updated_at = observation_timestamp();
+        let _ = persistence::save_snapshot(&mut snapshot);
+        Ok(snapshot.clone())
+    }
+
+    fn fail_board_online_live(
+        &self,
+        session_id: &str,
+        reason: &str,
+    ) -> Result<CompanionV1Snapshot, String> {
+        let mut snapshot = self
+            .snapshot
+            .lock()
+            .map_err(|_| "Companion backend state lock failed".to_string())?;
+        if let Some(session) = snapshot
+            .host
+            .sessions
+            .iter_mut()
+            .find(|session| session.id == session_id)
+        {
+            session.source = "deviceFlash".to_string();
+            session.status = "captured".to_string();
+            session.pending_reason = Some("needs_device_sync".to_string());
+            // A failed transport/STOP is not an acknowledged capture end.
+            board_meeting::retain_capture_dates(session);
+            arm_meeting_recovery(session);
+            session.recovery.stage = "paused".to_string();
+            session.recovery.last_error = Some(reason.chars().take(512).collect());
+        }
+        snapshot.host.active_session_id = None;
+        snapshot.meeting.active = false;
+        snapshot.meeting.status = "captured".to_string();
+        snapshot.updated_at = observation_timestamp();
+        if let Some(echo) = snapshot.last_control.as_mut() {
+            echo.accepted = false;
+            echo.message = format!("board onlineLive failed: {reason}");
+        }
+        let _ = persistence::save_snapshot(&mut snapshot);
+        Ok(snapshot.clone())
     }
 }
 
@@ -517,6 +3244,49 @@ fn selected_session_mut(snapshot: &mut CompanionV1Snapshot) -> Option<&mut Compa
         .find(|session| session.id == selected_id)
 }
 
+fn requested_or_selected_session_mut<'a>(
+    snapshot: &'a mut CompanionV1Snapshot,
+    requested_id: Option<&str>,
+) -> Option<&'a mut CompanionV1HostSession> {
+    let target_id = requested_id
+        .map(str::to_owned)
+        .or_else(|| snapshot.host.selected_session_id.clone())
+        .or_else(|| snapshot.host.active_session_id.clone())
+        .or_else(|| snapshot.host.sessions.first().map(|session| session.id.clone()))?;
+    snapshot
+        .host
+        .sessions
+        .iter_mut()
+        .find(|session| session.id == target_id)
+}
+
+fn transcription_chunk_paths(session: &CompanionV1HostSession) -> Vec<String> {
+    // The host recorder seals five-minute timeline entries over ONE durable
+    // WAV. Recognise that exact generated contract, not arbitrary duplicates:
+    // independently declared physical segments must still be checked in full.
+    if let Some(primary) = session.audio_path.as_ref().filter(|path| {
+        !path.starts_with("host://") && !path.starts_with("device://")
+    }) {
+        let expected = seal_companion_v1_session_chunks(
+            session, "", session.duration_ms, Some(session.audio_bytes),
+        );
+        if !session.chunks.is_empty()
+            && expected.len() == session.chunks.len()
+            && session.chunks.iter().zip(&expected).all(|(actual, expected)| {
+                actual.id == expected.id && actual.status == "sealed"
+                    && actual.path.as_ref() == Some(primary)
+                    && actual.duration_ms == expected.duration_ms && actual.bytes == expected.bytes
+            })
+        {
+            return vec![primary.clone()];
+        }
+    }
+    // Retain every declared entry, including unresolved device/host URIs and
+    // missing paths. The transcription boundary reports its exact missing
+    // position before any provider/cache can return a partial meeting.
+    session.chunks.iter().map(|chunk| chunk.path.clone().unwrap_or_default()).collect()
+}
+
 fn selected_session(snapshot: &CompanionV1Snapshot) -> Option<&CompanionV1HostSession> {
     let selected_id = snapshot
         .host
@@ -531,6 +3301,118 @@ fn selected_session(snapshot: &CompanionV1Snapshot) -> Option<&CompanionV1HostSe
             .find(|session| &session.id == selected_id);
     }
     snapshot.host.sessions.first()
+}
+
+fn received_recording_target(sessions: &[CompanionV1HostSession], device_id: Option<&str>, item: &CompanionSyncedRecording) -> String {
+    let matches: Vec<_> = sessions.iter().filter(|s|
+        s.device_recording_id == Some(item.recording_id)
+            && s.source_device_id.as_deref().zip(device_id).is_some_and(|(a,b)| device_connection::same_device_id(a,b))
+            && s.device_sha256.as_deref().is_none_or(|sha| sha == item.sha256))
+        .collect();
+    if matches.len() == 1 { matches[0].id.clone() }
+    else { format!("{}-{}", device_recording_session_id(device_id, item.recording_id), item.sha256) }
+}
+pub(crate) fn checkpoint_received_recording(
+    path: &std::path::Path, device_id: &str, recording: &CompanionSyncedRecording,
+) -> Result<(), String> {
+    session_store::update(path, |sessions| {
+        let mut checkpoint = fixture_snapshot();
+        checkpoint.device.device_id = Some(device_id.into());
+        checkpoint.host.sessions = std::mem::take(sessions);
+        merge_synced_recordings(&mut checkpoint, std::slice::from_ref(recording));
+        *sessions = checkpoint.host.sessions;
+    })
+}
+
+fn observe_paused_online_sync(snapshot: &mut CompanionV1Snapshot, session_id: &str,
+    report: &BoardOnlineLiveReport) -> Result<(), String> {
+    if report.device_reclaimed || !report.final_recording_path.is_empty()
+        || report.final_total_length != 0 || !report.final_sha256.is_empty()
+    { return Err("暂停同步结果含有矛盾的录音完成标记，未修改会议。".into()); }
+    let session = snapshot.host.sessions.iter_mut().find(|session| session.id == session_id)
+        .ok_or_else(|| format!("board onlineLive session {session_id} disappeared"))?;
+    let mut pending = session.clone();
+    board_meeting::observe_online_times(&mut pending, &report.device_id, report.recording_id,
+        &report.start_ack_at, &report.stop_ack_at)?;
+    board_meeting::pending_sync(&mut pending, report.recording_id, report.sealed_duration_ms, &report.stop_ack_at)?;
+    pending.source = "boardDevice".into();
+    pending.source_device_id = Some(report.device_id.clone());
+    *session = pending;
+    snapshot.host.active_session_id = None;
+    snapshot.meeting.active = false;
+    snapshot.meeting.status = "captured".into();
+    snapshot.meeting.duration_ms = u64::from(report.sealed_duration_ms);
+    snapshot.updated_at = observation_timestamp();
+    snapshot.last_control = Some(crate::companion_v1::CompanionV1ControlEcho {
+        action: CompanionV1ControlAction::MeetingStop,
+        characteristic_uuid: crate::companion_v1::COMPANION_V1_HOST_DEVICE_CHANNEL,
+        payload_hex: String::new(), accepted: true,
+        message: format!("设备已停止录音。{}", recording_sync::PAUSED),
+    });
+    refresh_privacy_counts(snapshot);
+    Ok(())
+}
+
+fn observe_empty_sync_pause(snapshot: &mut CompanionV1Snapshot, operation: &CompanionBleOperation) {
+    // This changes the outcome of the local sync command, not capture/library
+    // state. In particular, do not run the fixture's synced-session reducer.
+    snapshot.updated_at = observation_timestamp();
+    snapshot.device.message = operation.message.clone();
+    snapshot.last_control = Some(crate::companion_v1::CompanionV1ControlEcho {
+        action: CompanionV1ControlAction::DeviceSyncRecordings,
+        characteristic_uuid: crate::companion_v1::COMPANION_V1_HOST_DEVICE_CHANNEL,
+        payload_hex: String::new(), accepted: true, message: operation.message.clone(),
+    });
+}
+
+fn merge_synced_recordings(snapshot: &mut CompanionV1Snapshot, recordings: &[CompanionSyncedRecording]) {
+    if recordings.is_empty() { return; }
+    let mut last_id = None;
+    for item in recordings {
+        let id = received_recording_target(&snapshot.host.sessions, snapshot.device.device_id.as_deref(), item);
+        if !snapshot.host.sessions.iter().any(|s| s.id == id) {
+            let metrics = wav_file_metrics(&item.recording_path);
+            let request = CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::DeviceSyncRecordings, ble_name: None, session_id: Some(id.clone()), prompt_id: None,
+                title: Some(format!("设备录音 #{}", item.recording_id)), transcript_text: None,
+                meeting_mode: Some("offlineStore".into()), audio_path: Some(item.recording_path.clone()),
+                audio_bytes: metrics.map(|v|v.0).or(Some(item.total_length as u64)),
+                device_id: snapshot.device.device_id.clone(), duration_ms: metrics.map(|v|v.1).or(Some(item.duration_ms as u64)),
+            };
+            let mut session = crate::companion_v1::synced_device_session(snapshot, &request, &snapshot.updated_at);
+            // A pull observes receipt, not the original capture start/stop.
+            session.started_at = None;
+            session.stopped_at = None;
+            snapshot.host.sessions.insert(0, session);
+        }
+        let session = snapshot.host.sessions.iter_mut().find(|s| s.id == id).expect("received session inserted");
+        let was_waiting_for_sync = session.pending_reason.as_deref() == Some("needs_device_sync");
+        session.device_recording_id = Some(item.recording_id);
+        session.device_total_length = Some(item.total_length);
+        session.device_sha256 = Some(item.sha256.clone());
+        session.device_reclaimed = item.device_reclaimed;
+        session.capture_incomplete = item.capture_incomplete;
+        session.source_device_id = snapshot.device.device_id.clone();
+        session.audio_path = Some(item.recording_path.clone());
+        session.audio_bytes = std::fs::metadata(&item.recording_path).map(|m|m.len()).unwrap_or(0);
+        session.audio_stored = true;
+        session.retention.audio_cached = true;
+        session.duration_ms = item.duration_ms as u64;
+        recording_bookmarks::bind_received(session);
+        board_meeting::retain_capture_dates(session);
+        session.chunks = vec![audio_chunk(format!("{}-received", session.id), session.audio_path.clone(),
+            session.started_at.clone(), session.stopped_at.clone(), session.duration_ms, session.audio_bytes, "synced")];
+        if !session.transcript_final {
+            session.status = "captured".into();
+            session.pending_reason = Some("needs_transcription".into());
+            if was_waiting_for_sync {
+                session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
+            } else { arm_meeting_recovery(session); }
+        }
+        last_id = Some(id);
+    }
+    snapshot.host.selected_session_id = last_id;
+    snapshot.device.recordings_available = recordings.iter().filter(|r| !r.device_reclaimed).count() as u32;
 }
 
 fn audio_chunk(
@@ -564,7 +3446,7 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
         .host
         .sessions
         .iter()
-        .map(|session| session.transcript_text.as_bytes().len() as u64)
+        .map(|session| (session.transcript_text.len() + session.meeting_notes.iter().map(|n| n.text.len()).sum::<usize>()) as u64)
         .sum();
     snapshot.privacy.minutes_bytes = snapshot
         .host
@@ -576,8 +3458,1486 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn stop_retry_keeps_durable_audio_without_inventing_physical_consumption() {
+        let source = "C8:92:FF:DD:3B:CA";
+        let operation = |ready, device_id: Option<&str>, reclaimed: Option<bool>| {
+            super::ble_bridge::CompanionBleOperation {
+                provider_id: "companion-type-windows-ble".into(),
+                mode: "windows-native-recording-pull".into(), ready, sync_paused: false,
+                device_id: device_id.map(str::to_string), recording_path: None,
+                recordings: reclaimed.map(|device_reclaimed| super::CompanionSyncedRecording {
+                    recording_id: 16, duration_ms: 300_420, total_length: 630_894,
+                    sha256: "59".repeat(32), recording_path: "original.wav".into(),
+                    device_reclaimed, capture_incomplete: false,
+                }).into_iter().collect(), device_identity: None,
+                message: "latest attempt".into(),
+            }
+        };
+        let pending = operation(true, Some(source), Some(false));
+        let failed = super::retain_stopped_recording_checkpoint(
+            &pending, operation(false, None, None), source, 16);
+        assert!(failed.ready);
+        assert_eq!(failed.recording_path.as_deref(), Some("original.wav"));
+        assert_eq!(failed.recordings.len(), 1);
+        assert!(!failed.recordings[0].device_reclaimed);
+        let absent = super::retain_stopped_recording_checkpoint(
+            &failed, operation(true, Some(source), None), source, 16);
+        assert!(!absent.recordings[0].device_reclaimed, "directory absence is not an ACK");
+        let confirmed = super::retain_stopped_recording_checkpoint(
+            &absent, operation(true, Some(source), Some(true)), source, 16);
+        assert!(confirmed.recordings[0].device_reclaimed);
+        let other = super::retain_stopped_recording_checkpoint(
+            &pending, operation(false, Some("AA:BB:CC:DD:EE:FF"), None), source, 16);
+        assert!(!other.ready);
+        assert!(other.recordings.is_empty(), "never move a receipt across device identities");
+    }
+
+    #[test]
+    fn offline_duration_is_preserved_and_invalid_input_is_rejected() {
+        assert_eq!(super::recording_duration_seconds(Some(60*60*1000)).unwrap(),3600);
+        assert_eq!(super::recording_duration_seconds(Some(1001)).unwrap(),2);
+        assert!(super::recording_duration_seconds(Some(0)).is_err());
+        assert!(super::recording_duration_seconds(Some(u64::MAX)).is_err());
+    }
+    #[test]
+    fn incomplete_capture_preserves_audio_and_pauses_automatic_processing() {
+        let mut snapshot = super::apply_fixture_control(
+            super::fixture_snapshot(),
+            recovery_request(super::CompanionV1ControlAction::MeetingStart, "partial-capture", false),
+        ).unwrap();
+        let session = &mut snapshot.host.sessions[0];
+        session.audio_path = Some("partial.wav".to_string());
+        session.audio_bytes = 32044;
+        session.transcript_final = true;
+        super::pause_incomplete_host_recording(session, "麦克风已拔出");
+        assert_eq!(session.audio_path.as_deref(), Some("partial.wav"));
+        assert!(session.audio_stored);
+        assert!(!session.transcript_final);
+        assert_eq!(session.status, "captured");
+        assert_eq!(session.recovery.stage, "paused");
+        assert!(session.recovery.next_retry_at_unix_ms.is_none());
+        assert!(session.recovery.last_error.as_ref().unwrap().contains("麦克风已拔出"));
+    }
+
+    #[test]
+    fn completed_asr_without_speech_preserves_audio_and_pauses_reupload() {
+        let mut snapshot = super::apply_fixture_control(super::fixture_snapshot(),
+            recovery_request(super::CompanionV1ControlAction::MeetingStart, "no-speech", false)).unwrap();
+        let session = &mut snapshot.host.sessions[0];
+        session.status = "captured".to_string();
+        session.audio_path = Some("actual-preserved.wav".into());
+        session.audio_bytes = 32044;
+        session.audio_stored = true;
+        session.recovery.stage = "transcribing".into();
+        session.recovery.attempt_count = 1;
+        session.recovery.retry_stage = "transcription".into();
+        super::schedule_recovery_failure(session, "Volcengine ASR completed without recognized speech");
+        assert_eq!(session.recovery.stage, "paused");
+        assert_eq!(session.recovery.attempt_count, 1);
+        assert!(session.recovery.next_retry_at_unix_ms.is_none());
+        assert_eq!(session.pending_reason.as_deref(), Some("no_speech_detected"));
+        assert!(session.audio_stored);
+        assert_eq!(session.audio_path.as_deref(), Some("actual-preserved.wav"));
+        assert!(!session.transcript_final);
+        super::persistence::reconcile_session_recovery(session);
+        assert_eq!(session.pending_reason.as_deref(), Some("no_speech_detected"));
+        assert_eq!(session.recovery.stage, "paused");
+        assert!(!super::recovery_error_is_permanent("Volcengine connection closed without a final result"));
+    }
     use super::*;
-    use crate::companion_v1::CompanionV1ControlAction;
+    use crate::companion_v1::{
+        synced_device_session, CompanionV1ControlAction, CompanionV1ControlRequest,
+    };
+
+    #[test]
+    fn stopped_host_recording_uses_measured_duration_instead_of_requested_limit() {
+        let backend = FixtureCompanionBackend::new();
+        let mut start = recovery_request(CompanionV1ControlAction::MeetingStart, "measured-duration", false);
+        start.meeting_mode = Some("offlineStore".to_string());
+        start.duration_ms = Some(1_800_000);
+        backend.apply_control(start).unwrap();
+        let mut stop = recovery_request(CompanionV1ControlAction::MeetingStop, "measured-duration", false);
+        stop.duration_ms = Some(1_800_000);
+        let stopped = backend.apply_control(stop).unwrap();
+        let session = stopped.host.sessions.iter().find(|session| session.id == "measured-duration").unwrap();
+        assert!(session.audio_bytes > 44);
+        assert!(session.duration_ms > 0 && session.duration_ms < 10_000,
+            "a short capture must not claim the requested thirty-minute limit");
+        assert_eq!(stopped.meeting.duration_ms, session.duration_ms);
+        assert!(!stopped.meeting.active);
+    }
+
+    fn recovery_request(
+        action: CompanionV1ControlAction,
+        session_id: &str,
+        automatic: bool,
+    ) -> CompanionV1ControlRequest {
+        CompanionV1ControlRequest {
+            action,
+            ble_name: None,
+            session_id: Some(session_id.to_string()),
+            prompt_id: automatic.then(|| "__companion_auto_recovery__".to_string()),
+            title: None,
+            transcript_text: None,
+            meeting_mode: None,
+            audio_path: None,
+            audio_bytes: None,
+            device_id: None,
+            duration_ms: None,
+        }
+    }
+
+    #[test]
+    fn received_recording_is_discoverable_before_ack_and_keeps_online_identity() {
+        let root = std::env::temp_dir().join(format!("companion-received-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let path = root.join("sessions.json");
+        let wav = root.join("received.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        let item = CompanionSyncedRecording { recording_id: 42, duration_ms: 10_000,
+            total_length: 1000, sha256: "a".repeat(64), recording_path: wav.to_string_lossy().into_owned(), device_reclaimed: false, capture_incomplete: false };
+        let mut request = recovery_request(CompanionV1ControlAction::MeetingStart, "original-online", false);
+        request.meeting_mode = Some("onlineLive".into());
+        request.audio_path = Some("board://online/original-online".into());
+        request.device_id = Some("AA:BB:CC:DD:EE:FF".into());
+        let prepared = apply_fixture_control(fixture_snapshot(), request).unwrap();
+        let mut sessions = prepared.host.sessions;
+        sessions[0].device_recording_id = Some(42);
+        persistence::save_sessions_to(&path, &sessions).unwrap();
+        checkpoint_received_recording(&path, "AA:BB:CC:DD:EE:FF", &item).unwrap();
+        checkpoint_received_recording(&path, "AA:BB:CC:DD:EE:FF", &item).unwrap();
+        std::fs::write(&path, b"torn after device ACK").unwrap();
+        let restored = persistence::load_sessions_from(&path).unwrap();
+        assert_eq!(restored.len(), 1);
+        assert_eq!(restored[0].id, "original-online");
+        assert_eq!(restored[0].meeting_mode, "onlineLive");
+        assert_eq!(restored[0].device_recording_id, Some(42));
+        assert_eq!(restored[0].device_total_length, Some(1000));
+        assert_eq!(restored[0].device_sha256.as_deref(), Some(item.sha256.as_str()));
+        assert_eq!(restored[0].audio_path.as_deref(), Some(item.recording_path.as_str()));
+        assert!(!restored[0].device_reclaimed, "without device receipt reclaim cannot be claimed");
+        let mut acknowledged = item.clone(); acknowledged.device_reclaimed = true;
+        checkpoint_received_recording(&path, "AA:BB:CC:DD:EE:FF", &acknowledged).unwrap();
+        let after_ack = persistence::load_sessions_from(&path).unwrap();
+        assert_eq!(after_ack[0].id, "original-online");
+        assert!(after_ack[0].device_reclaimed, "exact device ACK survives pending ASR and restart");
+        assert_eq!(after_ack[0].device_sha256.as_deref(), Some(item.sha256.as_str()));
+        assert_eq!(after_ack[0].audio_path.as_deref(), Some(item.recording_path.as_str()));
+        assert!(after_ack[0].audio_stored && !after_ack[0].transcript_final);
+        let mut second = item.clone(); second.recording_id = 43;
+        checkpoint_received_recording(&path, "AA:BB:CC:DD:EE:FF", &second).unwrap();
+        assert_eq!(persistence::load_sessions_from(&path).unwrap().len(), 2);
+        std::fs::write(&path, b"unrecoverable primary").unwrap();
+        std::fs::write(root.join("sessions.json.bak"), b"unrecoverable backup").unwrap();
+        assert!(checkpoint_received_recording(&path, "AA:BB:CC:DD:EE:FF", &second).is_err(), "no device ACK after failed durable checkpoint");
+        assert_eq!(std::fs::read(&path).unwrap(), b"unrecoverable primary");
+    }
+
+    #[test]
+    fn interrupted_online_identity_and_sync_keep_user_edits() {
+        let mut snapshot = fixture_snapshot();
+        let request = CompanionV1ControlRequest { action: CompanionV1ControlAction::MeetingStart,
+            meeting_mode: Some("onlineLive".into()), audio_path: Some("board://online/known".into()),
+            device_id: Some("AA:BB:CC:DD:EE:FF".into()), ..recovery_request(CompanionV1ControlAction::MeetingStart,"known",false) };
+        snapshot = apply_fixture_control(snapshot, request).unwrap();
+        let original = &mut snapshot.host.sessions[0];
+        original.device_recording_id = Some(42);
+        original.title = "用户保留的标题".into();
+        original.status = "captured".into();
+        original.pending_reason = Some("needs_device_sync".into());
+        snapshot.device.device_id = Some("AA:BB:CC:DD:EE:FF".into());
+        let root = std::env::temp_dir().join(format!("companion-merge-{}", uuid::Uuid::new_v4().simple()));
+        std::fs::create_dir(&root).unwrap();
+        let wav = root.join("received.wav"); std::fs::write(&wav,b"fixture-only").unwrap();
+        let item = CompanionSyncedRecording {recording_id:42,duration_ms:1000,total_length:100,
+            sha256:"a".repeat(64),recording_path:wav.to_string_lossy().into_owned(),device_reclaimed: false, capture_incomplete: false};
+        merge_synced_recordings(&mut snapshot, std::slice::from_ref(&item));
+        assert_eq!(snapshot.host.sessions.len(),1);
+        assert_eq!(snapshot.host.sessions[0].id,"known");
+        assert_eq!(snapshot.host.sessions[0].title,"用户保留的标题");
+        assert_eq!(snapshot.host.sessions[0].meeting_mode,"onlineLive");
+        assert_eq!(snapshot.host.sessions[0].pending_reason.as_deref(),Some("needs_transcription"));
+        snapshot.host.sessions[0].transcript_text="已核对的完整文字".into();
+        snapshot.host.sessions[0].transcript_final=true;
+        snapshot.host.sessions[0].status="transcribed".into();
+        merge_synced_recordings(&mut snapshot, std::slice::from_ref(&item));
+        assert_eq!(snapshot.host.sessions[0].transcript_text,"已核对的完整文字");
+        assert_eq!(snapshot.host.sessions[0].status,"transcribed");
+        let mut reused=item.clone();reused.sha256="b".repeat(64);
+        merge_synced_recordings(&mut snapshot, std::slice::from_ref(&reused));
+        assert_eq!(snapshot.host.sessions.len(),2,"reused device ID with different content must not overwrite a meeting");
+        assert_eq!(snapshot.host.sessions.iter().find(|s| s.id=="known").unwrap().device_sha256.as_deref(),Some(item.sha256.as_str()));
+    }
+
+    #[test]
+    fn save_retry_requeues_interrupted_checkpoint_without_resetting_attempt_budget() {
+        let backend = FixtureCompanionBackend::new();
+        let demo = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "retry-checkpoint", false)).unwrap();
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            snapshot.host.sessions = demo.host.sessions;
+            let session = &mut snapshot.host.sessions[0];
+            session.minutes = None; session.minutes_by_mode = Default::default();
+            session.recovery = crate::companion_v1::CompanionV1MeetingRecovery::armed("offlineStore");
+            session.recovery.stage = "generatingMinutes".into();
+            session.recovery.attempt_count = 1;
+            snapshot.host.persistence.status = "unsaved".into();
+        }
+        let saved = backend.apply_control(recovery_request(CompanionV1ControlAction::HostRetrySave, "", false)).unwrap();
+        assert_eq!(saved.host.persistence.status, "ready");
+        assert_eq!(saved.host.sessions[0].recovery.stage, "retryBackoff");
+        assert_eq!(saved.host.sessions[0].recovery.retry_stage, "minutes");
+        assert_eq!(saved.host.sessions[0].recovery.attempt_count, 1);
+    }
+
+    #[test]
+    #[cfg(windows)]
+    fn locked_original_keeps_session_and_can_be_deleted_after_retry() {
+        use std::os::windows::fs::OpenOptionsExt;
+        struct RecordingOverride(Option<std::ffi::OsString>);
+        impl Drop for RecordingOverride {
+            fn drop(&mut self) {
+                if let Some(value) = &self.0 { std::env::set_var("COMPANION_TYPE_RECORDING_DIR", value); }
+                else { std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); }
+            }
+        }
+        let _restore = RecordingOverride(std::env::var_os("COMPANION_TYPE_RECORDING_DIR"));
+        let root = std::env::temp_dir().join(format!("companion-delete-retry-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let audio = root.join("original.wav");
+        std::fs::write(&audio, b"owned audio").unwrap();
+        let backend = FixtureCompanionBackend::new();
+        let mut demo = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "delete-retry", false)).unwrap();
+        demo.host.sessions.truncate(1);
+        let session = &mut demo.host.sessions[0];
+        session.audio_path = Some(audio.to_string_lossy().into());
+        session.audio_stored = true; session.retention.audio_cached = true;
+        session.device_recording_id = None; session.chunks.clear();
+        let id = session.id.clone();
+        demo.host.selected_session_id = Some(id.clone());
+        *backend.snapshot.lock().unwrap() = demo;
+        let held = std::fs::OpenOptions::new().read(true).share_mode(0).open(&audio).unwrap();
+        for action in [CompanionV1ControlAction::PrivacyEraseAudio,
+            CompanionV1ControlAction::PrivacyDeleteSession, CompanionV1ControlAction::PrivacyEraseAll] {
+            let error = backend.apply_control(recovery_request(action, &id, false)).unwrap_err();
+            assert!(error.contains("尚未完全删除"), "{error}");
+            let snapshot = backend.snapshot().unwrap();
+            assert_eq!(snapshot.host.sessions.len(), 1);
+            assert!(snapshot.host.sessions[0].retention.audio_cached);
+            assert_eq!(snapshot.host.sessions[0].audio_path.as_deref(), Some(audio.to_string_lossy().as_ref()));
+        }
+        drop(held);
+        let cleared = backend.apply_control(recovery_request(CompanionV1ControlAction::PrivacyEraseAudio, &id, false)).unwrap();
+        assert!(!cleared.host.sessions[0].retention.audio_cached);
+        assert!(!audio.exists());
+        std::fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn storage_failure_preserves_edits_blocks_processing_and_retry_commits() {
+        // This suite is run with --test-threads=1, like the existing environment
+        // provider tests. Always restore the user's state override on unwind.
+        struct StateOverride(Option<std::ffi::OsString>);
+        impl Drop for StateOverride {
+            fn drop(&mut self) {
+                if let Some(value) = &self.0 { std::env::set_var("COMPANION_TYPE_STATE_PATH", value); }
+                else { std::env::remove_var("COMPANION_TYPE_STATE_PATH"); }
+            }
+        }
+        let _restore = StateOverride(std::env::var_os("COMPANION_TYPE_STATE_PATH"));
+        let root = std::env::temp_dir().join(format!("companion-backend-storage-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let path = root.join("sessions.json");
+        std::env::set_var("COMPANION_TYPE_STATE_PATH", &path);
+        let demo = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "stored", false)).unwrap();
+        persistence::save_sessions_to(&path, &demo.host.sessions).unwrap();
+        let id = demo.host.sessions[0].id.clone();
+        let backend = FixtureCompanionBackend::new();
+        let backup = root.join("sessions.json.bak");
+        std::fs::remove_file(&backup).unwrap();
+        std::fs::create_dir(&backup).unwrap(); // readable primary, unwritable backup destination
+        let mut edit = recovery_request(CompanionV1ControlAction::MeetingImportTranscript, &id, false);
+        edit.transcript_text = Some("本次新增的会议内容必须保留".into());
+        let changed = backend.apply_control(edit).unwrap();
+        assert_eq!(changed.host.persistence.status, "unsaved");
+        assert!(changed.host.sessions[0].transcript_text.contains("必须保留"));
+        assert!(!changed.last_control.unwrap().accepted);
+        assert!(backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingGenerateMinutes, &id, true)).is_err());
+        let viewed = backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingSelectSession, &id, false)).unwrap();
+        assert_eq!(viewed.host.persistence.status, "unsaved", "viewing must not dismiss the warning");
+        std::fs::remove_dir(&backup).unwrap();
+        let retry = backend.apply_control(recovery_request(CompanionV1ControlAction::HostRetrySave, &id, false)).unwrap();
+        assert_eq!(retry.host.persistence.status, "ready");
+        assert!(retry.last_control.is_none());
+        let restarted = FixtureCompanionBackend::new().snapshot().unwrap();
+        assert_eq!(restarted.host.sessions[0].transcript_text, changed.host.sessions[0].transcript_text);
+
+        // The meeting editor must retain accepted in-memory edits if the disk
+        // fails, and only report them saved after the explicit retry commits.
+        std::fs::remove_file(&backup).unwrap();
+        std::fs::create_dir(&backup).unwrap();
+        let renamed = backend.save_meeting_edit(meeting_workspace::MeetingEditRequest {
+            transcript_review: None,
+            session_id: id.clone(), title: Some("待保存的人工命名".into()),
+            expected_title: Some(restarted.host.sessions[0].title.clone()),
+            meeting_mode: None, markdown: None, expected_markdown: None,
+        }).unwrap();
+        assert_eq!(renamed.host.persistence.status, "unsaved");
+        assert_eq!(renamed.host.sessions[0].title, "待保存的人工命名");
+        std::fs::remove_dir(&backup).unwrap();
+        let retry = backend.apply_control(recovery_request(CompanionV1ControlAction::HostRetrySave, &id, false)).unwrap();
+        assert_eq!(retry.host.persistence.status, "ready");
+        assert_eq!(FixtureCompanionBackend::new().snapshot().unwrap().host.sessions[0].title, "待保存的人工命名");
+
+        std::fs::write(&path, b"torn index").unwrap();
+        std::fs::write(&backup, b"torn backup").unwrap();
+        let blocked = FixtureCompanionBackend::new();
+        assert_eq!(blocked.snapshot().unwrap().host.persistence.status, "blocked");
+        assert!(blocked.snapshot().unwrap().host.sessions.is_empty(), "damage cannot become a demo library");
+        assert!(blocked.apply_control(recovery_request(CompanionV1ControlAction::MeetingStart, "new", false)).is_err());
+        let again = blocked.apply_control(recovery_request(CompanionV1ControlAction::HostRetrySave, &id, false)).unwrap();
+        assert_eq!(again.host.persistence.status, "blocked");
+        assert_eq!(std::fs::read(&path).unwrap(), b"torn index");
+        std::fs::write(&backup, serde_json::to_vec(&retry.host.sessions).unwrap()).unwrap();
+        let restored = blocked.apply_control(recovery_request(CompanionV1ControlAction::HostRetrySave, &id, false)).unwrap();
+        assert_eq!(restored.host.persistence.status, "ready");
+        assert_eq!(restored.host.sessions[0].transcript_text, changed.host.sessions[0].transcript_text);
+
+        let mut start = recovery_request(CompanionV1ControlAction::MeetingStart, "stop-during-disk-failure", false);
+        start.meeting_mode = Some("offlineStore".into());
+        blocked.apply_control(start).unwrap(); // cargo-test synthetic capture, never hardware evidence
+        std::fs::remove_file(&backup).unwrap();
+        std::fs::create_dir(&backup).unwrap();
+        let stopped = blocked.apply_control(recovery_request(CompanionV1ControlAction::MeetingStop,
+            "stop-during-disk-failure", false)).unwrap();
+        assert_eq!(stopped.host.persistence.status, "unsaved");
+        assert!(!stopped.meeting.active);
+        assert!(stopped.host.active_session_id.is_none());
+        assert!(stopped.host.sessions.iter().all(|s| s.status != "recording"));
+        assert!(blocked.apply_control(recovery_request(CompanionV1ControlAction::MeetingStart, "too-soon", false)).is_err());
+        std::fs::remove_dir(&backup).unwrap();
+        let committed = blocked.apply_control(recovery_request(CompanionV1ControlAction::HostRetrySave, "", false)).unwrap();
+        assert_eq!(committed.host.persistence.status, "ready");
+        assert!(!committed.meeting.active);
+    }
+
+    #[test]
+    fn paired_minutes_retry_only_failed_variant_and_preserve_capture_route() {
+        for failed_mode in ["offlineStore", "onlineLive"] {
+            let mut snapshot = apply_fixture_control(fixture_snapshot(),
+                recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "paired-recovery", false)).unwrap();
+            let session = &mut snapshot.host.sessions[0];
+            let mut completed = session.minutes.clone().unwrap();
+            completed.quality = "final".into();
+            completed.source = "userEdited".into();
+            completed.llm_note = None;
+            let mut failed = completed.clone();
+            failed.quality = "draft".into();
+            failed.source = "rules_l0".into();
+            failed.llm_note = Some("service rejected minutes response".into());
+            let ready = minutes_variant(&completed, 2);
+            let retry = minutes_variant(&failed, 2);
+            assert_eq!(ready.status, "minutesReady");
+            assert_eq!(retry.status, "retryPending");
+            session.meeting_mode = "onlineLive".into();
+            session.minutes = Some(if failed_mode == "onlineLive" { failed.clone() } else { completed.clone() });
+            session.minutes_by_mode.offline_store = Some(if failed_mode == "offlineStore" { retry.clone() } else { ready.clone() });
+            session.minutes_by_mode.online_live = Some(if failed_mode == "onlineLive" { retry } else { ready });
+            let preserved = serde_json::to_value(if failed_mode == "offlineStore" {
+                &session.minutes_by_mode.online_live
+            } else { &session.minutes_by_mode.offline_store }).unwrap();
+            let original_text = session.transcript_text.clone();
+            arm_meeting_recovery(session);
+            session.recovery.stage = "retryBackoff".into();
+            session.recovery.retry_stage = "minutes".into();
+            session.recovery.next_retry_at_unix_ms = Some(u64::MAX-1);
+            session.status = "minutesReady".into(); // stale checkpoint must not close the failed peer
+            assert!(!session_has_final_minutes_product(session));
+            persistence::reconcile_session_recovery(session);
+            assert_eq!(session.recovery.stage, "retryBackoff");
+            assert_eq!(session.recovery.next_retry_at_unix_ms, Some(u64::MAX-1));
+            let mut calls = Vec::new();
+            assert!(refresh_minutes_products(session, "retry-failed", |input| {
+                calls.push(input.meeting_mode.clone()); failed.clone()
+            }).is_some());
+            assert_eq!(calls, [failed_mode]);
+            assert_eq!(session.recovery.stage, "retryBackoff");
+            assert!(session_has_pending_dual_minutes(session));
+            calls.clear();
+            assert!(refresh_minutes_products(session, "retry-succeeded", |input| {
+                calls.push(input.meeting_mode.clone()); completed.clone()
+            }).is_none());
+            assert_eq!(calls, [failed_mode]);
+            assert_eq!(session.meeting_mode, "onlineLive");
+            assert_eq!(session.recovery.requested_meeting_mode, "onlineLive");
+            assert_eq!(session.transcript_text, original_text);
+            assert_eq!(serde_json::to_value(if failed_mode == "offlineStore" {
+                &session.minutes_by_mode.online_live
+            } else { &session.minutes_by_mode.offline_store }).unwrap(), preserved);
+            assert_eq!(session.recovery.stage, "complete");
+            assert!(session_has_final_minutes_product(session));
+        }
+    }
+
+    #[test]
+    fn manually_reviewed_final_minutes_require_explicit_regeneration() {
+        // Isolate provider switches; this is a serial, deterministic L0 test.
+        struct RestoreEnv(Vec<(&'static str, Option<std::ffi::OsString>)>);
+        impl Drop for RestoreEnv {
+            fn drop(&mut self) {
+                for (name, value) in &self.0 {
+                    if let Some(value) = value { std::env::set_var(name, value); }
+                    else { std::env::remove_var(name); }
+                }
+            }
+        }
+        let backend = FixtureCompanionBackend::new();
+        let _restore = RestoreEnv(["COMPANION_TYPE_MINUTES_COMMAND", "COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED"]
+            .into_iter().map(|name| (name, std::env::var_os(name))).collect());
+        std::env::remove_var("COMPANION_TYPE_MINUTES_COMMAND");
+        std::env::set_var("COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED", "0");
+        let mut snapshot = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "reviewed-final", false)).unwrap();
+        let session = &mut snapshot.host.sessions[0];
+        let id = session.id.clone();
+        session.minutes.as_mut().unwrap().quality = "final".into();
+        session.minutes.as_mut().unwrap().llm_note = None;
+        session.minutes_by_mode.offline_store.as_mut().unwrap().quality = "final".into();
+        let live = session.minutes_by_mode.offline_store.clone().unwrap();
+        session.minutes_by_mode.online_live = Some(live.clone());
+        let original = session.minutes_by_mode.offline_store.as_ref().unwrap().markdown.clone();
+        meeting_workspace::edit_session(session, &meeting_workspace::MeetingEditRequest {
+            transcript_review: None,
+            session_id: id.clone(), title: None, expected_title: None, meeting_mode: Some("offlineStore".into()),
+            markdown: Some("# 人工校订，后台不得覆盖".into()), expected_markdown: Some(original),
+        }, "reviewed").unwrap();
+        assert!(session_has_final_minutes_product(session));
+        *backend.snapshot.lock().unwrap() = snapshot;
+        let automatic = backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingGenerateMinutes, &id, true)).unwrap();
+        assert_eq!(automatic.host.sessions[0].minutes.as_ref().unwrap().source, "userEdited");
+        assert_eq!(automatic.host.sessions[0].minutes.as_ref().unwrap().markdown, "# 人工校订，后台不得覆盖");
+        let explicit = backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingGenerateMinutes, &id, false)).unwrap();
+        assert_eq!(explicit.host.sessions[0].minutes.as_ref().unwrap().source, "rules_l0");
+        assert_ne!(explicit.host.sessions[0].minutes.as_ref().unwrap().markdown, "# 人工校订，后台不得覆盖");
+        assert_eq!(explicit.host.sessions[0].minutes_by_mode.online_live.as_ref().unwrap().markdown, live.markdown);
+
+        // Exercise the real reducer + provider path, not only the retry planner:
+        // its selected-mode draft placeholder must not replace the completed edit.
+        let mut paired = automatic;
+        let session = &mut paired.host.sessions[0];
+        session.transcript_final = true;
+        session.minutes_by_mode.online_live.as_mut().unwrap().status = "retryPending".into();
+        session.minutes_by_mode.online_live.as_mut().unwrap().quality = "draft".into();
+        arm_meeting_recovery(session);
+        session.recovery.stage = "pendingMinutes".into();
+        session.recovery.retry_stage = "minutes".into();
+        *backend.snapshot.lock().unwrap() = paired;
+        let repaired = backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingGenerateMinutes, &id, true)).unwrap();
+        let session = &repaired.host.sessions[0];
+        assert_eq!(session.meeting_mode, "offlineStore");
+        assert_eq!(session.minutes.as_ref().unwrap().source, "userEdited");
+        assert_eq!(session.minutes.as_ref().unwrap().markdown, "# 人工校订，后台不得覆盖");
+        assert_eq!(session.minutes_by_mode.offline_store.as_ref().unwrap().source, "userEdited");
+        assert_eq!(session.minutes_by_mode.online_live.as_ref().unwrap().source, "rules_l0");
+        assert_eq!(session.minutes_by_mode.online_live.as_ref().unwrap().status, "minutesReady");
+        assert_eq!(session.recovery.stage, "complete");
+    }
+
+    #[test]
+    fn transcript_review_generates_requested_mode_without_changing_asr_or_peer() {
+        struct RestoreEnv(Vec<(&'static str, Option<std::ffi::OsString>)>);
+        impl Drop for RestoreEnv { fn drop(&mut self) { for (name,value) in &self.0 {
+            if let Some(value) = value { std::env::set_var(name,value); } else { std::env::remove_var(name); }
+        } } }
+        let _restore = RestoreEnv(["COMPANION_TYPE_MINUTES_COMMAND","COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED"].into_iter()
+            .map(|name| (name,std::env::var_os(name))).collect());
+        std::env::remove_var("COMPANION_TYPE_MINUTES_COMMAND"); std::env::set_var("COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED","0");
+        let backend = FixtureCompanionBackend::new();
+        let mut snapshot = apply_fixture_control(fixture_snapshot(),recovery_request(CompanionV1ControlAction::MeetingLoadDemo,"review-source",false)).unwrap();
+        let session = &mut snapshot.host.sessions[0]; let id = session.id.clone();
+        session.transcript_final = true; session.meeting_mode = "onlineLive".into();
+        session.utterances = vec![CompanionV1UtteranceSegment { text:"owner 王 due 周五交录音。".into(),start_ms:1000,end_ms:3000,speaker:Some(0) }];
+        session.minutes.as_mut().unwrap().quality = "final".into(); session.minutes_by_mode.offline_store.as_mut().unwrap().quality="final".into();
+        session.minutes_by_mode.online_live = session.minutes_by_mode.offline_store.clone();
+        let peer = serde_json::to_value(&session.minutes_by_mode.online_live).unwrap();
+        let raw = session.transcript_text.clone(); let utterances = session.utterances.clone();
+        let edit = meeting_workspace::MeetingEditRequest {
+            session_id:id.clone(),title:None,expected_title:None,meeting_mode:None,markdown:None,expected_markdown:None,
+            transcript_review:Some(transcript_review::TranscriptReviewEdit {
+                expected_transcript_text:raw.clone(),expected_utterances:utterances.clone(),expected_revision:0,
+                restore_original:false,text:None,utterance_edits:vec![transcript_review::UtteranceEdit {
+                    index:0,text:"owner 王 due 周四交录音。".into(),speaker_name:None }],
+                speaker_names:vec![transcript_review::SpeakerName {speaker:0,name:"小王".into()}],
+            }),
+        };
+        *backend.snapshot.lock().unwrap()=snapshot;
+        let edited=backend.save_meeting_edit(edit).unwrap(); let session=&edited.host.sessions[0];
+        assert_eq!(session.transcript_text,raw); assert!(!session_has_final_minutes_product(session));
+        let automatic=backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingGenerateMinutes,&id,true)).unwrap();
+        assert_eq!(serde_json::to_value(&automatic.host.sessions[0].minutes_by_mode.online_live).unwrap(),peer);
+        let mut request=recovery_request(CompanionV1ControlAction::MeetingGenerateMinutes,&id,false); request.meeting_mode=Some("offlineStore".into());
+        let generated=backend.apply_control(request.clone()).unwrap(); let session=&generated.host.sessions[0];
+        assert_eq!(session.meeting_mode,"onlineLive"); assert_eq!(session.transcript_text,raw); assert_eq!(session.utterances,utterances);
+        assert_eq!(serde_json::to_value(&session.minutes_by_mode.online_live).unwrap(),peer);
+        let mode=session.minutes_by_mode.offline_store.as_ref().unwrap();
+        assert_eq!(mode.source_review_revision,Some(1)); assert!(mode.markdown.contains("周四交录音"));
+        assert!(mode.markdown.contains("**小王**")); assert_eq!(session.pending_reason.as_deref(),Some("minutes_source_changed"));
+        assert!(!session_has_final_minutes_product(session));
+        let current=transcript_review::active_revision(session); assert!(transcript_review::minutes_current(session,current));
+        let root=std::env::temp_dir().join(format!("companion-review-binding-{}",uuid::Uuid::new_v4()));
+        persistence::save_sessions_to(&root.join("sessions.json"),&generated.host.sessions).unwrap();
+        let restored=persistence::load_sessions_from(&root.join("sessions.json")).unwrap();
+        assert_eq!(restored[0].transcript_review.as_ref().unwrap().revision,1);
+        assert_eq!(restored[0].minutes_by_mode.offline_store.as_ref().unwrap().source_review_revision,Some(1));
+        std::fs::remove_dir_all(root).unwrap();
+        backend.snapshot.lock().unwrap().host.sessions[0].utterances[0].end_ms+=1;
+        assert!(backend.apply_control(request).unwrap_err().contains("原始转写已更新"));
+    }
+
+    #[test]
+    fn draft_minutes_do_not_block_an_explicit_upgrade_attempt() {
+        let snapshot = apply_fixture_control(
+            fixture_snapshot(),
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingLoadDemo,
+                ble_name: None,
+                session_id: Some("draft-upgrade".to_string()),
+                prompt_id: None,
+                title: Some("Draft upgrade".to_string()),
+                transcript_text: Some("决定：继续精修纪要。".to_string()),
+                meeting_mode: Some("offlineStore".to_string()),
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: Some(2_000),
+            },
+        )
+        .unwrap();
+        let mut session = snapshot.host.sessions[0].clone();
+        assert_eq!(session.minutes.as_ref().unwrap().quality, "draft");
+        assert!(!session_has_final_minutes_product(&session));
+
+        session.minutes.as_mut().unwrap().quality = "final".to_string();
+        session.minutes.as_mut().unwrap().llm_note = None;
+        session
+            .minutes_by_mode
+            .offline_store
+            .as_mut()
+            .unwrap()
+            .quality = "final".to_string();
+        assert!(session_has_final_minutes_product(&session));
+    }
+
+    #[test]
+    fn physical_oobe_report_never_claims_unrecorded_board_audio_or_remote_services() {
+        let report = ble_bridge::CompanionOobeProbeReport {
+            device_id: "AA:BB:CC:DD:EE:FF".to_string(),
+            service_count: 5,
+            characteristic_count: 18,
+            recordings_available: 2,
+            identity: CompanionDeviceIdentity {
+                firmware_version: Some(0x0001_010f),
+                build_id: Some(0x2026_1004),
+                board_id: Some(0x5742_4155),
+                mcu_uid: Some("1032547698badcfe01234567".to_string()),
+                ui_generation: Some(33),
+                recording_capacity: None,
+                recording: Some(false),
+                imu_supported: Some(true),
+                imu_online: Some(true),
+                imu_sample_hz: Some(50),
+                speaker_supported: Some(false),
+                speaker_online: Some(false),
+                speaker_volume: Some(0),
+            },
+            device_status_read: true,
+            imu_status_read: true,
+            speaker_status_read: true,
+            missing_required_gatt: Vec::new(),
+            recording_list_error: None,
+            clock_sync_error: None,
+            clock_sync_evidence: Some("UTC write/readback verified 02:03:04".to_string()),
+        };
+        let checks = oobe_checks_from_probe(&report);
+        assert_eq!(
+            checks.iter().find(|check| check.id == "firmware").unwrap().status,
+            "pass"
+        );
+        assert_eq!(
+            checks.iter().find(|check| check.id == "gatt").unwrap().status,
+            "pass"
+        );
+        let microphone = checks
+            .iter()
+            .find(|check| check.id == "boardMicrophone")
+            .unwrap();
+        assert_eq!(microphone.status, "warn");
+        assert!(microphone.message.contains("未启动麦克风实录"));
+        let remote = checks
+            .iter()
+            .find(|check| check.id == "remoteServices")
+            .unwrap();
+        assert_eq!(remote.status, "warn");
+        assert!(remote.message.contains("未调用"));
+        assert_eq!(
+            checks.iter().find(|check| check.id == "speaker").unwrap().status,
+            "warn"
+        );
+        for id in ["display", "touch", "power"] {
+            let check = checks.iter().find(|check| check.id == id).unwrap();
+            assert_eq!(check.status, "warn");
+            assert!(check.message.contains("未检查"));
+        }
+
+        let mut missing_recording_gatt = report;
+        missing_recording_gatt.missing_required_gatt =
+            vec!["recording_control(8f7a...)".to_string()];
+        assert_eq!(
+            oobe_checks_from_probe(&missing_recording_gatt)
+                .iter()
+                .find(|check| check.id == "boardMicrophone")
+                .unwrap()
+                .status,
+            "fail"
+        );
+    }
+
+    #[test]
+    fn failed_oobe_connection_marks_unchecked_hardware_truthfully() {
+        let checks = failed_oobe_checks("pairing denied");
+        assert_eq!(
+            checks.iter().find(|check| check.id == "bluetooth").unwrap().status,
+            "fail"
+        );
+        assert_eq!(
+            checks
+                .iter()
+                .find(|check| check.id == "boardMicrophone")
+                .unwrap()
+                .status,
+            "warn"
+        );
+        assert!(checks
+            .iter()
+            .find(|check| check.id == "boardMicrophone")
+            .unwrap()
+            .message
+            .contains("主机麦克风"));
+        for id in ["display", "touch", "power"] {
+            assert_eq!(
+                checks.iter().find(|check| check.id == id).unwrap().status,
+                "warn"
+            );
+        }
+    }
+
+    #[test]
+    fn oobe_is_rejected_before_ble_side_effects_while_recording() {
+        let mut snapshot = fixture_snapshot();
+        assert!(!oobe_blocked_by_active_recording(&snapshot, false));
+        assert!(oobe_blocked_by_active_recording(&snapshot, true));
+        snapshot.meeting.active = true;
+        assert!(oobe_blocked_by_active_recording(&snapshot, false));
+
+        let backend = FixtureCompanionBackend::new();
+        {
+            let mut guard = backend.snapshot.lock().unwrap();
+            guard.meeting.active = true;
+            guard.meeting.status = "recording".to_string();
+            guard.oobe.complete = false;
+            guard.oobe.last_run_at = None;
+        }
+        let error = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::OobeRunChecks,
+                "unused-oobe-target",
+                false,
+            ))
+            .unwrap_err();
+        assert!(error.contains("正在录音或在线转写"));
+        let after = backend.snapshot().unwrap();
+        assert!(!after.oobe.complete);
+        assert!(after.oobe.last_run_at.is_none());
+    }
+
+    fn install_recovery_session(
+        backend: &FixtureCompanionBackend,
+        id: &str,
+        audio_path: &std::path::Path,
+    ) {
+        let mut snapshot = fixture_snapshot();
+        let request = CompanionV1ControlRequest {
+            action: CompanionV1ControlAction::DeviceSyncRecordings,
+            ble_name: None,
+            session_id: Some(id.to_string()),
+            prompt_id: None,
+            title: Some(id.to_string()),
+            transcript_text: None,
+            meeting_mode: Some("offlineStore".to_string()),
+            audio_path: Some(audio_path.to_string_lossy().to_string()),
+            audio_bytes: Some(std::fs::metadata(audio_path).unwrap().len()),
+            device_id: Some("test-device".to_string()),
+            duration_ms: Some(1_000),
+        };
+        let session = synced_device_session(&snapshot, &request, "test");
+        snapshot.host.sessions = vec![session];
+        snapshot.host.selected_session_id = Some(id.to_string());
+        *backend.snapshot.lock().unwrap() = snapshot;
+    }
+
+    #[test]
+    fn recovery_explicit_missing_target_never_falls_back_to_selected_session() {
+        let backend = FixtureCompanionBackend::new();
+        let error = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingGenerateMinutes,
+                "missing-session",
+                true,
+            ))
+            .unwrap_err();
+        assert!(error.contains("missing-session"));
+    }
+
+    #[test]
+    fn product_long_recording_uses_one_wav_but_independent_duplicates_fail() {
+        let root = std::env::temp_dir().join(format!("companion-logical-chunks-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let audio = root.join("long.wav");
+        let pcm_bytes = 301 * 32_000u32;
+        let mut wav = Vec::new();
+        wav.extend_from_slice(b"RIFF"); wav.extend_from_slice(&(pcm_bytes + 36).to_le_bytes());
+        wav.extend_from_slice(b"WAVEfmt "); wav.extend_from_slice(&16u32.to_le_bytes());
+        wav.extend_from_slice(&1u16.to_le_bytes()); wav.extend_from_slice(&1u16.to_le_bytes());
+        wav.extend_from_slice(&16_000u32.to_le_bytes()); wav.extend_from_slice(&32_000u32.to_le_bytes());
+        wav.extend_from_slice(&2u16.to_le_bytes()); wav.extend_from_slice(&16u16.to_le_bytes());
+        wav.extend_from_slice(b"data"); wav.extend_from_slice(&pcm_bytes.to_le_bytes());
+        wav.resize(44 + pcm_bytes as usize, 0);
+        std::fs::write(&audio, &wav).unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "long-logical", &audio);
+        let original = {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            let session = &mut snapshot.host.sessions[0];
+            session.duration_ms = 301_000;
+            session.chunks = seal_companion_v1_session_chunks(session, "test", session.duration_ms, Some(session.audio_bytes));
+            assert_eq!(session.chunks.len(), 2);
+            assert_eq!(transcription_chunk_paths(session), vec![audio.to_string_lossy().into_owned()]);
+            session.clone()
+        };
+        // Only the known timeline contract may collapse duplicate paths.
+        for field in 0..4 {
+            let mut altered = original.clone();
+            match field {
+                0 => altered.chunks[1].id.push_str("-independent"),
+                1 => altered.chunks[1].status = "captured".into(),
+                2 => altered.chunks[1].duration_ms += 1,
+                _ => altered.chunks[1].bytes += 1,
+            }
+            let paths = transcription_chunk_paths(&altered);
+            assert_eq!(paths.len(), 2);
+            assert!(CompanionTranscriptionManager::new().transcribe_session(Some(audio.to_str().unwrap()), &paths)
+                .unwrap_err().contains("录音分段重复"));
+        }
+        for missing in [None, Some("device://not-pulled".to_string()), Some("host://not-recorded".to_string())] {
+            let mut incomplete = original.clone();
+            incomplete.chunks.push(original.chunks[0].clone());
+            incomplete.chunks[1].path = missing;
+            let paths = transcription_chunk_paths(&incomplete);
+            assert_eq!(paths.len(), 3);
+            assert!(CompanionTranscriptionManager::new().transcribe_session(Some(audio.to_str().unwrap()), &paths)
+                .unwrap_err().contains("第 2 / 3 段"));
+        }
+        let previous = std::env::var_os("COMPANION_TYPE_TRANSCRIPT_TEXT");
+        std::env::set_var("COMPANION_TYPE_TRANSCRIPT_TEXT", "Software fixture for long recording metadata routing.");
+        let result = backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingTranscribeAudio, "long-logical", false));
+        if let Some(value) = previous { std::env::set_var("COMPANION_TYPE_TRANSCRIPT_TEXT", value); }
+        else { std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT"); }
+        let session = &result.unwrap().host.sessions[0];
+        assert!(session.transcript_final);
+        assert_eq!(session.chunks.len(), 2);
+        assert_eq!(std::fs::read(&audio).unwrap(), wav);
+        std::fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn product_transcription_keeps_missing_segment_and_pauses_recovery() {
+        let root = std::env::temp_dir().join(format!("companion-product-missing-segment-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let first = root.join("first.wav"); std::fs::write(&first, b"retained-audio-fixture").unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "missing-segment", &first);
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            let session = &mut snapshot.host.sessions[0];
+            session.chunks = [first.clone(), root.join("missing.wav")].iter().enumerate().map(|(index,path)| {
+                crate::companion_v1::CompanionV1AudioChunk { id: format!("segment-{index}"),
+                    path: Some(path.to_string_lossy().into_owned()), started_at: None, stopped_at: None,
+                    duration_ms: 1_000, bytes: 22, status: "captured".into() }
+            }).collect();
+        }
+        let previous = std::env::var_os("COMPANION_TYPE_TRANSCRIPT_TEXT");
+        std::env::set_var("COMPANION_TYPE_TRANSCRIPT_TEXT", "This fixture must not hide missing segments.");
+        let result = backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingTranscribeAudio, "missing-segment", false));
+        if let Some(value) = previous { std::env::set_var("COMPANION_TYPE_TRANSCRIPT_TEXT", value); }
+        else { std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT"); }
+        let snapshot = result.unwrap(); let session = &snapshot.host.sessions[0];
+        assert_eq!(session.chunks.len(), 2); assert!(!session.transcript_final);
+        assert_eq!(session.recovery.stage, "paused");
+        assert!(session.recovery.last_error.as_ref().unwrap().contains("第 2 / 2 段"));
+        assert_eq!(std::fs::read(first).unwrap(), b"retained-audio-fixture");
+        std::fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn recovery_stale_automatic_request_cannot_bypass_persisted_backoff() {
+        let root = std::env::temp_dir().join("companion-type-stale-recovery");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let wav = root.join("meeting.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "stale", &wav);
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            let session = &mut snapshot.host.sessions[0];
+            session.recovery.stage = "retryBackoff".to_string();
+            session.recovery.retry_stage = "transcription".to_string();
+            session.recovery.attempt_count = 1;
+            session.recovery.next_retry_at_unix_ms = Some(u64::MAX - 1);
+        }
+        let result = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingTranscribeAudio,
+                "stale",
+                true,
+            ))
+            .unwrap();
+        assert_eq!(result.host.sessions[0].recovery.stage, "retryBackoff");
+        assert_eq!(result.host.sessions[0].recovery.attempt_count, 1);
+        assert!(!result.host.sessions[0].transcript_final);
+        let _ = std::fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn recovery_automatic_claim_rechecks_and_waits_for_an_active_recording() {
+        let root = std::env::temp_dir().join("companion-type-active-recording-recovery");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let wav = root.join("meeting.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        std::fs::write(root.join("meeting.transcript.txt"), "must wait").unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "old-pending", &wav);
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            let mut recording = snapshot.host.sessions[0].clone();
+            recording.id = "recording-now".to_string();
+            recording.status = "recording".to_string();
+            recording.recovery = CompanionV1MeetingRecovery::default();
+            snapshot.host.sessions.push(recording);
+            snapshot.host.active_session_id = Some("recording-now".to_string());
+            snapshot.meeting.active = true;
+        }
+        let result = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingTranscribeAudio,
+                "old-pending",
+                true,
+            ))
+            .unwrap();
+        let pending = result
+            .host
+            .sessions
+            .iter()
+            .find(|session| session.id == "old-pending")
+            .unwrap();
+        assert_eq!(pending.recovery.stage, "pendingTranscription");
+        assert!(!pending.transcript_final);
+        assert!(result.meeting.active);
+        assert_eq!(result.host.active_session_id.as_deref(), Some("recording-now"));
+
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            let pending = snapshot
+                .host
+                .sessions
+                .iter_mut()
+                .find(|session| session.id == "old-pending")
+                .unwrap();
+            pending.transcript_text = "already committed".to_string();
+            pending.transcript_final = true;
+            pending.recovery.stage = "paused".to_string();
+            pending.recovery.retry_stage = "minutes".to_string();
+        }
+        let cached = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingTranscribeAudio,
+                "old-pending",
+                true,
+            ))
+            .unwrap();
+        let pending = cached
+            .host
+            .sessions
+            .iter()
+            .find(|session| session.id == "old-pending")
+            .unwrap();
+        assert_eq!(pending.recovery.stage, "paused");
+        assert!(cached.meeting.active);
+        assert_eq!(cached.host.active_session_id.as_deref(), Some("recording-now"));
+        let _ = std::fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn recovery_automatic_claim_waits_for_device_button_recording_then_resumes() {
+        let root = std::env::temp_dir().join("companion-type-device-recording-recovery");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let wav = root.join("meeting.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        std::fs::write(root.join("meeting.transcript.txt"), "resume after device stop").unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "device-busy-pending", &wav);
+        backend.snapshot.lock().unwrap().device.recording = true;
+
+        let waiting = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingTranscribeAudio,
+                "device-busy-pending",
+                true,
+            ))
+            .unwrap();
+        assert_eq!(waiting.host.sessions[0].recovery.stage, "pendingTranscription");
+        assert!(!waiting.host.sessions[0].transcript_final);
+
+        backend.snapshot.lock().unwrap().device.recording = false;
+        let resumed = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingTranscribeAudio,
+                "device-busy-pending",
+                true,
+            ))
+            .unwrap();
+        assert!(resumed.host.sessions[0].transcript_final);
+        assert_eq!(resumed.host.sessions[0].transcript_text, "resume after device stop");
+        assert_eq!(resumed.host.sessions[0].recovery.stage, "pendingMinutes");
+        let _ = std::fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn recovery_automatic_processing_does_not_change_user_selected_session() {
+        let root = std::env::temp_dir().join("companion-type-selection-recovery");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let wav = root.join("meeting.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        std::fs::write(
+            root.join("meeting.transcript.txt"),
+            "Decision: preserve selection.",
+        )
+        .unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "recover-me", &wav);
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            let mut other = snapshot.host.sessions[0].clone();
+            other.id = "user-selected".to_string();
+            other.recovery = CompanionV1MeetingRecovery::default();
+            snapshot.host.sessions.push(other);
+            snapshot.host.selected_session_id = Some("user-selected".to_string());
+        }
+        let result = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingTranscribeAudio,
+                "recover-me",
+                true,
+            ))
+            .unwrap();
+        assert_eq!(result.host.selected_session_id.as_deref(), Some("user-selected"));
+        let recovered = result
+            .host
+            .sessions
+            .iter()
+            .find(|session| session.id == "recover-me")
+            .unwrap();
+        assert!(recovered.transcript_final);
+        assert_eq!(recovered.recovery.stage, "pendingMinutes");
+        let _ = std::fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn recovery_manual_retry_racing_startup_worker_is_single_flight_per_session() {
+        let root = std::env::temp_dir().join("companion-type-single-flight-recovery");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let wav = root.join("meeting.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        std::fs::write(
+            root.join("meeting.transcript.txt"),
+            "Decision: invoke ASR once. Action: keep the durable result.",
+        )
+        .unwrap();
+        let backend = Arc::new(FixtureCompanionBackend::new());
+        install_recovery_session(&backend, "single-flight", &wav);
+        let barrier = Arc::new(std::sync::Barrier::new(3));
+        let mut threads = Vec::new();
+        for automatic in [true, false] {
+            let backend = Arc::clone(&backend);
+            let barrier = Arc::clone(&barrier);
+            threads.push(std::thread::spawn(move || {
+                barrier.wait();
+                backend.apply_control(recovery_request(
+                    CompanionV1ControlAction::MeetingTranscribeAudio,
+                    "single-flight",
+                    automatic,
+                ))
+            }));
+        }
+        barrier.wait();
+        for thread in threads {
+            thread.join().unwrap().unwrap();
+        }
+        let result = backend.snapshot().unwrap();
+        let session = &result.host.sessions[0];
+        assert!(session.transcript_final);
+        assert_eq!(session.recovery.stage, "pendingMinutes");
+        assert_eq!(session.recovery.attempt_count, 0);
+        assert_eq!(session.transcript_text.matches("invoke ASR once").count(), 1);
+        let _ = std::fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn recovery_stale_automatic_request_stops_after_privacy_revocation() {
+        let root = std::env::temp_dir().join("companion-type-revoked-recovery");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let wav = root.join("meeting.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        std::fs::write(root.join("meeting.transcript.txt"), "must not be read").unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "revoked", &wav);
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            snapshot.host.sessions[0].recovery = CompanionV1MeetingRecovery::default();
+        }
+        let result = backend
+            .apply_control(recovery_request(
+                CompanionV1ControlAction::MeetingTranscribeAudio,
+                "revoked",
+                true,
+            ))
+            .unwrap();
+        let session = &result.host.sessions[0];
+        assert_eq!(session.recovery.intent, "none");
+        assert!(session.transcript_text.is_empty());
+        assert!(!session.transcript_final);
+        let _ = std::fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn recovery_imported_final_transcript_advances_to_minutes_only() {
+        let root = std::env::temp_dir().join("companion-type-import-recovery");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let wav = root.join("meeting.wav");
+        std::fs::write(&wav, b"RIFF----WAVEfmt ").unwrap();
+        let backend = FixtureCompanionBackend::new();
+        install_recovery_session(&backend, "import-final", &wav);
+        let mut request = recovery_request(
+            CompanionV1ControlAction::MeetingImportTranscript,
+            "import-final",
+            false,
+        );
+        request.transcript_text = Some("Decision: imported final transcript.".to_string());
+        let result = backend.apply_control(request).unwrap();
+        let session = &result.host.sessions[0];
+        assert!(session.transcript_final);
+        assert_eq!(session.recovery.stage, "pendingMinutes");
+        assert_eq!(session.recovery.retry_stage, "minutes");
+        assert_eq!(session.recovery.attempt_count, 0);
+        let _ = std::fs::remove_dir_all(root);
+    }
+
+    #[test]
+    fn uncertain_meeting_start_retry_reuses_wire_identity_and_original_limit() {
+        let mut pending = None;
+        assert_eq!(
+            reserve_pending_meeting_start(
+                &mut pending,
+                "meeting-retry-7",
+                Some("wba-device-a"),
+                60,
+            )
+            .unwrap(),
+            60
+        );
+        /* A refreshed UI may submit a different duration, but an uncertain
+         * retry must keep the original START bytes under the same request id. */
+        assert_eq!(
+            reserve_pending_meeting_start(
+                &mut pending,
+                "meeting-retry-7",
+                Some("wba-device-a"),
+                90,
+            )
+            .unwrap(),
+            60
+        );
+        assert_eq!(pending.as_ref().unwrap().max_seconds, 60);
+    }
+
+    #[test]
+    fn uncertain_meeting_start_cannot_move_to_another_session_or_device() {
+        let mut pending = None;
+        reserve_pending_meeting_start(&mut pending, "meeting-owner-a", Some("wba-device-a"), 60)
+            .unwrap();
+        assert!(reserve_pending_meeting_start(
+            &mut pending,
+            "meeting-owner-b",
+            Some("wba-device-a"),
+            60,
+        )
+        .unwrap_err()
+        .contains("outcome is still unknown"));
+        assert!(reserve_pending_meeting_start(
+            &mut pending,
+            "meeting-owner-a",
+            Some("wba-device-b"),
+            60,
+        )
+        .unwrap_err()
+        .contains("bound to device"));
+        assert_eq!(pending.as_ref().unwrap().session_id, "meeting-owner-a");
+    }
+
+    #[test]
+    fn only_an_explicit_board_start_rejection_is_a_definitive_retry_end() {
+        assert!(meeting_start_rejection_is_definitive(
+            "board rejected V1 meeting command=1 request_id=42 error=2"
+        ));
+        assert!(!meeting_start_rejection_is_definitive(
+            "meeting_status timeout command=1 request_id=42 expected_state=1"
+        ));
+        assert!(!meeting_start_rejection_is_definitive(
+            "write V1 meeting_control command=1: device disconnected"
+        ));
+    }
+
+    #[test]
+    fn measured_wba_identity_updates_model_and_unknown_probe_fails_closed() {
+        let mut snapshot = fixture_snapshot();
+        snapshot.connected = true;
+        snapshot.device.connected = true;
+        let measured = CompanionDeviceIdentity {
+            firmware_version: Some(0x0001_0101),
+            build_id: Some(0x2026_1003),
+            board_id: Some(0x5742_4155),
+            mcu_uid: Some("1032547698badcfe01234567".to_string()),
+            ui_generation: Some(33),
+            recording_capacity: None,
+            recording: Some(true),
+            imu_supported: Some(true),
+            imu_online: Some(true),
+            imu_sample_hz: Some(52),
+            speaker_supported: Some(true),
+            speaker_online: Some(true),
+            speaker_volume: Some(65),
+        };
+        apply_device_identity(&mut snapshot, &measured);
+        assert_eq!(snapshot.device.firmware_version, Some(0x0001_0101));
+        assert_eq!(snapshot.device.mcu_uid, measured.mcu_uid);
+        assert_eq!(snapshot.device.ui_generation, Some(33));
+        assert_eq!(
+            snapshot.device.hardware_revision.as_deref(),
+            Some("COMPANION-WBA55-V1.1")
+        );
+        assert!(snapshot.imu.supported && snapshot.imu.online);
+        assert!(snapshot.speaker.supported && snapshot.speaker.online);
+        assert_eq!(snapshot.speaker.volume, 65);
+        assert!(snapshot.device.recording);
+
+        let unknown = CompanionDeviceIdentity {
+            firmware_version: None,
+            build_id: None,
+            board_id: None,
+            mcu_uid: None,
+            ui_generation: None,
+            recording_capacity: None,
+            recording: None,
+            imu_supported: None,
+            imu_online: None,
+            imu_sample_hz: None,
+            speaker_supported: None,
+            speaker_online: None,
+            speaker_volume: None,
+        };
+        apply_device_identity(&mut snapshot, &unknown);
+        assert!(!snapshot.imu.supported && !snapshot.imu.online);
+        assert!(!snapshot.speaker.supported && !snapshot.speaker.online);
+        assert_eq!(snapshot.imu.sample_hz, 0);
+        assert_eq!(snapshot.speaker.volume, 0);
+        assert_eq!(snapshot.speaker.status, "unknown");
+        assert!(snapshot.device.recording);
+        assert!(snapshot.device.firmware_version.is_none());
+        assert!(snapshot.device.build_id.is_none());
+        assert!(snapshot.device.board_id.is_none());
+        assert!(snapshot.device.hardware_revision.is_none());
+        assert!(snapshot.device.mcu_uid.is_none());
+        assert!(snapshot.device.ui_generation.is_none());
+    }
+
+    #[test]
+    fn speaker_prompt_names_are_bounded_to_firmware_product_cues() {
+        assert_eq!(speaker_prompt_id(None).unwrap(), 0);
+        assert_eq!(speaker_prompt_id(Some("recordingStarted")).unwrap(), 1);
+        assert_eq!(speaker_prompt_id(Some("recordingStopped")).unwrap(), 2);
+        assert_eq!(speaker_prompt_id(Some("error")).unwrap(), 3);
+        assert!(speaker_prompt_id(Some("spokenMinutes")).is_err());
+    }
+
+    #[test]
+    fn active_recording_id_is_not_treated_as_already_pulled() {
+        let mut snapshot = fixture_snapshot();
+        let request = CompanionV1ControlRequest {
+            action: CompanionV1ControlAction::MeetingStart,
+            ble_name: None,
+            session_id: Some("filter-regression".to_string()),
+            prompt_id: None,
+            title: None,
+            transcript_text: None,
+            meeting_mode: Some("offlineStore".to_string()),
+            audio_path: Some("C:/recordings/filter-regression.wav".to_string()),
+            audio_bytes: Some(12_345),
+            device_id: None,
+            duration_ms: Some(1_000),
+        };
+        let mut active =
+            crate::companion_v1::synced_device_session(&snapshot, &request, "filter-regression");
+        active.source_device_id = Some("AA:BB:CC:DD:EE:FF".to_string());
+        active.device_recording_id = Some(901);
+        active.device_total_length = None;
+        active.device_sha256 = None;
+        let mut verified = active.clone();
+        verified.device_recording_id = Some(900);
+        verified.device_total_length = Some(12_345);
+        verified.device_sha256 = Some("a".repeat(64));
+        verified.device_reclaimed = true;
+        snapshot.host.sessions = vec![active, verified];
+
+        assert_eq!(
+            verified_device_recording_ids(&snapshot, Some("AA:BB:CC:DD:EE:FF")),
+            vec![900]
+        );
+    }
+
+    #[test]
+    fn recording_identity_is_namespaced_by_source_device_and_legacy_never_suppresses_pull() {
+        assert_eq!(
+            device_recording_session_id(Some("AA:BB:CC:DD:EE:FF"), 42),
+            "device-aabbccddeeff-recording-42"
+        );
+        assert_eq!(
+            device_recording_session_id(Some("11:22:33:44:55:66"), 42),
+            "device-112233445566-recording-42"
+        );
+
+        let mut snapshot = fixture_snapshot();
+        let request = CompanionV1ControlRequest {
+            action: CompanionV1ControlAction::DeviceSyncRecordings,
+            ble_name: None,
+            session_id: Some("device-recording-42".to_string()),
+            prompt_id: None,
+            title: None,
+            transcript_text: None,
+            meeting_mode: Some("offlineStore".to_string()),
+            audio_path: Some("C:/legacy.wav".to_string()),
+            audio_bytes: Some(42),
+            device_id: None,
+            duration_ms: Some(42),
+        };
+        let mut legacy = crate::companion_v1::synced_device_session(&snapshot, &request, "legacy");
+        legacy.device_recording_id = Some(42);
+        legacy.device_total_length = Some(42);
+        legacy.device_sha256 = Some("a".repeat(64));
+        legacy.source_device_id = None;
+        let mut other_device = legacy.clone();
+        other_device.id = "device-112233445566-recording-42".to_string();
+        other_device.source_device_id = Some("11:22:33:44:55:66".to_string());
+        other_device.device_reclaimed = true;
+        snapshot.host.sessions = vec![legacy, other_device];
+        assert!(verified_device_recording_ids(
+            &snapshot,
+            Some("AA:BB:CC:DD:EE:FF")
+        )
+        .is_empty());
+        assert_eq!(
+            verified_device_recording_ids(&snapshot, Some("11:22:33:44:55:66")),
+            vec![42]
+        );
+
+        snapshot.device.device_id = Some("AA:BB:CC:DD:EE:FF".to_string());
+        let implicit_target = effective_device_target(
+            None,
+            snapshot.device.device_id.as_deref(),
+        );
+        assert_eq!(implicit_target.as_deref(), Some("AA:BB:CC:DD:EE:FF"));
+        assert!(verified_device_recording_ids(&snapshot, implicit_target.as_deref()).is_empty());
+
+        let switched_target = effective_device_target(
+            Some("11:22:33:44:55:66"),
+            snapshot.device.device_id.as_deref(),
+        );
+        assert_eq!(switched_target.as_deref(), Some("11:22:33:44:55:66"));
+        assert_eq!(
+            verified_device_recording_ids(&snapshot, switched_target.as_deref()),
+            vec![42]
+        );
+
+        assert_eq!(effective_device_target(None, None), None);
+        assert!(verified_device_recording_ids(&snapshot, None).is_empty());
+    }
+
+    #[test]
+    fn board_online_live_partial_replaces_durable_prefix_preview() {
+        let backend = FixtureCompanionBackend::new();
+        let session_id = "board-online-partial-reconcile-test";
+        backend
+            .apply_control(CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingStart,
+                ble_name: None,
+                session_id: Some(session_id.to_string()),
+                prompt_id: None,
+                title: Some("Board partial reconcile".to_string()),
+                transcript_text: None,
+                meeting_mode: Some("onlineLive".to_string()),
+                audio_path: Some(format!("board://online/{session_id}")),
+                audio_bytes: Some(0),
+                device_id: None,
+                duration_ms: Some(0),
+            })
+            .expect("start board session");
+        backend
+            .set_board_online_live_partial(session_id, "第一段耐久前缀")
+            .expect("first partial");
+        let snapshot = backend
+            .set_board_online_live_partial(session_id, "第二段最新窗口")
+            .expect("second partial");
+        let session = snapshot
+            .host
+            .sessions
+            .iter()
+            .find(|session| session.id == session_id)
+            .expect("session");
+        assert_eq!(session.live_transcript_text, "第二段最新窗口");
+        assert_eq!(session.transcript_text, "第二段最新窗口");
+        assert!(!session.transcript_text.contains("第一段"));
+    }
+
+    #[test]
+    fn durable_board_batch_creates_three_stable_sessions_and_exact_delete_preserves_neighbors() {
+        let mut snapshot = fixture_snapshot();
+        snapshot.host.sessions.clear();
+        let make = |id: u32| CompanionSyncedRecording {
+            recording_id: id,
+            duration_ms: 45_000 + id,
+            total_length: 90_000 + id,
+            sha256: format!("{:064x}", id),
+            recording_path: format!("C:/recordings/device-{id}.wav"),
+            device_reclaimed: false, capture_incomplete: false,
+        };
+        let three = vec![make(41), make(42), make(43)];
+        let expected_id = |id: u32| format!("device-recording-{id}-{:064x}", id);
+        merge_synced_recordings(&mut snapshot, &three);
+        assert_eq!(snapshot.host.sessions.len(), 3);
+        assert_eq!(snapshot.device.recordings_available, 3);
+        assert_eq!(
+            snapshot.host.selected_session_id.as_deref(),
+            Some(expected_id(43).as_str())
+        );
+        let identities = snapshot
+            .host
+            .sessions
+            .iter()
+            .map(|session| {
+                (
+                    session.device_recording_id.unwrap(),
+                    session.device_sha256.clone().unwrap(),
+                )
+            })
+            .collect::<std::collections::BTreeMap<_, _>>();
+        assert_eq!(identities.len(), 3);
+
+        // Reconnect updates id=42 in place; it must not duplicate or collapse the other ids.
+        let mut replay = make(42);
+        replay.recording_path = "C:/recordings/device-42-resumed.wav".to_string();
+        merge_synced_recordings(&mut snapshot, &[replay]);
+        assert_eq!(snapshot.host.sessions.len(), 3);
+        assert_eq!(
+            snapshot
+                .host
+                .sessions
+                .iter()
+                .find(|s| s.id == expected_id(42))
+                .unwrap()
+                .audio_path
+                .as_deref(),
+            Some("C:/recordings/device-42-resumed.wav")
+        );
+
+        // The reducer's selected delete removes exactly the requested middle session.
+        let before_41 = identities.get(&41).cloned().unwrap();
+        let before_43 = identities.get(&43).cloned().unwrap();
+        let deleted = apply_fixture_control(
+            snapshot,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::PrivacyDeleteSession,
+                ble_name: None,
+                session_id: Some(expected_id(42)),
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            },
+        )
+        .unwrap();
+        assert_eq!(deleted.host.sessions.len(), 2);
+        assert!(deleted
+            .host
+            .sessions
+            .iter()
+            .all(|s| s.device_recording_id != Some(42)));
+        assert_eq!(
+            deleted
+                .host
+                .sessions
+                .iter()
+                .find(|s| s.device_recording_id == Some(41))
+                .unwrap()
+                .device_sha256
+                .as_deref(),
+            Some(before_41.as_str())
+        );
+        assert_eq!(
+            deleted
+                .host
+                .sessions
+                .iter()
+                .find(|s| s.device_recording_id == Some(43))
+                .unwrap()
+                .device_sha256
+                .as_deref(),
+            Some(before_43.as_str())
+        );
+    }
 
     #[test]
     fn fixture_backend_exposes_type_style_service_boundaries() {
@@ -633,6 +4993,8 @@ mod tests {
         std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
         std::env::remove_var("COMPANION_TYPE_ASR_COMMAND");
         std::env::remove_var("COMPANION_TYPE_MINUTES_COMMAND");
+        std::env::remove_var("DEEPSEEK_API_KEY");
+        std::env::remove_var("COMPANION_TYPE_DEFAULT_MEETING_MODE");
 
         let backend = FixtureCompanionBackend::new();
         let started = backend
@@ -643,6 +5005,7 @@ mod tests {
                 prompt_id: None,
                 title: Some("Mechanical voice acceptance".to_string()),
                 transcript_text: None,
+                meeting_mode: Some("offlineStore".to_string()),
                 audio_path: Some(wav.to_string_lossy().to_string()),
                 audio_bytes: Some(bytes.len() as u64),
                 device_id: None,
@@ -659,6 +5022,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: Some(wav.to_string_lossy().to_string()),
                 audio_bytes: Some(bytes.len() as u64),
                 device_id: None,
@@ -680,6 +5044,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: Some(wav.to_string_lossy().to_string()),
                 audio_bytes: None,
                 device_id: None,
@@ -699,6 +5064,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -726,6 +5092,7 @@ mod tests {
                 prompt_id: None,
                 title: Some("Backend state chain".to_string()),
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -743,6 +5110,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -758,6 +5126,8 @@ mod tests {
     fn backend_transcribes_audio_with_companion_type_sidecar_provider() {
         std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
         std::env::remove_var("COMPANION_TYPE_ASR_COMMAND");
+        std::env::remove_var("DEEPSEEK_API_KEY");
+        std::env::remove_var("COMPANION_TYPE_DEFAULT_MEETING_MODE");
         let root =
             std::env::temp_dir().join("companion-type-independent-transcription-backend-test");
         let _ = std::fs::create_dir_all(&root);
@@ -779,6 +5149,7 @@ mod tests {
                 prompt_id: None,
                 title: Some("Independent ASR".to_string()),
                 transcript_text: None,
+                meeting_mode: Some("offlineStore".to_string()),
                 audio_path: Some(audio.to_string_lossy().to_string()),
                 audio_bytes: None,
                 device_id: None,
@@ -799,6 +5170,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -815,6 +5187,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -840,6 +5213,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -865,5 +5239,343 @@ mod tests {
                 .len(),
             1
         );
+    }
+
+    #[test]
+    fn live_asr_mock_online_partials_before_stop() {
+        std::env::set_var("COMPANION_TYPE_LIVE_ASR_MOCK", "1");
+        std::env::set_var("COMPANION_TYPE_HOST_RECORDING_MODE", "synthetic");
+        std::env::remove_var("COMPANION_TYPE_LIVE_ASR_OFF");
+        std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
+
+        let backend = FixtureCompanionBackend::new();
+        let started = backend
+            .apply_control(CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingStart,
+                ble_name: None,
+                session_id: Some("live-1".to_string()),
+                prompt_id: None,
+                title: Some("Live streaming mock".to_string()),
+                transcript_text: None,
+                meeting_mode: Some("onlineLive".to_string()),
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            })
+            .unwrap();
+        assert_eq!(started.meeting.status, "recording");
+        assert!(
+            started
+                .last_control
+                .as_ref()
+                .map(|c| c.message.contains("liveAsr=mock-streaming")
+                    || c.message.contains("liveAsr="))
+                .unwrap_or(false),
+            "start should report liveAsr mode: {:?}",
+            started.last_control
+        );
+
+        // Wait for mock partials (3 steps × 180ms).
+        std::thread::sleep(std::time::Duration::from_millis(700));
+        let mid = backend.snapshot().unwrap();
+        let mid_session = mid
+            .host
+            .sessions
+            .iter()
+            .find(|s| s.id == "live-1")
+            .expect("session");
+        assert!(
+            !mid_session.live_transcript_text.trim().is_empty()
+                || !mid_session.transcript_text.trim().is_empty(),
+            "mid-meeting live text must appear before stop; live={:?} transcript={:?}",
+            mid_session.live_transcript_text,
+            mid_session.transcript_text
+        );
+
+        let stopped = backend
+            .apply_control(CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingStop,
+                ble_name: None,
+                session_id: Some("live-1".to_string()),
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: Some(1000),
+            })
+            .unwrap();
+        let stopped_session = stopped
+            .host
+            .sessions
+            .iter()
+            .find(|s| s.id == "live-1")
+            .expect("session");
+        assert_eq!(stopped_session.status, "transcribed");
+        assert!(stopped_session.pending_reason.is_none());
+        assert!(
+            stopped_session.transcript_text.contains("在线实时转写")
+                || stopped_session.transcript_text.contains("会议开始"),
+            "stop should seal live stream text: {}",
+            stopped_session.transcript_text
+        );
+        std::env::remove_var("COMPANION_TYPE_LIVE_ASR_MOCK");
+    }
+
+    /// Product IPC closure: apply_control(MeetingStart -> Stop ->
+    /// TranscribeAudio -> GenerateMinutes) end-to-end through the native
+    /// DeepSeek path (no python, no COMPANION_TYPE_MINUTES_COMMAND). This is
+    /// the packaged-build code path the UI exercises. Uses a sidecar
+    /// transcript so it does not depend on real ASR. #[ignore]'d: needs
+    /// DEEPSEEK_API_KEY + network.
+    #[test]
+    #[ignore = "requires DEEPSEEK_API_KEY + network; runs the product IPC minutes path"]
+    fn product_minutes_path_native_deepseek_end_to_end() {
+        if std::env::var("DEEPSEEK_API_KEY")
+            .map(|v| v.trim().is_empty())
+            .unwrap_or(true)
+        {
+            eprintln!("skipped: DEEPSEEK_API_KEY not set");
+            return;
+        }
+        std::env::remove_var("COMPANION_TYPE_MINUTES_COMMAND");
+        std::env::remove_var("COMPANION_TYPE_MINUTES_ARGS");
+        std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
+        std::env::remove_var("COMPANION_TYPE_ASR_COMMAND");
+
+        let root = std::env::temp_dir().join("companion-type-product-native-minutes");
+        let _ = std::fs::create_dir_all(&root);
+        let wav = root.join("product-native.wav");
+        let mut bytes = Vec::new();
+        bytes.extend_from_slice(b"RIFF");
+        bytes.extend_from_slice(&(36_u32 + 3200).to_le_bytes());
+        bytes.extend_from_slice(b"WAVE");
+        bytes.extend_from_slice(b"fmt ");
+        bytes.extend_from_slice(&16_u32.to_le_bytes());
+        bytes.extend_from_slice(&1_u16.to_le_bytes());
+        bytes.extend_from_slice(&1_u16.to_le_bytes());
+        bytes.extend_from_slice(&16_000_u32.to_le_bytes());
+        bytes.extend_from_slice(&(16_000_u32 * 2).to_le_bytes());
+        bytes.extend_from_slice(&2_u16.to_le_bytes());
+        bytes.extend_from_slice(&16_u16.to_le_bytes());
+        bytes.extend_from_slice(b"data");
+        bytes.extend_from_slice(&3200_u32.to_le_bytes());
+        bytes.extend(std::iter::repeat(0u8).take(3200));
+        std::fs::write(&wav, &bytes).unwrap();
+        let sidecar = root.join("product-native.transcript.txt");
+        std::fs::write(
+            &sidecar,
+            "陈明：默认编码用 Opus 16 单声道，失败必须 fail closed 并提示重录。\n\
+             Billy：录音区 14 兆连续，UI 两兆独立，不作录音缓冲。\n\
+             决定：发版默认 codec 是 Opus 16，半率 IMA 仅调试开关且默认关闭。\n\
+             行动：陈明周五前输出压缩同步说明；Billy 本周完成 5 分钟空中路径闭环。",
+        )
+        .unwrap();
+
+        let backend = FixtureCompanionBackend::new();
+        backend
+            .apply_control(CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingStart,
+                ble_name: None,
+                session_id: Some("prod-native-1".to_string()),
+                prompt_id: None,
+                title: Some("产品纪要闭环".to_string()),
+                transcript_text: None,
+                meeting_mode: Some("offlineStore".to_string()),
+                audio_path: Some(wav.to_string_lossy().to_string()),
+                audio_bytes: Some(bytes.len() as u64),
+                device_id: None,
+                duration_ms: Some(1000),
+            })
+            .unwrap();
+        backend
+            .apply_control(CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingStop,
+                ble_name: None,
+                session_id: Some("prod-native-1".to_string()),
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: Some(wav.to_string_lossy().to_string()),
+                audio_bytes: Some(bytes.len() as u64),
+                device_id: None,
+                duration_ms: Some(1000),
+            })
+            .unwrap();
+        let transcribed = backend
+            .apply_control(CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingTranscribeAudio,
+                ble_name: None,
+                session_id: Some("prod-native-1".to_string()),
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: Some(wav.to_string_lossy().to_string()),
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            })
+            .unwrap();
+        assert_eq!(transcribed.meeting.status, "transcribed");
+
+        let minutes_snap = backend
+            .apply_control(CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingGenerateMinutes,
+                ble_name: None,
+                session_id: Some("prod-native-1".to_string()),
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            })
+            .unwrap();
+        assert_eq!(minutes_snap.meeting.status, "minutesReady");
+        let session = minutes_snap
+            .host
+            .sessions
+            .iter()
+            .find(|s| s.id == "prod-native-1")
+            .expect("session present");
+        let m = session.minutes.as_ref().expect("minutes generated");
+        // The product path must have routed through native DeepSeek, not L0.
+        assert_eq!(
+            m.source, "llm_deepseek",
+            "product path must use native deepseek; llm_note={:?}",
+            m.llm_note
+        );
+        assert_eq!(m.quality, "final");
+        assert!(
+            m.llm_note.is_none(),
+            "unexpected downgrade: {:?}",
+            m.llm_note
+        );
+        assert!(!m.decisions.is_empty());
+        assert!(session.export_markdown.contains("Opus"));
+        // Echo must not carry a downgrade marker on the success path.
+        let echo = minutes_snap.last_control.as_ref().expect("echo");
+        assert!(
+            !echo.message.contains("—"),
+            "echo leaked downgrade note: {}",
+            echo.message
+        );
+    }
+
+    #[test]
+    fn privacy_erase_all_is_local_only_and_refuses_to_interrupt_recording() {
+        let backend = FixtureCompanionBackend::new();
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            snapshot.meeting.active = true;
+            snapshot.meeting.status = "recording".to_string();
+        }
+        let request = CompanionV1ControlRequest {
+            action: CompanionV1ControlAction::PrivacyEraseAll,
+            ble_name: None,
+            session_id: None,
+            prompt_id: None,
+            title: None,
+            transcript_text: None,
+            meeting_mode: None,
+            audio_path: None,
+            audio_bytes: None,
+            device_id: Some("AA:BB:CC:DD:EE:FF".to_string()),
+            duration_ms: None,
+        };
+        assert!(backend.apply_control(request.clone()).is_err());
+        assert!(backend.snapshot().unwrap().meeting.active);
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            snapshot.meeting.active = false;
+            snapshot.meeting.status = "idle".to_string();
+        }
+        let cleared = backend.apply_control(request).unwrap();
+        assert!(cleared.host.sessions.is_empty());
+        assert!(cleared
+            .last_control
+            .as_ref()
+            .unwrap()
+            .message
+            .contains("device's local menu"));
+    }
+
+    #[test]
+    fn exact_delete_rejects_stale_selection_and_wrong_source_device() {
+        let backend = FixtureCompanionBackend::new();
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            let request = CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::DeviceSyncRecordings,
+                ble_name: None,
+                session_id: Some("owned-recording".to_string()),
+                prompt_id: None,
+                title: Some("owned".to_string()),
+                transcript_text: None,
+                meeting_mode: Some("offlineStore".to_string()),
+                audio_path: Some("C:/missing.wav".to_string()),
+                audio_bytes: Some(100),
+                device_id: Some("AA:BB:CC:DD:EE:FF".to_string()),
+                duration_ms: Some(1000),
+            };
+            let mut session = crate::companion_v1::synced_device_session(
+                &snapshot,
+                &request,
+                "owned-recording",
+            );
+            session.device_recording_id = Some(7);
+            session.device_total_length = Some(100);
+            session.device_sha256 = Some("a".repeat(64));
+            session.source_device_id = Some("AA:BB:CC:DD:EE:FF".to_string());
+            snapshot.host.sessions = vec![session];
+            snapshot.host.selected_session_id = Some("other-session".to_string());
+            snapshot.device.device_id = Some("11:22:33:44:55:66".to_string());
+        }
+        let request = CompanionV1ControlRequest {
+            action: CompanionV1ControlAction::PrivacyDeleteSession,
+            ble_name: None,
+            session_id: Some("owned-recording".to_string()),
+            prompt_id: None,
+            title: None,
+            transcript_text: None,
+            meeting_mode: None,
+            audio_path: None,
+            audio_bytes: None,
+            device_id: Some("11:22:33:44:55:66".to_string()),
+            duration_ms: None,
+        };
+        assert!(backend
+            .apply_control(request.clone())
+            .unwrap_err()
+            .contains("no longer the selected"));
+        backend.snapshot.lock().unwrap().host.selected_session_id =
+            Some("owned-recording".to_string());
+        assert!(backend
+            .apply_control(request.clone())
+            .unwrap_err()
+            .contains("belongs to device"));
+        assert_eq!(backend.snapshot().unwrap().host.sessions.len(), 1);
+
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            snapshot.host.sessions[0].device_reclaimed = true;
+        }
+        let mut reclaimed_request = request;
+        reclaimed_request.device_id = Some("AA:BB:CC:DD:EE:FF".to_string());
+        let deleted = backend.apply_control(reclaimed_request).unwrap();
+        assert!(deleted.host.sessions.is_empty());
+        assert!(deleted
+            .last_control
+            .as_ref()
+            .unwrap()
+            .message
+            .contains("already reclaimed"));
     }
 }

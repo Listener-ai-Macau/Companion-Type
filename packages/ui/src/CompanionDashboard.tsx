@@ -1,4 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { CompanionSetup } from './CompanionSetup';
+import { CompanionTranscriptReview } from './CompanionTranscriptReview';
+import { CompanionBookmarks } from './CompanionBookmarks';
+import { CompanionAudioPlayer } from './CompanionAudioPlayer';
+import { CompanionMeetingNotes } from './CompanionMeetingNotes';
+import { seekBookmarkAudio } from './bookmarkAudio';
+import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
+import { CompanionRecoveryCenter } from './CompanionRecoveryCenter';
+import { CompanionRecordingSync } from './CompanionRecordingSync';
+import { CompanionBehaviorPreview } from './CompanionBehaviorPreview';
 import {
   Bluetooth,
   Check,
@@ -8,9 +18,10 @@ import {
   Eraser,
   FileText,
   HardDrive,
+  Headphones,
   Link2,
-  ListChecks,
   Mic,
+  Pencil,
   Play,
   RefreshCw,
   Search,
@@ -19,120 +30,737 @@ import {
   Trash2,
   Unlink,
   Upload,
-  Volume2,
 } from 'lucide-react';
 
 import {
   type CompanionV1ControlAction,
   type CompanionV1ControlRequest,
+  type CompanionV1MeetingMode,
+  type CompanionV1HostSession,
   type CompanionV1Snapshot,
+  type CompanionTranscriptReviewEdit,
+  type CompanionBookmarkRequest,
+  type CompanionMeetingNoteRequest,
+  companionBookmarkAudioPosition,
+  companionCanChangeOfflineRecordingLink,
+  companionMinutesMatchTranscript,
+  companionMinutesProcessingComplete,
+  companionReviewedTranscript,
+  companionTranscriptReviewRevision,
   companionBleNameIsValid,
-  describeSessionPendingReason,
+  companionSessionHasFinalTranscript,
+  describeCompanionMeetingRecovery,
   selectedCompanionHostSession,
 } from '@companion-type/core';
 
+export type CompanionProductSettingsPublic = {
+  defaultMeetingMode: string;
+  asrProvider: string;
+  volcAppKeySet: boolean;
+  volcAccessKeySet: boolean;
+  volcResourceId: string;
+  openaiAsrEndpoint: string;
+  openaiAsrApiKeySet: boolean;
+  openaiAsrModel: string;
+  deepseekApiKeySet: boolean;
+  deepseekBaseUrl: string;
+  deepseekModel: string;
+  deepseekMinutesEnabled: boolean;
+  bleCompress: boolean;
+  settingsPath: string;
+  storageWarning?: string | null;
+  storageSaveBlocked?: boolean;
+};
+
+export type CompanionProductSettingsPatch = {
+  defaultMeetingMode: string;
+  asrProvider: string;
+  volcAppKey: string;
+  volcAccessKey: string;
+  volcResourceId: string;
+  openaiAsrEndpoint: string;
+  openaiAsrApiKey: string;
+  openaiAsrModel: string;
+  deepseekApiKey: string;
+  deepseekBaseUrl: string;
+  deepseekModel: string;
+  deepseekMinutesEnabled: boolean;
+  bleCompress: boolean;
+  clearCredentials?: Array<'volcAppKey' | 'volcAccessKey' | 'openaiAsrApiKey' | 'deepseekApiKey'>;
+};
+
+export type CompanionOtaPackageValidationUi = {
+  ok: boolean;
+  packageType: string;
+  versionNote: string;
+  payloadBytes: number;
+  chunkBytes: number;
+  payloadSha256: string;
+  message: string;
+};
+
+export type CompanionBoardOnlineLiveUiStatus = {
+  state: 'idle' | 'starting' | 'recording' | 'stopping' | 'finalizing' | 'completed' | 'pending' | 'failed';
+  sessionId: string | null;
+  deviceId: string | null;
+  recordingId: number | null;
+  partialCount: number;
+  durationMs: number;
+  maxDurationSeconds?: number | null;
+  disconnectResume: boolean;
+  finalRecordingPath: string | null;
+  error: string | null;
+};
+
+export type CompanionMeetingExportRequest = {
+  sessionId: string;
+  meetingMode: CompanionV1MeetingMode;
+  format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'ics';
+};
+
+export type CompanionMeetingSaveRequest = {
+  sessionId: string;
+  title?: string;
+  expectedTitle?: string;
+  meetingMode?: CompanionV1MeetingMode;
+  markdown?: string;
+  expectedMarkdown?: string;
+  transcriptReview?: CompanionTranscriptReviewEdit;
+};
+
 export interface CompanionDashboardProps {
+  recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
+  pauseSyncBusy?: boolean;
+  onPauseSync?: (jobId: string) => void;
+  onUnsavedChange?: (unsaved: boolean) => void;
   snapshot: CompanionV1Snapshot | null;
   busyAction: CompanionV1ControlAction | 'refresh' | null;
   error: string | null;
   surface: 'windows' | 'mobile';
+  productSettings?: CompanionProductSettingsPublic | null;
+  boardOnlineLive?: CompanionBoardOnlineLiveUiStatus | null;
+  boardOnlineBusy?: boolean;
   onRefresh: () => void;
   onControl: (request: CompanionV1ControlRequest) => void;
+  onStartBoardOnlineLive?: (request: {
+    title?: string;
+    deviceId?: string | null;
+    maxDurationSeconds?: number;
+    partialIntervalMs?: number;
+  }) => void | Promise<void>;
+  onStopBoardOnlineLive?: () => void | Promise<void>;
+  onSaveProductSettings?: (patch: CompanionProductSettingsPatch) => void | Promise<void>;
+  onExportMeeting?: (request: CompanionMeetingExportRequest) => Promise<{ path: string; bytes: number; warning?: string | null } | null>;
+  onExportDiagnostics?: (includeDevice: boolean) => Promise<{path:string;bytes:number;warning?:string|null}|null>;
+  onPrepareAudioComponents?: () => Promise<void>;
+  onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
+  /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
+  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string }>;
+  onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
+  /** Native host obtains a concrete device proposal and its confirmation dialog. */
+  onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
+    status: 'deleted' | 'cancelled' | 'noCandidate'; message: string;
+  }>;
+  /** Conflict-aware metadata/minutes edit. The host persists before returning its next snapshot. */
+  onSaveMeeting?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
+  onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
+  onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
+  /** Host-only resource/firmware package validation (Windows Tauri). */
+  onValidateOtaPackage?: (paths: {
+    manifestPath: string;
+    firmwarePath: string;
+  }) => Promise<CompanionOtaPackageValidationUi>;
+  /** BLE OTA transfer; resource packages blocked until device installer ships. */
+  onTransferOtaPackage?: (paths: {
+    manifestPath: string;
+    firmwarePath: string;
+    deviceId?: string | null;
+  }) => Promise<{ packageType: string; firmwareBytes: number; elapsedMs: number; deviceId: string }>;
 }
 
-const DEFAULT_TRANSCRIPT = [
-  'Decision: Companion host owns long meeting recordings.',
-  'Action owner: Chen due: Friday validates minutes export.',
-  'Question: should offline show needs_transcription?',
-].join('\n');
-
 export function CompanionDashboard({
+  recordingSync = null,
+  pauseSyncBusy = false,
+  onPauseSync,
+  onUnsavedChange,
   snapshot,
   busyAction,
   error,
   surface,
+  productSettings = null,
+  boardOnlineLive = null,
+  boardOnlineBusy = false,
   onRefresh,
   onControl,
+  onStartBoardOnlineLive,
+  onStopBoardOnlineLive,
+  onSaveProductSettings,
+  onExportMeeting,
+  onExportDiagnostics,
+  onPrepareAudioComponents,
+  onCheckService,
+  onPrepareAudio,
+  onExportAudio,
+  onDiscardOldestRecording,
+  onSaveMeeting,
+  onSaveBookmark,
+  onSaveNote,
+  onValidateOtaPackage,
+  onTransferOtaPackage,
 }: CompanionDashboardProps) {
   const [draftName, setDraftName] = useState('companion');
   const [draftTitle, setDraftTitle] = useState('设备会议');
-  const [draftMinutes, setDraftMinutes] = useState('60');
-  const [transcriptDraft, setTranscriptDraft] = useState(DEFAULT_TRANSCRIPT);
+  const [newMeetingTitle, setNewMeetingTitle] = useState('');
+  const [draftMinutes, setDraftMinutes] = useState('30');
+  const [transcriptDraft, setTranscriptDraft] = useState('');
+  const transcriptEditor = useRef<{ sessionId?: string; dirty: boolean }>({ dirty: false });
+  const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string } | null>(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showWorkflow, setShowWorkflow] = useState(false);
+  const [onlyPendingSessions, setOnlyPendingSessions] = useState(false);
+  const [libraryQuery, setLibraryQuery] = useState('');
+  const [detailView, setDetailView] = useState<'minutes' | 'transcript'>('minutes');
+  const [meetingMode, setMeetingMode] = useState<CompanionV1MeetingMode>('offlineStore');
+  const [minutesSelection, setMinutesSelection] = useState<{ sessionId: string; mode: CompanionV1MeetingMode } | null>(null);
+  const [settingsMsg, setSettingsMsg] = useState<string | null>(null);
+  const [settingsBusy, setSettingsBusy] = useState(false);
+  const settingsActive = useRef(false);
+  const [clearCredentials, setClearCredentials] = useState<NonNullable<CompanionProductSettingsPatch['clearCredentials']>>([]);
+  const [serviceBusy, setServiceBusy] = useState<'asr' | 'minutes' | null>(null);
+  const [discardBusy, setDiscardBusy] = useState(false);
+  const [discardMessage, setDiscardMessage] = useState<string | null>(null);
+  const discardActive = useRef(false);
+  const currentDiscardDevice = useRef<string | null>(null);
+  const serviceActive = useRef(false);
+  const [serviceResults, setServiceResults] = useState<Partial<Record<'asr' | 'minutes', string>>>({});
+  const [resourceManifestPath, setResourceManifestPath] = useState('');
+  const [resourcePayloadPath, setResourcePayloadPath] = useState('');
+  const [resourceMsg, setResourceMsg] = useState<string | null>(null);
+  const [diagnosticMsg, setDiagnosticMsg] = useState<string | null>(null);
+  const [diagnosticBusy, setDiagnosticBusy] = useState(false);
+  const diagnosticActive = useRef(false);
+  const [resourceBusy, setResourceBusy] = useState(false);
+  const [exportBusy, setExportBusy] = useState(false);
+  const exportActive = useRef(false);
+  const [exportResult, setExportResult] = useState<{ sessionId: string; message: string } | null>(null);
+  const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
+    title?: { value: string; expected: string };
+    minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string }>>;
+  }>>({});
+  const [editingMinutes, setEditingMinutes] = useState(false);
+  const [saveMeetingBusy, setSaveMeetingBusy] = useState(false);
+  const [bookmarkBusy,setBookmarkBusy]=useState(false);
+  const [bookmarkUnsaved,setBookmarkUnsaved]=useState(false);
+  const [noteBusy,setNoteBusy]=useState(false);
+  const [noteUnsaved,setNoteUnsaved]=useState(false);
+  const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; message: string } | null>(null);
+  const [audioBusy, setAudioBusy] = useState(false);
+  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string }>>({});
+  const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
+  const audioElement = useRef<HTMLAudioElement | null>(null);
+  const audioRequestId = useRef(0);
+  const [formAsrProvider, setFormAsrProvider] = useState('volcengine');
+  const [formVolcApp, setFormVolcApp] = useState('');
+  const [formVolcAccess, setFormVolcAccess] = useState('');
+  const [formVolcResource, setFormVolcResource] = useState('volc.bigasr.sauc.duration');
+  const [formOpenAiEndpoint, setFormOpenAiEndpoint] = useState('https://api.openai.com/v1/audio/transcriptions');
+  const [formOpenAiKey, setFormOpenAiKey] = useState('');
+  const [formOpenAiModel, setFormOpenAiModel] = useState('gpt-4o-transcribe');
+  const [formDeepseekKey, setFormDeepseekKey] = useState('');
+  const [formDeepseekBase, setFormDeepseekBase] = useState('https://api.deepseek.com/v1');
+  const [formDeepseekModel, setFormDeepseekModel] = useState('deepseek-v4-flash');
+  const [formDeepseekEnabled, setFormDeepseekEnabled] = useState(true);
+  const [formBleCompress, setFormBleCompress] = useState(false);
+  const [formDefaultMode, setFormDefaultMode] = useState<CompanionV1MeetingMode>('offlineStore');
 
+  useEffect(() => {
+    if (!productSettings || productSettings.storageSaveBlocked) return;
+    setFormAsrProvider(productSettings.asrProvider || 'volcengine');
+    setFormVolcResource(productSettings.volcResourceId || 'volc.bigasr.sauc.duration');
+    setFormOpenAiEndpoint(productSettings.openaiAsrEndpoint);
+    setFormOpenAiModel(productSettings.openaiAsrModel);
+    setFormDeepseekBase(productSettings.deepseekBaseUrl);
+    setFormDeepseekModel(productSettings.deepseekModel);
+    setFormDeepseekEnabled(productSettings.deepseekMinutesEnabled);
+    setFormBleCompress(productSettings.bleCompress);
+    const mode = productSettings.defaultMeetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
+    setFormDefaultMode(mode);
+    setMeetingMode(mode);
+  }, [productSettings?.asrProvider, productSettings?.volcResourceId,
+    productSettings?.openaiAsrEndpoint, productSettings?.openaiAsrModel,
+    productSettings?.deepseekBaseUrl, productSettings?.deepseekModel,
+    productSettings?.deepseekMinutesEnabled, productSettings?.bleCompress,
+    productSettings?.defaultMeetingMode, Boolean(productSettings?.storageSaveBlocked)]);
+
+  const [transcriptReviewUnsaved, setTranscriptReviewUnsaved] = useState(false);
   const selectedSession = useMemo(
     () => (snapshot ? selectedCompanionHostSession(snapshot) : null),
     [snapshot],
   );
   const device = snapshot?.device;
-  const oobe = snapshot?.oobe;
   const privacy = snapshot?.privacy;
+  const recordingLibrary = snapshot?.host.sessions ?? [];
+  const readableLibrary = useMemo(
+    () => recordingLibrary.filter((session) => (
+      session.status === 'minutesReady'
+      || Boolean(session.transcriptText?.trim())
+      || Boolean(session.meetingNotes?.length)
+      || Boolean(session.minutesByMode?.offlineStore || session.minutesByMode?.onlineLive)
+      || Boolean(session.recovery?.intent === 'processMeeting')
+    )),
+    [recordingLibrary],
+  );
+  const pendingLibrary = recordingLibrary.filter((session) => !meetingHasFinalMinutes(session)
+    || Boolean(describeCompanionMeetingRecovery(session)));
+  const visibleLibrary = useMemo(() => {
+    const base = onlyPendingSessions ? pendingLibrary : recordingLibrary;
+    const query = libraryQuery.trim().toLocaleLowerCase();
+    if (!query) return base;
+    return base.filter((session) => meetingSearchText(session).includes(query));
+  }, [onlyPendingSessions, pendingLibrary, recordingLibrary, libraryQuery]);
   const connected = Boolean(snapshot?.connected || device?.connected);
+
+  useEffect(() => {
+    if (readableLibrary.length === 0) return;
+    if (selectedSession) return;
+    onControl({ action: 'meetingSelectSession', sessionId: readableLibrary[0].id });
+  }, [selectedSession?.id, readableLibrary[0]?.id]);
 
   useEffect(() => {
     if (snapshot) setDraftName(snapshot.bleName.stagedName);
   }, [snapshot?.bleName.stagedName]);
 
   useEffect(() => {
+    if (transcriptEditor.current.sessionId !== selectedSession?.id) {
+      transcriptEditor.current = { sessionId: selectedSession?.id, dirty: false };
+    }
+    if (!transcriptEditor.current.dirty) setTranscriptDraft(selectedSession?.transcriptText ?? '');
+  }, [selectedSession?.id, selectedSession?.transcriptText]);
+
+  useEffect(() => {
+    setPendingDelete(null);
+    setEditingMinutes(false);
+    setSaveMeetingResult(null);
+    setAudioResult(null);
     if (!selectedSession) return;
     setDraftTitle(selectedSession.title);
-    if (selectedSession.transcriptText) setTranscriptDraft(selectedSession.transcriptText);
-  }, [selectedSession?.id, selectedSession?.transcriptText, selectedSession?.title]);
+    if (selectedSession.meetingMode === 'onlineLive' || selectedSession.meetingMode === 'offlineStore') {
+      setMeetingMode(selectedSession.meetingMode);
+    }
+    const modes = selectedSession.minutesByMode;
+    setDetailView(modes?.offlineStore || modes?.onlineLive || selectedSession.minutes ? 'minutes' : 'transcript');
+  }, [selectedSession?.id]);
 
   const nameError = draftName.length > 0 && !companionBleNameIsValid(draftName)
     ? 'BLE 名称不合法'
     : null;
 
-  const minutesMarkdown = selectedSession?.exportMarkdown
-    || selectedSession?.minutes?.markdown
-    || '';
+  useEffect(()=>{
+    // Deleting the last meeting unmounts its editor. Clear only its aggregate
+    // flag; switching between existing meetings still preserves every draft.
+    if (!selectedSession) {setBookmarkUnsaved(false);setBookmarkBusy(false);}
+  },[selectedSession?.id]);
+
+  const offlineMinutes = selectedSession?.minutesByMode?.offlineStore ?? null;
+  const onlineMinutes = selectedSession?.minutesByMode?.onlineLive ?? null;
+  const preferredMinutesMode = minutesSelection?.sessionId === selectedSession?.id
+    ? minutesSelection?.mode : selectedSession?.meetingMode;
+  // A recovering recording may have a transcript before either minutes variant
+  // exists. Keep exports on its capture mode, then use only an available variant.
+  const minutesViewMode: CompanionV1MeetingMode = preferredMinutesMode === 'onlineLive'
+    ? (onlineMinutes || !offlineMinutes ? 'onlineLive' : 'offlineStore')
+    : (offlineMinutes || !onlineMinutes ? 'offlineStore' : 'onlineLive');
+  const setMinutesViewMode = (mode: CompanionV1MeetingMode) => {
+    if (selectedSession) setMinutesSelection({ sessionId: selectedSession.id, mode });
+    setEditingMinutes(false);
+  };
+  const selectedMinutesVariant = minutesViewMode === 'onlineLive' ? onlineMinutes : offlineMinutes;
+  const recoveryView = selectedSession ? describeCompanionMeetingRecovery(selectedSession) : null;
+  const finalTranscript = selectedSession ? companionSessionHasFinalTranscript(selectedSession) : false;
+  const offlineReady = offlineMinutes?.status === 'minutesReady' && offlineMinutes.quality === 'final'
+    && companionMinutesProcessingComplete(offlineMinutes.processing)
+    && Boolean(selectedSession && companionMinutesMatchTranscript(selectedSession, offlineMinutes.sourceReviewRevision));
+  const onlineReady = onlineMinutes?.status === 'minutesReady' && onlineMinutes.quality === 'final'
+    && companionMinutesProcessingComplete(onlineMinutes.processing)
+    && Boolean(selectedSession && companionMinutesMatchTranscript(selectedSession, onlineMinutes.sourceReviewRevision));
+  const legacyMinutes = !offlineMinutes && !onlineMinutes && selectedSession?.meetingMode === minutesViewMode
+    ? selectedSession.minutes : null;
+  const selectedMinutesStale = Boolean(selectedSession && (selectedMinutesVariant || legacyMinutes)
+    && !companionMinutesMatchTranscript(selectedSession, (selectedMinutesVariant || legacyMinutes)?.sourceReviewRevision));
+  const minutesMarkdown = selectedMinutesVariant?.markdown || legacyMinutes?.markdown || '';
+  const minutesProcessing = (selectedMinutesVariant || legacyMinutes)?.processing;
+  const recordingMode = selectedSession?.meetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
+  const recordingModeMinutes = recordingMode === 'onlineLive' ? onlineMinutes : offlineMinutes;
+  const legacyRecordingMinutes = !offlineMinutes && !onlineMinutes ? selectedSession?.minutes : null;
+  const recordingMinutesUserEdited = recordingModeMinutes?.source === 'userEdited'
+    || String(legacyRecordingMinutes?.source ?? '') === 'userEdited';
+  const recordingModeLabel = recordingMode === 'onlineLive' ? '在线速记' : '先录后整理';
+  const selectedDraft = selectedSession ? meetingDrafts[selectedSession.id] : undefined;
+  const titleDraft = selectedSession
+    ? selectedDraft?.title?.value ?? meetingTitle(selectedSession) : '';
+  const minutesDraft = selectedSession
+    ? selectedDraft?.minutes?.[minutesViewMode]?.value ?? minutesMarkdown : '';
+  const titleDirty = Boolean(selectedSession && selectedDraft?.title);
+  const minutesDirty = Boolean(selectedSession && selectedDraft?.minutes?.[minutesViewMode]);
   const hasMinutes = Boolean(minutesMarkdown.trim());
   const hasSyncedAudio = Boolean(
     selectedSession
-    && (selectedSession.source === 'deviceFlash' || selectedSession.audioBytes > 0 || selectedSession.audioPath),
+    && selectedSession.status !== 'recording' && selectedSession.pendingReason !== 'needs_device_sync'
+    && (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0)),
   );
-  const pendingHint = describeSessionPendingReason(selectedSession?.pendingReason ?? null);
-  const canGenerate = Boolean(selectedSession?.transcriptText.trim());
+  const canGenerate = finalTranscript && !recoveryView?.isProcessing;
+  const hasOriginalAudio = Boolean(hasSyncedAudio && selectedSession?.audioStored && selectedSession.retention.audioCached
+    && selectedSession.audioPath && !/^(host|device|board):\/\//i.test(selectedSession.audioPath));
   const canTranscribe = Boolean(
     selectedSession
     && selectedSession.status !== 'recording'
-    && (selectedSession.audioPath || selectedSession.audioBytes || selectedSession.source === 'deviceFlash'),
+    && !recoveryView?.isProcessing
+    && hasSyncedAudio,
   );
   const canEraseAudio = Boolean(selectedSession?.audioPath || selectedSession?.audioBytes);
-  const canEraseTranscript = Boolean(selectedSession?.transcriptText || selectedSession?.minutes);
-  const requestedDurationMs = Math.max(1, Number.parseInt(draftMinutes, 10) || 60) * 60000;
+  const canEraseTranscript = Boolean(selectedSession?.transcriptText || selectedSession?.minutes || offlineMinutes || onlineMinutes || selectedSession?.meetingNotes?.length);
+  const hasVerifiedBoardCopy = Boolean(selectedSession?.deviceRecordingId != null
+    && selectedSession.sourceDeviceId && selectedSession.deviceTotalLength
+    && /^[0-9a-f]{64}$/i.test(selectedSession.deviceSha256 ?? '') && !selectedSession.deviceReclaimed);
+  const requestedDurationMs = Number(draftMinutes) * 60000;
+  const boardMaxDurationSeconds = requestedDurationMs / 1000;
+  const durationValid = draftMinutes.trim() !== '' && Number.isSafeInteger(requestedDurationMs)
+    && requestedDurationMs > 0 && (!connected || boardMaxDurationSeconds <= 65535);
+  const onlineDurationValid = durationValid && boardMaxDurationSeconds >= 12 && boardMaxDurationSeconds <= 2580;
+  const durationError = !durationValid ? '请输入有效的录音时长，实际可录时间以设备空间为准。'
+    : !onlineDurationValid ? '在线转写单次最多 43 分钟，请修改时长；不会自动截短。' : null;
+  const capacity = connected ? device?.recordingCapacity : null;
+  currentDiscardDevice.current = connected ? device?.deviceId ?? null : null;
+  useEffect(() => { setDiscardMessage(null); }, [device?.deviceId, connected]);
+  const capacitySeconds = capacity && capacity.usedEntries < capacity.maxEntries
+    ? Math.max(0, Math.floor((capacity.largestFreeExtent - capacity.reserveHeadroom) / capacity.bytesPerSecond)) : 0;
+  const capacityHint = !capacity ? '尚未取得设备容量，无法预估剩余时长；开始时由设备检查空间。'
+    : capacity.busy ? '设备上次报告正在录音、回收或升级；开始前会重新检查。'
+      : capacity.usedEntries >= capacity.maxEntries ? '设备录音目录已满，请同步并回收录音。'
+        : `${formatBytes(capacity.freeBytes)} 空闲 · 连续可用约 ${formatDuration(capacitySeconds * 1000)} · 目录 ${capacity.usedEntries}/${capacity.maxEntries}`;
+  const boardLiveActive = Boolean(
+    boardOnlineLive
+    && ['starting', 'recording', 'stopping', 'finalizing'].includes(boardOnlineLive.state),
+  );
+  const oobeBlockedByRecording = Boolean(
+    snapshot?.meeting.active
+    || device?.recording
+    || recordingLibrary.some((session) => session.status === 'recording')
+    || boardLiveActive,
+  );
+  const controlsBusy = busyAction !== null || Boolean(recordingSync?.jobId) || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy;
+  const lossBudgetSeconds = Math.ceil(boardMaxDurationSeconds + (meetingMode === 'onlineLive' ? 120 : 0));
+  const lossBudgetValid = durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
+  const captureBudgetBytes = capacity && lossBudgetValid
+    ? Math.ceil((lossBudgetSeconds * capacity.bytesPerSecond + capacity.reserveHeadroom) / 4096) * 4096 : null;
+  const capacityInsufficient = Boolean(capacity && lossBudgetValid && (capacity.usedEntries >= capacity.maxEntries
+    || (captureBudgetBytes ?? 0) > capacity.largestFreeExtent));
+  const inspectRecordingLoss = async () => {
+    if (!onDiscardOldestRecording || !capacity?.confirmedDiscardSupported || !capacityInsufficient
+      || capacity.busy || !capacity.unsyncedEntries || controlsBusy || settingsBusy || oobeBlockedByRecording || discardActive.current) return;
+    discardActive.current = true; setDiscardBusy(true); setDiscardMessage(null);
+    const expectedDevice = currentDiscardDevice.current;
+    try {
+      const result = await onDiscardOldestRecording(lossBudgetSeconds);
+      if (currentDiscardDevice.current === expectedDevice) setDiscardMessage(result.message);
+    }
+    catch (err) {
+      if (currentDiscardDevice.current === expectedDevice) setDiscardMessage(err instanceof Error ? err.message : '操作未完成，请重新读取设备状态。');
+    }
+    finally { discardActive.current = false; setDiscardBusy(false); }
+  };
+  const serviceConfigKey = JSON.stringify([formAsrProvider, formVolcApp, formVolcAccess, formVolcResource,
+    formOpenAiEndpoint, formOpenAiKey, formOpenAiModel, formDeepseekKey, formDeepseekBase, formDeepseekModel, formDeepseekEnabled,
+    clearCredentials,
+    productSettings?.volcAppKeySet, productSettings?.volcAccessKeySet, productSettings?.openaiAsrApiKeySet, productSettings?.deepseekApiKeySet]);
+  const currentServiceConfig = useRef(serviceConfigKey);
+  currentServiceConfig.current = serviceConfigKey;
+  useEffect(() => { setServiceResults({}); }, [serviceConfigKey]);
+  const serviceConfigDirty = !productSettings || clearCredentials.length > 0 || !!(formVolcApp || formVolcAccess || formOpenAiKey || formDeepseekKey)
+    || formAsrProvider !== productSettings.asrProvider || formVolcResource !== productSettings.volcResourceId
+    || formOpenAiEndpoint !== productSettings.openaiAsrEndpoint || formOpenAiModel !== productSettings.openaiAsrModel
+    || formDeepseekBase !== productSettings.deepseekBaseUrl || formDeepseekModel !== productSettings.deepseekModel
+    || formDeepseekEnabled !== productSettings.deepseekMinutesEnabled;
+  const checkService = async (service: 'asr' | 'minutes') => {
+    if (!onCheckService || controlsBusy || settingsBusy || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || serviceActive.current) return;
+    serviceActive.current = true; setServiceBusy(service);
+    const config = serviceConfigKey;
+    setServiceResults(previous => ({ ...previous, [service]: undefined }));
+    try {
+      const result = await onCheckService(service);
+      if (currentServiceConfig.current === config) setServiceResults(previous => ({...previous,
+        [service]: `${result.message}（${Math.max(0, result.elapsedMs / 1000).toFixed(1)} 秒）`}));
+    } catch {
+      if (currentServiceConfig.current === config) setServiceResults(previous => ({...previous, [service]: '测试未完成，请确认录音已结束后重试。'}));
+    } finally { serviceActive.current = false; setServiceBusy(null); }
+  };
+  const storageBlocked = Boolean(snapshot?.host.persistence && snapshot.host.persistence.status !== 'ready');
+  const asrConfigured = productSettings?.asrProvider === 'volcengine'
+    ? Boolean(productSettings.volcAppKeySet && productSettings.volcAccessKeySet)
+    : Boolean(productSettings?.openaiAsrApiKeySet);
+  useEffect(() => {
+    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.keys(meetingDrafts).length > 0 || transcriptEditor.current.dirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved);
+  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved]);
+  const missingServiceFields = [
+    ...(formAsrProvider === 'volcengine'
+      ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
+      : [!formOpenAiEndpoint.trim() ? '兼容服务 Endpoint' : '', !formOpenAiModel.trim() ? '兼容服务模型' : '', clearCredentials.includes('openaiAsrApiKey') || !(formOpenAiKey.trim() || productSettings?.openaiAsrApiKeySet) ? '兼容服务 Key' : '']),
+    ...(formDeepseekEnabled
+      ? [!formDeepseekBase.trim() ? 'DeepSeek Base URL' : '', !formDeepseekModel.trim() ? 'DeepSeek 模型' : '', clearCredentials.includes('deepseekApiKey') || !(formDeepseekKey.trim() || productSettings?.deepseekApiKeySet) ? 'DeepSeek Key' : ''] : []),
+  ].filter(Boolean);
+  const credentialField = (kind: NonNullable<CompanionProductSettingsPatch['clearCredentials']>[number], label: string,
+    value: string, setValue: (value: string) => void, configured: boolean | undefined) => {
+    const pending = clearCredentials.includes(kind);
+    const blocked = controlsBusy || settingsBusy || oobeBlockedByRecording || !productSettings || productSettings.storageSaveBlocked;
+    return <div className="ct-field" key={kind}>
+      <label htmlFor={`ct-key-${kind}`}>{label} {pending ? '（待清空）' : configured ? '（已配置）' : ''}</label>
+      <input id={`ct-key-${kind}`} type="password" autoComplete="off" value={pending ? '' : value}
+        onChange={e => setValue(e.target.value)} disabled={blocked || pending} placeholder={pending ? '保存后清空' : '留空=保持原值'} spellCheck={false} />
+      <button type="button" className="ct-text-button" aria-label={`${pending ? '撤销清空' : '清空'}${label}`}
+        disabled={blocked || (!configured && !value && !pending)} onClick={() => {
+          if (blocked || settingsActive.current) return;
+          setClearCredentials(previous => pending ? previous.filter(key => key !== kind) : [...previous, kind]);
+          setSettingsMsg(null);
+        }}>{pending ? '撤销清空' : '清空密钥'}</button>
+    </div>;
+  };
+  const openSettings = () => {
+    setShowAdvanced(true);
+    window.setTimeout(() => document.getElementById('ct-service-settings')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0);
+  };
+  const openWorkflow = () => {
+    setShowWorkflow(true);
+    window.setTimeout(() => document.getElementById('ct-workflow')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0);
+  };
+  const journey = selectedSession ? meetingJourney(selectedSession, {
+    connected, deviceId: device?.deviceId, asrReady: asrConfigured,
+    minutesReady: Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet),
+  }) : null;
+  const actualRecordingDurationMs = boardOnlineLive?.state === 'recording' ? boardOnlineLive.durationMs : 0;
+  const recordingLimitMs = (boardOnlineLive?.maxDurationSeconds ?? 0) * 1000;
+  const recordingRemainingMs = Math.max(0, recordingLimitMs - actualRecordingDurationMs);
+  const nearRecordingLimit = recordingLimitMs > 0 && actualRecordingDurationMs > 0 && recordingRemainingMs <= 5 * 60 * 1000;
+  const audioBlockedReason = !selectedSession ? '请先选择一场会议'
+    : selectedSession.status === 'recording' || oobeBlockedByRecording ? '录音进行中，结束并保存后才能回听'
+      : recoveryView?.isProcessing ? '正在处理这场会议，完成后才能回听'
+        : !hasSyncedAudio ? '这场会议还没有可回听的本机原音'
+          : !onPrepareAudio ? '原音回听仅在 Companion Type 桌面版可用'
+            : null;
+  const audioIdentity = selectedSession ? [selectedSession.id, selectedSession.audioPath ?? '', selectedSession.audioBytes,selectedSession.deviceSha256??'',
+    selectedSession.audioStored ? 1 : 0, selectedSession.retention.audioCached ? 1 : 0].join('|') : '';
+  const audioContext = useRef({ sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) });
+  audioContext.current = { sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) };
+  const preparedAudio = selectedSession && audioSources[selectedSession.id]?.identity === audioIdentity && !audioBlockedReason
+    ? audioSources[selectedSession.id] : null;
+
+  useEffect(() => {
+    audioRequestId.current += 1;
+    const sessionId = selectedSession?.id;
+    if (!sessionId) return;
+    setAudioSources((current) => {
+      const source = current[sessionId];
+      if (!source || (!audioBlockedReason && source.identity === audioIdentity)) return current;
+      const next = { ...current }; delete next[sessionId]; return next;
+    });
+  }, [selectedSession?.id, audioIdentity, audioBlockedReason]);
+
+  useEffect(() => {
+    const player = audioElement.current;
+    return () => {
+      if (!player) return;
+      player.pause();
+      player.removeAttribute('src');
+      player.load();
+    };
+  }, [preparedAudio?.url, audioIdentity]);
+  const exportMeeting = async (format: CompanionMeetingExportRequest['format']) => {
+    if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
+    const sessionId = selectedSession.id;
+    exportActive.current = true;
+    setExportBusy(true);
+    setExportResult(null);
+    try {
+      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format });
+      setExportResult({ sessionId, message: result ? `已保存：${result.path}${result.warning ? `（${result.warning}）` : ''}` : '已取消保存，会议内容保持不变。' });
+    } catch (error) {
+      setExportResult({ sessionId, message: `保存未完成：${error instanceof Error ? error.message : String(error)}` });
+    } finally { exportActive.current = false; setExportBusy(false); }
+  };
+  const exportAudio = async () => {
+    if (!selectedSession || !onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
+    const sessionId = selectedSession.id;
+    exportActive.current = true; setExportBusy(true); setExportResult(null);
+    try {
+      const result = await onExportAudio(sessionId);
+      setExportResult({ sessionId, message: result ? `原音已保存：${result.path}` : '已取消保存，原音保持不变。' });
+    } catch (error) {
+      setExportResult({ sessionId, message: `原音保存未完成：${error instanceof Error ? error.message : String(error)}` });
+    } finally { exportActive.current = false; setExportBusy(false); }
+  };
+  const updateTitleDraft = (value: string) => {
+    if (!selectedSession) return;
+    const sessionId = selectedSession.id;
+    setMeetingDrafts((current) => ({
+      ...current,
+      [sessionId]: {
+        ...current[sessionId],
+        title: { value, expected: current[sessionId]?.title?.expected ?? selectedSession.title },
+      },
+    }));
+  };
+  const updateMinutesDraft = (value: string) => {
+    if (!selectedSession) return;
+    const sessionId = selectedSession.id;
+    const mode = minutesViewMode;
+    setMeetingDrafts((current) => ({
+      ...current,
+      [sessionId]: {
+        ...current[sessionId],
+        minutes: {
+          ...current[sessionId]?.minutes,
+          [mode]: { value, expected: current[sessionId]?.minutes?.[mode]?.expected ?? minutesMarkdown },
+        },
+      },
+    }));
+  };
+  const cancelMeetingDraft = (part: 'title' | 'minutes') => {
+    if (!selectedSession) return;
+    const sessionId = selectedSession.id;
+    setMeetingDrafts((current) => {
+      const session = current[sessionId];
+      if (!session) return current;
+      const nextSession = { ...session };
+      if (part === 'title') delete nextSession.title;
+      else nextSession.minutes = { ...nextSession.minutes, [minutesViewMode]: undefined };
+      return { ...current, [sessionId]: nextSession };
+    });
+    if (part === 'minutes') setEditingMinutes(false);
+    setSaveMeetingResult(null);
+  };
+  const saveMeetingDraft = async () => {
+    if (!selectedSession || !onSaveMeeting || saveMeetingBusy || (!titleDirty && !minutesDirty)) return;
+    const sessionId = selectedSession.id;
+    const mode = minutesViewMode;
+    const title = selectedDraft?.title;
+    const minutes = selectedDraft?.minutes?.[mode];
+    const submittedTitle = title ? title.value.trim() : undefined;
+    const submittedMinutes = minutes ? minutes.value.trim() : undefined;
+    setSaveMeetingBusy(true);
+    setSaveMeetingResult(null);
+    try {
+      const next = await onSaveMeeting({
+        sessionId,
+        ...(title ? { title: submittedTitle, expectedTitle: title.expected } : {}),
+        ...(minutes ? { meetingMode: mode, markdown: submittedMinutes, expectedMarkdown: minutes.expected } : {}),
+      });
+      const savedSession = next.host.sessions.find((item) => item.id === sessionId);
+      if (next.host.persistence?.status !== 'ready') {
+        // The host may have updated its in-memory snapshot before durable storage
+        // failed. Rebase only an unchanged submitted draft so retry remains
+        // idempotent instead of conflicting with that same value.
+        setMeetingDrafts((current) => {
+          const currentSession = current[sessionId];
+          if (!currentSession) return current;
+          const nextSession = { ...currentSession };
+          if (title && currentSession.title?.value === title.value && currentSession.title.expected === title.expected
+            && savedSession?.title === submittedTitle) nextSession.title = { ...currentSession.title, expected: submittedTitle ?? '' };
+          const currentMinutes = currentSession.minutes?.[mode];
+          if (minutes && currentMinutes?.value === minutes.value && currentMinutes.expected === minutes.expected
+            && savedSession && meetingMinutesMarkdown(savedSession, mode) === submittedMinutes) {
+            nextSession.minutes = { ...currentSession.minutes, [mode]: { ...currentMinutes, expected: submittedMinutes ?? '' } };
+          }
+          return { ...current, [sessionId]: nextSession };
+        });
+        setSaveMeetingResult({ sessionId, message: next.host.persistence?.message ?? '修改尚未安全保存，草稿已保留，请重试。' });
+        return;
+      }
+      setMeetingDrafts((current) => {
+        const session = current[sessionId];
+        if (!session) return current;
+        const currentTitle = session.title;
+        const currentMinutes = session.minutes?.[mode];
+        return { ...current, [sessionId]: {
+          ...session,
+          title: title && currentTitle?.value === title.value && currentTitle.expected === title.expected ? undefined : currentTitle,
+          minutes: minutes && currentMinutes?.value === minutes.value && currentMinutes.expected === minutes.expected
+            ? { ...session.minutes, [mode]: undefined } : session.minutes,
+        } };
+      });
+      setEditingMinutes(false);
+      setSaveMeetingResult({ sessionId, message: '修改已保存。' });
+    } catch (saveError) {
+      setSaveMeetingResult({ sessionId, message: `未保存，草稿仍在：${saveError instanceof Error ? saveError.message : String(saveError)}` });
+    } finally {
+      setSaveMeetingBusy(false);
+    }
+  };
+  const prepareAudio = async () => {
+    if (!selectedSession || !onPrepareAudio || audioBusy || audioBlockedReason) return;
+    const sessionId = selectedSession.id;
+    const requestedIdentity = audioIdentity;
+    const requestId = ++audioRequestId.current;
+    setAudioBusy(true);
+    setAudioResult(null);
+    try {
+      const prepared = await onPrepareAudio(sessionId);
+      if (prepared.sessionId !== sessionId || !prepared.url) throw new Error('桌面端没有返回这场会议的授权音频');
+      const current = audioContext.current;
+      if (requestId !== audioRequestId.current || current.sessionId !== sessionId
+        || current.identity !== requestedIdentity || current.blocked) return;
+      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity } }));
+    } catch (prepareError) {
+      setAudioResult({ sessionId, message: `无法回听：${prepareError instanceof Error ? prepareError.message : String(prepareError)}` });
+    } finally {
+      setAudioBusy(false);
+    }
+  };
+  const seekBookmark = async (sessionId:string,bookmarkId:string,positionMs:number) => {
+    const point=selectedSession?.bookmarks?.find((b)=>b.id===bookmarkId);
+    if (!selectedSession||selectedSession.id!==sessionId||!point
+      ||companionBookmarkAudioPosition(selectedSession,point)!==positionMs) throw new Error('重点所属原音已变化，请重新核对。');
+    const identity=audioIdentity;
+    await seekBookmarkAudio(positionMs,async()=>{if(!preparedAudio) await prepareAudio();},()=>audioElement.current,
+      ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked);
+    setAudioResult({sessionId,message:'已定位到重点。点击原音播放器的播放按钮即可回听。'});
+  };
+  const requestErase = (action: CompanionV1ControlAction, title: string, detail: string) => {
+    setPendingDelete({
+      request: { action, sessionId: selectedSession?.id, deviceId: device?.deviceId ?? undefined },
+      title, detail,
+    });
+  };
 
   // Product path: board required for primary minutes flow.
   let step = 1;
   if (connected) step = 2;
-  if (connected && hasSyncedAudio) step = 3;
-  if (connected && hasSyncedAudio && selectedSession?.transcriptText) step = 4;
-  if (hasMinutes && selectedSession?.source === 'deviceFlash') step = 5;
+  if (hasSyncedAudio) step = 3;
+  if (finalTranscript) step = 4;
+  if (hasMinutes && !selectedMinutesStale) step = 5;
 
-  const simpleStatus = !connected
-    ? '请先连接板子'
-    : hasMinutes
-      ? '纪要已生成'
-      : selectedSession?.pendingReason
-        ? '已同步，待转写'
-        : hasSyncedAudio
-          ? '已同步设备录音'
-          : '已连接，请同步短录';
+  const simpleStatus = boardLiveActive ? 'Companion 正在记录这场会议' : selectedMinutesStale ? '转写已修订，纪要需要更新' : recoveryView?.label ?? (hasMinutes
+    ? (selectedMinutesVariant?.quality ?? selectedSession?.minutes?.quality) === 'final' ? '纪要已生成' : '纪要草稿已保存'
+    : finalTranscript ? '完整转写已保存，可以继续整理'
+      : hasSyncedAudio ? '录音已保存，可以继续转写'
+        : !connected ? '连接 Companion，开始一场记录'
+          : '设备已识别，可以开始录音');
 
   const footer = useMemo(() => {
     if (error) return error;
     if (nameError) return nameError;
-    if (!connected) return '主路径：连接板子 → 同步录音 → 转写 → 纪要';
-    if (hasMinutes) return '纪要已就绪';
-    return '按步骤 1→2→3→4 操作';
-  }, [error, nameError, connected, hasMinutes]);
+    if (recoveryView) return recoveryView.message;
+    if (selectedMinutesStale) return '原始文字和修订已保留。请重新生成或核对当前纪要，再导出待办。';
+    if (hasMinutes) return (selectedMinutesVariant?.quality ?? selectedSession?.minutes?.quality) === 'final'
+      ? '纪要已保存，可以核对并导出。' : '纪要草稿已保存，可以查看或继续整理。';
+    if (!connected) return '已有会议保存在本机，设备不在身边也可以继续查看和整理。';
+    return '在 Companion 上录音，回到电脑同步并整理。';
+  }, [error, nameError, connected, hasMinutes, selectedMinutesStale, recoveryView?.message, selectedMinutesVariant?.quality, selectedSession?.minutes?.quality]);
 
   return (
     <main className={`ct-shell ct-simple ct-${surface}`}>
       <header className="ct-topbar">
         <div>
           <p className="ct-kicker">Companion Type</p>
-          <h1>会议纪要</h1>
+          <h1>留住每次好想法</h1>
         </div>
         <button
           className="ct-icon-button"
@@ -151,31 +779,272 @@ export function CompanionDashboard({
         <strong>{simpleStatus}</strong>
         <span className="ct-simple-sub">
           {connected
-            ? `已连接 ${device?.deviceId ?? snapshot?.bleName.activeName ?? 'companion'}`
-            : '主路径必须连接板子'}
+            ? '设备已识别 · 使用时连接'
+            : '已有会议仍可查看'}
         </span>
       </section>
 
       {error ? (
         <section className="ct-pending-banner" role="alert">{error}</section>
       ) : null}
-
-      {pendingHint && connected ? (
-        <section className="ct-pending-banner" role="status">{pendingHint}</section>
+      {!error && snapshot?.lastControl?.accepted === false ? (
+        <section className="ct-pending-banner" role="alert">{snapshot.lastControl.message}</section>
       ) : null}
 
-      {/* Step path: board first */}
-      <section className="ct-steps" aria-label="主路径步骤">
+      <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
+        resumeBlocked={controlsBusy || oobeBlockedByRecording} onPause={onPauseSync}
+        onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle })} />
+
+      {boardLiveActive && boardOnlineLive ? <section className="ct-recording-activity" aria-label="当前录音" aria-live="polite">
+        <div><strong>{boardOnlineLive.state === 'starting' ? '正在准备录音'
+          : boardOnlineLive.state === 'recording' ? '正在录音'
+            : boardOnlineLive.state === 'stopping' ? '正在收齐录音' : '录音已结束，正在整理'}</strong>
+          <p>{boardOnlineLive.state === 'recording' ? '声音正在由 Companion 采集，结束后继续转写与整理。'
+            : '请保持设备在附近，当前会议还在处理中。'}
+            {boardOnlineLive.durationMs > 0 ? ` · ${formatDuration(boardOnlineLive.durationMs)}` : ''}
+            {nearRecordingLimit ? ` · 距本次设定结束约 ${formatDuration(recordingRemainingMs)}` : ''}</p></div>
+        <button type="button" className="ct-action" disabled={controlsBusy || boardOnlineLive.state !== 'recording' || !onStopBoardOnlineLive}
+          onClick={() => onStopBoardOnlineLive?.()}><Square size={15} />结束录音并整理</button>
+      </section> : null}
+
+      {!boardLiveActive && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前录音">
+        <div><strong>{device?.recording ? '设备录音中 · 上次读取' : '会议正在录音'}</strong>
+          <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p></div>
+        {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={controlsBusy}
+          onClick={() => onControl({ action: 'meetingStop', sessionId: snapshot.host.activeSessionId ?? undefined })}><Square size={15} />结束录音</button>
+          : <button type="button" className="ct-action" disabled={controlsBusy}
+            onClick={() => onControl({ action: 'deviceConnect', deviceId: device?.deviceId ?? undefined })}><RefreshCw size={15} />读取设备状态</button>}
+      </section> : null}
+
+      <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
+        recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
+        onSettings={openSettings} onWorkflow={openWorkflow} />
+
+      {connected ? <section className="ct-pending-banner" aria-label="设备录音容量">
+        <strong>设备录音空间 · 上次读取</strong><p>{capacityHint}</p>
+        {capacity ? <p>未同步 {capacity.unsyncedEntries} 段，未封口 {capacity.writingEntries} 段，共占用 {formatBytes(capacity.protectedBytes)}；待回收（已同步或已确认删除）{capacity.consumedEntries} 段，{formatBytes(capacity.consumedBytes)}。
+          设备独立开录：{capacity.localLimitSeconds ? `${capacity.localLimitSeconds / 60} 分钟` : '无时间上限，空间仍有限'}。</p> : null}
+        {capacity && capacity.writingEntries>0 && !oobeBlockedByRecording ? <p role="alert">
+          设备仍保留未封口录音；校验不足的内容不会自动覆盖。请先同步可恢复的片段，剩余占用需要设备诊断后处理。
+        </p> : null}
+        <p>{capacity ? '电脑开录使用下方填写的时长，开始前重新核对完整空间。空间不足会拒绝开录；不会自动覆盖未同步录音。'
+          : '旧固件或未读到容量时，无法承诺完整时长；请重新读取，或升级到配套固件。'}</p>
+        <button type="button" className="ct-text-button" disabled={controlsBusy || oobeBlockedByRecording}
+          onClick={() => onControl({action:'oobeRunChecks'})}>重新读取设备容量</button>
+        {onDiscardOldestRecording && capacity?.confirmedDiscardSupported && capacityInsufficient ? <>
+          <p>优先同步保存录音。也可查看最旧未同步录音的具体时间、大小和风险，再决定是否删除这一条。</p>
+          <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || capacity.busy || !capacity.unsyncedEntries}
+            onClick={() => void inspectRecordingLoss()}>{discardBusy ? '正在核对确认与回收…' : '查看可释放的最旧录音'}</button>
+        </> : null}
+        {discardMessage ? <p role="status">{discardMessage}</p> : null}
+      </section> : null}
+      {!oobeBlockedByRecording ? <div className="ct-capture-entry">
+        <div><strong>开会时，让它帮你记住</strong><p>随身先录，回来同步；或连接电脑，边录边看文字。</p></div>
+        <button type="button" className="ct-action" onClick={openWorkflow}><Mic size={16} />录音与同步</button>
+      </div> : null}
+
+      {snapshot ? <CompanionRecoveryCenter snapshot={snapshot} blocked={controlsBusy || oobeBlockedByRecording}
+        savingBusy={controlsBusy} asrReady={asrConfigured}
+        minutesReady={Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet)}
+        onControl={onControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
+      <section className="ct-library" aria-label="录音历史">
+        <div className="ct-library-head">
+          <div>
+            <p className="ct-section-eyebrow">MEETING LIBRARY</p>
+            <strong>会议库</strong>
+            <p>{recordingLibrary.length} 场会议 · {pendingLibrary.length} 场待整理</p>
+          </div>
+          <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions}
+            onClick={() => setOnlyPendingSessions((value) => !value)}>{onlyPendingSessions ? '显示全部会议' : '只看待整理'}</button>
+        </div>
+        <label className="ct-library-search"><Search size={15} /><span className="ct-sr-only">搜索会议全文</span>
+          <input value={libraryQuery} onChange={(event) => setLibraryQuery(event.target.value)}
+            placeholder="搜索标题、转写或纪要" aria-label="搜索标题、转写或纪要" />
+          {libraryQuery ? <button type="button" onClick={() => setLibraryQuery('')}>清除</button> : null}
+        </label>
+        {visibleLibrary.length === 0 ? (
+          <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关会议' : onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的会议' : '把值得记住的事，留在这里'}</strong><p>{libraryQuery ? '搜索会同时检查标题、完整转写和两个模式的纪要。' : onlyPendingSessions && recordingLibrary.length ? '切回全部会议，可以查看已完成的内容。' : '在 Companion 上长按按键开始录音，结束后回到电脑同步。转写与纪要需要已配置的服务。'}</p><button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openWorkflow}>{libraryQuery ? '清除搜索' : onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : '查看录音与同步步骤'}</button></div>
+        ) : (
+          <div className="ct-library-list">
+            {visibleLibrary.map((session) => {
+              const selected = session.id === snapshot?.host.selectedSessionId;
+              const boardId = session.deviceRecordingId;
+              const statusLabel = describeCompanionMeetingRecovery(session)?.label ?? (meetingHasFinalMinutes(session)
+                ? '纪要完成'
+                : session.minutes?.markdown || session.minutesByMode?.offlineStore || session.minutesByMode?.onlineLive ? '纪要草稿'
+                : session.status === 'transcribed'
+                  ? '已转写'
+                  : session.pendingReason === 'needs_transcription'
+                    ? '待转写'
+                    : session.status === 'recording'
+                      ? '录制中'
+                      : '已保存');
+              return (
+                <button
+                  type="button"
+                  key={session.id}
+                  className={`ct-library-card ${selected ? 'selected' : ''}`}
+                  onClick={() => onControl({ action: 'meetingSelectSession', sessionId: session.id })}
+                  disabled={busyAction !== null}
+                  aria-pressed={selected}
+                  title={session.sourceDeviceId ? `来源设备：${session.sourceDeviceId}` : undefined}
+                >
+                  <span className="ct-library-icon"><FileText size={17} /></span>
+                  <span className="ct-library-card-main">
+                    <strong>{meetingTitle(session)}</strong>
+                    <small>
+                      {meetingSource(session)}{boardId != null ? ` #${boardId}` : ''}
+                      {' · '}{formatDuration(session.durationMs)}
+                      {' · '}{formatBytes(session.audioBytes)}
+                      {session.sourceDeviceId ? ` · 设备 ${session.sourceDeviceId.replace(/[:-]/g, '').slice(-4).toUpperCase()}` : ''}
+                    </small>
+                  </span>
+                  <span className={`ct-library-status ct-library-status-${session.status}`}>{statusLabel}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      {selectedSession ? (
+        <section className="ct-meeting-workspace" aria-label="当前会议">
+          <header className="ct-meeting-hero">
+            <div>
+              <p className="ct-section-eyebrow">CURRENT MEETING</p>
+              <label className="ct-title-editor"><span className="ct-sr-only">会议标题</span><Pencil size={15} />
+                <input value={titleDraft} maxLength={120} aria-label="会议标题"
+                  readOnly={!onSaveMeeting || saveMeetingBusy} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
+                  onChange={(event) => updateTitleDraft(event.target.value)} /></label>
+              <p>{formatDuration(selectedSession.durationMs)} · {formatBytes(selectedSession.audioBytes)} · {meetingSource(selectedSession)}</p>
+              {titleDirty ? <div className="ct-inline-edit-actions">
+                <button type="button" className="ct-text-button" disabled={saveMeetingBusy || !titleDraft.trim()} onClick={() => void saveMeetingDraft()}>保存标题</button>
+                <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
+              </div> : null}
+            </div>
+            <div className="ct-meeting-badges">
+              {finalTranscript ? <span className="ct-pill ct-pill-good">转写完成</span>
+                : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写' : '等待转写'}</span>}
+              {offlineMinutes ? <span className="ct-pill">{offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
+              {onlineMinutes ? <span className="ct-pill">{onlineReady ? '在线纪要' : '在线草稿'}</span> : null}
+            </div>
+          </header>
+          <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} />
+          <section className="ct-audio-card" aria-label="本机原音回听">
+            <div><strong><Headphones size={16} />本机原音</strong><p>{audioBlockedReason ?? '由桌面端为当前会议临时授权，只能回听这场会议。'}</p></div>
+            {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}`} playerRef={audioElement} src={preparedAudio.url}
+              onError={() => {
+                if (audioContext.current.sessionId !== selectedSession.id || audioContext.current.identity !== preparedAudio.identity) return;
+                const player = audioElement.current;
+                player?.pause();
+                if (player) { player.removeAttribute('src'); player.load(); }
+                setAudioSources((current) => {
+                  const next = { ...current }; delete next[selectedSession.id]; return next;
+                });
+                setAudioResult({ sessionId: selectedSession.id, message: '无法回听：音频可能已移动、删除或损坏，请刷新后重试。' });
+              }} />
+              : <button type="button" className="ct-action" disabled={Boolean(audioBlockedReason) || audioBusy}
+                title={audioBlockedReason ?? undefined} onClick={() => void prepareAudio()}>{audioBusy ? '正在准备…' : '准备回听'}</button>}
+            {audioResult?.sessionId === selectedSession.id ? <p className="ct-step-warn" role="status">{audioResult.message}</p> : null}
+            <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
+              onClick={() => void exportAudio()}><Download size={15} />保存原音</button>
+            <p>保存一份原始 WAV 到你选择的位置，可单独备份或使用其他播放器打开。此副本由你自行保管，删除会议不会删除它。</p>
+          </section>
+          <CompanionBookmarks session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
+            persistenceReady={!storageBlocked} onSave={onSaveBookmark} onBusyChange={setBookmarkBusy} onUnsavedChange={setBookmarkUnsaved}
+            playbackPosition={()=>audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
+              ? Math.round(audioElement.current.currentTime*1000):null}
+            onSeek={seekBookmark} onShowOriginal={()=>setDetailView('transcript')}
+            onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
+          <CompanionMeetingNotes session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
+            persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
+            onSeek={seekBookmark} onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
+          {journey ? <CompanionJourney journey={journey} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
+            onControl={onControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
+          {selectedSession.recovery?.lastError ? <details className="ct-recovery-detail">
+            <summary>查看处理失败的详情</summary><p>{selectedSession.recovery.lastError}</p>
+            <small>已尝试 {selectedSession.recovery.attemptCount} / {selectedSession.recovery.maxAttempts} 次；已有内容仍保留在本机。</small>
+          </details> : null}
+          <nav className="ct-detail-tabs" role="tablist" aria-label="会议内容">
+            <button type="button" role="tab" aria-selected={detailView === 'minutes'} className={detailView === 'minutes' ? 'active' : ''} onClick={() => setDetailView('minutes')}>智能纪要</button>
+            <button type="button" role="tab" aria-selected={detailView === 'transcript'} className={detailView === 'transcript' ? 'active' : ''} onClick={() => setDetailView('transcript')}>完整转写</button>
+          </nav>
+          {detailView === 'transcript' ? <div className="ct-document-actions">
+            <span>保存当前转写；完整记录包含原始识别结果</span>
+            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !onExportMeeting || transcriptReviewUnsaved}
+              onClick={() => void exportMeeting('txt')}><Download size={15} />保存文字</button>
+            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !selectedSession.utterances?.length || !onExportMeeting || transcriptReviewUnsaved}
+              onClick={() => void exportMeeting('srt')}>保存字幕</button>
+            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !onExportMeeting || transcriptReviewUnsaved}
+              onClick={() => void exportMeeting('json')}>保存完整记录</button>
+          </div> : (
+          <div className="ct-document-actions">
+            <span>{detailView === 'minutes' ? '保存正在查看的纪要版本' : '保存这场会议的文字与纪要'}</span>
+            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting}
+              title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
+              onClick={() => void exportMeeting('markdown')}><Download size={15} />{exportBusy ? '正在保存…' : '保存纪要'}</button>
+            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
+              onClick={() => void exportMeeting('todo')}>保存待办</button>
+            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
+              onClick={() => void exportMeeting('ics')}>导出日历待办</button>
+          </div>
+          )}
+          {exportResult?.sessionId === selectedSession.id ? <p className="ct-export-result" role="status">{exportResult.message}</p> : null}
+          {saveMeetingResult?.sessionId === selectedSession.id ? <p className={snapshot?.host.persistence?.status && snapshot.host.persistence.status !== 'ready' ? 'ct-step-warn ct-save-result' : 'ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
+          {detailView === 'minutes' ? (
+            <div className="ct-meeting-document">
+              <div className="ct-minutes-mode-tabs" role="tablist" aria-label="双模式纪要">
+                <button type="button" role="tab" aria-label={`先录后整理纪要 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`} aria-selected={minutesViewMode === 'offlineStore'} className={`ct-mode-chip ${minutesViewMode === 'offlineStore' ? 'active' : ''}`} disabled={!offlineMinutes} onClick={() => setMinutesViewMode('offlineStore')}>先录后整理 {offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}</button>
+                <button type="button" role="tab" aria-label={`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`} aria-selected={minutesViewMode === 'onlineLive'} className={`ct-mode-chip ${minutesViewMode === 'onlineLive' ? 'active' : ''}`} disabled={!onlineMinutes} onClick={() => setMinutesViewMode('onlineLive')}>在线速记 {onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}</button>
+              </div>
+              {minutesProcessing ? <div className={companionMinutesProcessingComplete(minutesProcessing) ? 'ct-minutes-mode-meta' : 'ct-step-warn'} role="status">
+                {companionMinutesProcessingComplete(minutesProcessing)
+                  ? `长会议已整理全部 ${minutesProcessing.totalChunks} 段；各段原文依据已保留，内容请核对。`
+                  : `部分纪要：已整理 ${minutesProcessing.completedChunks}/${minutesProcessing.totalChunks} 段，原文与已完成分段都已保留。`}
+                {!companionMinutesProcessingComplete(minutesProcessing) ? <button type="button" className="ct-action"
+                  disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !finalTranscript || transcriptReviewUnsaved || editingMinutes || selectedMinutesStale}
+                  onClick={() => onControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>继续整理当前纪要</button> : null}
+              </div> : null}
+              {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写已修订，此版纪要仍基于旧文字。内容已保留，请重新生成或核对后使用。
+                <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
+                  onClick={() => onControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>依据修订重新生成当前纪要</button>
+              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.quality === 'final' ? '已精修' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
+              <div className="ct-inline-edit-actions">
+                {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
+                  title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />编辑当前纪要</button> : null}
+              </div>
+              {editingMinutes ? <div className="ct-minutes-editor">
+                <textarea value={minutesDraft} onChange={(event) => updateMinutesDraft(event.target.value)}
+                  aria-label={`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} spellCheck={false} disabled={saveMeetingBusy} />
+                <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary"
+                  disabled={!minutesDirty || saveMeetingBusy || !minutesDraft.trim()} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : '保存修改'}</button>
+                  <button type="button" className="ct-action" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('minutes')}>取消</button></div>
+                <p className="ct-step-meta">只修改当前模式；另一个模式的纪要保持不变。保存后仍保留原来的草稿/最终质量标记。</p>
+              </div> : <MarkdownMinutes markdown={minutesMarkdown} />}
+              <textarea className="ct-minutes-output ct-machine-minutes" value={minutesMarkdown} readOnly aria-hidden="true" tabIndex={-1} />
+            </div>
+          ) : null}
+          <CompanionTranscriptReview session={selectedSession} visible={detailView === 'transcript'}
+            blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
+            onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} />
+        </section>
+      ) : null}
+
+      <button type="button" className="ct-workflow-toggle" onClick={() => setShowWorkflow((value) => !value)}>
+        <span><HardDrive size={16} />采集与处理</span><span>{showWorkflow ? '收起' : '录音 · 同步 · 整理'}</span>
+      </button>
+
+      {showWorkflow ? <section className="ct-steps" id="ct-workflow" aria-label="主路径步骤">
         <div className={`ct-step ${step >= 1 ? 'active' : ''} ${connected ? 'done' : ''}`}>
           <span className="ct-step-n">1</span>
           <div className="ct-step-body">
-            <strong>连接板子</strong>
+            <strong>连接 Companion</strong>
             <p>扫描并连接 Companion</p>
             <div className="ct-button-row">
               <button
                 type="button"
                 className="ct-action"
-                disabled={busyAction !== null}
+                disabled={controlsBusy || oobeBlockedByRecording}
                 onClick={() => onControl({ action: 'deviceScan' })}
               >
                 <Search size={16} />
@@ -184,7 +1053,8 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={busyAction !== null}
+                disabled={controlsBusy || (oobeBlockedByRecording && !companionCanChangeOfflineRecordingLink(snapshot,
+                  { action: 'deviceConnect', deviceId: device?.deviceId ?? undefined }))}
                 onClick={() => onControl({
                   action: 'deviceConnect',
                   deviceId: device?.deviceId ?? undefined,
@@ -197,7 +1067,8 @@ export function CompanionDashboard({
                 <button
                   type="button"
                   className="ct-icon-button"
-                  disabled={busyAction !== null}
+                  disabled={controlsBusy || (oobeBlockedByRecording && !companionCanChangeOfflineRecordingLink(snapshot,
+                    { action: 'deviceDisconnect' }))}
                   onClick={() => onControl({ action: 'deviceDisconnect' })}
                   title="断开"
                 >
@@ -207,6 +1078,9 @@ export function CompanionDashboard({
             </div>
             <p className="ct-step-meta">
               {device?.message ?? '尚未扫描'}
+              {device?.hardwareRevision
+                ? ` · ${device.hardwareRevision} · FW 0x${(device.firmwareVersion ?? 0).toString(16).padStart(8, '0')}`
+                : (connected ? ' · 设备身份未读出' : '')}
               {device?.recordingsAvailable != null
                 ? ` · 设备录音 ${device.recordingsAvailable} 条`
                 : ''}
@@ -217,21 +1091,84 @@ export function CompanionDashboard({
         <div className={`ct-step ${step >= 2 ? 'active' : ''} ${hasSyncedAudio ? 'done' : ''}`}>
           <span className="ct-step-n">2</span>
           <div className="ct-step-body">
-            <strong>同步设备短录</strong>
+            <strong>板端采集 / 同步录音库</strong>
             <p>
-              必须先在<strong>板子上录完一段</strong>，设备里才有录音列表。
-              然后点同步，把音频拉到电脑。
+              使用 Companion 录音，电脑同步显示转写。停止后自动收齐录音并整理纪要；也可以先在设备上录好，再同步到电脑。
             </p>
+            <div className="ct-meeting-grid">
+              <label className="ct-field"><span>这次会议的名称（可选）</span><input value={newMeetingTitle}
+                placeholder="例如：周会、一次灵感" maxLength={120} disabled={oobeBlockedByRecording || controlsBusy}
+                onChange={(event) => setNewMeetingTitle(event.target.value)} /></label>
+              <label className="ct-field ct-duration-field"><span>最长录制时间（分钟）</span><input value={draftMinutes}
+                inputMode="numeric" disabled={oobeBlockedByRecording || controlsBusy}
+                onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))} /></label>
+            </div>
+            <p className="ct-step-meta">实时转写单次最多 43 分钟，另预留 2 分钟设备收尾空间；容量不够会明确拒绝开录。当前不支持无缝连续分段。</p>
+            {captureBudgetBytes !== null ? <p className="ct-step-meta" role={capacityInsufficient ? 'alert' : undefined}>
+              本次需预留约 {formatBytes(captureBudgetBytes)}{meetingMode === 'onlineLive' ? '（含收尾空间）' : ''}；
+              设备上次报告连续可录约 {formatDuration(capacitySeconds * 1000)}。
+              {capacityInsufficient ? '当前容量不足，请先同步已有录音或缩短时长；不会自动缩短或覆盖录音。' : '开始前会重新核对容量。'}
+            </p> : null}
+            {durationError ? <p className="ct-step-meta" role="alert">{durationError}</p> : null}
             <div className="ct-button-row">
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={busyAction !== null || !connected}
-                onClick={() => onControl({ action: 'deviceSyncRecordings', title: draftTitle })}
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !connected || !asrConfigured || !onStartBoardOnlineLive || !onlineDurationValid}
+                onClick={() => onStartBoardOnlineLive?.({
+                  title: newMeetingTitle.trim() || 'Companion 会议',
+                  deviceId: device?.deviceId,
+                  maxDurationSeconds: boardMaxDurationSeconds,
+                  partialIntervalMs: 8_000,
+                })}
+                title={!connected ? '请先连接 Companion' : !asrConfigured ? '请先配置转写服务；也可以直接在设备上录音' : '使用 Companion 麦克风开始在线会议'}
+              >
+                <Mic size={16} />
+                <span>开始在线会议</span>
+              </button>
+              <button
+                type="button"
+                className="ct-action"
+                disabled={controlsBusy || boardOnlineLive?.state !== 'recording' || !onStopBoardOnlineLive}
+                onClick={() => onStopBoardOnlineLive?.()}
+              >
+                <Square size={16} />
+                <span>停止并生成纪要</span>
+              </button>
+            </div>
+            {!asrConfigured ? <p className="ct-step-meta">在线转写需要服务配置。你也可以先在设备上录音，稍后同步。<button type="button" className="ct-text-button" onClick={openSettings}>配置转写服务</button></p> : null}
+            {boardOnlineLive && boardOnlineLive.state !== 'idle' ? (
+              <div className="ct-live-box" aria-live="polite" aria-label="板端在线会议状态">
+                <strong>
+                  {boardOnlineLive.state === 'starting' ? '正在连接并启动板端录音'
+                    : boardOnlineLive.state === 'recording' ? 'Companion 正在录音 / 在线转写'
+                      : boardOnlineLive.state === 'stopping' ? '正在停止并拉齐板端录音'
+                        : boardOnlineLive.state === 'finalizing' ? '正在做最终转写与双模式纪要'
+                          : boardOnlineLive.state === 'completed' ? '板端在线会议已完成'
+                            : boardOnlineLive.state === 'pending' ? '录音已保存，等待联网转写'
+                            : '板端在线会议失败'}
+                </strong>
+                <div>
+                  {boardOnlineLive.recordingId != null ? `录音 #${boardOnlineLive.recordingId} · ` : ''}
+                  已出 {boardOnlineLive.partialCount} 个在线片段
+                  {boardOnlineLive.durationMs > 0 ? ` · ${formatDuration(boardOnlineLive.durationMs)}` : ''}
+                  {nearRecordingLimit ? ` · 距上限约 ${formatDuration(recordingRemainingMs)}` : ''}
+                  {boardOnlineLive.disconnectResume ? ' · 已从断线处继续同步' : ''}
+                  {boardOnlineLive.error ? ` · ${boardOnlineLive.error}` : ''}
+                </div>
+              </div>
+            ) : null}
+            <p className="ct-step-meta">这次实时转写上限 {Math.ceil(boardMaxDurationSeconds / 60)} 分钟；可以提前停止，设备设置或空间不足也可能更早结束。已有板端录音仍可单独同步：</p>
+            <div className="ct-button-row">
+              <button
+                type="button"
+                className="ct-action"
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !connected}
+                onClick={() => onControl({ action: 'deviceSyncRecordings', title: draftTitle, deviceId: device?.deviceId ?? undefined })}
                 title={!connected ? '请先连接板子' : '同步设备录音'}
               >
                 <HardDrive size={16} />
-                <span>同步短录</span>
+                <span>同步录音库</span>
               </button>
             </div>
             {!connected ? (
@@ -242,14 +1179,14 @@ export function CompanionDashboard({
                 {selectedSession?.audioBytes
                   ? ` · ${(selectedSession.audioBytes / 1024).toFixed(0)} KB`
                   : ''}
-                {selectedSession?.source === 'deviceFlash' ? ' · 来源 deviceFlash' : ''}
+                {selectedSession?.source === 'deviceFlash' ? ' · Companion 录音' : ''}
               </p>
             ) : (
               <p className="ct-step-meta">
-                当前设备报告录音条数：{device?.recordingsAvailable ?? 0}
+                设备录音：{device?.recordingsAvailable ?? 0} 条
                 {(device?.recordingsAvailable ?? 0) === 0
-                  ? '（0 条 = 同步会提示没有录音，请先在板子上录）'
-                  : '（有条目再点同步）'}
+                  ? '，可以先在 Companion 上录一段'
+                  : '，可同步到本机'}
               </p>
             )}
           </div>
@@ -263,17 +1200,53 @@ export function CompanionDashboard({
             <textarea
               className="ct-textarea ct-step-textarea"
               value={transcriptDraft}
-              onChange={(event) => setTranscriptDraft(event.target.value)}
+              onChange={(event) => {
+                transcriptEditor.current.dirty = true;
+                setTranscriptDraft(event.target.value);
+              }}
               spellCheck={false}
               placeholder="转写文本…"
               disabled={!hasSyncedAudio && !selectedSession}
             />
+            {(() => {
+              const utterances = selectedSession?.utterances ?? [];
+              const taggedLines = (selectedSession?.transcriptText || transcriptDraft || '')
+                .split(/\r?\n/)
+                .map((line) => line.trim())
+                .filter((line) => /^说话人\d+[:：]/.test(line) || /^说话人\?[:：]/.test(line));
+              const speakerCount = new Set(
+                taggedLines
+                  .map((line) => line.match(/^说话人(\d+|\?)/)?.[1])
+                  .filter(Boolean),
+              ).size;
+              if (utterances.length === 0 && taggedLines.length === 0) {
+                return null;
+              }
+              return (
+                <div className="ct-speaker-panel" aria-label="说话人分离">
+                  <div className="ct-speaker-head">
+                    <strong>说话人</strong>
+                    <span className="ct-pill ct-pill-good">
+                      {speakerCount > 0 ? `${speakerCount} 人` : `${utterances.length} 段`}
+                    </span>
+                  </div>
+                  <ul className="ct-speaker-list">
+                    {(taggedLines.length > 0 ? taggedLines : utterances.map((u) => {
+                      const label = u.speaker == null ? '说话人?' : `说话人${u.speaker + 1}`;
+                      return `${label}: ${u.text}`;
+                    })).map((line, index) => (
+                      <li key={`spk-${index}`} className="ct-speaker-line">{line}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })()}
             <div className="ct-button-row">
               <button
                 type="button"
                 className="ct-action"
-                disabled={busyAction !== null || !canTranscribe}
-                onClick={() => onControl({ action: 'meetingTranscribeAudio' })}
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe}
+                onClick={() => onControl({ action: 'meetingTranscribeAudio', sessionId: selectedSession?.id })}
               >
                 <FileText size={16} />
                 <span>转写</span>
@@ -281,9 +1254,10 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={busyAction !== null || !transcriptDraft.trim() || !hasSyncedAudio}
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !transcriptDraft.trim() || !hasSyncedAudio}
                 onClick={() => onControl({
                   action: 'meetingImportTranscript',
+                  sessionId: selectedSession?.id,
                   title: draftTitle,
                   transcriptText: transcriptDraft,
                 })}
@@ -299,13 +1273,13 @@ export function CompanionDashboard({
           <span className="ct-step-n">4</span>
           <div className="ct-step-body">
             <strong>生成纪要</strong>
-            <p>根据转写生成草稿纪要</p>
+            <p>根据转写生成录制模式（{recordingModeLabel}）纪要</p>
             <div className="ct-button-row">
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={busyAction !== null || !canGenerate}
-                onClick={() => onControl({ action: 'meetingGenerateMinutes' })}
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canGenerate}
+                onClick={() => onControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession?.id })}
               >
                 <FileText size={16} />
                 <span>生成纪要</span>
@@ -313,46 +1287,17 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action"
-                disabled={busyAction !== null || !canGenerate}
-                onClick={() => onControl({ action: 'meetingExportMarkdown' })}
+                disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting}
+                onClick={() => void exportMeeting('markdown')}
               >
                 <Download size={16} />
                 <span>导出 Markdown</span>
               </button>
             </div>
+            {recordingMinutesUserEdited ? <p className="ct-step-warn">录制模式（{recordingModeLabel}）纪要含人工修改。再次生成会替换这一版，建议先导出保存。</p> : null}
           </div>
         </div>
-      </section>
-
-      <section className="ct-result-card" aria-label="纪要结果">
-        <div className="ct-result-head">
-          <h2>纪要结果</h2>
-          {hasMinutes ? (
-            <span className="ct-pill ct-pill-good">已生成</span>
-          ) : (
-            <span className="ct-pill">完成上面 1→4 后出现</span>
-          )}
-        </div>
-        <textarea
-          className="ct-textarea ct-minutes-output ct-result-box"
-          value={minutesMarkdown || '连接板子并同步录音、转写后，这里显示纪要…'}
-          readOnly
-          spellCheck={false}
-        />
-        {hasMinutes ? (
-          <div className="ct-button-row">
-            <button
-              type="button"
-              className="ct-action"
-              disabled={busyAction !== null}
-              onClick={() => onControl({ action: 'meetingResetSession' })}
-            >
-              <Trash2 size={16} />
-              <span>清空会话</span>
-            </button>
-          </div>
-        ) : null}
-      </section>
+      </section> : null}
 
       <button
         type="button"
@@ -360,19 +1305,36 @@ export function CompanionDashboard({
         onClick={() => setShowAdvanced((value) => !value)}
       >
         {showAdvanced ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        <span>{showAdvanced ? '收起高级功能' : '展开高级功能（本机长会 / 演示 / 隐私）'}</span>
+        <span>{showAdvanced ? '收起高级功能' : '展开设置与工具'}</span>
       </button>
 
       {showAdvanced ? (
         <div className="ct-advanced">
+          <CompanionBehaviorPreview recording={oobeBlockedByRecording} />
           <section className="ct-panel">
             <div className="ct-panel-title">
               <Mic size={18} />
-              <span>本机长会（可选，不用板子）</span>
+              <span>{connected ? 'Companion 录音' : '本机麦克风录音'}</span>
             </div>
             <p className="ct-meeting-hint">
-              产品主路径是板子短录同步。这里仅用于主机麦克风长会或开发调试。
+              先录后整理：先安全保存录音，稍后转写。在线转写：录音期间显示文字，结束后继续整理。转写与智能纪要使用你配置的服务。
             </p>
+            <div className="ct-mode-row" role="group" aria-label="会议模式">
+              <button
+                type="button"
+                className={`ct-mode-chip ${meetingMode === 'offlineStore' ? 'active' : ''}`}
+                onClick={() => setMeetingMode('offlineStore')}
+              >
+                先录后整理
+              </button>
+              <button
+                type="button"
+                className={`ct-mode-chip ${meetingMode === 'onlineLive' ? 'active' : ''}`}
+                onClick={() => setMeetingMode('onlineLive')}
+              >
+                在线转写
+              </button>
+            </div>
             <div className="ct-meeting-grid">
               <label className="ct-field">
                 <span>标题</span>
@@ -383,7 +1345,7 @@ export function CompanionDashboard({
                 />
               </label>
               <label className="ct-field ct-duration-field">
-                <span>时长(分)</span>
+                <span>{connected ? '最长录音(分)' : '预计时长(分)'}</span>
                 <input
                   value={draftMinutes}
                   onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))}
@@ -392,65 +1354,377 @@ export function CompanionDashboard({
               </label>
             </div>
             <div className="ct-button-row">
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'meetingStart', title: draftTitle })}>
-                <Play size={16} /><span>本机开始录音</span>
+              <button
+                type="button"
+                className="ct-action ct-action-primary"
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked
+                  || !durationValid || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
+                  || (connected && meetingMode === 'onlineLive' && (!asrConfigured || !onStartBoardOnlineLive))}
+                onClick={() => {
+                  if (connected && meetingMode === 'onlineLive') {
+                    void onStartBoardOnlineLive?.({
+                      title: draftTitle.trim() || 'Companion 会议',
+                      deviceId: device?.deviceId,
+                      maxDurationSeconds: boardMaxDurationSeconds,
+                      partialIntervalMs: 8_000,
+                    });
+                  } else {
+                    onControl({
+                      action: 'meetingStart',
+                      title: draftTitle,
+                      meetingMode,
+                      durationMs: requestedDurationMs,
+                    });
+                  }
+                }}
+              >
+                <Play size={16} /><span>{connected ? '板端开始录音' : '本机开始录音'}</span>
               </button>
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'meetingStop', title: draftTitle, durationMs: requestedDurationMs })}>
+              <button
+                type="button"
+                className="ct-action"
+                disabled={controlsBusy || !snapshot?.meeting.active || boardLiveActive}
+                onClick={() => onControl({
+                  action: 'meetingStop',
+                  title: draftTitle,
+                  durationMs: requestedDurationMs,
+                })}
+              >
                 <Square size={16} /><span>停止</span>
               </button>
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'meetingLoadDemo', title: '调试演示纪要' })}>
+              <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording} onClick={() => onControl({ action: 'meetingLoadDemo', title: '调试演示纪要' })}>
                 <FileText size={16} /><span>调试：无板演示</span>
               </button>
             </div>
+            <p className="ct-step-meta">{connected
+              ? `${meetingMode === 'onlineLive' ? `实时转写单次最多 43 分钟，另预留 2 分钟收尾空间。${nearRecordingLimit ? ` 距本次设定结束约 ${formatDuration(recordingRemainingMs)}。` : ''}` : '先录后整理按填写时长检查完整空间，不会自动截短。'} 当前不支持无缝连续分段。在线模式需要配置转写服务。`
+              : '本机录音需要手动停止，保存后按实际音频长度显示时长。'}</p>
+            {!durationValid || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
+              ? <p className="ct-step-meta" role="alert">{durationError}</p> : null}
+            {(selectedSession?.status === 'recording' || selectedSession?.liveTranscriptText) ? (
+              <div className="ct-live-box" aria-live="polite">
+                <strong>
+                  {selectedSession?.meetingMode === 'onlineLive' ? '在线 live / 转写' : '会话文本'}
+                  {selectedSession?.status === 'recording' ? ' · 录制中' : ''}
+                </strong>
+                <div>
+                  {selectedSession?.liveTranscriptText
+                    || selectedSession?.transcriptText
+                    || (meetingMode === 'onlineLive'
+                      ? '（在线模式：录制中推送 live partial；无密钥时停会 batch 回落）'
+                      : '（离线模式：停会后点转写）')}
+                </div>
+              </div>
+            ) : null}
+          </section>
+
+          <section className="ct-panel" aria-label="更新资源">
+            <div className="ct-panel-title">
+              <Upload size={18} />
+              <span>设备更新</span>
+            </div>
+            <p className="ct-meeting-hint">
+              选择同一个更新包中的清单与数据文件，先校验再传输。设备会检查型号、签名与供电条件；录音期间无法更新。
+            </p>
+            <div className="ct-settings-grid">
+              <label className="ct-field">
+                <span>更新清单路径</span>
+                <input
+                  value={resourceManifestPath}
+                  onChange={(e) => setResourceManifestPath(e.target.value)}
+                  placeholder="…\ota_manifest.json"
+                  spellCheck={false}
+                />
+              </label>
+              <label className="ct-field">
+                <span>更新数据路径</span>
+                <input
+                  value={resourcePayloadPath}
+                  onChange={(e) => setResourcePayloadPath(e.target.value)}
+                  placeholder="…\firmware.bin 或 ui-partition.bin"
+                  spellCheck={false}
+                />
+              </label>
+            </div>
+            <div className="ct-button-row">
+              <button
+                type="button"
+                className="ct-action ct-action-primary"
+                disabled={controlsBusy || oobeBlockedByRecording || !onValidateOtaPackage || !resourceManifestPath.trim() || !resourcePayloadPath.trim()}
+                onClick={() => {
+                  setResourceMsg(null);
+                  setResourceBusy(true);
+                  void Promise.resolve(
+                    onValidateOtaPackage?.({
+                      manifestPath: resourceManifestPath.trim(),
+                      firmwarePath: resourcePayloadPath.trim(),
+                    }),
+                  )
+                    .then((report) => {
+                      if (!report) return;
+                      setResourceMsg(
+                        `${report.ok ? '校验通过' : '校验失败'} · ${report.packageType} · ${report.payloadBytes} B · ${report.message}`,
+                      );
+                    })
+                    .catch((err: unknown) => {
+                      setResourceMsg(err instanceof Error ? err.message : String(err));
+                    })
+                    .finally(() => setResourceBusy(false));
+                }}
+              >
+                <Check size={16} />
+                <span>校验更新包</span>
+              </button>
+              <button
+                type="button"
+                className="ct-action"
+                disabled={
+                  controlsBusy
+                  || oobeBlockedByRecording
+                  || !connected
+                  || !onTransferOtaPackage
+                  || !resourceManifestPath.trim()
+                  || !resourcePayloadPath.trim()
+                }
+                title="校验匹配当前设备的更新包后传输"
+                onClick={() => {
+                  setResourceMsg(null);
+                  setResourceBusy(true);
+                  void Promise.resolve(
+                    onTransferOtaPackage?.({
+                      manifestPath: resourceManifestPath.trim(),
+                      firmwarePath: resourcePayloadPath.trim(),
+                      deviceId: device?.deviceId ?? null,
+                    }),
+                  )
+                    .then((report) => {
+                      if (!report) return;
+                      setResourceMsg(
+                        `传输完成 · ${report.packageType} · ${report.firmwareBytes} B · ${report.elapsedMs} ms · ${report.deviceId}`,
+                      );
+                    })
+                    .catch((err: unknown) => {
+                      setResourceMsg(err instanceof Error ? err.message : String(err));
+                    })
+                    .finally(() => setResourceBusy(false));
+                }}
+              >
+                <Upload size={16} />
+                <span>传输到设备</span>
+              </button>
+            </div>
+            {resourceMsg ? (
+              <p className="ct-step-meta" role="status">{resourceMsg}</p>
+            ) : null}
+            <div className="ct-section-title"><FileText size={18} /><span>日志与诊断</span></div>
+            <p className="ct-meeting-hint">保存连接、升级和音频处理的阶段记录，方便排查问题。不包含密钥、会议正文或原始录音。设备日志只保留最近的运行事件，重启会清空；本机日志按大小轮换。</p>
+            <div className="ct-button-row">
+              {[false, true].map((includeDevice) => <button key={String(includeDevice)} type="button" className="ct-action"
+                disabled={controlsBusy || oobeBlockedByRecording || !onExportDiagnostics || (includeDevice && !connected)}
+                onClick={() => {
+                  if (diagnosticActive.current || !onExportDiagnostics) return;
+                  diagnosticActive.current=true; setDiagnosticBusy(true); setDiagnosticMsg(null);
+                  void onExportDiagnostics(includeDevice).then((result) => {
+                    setDiagnosticMsg(result ? `已保存：${result.path}${result.warning ? `。${result.warning}` : ''}` : '已取消，未导出日志。');
+                  }).catch((error) => setDiagnosticMsg(String(error))).finally(() => { diagnosticActive.current=false; setDiagnosticBusy(false); });
+                }}><Download size={15}/>{includeDevice ? '读取设备并导出日志' : '导出本机日志'}</button>)}
+            </div>
+            {!onExportDiagnostics ? <p className="ct-step-meta">真实日志导出仅在 Windows 应用中提供。</p> : null}
+            {diagnosticMsg ? <p className="ct-step-meta" role="status">{diagnosticMsg}</p> : null}
+            <p className="ct-meeting-hint">设备录音解码已随应用提供。可另外准备本地说话人区分组件：首次约下载 46 MB，只下载模型与运行库，不上传录音。说话人区分用于会议中的不同发言者，不识别真实身份。</p>
+            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onPrepareAudioComponents}
+              onClick={() => {
+                if (diagnosticActive.current || !onPrepareAudioComponents) return;
+                diagnosticActive.current=true; setDiagnosticBusy(true); setDiagnosticMsg('正在准备音频组件，请稍候…');
+                void onPrepareAudioComponents().then(() => setDiagnosticMsg('音频组件已校验并成功加载；后续会议可以使用本地说话人区分。'))
+                  .catch((error) => setDiagnosticMsg(String(error))).finally(() => {diagnosticActive.current=false;setDiagnosticBusy(false);});
+              }}>准备说话人区分组件</button>
+          </section>
+
+          <section className="ct-panel" id="ct-service-settings">
+            <div className="ct-panel-title">
+              <Shield size={18} />
+              <span>转写与纪要服务</span>
+            </div>
+            {productSettings?.storageWarning ? <p className="ct-step-warn" role="alert">
+              {productSettings.storageWarning}
+            </p> : null}
+            <p className="ct-secret-hint">
+              正式桌面版使用系统凭据管理器保存密钥。转写会把录音发送到所选 ASR 服务，智能纪要会把转写文字发送到 DeepSeek；空密钥保存不会覆盖已有值。
+            </p>
+            <p className="ct-service-boundary">使用自备或兼容服务时，数据会离开 Companion Type 并交给你填写的服务地址；该服务的保留期限、访问控制与可用性由服务提供者或你的部署负责。</p>
+            <div className="ct-mode-row">
+              <button
+                type="button"
+                className={`ct-mode-chip ${formDefaultMode === 'offlineStore' ? 'active' : ''}`}
+                onClick={() => setFormDefaultMode('offlineStore')}
+              >
+                默认先录后整理
+              </button>
+              <button
+                type="button"
+                className={`ct-mode-chip ${formDefaultMode === 'onlineLive' ? 'active' : ''}`}
+                onClick={() => setFormDefaultMode('onlineLive')}
+              >
+                默认在线
+              </button>
+            </div>
+            <div className="ct-settings-grid">
+              <label className="ct-field">
+                <span>ASR 提供商</span>
+                <select value={formAsrProvider} onChange={(e) => setFormAsrProvider(e.target.value)}>
+                  <option value="volcengine">火山 Volcengine</option>
+                  <option value="openai-compatible">OpenAI 兼容</option>
+                </select>
+              </label>
+              {formAsrProvider === 'volcengine' ? <>
+                <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
+                {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
+                {credentialField('volcAccessKey', '火山 Access Key', formVolcAccess, setFormVolcAccess, productSettings?.volcAccessKeySet)}
+              </> : <>
+                <label className="ct-field"><span>兼容服务 Endpoint</span><input value={formOpenAiEndpoint} onChange={(e) => setFormOpenAiEndpoint(e.target.value)} spellCheck={false} /></label>
+                {credentialField('openaiAsrApiKey', '兼容服务 Key', formOpenAiKey, setFormOpenAiKey, productSettings?.openaiAsrApiKeySet)}
+                <label className="ct-field"><span>兼容服务模型</span><input value={formOpenAiModel} onChange={(e) => setFormOpenAiModel(e.target.value)} spellCheck={false} /></label>
+              </>}
+              {formDeepseekEnabled ? <>
+                {credentialField('deepseekApiKey', 'DeepSeek Key', formDeepseekKey, setFormDeepseekKey, productSettings?.deepseekApiKeySet)}
+                <label className="ct-field"><span>DeepSeek Base URL</span><input value={formDeepseekBase} onChange={(e) => setFormDeepseekBase(e.target.value)} spellCheck={false} /></label>
+                <label className="ct-field"><span>DeepSeek 模型</span><input value={formDeepseekModel} onChange={(e) => setFormDeepseekModel(e.target.value)} spellCheck={false} /></label>
+              </> : null}
+            </div>
+            <label className="ct-field-check">
+              <input type="checkbox" checked={formDeepseekEnabled} onChange={(e) => setFormDeepseekEnabled(e.target.checked)} />
+              启用 DeepSeek 智能纪要，整理摘要、决定与行动项
+            </label>
+            <label className="ct-field-check">
+              <input type="checkbox" checked={formBleCompress} onChange={(e) => setFormBleCompress(e.target.checked)} />
+              旧设备的节省流量模式（可能降低音质）
+            </label>
+            <p className="ct-step-meta">新版设备录音已压缩，会直接同步原始压缩音频。本开关仅适用于旧设备的未压缩录音，不会再次压缩已有的 Opus 录音。</p>
+            {missingServiceFields.length ? <p className="ct-step-warn" aria-label="服务配置缺项">
+              还缺：{missingServiceFields.join('、')}。可以先保存并使用“先录后整理”，但缺项会阻止对应的转写或智能纪要。
+            </p> : <p className="ct-step-meta" aria-label="服务配置完整性">必填项已提供，但实际服务调用仍需用一次真实转写/纪要验证。</p>}
+            <div className="ct-button-row">
+              <button
+                type="button"
+                className="ct-action ct-action-primary"
+                disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !productSettings || productSettings.storageSaveBlocked || !onSaveProductSettings}
+                onClick={() => {
+                  if (controlsBusy || settingsBusy || oobeBlockedByRecording || !productSettings || productSettings.storageSaveBlocked || !onSaveProductSettings || settingsActive.current) return;
+                  settingsActive.current = true;
+                  setSettingsMsg(null);
+                  setSettingsBusy(true);
+                  void Promise.resolve().then(() => onSaveProductSettings?.({
+                    defaultMeetingMode: formDefaultMode,
+                    asrProvider: formAsrProvider,
+                    volcAppKey: clearCredentials.includes('volcAppKey') ? '' : formVolcApp,
+                    volcAccessKey: clearCredentials.includes('volcAccessKey') ? '' : formVolcAccess,
+                    volcResourceId: formVolcResource,
+                    openaiAsrEndpoint: formOpenAiEndpoint,
+                    openaiAsrApiKey: clearCredentials.includes('openaiAsrApiKey') ? '' : formOpenAiKey,
+                    openaiAsrModel: formOpenAiModel,
+                    deepseekApiKey: clearCredentials.includes('deepseekApiKey') ? '' : formDeepseekKey,
+                    deepseekBaseUrl: formDeepseekBase,
+                    deepseekModel: formDeepseekModel,
+                    deepseekMinutesEnabled: formDeepseekEnabled,
+                    bleCompress: formBleCompress,
+                    clearCredentials,
+                  })).then(() => {
+                    setSettingsMsg('配置已保存，实际服务调用尚未验证。');
+                    setClearCredentials([]);
+                    setFormVolcApp('');
+                    setFormVolcAccess('');
+                    setFormOpenAiKey('');
+                    setFormDeepseekKey('');
+                  }).catch((err: unknown) => {
+                    setSettingsMsg(err instanceof Error ? err.message : String(err));
+                  }).finally(() => { settingsActive.current = false; setSettingsBusy(false); });
+                }}
+              >
+                {settingsBusy ? '正在保存…' : '保存设置'}
+              </button>
+            </div>
+            {clearCredentials.length ? <p className="ct-step-warn" role="status">保存后将清空所选密钥，并停止对应服务。保存前可撤销清空；重新填写密钥后可恢复使用。</p>
+              : <p className="ct-step-meta">密钥留空会保持原值；需要删除时点“清空密钥”，再保存设置。</p>}
+            {settingsMsg ? <p className="ct-step-meta">{settingsMsg}</p> : null}
+            <div className="ct-button-row">
+              {(['asr', 'minutes'] as const).map(service => <button key={service} type="button" className="ct-action"
+                disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && !formDeepseekEnabled)}
+                onClick={() => void checkService(service)}>{serviceBusy === service ? '正在测试…' : service === 'asr' ? '测试转写服务' : '测试纪要服务'}</button>)}
+            </div>
+            <p className="ct-step-meta">按已保存配置发送一秒静音或固定测试文字，不读取会议或麦克风，服务商可能计费。测试通过不代表识别或纪要准确率通过。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>
+            {(['asr', 'minutes'] as const).map(service => serviceResults[service] ? <p key={service} className="ct-step-meta" role="status">{service === 'asr' ? '转写' : '纪要'}：{serviceResults[service]}</p> : null)}
+          </section>
+
+          <section className="ct-panel">
+            <div className="ct-panel-title">
+              <Download size={18} />
+              <span>多格式导出</span>
+            </div>
+            <div className="ct-button-row">
+              {(['markdown', 'txt', 'json', 'srt', 'todo', 'ics'] as const).map((format) => <button key={format} type="button" className="ct-action"
+                disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || (['markdown', 'todo', 'ics'].includes(format) ? !hasMinutes : !finalTranscript)}
+                onClick={() => void exportMeeting(format)}>{format === 'markdown' ? 'Markdown' : format === 'todo' ? '待办清单' : format === 'ics' ? '日历待办 (.ics)' : format.toUpperCase()}</button>)}
+            </div>
+            <p className="ct-step-meta">选择保存位置；导出只使用已保存的内容，不会重新调用转写或纪要服务。SRT 需要真实时间戳。</p>
+            <p className="ct-step-meta">待办取自当前纪要的“行动项 / Action Items”列表；修改后请先保存。日历文件使用 VTODO，需支持待办的日历应用；仅明确的日期或带时区时间设为截止时间，“周五”等保留原文供核对，不自动猜日期。</p>
           </section>
 
           <section className="ct-ops-grid">
-            <section className="ct-panel">
-              <div className="ct-panel-title"><ListChecks size={18} /><span>检查</span></div>
-              <div className="ct-check-list">
-                {(oobe?.checks ?? []).map((check) => (
-                  <span key={check.id} className={`ct-check ct-check-${check.status}`}>
-                    <Check size={14} />{check.label}
-                  </span>
-                ))}
-              </div>
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'oobeRunChecks' })}>
-                <ListChecks size={16} /><span>运行检查</span>
-              </button>
-            </section>
             <section className="ct-panel">
               <div className="ct-panel-title"><Shield size={18} /><span>隐私</span></div>
               <div className="ct-metric-grid">
                 <InfoMetric label="音频" value={privacy ? formatBytes(privacy.audioCacheBytes) : '0'} />
                 <InfoMetric label="文本" value={privacy ? formatBytes(privacy.transcriptBytes + privacy.minutesBytes) : '0'} />
-                <InfoMetric label="天数" value={String(privacy?.retentionDays ?? 7)} />
+                <InfoMetric label="自动删除" value="未启用" />
               </div>
+              <p className="ct-step-meta">会议与原音保存在本机，直到你主动删除。另存的原音和导出文件由你自行保管，不会随会议删除。</p>
               <div className="ct-button-row">
-                <button type="button" className="ct-action" disabled={busyAction !== null || !canEraseAudio} onClick={() => onControl({ action: 'privacyEraseAudio' })}>
+                <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !canEraseAudio} onClick={() => requestErase('privacyEraseAudio', '删除这场会议的本机音频？', '保留已有文字和纪要，取消尚未完成的自动处理。设备上的原始录音不受影响。')}>
                   <Eraser size={16} /><span>删音频</span>
                 </button>
-                <button type="button" className="ct-action" disabled={busyAction !== null || !canEraseTranscript} onClick={() => onControl({ action: 'privacyEraseTranscript' })}>
+                <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !canEraseTranscript} onClick={() => requestErase('privacyEraseTranscript', '删除这场会议的文字、纪要和备注？', '保留录音，取消尚未完成的自动处理。用户备注也会删除，重新转写不会恢复这些备注；请先保存需要的内容。')}>
                   <FileText size={16} /><span>删文本</span>
                 </button>
-                <button type="button" className="ct-icon-button" disabled={busyAction !== null} onClick={() => onControl({ action: 'privacyEraseAll' })} title="全删">
-                  <Trash2 size={17} />
+                <button
+                  type="button"
+                  className="ct-action ct-action-danger"
+                  disabled={controlsBusy || oobeBlockedByRecording || !selectedSession}
+                  onClick={() => requestErase('privacyDeleteSession', '永久删除这场会议？', hasVerifiedBoardCopy
+                    ? '删除本机音频、文字和纪要，并精确回收设备上对应的录音。这项操作无法撤销。'
+                    : '删除这场会议的本机音频、文字和纪要，设备上的录音保持不变。这项操作无法撤销。')}
+                  title="只删除当前选中的录音；板端条目使用 ID、长度和 SHA 精确回收"
+                >
+                  <Trash2 size={16} /><span>删当前录音</span>
+                </button>
+                <button type="button" className="ct-action ct-action-danger" disabled={controlsBusy || oobeBlockedByRecording || recordingLibrary.length === 0} onClick={() => requestErase('privacyEraseAll', '清除全部本机会议？', `将清除 ${recordingLibrary.length} 场会议的本机音频、文字和纪要，并取消自动处理。设备上的录音需在设备菜单中另行清除。`)}>
+                  <Trash2 size={17} />清除全部本机会议
                 </button>
               </div>
+              {pendingDelete ? <div className="ct-delete-confirm" role="alertdialog" aria-label={pendingDelete.title} aria-describedby="ct-delete-description">
+                <strong>{pendingDelete.title}</strong>
+                {pendingDelete.request.action !== 'privacyEraseAll' ? <p>当前会议：{selectedSession?.title}</p> : null}
+                <p id="ct-delete-description">{pendingDelete.detail}</p>
+                <div className="ct-button-row">
+                  <button type="button" className="ct-action" autoFocus onClick={() => setPendingDelete(null)}>保留内容</button>
+                  <button type="button" className="ct-action ct-action-danger" disabled={controlsBusy || oobeBlockedByRecording} onClick={() => {
+                    const request = pendingDelete.request;
+                    setPendingDelete(null);
+                    onControl(request);
+                  }}>确认删除</button>
+                </div>
+              </div> : null}
             </section>
           </section>
 
           <section className="ct-panel">
-            <div className="ct-panel-title"><Bluetooth size={18} /><span>蓝牙名 / 实验</span></div>
+            <div className="ct-panel-title"><Bluetooth size={18} /><span>设备名称</span></div>
             <div className="ct-name-row">
-              <input value={draftName} onChange={(event) => setDraftName(event.target.value)} spellCheck={false} />
-              <button type="button" className="ct-action" disabled={busyAction !== null || Boolean(nameError)} onClick={() => onControl({ action: 'stageBleName', bleName: draftName })}>暂存</button>
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'applyBleName' })}>应用</button>
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'resetBleName' })}>重置</button>
+              <input aria-label="Companion 设备名称" value={draftName} onChange={(event) => setDraftName(event.target.value)} spellCheck={false} />
+              <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !connected || !draftName.trim() || Boolean(nameError)} onClick={() => onControl({ action: 'applyBleName', bleName: draftName })}>保存到设备</button>
+              <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !connected} onClick={() => onControl({ action: 'resetBleName' })}>恢复默认名称</button>
             </div>
-            <div className="ct-button-row" style={{ marginTop: 10 }}>
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'speakerPrompt' })}><Volume2 size={16} />扬声器</button>
-              <button type="button" className="ct-action" disabled={busyAction !== null} onClick={() => onControl({ action: 'wakeArm' })}>唤醒布防</button>
-            </div>
+            <p className="ct-step-meta">{nameError ? '名称不符合设备要求，请缩短名称，并避免中文、引号、分号等字符。' : `当前名称：${snapshot?.bleName.activeName ?? '尚未读取'}。保存后会读取设备确认结果。`}</p>
           </section>
         </div>
       ) : null}
@@ -458,6 +1732,49 @@ export function CompanionDashboard({
       <footer className="ct-footer">{footer}</footer>
     </main>
   );
+}
+
+function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
+  session: CompanionV1HostSession;
+  persistence: CompanionV1Snapshot['host']['persistence'];
+  recoveryProcessing: boolean;
+}) {
+  const localAudio = session.pendingReason !== 'needs_device_sync'
+    && Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0));
+  const deviceCopy = Boolean(session.sourceDeviceId && session.deviceRecordingId != null && !session.deviceReclaimed);
+  const exactDeviceCopy = Boolean(deviceCopy && session.deviceTotalLength
+    && /^[0-9a-f]{64}$/i.test(session.deviceSha256 ?? ''));
+  const saveFailed = Boolean(persistence?.status && persistence.status !== 'ready');
+  const steps = [
+    {
+      label: '设备',
+      state: session.deviceReclaimed ? '已精确回收' : deviceCopy ? '原录音仍保留' : session.pendingReason === 'needs_device_sync' ? '等待来源设备' : '无设备副本',
+      kind: session.deviceReclaimed || deviceCopy ? 'done' : 'idle',
+    },
+    {
+      label: '传到电脑',
+      state: localAudio ? session.captureIncomplete ? '已收齐恢复片段' : '音频已收齐' : session.pendingReason === 'needs_device_sync' ? '连接后继续同步' : recoveryProcessing ? '正在处理' : '尚未收齐',
+      kind: localAudio ? 'done' : recoveryProcessing ? 'active' : 'idle',
+    },
+    {
+      label: '本机保存',
+      state: saveFailed ? '保存失败，可重试' : persistence?.status === 'ready' && localAudio ? '已安全保存' : localAudio ? '已有音频，保存状态待确认' : '等待音频',
+      kind: saveFailed ? 'error' : persistence?.status === 'ready' && localAudio ? 'done' : 'idle',
+    },
+    {
+      label: '设备空间',
+      state: session.deviceReclaimed ? '设备副本已回收' : exactDeviceCopy && localAudio && !saveFailed ? '可在删除会议时精确回收' : deviceCopy ? '暂不回收' : '无需回收',
+      kind: session.deviceReclaimed ? 'done' : exactDeviceCopy && localAudio && !saveFailed ? 'active' : 'idle',
+    },
+  ];
+  return <section className="ct-safety-card" aria-label="录音安全状态">
+    <header><strong>录音安全状态</strong><span>{saveFailed ? '需要处理' : localAudio ? '电脑已有副本' : '内容仍在流转'}</span></header>
+    <ol>{steps.map((step) => <li key={step.label} className={`ct-safety-${step.kind}`}><span aria-hidden="true" />
+      <div><strong>{step.label}</strong><small>{step.state}</small></div></li>)}</ol>
+    {session.pendingReason === 'needs_device_sync' ? <p>录音仍在来源设备；重连同一台 Companion 后会从断点继续。</p> : null}
+    {session.captureIncomplete ? <p role="alert">这场录音曾意外中断，仅恢复了已验证的完整片段；结尾可能缺失。转写与纪要只覆盖恢复内容，请核对后使用。</p> : null}
+    {saveFailed ? <p>{persistence?.message ?? '本机索引尚未安全保存，当前不会回收设备副本。'}</p> : null}
+  </section>;
 }
 
 function InfoMetric({ label, value }: { label: string; value: string }) {
@@ -469,8 +1786,98 @@ function InfoMetric({ label, value }: { label: string; value: string }) {
   );
 }
 
+function meetingSearchText(session: CompanionV1HostSession): string {
+  return [
+    meetingTitle(session),
+    session.transcriptText,
+    companionReviewedTranscript(session),
+    session.minutes?.markdown,
+    session.minutesByMode?.offlineStore?.markdown,
+    session.minutesByMode?.onlineLive?.markdown,
+  ].filter(Boolean).join('\n').toLocaleLowerCase();
+}
+
+function meetingMinutesMarkdown(session: CompanionV1HostSession, mode: CompanionV1MeetingMode): string {
+  const variant = session.minutesByMode?.[mode];
+  if (variant) return variant.markdown;
+  return session.meetingMode === mode ? session.minutes?.markdown ?? '' : '';
+}
+
+function meetingTitle(session: CompanionV1HostSession): string {
+  if (session.title.trim() && session.title !== 'Companion device recording') return session.title;
+  return session.deviceRecordingId != null ? `会议录音 #${session.deviceRecordingId}` : '未命名会议';
+}
+
+function meetingSource(session: CompanionV1HostSession): string {
+  if (session.source === 'deviceFlash' || session.source === 'boardDevice') return 'Companion 录音';
+  if (session.source === 'hostMicrophone') return '本机麦克风';
+  if (session.source === 'importedTranscript') return '导入文字';
+  return '演示记录';
+}
+
+function MarkdownMinutes({ markdown }: { markdown: string }) {
+  if (!markdown.trim()) return <p className="ct-document-empty">这场会议还没有生成纪要。</p>;
+  const blocks: Array<{ type: 'title' | 'heading' | 'item' | 'text'; text: string }> = [];
+  markdown.split(/\r?\n/).forEach((raw) => {
+    const line = raw.trim();
+    if (!line || /^Generated:|^Duration:|^Source:|^Minutes engine:/i.test(line)) return;
+    if (line.startsWith('# ')) blocks.push({ type: 'title', text: line.slice(2) });
+    else if (/^#{2,3} /.test(line)) blocks.push({ type: 'heading', text: line.replace(/^#{2,3} /, '') });
+    else if (/^[-*]\s+/.test(line)) blocks.push({ type: 'item', text: line.replace(/^[-*]\s+/, '') });
+    else if (/^\d+[.)]\s+/.test(line)) blocks.push({ type: 'item', text: line.replace(/^\d+[.)]\s+/, '') });
+    else if (!/^None captured$/i.test(line)) blocks.push({ type: 'text', text: line });
+  });
+  const visibleBlocks = blocks.filter((block, index) => {
+    if (block.type !== 'heading') return true;
+    const next = blocks[index + 1];
+    return next && next.type !== 'heading' && next.type !== 'title';
+  });
+  return (
+    <article className="ct-minutes-article">
+      {visibleBlocks.map((block, index) => {
+        if (block.type === 'title') return <h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
+        if (block.type === 'heading') return <h4 key={index}>{translateMinutesHeading(block.text)}</h4>;
+        if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}</span></div>;
+        return <p key={index}>{block.text}</p>;
+      })}
+    </article>
+  );
+}
+
+function translateMinutesHeading(value: string): string {
+  const headings: Record<string, string> = {
+    Summary: '会议摘要', 摘要: '会议摘要', Decisions: '关键决定', 决定: '关键决定', 'Action Items': '行动项', Questions: '待确认问题', 问题: '待确认问题', Keywords: '关键词',
+  };
+  return headings[value] ?? value;
+}
+
+function formatMinutesTitle(value: string): string {
+  if (/^Recording \d+ onlineLive$/i.test(value)) return '在线会议速记';
+  if (/^Companion device recording$/i.test(value)) return '会议纪要';
+  return value;
+}
+
+function formatTranscript(text: string) {
+  if (!text.trim()) return <p className="ct-document-empty">这场会议还没有转写内容。</p>;
+  return text.split(/\r?\n/).filter(Boolean).map((line, index) => {
+    const match = line.match(/^(说话人(?:\d+|\?))[:：]\s*(.*)$/);
+    return (
+      <div className="ct-transcript-line" key={index}>
+        <span>{match?.[1] ?? '转写'}</span><p>{match?.[2] ?? line}</p>
+      </div>
+    );
+  });
+}
+
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function formatDuration(durationMs: number): string {
+  const seconds = Math.max(0, Math.round(durationMs / 1000));
+  const minutes = Math.floor(seconds / 60);
+  const remain = seconds % 60;
+  return minutes > 0 ? `${minutes}:${String(remain).padStart(2, '0')}` : `${remain} 秒`;
 }

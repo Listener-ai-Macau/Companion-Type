@@ -22,6 +22,8 @@ pub const COMPANION_V1_HOST_PRIVACY_CHANNEL: &str = "host://companion-type/priva
 #[derive(Clone, Copy, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1GattBoundary {
+    pub device_status_service_uuid: &'static str,
+    pub device_status_uuid: &'static str,
     pub settings_service_uuid: &'static str,
     pub ble_name_config_uuid: &'static str,
     pub meeting_service_uuid: &'static str,
@@ -37,6 +39,8 @@ pub struct CompanionV1GattBoundary {
 }
 
 pub const COMPANION_V1_GATT_BOUNDARY: CompanionV1GattBoundary = CompanionV1GattBoundary {
+    device_status_service_uuid: "8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    device_status_uuid: "8f7a1001-7b7d-4f3d-9d6f-6c2d1b7c0000",
     settings_service_uuid: "8f7a0004-7b7d-4f3d-9d6f-6c2d1b7c0000",
     ble_name_config_uuid: "8f7a4002-7b7d-4f3d-9d6f-6c2d1b7c0000",
     meeting_service_uuid: "8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000",
@@ -144,8 +148,53 @@ pub struct CompanionV1DeviceTransportState {
     pub last_seen_at: Option<String>,
     pub signal_rssi: Option<i16>,
     pub recordings_available: u32,
+    /// Last valid DEVICE_STATUS.active_mode reading. This is board capture
+    /// state, independent from the host meeting reducer.
+    pub recording: bool,
     pub last_sync_at: Option<String>,
+    pub firmware_version: Option<u32>,
+    pub build_id: Option<u32>,
+    pub board_id: Option<u32>,
+    pub hardware_revision: Option<String>,
+    /// Raw 96-bit STM32 UID bytes, lowercase hex, when exposed by the WBA
+    /// backward-compatible DEVICE_STATUS tail.
+    pub mcu_uid: Option<String>,
+    /// Active, validated UI resource generation reported by WBA. None on
+    /// legacy 20-byte DEVICE_STATUS payloads or before assets mount.
+    pub ui_generation: Option<u32>,
+    pub recording_capacity: Option<CompanionV1RecordingCapacity>,
+    /// Transactional BLE state. `ready` means the exact device was verified;
+    /// the GATT link itself is opened on demand for each operation.
+    pub connection_phase: String,
+    pub remembered_device_id: Option<String>,
+    pub auto_reconnect_enabled: bool,
+    pub manual_disconnect: bool,
+    pub last_connected_at: Option<String>,
+    pub last_reconnect_attempt_at: Option<String>,
+    pub reconnect_attempt_count: u32,
     pub message: String,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1RecordingCapacity {
+    pub layout_version: u8,
+    pub busy: bool,
+    pub confirmed_discard_supported: bool,
+    pub used_entries: u8,
+    pub max_entries: u8,
+    pub catalog_generation: u32,
+    pub data_bytes: u32,
+    pub free_bytes: u32,
+    pub largest_free_extent: u32,
+    pub protected_bytes: u32,
+    pub consumed_bytes: u32,
+    pub bytes_per_second: u32,
+    pub reserve_headroom: u32,
+    pub local_limit_seconds: u32,
+    pub unsynced_entries: u8,
+    pub writing_entries: u8,
+    pub consumed_entries: u8,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -195,15 +244,38 @@ pub struct CompanionV1RecordingPolicy {
     pub asr_provider_mode: String,
     pub short_capture_guide: String,
     pub long_meeting_guide: String,
+    #[serde(default = "default_supported_meeting_modes")]
+    pub supported_meeting_modes: Vec<String>,
+    #[serde(default = "default_meeting_mode_offline")]
+    pub default_meeting_mode: String,
+    #[serde(default = "default_offline_store_guide")]
+    pub offline_store_guide: String,
+    #[serde(default = "default_online_live_guide")]
+    pub online_live_guide: String,
 }
 
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1HostState {
+    pub persistence: CompanionV1PersistenceState,
     pub recording_policy: CompanionV1RecordingPolicy,
     pub active_session_id: Option<String>,
     pub selected_session_id: Option<String>,
     pub sessions: Vec<CompanionV1HostSession>,
+}
+
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1PersistenceState {
+    pub status: String,
+    pub message: Option<String>,
+    pub recovery_path: Option<String>,
+}
+
+impl Default for CompanionV1PersistenceState {
+    fn default() -> Self {
+        Self { status: "ready".into(), message: None, recovery_path: None }
+    }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -213,6 +285,9 @@ pub struct CompanionV1HostSession {
     pub title: String,
     pub source: String,
     pub status: String,
+    /// offlineStore = store-first batch ASR later; onlineLive = live partials while recording.
+    #[serde(default = "default_meeting_mode_offline")]
+    pub meeting_mode: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pending_reason: Option<String>,
     pub started_at: Option<String>,
@@ -220,8 +295,31 @@ pub struct CompanionV1HostSession {
     pub duration_ms: u64,
     pub audio_path: Option<String>,
     pub audio_bytes: u64,
+    #[serde(default)]
+    pub audio_stored: bool,
+    /// Stable durable-board identity. None for host/imported sessions.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub device_recording_id: Option<u32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub device_total_length: Option<u32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub device_sha256: Option<String>,
+    /// True only after the exact board extent acknowledged reclaim.
+    #[serde(default)]
+    pub device_reclaimed: bool,
+    #[serde(default)]
+    pub capture_incomplete: bool,
+    /// Exact native Bluetooth address that produced the durable board extent.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_device_id: Option<String>,
     pub chunks: Vec<CompanionV1AudioChunk>,
     pub transcript_text: String,
+    /// True only for a completed batch/import result. onlineLive prefixes are
+    /// intentionally false so restart recovery cannot mistake them for final.
+    #[serde(default)]
+    pub transcript_final: bool,
+    #[serde(default)]
+    pub live_transcript_text: String,
     pub transcript_preview: String,
     pub transcript_segments: usize,
     /// Timed, speaker-attributed utterances from the diarization-aware
@@ -229,10 +327,120 @@ pub struct CompanionV1HostSession {
     /// existed or when diarization timing is unavailable.
     #[serde(default)]
     pub utterances: Vec<CompanionV1UtteranceSegment>,
+    /// Human review is an overlay; never replace the provider's ASR evidence.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub transcript_review: Option<crate::backend::transcript_review::TranscriptReview>,
+    #[serde(default)]
+    pub bookmark_revision: u64,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub bookmarks: Vec<crate::backend::recording_bookmarks::Bookmark>,
+    #[serde(default)]
+    pub note_revision: u64,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub meeting_notes: Vec<crate::backend::meeting_notes::Note>,
     pub minutes: Option<CompanionV1MeetingMinutes>,
+    /// Two independently persisted products may coexist for one durable board recording.
+    #[serde(default)]
+    pub minutes_by_mode: CompanionV1MinutesByMode,
+    /// Durable, explicit authorization for restart recovery. Legacy/imported
+    /// WAV rows deserialize to `intent=none` and are never auto-submitted.
+    #[serde(default)]
+    pub recovery: CompanionV1MeetingRecovery,
     pub export_markdown: String,
     pub exported_at: Option<String>,
     pub retention: CompanionV1SessionRetention,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MeetingRecovery {
+    /// `processMeeting` is set only by an explicit product capture/sync path.
+    pub intent: String,
+    /// Frozen at capture time so restart recovery cannot silently switch route.
+    pub requested_meeting_mode: String,
+    /// idle | pendingTranscription | pendingMinutes | retryBackoff | paused | complete
+    pub stage: String,
+    pub attempt_count: u8,
+    pub max_attempts: u8,
+    /// transcription | minutes; identifies what retryBackoff resumes.
+    #[serde(default)]
+    pub retry_stage: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub next_retry_at_unix_ms: Option<u64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub last_error: Option<String>,
+}
+
+impl Default for CompanionV1MeetingRecovery {
+    fn default() -> Self {
+        Self {
+            intent: "none".to_string(),
+            requested_meeting_mode: String::new(),
+            stage: "idle".to_string(),
+            attempt_count: 0,
+            max_attempts: 3,
+            retry_stage: String::new(),
+            next_retry_at_unix_ms: None,
+            last_error: None,
+        }
+    }
+}
+
+impl CompanionV1MeetingRecovery {
+    pub(crate) fn armed(meeting_mode: &str) -> Self {
+        Self {
+            intent: "processMeeting".to_string(),
+            requested_meeting_mode: meeting_mode.to_string(),
+            stage: "pendingTranscription".to_string(),
+            ..Self::default()
+        }
+    }
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MinutesByMode {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub offline_store: Option<CompanionV1MinutesVariant>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub online_live: Option<CompanionV1MinutesVariant>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MinutesVariant {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub processing: Option<CompanionV1MinutesProcessing>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_review_revision: Option<u64>,
+    pub status: String,
+    pub markdown: String,
+    pub source: String,
+    pub quality: String,
+    pub generated_at: Option<String>,
+    #[serde(default)]
+    pub partial_count: u32,
+}
+
+fn cache_fixture_minutes_for_mode(session: &mut CompanionV1HostSession) {
+    let Some(minutes) = session.minutes.as_ref() else {
+        return;
+    };
+    let variant = CompanionV1MinutesVariant {
+        processing: minutes.processing.clone(),
+        source_review_revision: minutes.source_review_revision,
+        status: "minutesReady".to_string(),
+        markdown: minutes.markdown.clone(),
+        source: minutes.source.clone(),
+        quality: minutes.quality.clone(),
+        generated_at: Some(minutes.generated_at.clone()),
+        partial_count: 0,
+    };
+    if session.meeting_mode == "onlineLive" {
+        session.minutes_by_mode.online_live = Some(variant);
+    } else {
+        session.minutes_by_mode.offline_store = Some(variant);
+    }
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
@@ -269,6 +477,10 @@ pub struct CompanionV1ActionItem {
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1MeetingMinutes {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub processing: Option<CompanionV1MinutesProcessing>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_review_revision: Option<u64>,
     pub generated_at: String,
     pub source: String,
     pub quality: String,
@@ -278,13 +490,43 @@ pub struct CompanionV1MeetingMinutes {
     pub questions: Vec<String>,
     pub keywords: Vec<String>,
     pub markdown: String,
+    /// LLM downgrade reason. Populated when L1 (DeepSeek) failed and we fell
+    /// back to the L0 rule draft, so the UI can surface *why* final minutes
+    /// weren't produced instead of silently showing a draft. None in normal
+    /// operation. `default` lets persisted sessions that predate this field
+    /// deserialize without the key.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub llm_note: Option<String>,
+}
+
+/// Coverage of the submitted source, not a claim of semantic accuracy.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MinutesProcessing {
+    pub strategy: String,
+    pub source_bytes: usize,
+    pub processed_source_bytes: usize,
+    pub total_chunks: usize,
+    pub completed_chunks: usize,
+    pub resumed_chunks: usize,
+    pub complete: bool,
+}
+
+impl CompanionV1MinutesProcessing {
+    pub fn is_complete(&self) -> bool {
+        self.strategy == "chunkedSourceBacked"
+            && self.complete && self.total_chunks != 0
+            && self.completed_chunks == self.total_chunks
+            && self.resumed_chunks <= self.completed_chunks
+            && self.source_bytes != 0 && self.processed_source_bytes == self.source_bytes
+    }
 }
 
 /// One timed, speaker-attributed transcript utterance. Populated by the
 /// diarization-aware transcription path so exports can render timed formats
 /// (SRT subtitles) and the UI can show per-utterance speaker/timing. `speaker`
 /// is a 0-based diarization id; `None` when diarization could not attribute it.
-#[derive(Clone, Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1UtteranceSegment {
     pub text: String,
@@ -306,9 +548,12 @@ pub struct CompanionV1ControlEcho {
 #[derive(Clone, Copy, Debug, Deserialize, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum CompanionV1ControlAction {
+    HostRetrySave,
     DeviceScan,
     DeviceConnect,
     DeviceDisconnect,
+    DeviceEnableAutoReconnect,
+    DeviceDisableAutoReconnect,
     DeviceSyncRecordings,
     StageBleName,
     ApplyBleName,
@@ -317,6 +562,7 @@ pub enum CompanionV1ControlAction {
     MeetingStart,
     MeetingStop,
     MeetingFinalize,
+    MeetingAppendLiveTranscript,
     MeetingImportTranscript,
     MeetingTranscribeAudio,
     MeetingGenerateMinutes,
@@ -324,11 +570,15 @@ pub enum CompanionV1ControlAction {
     MeetingExportTxt,
     MeetingExportJson,
     MeetingExportSrt,
+    MeetingExportActionsTodo,
+    MeetingExportActionsIcal,
     MeetingLoadDemo,
+    MeetingSelectSession,
     MeetingResetSession,
     PrivacyEraseAudio,
     PrivacyEraseTranscript,
     PrivacyEraseAll,
+    PrivacyDeleteSession,
     SpeakerPrompt,
     SpeakerStop,
     WakeArm,
@@ -345,6 +595,7 @@ pub struct CompanionV1ControlRequest {
     pub prompt_id: Option<String>,
     pub title: Option<String>,
     pub transcript_text: Option<String>,
+    pub meeting_mode: Option<String>,
     pub audio_path: Option<String>,
     pub audio_bytes: Option<u64>,
     pub device_id: Option<String>,
@@ -378,7 +629,7 @@ pub fn fixture_snapshot() -> CompanionV1Snapshot {
             transcript_count: 0,
         },
         imu: CompanionV1ImuState {
-            supported: true,
+            supported: false,
             online: false,
             sample_hz: 0,
             motion: "unknown".to_string(),
@@ -394,16 +645,16 @@ pub fn fixture_snapshot() -> CompanionV1Snapshot {
             },
         },
         speaker: CompanionV1SpeakerState {
-            supported: true,
+            supported: false,
             online: false,
-            muted: false,
-            volume: 65,
-            status: "idle".to_string(),
+            muted: true,
+            volume: 0,
+            status: "notPopulated".to_string(),
         },
         wake_word: CompanionV1WakeWordState {
-            supported: true,
+            supported: false,
             armed: false,
-            engine: "fixture".to_string(),
+            engine: "notPopulated".to_string(),
             keyword: "hey companion".to_string(),
             last_detected_at: None,
             confidence: 0.0,
@@ -424,13 +675,40 @@ pub fn fixture_snapshot() -> CompanionV1Snapshot {
 }
 
 pub fn apply_fixture_control(
-    mut snapshot: CompanionV1Snapshot,
+    snapshot: CompanionV1Snapshot,
     request: CompanionV1ControlRequest,
 ) -> Result<CompanionV1Snapshot, String> {
-    let now = "fixture".to_string();
+    apply_control_at(snapshot, request, "fixture")
+}
+
+/// Pure state transition with a caller-owned observation time. The product
+/// backend supplies the wall clock; fixtures retain their deterministic clock.
+pub(crate) fn apply_control_at(
+    mut snapshot: CompanionV1Snapshot,
+    request: CompanionV1ControlRequest,
+    observed_at: &str,
+) -> Result<CompanionV1Snapshot, String> {
+    let now = observed_at.to_string();
     snapshot.updated_at = now.clone();
 
+    if (matches!(
+        request.action,
+        CompanionV1ControlAction::SpeakerPrompt | CompanionV1ControlAction::SpeakerStop
+    ) && (!snapshot.connected || !snapshot.speaker.supported))
+        || matches!(
+            request.action,
+            CompanionV1ControlAction::WakeArm
+                | CompanionV1ControlAction::WakeDisable
+                | CompanionV1ControlAction::WakeTestDetect
+        )
+    {
+        return Err(
+            "Companion peripheral capability is unavailable on the connected hardware".to_string(),
+        );
+    }
+
     match request.action {
+        CompanionV1ControlAction::HostRetrySave => {}
         CompanionV1ControlAction::DeviceScan => {
             snapshot.device.scanning = false;
             snapshot.device.connected = false;
@@ -444,6 +722,7 @@ pub fn apply_fixture_control(
             snapshot.device.signal_rssi = Some(-48);
             snapshot.device.recordings_available = snapshot.device.recordings_available.max(1);
             snapshot.device.message = "Companion device discovered".to_string();
+            snapshot.device.connection_phase = "discovered".to_string();
             snapshot.connected = false;
         }
         CompanionV1ControlAction::DeviceConnect => {
@@ -458,15 +737,31 @@ pub fn apply_fixture_control(
             snapshot.device.last_seen_at = Some(now.clone());
             snapshot.device.signal_rssi = snapshot.device.signal_rssi.or(Some(-48));
             snapshot.device.message = "Companion device connected".to_string();
+            snapshot.device.connection_phase = "ready".to_string();
             snapshot.connected = true;
         }
         CompanionV1ControlAction::DeviceDisconnect => {
+            snapshot.device.recording_capacity=None;
             snapshot.device.connected = false;
             snapshot.device.message = "Companion device disconnected".to_string();
+            snapshot.device.connection_phase = "manualDisconnected".to_string();
             snapshot.connected = false;
         }
+        CompanionV1ControlAction::DeviceEnableAutoReconnect => {
+            snapshot.device.auto_reconnect_enabled = true;
+            snapshot.device.manual_disconnect = false;
+            snapshot.device.connection_phase = if snapshot.device.remembered_device_id.is_some() {
+                "offline"
+            } else {
+                "idle"
+            }
+            .to_string();
+        }
+        CompanionV1ControlAction::DeviceDisableAutoReconnect => {
+            snapshot.device.auto_reconnect_enabled = false;
+        }
         CompanionV1ControlAction::DeviceSyncRecordings => {
-            let session = create_synced_device_session(&snapshot, &request, &now);
+            let session = synced_device_session(&snapshot, &request, &now);
             let session_id = session.id.clone();
             snapshot.host.sessions.retain(|item| item.id != session_id);
             snapshot.host.sessions.insert(0, session.clone());
@@ -498,6 +793,13 @@ pub fn apply_fixture_control(
             snapshot.ble_name.pending_restart = true;
         }
         CompanionV1ControlAction::ApplyBleName => {
+            if let Some(name) = request.ble_name.as_deref() {
+                let name = name.trim();
+                if !companion_ble_name_is_valid(name) {
+                    return Err("BLE name must be printable ASCII and 1..29 bytes".to_string());
+                }
+                snapshot.ble_name.staged_name = name.to_string();
+            }
             snapshot.ble_name.active_name = snapshot.ble_name.staged_name.clone();
             snapshot.ble_name.status = "pendingRestart".to_string();
             snapshot.ble_name.pending_restart = true;
@@ -513,36 +815,40 @@ pub fn apply_fixture_control(
             snapshot.oobe.checks = vec![
                 oobe_check(
                     "firmware",
-                    "Firmware",
-                    "pass",
-                    "STM32CubeProgrammer or firmware helper ready",
+                    "固件与板卡身份",
+                    "warn",
+                    "Fixture only：未连接实板，未读取 DEVICE_STATUS",
                 ),
                 oobe_check(
                     "bluetooth",
-                    "Bluetooth",
-                    if snapshot.device.supported {
-                        "pass"
-                    } else {
-                        "warn"
-                    },
-                    &snapshot.device.provider_id,
+                    "蓝牙连接",
+                    "warn",
+                    "Fixture only：未执行物理扫描、配对或连接",
                 ),
                 oobe_check(
-                    "microphone",
-                    "Microphone",
-                    "pass",
-                    "Host WAV recorder ready",
+                    "gatt",
+                    "核心 GATT",
+                    "warn",
+                    "Fixture only：未发现或读取实板 GATT",
                 ),
                 oobe_check(
-                    "asr",
-                    "ASR",
-                    "pass",
-                    &format!(
-                        "{} (configure cloud/local before auto-transcribe)",
-                        snapshot.host.recording_policy.asr_provider_mode
-                    ),
+                    "boardMicrophone",
+                    "板端录音链路",
+                    "warn",
+                    "未实测；主机麦克风不能作为板端通过证据",
                 ),
-                oobe_check("privacy", "Privacy", "pass", &snapshot.privacy.policy_label),
+                oobe_check("clock", "自动校时", "warn", "未执行写后读回"),
+                oobe_check("imu", "IMU", "warn", "未读取 IMU_STATUS"),
+                oobe_check("speaker", "扬声器", "warn", "未读取 SPEAKER_STATUS；未播放测试音"),
+                oobe_check("display", "墨水屏", "warn", "未检查；无屏幕自检 GATT"),
+                oobe_check("touch", "触摸", "warn", "未检查；无触摸自检 GATT"),
+                oobe_check("power", "电源与充电", "warn", "未检查；无电源/充电自检 GATT"),
+                oobe_check(
+                    "remoteServices",
+                    "ASR / 纪要服务",
+                    "warn",
+                    "Fixture 检查不会调用外部服务",
+                ),
             ];
         }
         CompanionV1ControlAction::MeetingStart => {
@@ -562,18 +868,42 @@ pub fn apply_fixture_control(
             let duration_ms = request
                 .duration_ms
                 .unwrap_or_else(|| snapshot.host.sessions[index].duration_ms.max(60_000));
-            snapshot.host.sessions[index].status = "captured".to_string();
-            snapshot.host.sessions[index].pending_reason =
-                if snapshot.host.sessions[index].transcript_text.trim().is_empty() {
-                    Some("needs_transcription".to_string())
-                } else {
-                    None
-                };
+            let live = snapshot.host.sessions[index]
+                .live_transcript_text
+                .trim()
+                .to_string();
+            let existing = snapshot.host.sessions[index]
+                .transcript_text
+                .trim()
+                .to_string();
+            let final_transcript = if !existing.is_empty() { existing } else { live };
+            let has_transcript = !final_transcript.is_empty();
+            let is_online = snapshot.host.sessions[index].meeting_mode == "onlineLive";
+            let status = if has_transcript && is_online {
+                "transcribed"
+            } else {
+                "captured"
+            };
+            snapshot.host.sessions[index].status = status.to_string();
+            snapshot.host.sessions[index].pending_reason = if has_transcript {
+                None
+            } else {
+                Some("needs_transcription".to_string())
+            };
             snapshot.host.sessions[index].stopped_at = Some(now.clone());
             snapshot.host.sessions[index].duration_ms = duration_ms;
             snapshot.host.sessions[index].audio_bytes = request
                 .audio_bytes
                 .unwrap_or_else(|| estimate_pcm_bytes(duration_ms));
+            snapshot.host.sessions[index].audio_stored = true;
+            if has_transcript {
+                snapshot.host.sessions[index].transcript_text = final_transcript.clone();
+                snapshot.host.sessions[index].transcript_preview = preview_text(&final_transcript);
+                snapshot.host.sessions[index].transcript_segments =
+                    split_segments(&final_transcript).len();
+                snapshot.host.sessions[index].retention.transcript_cached = true;
+            }
+            snapshot.host.sessions[index].retention.audio_cached = true;
             snapshot.host.sessions[index].chunks = seal_session_chunks(
                 &snapshot.host.sessions[index],
                 &now,
@@ -582,8 +912,42 @@ pub fn apply_fixture_control(
             );
             snapshot.host.active_session_id = None;
             snapshot.meeting.active = false;
-            snapshot.meeting.status = "captured".to_string();
+            snapshot.meeting.status = status.to_string();
             snapshot.meeting.duration_ms = duration_ms;
+            snapshot.meeting.transcript_count = count_transcript_sessions(&snapshot);
+        }
+        CompanionV1ControlAction::MeetingAppendLiveTranscript => {
+            let index = ensure_selected_session(&mut snapshot, &request, &now);
+            if snapshot.host.sessions[index].meeting_mode != "onlineLive" {
+                return Err("Live transcript append requires meetingMode=onlineLive.".to_string());
+            }
+            if snapshot.host.sessions[index].status != "recording" {
+                return Err(
+                    "Live transcript append requires an active recording session.".to_string(),
+                );
+            }
+            let delta = normalize_transcript(request.transcript_text.as_deref().unwrap_or(""));
+            if delta.is_empty() {
+                return Err("Live transcript append requires non-empty transcriptText.".to_string());
+            }
+            let live = if snapshot.host.sessions[index]
+                .live_transcript_text
+                .trim()
+                .is_empty()
+            {
+                delta
+            } else {
+                normalize_transcript(&format!(
+                    "{} {}",
+                    snapshot.host.sessions[index].live_transcript_text, delta
+                ))
+            };
+            snapshot.host.sessions[index].live_transcript_text = live.clone();
+            snapshot.host.sessions[index].transcript_text = live.clone();
+            snapshot.host.sessions[index].transcript_preview = preview_text(&live);
+            snapshot.host.sessions[index].transcript_segments = split_segments(&live).len();
+            snapshot.host.sessions[index].pending_reason = None;
+            snapshot.host.sessions[index].retention.transcript_cached = true;
         }
         CompanionV1ControlAction::MeetingFinalize => {
             let index = ensure_selected_session(&mut snapshot, &request, &now);
@@ -605,10 +969,9 @@ pub fn apply_fixture_control(
                 snapshot.host.sessions[index].pending_reason = None;
                 snapshot.host.sessions[index].export_markdown = minutes.markdown.clone();
                 snapshot.host.sessions[index].exported_at = Some(now.clone());
-                snapshot.host.sessions[index]
-                    .retention
-                    .minutes_cached = true;
+                snapshot.host.sessions[index].retention.minutes_cached = true;
                 snapshot.host.sessions[index].minutes = Some(minutes);
+                cache_fixture_minutes_for_mode(&mut snapshot.host.sessions[index]);
                 snapshot.meeting.status = "minutesReady".to_string();
             }
             snapshot.meeting.active = false;
@@ -661,6 +1024,7 @@ pub fn apply_fixture_control(
             snapshot.host.sessions[index].pending_reason = None;
             snapshot.host.sessions[index].export_markdown = minutes.markdown.clone();
             snapshot.host.sessions[index].minutes = Some(minutes);
+            cache_fixture_minutes_for_mode(&mut snapshot.host.sessions[index]);
             snapshot.host.sessions[index].retention.minutes_cached = true;
             snapshot.meeting.active = false;
             snapshot.meeting.status = "minutesReady".to_string();
@@ -669,19 +1033,89 @@ pub fn apply_fixture_control(
         CompanionV1ControlAction::MeetingExportMarkdown
         | CompanionV1ControlAction::MeetingExportTxt
         | CompanionV1ControlAction::MeetingExportJson
-        | CompanionV1ControlAction::MeetingExportSrt => {
+        | CompanionV1ControlAction::MeetingExportSrt
+        | CompanionV1ControlAction::MeetingExportActionsTodo
+        | CompanionV1ControlAction::MeetingExportActionsIcal => {
             let index = ensure_selected_session(&mut snapshot, &request, &now);
-            let minutes = snapshot.host.sessions[index]
-                .minutes
-                .clone()
-                .unwrap_or_else(|| build_minutes(&snapshot.host.sessions[index], &now));
-            snapshot.host.sessions[index].status = "minutesReady".to_string();
-            snapshot.host.sessions[index].export_markdown = minutes.markdown.clone();
+            if request
+                .meeting_mode
+                .as_deref()
+                .is_some_and(|mode| mode != snapshot.host.sessions[index].meeting_mode)
+            {
+                return Err("export meeting mode does not match the selected session".to_string());
+            }
+            let session = &snapshot.host.sessions[index];
+            let export = match request.action {
+                CompanionV1ControlAction::MeetingExportMarkdown => {
+                    let variant = if session.meeting_mode == "onlineLive" {
+                        session.minutes_by_mode.online_live.as_ref()
+                    } else {
+                        session.minutes_by_mode.offline_store.as_ref()
+                    }
+                    .filter(|variant| !variant.markdown.trim().is_empty())
+                    .ok_or_else(|| "completed minutes are required for Markdown export".to_string())?;
+                    if variant.status == "minutesReady" && variant.quality != "draft" {
+                        variant.markdown.clone()
+                    } else {
+                        format!(
+                            "> 草稿：纪要服务尚未完成；以下为已保存在本机的内容。\n\n{}",
+                            variant.markdown
+                        )
+                    }
+                }
+                CompanionV1ControlAction::MeetingExportTxt => {
+                    let final_transcript = session.transcript_final
+                        || (session.recovery.intent == "none"
+                            && matches!(session.status.as_str(), "transcribed" | "minutesReady"));
+                    if !final_transcript || session.transcript_text.trim().is_empty() {
+                        return Err("a final transcript is required for text export".to_string());
+                    }
+                    crate::backend::export::render_txt(session)
+                }
+                CompanionV1ControlAction::MeetingExportJson => {
+                    let final_transcript = session.transcript_final
+                        || (session.recovery.intent == "none"
+                            && matches!(session.status.as_str(), "transcribed" | "minutesReady"));
+                    if !final_transcript || session.transcript_text.trim().is_empty() {
+                        return Err("a final transcript is required for JSON export".to_string());
+                    }
+                    crate::backend::export::render_json(session)?
+                }
+                CompanionV1ControlAction::MeetingExportSrt => {
+                    let final_transcript = session.transcript_final
+                        || (session.recovery.intent == "none"
+                            && matches!(session.status.as_str(), "transcribed" | "minutesReady"));
+                    if !final_transcript
+                        || session.utterances.is_empty()
+                        || session.utterances.iter().any(|utterance| {
+                            utterance.text.trim().is_empty()
+                                || utterance.end_ms <= utterance.start_ms
+                        })
+                    {
+                        return Err(
+                            "SRT export requires a final transcript with real timed utterances"
+                                .to_string(),
+                        );
+                    }
+                    crate::backend::export::render_srt(session)
+                }
+                CompanionV1ControlAction::MeetingExportActionsTodo => {
+                    if session.minutes.is_none() {
+                        return Err("completed minutes are required for action export".to_string());
+                    }
+                    crate::backend::export::render_action_items_todo(session)
+                }
+                CompanionV1ControlAction::MeetingExportActionsIcal => {
+                    if session.minutes.is_none() {
+                        return Err("completed minutes are required for action export".to_string());
+                    }
+                    crate::backend::export::render_action_items_ical(session)
+                }
+                _ => unreachable!(),
+            };
+            snapshot.host.sessions[index].export_markdown = export;
             snapshot.host.sessions[index].exported_at = Some(now.clone());
-            snapshot.host.sessions[index].minutes = Some(minutes);
-            snapshot.host.sessions[index].retention.minutes_cached = true;
             snapshot.meeting.active = false;
-            snapshot.meeting.status = "minutesReady".to_string();
             snapshot.meeting.transcript_count = count_transcript_sessions(&snapshot);
         }
         CompanionV1ControlAction::MeetingLoadDemo => {
@@ -705,13 +1139,15 @@ pub fn apply_fixture_control(
                             .unwrap_or_else(|| "一键演示纪要".to_string()),
                     ),
                     transcript_text: None,
-                    audio_path: Some(
+                    meeting_mode: None,
+                    audio_path: Some(request.audio_path.clone().unwrap_or_else(|| {
+                        "demo://companion-type/mechanical-voice.wav".to_string()
+                    })),
+                    audio_bytes: Some(
                         request
-                            .audio_path
-                            .clone()
-                            .unwrap_or_else(|| "demo://companion-type/mechanical-voice.wav".to_string()),
+                            .audio_bytes
+                            .unwrap_or_else(|| estimate_pcm_bytes(duration_ms)),
                     ),
-                    audio_bytes: Some(request.audio_bytes.unwrap_or_else(|| estimate_pcm_bytes(duration_ms))),
                     device_id: None,
                     duration_ms: Some(duration_ms),
                 },
@@ -739,6 +1175,7 @@ pub fn apply_fixture_control(
             session.export_markdown = minutes.markdown.clone();
             session.exported_at = Some(now.clone());
             session.minutes = Some(minutes);
+            cache_fixture_minutes_for_mode(&mut session);
             session.retention = session_retention(true, true, true);
             let session_id = session.id.clone();
             snapshot.host.sessions.retain(|item| item.id != session_id);
@@ -750,6 +1187,21 @@ pub fn apply_fixture_control(
             snapshot.meeting.started_at = None;
             snapshot.meeting.duration_ms = duration_ms;
             snapshot.meeting.transcript_count = count_transcript_sessions(&snapshot);
+        }
+        CompanionV1ControlAction::MeetingSelectSession => {
+            let id = request
+                .session_id
+                .as_deref()
+                .ok_or_else(|| "sessionId is required".to_string())?;
+            if !snapshot
+                .host
+                .sessions
+                .iter()
+                .any(|session| session.id == id)
+            {
+                return Err(format!("session not found: {id}"));
+            }
+            snapshot.host.selected_session_id = Some(id.to_string());
         }
         CompanionV1ControlAction::MeetingResetSession => {
             snapshot.host = default_host_state();
@@ -763,6 +1215,7 @@ pub fn apply_fixture_control(
             let index = ensure_selected_session(&mut snapshot, &request, &now);
             snapshot.host.sessions[index].audio_path = None;
             snapshot.host.sessions[index].audio_bytes = 0;
+            snapshot.host.sessions[index].audio_stored = false;
             snapshot.host.sessions[index].chunks = snapshot.host.sessions[index]
                 .chunks
                 .iter()
@@ -777,6 +1230,8 @@ pub fn apply_fixture_control(
                 })
                 .collect();
             snapshot.host.sessions[index].retention.audio_cached = false;
+            snapshot.host.sessions[index].recovery = CompanionV1MeetingRecovery::default();
+            snapshot.host.sessions[index].pending_reason = None;
             snapshot.privacy.last_erase_at = Some(now.clone());
         }
         CompanionV1ControlAction::PrivacyEraseTranscript => {
@@ -791,13 +1246,21 @@ pub fn apply_fixture_control(
                 None
             };
             snapshot.host.sessions[index].transcript_text.clear();
+            snapshot.host.sessions[index].transcript_final = false;
+            snapshot.host.sessions[index].live_transcript_text.clear();
             snapshot.host.sessions[index].transcript_preview.clear();
             snapshot.host.sessions[index].transcript_segments = 0;
+            snapshot.host.sessions[index].utterances.clear();
+            snapshot.host.sessions[index].transcript_review = None;
+            snapshot.host.sessions[index].meeting_notes.clear();
+            snapshot.host.sessions[index].note_revision = snapshot.host.sessions[index].note_revision.saturating_add(1);
             snapshot.host.sessions[index].minutes = None;
+            snapshot.host.sessions[index].minutes_by_mode = Default::default();
             snapshot.host.sessions[index].export_markdown.clear();
             snapshot.host.sessions[index].exported_at = None;
             snapshot.host.sessions[index].retention.transcript_cached = false;
             snapshot.host.sessions[index].retention.minutes_cached = false;
+            snapshot.host.sessions[index].recovery = CompanionV1MeetingRecovery::default();
             snapshot.meeting.status = if has_audio { "captured" } else { "idle" }.to_string();
             snapshot.meeting.transcript_count = count_transcript_sessions(&snapshot);
             snapshot.privacy.last_erase_at = Some(now.clone());
@@ -812,6 +1275,19 @@ pub fn apply_fixture_control(
             snapshot.privacy = default_privacy_state();
             snapshot.privacy.last_erase_at = Some(now.clone());
         }
+        CompanionV1ControlAction::PrivacyDeleteSession => {
+            let index = ensure_selected_session(&mut snapshot, &request, &now);
+            let removed_id = snapshot.host.sessions[index].id.clone();
+            snapshot.host.sessions.remove(index);
+            snapshot.host.selected_session_id =
+                snapshot.host.sessions.first().map(|s| s.id.clone());
+            snapshot.host.active_session_id = snapshot
+                .host
+                .active_session_id
+                .filter(|id| id != &removed_id);
+            snapshot.meeting.transcript_count = count_transcript_sessions(&snapshot);
+            snapshot.privacy.last_erase_at = Some(now.clone());
+        }
         CompanionV1ControlAction::SpeakerPrompt => {
             snapshot.speaker.online = true;
             snapshot.speaker.status = "prompting".to_string();
@@ -819,18 +1295,9 @@ pub fn apply_fixture_control(
         CompanionV1ControlAction::SpeakerStop => {
             snapshot.speaker.status = "idle".to_string();
         }
-        CompanionV1ControlAction::WakeArm => {
-            snapshot.wake_word.armed = true;
-        }
-        CompanionV1ControlAction::WakeDisable => {
-            snapshot.wake_word.armed = false;
-            snapshot.wake_word.confidence = 0.0;
-        }
-        CompanionV1ControlAction::WakeTestDetect => {
-            snapshot.wake_word.armed = true;
-            snapshot.wake_word.last_detected_at = Some(now.clone());
-            snapshot.wake_word.confidence = 0.92;
-        }
+        CompanionV1ControlAction::WakeArm
+        | CompanionV1ControlAction::WakeDisable
+        | CompanionV1ControlAction::WakeTestDetect => unreachable!("rejected above"),
     }
 
     snapshot.privacy = refresh_privacy_state(&snapshot, snapshot.privacy.last_erase_at.clone());
@@ -860,6 +1327,7 @@ pub fn apply_fixture_control(
 
 fn default_host_state() -> CompanionV1HostState {
     CompanionV1HostState {
+        persistence: Default::default(),
         recording_policy: CompanionV1RecordingPolicy {
             owner: "host".to_string(),
             device_flash_raw_cache_seconds: COMPANION_V1_DEVICE_FLASH_RECORDING_MAX_SECONDS,
@@ -878,6 +1346,10 @@ fn default_host_state() -> CompanionV1HostState {
             long_meeting_guide:
                 "Long meeting: host microphone (5 min chunks); device is trigger/status only — not full-hour BLE pull"
                     .to_string(),
+            supported_meeting_modes: default_supported_meeting_modes(),
+            default_meeting_mode: default_meeting_mode_offline(),
+            offline_store_guide: default_offline_store_guide(),
+            online_live_guide: default_online_live_guide(),
         },
         active_session_id: None,
         selected_session_id: None,
@@ -896,7 +1368,22 @@ fn default_device_state() -> CompanionV1DeviceTransportState {
         last_seen_at: None,
         signal_rssi: None,
         recordings_available: 0,
+        recording: false,
         last_sync_at: None,
+        firmware_version: None,
+        build_id: None,
+        board_id: None,
+        hardware_revision: None,
+        mcu_uid: None,
+        ui_generation: None,
+        recording_capacity: None,
+        connection_phase: "idle".to_string(),
+        remembered_device_id: None,
+        auto_reconnect_enabled: true,
+        manual_disconnect: false,
+        last_connected_at: None,
+        last_reconnect_attempt_at: None,
+        reconnect_attempt_count: 0,
         message: "Not scanned".to_string(),
     }
 }
@@ -906,11 +1393,22 @@ fn default_oobe_state() -> CompanionV1OobeState {
         complete: false,
         last_run_at: None,
         checks: vec![
-            oobe_check("firmware", "Firmware", "pending", "Waiting"),
-            oobe_check("bluetooth", "Bluetooth", "pending", "Waiting"),
-            oobe_check("microphone", "Microphone", "pending", "Waiting"),
-            oobe_check("asr", "ASR", "pending", "Waiting"),
-            oobe_check("privacy", "Privacy", "pending", "Waiting"),
+            oobe_check("bluetooth", "蓝牙连接", "pending", "等待实板检查"),
+            oobe_check("firmware", "固件与板卡身份", "pending", "等待实板检查"),
+            oobe_check("gatt", "核心 GATT", "pending", "等待实板检查"),
+            oobe_check("boardMicrophone", "板端录音链路", "pending", "等待实板检查"),
+            oobe_check("clock", "自动校时", "pending", "等待实板检查"),
+            oobe_check("imu", "IMU", "pending", "等待实板检查"),
+            oobe_check("speaker", "扬声器", "pending", "等待实板检查"),
+            oobe_check("display", "墨水屏", "pending", "等待实板观察"),
+            oobe_check("touch", "触摸", "pending", "等待实板操作"),
+            oobe_check("power", "电源与充电", "pending", "等待实板测量"),
+            oobe_check(
+                "remoteServices",
+                "ASR / 纪要服务",
+                "pending",
+                "不在硬件检查中调用",
+            ),
         ],
     }
 }
@@ -958,7 +1456,18 @@ fn create_host_session(
     let audio_path = supplied_audio_path
         .clone()
         .unwrap_or_else(|| default_host_audio_path(&id));
+    let meeting_mode = request
+        .meeting_mode
+        .as_deref()
+        .map(str::trim)
+        .filter(|mode| *mode == "onlineLive" || *mode == "offlineStore")
+        .map(str::to_string)
+        .unwrap_or_else(|| snapshot.host.recording_policy.default_meeting_mode.clone());
     CompanionV1HostSession {
+        note_revision: 0, meeting_notes: vec![],
+        bookmark_revision: 0,
+        bookmarks: vec![],
+        transcript_review: None,
         id: id.clone(),
         title: request
             .title
@@ -973,12 +1482,19 @@ fn create_host_session(
             "hostMicrophone".to_string()
         },
         status: "recording".to_string(),
+        meeting_mode,
         pending_reason: None,
         started_at: Some(now.to_string()),
         stopped_at: None,
         duration_ms,
         audio_path: Some(audio_path.clone()),
         audio_bytes,
+        audio_stored: false,
+        device_recording_id: None,
+        device_total_length: None,
+        device_sha256: None,
+        device_reclaimed: false, capture_incomplete: false,
+        source_device_id: request.device_id.clone(),
         chunks: vec![audio_chunk(
             &format!("{id}-chunk-1"),
             Some(audio_path.clone()),
@@ -989,17 +1505,21 @@ fn create_host_session(
             "open",
         )],
         transcript_text: String::new(),
+        transcript_final: false,
+        live_transcript_text: String::new(),
         transcript_preview: String::new(),
         transcript_segments: 0,
         utterances: Vec::new(),
         minutes: None,
+        minutes_by_mode: Default::default(),
+        recovery: Default::default(),
         export_markdown: String::new(),
         exported_at: None,
         retention: session_retention(true, false, false),
     }
 }
 
-fn create_synced_device_session(
+pub(crate) fn synced_device_session(
     snapshot: &CompanionV1Snapshot,
     request: &CompanionV1ControlRequest,
     now: &str,
@@ -1028,6 +1548,7 @@ fn create_synced_device_session(
                     .unwrap_or_else(|| "Companion device recording".to_string()),
             ),
             transcript_text: None,
+            meeting_mode: Some("offlineStore".to_string()),
             audio_path: Some(audio_path.clone()),
             audio_bytes: Some(audio_bytes),
             device_id: request.device_id.clone(),
@@ -1036,12 +1557,19 @@ fn create_synced_device_session(
         now,
     );
     session.source = "deviceFlash".to_string();
+    session.meeting_mode = "offlineStore".to_string();
     session.status = "captured".to_string();
     session.pending_reason = Some("needs_transcription".to_string());
+    session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
     session.started_at = None;
     session.stopped_at = Some(now.to_string());
     session.duration_ms = duration_ms;
     session.audio_bytes = audio_bytes;
+    session.audio_stored = true;
+    session.device_recording_id = None;
+    session.device_total_length = None;
+    session.device_sha256 = None;
+    session.device_reclaimed = false;
     session.chunks = vec![audio_chunk(
         &format!("{}-flash-cache", session.id),
         Some(audio_path),
@@ -1069,9 +1597,8 @@ fn apply_transcript(
     snapshot.host.sessions[index].transcript_preview = preview_text(&transcript);
     snapshot.host.sessions[index].transcript_segments = split_segments(&transcript).len();
     snapshot.host.sessions[index].transcript_text = transcript;
-    snapshot.host.sessions[index]
-        .retention
-        .transcript_cached = true;
+    snapshot.host.sessions[index].transcript_final = true;
+    snapshot.host.sessions[index].retention.transcript_cached = true;
     snapshot.meeting.active = false;
     snapshot.meeting.status = "transcribed".to_string();
     snapshot.meeting.transcript_count = count_transcript_sessions(snapshot);
@@ -1199,6 +1726,24 @@ pub fn seal_companion_v1_session_chunks(
     seal_session_chunks(session, now, duration_ms, audio_bytes)
 }
 
+fn default_meeting_mode_offline() -> String {
+    "offlineStore".to_string()
+}
+
+fn default_supported_meeting_modes() -> Vec<String> {
+    vec!["offlineStore".to_string(), "onlineLive".to_string()]
+}
+
+fn default_offline_store_guide() -> String {
+    "Offline: store WAV/chunks first (no live ASR); later batch transcribe → L0/L1 minutes"
+        .to_string()
+}
+
+fn default_online_live_guide() -> String {
+    "Online: live partial transcript while recording; audio still stored as backup; stop → minutes"
+        .to_string()
+}
+
 fn default_host_audio_path(session_id: &str) -> String {
     format!("host://companion-type/recordings/{session_id}.wav")
 }
@@ -1220,7 +1765,7 @@ fn session_retention(
         transcript_cached,
         minutes_cached,
         consent_required: true,
-        retention_label: "7 days local".to_string(),
+        retention_label: "Local until manually deleted".to_string(),
         expires_at: None,
     }
 }
@@ -1243,7 +1788,7 @@ fn refresh_privacy_state(
         .host
         .sessions
         .iter()
-        .map(|session| session.transcript_text.as_bytes().len() as u64)
+        .map(|session| (session.transcript_text.len() + session.meeting_notes.iter().map(|n| n.text.len()).sum::<usize>()) as u64)
         .sum();
     let minutes_bytes = snapshot
         .host
@@ -1295,6 +1840,8 @@ fn build_minutes(
     let keywords = extract_keywords(&session.transcript_text);
 
     let mut minutes = CompanionV1MeetingMinutes {
+        processing: None,
+        source_review_revision: None,
         generated_at: generated_at.to_string(),
         source: "rules_l0".to_string(),
         quality: "draft".to_string(),
@@ -1304,6 +1851,7 @@ fn build_minutes(
         questions,
         keywords,
         markdown: String::new(),
+        llm_note: None,
     };
     minutes.markdown = render_minutes_markdown(session, &minutes);
     minutes
@@ -1498,12 +2046,15 @@ fn count_transcript_sessions(snapshot: &CompanionV1Snapshot) -> u32 {
 
 fn characteristic_for_action(action: CompanionV1ControlAction) -> &'static str {
     match action {
+        CompanionV1ControlAction::HostRetrySave => COMPANION_V1_HOST_RECORDING_CHANNEL,
         CompanionV1ControlAction::DeviceScan
         | CompanionV1ControlAction::DeviceConnect
         | CompanionV1ControlAction::DeviceDisconnect
-        | CompanionV1ControlAction::DeviceSyncRecordings => COMPANION_V1_HOST_DEVICE_CHANNEL,
-        CompanionV1ControlAction::StageBleName
-        | CompanionV1ControlAction::ApplyBleName
+        | CompanionV1ControlAction::DeviceSyncRecordings
+        | CompanionV1ControlAction::DeviceEnableAutoReconnect
+        | CompanionV1ControlAction::DeviceDisableAutoReconnect => COMPANION_V1_HOST_DEVICE_CHANNEL,
+        CompanionV1ControlAction::StageBleName => COMPANION_V1_HOST_DEVICE_CHANNEL,
+        CompanionV1ControlAction::ApplyBleName
         | CompanionV1ControlAction::ResetBleName => COMPANION_V1_GATT_BOUNDARY.ble_name_config_uuid,
         CompanionV1ControlAction::OobeRunChecks => COMPANION_V1_HOST_SETUP_CHANNEL,
         CompanionV1ControlAction::MeetingStart
@@ -1512,20 +2063,25 @@ fn characteristic_for_action(action: CompanionV1ControlAction) -> &'static str {
             COMPANION_V1_GATT_BOUNDARY.meeting_control_uuid
         }
         CompanionV1ControlAction::MeetingImportTranscript
+        | CompanionV1ControlAction::MeetingAppendLiveTranscript
         | CompanionV1ControlAction::MeetingTranscribeAudio
+        | CompanionV1ControlAction::MeetingSelectSession
         | CompanionV1ControlAction::MeetingResetSession => COMPANION_V1_HOST_RECORDING_CHANNEL,
         CompanionV1ControlAction::MeetingGenerateMinutes
         | CompanionV1ControlAction::MeetingExportMarkdown
         | CompanionV1ControlAction::MeetingExportTxt
         | CompanionV1ControlAction::MeetingExportJson
         | CompanionV1ControlAction::MeetingExportSrt
+        | CompanionV1ControlAction::MeetingExportActionsTodo
+        | CompanionV1ControlAction::MeetingExportActionsIcal
         | CompanionV1ControlAction::MeetingLoadDemo => COMPANION_V1_HOST_MINUTES_CHANNEL,
         CompanionV1ControlAction::SpeakerPrompt | CompanionV1ControlAction::SpeakerStop => {
             COMPANION_V1_GATT_BOUNDARY.speaker_control_uuid
         }
         CompanionV1ControlAction::PrivacyEraseAudio
         | CompanionV1ControlAction::PrivacyEraseTranscript
-        | CompanionV1ControlAction::PrivacyEraseAll => COMPANION_V1_HOST_PRIVACY_CHANNEL,
+        | CompanionV1ControlAction::PrivacyEraseAll
+        | CompanionV1ControlAction::PrivacyDeleteSession => COMPANION_V1_HOST_PRIVACY_CHANNEL,
         CompanionV1ControlAction::WakeArm
         | CompanionV1ControlAction::WakeDisable
         | CompanionV1ControlAction::WakeTestDetect => {
@@ -1574,10 +2130,13 @@ fn payload_hex(request: &CompanionV1ControlRequest) -> String {
 
 fn action_command(action: CompanionV1ControlAction) -> u8 {
     match action {
+        CompanionV1ControlAction::HostRetrySave => 0x8e,
         CompanionV1ControlAction::DeviceScan => 0x10,
         CompanionV1ControlAction::DeviceConnect => 0x11,
         CompanionV1ControlAction::DeviceDisconnect => 0x12,
         CompanionV1ControlAction::DeviceSyncRecordings => 0x13,
+        CompanionV1ControlAction::DeviceEnableAutoReconnect => 0x14,
+        CompanionV1ControlAction::DeviceDisableAutoReconnect => 0x15,
         CompanionV1ControlAction::OobeRunChecks => 0x20,
         CompanionV1ControlAction::StageBleName
         | CompanionV1ControlAction::MeetingStart
@@ -1596,35 +2155,49 @@ fn action_command(action: CompanionV1ControlAction) -> u8 {
         CompanionV1ControlAction::MeetingExportTxt => 0x87,
         CompanionV1ControlAction::MeetingExportJson => 0x88,
         CompanionV1ControlAction::MeetingExportSrt => 0x89,
+        CompanionV1ControlAction::MeetingExportActionsTodo => 0x8a,
+        CompanionV1ControlAction::MeetingExportActionsIcal => 0x8b,
         CompanionV1ControlAction::MeetingResetSession => 0x84,
         CompanionV1ControlAction::MeetingTranscribeAudio => 0x85,
         CompanionV1ControlAction::MeetingLoadDemo => 0x86,
+        CompanionV1ControlAction::MeetingAppendLiveTranscript => 0x8c,
+        CompanionV1ControlAction::MeetingSelectSession => 0x8d,
         CompanionV1ControlAction::PrivacyEraseAudio => 0x90,
         CompanionV1ControlAction::PrivacyEraseTranscript => 0x91,
         CompanionV1ControlAction::PrivacyEraseAll => 0x92,
+        CompanionV1ControlAction::PrivacyDeleteSession => 0x93,
     }
 }
 
 fn host_only_action(action: CompanionV1ControlAction) -> bool {
     matches!(
         action,
-        CompanionV1ControlAction::DeviceScan
+        CompanionV1ControlAction::HostRetrySave
+            | CompanionV1ControlAction::DeviceScan
             | CompanionV1ControlAction::DeviceConnect
             | CompanionV1ControlAction::DeviceDisconnect
             | CompanionV1ControlAction::DeviceSyncRecordings
+            | CompanionV1ControlAction::DeviceEnableAutoReconnect
+            | CompanionV1ControlAction::DeviceDisableAutoReconnect
             | CompanionV1ControlAction::OobeRunChecks
+            | CompanionV1ControlAction::StageBleName
             | CompanionV1ControlAction::MeetingImportTranscript
+            | CompanionV1ControlAction::MeetingAppendLiveTranscript
             | CompanionV1ControlAction::MeetingTranscribeAudio
             | CompanionV1ControlAction::MeetingGenerateMinutes
             | CompanionV1ControlAction::MeetingExportMarkdown
             | CompanionV1ControlAction::MeetingExportTxt
             | CompanionV1ControlAction::MeetingExportJson
             | CompanionV1ControlAction::MeetingExportSrt
+            | CompanionV1ControlAction::MeetingExportActionsTodo
+            | CompanionV1ControlAction::MeetingExportActionsIcal
             | CompanionV1ControlAction::MeetingLoadDemo
+            | CompanionV1ControlAction::MeetingSelectSession
             | CompanionV1ControlAction::MeetingResetSession
             | CompanionV1ControlAction::PrivacyEraseAudio
             | CompanionV1ControlAction::PrivacyEraseTranscript
             | CompanionV1ControlAction::PrivacyEraseAll
+            | CompanionV1ControlAction::PrivacyDeleteSession
     )
 }
 
@@ -1644,7 +2217,7 @@ mod tests {
     }
 
     #[test]
-    fn stage_ble_name_uses_settings_characteristic() {
+    fn local_stage_does_not_claim_a_device_write_and_apply_accepts_direct_name() {
         let snapshot = apply_fixture_control(
             fixture_snapshot(),
             CompanionV1ControlRequest {
@@ -1654,6 +2227,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -1661,12 +2235,33 @@ mod tests {
             },
         )
         .unwrap();
-        let echo = snapshot.last_control.unwrap();
+        let echo = snapshot.last_control.as_ref().unwrap();
         assert_eq!(
             echo.characteristic_uuid,
+            COMPANION_V1_HOST_DEVICE_CHANNEL
+        );
+        let applied = apply_fixture_control(
+            snapshot,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::ApplyBleName,
+                ble_name: Some("Companion Two".to_string()),
+                session_id: None,
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            },
+        )
+        .unwrap();
+        assert_eq!(applied.ble_name.active_name, "Companion Two");
+        assert_eq!(
+            applied.last_control.unwrap().characteristic_uuid,
             COMPANION_V1_GATT_BOUNDARY.ble_name_config_uuid
         );
-        assert!(echo.payload_hex.starts_with("011d"));
     }
 
     #[test]
@@ -1680,6 +2275,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -1689,6 +2285,77 @@ mod tests {
         .unwrap();
         assert_eq!(snapshot.meeting.status, "finalized");
         assert_eq!(snapshot.meeting.transcript_count, 0);
+    }
+
+    #[test]
+    fn unpopulated_board_features_are_honest_and_fail_closed() {
+        let snapshot = fixture_snapshot();
+        assert!(!snapshot.imu.supported);
+        assert!(!snapshot.speaker.supported);
+        assert!(snapshot.speaker.muted);
+        assert_eq!(snapshot.speaker.volume, 0);
+        assert_eq!(snapshot.speaker.status, "notPopulated");
+        assert!(!snapshot.wake_word.supported);
+        assert!(!snapshot.wake_word.armed);
+        assert_eq!(snapshot.wake_word.engine, "notPopulated");
+        assert_eq!(snapshot.wake_word.confidence, 0.0);
+
+        for action in [
+            CompanionV1ControlAction::SpeakerPrompt,
+            CompanionV1ControlAction::SpeakerStop,
+            CompanionV1ControlAction::WakeArm,
+            CompanionV1ControlAction::WakeDisable,
+            CompanionV1ControlAction::WakeTestDetect,
+        ] {
+            let result = apply_fixture_control(
+                fixture_snapshot(),
+                CompanionV1ControlRequest {
+                    action,
+                    ble_name: None,
+                    session_id: None,
+                    prompt_id: None,
+                    title: None,
+                    transcript_text: None,
+                    meeting_mode: None,
+                    audio_path: None,
+                    audio_bytes: None,
+                    device_id: None,
+                    duration_ms: None,
+                },
+            );
+            assert!(result.is_err());
+        }
+    }
+
+    #[test]
+    fn measured_connected_speaker_can_enter_prompting_state() {
+        let mut snapshot = fixture_snapshot();
+        snapshot.connected = true;
+        snapshot.device.connected = true;
+        snapshot.speaker.supported = true;
+        snapshot.speaker.online = true;
+        snapshot.speaker.volume = 65;
+        snapshot.speaker.muted = false;
+        let updated = apply_fixture_control(
+            snapshot,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::SpeakerPrompt,
+                ble_name: None,
+                session_id: None,
+                prompt_id: Some("confirm".to_string()),
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            },
+        )
+        .unwrap();
+        assert!(updated.speaker.supported && updated.speaker.online);
+        assert_eq!(updated.speaker.status, "prompting");
+        assert_eq!(updated.speaker.volume, 65);
     }
 
     #[test]
@@ -1703,6 +2370,7 @@ mod tests {
                 prompt_id: None,
                 title: Some("Companion host workflow".to_string()),
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -1719,6 +2387,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -1756,6 +2425,24 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: Some("Decision: host owns long recordings.\nAction owner: Chen due: July 5 validates Markdown.\nQuestion: wake word now?".to_string()),
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            },
+        )
+        .unwrap();
+        let generated = apply_fixture_control(
+            transcribed,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingGenerateMinutes,
+                ble_name: None,
+                session_id: None,
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -1764,7 +2451,7 @@ mod tests {
         )
         .unwrap();
         let exported = apply_fixture_control(
-            transcribed,
+            generated,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingExportMarkdown,
                 ble_name: None,
@@ -1772,6 +2459,7 @@ mod tests {
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
+                meeting_mode: None,
                 audio_path: None,
                 audio_bytes: None,
                 device_id: None,
@@ -1785,5 +2473,148 @@ mod tests {
             .export_markdown
             .contains("# Companion host workflow"));
         assert!(session.export_markdown.contains("## Action Items"));
+    }
+
+    #[test]
+    fn recovery_privacy_erasure_revokes_intent_and_clears_transcript_proof() {
+        let mut snapshot = fixture_snapshot();
+        let sync_request = CompanionV1ControlRequest {
+            action: CompanionV1ControlAction::DeviceSyncRecordings,
+            ble_name: None,
+            session_id: Some("privacy-session".to_string()),
+            prompt_id: None,
+            title: Some("privacy".to_string()),
+            transcript_text: None,
+            meeting_mode: Some("offlineStore".to_string()),
+            audio_path: Some("C:/test/privacy.wav".to_string()),
+            audio_bytes: Some(16),
+            device_id: Some("test-device".to_string()),
+            duration_ms: Some(1_000),
+        };
+        let mut session = synced_device_session(&snapshot, &sync_request, "test");
+        session.transcript_text = "final and private".to_string();
+        session.transcript_final = true;
+        session.live_transcript_text = "live and private".to_string();
+        session.utterances = vec![CompanionV1UtteranceSegment {
+            text: "speaker text".to_string(),
+            start_ms: 0,
+            end_ms: 100,
+            speaker: Some(0),
+        }];
+        snapshot.host.sessions = vec![session];
+        snapshot.host.selected_session_id = Some("privacy-session".to_string());
+
+        let erased_text = apply_fixture_control(
+            snapshot,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::PrivacyEraseTranscript,
+                session_id: Some("privacy-session".to_string()),
+                ble_name: None,
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            },
+        )
+        .unwrap();
+        let session = &erased_text.host.sessions[0];
+        assert_eq!(session.recovery, CompanionV1MeetingRecovery::default());
+        assert!(!session.transcript_final);
+        assert!(session.transcript_text.is_empty());
+        assert!(session.live_transcript_text.is_empty());
+        assert!(session.utterances.is_empty());
+
+        let mut audio_snapshot = erased_text;
+        audio_snapshot.host.sessions[0].recovery =
+            CompanionV1MeetingRecovery::armed("offlineStore");
+        audio_snapshot.host.sessions[0].pending_reason =
+            Some("recovery_processing".to_string());
+        let erased_audio = apply_fixture_control(
+            audio_snapshot,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::PrivacyEraseAudio,
+                session_id: Some("privacy-session".to_string()),
+                ble_name: None,
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: None,
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            },
+        )
+        .unwrap();
+        let session = &erased_audio.host.sessions[0];
+        assert_eq!(session.recovery, CompanionV1MeetingRecovery::default());
+        assert!(session.pending_reason.is_none());
+        assert!(session.audio_path.is_none());
+        assert_eq!(session.audio_bytes, 0);
+    }
+
+    #[test]
+    fn legacy_export_never_generates_missing_minutes_or_fake_srt() {
+        let mut snapshot = apply_fixture_control(
+            fixture_snapshot(),
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingLoadDemo,
+                ble_name: None,
+                session_id: Some("export-existing-only".to_string()),
+                prompt_id: None,
+                title: None,
+                transcript_text: Some("已有文字".to_string()),
+                meeting_mode: Some("offlineStore".to_string()),
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: Some(1_000),
+            },
+        )
+        .unwrap();
+        snapshot.host.sessions[0].transcript_final = true;
+        let mut missing = snapshot.clone();
+        missing.host.sessions[0].minutes = None;
+        missing.host.sessions[0].minutes_by_mode = Default::default();
+        assert!(apply_fixture_control(
+            missing,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingExportMarkdown,
+                ble_name: None,
+                session_id: Some("export-existing-only".to_string()),
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: Some("offlineStore".to_string()),
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            }
+        )
+        .unwrap_err()
+        .contains("completed minutes"));
+        assert!(apply_fixture_control(
+            snapshot,
+            CompanionV1ControlRequest {
+                action: CompanionV1ControlAction::MeetingExportSrt,
+                ble_name: None,
+                session_id: Some("export-existing-only".to_string()),
+                prompt_id: None,
+                title: None,
+                transcript_text: None,
+                meeting_mode: Some("offlineStore".to_string()),
+                audio_path: None,
+                audio_bytes: None,
+                device_id: None,
+                duration_ms: None,
+            }
+        )
+        .unwrap_err()
+        .contains("real timed utterances"));
     }
 }

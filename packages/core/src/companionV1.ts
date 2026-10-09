@@ -1,3 +1,5 @@
+import type { CompanionRecordingBookmark } from './recordingBookmarks';
+
 export const COMPANION_V1_SCHEMA = 'companion.host.v1' as const;
 export const COMPANION_V1_DEFAULT_BLE_NAME = 'companion';
 export const COMPANION_V1_BLE_NAME_MAX_BYTES = 29;
@@ -18,6 +20,8 @@ export const COMPANION_V1_HOST_SETUP_CHANNEL = 'host://companion-type/setup';
 export const COMPANION_V1_HOST_PRIVACY_CHANNEL = 'host://companion-type/privacy';
 
 export const COMPANION_V1_GATT_BOUNDARY = {
+  deviceStatusServiceUuid: '8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000',
+  deviceStatusUuid: '8f7a1001-7b7d-4f3d-9d6f-6c2d1b7c0000',
   settingsServiceUuid: '8f7a0004-7b7d-4f3d-9d6f-6c2d1b7c0000',
   bleNameConfigUuid: '8f7a4002-7b7d-4f3d-9d6f-6c2d1b7c0000',
   meetingServiceUuid: '8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000',
@@ -35,9 +39,12 @@ export const COMPANION_V1_GATT_BOUNDARY = {
 export type CompanionV1SnapshotSource = 'fixture' | 'firmware' | 'lastKnown' | 'unavailable';
 
 export type CompanionV1ControlAction =
+  | 'hostRetrySave'
   | 'deviceScan'
   | 'deviceConnect'
   | 'deviceDisconnect'
+  | 'deviceEnableAutoReconnect'
+  | 'deviceDisableAutoReconnect'
   | 'deviceSyncRecordings'
   | 'stageBleName'
   | 'applyBleName'
@@ -46,15 +53,23 @@ export type CompanionV1ControlAction =
   | 'meetingStart'
   | 'meetingStop'
   | 'meetingFinalize'
+  | 'meetingAppendLiveTranscript'
   | 'meetingImportTranscript'
   | 'meetingTranscribeAudio'
   | 'meetingGenerateMinutes'
   | 'meetingExportMarkdown'
+  | 'meetingExportTxt'
+  | 'meetingExportJson'
+  | 'meetingExportSrt'
+  | 'meetingExportActionsTodo'
+  | 'meetingExportActionsIcal'
   | 'meetingLoadDemo'
+  | 'meetingSelectSession'
   | 'meetingResetSession'
   | 'privacyEraseAudio'
   | 'privacyEraseTranscript'
   | 'privacyEraseAll'
+  | 'privacyDeleteSession'
   | 'speakerPrompt'
   | 'speakerStop'
   | 'wakeArm'
@@ -82,6 +97,12 @@ export interface CompanionV1MeetingState {
 
 export interface CompanionV1ImuState {
   supported: boolean;
+  /**
+   * Electronic-pet body sense (pick up / tap / idle). Enabled only after a
+   * valid IMU_STATUS read reports populated hardware.
+   * Product core identity: pet first; meeting is a skill.
+   */
+  reserved: boolean;
   online: boolean;
   sampleHz: number;
   motion: 'unknown' | 'still' | 'moving' | 'tilted';
@@ -91,10 +112,15 @@ export interface CompanionV1ImuState {
 
 export interface CompanionV1SpeakerState {
   supported: boolean;
+  /**
+   * Electronic-pet “mouth”: short calls / mood sounds, not long meeting playback.
+   * Enabled only after a valid SPEAKER_STATUS read reports populated hardware.
+   */
+  reserved: boolean;
   online: boolean;
   muted: boolean;
   volume: number;
-  status: 'idle' | 'prompting' | 'streaming' | 'error';
+  status: 'unknown' | 'notPopulated' | 'idle' | 'prompting' | 'streaming' | 'error';
 }
 
 export interface CompanionV1WakeWordState {
@@ -124,8 +150,49 @@ export interface CompanionV1DeviceTransportState {
   lastSeenAt: string | null;
   signalRssi: number | null;
   recordingsAvailable: number;
+  /** Last valid board DEVICE_STATUS.active_mode reading. */
+  recording: boolean;
   lastSyncAt: string | null;
+  firmwareVersion: number | null;
+  buildId: number | null;
+  boardId: number | null;
+  hardwareRevision: string | null;
+  /** Optional WBA DEVICE_STATUS extension; absent on legacy 20-byte payloads. */
+  mcuUid?: string | null;
+  /** Active validated UI resource generation; absent until WBA assets mount. */
+  uiGeneration?: number | null;
+  /** Last validated device report. Refreshed on connection/sync; START checks again. */
+  recordingCapacity?: CompanionV1RecordingCapacity | null;
+  /** Transactional BLE readiness; ready means verified and connect-on-demand. */
+  connectionPhase: 'idle' | 'discovered' | 'checking' | 'ready' | 'reconnecting' | 'offline' | 'manualDisconnected' | 'busy';
+  rememberedDeviceId: string | null;
+  autoReconnectEnabled: boolean;
+  manualDisconnect: boolean;
+  lastConnectedAt: string | null;
+  lastReconnectAttemptAt: string | null;
+  reconnectAttemptCount: number;
   message: string;
+}
+
+export interface CompanionV1RecordingCapacity {
+  /** Explicit user-confirmed single-entry loss protocol; absent on older firmware. */
+  confirmedDiscardSupported?: boolean;
+  layoutVersion: number;
+  busy: boolean;
+  usedEntries: number;
+  maxEntries: number;
+  catalogGeneration: number;
+  dataBytes: number;
+  freeBytes: number;
+  largestFreeExtent: number;
+  protectedBytes: number;
+  consumedBytes: number;
+  bytesPerSecond: number;
+  reserveHeadroom: number;
+  localLimitSeconds: number;
+  unsyncedEntries: number;
+  writingEntries: number;
+  consumedEntries: number;
 }
 
 export type CompanionV1OobeCheckStatus = 'pending' | 'pass' | 'warn' | 'fail';
@@ -157,6 +224,7 @@ export interface CompanionV1PrivacyState {
 export type CompanionV1HostSessionSource =
   | 'fixture'
   | 'deviceFlash'
+  | 'boardDevice'
   | 'hostMicrophone'
   | 'importedTranscript';
 
@@ -172,7 +240,20 @@ export type CompanionV1SessionPendingReason =
   | null
   | 'needs_transcription'
   | 'needs_network'
-  | 'needs_pull';
+  | 'needs_pull'
+  | 'needs_device_sync'
+  | 'recovery_processing'
+  | 'recovery_retry_wait'
+  | 'recovery_paused'
+  | 'no_speech_detected'
+  | 'minutes_source_changed';
+
+/**
+ * Dual product routes:
+ * - offlineStore: record/store first; batch ASR later (no live network required during capture).
+ * - onlineLive: real-time partials while recording; audio still stored as backup.
+ */
+export type CompanionV1MeetingMode = 'offlineStore' | 'onlineLive';
 
 export type CompanionV1AudioChunkStatus = 'open' | 'sealed' | 'synced' | 'erased';
 
@@ -212,6 +293,12 @@ export interface CompanionV1RecordingPolicy {
   shortCaptureGuide: string;
   /** Long meeting: host owns audio; device is trigger/status only. */
   longMeetingGuide: string;
+  /** Supported dual routes. */
+  supportedMeetingModes: CompanionV1MeetingMode[];
+  /** Default when meetingStart omits meetingMode. */
+  defaultMeetingMode: CompanionV1MeetingMode;
+  offlineStoreGuide: string;
+  onlineLiveGuide: string;
 }
 
 export interface CompanionV1ActionItem {
@@ -221,6 +308,8 @@ export interface CompanionV1ActionItem {
 }
 
 export interface CompanionV1MeetingMinutes {
+  processing?: CompanionV1MinutesProcessing | null;
+  sourceReviewRevision?: number | null;
   generatedAt: string;
   /** rules_l0 = deterministic host extractor; llm later. */
   source: 'rules_l0' | 'fixture';
@@ -231,6 +320,77 @@ export interface CompanionV1MeetingMinutes {
   questions: string[];
   keywords: string[];
   markdown: string;
+  /**
+   * LLM downgrade reason. Present when L1 (DeepSeek) failed and we fell back
+   * to the L0 rule draft, so the UI can surface *why* final minutes weren't
+   * produced. undefined in normal operation.
+   */
+  llmNote?: string;
+}
+
+/** Submission coverage, independent of transcript/minutes accuracy. */
+export interface CompanionV1MinutesProcessing {
+  strategy: 'chunkedSourceBacked';
+  sourceBytes: number;
+  processedSourceBytes: number;
+  totalChunks: number;
+  completedChunks: number;
+  resumedChunks: number;
+  complete: boolean;
+}
+
+function cacheMinutesForMode(
+  session: CompanionV1HostSession,
+  minutes: CompanionV1MeetingMinutes,
+  partialCount = 0,
+): CompanionV1MinutesByMode {
+  const next: CompanionV1MinutesByMode = {
+    offlineStore: session.minutesByMode?.offlineStore ?? null,
+    onlineLive: session.minutesByMode?.onlineLive ?? null,
+  };
+  const variant: CompanionV1MinutesVariant = {
+    processing: minutes.processing,
+    status: 'minutesReady',
+    markdown: minutes.markdown,
+    source: minutes.source,
+    quality: minutes.quality,
+    generatedAt: minutes.generatedAt,
+    partialCount,
+    sourceReviewRevision: minutes.sourceReviewRevision,
+  };
+  if (session.meetingMode === 'onlineLive') next.onlineLive = variant;
+  else next.offlineStore = variant;
+  return next;
+}
+
+/** Timed, optionally speaker-attributed ASR segment (product diarization path). */
+export interface CompanionV1UtteranceSegment {
+  text: string;
+  startMs: number;
+  endMs: number;
+  /** 0-based speaker id when diarization succeeds. */
+  speaker?: number | null;
+}
+
+export interface CompanionSpeakerName { speaker: number; name: string; }
+export interface CompanionUtteranceEdit { index: number; text: string; speakerName?: string | null; }
+export interface CompanionTranscriptReview {
+  revision: number;
+  editedAt: string;
+  sourceTranscriptText: string;
+  sourceUtterances: CompanionV1UtteranceSegment[];
+  text?: string | null;
+  utteranceEdits: CompanionUtteranceEdit[];
+  speakerNames: CompanionSpeakerName[];
+}
+export interface CompanionTranscriptReviewEdit {
+  expectedTranscriptText: string;
+  expectedUtterances: CompanionV1UtteranceSegment[];
+  expectedRevision: number;
+  restoreOriginal?: boolean;
+  text?: string | null;
+  utteranceEdits?: CompanionUtteranceEdit[];
+  speakerNames?: CompanionSpeakerName[];
 }
 
 export interface CompanionV1HostSession {
@@ -238,6 +398,8 @@ export interface CompanionV1HostSession {
   title: string;
   source: CompanionV1HostSessionSource;
   status: CompanionV1HostSessionStatus;
+  /** offlineStore = store-first; onlineLive = live partials during capture. */
+  meetingMode: CompanionV1MeetingMode;
   /** Blocker after capture (needs ASR, network, or device pull). */
   pendingReason: CompanionV1SessionPendingReason;
   startedAt: string | null;
@@ -245,17 +407,76 @@ export interface CompanionV1HostSession {
   durationMs: number;
   audioPath: string | null;
   audioBytes: number;
+  /** True once audio is sealed/synced on disk (offline always stores; online also stores backup). */
+  audioStored: boolean;
+  /** Durable WB55 journal identity; absent for host/imported sessions. */
+  deviceRecordingId?: number | null;
+  deviceTotalLength?: number | null;
+  deviceSha256?: string | null;
+  deviceReclaimed?: boolean;
+  /** Interrupted capture: only the verified complete packet prefix survived. */
+  captureIncomplete?: boolean;
+  sourceDeviceId?: string | null;
   chunks: CompanionV1AudioChunk[];
   transcriptText: string;
+  /** False for online-live prefixes; true only after final ASR/import commit. */
+  transcriptFinal?: boolean;
+  /** Cumulative live partials for onlineLive (mirrors into transcriptText while recording). */
+  liveTranscriptText: string;
   transcriptPreview: string;
   transcriptSegments: number;
+  /** Speaker-attributed utterances when diarization ran (Volc + models). */
+  utterances?: CompanionV1UtteranceSegment[];
+  transcriptReview?: CompanionTranscriptReview | null;
+  bookmarkRevision?: number;
+  bookmarks?: CompanionRecordingBookmark[];
+  noteRevision?: number;
+  meetingNotes?: import('./meetingNotes').CompanionMeetingNote[];
   minutes: CompanionV1MeetingMinutes | null;
+  /** Independently persisted minutes products for the same durable recording. */
+  minutesByMode?: CompanionV1MinutesByMode;
+  /** Durable per-session authorization and retry checkpoint for automatic recovery. */
+  recovery?: CompanionV1MeetingRecovery;
   exportMarkdown: string;
   exportedAt: string | null;
   retention: CompanionV1SessionRetention;
 }
 
+export interface CompanionV1MinutesVariant {
+  processing?: CompanionV1MinutesProcessing | null;
+  sourceReviewRevision?: number | null;
+  status: 'minutesReady' | 'retryPending';
+  markdown: string;
+  source: string;
+  quality: string;
+  generatedAt: string | null;
+  /** onlineLive only: durable-prefix ASR results observed before STOP. */
+  partialCount: number;
+}
+
+export interface CompanionV1MeetingRecovery {
+  intent: 'none' | 'processMeeting';
+  requestedMeetingMode: string;
+  stage: 'idle' | 'pendingTranscription' | 'transcribing' | 'pendingMinutes'
+    | 'generatingMinutes' | 'retryBackoff' | 'paused' | 'complete';
+  attemptCount: number;
+  maxAttempts: number;
+  retryStage?: 'transcription' | 'minutes' | '';
+  nextRetryAtUnixMs?: number | null;
+  lastError?: string | null;
+}
+
+export interface CompanionV1MinutesByMode {
+  offlineStore: CompanionV1MinutesVariant | null;
+  onlineLive: CompanionV1MinutesVariant | null;
+}
+
 export interface CompanionV1HostState {
+  persistence?: {
+    status: 'ready' | 'recovered' | 'blocked' | 'unsaved';
+    message?: string | null;
+    recoveryPath?: string | null;
+  };
   recordingPolicy: CompanionV1RecordingPolicy;
   activeSessionId: string | null;
   selectedSessionId: string | null;
@@ -296,6 +517,8 @@ export interface CompanionV1ControlRequest {
   promptId?: string;
   title?: string;
   transcriptText?: string;
+  /** Select offlineStore | onlineLive on meetingStart (default from policy). */
+  meetingMode?: CompanionV1MeetingMode;
   audioPath?: string;
   audioBytes?: number;
   deviceId?: string;
@@ -333,7 +556,8 @@ export function createCompanionV1Fixture(
       transcriptCount: 0,
     },
     imu: {
-      supported: true,
+      supported: false,
+      reserved: true,
       online: false,
       sampleHz: 0,
       motion: 'unknown',
@@ -341,14 +565,15 @@ export function createCompanionV1Fixture(
       gyro: { x: 0, y: 0, z: 0 },
     },
     speaker: {
-      supported: true,
+      supported: false,
+      reserved: true,
       online: false,
       muted: false,
       volume: 65,
       status: 'idle',
     },
     wakeWord: {
-      supported: true,
+      supported: false,
       armed: false,
       engine: 'fixture',
       keyword: 'hey companion',
@@ -394,6 +619,12 @@ export function createDefaultHostState(): CompanionV1HostState {
         'Short: device flash cache (≤60s) → Sync/pull → host ASR → minutes',
       longMeetingGuide:
         'Long meeting: host microphone (5 min chunks); device is trigger/status only — not full-hour BLE pull',
+      supportedMeetingModes: ['offlineStore', 'onlineLive'],
+      defaultMeetingMode: 'offlineStore',
+      offlineStoreGuide:
+        'Offline: store WAV/chunks first (no live ASR); later batch transcribe → L0/L1 minutes',
+      onlineLiveGuide:
+        'Online: live partial transcript while recording; audio still stored as backup; stop → minutes',
     },
     activeSessionId: null,
     selectedSessionId: null,
@@ -412,7 +643,22 @@ export function createDefaultDeviceState(): CompanionV1DeviceTransportState {
     lastSeenAt: null,
     signalRssi: null,
     recordingsAvailable: 0,
+    recording: false,
     lastSyncAt: null,
+    firmwareVersion: null,
+    buildId: null,
+    boardId: null,
+    hardwareRevision: null,
+    mcuUid: null,
+    uiGeneration: null,
+    recordingCapacity: null,
+    connectionPhase: 'idle',
+    rememberedDeviceId: null,
+    autoReconnectEnabled: true,
+    manualDisconnect: false,
+    lastConnectedAt: null,
+    lastReconnectAttemptAt: null,
+    reconnectAttemptCount: 0,
     message: 'Not scanned',
   };
 }
@@ -422,11 +668,17 @@ export function createDefaultOobeState(): CompanionV1OobeState {
     complete: false,
     lastRunAt: null,
     checks: [
-      { id: 'firmware', label: 'Firmware', status: 'pending', message: 'Waiting' },
-      { id: 'bluetooth', label: 'Bluetooth', status: 'pending', message: 'Waiting' },
-      { id: 'microphone', label: 'Microphone', status: 'pending', message: 'Waiting' },
-      { id: 'asr', label: 'ASR', status: 'pending', message: 'Waiting' },
-      { id: 'privacy', label: 'Privacy', status: 'pending', message: 'Waiting' },
+      { id: 'bluetooth', label: '蓝牙连接', status: 'pending', message: '等待实板检查' },
+      { id: 'firmware', label: '固件与板卡身份', status: 'pending', message: '等待实板检查' },
+      { id: 'gatt', label: '核心 GATT', status: 'pending', message: '等待实板检查' },
+      { id: 'boardMicrophone', label: '板端录音链路', status: 'pending', message: '等待实板检查' },
+      { id: 'clock', label: '自动校时', status: 'pending', message: '等待实板检查' },
+      { id: 'imu', label: 'IMU', status: 'pending', message: '等待实板检查' },
+      { id: 'speaker', label: '扬声器', status: 'pending', message: '等待实板检查' },
+      { id: 'display', label: '墨水屏', status: 'pending', message: '等待实板观察' },
+      { id: 'touch', label: '触摸', status: 'pending', message: '等待实板操作' },
+      { id: 'power', label: '电源与充电', status: 'pending', message: '等待实板测量' },
+      { id: 'remoteServices', label: 'ASR / 纪要服务', status: 'pending', message: '不在硬件检查中调用' },
     ],
   };
 }
@@ -452,7 +704,29 @@ export function applyCompanionV1ControlFixture(
   const now = new Date().toISOString();
   next.updatedAt = now;
 
+  if (
+    request.action === 'oobeRunChecks'
+    && (next.meeting.active || next.host.sessions.some((session) => session.status === 'recording'))
+  ) {
+    throw new Error('正在录音或在线转写，不能运行首次使用检查；请先停止并完成当前会议');
+  }
+
+  if (
+    (request.action === 'speakerPrompt' || request.action === 'speakerStop')
+    && (!next.speaker.supported || !next.device.connected)
+  ) {
+    throw new Error('Companion speaker is not populated on this hardware.');
+  }
+  if (
+    (request.action === 'wakeArm' || request.action === 'wakeDisable' || request.action === 'wakeTestDetect')
+    && !next.wakeWord.supported
+  ) {
+    throw new Error('Companion wake-word engine is not populated on this hardware.');
+  }
+
   switch (request.action) {
+    case 'hostRetrySave':
+      throw new Error('本地会议库恢复需要 Companion Type 桌面程序；浏览器演示不能验证磁盘保存。');
     case 'deviceScan':
       next.device = {
         ...next.device,
@@ -462,6 +736,7 @@ export function applyCompanionV1ControlFixture(
         lastSeenAt: now,
         signalRssi: -48,
         recordingsAvailable: Math.max(next.device.recordingsAvailable, 1),
+        connectionPhase: 'discovered',
         message: 'Companion device discovered',
       };
       next.connected = false;
@@ -474,16 +749,31 @@ export function applyCompanionV1ControlFixture(
         lastSeenAt: now,
         signalRssi: next.device.signalRssi ?? -48,
         message: 'Companion device connected',
+        connectionPhase: 'ready',
       };
       next.connected = true;
       break;
     case 'deviceDisconnect':
       next.device = {
         ...next.device,
+        recordingCapacity: null,
         connected: false,
         message: 'Companion device disconnected',
+        connectionPhase: 'manualDisconnected',
+        manualDisconnect: Boolean(next.device.rememberedDeviceId),
       };
       next.connected = false;
+      break;
+    case 'deviceEnableAutoReconnect':
+      next.device = {
+        ...next.device,
+        autoReconnectEnabled: true,
+        manualDisconnect: false,
+        connectionPhase: next.device.rememberedDeviceId ? 'offline' : 'idle',
+      };
+      break;
+    case 'deviceDisableAutoReconnect':
+      next.device = { ...next.device, autoReconnectEnabled: false };
       break;
     case 'deviceSyncRecordings': {
       const session = createSyncedDeviceSession(next, request, now);
@@ -517,14 +807,21 @@ export function applyCompanionV1ControlFixture(
       next.bleName = { ...next.bleName, stagedName: name, status: 'staged', pendingRestart: true };
       break;
     }
-    case 'applyBleName':
+    case 'applyBleName': {
+      const requested = request.bleName?.trim();
+      if (requested && !companionBleNameIsValid(requested)) {
+        throw new Error('Companion BLE name must be 1-29 printable ASCII bytes and cannot contain quotes, semicolons, equals signs, or backslashes.');
+      }
+      const activeName = requested || next.bleName.stagedName;
       next.bleName = {
         ...next.bleName,
-        activeName: next.bleName.stagedName,
+        stagedName: activeName,
+        activeName,
         status: 'pendingRestart',
         pendingRestart: true,
       };
       break;
+    }
     case 'resetBleName':
       next.bleName = {
         ...next.bleName,
@@ -538,16 +835,17 @@ export function applyCompanionV1ControlFixture(
         complete: true,
         lastRunAt: now,
         checks: [
-          { id: 'firmware', label: 'Firmware', status: 'pass', message: 'STM32CubeProgrammer or firmware helper ready' },
-          { id: 'bluetooth', label: 'Bluetooth', status: next.device.supported ? 'pass' : 'warn', message: next.device.providerId },
-          { id: 'microphone', label: 'Microphone', status: 'pass', message: 'Host WAV recorder ready' },
-          {
-            id: 'asr',
-            label: 'ASR',
-            status: 'pass',
-            message: `${next.host.recordingPolicy.asrProviderMode} (configure cloud/local before auto-transcribe)`,
-          },
-          { id: 'privacy', label: 'Privacy', status: 'pass', message: next.privacy.policyLabel },
+          { id: 'bluetooth', label: '蓝牙连接', status: 'warn', message: 'Fixture only：未执行物理扫描、配对或连接' },
+          { id: 'firmware', label: '固件与板卡身份', status: 'warn', message: 'Fixture only：未连接实板，未读取 DEVICE_STATUS' },
+          { id: 'gatt', label: '核心 GATT', status: 'warn', message: 'Fixture only：未发现或读取实板 GATT' },
+          { id: 'boardMicrophone', label: '板端录音链路', status: 'warn', message: '未实测；主机麦克风不能作为板端通过证据' },
+          { id: 'clock', label: '自动校时', status: 'warn', message: '未执行写后读回' },
+          { id: 'imu', label: 'IMU', status: 'warn', message: '未读取 IMU_STATUS' },
+          { id: 'speaker', label: '扬声器', status: 'warn', message: '未读取 SPEAKER_STATUS；未播放测试音' },
+          { id: 'display', label: '墨水屏', status: 'warn', message: '未检查；无屏幕自检 GATT' },
+          { id: 'touch', label: '触摸', status: 'warn', message: '未检查；无触摸自检 GATT' },
+          { id: 'power', label: '电源与充电', status: 'warn', message: '未检查；无电源/充电自检 GATT' },
+          { id: 'remoteServices', label: 'ASR / 纪要服务', status: 'warn', message: 'Fixture 检查不会调用外部服务' },
         ],
       };
       break;
@@ -568,21 +866,74 @@ export function applyCompanionV1ControlFixture(
     case 'meetingStop': {
       const session = requireSelectedSession(next, now, request);
       const durationMs = request.durationMs ?? Math.max(session.durationMs, 60000);
+      const audioBytes = request.audioBytes ?? estimatePcmBytes(durationMs);
+      const hasTranscript = session.transcriptText.trim().length > 0
+        || session.liveTranscriptText.trim().length > 0;
+      const finalTranscript = session.transcriptText.trim()
+        || session.liveTranscriptText.trim();
+      // Offline: always store-first; empty transcript → needs_transcription.
+      // Online: live text already present → transcribed; still keep audioStored.
+      const isOnline = session.meetingMode === 'onlineLive';
+      const status: CompanionV1HostSessionStatus = hasTranscript && isOnline
+        ? 'transcribed'
+        : 'captured';
+      const pendingReason: CompanionV1SessionPendingReason = hasTranscript
+        ? null
+        : 'needs_transcription';
       updateHostSession(next, session.id, {
-        status: 'captured',
-        pendingReason: session.transcriptText.trim() ? null : 'needs_transcription',
+        status,
+        pendingReason,
         stoppedAt: now,
         durationMs,
         chunks: sealSessionChunks(session, now, durationMs, request.audioBytes),
-        audioBytes: request.audioBytes ?? estimatePcmBytes(durationMs),
+        audioBytes,
+        audioStored: true,
+        transcriptText: finalTranscript || session.transcriptText,
+        transcriptPreview: previewText(finalTranscript || session.transcriptText),
+        transcriptSegments: splitTranscriptSegments(finalTranscript || session.transcriptText).length,
+        retention: {
+          ...session.retention,
+          audioCached: true,
+          transcriptCached: hasTranscript,
+        },
       });
       next.host.activeSessionId = null;
       next.meeting = {
         ...next.meeting,
         active: false,
-        status: 'captured',
+        status: status === 'transcribed' ? 'transcribed' : 'captured',
         durationMs,
+        transcriptCount: countTranscriptSessions(next),
       };
+      break;
+    }
+    case 'meetingAppendLiveTranscript': {
+      const session = requireSelectedSession(next, now, request);
+      if (session.meetingMode !== 'onlineLive') {
+        throw new Error('Live transcript append requires meetingMode=onlineLive.');
+      }
+      if (session.status !== 'recording') {
+        throw new Error('Live transcript append requires an active recording session.');
+      }
+      const delta = normalizeTranscript(request.transcriptText ?? '');
+      if (!delta) {
+        throw new Error('Live transcript append requires non-empty transcriptText.');
+      }
+      const live = normalizeTranscript(
+        session.liveTranscriptText ? `${session.liveTranscriptText} ${delta}` : delta,
+      );
+      updateHostSession(next, session.id, {
+        liveTranscriptText: live,
+        transcriptText: live,
+        transcriptPreview: previewText(live),
+        transcriptSegments: splitTranscriptSegments(live).length,
+        pendingReason: null,
+        retention: {
+          ...session.retention,
+          transcriptCached: true,
+        },
+      });
+      // Keep meeting.active while recording; surface partial progress in echo only.
       break;
     }
     case 'meetingFinalize': {
@@ -593,6 +944,7 @@ export function applyCompanionV1ControlFixture(
           status: 'minutesReady',
           pendingReason: null,
           minutes,
+          minutesByMode: cacheMinutesForMode(session, minutes),
           exportMarkdown: minutes.markdown,
           exportedAt: now,
           retention: {
@@ -662,6 +1014,7 @@ export function applyCompanionV1ControlFixture(
         status: 'minutesReady',
         pendingReason: null,
         minutes,
+        minutesByMode: cacheMinutesForMode(session, minutes),
         exportMarkdown: minutes.markdown,
         retention: {
           ...session.retention,
@@ -676,13 +1029,35 @@ export function applyCompanionV1ControlFixture(
       };
       break;
     }
-    case 'meetingExportMarkdown': {
+    case 'meetingExportMarkdown':
+    case 'meetingExportTxt':
+    case 'meetingExportJson':
+    case 'meetingExportSrt':
+    case 'meetingExportActionsTodo':
+    case 'meetingExportActionsIcal': {
       const session = requireSelectedSession(next, now, request);
       const minutes = session.minutes ?? buildCompanionMeetingMinutes(session, now);
+      let exportBody = minutes.markdown;
+      if (request.action === 'meetingExportTxt') {
+        exportBody = [session.title, '', session.transcriptText, '', minutes.markdown].join('\n');
+      } else if (request.action === 'meetingExportJson') {
+        exportBody = JSON.stringify({ title: session.title, transcript: session.transcriptText, minutes }, null, 2);
+      } else if (request.action === 'meetingExportSrt') {
+        exportBody = session.transcriptText
+          .split(/\n+/)
+          .filter(Boolean)
+          .map((line, index) => `${index + 1}\n00:00:${String(index).padStart(2, '0')},000 --> 00:00:${String(index + 1).padStart(2, '0')},000\n${line}\n`)
+          .join('\n') || minutes.markdown;
+      } else if (request.action === 'meetingExportActionsTodo') {
+        exportBody = (minutes.actionItems ?? []).map((item) => `- [ ] ${item.text}`).join('\n') || '- [ ] (none)';
+      } else if (request.action === 'meetingExportActionsIcal') {
+        exportBody = ['BEGIN:VCALENDAR', 'VERSION:2.0', ...(minutes.actionItems ?? []).flatMap((item) => ['BEGIN:VTODO', `SUMMARY:${item.text}`, 'END:VTODO']), 'END:VCALENDAR'].join('\r\n');
+      }
       updateHostSession(next, session.id, {
         status: 'minutesReady',
         minutes,
-        exportMarkdown: minutes.markdown,
+        minutesByMode: cacheMinutesForMode(session, minutes),
+        exportMarkdown: exportBody,
         exportedAt: now,
         retention: {
           ...session.retention,
@@ -721,12 +1096,15 @@ export function applyCompanionV1ControlFixture(
         now,
       );
       session.source = 'hostMicrophone';
+      session.meetingMode = request.meetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
       session.status = 'minutesReady';
       session.pendingReason = null;
       session.startedAt = now;
       session.stoppedAt = now;
       session.durationMs = durationMs;
+      session.audioStored = true;
       session.transcriptText = demoText;
+      session.liveTranscriptText = demoText;
       session.transcriptPreview = previewText(demoText);
       session.transcriptSegments = splitTranscriptSegments(demoText).length;
       session.chunks = [
@@ -742,6 +1120,7 @@ export function applyCompanionV1ControlFixture(
       ];
       const minutes = buildCompanionMeetingMinutes(session, now);
       session.minutes = minutes;
+      session.minutesByMode = cacheMinutesForMode(session, minutes);
       session.exportMarkdown = minutes.markdown;
       session.exportedAt = now;
       session.retention = createSessionRetention(true, true, true);
@@ -756,6 +1135,13 @@ export function applyCompanionV1ControlFixture(
         durationMs,
         transcriptCount: countTranscriptSessions(next),
       };
+      break;
+    }
+    case 'meetingSelectSession': {
+      if (!request.sessionId || !next.host.sessions.some((session) => session.id === request.sessionId)) {
+        throw new Error('A valid sessionId is required.');
+      }
+      next.host.selectedSessionId = request.sessionId;
       break;
     }
     case 'meetingResetSession':
@@ -774,6 +1160,9 @@ export function applyCompanionV1ControlFixture(
       updateHostSession(next, session.id, {
         audioPath: null,
         audioBytes: 0,
+        audioStored: false,
+        recovery: undefined,
+        pendingReason: null,
         chunks: session.chunks.map((chunk) => ({ ...chunk, path: null, bytes: 0, status: 'erased' })),
         retention: {
           ...session.retention,
@@ -789,9 +1178,17 @@ export function applyCompanionV1ControlFixture(
         status: session.audioPath || session.audioBytes ? 'captured' : 'idle',
         pendingReason: session.audioPath || session.audioBytes ? 'needs_transcription' : null,
         transcriptText: '',
+        transcriptFinal: false,
+        recovery: undefined,
+        liveTranscriptText: '',
         transcriptPreview: '',
         transcriptSegments: 0,
+        utterances: [],
+        transcriptReview: null,
+        noteRevision: (session.noteRevision ?? 0) + 1,
+        meetingNotes: [],
         minutes: null,
+        minutesByMode: { offlineStore: null, onlineLive: null },
         exportMarkdown: '',
         exportedAt: null,
         retention: {
@@ -820,6 +1217,15 @@ export function applyCompanionV1ControlFixture(
         lastEraseAt: now,
       };
       break;
+    case 'privacyDeleteSession': {
+      const session = requireSelectedSession(next, now, request);
+      next.host.sessions = next.host.sessions.filter((item) => item.id !== session.id);
+      next.host.selectedSessionId = next.host.sessions[0]?.id ?? null;
+      if (next.host.activeSessionId === session.id) next.host.activeSessionId = null;
+      next.meeting.transcriptCount = countTranscriptSessions(next);
+      next.privacy.lastEraseAt = now;
+      break;
+    }
     case 'speakerPrompt':
       next.speaker = { ...next.speaker, online: true, status: 'prompting' };
       break;
@@ -863,12 +1269,80 @@ export function selectedCompanionHostSession(snapshot: CompanionV1Snapshot): Com
   return normalized.host.sessions[0] ?? null;
 }
 
+export function companionSessionHasFinalTranscript(session: CompanionV1HostSession): boolean {
+  if (!session.transcriptText.trim() || session.status === 'recording') return false;
+  if (session.transcriptFinal !== undefined) return session.transcriptFinal;
+  // Older saved sessions did not carry the flag. Keep completed legacy text
+  // readable, but never promote an armed recovery job's unknown prefix.
+  return session.recovery?.intent !== 'processMeeting'
+    && (session.status === 'transcribed' || session.status === 'minutesReady');
+}
+
+export function describeCompanionMeetingRecovery(session: CompanionV1HostSession): {
+  label: string;
+  message: string;
+  retryAction: 'meetingTranscribeAudio' | 'meetingGenerateMinutes' | null;
+  isProcessing: boolean;
+} | null {
+  const recovery = session.recovery;
+  if (!recovery || recovery.intent !== 'processMeeting' || session.status === 'recording'
+    || recovery.stage === 'idle' || recovery.stage === 'complete') return null;
+  if (recovery.requestedMeetingMode !== session.meetingMode) {
+    return { label: '恢复暂停', message: '会议模式已改变，请检查这场会议的原始处理模式。', retryAction: null, isProcessing: false };
+  }
+  if (session.pendingReason === 'needs_device_sync') {
+    return { label: '等待设备同步', message: '录音仍在设备端。连接 Companion 后同步录音，再继续处理。', retryAction: null, isProcessing: false };
+  }
+  const isProcessing = recovery.stage === 'transcribing' || recovery.stage === 'generatingMinutes';
+  const label = session.pendingReason === 'no_speech_detected' ? '未识别到人声'
+    : recovery.stage === 'paused' ? '恢复暂停'
+    : recovery.stage === 'retryBackoff' ? '等待重试'
+      : recovery.stage === 'generatingMinutes' ? '正在整理纪要'
+        : recovery.stage === 'transcribing' ? '正在转写' : '等待处理';
+  const retryable = recovery.stage === 'paused' || recovery.stage === 'retryBackoff';
+  // A live prefix must go through final ASR, even if a stale checkpoint says
+  // minutes. Always address the same session when the user resumes it.
+  const retryAction = !retryable ? null : companionSessionHasFinalTranscript(session)
+    ? 'meetingGenerateMinutes' : 'meetingTranscribeAudio';
+  return {
+    label,
+    message: describeSessionPendingReason(session.pendingReason)
+      ?? (recovery.stage === 'pendingMinutes' ? '转写已保存，正在等待整理纪要。' : '录音已保存，正在等待转写。'),
+    retryAction,
+    isProcessing,
+  };
+}
+
 export function buildCompanionMeetingMinutes(
   session: CompanionV1HostSession,
   generatedAt = new Date().toISOString(),
 ): CompanionV1MeetingMinutes {
   const segments = splitTranscriptSegments(session.transcriptText);
-  const summary = segments.slice(0, 4);
+  const summaryPriority = [
+    /主持人|参会人|attendees?|facilitator/i,
+    /压缩同步|先压(?:缩)?再传|录音.*压缩|compressed?\s+sync/i,
+    /(?:空中|wire).*(?:压缩比|等效|真速)|(?:压缩比|等效).*(?:空中|wire)/i,
+    /(?:八千|8000).*(?:七点八|7[.。]?8|压缩)|(?:七点八|7[.。]?8).*(?:八千|8000)/i,
+    /解压.*上采样|上采样.*解压|(?:解压|上采样).*(?:一万六|16000)|(?:一万六|16000).*(?:解压|上采样)/i,
+    /会议纪要.*(?:音质|识别|关键词|决策)|(?:识别|关键词).*(?:会议纪要|决策)/i,
+    /(?:连续\s*(?:10|十)分钟|(?:10|十)分钟\s*连续)/i,
+    /离线先存|在线停会|offline\s*store|online\s*live/i,
+    /fail(?:ure)?\s*close|失败.*重录/i,
+  ];
+  const summaryLimit = 6;
+  // Keep the opening context, then spend the remaining bounded slots on
+  // salient facts. Taking the first two unconditionally often wastes a slot
+  // on markers such as "第一轮" and drops the actual offline meeting content.
+  const summary = [...segments.slice(0, 1)];
+  for (const pattern of summaryPriority) {
+    const candidate = segments.find((segment) => pattern.test(segment) && !summary.includes(segment));
+    if (candidate) summary.push(candidate);
+    if (summary.length >= summaryLimit) break;
+  }
+  for (const segment of segments) {
+    if (summary.length >= summaryLimit) break;
+    if (!summary.includes(segment)) summary.push(segment);
+  }
   const decisions = extractMatchingSegments(segments, DECISION_PATTERNS).slice(0, 5);
   const actionItems = extractActionItems(segments).slice(0, 8);
   const questions = segments.filter((segment) => segment.includes('?') || segment.includes('\uff1f')).slice(0, 5);
@@ -899,6 +1373,18 @@ export function describeSessionPendingReason(
       return 'Cloud ASR/minutes need network (or switch to local-only ASR).';
     case 'needs_pull':
       return 'Device has recordings that still need Sync/pull into the host.';
+    case 'needs_device_sync':
+      return '录音仍在设备端，重新连接 Companion 后会继续同步。';
+    case 'recovery_processing':
+      return '正在自动恢复这场会议的转写或纪要。';
+    case 'recovery_retry_wait':
+      return '处理暂时失败，已保留录音并将在短暂退避后自动重试。';
+    case 'recovery_paused':
+      return '自动恢复已暂停，录音和已有文本仍保留；请检查错误后手动重试。';
+    case 'minutes_source_changed':
+      return '转写已修订。已有纪要仍保留，请重新生成或核对后使用。';
+    case 'no_speech_detected':
+      return '转写服务未识别到人声，原录音已保留。请先回听并检查拾音和音量，再手动重试；不会自动反复上传。';
     default:
       return null;
   }
@@ -931,10 +1417,14 @@ function applyTranscriptToSession(
 }
 
 export function characteristicForCompanionAction(action: CompanionV1ControlAction): string {
-  if (action === 'deviceScan' || action === 'deviceConnect' || action === 'deviceDisconnect' || action === 'deviceSyncRecordings') {
+  if (action === 'hostRetrySave') return COMPANION_V1_HOST_RECORDING_CHANNEL;
+  if (action === 'deviceScan' || action === 'deviceConnect' || action === 'deviceDisconnect'
+    || action === 'deviceEnableAutoReconnect' || action === 'deviceDisableAutoReconnect'
+    || action === 'deviceSyncRecordings') {
     return COMPANION_V1_HOST_DEVICE_CHANNEL;
   }
-  if (action === 'stageBleName' || action === 'applyBleName' || action === 'resetBleName') {
+  if (action === 'stageBleName') return COMPANION_V1_HOST_DEVICE_CHANNEL;
+  if (action === 'applyBleName' || action === 'resetBleName') {
     return COMPANION_V1_GATT_BOUNDARY.bleNameConfigUuid;
   }
   if (action === 'oobeRunChecks') {
@@ -945,14 +1435,26 @@ export function characteristicForCompanionAction(action: CompanionV1ControlActio
   }
   if (
     action === 'meetingImportTranscript'
+    || action === 'meetingAppendLiveTranscript'
     || action === 'meetingTranscribeAudio'
     || action === 'meetingGenerateMinutes'
     || action === 'meetingExportMarkdown'
+    || action === 'meetingExportTxt'
+    || action === 'meetingExportJson'
+    || action === 'meetingExportSrt'
+    || action === 'meetingExportActionsTodo'
+    || action === 'meetingExportActionsIcal'
     || action === 'meetingLoadDemo'
+    || action === 'meetingSelectSession'
     || action === 'meetingResetSession'
   ) {
     return action === 'meetingGenerateMinutes'
       || action === 'meetingExportMarkdown'
+      || action === 'meetingExportTxt'
+      || action === 'meetingExportJson'
+      || action === 'meetingExportSrt'
+      || action === 'meetingExportActionsTodo'
+      || action === 'meetingExportActionsIcal'
       || action === 'meetingLoadDemo'
       ? COMPANION_V1_HOST_MINUTES_CHANNEL
       : COMPANION_V1_HOST_RECORDING_CHANNEL;
@@ -960,7 +1462,7 @@ export function characteristicForCompanionAction(action: CompanionV1ControlActio
   if (action === 'speakerPrompt' || action === 'speakerStop') {
     return COMPANION_V1_GATT_BOUNDARY.speakerControlUuid;
   }
-  if (action === 'privacyEraseAudio' || action === 'privacyEraseTranscript' || action === 'privacyEraseAll') {
+  if (action === 'privacyEraseAudio' || action === 'privacyEraseTranscript' || action === 'privacyEraseAll' || action === 'privacyDeleteSession') {
     return COMPANION_V1_HOST_PRIVACY_CHANNEL;
   }
   return COMPANION_V1_GATT_BOUNDARY.wakeWordControlUuid;
@@ -980,6 +1482,14 @@ export function companionActionPayloadHex(request: CompanionV1ControlRequest): s
   return bytes.map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
+function normalizeMeetingMode(
+  value: CompanionV1MeetingMode | string | undefined | null,
+  fallback: CompanionV1MeetingMode = 'offlineStore',
+): CompanionV1MeetingMode {
+  if (value === 'onlineLive' || value === 'offlineStore') return value;
+  return fallback;
+}
+
 function createHostSession(
   snapshot: CompanionV1Snapshot,
   request: CompanionV1ControlRequest,
@@ -990,22 +1500,31 @@ function createHostSession(
   const suppliedAudioPath = request.audioPath ?? null;
   const audioPath = suppliedAudioPath ?? defaultHostAudioPath(id);
   const audioBytes = request.audioBytes ?? (durationMs ? estimatePcmBytes(durationMs) : 0);
+  const meetingMode = normalizeMeetingMode(
+    request.meetingMode,
+    snapshot.host.recordingPolicy.defaultMeetingMode ?? 'offlineStore',
+  );
   return {
     id,
     title: (request.title ?? 'Companion meeting').trim() || 'Companion meeting',
     source: suppliedAudioPath ? 'deviceFlash' : 'hostMicrophone',
     status: 'recording',
+    meetingMode,
     pendingReason: null,
     startedAt: now,
     stoppedAt: null,
     durationMs,
     audioPath,
     audioBytes,
+    audioStored: false,
+    sourceDeviceId: request.deviceId ?? null,
     chunks: [createAudioChunk(`${id}-chunk-1`, audioPath, now, null, durationMs, audioBytes, 'open')],
     transcriptText: '',
+    liveTranscriptText: '',
     transcriptPreview: '',
     transcriptSegments: 0,
     minutes: null,
+    minutesByMode: { offlineStore: null, onlineLive: null },
     exportMarkdown: '',
     exportedAt: null,
     retention: createSessionRetention(true, false, false),
@@ -1033,12 +1552,14 @@ function createSyncedDeviceSession(
     now,
   );
   session.source = 'deviceFlash';
+  session.meetingMode = 'offlineStore';
   session.status = 'captured';
   session.pendingReason = 'needs_transcription';
   session.startedAt = null;
   session.stoppedAt = now;
   session.durationMs = durationMs;
   session.audioBytes = audioBytes;
+  session.audioStored = true;
   session.chunks = [createAudioChunk(`${session.id}-flash-cache`, audioPath, null, now, durationMs, audioBytes, 'synced')];
   session.retention = createSessionRetention(true, false, false);
   return session;
@@ -1145,7 +1666,7 @@ function createSessionRetention(
     transcriptCached,
     minutesCached,
     consentRequired: true,
-    retentionLabel: '7 days local',
+    retentionLabel: 'Local until manually deleted',
     expiresAt: null,
   };
 }
@@ -1194,9 +1715,10 @@ function normalizeTranscript(text: string): string {
 function splitTranscriptSegments(text: string): string[] {
   const normalized = normalizeTranscript(text);
   if (!normalized) return [];
+  // Split on Latin and Chinese sentence boundaries so 决定/行动项 can multi-match.
   return normalized
     .split(/\n+/)
-    .flatMap((line) => line.split(/(?<=[.!?;])\s+/))
+    .flatMap((line) => line.split(/(?<=[.!?;。！？])\s*/))
     .map((segment) => segment.trim())
     .filter(Boolean);
 }
@@ -1232,16 +1754,39 @@ const ACTION_PATTERNS = [
   /\u5b89\u6392/,
 ];
 
+const NON_NEED_ACTION_PATTERNS = [
+  /\baction\b/i,
+  /\btodo\b/i,
+  /\bfollow up\b/i,
+  /\bowner\b/i,
+  /\bdue\b/i,
+  /\bassign(?:ed)?\b/i,
+  /\u8d1f\u8d23/,
+  /\u8ddf\u8fdb/,
+  /\u5f85\u529e/,
+  /\u5b89\u6392/,
+];
+
+const NEGATED_NEED_PATTERNS = [
+  /\b(?:do(?:es)?\s+not|don't|doesn't)\s+need(?:s|ed)?\s+to\b/i,
+  /\u4e0d\u9700\u8981|\u65e0\u9700|\u65e0\u987b|\u4e0d\u7528/,
+];
+
 function extractMatchingSegments(segments: string[], patterns: RegExp[]): string[] {
   return segments.filter((segment) => patterns.some((pattern) => pattern.test(segment)));
 }
 
 function extractActionItems(segments: string[]): CompanionV1ActionItem[] {
-  return extractMatchingSegments(segments, ACTION_PATTERNS).map((segment) => ({
+  return extractMatchingSegments(segments, ACTION_PATTERNS)
+    .filter((segment) => (
+      !NEGATED_NEED_PATTERNS.some((pattern) => pattern.test(segment))
+      || NON_NEED_ACTION_PATTERNS.some((pattern) => pattern.test(segment))
+    ))
+    .map((segment) => ({
     text: segment,
     owner: extractOwner(segment),
     due: extractDue(segment),
-  }));
+    }));
 }
 
 function extractOwner(segment: string): string | null {
@@ -1341,20 +1886,32 @@ function countTranscriptSessions(snapshot: CompanionV1Snapshot): number {
 }
 
 function hostOnlyAction(action: CompanionV1ControlAction): boolean {
-  return action === 'deviceScan'
+  return action === 'hostRetrySave'
+    || action === 'deviceScan'
     || action === 'deviceConnect'
     || action === 'deviceDisconnect'
+    || action === 'deviceEnableAutoReconnect'
+    || action === 'deviceDisableAutoReconnect'
     || action === 'deviceSyncRecordings'
+    || action === 'stageBleName'
     || action === 'oobeRunChecks'
     || action === 'meetingImportTranscript'
+    || action === 'meetingAppendLiveTranscript'
     || action === 'meetingTranscribeAudio'
     || action === 'meetingGenerateMinutes'
     || action === 'meetingExportMarkdown'
+    || action === 'meetingExportTxt'
+    || action === 'meetingExportJson'
+    || action === 'meetingExportSrt'
+    || action === 'meetingExportActionsTodo'
+    || action === 'meetingExportActionsIcal'
     || action === 'meetingLoadDemo'
+    || action === 'meetingSelectSession'
     || action === 'meetingResetSession'
     || action === 'privacyEraseAudio'
     || action === 'privacyEraseTranscript'
-    || action === 'privacyEraseAll';
+    || action === 'privacyEraseAll'
+    || action === 'privacyDeleteSession';
 }
 
 function bytesToHex(bytes: Uint8Array): string {
@@ -1363,9 +1920,12 @@ function bytesToHex(bytes: Uint8Array): string {
 
 function actionCommand(action: CompanionV1ControlAction): number {
   const table: Record<CompanionV1ControlAction, number> = {
+    hostRetrySave: 0x8e,
     deviceScan: 0x10,
     deviceConnect: 0x11,
     deviceDisconnect: 0x12,
+    deviceEnableAutoReconnect: 0x14,
+    deviceDisableAutoReconnect: 0x15,
     deviceSyncRecordings: 0x13,
     stageBleName: 1,
     applyBleName: 2,
@@ -1380,9 +1940,17 @@ function actionCommand(action: CompanionV1ControlAction): number {
     meetingResetSession: 0x84,
     meetingTranscribeAudio: 0x85,
     meetingLoadDemo: 0x86,
+    meetingExportTxt: 0x87,
+    meetingExportJson: 0x88,
+    meetingExportSrt: 0x89,
+    meetingExportActionsTodo: 0x8a,
+    meetingExportActionsIcal: 0x8b,
+    meetingAppendLiveTranscript: 0x8c,
+    meetingSelectSession: 0x8d,
     privacyEraseAudio: 0x90,
     privacyEraseTranscript: 0x91,
     privacyEraseAll: 0x92,
+    privacyDeleteSession: 0x93,
     speakerPrompt: 1,
     speakerStop: 2,
     wakeArm: 1,
@@ -1408,6 +1976,10 @@ function deepMergeCompanionSnapshot(
           new Date().toISOString(),
         ),
         ...session,
+        meetingMode: normalizeMeetingMode(session.meetingMode, base.host.recordingPolicy.defaultMeetingMode),
+        minutesByMode: session.minutesByMode ?? { offlineStore: null, onlineLive: null },
+        audioStored: session.audioStored ?? Boolean(session.audioPath || session.audioBytes),
+        liveTranscriptText: session.liveTranscriptText ?? '',
         audioBytes: session.audioBytes ?? 0,
         chunks: session.chunks ?? [],
         retention: {
@@ -1425,10 +1997,15 @@ function deepMergeCompanionSnapshot(
     imu: {
       ...base.imu,
       ...overrides.imu,
+      reserved: overrides.imu?.reserved ?? base.imu.reserved ?? true,
       accel: { ...base.imu.accel, ...overrides.imu?.accel },
       gyro: { ...base.imu.gyro, ...overrides.imu?.gyro },
     },
-    speaker: { ...base.speaker, ...overrides.speaker },
+    speaker: {
+      ...base.speaker,
+      ...overrides.speaker,
+      reserved: overrides.speaker?.reserved ?? base.speaker.reserved ?? true,
+    },
     wakeWord: { ...base.wakeWord, ...overrides.wakeWord },
     bleName: { ...base.bleName, ...overrides.bleName },
     device: { ...base.device, ...overrides.device },

@@ -1,3 +1,9 @@
 export { CompanionDashboard } from './CompanionDashboard';
-export type { CompanionDashboardProps } from './CompanionDashboard';
+export type {
+  CompanionDashboardProps,
+  CompanionMeetingSaveRequest,
+  CompanionOtaPackageValidationUi,
+  CompanionProductSettingsPatch,
+  CompanionProductSettingsPublic,
+} from './CompanionDashboard';
 

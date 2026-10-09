@@ -12,12 +12,30 @@
   "app": {
     "windows": [],
     "security": {
-      "csp": null
+      "capabilities": [{
+        "identifier": "main-recording-sync-status",
+        "windows": ["main"],
+        "permissions": ["core:event:allow-listen", "core:event:allow-unlisten"]
+      }],
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset: http://asset.localhost data: blob:; media-src 'self' asset: http://asset.localhost blob:; connect-src 'self' ipc: http://ipc.localhost http://asset.localhost; object-src 'none'; base-uri 'none'; frame-src 'none'",
+      "devCsp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' asset: http://asset.localhost data: blob:; media-src 'self' asset: http://asset.localhost blob:; connect-src 'self' ipc: http://ipc.localhost http://asset.localhost ws://localhost:1421 ws://127.0.0.1:1421; object-src 'none'; base-uri 'none'; frame-src 'none'",
+      "assetProtocol": {
+        "enable": true,
+        "scope": []
+      }
     }
   },
+  "plugins": { "updater": { "pubkey": "", "windows": { "installMode": "passive" } } },
   "bundle": {
     "active": true,
-    "targets": ["msi"],
-    "icon": ["icons/icon.ico"]
+    "targets": [
+      "msi"
+    ],
+    "icon": [
+      "icons/icon.ico"
+    ],
+    "resources": {
+      "resources/opus-license.txt": "licenses/opus.txt"
+    }
   }
 }

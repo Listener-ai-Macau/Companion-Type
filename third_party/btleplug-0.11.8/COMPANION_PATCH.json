@@ -1,0 +1,18 @@
+{
+  "upstream_version": "0.11.8",
+  "upstream_commit": "c227cc1adf885e143217f274758968afc02490fb",
+  "modified_upstream_files": [
+    "src/common/util.rs",
+    "src/winrtble/peripheral.rs"
+  ],
+  "reason": "The original Windows broadcast held 16 notifications and its ordinary stream silently discarded Lagged errors. A stopped recording receiver must not hide missing original payload.",
+  "changes": [
+    "Windows callback queue holds 512 bounded notifications",
+    "Windows callback preserves monotonic receive time before queueing",
+    "checked_notifications exposes native lag to the recording durable-offset retry",
+    "Existing Peripheral notifications trait stays compatible and no device/subscription/connection is added"
+  ],
+  "limits": "The ordinary trait keeps its upstream error semantics for existing callers. Recording uses the checked extension. Queue capacity is finite; overload is a receive failure, never successful consumption.",
+  "validation": "Companion .cache/stopped-upload-20261009/r17/native-queue-harness compiles the exact production util source with three burst/overflow/timestamp checks, avoiding unrelated upstream example dev dependencies. Product pull_receiver tests cover propagation, bounds, timing and cancellation.",
+  "license": "LICENSE.md is copied unchanged; original package file hashes are retained in UPSTREAM.json."
+}

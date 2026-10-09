@@ -1,15 +1,18 @@
 //! Host microphone recording backend.
 //!
-//! The product path is host-owned long recording. Firmware remains a short
-//! cache/trigger, while this backend records a 16 kHz mono WAV on the host.
+//! The optional host-input path records a 16 kHz mono WAV on the computer;
+//! board recording has its own codec/storage/transfer path.
 //! Capture, sample conversion, and the WAV container come from the platform
 //! `denzic-host-audio-v1-core` crate; this module keeps session management,
-//! file placement, the ratio resampler, and the synthetic fallback mode.
+//! file placement, the ratio resampler, and explicit synthetic test mode.
 
 use std::fs::create_dir_all;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
+
+/// Optional PCM fan-out (16 kHz mono i16) for onlineLive streaming ASR.
+pub type HostPcmSink = Arc<dyn Fn(&[i16]) + Send + Sync>;
 
 use denzic_host_audio_v1_core::capture::{CaptureOptions, CaptureSession};
 use denzic_host_audio_v1_core::wav::WavWriter;
@@ -31,6 +34,7 @@ pub struct HostRecordingStop {
     pub duration_ms: u64,
     pub bytes: u64,
     pub mode: String,
+    pub capture_error: Option<String>,
 }
 
 struct ActiveHostRecording {
@@ -38,6 +42,7 @@ struct ActiveHostRecording {
     path: PathBuf,
     started_at: Instant,
     mode: ActiveHostRecordingMode,
+    artifact: Option<super::audio_artifacts::WriteLease>,
 }
 
 enum ActiveHostRecordingMode {
@@ -47,48 +52,56 @@ enum ActiveHostRecordingMode {
 
 pub struct HostRecordingManager {
     active: Mutex<Option<ActiveHostRecording>>,
+    pcm_sink: Mutex<Option<HostPcmSink>>,
 }
 
 impl HostRecordingManager {
     pub fn new() -> Self {
         Self {
             active: Mutex::new(None),
+            pcm_sink: Mutex::new(None),
+        }
+    }
+
+    pub fn set_pcm_sink(&self, sink: Option<HostPcmSink>) {
+        if let Ok(mut slot) = self.pcm_sink.lock() {
+            *slot = sink;
         }
     }
 
     pub fn start(&self, session_id: &str, title: &str) -> Result<HostRecordingStart, String> {
+        let requested_mode = std::env::var("COMPANION_TYPE_HOST_RECORDING_MODE")
+            .unwrap_or_else(|_| if cfg!(test) { "synthetic" } else { "real" }.to_string());
+        super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStart).result(self.start_with_mode(session_id, title, &requested_mode, RealRecording::start))
+    }
+
+    fn start_with_mode(
+        &self,
+        session_id: &str,
+        title: &str,
+        requested_mode: &str,
+        start_real: impl FnOnce(PathBuf, Option<HostPcmSink>) -> Result<RealRecording, String>,
+    ) -> Result<HostRecordingStart, String> {
         let mut active = self
             .active
             .lock()
             .map_err(|_| "host recording state lock failed".to_string())?;
-        if let Some(recording) = active.take() {
-            let _ = stop_active_recording(recording);
+        if active.is_some() {
+            return Err("已有本机录音正在进行，请先结束当前录音".to_string());
         }
 
         let path = recording_path(session_id, title)?;
-        let requested_mode =
-            std::env::var("COMPANION_TYPE_HOST_RECORDING_MODE").unwrap_or_else(|_| {
-                if cfg!(test) {
-                    "synthetic".to_string()
-                } else {
-                    "real-with-synthetic-fallback".to_string()
-                }
-            });
+        let artifact = super::audio_artifacts::WriteLease::begin(&path, &path, super::audio_artifacts::Purpose::Recording)?;
+        let pcm_sink = self.pcm_sink.lock().ok().and_then(|slot| slot.clone());
 
         let (mode, mode_label) = if requested_mode.eq_ignore_ascii_case("synthetic") {
             (ActiveHostRecordingMode::Synthetic, "synthetic".to_string())
         } else {
-            match RealRecording::start(path.clone()) {
-                Ok(recording) => (
-                    ActiveHostRecordingMode::Real(recording),
-                    "host-microphone".to_string(),
-                ),
-                Err(err) if requested_mode.eq_ignore_ascii_case("real") => return Err(err),
-                Err(_) => (
-                    ActiveHostRecordingMode::Synthetic,
-                    "synthetic-fallback".to_string(),
-                ),
-            }
+            // Even the legacy fallback setting must surface capture failure.
+            // Generated audio is available only through explicit synthetic mode.
+            let recording = start_real(path.clone(), pcm_sink)
+                .map_err(|error| format!("无法启动本机麦克风录音：{error}"))?;
+            (ActiveHostRecordingMode::Real(recording), "host-microphone".to_string())
         };
 
         *active = Some(ActiveHostRecording {
@@ -96,6 +109,7 @@ impl HostRecordingManager {
             path: path.clone(),
             started_at: Instant::now(),
             mode,
+            artifact,
         });
 
         Ok(HostRecordingStart {
@@ -109,20 +123,27 @@ impl HostRecordingManager {
         &self,
         requested_session_id: Option<&str>,
     ) -> Result<Option<HostRecordingStop>, String> {
+        let span = super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStop);
+        let result = self.stop_inner(requested_session_id);
+        let error = match &result { Err(error) => Some(error.as_str()), Ok(Some(report)) => report.capture_error.as_deref(), _ => None };
+        span.finish(error);
+        result
+    }
+
+    fn stop_inner(&self, requested_session_id: Option<&str>) -> Result<Option<HostRecordingStop>, String> {
         let mut active = self
             .active
             .lock()
             .map_err(|_| "host recording state lock failed".to_string())?;
-        let Some(recording) = active.take() else {
+        let Some(recording) = active.as_ref() else {
             return Ok(None);
         };
         if let Some(session_id) = requested_session_id {
             if recording.session_id != session_id {
-                let result = stop_active_recording(recording);
-                return result.map(Some);
+                return Err("停止请求与正在录音的会议不一致，当前录音继续保留".to_string());
             }
         }
-        stop_active_recording(recording).map(Some)
+        stop_active_recording(active.take().expect("active recording checked above")).map(Some)
     }
 
     pub fn discard(&self) {
@@ -142,44 +163,43 @@ impl Default for HostRecordingManager {
 
 fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecordingStop, String> {
     let elapsed_ms = recording.started_at.elapsed().as_millis().max(1) as u64;
-    let (path, bytes, mode) = match recording.mode {
+    let (path, bytes, mode, capture_error) = match recording.mode {
         ActiveHostRecordingMode::Real(real) => {
             let stop = real.stop()?;
-            (stop.path, stop.bytes, "host-microphone".to_string())
+            (stop.path, stop.bytes, "host-microphone".to_string(), stop.capture_error)
         }
         ActiveHostRecordingMode::Synthetic => {
             write_synthetic_wav(&recording.path, elapsed_ms.max(1_000))?;
             let bytes = std::fs::metadata(&recording.path)
                 .map_err(|err| format!("read synthetic wav metadata: {err}"))?
                 .len();
-            (recording.path, bytes, "synthetic".to_string())
+            (recording.path, bytes, "synthetic".to_string(), None)
         }
     };
 
+    if let Some(artifact) = recording.artifact { artifact.finish()?; }
     Ok(HostRecordingStop {
         session_id: recording.session_id,
         path,
-        duration_ms: elapsed_ms,
+        duration_ms: bytes.saturating_sub(44).saturating_mul(1_000)
+            / (u64::from(TARGET_SAMPLE_RATE) * 2),
         bytes,
         mode,
+        capture_error,
     })
 }
 
 fn recording_path(session_id: &str, title: &str) -> Result<PathBuf, String> {
-    let root = std::env::var("COMPANION_TYPE_RECORDING_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|_| {
-            std::env::temp_dir()
-                .join("companion-type")
-                .join("recordings")
-        });
-    create_dir_all(&root).map_err(|err| format!("create recording dir {root:?}: {err}"))?;
+    let root = super::audio_storage::recording_root()?;
     let stamp = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map_err(|err| format!("clock before epoch: {err}"))?
         .as_secs();
     let safe_title = sanitize_file_stem(title);
-    Ok(root.join(format!("{stamp}-{session_id}-{safe_title}.wav")))
+    // The session ID belongs in the index, not in a path component. A unique
+    // bounded filename also prevents two starts from replacing an older file.
+    let _ = session_id;
+    Ok(root.join(format!("{stamp}-{}-{safe_title}.wav", uuid::Uuid::new_v4().simple())))
 }
 
 fn sanitize_file_stem(value: &str) -> String {
@@ -207,15 +227,45 @@ fn sanitize_file_stem(value: &str) -> String {
 struct RealRecording {
     session: CaptureSession,
     path: PathBuf,
+    writer: Arc<Mutex<WavWriter>>,
+    capture_error: Arc<Mutex<Option<String>>>,
 }
 
 struct RealRecordingStop {
     path: PathBuf,
     bytes: u64,
+    capture_error: Option<String>,
+}
+
+fn remember_capture_error(slot: &Mutex<Option<String>>, message: String) {
+    if let Ok(mut error) = slot.lock() {
+        if error.is_none() {
+            *error = Some(message.chars().take(512).collect());
+        }
+    }
+}
+
+fn finish_capture_file(
+    writer: &Mutex<WavWriter>,
+    capture_error: &Mutex<Option<String>>,
+) -> (u64, Option<String>) {
+    let mut bytes = 0;
+    match writer.lock() {
+        Ok(mut writer) => match writer.finalize() {
+            Ok(length) => bytes = length,
+            Err(error) => remember_capture_error(capture_error, format!("录音文件保存失败：{error}")),
+        },
+        Err(_) => remember_capture_error(capture_error, "录音文件状态不可用".to_string()),
+    }
+    if bytes <= 44 {
+        remember_capture_error(capture_error, "麦克风没有录到有效音频帧".to_string());
+    }
+    let error = capture_error.lock().ok().and_then(|error| error.clone());
+    (bytes, error)
 }
 
 impl RealRecording {
-    fn start(path: PathBuf) -> Result<Self, String> {
+    fn start(path: PathBuf, pcm_sink: Option<HostPcmSink>) -> Result<Self, String> {
         if let Some(parent) = path.parent() {
             create_dir_all(parent).map_err(|err| format!("create wav parent {parent:?}: {err}"))?;
         }
@@ -223,14 +273,18 @@ impl RealRecording {
             WavWriter::create(&path).map_err(|err| format!("create wav {path:?}: {err}"))?,
         ));
         let sink_writer = Arc::clone(&writer);
+        let capture_error = Arc::new(Mutex::new(None::<String>));
+        let stream_error = Arc::clone(&capture_error);
+        let write_error = Arc::clone(&capture_error);
         let resampler_slot = Arc::new(Mutex::new(None::<RatioResampler>));
         let sink_resampler = Arc::clone(&resampler_slot);
 
         let session = CaptureSession::start(
             CaptureOptions {
                 device_name: None,
-                on_stream_error: Some(Arc::new(|err| {
+                on_stream_error: Some(Arc::new(move |err| {
                     eprintln!("[companion-type-recorder] stream error: {err}");
+                    remember_capture_error(&stream_error, format!("麦克风录音中断：{err}"));
                 })),
             },
             move |samples: &[f32], source_rate: u32| {
@@ -245,23 +299,31 @@ impl RealRecording {
                     return;
                 }
                 if let Ok(mut writer) = sink_writer.lock() {
-                    let _ = writer.append_samples(&resampled);
+                    if let Err(error) = writer.append_samples(&resampled) {
+                        remember_capture_error(&write_error, format!("录音写入失败：{error}"));
+                    }
+                } else {
+                    remember_capture_error(&write_error, "录音文件状态不可用".to_string());
+                }
+                if let Some(sink) = pcm_sink.as_ref() {
+                    sink(&resampled);
                 }
             },
         )
         .map_err(|err| err.to_string())?;
 
-        Ok(Self { session, path })
+        Ok(Self { session, path, writer, capture_error })
     }
 
     fn stop(self) -> Result<RealRecordingStop, String> {
-        self.session.stop().map_err(|err| err.to_string())?;
-        let bytes = std::fs::metadata(&self.path)
-            .map_err(|err| format!("read wav metadata: {err}"))?
-            .len();
+        if let Err(error) = self.session.stop() {
+            remember_capture_error(&self.capture_error, format!("停止麦克风失败：{error}"));
+        }
+        let (bytes, capture_error) = finish_capture_file(&self.writer, &self.capture_error);
         Ok(RealRecordingStop {
             path: self.path,
             bytes,
+            capture_error,
         })
     }
 }
@@ -361,6 +423,55 @@ mod tests {
         assert!(stop.path.exists());
         assert!(stop.bytes > 44);
         std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
+
+    #[test]
+    fn microphone_failure_never_creates_a_synthetic_success() {
+        for mode in ["real", "real-with-synthetic-fallback"] {
+            let manager = HostRecordingManager::new();
+            let error = manager.start_with_mode("failed-mic", "Failure", mode,
+                |_, _| Err("capture device unavailable".to_string())).unwrap_err();
+            assert!(error.contains("capture device unavailable"));
+            assert!(manager.stop(Some("failed-mic")).unwrap().is_none());
+            assert!(manager.active.lock().unwrap().is_none());
+        }
+    }
+
+    #[test]
+    fn interrupted_capture_keeps_decodable_audio_and_reports_the_original_failure() {
+        let path = std::env::temp_dir().join("companion-type-interrupted-capture.wav");
+        let writer = Mutex::new(WavWriter::create(&path).unwrap());
+        writer.lock().unwrap().append_samples(&[100, -100, 50]).unwrap();
+        let errors = Mutex::new(None);
+        remember_capture_error(&errors, "麦克风已拔出".to_string());
+        remember_capture_error(&errors, "后续错误".to_string());
+        let (length, error) = finish_capture_file(&writer, &errors);
+        assert_eq!(length, 50);
+        assert_eq!(error.as_deref(), Some("麦克风已拔出"));
+        let wav = std::fs::read(&path).unwrap();
+        assert_eq!(u32::from_le_bytes(wav[40..44].try_into().unwrap()), 6);
+        assert_eq!(&wav[44..], &[100, 0, 156, 255, 50, 0]);
+    }
+
+    #[test]
+    fn capture_without_frames_is_not_reported_as_success() {
+        let path = std::env::temp_dir().join("companion-type-no-capture-frames.wav");
+        let writer = Mutex::new(WavWriter::create(&path).unwrap());
+        let (length, error) = finish_capture_file(&writer, &Mutex::new(None));
+        assert_eq!(length, 44);
+        assert!(error.unwrap().contains("没有录到有效音频帧"));
+    }
+
+    #[test]
+    fn duplicate_start_and_wrong_stop_preserve_the_original_recording() {
+        let manager = HostRecordingManager::new();
+        let original = manager.start_with_mode("original", "Original", "synthetic", |_, _| unreachable!()).unwrap();
+        assert!(manager.start_with_mode("replacement", "Replacement", "synthetic", |_, _| unreachable!()).is_err());
+        assert!(manager.stop(Some("other-session")).is_err());
+        let stop = manager.stop(Some("original")).unwrap().unwrap();
+        assert_eq!(stop.session_id, "original");
+        assert_eq!(stop.path, original.path);
+        assert!(stop.bytes > 44);
     }
 
     #[test]

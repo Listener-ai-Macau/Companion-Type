@@ -49,14 +49,24 @@ export function App() {
   }, []);
 
   return (
-    <CompanionDashboard
-      snapshot={snapshot}
-      busyAction={busyAction}
-      error={error}
-      surface="mobile"
-      onRefresh={refresh}
-      onControl={runControl}
-    />
+    <div className="ct-mobile-shell">
+      <p
+        className="ct-pending-banner"
+        role="status"
+        style={{ margin: '0.75rem 1rem 0', maxWidth: 720 }}
+      >
+        手机 App：当前为 <strong>fixture 预留壳</strong>（本地模拟，无原生 BLE/真机）。
+        原生框架到位后再接设备与真路径；勿当作已上架产品 App。
+      </p>
+      <CompanionDashboard
+        snapshot={snapshot}
+        busyAction={busyAction}
+        error={error}
+        surface="mobile"
+        onRefresh={refresh}
+        onControl={runControl}
+      />
+    </div>
   );
 }
 

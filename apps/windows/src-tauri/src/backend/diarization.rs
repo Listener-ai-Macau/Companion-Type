@@ -10,18 +10,32 @@
 
 use std::ffi::{c_char, c_void, CString};
 use std::path::{Path, PathBuf};
-use std::sync::{Mutex, OnceLock};
+use std::sync::{OnceLock, Mutex, Arc};
 
 use libloading::Library;
 
 const SAMPLE_RATE: i32 = 16_000;
-const VAD_WINDOW_MS: usize = 500;
-const VAD_MERGE_GAP_MS: usize = 500;
+// Use a window materially shorter than ordinary turn-taking pauses. The
+// previous 500 ms window plus 500 ms merge bridged the product stimulus' 350 ms
+// inter-speaker gaps and handed several speakers to the embedding model as one
+// segment. 100 ms windows with a 300 ms merge retain within-sentence pauses but
+// preserve real turn boundaries.
+const VAD_WINDOW_MS: usize = 100;
+const VAD_MERGE_GAP_MS: usize = 300;
 const MIN_SEGMENT_MS: usize = 1_500;
-/// Cosine similarity below this => two clusters merge. 3dspeaker embeddings:
-/// same-speaker typically >0.7, different-speaker <0.5. 0.50 is a conservative
-/// split point (favor not merging distinct speakers).
-const CLUSTER_COSINE_THRESHOLD: f32 = 0.50;
+/// Merge clusters only when their average cosine is at least this value.
+/// Keep this conservative: increasing it can split codec/noise variation from
+/// one person into fake speakers. Provider-supplied speaker labels take
+/// precedence when the configured ASR service supports them.
+const DEFAULT_CLUSTER_COSINE_THRESHOLD: f32 = 0.68;
+
+fn cluster_cosine_threshold() -> f32 {
+    std::env::var("COMPANION_TYPE_DIARIZATION_COSINE_THRESHOLD")
+        .ok()
+        .and_then(|value| value.parse::<f32>().ok())
+        .filter(|value| (0.50..=0.85).contains(value))
+        .unwrap_or(DEFAULT_CLUSTER_COSINE_THRESHOLD)
+}
 
 #[derive(Debug, Clone)]
 pub struct DiarizationSegment {
@@ -87,8 +101,8 @@ impl Drop for SpeakerRuntime {
 
 impl SpeakerRuntime {
     fn load(model_dir: &Path) -> Result<Self, String> {
-        let model_path =
-            model_dir.join("3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx");
+        super::audio_components::verify(model_dir)?;
+        let model_path = model_dir.join("3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx");
         if !model_path.exists() {
             return Err(format!(
                 "3dspeaker model not found at {}. Install Listener Type (ships the model + sherpa-onnx runtime) or set COMPANION_TYPE_SPEAKER_MODEL_DIR.",
@@ -132,9 +146,10 @@ impl SpeakerRuntime {
             let destroy_embedding: FnDestroyEmbedding = *sherpa
                 .get(b"SherpaOnnxSpeakerEmbeddingExtractorDestroyEmbedding\0")
                 .map_err(|e| format!("symbol DestroyEmbedding: {e}"))?;
-            let destroy_stream: FnDestroyStream = *sherpa
-                .get(b"SherpaOnnxDestroyOnlineStream\0")
-                .map_err(|e| format!("symbol DestroyStream: {e}"))?;
+            let destroy_stream: FnDestroyStream =
+                *sherpa
+                    .get(b"SherpaOnnxDestroyOnlineStream\0")
+                    .map_err(|e| format!("symbol DestroyStream: {e}"))?;
             let config = ExtractorConfig {
                 model: model.as_ptr(),
                 num_threads: 1,
@@ -206,20 +221,33 @@ fn speaker_model_dir() -> PathBuf {
     if let Ok(dir) = std::env::var("COMPANION_TYPE_SPEAKER_MODEL_DIR") {
         return PathBuf::from(dir);
     }
-    // Default: reuse Listener Type's installed speaker-verification models.
     let appdata = std::env::var("APPDATA").unwrap_or_default();
+    let own = PathBuf::from(&appdata).join("Companion Type").join("models").join("speaker-verification");
+    if own.is_dir() { return own; }
+    // Explicit compatibility fallback for existing installations only.
     PathBuf::from(appdata)
         .join("Listener Type")
         .join("models")
         .join("speaker-verification")
 }
 
-static RUNTIME: OnceLock<Result<SpeakerRuntime, String>> = OnceLock::new();
-
-fn runtime() -> Result<&'static SpeakerRuntime, String> {
-    let r = RUNTIME.get_or_init(|| SpeakerRuntime::load(&speaker_model_dir()));
-    r.as_ref().map_err(|e| e.clone())
+pub(crate) fn model_files_present() -> bool {
+    let dir = speaker_model_dir();
+    ["3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx", "onnxruntime.dll", "onnxruntime_providers_shared.dll", "sherpa-onnx-c-api.dll"].iter().all(|name| dir.join(name).metadata().is_ok_and(|m| m.is_file() && m.len()>0))
 }
+
+static RUNTIME: OnceLock<Mutex<Option<Arc<SpeakerRuntime>>>> = OnceLock::new();
+
+fn runtime() -> Result<Arc<SpeakerRuntime>, String> {
+    let mut state = RUNTIME.get_or_init(|| Mutex::new(None)).lock().map_err(|_| "说话人组件状态不可用")?;
+    if let Some(runtime)=state.as_ref() {return Ok(Arc::clone(runtime));}
+    let loaded=Arc::new(SpeakerRuntime::load(&speaker_model_dir())?);
+    *state=Some(Arc::clone(&loaded));
+    Ok(loaded)
+}
+
+pub(crate) fn prepare_runtime()->Result<(),String> { super::audio_components::prepare()?; runtime().map(|_|()) }
+pub(crate) fn runtime_loaded()->bool { RUNTIME.get().and_then(|state|state.try_lock().ok()).is_some_and(|state|state.is_some()) }
 
 // ===================== energy VAD =====================
 
@@ -231,20 +259,26 @@ fn rms(w: &[f32]) -> f32 {
     (sum / w.len() as f32).sqrt()
 }
 
-/// Adaptive energy VAD: split into VAD_WINDOW_MS windows, mark windows above
-/// 15% of the max window RMS as speech, merge speech windows separated by less
-/// than VAD_MERGE_GAP_MS. Returns (start_sample, end_sample) speech segments.
+/// Adaptive energy VAD: split into VAD_WINDOW_MS windows and estimate a robust
+/// noise floor (p10) plus speech reference (p95). A max-relative threshold was
+/// dominated by isolated Opus/microphone peaks on the WB55 path and retained
+/// fewer than 10% of windows, fragmenting every utterance. The percentile
+/// threshold remains stable in the presence of those peaks.
 fn energy_vad(samples: &[f32]) -> Vec<(usize, usize)> {
     let win = SAMPLE_RATE as usize * VAD_WINDOW_MS / 1000;
     if samples.len() < win {
         return Vec::new();
     }
     let energies: Vec<f32> = samples.chunks(win).map(rms).collect();
-    let max_e = energies.iter().cloned().fold(0.0f32, f32::max);
-    if max_e <= f32::EPSILON {
+    let mut sorted = energies.clone();
+    sorted.sort_by(f32::total_cmp);
+    let quantile = |percent: usize| sorted[percent * (sorted.len() - 1) / 100];
+    let noise_floor = quantile(10);
+    let speech_reference = quantile(95);
+    if speech_reference <= f32::EPSILON {
         return Vec::new();
     }
-    let thr = max_e * 0.15;
+    let thr = noise_floor + (speech_reference - noise_floor).max(0.0) * 0.15;
     let speech: Vec<bool> = energies.iter().map(|e| *e > thr).collect();
     let gap_windows = (VAD_MERGE_GAP_MS + VAD_WINDOW_MS - 1) / VAD_WINDOW_MS;
     // Merge speech windows, bridging gaps shorter than gap_windows.
@@ -290,12 +324,27 @@ fn cosine(a: &[f32], b: &[f32]) -> f32 {
 }
 
 /// Cluster a set of speaker embeddings with the canonical Companion threshold
-/// (CLUSTER_COSINE_THRESHOLD). Public so callers that collect embeddings
+/// (see [`cluster_cosine_threshold`]). Public so callers that collect embeddings
 /// across many audio chunks can cluster them ONCE globally — this is what
 /// keeps speaker ids consistent across a chunked long meeting. Returns a
 /// speaker id (0-based) per embedding, in input order.
 pub fn cluster_speakers(embeddings: &[Vec<f32>]) -> Vec<usize> {
-    ahc_cluster(embeddings, CLUSTER_COSINE_THRESHOLD)
+    ahc_cluster(embeddings, cluster_cosine_threshold())
+}
+
+/// A provider identity is comparable only inside one recognition request.
+/// Different labels there must not collapse merely because room noise makes
+/// local embeddings similar. Labels reused by another request are unrelated.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct SpeakerConstraint {
+    pub request: u64,
+    pub label: String,
+}
+
+pub(crate) fn cluster_speakers_constrained(
+    embeddings: &[Vec<f32>], constraints: &[Option<SpeakerConstraint>],
+) -> Vec<usize> {
+    ahc_cluster_constrained(embeddings, cluster_cosine_threshold(), constraints)
 }
 
 /// Agglomerative hierarchical clustering: start with each embedding as its own
@@ -303,17 +352,44 @@ pub fn cluster_speakers(embeddings: &[Vec<f32>]) -> Vec<usize> {
 /// similarity is highest, as long as it is >= threshold. Returns a speaker id
 /// (0-based, arbitrary) per input embedding.
 fn ahc_cluster(embeddings: &[Vec<f32>], threshold: f32) -> Vec<usize> {
+    ahc_cluster_constrained(embeddings, threshold, &[])
+}
+
+fn ahc_cluster_constrained(
+    embeddings: &[Vec<f32>], threshold: f32, constraints: &[Option<SpeakerConstraint>],
+) -> Vec<usize> {
     let n = embeddings.len();
     if n == 0 {
         return Vec::new();
     }
-    // clusters: each is a list of embedding indices
-    let mut clusters: Vec<Vec<usize>> = (0..n).map(|i| vec![i]).collect();
+    // Same-request equal labels are one provider identity. Start them together;
+    // across requests, the unchanged acoustic threshold decides association.
+    let mut clusters: Vec<Vec<usize>> = Vec::new();
+    let mut identities = std::collections::BTreeMap::new();
+    for i in 0..n {
+        if let Some(identity) = constraints.get(i).and_then(Option::as_ref) {
+            let key = (identity.request, identity.label.as_str());
+            let next = clusters.len();
+            let cluster = *identities.entry(key).or_insert(next);
+            if cluster == next { clusters.push(Vec::new()); }
+            clusters[cluster].push(i);
+        } else {
+            clusters.push(vec![i]);
+        }
+    }
     while clusters.len() > 1 {
         // find the pair with max average-link cosine similarity
         let mut best = (0usize, 1usize, f32::NEG_INFINITY);
         for a in 0..clusters.len() {
             for b in (a + 1)..clusters.len() {
+                let conflicts = clusters[a].iter().any(|&i| clusters[b].iter().any(|&j| {
+                    match (constraints.get(i).and_then(Option::as_ref),
+                           constraints.get(j).and_then(Option::as_ref)) {
+                        (Some(left), Some(right)) => left.request == right.request && left.label != right.label,
+                        _ => false,
+                    }
+                }));
+                if conflicts { continue; }
                 let sim = avg_link(&embeddings, &clusters[a], &clusters[b]);
                 if sim > best.2 {
                     best = (a, b, sim);
@@ -363,6 +439,10 @@ fn avg_link(embeddings: &[Vec<f32>], a: &[usize], b: &[usize]) -> f32 {
 /// consistent across a chunked long meeting. Segments whose embedding
 /// extraction fails (too short / noisy) are dropped.
 pub fn segment_embeddings(wav_path: &Path) -> Result<Vec<EmbeddingSegment>, String> {
+    super::diagnostics::Span::start(super::diagnostics::Operation::SpeakerEmbedding).result(segment_embeddings_inner(wav_path))
+}
+
+fn segment_embeddings_inner(wav_path: &Path) -> Result<Vec<EmbeddingSegment>, String> {
     let pcm = read_pcm16k_mono_wav(wav_path)?;
     let samples: Vec<f32> = pcm
         .chunks_exact(2)
@@ -370,9 +450,7 @@ pub fn segment_embeddings(wav_path: &Path) -> Result<Vec<EmbeddingSegment>, Stri
         .collect();
     let raw_segments = energy_vad(&samples);
     let min_samples = SAMPLE_RATE as usize * MIN_SEGMENT_MS / 1000;
-    let to_ms = |sample: usize| -> u64 {
-        (sample as f32 / SAMPLE_RATE as f32 * 1000.0) as u64
-    };
+    let to_ms = |sample: usize| -> u64 { (sample as f32 / SAMPLE_RATE as f32 * 1000.0) as u64 };
     let rt = runtime()?;
     let mut out = Vec::new();
     for (s, e) in raw_segments
@@ -399,7 +477,7 @@ pub fn diarize(wav_path: &Path) -> Result<Vec<DiarizationSegment>, String> {
         return Ok(Vec::new());
     }
     let embeddings: Vec<Vec<f32>> = segs.iter().map(|s| s.embedding.clone()).collect();
-    let speakers = ahc_cluster(&embeddings, CLUSTER_COSINE_THRESHOLD);
+    let speakers = ahc_cluster(&embeddings, cluster_cosine_threshold());
     Ok(segs
         .iter()
         .enumerate()
@@ -411,14 +489,16 @@ pub fn diarize(wav_path: &Path) -> Result<Vec<DiarizationSegment>, String> {
         .collect())
 }
 
-fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
-    let bytes =
-        std::fs::read(path).map_err(|e| format!("read wav {}: {e}", path.display()))?;
+pub(crate) fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
+    let bytes = std::fs::read(path).map_err(|e| format!("read wav {}: {e}", path.display()))?;
     if bytes.len() < 44 || &bytes[0..4] != b"RIFF" || &bytes[8..12] != b"WAVE" {
         return Err(format!("not a RIFF/WAVE: {}", path.display()));
     }
+    let riff_end = u32::from_le_bytes(bytes[4..8].try_into().unwrap()) as usize + 8;
+    if riff_end != bytes.len() { return Err("WAV length does not match RIFF header; recording may be truncated".into()); }
     let mut offset = 12;
     let mut data: Option<(usize, usize)> = None;
+    let mut format_valid = false;
     while offset + 8 <= bytes.len() {
         let id = &bytes[offset..offset + 4];
         let size = u32::from_le_bytes([
@@ -428,16 +508,26 @@ fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
             bytes[offset + 7],
         ]) as usize;
         let body = offset + 8;
-        if id == b"data" {
-            let end = (body + size).min(bytes.len());
-            data = Some((body, end - body));
-            break;
+        let end = body.checked_add(size).filter(|end| *end <= riff_end)
+            .ok_or("truncated WAV chunk; original recording preserved")?;
+        if id == b"fmt " {
+            if size < 16 || format_valid { return Err("invalid or duplicate WAV format".into()); }
+            let u16_at = |n: usize| u16::from_le_bytes(bytes[body+n..body+n+2].try_into().unwrap());
+            let u32_at = |n: usize| u32::from_le_bytes(bytes[body+n..body+n+4].try_into().unwrap());
+            if u16_at(0) != 1 || u16_at(2) != 1 || u32_at(4) != 16_000 || u32_at(8) != 32_000 || u16_at(12) != 2 || u16_at(14) != 16 {
+                return Err("unsupported WAV; expected 16 kHz mono PCM16".into());
+            }
+            format_valid = true;
         }
-        offset = body + size + (size & 1);
+        if id == b"data" {
+            if data.is_some() || size == 0 || size % 2 != 0 { return Err("invalid WAV PCM data chunk".into()); }
+            data = Some((body, size));
+        }
+        offset = end + (size & 1);
     }
+    if !format_valid || offset != riff_end { return Err("invalid WAV format or trailing chunk".into()); }
     let (start, size) = data.ok_or_else(|| "WAV has no data chunk".to_string())?;
-    let end = (start + size).min(bytes.len());
-    Ok(bytes[start..end].to_vec())
+    Ok(bytes[start..start + size].to_vec())
 }
 
 #[cfg(test)]
@@ -474,6 +564,35 @@ mod tests {
     }
 
     #[test]
+    fn constrained_speaker_identity_preserves_provider_distinctions_through_a_bridge() {
+        let embeddings = vec![vec![1.0, 0.0]; 4];
+        let constraint = |label: &str| Some(SpeakerConstraint { request: 0, label: label.into() });
+        let groups = vec![constraint("a"), constraint("b"), None, constraint("a")];
+        let ids = ahc_cluster_constrained(&embeddings, 0.68, &groups);
+        assert_eq!(ids[0], ids[3]);
+        assert_ne!(ids[0], ids[1], "a bridge cannot erase two provider identities");
+        assert_eq!(ids[0], ids[2]);
+        assert_eq!(ahc_cluster(&embeddings, 0.68), vec![0; 4]);
+    }
+
+    #[test]
+    fn constrained_speaker_identity_matches_acoustics_across_reused_provider_labels() {
+        let embeddings = vec![vec![1.0,0.0], vec![0.0,1.0], vec![0.0,1.0], vec![1.0,0.0]];
+        let groups = [(0,"0"),(0,"1"),(1,"0"),(1,"1")].map(|(request,label)| {
+            Some(SpeakerConstraint { request, label:label.into() })
+        });
+        let ids = ahc_cluster_constrained(&embeddings, 0.68, &groups);
+        assert_eq!(ids[0], ids[3]);
+        assert_eq!(ids[1], ids[2]);
+        assert_ne!(ids[0], ids[1]);
+        let embeddings = vec![vec![1.0,0.0,0.0,0.0],vec![0.0,1.0,0.0,0.0],
+                              vec![0.0,0.0,1.0,0.0],vec![0.0,0.0,0.0,1.0]];
+        let ids = ahc_cluster_constrained(&embeddings, 0.68, &groups);
+        assert_eq!(ids.iter().copied().collect::<std::collections::BTreeSet<_>>().len(), 4,
+            "labels reused by another request do not establish one identity");
+    }
+
+    #[test]
     fn energy_vad_silence_filtered() {
         // 3 seconds: 1s silence (zeros) + 1s tone + 1s silence.
         let n = SAMPLE_RATE as usize * 3;
@@ -484,12 +603,16 @@ mod tests {
         }
         let segs = energy_vad(&samples);
         assert!(!segs.is_empty(), "tone window detected");
-        // With 500ms windows + 500ms merge gap the segment may span slightly
+        // Windowing/merge may span slightly
         // beyond the strict [1s, 2s] tone region; assert it overlaps it.
         let tone_start = sr;
         let tone_end = 2 * sr;
         let any_overlap = segs.iter().any(|(s, e)| *e > tone_start && *s < tone_end);
-        assert!(any_overlap, "a segment overlaps the tone region [1s,2s]: {:?}", segs);
+        assert!(
+            any_overlap,
+            "a segment overlaps the tone region [1s,2s]: {:?}",
+            segs
+        );
     }
 
     /// Real diarization on the 4-speaker zh meeting clip. Disabled by default;
@@ -501,9 +624,7 @@ mod tests {
     #[ignore = "requires Listener speaker-verification models (3dspeaker + sherpa-onnx runtime)"]
     fn diarize_four_speaker_meeting() {
         let wav = std::env::var("COMPANION_TYPE_DIARIZE_PROBE_WAV")
-            .unwrap_or_else(|_| {
-                "docs/validation/four-speakers-zh.wav".to_string()
-            });
+            .unwrap_or_else(|_| "docs/validation/four-speakers-zh.wav".to_string());
         let segments = diarize(Path::new(&wav)).expect("diarize");
         assert!(!segments.is_empty(), "expected speech segments");
         let speakers: std::collections::BTreeSet<usize> =

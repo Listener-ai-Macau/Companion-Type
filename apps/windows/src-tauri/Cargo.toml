@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Standalone Companion Type host app"
 authors = ["Listener AI"]
 edition = "2021"
-rust-version = "1.77"
+rust-version = "1.89"
 
 [lib]
 name = "companion_type_lib"
@@ -14,20 +14,57 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "~2.11", features = ["tray-icon"] }
+tauri = { version = "~2.11", features = ["tray-icon", "protocol-asset"] }
+tauri-plugin-dialog = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 btleplug = "0.11"
 crc32fast = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+bzip2 = "0.4"
+tar = "0.4"
 futures = "0.3"
 sha2 = "0.10"
+regex = "1"
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "sync", "time", "net", "io-util", "macros"] }
 tokio-tungstenite = { version = "0.24", features = ["rustls-tls-native-roots"] }
 libloading = "0.8"
-uuid = { version = "1", features = ["v4"] }
+uuid = { version = "1", features = ["v4", "serde"] }
 denzic-ota-core = { path = "../../../third_party/denzic-platform/ota/host/rust" }
-denzic-host-audio-v1-core = { path = "../../../third_party/denzic-platform/host_audio/host/rust" }
+denzic-host-audio-v1-core = { path = "../../../third_party/denzic-platform/host_audio/host/rust", features = ["native-opus"] }
+denzic-ble-windows = { path = "../../../third_party/denzic-platform/ble_windows/host/rust" }
+denzic-observability-v1-core = { path = "../../../third_party/denzic-platform/observability/host/rust" }
+# Native DeepSeek minutes (replaces the python helper dependency so packaged
+# builds don't need python on PATH or a relative tools/ path). blocking+json
+# only; reuses the rustls TLS already pulled in by the dependency tree.
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "multipart", "rustls-tls"] }
+tauri-plugin-updater = "=2.12.0"
+semver = "1"
+minisign-verify = "0.2"
+base64 = "0.22"
+msi = "0.10.0"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = [
+    "Devices_Bluetooth",
+    "Devices_Bluetooth_GenericAttributeProfile",
+    "Devices_Enumeration",
+    "Foundation",
+    "Foundation_Collections",
+    "Storage_Streams",
+    "Win32_Foundation",
+    "Win32_Storage_FileSystem",
+    "Win32_Security",
+    "Win32_System_JobObjects",
+    "Win32_System_Pipes",
+    "Win32_System_Threading",
+] }
 
 [features]
 default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
+
+[patch.crates-io]
+# Freeze the existing version with a bounded Windows receive queue and visible
+# lag errors. Applies to direct and denzic-ble-windows users of this crate.
+btleplug = { path = "../../../third_party/btleplug-0.11.8" }
