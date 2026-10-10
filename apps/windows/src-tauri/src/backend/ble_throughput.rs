@@ -143,6 +143,17 @@ pub(super) struct TransferPreference {
     parameter_observation: Arc<ParameterObservation>,
 }
 
+impl TransferPreference {
+    pub(super) fn handoff_to_sealed_sync(&mut self) {
+        // Keep the existing WinRT request alive. Close/reopen can queue a
+        // normal interval update that lands after the new upload request.
+        eprintln!("recording_link_timeline scope={} stage=handoff_to_sealed_sync elapsed_us={} preference_not_released=1 host_unix_us={}",
+            self.scope, self.parameter_observation.started.elapsed().as_micros(),
+            chrono::Utc::now().timestamp_micros());
+        self.scope = "connection_setup_through_sealed_sync";
+    }
+}
+
 struct ParameterObservation {
     started: Instant,
     changes: std::sync::atomic::AtomicU64,

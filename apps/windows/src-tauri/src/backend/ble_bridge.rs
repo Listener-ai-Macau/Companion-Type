@@ -1228,6 +1228,15 @@ fn env_timeout(name: &str, default_ms: u64) -> StdDuration {
     )
 }
 
+// Setup preferences have one owner and never enter the cloned idle/recorder
+// device stores. A sealed sync can move this guard into its operation; normal
+// Connect/START extracts only the device and immediately releases it.
+struct NativeConnectionSetup {
+    device: NativeDevice,
+    #[cfg(windows)]
+    preference: Option<super::ble_throughput::TransferPreference>,
+}
+
 #[derive(Clone)]
 struct NativeDevice {
     peripheral: Peripheral,
@@ -1854,9 +1863,9 @@ fn normalize_device_id(value: &str) -> String {
 async fn connect_native_device_once(
     requested_device_id: Option<&str>,
     sync_clock: bool,
-) -> Result<NativeDevice, String> {
+) -> Result<NativeConnectionSetup, String> {
     let device = scan_native_device(requested_device_id).await?;
-    connect_known_native_device_with_clock(device,sync_clock).await
+    connect_known_native_device_setup(device,sync_clock).await
 }
 
 async fn connect_native_device(requested_device_id: Option<&str>) -> Result<NativeDevice, String> {
@@ -1864,9 +1873,13 @@ async fn connect_native_device(requested_device_id: Option<&str>) -> Result<Nati
 }
 
 async fn connect_native_device_with_clock(requested_device_id: Option<&str>,sync_clock:bool) -> Result<NativeDevice,String> {
+    connect_native_device_setup(requested_device_id, sync_clock).await.map(|setup| setup.device)
+}
+
+async fn connect_native_device_setup(requested_device_id: Option<&str>,sync_clock:bool) -> Result<NativeConnectionSetup,String> {
     if let Some(device) = take_prepared_device(requested_device_id).await? {
         if sync_clock { let _ = sync_device_utc_clock(&device.peripheral).await; }
-        return Ok(device);
+        return Ok(NativeConnectionSetup { device, #[cfg(windows)] preference: None });
     }
     /* Windows may retain a stale GATT object for a few seconds after the
      * transactional probe disconnects.  A one-shot connect made the UI look
@@ -1907,11 +1920,17 @@ async fn connect_known_native_device(device: NativeDevice) -> Result<NativeDevic
     connect_known_native_device_with_clock(device,true).await
 }
 
-async fn connect_known_native_device_with_clock(mut device: NativeDevice,sync_clock:bool) -> Result<NativeDevice,String> {
+async fn connect_known_native_device_with_clock(device: NativeDevice,sync_clock:bool) -> Result<NativeDevice,String> {
+    connect_known_native_device_setup(device, sync_clock).await.map(|setup| setup.device)
+}
+
+async fn connect_known_native_device_setup(mut device: NativeDevice,sync_clock:bool) -> Result<NativeConnectionSetup,String> {
     let device_id = device.device_id();
     let connect_timeout = env_timeout("COMPANION_TYPE_BLE_CONNECT_TIMEOUT_MS", 12_000);
     let discover_timeout = env_timeout("COMPANION_TYPE_BLE_DISCOVER_TIMEOUT_MS", 8_000);
     let started = StdInstant::now();
+    #[cfg(windows)]
+    let mut setup_preference = None;
     let result = async {
     let connected = timeout(connect_timeout, device.peripheral.is_connected())
         .await
@@ -1936,11 +1955,12 @@ async fn connect_known_native_device_with_clock(mut device: NativeDevice,sync_cl
     }
     // WinRT's uncached connect/service/descriptor enumeration contains many
     // ATT round trips. Scope the central preference to setup as well as bulk
-    // receive; keeping it on the returned user connection would waste power.
+    // receive. Return its single-owner guard separately: normal user/recorder
+    // connections drop it, while a sealed upload can keep the same request.
     #[cfg(windows)]
-    let _setup_preference = super::ble_throughput::request_for_connection_setup(
+    { setup_preference = super::ble_throughput::request_for_connection_setup(
         &device.address, device.address_type,
-    ).await;
+    ).await; }
     if !connected {
         let connect_begun = StdInstant::now();
         timeout(connect_timeout, device.peripheral.connect())
@@ -1977,6 +1997,8 @@ async fn connect_known_native_device_with_clock(mut device: NativeDevice,sync_cl
     Ok(())
     }.await;
     if result.is_err() {
+        #[cfg(windows)]
+        drop(setup_preference.take());
         // A failed connect/discovery can still own WinRT GATT handles. Close
         // them before the next fresh scan instead of leaving a stale attempt
         // in parallel with the retry. This never removes the pairing bond.
@@ -1984,7 +2006,7 @@ async fn connect_known_native_device_with_clock(mut device: NativeDevice,sync_cl
     }
     eprintln!("BLE protected_connection elapsed_ms={} success={} clock_sync={sync_clock}",
         started.elapsed().as_millis(), result.is_ok());
-    result.map(|()| device)
+    result.map(|()| NativeConnectionSetup { device, #[cfg(windows)] preference: setup_preference })
 }
 
 async fn sync_device_utc_clock(peripheral: &Peripheral) -> Result<(), String> {
@@ -3673,9 +3695,18 @@ async fn sync_native_recordings_excluding(
     // Acquire the protected connection without a best-effort settings-clock
     // read/write in front of the download. Normal connect/START still sync UTC.
     let started = StdInstant::now();
-    let device = connect_native_device_with_clock(requested_device_id, false).await?;
+    let setup = connect_native_device_setup(requested_device_id, false).await?;
+    let device = setup.device;
+    #[cfg(windows)]
+    let mut setup_preference = setup.preference;
+    #[cfg(windows)]
+    if let Some(preference) = setup_preference.as_mut() { preference.handoff_to_sealed_sync(); }
     eprintln!("recording_sync_stage stage=connection elapsed_ms={}", started.elapsed().as_millis());
     let result = sync_native_recordings_inner(&device, known_recording_ids).await;
+    // Release before returning a reusable idle connection or closing its
+    // owner. Errors/cancel also drop this local guard, never retain fast idle.
+    #[cfg(windows)]
+    drop(setup_preference);
     let reusable = result.as_ref().is_ok_and(|batch| batch.connection_reusable);
     finish_native_device_operation(device, reusable).await?;
     result
