@@ -2140,7 +2140,7 @@ async fn reconnect_native_device(
         match connect_native_device_once(requested_device_id, true).await {
             Ok(device) => {
                 eprintln!("BLE reconnect scan_success attempt={attempt}/{attempts}");
-                return Ok(device);
+                return Ok(device.device);
             }
             Err(error) => {
                 #[cfg(windows)]
