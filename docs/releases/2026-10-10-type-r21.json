@@ -1,0 +1,66 @@
+{
+  "schema": "companion.type.upload_steps.v1",
+  "recordedAtLocal": "2026-10-10T10:54:26",
+  "result": "SETUP_INTERVAL_REGRESSION_REMOVED_QM11_STILL_NOT_MET",
+  "firmware": "FW151/UI67",
+  "fixedBoardSample": {
+    "recordingId": 20,
+    "totalLength": 631104,
+    "sha256": "c55a559cc2004fc7710603964e1f79c9507f950a189f91f9475cd49109abdc28"
+  },
+  "durationMs": 300520,
+  "audioCaptureSource": "board_device",
+  "hostMic": false,
+  "seed": false,
+  "intentionalDevelopmentRetention": true,
+  "newReceiveDirectories": true,
+  "rateBasis": "new original COP1 bytes / native host first-to-last arrival",
+  "compressionMultiplier": false,
+  "fullChainAcceptance": "NOT_RUN",
+  "ownerAcceptance": "NOT_REQUESTED_INTERNAL_STAGE",
+  "cloudCalls": 0,
+  "candidates": [
+    {
+      "version": "r20",
+      "sourceGitCommit": "06d04465fff7b1fb8cc4b64ca0caaa4881a4be49",
+      "sourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\.cache\\upload-steps-20261010\\r20\\build-result.json",
+      "sourceReceiptSha256": "6954ebd513d1a8bff297fb2a07fde2ae3897c150fb3fc5b33dd2a4de2370fdcc",
+      "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\.cache\\upload-steps-20261010\\r20\\msi\\Companion-Type-0.1.0-native-arrival-timeline-x64-en-US.msi",
+      "msiSha256": "adcf6486095d97bc8e9a4a03c2cdd8134a243fc38d0f0bdd35628b9718388052",
+      "installedExeSha256": "39a821fab5e1ce2fec7b3633985544073f958ff5b89634e47d580b62894da9d8",
+      "installedDllSha256": "b15ec80a8078832b04cf70e3322340617699094fcd1c7f46bc8cbe27f43e78d1",
+      "installedPayloadMatch": true,
+      "actualNewPayloadKiBs": 54.65,
+      "receiveFirstToLastSeconds": 11.278,
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\.cache\\upload-steps-20261010\\step2-fixed-id20-r20\\result.json",
+      "evidenceSha256": "189aff58283f355ec595bd95d9b17f688c6184b23af863045895554ee13b99c6",
+      "qm11": "NOT_MET",
+      "deviceConsumed": false
+    },
+    {
+      "version": "r21",
+      "sourceGitCommit": "f58fe5279a5eac5b8446ee658d4de13f57f329bb",
+      "sourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\.cache\\upload-steps-20261010\\r21\\build-result.json",
+      "sourceReceiptSha256": "cc0ca78ebae49f33dcd05182e72bd373cd30052f9ef60ee13101e7d6394323dc",
+      "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\.cache\\upload-steps-20261010\\r21\\msi\\Companion-Type-0.1.0-setup-through-sealed-sync-x64-en-US.msi",
+      "msiSha256": "51dcfc3182512403d5636785d15a708ae4ca6a843ccbfee19bad94c3539838a0",
+      "installedExeSha256": "860c3188240e71ed7b5e95445ddfd6ea8c399f3f9028e1409aa6194dbca22242",
+      "installedDllSha256": "14c2043fb368256b0e18b722b14a9d5a86e8674a80678b18eb0450fe127cdec6",
+      "installedPayloadMatch": true,
+      "actualNewPayloadKiBs": 57.69,
+      "receiveFirstToLastSeconds": 10.683,
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\.cache\\upload-steps-20261010\\step3-fixed-id20-r21\\result.json",
+      "evidenceSha256": "e6121d42fa3cc2a5f9275bc4b632b3ff2576d7d7a13289fac7c834f325f5ae4f",
+      "qm11": "NOT_MET",
+      "deviceConsumed": false
+    }
+  ],
+  "observedChange": {
+    "r20": "CI12 -> CI48 for about 0.6s -> CI12 during startup; ten gaps >=50ms",
+    "r21": "Held setup request continuously through sealed sync; no observed interval changes during payload; zero gaps >=50ms",
+    "wholeFileImprovementPercent": 5.56,
+    "remaining": "First tenth still about40.57KiB/s; whole file57.69<60. Prior first-consume ATT timeouts and complete meeting/OTA/power gates remain open.",
+    "limitations": "One same-file before/after; no stability or whole-product PASS. Earlier15.86->54.40 recovery happened before this production change and has no proven cause. Cold connection preparation was 4651ms in r21 vs 2645ms in r20; no claim of improved cold end-to-end operation time."
+  },
+  "buildFailurePreserved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\.cache\\upload-steps-20261010\\r21\\build-attempt1-compile-failure.log"
+}
