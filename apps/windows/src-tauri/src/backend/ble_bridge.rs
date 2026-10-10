@@ -30,6 +30,7 @@ mod offline_connection;
 mod pull_session;
 mod pull_progress;
 mod pull_reorder;
+mod pull_timing;
 mod pull_receiver;
 mod pull_recovery;
 mod prepared_connection;
@@ -4519,6 +4520,8 @@ async fn pull_recording_bytes_in_session(
         None
     };
     let mut pending = pull_reorder::PendingChunks::default();
+    let mut arrival_timing = (!compress && !is_live_prefix).then(||
+        pull_timing::PullTiming::new(entry.recording_id, initial_offset, entry.total_length));
     let transfer_started = std::time::Instant::now();
     // Product bulk: Write Without Response for START/resume (no ATT response RTT).
     let write_type = WriteType::WithoutResponse;
@@ -4697,6 +4700,9 @@ async fn pull_recording_bytes_in_session(
             } else {
                 chunk.payload.len() as u32
             };
+            if let Some(timing) = arrival_timing.as_mut() {
+                timing.validated(chunk.byte_offset, chunk.payload.len(), arrived_at);
+            }
             if chunk.flags & RECORDING_CHUNK_COMPRESSED_IMA_FLAG != 0 {
                 // stash: pcm_adv, plen, flags, payload
                 data.extend_from_slice(&(pcm_advance as u32).to_le_bytes());
@@ -4924,6 +4930,7 @@ async fn pull_recording_bytes_in_session(
     // Notification payload rate from first packet to last, excluding arming.
     // This includes waits between packets, not BLE protocol/radio overhead.
     let elapsed = pending.elapsed_seconds().unwrap_or(elapsed_air);
+    if let Some(timing) = arrival_timing.as_mut() { timing.completed(); }
     for line in super::recording_metrics::diagnostics(super::recording_metrics::CompletedPull {
         codec: entry.codec, directory_duration_ms: entry.duration_ms,
         payload_bytes: data.len(), received_payload_bytes: offset.saturating_sub(initial_offset),

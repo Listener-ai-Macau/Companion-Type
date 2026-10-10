@@ -139,14 +139,39 @@ pub(super) struct TransferPreference {
     device: BluetoothLEDevice,
     request: Option<BluetoothLEPreferredConnectionParametersRequest>,
     scope: &'static str,
+    parameter_token: Option<EventRegistrationToken>,
+    parameter_observation: Arc<ParameterObservation>,
 }
+
+struct ParameterObservation {
+    started: Instant,
+    changes: std::sync::atomic::AtomicU64,
+}
+
+fn observed_parameters(device: &BluetoothLEDevice) -> (Option<u16>, Option<u16>, Option<u16>) {
+    let parameters = device.GetConnectionParameters().ok();
+    (
+        parameters.as_ref().and_then(|p| p.ConnectionInterval().ok()),
+        parameters.as_ref().and_then(|p| p.ConnectionLatency().ok()),
+        parameters.as_ref().and_then(|p| p.LinkTimeout().ok()),
+    )
+}
+
 impl Drop for TransferPreference {
     fn drop(&mut self) {
+        let observer_registered = self.parameter_token.is_some();
+        if let Some(token) = self.parameter_token.take() {
+            let _ = self.device.RemoveConnectionParametersChanged(token);
+        }
         // Read the actual interval after the scoped operation, before releasing the
         // preference. Request acceptance alone does not prove negotiation.
         let interval = self.device.GetConnectionParameters().ok()
             .and_then(|p| p.ConnectionInterval().ok());
         eprintln!("recording native throughput preference scope={} end_interval_units={interval:?}", self.scope);
+        eprintln!("recording_link_timeline scope={} stage=end elapsed_us={} parameter_changes={} event_log_limit=32 observer_registered={} no_extra_att_reads=1 host_unix_us={}",
+            self.scope, self.parameter_observation.started.elapsed().as_micros(),
+            self.parameter_observation.changes.load(Ordering::Relaxed), observer_registered,
+            chrono::Utc::now().timestamp_micros());
         if let Some(request) = self.request.take() { let _ = request.Close(); }
         // This is a temporary reference to a device already owned by the
         // native connection, not the owner of that connection. WinRT can
@@ -207,7 +232,30 @@ fn open_preference(address: u64, address_type: Option<AddressType>, scope: &'sta
     let parameters = BluetoothLEPreferredConnectionParameters::ThroughputOptimized()
         .map_err(|e| format!("ThroughputOptimized: {e}"))?;
     let device = open_device(address, address_type, cancel)?;
-    let mut preference = TransferPreference { device, request: None, scope };
+    let observation = Arc::new(ParameterObservation {
+        started: Instant::now(), changes: std::sync::atomic::AtomicU64::new(0),
+    });
+    let mut preference = TransferPreference {
+        device, request: None, scope, parameter_token: None, parameter_observation: observation.clone(),
+    };
+    let handler = TypedEventHandler::<BluetoothLEDevice, windows::core::IInspectable>::new(move |sender, _| {
+        let change = observation.changes.fetch_add(1, Ordering::Relaxed) + 1;
+        if change <= 32 {
+            if let Some(device) = sender {
+                let (interval, latency, supervision) = observed_parameters(device);
+                eprintln!("recording_link_timeline scope={scope} stage=parameters_changed elapsed_us={} event={} interval_units={interval:?} latency={latency:?} supervision_units={supervision:?} no_extra_att_reads=1 host_unix_us={}",
+                    observation.started.elapsed().as_micros(), change, chrono::Utc::now().timestamp_micros());
+            }
+        }
+        Ok(())
+    });
+    match preference.device.ConnectionParametersChanged(&handler) {
+        Ok(token) => preference.parameter_token = Some(token),
+        Err(error) => eprintln!("recording_link_timeline scope={scope} stage=observer_unavailable cause={error}; normal_preference_retained=1"),
+    }
+    let (interval, latency, supervision) = observed_parameters(&preference.device);
+    eprintln!("recording_link_timeline scope={scope} stage=start elapsed_us={} interval_units={interval:?} latency={latency:?} supervision_units={supervision:?} no_extra_att_reads=1 host_unix_us={}",
+        preference.parameter_observation.started.elapsed().as_micros(), chrono::Utc::now().timestamp_micros());
     if cancel.requested() { return Err(cancel.cancelled_error("throughput preference")); }
     preference.request = Some(preference.device.RequestPreferredConnectionParameters(&parameters)
         .map_err(|e| format!("request throughput preference: {e}"))?);
