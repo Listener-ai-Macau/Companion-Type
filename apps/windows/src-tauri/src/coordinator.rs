@@ -49,6 +49,8 @@ fn operation_name(kind: u8) -> &'static str {
         10 => "service settings save",
         11 => "desktop software update",
         12 => "recording bookmark observation",
+        13 => "continuous recording synchronization",
+        14 => "local original recording recovery",
         _ => "unknown device operation",
     }
 }
@@ -72,6 +74,10 @@ fn device_recording_blocks_control(
     snapshot: &CompanionV1Snapshot,
     action: crate::companion_v1::CompanionV1ControlAction,
 ) -> bool {
+    if action == crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings
+        && crate::backend::segmented_link_change_allowed(snapshot) {
+        return false;
+    }
     snapshot.device.recording
         && matches!(
             action,
@@ -102,6 +108,15 @@ impl CompanionCoordinator {
         &self,
         kind: u8,
     ) -> Result<CompanionDeviceOperationLease, String> {
+        if kind == 13 && self.device_operation.load(Ordering::Acquire) == 0 {
+            crate::backend::recording_sync::prepare_background();
+        } else if kind != 13 && self.device_operation.load(Ordering::Acquire) == 13 {
+            crate::backend::recording_sync::yield_background();
+            let until = std::time::Instant::now() + std::time::Duration::from_secs(30);
+            while self.device_operation.load(Ordering::Acquire) == 13 && std::time::Instant::now() < until {
+                std::thread::sleep(std::time::Duration::from_millis(5));
+            }
+        }
         self.device_operation
             .compare_exchange(0, kind, Ordering::AcqRel, Ordering::Acquire)
             .map_err(|active| {
@@ -162,6 +177,11 @@ impl CompanionCoordinator {
         self.backend.snapshot()
     }
 
+    pub(crate) fn restore_local_recordings(&self) -> Result<crate::backend::recording_wire::receiver::LocalRestoreReport,String> {
+        let _lease=self.begin_device_operation_kind(14)?;
+        self.backend.restore_local_recordings()
+    }
+
     pub fn begin_audio_export(&self) -> Result<CompanionDeviceOperationLease, String> {
         let lease = self.begin_device_operation_kind(8)?;
         let snapshot = self.backend.snapshot()?;
@@ -217,6 +237,11 @@ impl CompanionCoordinator {
         &self,
         request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String> {
+        // Request handoff before snapshot() can wait behind the follower's
+        // state/library lock. This signal is not the user's Pause Sync choice.
+        if self.device_operation.load(Ordering::Acquire) == 13 {
+            crate::backend::recording_sync::yield_background();
+        }
         let operation = if request.action == crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings { Operation::RecordingSync } else { Operation::DeviceControl };
         let span = Span::start(operation);
         let result = self.apply_control_inner(request);
@@ -231,6 +256,11 @@ impl CompanionCoordinator {
     fn apply_control_inner(
         &self, request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String> {
+        if request.action==crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings {
+            // Finish durable host data before radio setup. A later connection
+            // failure cannot strand a complete original behind a virtual URI.
+            self.restore_local_recordings()?;
+        }
         let needs_device = match request.action {
             crate::companion_v1::CompanionV1ControlAction::DeviceScan
             | crate::companion_v1::CompanionV1ControlAction::DeviceConnect
@@ -255,14 +285,23 @@ impl CompanionCoordinator {
             _ => false,
         };
         let snapshot = self.backend.snapshot()?;
-        if device_recording_blocks_control(&snapshot, request.action) {
+        let original_sync=crate::backend::owned_segmented_recording_sync(&snapshot,&request).is_some();
+        if !original_sync && device_recording_blocks_control(&snapshot, request.action) {
             return Err(
                 "device operation cannot start while the Companion is recording; end the recording on the device, then read device status again"
                     .to_string(),
             );
         }
         if needs_device
+            && !original_sync
             && !owned_offline_recording_link(&snapshot,&request)
+            && !(matches!(request.action,
+                crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings
+                    | crate::companion_v1::CompanionV1ControlAction::DeviceConnect
+                    | crate::companion_v1::CompanionV1ControlAction::DeviceDisconnect)
+                && crate::backend::segmented_link_change_allowed(&snapshot)
+                && request.device_id.as_deref().is_none_or(|target| snapshot.device.device_id.as_deref()
+                    .is_some_and(|current| crate::backend::same_device_id(target, current))))
             && !matches!(
                 request.action,
                 crate::companion_v1::CompanionV1ControlAction::MeetingStop
@@ -285,6 +324,16 @@ impl CompanionCoordinator {
         let _operation = self.begin_device_operation_kind(4)?;
         // No-op background probes must not grow the log every polling tick.
         self.backend.automatic_reconnect_once()
+    }
+
+    pub fn follow_recording_once(&self) -> Result<bool, String> {
+        let _operation = self.begin_device_operation_kind(13)?;
+        self.backend.follow_recording_once(None)
+    }
+
+    pub fn follow_original_recording_once(&self, session_id: &str) -> Result<bool, String> {
+        let _operation = self.begin_device_operation_kind(13)?;
+        self.backend.follow_recording_once(Some(session_id))
     }
 
     pub fn record_meeting_recovery_failure(
@@ -386,6 +435,45 @@ mod tests {
         assert!(coordinator.begin_device_operation_kind(1).is_ok());
     }
     use crate::companion_v1::CompanionV1ControlAction;
+
+    #[test]
+    fn follower_handoff_keeps_durable_cursor_without_pausing_future_sync() {
+        use crate::backend::{recording_sync, recording_transfer::{Cursor, Source}};
+        use sha2::{Digest, Sha256};
+        let coordinator = Arc::new(CompanionCoordinator::new_fixture());
+        let folder = std::env::temp_dir().join(format!("companion-follow-handoff-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir(&folder).unwrap();
+        let body: Vec<u8> = (0..100_000).map(|n| (n % 239) as u8).collect();
+        let source = Source { device: "AA:BB:CC:DD:EE:19".into(), recording_id: 77,
+            codec: 3, source_mode: 1, duration_ms: 50_000, total_length: body.len() as u32,
+            sha256_prefix: Sha256::digest(&body)[..8].try_into().unwrap(), content_crc32: crc32fast::hash(&body) };
+        let (ready_tx, ready_rx) = std::sync::mpsc::channel();
+        let worker_coordinator = coordinator.clone();
+        let worker_folder = folder.clone(); let worker_source = source.clone(); let worker_body = body.clone();
+        let worker = std::thread::spawn(move || {
+            let lease = worker_coordinator.begin_device_operation_kind(13).unwrap();
+            let job = recording_sync::Job::begin_background(&worker_source.device).unwrap();
+            let (mut cursor, _) = Cursor::open(&worker_folder, worker_source).unwrap();
+            for bytes in worker_body[..80_000].chunks(224) { cursor.append(bytes).unwrap(); }
+            ready_tx.send(()).unwrap();
+            let runtime = tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
+            let result = runtime.block_on(job.receive(std::future::pending::<Result<(), String>>()));
+            assert_eq!(result.unwrap_err(), recording_sync::PAUSED);
+            assert!(job.yielded());
+            assert!(!recording_sync::status().unwrap().pause_requested);
+            drop(cursor); drop(job); drop(lease);
+        });
+        ready_rx.recv_timeout(std::time::Duration::from_secs(5)).unwrap();
+        let control = coordinator.begin_device_operation_kind(1).unwrap();
+        worker.join().unwrap();
+        let (cursor, received) = Cursor::open(&folder, source.clone()).unwrap();
+        assert_eq!(received, body[..80_000], "user control leaves the physical download's real durable prefix");
+        drop(cursor); drop(control);
+        assert!(recording_sync::automatic_allowed(&source.device), "handoff is not a persisted user Pause Sync");
+        let next = recording_sync::Job::begin(&source.device).unwrap();
+        assert!(!next.is_paused());
+        drop(next);
+    }
 
     #[test]
     fn only_same_owned_offline_board_session_can_change_its_link_during_capture() {

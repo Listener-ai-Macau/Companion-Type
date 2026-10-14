@@ -73,16 +73,7 @@ pub fn rules_l0_minutes(
         .take(5)
         .cloned()
         .collect::<Vec<_>>();
-    let action_items = segments
-        .iter()
-        .filter(|segment| has_action_marker(segment))
-        .take(8)
-        .map(|segment| CompanionV1ActionItem {
-            text: segment.clone(),
-            owner: extract_marker_value(segment, "owner"),
-            due: extract_marker_value(segment, "due"),
-        })
-        .collect::<Vec<_>>();
+    let action_items = source_action_items(&segments);
     let questions = segments
         .iter()
         .filter(|segment| {
@@ -143,8 +134,9 @@ pub(super) fn finalize_minutes(
                 upgraded.quality = "final".to_string();
             }
             let actions_changed = enforce_source_backed_action_items(&mut upgraded, &l0);
+            let assigned_added = merge_explicit_source_assignments(&mut upgraded, &l0);
             let fallback_count = merge_missing_source_facts(&mut upgraded, &l0.summary);
-            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed {
+            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added {
                 // The model may return a polished markdown body that omits facts
                 // already retained by deterministic extraction. Once a fallback
                 // is needed, render from the merged structured fields so the UI,
@@ -738,6 +730,48 @@ fn has_action_marker(segment: &str) -> bool {
     responsibility && !explicitly_absent
 }
 
+// Explicit named/deadlined Chinese assignments were absent from L0 unless
+// they also said "负责" or "行动项". Keep the exact clause; never infer a name,
+// resolve "我", correct ASR terms or turn a cancelled plan into an assignment.
+fn named_deadline_actions(segment: &str) -> Vec<CompanionV1ActionItem> {
+    static PATTERN: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| regex::Regex::new(
+        r"(?:^|[，,；;])\s*([\p{Han}A-Za-z·]{2,12})\s*在\s*((?:本?周|星期)[一二三四五六日天](?:上午|下午|晚上)?(?:之前|前)?)\s*(?:完成|提交|交付|核对|确认|跟进)([^，,；;。！？\n]{2,100})"
+    ).expect("constant Chinese assignment pattern"));
+    if ["取消", "不再", "无需", "不要", "没有安排", "未安排", "不能", "无法", "可能", "假如", "如果", "假设", "建议", "也许", "是否", "希望"]
+        .iter().any(|s| segment.contains(s)) { return vec![]; }
+    PATTERN.captures_iter(segment).filter_map(|m| {
+        let owner = m.get(1)?.as_str();
+        if matches!(owner, "我们" | "他们" | "有人" | "谁会" | "是否") { return None; }
+        Some(CompanionV1ActionItem { text: m.get(0)?.as_str().trim_start_matches(['，', ',', '；', ';']).trim().into(),
+            owner: Some(owner.into()), due: Some(m.get(2)?.as_str().into()) })
+    }).collect()
+}
+
+fn source_action_items(segments: &[String]) -> Vec<CompanionV1ActionItem> {
+    let mut items = Vec::new();
+    // Real explicit commitments come before broad responsibility excerpts.
+    for segment in segments { items.extend(named_deadline_actions(segment)); }
+    for segment in segments.iter().filter(|s| named_deadline_actions(s).is_empty() && has_action_marker(s)) {
+        items.push(CompanionV1ActionItem { text: segment.clone(),
+            owner: extract_marker_value(segment, "owner"), due: extract_marker_value(segment, "due") });
+    }
+    items.truncate(8); items
+}
+
+fn merge_explicit_source_assignments(upgraded: &mut CompanionV1MeetingMinutes,
+    l0: &CompanionV1MeetingMinutes) -> bool {
+    let mut changed = false;
+    for source in l0.action_items.iter().filter(|s| s.owner.is_some() && s.due.is_some()
+        && !named_deadline_actions(&s.text).is_empty()) {
+        if upgraded.action_items.iter().any(|item| item.owner == source.owner && item.due == source.due
+            && (source_fact_covered(&source.text, &item.text) || source_fact_covered(&item.text, &source.text))) { continue; }
+        // Keep this original assignment as one task with its own attribution,
+        // instead of borrowing a deadline from another paraphrased task.
+        upgraded.action_items.push(source.clone()); changed = true;
+    }
+    changed
+}
+
 fn extract_marker_value(segment: &str, key: &str) -> Option<String> {
     let pattern = format!("{key}");
     let lower = segment.to_ascii_lowercase();
@@ -926,7 +960,7 @@ mod tests {
     use crate::companion_v1::CompanionV1SessionRetention;
 
     fn session_with_text(text: &str) -> CompanionV1HostSession {
-        CompanionV1HostSession {
+        CompanionV1HostSession { recorder_control: None, recorder_control_uncertain: false, device_recording_key: None, 
             transcript_review: None,
             bookmark_revision: 0, bookmarks: vec![],
             note_revision: 0, meeting_notes: vec![],
@@ -1092,6 +1126,36 @@ mod tests {
         let result = finalize_minutes(Ok(upgraded), l0, &session);
         assert!(result.action_items.is_empty());
         assert!(!result.markdown.contains("验证Windows蓝牙可复现性"));
+    }
+
+    #[test]
+    fn real_named_deadline_assignments_survive_model_omission_without_cross_attribution() {
+        // Actual recognized delivery clause from session9; no reference text
+        // or fixed product/role spelling is supplied to the product extractor.
+        let session = session_with_text("我补充交付安排。小王在周四之前完成录音和蓝牙断线恢复，小陈在周四下午提交转写与纪要的核对结果。星期五的版本仅供内部测试，不是正式销售版。");
+        let l0 = rules_l0_minutes(&session, "now");
+        assert_eq!(l0.action_items.len(), 2);
+        assert_eq!(l0.action_items[0].owner.as_deref(), Some("小王"));
+        assert_eq!(l0.action_items[0].due.as_deref(), Some("周四之前"));
+        assert!(!l0.action_items[0].text.contains("小陈"));
+        assert_eq!(l0.action_items[1].owner.as_deref(), Some("小陈"));
+        assert_eq!(l0.action_items[1].due.as_deref(), Some("周四下午"));
+        let mut upgraded = l0.clone(); upgraded.source = "llm_deepseek".into(); upgraded.quality = "final".into();
+        upgraded.action_items.clear(); upgraded.markdown = "# 模型正文仅提及安排".into();
+        let result = finalize_minutes(Ok(upgraded), l0.clone(), &session);
+        assert_eq!(result.action_items.len(), 2);
+        assert!(result.markdown.contains("owner: 小王") && result.markdown.contains("due: 周四之前"));
+        assert!(result.markdown.contains("owner: 小陈") && result.markdown.contains("due: 周四下午"));
+        let mut duplicated = result.clone();
+        assert!(!merge_explicit_source_assignments(&mut duplicated, &l0));
+        for text in ["如果阿敏在星期二上午提交报价，会议再讨论。", "建议张玲在周五之前完成审稿。",
+            "取消李明在周一提交报告的安排。", "他们在周四之前完成文档。", "张玲在周五之前可能提交报告。"] {
+            assert!(named_deadline_actions(text).is_empty(), "do not manufacture commitment: {text}");
+        }
+        let other = named_deadline_actions("张玲在星期二上午提交报价，李明在周五前完成门锁维修");
+        assert_eq!(other.len(), 2);
+        assert_eq!(other[0].owner.as_deref(), Some("张玲"));
+        assert_eq!(other[1].due.as_deref(), Some("周五前"));
     }
 
     #[test]

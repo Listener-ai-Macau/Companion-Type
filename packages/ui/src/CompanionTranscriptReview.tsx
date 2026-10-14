@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pencil, RotateCcw } from 'lucide-react';
 import {
   companionReviewedTranscript, companionReviewedUtterances, companionSessionHasFinalTranscript,
   companionTranscriptReviewIsStale, companionTranscriptReviewRevision, companionTranscriptSpeakerLabel,
+  companionTranscriptSources, companionTranscriptSourceIsCurrent, type CompanionTranscriptSource,
   type CompanionV1HostSession, type CompanionV1Snapshot, type CompanionV1UtteranceSegment,
 } from '@companion-type/core';
 import type { CompanionMeetingSaveRequest } from './CompanionDashboard';
@@ -28,19 +29,45 @@ function stamp(ms: number) {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 }
 
-export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange }: {
+export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange,
+  sourceSelection, onSeekSource, audioSeekBlocked = false }: {
   session: CompanionV1HostSession; visible: boolean; blocked: boolean;
   onSave?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onUnsavedChange: (unsaved: boolean) => void;
+  sourceSelection?: CompanionTranscriptSource | null;
+  onSeekSource?: (source: CompanionTranscriptSource) => Promise<void>;
+  audioSeekBlocked?: boolean;
 }) {
   // Keep per-meeting drafts mounted even when the user switches content tabs.
   const [drafts, setDrafts] = useState<Record<string, Draft>>({});
   const [saving, setSaving] = useState<string | null>(null);
   const [result, setResult] = useState<{ id: string; message: string } | null>(null);
+  const [seeking, setSeeking] = useState(false);
+  const seekInFlight = useRef(false);
+  const selectedElement = useRef<HTMLDivElement | null>(null);
   const draft = drafts[session.id];
   const stale = companionTranscriptReviewIsStale(session);
   const revision = companionTranscriptReviewRevision(session);
   const rows = draft?.sourceUtterances ?? companionReviewedUtterances(session);
+  const sources = companionTranscriptSources(session);
+  const sourcesByIndex = new Map(sources.map((source) => [source.index, source]));
+  const selection = sourceSelection && companionTranscriptSourceIsCurrent(session, sourceSelection)
+    ? sourceSelection : null;
+  useEffect(() => {
+    if (visible && !draft && selection) {
+      selectedElement.current?.scrollIntoView?.({ block: 'nearest' });
+      selectedElement.current?.focus?.({ preventScroll: true });
+    }
+  }, [visible, Boolean(draft), selection?.sessionId, selection?.index, selection?.text,
+    selection?.startMs, selection?.endMs]);
+
+  async function seek(source: CompanionTranscriptSource) {
+    if (!onSeekSource || blocked || audioSeekBlocked || seekInFlight.current) return;
+    seekInFlight.current = true; setSeeking(true);
+    try { await onSeekSource(source); }
+    catch (error) { setResult({ id: source.sessionId, message: error instanceof Error ? error.message : String(error) }); }
+    finally { seekInFlight.current = false; setSeeking(false); }
+  }
   const speakers = [...new Set(rows.flatMap((u) => u.speaker == null ? [] : [u.speaker]))].sort((a,b) => a-b);
   const changedSource = draft && (draft.sourceText !== session.transcriptText
     || JSON.stringify(draft.sourceUtterances) !== JSON.stringify(session.utterances ?? [])
@@ -130,8 +157,15 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
         {revision !== null || stale ? <button type="button" className="ct-text-button" disabled={!canEdit} onClick={() => void save(true)}><RotateCcw size={14} />恢复原始转写</button> : null}
       </div>
       <div className="ct-transcript-lines">
-        {rows.length ? rows.map((u,index) => <div className="ct-reviewed-utterance" key={index}>
-          <div className="ct-transcript-review-meta"><time>{stamp(u.startMs)}–{stamp(u.endMs)}</time><strong>{companionTranscriptSpeakerLabel(session,index)}</strong></div>
+        {rows.length ? rows.map((u,index) => <div className="ct-reviewed-utterance" key={index}
+          data-source-selected={selection?.index === index ? 'true' : undefined}
+          tabIndex={selection?.index === index ? -1 : undefined}
+          ref={selection?.index === index ? selectedElement : undefined}>
+          <div className="ct-transcript-review-meta"><time>{stamp(u.startMs)}–{stamp(u.endMs)}</time><strong>{companionTranscriptSpeakerLabel(session,index)}</strong>
+            {onSeekSource && sourcesByIndex.has(index) ? <button type="button"
+              className="ct-text-button" disabled={blocked || audioSeekBlocked || seeking}
+              aria-label={`定位第${index + 1}段原音`} onClick={() => seek(sourcesByIndex.get(index)!)}>定位原音</button> : null}
+          </div>
           <p>{u.text}</p>
         </div>) : companionReviewedTranscript(session).split('\n').map((line,i) => <p key={i}>{line || '\u00a0'}</p>)}
       </div>

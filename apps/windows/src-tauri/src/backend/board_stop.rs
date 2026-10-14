@@ -22,7 +22,9 @@ pub(super) fn completed_retry(
     if snapshot.host.persistence.status != "ready" {
         return Err("这场录音已结束，但会议库尚未保存；请先重试保存。".into());
     }
-    if !session.device_recording_id.is_some_and(|id| id != 0)
+    if session.device_recording_key.is_some() {
+        super::recording_wire::receiver::Receiver::verify_completed_row(session)?;
+    } else if !session.device_recording_id.is_some_and(|id| id != 0)
         || !session.source_device_id.as_deref().is_some_and(device_connection::stable_device_id)
         || !session.device_total_length.is_some_and(|bytes| bytes > 0)
         || !session.device_sha256.as_deref().is_some_and(|sha|
@@ -69,6 +71,8 @@ pub(super) fn observe(
     let session = &snapshot.host.sessions[index];
     if !matches!(session.source.as_str(), "boardDevice" | "deviceFlash")
         || session.device_recording_id != Some(report.meeting_id)
+        || session.device_recording_key.as_ref().map(super::recording_wire::SessionKey::from_public).transpose()?
+            != report.logical_key
         || !session.source_device_id.as_deref().is_some_and(|id|
             device_connection::same_device_id(id, &report.device_id))
         || session.started_at.as_deref().and_then(|value|
@@ -78,7 +82,14 @@ pub(super) fn observe(
     }
 
     let mut pending = session.clone();
-    if !pending.audio_stored {
+    if report.logical_key.is_some() {
+        // Sealed segments may already be durably received during capture.
+        // A STOP ACK cannot clear those original files, marks or receipts.
+        pending.duration_ms = u64::from(report.duration_ms);
+        pending.status = "captured".into();pending.pending_reason = Some("needs_segments".into());
+        if pending.stopped_at.is_none() {pending.stopped_at = Some(observed_at.into());}
+        pending.recovery = Default::default();
+    } else if !pending.audio_stored {
         // The device ACK confirms capture, not receipt, transcription or reclaim.
         let first_stop = pending.stopped_at.clone().filter(|value|
             chrono::DateTime::parse_from_rfc3339(value).is_ok());
@@ -238,7 +249,7 @@ mod tests {
         session.device_recording_id = Some(16);
         session.audio_stored = false;
         session.retention.audio_cached = false;
-        (snapshot, CompanionMeetingControlReport { device_id: DEVICE.into(), request_id: 42,
+        (snapshot, CompanionMeetingControlReport { logical_key: None,  device_id: DEVICE.into(), request_id: 42,
             state: 2, last_error: 0, meeting_id: 16, duration_ms: 300420, sync_state: 2 })
     }
 

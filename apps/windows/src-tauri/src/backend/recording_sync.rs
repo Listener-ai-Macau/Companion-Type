@@ -15,6 +15,16 @@ struct Store {
 }
 static STORE: std::sync::LazyLock<Mutex<Store>> = std::sync::LazyLock::new(|| Mutex::new(Store::default()));
 static OBSERVER: std::sync::OnceLock<Box<dyn Fn(Status) + Send + Sync>> = std::sync::OnceLock::new();
+static BACKGROUND_YIELD: AtomicBool = AtomicBool::new(false);
+
+// The coordinator resets this before acquiring its background lease. A user
+// command can request handoff even before the first BLE await creates a Job.
+pub(crate) fn prepare_background() { BACKGROUND_YIELD.store(false, Ordering::Release); }
+pub(crate) fn yield_background() {
+    BACKGROUND_YIELD.store(true, Ordering::Release);
+    let job = STORE.lock().ok().and_then(|s| s.active.as_ref().and_then(Weak::upgrade));
+    if let Some(job) = job.filter(|j| j.background) { job.signal.notify_one(); }
+}
 
 pub(crate) fn bind_app(app: tauri::AppHandle) {
     use tauri::Emitter;
@@ -49,18 +59,28 @@ pub(crate) struct Job {
     recording: AtomicU32,
     received: AtomicU32,
     total: AtomicU32,
+    background: bool,
 }
 
 impl Job {
-    fn create(device: &str) -> Arc<Self> {
+    #[cfg(test)]
+    fn create(device: &str) -> Arc<Self> { Self::create_kind(device, false) }
+    fn create_kind(device: &str, background: bool) -> Arc<Self> {
         Arc::new(Self {
             id: uuid::Uuid::new_v4().to_string(), device: device.into(),
             paused: AtomicBool::new(false), signal: Notify::new(),
             phase: AtomicU8::new(0), recording: AtomicU32::new(0),
             received: AtomicU32::new(0), total: AtomicU32::new(0),
+            background,
         })
     }
     pub fn begin(device: &str) -> Result<Arc<Self>, String> {
+        Self::begin_kind(device, false)
+    }
+    pub fn begin_background(device: &str) -> Result<Arc<Self>, String> {
+        Self::begin_kind(device, true)
+    }
+    fn begin_kind(device: &str, background: bool) -> Result<Arc<Self>, String> {
         let mut store = STORE.lock().map_err(|_| "同步暂停状态暂时不可用")?;
         let active = store.active.as_ref().and_then(Weak::upgrade);
         if active.is_some() {
@@ -69,7 +89,7 @@ impl Job {
             return Err("已有设备录音正在同步，请先完成或暂停。".into());
         }
         if store.paused_devices.contains(&key(device)) { return Err(PAUSED.into()); }
-        let job = Self::create(device);
+        let job = Self::create_kind(device, background);
         store.active = Some(Arc::downgrade(&job));
         drop(store);
         emit_status();
@@ -89,7 +109,8 @@ impl Job {
     }
     pub fn saving(&self) { self.phase.store(1, Ordering::Release); emit_status(); }
     pub fn reclaiming(&self) { self.phase.store(2, Ordering::Release); emit_status(); }
-    pub fn is_paused(&self) -> bool { self.paused.load(Ordering::Acquire) }
+    pub fn yielded(&self) -> bool { self.background && BACKGROUND_YIELD.load(Ordering::Acquire) }
+    pub fn is_paused(&self) -> bool { self.paused.load(Ordering::Acquire) || self.yielded() }
     pub async fn until_paused(&self) {
         loop {
             let notified = self.signal.notified();
@@ -115,7 +136,7 @@ impl Job {
             phase: match self.phase.load(Ordering::Acquire) { 1 => "saving", 2 => "reclaiming", _ => "receiving" },
             recording_id: self.recording.load(Ordering::Acquire),
             received_bytes: self.received.load(Ordering::Acquire), total_bytes: self.total.load(Ordering::Acquire),
-            pause_requested: self.is_paused(),
+            pause_requested: self.paused.load(Ordering::Acquire),
         }
     }
 }
@@ -153,7 +174,25 @@ pub(crate) fn pause(job_id: &str) -> Result<bool, String> {
 }
 
 pub(crate) fn automatic_allowed(device: &str) -> bool {
-    STORE.lock().map(|s| !s.paused_devices.contains(&key(device))).unwrap_or(false)
+    // An isolated recording operation already suppresses automatic recovery.
+    // Connect must respect the same switch instead of consuming unrelated
+    // sealed recordings before the explicit START/STOP path even begins.
+    let disabled = std::env::var("COMPANION_TYPE_DISABLE_AUTO_RECOVERY").as_deref() == Ok("1");
+    STORE.lock().map(|s| automatic_allowed_for(&s, device, disabled)).unwrap_or(false)
+}
+
+// Explicitly following an owned open recording is distinct from recovering
+// unrelated sealed backlog. It still cannot undo the user's sync pause.
+pub(crate) fn owned_follow_allowed(device: &str) -> bool {
+    STORE.lock().map(|s| owned_follow_allowed_for(&s, device)).unwrap_or(false)
+}
+
+fn owned_follow_allowed_for(store: &Store, device: &str) -> bool {
+    !store.paused_devices.contains(&key(device))
+}
+
+fn automatic_allowed_for(store: &Store, device: &str, disabled: bool) -> bool {
+    !disabled && owned_follow_allowed_for(store, device)
 }
 
 pub(crate) fn resume_explicit(device: Option<&str>) {
@@ -169,6 +208,19 @@ pub(crate) fn resume_explicit(device: Option<&str>) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn isolated_capture_blocks_connect_backlog_without_changing_device_pause() {
+        let mut store = Store::default();
+        store.paused_devices.insert(key("AA:BB:CC:DD:EE:01"));
+        for device in ["aabbccddee01", "AA:BB:CC:DD:EE:02"] {
+            assert!(!automatic_allowed_for(&store, device, true));
+        }
+        assert!(!automatic_allowed_for(&store, "aabbccddee01", false));
+        assert!(automatic_allowed_for(&store, "AA:BB:CC:DD:EE:02", false));
+        assert!(!owned_follow_allowed_for(&store, "aabbccddee01"), "an explicit original never resumes user-paused sync");
+        assert!(owned_follow_allowed_for(&store, "AA:BB:CC:DD:EE:02"), "isolated connect backlog need not block an exact owned original");
+        assert_eq!(store.paused_devices.len(), 1);
+    }
     #[test]
     fn pause_is_job_bound_and_blocks_automatic_restart_until_explicit_resume() {
         let job = Job::begin("AA:BB:CC:DD:EE:01").unwrap();

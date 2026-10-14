@@ -53,6 +53,9 @@ export type CompanionV1ControlAction =
   | 'meetingStart'
   | 'meetingStop'
   | 'meetingFinalize'
+  | 'meetingPause'
+  | 'meetingResume'
+  | 'meetingRecoverControl'
   | 'meetingAppendLiveTranscript'
   | 'meetingImportTranscript'
   | 'meetingTranscribeAudio'
@@ -242,9 +245,11 @@ export type CompanionV1SessionPendingReason =
   | 'needs_network'
   | 'needs_pull'
   | 'needs_device_sync'
+  | 'device_control_pending'
   | 'recovery_processing'
   | 'recovery_retry_wait'
   | 'recovery_paused'
+  | 'capture_interrupted'
   | 'no_speech_detected'
   | 'minutes_source_changed';
 
@@ -411,12 +416,23 @@ export interface CompanionV1HostSession {
   audioStored: boolean;
   /** Durable WB55 journal identity; absent for host/imported sessions. */
   deviceRecordingId?: number | null;
+  /** Durable segmented identity supplied by the native verified receiver. */
+  deviceRecordingKey?: { deviceUid: string; formatEpoch: string; sessionId: string } | null;
   deviceTotalLength?: number | null;
   deviceSha256?: string | null;
   deviceReclaimed?: boolean;
   /** Interrupted capture: only the verified complete packet prefix survived. */
   captureIncomplete?: boolean;
   sourceDeviceId?: string | null;
+  recorderControl?: {
+    hostSession: string;
+    deviceId: string;
+    startRequest: number;
+    maxSeconds: number;
+    confirmed: { command: number; sequence: number; state: number; durationMs: number; finishedLocally?: boolean } | null;
+    pending: { command: number; request: number; sequence: number } | null;
+  } | null;
+  recorderControlUncertain?: boolean;
   chunks: CompanionV1AudioChunk[];
   transcriptText: string;
   /** False for online-live prefixes; true only after final ASR/import commit. */
@@ -464,6 +480,8 @@ export interface CompanionV1MeetingRecovery {
   retryStage?: 'transcription' | 'minutes' | '';
   nextRetryAtUnixMs?: number | null;
   lastError?: string | null;
+  /** Explicit choice to process this saved, interrupted original. */
+  captureReviewConfirmed?: boolean;
 }
 
 export interface CompanionV1MinutesByMode {
@@ -849,6 +867,10 @@ export function applyCompanionV1ControlFixture(
         ],
       };
       break;
+    case 'meetingPause':
+    case 'meetingResume':
+    case 'meetingRecoverControl':
+      throw new Error('设备暂停控制需要正式后端确认，不能用演示状态代替。');
     case 'meetingStart': {
       const session = createHostSession(next, request, now);
       next.host.sessions = [session, ...next.host.sessions.filter((item) => item.id !== session.id)];
@@ -1285,6 +1307,13 @@ export function describeCompanionMeetingRecovery(session: CompanionV1HostSession
   isProcessing: boolean;
 } | null {
   const recovery = session.recovery;
+  if (session.captureIncomplete && !recovery?.captureReviewConfirmed && session.audioStored
+    && session.status !== 'recording' && recovery?.stage !== 'complete') {
+    return { label: '录音中断，片段已保存',
+      message: `已保存 ${Math.floor(session.durationMs / 1000)} 秒。可以先回听或导出；整理结果只覆盖已保存的片段。`,
+      retryAction: companionSessionHasFinalTranscript(session) ? 'meetingGenerateMinutes' : 'meetingTranscribeAudio',
+      isProcessing: false };
+  }
   if (!recovery || recovery.intent !== 'processMeeting' || session.status === 'recording'
     || recovery.stage === 'idle' || recovery.stage === 'complete') return null;
   if (recovery.requestedMeetingMode !== session.meetingMode) {
@@ -1381,6 +1410,8 @@ export function describeSessionPendingReason(
       return '处理暂时失败，已保留录音并将在短暂退避后自动重试。';
     case 'recovery_paused':
       return '自动恢复已暂停，录音和已有文本仍保留；请检查错误后手动重试。';
+    case 'capture_interrupted':
+      return '录音曾意外中断，已保存的原音可以回听或导出；选择整理片段后才继续转写和纪要。';
     case 'minutes_source_changed':
       return '转写已修订。已有纪要仍保留，请重新生成或核对后使用。';
     case 'no_speech_detected':
@@ -1430,7 +1461,8 @@ export function characteristicForCompanionAction(action: CompanionV1ControlActio
   if (action === 'oobeRunChecks') {
     return COMPANION_V1_HOST_SETUP_CHANNEL;
   }
-  if (action === 'meetingStart' || action === 'meetingStop' || action === 'meetingFinalize') {
+  if (action === 'meetingStart' || action === 'meetingStop' || action === 'meetingFinalize'
+      || action === 'meetingPause' || action === 'meetingResume' || action === 'meetingRecoverControl') {
     return COMPANION_V1_GATT_BOUNDARY.meetingControlUuid;
   }
   if (
@@ -1934,6 +1966,9 @@ function actionCommand(action: CompanionV1ControlAction): number {
     meetingStart: 1,
     meetingStop: 2,
     meetingFinalize: 3,
+    meetingPause: 4,
+    meetingResume: 5,
+    meetingRecoverControl: 0,
     meetingImportTranscript: 0x81,
     meetingGenerateMinutes: 0x82,
     meetingExportMarkdown: 0x83,

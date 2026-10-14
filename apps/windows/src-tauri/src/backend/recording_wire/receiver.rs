@@ -1,9 +1,8 @@
-//! Durable V2 segment consumer. No BLE action is performed here. The current
-//! production radio is V1; this receiver can be connected only after negotiated
-//! V2 and actual device UID validation. Every pathname is derived from validated
+//! Durable V2 segment consumer. No BLE action is performed here. The caller
+//! must negotiate V2 and validate the actual UID. Every pathname is derived from validated
 //! immutable metadata, never loaded as an arbitrary path from a receipt.
 use super::{plan_group, Descriptor, GroupPlan, MAX_SEGMENTS};
-use crate::backend::{audio_artifacts, export, session_store};
+use crate::backend::{audio_artifacts, cop1, export, session_store};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{
@@ -53,6 +52,8 @@ struct Audio {
     bytes: u64,
     sha256: String,
     samples: u64,
+    #[serde(default, skip_serializing_if="Option::is_none")]
+    timeline: Option<cop1::Timeline>,
 }
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -72,6 +73,46 @@ pub(crate) struct Receiver {
     ready: bool,
 }
 impl Receiver {
+    /// Recover pending physical receipts even if the device directory is now
+    /// empty (power loss after removal, before its successful reply). Enumerate
+    /// only this format's exact manifest names; never adopt arbitrary audio.
+    pub(crate) fn pending_initials(root: &Path, peer: &super::transport::Peer,
+        device: &str) -> Result<Vec<Vec<u8>>, String> {
+        let mut pending = Vec::new();
+        for entry in fs::read_dir(root).map_err(|_| fail())? {
+            let entry = entry.map_err(|_| fail())?;
+            let name = entry.file_name();
+            let Some(name) = name.to_str() else { continue; };
+            let Some(hash) = name.strip_prefix(".board-session-").and_then(|s| s.strip_suffix(".json")) else { continue; };
+            if hash.len() != 64 || !hash.bytes().all(|b| b.is_ascii_hexdigit()) { continue; }
+            let mut body = Vec::new();
+            read_locked(&entry.path())?.take(MAX_RECEIPT + 1).read_to_end(&mut body).map_err(|_| fail())?;
+            if body.len() as u64 > MAX_RECEIPT { return Err(fail()); }
+            let receipt: Receipt = serde_json::from_slice(&body).map_err(|_| fail())?;
+            if receipt.schema != 1 || receipt.segments.is_empty() || receipt.segments.len() > MAX_SEGMENTS as usize {
+                return Err(fail());
+            }
+            let d = Descriptor::decode(&receipt.segments[0].wire)?;
+            let expected = format!("{:x}", Sha256::digest(serde_json::to_vec(&d.key).map_err(|_| fail())?));
+            if hash != expected { return Err(fail()); }
+            if d.key.device_uid != peer.uid || d.key.format_epoch != peer.epoch { continue; }
+            if receipt.device.as_deref().is_some_and(|id|
+                !crate::backend::device_connection::same_device_id(id, device)) { continue; }
+            if receipt.audio.is_none() || receipt.segments.iter().any(|s| !s.acked) {
+                pending.push(d.encode()?);
+            }
+        }
+        pending.sort_by_key(|p| super::u64le(p, 20));
+        Ok(pending)
+    }
+    pub(crate) fn session_id(&self) -> &str { &self.stem }
+    pub(crate) fn has_segment(&mut self, wire: &[u8]) -> Result<bool, String> {
+        let d = Descriptor::decode(wire)?;
+        self.accept_metadata(wire)?;
+        self.recover()?;
+        Ok(self.receipt.segments.iter().any(|s| s.received &&
+            super::u32le(&s.wire, 28) == d.segment_index))
+    }
     pub(crate) fn open(root: &Path, initial_wire: &[u8]) -> Result<Self, String> {
         let initial = Descriptor::decode(initial_wire)?;
         let root = root.canonicalize().map_err(|_| fail())?;
@@ -312,7 +353,8 @@ impl Receiver {
         plan_group(&descriptors, &ids)
     }
     fn verify_audio(&self, a: &Audio) -> Result<(), String> {
-        let plan = plan_group(&self.descriptors()?, &BTreeSet::new())?;
+        let descriptors=self.descriptors()?;
+        let plan = plan_group(&descriptors, &BTreeSet::new())?;
         let expected = plan
             .sample_count
             .checked_sub(320)
@@ -334,6 +376,36 @@ impl Receiver {
         if a.bytes != bytes || a.sha256 != hash {
             return Err(fail());
         }
+        // A saved pause index must be derivable from the same immutable raw
+        // originals. Never trust edited receipt timing or infer gaps from WAV.
+        // Legacy originals only need the header check here; their established
+        // raw verification remains in recover(), without another full scan.
+        let mut files=Vec::with_capacity(descriptors.len());let mut schemas=Vec::new();
+        for d in &descriptors {
+            let mut file=read_locked(&self.payload_path(d))?;let mut header=[0;12];
+            file.read_exact(&mut header).map_err(|_|fail())?;schemas.push(header[4]);
+            file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;files.push(file);
+        }
+        let timeline=if schemas.iter().all(|schema|*schema==1) {None} else {
+            for (file,d) in files.iter_mut().zip(&descriptors) {
+                let owned=file.try_clone().map_err(|_|fail())?;let _=verify_file(owned,d)?;
+                file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;
+            }
+            collect_timeline(&descriptors,&mut files)?
+        };
+        if a.timeline!=timeline {return Err("暂停时间轴与已保存原音不一致，原件已保留。".into());}
+        Ok(())
+    }
+    fn verify_received_timeline(&self) -> Result<(),String> {
+        let descriptors=self.descriptors()?.into_iter().zip(&self.receipt.segments)
+            .filter(|(_,segment)|segment.received).map(|(d,_)|d).collect::<Vec<_>>();
+        let mut files=Vec::new();let mut schemas=Vec::new();
+        for d in &descriptors {
+            let mut file=read_locked(&self.payload_path(d))?;let mut header=[0;12];
+            file.read_exact(&mut header).map_err(|_|fail())?;schemas.push(header[4]);
+            file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;files.push(file);
+        }
+        if !schemas.iter().all(|schema|*schema==1) {collect_timeline(&descriptors,&mut files)?;}
         Ok(())
     }
     pub(crate) fn assemble(&mut self) -> Result<PathBuf, String> {
@@ -382,7 +454,7 @@ impl Receiver {
             &temporary,
             audio_artifacts::Purpose::DecodeTemporary,
             || {
-                decode(ds, files, &temporary, samples)?;
+                let timeline=decode(ds, files, &temporary, samples)?;
                 let (bytes, sha256) = digest(read_locked(&temporary)?)?;
                 if existing {
                     audio_artifacts::generated_pinned(
@@ -411,6 +483,7 @@ impl Receiver {
                     bytes,
                     sha256,
                     samples,
+                    timeline,
                 })
             },
         );
@@ -445,41 +518,29 @@ fn digest(mut file: File) -> Result<(u64, String), String> {
     }
     Ok((bytes, format!("{:x}", sha.finalize())))
 }
+struct HashedRead<'a> {file: &'a mut File,sha: Sha256,crc: crc32fast::Hasher,bytes:u64}
+impl Read for HashedRead<'_> {
+    fn read(&mut self, output:&mut [u8]) -> std::io::Result<usize> {
+        let n=self.file.read(output)?;self.sha.update(&output[..n]);self.crc.update(&output[..n]);self.bytes+=n as u64;Ok(n)
+    }
+}
 fn verify_file(mut file: File, d: &Descriptor) -> Result<File, String> {
     d.validate()?;
     if file.metadata().map_err(|_| fail())?.len() != u64::from(d.encoded_length) {
         return Err(fail());
     }
-    let mut header = [0; 12];
-    file.read_exact(&mut header).map_err(|_| fail())?;
-    if header != *b"COP1\x01\x01\x14\x00\x80\x3e\x00\x00" {
-        return Err(fail());
+    let mut hashed=HashedRead{file:&mut file,sha:Sha256::new(),crc:crc32fast::Hasher::new(),bytes:0};
+    let mut reader=cop1::Reader::new(&mut hashed,d.sample_offset,false)?;
+    if reader.frame_ms!=20 || reader.source_rate!=16000 {return Err(fail());}
+    while let Some(record)=reader.next()? {
+        if let cop1::Record::Audio(packet)=record {if packet.len()>400 {return Err(fail());}}
     }
-    let mut sha = Sha256::new();
-    let mut crc = crc32fast::Hasher::new();
-    sha.update(header);
-    crc.update(&header);
-    let mut at = 12u32;
-    let mut frames = 0u64;
-    let mut packet = [0; 400];
-    while at < d.encoded_length {
-        let mut prefix = [0; 2];
-        file.read_exact(&mut prefix).map_err(|_| fail())?;
-        let n = u16::from_le_bytes(prefix) as usize;
-        if n == 0 || n > 400 || n as u32 + 2 > d.encoded_length - at {
-            return Err(fail());
-        }
-        file.read_exact(&mut packet[..n]).map_err(|_| fail())?;
-        sha.update(prefix);
-        sha.update(&packet[..n]);
-        crc.update(&prefix);
-        crc.update(&packet[..n]);
-        at += n as u32 + 2;
-        frames += 1;
-    }
-    if frames * 320 != d.sample_count
-        || crc.finalize() != d.content_crc32
-        || sha.finalize().as_slice() != d.sha256
+    let summary=reader.finish(d.flags&4!=0)?;drop(reader);
+    if summary.frames * 320 != d.sample_count || summary.encoded_bytes!=u64::from(d.encoded_length)
+        || (summary.ended_paused && d.flags&2==0)
+        || hashed.bytes!=u64::from(d.encoded_length)
+        || hashed.crc.finalize() != d.content_crc32
+        || hashed.sha.finalize().as_slice() != d.sha256
     {
         return Err(fail());
     }
@@ -491,28 +552,25 @@ fn decode(
     files: &mut [File],
     output: &Path,
     expected: u64,
-) -> Result<(), String> {
+) -> Result<Option<cop1::Timeline>, String> {
     use denzic_host_audio_v1_core::{opus_decoder::MonoDecoder, wav::WavWriter};
     let mut decoder = MonoDecoder::new(16000)?;
     let mut wav = WavWriter::create(output).map_err(|_| fail())?;
     let mut frames = 0u64;
-    let mut packet = [0; 400];
+    let mut schema=None;let mut timeline=None;
     for (d, file) in ds.iter().zip(files) {
-        file.seek(SeekFrom::Start(12)).map_err(|_| fail())?;
-        let mut at = 12u32;
-        while at < d.encoded_length {
-            let mut size = [0; 2];
-            file.read_exact(&mut size).map_err(|_| fail())?;
-            let n = u16::from_le_bytes(size) as usize;
-            if n == 0 || n > 400 || n as u32 + 2 > d.encoded_length - at {
-                return Err(fail());
-            }
-            file.read_exact(&mut packet[..n]).map_err(|_| fail())?;
-            let pcm = decoder.decode(&packet[..n])?;
+        file.seek(SeekFrom::Start(0)).map_err(|_| fail())?;
+        let mut reader=cop1::Reader::new(file,d.sample_offset,false)?;
+        select_schema(&mut schema,&mut timeline,reader.schema)?;
+        while let Some(record)=reader.next()? {
+            let packet=match record {
+                cop1::Record::Audio(packet)=>packet,
+                cop1::Record::Event(event)=>{timeline.as_mut().ok_or_else(fail)?.push(event)?;continue;},
+            };
+            let pcm = decoder.decode(&packet)?;
             if pcm.len() != 320 {
                 return Err(fail());
             }
-            at += n as u32 + 2;
             frames += 1;
             if frames == 1 {
                 continue;
@@ -523,6 +581,8 @@ fn decode(
                 .collect::<Vec<_>>();
             wav.append_bytes(&pcm).map_err(|_| fail())?;
         }
+        let summary=reader.finish(d.flags&4!=0)?;
+        if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
     }
     if (frames - 1) * 320 != expected {
         return Err(fail());
@@ -533,9 +593,35 @@ fn decode(
         .write(true)
         .open(output)
         .and_then(|f| f.sync_all())
-        .map_err(|_| fail())
+        .map_err(|_| fail())?;
+    Ok(timeline)
 }
+
+fn select_schema(schema:&mut Option<u8>,timeline:&mut Option<cop1::Timeline>,current:u8)->Result<(),String> {
+    if schema.is_some_and(|old|old!=current) {return Err("同一录音的原音格式发生变化，原件已保留。".into());}
+    if schema.is_none() {if current==2 {*timeline=Some(cop1::Timeline::default());}*schema=Some(current);}
+    Ok(())
+}
+fn collect_timeline(ds:&[Descriptor],files:&mut [File])->Result<Option<cop1::Timeline>,String> {
+    let mut schema=None;let mut timeline=None;
+    for (d,file) in ds.iter().zip(files) {
+        file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;
+        let mut reader=cop1::Reader::new(file,d.sample_offset,false)?;
+        select_schema(&mut schema,&mut timeline,reader.schema)?;
+        while let Some(record)=reader.next()? {
+            if let cop1::Record::Event(event)=record {timeline.as_mut().ok_or_else(fail)?.push(event)?;}
+        }
+        let summary=reader.finish(d.flags&4!=0)?;
+        if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
+    }
+    Ok(timeline)
+}
+
+#[cfg(test)]
+mod pause_tests;
 
 mod probe;
 mod publish;
+mod local;
+pub(crate) use local::{LocalRestoreReport, restore_local_product};
 pub(crate) use probe::{phase, verify};

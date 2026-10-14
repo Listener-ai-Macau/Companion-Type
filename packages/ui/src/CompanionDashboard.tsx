@@ -2,12 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
-import { CompanionAudioPlayer } from './CompanionAudioPlayer';
+import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
 import { CompanionRecoveryCenter } from './CompanionRecoveryCenter';
 import { CompanionRecordingSync } from './CompanionRecordingSync';
+import { CompanionRecorderControl } from './CompanionRecorderControl';
 import { CompanionBehaviorPreview } from './CompanionBehaviorPreview';
 import {
   Bluetooth,
@@ -44,6 +45,10 @@ import {
   companionBookmarkAudioPosition,
   companionCanChangeOfflineRecordingLink,
   companionMinutesMatchTranscript,
+  companionMinutesReferencedSources,
+  companionTranscriptSources,
+  companionTranscriptSourceIsCurrent,
+  type CompanionTranscriptSource,
   companionMinutesProcessingComplete,
   companionReviewedTranscript,
   companionTranscriptReviewRevision,
@@ -155,7 +160,7 @@ export interface CompanionDashboardProps {
   onPrepareAudioComponents?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
-  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string }>;
+  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; pauseTimeline?: CompanionPauseTimeline | null }>;
   onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
   onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
@@ -255,7 +260,7 @@ export function CompanionDashboard({
   const [noteUnsaved,setNoteUnsaved]=useState(false);
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; message: string } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
-  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string }>>({});
+  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; pauseTimeline?: CompanionPauseTimeline | null }>>({});
   const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
   const audioElement = useRef<HTMLAudioElement | null>(null);
   const audioRequestId = useRef(0);
@@ -298,6 +303,15 @@ export function CompanionDashboard({
     [snapshot],
   );
   const device = snapshot?.device;
+  const controlledRecorder = snapshot?.host.sessions.find((row) => row.recorderControl
+    && (row.status === 'recording' || row.recorderControlUncertain)) ?? null;
+  const activeRecorders = snapshot?.host.sessions.filter((row) => row.status === 'recording') ?? [];
+  const originalSyncRecorder = activeRecorders.length === 1
+    && activeRecorders[0].source === 'boardDevice' && activeRecorders[0].deviceRecordingKey
+    && activeRecorders[0].deviceRecordingId && activeRecorders[0].sourceDeviceId
+    && (!device?.deviceId || device.deviceId.replace(/[:-]/g, '').toLowerCase()
+      === activeRecorders[0].sourceDeviceId.replace(/[:-]/g, '').toLowerCase())
+    ? activeRecorders[0] : null;
   const privacy = snapshot?.privacy;
   const recordingLibrary = snapshot?.host.sessions ?? [];
   const readableLibrary = useMemo(
@@ -548,6 +562,12 @@ export function CompanionDashboard({
             : null;
   const audioIdentity = selectedSession ? [selectedSession.id, selectedSession.audioPath ?? '', selectedSession.audioBytes,selectedSession.deviceSha256??'',
     selectedSession.audioStored ? 1 : 0, selectedSession.retention.audioCached ? 1 : 0].join('|') : '';
+  const [sourceSelection, setSourceSelection] = useState<CompanionTranscriptSource | null>(null);
+  const transcriptSources = useMemo(() => selectedSession ? companionTranscriptSources(selectedSession) : [], [selectedSession]);
+  const sourceContext = useRef({ session: selectedSession, blocked: false });
+  sourceContext.current = { session: selectedSession,
+    blocked: controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved };
+  const externalAudioSeek = useRef<(() => void) | null>(null);
   const audioContext = useRef({ sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) });
   audioContext.current = { sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) };
   const preparedAudio = selectedSession && audioSources[selectedSession.id]?.identity === audioIdentity && !audioBlockedReason
@@ -707,7 +727,7 @@ export function CompanionDashboard({
       const current = audioContext.current;
       if (requestId !== audioRequestId.current || current.sessionId !== sessionId
         || current.identity !== requestedIdentity || current.blocked) return;
-      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity } }));
+      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, pauseTimeline: prepared.pauseTimeline } }));
     } catch (prepareError) {
       setAudioResult({ sessionId, message: `无法回听：${prepareError instanceof Error ? prepareError.message : String(prepareError)}` });
     } finally {
@@ -720,8 +740,25 @@ export function CompanionDashboard({
       ||companionBookmarkAudioPosition(selectedSession,point)!==positionMs) throw new Error('重点所属原音已变化，请重新核对。');
     const identity=audioIdentity;
     await seekBookmarkAudio(positionMs,async()=>{if(!preparedAudio) await prepareAudio();},()=>audioElement.current,
-      ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked);
+      ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked,
+      () => externalAudioSeek.current?.());
     setAudioResult({sessionId,message:'已定位到重点。点击原音播放器的播放按钮即可回听。'});
+  };
+  const openTranscriptSource = (source: CompanionTranscriptSource) => {
+    if (!selectedSession || selectedMinutesStale || transcriptReviewUnsaved || controlsBusy
+      || !companionTranscriptSourceIsCurrent(selectedSession, source)) return;
+    setSourceSelection(source); setDetailView('transcript');
+  };
+  const seekTranscriptSource = async (source: CompanionTranscriptSource) => {
+    const valid = () => Boolean(sourceContext.current.session && !sourceContext.current.blocked
+      && companionTranscriptSourceIsCurrent(sourceContext.current.session, source));
+    if (!valid() || audioBlockedReason || controlsBusy || transcriptReviewUnsaved)
+      throw new Error('这段转写或原音尚不可回听，请结束处理并重新核对。');
+    const identity = audioIdentity;
+    await seekBookmarkAudio(source.startMs, async () => { if (!preparedAudio) await prepareAudio(); }, () => audioElement.current,
+      () => valid() && audioContext.current.sessionId === source.sessionId
+        && audioContext.current.identity === identity && !audioContext.current.blocked, () => externalAudioSeek.current?.());
+    setAudioResult({ sessionId: source.sessionId, message: '已定位到这段原音。点击播放器的播放按钮即可回听。' });
   };
   const requestErase = (action: CompanionV1ControlAction, title: string, detail: string) => {
     setPendingDelete({
@@ -795,6 +832,8 @@ export function CompanionDashboard({
         resumeBlocked={controlsBusy || oobeBlockedByRecording} onPause={onPauseSync}
         onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle })} />
 
+      {!boardLiveActive ? <CompanionRecorderControl session={controlledRecorder} busy={controlsBusy} onControl={onControl} /> : null}
+
       {boardLiveActive && boardOnlineLive ? <section className="ct-recording-activity" aria-label="当前录音" aria-live="polite">
         <div><strong>{boardOnlineLive.state === 'starting' ? '正在准备录音'
           : boardOnlineLive.state === 'recording' ? '正在录音'
@@ -807,7 +846,7 @@ export function CompanionDashboard({
           onClick={() => onStopBoardOnlineLive?.()}><Square size={15} />结束录音并整理</button>
       </section> : null}
 
-      {!boardLiveActive && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前录音">
+      {!boardLiveActive && !controlledRecorder && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前录音">
         <div><strong>{device?.recording ? '设备录音中 · 上次读取' : '会议正在录音'}</strong>
           <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p></div>
         {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={controlsBusy}
@@ -932,7 +971,8 @@ export function CompanionDashboard({
           <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} />
           <section className="ct-audio-card" aria-label="本机原音回听">
             <div><strong><Headphones size={16} />本机原音</strong><p>{audioBlockedReason ?? '由桌面端为当前会议临时授权，只能回听这场会议。'}</p></div>
-            {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}`} playerRef={audioElement} src={preparedAudio.url}
+            {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
+              externalSeekRef={externalAudioSeek}
               onError={() => {
                 if (audioContext.current.sessionId !== selectedSession.id || audioContext.current.identity !== preparedAudio.identity) return;
                 const player = audioElement.current;
@@ -1020,12 +1060,16 @@ export function CompanionDashboard({
                   disabled={!minutesDirty || saveMeetingBusy || !minutesDraft.trim()} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : '保存修改'}</button>
                   <button type="button" className="ct-action" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('minutes')}>取消</button></div>
                 <p className="ct-step-meta">只修改当前模式；另一个模式的纪要保持不变。保存后仍保留原来的草稿/最终质量标记。</p>
-              </div> : <MarkdownMinutes markdown={minutesMarkdown} />}
+              </div> : <MarkdownMinutes markdown={minutesMarkdown}
+                sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
+                blocked={controlsBusy} onOpenSource={openTranscriptSource} />}
               <textarea className="ct-minutes-output ct-machine-minutes" value={minutesMarkdown} readOnly aria-hidden="true" tabIndex={-1} />
             </div>
           ) : null}
           <CompanionTranscriptReview session={selectedSession} visible={detailView === 'transcript'}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
+            sourceSelection={sourceSelection} onSeekSource={seekTranscriptSource}
+            audioSeekBlocked={Boolean(audioBlockedReason) || audioBusy}
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} />
         </section>
       ) : null}
@@ -1163,15 +1207,17 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action"
-                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !connected}
-                onClick={() => onControl({ action: 'deviceSyncRecordings', title: draftTitle, deviceId: device?.deviceId ?? undefined })}
-                title={!connected ? '请先连接板子' : '同步设备录音'}
+                disabled={controlsBusy || storageBlocked || boardLiveActive || (!originalSyncRecorder && (oobeBlockedByRecording || !connected))}
+                onClick={() => onControl({ action: 'deviceSyncRecordings', title: draftTitle,
+                  deviceId: originalSyncRecorder?.sourceDeviceId ?? device?.deviceId ?? undefined,
+                  ...(originalSyncRecorder ? { sessionId: originalSyncRecorder.id } : {}) })}
+                title={originalSyncRecorder ? '连接原设备，继续同步同一场录音；采音不会停止' : !connected ? '请先连接板子' : '同步设备录音'}
               >
                 <HardDrive size={16} />
-                <span>同步录音库</span>
+                <span>{originalSyncRecorder ? '同步原录音' : '同步录音库'}</span>
               </button>
             </div>
-            {!connected ? (
+            {!connected && originalSyncRecorder ? <p className="ct-step-meta">会连接这场录音的原设备，继续收取已保存的片段。不会重新开录或停止采音。</p> : !connected ? (
               <p className="ct-step-warn">未连接板子，无法同步</p>
             ) : hasSyncedAudio ? (
               <p className="ct-step-ok">
@@ -1249,7 +1295,7 @@ export function CompanionDashboard({
                 onClick={() => onControl({ action: 'meetingTranscribeAudio', sessionId: selectedSession?.id })}
               >
                 <FileText size={16} />
-                <span>转写</span>
+              <span>{selectedSession?.captureIncomplete ? '转写已保存的片段' : '转写'}</span>
               </button>
               <button
                 type="button"
@@ -1282,7 +1328,7 @@ export function CompanionDashboard({
                 onClick={() => onControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession?.id })}
               >
                 <FileText size={16} />
-                <span>生成纪要</span>
+              <span>{selectedSession?.captureIncomplete ? '整理片段的纪要' : '生成纪要'}</span>
               </button>
               <button
                 type="button"
@@ -1424,7 +1470,7 @@ export function CompanionDashboard({
               <span>设备更新</span>
             </div>
             <p className="ct-meeting-hint">
-              选择同一个更新包中的清单与数据文件，先校验再传输。设备会检查型号、签名与供电条件；录音期间无法更新。
+              整套更新只需填写 system_bundle.json，固件与资源会一起更新，重启确认成功后才释放临时空间。设备会检查型号、签名与供电条件；录音期间无法更新。
             </p>
             <div className="ct-settings-grid">
               <label className="ct-field">
@@ -1432,12 +1478,12 @@ export function CompanionDashboard({
                 <input
                   value={resourceManifestPath}
                   onChange={(e) => setResourceManifestPath(e.target.value)}
-                  placeholder="…\ota_manifest.json"
+                  placeholder="…\system_bundle.json"
                   spellCheck={false}
                 />
               </label>
               <label className="ct-field">
-                <span>更新数据路径</span>
+                <span>单组件包数据路径（整套包留空）</span>
                 <input
                   value={resourcePayloadPath}
                   onChange={(e) => setResourcePayloadPath(e.target.value)}
@@ -1450,7 +1496,7 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={controlsBusy || oobeBlockedByRecording || !onValidateOtaPackage || !resourceManifestPath.trim() || !resourcePayloadPath.trim()}
+                disabled={controlsBusy || oobeBlockedByRecording || !onValidateOtaPackage || !resourceManifestPath.trim()}
                 onClick={() => {
                   setResourceMsg(null);
                   setResourceBusy(true);
@@ -1484,7 +1530,6 @@ export function CompanionDashboard({
                   || !connected
                   || !onTransferOtaPackage
                   || !resourceManifestPath.trim()
-                  || !resourcePayloadPath.trim()
                 }
                 title="校验匹配当前设备的更新包后传输"
                 onClick={() => {
@@ -1500,7 +1545,9 @@ export function CompanionDashboard({
                     .then((report) => {
                       if (!report) return;
                       setResourceMsg(
-                        `传输完成 · ${report.packageType} · ${report.firmwareBytes} B · ${report.elapsedMs} ms · ${report.deviceId}`,
+                        report.packageType==='companion-system-ota'
+                          ? `固件与资源已更新，设备重启确认成功 · ${report.firmwareBytes} B`
+                          : `数据传输完成 · ${report.firmwareBytes} B；尚未确认整套升级。`,
                       );
                     })
                     .catch((err: unknown) => {
@@ -1739,40 +1786,56 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   persistence: CompanionV1Snapshot['host']['persistence'];
   recoveryProcessing: boolean;
 }) {
+  const captureOngoing = session.status === 'recording';
+  const wholeReclaimed = Boolean(session.deviceReclaimed && !captureOngoing);
+  const savedSegments = session.source === 'boardDevice' && session.deviceRecordingKey
+    ? session.chunks.filter((chunk) => chunk.status === 'sealed' && chunk.path && chunk.bytes > 0).length : 0;
   const localAudio = session.pendingReason !== 'needs_device_sync'
-    && Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0));
-  const deviceCopy = Boolean(session.sourceDeviceId && session.deviceRecordingId != null && !session.deviceReclaimed);
+    && !captureOngoing && (session.deviceRecordingKey
+      ? Boolean(session.audioStored && session.audioPath && session.audioBytes > 0)
+      : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
+  const partialAudio = !localAudio && savedSegments > 0;
+  const deviceCopy = Boolean(session.sourceDeviceId && session.deviceRecordingId != null && !wholeReclaimed);
+  const growingDeviceCapture = captureOngoing && deviceCopy;
   const exactDeviceCopy = Boolean(deviceCopy && session.deviceTotalLength
     && /^[0-9a-f]{64}$/i.test(session.deviceSha256 ?? ''));
   const saveFailed = Boolean(persistence?.status && persistence.status !== 'ready');
   const steps = [
     {
       label: '设备',
-      state: session.deviceReclaimed ? '已精确回收' : deviceCopy ? '原录音仍保留' : session.pendingReason === 'needs_device_sync' ? '等待来源设备' : '无设备副本',
-      kind: session.deviceReclaimed || deviceCopy ? 'done' : 'idle',
+      state: growingDeviceCapture ? session.recorderControlUncertain ? '录音状态待核对'
+        : session.recorderControl?.confirmed?.state === 3 ? '录音已暂停' : '录音仍在进行'
+        : wholeReclaimed ? '已精确回收' : deviceCopy ? '原录音仍保留' : session.pendingReason === 'needs_device_sync' ? '等待来源设备' : '无设备副本',
+      kind: growingDeviceCapture ? 'active' : wholeReclaimed || deviceCopy ? 'done' : 'idle',
     },
     {
       label: '传到电脑',
-      state: localAudio ? session.captureIncomplete ? '已收齐恢复片段' : '音频已收齐' : session.pendingReason === 'needs_device_sync' ? '连接后继续同步' : recoveryProcessing ? '正在处理' : '尚未收齐',
-      kind: localAudio ? 'done' : recoveryProcessing ? 'active' : 'idle',
+      state: localAudio ? session.captureIncomplete ? '已收齐恢复片段' : '音频已收齐'
+        : partialAudio ? captureOngoing ? `已收到${savedSegments}段，继续同步` : '已收到分段，继续收齐'
+        : session.pendingReason === 'needs_device_sync' ? '连接后继续同步' : recoveryProcessing ? '正在处理' : '尚未收齐',
+      kind: localAudio ? 'done' : partialAudio || recoveryProcessing ? 'active' : 'idle',
     },
     {
       label: '本机保存',
-      state: saveFailed ? '保存失败，可重试' : persistence?.status === 'ready' && localAudio ? '已安全保存' : localAudio ? '已有音频，保存状态待确认' : '等待音频',
-      kind: saveFailed ? 'error' : persistence?.status === 'ready' && localAudio ? 'done' : 'idle',
+      state: saveFailed ? '保存失败，可重试' : persistence?.status === 'ready' && localAudio ? '已安全保存'
+        : persistence?.status === 'ready' && partialAudio ? `已保存${savedSegments}段`
+        : localAudio || partialAudio ? '已有音频，保存状态待确认' : '等待音频',
+      kind: saveFailed ? 'error' : persistence?.status === 'ready' && (localAudio || partialAudio) ? 'done' : 'idle',
     },
     {
       label: '设备空间',
-      state: session.deviceReclaimed ? '设备副本已回收' : exactDeviceCopy && localAudio && !saveFailed ? '可在删除会议时精确回收' : deviceCopy ? '暂不回收' : '无需回收',
-      kind: session.deviceReclaimed ? 'done' : exactDeviceCopy && localAudio && !saveFailed ? 'active' : 'idle',
+      state: wholeReclaimed ? '设备副本已回收' : growingDeviceCapture
+        ? partialAudio ? '已保存分段可回收，尾段保留' : '录音尾段保留'
+        : exactDeviceCopy && localAudio && !saveFailed ? '可在删除会议时精确回收' : deviceCopy ? '暂不回收' : '无需回收',
+      kind: wholeReclaimed ? 'done' : growingDeviceCapture || (exactDeviceCopy && localAudio && !saveFailed) ? 'active' : 'idle',
     },
   ];
   return <section className="ct-safety-card" aria-label="录音安全状态">
-    <header><strong>录音安全状态</strong><span>{saveFailed ? '需要处理' : localAudio ? '电脑已有副本' : '内容仍在流转'}</span></header>
+    <header><strong>录音安全状态</strong><span>{saveFailed ? '需要处理' : localAudio ? '电脑已有副本' : partialAudio ? '本机已保存分段' : '内容仍在流转'}</span></header>
     <ol>{steps.map((step) => <li key={step.label} className={`ct-safety-${step.kind}`}><span aria-hidden="true" />
       <div><strong>{step.label}</strong><small>{step.state}</small></div></li>)}</ol>
     {session.pendingReason === 'needs_device_sync' ? <p>录音仍在来源设备；重连同一台 Companion 后会从断点继续。</p> : null}
-    {session.captureIncomplete ? <p role="alert">这场录音曾意外中断，仅恢复了已验证的完整片段；结尾可能缺失。转写与纪要只覆盖恢复内容，请核对后使用。</p> : null}
+    {session.captureIncomplete ? <p role="alert">这场录音曾意外中断，实际保存 {formatDuration(session.durationMs)}，结尾可能缺失。可以回听或导出原音；转写与纪要只覆盖已保存的片段。{!session.recovery?.captureReviewConfirmed ? '选择整理片段后才会继续处理。' : ''}</p> : null}
     {saveFailed ? <p>{persistence?.message ?? '本机索引尚未安全保存，当前不会回收设备副本。'}</p> : null}
   </section>;
 }
@@ -1815,7 +1878,9 @@ function meetingSource(session: CompanionV1HostSession): string {
   return '演示记录';
 }
 
-function MarkdownMinutes({ markdown }: { markdown: string }) {
+function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource }: { markdown: string;
+  sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
+  onOpenSource?: (source: CompanionTranscriptSource) => void }) {
   if (!markdown.trim()) return <p className="ct-document-empty">这场会议还没有生成纪要。</p>;
   const blocks: Array<{ type: 'title' | 'heading' | 'item' | 'text'; text: string }> = [];
   markdown.split(/\r?\n/).forEach((raw) => {
@@ -1837,8 +1902,14 @@ function MarkdownMinutes({ markdown }: { markdown: string }) {
       {visibleBlocks.map((block, index) => {
         if (block.type === 'title') return <h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
         if (block.type === 'heading') return <h4 key={index}>{translateMinutesHeading(block.text)}</h4>;
-        if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}</span></div>;
-        return <p key={index}>{block.text}</p>;
+        const references = companionMinutesReferencedSources(sources, block.text);
+        const links = onOpenSource && references.length ? <span className="ct-minutes-source-links">
+          {references.map((source) => <button type="button" className="ct-text-button" key={source.index}
+            disabled={blocked} aria-label={`核对第${source.index + 1}段原文`}
+            onClick={() => onOpenSource(source)}>核对原文 · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
+        </span> : null;
+        if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}{links}</span></div>;
+        return <p key={index}>{block.text}{links}</p>;
       })}
     </article>
   );

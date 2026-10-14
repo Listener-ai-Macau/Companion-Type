@@ -22,6 +22,11 @@ impl<T> Store<T> {
         } else { None }
     }
 
+    pub fn peek_exact(&self, requested: &str) -> Option<&Peer<T>> {
+        self.peer.as_ref().filter(|peer|
+            super::scan_exact_address_match(Some(requested), &peer.device_id))
+    }
+
     pub fn replace(&mut self, peer: Peer<T>) -> Option<Peer<T>> {
         self.peer.replace(peer)
     }

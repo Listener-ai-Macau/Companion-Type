@@ -2,7 +2,7 @@
 //! A device's finite physical pairing window still decides whether to pair.
 #![cfg(windows)]
 
-use std::sync::{atomic::{AtomicBool, Ordering}, Arc};
+use std::sync::{atomic::{AtomicBool, AtomicU32, Ordering}, Arc};
 use std::time::Duration;
 
 use btleplug::api::AddressType;
@@ -113,9 +113,13 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
     }.map_err(|error| format!("打开配对设备失败：{error}"))?;
     let device = DeviceHandle(wait_async_operation_with_cancel(
         operation, OPEN_TIMEOUT, "pairing device open", cancel)?);
-    let id = device.0.DeviceInformation()
-        .and_then(|info| info.Id())
+    let initial_information = device.0.DeviceInformation()
         .map_err(|error| format!("读取配对设备身份失败：{error}"))?;
+    let id = initial_information.Id()
+        .map_err(|error| format!("读取配对设备身份失败：{error}"))?;
+    eprintln!("BLE pairing_trace stage=opened_native_device address={address:012X} native_id={id:?} information_kind={:?} native_connection={:?} initial_paired={:?}",
+        initial_information.Kind().ok(), device.0.ConnectionStatus().ok(),
+        initial_information.Pairing().and_then(|p|p.IsPaired()).ok());
     // Refresh pairing information instead of trusting the BluetoothLEDevice's
     // initial cached DeviceInformation object.
     let operation = DeviceInformation::CreateFromIdAsync(&id)
@@ -124,7 +128,8 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
         operation, OPEN_TIMEOUT, "pairing information refresh", cancel)?;
     let pairing = information.Pairing().map_err(|error| format!("读取配对状态失败：{error}"))?;
     let is_paired = pairing.IsPaired().map_err(|error| format!("读取配对状态失败：{error}"))?;
-    eprintln!("BLE pairing_trace stage=refreshed_windows_state address={address:012X} address_type={address_type:?} paired={is_paired}");
+    eprintln!("BLE pairing_trace stage=refreshed_windows_state address={address:012X} address_type={address_type:?} paired={is_paired} information_kind={:?} id_matches={}",
+        information.Kind().ok(),information.Id().ok().as_ref()==Some(&id));
     if is_paired {
         eprintln!("BLE Windows pairing already_paired before GATT address={address:012X}");
         return Ok(());
@@ -137,11 +142,24 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
     if cancel.requested() { return Err(cancel.cancelled_error("pairing")); }
     let custom = pairing.Custom().map_err(|error| format!("打开原生配对流程失败：{error}"))?;
     let callback_cancel = cancel.clone();
+    let requested_events=Arc::new(AtomicU32::new(0));
+    let accepted_events=Arc::new(AtomicU32::new(0));
+    let requested=requested_events.clone();let accepted=accepted_events.clone();
+    let pair_started = std::time::Instant::now();
     let handler = TypedEventHandler::<DeviceInformationCustomPairing, DevicePairingRequestedEventArgs>::new(
         move |_, args| {
-            if !callback_cancel.requested() {
-                if let Some(args) = args {
-                    if confirmation_supported(args.PairingKind()?) { args.Accept()?; }
+            let count=requested.fetch_add(1,Ordering::Relaxed)+1;
+            if let Some(args)=args {
+                let kind=args.PairingKind()?;
+                let allow=!callback_cancel.requested() && confirmation_supported(kind);
+                eprintln!("BLE pairing_trace stage=ceremony_requested address={address:012X} elapsed_us={} event={count} kind={} confirm_only_allowed={allow}",
+                    pair_started.elapsed().as_micros(),kind.0);
+                if allow {
+                    let result=args.Accept();
+                    if result.is_ok(){accepted.fetch_add(1,Ordering::Relaxed);}
+                    eprintln!("BLE pairing_trace stage=ceremony_accept address={address:012X} elapsed_us={} accepted={} error_hresult={:?}",
+                        pair_started.elapsed().as_micros(),result.is_ok(),result.as_ref().err().map(|e|e.code().0));
+                    result?;
                 }
             }
             Ok(())
@@ -149,15 +167,21 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
     let token = custom.PairingRequested(&handler)
         .map_err(|error| format!("注册配对确认失败：{error}"))?;
     let _handler = PairingHandler { custom: custom.clone(), token };
-    let pair_started = std::time::Instant::now();
     eprintln!("BLE pairing_trace stage=encrypted_pair_begin address={address:012X}");
     let operation = custom.PairWithProtectionLevelAsync(
         DevicePairingKinds::ConfirmOnly, DevicePairingProtectionLevel::Encryption)
         .map_err(|error| format!("开始加密配对失败：{error}"))?;
-    let paired = wait_async_operation_with_cancel(operation, PAIR_TIMEOUT, "encrypted pairing", cancel)?;
+    let paired = match wait_async_operation_with_cancel(operation, PAIR_TIMEOUT, "encrypted pairing", cancel) {
+        Ok(result)=>result,
+        Err(error)=>{
+            eprintln!("BLE pairing_trace stage=encrypted_pair_operation_error address={address:012X} elapsed_us={} requested_events={} accepted_events={} native_connection={:?} error={error}",
+                pair_started.elapsed().as_micros(),requested_events.load(Ordering::Relaxed),accepted_events.load(Ordering::Relaxed),device.0.ConnectionStatus().ok());
+            return Err(error);
+        }
+    };
     let status = paired.Status().map_err(|error| format!("读取配对结果失败：{error}"))?;
-    eprintln!("BLE pairing_trace stage=encrypted_pair_result address={address:012X} elapsed_us={} status={} requested_protection=Encryption reported_protection={:?}",
-        pair_started.elapsed().as_micros(), status.0, paired.ProtectionLevelUsed().ok());
+    eprintln!("BLE pairing_trace stage=encrypted_pair_result address={address:012X} elapsed_us={} status={} requested_protection=Encryption reported_protection={:?} requested_events={} accepted_events={} native_connection={:?}",
+        pair_started.elapsed().as_micros(), status.0, paired.ProtectionLevelUsed().ok(),requested_events.load(Ordering::Relaxed),accepted_events.load(Ordering::Relaxed),device.0.ConnectionStatus().ok());
     verify_pair_result(status)?;
     eprintln!("BLE Windows pairing completed before GATT address={address:012X} status={} requested_protection=Encryption reported_protection={:?}",
         status.0, paired.ProtectionLevelUsed().ok());

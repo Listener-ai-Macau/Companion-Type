@@ -1,7 +1,7 @@
 //! Transfer diagnostics describe stored payloads separately from audio time.
 //! A catalog duration also handles legacy 8 kHz PCM and opaque COP1/IMA bytes.
 
-mod targets;
+pub(super) mod targets;
 
 pub(super) struct CompletedPull {
     pub codec: u8,
@@ -80,17 +80,17 @@ pub(super) fn diagnostics(pull: CompletedPull) -> Vec<String> {
         && duration_ms >= targets::MINIMUM_AUDIO_DURATION_MS
         && pull.received_payload_bytes >= targets::MINIMUM_RECEIVED_BYTES
         && u64::from(pull.received_payload_bytes) <= pull.payload_bytes as u64;
-    let evaluation = |threshold: f64| {
+    let evaluation = |threshold: f64, strict: bool| {
         if !qualified { "not_evaluated" }
-        else if payload_rate >= threshold { "met" }
+        else if (strict && payload_rate > threshold) || (!strict && payload_rate >= threshold) { "met" }
         else { "not_met" }
     };
     lines.push(format!(
         "recording_pull_target version=\"{}\" sample={} effective_kib_s={:.2} delivery_kib_s={} stretch_kib_s={} explore_kib_s={} qm11_payload={} qm11_payload_stretch={} qm11_payload_explore={} scope=payload_rate_only full_chain_acceptance=false",
         targets::VERSION, if qualified { "sustained" } else { "insufficient_or_inapplicable" }, payload_rate,
         targets::PAYLOAD_DELIVERY_KIB_S, targets::PAYLOAD_STRETCH_KIB_S, targets::PAYLOAD_EXPLORE_KIB_S,
-        evaluation(targets::PAYLOAD_DELIVERY_KIB_S), evaluation(targets::PAYLOAD_STRETCH_KIB_S),
-        evaluation(targets::PAYLOAD_EXPLORE_KIB_S),
+        evaluation(targets::PAYLOAD_DELIVERY_KIB_S, targets::PAYLOAD_DELIVERY_STRICT), evaluation(targets::PAYLOAD_STRETCH_KIB_S, false),
+        evaluation(targets::PAYLOAD_EXPLORE_KIB_S, false),
     ));
     lines
 }

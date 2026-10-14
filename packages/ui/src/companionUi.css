@@ -1393,3 +1393,6 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-audio-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .ct-audio-tools label, .ct-audio-tools span { font-size: 12px; color: var(--ct-text-muted, #696761); }
 .ct-audio-tools select { margin-left: 6px; padding: 5px 8px; border: 1px solid #d8d5cc; border-radius: 8px; background: #fff; color: #302e29; }
+.ct-minutes-source-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+.ct-reviewed-utterance[data-source-selected="true"] { background: #edf3f7; border-radius: 8px; box-shadow: inset 3px 0 #52748d; }
+.ct-reviewed-utterance[data-source-selected="true"]:focus { outline: 2px solid #a4c3e9; outline-offset: 3px; }

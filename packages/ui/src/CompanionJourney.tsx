@@ -47,6 +47,14 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
       request: session.sourceDeviceId ? { action: sameDevice ? 'deviceSyncRecordings' : 'deviceConnect', deviceId: session.sourceDeviceId } : undefined,
       destination: session.sourceDeviceId ? undefined : 'workflow' };
   }
+  if (session.captureIncomplete && !session.recovery?.captureReviewConfirmed && session.audioStored && !finalMinutes) {
+    const detail = `录音曾意外中断，已保存 ${Math.floor(session.durationMs / 1000)} 秒。可先回听或导出；转写和纪要只覆盖这些片段。`;
+    return { stage, title: '录音中断，已保存的内容还在', detail,
+      label: finalText ? '整理已保存片段的纪要' : context.asrReady ? '转写已保存的片段' : '配置转写服务',
+      request: finalText ? { action:'meetingGenerateMinutes',sessionId:session.id }
+        : context.asrReady ? { action:'meetingTranscribeAudio',sessionId:session.id } : undefined,
+      destination: !finalText && !context.asrReady ? 'settings' : undefined };
+  }
   if (recovery && !recovery.retryAction) return { stage, title: recovery.label, detail: recovery.message, processing: recovery.isProcessing };
   if (session.pendingReason === 'no_speech_detected' && localAudio && recovery) {
     return { stage: 1, title: recovery.label, detail: recovery.message,

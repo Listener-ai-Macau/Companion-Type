@@ -4,10 +4,68 @@ use crate::companion_v1::{
 };
 
 impl Receiver {
+    /// An idempotent user STOP can return the existing completed result only
+    /// after reopening the exact receipt and rechecking original segments/WAV.
+    /// This performs no GATT, cloud call or physical consume.
+    pub(crate) fn verify_completed_row(row: &crate::companion_v1::CompanionV1HostSession) -> Result<(),String> {
+        Self::verify_saved_row_inner(row, true, None).map(|_|())
+    }
+    /// A verified local original remains usable before physical consumption.
+    /// This never authorizes an ACK or substitutes for a device reclaim receipt.
+    pub(crate) fn verify_saved_row(row: &crate::companion_v1::CompanionV1HostSession) -> Result<(),String> {
+        Self::verify_saved_row_inner(row, false, None).map(|_|())
+    }
+    /// Local deletion may retire a recovered control journal without forging
+    /// a STOP acknowledgement. Require a complete LAST original, canonical
+    /// raw/WAV receipt and the exact physical START anchor; no device command.
+    pub(crate) fn verify_closed_original(row:&crate::companion_v1::CompanionV1HostSession,
+        anchor:u32)->Result<(),String> {
+        if anchor==0 || row.source!="boardDevice" || row.device_recording_id!=Some(anchor) {
+            return Err(fail());
+        }
+        Self::verify_saved_row_inner(row,false,Some(anchor)).map(|_|())
+    }
+    pub(crate) fn verified_source_timeline(row:&crate::companion_v1::CompanionV1HostSession)->Result<Option<cop1::Timeline>,String> {
+        Self::verify_saved_row_inner(row,false,None)
+    }
+    fn verify_saved_row_inner(row: &crate::companion_v1::CompanionV1HostSession, require_reclaimed: bool,
+        original_anchor:Option<u32>) -> Result<Option<cop1::Timeline>,String> {
+        let key = super::super::SessionKey::from_public(row.device_recording_key.as_ref().ok_or_else(fail)?)?;
+        let audio = Path::new(row.audio_path.as_deref().ok_or_else(fail)?);
+        if !audio.is_absolute() {return Err(fail());}
+        let root = audio.parent().ok_or_else(fail)?;
+        let stem = format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(&key).map_err(|_| fail())?));
+        let receipt_path = root.join(format!(".{stem}.json"));
+        let mut body=Vec::new();read_locked(&receipt_path)?.take(MAX_RECEIPT+1).read_to_end(&mut body).map_err(|_| fail())?;
+        if body.len() as u64 > MAX_RECEIPT {return Err(fail());}
+        let receipt:Receipt=serde_json::from_slice(&body).map_err(|_| fail())?;
+        let first=receipt.segments.first().ok_or_else(fail)?;
+        let first_descriptor=Descriptor::decode(&first.wire)?;
+        if first_descriptor.key != key || original_anchor.is_some_and(|anchor|
+            first_descriptor.recording_id!=anchor || first_descriptor.segment_index!=0 || first_descriptor.sample_offset!=0) {
+            return Err(fail());
+        }
+        let mut receiver=Receiver::open(root,&first.wire)?;
+        let plan=receiver.plan()?;
+        if !plan.payloads_complete || receiver.receipt.audio.is_none() || receiver.audio_path()!=audio
+            || receiver.receipt.device.as_deref().zip(row.source_device_id.as_deref())
+                .is_none_or(|(a,b)|!crate::backend::device_connection::same_device_id(a,b))
+            || receiver.receipt.segments.iter().any(|s| !s.received || (require_reclaimed && !s.acked))
+            || !row.audio_stored || (require_reclaimed && !row.device_reclaimed) || !row.retention.audio_cached {
+            return Err(fail());
+        }
+        let ds=receiver.descriptors()?;
+        for d in ds {
+            if !row.chunks.iter().any(|c| c.id==Self::chunk_id(&d)
+                && c.path.as_deref()==Some(receiver.payload_path(&d).to_string_lossy().as_ref())
+                && c.bytes==u64::from(d.encoded_length) && matches!(c.status.as_str(),"sealed"|"synced")) {return Err(fail());}
+        }
+        Ok(receiver.receipt.audio.as_ref().and_then(|a|a.timeline.clone()))
+    }
     /// Checkpoint an incomplete meeting as well as a complete one. Sealed raw
     /// segments are discoverable after restart before any device consumption;
     /// incomplete rows never arm ASR or claim a playable final WAV.
-    pub(crate) fn publish(&mut self, index: &Path, device: &str) -> Result<(), String> {
+    pub(crate) fn publish(&mut self, index: &Path, device: &str) -> Result<String, String> {
         if !crate::backend::device_connection::stable_device_id(device) {
             return Err(fail());
         }
@@ -21,6 +79,7 @@ impl Receiver {
         }
         let plan = self.plan()?;
         let ds = self.descriptors()?;
+        let logical_key = ds.first().ok_or_else(fail)?.key.public_key();
         let mut chunks = Vec::new();
         let mut bytes = 0u64;
         for (segment, d) in self.receipt.segments.iter().zip(&ds) {
@@ -59,12 +118,20 @@ impl Receiver {
             .as_ref()
             .map(|a| a.samples / 16)
             .unwrap_or(plan.sample_count / 16);
-        let reclaimed = !self.receipt.segments.is_empty()
+        // Known sealed segments can be consumed while the session grows. Only
+        // a complete LAST catalogue plus all exact receipts retires the whole
+        // session; missing metadata must not hide a tail or a missing segment.
+        let reclaimed = plan.metadata_complete && !self.receipt.segments.is_empty()
             && self.receipt.segments.iter().all(|s| s.received && s.acked);
+        let mut published_id = self.stem.clone();
         session_store::update_checked(index, |sessions| {
             let mut next = sessions.clone();
-            if let Some(old) = next.iter().find(|s| s.id == self.stem) {
-                if old.audio_path.as_deref() != Some(audio_path.as_str())
+            let binding = self.library_binding(&next, &logical_key)?;
+            if let Some(old) = binding.map(|i| &next[i]) {
+                if old.source != "boardDevice"
+                    || (old.audio_path.as_deref().is_some_and(|p| p != audio_path)
+                        && !owned_capture_placeholder(old, &logical_key))
+                    || (old.audio_path.is_none() && !old.chunks.is_empty())
                     || old.source_device_id.as_deref().is_some_and(|old| {
                         !crate::backend::device_connection::same_device_id(old, device)
                     })
@@ -104,15 +171,13 @@ impl Receiver {
                     ),
                 );
             }
-            let s = next
-                .iter_mut()
-                .find(|s| s.id == self.stem)
-                .expect("inserted session");
+            let s = &mut next[binding.unwrap_or(0)];
+            published_id = s.id.clone();
             s.source = "boardDevice".into();
             s.source_device_id = Some(device.into());
             // V1 exact-ID bookkeeping must never reinterpret a V2 session as
             // one of its independent physical recordings.
-            s.device_recording_id = None;
+            s.device_recording_key = Some(logical_key.clone());
             s.device_total_length = None;
             s.device_sha256 = None;
             s.device_reclaimed = reclaimed;
@@ -121,10 +186,10 @@ impl Receiver {
             s.audio_stored = complete;
             s.retention.audio_cached = true;
             s.audio_bytes = bytes;
-            s.duration_ms = duration;
+            s.duration_ms = if s.status == "recording" && !complete { s.duration_ms.max(duration) } else { duration };
             s.chunks = chunks.clone();
             if !s.transcript_final {
-                s.status = if complete { "captured" } else { "pending" }.into();
+                s.status = if complete { "captured" } else if s.status == "recording" { "recording" } else { "pending" }.into();
                 s.pending_reason = Some(
                     if complete {
                         "needs_transcription"
@@ -143,13 +208,26 @@ impl Receiver {
             Ok(())
         })?;
         self.receipt.device = Some(device.into());
-        self.save()
+        self.save()?;
+        Ok(published_id)
+    }
+    fn library_binding(&self, rows: &[crate::companion_v1::CompanionV1HostSession],
+        key: &crate::companion_v1::CompanionV1RecordingKey) -> Result<Option<usize>,String> {
+        let mut indices = rows.iter().enumerate().filter(|(_,s)|
+            s.device_recording_key.as_ref() == Some(key) || s.id == self.stem);
+        let first = indices.next();
+        if indices.next().is_some() || first.is_some_and(|(_,s)|
+            s.device_recording_key.as_ref().is_some_and(|old| old != key)) { return Err(fail()); }
+        Ok(first.map(|(i,_)| i))
     }
     /// Software ACKs only: exact immutable identity and full SHA, never an ID
     /// prefix. A present receipt cannot replace revalidation of payload and the
-    /// library row. The radio remains disabled until WBA implements this schema.
+    /// library row. The caller must have negotiated a protected V2 peer.
     pub(crate) fn ack_candidates(&mut self, index: &Path) -> Result<Vec<Vec<u8>>, String> {
         self.recover()?;
+        // Exact hashes do not make a replayed/contradictory pause timeline
+        // correct. Validate all saved segments before authorizing consumption.
+        self.verify_received_timeline()?;
         let device = self.receipt.device.as_deref().ok_or_else(fail)?;
         let loaded = session_store::load(index);
         if loaded.state.status == "blocked" {
@@ -157,10 +235,8 @@ impl Receiver {
         }
         let sessions: Vec<crate::companion_v1::CompanionV1HostSession> =
             serde_json::from_slice(&loaded.bytes.ok_or_else(fail)?).map_err(|_| fail())?;
-        let row = sessions
-            .iter()
-            .find(|s| s.id == self.stem)
-            .ok_or_else(fail)?;
+        let key = self.descriptors()?.first().ok_or_else(fail)?.key.public_key();
+        let row = &sessions[self.library_binding(&sessions,&key)?.ok_or_else(fail)?];
         if row.audio_path.as_deref() != Some(self.audio_path().to_string_lossy().as_ref())
             || !row
                 .source_device_id
@@ -212,6 +288,54 @@ impl Receiver {
             return Err(e);
         }
         Ok(())
+    }
+}
+
+// START can bind the verified logical device key before any host file exists.
+// Replace only that exact row's virtual capture reference. A stored original,
+// another session, a real pathname or a received segment is never reassigned.
+fn owned_capture_placeholder(row: &crate::companion_v1::CompanionV1HostSession,
+    key: &crate::companion_v1::CompanionV1RecordingKey) -> bool {
+    let reference = format!("host://companion-type/recordings/{}.wav", row.id);
+    row.source == "boardDevice" && row.device_recording_key.as_ref() == Some(key)
+        && !row.audio_stored && !row.device_reclaimed && !row.transcript_final
+        && row.audio_path.as_deref() == Some(reference.as_str())
+        && row.chunks.iter().all(|chunk| {
+            chunk.id.starts_with(&format!("{}-chunk-", row.id))
+                && chunk.path.as_deref() == Some(reference.as_str())
+                && matches!(chunk.status.as_str(), "open" | "paused")
+        })
+}
+
+#[cfg(test)]
+mod placeholder_tests {
+    use super::*;
+    #[test]
+    fn only_the_unstored_verified_capture_reference_can_be_bound_to_real_segments() {
+        let snapshot = crate::companion_v1::fixture_snapshot();
+        let request = CompanionV1ControlRequest { action: CompanionV1ControlAction::DeviceSyncRecordings,
+            ble_name: None, session_id: Some("owned-capture".into()), prompt_id: None,
+            title: None, transcript_text: None, meeting_mode: Some("offlineStore".into()),
+            audio_path: Some("host://companion-type/recordings/owned-capture.wav".into()),
+            audio_bytes: Some(0), device_id: Some("C8:92:FF:DD:3B:CA".into()), duration_ms: Some(0) };
+        let mut row = crate::companion_v1::synced_device_session(&snapshot, &request, "capture");
+        let key = super::super::super::SessionKey { device_uid: [1;12], format_epoch: 2, session_id: 3 }.public_key();
+        row.source="boardDevice".into();
+        row.device_recording_key = Some(key.clone()); row.audio_stored=false;
+        row.device_reclaimed=false; row.transcript_final=false;
+        row.chunks.clear();
+        row.chunks.push(CompanionV1AudioChunk { id:format!("{}-chunk-1",row.id),path:row.audio_path.clone(),
+            started_at:None,stopped_at:None,duration_ms:0,bytes:0,status:"open".into() });
+        assert!(owned_capture_placeholder(&row,&key));
+        let mut other = key.clone(); other.session_id="0000000000000004".into();
+        assert!(!owned_capture_placeholder(&row,&other));
+        row.audio_stored=true;assert!(!owned_capture_placeholder(&row,&key));row.audio_stored=false;
+        row.device_reclaimed=true;assert!(!owned_capture_placeholder(&row,&key));row.device_reclaimed=false;
+        row.audio_path=Some("C:/original.wav".into());assert!(!owned_capture_placeholder(&row,&key));
+        row.audio_path=request.audio_path;
+        row.chunks.push(CompanionV1AudioChunk { id:"segment-0-9-proof".into(),path:row.audio_path.clone(),
+            started_at:None,stopped_at:None,duration_ms:0,bytes:42,status:"sealed".into() });
+        assert!(!owned_capture_placeholder(&row,&key));
     }
 }
 pub(super) fn ack(d: &Descriptor) -> Vec<u8> {

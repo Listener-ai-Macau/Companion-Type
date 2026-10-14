@@ -1,0 +1,140 @@
+//! Exact CMC3 intent and original index precede every write. STOP confirmation
+//! precedes receipt on this same connection owner.
+use super::*;
+use crate::backend::{recorder_control::{Journal, Observation, Store},
+    recording_wire::{SessionKey, control::{PausePeer, PauseStatus}}};
+
+type Observed=(PauseStatus,u32,u32,u8);
+fn fields(wire:&[u8])->Result<Observed,String> {
+    let status=PauseStatus::decode(wire)?;
+    Ok((status,u32::from_le_bytes(wire[12..16].try_into().unwrap()),
+        u32::from_le_bytes(wire[20..24].try_into().unwrap()),wire[24]))
+}
+
+async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteristic,
+    store:&mut Store,journal:&mut Journal,initial:Option<Observed>,fresh_start:bool)->Result<Observed,String> {
+    let Some(pending)=journal.pending.clone() else {return initial.ok_or("原确认缺失。".into())};
+    let disposition=if let Some((s,anchor,duration,_))=initial.as_ref() {
+        journal.observe(s,*anchor,*duration)?
+    } else {Observation::Previous};
+    store.commit_bound(journal.clone())?;
+    if disposition==Observation::Confirmed {return initial.ok_or("实际确认缺失。".into());}
+    if pending.command==1 && disposition==Observation::Previous && !fresh_start {
+        return Err("设备尚未确认上次开始；可能已重启，未自动重新开录。原命令与会议保留。".into());
+    }
+    let deadline=StdInstant::now()+env_timeout("COMPANION_TYPE_MEETING_STATUS_TIMEOUT_MS",60_000);
+    let mut notifications=bounded_ble_result("CMC3 notifications",StdDuration::from_secs(8),device.peripheral.notifications()).await?;
+    bounded_ble_result("subscribe CMC3 status",StdDuration::from_secs(8),device.peripheral.subscribe(status)).await?;
+    let result:Result<Observed,String>=async {
+        if disposition==Observation::Previous {
+            bounded_ble_result("write durable CMC3 command",remaining_deadline_budget(deadline,StdDuration::from_secs(8)),
+                device.peripheral.write(control,&pending.wire,WriteType::WithResponse)).await?;
+        }
+        loop {
+            if StdInstant::now()>=deadline {return Err("设备控制确认超时；原命令和原会议已保存，下次核对同一命令。".into());}
+            let notified=match timeout(remaining_deadline_budget(deadline,StdDuration::from_millis(700)),notifications.next()).await {
+                Ok(Some(n)) if n.uuid==MEETING_STATUS_UUID=>Some(n.value),
+                Ok(None)=>return Err("录音确认通道已断开；原命令和原音保留。".into()),_=>None,
+            };
+            let wire=match notified {Some(wire)=>wire,None=>bounded_ble_result("read durable CMC3 confirmation",
+                remaining_deadline_budget(deadline,StdDuration::from_secs(8)),device.peripheral.read(status)).await?};
+            // A queued pre-START CMS2 idle notification is not a CMC3 ACK.
+            if pending.command==1 && wire.len()==64 {
+                let old=parse_meeting_status(&wire)?;
+                if old.last_error==0 && matches!(old.state,0|2) {continue;}
+            }
+            let observed=fields(&wire)?;
+            if journal.observe(&observed.0,observed.1,observed.2)?==Observation::Confirmed {
+                store.commit_bound(journal.clone())?;return Ok(observed);
+            }
+        }
+    }.await;
+    let _=bounded_ble_result("unsubscribe CMC3 status",StdDuration::from_secs(1),device.peripheral.unsubscribe(status)).await;
+    result
+}
+
+pub(super) async fn execute_owned(
+    device_id:&str,command:u8,max_seconds:u16,host_session:&str,start_request:u32,
+    expected_anchor:Option<u32>,expected_key:Option<&crate::companion_v1::CompanionV1RecordingKey>,
+    fresh_start:bool,
+) -> Result<(CompanionMeetingControlReport,Journal,NativeDevice),String> {
+    if command>5 || start_request==0 || (command!=1 && max_seconds!=0) {
+        return Err("录音控制缺少原会话或有效命令；没有连接设备。".into());
+    }
+    let expected_key=expected_key.map(SessionKey::from_public).transpose()?;
+    let mut store=Store::open(&crate::backend::persistence::state_file_path(),host_session)?;
+    let mut journal=store.journal.clone().ok_or("原命令尚未耐久保存；未连接或新开录音。")?;
+    if journal.start_request!=start_request || normalize_device_id(&journal.device_id)!=normalize_device_id(device_id)
+        || journal.anchor!=expected_anchor || journal.key.as_ref().map(SessionKey::from_public).transpose()?!=expected_key
+        || (command==1 && journal.max_seconds!=max_seconds) {
+        return Err("控制与耐久保存的原录音不同；未连接其它录音。".into());
+    }
+    let request=journal.pending.as_ref().map(|p|p.request)
+        .or_else(||journal.confirmed.as_ref().map(|c|c.request)).ok_or("原命令缺失。")?;
+    let retained=retained_offline_connection(Some(device_id),start_request,expected_anchor,request).await?;
+    let reused=retained.is_some();
+    let mut device=match retained {Some(lease)=>lease.device,
+        // Retrying an original capture must not rewrite its clock.
+        None=>connect_native_device_with_clock(Some(device_id),false).await?};
+    let result=async {
+        let chars=device.peripheral.characteristics();
+        let control=find_characteristic(&chars,MEETING_CONTROL_UUID)?;
+        let status=find_characteristic(&chars,MEETING_STATUS_UUID)?;
+        if !control.properties.contains(CharPropFlags::WRITE) || !status.properties.contains(CharPropFlags::NOTIFY)
+            || !status.properties.contains(CharPropFlags::READ) {return Err("设备没有完整的受保护录音控制通道。".into());}
+        let identity=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
+            .ok_or("设备身份读取失败，未发录音控制。")?;
+        let peer=PausePeer::from_status(&identity)?.ok_or("当前固件没有明确支持暂停；未停止重开。")?;
+        journal.matches(&peer,host_session,&device.device_id())?;
+        let wire=bounded_ble_result("read original CMC3 recorder",StdDuration::from_secs(8),device.peripheral.read(&status)).await?;
+        let mut observed=if wire.len()==80 {Some(fields(&wire)?)} else {
+            // A new START switches CMS2 to CMS3. Before the switch require a
+            // checked idle/sealed status; never manufacture an extended ACK.
+            let old=parse_meeting_status(&wire)?;
+            if journal.confirmed.is_some() || journal.pending.as_ref().is_none_or(|p|p.command!=1)
+                || old.last_error!=0 || !matches!(old.state,0|2) {return Err("设备当前状态不能确认原开始请求；未重开。".into());}
+            None
+        };
+        if let Some((s,anchor,duration,_))=observed.as_ref() {
+            if journal.observe(s,*anchor,*duration)?==Observation::Confirmed {store.commit_bound(journal.clone())?;}
+        }
+        if journal.confirmed.is_none() && journal.pending.as_ref().is_some_and(|p|p.command==1) {
+            if let Some(capacity)=crate::backend::recording_capacity::parse(&identity) {
+                if !capacity.busy {crate::backend::recording_capacity::check(&capacity,journal.max_seconds)?;}
+            }
+        }
+        // STOP settles the exact lost PAUSE/RESUME/START, then uses the next
+        // sequence. Recovery only settles the original pending intent.
+        if matches!(command,0|2|3) && journal.pending.is_some() {
+            observed=Some(settle(&device,&control,&status,&mut store,&mut journal,observed,false).await?);
+        }
+        if command!=0 && journal.prepare(&peer,command)? {
+            observed=Some(settle(&device,&control,&status,&mut store,&mut journal,observed,fresh_start).await?);
+        }
+        let (observed,anchor,duration,sync_state)=observed.ok_or("设备尚未确认原控制。")?;
+        if !matches!(observed.state,1|2|3) || observed.last_error!=0 || !observed.timeline {
+            return Err("设备尚未到达稳定确认，未更新界面。".into());
+        }
+        // Repair an index write failure after the sidecar commit before any
+        // receive/consume can proceed.
+        store.commit_bound(journal.clone())?;
+        let actual_peer=crate::backend::recording_wire::transport::Peer::from_status(&identity)?.ok_or("逻辑录音能力缺失。")?;
+        device.verified_uid=Some(hex_lower(&actual_peer.uid));device.recording_peer=Some(actual_peer.clone());device.user_connection=true;
+        device.observed_identity=Some(parse_device_identity(Some(&identity),None,None));
+        if matches!(observed.state,1|3) {
+            *VERIFIED_SEGMENTED_RECORDER.lock().map_err(|_|"连续录音身份锁不可用")?=Some((device.device_id(),actual_peer));
+            let previous=offline_connection_lock()?.remember(offline_connection::Lease {
+                device:device.clone(),device_id:device.device_id(),start_token:start_request,recording_id:anchor,logical_key:observed.key.clone(),
+            })?;
+            if let Some(previous)=previous {if normalize_device_id(&previous.device_id)!=normalize_device_id(&device.device_id()) {close_native_device(&previous.device).await;}}
+        } else {offline_connection_lock()?.forget(&device.device_id(),start_request,anchor);}
+        Ok((CompanionMeetingControlReport{device_id:device.device_id(),request_id:observed.request,state:observed.state,
+            last_error:observed.last_error,meeting_id:anchor,duration_ms:duration,sync_state,logical_key:observed.key},journal.clone()))
+    }.await;
+    if result.is_err() {
+        if let Some(anchor)=expected_anchor {offline_connection_lock()?.forget(device_id,start_request,anchor);}
+        close_native_device(&device).await;
+    }
+    eprintln!("recorder_control scope=CMC3 original_session={host_session} command={command} connection_reused={reused} result_confirmed={}",result.is_ok());
+    result.map(|(report,journal)|(report,journal,device))
+}

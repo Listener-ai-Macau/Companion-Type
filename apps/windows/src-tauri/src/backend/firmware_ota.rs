@@ -50,6 +50,8 @@ pub struct CompanionFirmwareOtaReport {
     pub recovered_offsets: u32,
     pub active_link_confirmed: bool,
     pub elapsed_ms: u128,
+    pub payload_metrics: super::ota_metrics::PayloadMetrics,
+    pub system_bundle: Option<serde_json::Value>,
 }
 
 /// Host-side validation of a firmware or resource OTA package (no BLE).
@@ -113,6 +115,12 @@ struct ValidatedPackage {
 pub fn validate_ota_package(
     request: &CompanionFirmwareOtaRequest,
 ) -> Result<CompanionOtaPackageValidation, String> {
+    if super::system_ota::is_bundle(Path::new(&request.manifest_path))? {
+        let p=super::system_ota::load(Path::new(&request.manifest_path))?;
+        return Ok(CompanionOtaPackageValidation{ok:true,package_type:"companion-system-ota".into(),
+            version_note:"整套固件＋资源，同一次启动确认".into(),payload_bytes:p.firmware.len()+p.resources.len(),chunk_bytes:505,
+            payload_sha256:p.id,message:"整套内容与签名线格式已核对；设备须验证三份签名后才允许发送，重启后的共同确认才算升级成功。".into()});
+    }
     let package = validate_package(
         Path::new(&request.manifest_path),
         Path::new(&request.firmware_path),
@@ -144,6 +152,15 @@ pub fn transfer(
     bridge: &CompanionBleBridge,
     request: CompanionFirmwareOtaRequest,
 ) -> Result<CompanionFirmwareOtaReport, String> {
+    if super::system_ota::is_bundle(Path::new(&request.manifest_path))? {
+        let p=super::system_ota::load(Path::new(&request.manifest_path))?;
+        #[cfg(windows)] {
+            let started=Instant::now();
+            let r=super::ota_winrt::transfer_system_ota_winrt(request.device_id.as_deref(),&p)?;
+            return Ok(report(r,"companion-system-ota".into(),started.elapsed().as_millis()));
+        }
+        #[cfg(not(windows))] {let _=p;return Err("整套升级需要原生Windows蓝牙入口".into());}
+    }
     let package = validate_package(
         Path::new(&request.manifest_path),
         Path::new(&request.firmware_path),
@@ -184,14 +201,20 @@ fn report(
     package_type: String,
     elapsed_ms: u128,
 ) -> CompanionFirmwareOtaReport {
-    let protocol_ms = result.transfer.timings.total.as_secs_f64().max(0.001);
-    let bulk_kb_s = (result.transfer.firmware_bytes as f64 / 1024.0) / protocol_ms;
+    let protocol_ms = result.transfer.timings.total.as_secs_f64();
+    // Use the same authoritative new-byte wall-clock window as QM16. The
+    // total engine/API timings cannot substitute for an unknown payload rate.
+    let bulk_kb_s = result.payload_metrics.actual_payload_kib_s
+        .map(|rate| format!("{rate:.2}")).unwrap_or_else(|| "not_measured".into());
     // Keep stderr machine-parseable for acceptance scripts.
     eprintln!(
-        "firmware_ota_report package_type={package_type} bulk_kb_s={bulk_kb_s:.2} protocol_ms={:.0} wall_ms={elapsed_ms} bytes={} data_writes={} chunk_note=WB_SAFE_ATT_le_244",
+        "firmware_ota_report package_type={package_type} bulk_kb_s={bulk_kb_s} protocol_ms={:.0} wall_ms={elapsed_ms} bytes={} data_writes={} new_payload_bytes={} payload_window_us={:?} rate_basis={}",
         protocol_ms * 1000.0,
         result.transfer.firmware_bytes,
-        result.transfer.data_writes
+        result.transfer.data_writes,
+        result.payload_metrics.new_payload_bytes,
+        result.payload_metrics.payload_elapsed_us,
+        result.payload_metrics.rate_basis
     );
     CompanionFirmwareOtaReport {
         protocol: denzic_ota_core::PROTOCOL_NAME.to_string(),
@@ -203,6 +226,8 @@ fn report(
         recovered_offsets: result.transfer.recovered_offsets,
         active_link_confirmed: result.transfer.active_link_confirmed,
         elapsed_ms,
+        payload_metrics: result.payload_metrics,
+        system_bundle: result.system_bundle,
     }
 }
 

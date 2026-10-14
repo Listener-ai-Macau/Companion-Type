@@ -443,6 +443,50 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
 #[cfg(test)]
 mod tests {
     #[test]
+    fn sealed_segment_acks_do_not_claim_the_whole_growing_session_is_reclaimed() {
+        use super::*;
+        let root = std::env::temp_dir().join(format!("companion-open-reclaim-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let root = root.canonicalize().unwrap();
+        let _env = Environment::isolate(&root);
+        let (ds, payload) = fixture();
+        let index = root.join("sessions.json");
+        let row = || serde_json::from_slice::<Vec<crate::companion_v1::CompanionV1HostSession>>(&fs::read(&index).unwrap()).unwrap().remove(0);
+        let mut r = Receiver::open(&root, &ds[0].encode().unwrap()).unwrap();
+        r.accept_segment(&ds[0].encode().unwrap(), &payload).unwrap();
+        r.publish(&index, DEVICE).unwrap();
+        for ack in r.ack_candidates(&index).unwrap() { r.confirm_acked(&ack).unwrap(); }
+        r.publish(&index, DEVICE).unwrap();
+        assert!(!row().device_reclaimed, "first sealed segment is consumed, but the session has no LAST");
+        assert!(!row().audio_stored);
+        drop(r);
+        let mut r = Receiver::open(&root, &ds[0].encode().unwrap()).unwrap();
+        r.publish(&index, DEVICE).unwrap();
+        assert!(!row().device_reclaimed, "reopening does not restore the premature whole-session flag");
+        r.accept_segment(&ds[2].encode().unwrap(), &payload).unwrap();
+        r.publish(&index, DEVICE).unwrap();
+        for ack in r.ack_candidates(&index).unwrap() { r.confirm_acked(&ack).unwrap(); }
+        r.publish(&index, DEVICE).unwrap();
+        assert!(!row().device_reclaimed, "known LAST and all known ACKs cannot hide a missing middle segment");
+        r.accept_metadata(&ds[1].encode().unwrap()).unwrap();
+        r.publish(&index, DEVICE).unwrap();
+        assert!(!row().device_reclaimed, "complete metadata is insufficient without durable payload and physical ACK");
+        r.accept_segment(&ds[1].encode().unwrap(), &payload).unwrap();
+        r.assemble().unwrap();
+        r.publish(&index, DEVICE).unwrap();
+        assert!(row().audio_stored);
+        assert!(!row().device_reclaimed, "complete local audio still needs the last physical receipt");
+        for ack in r.ack_candidates(&index).unwrap() { r.confirm_acked(&ack).unwrap(); }
+        r.publish(&index, DEVICE).unwrap();
+        assert!(row().device_reclaimed && row().audio_stored);
+        let completed = row();
+        drop(r);
+        Receiver::verify_completed_row(&completed).unwrap();
+        let temp = std::env::temp_dir().canonicalize().unwrap();
+        assert!(root.starts_with(temp) && root.file_name().unwrap().to_string_lossy().starts_with("companion-open-reclaim-"));
+        fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
     fn durable_receiver_missing_reordered_restart_and_exact_ack() {
         let root = std::env::temp_dir().join(format!(
             "companion-session-receiver-{}",

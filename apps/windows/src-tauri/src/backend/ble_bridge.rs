@@ -27,6 +27,7 @@ use uuid::Uuid;
 use super::recording_sync::{self, Job as RecordingSyncJob};
 
 mod offline_connection;
+pub(crate) use offline_connection::original_follow_scope;
 mod pull_session;
 mod pull_progress;
 mod pull_reorder;
@@ -34,8 +35,14 @@ mod pull_timing;
 mod pull_receiver;
 mod pull_recovery;
 mod prepared_connection;
+mod segmented;
+mod batch_interval;
+mod recorder_control;
+mod upload_benchmark;
+pub(crate) use upload_benchmark::receive_fixture as benchmark_recording_upload;
 use pull_session::PullSession;
-pub(crate) use offline_connection::{owner_for_link as owned_offline_recording_link, OwnedRecorder};
+pub(crate) use offline_connection::{owner_for_link as owned_offline_recording_link,
+    owner_for_sync as owned_segmented_recording_sync, OwnedRecorder};
 
 static OFFLINE_RECORDER_CONNECTION: std::sync::Mutex<offline_connection::Store<NativeDevice>> =
     std::sync::Mutex::new(offline_connection::Store::empty());
@@ -75,7 +82,7 @@ const DELETE_PRIVACY_REFUSAL_FLAG: u16 = 0x0001;
 const DELETE_PRIVACY_REQUEST_BYTES: usize = 48;
 const RECORDING_CHUNK_FINAL_FLAG: u8 = 0x01;
 const RECORDING_CHUNK_COMPRESSED_IMA_FLAG: u8 = 0x02;
-/// Product intermediate (COMP-REQ-667 peak wire ~97 KB/s): compact 20B + ≤224 B payload.
+/// Product compact transport:20B plus negotiated payload, maximum489B.
 const RECORDING_CHUNK_COMPACT_FLAG: u8 = 0x08;
 /// COMP-REQ-666: IMA payload is 8 kHz; host upsamples ×2 to 16 kHz PCM.
 const RECORDING_CHUNK_HALF_RATE_8K_FLAG: u8 = 0x10;
@@ -106,7 +113,7 @@ const RECORDING_CHUNK_HEADER_SLIM_BYTES: usize = 12;
 const RECORDING_CHUNK_HEADER_LEGACY_BASE_BYTES: usize = 24;
 const RECORDING_CHUNK_HEADER_FULL_BYTES: usize = 56;
 /// Product ATT payload budget matches firmware SAFE_ATT 244 − compact 20.
-const RECORDING_CHUNK_PRODUCT_PAYLOAD_MAX: usize = 224;
+const RECORDING_CHUNK_PRODUCT_PAYLOAD_MAX: usize = 489;
 const RECORDING_CODEC_PCM16_MONO: u8 = 1;
 /// Half-rate IMA ADPCM on flash (compress-at-record product path).
 const RECORDING_CODEC_HALF_IMA: u8 = 2;
@@ -122,7 +129,7 @@ fn recording_wire_ima_requested(codec: u8) -> bool {
         .map(|v| matches!(v.trim().to_ascii_lowercase().as_str(), "1" | "true" | "on" | "yes"))
         .unwrap_or(false))
 }
-const RECORDING_SOURCE_MIC_SAI: u8 = 1;
+const RECORDING_SOURCE_MIC_SAI: u8 = super::recording_wire::SOURCE_MIC_SAI;
 const RECORDING_SYNC_UNSYNCED: u8 = 0;
 const RECORDING_SYNC_TRANSFER_ACTIVE: u8 = 1;
 const PCM_SAMPLE_RATE_HZ: u32 = 16_000;
@@ -226,6 +233,7 @@ pub(crate) struct CompanionMeetingControlReport {
     pub meeting_id: u32,
     pub duration_ms: u32,
     pub sync_state: u8,
+    pub logical_key: Option<super::recording_wire::SessionKey>,
 }
 
 #[derive(Clone, Debug)]
@@ -245,6 +253,8 @@ pub(crate) struct CompanionBleNameReport {
 pub(crate) struct CompanionOtaBleReport {
     pub device_id: String,
     pub transfer: denzic_ota_core::TransferReport,
+    pub payload_metrics: super::ota_metrics::PayloadMetrics,
+    pub system_bundle: Option<serde_json::Value>,
 }
 
 pub struct CompanionBleBridge {
@@ -434,7 +444,7 @@ impl CompanionBleBridge {
             return operation;
         }
         if native_ble_available() {
-            return match run_native_blocking(connect_native_probe(requested_device_id, owned_recording)) {
+            return match run_native_blocking(connect_native_probe(requested_device_id, owned_recording, None)) {
                 Ok(probe) => {
                     let actual_device_id = probe.device_id.clone();
                     let device_recording = probe.identity.recording;
@@ -457,7 +467,7 @@ impl CompanionBleBridge {
                     let mut operation_recordings = Vec::new();
                     let mut sync_paused = false;
                     let mut pull_msg = String::new();
-                    if device_recording == Some(true) {
+                    if device_recording == Some(true) && !probe.segmented_recording {
                         pull_msg = "; board recording is active; automatic recording pull deferred"
                             .to_string();
                     } else if device_recording.is_none() {
@@ -466,7 +476,7 @@ impl CompanionBleBridge {
                     } else if !recording_sync::automatic_allowed(&actual_device_id) {
                         sync_paused = true;
                         pull_msg = "; 录音同步已暂停，点击同步录音可从断点继续".into();
-                    } else if should_auto_pull_recordings(
+                    } else if probe.segmented_recording || should_auto_pull_recordings(
                         device_recording,
                         probe.recordings_available,
                     ) {
@@ -508,6 +518,9 @@ impl CompanionBleBridge {
                                         .collect::<Vec<_>>(),
                                     batch.failures
                                 );
+                                if let Some(sessions) = batch.segmented.as_ref() {
+                                    pull_msg.push_str(&format!("; continuous_sessions_saved={}", sessions.len()));
+                                }
                                 sync_paused = batch.paused;
                                 if sync_paused { pull_msg.push_str(&format!("; {}", recording_sync::PAUSED)); }
                                 operation_recordings = batch.recordings;
@@ -519,7 +532,8 @@ impl CompanionBleBridge {
                     }
                     CompanionBleOperation {
                         provider_id: "companion-type-windows-ble".to_string(),
-                        mode: "windows-native-connect-auto-upload".to_string(),
+                        mode: if probe.segmented_recording { "windows-native-connect-auto-upload-segmented" }
+                            else { "windows-native-connect-auto-upload" }.to_string(),
                         ready: true,
                         sync_paused,
                         device_id: Some(actual_device_id),
@@ -576,7 +590,7 @@ impl CompanionBleBridge {
                 "Windows native BLE is unavailable; remembered-device probe was not run.",
             );
         }
-        match super::diagnostics::Span::start(super::diagnostics::Operation::Reconnect).result(run_native_blocking(connect_native_probe(Some(device_id), None))) {
+        match super::diagnostics::Span::start(super::diagnostics::Operation::Reconnect).result(run_native_blocking(connect_native_probe(Some(device_id), None, known_segmented_peer(device_id)))) {
             Ok(probe)
                 if normalize_device_id(&probe.device_id) == normalize_device_id(device_id) =>
             {
@@ -699,6 +713,30 @@ impl CompanionBleBridge {
         )
     }
 
+    pub(crate) fn sync_original_recording(&self, original: &OwnedRecorder) -> CompanionBleOperation {
+        recording_sync::resume_explicit(Some(&original.device_id));
+        if !native_ble_available() {
+            return helper_operation(&self.status(), "原设备录音同步需要真实Windows蓝牙，未用导入或演示源替代。");
+        }
+        native_recording_operation(run_native_blocking(sync_native_recordings_original(original)))
+    }
+
+    /// The user's STOP/retry owns exactly this sealed recording. An older
+    /// backlog stays available for normal automatic or explicit batch sync.
+    pub(crate) fn sync_stopped_recording(
+        &self,
+        requested_device_id: Option<&str>,
+        recording_id: u32,
+        known_recording_ids: &[u32],
+    ) -> CompanionBleOperation {
+        if !native_ble_available() {
+            return helper_operation(&self.status(), "Native BLE is unavailable; stopped recording sync requires Windows BLE.");
+        }
+        recording_sync::resume_explicit(requested_device_id);
+        native_recording_operation(run_native_blocking(sync_native_recordings_selected(
+            requested_device_id, known_recording_ids, Some(recording_id))))
+    }
+
     pub(crate) fn meeting_control_idempotent(
         &self,
         requested_device_id: Option<&str>,
@@ -706,6 +744,7 @@ impl CompanionBleBridge {
         max_seconds: u16,
         session_key: &str,
         expected_recording_id: Option<u32>,
+        expected_key: Option<&crate::companion_v1::CompanionV1RecordingKey>,
     ) -> Result<CompanionMeetingControlReport, String> {
         if !native_ble_available() {
             return Err(
@@ -720,8 +759,38 @@ impl CompanionBleBridge {
             request_id,
             max_seconds,
             meeting_idempotency_request_id(session_key, 1),
-            expected_recording_id.map(|id| MeetingControlIdentity::for_session(session_key, id)),
+            expected_recording_id.map(|id| MeetingControlIdentity::for_session(session_key, id)
+                .with_key(expected_key)).transpose()?,
         ))
+    }
+
+    /// CMC3 controls are explicitly opt-in until the application can present
+    /// their durable pending/paused states. No CMC2 or fixture fallback.
+    pub(crate) fn pausable_meeting_control(
+        &self, requested_device_id: &str, command: u8, max_seconds: u16,
+        session_id: &str, expected_recording_id: Option<u32>,
+        expected_key: Option<&crate::companion_v1::CompanionV1RecordingKey>,
+        fresh_start: bool,
+        known_recording_ids: &[u32],
+    ) -> Result<(CompanionMeetingControlReport, super::recorder_control::Journal, Option<CompanionBleOperation>), String> {
+        if !native_ble_available() {
+            return Err("暂停录音控制需要正式 Windows 蓝牙，不能用模拟控制替代。".into());
+        }
+        run_native_blocking(async {
+            let (report,journal,device)=recorder_control::execute_owned(
+                requested_device_id, command, max_seconds, session_id,
+                meeting_idempotency_request_id(session_id,1), expected_recording_id, expected_key, fresh_start,
+            ).await?;
+            if report.state!=2 {return Ok((report,journal,None));}
+            // The original row and STOP/natural-seal confirmation are already
+            // durable. Receive on the same owner; no re-pair/clock/START here.
+            recording_sync::resume_explicit(Some(&device.device_id()));
+            let pulled=sync_native_recordings_with_link_policy(&device,known_recording_ids,
+                Some(report.meeting_id),&mut SealedLinkPolicy::default(),report.logical_key.as_ref()).await;
+            let reusable=pulled.as_ref().is_ok_and(|batch|batch.connection_reusable);
+            finish_native_device_operation(device,reusable).await?;
+            Ok((report,journal,Some(native_recording_operation(pulled))))
+        })
     }
 
     /// STOP and durable receive share one verified device/connection owner.
@@ -733,6 +802,7 @@ impl CompanionBleBridge {
         session_key: &str,
         expected_recording_id: u32,
         known_recording_ids: &[u32],
+        expected_key: Option<&crate::companion_v1::CompanionV1RecordingKey>,
         on_stopped: F,
     ) -> Result<(CompanionMeetingControlReport, String, CompanionBleOperation), String>
     where F: FnOnce(&CompanionMeetingControlReport, &str) -> Result<(), String> {
@@ -743,7 +813,7 @@ impl CompanionBleBridge {
             let (report, device) = meeting_control_native_owned(
                 requested_device_id, 2, meeting_idempotency_request_id(session_key, 2),
                 0, meeting_idempotency_request_id(session_key, 1),
-                Some(MeetingControlIdentity::for_session(session_key, expected_recording_id)),
+                Some(MeetingControlIdentity::for_session(session_key, expected_recording_id).with_key(expected_key)?),
             ).await?;
             let observed_at = super::observation_timestamp();
             if let Err(error) = on_stopped(&report, &observed_at) {
@@ -758,7 +828,8 @@ impl CompanionBleBridge {
             }
             recording_sync::resume_explicit(Some(&device.device_id()));
             eprintln!("recording_sync_stage stage=connection elapsed_ms=0 stopped_connection_reused=1 id={}", report.meeting_id);
-            let pulled = sync_native_recordings_inner(&device, known_recording_ids).await;
+            let pulled = sync_native_recordings_with_link_policy(&device, known_recording_ids,
+                Some(report.meeting_id), &mut SealedLinkPolicy::default(), report.logical_key.as_ref()).await;
             let reusable = pulled.as_ref().is_ok_and(|batch| batch.connection_reusable);
             finish_native_device_operation(device, reusable).await?;
             Ok((report, observed_at, native_recording_operation(pulled)))
@@ -1237,6 +1308,47 @@ struct NativeConnectionSetup {
     preference: Option<super::ble_throughput::TransferPreference>,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+enum ConnectionIntent { Normal, SealedSync }
+
+// This policy belongs to one sync operation, never to cloned idle devices.
+// Keep the bootstrap identity after releasing its request so later backlog
+// entries cannot install a 15ms Windows override over the WBA's 7.5ms request.
+#[derive(Default)]
+struct SealedLinkPolicy {
+    #[cfg(windows)]
+    preference: Option<super::ble_throughput::TransferPreference>,
+    #[cfg(windows)]
+    initialized: bool,
+}
+impl SealedLinkPolicy {
+    async fn initialize(&mut self, device: &NativeDevice) {
+        #[cfg(windows)]
+        if !self.initialized {
+            self.initialized = true;
+            self.preference = super::ble_throughput::request_for_sealed_sync(
+                &device.address, device.address_type,
+            ).await;
+        }
+        #[cfg(not(windows))]
+        let _ = device;
+    }
+
+    fn verified_payload(&mut self) {
+        #[cfg(windows)]
+        if let Some(preference) = self.preference.as_mut() {
+            preference.release_after_verified_payload();
+        }
+    }
+
+    fn verified_batch_interval(&mut self) {
+        #[cfg(windows)]
+        if let Some(preference)=self.preference.as_mut() {
+            preference.release_after_verified_batch_owner();
+        }
+    }
+}
+
 #[derive(Clone)]
 struct NativeDevice {
     peripheral: Peripheral,
@@ -1247,6 +1359,10 @@ struct NativeDevice {
     service_uuids: Vec<Uuid>,
     user_connection: bool,
     verified_uid: Option<String>,
+    // Learned only from the protected V2 catalogue on this verified link.
+    recording_peer: Option<super::recording_wire::transport::Peer>,
+    follow_generation: Option<u32>,
+    observed_identity: Option<CompanionDeviceIdentity>,
     #[cfg(windows)]
     connection_session: Option<Arc<super::ble_throughput::ConnectionSession>>,
 }
@@ -1289,7 +1405,7 @@ async fn finish_native_device_operation(device: NativeDevice, succeeded: bool) -
 async fn take_prepared_device(requested: Option<&str>) -> Result<Option<NativeDevice>, String> {
     let peer = PREPARED_DEVICE_CONNECTION.lock()
         .map_err(|_| "已连接设备状态锁不可用".to_string())?.take_exact(requested);
-    let Some(peer) = peer else { return Ok(None) };
+    let Some(mut peer) = peer else { return Ok(None) };
     let connected = bounded_ble_result("check prepared device connection", StdDuration::from_secs(3),
         peer.device.peripheral.is_connected()).await.unwrap_or(false);
     if !connected { close_native_device(&peer.device).await; return Ok(None); }
@@ -1302,9 +1418,133 @@ async fn take_prepared_device(requested: Option<&str>) -> Result<Option<NativeDe
             close_native_device(&peer.device).await;
             return Err("已连接设备的芯片身份不可核对或发生变化，未发送开停/收取命令。".into());
         }
+        peer.device.observed_identity = Some(identity);
     }
     eprintln!("BLE prepared_connection reused=1 exact_address=1 identity_checked={}", u8::from(identity_checked));
     Ok(Some(peer.device))
+}
+
+static VERIFIED_SEGMENTED_RECORDER: std::sync::LazyLock<std::sync::Mutex<Option<(String, super::recording_wire::transport::Peer)>>> =
+    std::sync::LazyLock::new(|| std::sync::Mutex::new(None));
+
+pub(crate) fn known_segmented_peer(device_id: &str) -> Option<super::recording_wire::transport::Peer> {
+    VERIFIED_SEGMENTED_RECORDER.lock().ok().and_then(|known| known.as_ref()
+        .filter(|(id, _)| scan_exact_address_match(Some(device_id), id)).map(|(_, peer)| peer.clone()))
+}
+
+pub(crate) fn known_segmented_recording(device_id: &str) -> bool { known_segmented_peer(device_id).is_some() }
+
+fn require_same_recorder(expected: Option<&super::recording_wire::transport::Peer>,
+    actual: Option<&super::recording_wire::transport::Peer>) -> Result<(), String> {
+    if expected.is_some_and(|expected| actual.is_none_or(|actual|
+        expected.uid != actual.uid || expected.epoch != actual.epoch)) {
+        return Err("重连设备的UID或录音格式代次改变；未收取、开停或消费原会话。".into());
+    }
+    Ok(())
+}
+
+pub(crate) fn prepared_segmented_recording(device_id: &str) -> bool {
+    OFFLINE_RECORDER_CONNECTION.lock().ok().is_some_and(|store|
+        store.peek_device(device_id).is_some_and(|lease| lease.logical_key.is_some()
+            && lease.device.recording_peer.is_some())) ||
+    PREPARED_DEVICE_CONNECTION.lock().ok().is_some_and(|store|
+        store.peek_exact(device_id).is_some_and(|peer|
+            peer.mcu_uid.is_some() && peer.device.user_connection && peer.device.recording_peer.is_some()))
+}
+
+// A bounded follower borrows only the already verified user connection. It
+// never scans, pairs, starts/stops MIC or resumes a user-paused synchronization.
+pub(crate) struct FollowObservation {
+    pub(super) identity: CompanionDeviceIdentity,
+    pub(super) operation: Option<CompanionBleOperation>,
+}
+
+pub(crate) fn follow_prepared_recording_once(device_id: &str,
+    original_scope: Option<&super::recording_wire::SessionKey>) -> Result<Option<FollowObservation>, String> {
+    let allowed = if original_scope.is_some() { recording_sync::owned_follow_allowed(device_id) }
+        else { recording_sync::automatic_allowed(device_id) };
+    if !allowed || !prepared_segmented_recording(device_id) {
+        return Ok(None);
+    }
+    run_native_blocking(async {
+        // Backend's snapshot lock serializes this borrow with START/STOP and
+        // bookmarks. Remove the actual lease while this bounded job owns it.
+        let mut owned = {
+            let mut store = offline_connection_lock()?;
+            if original_scope.is_some_and(|scope| store.peek_device(device_id)
+                .is_none_or(|lease| lease.logical_key.as_ref() != Some(scope))) {
+                return Err("连续录音连接与指定原会话不同，未借用其它连接。".into());
+            }
+            store.take_device(Some(device_id))
+        };
+        let mut device = if let Some(lease) = owned.as_ref() { lease.device.clone() } else {
+            take_prepared_device(Some(device_id)).await?
+                .ok_or("连续录音连接已断开；设备继续离线录音，接收断点保留。")?
+        };
+        let mut identity = device.observed_identity.clone();
+        let result = async {
+            let peer = device.recording_peer.clone().ok_or("连续录音连接身份不可用。")?;
+            let chars = device.peripheral.characteristics();
+            if let Some(lease) = owned.as_ref() {
+                let wire = read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
+                    .ok_or("录中同步未读到当前芯片状态；设备继续离线采音。")?;
+                let current = parse_device_identity(Some(&wire),None,None);
+                let status = find_characteristic(&chars,MEETING_STATUS_UUID)?;
+                let status = bounded_ble_result("read logical recorder for follower",StdDuration::from_secs(3),
+                    device.peripheral.read(&status)).await?;
+                let status = parse_meeting_status(&status)?;
+                lease.verify_observation(device.verified_uid.as_deref(),&device.device_id(),&current,&status,lease.start_token)?;
+                identity = Some(current);
+            }
+            let job = RecordingSyncJob::begin_background(device_id)?;
+            // Finish the bounded control exchange/CCCD cleanup before handoff;
+            // do not drop a subscription-owning future midway through an ACK.
+            let catalog = segmented::read_catalog(&device, &chars, peer.clone()).await?;
+            let tail_scope=owned.as_ref().and_then(|lease| lease.logical_key.as_ref());
+            if catalog.generation.is_some() && device.follow_generation == catalog.generation
+                && !(peer.growing_tail&&tail_scope.is_some()) {
+                return Ok(None);
+            }
+            let mut policy = SealedLinkPolicy::default();
+            let (mut batch, deferred) = segmented::sync_catalog_limited(&device, &chars, peer.clone(), catalog.entries,
+                &job, &mut policy, Some(1), owned.as_ref().and_then(|lease| lease.logical_key.as_ref())).await?;
+            if !deferred&&!batch.paused&&batch.failures.is_empty()&&peer.growing_tail {
+                if let Some(scope)=tail_scope {
+                    match segmented::follow_tail(&device,&chars,&peer,scope,&job).await {
+                        Ok(())=>(),Err(e) if e==recording_sync::PAUSED=>batch.paused=true,
+                        Err(e)=>{batch.failures.push(e);batch.connection_reusable=false;}
+                    }
+                }
+            }
+            if !deferred && batch.failures.is_empty() && !batch.paused {
+                device.follow_generation = catalog.generation;
+            }
+            if job.yielded() && batch.paused {
+                batch.paused = false;
+                // Cancelled payload awaits retain their durable cursor; retire
+                // this handle before a user command establishes its own lane.
+                batch.connection_reusable = false;
+            }
+            Ok::<_, String>(Some(batch))
+        }.await;
+        let reusable = result.as_ref().is_ok_and(|batch| batch.as_ref().is_none_or(|batch| batch.connection_reusable));
+        if reusable {
+            if let Some(lease) = owned.as_mut() {
+                lease.device = device;offline_connection_lock()?.remember(lease.clone())?;
+            } else { finish_native_device_operation(device,true).await?; }
+        } else { close_native_device(&device).await; }
+        let identity = identity.ok_or("连续录音状态没有当前身份读回。")?;
+        result.map(|batch| Some(FollowObservation { identity, operation: batch.and_then(|batch| {
+            if batch.failures.is_empty() && !batch.paused
+                && batch.segmented.as_ref().is_none_or(|ids| ids.is_empty()) { None }
+            else {
+                let failed = !batch.failures.is_empty();
+                let mut operation = native_recording_operation(Ok(batch));
+                if failed { operation.ready = false; }
+                Some(operation)
+            }
+        }) }))
+    })
 }
 
 pub(crate) fn disconnect_prepared_device(device_id: Option<&str>) -> Result<(), String> {
@@ -1411,6 +1651,7 @@ struct NativeConnectProbe {
     recordings_available: usize,
     identity: CompanionDeviceIdentity,
     owned_recording_connection_retained: bool,
+    segmented_recording: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -1432,23 +1673,33 @@ struct NativeRecordingBatch {
     failures: Vec<String>,
     paused: bool,
     connection_reusable: bool,
+    // V2 rows are already durably published with UID/epoch/session keys. They
+    // must never pass through the V1 physical-ID import reducer.
+    segmented: Option<Vec<String>>,
 }
 
 fn native_recording_operation(result: Result<NativeRecordingBatch, String>) -> CompanionBleOperation {
     match result {
         Ok(batch) => CompanionBleOperation {
             provider_id: "companion-type-windows-ble".into(),
-            mode: "windows-native-recording-pull".into(),
+            mode: if batch.segmented.is_some() { "windows-native-segmented-recording-pull" }
+                else { "windows-native-recording-pull" }.into(),
             // A durable receipt remains importable after its control transport
             // is retired. Physical consumption is tracked by each exact ACK,
             // separately from this host-save result and connection ownership.
-            ready: batch.failures.is_empty() || !batch.recordings.is_empty(),
+            ready: batch.failures.is_empty() || !batch.recordings.is_empty()
+                || batch.segmented.as_ref().is_some_and(|s| !s.is_empty()),
             sync_paused: batch.paused,
             device_id: Some(batch.device_id.clone()),
             recording_path: batch.recordings.last().map(|item| item.recording_path.clone()),
             recordings: batch.recordings.clone(),
             device_identity: None,
-            message: if batch.paused {
+            message: if let Some(sessions) = batch.segmented.as_ref() {
+                format!("设备连续录音已保存到录音库：{}场；{}。{:?}", sessions.len(),
+                    if batch.paused { "同步已暂停，设备录音继续" }
+                    else if !batch.connection_reusable { "回收确认未完成，原音已保存并保留精确重试记录" }
+                    else { "未封口尾段仍留在设备，确认后才回收已保存段" }, batch.failures)
+            } else if batch.paused {
                 format!("{} 本次已完整保存{}条录音；未收齐的录音没有消费。", recording_sync::PAUSED, batch.recordings.len())
             } else if batch.recordings.is_empty() && batch.failures.is_empty() {
                 "Native BLE sync found no stored recordings on device".into()
@@ -1629,6 +1880,8 @@ struct RecordingEntry {
     total_length: u32,
     sha256_prefix: [u8; 8],
     content_crc32: u32,
+    segment: Option<super::recording_wire::Descriptor>,
+    tail: Option<super::recording_wire::tail::Tail>,
 }
 
 #[derive(Clone, Debug)]
@@ -1652,22 +1905,33 @@ struct MeetingStatus {
     meeting_id: u32,
     duration_ms: u32,
     sync_state: u8,
+    logical_key: Option<super::recording_wire::SessionKey>,
+    pause_status: Option<super::recording_wire::control::PauseStatus>,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 struct MeetingControlIdentity {
     recording_id: u32,
     request_ids: [u32; 3],
+    logical_key: Option<super::recording_wire::SessionKey>,
 }
 
 impl MeetingControlIdentity {
     fn for_session(session_key: &str, recording_id: u32) -> Self {
-        Self { recording_id, request_ids: [1, 2, 3].map(|command|
+        Self { recording_id, logical_key: None, request_ids: [1, 2, 3].map(|command|
             meeting_idempotency_request_id(session_key, command)) }
+    }
+    fn with_key(mut self, key: Option<&crate::companion_v1::CompanionV1RecordingKey>) -> Result<Self, String> {
+        self.logical_key = key.map(super::recording_wire::SessionKey::from_public).transpose()?;
+        Ok(self)
     }
 }
 
 async fn scan_native_device(requested_device_id: Option<&str>) -> Result<NativeDevice, String> {
+    #[cfg(windows)]
+    if let Some(device) = connected_windows_device(requested_device_id).await {
+        return Ok(device);
+    }
     let timeout_ms = std::env::var("COMPANION_TYPE_BLE_SCAN_TIMEOUT_MS")
         .ok()
         .and_then(|value| value.parse::<u64>().ok())
@@ -1759,6 +2023,29 @@ async fn scan_native_device(requested_device_id: Option<&str>) -> Result<NativeD
     result
 }
 
+#[cfg(windows)]
+async fn connected_windows_device(requested_device_id: Option<&str>) -> Option<NativeDevice> {
+    let requested = requested_device_id?;
+    // Only an explicit exact MAC may use the Windows paired-device lookup.
+    // Name/default selection still scans and chooses among advertised devices.
+    if !scan_exact_address_match(Some(requested), requested) { return None; }
+    let compact = requested.trim().replace([':', '-'], "");
+    let address: btleplug::api::BDAddr = u64::from_str_radix(&compact, 16).ok()?.try_into().ok()?;
+    let started = StdInstant::now();
+    let peripheral = match timeout(StdDuration::from_secs(2),
+        Peripheral::from_connected_paired_address(address)).await {
+        Ok(Ok(peripheral)) => peripheral,
+        result => {
+            eprintln!("BLE known_device lookup_unavailable elapsed_ms={} cause={result:?} advertisement_fallback=1", started.elapsed().as_millis());
+            return None;
+        }
+    };
+    let device = scan_candidate(peripheral).await.ok()??;
+    if !scan_exact_address_match(Some(requested), &device.address) { return None; }
+    eprintln!("BLE known_device exact_paired_connected=1 elapsed_ms={} advertisement_wait=0 protected_setup_required=1", started.elapsed().as_millis());
+    Some(device)
+}
+
 async fn scan_candidate(peripheral: Peripheral) -> Result<Option<NativeDevice>, String> {
     let Some(props) = peripheral.properties().await
         .map_err(|err| format!("read peripheral properties: {err}"))? else { return Ok(None) };
@@ -1771,6 +2058,9 @@ async fn scan_candidate(peripheral: Peripheral) -> Result<Option<NativeDevice>, 
         service_uuids: props.services,
         user_connection: false,
         verified_uid: None,
+        recording_peer: None,
+        follow_generation: None,
+        observed_identity: None,
         #[cfg(windows)]
         connection_session: None,
     }))
@@ -1863,9 +2153,10 @@ fn normalize_device_id(value: &str) -> String {
 async fn connect_native_device_once(
     requested_device_id: Option<&str>,
     sync_clock: bool,
+    intent: ConnectionIntent,
 ) -> Result<NativeConnectionSetup, String> {
     let device = scan_native_device(requested_device_id).await?;
-    connect_known_native_device_setup(device,sync_clock).await
+    connect_known_native_device_setup(device,sync_clock,intent).await
 }
 
 async fn connect_native_device(requested_device_id: Option<&str>) -> Result<NativeDevice, String> {
@@ -1877,9 +2168,17 @@ async fn connect_native_device_with_clock(requested_device_id: Option<&str>,sync
 }
 
 async fn connect_native_device_setup(requested_device_id: Option<&str>,sync_clock:bool) -> Result<NativeConnectionSetup,String> {
+    connect_native_device_setup_with_intent(requested_device_id, sync_clock, ConnectionIntent::Normal).await
+}
+
+async fn connect_native_device_setup_with_intent(requested_device_id: Option<&str>,sync_clock:bool,intent:ConnectionIntent) -> Result<NativeConnectionSetup,String> {
     if let Some(device) = take_prepared_device(requested_device_id).await? {
         if sync_clock { let _ = sync_device_utc_clock(&device.peripheral).await; }
-        return Ok(NativeConnectionSetup { device, #[cfg(windows)] preference: None });
+        #[cfg(windows)]
+        let preference = if intent == ConnectionIntent::SealedSync {
+            super::ble_throughput::request_for_sealed_sync(&device.address, device.address_type).await
+        } else { None };
+        return Ok(NativeConnectionSetup { device, #[cfg(windows)] preference });
     }
     /* Windows may retain a stale GATT object for a few seconds after the
      * transactional probe disconnects.  A one-shot connect made the UI look
@@ -1897,7 +2196,7 @@ async fn connect_native_device_setup(requested_device_id: Option<&str>,sync_cloc
         if attempt > 1 {
             sleep(retry_delay).await;
         }
-        match connect_native_device_once(requested_device_id,sync_clock).await {
+        match connect_native_device_once(requested_device_id,sync_clock,intent).await {
             Ok(device) => {
                 eprintln!("BLE initial connect success attempt={attempt}/{attempts}");
                 return Ok(device);
@@ -1921,10 +2220,15 @@ async fn connect_known_native_device(device: NativeDevice) -> Result<NativeDevic
 }
 
 async fn connect_known_native_device_with_clock(device: NativeDevice,sync_clock:bool) -> Result<NativeDevice,String> {
-    connect_known_native_device_setup(device, sync_clock).await.map(|setup| setup.device)
+    connect_known_native_device_setup(device, sync_clock, ConnectionIntent::Normal).await.map(|setup| setup.device)
 }
 
-async fn connect_known_native_device_setup(mut device: NativeDevice,sync_clock:bool) -> Result<NativeConnectionSetup,String> {
+async fn connect_known_native_device_setup(device: NativeDevice,sync_clock:bool,intent:ConnectionIntent) -> Result<NativeConnectionSetup,String> {
+    connect_known_native_device_setup_guarded(device,sync_clock,intent,false).await
+}
+
+async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync_clock:bool,intent:ConnectionIntent,
+    require_existing_connection:bool) -> Result<NativeConnectionSetup,String> {
     let device_id = device.device_id();
     let connect_timeout = env_timeout("COMPANION_TYPE_BLE_CONNECT_TIMEOUT_MS", 12_000);
     let discover_timeout = env_timeout("COMPANION_TYPE_BLE_DISCOVER_TIMEOUT_MS", 8_000);
@@ -1941,11 +2245,23 @@ async fn connect_known_native_device_setup(mut device: NativeDevice,sync_clock:b
             )
         })?
         .map_err(|err| format!("read BLE connection state: {err}"))?;
+    if require_existing_connection && !connected {
+        return Err("Diagnostic warm connection was lost; no reconnect or payload was attempted".into());
+    }
     if !connected {
         // WBA may begin its security request immediately on connection.
         // Pair before btleplug opens/enumerates protected GATT services.
         #[cfg(windows)]
         super::ble_pairing::ensure_paired_before_gatt(&device.address, device.address_type).await?;
+    }
+    // A sealed sync uses the same peer-interval policy for cold and already
+    // connected devices. Keep pairing first and request before maintaining
+    // the session; warm connections must not acquire the 15ms setup override.
+    #[cfg(windows)]
+    if intent == ConnectionIntent::SealedSync {
+        setup_preference = super::ble_throughput::request_for_sealed_connection_setup(
+            &device.address, device.address_type,
+        ).await;
     }
     #[cfg(windows)]
     if !device.connection_session.as_ref().is_some_and(|session| session.is_open()) {
@@ -1958,7 +2274,7 @@ async fn connect_known_native_device_setup(mut device: NativeDevice,sync_clock:b
     // receive. Return its single-owner guard separately: normal user/recorder
     // connections drop it, while a sealed upload can keep the same request.
     #[cfg(windows)]
-    { setup_preference = super::ble_throughput::request_for_connection_setup(
+    if intent == ConnectionIntent::Normal { setup_preference = super::ble_throughput::request_for_connection_setup(
         &device.address, device.address_type,
     ).await; }
     if !connected {
@@ -1975,7 +2291,18 @@ async fn connect_known_native_device_setup(mut device: NativeDevice,sync_clock:b
         eprintln!("BLE connection_setup phase=connect elapsed_ms={}", connect_begun.elapsed().as_millis());
     }
     let discovery_begun = StdInstant::now();
-    timeout(discover_timeout, device.peripheral.discover_services())
+    let discovery = async {
+        // Sealed receive uses characteristics and WinRT's CCCD subscription API,
+        // never raw descriptors. Keep fresh service/characteristic discovery and
+        // all normal encryption/identity checks, without enumerating every unused
+        // descriptor over ATT before the first original byte can arrive.
+        #[cfg(windows)]
+        if intent == ConnectionIntent::SealedSync {
+            return device.peripheral.discover_services_without_descriptors().await;
+        }
+        device.peripheral.discover_services().await
+    };
+    timeout(discover_timeout, discovery)
         .await
         .map_err(|_| {
             format!(
@@ -1984,7 +2311,9 @@ async fn connect_known_native_device_setup(mut device: NativeDevice,sync_clock:b
             )
         })?
         .map_err(|err| format!("discover GATT services: {err}"))?;
-    eprintln!("BLE connection_setup phase=gatt_discovery elapsed_ms={}", discovery_begun.elapsed().as_millis());
+    eprintln!("BLE connection_setup phase=gatt_discovery elapsed_ms={} scope={:?} raw_descriptors={}",
+        discovery_begun.elapsed().as_millis(), intent,
+        if cfg!(windows) && intent == ConnectionIntent::SealedSync { "not_used_not_enumerated" } else { "ordinary" });
     /* Best-effort clock sync is a backwards-compatible Settings extension.
      * The first 10 bytes are read back unchanged; UTC H/M/S are appended so
      * the board never has to invent a status-bar time. */
@@ -2137,7 +2466,7 @@ async fn reconnect_native_device(
                 failures.push(format!("attempt {attempt} cached: {error}"));
             }
         }
-        match connect_native_device_once(requested_device_id, true).await {
+        match connect_native_device_once(requested_device_id, true, ConnectionIntent::Normal).await {
             Ok(device) => {
                 eprintln!("BLE reconnect scan_success attempt={attempt}/{attempts}");
                 return Ok(device.device);
@@ -2158,6 +2487,7 @@ async fn reconnect_native_device(
 async fn connect_native_probe(
     requested_device_id: Option<&str>,
     owner: Option<&OwnedRecorder>,
+    expected_peer: Option<super::recording_wire::transport::Peer>,
 ) -> Result<NativeConnectProbe, String> {
     let begun = StdInstant::now();
     let retained = match owner {
@@ -2174,7 +2504,7 @@ async fn connect_native_probe(
     };
     let mut device = match retained {
         Some(lease) => lease.device,
-        None => connect_native_device_with_clock(requested_device_id, owner.is_none()).await?,
+        None => connect_native_device_with_clock(requested_device_id, owner.is_none() && expected_peer.is_none()).await?,
     };
     let mut retain_active_recording = false;
     let result = async {
@@ -2196,6 +2526,18 @@ async fn connect_native_probe(
         imu_status.as_deref(),
         speaker_status.as_deref(),
     );
+    let actual_peer = super::recording_wire::transport::Peer::from_status(
+        device_status.as_deref().expect("required device status"))?;
+    require_same_recorder(expected_peer.as_ref(), actual_peer.as_ref())?;
+    if let Some(key) = owner.and_then(|owner| owner.logical_key.as_ref()) {
+        if actual_peer.as_ref().is_none_or(|peer| !peer.logical_control ||
+            peer.uid != key.device_uid || peer.epoch != key.format_epoch) {
+            return Err("重新连接的录音协议／芯片／格式代次与原会议不同，未接管或消费。".into());
+        }
+        device.recording_peer = actual_peer.clone();device.user_connection = true;
+        device.verified_uid = identity.mcu_uid.clone();device.observed_identity = Some(identity.clone());
+    }
+    let segmented_recording = actual_peer.is_some();
     let recordings_available = if let Some(owner) = owner {
         if identity.recording == Some(false) {
             owner.verify_closed_device(&device.device_id(), &identity)?;
@@ -2210,6 +2552,7 @@ async fn connect_native_probe(
             let previous = offline_connection_lock()?.remember(offline_connection::Lease {
                 device: device.clone(), device_id: device.device_id(),
                 start_token: owner.start_token(), recording_id: owner.recording_id,
+                logical_key: owner.logical_key.clone(),
             })?;
             if let Some(previous) = previous {
                 if normalize_device_id(&previous.device_id) != normalize_device_id(&device.device_id()) {
@@ -2224,7 +2567,13 @@ async fn connect_native_probe(
     } else {
         // A public status read alone cannot establish that this paired device
         // is ready for recording. Require the protected catalogue as well.
-        read_recording_list(&device.peripheral, &characteristics).await?.len()
+        let catalog = read_recording_catalog(&device, &characteristics).await?;
+        if segmented_recording != catalog.peer.is_some()
+            || catalog.peer.as_ref().is_some_and(|p| identity.mcu_uid.as_deref() != Some(hex_lower(&p.uid).as_str())) {
+            return Err("录音目录与刚读取的实际设备身份/协议不一致，未把设备标为可同步。".into());
+        }
+        device.recording_peer = catalog.peer;
+        catalog.entries.len()
     };
     let probe = NativeConnectProbe {
         device_id: device.device_id(),
@@ -2233,6 +2582,7 @@ async fn connect_native_probe(
         recordings_available,
         identity,
         owned_recording_connection_retained: retain_active_recording,
+        segmented_recording,
     };
     Ok(probe)
     }.await;
@@ -2248,6 +2598,10 @@ async fn connect_native_probe(
     } else if !retain_active_recording {
         device.user_connection = true;
         device.verified_uid = result.as_ref().ok().and_then(|probe| probe.identity.mcu_uid.clone());
+        if let Some(peer) = device.recording_peer.as_ref() {
+            *VERIFIED_SEGMENTED_RECORDER.lock().map_err(|_| "连续录音身份状态锁不可用")? =
+                Some((device.device_id(), peer.clone()));
+        }
         remember_prepared_device(device).await?;
     }
     if owner.is_some() {
@@ -2445,7 +2799,7 @@ async fn oobe_native_probe(
         speaker_status.as_deref(),
     );
     let (recordings_available, recording_list_error) =
-        match read_recording_list(&device.peripheral, &characteristics).await {
+        match read_recording_list(&device, &characteristics).await {
             Ok(entries) => (entries.len(), None),
             Err(error) => (0, Some(error)),
         };
@@ -2680,7 +3034,7 @@ async fn speaker_prompt_native(
     })
 }
 
-fn meeting_idempotency_request_id(session_key: &str, command: u8) -> u32 {
+pub(crate) fn meeting_idempotency_request_id(session_key: &str, command: u8) -> u32 {
     /* Stable FNV-1a over the product session identity and command.  A retry of
      * the same UI action therefore reaches firmware with the same request id,
      * while START/STOP/FINALIZE remain distinct state transitions. */
@@ -2716,13 +3070,15 @@ async fn read_owned_recording_position(
         device.peripheral.read(&status),
     )
     .await?;
-    owner.verify_status(&parse_meeting_status(&payload)?)?;
+    let observed = parse_meeting_status(&payload)?;
+    owner.verify_status(&observed)?;
+    if owner.logical_key.is_some() { return Ok((Vec::new(),u64::from(observed.duration_ms))); }
     let mut notifications = device
         .peripheral
         .notifications()
         .await
         .map_err(|e| format!("recording notifications: {e}"))?;
-    let entries = refresh_recording_list(&device.peripheral, &chars, &mut notifications).await?;
+    let entries = refresh_recording_list(&device, &chars, &mut notifications).await?;
     let entry = entries
         .iter()
         .find(|e| {
@@ -2753,9 +3109,25 @@ async fn read_owned_closed_catalogue(
     let before = bounded_ble_result("read finalized original meeting", StdDuration::from_secs(8),
         device.peripheral.read(&status)).await?;
     let before = parse_meeting_status(&before)?;
+    if let Some(key) = owner.logical_key.as_ref() {
+        let identity = MeetingControlIdentity::for_session(&owner.session_id,owner.recording_id);
+        let mut identity = identity;identity.logical_key = Some(key.clone());
+        verify_meeting_control_target(&before,&identity)?;
+        if before.state != MEETING_STATE_FINALIZED {return Err("原逻辑录音仍在采音，未声明停止。".into());}
+        let mut catalog = read_recording_catalog(device,&chars).await?;
+        let peer = catalog.peer.as_ref().ok_or("原逻辑录音目录协议不可用。")?;
+        if peer.uid != key.device_uid || peer.epoch != key.format_epoch {return Err("原逻辑录音目录身份改变。".into());}
+        let after = bounded_ble_result("recheck finalized logical meeting",StdDuration::from_secs(3),device.peripheral.read(&status)).await?;
+        let after = parse_meeting_status(&after)?;verify_meeting_control_target(&after,&identity)?;
+        if after.state != before.state || after.duration_ms != before.duration_ms || after.request_id != before.request_id {
+            return Err("原逻辑录音结束状态仍在变化，未接管其它会议。".into());
+        }
+        catalog.entries.retain(|e| e.segment.as_ref().is_some_and(|d| &d.key == key));
+        return Ok(catalog.entries);
+    }
     let mut notifications = device.peripheral.notifications().await
         .map_err(|error| format!("recording notifications: {error}"))?;
-    let entries = refresh_recording_list(&device.peripheral, &chars, &mut notifications).await?;
+    let entries = refresh_recording_list(&device, &chars, &mut notifications).await?;
     let entry = entries.iter().find(|entry| entry.recording_id == owner.recording_id)
         .ok_or("设备没有原录音的封存目录，未声明结束或消费。")?;
     let after = bounded_ble_result("recheck finalized original meeting", StdDuration::from_secs(8),
@@ -2779,24 +3151,29 @@ async fn read_owned_closed_catalogue(
 
 /// Native read-only observation for the ordinary offlineStore START route.
 /// Both status reads must still name this session's original START token.
-pub(crate) fn live_recording_stamp(device_id: &str, session_id: &str, recording_id:u32)
+pub(crate) fn live_recording_stamp(device_id: &str, session_id: &str, recording_id:u32,
+    key: Option<&crate::companion_v1::CompanionV1RecordingKey>, journal:Option<&super::recorder_control::Journal>)
     -> Result<super::recording_bookmarks::LiveStamp,String> {
     let begun=StdInstant::now();
     let position_ms = run_native_blocking(async {
         // A bookmark observes a running recorder. Rewriting Settings here was
         // unnecessary and could wait eight seconds for its busy clock service.
         let token=meeting_idempotency_request_id(session_id,1);
-        let retained=retained_offline_connection(Some(device_id),token,Some(recording_id),token).await?;
+        let current=journal.and_then(|j|j.pending.as_ref().map(|p|p.request)
+            .or_else(||j.confirmed.as_ref().map(|c|c.request))).unwrap_or(token);
+        let retained=retained_offline_connection(Some(device_id),token,Some(recording_id),current).await?;
         let reused=retained.is_some();
         let device=match retained {
             Some(lease)=>lease.device,
             None=>connect_native_device_with_clock(Some(device_id),false).await?,
         };
-        let owner = OwnedRecorder { device_id: device_id.into(), session_id: session_id.into(), recording_id, mcu_uid: None };
+        let logical_key = key.map(super::recording_wire::SessionKey::from_public).transpose()?;
+        let owner = OwnedRecorder { journal:journal.cloned(), device_id: device_id.into(), session_id: session_id.into(), recording_id, mcu_uid: None, logical_key: logical_key.clone() };
         let result = read_owned_recording_position(&device, &owner).await.map(|(_, position)| position);
         if result.is_ok() && !reused {
             offline_connection_lock()?.remember(offline_connection::Lease {
                 device:device.clone(),device_id:device_id.into(),start_token:token,recording_id,
+                logical_key,
             })?;
         } else if result.is_err() {
             offline_connection_lock()?.forget(device_id,token,recording_id);
@@ -2823,7 +3200,7 @@ pub(crate) fn bookmarks_probe_preflight(device_id:&str, expected_uid:&str)->Resu
                 return Err("实板身份或空闲状态未确认，未开始测试录音。".into());
             }
             let mut notifications=device.peripheral.notifications().await.map_err(|e|e.to_string())?;
-            let entries=refresh_recording_list(&device.peripheral,&chars,&mut notifications).await?;
+            let entries=refresh_recording_list(&device,&chars,&mut notifications).await?;
             if !entries.is_empty() { return Err("设备仍有录音，未自动收录或覆盖这些录音。".into()); }
             Ok(())
         }.await;
@@ -2878,12 +3255,14 @@ fn parse_meeting_status(payload: &[u8]) -> Result<MeetingStatus, String> {
         return Err(format!("meeting_status schema mismatch: {}", payload[0]));
     }
     Ok(MeetingStatus {
+        pause_status: if payload.len()==80 {Some(super::recording_wire::control::PauseStatus::decode(payload)?)} else {None},
         state: payload[1],
         last_error: payload[2],
         request_id: u32::from_le_bytes(payload[8..12].try_into().unwrap()),
         meeting_id: u32::from_le_bytes(payload[12..16].try_into().unwrap()),
         duration_ms: u32::from_le_bytes(payload[20..24].try_into().unwrap()),
         sync_state: payload[24],
+        logical_key: super::recording_wire::control::status(payload)?,
     })
 }
 
@@ -2915,16 +3294,16 @@ async fn meeting_control_native_owned(
     if !(1..=3).contains(&command) {
         return Err(format!("unsupported V1 meeting command={command}"));
     }
-    if command != 1 && expected_identity.is_none_or(|identity| identity.recording_id == 0) {
+    if command != 1 && expected_identity.as_ref().is_none_or(|identity| identity.recording_id == 0) {
         return Err("原录音缺少设备录音编号，未连接设备或发送停止命令。".into());
     }
     // STOP/FINALIZE must not write unrelated settings while the mic is active.
     // Ordinary connection and START keep their existing clock synchronisation.
     let retained=retained_offline_connection(requested_device_id,start_token,
-        expected_identity.map(|identity| identity.recording_id),request_id).await?;
+        expected_identity.as_ref().map(|identity| identity.recording_id),request_id).await?;
     let expected_identity = expected_identity.or_else(|| retained.as_ref().map(|lease|
-        MeetingControlIdentity { recording_id: lease.recording_id, request_ids: [start_token; 3] }));
-    let device=match retained {
+        MeetingControlIdentity { recording_id: lease.recording_id, request_ids: [start_token; 3], logical_key: lease.logical_key.clone() }));
+    let mut device=match retained {
         Some(lease)=>lease.device,
         None=>connect_native_device_with_clock(requested_device_id,command==1).await?,
     };
@@ -2932,6 +3311,17 @@ async fn meeting_control_native_owned(
     let characteristics = device.peripheral.characteristics();
     let control = find_characteristic(&characteristics, MEETING_CONTROL_UUID)?;
     let status = find_characteristic(&characteristics, MEETING_STATUS_UUID)?;
+    let identity_wire = read_optional_status(&device.peripheral,&characteristics,DEVICE_STATUS_UUID,36).await;
+    let peer = identity_wire.as_deref().map(super::recording_wire::transport::Peer::from_status).transpose()?.flatten();
+    if expected_identity.as_ref().is_some_and(|id| id.logical_key.is_some())
+        && peer.as_ref().is_none_or(|p| !p.logical_control) {
+        return Err("原会议使用逻辑录音协议，当前连接未确认同一协议；未发送控制命令。".into());
+    }
+    let control_wire = if let Some(p) = peer.as_ref().filter(|p| p.logical_control) {
+        super::recording_wire::control::request(p,
+            expected_identity.as_ref().and_then(|id| id.logical_key.as_ref()),
+            command,request_id,start_token,max_seconds)?.to_vec()
+    } else { meeting_control_request(command,request_id,max_seconds).to_vec() };
     // A fresh connection after restart has no retained Lease. It still belongs
     // to the original meeting: read protected status before any control write.
     if let Some(identity) = expected_identity.as_ref() {
@@ -2976,7 +3366,7 @@ async fn meeting_control_native_owned(
         remaining_deadline_budget(deadline, write_timeout),
         device.peripheral.write(
             &control,
-            &meeting_control_request(command, request_id, max_seconds),
+            &control_wire,
             WriteType::WithResponse,
         ),
     )
@@ -3034,6 +3424,12 @@ async fn meeting_control_native_owned(
         if parsed.last_error != 0 {
             return Err(meeting_control_failure(parsed.last_error, command, request_id));
         }
+        if let Some(peer) = peer.as_ref().filter(|peer| peer.logical_control) {
+            if parsed.state == expected_state && parsed.logical_key.as_ref().is_none_or(|key|
+                key.device_uid != peer.uid || key.format_epoch != peer.epoch) {
+                return Err("录音确认缺少当前芯片／格式代次的逻辑会话身份。".into());
+            }
+        }
         if let Some(identity) = expected_identity.as_ref() {
             verify_meeting_control_target(&parsed, identity)?;
         }
@@ -3052,8 +3448,15 @@ async fn meeting_control_native_owned(
     )
     .await;
     if command==1 {
+        if let Some(peer) = peer.filter(|p| p.logical_control) {
+            device.verified_uid = Some(hex_lower(&peer.uid));device.recording_peer = Some(peer.clone());
+            device.user_connection = true;
+            device.observed_identity = Some(parse_device_identity(identity_wire.as_deref(),None,None));
+            *VERIFIED_SEGMENTED_RECORDER.lock().map_err(|_| "连续录音身份锁不可用")? = Some((device.device_id(),peer));
+        }
         let previous=offline_connection_lock()?.remember(offline_connection::Lease {
             device:device.clone(),device_id:device.device_id(),start_token,recording_id:observed.meeting_id,
+            logical_key: observed.logical_key.clone(),
         })?;
         if let Some(previous)=previous {
             if normalize_device_id(&previous.device_id)!=normalize_device_id(&device.device_id()) {
@@ -3073,6 +3476,7 @@ async fn meeting_control_native_owned(
         meeting_id: observed.meeting_id,
         duration_ms: observed.duration_ms,
         sync_state: observed.sync_state,
+        logical_key: observed.logical_key,
     })
     }.await;
     if result.is_err() {
@@ -3088,6 +3492,7 @@ fn verify_meeting_control_target(
     identity: &MeetingControlIdentity,
 ) -> Result<(), String> {
     if identity.recording_id == 0 || status.meeting_id != identity.recording_id
+        || identity.logical_key.as_ref().is_some_and(|key| status.logical_key.as_ref() != Some(key))
         || status.request_id == 0 || !identity.request_ids.contains(&status.request_id)
         || !matches!(status.state, MEETING_STATE_RECORDING | MEETING_STATE_FINALIZED)
         || status.last_error != 0
@@ -3262,7 +3667,7 @@ async fn record_board_online_live_inner(
     let activation_deadline = std::time::Instant::now() + StdDuration::from_secs(180);
     let active_entry = loop {
         let entries =
-            match refresh_recording_list(&device.peripheral, &characteristics, &mut notifications)
+            match refresh_recording_list(&device, &characteristics, &mut notifications)
                 .await
             {
                 Ok(entries) => entries,
@@ -3366,7 +3771,7 @@ async fn record_board_online_live_inner(
         }
         if partial_due { next_partial_at = std::time::Instant::now() + StdDuration::from_millis(partial_interval_ms); }
         let entries =
-            match refresh_recording_list(&device.peripheral, &characteristics, &mut notifications)
+            match refresh_recording_list(&device, &characteristics, &mut notifications)
                 .await
             {
                 Ok(entries) => entries,
@@ -3404,6 +3809,7 @@ async fn record_board_online_live_inner(
                 &device.address,
                 device.address_type,
                 Some(durable_codec),
+                None,
                 None,
             )
             .await
@@ -3509,7 +3915,7 @@ async fn record_board_online_live_inner(
                 .await
                 .map_err(|err| format!("resubscribe recording_control: {err}"))?;
             let resumed =
-                refresh_recording_list(&device.peripheral, &characteristics, &mut notifications)
+                refresh_recording_list(&device, &characteristics, &mut notifications)
                     .await?;
             let resume_entry = resumed
                 .iter()
@@ -3559,7 +3965,7 @@ async fn record_board_online_live_inner(
     let finalize_deadline = std::time::Instant::now() + StdDuration::from_secs(120);
     let final_entry = loop {
         let entries =
-            refresh_recording_list(&device.peripheral, &characteristics, &mut notifications)
+            refresh_recording_list(&device, &characteristics, &mut notifications)
                 .await?;
         if let Some(entry) = entries.into_iter().find(|entry| {
             entry.recording_id == recording_id
@@ -3603,10 +4009,11 @@ async fn record_board_online_live_inner(
 
     let mut final_pull_reconnects = 0u8;
     let mut final_pull_session = None;
+    let mut final_link_policy = SealedLinkPolicy::default();
     recording_sync::resume_explicit(Some(&device_id));
     let final_sync_job = RecordingSyncJob::begin(&device_id)?;
     let final_sync = loop {
-        match sync_native_recording_entry(&device, &characteristics, &mut final_pull_session, final_entry.clone(), Some(&final_sync_job)).await {
+        match sync_native_recording_entry(&device, &characteristics, &mut final_pull_session, final_entry.clone(), Some(&final_sync_job), &mut final_link_policy).await {
             Ok(sync) => break Some(sync),
             Err(error) if error == recording_sync::PAUSED => break None,
             Err(error) if should_reconnect_final_pull(&error, final_pull_reconnects) => {
@@ -3691,22 +4098,43 @@ async fn sync_native_recordings_excluding(
     requested_device_id: Option<&str>,
     known_recording_ids: &[u32],
 ) -> Result<NativeRecordingBatch, String> {
+    sync_native_recordings_selected(requested_device_id, known_recording_ids, None).await
+}
+
+async fn sync_native_recordings_selected(
+    requested_device_id: Option<&str>,
+    known_recording_ids: &[u32],
+    recording_id: Option<u32>,
+) -> Result<NativeRecordingBatch, String> {
+    sync_native_recordings_scoped(requested_device_id,known_recording_ids,recording_id,None).await
+}
+
+async fn sync_native_recordings_original(original: &OwnedRecorder) -> Result<NativeRecordingBatch,String> {
+    let key=original.logical_key.as_ref().ok_or("原录音缺少逻辑身份，未收取其它录音。")?;
+    sync_native_recordings_scoped(Some(&original.device_id),&[],Some(original.recording_id),Some(key)).await
+}
+
+async fn sync_native_recordings_scoped(requested_device_id: Option<&str>,known_recording_ids: &[u32],
+    recording_id: Option<u32>,logical_key: Option<&super::recording_wire::SessionKey>) -> Result<NativeRecordingBatch,String> {
     // Downloading sealed recordings cannot change their capture timestamps.
     // Acquire the protected connection without a best-effort settings-clock
     // read/write in front of the download. Normal connect/START still sync UTC.
     let started = StdInstant::now();
-    let setup = connect_native_device_setup(requested_device_id, false).await?;
+    let setup = connect_native_device_setup_with_intent(requested_device_id, false, ConnectionIntent::SealedSync).await?;
     let device = setup.device;
     #[cfg(windows)]
     let mut setup_preference = setup.preference;
     #[cfg(windows)]
     if let Some(preference) = setup_preference.as_mut() { preference.handoff_to_sealed_sync(); }
+    let mut link_policy = SealedLinkPolicy {
+        #[cfg(windows)] preference: setup_preference,
+        #[cfg(windows)] initialized: true,
+    };
     eprintln!("recording_sync_stage stage=connection elapsed_ms={}", started.elapsed().as_millis());
-    let result = sync_native_recordings_inner(&device, known_recording_ids).await;
+    let result = sync_native_recordings_with_link_policy(&device, known_recording_ids, recording_id, &mut link_policy, logical_key).await;
     // Release before returning a reusable idle connection or closing its
     // owner. Errors/cancel also drop this local guard, never retain fast idle.
-    #[cfg(windows)]
-    drop(setup_preference);
+    drop(link_policy);
     let reusable = result.as_ref().is_ok_and(|batch| batch.connection_reusable);
     finish_native_device_operation(device, reusable).await?;
     result
@@ -3949,24 +4377,55 @@ async fn sync_native_recordings_inner(
     device: &NativeDevice,
     known_recording_ids: &[u32],
 ) -> Result<NativeRecordingBatch, String> {
+    sync_native_recordings_with_link_policy(device, known_recording_ids, None, &mut SealedLinkPolicy::default(), None).await
+}
+
+fn pending_recordings(mut entries: Vec<RecordingEntry>, known_recording_ids: &[u32], recording_id: Option<u32>)
+    -> Vec<RecordingEntry>
+{
+    // A growing live prefix never enters the final SHA/ACK/reclaim path.
+    // STOP selects only its own sealed file; ordinary backlog sync selects all.
+    entries.retain(|entry| entry.sync_state == RECORDING_SYNC_UNSYNCED
+        && !known_recording_ids.contains(&entry.recording_id)
+        && recording_id.is_none_or(|id| entry.recording_id == id));
+    entries.sort_by_key(|entry| entry.recording_id);
+    entries
+}
+
+async fn sync_native_recordings_with_link_policy(
+    device: &NativeDevice,
+    known_recording_ids: &[u32],
+    recording_id: Option<u32>,
+    link_policy: &mut SealedLinkPolicy,
+    logical_key: Option<&super::recording_wire::SessionKey>,
+) -> Result<NativeRecordingBatch, String> {
     let job = RecordingSyncJob::begin(&device.device_id())?;
     let characteristics = device.peripheral.characteristics();
     let started = StdInstant::now();
-    let mut entries = match job.receive(read_recording_list(&device.peripheral, &characteristics)).await {
-        Ok(entries) => entries,
+    let catalog = match job.receive(read_recording_catalog(&device, &characteristics)).await {
+        Ok(catalog) => catalog,
         Err(error) if error == recording_sync::PAUSED => return Ok(NativeRecordingBatch {
             device_id: device.device_id(), recordings: Vec::new(), failures: Vec::new(), paused: true,
-            connection_reusable: true,
+            connection_reusable: false,
+            segmented: None,
         }),
         Err(error) => return Err(error),
     };
     eprintln!("recording_sync_stage stage=catalog elapsed_ms={}", started.elapsed().as_millis());
-    /* A WRITING entry advertises only the codec=3 prefix already committed to
-     * board NOR. It belongs to the online-live consumer and must never enter
-     * the final SHA/ACK/reclaim path until STOP changes it to UNSYNCED. */
-    entries.retain(|entry| entry.sync_state == RECORDING_SYNC_UNSYNCED);
-    entries.retain(|entry| !known_recording_ids.contains(&entry.recording_id));
-    entries.sort_by_key(|entry| entry.recording_id);
+    if let Some(peer) = catalog.peer {
+        // Physical V1 IDs and host V1 known-ID caches cannot filter a session.
+        // The durable V2 receiver itself selects missing immutable segments.
+        if recording_id.is_some() && logical_key.is_none() {
+            return Err("分段录音收取缺少原逻辑会话，未用物理段ID消费其它录音。".into());
+        }
+        return segmented::sync_catalog(device, &characteristics, peer, catalog.entries,
+            &job, link_policy, logical_key).await;
+    }
+    if logical_key.is_some() {
+        return Err("原分段录音的芯片与格式协议未核对，未退回旧物理ID收取其它录音。".into());
+    }
+    let entries = catalog.entries;
+    let entries = pending_recordings(entries, known_recording_ids, recording_id);
     if entries.is_empty() {
         return Ok(NativeRecordingBatch {
             device_id: device.device_id(),
@@ -3974,6 +4433,7 @@ async fn sync_native_recordings_inner(
             failures: Vec::new(),
             paused: false,
             connection_reusable: true,
+            segmented: None,
         });
     }
 
@@ -3989,7 +4449,7 @@ async fn sync_native_recordings_inner(
     for (index, entry) in entries.into_iter().enumerate() {
         if job.is_paused() { paused = true; break; }
         let recording_id = entry.recording_id;
-        let synced = match sync_native_recording_entry(device, &characteristics, &mut pull_session, entry, Some(&job)).await {
+        let synced = match sync_native_recording_entry(device, &characteristics, &mut pull_session, entry, Some(&job), link_policy).await {
             Ok(synced) => synced,
             Err(error) if error == recording_sync::PAUSED => { paused = true; break; },
             Err(err) => {
@@ -4047,6 +4507,7 @@ async fn sync_native_recordings_inner(
         failures,
         paused,
         connection_reusable,
+        segmented: None,
     })
 }
 
@@ -4056,6 +4517,7 @@ async fn sync_native_recording_entry(
     pull_session: &mut Option<PullSession>,
     entry: RecordingEntry,
     job: Option<&RecordingSyncJob>,
+    link_policy: &mut SealedLinkPolicy,
 ) -> Result<NativeRecordingSync, String> {
     if let Some(job) = job { job.recording(entry.recording_id, entry.total_length); }
     if entry.codec != RECORDING_CODEC_PCM16_MONO
@@ -4074,15 +4536,11 @@ async fn sync_native_recording_entry(
     // Codec3 includes WBA COP1 and legacy Ogg Opus. Keep its compressed original.
     let is_opus16 = entry.codec == RECORDING_CODEC_OPUS16;
 
-    // A sealed sync owns the temporary preference through the durable host
-    // commit and exact physical consume ACK, including queue recovery. Dropping
-    // it at the final payload can renegotiate the link during that control write.
-    // Live prefixes use normal parameters; errors and cancellation drop this
-    // guard along with the sync future rather than retaining a fast idle link.
-    #[cfg(windows)]
-    let _transfer_preference = super::ble_throughput::request_for_sealed_sync(
-        &device.address, device.address_type,
-    ).await;
+    // Cold, prepared and STOP/final backlog share one scoped bootstrap. Release
+    // once at the first verified payload and retain that policy across entries;
+    // neither later entries nor cached control recovery replace it with 15ms.
+    // Live prefixes do not enter this sealed-file path.
+    link_policy.initialize(device).await;
 
     let started = StdInstant::now();
     let payload_bytes = pull_recording_bytes(
@@ -4094,6 +4552,7 @@ async fn sync_native_recording_entry(
         device.address_type,
         None,
         job,
+        Some(link_policy),
     )
     .await?;
     eprintln!("recording_sync_stage stage=receive id={} elapsed_ms={}", entry.recording_id, started.elapsed().as_millis());
@@ -4213,6 +4672,13 @@ async fn sync_native_recording_entry(
     let reclaim_started = StdInstant::now();
     if let Some(job) = job { job.reclaiming(); }
     let device_erase_status = if delete_after_sync {
+        // Finish both audio CCCD writes before opening the control stream.
+        // This is outside the payload timer, after durable originals/index.
+        // If release fails, preserve the cursor and retire this connection;
+        // never send the irreversible exact consume on an uncertain stream.
+        let quiesce_started = StdInstant::now();
+        PullSession::quiesce_for_control(pull_session).await?;
+        eprintln!("recording_sync_stage stage=sealed_stream_quiesce id={} elapsed_ms={} completed=true", entry.recording_id, quiesce_started.elapsed().as_millis());
         match delete_privacy_on_device(
             device,
             DELETE_PRIVACY_OP_DELETE_RECORDING,
@@ -4278,9 +4744,31 @@ async fn sync_native_recording_entry(
 }
 
 async fn read_recording_list(
-    peripheral: &Peripheral,
+    device: &NativeDevice,
     characteristics: &std::collections::BTreeSet<Characteristic>,
 ) -> Result<Vec<RecordingEntry>, String> {
+    Ok(read_recording_catalog(device, characteristics).await?.entries)
+}
+
+struct RecordingCatalog {
+    entries: Vec<RecordingEntry>,
+    peer: Option<super::recording_wire::transport::Peer>,
+    generation: Option<u32>,
+}
+
+async fn read_recording_catalog(
+    device: &NativeDevice,
+    characteristics: &std::collections::BTreeSet<Characteristic>,
+) -> Result<RecordingCatalog, String> {
+    let peripheral = &device.peripheral;
+    // Decide protocol from the actual status capability before touching a
+    // cached directory. An advertised V2 peer can never enter ID-only V1 just
+    // because a stale ATT value happens to start with 1.
+    if let Some(status) = read_optional_status(peripheral, characteristics, DEVICE_STATUS_UUID, 20).await {
+        if let Some(peer) = super::recording_wire::transport::Peer::from_status(&status)? {
+            return segmented::read_catalog(device, characteristics, peer).await;
+        }
+    }
     let char_recording_list = find_characteristic(characteristics, RECORDING_LIST_UUID)?;
     if !char_recording_list.properties.contains(CharPropFlags::READ) {
         return Err("recording_list characteristic is not readable".to_string());
@@ -4295,7 +4783,11 @@ async fn read_recording_list(
             )
         })?
         .map_err(|err| format!("read recording_list: {err}"))?;
-    parse_recording_list(&payload)
+    if payload.first() == Some(&2) {
+        Err("设备目录为V2，但没有读到受支持的连续录音身份/能力；没有降级消费。".into())
+    } else {
+        Ok(RecordingCatalog { entries: parse_recording_list(&payload)?, peer: None, generation: None })
+    }
 }
 
 /// The firmware publishes the recording directory when the list CCC is
@@ -4306,13 +4798,14 @@ async fn read_recording_list(
 /// makes the value observed here a service-task snapshot of bytes that have
 /// already reached flash.
 async fn refresh_recording_list<S>(
-    peripheral: &Peripheral,
+    device: &NativeDevice,
     characteristics: &std::collections::BTreeSet<Characteristic>,
     notifications: &mut S,
 ) -> Result<Vec<RecordingEntry>, String>
 where
     S: futures::Stream<Item = ValueNotification> + Unpin,
 {
+    let peripheral = &device.peripheral;
     let char_recording_list = find_characteristic(characteristics, RECORDING_LIST_UUID)?;
     if !char_recording_list
         .properties
@@ -4329,6 +4822,7 @@ where
         peripheral.subscribe(&char_recording_list),
     )
     .await?;
+    let mut version2 = false;
     let result = match timeout(
         remaining_deadline_budget(refresh_deadline, refresh_timeout),
         async {
@@ -4338,6 +4832,10 @@ where
                     .await
                     .ok_or_else(|| "recording_list notification stream ended".to_string())?;
                 if notification.uuid == RECORDING_LIST_UUID {
+                    if notification.value.first() == Some(&2) {
+                        version2 = true;
+                        return Ok(Vec::new());
+                    }
                     return parse_recording_list(&notification.value);
                 }
             }
@@ -4357,7 +4855,9 @@ where
         peripheral.unsubscribe(&char_recording_list),
     )
     .await;
-    combine_operation_and_cleanup(result, unsubscribe_result)
+    let entries = combine_operation_and_cleanup(result, unsubscribe_result)?;
+    if version2 { Ok(read_recording_catalog(device, characteristics).await?.entries) }
+    else { Ok(entries) }
 }
 
 /// Product recording pull; measured rates are reported per codec and device:
@@ -4406,11 +4906,12 @@ async fn pull_recording_bytes(
     device_address_type: Option<AddressType>,
     initial_data: Option<Vec<u8>>,
     job: Option<&RecordingSyncJob>,
+    link_policy: Option<&mut SealedLinkPolicy>,
 ) -> Result<Vec<u8>, String> {
     let sealed_original = entry.sync_state == RECORDING_SYNC_UNSYNCED
         && initial_data.is_none() && !recording_wire_ima_requested(entry.codec);
     let mut port = RecordingPull { peripheral, characteristics, session, entry,
-        device_address, device_address_type, initial_data, job };
+        device_address, device_address_type, initial_data, job, link_policy };
     pull_recovery::receive(&mut port, sealed_original, entry.recording_id).await
 }
 
@@ -4423,12 +4924,13 @@ struct RecordingPull<'a> {
     device_address_type: Option<AddressType>,
     initial_data: Option<Vec<u8>>,
     job: Option<&'a RecordingSyncJob>,
+    link_policy: Option<&'a mut SealedLinkPolicy>,
 }
 impl pull_recovery::Attempt for RecordingPull<'_> {
     fn receive(&mut self) -> futures::future::BoxFuture<'_, Result<Vec<u8>, String>> {
         Box::pin(pull_recording_bytes_once(self.peripheral, self.characteristics,
             self.session, self.entry, self.device_address, self.device_address_type,
-            self.initial_data.take(), self.job))
+            self.initial_data.take(), self.job, self.link_policy.as_deref_mut()))
     }
 }
 
@@ -4441,6 +4943,7 @@ async fn pull_recording_bytes_once(
     device_address_type: Option<AddressType>,
     initial_data: Option<Vec<u8>>,
     job: Option<&RecordingSyncJob>,
+    link_policy: Option<&mut SealedLinkPolicy>,
 ) -> Result<Vec<u8>, String> {
     if session.is_none() {
         let opening = PullSession::open(peripheral, characteristics,
@@ -4449,7 +4952,7 @@ async fn pull_recording_bytes_once(
     }
     let work = pull_recording_bytes_in_session(peripheral,
         session.as_mut().expect("opened recording pull session"), entry,
-        device_address, device_address_type, initial_data, job);
+        device_address, device_address_type, initial_data, job, link_policy);
     let result = if let Some(job) = job { job.receive(work).await } else { work.await };
     if result.is_err() {
         // Failed entry/window retries re-open both lanes. Successful prefixes
@@ -4467,6 +4970,7 @@ async fn pull_recording_bytes_in_session(
     _device_address_type: Option<AddressType>,
     initial_data: Option<Vec<u8>>,
     job: Option<&RecordingSyncJob>,
+    mut link_policy: Option<&mut SealedLinkPolicy>,
 ) -> Result<Vec<u8>, String> {
     let is_live_prefix = entry.sync_state == RECORDING_SYNC_TRANSFER_ACTIVE;
     let char_chunk_pull = session.chunk.clone();
@@ -4498,19 +5002,26 @@ async fn pull_recording_bytes_in_session(
             .unwrap_or(inter_default),
     );
     let mut resume_cursor = None;
-    let mut data = if let Some(bytes) = initial_data {
-        if compress || !is_live_prefix {
-            return Err("incremental recording cursor requires the live raw transfer path".into());
-        }
-        if bytes.len() > entry.total_length as usize {
-            return Err("incremental recording cursor exceeds durable prefix".into());
-        }
-        bytes
-    } else if !compress && !is_live_prefix {
-        let (cursor, bytes) = super::recording_transfer::ReceiveCursor::open(
+    let mut data = if !compress && !is_live_prefix {
+        let (mut cursor, mut bytes) = super::recording_transfer::ReceiveCursor::open(
             &native_recording_root()?, recording_transfer_source(device_address, entry)).await?;
+        if let Some(prefix) = initial_data {
+            if entry.segment.is_none() || prefix.len()>entry.total_length as usize {
+                return Err("sealed prefix is not bound to a V2 descriptor".into());
+            }
+            let common=bytes.len().min(prefix.len());
+            if bytes[..common]!=prefix[..common] { return Err("durable tail and sealed receive cursor disagree".into()); }
+            if prefix.len()>bytes.len() {
+                cursor.append(&prefix[bytes.len()..]).await?;cursor.checkpoint().await?;bytes=prefix;
+            }
+        }
         eprintln!("recording pull durable_resume id={} offset={}", entry.recording_id, bytes.len());
         resume_cursor = Some(cursor);
+        bytes
+    } else if let Some(bytes) = initial_data {
+        if compress || bytes.len()>entry.total_length as usize {
+            return Err("incremental recording cursor exceeds durable raw prefix".into());
+        }
         bytes
     } else {
         Vec::with_capacity(entry.total_length as usize)
@@ -4518,7 +5029,7 @@ async fn pull_recording_bytes_in_session(
     let mut offset = if compress { 0 } else { data.len() as u32 };
     let initial_offset = offset;
     if let Some(job) = job { job.received(offset); }
-    if !compress && !is_live_prefix && offset == entry.total_length {
+    if !compress && offset == entry.total_length {
         // Cursor::open checked the durable receipt and bytes. The caller still
         // checks the current catalog CRC/SHA, commits the host index, and waits
         // for the exact physical consume ACK. No zero-length radio START is
@@ -4538,7 +5049,7 @@ async fn pull_recording_bytes_in_session(
         tokio::time::sleep(StdDuration::from_millis(link_settle_ms)).await;
     }
     eprintln!(
-        "recording pull host=Type/btleplug product=dual+compact224 settle_ms={link_settle_ms} dual={dual_lane}"
+        "recording pull host=Type/btleplug product=negotiated_compact settle_ms={link_settle_ms} dual={dual_lane}"
     );
     let mut expected_sequence = 0_u32;
     let mut wire_bytes: u64 = 0;
@@ -4569,17 +5080,7 @@ async fn pull_recording_bytes_in_session(
 
     // One START with STREAM_ALL: stream the original stored bytes; optional
     // wire IMA applies only to legacy PCM, never a stored Opus/IMA original.
-    let request = recording_chunk_pull_request_flags(
-        entry.recording_id,
-        offset,
-        u16::MAX.min(
-            entry
-                .total_length
-                .saturating_sub(offset)
-                .min(u32::from(u16::MAX)) as u16,
-        ),
-        req_flags,
-    );
+    let request = recording_entry_pull_request(entry, offset, req_flags)?;
     timeout(
         write_timeout,
         peripheral.write(&char_chunk_pull, &request, write_type),
@@ -4612,7 +5113,7 @@ async fn pull_recording_bytes_in_session(
     let mut receive_store_drain_us = 0u64;
     // Read this diagnostic preference once, outside the notification loop.
     // Normal transfers check each packet as well as the final source hash.
-    let skip_mid_crc = std::env::var("COMPANION_TYPE_BLE_SKIP_MID_CRC")
+    let skip_mid_crc = entry.segment.is_none() && entry.tail.is_none() && std::env::var("COMPANION_TYPE_BLE_SKIP_MID_CRC")
         .map(|v| {
             let t = v.trim();
             t == "1" || t.eq_ignore_ascii_case("true") || t.eq_ignore_ascii_case("on")
@@ -4643,17 +5144,7 @@ async fn pull_recording_bytes_in_session(
                         RECORDING_LIVE_STORAGE_RETRY_DELAY_MS,
                     ))
                     .await;
-                    let retry = recording_chunk_pull_request_flags(
-                        entry.recording_id,
-                        offset,
-                        u16::MAX.min(
-                            entry
-                                .total_length
-                                .saturating_sub(offset)
-                                .min(u32::from(u16::MAX)) as u16,
-                        ),
-                        req_flags,
-                    );
+                    let retry = recording_entry_pull_request(entry, offset, req_flags)?;
                     timeout(
                         write_timeout,
                         peripheral.write(&char_chunk_pull, &retry, write_type),
@@ -4731,6 +5222,9 @@ async fn pull_recording_bytes_in_session(
             } else {
                 chunk.payload.len() as u32
             };
+            if !is_live_prefix && !chunk.payload.is_empty() {
+                if let Some(policy) = link_policy.as_deref_mut() { policy.verified_payload(); }
+            }
             if let Some(timing) = arrival_timing.as_mut() {
                 timing.validated(chunk.byte_offset, chunk.payload.len(), arrived_at);
             }
@@ -4809,12 +5303,7 @@ async fn pull_recording_bytes_in_session(
                 // A missing offset, not raw notification traffic, controls
                 // retries. This also paces first-packet re-arms and bounds an
                 // established stall so connection/power cleanup can run.
-                let resume = recording_chunk_pull_request_flags(
-                    entry.recording_id,
-                    offset,
-                    entry.total_length.saturating_sub(offset).min(u32::from(u16::MAX)) as u16,
-                    req_flags,
-                );
+                let resume = recording_entry_pull_request(entry, offset, req_flags)?;
                 eprintln!("recording pull resume id={} offset={} attempt={} validated_progress_only=1",
                     entry.recording_id, offset, attempt);
                 timeout(
@@ -4930,12 +5419,12 @@ async fn pull_recording_bytes_in_session(
     // Lossy IMA: length + packet CRC already enforced; raw path requires full SHA match
     // unless COMPANION_TYPE_BLE_SKIP_FINAL_SHA=1 (virtual 10min wire package).
     let skip_final_sha = is_live_prefix
-        || std::env::var("COMPANION_TYPE_BLE_SKIP_FINAL_SHA")
+        || (entry.segment.is_none() && std::env::var("COMPANION_TYPE_BLE_SKIP_FINAL_SHA")
             .map(|v| {
                 let t = v.trim();
                 t == "1" || t.eq_ignore_ascii_case("true") || t.eq_ignore_ascii_case("on")
             })
-            .unwrap_or(false);
+            .unwrap_or(false));
     if !compress && !skip_final_sha && sha256[..] != final_sha256 {
         return Err(format!(
             "final SHA mismatch: device={} host={}",
@@ -4991,10 +5480,12 @@ fn parse_recording_list(payload: &[u8]) -> Result<Vec<RecordingEntry>, String> {
         started_unix_s: entry.started_unix_s, duration_ms: entry.duration_ms,
         codec: entry.codec, sync_state: entry.sync_state, source_mode: entry.source_mode,
         total_length: entry.total_length, sha256_prefix: entry.sha256_prefix, content_crc32: entry.content_crc32,
+        segment: None, tail: None,
     }).collect())
 }
 
 fn parse_recording_chunk(payload: &[u8]) -> Result<RecordingChunk, String> {
+    if payload.len()>509 {return Err("recording chunk exceeds supported ATT value ceiling".into());}
     // Need at least schema+flags+len before deciding header layout.
     if payload.len() < 4 {
         return Err(format!("recording chunk too short: {}", payload.len()));
@@ -5027,7 +5518,7 @@ fn parse_recording_chunk(payload: &[u8]) -> Result<RecordingChunk, String> {
         ));
     }
     let payload_end = header_bytes + payload_length as usize;
-    if payload.len() < payload_end {
+    if payload.len() != payload_end {
         return Err(format!(
             "recording chunk payload truncated: len={} flags=0x{:02x} hdr={} claim_pl={} need={}",
             payload.len(),
@@ -5099,6 +5590,19 @@ fn recording_chunk_pull_request_flags(
     payload[8..12].copy_from_slice(&offset.to_le_bytes());
     payload[12..16].copy_from_slice(&0_u32.to_le_bytes());
     payload
+}
+
+fn recording_entry_pull_request(entry: &RecordingEntry, offset: u32, flags: u8) -> Result<Vec<u8>, String> {
+    if let Some(tail)=entry.tail.as_ref() { return tail.pull(offset,flags); }
+    if let Some(d) = entry.segment.as_ref() {
+        let peer = super::recording_wire::transport::Peer {
+            uid: d.key.device_uid, epoch: d.key.format_epoch, capacity: 64, max_value_bytes: 248, logical_control: false, growing_tail: false, pause_control: false, batch_interval: false,
+        };
+        peer.pull(d, offset, flags)
+    } else {
+        Ok(recording_chunk_pull_request_flags(entry.recording_id, offset,
+            entry.total_length.saturating_sub(offset).min(u32::from(u16::MAX)) as u16, flags).to_vec())
+    }
 }
 
 /// Decode one companion IMA-ADPCM frame (6B header + nibbles) to LE i16 PCM bytes.
@@ -5224,7 +5728,13 @@ fn native_recording_root() -> Result<PathBuf, String> {
 
 fn recording_transfer_source(device: &str, entry: &RecordingEntry) -> super::recording_transfer::Source {
     super::recording_transfer::Source {
-        device: device.trim().to_ascii_lowercase(), recording_id: entry.recording_id,
+        device: if let Some(d) = entry.segment.as_ref() {
+            // Epoch/session/full digest isolate a reused physical ID from old
+            // receive cursors without changing the legacy Source receipt schema.
+            format!("{}#crv2:{}:{:016x}:{:016x}:{}:{}", device.trim().to_ascii_lowercase(),
+                hex_lower(&d.key.device_uid), d.key.format_epoch, d.key.session_id,
+                d.segment_index, hex_lower(&d.sha256))
+        } else { device.trim().to_ascii_lowercase() }, recording_id: entry.recording_id,
         codec: entry.codec, source_mode: entry.source_mode, duration_ms: entry.duration_ms,
         total_length: entry.total_length, sha256_prefix: entry.sha256_prefix,
         content_crc32: entry.content_crc32,
@@ -5317,6 +5827,43 @@ fn hex_lower(bytes: &[u8]) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn follower_reconnect_rejects_changed_uid_epoch_or_missing_v2() {
+        use super::super::recording_wire::transport::Peer;
+        let saved = Peer { uid: [3;12], epoch: 17, capacity: 64, max_value_bytes: 248, logical_control: false, growing_tail: false, pause_control: false, batch_interval: false };
+        assert!(require_same_recorder(Some(&saved), Some(&saved)).is_ok());
+        let mut changed = saved.clone(); changed.epoch += 1;
+        assert!(require_same_recorder(Some(&saved), Some(&changed)).is_err());
+        changed = saved.clone(); changed.uid[11] ^= 1;
+        assert!(require_same_recorder(Some(&saved), Some(&changed)).is_err());
+        assert!(require_same_recorder(Some(&saved), None).is_err());
+        assert!(require_same_recorder(None, Some(&changed)).is_ok(), "explicit fresh Connect can negotiate a new recorder");
+    }
+
+    #[test]
+    fn stop_saves_its_sealed_file_without_consuming_backlog_or_a_live_tail() {
+        let entry = |id, state| RecordingEntry { segment: None, tail: None, capture_incomplete: false,
+            recording_id: id, started_unix_s: 0, duration_ms: 10_000,
+            codec: 3, sync_state: state, source_mode: 1, total_length: 21_000,
+            sha256_prefix: [1; 8], content_crc32: 1 };
+        let catalog = vec![entry(22, RECORDING_SYNC_TRANSFER_ACTIVE),
+            entry(21, RECORDING_SYNC_UNSYNCED), entry(19, RECORDING_SYNC_UNSYNCED),
+            entry(20, RECORDING_SYNC_UNSYNCED)];
+        // The new production dispatcher must preserve the installed V1
+        // START/resume wire and durable source key byte-for-byte.
+        for offset in [0u32, 8_192u32] {
+            assert_eq!(recording_entry_pull_request(&catalog[1], offset, 4).unwrap(),
+                recording_chunk_pull_request_flags(21, offset, (21_000u32 - offset) as u16, 4));
+        }
+        assert_eq!(recording_transfer_source("C8:92:FF:DD:3B:CA", &catalog[1]).device,
+            "c8:92:ff:dd:3b:ca");
+        let ids = |items: Vec<RecordingEntry>| items.into_iter().map(|e| e.recording_id).collect::<Vec<_>>();
+        assert_eq!(ids(pending_recordings(catalog.clone(), &[], Some(21))), [21]);
+        assert_eq!(ids(pending_recordings(catalog.clone(), &[20], None)), [19, 21]);
+        assert!(pending_recordings(catalog.clone(), &[], Some(22)).is_empty());
+        assert!(pending_recordings(catalog, &[21], Some(21)).is_empty());
+    }
 
     #[test]
     fn scan_exact_address_never_shortcuts_for_a_name_or_different_board() {
@@ -5849,8 +6396,8 @@ mod tests {
     }
 
     #[test]
-    fn recording_chunk_parser_accepts_intermediate_224_payload_compact_header() {
-        // Product compact intermediate: 20B header + up to 224B payload (ATT 244).
+    fn recording_chunk_parser_accepts_intermediate_max509_value_compact_header() {
+        // Negotiated product compact intermediate: 20B header plus489B payload.
         let payload_bytes = vec![0xA5_u8; RECORDING_CHUNK_PRODUCT_PAYLOAD_MAX];
         let mut chunk = RecordingChunk {
             flags: RECORDING_CHUNK_COMPACT_FLAG,
@@ -5894,6 +6441,9 @@ mod tests {
         parsed.total_length = 1_920_000;
         assert_eq!(recording_packet_crc32(&parsed), parsed.packet_crc32);
         assert_eq!(parsed.final_sha256, [0_u8; 32]);
+        let mut oversized=wire.clone();oversized.push(0);
+        assert!(parse_recording_chunk(&oversized).is_err());
+        assert!(parse_recording_chunk(&wire[..wire.len()-1]).is_err());
     }
 
     #[test]
@@ -6064,7 +6614,7 @@ mod tests {
         let operation = native_recording_operation(Ok(NativeRecordingBatch {
             device_id: "C8:92:FF:DD:3B:CA".into(),
             recordings: vec![recording(15, true), recording(16, false)],
-            failures: vec![], paused: false, connection_reusable: false,
+            failures: vec![], paused: false, connection_reusable: false, segmented: None,
         }));
         assert!(operation.ready, "durable audio must still reach the library");
         assert_eq!(operation.recordings.len(), 2);
@@ -6074,7 +6624,7 @@ mod tests {
         assert!(operation.message.contains("connection_reusable=false"));
         let failed = native_recording_operation(Ok(NativeRecordingBatch {
             device_id: "C8:92:FF:DD:3B:CA".into(), recordings: vec![],
-            failures: vec!["no durable audio".into()], paused: false, connection_reusable: false,
+            failures: vec!["no durable audio".into()], paused: false, connection_reusable: false, segmented: None,
         }));
         assert!(!failed.ready);
         assert!(failed.recordings.is_empty());

@@ -1,7 +1,6 @@
-//! Versioned recording metadata. V1 remains the only enabled BLE directory.
-//! V2 radio remains disabled. The durable receiver revalidates physical files
-//! and the meeting index before producing a software ACK; metadata alone never
-//! authorizes device erasure or product acceptance.
+//! Versioned recording metadata. A V2 radio peer must negotiate its actual
+//! UID and durable epoch before the transport can use this directory. The
+//! receiver revalidates raw files and the library before an exact consume.
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 use std::{
@@ -17,6 +16,7 @@ const MAX_ENCODED: u32 = 64 * 1024 * 1024;
 const SEALED: u8 = 1;
 const LAST: u8 = 2;
 const RECOVERED: u8 = 4;
+pub(crate) const SOURCE_MIC_SAI: u8 = 1;
 const GOLDEN: &str = include_str!("recording_wire/golden.json");
 
 fn fail(reason: &str) -> String {
@@ -35,30 +35,58 @@ fn u64le(p: &[u8], at: usize) -> u64 {
 mod legacy;
 pub(crate) use legacy::decode_v1;
 pub(crate) mod receiver;
+pub(crate) mod transport;
+pub(crate) mod control;
+pub(crate) mod tail;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize)]
 #[serde(rename_all = "camelCase")]
-struct SessionKey {
-    device_uid: [u8; 12],
-    format_epoch: u64,
-    session_id: u64,
+pub(crate) struct SessionKey {
+    pub(crate) device_uid: [u8; 12],
+    pub(crate) format_epoch: u64,
+    pub(crate) session_id: u64,
+}
+impl SessionKey {
+    pub(crate) fn public_key(&self) -> crate::companion_v1::CompanionV1RecordingKey {
+        crate::companion_v1::CompanionV1RecordingKey {
+            device_uid: self.device_uid.iter().map(|b| format!("{b:02x}")).collect(),
+            format_epoch: format!("{:016x}", self.format_epoch),
+            session_id: format!("{:016x}", self.session_id),
+        }
+    }
+    pub(crate) fn from_public(key: &crate::companion_v1::CompanionV1RecordingKey) -> Result<Self, String> {
+        let valid = |s: &str, n| s.len() == n && s.bytes().all(|b| b.is_ascii_hexdigit());
+        if !valid(&key.device_uid, 24) || !valid(&key.format_epoch, 16) || !valid(&key.session_id, 16) {
+            return Err(fail("invalid persisted logical recorder key"));
+        }
+        let mut uid = [0; 12];
+        for (i, b) in uid.iter_mut().enumerate() {
+            *b = u8::from_str_radix(&key.device_uid[i*2..i*2+2],16).map_err(|_| fail("invalid UID"))?;
+        }
+        let epoch = u64::from_str_radix(&key.format_epoch,16).map_err(|_| fail("invalid epoch"))?;
+        let session = u64::from_str_radix(&key.session_id,16).map_err(|_| fail("invalid session"))?;
+        if uid == [0;12] || uid == [255;12] || epoch == 0 || session == 0 {
+            return Err(fail("empty persisted logical recorder key"));
+        }
+        Ok(Self { device_uid: uid, format_epoch: epoch, session_id: session })
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
-struct Descriptor {
-    key: SessionKey,
-    recording_id: u32,
-    segment_index: u32,
-    sample_offset: u64,
-    sample_count: u64,
-    encoded_length: u32,
-    content_crc32: u32,
-    sha256: [u8; 32],
-    total_segments: u32,
-    flags: u8,
-    codec: u8,
-    source_mode: u8,
-    sync_state: u8,
+pub(crate) struct Descriptor {
+    pub(crate) key: SessionKey,
+    pub(crate) recording_id: u32,
+    pub(crate) segment_index: u32,
+    pub(crate) sample_offset: u64,
+    pub(crate) sample_count: u64,
+    pub(crate) encoded_length: u32,
+    pub(crate) content_crc32: u32,
+    pub(crate) sha256: [u8; 32],
+    pub(crate) total_segments: u32,
+    pub(crate) flags: u8,
+    pub(crate) codec: u8,
+    pub(crate) source_mode: u8,
+    pub(crate) sync_state: u8,
 }
 impl Descriptor {
     fn validate(&self) -> Result<(), String> {
@@ -90,7 +118,7 @@ impl Descriptor {
         }
         Ok(())
     }
-    fn decode(p: &[u8]) -> Result<Self, String> {
+    pub(crate) fn decode(p: &[u8]) -> Result<Self, String> {
         if p.len() != DESCRIPTOR_BYTES
             || &p[..4] != b"CRS2"
             || u16le(p, 4) != 2
@@ -121,7 +149,7 @@ impl Descriptor {
         d.validate()?;
         Ok(d)
     }
-    fn encode(&self) -> Result<Vec<u8>, String> {
+    pub(crate) fn encode(&self) -> Result<Vec<u8>, String> {
         self.validate()?;
         let mut p = vec![0; DESCRIPTOR_BYTES];
         p[..4].copy_from_slice(b"CRS2");
@@ -160,7 +188,7 @@ impl Descriptor {
         copy.sync_state = self.sync_state;
         *self == copy
     }
-    fn verify_payload(&self, payload: &[u8]) -> Result<(), String> {
+    pub(crate) fn verify_payload(&self, payload: &[u8]) -> Result<(), String> {
         self.validate()?;
         if payload.len() != self.encoded_length as usize
             || crc32fast::hash(payload) != self.content_crc32
@@ -168,24 +196,18 @@ impl Descriptor {
         {
             return Err(fail("segment payload length/CRC/SHA mismatch"));
         }
-        if &payload[..12] != b"COP1\x01\x01\x14\x00\x80\x3e\x00\x00" {
+        let mut reader=super::cop1::Reader::new(payload,self.sample_offset,false)?;
+        if reader.frame_ms!=20 || reader.source_rate!=16000 {
             return Err(fail("V2 requires mono 16 kHz / 20 ms COP1"));
         }
-        let mut at = 12;
-        let mut frames = 0u64;
-        while at < payload.len() {
-            if payload.len() - at < 2 {
-                return Err(fail("truncated COP1 packet length"));
+        while let Some(record)=reader.next()? {
+            if let super::cop1::Record::Audio(packet)=record {
+                if packet.len()>400 {return Err(fail("invalid complete COP1 packet"));}
             }
-            let bytes = u16le(payload, at) as usize;
-            at += 2;
-            if !(1..=400).contains(&bytes) || bytes > payload.len() - at {
-                return Err(fail("invalid complete COP1 packet"));
-            }
-            at += bytes;
-            frames += 1;
         }
-        if frames * 320 != self.sample_count {
+        let summary=reader.finish(self.flags & RECOVERED!=0)?;
+        if summary.frames * 320 != self.sample_count || summary.encoded_bytes!=u64::from(self.encoded_length)
+            || (summary.ended_paused && self.flags & LAST==0) {
             return Err(fail("segment frame count disagrees with sample count"));
         }
         Ok(())
@@ -334,9 +356,16 @@ pub(crate) struct GroupPlan {
     verified_segments: u32,
     sample_count: u64,
     metadata_complete: bool,
-    payloads_complete: bool,
+    pub(crate) payloads_complete: bool,
     capture_incomplete: bool,
     capture_complete: bool,
+}
+impl GroupPlan {
+    /// A complete sealed catalogue has no growing tail to free space for.
+    /// Limited/background slices still reclaim each durable segment promptly.
+    pub(crate) fn may_batch_reclaim(&self, segment_limit: Option<usize>) -> bool {
+        segment_limit.is_none() && self.metadata_complete
+    }
 }
 fn plan_group(items: &[Descriptor], verified: &BTreeSet<u32>) -> Result<GroupPlan, String> {
     let first = items.first().ok_or_else(|| fail("empty session group"))?;

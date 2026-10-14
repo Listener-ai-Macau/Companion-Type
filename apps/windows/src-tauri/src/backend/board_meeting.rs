@@ -484,7 +484,7 @@ mod tests {
         assert_eq!(s.chunks[0].path, s.audio_path);
         assert_eq!(s.chunks[0].duration_ms, 3000);
         assert_eq!(
-            super::super::transcription_chunk_paths(&s),
+            super::super::transcription_chunk_paths(&s).unwrap(),
             vec![recording.recording_path.clone()]
         );
         assert!(std::path::Path::new(s.chunks[0].path.as_ref().unwrap()).is_file());

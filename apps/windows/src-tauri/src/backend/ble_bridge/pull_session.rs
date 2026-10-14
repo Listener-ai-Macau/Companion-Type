@@ -1,5 +1,5 @@
-//! One notification subscription lease per GATT connection, reused by prefixes
-//! and backlog entries. Packet validation and durable cursors stay in the pull.
+//! A notification lease reused by prefixes and retained backlog entries.
+//! Completed receive streams are released before a physical consume command.
 
 use std::time::Duration;
 
@@ -10,15 +10,15 @@ use tokio::time::timeout;
 use super::{find_characteristic, RECORDING_CHUNK_PULL_UUID, RECORDING_CHUNK_PULL_B_UUID};
 use super::pull_receiver::{NotificationReceiver, ReceivedNotification};
 
-trait SubscriptionPort: Clone + Send + Sync + 'static {
+pub(super) trait SubscriptionPort: Clone + Send + Sync + 'static {
     fn subscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>>;
     fn unsubscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>>;
 }
 
 #[derive(Clone)]
-struct NativeSubscriptions {
-    peripheral: Peripheral,
-    lanes: Vec<Characteristic>,
+pub(super) struct NativeSubscriptions {
+    pub(super) peripheral: Peripheral,
+    pub(super) lanes: Vec<Characteristic>,
 }
 impl SubscriptionPort for NativeSubscriptions {
     fn subscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
@@ -35,13 +35,13 @@ impl SubscriptionPort for NativeSubscriptions {
     }
 }
 
-struct SubscriptionLease<P: SubscriptionPort> {
+pub(super) struct SubscriptionLease<P: SubscriptionPort> {
     port: P,
     active: [bool; 2],
     cleanup_timeout: Duration,
 }
 impl<P: SubscriptionPort> SubscriptionLease<P> {
-    async fn open(port: P, lanes: usize, read_timeout: Duration) -> Result<Self, String> {
+    pub(super) async fn open(port: P, lanes: usize, read_timeout: Duration) -> Result<Self, String> {
         let mut lease = Self { port, active: [false; 2], cleanup_timeout: read_timeout.min(Duration::from_secs(1)) };
         for lane in 0..lanes {
             // A timed-out/cancelled CCCD write may still have reached Windows.
@@ -65,6 +65,25 @@ impl<P: SubscriptionPort> SubscriptionLease<P> {
                 self.active[lane] = false;
             }
         }
+    }
+
+    pub(super) async fn quiesce_for_control(&mut self) -> Result<(), String> {
+        let mut failures = Vec::new();
+        for lane in 0..self.active.len() {
+            if !self.active[lane] { continue; }
+            let result = timeout(self.cleanup_timeout, self.port.unsubscribe(lane)).await;
+            // Every owned lane gets one bounded close attempt even if another
+            // fails. A failed close retires the connection; it cannot authorize
+            // an exact consume or trigger a second cleanup from Drop.
+            self.active[lane] = false;
+            match result {
+                Ok(Ok(())) => {},
+                Ok(Err(error)) => failures.push(error),
+                Err(_) => failures.push(format!("recording lane {} release timed out", lane + 1)),
+            }
+        }
+        if failures.is_empty() { Ok(()) }
+        else { Err(format!("sealed stream release failed before reclaim: {}", failures.join("; "))) }
     }
 }
 async fn cleanup_lane<P: SubscriptionPort>(port: &P, lane: usize, deadline: Duration) {
@@ -141,6 +160,12 @@ impl PullSession {
             current.lease.close().await;
         }
     }
+
+    pub async fn quiesce_for_control(session: &mut Option<Self>) -> Result<(), String> {
+        let Some(mut current) = session.take() else { return Ok(()); };
+        current.notifications.close();
+        current.lease.quiesce_for_control().await
+    }
 }
 
 #[cfg(test)]
@@ -153,6 +178,8 @@ mod tests {
         calls: Arc<Mutex<Vec<(bool, usize)>>>,
         fail_second: bool,
         pending_second: bool,
+        fail_first_release: bool,
+        pending_first_release: bool,
     }
     impl SubscriptionPort for Port {
         fn subscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
@@ -163,7 +190,11 @@ mod tests {
             })
         }
         fn unsubscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
-            Box::pin(async move { self.calls.lock().unwrap().push((false, lane)); Ok(()) })
+            Box::pin(async move {
+                self.calls.lock().unwrap().push((false, lane));
+                if lane == 0 && self.pending_first_release { futures::future::pending::<()>().await; }
+                if lane == 0 && self.fail_first_release { Err("native first lane release failed".into()) } else { Ok(()) }
+            })
         }
     }
 
@@ -199,5 +230,17 @@ mod tests {
             while port.calls.lock().unwrap().len() < 4 { tokio::task::yield_now().await; }
         }).await.unwrap();
         assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
+    }
+
+    #[tokio::test]
+    async fn control_handoff_requires_both_releases_and_failure_still_closes_other_lane() {
+        for port in [Port::default(), Port { fail_first_release: true, ..Default::default() },
+                     Port { pending_first_release: true, ..Default::default() }] {
+            let success = !port.fail_first_release && !port.pending_first_release;
+            let mut lease = SubscriptionLease::open(port.clone(), 2, Duration::from_millis(10)).await.unwrap();
+            assert_eq!(lease.quiesce_for_control().await.is_ok(), success);
+            drop(lease);
+            assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
+        }
     }
 }

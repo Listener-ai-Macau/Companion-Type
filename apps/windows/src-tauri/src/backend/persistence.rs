@@ -90,6 +90,7 @@ pub(crate) fn reconcile_session_recovery(session: &mut CompanionV1HostSession) {
         session.pending_reason = Some("recovery_paused".to_string());
         return;
     }
+    if super::interrupted_capture::hold(session) { return; }
     // An attempt is durably consumed before remote work. If the process died
     // while it was in flight, resume that exact stage through backoff instead
     // of silently resetting the budget.
@@ -211,7 +212,13 @@ fn migrate_sessions(bytes: Vec<u8>) -> Option<Vec<CompanionV1HostSession>> {
                 // still be recording. Recover the row into an actionable state
                 // without inventing a stop time or treating a host:// target
                 // path as audio already received from the device.
-                if session.status == "recording" {
+                if session.status == "recording" && session.recorder_control.is_some() {
+                    // The physical recorder outlives this host process.
+                    // Preserve its exact pending intent/key and require an
+                    // actual CMS3 observation; restart cannot invent STOP.
+                    session.recorder_control_uncertain=true;
+                    session.pending_reason=Some("device_control_pending".into());
+                } else if session.status == "recording" {
                     let needs_device_sync = (matches!(
                         session.source.as_str(), "deviceFlash" | "boardDevice"
                     ) && session.device_recording_id.is_some_and(|id| id != 0)
@@ -425,7 +432,7 @@ mod tests {
     };
 
     fn sample_session(id: &str, text: &str) -> CompanionV1HostSession {
-        CompanionV1HostSession {
+        CompanionV1HostSession { recorder_control: None, recorder_control_uncertain: false, device_recording_key: None, 
             transcript_review: None,
             bookmark_revision: 0, bookmarks: vec![],
             note_revision: 0, meeting_notes: vec![],

@@ -115,6 +115,29 @@ pub fn prepare_companion_audio(
     Ok(path.to_string_lossy().into_owned())
 }
 
+#[derive(Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct PreparedAudioTimeline {
+    path:String,
+    pause_timeline:Option<crate::backend::recording_pause_view::PauseTimeline>,
+}
+
+#[tauri::command]
+pub async fn prepare_companion_audio_with_timeline(
+    app:AppHandle,coordinator:CompanionCoordinatorState<'_>,session_id:String,
+)->Result<PreparedAudioTimeline,String> {
+    let coordinator=coordinator.inner().clone();
+    let prepared=tauri::async_runtime::spawn_blocking(move || {
+        let _lease=coordinator.begin_audio_export()?;
+        let snapshot=coordinator.snapshot()?;
+        let path=crate::backend::meeting_workspace::local_audio_path(&snapshot,&session_id)?;
+        let pause_timeline=crate::backend::recording_pause_view::prepare(&snapshot,&session_id)?;
+        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),pause_timeline})
+    }).await.map_err(|e|format!("准备原音任务失败：{e}"))??;
+    app.asset_protocol_scope().allow_file(&prepared.path).map_err(|e|format!("无法准备回听：{e}"))?;
+    Ok(prepared)
+}
+
 #[derive(Clone, Copy, Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum CompanionMeetingExportFormat {

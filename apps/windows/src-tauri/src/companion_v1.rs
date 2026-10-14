@@ -278,6 +278,15 @@ impl Default for CompanionV1PersistenceState {
     }
 }
 
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1RecordingKey {
+    // Strings preserve all 64 bits through the desktop/JavaScript boundary.
+    pub device_uid: String,
+    pub format_epoch: String,
+    pub session_id: String,
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1HostSession {
@@ -301,6 +310,8 @@ pub struct CompanionV1HostSession {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub device_recording_id: Option<u32>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub device_recording_key: Option<CompanionV1RecordingKey>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub device_total_length: Option<u32>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub device_sha256: Option<String>,
@@ -312,6 +323,12 @@ pub struct CompanionV1HostSession {
     /// Exact native Bluetooth address that produced the durable board extent.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_device_id: Option<String>,
+    /// Exact CMC3 intent/confirmation belonging to this original device row.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub recorder_control: Option<crate::backend::recorder_control::Journal>,
+    /// Restart/disconnection is uncertainty, never an invented STOP.
+    #[serde(default)]
+    pub recorder_control_uncertain: bool,
     pub chunks: Vec<CompanionV1AudioChunk>,
     pub transcript_text: String,
     /// True only for a completed batch/import result. onlineLive prefixes are
@@ -369,6 +386,10 @@ pub struct CompanionV1MeetingRecovery {
     pub next_retry_at_unix_ms: Option<u64>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub last_error: Option<String>,
+    /// Explicit processing choice for this recovered, immutable original.
+    /// Older checkpoints default to unreviewed; syncing never authorizes it.
+    #[serde(default)]
+    pub capture_review_confirmed: bool,
 }
 
 impl Default for CompanionV1MeetingRecovery {
@@ -382,6 +403,7 @@ impl Default for CompanionV1MeetingRecovery {
             retry_stage: String::new(),
             next_retry_at_unix_ms: None,
             last_error: None,
+            capture_review_confirmed: false,
         }
     }
 }
@@ -562,6 +584,9 @@ pub enum CompanionV1ControlAction {
     MeetingStart,
     MeetingStop,
     MeetingFinalize,
+    MeetingPause,
+    MeetingResume,
+    MeetingRecoverControl,
     MeetingAppendLiveTranscript,
     MeetingImportTranscript,
     MeetingTranscribeAudio,
@@ -850,6 +875,10 @@ pub(crate) fn apply_control_at(
                     "Fixture 检查不会调用外部服务",
                 ),
             ];
+        }
+        CompanionV1ControlAction::MeetingPause | CompanionV1ControlAction::MeetingResume
+        | CompanionV1ControlAction::MeetingRecoverControl => {
+            return Err("设备暂停控制必须由正式后端确认，不能用模拟状态代替。".into());
         }
         CompanionV1ControlAction::MeetingStart => {
             let session = create_host_session(&snapshot, &request, &now);
@@ -1435,7 +1464,7 @@ fn oobe_check(id: &str, label: &str, status: &str, message: &str) -> CompanionV1
     }
 }
 
-fn create_host_session(
+pub(crate) fn create_host_session(
     snapshot: &CompanionV1Snapshot,
     request: &CompanionV1ControlRequest,
     now: &str,
@@ -1491,10 +1520,12 @@ fn create_host_session(
         audio_bytes,
         audio_stored: false,
         device_recording_id: None,
+        device_recording_key: None,
         device_total_length: None,
         device_sha256: None,
         device_reclaimed: false, capture_incomplete: false,
         source_device_id: request.device_id.clone(),
+        recorder_control: None, recorder_control_uncertain: false,
         chunks: vec![audio_chunk(
             &format!("{id}-chunk-1"),
             Some(audio_path.clone()),
@@ -2059,6 +2090,9 @@ fn characteristic_for_action(action: CompanionV1ControlAction) -> &'static str {
         CompanionV1ControlAction::OobeRunChecks => COMPANION_V1_HOST_SETUP_CHANNEL,
         CompanionV1ControlAction::MeetingStart
         | CompanionV1ControlAction::MeetingStop
+        | CompanionV1ControlAction::MeetingPause
+        | CompanionV1ControlAction::MeetingResume
+        | CompanionV1ControlAction::MeetingRecoverControl
         | CompanionV1ControlAction::MeetingFinalize => {
             COMPANION_V1_GATT_BOUNDARY.meeting_control_uuid
         }
@@ -2130,6 +2164,9 @@ fn payload_hex(request: &CompanionV1ControlRequest) -> String {
 
 fn action_command(action: CompanionV1ControlAction) -> u8 {
     match action {
+        CompanionV1ControlAction::MeetingPause => 4,
+        CompanionV1ControlAction::MeetingResume => 5,
+        CompanionV1ControlAction::MeetingRecoverControl => 0,
         CompanionV1ControlAction::HostRetrySave => 0x8e,
         CompanionV1ControlAction::DeviceScan => 0x10,
         CompanionV1ControlAction::DeviceConnect => 0x11,

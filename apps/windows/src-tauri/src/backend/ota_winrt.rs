@@ -7,7 +7,8 @@
 //! - `TransferOptions::dual_lane_bulk` window=400, inactive cold=64
 //! - pipeline depth 32 (~16/lane)
 //!
-//! Chunk payload stays WB SAFE_ATT (caller passes ≤244).
+//! WBA signed and legacy WB updates use their actual MTU and distinct attribute
+//! limits. Link readiness precedes manifest and bulk writes.
 
 #![cfg(windows)]
 
@@ -39,8 +40,8 @@ const OTA_DATA_UUID: GUID = GUID::from_u128(denzic_ota_core::GATT_DATA_UUID_U128
 const OTA_DATA_B_UUID: GUID = GUID::from_u128(denzic_ota_core::GATT_DATA_B_UUID_U128);
 const OTA_STATUS_UUID: GUID = GUID::from_u128(denzic_ota_core::GATT_STATUS_UUID_U128);
 
-/// Listener-proven dual-lane host pipeline (windows_ble). Measured on WB:
-/// depth 32 ~16.4 KB/s / 4 recoveries; depth 16 thrashed worse (~10 KB/s).
+/// Legacy WB budget. WBA uses its authenticated device-advertised window,
+/// one data lane and Denzic's authoritative bytes_written recovery.
 const WWR_PIPELINE_DEPTH: usize = 32;
 const INACTIVE_LINK_WINDOW_CHUNKS: u16 = 64;
 const WINDOW_CHUNKS: u16 = 400;
@@ -55,18 +56,19 @@ const STATUS_POLL_INTERVAL: Duration = Duration::from_millis(8);
 const PROGRESS_TIMEOUT: Duration = Duration::from_secs(120);
 
 struct OpenOtaTarget {
+    // Rust drops fields in declaration order. Retire the temporary preference
+    // and session ownership before closing our service/device. Characteristics
+    // may still have COM references; explicit Close retires this owner anyway.
+    _conn_pref_request: Option<denzic_ble_windows::ScopedBleResource<BluetoothLEPreferredConnectionParametersRequest>>,
+    _session: Option<denzic_ble_windows::ScopedBleResource<GattSession>>,
+    _service: denzic_ble_windows::ScopedBleResource<GattDeviceService>,
+    _device: Option<denzic_ble_windows::ScopedBleResource<BluetoothLEDevice>>,
     device_id: String,
     control: GattCharacteristic,
     data: GattCharacteristic,
     data_b: Option<GattCharacteristic>,
     status: GattCharacteristic,
     data_write_option: GattWriteOption,
-    /// Keep device/service/session alive for the transfer.
-    _service: GattDeviceService,
-    _session: Option<GattSession>,
-    _device: Option<BluetoothLEDevice>,
-    /// WinRT keeps preferred CI only while this request object lives.
-    _conn_pref_request: Option<BluetoothLEPreferredConnectionParametersRequest>,
 }
 
 struct CompanionOtaWinrtTransport<'a> {
@@ -75,6 +77,17 @@ struct CompanionOtaWinrtTransport<'a> {
     pending_wwr_b: Vec<IAsyncOperation<GattCommunicationStatus>>,
     status_error_started: Option<Instant>,
     wba_signed: bool,
+    pipeline_depth: usize,
+    system_component: Option<u8>,
+}
+
+impl Drop for CompanionOtaWinrtTransport<'_> {
+    fn drop(&mut self) {
+        // Failure may leave asynchronous writes owned by either lane. Retire
+        // them before the target's session/service close. On normal completion
+        // both queues are already empty; this adds no transfer pacing/wait.
+        self.cancel_pending_wwr();
+    }
 }
 
 pub fn transfer_companion_ota_winrt(
@@ -85,6 +98,31 @@ pub fn transfer_companion_ota_winrt(
 ) -> Result<CompanionOtaBleReport, String> {
     // Connection-params request is held on `target` for the whole transfer.
     let mut target = open_ota_target(requested_device_id)?;
+    let actual_mtu = wait_ota_mtu(&target, wba_manifest.is_some())?;
+    if wba_manifest.is_some() {
+        let readiness = read_wba_readiness(&target)?;
+        eprintln!("[companion-ota] device_preflight blockers={} battery_percent={:?} minimum_required_mv={} signed_manifest_still_required=1",
+            readiness.blockers, readiness.battery_percent, readiness.minimum_required_mv);
+        readiness.check_preflight()?;
+    }
+    let wba_flow=if wba_manifest.is_some() {
+        let capability=read_characteristic_bytes_with_timeout(&target.status,BluetoothCacheMode::Uncached,
+            "WBA OTA packet capability",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+        let supports_wwr=target.data.CharacteristicProperties()
+            .map_err(|e|format!("WBA OTA DATA properties: {e}"))?
+            .contains(GattCharacteristicProperties::WriteWithoutResponse);
+        let flow=super::ota_flow::WbaFlow::from_status(&capability,supports_wwr)?;
+        target.data_write_option=if flow.pipelined {GattWriteOption::WriteWithoutResponse}
+            else {GattWriteOption::WriteWithResponse};
+        Some(flow)
+    } else {None};
+    let board_limit=wba_flow.map(|flow|flow.payload_bytes).unwrap_or(244);
+    // Package validation emits240; the generic transport default is244.
+    // Grow either only through the explicit, parsed WBA capacity. The actual
+    // MTU and board limit below remain authoritative; WB stays unchanged.
+    let requested=wba_flow.map(|flow|flow.preferred_payload(chunk_bytes)).unwrap_or(chunk_bytes);
+    let chunk_bytes = ota_payload_for_mtu(requested, actual_mtu, wba_manifest.is_some(),board_limit)?;
+    eprintln!("[companion-ota] actual_att_mtu={actual_mtu} selected_file_payload={chunk_bytes}");
     let manifest_char=open_write_char(&target._service,
         GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"WBA signed manifest").ok();
     match (wba_manifest, manifest_char.as_ref()) {
@@ -101,7 +139,15 @@ pub fn transfer_companion_ota_winrt(
                 let accepted=read_characteristic_bytes_with_timeout(characteristic,BluetoothCacheMode::Uncached,
                     "WBA manifest acceptance",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
                 if accepted.as_slice()==receipt {break;}
-                if Instant::now()>=deadline {return Err("WBA rejected the signed manifest (key, target, version or device busy); no payload was sent".into());}
+                if Instant::now()>=deadline {
+                    // A recording/power condition may have changed since the
+                    // preflight. Read its current device reason once, never a
+                    // cached snapshot or our own unverified manifest write.
+                    if let Ok(current) = read_wba_readiness(&target) {
+                        if let Some(reason) = current.blocker_message() { return Err(reason); }
+                    }
+                    return Err("设备未接受签名升级包，请核对签名、板型和版本；尚未发送固件内容。".into());
+                }
                 std::thread::sleep(Duration::from_millis(50));
             }
         }
@@ -114,7 +160,9 @@ pub fn transfer_companion_ota_winrt(
     } else {
         eprintln!("[companion-ota] single-lane DATA only (no DATA_B on device)");
     }
-    eprintln!("[companion-ota] host=WinRT/denzic-ble-windows (Listener-aligned dual WWR pipeline)");
+    eprintln!("[companion-ota] host=WinRT/denzic-ble-windows target={} data_write={:?} dual_available={}",
+        if wba_manifest.is_some() { "WBA_signed" } else { "WB_legacy" },
+        target.data_write_option, target.data_b.is_some());
 
     // Preferred CI only sticks while the Request object is kept alive on the
     // *same* BluetoothLEDevice as the GATT session. Python subprocess / separate
@@ -134,7 +182,7 @@ pub fn transfer_companion_ota_winrt(
                     "[companion-ota] winrt_pref=ThroughputOptimized held_on_device={}",
                     target.device_id
                 );
-                target._conn_pref_request = Some(req);
+                target._conn_pref_request = Some(denzic_ble_windows::ScopedBleResource::new(req));
                 // Let controller apply CI before blasting WWR.
                 std::thread::sleep(Duration::from_millis(700));
             }
@@ -150,17 +198,19 @@ pub fn transfer_companion_ota_winrt(
         );
     }
 
-    let pipeline = WWR_PIPELINE_DEPTH;
+    let pipeline = wba_flow.map(|flow|flow.pipeline_depth()).unwrap_or(WWR_PIPELINE_DEPTH);
     eprintln!(
-        "[companion-ota] wwr_pipeline_depth={pipeline} per_lane={} dual={}",
-        (pipeline + 1) / 2,
+        "[companion-ota] data_write={:?} pipeline_depth={} per_lane={} dual={}",
+        target.data_write_option,
+        pipeline,
+        if wba_manifest.is_some() { pipeline } else { (pipeline + 1) / 2 },
         target.data_b.is_some()
     );
 
     let mut options = denzic_ota_core::TransferOptions::dual_lane_bulk(chunk_bytes);
     options.chunk_payload_bytes = chunk_bytes;
-    options.window_chunks = if wba_manifest.is_some() {8} else {WINDOW_CHUNKS};
-    options.inactive_link_window_chunks = Some(if wba_manifest.is_some() {8} else {INACTIVE_LINK_WINDOW_CHUNKS});
+    options.window_chunks = wba_flow.map(|flow|flow.window_chunks).unwrap_or(WINDOW_CHUNKS);
+    options.inactive_link_window_chunks = Some(wba_flow.map(|flow|flow.window_chunks).unwrap_or(INACTIVE_LINK_WINDOW_CHUNKS));
     options.prefer_dual_lane = wba_manifest.is_none();
     eprintln!(
         "[companion-ota] bulk options window_chunks={} prefer_dual_lane={} inactive_link={:?} chunk_payload={} dual_lane_available={}",
@@ -177,9 +227,15 @@ pub fn transfer_companion_ota_winrt(
         pending_wwr_b: Vec::with_capacity(pipeline),
         status_error_started: None,
         wba_signed: wba_manifest.is_some(),
+        pipeline_depth: pipeline,
+        system_component: None,
     };
 
-    let report = denzic_ota_core::transfer(&mut transport, firmware, options, |_, _| {})
+    let progress_started = Instant::now();
+    let mut payload_window = super::ota_metrics::PayloadWindow::default();
+    let report = denzic_ota_core::transfer(&mut transport, firmware, options, |accepted, total| {
+        payload_window.observe(accepted, total, progress_started.elapsed());
+    })
         .map_err(|e| e.to_string())?;
     if wba_manifest.is_some() {
         // FINISH means bytes arrived. WBA must additionally finish readback
@@ -200,10 +256,15 @@ pub fn transfer_companion_ota_winrt(
 
     let total_ms = report.timings.total.as_secs_f64().max(0.001);
     let transport_ms = report.timings.transport_elapsed().as_secs_f64().max(0.001);
-    let bulk_kb_s = (report.firmware_bytes as f64 / 1024.0) / total_ms;
-    let transport_kb_s = (report.firmware_bytes as f64 / 1024.0) / transport_ms;
+    let payload_metrics = payload_window.finish(&report,wba_manifest.is_some());
+    let new_bytes = report.firmware_bytes.saturating_sub(report.resumed_bytes);
+    let bulk_kb_s = payload_metrics.actual_payload_kib_s
+        .map(|rate| format!("{rate:.2}")).unwrap_or_else(|| "not_measured".into());
+    // Sum of API call durations is a diagnostic, never the speed gate.
+    let transport_kb_s = (new_bytes as f64 / 1024.0) / transport_ms;
+    eprintln!("firmware_ota_payload_metrics {}",serde_json::to_string(&payload_metrics).map_err(|e|e.to_string())?);
     eprintln!(
-        "[companion-ota] bulk_kb_s={:.1} transport_kb_s={:.1} bytes={} data_writes={} status_reads={} dual={} active_link={} recovered_offsets={} elapsed_ms={:.0} transport_ms={:.0}",
+        "[companion-ota] bulk_kb_s={} transport_call_only_kib_s={:.1} bytes={} data_writes={} status_reads={} dual={} active_link={} recovered_offsets={} elapsed_ms={:.0} transport_ms={:.0}",
         bulk_kb_s,
         transport_kb_s,
         report.firmware_bytes,
@@ -216,18 +277,129 @@ pub fn transfer_companion_ota_winrt(
         transport_ms * 1000.0
     );
     eprintln!(
-        "firmware_ota_report bulk_kb_s={:.2} protocol_ms={:.0} wall_ms={:.0} bytes={} data_writes={} chunk_note=WB_SAFE_ATT_le_244 host=winrt_dual_wwr",
+        "firmware_ota_report bulk_kb_s={} protocol_ms={:.0} wall_ms={:.0} bytes={} data_writes={} target={} actual_att_mtu={} file_payload={} data_write={:?} dual={}",
         bulk_kb_s,
         total_ms * 1000.0,
         total_ms * 1000.0,
         report.firmware_bytes,
-        report.data_writes
+        report.data_writes,
+        if wba_manifest.is_some() { "WBA_signed" } else { "WB_legacy" },
+        actual_mtu, chunk_bytes, target.data_write_option, options.prefer_dual_lane && target.data_b.is_some()
     );
 
     Ok(CompanionOtaBleReport {
         device_id: target.device_id.clone(),
         transfer: report,
+        payload_metrics,
+        system_bundle: None,
     })
+}
+
+pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
+    let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
+    let mtu=wait_ota_mtu(&target,true)?;
+    if mtu<455{return Err(format!("整套签名需要ATT MTU至少455，当前{mtu}；尚未发送升级内容"));}
+    read_wba_readiness(&target)?.check_preflight()?;
+    let bytes=read_characteristic_bytes_with_timeout(&target.status,BluetoothCacheMode::Uncached,
+        "整套OTA能力",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+    let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
+    let flow=super::ota_flow::WbaFlow::from_pair_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
+    target.data_write_option=if flow.pipelined {GattWriteOption::WriteWithoutResponse}else{GattWriteOption::WriteWithResponse};
+    // Match sealed recording's normal bootstrap: Balanced only until the peer
+    // accepts ownership; no old permanent ThroughputOptimized or fixed700ms.
+    if let Some(device)=target._device.as_ref() {
+        if let Ok(p)=BluetoothLEPreferredConnectionParameters::Balanced() {
+            if let Ok(r)=device.RequestPreferredConnectionParameters(&p) {target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(r));}
+        }
+    }
+    let manifest=open_write_char(&target._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"整套签名")?;
+    let crc=crc32fast::hash(&package.wire[..448]);let mut accepted=[0u8;8];accepted[..4].copy_from_slice(b"WMA2");accepted[4..].copy_from_slice(&crc.to_le_bytes());
+    write_gatt_value_with_timeout(&manifest,&package.wire,GattWriteOption::WriteWithResponse,OTA_WRITE_TIMEOUT,"整套签名")?;
+    let mut joint=[0u8;40];joint[..4].copy_from_slice(b"WMC2");joint[4..36].copy_from_slice(&package.wire[64..96]);joint[36..].copy_from_slice(&crc.to_le_bytes());
+    let deadline=Instant::now()+OTA_WRITE_TIMEOUT;
+    loop {
+        let receipt=read_characteristic_bytes_with_timeout(&manifest,BluetoothCacheMode::Uncached,"整套签名验证",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+        if receipt==accepted || receipt==joint {break;}
+        if Instant::now()>=deadline {
+            if let Ok(r)=read_wba_readiness(&target){if let Some(reason)=r.blocker_message(){return Err(reason);}}
+            return Err("设备未验证整套签名／版本／可用空间；没有发送固件或资源".into());
+        }
+        std::thread::sleep(Duration::from_millis(50));
+    }
+    drop(target._conn_pref_request.take());
+    let payload=ota_payload_for_mtu(flow.payload_bytes,mtu,true,flow.payload_bytes)?;
+    let mut options=denzic_ota_core::TransferOptions::dual_lane_bulk(payload);
+    options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
+    let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(flow.pipeline_depth()),pending_wwr_b:Vec::new(),
+        status_error_started:None,wba_signed:true,pipeline_depth:flow.pipeline_depth(),system_component:Some(0)};
+    let mut reports=Vec::new();let mut metrics=Vec::new();let mut first=None;let mut last=None;
+    for (index,p) in [&package.firmware,&package.resources].into_iter().enumerate() {
+        transport.system_component=Some(index as u8);let mut window=super::ota_metrics::PayloadWindow::default();
+        let mut had_new=false;let mut component_done=false;
+        let report=denzic_ota_core::transfer(&mut transport,p,options,|accepted,total|{
+            let at=started.elapsed();window.observe(accepted,total,at);
+            if accepted<total {had_new=true;if first.is_none(){first=Some(at);}}
+            if had_new&&accepted==total&&!component_done {last=Some(at);component_done=true;}
+        }).map_err(|e|format!("{}传输未完成，设备保留耐久前缀，可用同一整套包继续：{e}",if index==0 {"固件"}else{"资源"}))?;
+        metrics.push(window.finish(&report,true));reports.push(report);
+    }
+    drop(transport);let device_id=target.device_id.clone();
+    // FINISH is only receipt of both payloads. Keep this connection until the
+    // expected install reboot, then reopen ONLY the same address. No reset or
+    // arbitrary reconnect is injected; all owned WinRT handles close first.
+    let mut connection=Some(target);let deadline=Instant::now()+Duration::from_secs(240);let mut last_error=String::new();
+    loop {
+        if Instant::now()>=deadline {return Err(format!("固件和资源已传入，但尚未取得同一整套版本的启动／空间释放确认；可用同包继续。最后状态：{last_error}"));}
+        if connection.is_none() {
+            match open_ota_target(Some(&device_id)) {Ok(t)=>connection=Some(t),Err(e)=>{last_error=e;std::thread::sleep(Duration::from_millis(500));continue;}}
+        }
+        let t=connection.as_ref().unwrap();
+        let result=open_write_char(&t._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"整套启动确认")
+            .and_then(|c|read_characteristic_bytes_with_timeout(&c,BluetoothCacheMode::Uncached,"整套启动确认",STATUS_READ_TIMEOUT,&BleCancel::NONE));
+        match result {
+            Ok(r) if r==joint=>break,
+            Ok(_)=>{std::thread::sleep(Duration::from_millis(100));},
+            Err(e)=>{last_error=e;drop(connection.take());std::thread::sleep(Duration::from_millis(500));},
+        }
+    }
+    let new_bytes=metrics.iter().map(|m|m.new_payload_bytes).sum();
+    let resumed=reports.iter().map(|r|r.resumed_bytes).sum();
+    let elapsed=first.and_then(|a|last.and_then(|b|b.checked_sub(a)));
+    let payload_metrics=super::ota_metrics::PayloadMetrics::paired(new_bytes,resumed,elapsed);
+    let mut total=reports.remove(0);let ui=reports.remove(0);
+    total.firmware_bytes+=ui.firmware_bytes;total.resumed_bytes+=ui.resumed_bytes;total.data_writes+=ui.data_writes;total.status_reads+=ui.status_reads;
+    total.recovered_offsets+=ui.recovered_offsets;total.active_link_confirmed &= ui.active_link_confirmed;total.finish_confirmed &=ui.finish_confirmed;
+    total.timings.total=started.elapsed();total.timings.connect+=ui.timings.connect;total.timings.data_write+=ui.timings.data_write;
+    total.timings.control_write+=ui.timings.control_write;total.timings.status_read+=ui.timings.status_read;total.timings.status_retry_wait+=ui.timings.status_retry_wait;
+    let system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
+        "receipt":"WMC2-full-bundle-id","firmwareBytes":package.firmware.len(),"resourceBytes":package.resources.len(),
+        "componentPayloadMetrics":metrics,"installationElapsedMs":started.elapsed().as_millis()}));
+    Ok(CompanionOtaBleReport{device_id,transfer:total,payload_metrics,system_bundle})
+}
+
+fn read_wba_readiness(target: &OpenOtaTarget) -> Result<super::ota_readiness::Readiness, String> {
+    let device = target._device.as_ref().ok_or("无法确认设备升级条件：缺少本次设备连接，尚未发送固件。")?;
+    let cancel = BleCancel::NONE;
+    let op = device.GetGattServicesForUuidWithCacheModeAsync(
+        GUID::from_u128(super::ota_readiness::SERVICE_UUID), BluetoothCacheMode::Uncached)
+        .map_err(|e| format!("读取设备升级条件失败，尚未发送固件：{e}"))?;
+    let result = wait_async_operation_with_cancel(op, DISCOVERY_TIMEOUT, "WBA upgrade readiness service", &cancel)?;
+    if result.Status().map_err(|e| e.to_string())? != GattCommunicationStatus::Success {
+        return Err("无法读取设备升级条件，尚未发送固件。".into());
+    }
+    let services = result.Services().map_err(|e| e.to_string())?;
+    // These services belong only to this read. Close them on every exit; the
+    // device/session and the OTA service continue to belong to target.
+    let mut owned = Vec::new();
+    for i in 0..services.Size().map_err(|e| e.to_string())? {
+        owned.push(denzic_ble_windows::ScopedBleResource::new(services.GetAt(i).map_err(|e| e.to_string())?));
+    }
+    if owned.len() != 1 { return Err("无法确认唯一的设备升级状态服务，尚未发送固件。".into()); }
+    let characteristic = open_read_char(&owned[0],
+        GUID::from_u128(super::ota_readiness::CHARACTERISTIC_UUID), "WBA upgrade readiness")?;
+    let bytes = read_characteristic_bytes_with_timeout(&characteristic, BluetoothCacheMode::Uncached,
+        "WBA upgrade readiness", STATUS_READ_TIMEOUT, &cancel)?;
+    super::ota_readiness::Readiness::parse(&bytes)
 }
 
 fn open_ota_target(requested_device_id: Option<&str>) -> Result<OpenOtaTarget, String> {
@@ -340,7 +512,8 @@ fn open_ota_target_for_address(
     device_id_label: &str,
 ) -> Result<OpenOtaTarget, String> {
     let cancel = BleCancel::NONE;
-    let device = open_ble_device_with_timeout(address, DISCOVERY_TIMEOUT, false, &cancel)?;
+    let device = denzic_ble_windows::ScopedBleResource::new(
+        open_ble_device_with_timeout(address, DISCOVERY_TIMEOUT, false, &cancel)?);
     // Always label with the radio address from the open handle (not service-id UUID crumbs).
     let label = device
         .BluetoothAddress()
@@ -357,14 +530,12 @@ fn open_ota_target_for_address(
         .Status()
         .map_err(|e| format!("OTA services status: {e}"))?;
     if status != GattCommunicationStatus::Success {
-        let _ = device.Close();
         return Err(format!("OTA services status={status:?}"));
     }
     let services = services_result
         .Services()
         .map_err(|e| format!("OTA services list: {e}"))?;
     if services.Size().unwrap_or(0) == 0 {
-        let _ = device.Close();
         return Err("OTA service not present on device".to_string());
     }
     let service = services.GetAt(0).map_err(|e| format!("OTA service: {e}"))?;
@@ -385,9 +556,15 @@ fn open_ota_target_for_service_id(
 
 fn open_chars_from_service(
     service: GattDeviceService,
-    device: Option<BluetoothLEDevice>,
+    device: Option<denzic_ble_windows::ScopedBleResource<BluetoothLEDevice>>,
     device_id_label: &str,
 ) -> Result<OpenOtaTarget, String> {
+    // Acquire ownership before access/characteristic checks can return early.
+    // Device first, then service/session: early local exits also close in the
+    // reverse order, while final target fields define their explicit order.
+    let device = device.or_else(|| reopen_device_from_service(&service)
+        .map(denzic_ble_windows::ScopedBleResource::new));
+    let service = denzic_ble_windows::ScopedBleResource::new(service);
     let cancel = BleCancel::NONE;
     if let Ok(op) = service.RequestAccessAsync() {
         if let Ok(access) =
@@ -400,10 +577,6 @@ fn open_chars_from_service(
     }
     // Prefer an explicit device handle; otherwise reopen from the service DeviceId
     // so ThroughputOptimized can be held for the transfer lifetime.
-    let device = match device {
-        Some(d) => Some(d),
-        None => reopen_device_from_service(&service),
-    };
     let resolved_id = device
         .as_ref()
         .and_then(|d| d.BluetoothAddress().ok())
@@ -467,9 +640,9 @@ fn apply_throughput_optimized(
         .map_err(|e| format!("RequestPreferredConnectionParameters: {e}"))
 }
 
-fn prepare_gatt_session(service: &GattDeviceService) -> Result<Option<GattSession>, String> {
+fn prepare_gatt_session(service: &GattDeviceService) -> Result<Option<denzic_ble_windows::ScopedBleResource<GattSession>>, String> {
     let session = match service.Session() {
-        Ok(s) => s,
+        Ok(s) => denzic_ble_windows::ScopedBleResource::new(s),
         Err(_) => return Ok(None),
     };
     let deadline = Instant::now() + GATT_READY_TIMEOUT;
@@ -485,6 +658,81 @@ fn prepare_gatt_session(service: &GattDeviceService) -> Result<Option<GattSessio
     // Best-effort: continue without active session flag.
     let _ = session.SetMaintainConnection(true);
     Ok(Some(session))
+}
+
+fn wb_sync_settle(wba_signed: bool, option: GattWriteOption, is_sync: bool) -> bool {
+    !wba_signed && option == GattWriteOption::WriteWithoutResponse && is_sync
+}
+
+fn wait_ota_mtu(target: &OpenOtaTarget, wba_signed: bool) -> Result<u16, String> {
+    let session = target._session.as_ref()
+        .ok_or("Cannot obtain this connection's ATT MTU; OTA has not started")?;
+    let started = Instant::now();
+    let minimum = if wba_signed { super::ble_mtu::SIGNED_OTA_MIN_MTU } else { 24 };
+    let wait = super::ble_mtu::MtuWait::new("OTA", minimum, GATT_READY_TIMEOUT);
+    loop {
+        let mtu = session.MaxPduSize().map_err(|e| format!("OTA actual ATT MTU: {e}"))?;
+        if let Some(mtu) = wait.observe(mtu, started.elapsed())? { return Ok(mtu); }
+        std::thread::sleep(Duration::from_millis(50).min(GATT_READY_TIMEOUT.saturating_sub(started.elapsed())));
+    }
+}
+
+#[cfg(test)]
+fn wba_payload_capability(status:&[u8])->Result<u16,String> {
+    super::ota_flow::WbaFlow::from_status(status,false).map(|flow|flow.payload_bytes)
+}
+fn ota_payload_for_mtu(requested: u16, mtu: u16, wba_signed: bool, board_limit:u16) -> Result<u16, String> {
+    // Bound real writes by peer capability and actual ATT MTU. WBA assembles
+    // SDK HCI fragments before durable DOV1 acknowledgement; no prepared write
+    // is needed because a value never exceeds the negotiated MTU minus3.
+    if requested == 0 || mtu <= 23 || (wba_signed && mtu < 147) {
+        return Err(format!("ATT MTU {mtu} cannot carry this OTA protocol; no manifest or payload was sent"));
+    }
+    let board_limit=if wba_signed {board_limit.min(505)} else {244};
+    Ok(requested.min(mtu.saturating_sub(7)).min(board_limit))
+}
+
+#[cfg(test)]
+mod mtu_tests {
+    use super::{ota_payload_for_mtu, wba_payload_capability, wb_sync_settle, GattWriteOption};
+
+    #[test]
+    fn large_ota_requires_peer_capability_and_actual_mtu() {
+        let mut s=vec![0u8;24];s[..4].copy_from_slice(b"DOV1");s[4]=1;
+        assert_eq!(wba_payload_capability(&s).unwrap(),240);
+        s.extend_from_slice(b"WOC1");s.extend_from_slice(&505u16.to_le_bytes());s.extend_from_slice(&509u16.to_le_bytes());
+        assert_eq!(wba_payload_capability(&s).unwrap(),505);
+        assert_eq!(ota_payload_for_mtu(505,512,true,505).unwrap(),505);
+        assert_eq!(ota_payload_for_mtu(505,251,true,505).unwrap(),244);
+        assert_eq!(ota_payload_for_mtu(505,512,true,240).unwrap(),240);
+        s[31]=0;assert!(wba_payload_capability(&s).is_err());
+    }
+    #[test]
+    fn wba_window_does_not_inherit_the_wb_wwr_delay() {
+        assert!(!wb_sync_settle(true, GattWriteOption::WriteWithResponse, true));
+        assert!(!wb_sync_settle(true, GattWriteOption::WriteWithoutResponse, true));
+        assert!(!wb_sync_settle(false, GattWriteOption::WriteWithResponse, true));
+        assert!(!wb_sync_settle(false, GattWriteOption::WriteWithoutResponse, false));
+        assert!(wb_sync_settle(false, GattWriteOption::WriteWithoutResponse, true));
+    }
+
+    #[test]
+    fn uses_actual_mtu_and_wba_attribute_limit() {
+        assert_eq!(ota_payload_for_mtu(244, 517, true, 240).unwrap(), 240);
+        assert_eq!(ota_payload_for_mtu(244, 251, true, 240).unwrap(), 240);
+        assert_eq!(ota_payload_for_mtu(244, 185, true, 240).unwrap(), 178);
+        assert_eq!(ota_payload_for_mtu(100, 185, true, 240).unwrap(), 100);
+        assert_eq!(ota_payload_for_mtu(244, 247, false, 244).unwrap(), 240);
+        assert_eq!(ota_payload_for_mtu(244, 251, false, 244).unwrap(), 244);
+    }
+
+    #[test]
+    fn refuses_unnegotiated_or_unrepresentable_manifest_before_writes() {
+        assert!(ota_payload_for_mtu(244, 23, true, 240).is_err());
+        assert!(ota_payload_for_mtu(244, 146, true, 240).is_err());
+        assert!(ota_payload_for_mtu(0, 251, true, 240).is_err());
+        assert_eq!(ota_payload_for_mtu(244, 147, true, 240).unwrap(), 140);
+    }
 }
 
 fn open_write_char(
@@ -584,10 +832,10 @@ impl CompanionOtaWinrtTransport<'_> {
                     {
                         windows::Foundation::AsyncStatus::Completed => {
                             let operation = pending.remove(index);
-                            let status = operation
-                                .GetResults()
-                                .map_err(|err| format!("BLE {label} write result failed: {err}"))?;
+                            let result = operation.GetResults();
                             let _ = operation.Close();
+                            let status = result
+                                .map_err(|err| format!("BLE {label} write result failed: {err}"))?;
                             if status != GattCommunicationStatus::Success {
                                 return Err(format!(
                                     "BLE {label} write returned status={status:?}"
@@ -635,11 +883,11 @@ impl CompanionOtaWinrtTransport<'_> {
     }
 
     fn enqueue_wwr_data_write(&mut self, packet: &[u8], lane_b: bool) -> Result<(), String> {
-        let dual = self.target.data_b.is_some();
+        let dual = !self.wba_signed && self.target.data_b.is_some();
         let depth_per_lane = if dual {
-            (WWR_PIPELINE_DEPTH + 1) / 2
+            (self.pipeline_depth + 1) / 2
         } else {
-            WWR_PIPELINE_DEPTH
+            self.pipeline_depth
         };
 
         if lane_b {
@@ -672,7 +920,7 @@ impl CompanionOtaWinrtTransport<'_> {
         let total = self.pending_wwr.len() + self.pending_wwr_b.len();
         if self.pending_wwr.len() > max_a
             || self.pending_wwr_b.len() > max_b
-            || total >= WWR_PIPELINE_DEPTH
+            || total >= self.pipeline_depth
         {
             self.drain_pending_wwr_until(max_a, max_b)?;
         }
@@ -685,6 +933,9 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         &mut self,
         packet: &[u8; denzic_ota_core::CONTROL_BYTES],
     ) -> Result<(), String> {
+        let mut selected=*packet;
+        if let Some(c)=self.system_component {selected[6]=c;selected[7]=0xB2;}
+        let packet=&selected;
         if packet[4] == denzic_ota_core::OP_ABORT {
             self.cancel_pending_wwr();
             return write_gatt_value_with_timeout(
@@ -699,10 +950,10 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         self.flush_pending_wwr()?;
         let is_sync = packet[4] == denzic_ota_core::OP_SYNC;
         let is_begin = packet[4] == denzic_ota_core::OP_BEGIN;
-        // WB flash lags host WWR completion. A short settle after drain cuts
-        // ERROR_OFFSET_MISMATCH recoveries (window-halving thrash) more than it
-        // costs in wall time — measured thrash was the bulk gate killer.
-        if is_sync {
+        // The old WB WWR path needed settling after draining the host queue.
+        // WBA signed/acknowledged writes must use their device status instead
+        // of inheriting this per-window fixed delay.
+        if wb_sync_settle(self.wba_signed, self.target.data_write_option, is_sync) {
             std::thread::sleep(Duration::from_millis(25));
         }
         let label = match packet[4] {
@@ -773,6 +1024,10 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
             match self.enqueue_wwr_data_write(packet, false) {
                 Ok(()) => return Ok(()),
                 Err(e) => {
+                    if self.wba_signed {
+                        self.cancel_pending_wwr();
+                        return Err(e);
+                    }
                     if e.contains("stalled") {
                         return Err(e);
                     }
@@ -848,6 +1103,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         });
         match result {
             Ok(bytes) => {
+                if let Some(component)=self.system_component {super::ota_flow::WbaFlow::check_component(&bytes,component)?;}
                 self.status_error_started = None;
                 Ok(bytes)
             }
@@ -873,6 +1129,9 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         &mut self,
         packet: &[u8; denzic_ota_core::CONTROL_BYTES],
     ) -> Result<(), String> {
+        let mut selected=*packet;
+        if let Some(c)=self.system_component {selected[6]=c;selected[7]=0xB2;}
+        let packet=&selected;
         self.flush_pending_wwr()?;
         for attempt in 0..5 {
             match write_gatt_value_with_timeout(

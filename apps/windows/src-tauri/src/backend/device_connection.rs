@@ -32,6 +32,33 @@ impl Default for DeviceConnectionPreference {
 }
 
 impl DeviceConnectionPreference {
+    pub(crate) fn remember_confirmed_recorder_connect(&mut self,
+        action: crate::companion_v1::CompanionV1ControlAction,
+        snapshot: &crate::companion_v1::CompanionV1Snapshot, at: String) -> bool {
+        use crate::companion_v1::CompanionV1ControlAction as Action;
+        // Called only after recorder_control::apply completes its protected
+        // identity/journal observation. STOP/PAUSE/recovery are not user Connect.
+        if action != Action::DeviceConnect || snapshot.source != "firmware"
+            || snapshot.device.mode != "windowsNative" || !snapshot.connected
+            || !snapshot.device.connected
+            || snapshot.last_control.as_ref().is_none_or(|c| !c.accepted || c.action != action) {
+            return false;
+        }
+        self.remember_connected_probe("windows-native-connect", true,
+            snapshot.device.device_id.as_deref(), at)
+    }
+
+    /// A completed user Connect clears their earlier Disconnect for a live
+    /// recorder too. Discovery/configured/failed transports cannot do so.
+    pub(crate) fn remember_connected_probe(&mut self, mode: &str, ready: bool,
+        device_id: Option<&str>, at: String) -> bool {
+        if !ready || !matches!(mode, "windows-native-connect"
+            | "windows-native-connect-auto-upload" | "windows-native-connect-auto-upload-segmented") {
+            return false;
+        }
+        device_id.is_some_and(|id| self.remember_native_success(id, at))
+    }
+
     pub(crate) fn can_automatically_reconnect(&self) -> bool {
         self.auto_reconnect_enabled
             && !self.manual_disconnect
@@ -125,6 +152,83 @@ pub(super) fn save_to(path: &Path, preference: &DeviceConnectionPreference) -> R
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn protected_recorder_connect_retires_disconnect_but_other_controls_or_failed_observations_do_not() {
+        use crate::companion_v1::{fixture_snapshot, CompanionV1ControlAction as Action,
+            CompanionV1ControlEcho, COMPANION_V1_GATT_BOUNDARY};
+        let mut original = DeviceConnectionPreference::default();
+        original.remember_native_success("C8:92:FF:DD:3B:CA", "before".into());
+        original.set_auto_reconnect(false);
+        original.mark_manual_disconnect();
+        let mut snapshot = fixture_snapshot();
+        snapshot.source = "firmware".into();
+        snapshot.connected = true;
+        snapshot.device.connected = true;
+        snapshot.device.mode = "windowsNative".into();
+        snapshot.device.device_id = original.remembered_device_id.clone();
+        snapshot.last_control = Some(CompanionV1ControlEcho { action: Action::DeviceConnect,
+            characteristic_uuid: COMPANION_V1_GATT_BOUNDARY.meeting_control_uuid,
+            payload_hex: String::new(), accepted: true, message: "protected original confirmed".into() });
+        let mut preference = original.clone();
+        assert!(preference.remember_confirmed_recorder_connect(Action::DeviceConnect, &snapshot, "after".into()));
+        assert!(!preference.manual_disconnect);
+        assert!(!preference.auto_reconnect_enabled);
+        for action in [Action::MeetingRecoverControl, Action::MeetingStop, Action::MeetingPause,
+            Action::MeetingResume, Action::DeviceDisconnect] {
+            let mut preference = original.clone();
+            assert!(!preference.remember_confirmed_recorder_connect(action, &snapshot, "invalid".into()));
+            assert_eq!(preference, original);
+        }
+        for field in ["disconnected", "wrong_mode", "wrong_source", "unaccepted", "missing_echo", "unstable"] {
+            let mut candidate = snapshot.clone();
+            match field {
+                "disconnected" => candidate.device.connected = false,
+                "wrong_mode" => candidate.device.mode = "configured".into(),
+                "wrong_source" => candidate.source = "fixture".into(),
+                "unaccepted" => candidate.last_control.as_mut().unwrap().accepted = false,
+                "missing_echo" => candidate.last_control = None,
+                _ => candidate.device.device_id = Some("companion".into()),
+            }
+            let mut preference = original.clone();
+            assert!(!preference.remember_confirmed_recorder_connect(Action::DeviceConnect, &candidate, "invalid".into()), "{field}");
+            assert_eq!(preference, original);
+        }
+    }
+
+    #[test]
+    fn live_original_reconnect_clears_the_actual_manual_disconnect_without_enabling_auto_reconnect() {
+        let mut preference = DeviceConnectionPreference::default();
+        preference.remember_native_success("C8:92:FF:DD:3B:CA", "before".into());
+        preference.set_auto_reconnect(false);
+        preference.mark_manual_disconnect();
+        assert!(preference.manual_disconnect);
+        assert!(preference.remember_connected_probe("windows-native-connect", true,
+            Some("C8:92:FF:DD:3B:CA"), "after".into()));
+        assert!(!preference.manual_disconnect, "explicit live Connect must allow the bounded follower again");
+        assert!(!preference.auto_reconnect_enabled, "user's auto-reconnect setting is independent");
+        assert_eq!(preference.last_connected_at.as_deref(), Some("after"));
+    }
+
+    #[test]
+    fn no_successful_native_probe_never_clears_manual_disconnect() {
+        let mut preference = DeviceConnectionPreference::default();
+        preference.remember_native_success("C8:92:FF:DD:3B:CA", "before".into());
+        preference.mark_manual_disconnect();
+        let original = preference.clone();
+        for (mode, ready, id) in [("windows-native-connect", false, Some("C8:92:FF:DD:3B:CA")),
+            ("windows-native-scan", true, Some("C8:92:FF:DD:3B:CA")),
+            ("configured-native", true, Some("C8:92:FF:DD:3B:CA")),
+            ("windows-native-connect", true, None), ("windows-native-connect", true, Some("companion"))] {
+            assert!(!preference.remember_connected_probe(mode, ready, id, "invalid".into()));
+            assert_eq!(preference, original);
+        }
+        for mode in ["windows-native-connect-auto-upload", "windows-native-connect-auto-upload-segmented"] {
+            let mut successful = original.clone();
+            assert!(successful.remember_connected_probe(mode, true, Some("C8:92:FF:DD:3B:CA"), "valid".into()));
+            assert!(!successful.manual_disconnect);
+        }
+    }
 
     #[test]
     fn only_stable_native_address_can_arm_automatic_reconnect() {

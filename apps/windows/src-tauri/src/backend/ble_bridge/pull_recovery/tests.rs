@@ -96,7 +96,11 @@ fn transport_failures_retire_the_connection_but_one_bad_recording_stays_isolated
         "resume write: GattCommunicationStatus(1)", "not connected",
         "recording notification stream ended", "recording chunk notify timeout at offset=4",
         "recording transfer stalled after 3 resume requests at offset=4; original recording not consumed",
-        NATIVE_OVERRUN, RECEIVER_OVERRUN] { assert!(retire_connection(error), "{error}"); }
+        NATIVE_OVERRUN, RECEIVER_OVERRUN,
+        "sealed stream release failed before reclaim: native first lane release failed",
+        "sealed stream release failed before reclaim: recording lane 1 release timed out"] {
+        assert!(retire_connection(error), "{error}");
+    }
     for error in ["recording packet CRC mismatch", "final SHA mismatch", "unsupported recording codec: 9",
         "recording receive queue overflow in a recording title", super::super::super::recording_sync::PAUSED] {
         assert!(!retire_connection(error), "{error}");

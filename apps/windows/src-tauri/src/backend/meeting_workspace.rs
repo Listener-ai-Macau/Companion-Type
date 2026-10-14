@@ -295,7 +295,7 @@ pub(super) fn validate_wav(path: &std::path::Path) -> Result<(), String> {
     wav_duration_ms(path).map(|_| ())
 }
 
-pub(super) fn wav_duration_ms(path: &std::path::Path) -> Result<u64, String> {
+pub(crate) fn wav_duration_ms(path: &std::path::Path) -> Result<u64, String> {
     let mut duration_ms = None;
     let result = (|| -> std::io::Result<bool> {
         let mut file = File::open(path)?;

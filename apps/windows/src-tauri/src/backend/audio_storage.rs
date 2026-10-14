@@ -404,7 +404,7 @@ mod tests {
 
     fn product_session(path: &Path) -> CompanionV1HostSession {
         let bytes = fs::metadata(path).unwrap().len();
-        CompanionV1HostSession {
+        CompanionV1HostSession { recorder_control: None, recorder_control_uncertain: false, device_recording_key: None, 
             transcript_review: None,
             bookmark_revision: 0, bookmarks: vec![],
             note_revision: 0, meeting_notes: vec![],

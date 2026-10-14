@@ -125,7 +125,7 @@ pub(crate) fn run(args:&[String])->Option<Result<(),String>> {
         // Restart via the installed backend: do not hand-edit or inject a row.
         let restored=CompanionCoordinator::new_fixture(); let mut session=row(&restored,&id)?;
         if route=="offline" {
-            let paths=super::super::transcription_chunk_paths(&session);
+            let paths=super::super::transcription_chunk_paths(&session)?;
             if paths.len()!=1 || session.audio_path.as_deref()!=Some(paths[0].as_str())
                 || !Path::new(&paths[0]).is_file()
                 || session.chunks.iter().any(|s|s.path.as_deref()!=session.audio_path.as_deref())

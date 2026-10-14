@@ -1,4 +1,10 @@
-import { useEffect, useState, type RefObject } from 'react';
+import { useEffect, useRef, useState, type RefObject, type MutableRefObject } from 'react';
+
+export interface CompanionPauseTimeline {
+  capturedDurationMs: number;
+  gaps: Array<{ audioPositionMs: number; pausedAtMs: number; resumedAtMs: number | null;
+    durationMs: number | null; endedDuringPause: boolean }>;
+}
 
 const time = (seconds: number) => {
   const value = Math.max(0, Math.floor(seconds));
@@ -6,10 +12,12 @@ const time = (seconds: number) => {
 };
 
 /** Playback changes only this authorized original; it never edits the recording. */
-export function CompanionAudioPlayer({ src, playerRef, onError }: {
+export function CompanionAudioPlayer({ src, playerRef, onError, pauseTimeline, externalSeekRef }: {
   src: string;
   playerRef: RefObject<HTMLAudioElement>;
   onError: () => void;
+  pauseTimeline?: CompanionPauseTimeline | null;
+  externalSeekRef?: MutableRefObject<(() => void) | null>;
 }) {
   const [duration, setDuration] = useState(0);
   const [position, setPosition] = useState(0);
@@ -17,6 +25,8 @@ export function CompanionAudioPlayer({ src, playerRef, onError }: {
   const [start, setStart] = useState<number | null>(null);
   const [end, setEnd] = useState<number | null>(null);
   const [loop, setLoop] = useState(false);
+  const loopActive = useRef(loop);
+  loopActive.current = loop;
   const [message, setMessage] = useState('');
   const ready = Number.isFinite(duration) && duration > 0;
   const validRange = start != null && end != null && end - start >= 0.2 && end <= duration;
@@ -25,6 +35,12 @@ export function CompanionAudioPlayer({ src, playerRef, onError }: {
     const player = playerRef.current;
     return () => { player?.pause(); };
   }, [src, playerRef]);
+  useEffect(() => {
+    if (!externalSeekRef) return;
+    const reset = () => { loopActive.current = false; setLoop(false); };
+    externalSeekRef.current = reset;
+    return () => { if (externalSeekRef.current === reset) externalSeekRef.current = null; };
+  }, [src, externalSeekRef]);
 
   const current = () => {
     const player = playerRef.current;
@@ -51,7 +67,7 @@ export function CompanionAudioPlayer({ src, playerRef, onError }: {
   };
   const rewindLoop = () => {
     const player = playerRef.current;
-    if (!player || !loop || !validRange || start == null || end == null) return;
+    if (!player || !loopActive.current || !validRange || start == null || end == null) return;
     if (player.currentTime >= end || player.currentTime < start) {
       player.currentTime = start;
       setPosition(start);
@@ -74,7 +90,7 @@ export function CompanionAudioPlayer({ src, playerRef, onError }: {
       onPlay={rewindLoop}
       onEnded={() => {
         const player = playerRef.current;
-        if (!player || !loop || !validRange || start == null) return;
+        if (!player || !loopActive.current || !validRange || start == null) return;
         player.currentTime = start;
         void player.play().catch(() => { setLoop(false); setMessage('循环播放已暂停，请点击播放继续。'); });
       }}
@@ -91,6 +107,21 @@ export function CompanionAudioPlayer({ src, playerRef, onError }: {
         }}>{[0.5, 0.75, 1, 1.25, 1.5, 2].map((value) => <option key={value} value={value}>{value}×</option>)}</select></label>
       <span>{time(position)} / {time(duration)}</span>
     </div>
+    {pauseTimeline && pauseTimeline.gaps.length > 0 ? <section aria-label="录音暂停记录">
+      <strong>暂停记录</strong>
+      <p>原音只保留实际录到的声音；暂停间隔单独记录，回听时会接着播放。</p>
+      <div className="ct-audio-tools">{pauseTimeline.gaps.map((gap, index) => <button
+        key={`${gap.pausedAtMs}:${index}`} type="button" className="ct-action" disabled={!ready}
+        title="定位到原音中的暂停位置，不自动播放" onClick={() => {
+          const player = playerRef.current;
+          if (!player || !ready) return;
+          setLoop(false); player.currentTime = Math.min(duration, Math.max(0, gap.audioPositionMs / 1000));
+          setPosition(player.currentTime);
+        }}>
+        {time(gap.audioPositionMs / 1000)} · {gap.durationMs == null ? '暂停后未确认继续'
+          : `暂停 ${(Math.round(gap.durationMs / 10) / 100).toFixed(2)} 秒${gap.endedDuringPause ? '后结束' : '后继续'}`}
+      </button>)}</div>
+    </section> : null}
     <div className="ct-audio-tools" aria-label="片段循环回听">
       <button type="button" className="ct-action" disabled={!ready} onClick={() => mark('start')}>设为起点 A</button>
       <button type="button" className="ct-action" disabled={!ready || start == null} onClick={() => mark('end')}>设为终点 B</button>

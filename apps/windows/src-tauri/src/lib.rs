@@ -21,6 +21,15 @@ use sha2::{Digest, Sha256};
 
 pub fn run() {
     let args = std::env::args().collect::<Vec<_>>();
+    if args.iter().any(|arg|arg=="--restore-local-recordings") {
+        let result=backend::recording_wire::receiver::restore_local_product();
+        let good=result.as_ref().is_ok_and(|report|report.failures.is_empty());
+        match result {
+            Ok(report)=>println!("local_recording_restore_json={}",serde_json::to_string(&report).unwrap()),
+            Err(error)=>eprintln!("local_recording_restore_error={error}"),
+        }
+        process::exit(if good {0} else {1});
+    }
     if let Some(result) = run_meeting_workspace_cli(&args) {
         if let Err(error) = &result { eprintln!("meeting_workspace_error={error}"); }
         process::exit(if result.is_ok() { 0 } else { 1 });
@@ -170,6 +179,10 @@ pub fn run() {
     if let Some(result) = run_firmware_ota_cli(&args) {
         process::exit(if result.is_ok() { 0 } else { 1 });
     }
+    if let Some(result) = run_recorder_control_cli(&args) {
+        if let Err(error) = &result { eprintln!("recorder_control_error={error}"); }
+        process::exit(if result.is_ok() { 0 } else { 1 });
+    }
     if let Some(result) = run_v1_real_meeting_cli(&args) {
         if let Err(err) = &result {
             eprintln!("v1_real_meeting_error={err}");
@@ -180,6 +193,10 @@ pub fn run() {
         if let Err(err) = &result {
             eprintln!("board_online_live_error={err}");
         }
+        process::exit(if result.is_ok() { 0 } else { 1 });
+    }
+    if let Some(result) = run_recording_upload_benchmark_cli(&args) {
+        if let Err(error) = &result { eprintln!("recording_upload_benchmark_error={error}"); }
         process::exit(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_sync_device_recording_cli(&args) {
@@ -208,8 +225,20 @@ pub fn run() {
     let _ = backend::product_settings::load_and_apply();
 
     let coordinator = Arc::new(CompanionCoordinator::new_fixture());
-    spawn_automatic_meeting_recovery(Arc::clone(&coordinator));
-    spawn_automatic_device_reconnect(Arc::clone(&coordinator));
+    let local_recovery=Arc::clone(&coordinator);
+    std::thread::spawn(move || {
+        // One startup recovery, not a periodic scan. File decode stays off the
+        // window thread; the operation/receiver leases serialize mutation.
+        match local_recovery.restore_local_recordings() {
+            Ok(report) if !report.restored.is_empty() || !report.failures.is_empty()=>
+                eprintln!("local_recording_restore_json={}",serde_json::to_string(&report).unwrap()),
+            Err(error)=>eprintln!("local_recording_restore_error={error}"),
+            _=>(),
+        }
+        spawn_automatic_meeting_recovery(Arc::clone(&local_recovery));
+        spawn_automatic_device_reconnect(Arc::clone(&local_recovery));
+        spawn_continuous_recording_sync(local_recovery);
+    });
     let board_online_live = Arc::new(commands::CompanionBoardOnlineLiveManager::new());
 
     tauri::Builder::default()
@@ -230,6 +259,7 @@ pub fn run() {
             commands::save_companion_meeting_note,
             commands::save_companion_bookmark,
             commands::prepare_companion_audio,
+            commands::prepare_companion_audio_with_timeline,
             commands::apply_companion_v1_control,
             commands::get_companion_recording_sync_status,
             commands::pause_companion_recording_sync,
@@ -376,6 +406,17 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
 }
 
 fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
+    if args.get(1).is_some_and(|a|a=="--recording-pause-timeline") {
+        return Some((|| {
+            if args.len()!=4 {return Err("--recording-pause-timeline requires original session ID and output path".into());}
+            let coordinator=CompanionCoordinator::new_fixture();
+            let _lease=coordinator.begin_audio_export()?;
+            let timeline=backend::recording_pause_view::prepare(&coordinator.snapshot()?,&args[2])?;
+            backend::export::write_atomic(Path::new(&args[3]),&serde_json::to_vec_pretty(&timeline).map_err(|e|e.to_string())?)?;
+            println!("recording_timeline_result=VERIFIED_LOCAL_SOURCE_ONLY");
+            Ok(())
+        })());
+    }
     if let Some(index) = args.iter().position(|arg| arg == "--export-session-audio") {
         return Some((|| {
             let id = args.get(index + 1).ok_or("--export-session-audio requires session ID and output path")?;
@@ -582,14 +623,40 @@ fn spawn_automatic_meeting_recovery(coordinator: Arc<CompanionCoordinator>) {
 fn should_attempt_device_reconnect(snapshot: &companion_v1::CompanionV1Snapshot) -> bool {
     snapshot.device.auto_reconnect_enabled
         && !snapshot.device.manual_disconnect
+        && (!backend::segmented_link_change_allowed(snapshot) || !snapshot.device.connected)
         && snapshot.device.remembered_device_id.is_some()
         && !matches!(snapshot.device.connection_phase.as_str(), "reconnecting" | "busy")
-        && !snapshot.meeting.active
+        && (backend::segmented_link_change_allowed(snapshot) || (!snapshot.meeting.active
         && !snapshot
             .host
             .sessions
             .iter()
-            .any(|session| session.status == "recording")
+            .any(|session| session.status == "recording")))
+}
+
+fn spawn_continuous_recording_sync(coordinator: Arc<CompanionCoordinator>) {
+    if std::env::var("COMPANION_TYPE_DISABLE_AUTO_RECOVERY").as_deref() == Ok("1") { return; }
+    std::thread::spawn(move || {
+        let mut failures = 0u32;
+        loop {
+            let work = coordinator.snapshot().and_then(|snapshot| {
+                if !snapshot.device.connected && backend::segmented_link_change_allowed(&snapshot)
+                    && should_attempt_device_reconnect(&snapshot) {
+                    coordinator.automatic_reconnect_once().map(|_| true)
+                } else { coordinator.follow_recording_once() }
+            });
+            let wait = match work {
+                Ok(active) => { failures = 0; if active { 2 } else { 10 } },
+                Err(error) if error.contains("device is busy with") => 2,
+                Err(error) => {
+                    failures = failures.saturating_add(1).min(5);
+                    eprintln!("[recording-follow] local audio/cursors kept; {error}");
+                    (1u64 << failures).min(60)
+                }
+            };
+            std::thread::sleep(std::time::Duration::from_secs(wait));
+        }
+    });
 }
 
 fn spawn_automatic_device_reconnect(coordinator: Arc<CompanionCoordinator>) {
@@ -641,6 +708,92 @@ fn spawn_automatic_device_reconnect(coordinator: Arc<CompanionCoordinator>) {
     });
 }
 
+/// Recover/control a durable original through the same coordinator as the GUI.
+/// No scan, replacement START, supplied audio, or fallback to another row.
+fn original_recorder_request(args: &[String]) -> Result<(companion_v1::CompanionV1ControlRequest, Option<PathBuf>), String> {
+    use companion_v1::CompanionV1ControlAction as Action;
+    let mut values = std::collections::BTreeMap::new();
+    let mut i = 1;
+    while i < args.len() {
+        let flag = &args[i];
+        if !matches!(flag.as_str(), "--recorder-control" | "--session-id" | "--device-id" | "--output") {
+            return Err(format!("原录音控制不接受参数 {flag}，未连接设备。"));
+        }
+        let value = args.get(i + 1).filter(|value| !value.trim().is_empty() && !value.starts_with("--"))
+            .ok_or_else(|| format!("{flag} 需要明确的值，未连接设备。"))?;
+        if values.insert(flag.as_str(), value.clone()).is_some() {
+            return Err(format!("{flag} 重复，未连接设备。"));
+        }
+        i += 2;
+    }
+    let action = match values.get("--recorder-control").map(String::as_str) {
+        Some("recover") => Action::MeetingRecoverControl,
+        Some("pause") => Action::MeetingPause,
+        Some("resume") => Action::MeetingResume,
+        Some("stop") => Action::MeetingStop,
+        Some("finalize") => Action::MeetingFinalize,
+        _ => return Err("原录音控制仅接受 recover/pause/resume/stop/finalize；不会开始新录音。".into()),
+    };
+    let host = values.get("--session-id").ok_or("必须指定原录音 --session-id，未选择其它会议。")?;
+    let mut request = control_request(action, Some(host.clone()));
+    request.device_id = values.get("--device-id").cloned();
+    Ok((request, values.get("--output").map(PathBuf::from)))
+}
+
+fn bind_original_recorder_request(snapshot: &companion_v1::CompanionV1Snapshot,
+    request: &mut companion_v1::CompanionV1ControlRequest) -> Result<(), String> {
+    if snapshot.host.persistence.status != "ready" { return Err("原录音库暂时不可读，未连接设备。".into()); }
+    let host = request.session_id.as_deref().ok_or("原录音行缺失。")?;
+    let row = snapshot.host.sessions.iter().find(|row| row.id == host).ok_or("指定原录音不存在，未创建替代会议。")?;
+    let journal = row.recorder_control.as_ref().ok_or("原录音没有耐久控制记录，未发送命令。")?;
+    let same = |a: &str, b: &str| a.eq_ignore_ascii_case(b);
+    if row.source != "boardDevice" || journal.host_session != host
+        || row.source_device_id.as_deref().is_none_or(|d| !same(d, &journal.device_id))
+        || request.device_id.as_deref().is_some_and(|d| !same(d, &journal.device_id)) {
+        return Err("指定行、设备与原控制身份不一致，未控制其它录音。".into());
+    }
+    request.device_id = Some(journal.device_id.clone());
+    Ok(())
+}
+
+fn run_recorder_control_cli(args: &[String]) -> Option<Result<(), String>> {
+    if !args.iter().any(|arg| arg == "--recorder-control") { return None; }
+    Some((|| {
+        let (mut request, output) = original_recorder_request(args)?;
+        let _ = backend::product_settings::load_and_apply();
+        let coordinator = CompanionCoordinator::new_fixture();
+        bind_original_recorder_request(&coordinator.snapshot()?, &mut request)?;
+        let host = request.session_id.clone().unwrap();
+        let result = coordinator.apply_control(request);
+        // Preserve the actual original after errors too: the product may have
+        // durably confirmed a command before receipt/another step failed.
+        let snapshot = coordinator.snapshot()?;
+        let row = snapshot.host.sessions.iter().find(|row| row.id == host).ok_or("控制后原录音行缺失。")?;
+        let payload = serde_json::json!({"result": if result.is_ok() {"ORIGINAL_CONTROL_CONFIRMED"} else {"ORIGINAL_CONTROL_FAILED_OR_UNCONFIRMED"},
+            "sessionId": host, "error": result.as_ref().err(), "meetingStatus": snapshot.meeting.status,
+            "connected": snapshot.device.connected, "recording": snapshot.device.recording,
+            "session": row, "lastControl": snapshot.last_control});
+        if let Some(path) = output { fs::write(&path, serde_json::to_vec_pretty(&payload).map_err(|e|e.to_string())?)
+            .map_err(|e| format!("保存原控制结果：{e}"))?; }
+        println!("recorder_control_result_json={payload}");
+        result.map(|_| ())
+    })())
+}
+
+fn capture_pause_schedule(args: &[String], seconds: u64, incompatible: bool) -> Result<Option<(u64,u64)>,String> {
+    let time = |flag: &str| -> Result<Option<u64>,String> {
+        let positions: Vec<usize> = args.iter().enumerate().filter_map(|(i,a)|(a==flag).then_some(i)).collect();
+        if positions.len()>1 {return Err(format!("{flag} is repeated; no device command was sent"));}
+        positions.first().map(|i|args.get(i+1).ok_or_else(||format!("{flag} requires seconds"))?
+            .parse::<u64>().map_err(|_|format!("{flag} requires integer seconds"))).transpose()
+    };
+    match (time("--capture-pause-at")?,time("--capture-resume-at")?) {
+        (None,None)=>Ok(None),
+        (Some(pause),Some(resume)) if !incompatible && 0<pause && pause<resume && resume<seconds =>Ok(Some((pause,resume))),
+        _=>Err("Pause requires 0 < pause < resume < recording seconds; isolate it from disconnect/limit recovery before connecting".into()),
+    }
+}
+
 fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
     if !args.iter().any(|arg| arg == "--v1-real-meeting") {
         return None;
@@ -668,15 +821,35 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         // coordinator: let the actual board limit seal its original recording
         // and reconnect. No synthetic STOP acknowledgement or new process.
         let recover_after_limit = args.iter().any(|arg| arg == "--recover-after-limit");
+        let follow_original = args.iter().any(|arg| arg == "--follow-original-segments");
+        if follow_original && recover_after_limit {
+            return Err("An offline limit exercise cannot follow a disconnected original".into());
+        }
+        // These exercise the normal product's disconnect/connect actions while
+        // its original capture is still open. Actual radio loss is established
+        // separately by HCI/UART, never inferred from a reducer acknowledgement.
+        let capture_time = |flag: &str| -> Result<Option<u64>, String> {
+            args.iter().position(|arg| arg == flag).map(|i| {
+                args.get(i + 1).ok_or_else(|| format!("{flag} requires seconds"))?
+                    .parse::<u64>().map_err(|_| format!("{flag} requires integer seconds"))
+            }).transpose()
+        };
+        let capture_disconnect_at = capture_time("--capture-disconnect-at")?;
+        let capture_reconnect_at = capture_time("--capture-reconnect-at")?;
+        let capture_recovery = match (capture_disconnect_at, capture_reconnect_at) {
+            (None, None) => None,
+            (Some(disconnect), Some(reconnect))
+                if !recover_after_limit && 0 < disconnect && disconnect < reconnect && reconnect < seconds =>
+                    Some((disconnect, reconnect)),
+            _ => return Err("Capture recovery requires 0 < disconnect < reconnect < recording seconds and cannot combine with limit recovery".into()),
+        };
+        let capture_pause = capture_pause_schedule(args,seconds,recover_after_limit||capture_recovery.is_some()||follow_original)?;
         let coordinator = CompanionCoordinator::new_fixture();
 
-        let scan = coordinator.apply_control(control_request(
-            companion_v1::CompanionV1ControlAction::DeviceScan,
-            None,
-        ))?;
-        let device_id = requested_device
-            .or(scan.device.device_id)
-            .ok_or_else(|| "V1 real meeting scan returned no Companion device id".to_string())?;
+        let device_id = if let Some(id)=requested_device {id} else {
+            coordinator.apply_control(control_request(companion_v1::CompanionV1ControlAction::DeviceScan,None))?
+                .device.device_id.ok_or("Recording scan returned no Companion device id")?
+        };
         let mut connect =
             control_request(companion_v1::CompanionV1ControlAction::DeviceConnect, None);
         connect.device_id = Some(device_id.clone());
@@ -716,6 +889,8 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         let start_recording_id = started_session
             .device_recording_id
             .ok_or_else(|| "V1 START did not surface the board recording id".to_string())?;
+        let started_logical_key = started_session.device_recording_key.clone();
+        eprintln!("recording_capture_stage stage=started physical_anchor={} logical={}",start_recording_id,started_logical_key.is_some());
         let recovery_link_disconnected = if recover_after_limit {
             let mut disconnect = control_request(
                 companion_v1::CompanionV1ControlAction::DeviceDisconnect,
@@ -734,7 +909,94 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         // Follow the actual user path once. The product intentionally rejects
         // a new START while capture is active; that guard is not a second step
         // in normal recording and must not abort this STOP/receive exercise.
-        std::thread::sleep(std::time::Duration::from_secs(seconds + if recover_after_limit { 3 } else { 0 }));
+        let capture_started=std::time::Instant::now();
+        let capture_deadline=capture_started+std::time::Duration::from_secs(seconds + if recover_after_limit {3} else {0});
+        let mut followed_during_capture=false;
+        let mut sealed_segments_during_capture=0usize;
+        let mut capture_disconnect_requested=false;
+        let mut capture_reconnect_original_confirmed=false;
+        let mut pause_confirmed:Option<serde_json::Value>=None;
+        let mut resume_confirmed:Option<serde_json::Value>=None;
+        while std::time::Instant::now()<capture_deadline {
+            let poll = if capture_pause.is_some() {std::time::Duration::from_millis(100)}
+                else {std::time::Duration::from_secs(5)};
+            std::thread::sleep(capture_deadline.saturating_duration_since(std::time::Instant::now()).min(poll));
+            if let Some((pause_at,resume_at))=capture_pause {
+                let requested = if pause_confirmed.is_none() && capture_started.elapsed().as_secs()>=pause_at {
+                    Some((companion_v1::CompanionV1ControlAction::MeetingPause,4u8,3u8))
+                } else if pause_confirmed.is_some() && resume_confirmed.is_none() && capture_started.elapsed().as_secs()>=resume_at {
+                    Some((companion_v1::CompanionV1ControlAction::MeetingResume,5u8,1u8))
+                } else {None};
+                if let Some((action,command,state))=requested {
+                    let mut request=control_request(action,Some(session_id.clone()));
+                    request.device_id=Some(device_id.clone());
+                    let snapshot=coordinator.apply_control(request)?;
+                    let row=snapshot.host.sessions.iter().find(|row|row.id==session_id).ok_or("Pause control lost original row")?;
+                    let journal=row.recorder_control.as_ref().ok_or("Pause control lost original durable command")?;
+                    let confirmed=journal.confirmed.as_ref().ok_or("Pause control has no stable device reply")?;
+                    if journal.pending.is_some() || row.recorder_control_uncertain || confirmed.command!=command || confirmed.state!=state
+                        || row.device_recording_id!=Some(start_recording_id) || row.device_recording_key!=started_logical_key
+                        || journal.start_request!=started_session.recorder_control.as_ref().ok_or("Original START missing")?.start_request
+                        || !snapshot.meeting.active || row.status!="recording"
+                        || snapshot.device.recording!=(state==1) || snapshot.meeting.status!=if state==3 {"paused"} else {"recording"} {
+                        return Err("Pause/resume did not confirm the same stable original; no replacement START".into());
+                    }
+                    let observation=serde_json::json!({"elapsedMs":capture_started.elapsed().as_millis(),
+                        "journal":journal,"deviceRecording":snapshot.device.recording,"meetingStatus":snapshot.meeting.status,
+                        "durationMs":row.duration_ms,"physicalAnchor":start_recording_id,"logicalKey":row.device_recording_key});
+                    eprintln!("capture_pause stage={} elapsed_ms={} source_duration_ms={} sequence={} physical_anchor={} new_start_sent=false",
+                        if state==3 {"paused"} else {"resumed"},capture_started.elapsed().as_millis(),row.duration_ms,confirmed.sequence,start_recording_id);
+                    if state==3 {pause_confirmed=Some(observation);} else {resume_confirmed=Some(observation);}
+                }
+            }
+            if let Some((disconnect, reconnect))=capture_recovery {
+                if !capture_disconnect_requested && capture_started.elapsed().as_secs() >= disconnect {
+                    let mut request=control_request(companion_v1::CompanionV1ControlAction::DeviceDisconnect,
+                        Some(session_id.clone()));
+                    request.device_id=Some(device_id.clone());
+                    let snapshot=coordinator.apply_control(request)?;
+                    if snapshot.connected || snapshot.device.connected {
+                        return Err("Capture disconnect action did not release the product connection".into());
+                    }
+                    capture_disconnect_requested=true;
+                    eprintln!("capture_recovery stage=disconnect_requested elapsed_ms={} physical_anchor={} microphone_stop_sent=false radio_disconnect=await_hci",
+                        capture_started.elapsed().as_millis(), start_recording_id);
+                }
+                if capture_disconnect_requested && !capture_reconnect_original_confirmed
+                    && capture_started.elapsed().as_secs() >= reconnect {
+                    let mut request=control_request(companion_v1::CompanionV1ControlAction::DeviceConnect,
+                        Some(session_id.clone()));
+                    request.device_id=Some(device_id.clone());
+                    let snapshot=coordinator.apply_control(request)?;
+                    let row=snapshot.host.sessions.iter().find(|row|row.id==session_id)
+                        .ok_or("Capture reconnect lost the original library row")?;
+                    if !snapshot.connected || !snapshot.device.connected || !snapshot.device.recording
+                        || row.status!="recording" || row.device_recording_id!=Some(start_recording_id)
+                        || row.device_recording_key!=started_logical_key
+                        || row.recorder_control.as_ref().map(|j|j.start_request)
+                            != started_session.recorder_control.as_ref().map(|j|j.start_request) {
+                        return Err("Capture reconnect did not confirm the same still-recording original; no replacement START".into());
+                    }
+                    capture_reconnect_original_confirmed=true;
+                    eprintln!("capture_recovery stage=original_capture_reconnected elapsed_ms={} physical_anchor={} new_start_sent=false",
+                        capture_started.elapsed().as_millis(), start_recording_id);
+                }
+            }
+            if started_logical_key.is_some() && !recover_after_limit && capture_pause.is_none()
+                && (!capture_disconnect_requested || capture_reconnect_original_confirmed) {
+                let _ = if follow_original { coordinator.follow_original_recording_once(&session_id)? }
+                    else { coordinator.follow_recording_once()? };
+                let snapshot = coordinator.snapshot()?;
+                let row = snapshot.host.sessions.iter().find(|r| r.id == session_id)
+                    .ok_or("The original recording row disappeared during live receive")?;
+                if row.device_recording_key != started_logical_key || row.device_recording_id != Some(start_recording_id) {
+                    return Err("Live receive changed the original recording identity".into());
+                }
+                sealed_segments_during_capture = sealed_segments_during_capture.max(
+                    row.chunks.iter().filter(|c| c.status == "sealed").count());
+                followed_during_capture = sealed_segments_during_capture > 0;
+            }
+        }
 
         let mut stop = control_request(
             companion_v1::CompanionV1ControlAction::MeetingStop,
@@ -742,12 +1004,26 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         );
         stop.device_id = Some(device_id.clone());
         let stop_requested_at = std::time::Instant::now();
-        let stopped = if recover_after_limit {
+        let mut stopped = if recover_after_limit {
             let mut reconnect = control_request(
                 companion_v1::CompanionV1ControlAction::DeviceConnect, Some(session_id.clone()));
             reconnect.device_id = Some(device_id.clone());
             coordinator.apply_control(reconnect)?
         } else { coordinator.apply_control(stop)? };
+        if recover_after_limit && stopped.host.sessions.iter().any(|row|
+            row.id == session_id && row.source == "boardDevice" && row.status == "captured"
+                && row.device_recording_id == Some(start_recording_id)
+                && row.device_recording_key == started_logical_key && !row.audio_stored)
+        {
+            // Isolated capture intentionally disables automatic backlog pulls.
+            // After the protected probe closes this original meeting, explicitly
+            // use the product sync action; never send STOP or create another START.
+            eprintln!("offline_recovery stage=explicit_original_receive microphone_stop_sent=false");
+            let mut sync = control_request(
+                companion_v1::CompanionV1ControlAction::DeviceSyncRecordings, Some(session_id.clone()));
+            sync.device_id = Some(device_id.clone());
+            stopped = coordinator.apply_control(sync)?;
+        }
         let stop_to_durable_receive_ms = stop_requested_at.elapsed().as_millis();
         let stop_session = stopped
             .host
@@ -758,14 +1034,17 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         let recording_id = stop_session
             .device_recording_id
             .ok_or_else(|| "V1 STOP did not attach a real recording id".to_string())?;
-        if stop_session.device_total_length.unwrap_or(0) == 0
-            || stop_session
+        let legacy_identity_complete=stop_session.device_total_length.unwrap_or(0)>0
+            && stop_session
                 .device_sha256
                 .as_deref()
                 .unwrap_or_default()
                 .len()
-                != 64
-            || !stop_session
+                ==64;
+        let logical_identity_complete=started_logical_key.as_ref().is_some_and(|key|
+            stop_session.device_recording_key.as_ref()==Some(key)) && stop_session.audio_stored
+            && backend::recording_wire::receiver::Receiver::verify_saved_row(stop_session).is_ok();
+        if !(legacy_identity_complete || logical_identity_complete) || !stop_session
                 .audio_path
                 .as_deref()
                 .is_some_and(|path| Path::new(path).is_file())
@@ -790,8 +1069,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             "boardSourceNotHostMic": session.source == "boardDevice",
             "recordingIdentity": start_recording_id == recording_id
                 && session.device_recording_id == Some(recording_id)
-                && session.device_total_length.unwrap_or(0) > 0
-                && session.device_sha256.as_deref().unwrap_or_default().len() == 64,
+                && (legacy_identity_complete || logical_identity_complete),
             "pulledWav": session.audio_path.as_deref().is_some_and(|path| Path::new(path).is_file()),
             "durableDeviceConsume": session.device_reclaimed,
             "completeCapture": !session.capture_incomplete,
@@ -799,6 +1077,10 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
                 && finalized.host.active_session_id.is_none(),
             "noInventedStopTime": !recover_after_limit || session.stopped_at.is_none(),
             "originalLinkDisconnected": !recover_after_limit || recovery_link_disconnected,
+            "captureRecoveryActions": capture_recovery.is_none()
+                || (capture_disconnect_requested && capture_reconnect_original_confirmed),
+            "originalLiveSegmentsReceived": !follow_original || followed_during_capture,
+            "originalPauseResumeConfirmed": capture_pause.is_none() || (pause_confirmed.is_some() && resume_confirmed.is_some()),
         });
         let pass = checks.as_object().is_some_and(|checks| {
             checks
@@ -807,6 +1089,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         });
         let payload = serde_json::json!({
             "schema": "companion.real-recording-control.v2",
+            "sealedSegmentsReceivedDuringCapture": sealed_segments_during_capture,
             "result": if pass { "PASS_RECORDING_CONTROL_AND_RECEIVE_STAGE_ONLY" } else { "FAIL_RECORDING_CONTROL_AND_RECEIVE_STAGE" },
             "scope": if recover_after_limit { "original_ended_recording_reconnect_and_durable_receive_only" }
                 else { "recording_control_and_durable_receive_only" },
@@ -824,6 +1107,13 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             "deviceId": device_id,
             "recordingId": recording_id,
             "startRecordingId": start_recording_id,
+            "logicalRecordingKey": session.device_recording_key,
+            "sealedSegmentFollowDuringCapture": followed_during_capture,
+            "captureRecoveryRequested": capture_recovery.is_some(),
+            "captureDisconnectRequested": capture_disconnect_requested,
+            "captureOriginalReconfirmed": capture_reconnect_original_confirmed,
+            "captureRadioDisconnect": if capture_recovery.is_some() { "VERIFY_WITH_ACTUAL_HCI_UART" } else { "NOT_REQUESTED" },
+            "pauseObservation":pause_confirmed,"resumeObservation":resume_confirmed,
             "duplicateStart": "NOT_ATTEMPTED_NORMAL_USER_PATH",
             "durationMs": session.duration_ms,
             "totalLength": session.device_total_length,
@@ -1494,6 +1784,49 @@ fn run_board_online_live_cli(args: &[String]) -> Option<Result<(), String>> {
     Some(result)
 }
 
+fn verified_synced_audio(session: &companion_v1::CompanionV1HostSession) -> bool {
+    if !session.audio_stored || session.status=="recording" || !session.retention.audio_cached
+        || !matches!(session.source.as_str(),"boardDevice"|"deviceFlash") {return false;}
+    if session.device_recording_key.is_some() {
+        return backend::recording_wire::receiver::Receiver::verify_saved_row(session).is_ok();
+    }
+    let Some(path)=session.audio_path.as_deref().map(Path::new).filter(|p|p.is_absolute()) else {return false;};
+    session.device_recording_id.is_some()
+        && fs::symlink_metadata(path).is_ok_and(|m|m.is_file() && !m.file_type().is_symlink() && m.len()==session.audio_bytes)
+        && backend::meeting_workspace::wav_duration_ms(path).is_ok_and(|duration|duration==session.duration_ms)
+}
+
+/// A selected growing/partial meeting cannot hide originals saved by this
+/// batch. Receipt verification, rather than file existence, admits each result.
+fn synced_device_audio(snap:&companion_v1::CompanionV1Snapshot) -> Result<&companion_v1::CompanionV1HostSession,String> {
+    snap.host.selected_session_id.as_deref().and_then(|id|snap.host.sessions.iter().find(|s|s.id==id))
+        .filter(|s|verified_synced_audio(s))
+        .or_else(||snap.host.sessions.iter().find(|s|verified_synced_audio(s)))
+        .ok_or_else(||"设备片段已保存在录音库，但还没有收齐并校验的本机原音；未把部分录音当作完成。".into())
+}
+
+fn run_recording_upload_benchmark_cli(args: &[String]) -> Option<Result<(), String>> {
+    if !args.iter().any(|a|a=="--benchmark-recording-upload") { return None; }
+    Some((|| {
+        let required = |name: &str| -> Result<&str, String> {
+            let positions: Vec<_> = args.iter().enumerate().filter(|(_,a)|a.as_str()==name).map(|(i,_)|i).collect();
+            if positions.len()!=1 {return Err(format!("exactly one {name} is required"));}
+            args.get(positions[0]+1).filter(|v|!v.starts_with("--")).map(String::as_str)
+                .ok_or_else(||format!("missing {name} value"))
+        };
+        let profiles = if args.iter().any(|a|a=="--benchmark-value-profiles") {
+            Some(required("--benchmark-value-profiles")?.split(',').map(|s|
+                s.parse::<u16>().map_err(|_|"benchmark profiles must be comma-separated integers".to_string()))
+                .collect::<Result<Vec<_>,_>>()?)
+        } else { None };
+        let report = backend::benchmark_recording_upload(required("--device-id")?,
+            Path::new(required("--benchmark-sample")?), Path::new(required("--benchmark-output")?),
+            profiles.as_deref(), args.iter().any(|a|a=="--benchmark-capture-setup"))?;
+        println!("recording_upload_benchmark_json={report}");
+        Ok(())
+    })())
+}
+
 fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> {
     if !args.iter().any(|a| a == "--sync-device-recording") {
         return None;
@@ -1550,15 +1883,9 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
             .host
             .sessions
             .iter()
-            .filter(|session| session.device_recording_id.is_some())
+            .filter(|session| session.device_recording_id.is_some() || session.device_recording_key.is_some())
             .collect::<Vec<_>>();
-        let session = snap
-            .host
-            .selected_session_id
-            .as_deref()
-            .and_then(|id| snap.host.sessions.iter().find(|session| session.id == id))
-            .or_else(|| device_sessions.first().copied())
-            .ok_or_else(|| "sync returned no host session".to_string())?;
+        let session = synced_device_audio(&snap)?;
         let path = session
             .audio_path
             .clone()
@@ -1569,6 +1896,8 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
             && Path::new(&path).is_file();
         let payload = serde_json::json!({
             "status": if is_pass { "PASS" } else { "FAIL" },
+            "scope": "verified_local_original_audio_only_not_capture_or_meeting_acceptance",
+            "pendingAudioSessions": device_sessions.iter().filter(|item|!item.audio_stored).count(),
             "audioPath": path,
             "audioBytes": session.audio_bytes,
             "durationMs": session.duration_ms,
@@ -1584,6 +1913,8 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
                 "totalLength": item.device_total_length,
                 "sha256": item.device_sha256,
                 "deviceReclaimed": item.device_reclaimed,
+                "audioStored": item.audio_stored,
+                "captureIncomplete": item.capture_incomplete,
             })).collect::<Vec<_>>(),
             "lastControl": snap.last_control.as_ref().map(|c| &c.message),
         });
@@ -1895,8 +2226,8 @@ fn run_delete_device_recording_cli(args: &[String]) -> Option<Result<(), String>
 fn run_firmware_ota_cli(args: &[String]) -> Option<Result<(), String>> {
     let transfer_flag = args
         .iter()
-        .position(|arg| arg == "--firmware-ota-transfer" || arg == "--resource-ota-transfer");
-    let validate_flag = args.iter().position(|arg| arg == "--resource-ota-validate");
+        .position(|arg| arg == "--firmware-ota-transfer" || arg == "--resource-ota-transfer" || arg=="--system-ota-transfer");
+    let validate_flag = args.iter().position(|arg| arg == "--resource-ota-validate" || arg=="--system-ota-validate");
     let (index, mode) = if let Some(i) = validate_flag {
         (i, "validate")
     } else if let Some(i) = transfer_flag {
@@ -1908,9 +2239,8 @@ fn run_firmware_ota_cli(args: &[String]) -> Option<Result<(), String>> {
         let manifest_path = args
             .get(index + 1)
             .ok_or_else(|| "missing manifest path after OTA CLI flag".to_string())?;
-        let firmware_path = args
-            .get(index + 2)
-            .ok_or_else(|| "missing payload path after OTA CLI flag".to_string())?;
+        let system=args[index].starts_with("--system-ota-");
+        let firmware_path = if system {manifest_path} else {args.get(index+2).ok_or("missing payload path after OTA CLI flag")?};
         if !Path::new(manifest_path).is_file() {
             return Err(format!("OTA manifest does not exist: {manifest_path}"));
         }
@@ -1955,6 +2285,8 @@ fn run_firmware_ota_cli(args: &[String]) -> Option<Result<(), String>> {
             "recoveredOffsets": report.recovered_offsets,
             "activeLinkConfirmed": report.active_link_confirmed,
             "elapsedMs": report.elapsed_ms,
+            "systemBundle":report.system_bundle,
+            "payloadMetrics":report.payload_metrics,
         });
         println!("firmware_ota_result_json={payload}");
         Ok(())
@@ -2132,6 +2464,79 @@ fn wav_data_chunk_bytes(audio_path: &Path) -> Option<u64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn sync_result_keeps_verified_original_when_another_selected_capture_is_partial() {
+        let mut snap=companion_v1::apply_fixture_control(companion_v1::fixture_snapshot(),
+            control_request(companion_v1::CompanionV1ControlAction::MeetingStart,Some("saved-original".into()))).unwrap();
+        let root=std::env::temp_dir().join(format!("companion-sync-result-{}",uuid::Uuid::new_v4()));fs::create_dir(&root).unwrap();
+        let path=root.join("original.wav");
+        let frames=800u32;let data_bytes=frames*2;
+        let mut wav=b"RIFF".to_vec();wav.extend((36+data_bytes).to_le_bytes());wav.extend(b"WAVEfmt ");
+        wav.extend(16u32.to_le_bytes());wav.extend(1u16.to_le_bytes());wav.extend(1u16.to_le_bytes());
+        wav.extend(16000u32.to_le_bytes());wav.extend(32000u32.to_le_bytes());wav.extend(2u16.to_le_bytes());wav.extend(16u16.to_le_bytes());
+        wav.extend(b"data");wav.extend(data_bytes.to_le_bytes());wav.resize(44+data_bytes as usize,0);fs::write(&path,&wav).unwrap();
+        let row=&mut snap.host.sessions[0];row.source="boardDevice".into();row.status="captured".into();
+        row.device_recording_id=Some(7);row.audio_path=Some(path.to_string_lossy().into());
+        row.audio_stored=true;row.retention.audio_cached=true;row.audio_bytes=wav.len() as u64;row.duration_ms=50;
+        let mut partial=row.clone();partial.id="selected-partial".into();partial.audio_stored=false;
+        partial.audio_path=Some(root.join("not-complete.wav").to_string_lossy().into());partial.status="recording".into();
+        snap.host.sessions.insert(0,partial);snap.host.selected_session_id=Some("selected-partial".into());
+        assert_eq!(synced_device_audio(&snap).unwrap().id,"saved-original");
+        // An arbitrary existing WAV cannot stand in for a V2 original receipt.
+        let mut forged=snap.host.sessions[1].clone();forged.device_recording_key=Some(companion_v1::CompanionV1RecordingKey{
+            device_uid:"180010000d50335754363720".into(),format_epoch:"1f59b27acf4936e1".into(),session_id:"0000000000000005".into()});
+        assert!(!verified_synced_audio(&forged));
+        snap.host.sessions[1].audio_bytes+=1;assert!(synced_device_audio(&snap).is_err());
+        fs::remove_file(path).unwrap();fs::remove_dir(root).unwrap();
+    }
+
+    #[test]
+    fn scheduled_original_pause_rejects_ambiguous_or_conflicting_controls_before_connect() {
+        let args=|values:&[&str]|values.iter().map(|s|s.to_string()).collect::<Vec<_>>();
+        assert_eq!(capture_pause_schedule(&args(&["app","--capture-pause-at","8","--capture-resume-at","13"]),25,false).unwrap(),Some((8,13)));
+        for flags in [vec!["--capture-pause-at","8"],vec!["--capture-pause-at","8","--capture-resume-at","8"],
+            vec!["--capture-pause-at","8","--capture-resume-at","25"],vec!["--capture-pause-at","8","--capture-pause-at","9","--capture-resume-at","13"],
+            vec!["--capture-pause-at","zero","--capture-resume-at","13"]] {
+            let mut all=vec!["app"];all.extend(flags);assert!(capture_pause_schedule(&args(&all),25,false).is_err());
+        }
+        assert!(capture_pause_schedule(&args(&["app","--capture-pause-at","8","--capture-resume-at","13"]),25,true).is_err());
+        assert_eq!(capture_pause_schedule(&args(&["app"]),25,true).unwrap(),None);
+    }
+
+    #[test]
+    fn original_recorder_cli_requires_exact_durable_owner_and_cannot_start() {
+        let args = |tail: &[&str]| std::iter::once("companion-type").chain(tail.iter().copied()).map(str::to_string).collect::<Vec<_>>();
+        let original = "v1-real-installed-1791751615096";
+        let (mut request, _) = original_recorder_request(&args(&["--recorder-control", "recover", "--session-id", original])).unwrap();
+        assert_eq!(request.action, companion_v1::CompanionV1ControlAction::MeetingRecoverControl);
+        for tail in [vec!["--recorder-control", "start", "--session-id", original],
+            vec!["--recorder-control", "recover"],
+            vec!["--recorder-control", "recover", "--session-id", original, "--v1-real-meeting"],
+            vec!["--recorder-control", "recover", "--session-id", original, "--session-id", "another"],
+            vec!["--recorder-control", "stop", "--session-id", "--device-id", "other"]] {
+            assert!(original_recorder_request(&args(&tail)).is_err());
+        }
+        let mut snapshot = companion_v1::fixture_snapshot();
+        snapshot.host.persistence.status = "ready".into();
+        let mut row = companion_v1::create_host_session(&snapshot, &request, "");
+        row.id = original.into(); row.source = "boardDevice".into();
+        row.source_device_id = Some("C8:92:FF:DD:3B:CA".into());
+        row.recorder_control = Some(serde_json::from_str(r#"{"schema":1,"hostSession":"v1-real-installed-1791751615096","deviceId":"C8:92:FF:DD:3B:CA","uid":[24,0,16,0,13,80,51,87,84,54,55,32],"epoch":2259032928636450529,"startRequest":789973146,"maxSeconds":350,"key":null,"anchor":null,"confirmed":null,"pending":{"command":1,"request":789973146,"sequence":0,"wire":[67,77,67,51,3,1,2,1,24,0,16,0,13,80,51,87,84,54,55,32,225,54,73,207,122,178,89,31,0,0,0,0,0,0,0,0,154,8,22,47,154,8,22,47,94,1,0,0,0,0,0,0,168,20,243,156]}}"#).unwrap());
+        snapshot.host.sessions = vec![row];
+        let original_journal = snapshot.host.sessions[0].recorder_control.clone();
+        bind_original_recorder_request(&snapshot, &mut request).unwrap();
+        assert_eq!(request.device_id.as_deref(), Some("C8:92:FF:DD:3B:CA"));
+        assert_eq!(snapshot.host.sessions[0].recorder_control, original_journal);
+        request.session_id = Some("another".into());
+        assert!(bind_original_recorder_request(&snapshot, &mut request).is_err());
+        request.session_id = Some(original.into()); request.device_id = Some("other-device".into());
+        assert!(bind_original_recorder_request(&snapshot, &mut request).is_err());
+        request.device_id = None; snapshot.host.persistence.status = "blocked".into();
+        assert!(bind_original_recorder_request(&snapshot, &mut request).is_err());
+        snapshot.host.persistence.status = "ready".into(); snapshot.host.sessions[0].source = "hostMic".into();
+        assert!(bind_original_recorder_request(&snapshot, &mut request).is_err());
+    }
 
     fn snapshot_with_pending_recovery(
         id: &str,

@@ -89,8 +89,8 @@ fn qm11_uses_new_payload_instead_of_wire_bytes_and_versioned_targets() {
     assert!(lines[1].contains("actual_received_kib_s=60.00 rate_basis=new_transport_payload_bytes"));
     let target = lines.last().unwrap();
     assert!(target.contains(super::targets::VERSION));
-    assert!(target.contains("effective_kib_s=60.00 delivery_kib_s=60 stretch_kib_s=100 explore_kib_s=120"));
-    assert!(target.contains("qm11_payload=met qm11_payload_stretch=not_met"));
+    assert!(target.contains("effective_kib_s=60.00 delivery_kib_s=100 stretch_kib_s=100 explore_kib_s=120"));
+    assert!(target.contains("qm11_payload=not_met qm11_payload_stretch=not_met"));
     assert!(target.contains("scope=payload_rate_only full_chain_acceptance=false"));
 
     let mut pull = actual_board_22();
@@ -110,4 +110,24 @@ fn short_or_cached_receives_cannot_claim_sustained_payload_target() {
         let lines = diagnostics(pull);
         assert!(lines.last().unwrap().contains("qm11_payload=not_evaluated"));
     }
+}
+
+#[test]
+fn owner_inclusive_100_gate_uses_unrounded_new_payload_wall_rate() {
+    let mut pull = actual_board_22();
+    pull.payload_bytes = 614_400;
+    pull.received_payload_bytes = 614_400;
+    pull.wire_bytes = 1_228_800;
+    pull.elapsed_s = 6.0;
+    assert!(!super::targets::PAYLOAD_DELIVERY_STRICT);
+    assert_eq!(super::targets::PAYLOAD_DELIVERY_KIB_S,100.0);
+    assert!(diagnostics(pull).last().unwrap().contains("qm11_payload=met "));
+    let mut below = actual_board_22();
+    below.payload_bytes = 614_400;
+    below.received_payload_bytes = 614_400;
+    below.wire_bytes = 1_228_800;
+    below.elapsed_s = 6.00001;
+    let lines = diagnostics(below);
+    assert!(lines.last().unwrap().contains("effective_kib_s=100.00"));
+    assert!(lines.last().unwrap().contains("qm11_payload=not_met "));
 }

@@ -32,6 +32,7 @@ pub(super) fn transport_lost(error: &str) -> bool {
 
 pub(super) fn retire_connection(error: &str) -> bool {
     receiver_overrun(error) || transport_lost(error)
+        || error.starts_with("sealed stream release failed before reclaim:")
 }
 
 pub(super) async fn receive<P: Attempt>(port: &mut P, sealed_original: bool, recording_id: u32)
