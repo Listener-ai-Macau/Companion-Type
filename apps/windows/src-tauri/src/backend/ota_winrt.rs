@@ -99,15 +99,14 @@ pub fn transfer_companion_ota_winrt(
     // Connection-params request is held on `target` for the whole transfer.
     let mut target = open_ota_target(requested_device_id)?;
     let actual_mtu = wait_ota_mtu(&target, wba_manifest.is_some())?;
-    if wba_manifest.is_some() {
-        let readiness = read_wba_readiness(&target)?;
-        eprintln!("[companion-ota] device_preflight blockers={} battery_percent={:?} minimum_required_mv={} signed_manifest_still_required=1",
-            readiness.blockers, readiness.battery_percent, readiness.minimum_required_mv);
-        readiness.check_preflight()?;
-    }
     let wba_flow=if wba_manifest.is_some() {
+        // The public readiness value may still be the boot snapshot while a
+        // lost bond is being replaced. Complete one protected read first: this
+        // makes Windows establish encryption without sending an OTA command or
+        // payload. MTU negotiation alone does not establish authentication.
         let capability=read_characteristic_bytes_with_timeout(&target.status,BluetoothCacheMode::Uncached,
             "WBA OTA packet capability",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+        check_wba_readiness(&target)?;
         let supports_wwr=target.data.CharacteristicProperties()
             .map_err(|e|format!("WBA OTA DATA properties: {e}"))?
             .contains(GattCharacteristicProperties::WriteWithoutResponse);
@@ -299,9 +298,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
     let mtu=wait_ota_mtu(&target,true)?;
     if mtu<455{return Err(format!("整套签名需要ATT MTU至少455，当前{mtu}；尚未发送升级内容"));}
-    read_wba_readiness(&target)?.check_preflight()?;
     let bytes=read_characteristic_bytes_with_timeout(&target.status,BluetoothCacheMode::Uncached,
         "整套OTA能力",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+    check_wba_readiness(&target)?;
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
     let flow=super::ota_flow::WbaFlow::from_pair_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
     target.data_write_option=if flow.pipelined {GattWriteOption::WriteWithoutResponse}else{GattWriteOption::WriteWithResponse};
@@ -377,6 +376,12 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     Ok(CompanionOtaBleReport{device_id,transfer:total,payload_metrics,system_bundle})
 }
 
+fn check_wba_readiness(target:&OpenOtaTarget)->Result<(),String> {
+    let readiness=read_wba_readiness(target)?;
+    eprintln!("[companion-ota] device_preflight blockers={} battery_percent={:?} minimum_required_mv={} authenticated_status_read_complete=1 signed_manifest_still_required=1",
+        readiness.blockers,readiness.battery_percent,readiness.minimum_required_mv);
+    readiness.check_preflight()
+}
 fn read_wba_readiness(target: &OpenOtaTarget) -> Result<super::ota_readiness::Readiness, String> {
     let device = target._device.as_ref().ok_or("无法确认设备升级条件：缺少本次设备连接，尚未发送固件。")?;
     let cancel = BleCancel::NONE;
