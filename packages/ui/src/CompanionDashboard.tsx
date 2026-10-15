@@ -827,6 +827,24 @@ export function CompanionDashboard({
         <section className="ct-pending-banner" role="alert">{snapshot.lastControl.message}</section>
       ) : null}
 
+      {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="开始设备录音">
+        <div><strong>用 Companion 录音</strong>
+          <p>{connected
+            ? `先把原音保存下来，无需网络或转写配置。当前最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整。`
+            : '连接后可从这里开始，也可以直接用设备按键离线录音。'}</p>
+          {!durationValid ? <p role="alert">请输入有效的录音时长。</p> : null}
+        </div>
+        <div className="ct-button-row">
+          <button type="button" className="ct-action ct-action-primary"
+            disabled={controlsBusy || storageBlocked || !connected || !device?.deviceId || !durationValid}
+            onClick={() => onControl({ action: 'meetingStart', meetingMode: 'offlineStore',
+              deviceId: device?.deviceId ?? undefined, title: newMeetingTitle.trim() || 'Companion 录音', durationMs: requestedDurationMs })}>
+            <Mic size={16} /><span>开始录音</span>
+          </button>
+          <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
+        </div>
+      </section> : null}
+
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
         resumeBlocked={controlsBusy || oobeBlockedByRecording} onPause={onPauseSync}
         onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle })} />
@@ -1146,7 +1164,7 @@ export function CompanionDashboard({
                 inputMode="numeric" disabled={oobeBlockedByRecording || controlsBusy}
                 onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))} /></label>
             </div>
-            <p className="ct-step-meta">实时转写单次最多 43 分钟，另预留 2 分钟设备收尾空间；容量不够会明确拒绝开录。当前不支持无缝连续分段。</p>
+            <p className="ct-step-meta">在线转写单次最多 43 分钟，另预留 2 分钟收尾空间；纯录音按设备空间和设定时长保存。支持连续物理分段的设备仍保留为同一场录音，完整收齐后才确认回收。</p>
             {captureBudgetBytes !== null ? <p className="ct-step-meta" role={capacityInsufficient ? 'alert' : undefined}>
               本次需预留约 {formatBytes(captureBudgetBytes)}{meetingMode === 'onlineLive' ? '（含收尾空间）' : ''}；
               设备上次报告连续可录约 {formatDuration(capacitySeconds * 1000)}。

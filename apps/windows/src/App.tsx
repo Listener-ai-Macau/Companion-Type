@@ -89,7 +89,8 @@ export function App() {
         try {
           setSnapshot(await applyCompanionControl(request));
         } catch (controlError) {
-          if (request.action === 'meetingStop' || request.action === 'deviceSyncRecordings') {
+          if (['meetingStart', 'meetingStop', 'meetingFinalize', 'meetingPause', 'meetingResume',
+            'meetingRecoverControl', 'deviceSyncRecordings'].includes(request.action)) {
             // STOP or a partial sync can commit real state before its transfer
             // fails. Read that checkpoint while this operation still owns the
             // UI gate; never infer a STOP or replay a recording command.
@@ -145,6 +146,9 @@ export function App() {
   const liveMeeting = Boolean(snapshot?.host?.sessions?.some(
     (session) => session.status === 'recording' && session.meetingMode === 'onlineLive',
   ));
+  const controlledMeeting = Boolean(snapshot?.host?.sessions?.some(
+    (session) => session.status === 'recording' && session.recorderControl,
+  ));
   const recoveringMeeting = Boolean(snapshot?.host?.sessions?.some((session) => (
     session.recovery?.intent === 'processMeeting'
     && !['idle', 'paused', 'complete'].includes(session.recovery.stage)
@@ -157,12 +161,12 @@ export function App() {
   // Schedule after each response: an ASR call can hold the backend lock, so a
   // fixed interval would accumulate concurrent snapshot requests behind it.
   useEffect(() => {
-    if (!liveMeeting && !recoveringMeeting && !watchingDevice && !boardActive) {
+    if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !boardActive) {
       return undefined;
     }
     let cancelled = false;
     let timer: ReturnType<typeof window.setTimeout>;
-    const delay = liveMeeting || boardActive ? 500 : recoveringMeeting ? 1000 : 3000;
+    const delay = liveMeeting || controlledMeeting || boardActive ? 500 : recoveringMeeting ? 1000 : 3000;
     const poll = async () => {
       const epoch = snapshotEpoch.current;
       try {
@@ -191,7 +195,7 @@ export function App() {
     };
     timer = window.setTimeout(() => void poll(), delay);
     return () => { cancelled = true; window.clearTimeout(timer); };
-  }, [liveMeeting, recoveringMeeting, watchingDevice, boardActive]);
+  }, [liveMeeting, controlledMeeting, recoveringMeeting, watchingDevice, boardActive]);
 
   return (
     <div className="ct-window-shell">

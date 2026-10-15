@@ -15,6 +15,11 @@ class RecordingUartObserver:
         self.lease_guard = lease_guard
         self.stop = threading.Event()
         self.ready = threading.Event()
+        self.setup_query = threading.Event()
+        self.setup_query_sent = threading.Event()
+        self.setup_pair = threading.Event()
+        self.setup_pair_sent = threading.Event()
+        self.payload_started = False
         self.error = None
         self.thread = None
         self.summary = {'bytes': 0, 'chunks': 0, 'closed': True,
@@ -40,6 +45,29 @@ class RecordingUartObserver:
             if self.thread.is_alive():
                 raise RuntimeError('UART observer has not closed; do not release the board lease')
 
+    def request_setup_snapshot_once(self):
+        """Only the explicit pre-payload barrier may request this one query."""
+        if self.setup_query.is_set() or self.setup_query_sent.is_set():
+            raise RuntimeError('Setup query already requested; no repeated diagnostic')
+        self.lease_guard()
+        self.setup_query.set()
+
+    def request_guarded_pair_window_once(self):
+        """Explicit recovery of a recorded pairing failure, before BLE payload.
+
+        PAIR invokes the same finite, busy-guarded window as the device menu.
+        It does not clear bonds, pair a host or weaken the protected channel.
+        """
+        if self.payload_started or not self.setup_query_sent.is_set():
+            raise RuntimeError('Pair window is only available after idle setup and before payload')
+        if self.setup_pair.is_set() or self.setup_pair_sent.is_set():
+            raise RuntimeError('Pair window already requested; no repeated recovery')
+        self.lease_guard()
+        self.setup_pair.set()
+
+    def begin_payload(self):
+        self.payload_started = True
+
     def _read(self):
         try:
             ports = [p.device for p in list_ports.comports()
@@ -58,6 +86,23 @@ class RecordingUartObserver:
                     startedMonotonicNs=time.monotonic_ns())
                 self.ready.set()
                 while not self.stop.is_set():
+                    if self.setup_query.is_set() and not self.setup_query_sent.is_set():
+                        self.lease_guard()
+                        port.write(b'?')
+                        port.flush()
+                        self.summary.update(commandsSent=1,
+                            scope='one_explicit_pre_payload_setup_query_then_passive',
+                            setupQueryStartByteOffset=self.summary['bytes'],
+                            setupQuerySentAt=datetime.now(timezone.utc).isoformat())
+                        self.setup_query_sent.set()
+                    if self.setup_pair.is_set() and not self.setup_pair_sent.is_set():
+                        self.lease_guard()
+                        port.write(b'PAIR\n')
+                        port.flush()
+                        self.summary.update(commandsSent=self.summary['commandsSent'] + 1,
+                            scope='one_idle_setup_query_and_explicit_guarded_pair_window_then_passive',
+                            guardedPairWindowSentAt=datetime.now(timezone.utc).isoformat())
+                        self.setup_pair_sent.set()
                     data = port.read(4096)
                     if not data:
                         continue

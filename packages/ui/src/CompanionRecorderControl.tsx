@@ -27,7 +27,7 @@ export function CompanionRecorderControl({ session, busy, onControl }: {
           : state === 1 ? <button type="button" className="ct-action" disabled={busy}
             onClick={() => send('meetingPause')}><Pause size={15} />暂停录音</button> : null}
       {active ? <button type="button" className="ct-action" disabled={busy}
-        onClick={() => send('meetingStop')}><Square size={15} />结束并收取</button> : null}
+        onClick={() => send('meetingStop')}><Square size={15} />停止并保存</button> : null}
     </div>
   </section>;
 }
