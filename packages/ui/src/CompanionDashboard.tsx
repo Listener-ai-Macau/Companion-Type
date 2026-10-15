@@ -169,6 +169,7 @@ export interface CompanionDashboardProps {
   }>;
   /** Conflict-aware metadata/minutes edit. The host persists before returning its next snapshot. */
   onSaveMeeting?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
+  onRefineSpeakers?: (sessionId:string) => Promise<CompanionV1Snapshot>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   /** Host-only resource/firmware package validation (Windows Tauri). */
@@ -209,6 +210,7 @@ export function CompanionDashboard({
   onExportAudio,
   onDiscardOldestRecording,
   onSaveMeeting,
+  onRefineSpeakers,
   onSaveBookmark,
   onSaveNote,
   onValidateOtaPackage,
@@ -1316,6 +1318,18 @@ export function CompanionDashboard({
                 <FileText size={16} />
               <span>{selectedSession?.captureIncomplete ? '转写已保存的片段' : '转写'}</span>
               </button>
+              {onRefineSpeakers ? <button type="button" className="ct-action"
+                title="只用已保存原音在电脑本地区分，不重新转写或上传；旧纪要保留为待更新草稿。"
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !selectedSession?.audioStored
+                  || !selectedSession.transcriptFinal || !selectedSession.utterances?.length
+                  || titleDirty || minutesDirty || transcriptEditor.current.dirty}
+                onClick={async()=>{
+                  if (!selectedSession) return;
+                  const sessionId=selectedSession.id;setSaveMeetingBusy(true);setSaveMeetingResult(null);
+                  try {await onRefineSpeakers(sessionId);setSaveMeetingResult({sessionId,message:'已在本机重新区分说话人；原音、文字和时间轴保留，之前的纪要可按需重新生成。'});}
+                  catch (e) {setSaveMeetingResult({sessionId,message:`本地分组未完成：${e instanceof Error?e.message:String(e)}`});}
+                  finally {setSaveMeetingBusy(false);}
+                }}>重新区分说话人（本地）</button>:null}
               <button
                 type="button"
                 className="ct-action ct-action-primary"

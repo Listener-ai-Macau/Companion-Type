@@ -22,6 +22,8 @@ import {
 } from '@companion-type/core';
 
 let fixtureSnapshot: CompanionV1Snapshot = createCompanionV1Fixture();
+export const refineCompanionMeetingSpeakers = (sessionId:string) =>
+  invoke<CompanionV1Snapshot>('refine_companion_meeting_speakers',{sessionId});
 
 export type CompanionProductSettingsPublic = {
   defaultMeetingMode: string;

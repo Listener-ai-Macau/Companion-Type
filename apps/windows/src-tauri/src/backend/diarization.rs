@@ -13,6 +13,7 @@ use std::path::{Path, PathBuf};
 use std::sync::{OnceLock, Mutex, Arc};
 
 use libloading::Library;
+mod speaker_count;
 
 const SAMPLE_RATE: i32 = 16_000;
 // Use a window materially shorter than ordinary turn-taking pauses. The
@@ -358,6 +359,17 @@ fn ahc_cluster(embeddings: &[Vec<f32>], threshold: f32) -> Vec<usize> {
 fn ahc_cluster_constrained(
     embeddings: &[Vec<f32>], threshold: f32, constraints: &[Option<SpeakerConstraint>],
 ) -> Vec<usize> {
+    let baseline=ahc_cluster_with_minimum(embeddings,threshold,constraints,1);
+    let count=baseline.iter().copied().collect::<std::collections::BTreeSet<_>>().len();
+    // Counting refines an existing multiple-voice hypothesis; it cannot turn
+    // the current single-speaker result into extra people on a rank tie.
+    if count<=1 || std::env::var_os("COMPANION_TYPE_DIARIZATION_COSINE_THRESHOLD").is_some() { return baseline; }
+    let Some(estimate)=speaker_count::estimate(embeddings).filter(|&n|n>count) else { return baseline; };
+    ahc_cluster_with_minimum(embeddings,threshold,constraints,estimate)
+}
+
+fn ahc_cluster_with_minimum(embeddings:&[Vec<f32>],threshold:f32,
+    constraints:&[Option<SpeakerConstraint>],minimum_clusters:usize)->Vec<usize> {
     let n = embeddings.len();
     if n == 0 {
         return Vec::new();
@@ -399,6 +411,9 @@ fn ahc_cluster_constrained(
         if best.2 < threshold {
             break;
         }
+        // NME is a hypothesis, not permission to split near-identical voices
+        // along arbitrary nearest-neighbour rank ties.
+        if clusters.len()<=minimum_clusters && best.2<0.9 { break; }
         // merge b into a
         let mut merged = std::mem::take(&mut clusters[best.1]);
         clusters[best.0].append(&mut merged);

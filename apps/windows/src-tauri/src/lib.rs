@@ -260,6 +260,7 @@ pub fn run() {
             commands::check_companion_service,
             commands::get_companion_v1_snapshot,
             commands::save_companion_meeting_edit,
+            commands::refine_companion_meeting_speakers,
             commands::save_companion_meeting_note,
             commands::save_companion_bookmark,
             commands::prepare_companion_audio,
@@ -326,6 +327,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-minutes-request" => Some((i,2)),
         "--meeting-bookmark-request" => Some((i,3)),
         "--meeting-note-request" => Some((i,4)),
+        "--meeting-speakers-request" => Some((i,5)),
         _ => None,
     })?;
     Some((|| {
@@ -374,6 +376,12 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
                 "fullChainAcceptance":"NOT_RUN", "hardwareAcceptance":"NOT_RUN"
             })).map_err(|_| "无法生成备注保存结果。")?)?;
             println!("meeting_workspace_result=SAVED_LOCAL_USER_NOTE");
+        } else if operation == 5 {
+            let request:backend::speaker_refinement::Request=serde_json::from_reader(file).map_err(|_|"本地分组请求格式不正确。")?;
+            let snapshot=coordinator.refine_meeting_speakers(&request.session_id)?;
+            let row=snapshot.host.sessions.iter().find(|r|r.id==request.session_id).ok_or("原会议不存在。")?;
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(row).map_err(|_|"无法保存本地分组结果。")?)?;
+            println!("meeting_workspace_result=SAVED_LOCAL_SPEAKER_REFINEMENT cloud_calls=0");
         } else if operation == 3 {
             let request:backend::recording_bookmarks::Request=serde_json::from_reader(file)
                 .map_err(|_| "会议重点请求格式不正确。")?;

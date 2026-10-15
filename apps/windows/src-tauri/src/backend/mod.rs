@@ -5,6 +5,7 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+pub(crate) mod speaker_refinement;
 pub(crate) use ble_bridge::benchmark_recording_upload;
 pub(crate) use ble_bridge::known_segmented_peer;
 mod ble_mtu;
@@ -621,6 +622,7 @@ pub trait CompanionBackend: Send + Sync {
     fn save_bookmark(&self, request: recording_bookmarks::Request, stamp: Option<recording_bookmarks::LiveStamp>)
         -> Result<CompanionV1Snapshot,String>;
     fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String>;
+    fn refine_meeting_speakers(&self,_id:&str)->Result<CompanionV1Snapshot,String> {Err("当前环境未提供本地说话人区分。".into())}
     fn capabilities(&self) -> CompanionBackendCapabilities;
     fn ble_bridge_status(&self) -> CompanionBleBridgeStatus;
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String>;
@@ -1141,6 +1143,22 @@ impl Default for FixtureCompanionBackend {
 }
 
 impl CompanionBackend for FixtureCompanionBackend {
+    fn refine_meeting_speakers(&self,id:&str)->Result<CompanionV1Snapshot,String> {
+        let _processing=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
+        let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        if snapshot.host.persistence.status!="ready" {return Err("请先保存或恢复会议库。".into());}
+        let input=speaker_refinement::prepare(&snapshot,id)?;
+        let path=meeting_workspace::local_audio_path(&snapshot,id)?;
+        let request=CompanionV1ControlRequest {action:CompanionV1ControlAction::MeetingTranscribeAudio,session_id:Some(id.into()),
+            ble_name:None,prompt_id:None,title:None,transcript_text:None,meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
+        let (mut snapshot,result)=self.run_meeting_work(snapshot,&request,||transcription::refine_saved_speakers(&path,&input.utterances))?;
+        let labels=result?;
+        let row=snapshot.host.sessions.iter_mut().find(|r|r.id==id).ok_or("这场录音已不存在，未重建。")?;
+        if !speaker_refinement::apply(row,labels)? {return Ok(snapshot.clone());}
+        if snapshot.host.selected_session_id.as_deref()==Some(id) {snapshot.meeting.status="transcribed".into();}
+        snapshot.updated_at=observation_timestamp();persistence::save_snapshot(&mut snapshot)?;
+        refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
+    }
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport,String> {
         let report=recording_wire::receiver::restore_local_product()?;
         if !report.restored.is_empty() {

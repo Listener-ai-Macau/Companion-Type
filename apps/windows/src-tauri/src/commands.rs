@@ -108,6 +108,13 @@ pub async fn save_companion_meeting_edit(
 }
 
 #[tauri::command]
+pub async fn refine_companion_meeting_speakers(coordinator:CompanionCoordinatorState<'_>,session_id:String)->Result<CompanionV1Snapshot,String> {
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||coordinator.refine_meeting_speakers(&session_id))
+        .await.map_err(|e|format!("本地说话人区分未完成：{e}"))?
+}
+
+#[tauri::command]
 pub fn prepare_companion_audio(
     app: AppHandle, coordinator: CompanionCoordinatorState<'_>, session_id: String,
 ) -> Result<String, String> {

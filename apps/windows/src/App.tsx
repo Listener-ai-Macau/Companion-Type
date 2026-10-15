@@ -6,6 +6,7 @@ import {
   type CompanionV1Snapshot,
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
+import { refineCompanionMeetingSpeakers } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
@@ -234,6 +235,9 @@ export function App() {
         setSnapshot(saved);
         return saved;
       }) : undefined}
+      onRefineSpeakers={isTauriRuntime() ? (sessionId) => exclusive('refresh',async()=>{
+        const saved=await refineCompanionMeetingSpeakers(sessionId);setSnapshot(saved);return saved;
+      }):undefined}
       onSaveBookmark={isTauriRuntime() ? (request) => exclusive('refresh',async()=>{
         try { const saved=await saveCompanionBookmark(request);setSnapshot(saved);return saved; }
         catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* keep the last readable library */ } throw error; }

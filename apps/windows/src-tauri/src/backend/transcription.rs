@@ -476,6 +476,19 @@ fn recollect_embeddings_from_full_audio(
     }
 }
 
+pub(super) fn refine_saved_speakers(audio:&Path,utterances:&[crate::companion_v1::CompanionV1UtteranceSegment])
+    ->Result<CompanionTranscript,String> {
+    let _usage=super::audio_artifacts::usage(audio)?;
+    let segments=diarization::segment_embeddings(audio)?;
+    if segments.is_empty() {return Err("原音没有足够的可用声纹，保留原分组。".into());}
+    let collected=utterances.iter().map(|u|CollectedUtterance {text:u.text.clone(),start_ms:u.start_ms,end_ms:u.end_ms,
+        provider_speaker:None,provider_request:None,embedding:embedding_index_for_range(u.start_ms,u.end_ms,&segments)
+            .map(|i|segments[i].embedding.clone())}).collect::<Vec<_>>();
+    let mut result=volcengine_transcript_from("",&collected);
+    result.provider_id="companion-local-speaker-refinement".into();result.mode="saved-timing-local-only".into();
+    Ok(result)
+}
+
 /// Cluster per-utterance embeddings GLOBALLY and assign each utterance a
 /// speaker id. Because clustering runs once over every utterance (across all
 /// chunks), a speaker keeps the same id throughout a chunked long meeting —
