@@ -1,0 +1,402 @@
+{
+  "schema": "companion.pet-foreground-p128.actual.v1",
+  "createdAtLocal": "2026-10-16T03:12:49+08:00",
+  "summary": "P128已由正式TypeR21继承并实测：听句中、字幕发送中两种情况下，旧宠物短句被取消并保存，新的普通录音/会议录音实际开始、停止且原音保存回收。新录音启动墙钟11.469s/5.968s，旧操作让路8.454s/0.636s，速度仍OPEN。",
+  "petSource": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "7d0f5277df26d15f2106ab4b10ee1ed89362c1ed",
+    "tag": "pet-foreground-p128-20261016-source",
+    "parent": "873c0434dba8bc87eae963e6b5bd6e7f71699694",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T02:39:36"
+  },
+  "completeSource": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "a33dcd57a25ca325417d1de20cb717690ff859cc",
+    "tag": "pet-foreground-p128-20261016-build-source",
+    "parent": "7d0f5277df26d15f2106ab4b10ee1ed89362c1ed",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T02:49:11"
+  },
+  "ownBuildReceipt": ".cache/pet-goal-20261013/pet-foreground-p128-20261016/msi-complete/build-receipt.json",
+  "ownCandidateInstalled": false,
+  "jointDelivery": {
+    "result": "LATEST_INSTALLED_R21_INHERITS_P128_EXACT_PET_CODE",
+    "createdAtLocal": "2026-10-16T02:59:53.331132+08:00",
+    "source": {
+      "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+      "commit": "a60df79eb53b69e9acdde3ed52087009fb6aefd5",
+      "tag": "companion-local-speakers-r21-20261016-source",
+      "parent": "a33dcd57a25ca325417d1de20cb717690ff859cc",
+      "normalHeadAndIndexUnchanged": true,
+      "createdAtLocal": "2026-10-16T02:52:41"
+    },
+    "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\speaker-r21\\msi\\build-receipt.json",
+    "installReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\speaker-r21\\install\\result.json",
+    "installedExe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "installedExeSha256": "d79d5f9f24298fab1ce8c0f7fd3ee1ef9e144f8f758f4f8228fe846794b8308c",
+    "installedDllSha256": "a9f0b8cbb08922d9539c8b8b79b33bbed4580606afa84263f5b6ca1032096e80",
+    "petSource": "a33dcd57a25ca325417d1de20cb717690ff859cc",
+    "coordinatorExtra": "Only one local speaker-refinement forwarding method; all P128 lines retained",
+    "newInstall": false,
+    "oldCandidateNotInstalled": true
+  },
+  "code": {
+    "files": [
+      "apps/windows/src-tauri/src/coordinator.rs",
+      "apps/windows/src-tauri/src/backend/pet_chat.rs"
+    ],
+    "meaning": "Pet capture16/caption15 have distinct actual leases. Explicit recording/link/OTA/update requests block new pet entry, cancel the current job, then wait at most15s for pet cleanup before taking the same original atomic gate. Other active owners remain protected; timeout never force-unlocks. Existing kind13 background drain budget is unchanged.",
+    "compatibility": "Normal online recorder still owns kind2 and uses the original source/lease checks; only pet-specific capture control accepts16. Foreground guard drops on all exits. Physical menu/recording cancellation and visible acknowledgement remain unchanged."
+  },
+  "buildRepair": {
+    "existingVendorManifest": "third_party/btleplug-0.11.8/Cargo.toml",
+    "cause": "Exact old Git reconstruction did not contain the working Devices_Enumeration feature used by frozen peripheral.rs, so fresh compiler reported E0599. Existing manifest declaration was saved; build proof now includes it as input208, no new Bluetooth algorithm.",
+    "failure": ".cache/pet-goal-20261013/pet-foreground-p128-20261016/msi-build-missing-windows-feature.log",
+    "recipe": "Private raw Git blobs and exact dependency gitlink, private Cargo target and frontend outputs; only preinstalled node_modules junction shared. Git archive initially applied checkout line endings and was rejected before compilation; raw blobs restored exact bytes.",
+    "explicitLibrary": "Fresh tauri binary build produced no root DLL required by delivery checks. Added same-source cargo build --release --lib then bundled; earlier incomplete MSI remains separate. No old DLL copied from main target.",
+    "ownMsiSha256": "f3085cc85b0140fbcc69a7e908efca3712f86e1b521c166d59660821f2a698a6",
+    "ownMsiBytes": 10371072,
+    "immutableInputCount": 209
+  },
+  "actualCaptureHandoff": {
+    "evidence": ".cache/pet-goal-20261013/pet-foreground-p128-20261016/capture-to-recording/observation-result.json",
+    "petId": 60,
+    "normalId": 62,
+    "normalStartWallMs": 11469.0,
+    "petDrainWaitMs": 8454,
+    "petProviderCalled": false
+  },
+  "actualCaptionHandoff": {
+    "evidence": ".cache/pet-goal-20261013/pet-foreground-p128-20261016/caption-to-recording/observation-result.json",
+    "petId": 64,
+    "normalId": 66,
+    "normalStartWallMs": 5968.0,
+    "petDrainWaitMs": 636,
+    "petAsrReplyAdapterCalls": [
+      1,
+      1
+    ]
+  },
+  "observerCorrection": {
+    "raw": [
+      ".cache/pet-goal-20261013/pet-foreground-p128-20261016/capture-to-recording/result.json",
+      ".cache/pet-goal-20261013/pet-foreground-p128-20261016/caption-to-recording/result.json"
+    ],
+    "issue": "Helper incorrectly required manual/intent-none for unchanged recording policy; first request explicitly selected offlineStore, second inherited actual processing settings. The extra criterion was removed; existing exact original state2/durable audio/reclaim and terminal chat were read without re-record/provider restart.",
+    "noRerun": true
+  },
+  "recordings": [
+    {
+      "case": "capture-to-recording",
+      "kind": "pet",
+      "id": 60,
+      "session": "pet-chat-4138814959-96ef859a-f03c-4fde-a472-9f4fc8686a9e",
+      "path": "\\\\?\\C:\\Users\\Billy\\AppData\\Local\\Companion Type\\recordings\\board-session-94797ef3daca17a09b44b68349231a2b000ee493803ca18a727ef742162fb374.wav",
+      "sha256": "1d8b724e903f634bb02cfe752aec6be5a0f48f9907d4f90dc9ae6dfd1344c031",
+      "format": [
+        1,
+        2,
+        16000
+      ],
+      "duration": 1.4,
+      "rms": 1887.578,
+      "peak": 22333,
+      "clipped": 0,
+      "perSecondRms": [
+        2227.506,
+        256.673
+      ]
+    },
+    {
+      "case": "capture-to-recording",
+      "kind": "normal",
+      "id": 62,
+      "session": "pet-priority-normal-b8fe39e3-d4f3-4e90-a4b4-fc626234aed4",
+      "path": "\\\\?\\C:\\Users\\Billy\\AppData\\Local\\Companion Type\\recordings\\board-session-4b67870602b36a825fc87d31c37e1d8171574fe40dcb0a88abd4040d45e0aae7.wav",
+      "sha256": "dd16f3610d391f8ba7b1e2591eadbe449a6d278ab50243d877f4293363e560db",
+      "format": [
+        1,
+        2,
+        16000
+      ],
+      "duration": 8.48,
+      "rms": 1446.06,
+      "peak": 29900,
+      "clipped": 0,
+      "perSecondRms": [
+        1309.567,
+        2962.694,
+        1733.253,
+        904.744,
+        1515.483,
+        997.231,
+        224.048,
+        227.354,
+        224.214
+      ]
+    },
+    {
+      "case": "caption-to-recording",
+      "kind": "pet",
+      "id": 64,
+      "session": "pet-chat-854464593-cf40ff37-fe6c-4e04-a988-1fce220f1fc9",
+      "path": "\\\\?\\C:\\Users\\Billy\\AppData\\Local\\Companion Type\\recordings\\board-session-e2ea5e638cae98122d563eec1973cc9fb32caf2b925c8cd85ca30710e421c957.wav",
+      "sha256": "50f032d9da383fe2fe702f4c5f8cec2ec6e602677bb80be93d8946f775c1f739",
+      "format": [
+        1,
+        2,
+        16000
+      ],
+      "duration": 6.28,
+      "rms": 1760.877,
+      "peak": 29900,
+      "clipped": 0,
+      "perSecondRms": [
+        3234.234,
+        1418.219,
+        1817.358,
+        695.307,
+        1770.213,
+        259.541,
+        219.071
+      ]
+    },
+    {
+      "case": "caption-to-recording",
+      "kind": "normal",
+      "id": 66,
+      "session": "pet-priority-normal-f5f8cc6c-80bc-4baf-882d-9c1ed31cddee",
+      "path": "\\\\?\\C:\\Users\\Billy\\AppData\\Local\\Companion Type\\recordings\\board-session-c22969662f664d61dd6703082295d0ed44816e36f44ca6c872c4a712c221627d.wav",
+      "sha256": "aca2b6aaf9c4aaa4b6697bdf6ebaba198a50a90ce1ac8d85dc6843946428d0a9",
+      "format": [
+        1,
+        2,
+        16000
+      ],
+      "duration": 8.7,
+      "rms": 1501.164,
+      "peak": 29900,
+      "clipped": 0,
+      "perSecondRms": [
+        3201.785,
+        1496.063,
+        1838.024,
+        669.966,
+        1718.524,
+        430.143,
+        225.321,
+        233.77,
+        252.976
+      ]
+    }
+  ],
+  "normal66": {
+    "key": {
+      "deviceUid": "180010000d50335754363720",
+      "formatEpoch": "e7d5fb1e1b47e567",
+      "sessionId": "000000000000001a"
+    },
+    "session": "pet-priority-normal-f5f8cc6c-80bc-4baf-882d-9c1ed31cddee",
+    "stage": {
+      "intent": "processMeeting",
+      "requestedMeetingMode": "offlineStore",
+      "stage": "paused",
+      "attemptCount": 2,
+      "maxAttempts": 3,
+      "retryStage": "transcription",
+      "lastError": "Volcengine ASR completed without recognized speech",
+      "captureReviewConfirmed": false
+    },
+    "audioSha256": "aca2b6aaf9c4aaa4b6697bdf6ebaba198a50a90ce1ac8d85dc6843946428d0a9",
+    "conclusion": "ASR pipeline paused after no_speech_detected despite nonempty/nonzero recorded waveform. RMS1501/peak29900/0clipped does not prove intelligibility or provider root. Preserve exact original for functional-side analysis; no replacement capture."
+  },
+  "finalPassive": {
+    "evidence": ".cache/pet-goal-20261013/pet-foreground-p128-20261016/final-passive-result.json",
+    "state": {
+      "ID": {
+        "fw": "0001029d",
+        "build": "20261004",
+        "board": "57424155",
+        "uid": "180010000d50335754363720",
+        "ui": 76,
+        "uptime_ms": 3070520
+      },
+      "CORE": {
+        "reset": "14000000",
+        "iwdg_reset": 0,
+        "faults": "00000200",
+        "clock": 0,
+        "lse": 0,
+        "io": 0,
+        "imu": 0,
+        "touch": 0,
+        "audio": 0,
+        "mic": 0,
+        "nor": 0,
+        "panel": 0,
+        "battery": 1,
+        "ram_gap": 40,
+        "stack_min": 3200,
+        "stack_low": 0,
+        "stack_guard": 0
+      },
+      "DISPLAY": {
+        "bound": 1,
+        "driver": 3,
+        "error": 0,
+        "presenter": 0,
+        "assets": 1,
+        "rendered": 547,
+        "failed": 2,
+        "stage": 11,
+        "busy": 0,
+        "transfer_calls": 175214,
+        "busy_timeouts": 0
+      },
+      "STORAGE": {
+        "jedec": "ef6018",
+        "size": 16777216,
+        "layout": 1,
+        "recording_ready": 1,
+        "rec_state": 6,
+        "rec_fault": 0,
+        "committed": 18324,
+        "suspend_ok": 1,
+        "erase_active": 0,
+        "erase_sus": 0,
+        "sus_ms": 2,
+        "resume_ms": 2,
+        "bfp_dw": 16,
+        "dw12": "337663e9",
+        "dw13": "757a757a"
+      },
+      "AUDIO": {
+        "mic_init": 1,
+        "mic_run": 0,
+        "mic_hal": 0,
+        "mic_irq_err": 0,
+        "mic_stale": 0,
+        "mic_overflow": 0,
+        "mic_reject": 0,
+        "frames": 3829,
+        "deadline": 0,
+        "speaker_ready": 1,
+        "fg_ms": 8,
+        "hal_ms": 5,
+        "rec_ms": 5,
+        "ble_ms": 2,
+        "runtime_ms": 1,
+        "present_ms": 4,
+        "render_ms": 57,
+        "pdm_ms": 3
+      },
+      "TIMING": {
+        "rec_id": 66,
+        "mic_starts": 6,
+        "tick_us": 1000,
+        "min_samples": 20,
+        "enc_n": 436,
+        "enc_valid": 1,
+        "enc_p95_upper_ms": 6,
+        "enc_peak_upper_ms": 6,
+        "pdm_n": 873,
+        "pdm_valid": 1,
+        "pdm_p95_upper_ms": 4,
+        "pdm_peak_upper_ms": 4
+      },
+      "BLE": {
+        "compiled": 1,
+        "init": 1,
+        "host": 1,
+        "host_error": 0,
+        "connection": "ffff",
+        "linked": 0,
+        "secured": 0,
+        "fatal": 0,
+        "bond_lost": 0,
+        "rebond": 0,
+        "pair_status": 0,
+        "pair_reason": 0
+      },
+      "POWER": {
+        "adc": 1,
+        "voltage_valid": 0,
+        "percent_valid": 0,
+        "charger_valid": 0,
+        "charger_present": 0,
+        "mv": 0,
+        "pct": 255,
+        "charge": 0,
+        "ota_block": "0004",
+        "sleep_block": "00000000"
+      },
+      "BATTERY": {
+        "vref_raw": 2751,
+        "vref_cal": 1647,
+        "vdda_mv": 1796,
+        "vref_valid": 1,
+        "vref_age_ms": 3944,
+        "vref_n": 1205,
+        "raw": 3533,
+        "samples": 601,
+        "adc_error": 0,
+        "adc_failures": 2,
+        "divider_safe": 0,
+        "divider_verified": 0,
+        "reference_verified": 0,
+        "sample_errors": 1,
+        "gate_errors": 0,
+        "raw_mode": 1,
+        "input_mv": 1550,
+        "input_valid": 1,
+        "saturated": 0,
+        "sample_age_ms": 3942,
+        "vdda_min_mv": 1790,
+        "vdda_max_mv": 1797
+      },
+      "POWERCFG": {
+        "top_ohm": 100000,
+        "bottom_ohm": 68000,
+        "max_cell_mv": 4350,
+        "reference_floor_mv": 1700,
+        "charger_pullups_verified": 0,
+        "soc_curve_verified": 0
+      }
+    },
+    "queries": 0,
+    "ownedHandlesClosed": true
+  },
+  "scope": {
+    "availabilityQueries": 1,
+    "recordings": [
+      60,
+      62,
+      64,
+      66
+    ],
+    "hostMic": false,
+    "seed": false,
+    "firmwareWrite": false,
+    "swd": false,
+    "reset": false,
+    "pairCommand": false,
+    "newCloudService": false,
+    "cloudConfigurationChanged": false,
+    "normalHistoricalRecovery": true,
+    "petAsrAdapterCalls": 1,
+    "petReplyAdapterCalls": 1,
+    "normalMeetingProviderCalls": "Automatic per actual recorder policy;62 complete,66 paused after2 transcription attempts. HTTP/historical totals not instrumented; not zero."
+  },
+  "remaining": [
+    "Handoff latency not qualified",
+    "OTA/desktop update actual preemption not checked",
+    "Exact device-side caption commit instant cancellation",
+    "LLM-in-flight foreground cancellation",
+    "Human touch/menu/IMU/sound/game/QM17–QM22",
+    "Deferred optical/BUSY/pale/gray/line defects"
+  ],
+  "next": "Inspect caption cancellation connection cleanup and remaining start latency with functional side preserving exact timing; do not re-run these originals. Request necessary human pet interaction experience separately.",
+  "testSuitesRun": false,
+  "wholeGoalComplete": false
+}
