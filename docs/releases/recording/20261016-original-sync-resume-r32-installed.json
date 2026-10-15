@@ -1,0 +1,120 @@
+{
+  "schema": "companion.recorder.original-sync-resume.r32.v1",
+  "result": "R32_INSTALLED_UI_ORIGINAL_RESUME_FIXED_REAL_EXERCISE_BLOCKED_BEFORE_START",
+  "createdAtLocal": "2026-10-16T07:21:30+08:00",
+  "summary": "R32正式安装：首页“继续同步”可在唯一同设备原录音仍采集中恢复，带原sessionId，不再被所有录音统一禁用；外设备/多录音/本机库阻塞/在线独占/忙门仍保留。React旧反例失败、修后入口和边界通过。",
+  "limitations": "本次实板操作停在START之前：Windows正常发现路径未取得目标；串口同415/UI77正常、帧数和micStarts未增，没有新录音。只读原生扫描8秒收到135次周边事件但目标0，Radio On/Watcher Started；正常已配对地址也未在8秒内建立GATT会话。唯一根因未定，不归因电池/主板/Windows缓存或R32回退，未刷写/复位/清配对/改Radio。暂停跨段实物资格仍OPEN；416安装断电待Owner，提速等Nordic，其它冻结门不改。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "5e3e5eea3093d7a394b2b1d289cdc7f9d374388b",
+    "tag": "companion-sync-resume-r32-20261016-source",
+    "parent": "fb557854aed24db8c0b1524d291e294559652e1b",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T07:10:11"
+  },
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\sync-resume-r32\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10485760,
+    "sha256": "1cf2c4434189ac5450983593db58f97979a34f593b75e72184334ca36e5b8a03"
+  },
+  "install": {
+    "result": "PASS_INSTALL_IDENTITY_ONLY",
+    "payloadMatch": true,
+    "exeSha256": "2a8107e54d15a0b2e7034499e496a97efeadfa3a3113192c1a89d87ea82e1b3e",
+    "dllSha256": "6c3d8ab76b56a3fb7615bfd2fb4088134f970a8d4b42f37fd5e7758a997c1289",
+    "sourceInputs": 217
+  },
+  "changes": [
+    "Main Continue Sync borrows the existing sole-original UI identity rule, also matches paused device and sends original sessionId. It retains storage/operation/live-online and foreign/multiple-source restrictions.",
+    "Optional installed real-capture CLI schedule calls the same job-bound Pause Sync and exact original DeviceSyncRecordings APIs, observes chunk count before resume and original START/key/capture after resume. It sends no microphone PAUSE/RESUME, replacement START or simulated recording source.",
+    "Schedule rejects incomplete/duplicate/overlapping/incompatible and integer-overflow values before BLE. Invalid maximum-u64 request was actually rejected by installed Type before board access."
+  ],
+  "validation": {
+    "reactOldCounterexample": "FAILED: Continue Sync disabled during original capture",
+    "reactFixedEntry": true,
+    "reactRejectedCases": [
+      "host microphone",
+      "missing logical key",
+      "different current device",
+      "multiple recording rows",
+      "different paused device",
+      "blocked library",
+      "busy operation",
+      "active online owner"
+    ],
+    "guiClickAcceptance": "NOT_RUN",
+    "actualRecording": "NOT_STARTED",
+    "newRecordingRows": 0,
+    "microphoneStartsDelta": 0,
+    "audioBlocksDelta": 0
+  },
+  "actualConnectionFailure": {
+    "startedAtLocal": "2026-10-16T07:13:10.323+08:00",
+    "finishedAtLocal": "2026-10-16T07:14:08.383+08:00",
+    "stage": "INITIAL_DISCOVERY_AND_CONNECTION_BEFORE_START",
+    "productInitialConnectAttempts": 4,
+    "knownDeviceLookup": "not currently connected, normal advertisement fallback",
+    "wrapperError": "Original AssertionError() retained: no new board recording row was created after native connection failed.",
+    "beforeIdentity": {
+      "fw": "0001029f",
+      "build": "20261004",
+      "board": "57424155",
+      "uid": "180010000d50335754363720",
+      "ui": 77,
+      "uptime_ms": 6351872
+    },
+    "latestPassiveIdentity": {
+      "fw": "0001029f",
+      "build": "20261004",
+      "board": "57424155",
+      "uid": "180010000d50335754363720",
+      "ui": 77,
+      "uptime_ms": 6371874
+    },
+    "gapState": "GAP2 radio1/auto_reconnect1/advertising1/pending0/pair_open0/ll_status0/ll_mask1/rearms11 remained unchanged in passive UART. Software/controller report does not prove RF packets reached Windows."
+  },
+  "normalNativeObservation": {
+    "finished": true,
+    "gattRequests": 0,
+    "lowEnergySupported": true,
+    "observation": {
+      "receivedEvents": 135,
+      "stoppedEvents": [
+        {
+          "elapsedMs": 8026,
+          "error": 0
+        }
+      ],
+      "targetEvents": 0
+    },
+    "ownStopOk": true,
+    "pairRequests": 0,
+    "radioState": 1,
+    "radioStateWrites": 0,
+    "receivedHandlerRemoved": true,
+    "schema": "companion.normal-windows-advertisement-observation.r32",
+    "seconds": 8,
+    "statusAfterOwnStop": 3,
+    "statusAfterStart": 0,
+    "statusBeforeOwnStop": 1,
+    "stoppedHandlerRemoved": true
+  },
+  "knownPairedAddressObservation": {
+    "result": "NORMAL_KNOWN_ADDRESS_NOT_REACHABLE",
+    "startedAtLocal": "2026-10-16T07:19:44.773+08:00",
+    "finishedAtLocal": "2026-10-16T07:19:53.062+08:00",
+    "alreadyPaired": true,
+    "sessionActive": false,
+    "commandWrites": 0,
+    "newRecording": false,
+    "ownedHandlesClosed": true
+  },
+  "remaining": "No repeat attempt without a new target observation, relevant code change or physical-state change. Preserve this failure for analyzer/cross-side diagnosis; current actual sync pause/capture/consume not qualified.",
+  "preservedFailures": [
+    "Old Continue button disabled failure retained.",
+    "First extended test assumed an optional persistence object existed; corrected fixture to explicit ready before checking blocked-state variant, intermediate failure retained.",
+    "Normal connection exhausted its existing four-attempt bound; no scripted outer retry.",
+    "Independent normal SDK watcher and paired-address read distinguish a broader reachability failure, without proving a unique root."
+  ],
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
