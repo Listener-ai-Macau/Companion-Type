@@ -239,7 +239,6 @@ export function CompanionDashboard({
   const serviceActive = useRef(false);
   const [serviceResults, setServiceResults] = useState<Partial<Record<'asr' | 'minutes', string>>>({});
   const [resourceManifestPath, setResourceManifestPath] = useState('');
-  const [resourcePayloadPath, setResourcePayloadPath] = useState('');
   const [resourceMsg, setResourceMsg] = useState<string | null>(null);
   const [diagnosticMsg, setDiagnosticMsg] = useState<string | null>(null);
   const [diagnosticBusy, setDiagnosticBusy] = useState(false);
@@ -1470,7 +1469,7 @@ export function CompanionDashboard({
               <span>设备更新</span>
             </div>
             <p className="ct-meeting-hint">
-              整套更新只需填写 system_bundle.json，固件与资源会一起更新，重启确认成功后才释放临时空间。设备会检查型号、签名与供电条件；录音期间无法更新。
+              填写更新包清单路径，程序和屏幕资源会一起更新。下载中断后可重新开始；设备正常启动并确认新版本后才显示成功。录音期间无法更新。
             </p>
             <div className="ct-settings-grid">
               <label className="ct-field">
@@ -1478,16 +1477,7 @@ export function CompanionDashboard({
                 <input
                   value={resourceManifestPath}
                   onChange={(e) => setResourceManifestPath(e.target.value)}
-                  placeholder="…\system_bundle.json"
-                  spellCheck={false}
-                />
-              </label>
-              <label className="ct-field">
-                <span>单组件包数据路径（整套包留空）</span>
-                <input
-                  value={resourcePayloadPath}
-                  onChange={(e) => setResourcePayloadPath(e.target.value)}
-                  placeholder="…\firmware.bin 或 ui-partition.bin"
+                  placeholder="…\ota_manifest.json"
                   spellCheck={false}
                 />
               </label>
@@ -1503,7 +1493,7 @@ export function CompanionDashboard({
                   void Promise.resolve(
                     onValidateOtaPackage?.({
                       manifestPath: resourceManifestPath.trim(),
-                      firmwarePath: resourcePayloadPath.trim(),
+                      firmwarePath: '',
                     }),
                   )
                     .then((report) => {
@@ -1538,7 +1528,7 @@ export function CompanionDashboard({
                   void Promise.resolve(
                     onTransferOtaPackage?.({
                       manifestPath: resourceManifestPath.trim(),
-                      firmwarePath: resourcePayloadPath.trim(),
+                      firmwarePath: '',
                       deviceId: device?.deviceId ?? null,
                     }),
                   )
