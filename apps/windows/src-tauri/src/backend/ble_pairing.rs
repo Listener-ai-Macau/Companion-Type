@@ -38,6 +38,14 @@ impl Drop for PairingHandler {
 
 pub(super) fn is_pairing_error(error: &str) -> bool { error.starts_with(PAIR_ERROR) }
 
+/* OTA's synchronous WinRT path must use the same normal pairing ceremony as
+ * recorder connect, with the address type read from its actual device handle.
+ * This never unpairs/deletes a bond or opens the device's physical window. */
+pub(super) fn ensure_paired_for_ota(address:u64,kind:BluetoothAddressType)->Result<(),String> {
+    let kind=if kind==BluetoothAddressType::Random {AddressType::Random}else{AddressType::Public};
+    pair_before_services(address,Some(kind),&BleCancel::NONE).map_err(pair_error)
+}
+
 pub(super) async fn ensure_paired_before_gatt(
     address: &str, address_type: Option<AddressType>,
 ) -> Result<(), String> {

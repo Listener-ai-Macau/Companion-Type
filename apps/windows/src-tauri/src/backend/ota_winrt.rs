@@ -297,8 +297,7 @@ pub fn transfer_companion_ota_winrt(
 pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
     let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
     // Protected capability read establishes encryption before public readiness.
-    let bytes=read_characteristic_bytes_with_timeout(&target.status,BluetoothCacheMode::Uncached,
-        "单文件OTA能力",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+    let bytes=read_simple_protected_status(&target)?;
     check_wba_readiness(&target)?;
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
     let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
@@ -350,6 +349,26 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis()}));
     Ok(CompanionOtaBleReport{device_id,transfer:report,payload_metrics,system_bundle})
+}
+
+fn read_simple_protected_status(target:&OpenOtaTarget)->Result<Vec<u8>,String> {
+    let deadline=Instant::now()+Duration::from_secs(15);
+    loop {
+        let op=target.status.ReadValueWithCacheModeAsync(BluetoothCacheMode::Uncached)
+            .map_err(|e|format!("升级加密状态读取失败：{e}"))?;
+        let read=wait_async_operation_with_cancel(op,STATUS_READ_TIMEOUT,"升级加密状态",&BleCancel::NONE)?;
+        let status=read.Status().map_err(|e|e.to_string())?;
+        if status==GattCommunicationStatus::Success {
+            return denzic_ble_windows::buffer_to_vec(&read.Value().map_err(|e|e.to_string())?).map_err(|e|e.to_string());
+        }
+        let protocol=read.ProtocolError().ok().and_then(|v|v.Value().ok());
+        // Only SMP's transient insufficient authentication/encryption may
+        // wait on this SAME connection. Access denial/other errors fail closed.
+        if status!=GattCommunicationStatus::ProtocolError||!matches!(protocol,Some(0x05|0x0f))||Instant::now()>=deadline {
+            return Err(format!("升级加密未完成：status={status:?} ATT={protocol:?}；未发送升级内容"));
+        }
+        std::thread::sleep(Duration::from_millis(200));
+    }
 }
 
 fn check_wba_readiness(target:&OpenOtaTarget)->Result<(),String> {
@@ -502,6 +521,7 @@ fn open_ota_target_for_address(
         .map(format_ble_address)
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| device_id_label.to_string());
+    super::ble_pairing::ensure_paired_for_ota(address,device.BluetoothAddressType().map_err(|e|e.to_string())?)?;
     let services_op = device
         .GetGattServicesForUuidWithCacheModeAsync(OTA_SERVICE_UUID, BluetoothCacheMode::Uncached)
         .map_err(|e| format!("OTA GetGattServices failed: {e}"))?;
