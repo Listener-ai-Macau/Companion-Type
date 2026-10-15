@@ -675,7 +675,7 @@ impl CompanionBleBridge {
         requested_device_id: Option<&str>,
         known_recording_ids: &[u32],
     ) -> CompanionBleOperation {
-        recording_sync::resume_explicit(requested_device_id);
+        if let Err(error)=recording_sync::resume_explicit(requested_device_id) {return native_recording_operation(Err(error));}
         if let Ok(path) = std::env::var("COMPANION_TYPE_DEVICE_RECORDING_PATH") {
             // Explicit file import/diagnostic path, using the in-memory queue.
             // This does not exercise the board NOR journal or V2 sealed segments.
@@ -715,7 +715,7 @@ impl CompanionBleBridge {
     }
 
     pub(crate) fn sync_original_recording(&self, original: &OwnedRecorder) -> CompanionBleOperation {
-        recording_sync::resume_explicit(Some(&original.device_id));
+        if let Err(error)=recording_sync::resume_explicit(Some(&original.device_id)) {return native_recording_operation(Err(error));}
         if !native_ble_available() {
             return helper_operation(&self.status(), "原设备录音同步需要真实Windows蓝牙，未用导入或演示源替代。");
         }
@@ -733,7 +733,7 @@ impl CompanionBleBridge {
         if !native_ble_available() {
             return helper_operation(&self.status(), "Native BLE is unavailable; stopped recording sync requires Windows BLE.");
         }
-        recording_sync::resume_explicit(requested_device_id);
+        if let Err(error)=recording_sync::resume_explicit(requested_device_id) {return native_recording_operation(Err(error));}
         native_recording_operation(run_native_blocking(sync_native_recordings_selected(
             requested_device_id, known_recording_ids, Some(recording_id))))
     }
@@ -792,7 +792,12 @@ impl CompanionBleBridge {
                 finish_native_device_operation(device,true).await?;
                 return Ok((report,journal,None));
             }
-            if !automatic_recovery {recording_sync::resume_explicit(Some(&device.device_id()));}
+            if !automatic_recovery {
+                if let Err(error)=recording_sync::resume_explicit(Some(&device.device_id())) {
+                    let cleanup=finish_native_device_operation(device,true).await;
+                    return Err(match cleanup {Ok(())=>error,Err(cleanup)=>format!("{error}; connection cleanup: {cleanup}")});
+                }
+            }
             let pulled=sync_native_recordings_with_link_policy(&device,known_recording_ids,
                 Some(report.meeting_id),&mut SealedLinkPolicy::default(),report.logical_key.as_ref()).await;
             let reusable=pulled.as_ref().is_ok_and(|batch|batch.connection_reusable);
@@ -834,7 +839,10 @@ impl CompanionBleBridge {
                     Err(cleanup) => format!("{error}; connection cleanup: {cleanup}"),
                 });
             }
-            recording_sync::resume_explicit(Some(&device.device_id()));
+            if let Err(error)=recording_sync::resume_explicit(Some(&device.device_id())) {
+                let cleanup=finish_native_device_operation(device,true).await;
+                return Err(match cleanup {Ok(())=>error,Err(cleanup)=>format!("{error}; connection cleanup: {cleanup}")});
+            }
             eprintln!("recording_sync_stage stage=connection elapsed_ms=0 stopped_connection_reused=1 id={}", report.meeting_id);
             let pulled = sync_native_recordings_with_link_policy(&device, known_recording_ids,
                 Some(report.meeting_id), &mut SealedLinkPolicy::default(), report.logical_key.as_ref()).await;
@@ -3998,6 +4006,7 @@ async fn record_board_online_live_inner(
      * it connected while its notification/write channel remains unreachable
      * (GattCommunicationStatus::Unreachable == 1). A rescan gives the final
      * transfer a genuinely new WinRT Peripheral/GATT object graph. */
+    recording_sync::resume_explicit(Some(&device_id))?;
     device = connect_native_device(Some(&device_id))
         .await
         .map_err(|error| format!("open fresh final-pull GATT session: {error}"))?;
@@ -4007,7 +4016,6 @@ async fn record_board_online_live_inner(
     let mut final_pull_reconnects = 0u8;
     let mut final_pull_session = None;
     let mut final_link_policy = SealedLinkPolicy::default();
-    recording_sync::resume_explicit(Some(&device_id));
     let final_sync_job = RecordingSyncJob::begin(&device_id)?;
     let final_sync = loop {
         match sync_native_recording_entry(&device, &characteristics, &mut final_pull_session, final_entry.clone(), Some(&final_sync_job), &mut final_link_policy).await {

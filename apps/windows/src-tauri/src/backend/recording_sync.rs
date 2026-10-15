@@ -4,6 +4,7 @@ use std::collections::HashSet;
 use std::sync::{atomic::{AtomicBool, AtomicU32, AtomicU8, Ordering}, Arc, Mutex, Weak};
 use serde::Serialize;
 use tokio::sync::Notify;
+mod preference;
 
 pub(crate) const PAUSED: &str = "录音同步已暂停；未收齐的设备录音和接收断点保留，点击同步录音可继续。";
 
@@ -12,8 +13,10 @@ struct Store {
     active: Option<Weak<Job>>,
     paused_devices: HashSet<String>,
     last_paused_device: Option<String>,
+    preference_path: Option<std::path::PathBuf>,
+    storage_error: Option<String>,
 }
-static STORE: std::sync::LazyLock<Mutex<Store>> = std::sync::LazyLock::new(|| Mutex::new(Store::default()));
+static STORE: std::sync::LazyLock<Mutex<Store>> = std::sync::LazyLock::new(|| Mutex::new(preference::load_product()));
 static OBSERVER: std::sync::OnceLock<Box<dyn Fn(Status) + Send + Sync>> = std::sync::OnceLock::new();
 static BACKGROUND_YIELD: AtomicBool = AtomicBool::new(false);
 
@@ -48,6 +51,8 @@ pub(crate) struct Status {
     pub received_bytes: u32,
     pub total_bytes: u32,
     pub pause_requested: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub error: Option<String>,
 }
 
 pub(crate) struct Job {
@@ -82,6 +87,7 @@ impl Job {
     }
     fn begin_kind(device: &str, background: bool) -> Result<Arc<Self>, String> {
         let mut store = STORE.lock().map_err(|_| "同步暂停状态暂时不可用")?;
+        if let Some(error) = &store.storage_error { return Err(error.clone()); }
         let active = store.active.as_ref().and_then(Weak::upgrade);
         if active.is_some() {
             drop(store);
@@ -137,6 +143,7 @@ impl Job {
             recording_id: self.recording.load(Ordering::Acquire),
             received_bytes: self.received.load(Ordering::Acquire), total_bytes: self.total.load(Ordering::Acquire),
             pause_requested: self.paused.load(Ordering::Acquire),
+            error: None,
         }
     }
 }
@@ -148,15 +155,16 @@ impl Drop for Job {
 pub(crate) fn status() -> Result<Status, String> {
     // Do not drop the last upgraded Arc while holding STORE: Job's final
     // notification obtains the current status, including any newer job.
-    let (job, last_paused) = {
+    let (job, last_paused, storage_error) = {
         let store = STORE.lock().map_err(|_| "同步暂停状态暂时不可用")?;
-        (store.active.as_ref().and_then(Weak::upgrade), store.last_paused_device.clone())
+        (store.active.as_ref().and_then(Weak::upgrade), store.last_paused_device.clone(), store.storage_error.clone())
     };
-    if let Some(job) = job { return Ok(job.status()); }
+    if let Some(job) = job { let mut status=job.status();status.error=storage_error;return Ok(status); }
     Ok(Status {
         job_id: None, device_id: last_paused.clone(),
-        phase: if last_paused.is_some() { "paused" } else { "idle" },
+        phase: if storage_error.is_some() { "blocked" } else if last_paused.is_some() { "paused" } else { "idle" },
         recording_id: 0, received_bytes: 0, total_bytes: 0, pause_requested: false,
+        error: storage_error,
     })
 }
 
@@ -167,10 +175,14 @@ pub(crate) fn pause(job_id: &str) -> Result<bool, String> {
     if job.id != job_id { drop(store); return Ok(false); }
     store.paused_devices.insert(key(&job.device));
     store.last_paused_device = Some(job.device.clone());
+    // Stop the current job even if local storage is unavailable, but never
+    // report that a pause survives restart unless the durable write succeeded.
+    let saved = preference::save(&store);
+    if let Err(error) = &saved { store.storage_error=Some(error.clone()); }
     drop(store);
     job.request_pause();
     emit_status();
-    Ok(true)
+    saved.map(|_|true)
 }
 
 pub(crate) fn automatic_allowed(device: &str) -> bool {
@@ -188,22 +200,24 @@ pub(crate) fn owned_follow_allowed(device: &str) -> bool {
 }
 
 fn owned_follow_allowed_for(store: &Store, device: &str) -> bool {
-    !store.paused_devices.contains(&key(device))
+    store.storage_error.is_none() && !store.paused_devices.contains(&key(device))
 }
 
 fn automatic_allowed_for(store: &Store, device: &str, disabled: bool) -> bool {
     !disabled && owned_follow_allowed_for(store, device)
 }
 
-pub(crate) fn resume_explicit(device: Option<&str>) {
-    if let Ok(mut store) = STORE.lock() {
-        if let Some(device) = device { store.paused_devices.remove(&key(device)); }
-        else { store.paused_devices.clear(); }
-        if store.last_paused_device.as_deref().is_some_and(|last|
-            !store.paused_devices.contains(&key(last))) { store.last_paused_device = None; }
-    }
+pub(crate) fn resume_explicit(device: Option<&str>) -> Result<(),String> {
+    let mut store = STORE.lock().map_err(|_| "同步暂停状态暂时不可用")?;
+    preference::resume(&mut store,device)?;
+    drop(store);
     emit_status();
+    Ok(())
 }
+
+#[cfg(test)]
+#[path = "recording_sync/restart_tests.rs"]
+mod restart_tests;
 
 #[cfg(test)]
 mod tests {
@@ -242,7 +256,7 @@ mod tests {
         drop(job);
         assert_eq!(status().unwrap().phase, "paused");
         assert!(Job::begin("AA:BB:CC:DD:EE:01").is_err());
-        resume_explicit(Some("aabbccddee01"));
+        resume_explicit(Some("aabbccddee01")).unwrap();
         let next = Job::begin("AA:BB:CC:DD:EE:01").unwrap();
         assert!(!pause(&old_id).unwrap());
         assert!(!next.is_paused());

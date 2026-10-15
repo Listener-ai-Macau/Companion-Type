@@ -22,6 +22,14 @@ use sha2::{Digest, Sha256};
 
 pub fn run() {
     let args = std::env::args().collect::<Vec<_>>();
+    if args.iter().any(|arg|arg=="--recording-sync-status") {
+        if args.len()!=2 {eprintln!("recording_sync_status_error=此只读入口不能与其它操作组合。");process::exit(1);}
+        match backend::recording_sync::status() {
+            Ok(status)=>println!("recording_sync_status_json={}",serde_json::to_string(&status).unwrap()),
+            Err(error)=>{eprintln!("recording_sync_status_error={error}");process::exit(1);}
+        }
+        process::exit(0);
+    }
     if args.iter().any(|arg|arg=="--restore-local-recordings") {
         let result=backend::recording_wire::receiver::restore_local_product();
         let good=result.as_ref().is_ok_and(|report|report.failures.is_empty());
