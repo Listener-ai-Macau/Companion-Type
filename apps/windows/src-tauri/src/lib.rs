@@ -654,7 +654,7 @@ fn should_attempt_device_reconnect(snapshot: &companion_v1::CompanionV1Snapshot)
         && (!backend::segmented_link_change_allowed(snapshot) || !snapshot.device.connected)
         && snapshot.device.remembered_device_id.is_some()
         && !matches!(snapshot.device.connection_phase.as_str(), "reconnecting" | "busy" | "pairingRequired")
-        && (backend::segmented_link_change_allowed(snapshot) || (!snapshot.meeting.active
+        && (backend::segmented_link_change_allowed(snapshot) || backend::automatic_original_reconnect_pending(snapshot) || (!snapshot.meeting.active
         && !snapshot
             .host
             .sessions
@@ -668,7 +668,8 @@ fn spawn_continuous_recording_sync(coordinator: Arc<CompanionCoordinator>) {
         let mut failures = 0u32;
         loop {
             let work = coordinator.snapshot().and_then(|snapshot| {
-                if !snapshot.device.connected && backend::segmented_link_change_allowed(&snapshot)
+                if !snapshot.device.connected && (backend::segmented_link_change_allowed(&snapshot)
+                    || backend::automatic_original_reconnect_pending(&snapshot))
                     && should_attempt_device_reconnect(&snapshot) {
                     coordinator.automatic_reconnect_once().map(|_| true)
                 } else { coordinator.follow_recording_once() }
@@ -743,6 +744,7 @@ fn spawn_automatic_device_reconnect(coordinator: Arc<CompanionCoordinator>) {
 
 /// Recover/control a durable original through the same coordinator as the GUI.
 /// No scan, replacement START, supplied audio, or fallback to another row.
+/// An explicit retry-start can only replay that row's unconfirmed START.
 fn original_recorder_request(args: &[String]) -> Result<(companion_v1::CompanionV1ControlRequest, Option<PathBuf>), String> {
     use companion_v1::CompanionV1ControlAction as Action;
     let mut values = std::collections::BTreeMap::new();
@@ -765,7 +767,8 @@ fn original_recorder_request(args: &[String]) -> Result<(companion_v1::Companion
         Some("resume") => Action::MeetingResume,
         Some("stop") => Action::MeetingStop,
         Some("finalize") => Action::MeetingFinalize,
-        _ => return Err("原录音控制仅接受 recover/pause/resume/stop/finalize；不会开始新录音。".into()),
+        Some("retry-start") => Action::MeetingStart,
+        _ => return Err("原录音控制仅接受 recover/pause/resume/stop/finalize/retry-start；不会创建替代录音。".into()),
     };
     let host = values.get("--session-id").ok_or("必须指定原录音 --session-id，未选择其它会议。")?;
     let mut request = control_request(action, Some(host.clone()));
@@ -786,6 +789,13 @@ fn bind_original_recorder_request(snapshot: &companion_v1::CompanionV1Snapshot,
         return Err("指定行、设备与原控制身份不一致，未控制其它录音。".into());
     }
     request.device_id = Some(journal.device_id.clone());
+    if request.action==companion_v1::CompanionV1ControlAction::MeetingStart {
+        if row.status!="recording" || journal.confirmed.is_some() || journal.key.is_some() || journal.anchor.is_some()
+            || journal.pending.as_ref().is_none_or(|pending|pending.command!=1 || pending.request!=journal.start_request || pending.sequence!=0) {
+            return Err("只有原始开始请求尚未确认时才能明确重试；未重开已确认录音。".into());
+        }
+        request.duration_ms=Some(u64::from(journal.max_seconds)*1000);
+    }
     Ok(())
 }
 

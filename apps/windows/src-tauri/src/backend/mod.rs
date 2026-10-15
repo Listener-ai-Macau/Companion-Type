@@ -33,6 +33,10 @@ pub(crate) fn segmented_link_change_allowed(snapshot: &CompanionV1Snapshot) -> b
                 .all(|session| session.source == "boardDevice" && session.source_device_id.as_deref()
                     .is_some_and(|source| device_connection::same_device_id(source, id))))
 }
+pub(crate) fn automatic_original_reconnect_pending(snapshot:&CompanionV1Snapshot)->bool {
+    !snapshot.device.connected && snapshot.device.remembered_device_id.as_deref()
+        .and_then(|id|recorder_control::restart_recovery_request(snapshot,id)).is_some()
+}
 mod recording_capacity;
 mod recording_metrics;
 pub(crate) mod recording_bookmarks;
@@ -2979,19 +2983,35 @@ impl CompanionBackend for FixtureCompanionBackend {
         let remembered_device_id = preference.remembered_device_id.ok_or_else(|| {
             "automatic reconnect has no stable remembered device".to_string()
         })?;
-        {
+        let original_recovery = {
             let mut snapshot = self
                 .snapshot
                 .lock()
                 .map_err(|_| "Companion backend state lock failed".to_string())?;
+            let original=(!snapshot.device.connected).then(||
+                recorder_control::restart_recovery_request(&snapshot,&remembered_device_id)).flatten();
             if oobe_blocked_by_active_recording(&snapshot, self.live_asr.snapshot().active)
-                && !segmented_link_change_allowed(&snapshot) {
+                && (!segmented_link_change_allowed(&snapshot) && original.is_none()
+                    || self.live_asr.snapshot().active) {
                 return Ok(snapshot.clone());
             }
-            snapshot.device.connection_phase = "reconnecting".to_string();
+            if original.is_none() {snapshot.device.connection_phase = "reconnecting".to_string();}
             snapshot.device.last_reconnect_attempt_at = Some(connection_timestamp());
             snapshot.device.reconnect_attempt_count =
                 snapshot.device.reconnect_attempt_count.saturating_add(1);
+            original
+        };
+        if let Some(request)=original_recovery {
+            // The coordinator's same device-operation gate serializes this
+            // with explicit Disconnect/opt-out. Recheck its exact preference
+            // before entering the normal durable recorder recovery path.
+            let preference=self.connection_preference.lock().map_err(|_|"device connection preference lock failed")?;
+            let current=preference.can_automatically_reconnect() && preference.remembered_device_id.as_deref()
+                .is_some_and(|id|device_connection::same_device_id(id,&remembered_device_id));
+            drop(preference);
+            if !current {return self.snapshot();}
+            eprintln!("[device-reconnect] recovering confirmed durable original={} no_new_start=1",request.session_id.as_deref().unwrap_or(""));
+            return self.apply_control(request);
         }
 
         let operation = self.ble_bridge.probe_remembered(&remembered_device_id);

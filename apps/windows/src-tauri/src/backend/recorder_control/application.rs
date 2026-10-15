@@ -3,6 +3,33 @@ use super::*;
 use crate::companion_v1::{CompanionV1ControlAction as Action, CompanionV1ControlRequest,
     CompanionV1HostSession, CompanionV1Snapshot, CompanionV1ControlEcho, COMPANION_V1_GATT_BOUNDARY};
 
+/// A fresh host has no live GATT identity. A durable, already-confirmed
+/// original authorizes its protected QUERY/recovery, not a generic probe or
+/// a replacement START. The actual UID/epoch/journal are still checked on GATT.
+pub(crate) fn restart_recovery_request(snapshot:&CompanionV1Snapshot,device:&str)->Option<CompanionV1ControlRequest> {
+    if snapshot.host.persistence.status!="ready" || !matches!(snapshot.source,"lastKnown"|"firmware")
+        || snapshot.device.device_id.as_deref().is_some_and(|id|!same_device(id,device)) {return None;}
+    let mut active=snapshot.host.sessions.iter().filter(|row|row.status=="recording");
+    let row=active.next()?;
+    if active.next().is_some() || row.source!="boardDevice"
+        || snapshot.host.active_session_id.as_deref().is_some_and(|id|id!=row.id)
+        || row.source_device_id.as_deref().is_none_or(|id|!same_device(id,device)) {return None;}
+    let journal=row.recorder_control.as_ref()?;
+    let key=SessionKey::from_public(row.device_recording_key.as_ref()?).ok()?;
+    if journal.schema!=1 || journal.host_session!=row.id || !same_device(&journal.device_id,device)
+        || journal.uid!=key.device_uid || journal.epoch!=key.format_epoch
+        || journal.start_request==0 || journal.max_seconds==0
+        || journal.key.as_ref()!=row.device_recording_key.as_ref()
+        || journal.anchor.is_none_or(|id|id==0) || journal.anchor!=row.device_recording_id
+        || journal.confirmed.as_ref().is_none_or(|confirmed|!matches!(confirmed.state,1|3))
+        || journal.pending.as_ref().is_some_and(|pending|!matches!(pending.command,2..=5))
+        || journal.sealed_catalogue_end.is_some()
+        || snapshot.device.mcu_uid.as_deref().is_some_and(|uid|!uid.eq_ignore_ascii_case(&key.public_key().device_uid)) {return None;}
+    Some(CompanionV1ControlRequest {action:Action::MeetingRecoverControl,session_id:Some(row.id.clone()),
+        device_id:Some(device.into()),ble_name:None,prompt_id:None,title:None,transcript_text:None,
+        meeting_mode:None,audio_path:None,audio_bytes:None,duration_ms:None})
+}
+
 impl Journal {
     pub(crate) fn checkpoint_row(&self,row:&mut CompanionV1HostSession)->Result<(),String> {
         if row.id!=self.host_session || row.source!="boardDevice"
@@ -184,6 +211,7 @@ pub(crate) fn apply(snapshot:&mut CompanionV1Snapshot,request:&CompanionV1Contro
     snapshot.device.mode="windowsNative".into();
     snapshot.device.mcu_uid=Some(_journal.uid.iter().map(|b|format!("{b:02x}")).collect());
     snapshot.device.connected=true;snapshot.connected=true;
+    snapshot.device.connection_phase="ready".into();
     if let Some(row)=snapshot.host.sessions.iter_mut().find(|r|r.id==host) {row.recorder_control_uncertain=false;}
     if let Some(operation)=operation {
         if !operation.ready && !operation.sync_paused {return Err(format!("设备已结束录音，原会议已保存；收取尚未完成：{}",operation.message));}

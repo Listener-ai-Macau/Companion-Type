@@ -1,6 +1,60 @@
 use super::*;
 
 #[test]
+fn explicit_start_retry_is_only_the_original_unconfirmed_initial_request() {
+    let mut snapshot=crate::companion_v1::fixture_snapshot();let pending=start();
+    snapshot.host.persistence.status="ready".into();snapshot.host.sessions=vec![original_row(&pending)];
+    let args=["companion-type","--recorder-control","retry-start","--session-id",HOST,"--device-id",DEVICE]
+        .into_iter().map(str::to_owned).collect::<Vec<_>>();
+    let (mut request,_)=crate::original_recorder_request(&args).unwrap();
+    crate::bind_original_recorder_request(&snapshot,&mut request).unwrap();
+    assert_eq!(request.action,crate::companion_v1::CompanionV1ControlAction::MeetingStart);
+    assert_eq!(request.session_id.as_deref(),Some(HOST));assert_eq!(request.duration_ms,Some(u64::from(pending.max_seconds)*1000));
+    assert_eq!(snapshot.host.sessions[0].recorder_control.as_ref().unwrap(),&pending);
+    snapshot.host.sessions=vec![original_row(&running())];
+    assert!(crate::bind_original_recorder_request(&snapshot,&mut request).is_err());
+    snapshot.host.sessions=vec![original_row(&pending)];request.device_id=Some("AA:BB:CC:DD:EE:FF".into());
+    assert!(crate::bind_original_recorder_request(&snapshot,&mut request).is_err());
+}
+
+#[test]
+fn restart_recovery_uses_confirmed_durable_original_without_volatile_peer_cache() {
+    let mut snapshot=crate::companion_v1::fixture_snapshot();let journal=running();let mut row=original_row(&journal);
+    row.status="recording".into();row.recorder_control_uncertain=true;
+    snapshot.source="lastKnown";snapshot.device.connected=false;snapshot.device.mode="unavailable".into();
+    snapshot.device.device_id=Some(DEVICE.into());snapshot.device.remembered_device_id=Some(DEVICE.into());
+    snapshot.device.auto_reconnect_enabled=true;snapshot.device.manual_disconnect=false;snapshot.device.connection_phase="offline".into();
+    snapshot.host.active_session_id=None;snapshot.meeting.active=false;snapshot.host.sessions=vec![row];
+    let request=restart_recovery_request(&snapshot,DEVICE).expect("durable original is sufficient to attempt protected verification");
+    assert_eq!(request.action,crate::companion_v1::CompanionV1ControlAction::MeetingRecoverControl);
+    assert_eq!(request.session_id.as_deref(),Some(HOST));assert_eq!(request.device_id.as_deref(),Some(DEVICE));
+    assert!(super::super::automatic_original_reconnect_pending(&snapshot));
+    assert!(crate::should_attempt_device_reconnect(&snapshot));
+    let mut paused_retry=snapshot.clone();paused_retry.device.connection_phase="pairingRequired".into();
+    assert!(!crate::should_attempt_device_reconnect(&paused_retry));
+    paused_retry.device.connection_phase="offline".into();paused_retry.device.manual_disconnect=true;
+    assert!(!crate::should_attempt_device_reconnect(&paused_retry));
+    paused_retry.device.manual_disconnect=false;paused_retry.device.auto_reconnect_enabled=false;
+    assert!(!crate::should_attempt_device_reconnect(&paused_retry));
+    for invalid in 0..8 {
+        let mut bad=snapshot.clone();
+        match invalid {
+            0=>bad.source="fixture",
+            1=>bad.host.sessions[0].source="hostMicrophone".into(),
+            2=>bad.host.sessions[0].recorder_control=Some(start()),
+            3=>bad.host.sessions[0].device_recording_id=Some(999),
+            4=>bad.host.sessions[0].device_recording_key.as_mut().unwrap().format_epoch="8".into(),
+            5=>bad.host.sessions[0].recorder_control.as_mut().unwrap().confirmed.as_mut().unwrap().state=2,
+            6=>bad.host.active_session_id=Some("other".into()),
+            _=>bad.host.sessions.push(bad.host.sessions[0].clone()),
+        }
+        assert!(restart_recovery_request(&bad,DEVICE).is_none(),"invalid original {invalid}");
+    }
+    assert!(restart_recovery_request(&snapshot,"AA:BB:CC:DD:EE:FF").is_none());
+    snapshot.device.connected=true;assert!(!super::super::automatic_original_reconnect_pending(&snapshot));
+}
+
+#[test]
 fn actual_fw212_start_preparation_waits_without_confirmation_or_replacement_start() {
     let hex=|s:&str|s.as_bytes().chunks_exact(2).map(|p|
         u8::from_str_radix(std::str::from_utf8(p).unwrap(),16).unwrap()).collect::<Vec<_>>();
