@@ -66,6 +66,7 @@ pub(crate) fn begin(coordinator:Arc<CompanionCoordinator>)->Result<Status,String
     if std::thread::Builder::new().name("companion-pet-chat".into()).spawn(move||{
         let result=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||run(&coordinator,&worker)));
         let error=match result {Ok(Ok(()))=>None,Ok(Err(error))=>Some(error),Err(_)=>Some("这次聊天未完成，请重新开聊。".into())};
+        let succeeded=error.is_none();
         worker.running.store(false,Ordering::Release);
         if worker.cancel.load(Ordering::Acquire) {
             let _=update(&worker,"cancelled",None);
@@ -74,6 +75,12 @@ pub(crate) fn begin(coordinator:Arc<CompanionCoordinator>)->Result<Status,String
             let _=update(&worker,if worker.cancel.load(Ordering::Acquire){"cancelled"}else{"failed"},Some(error));
             let _=with(|s|{if s.job.as_ref().is_some_and(|j|j.id==worker.id){s.job=None;}});
         }
+        // One bounded lifecycle event, without speech/reply content. This
+        // distinguishes a cancelled worker still finishing provider I/O from
+        // an old result overwriting a later request; it is not visibility.
+        eprintln!("pet_chat_worker_finished request={} cancelled={} success={} current_request={}",
+            worker.id,u8::from(worker.cancel.load(Ordering::Acquire)),u8::from(succeeded),
+            with(|s|s.status.request_id).unwrap_or(0));
     }).is_err(){let _=with(|s|{s.job=None;s.status.phase="failed".into();});return Err("无法开始这次聊天，请稍后再试。".into());}
     status()
 }
@@ -164,7 +171,10 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     super::export::write_atomic(&root.join(format!("{}-{}.json",job.id,uuid::Uuid::new_v4())),
         &serde_json::to_vec(&receipt).map_err(|_|"无法保存聊天来源")?)?;
     cancelled(job)?;update(job,"transcribing",None)?;
-    let transcript=super::CompanionTranscriptionManager::new().transcribe_pet_audio(Path::new(audio))?;
+    let transcript=super::CompanionTranscriptionManager::new().transcribe_pet_audio(Path::new(audio));
+    eprintln!("pet_chat_asr_finished request={} success={} cancelled={}",
+        job.id,u8::from(transcript.is_ok()),u8::from(job.cancel.load(Ordering::Acquire)));
+    let transcript=transcript?;
     // This routes an explicit chat utterance, not ambient/acoustic wake evidence.
     // "开始录音" stays reserved and is never interpreted as a chat question.
     let text=question(&transcript);
@@ -179,7 +189,10 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
         }
         s.status.transcript=transcript;s.status.phase="thinking".into();Ok(s.history.clone())
     })??;
-    let reply=reply(&text,context)?;cancelled(job)?;
+    let reply=reply(&text,context);
+    eprintln!("pet_chat_reply_finished request={} success={} cancelled={}",
+        job.id,u8::from(reply.is_ok()),u8::from(job.cancel.load(Ordering::Acquire)));
+    let reply=reply?;cancelled(job)?;
     with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id) && !job.cancel.load(Ordering::Acquire){
         // A prepared answer may still be cancelled or refused by the screen.
         // It becomes conversation history only after qualified visibility.
