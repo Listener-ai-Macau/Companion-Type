@@ -1,0 +1,282 @@
+{
+  "schema": "companion.original-restart-recovery.r24.v1",
+  "result": "INSTALLED_NORMAL_REOPEN_FOLLOWS_ORIGINAL_AND_SAVED_CONSUMED",
+  "createdAtLocal": "2026-10-16T05:20:33+08:00",
+  "summary": "R24r3正式安装：已确认原录音在Type正常重开后自动接回，120秒首段录中耐久保存并消费；同一原START/逻辑身份最终收齐239.98秒、两个物理段并全部消费，整场只跳过一次320样本。",
+  "limitations": "最终STOP因Windows缺少控制特征未发出；本次由原240秒上限自然封口，后续受保护QUERY成功收齐，不能当STOP成功或缺特征已修。2h、无干预长期恢复、GUI点击、低电/功耗、严格OTA安装中断电及100KiB/s仍开放，提速等Nordic。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "042af61e91a95b09e19c41181684726701d327ee",
+    "tag": "companion-restart-recovery-r24r3-20261016-source",
+    "parent": "c9e61fa8f225be81eb52e7dabaed90e231eb5a0c",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T04:59:52"
+  },
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\restart-recovery-r24\\r3\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10416128,
+    "sha256": "e7c9ebe7bffb977a34fe1a2c06e39ffbb8f92d9a337cabcd1109761622d28c81"
+  },
+  "install": {
+    "result": "PASS_INSTALL_IDENTITY_ONLY",
+    "exeSha256": "7167b32b1b5af4876cfec4d1229af640c2a70cd0f25361e6eff61b5815a7da56",
+    "dllSha256": "1e6605e601265d7f08b3385a933016c30d7fec35bc3eb39e436b2f33b4ff14f4",
+    "payloadMatch": true
+  },
+  "changes": [
+    "Build a recovery plan only from an exactly bound confirmed durable original, without pretending lastKnown is a live peer.",
+    "Background startup reconnect uses the existing protected CMC3 recovery entry and common device gate; no new START, new session, clock rewrite or bypass of pairing/manual/autoconnect choices.",
+    "Explicit retry-start admits ONLY the same original unconfirmed initial request through both CLI and coordinator; automatic recovery cannot create an unaccepted START.",
+    "Automatic recovery preserves independent Pause Sync; explicit user control retains its existing resume behavior."
+  ],
+  "original": {
+    "hostSession": "v1-real-installed-1792095563795",
+    "startRequest": 2181629560,
+    "anchor": 80,
+    "key": {
+      "deviceUid": "180010000d50335754363720",
+      "formatEpoch": "e7d5fb1e1b47e567",
+      "sessionId": "0000000000000021"
+    },
+    "processingPolicy": "manual",
+    "confirmed": {
+      "command": 1,
+      "request": 2181629560,
+      "sequence": 0,
+      "state": 2,
+      "durationMs": 240000,
+      "finishedLocally": true
+    },
+    "sourceDurationMs": 239980,
+    "segments": [
+      {
+        "id": "segment-0-80-26d9abd174d5f8e908ee3a694d372fbf512f73f6f54c833209769651356dd5a4",
+        "bytes": 252012,
+        "sha256": "26d9abd174d5f8e908ee3a694d372fbf512f73f6f54c833209769651356dd5a4",
+        "frames": 6000,
+        "opusPayloadBytes": 240000,
+        "durationMs": 120000
+      },
+      {
+        "id": "segment-1-81-d121d642e33d793f5551050934d987272ebe902bb9d6c82fce9828e17a8cc4c5",
+        "bytes": 252012,
+        "sha256": "d121d642e33d793f5551050934d987272ebe902bb9d6c82fce9828e17a8cc4c5",
+        "frames": 6000,
+        "opusPayloadBytes": 240000,
+        "durationMs": 120000
+      }
+    ],
+    "totalSegmentBytes": 504024,
+    "frames": 12000,
+    "opusPayloadBytes": 480000,
+    "wav": {
+      "samples": 3839680,
+      "sampleRate": 16000,
+      "channels": 1,
+      "sampleBytes": 2
+    },
+    "wavBytes": 7679404,
+    "wavSha256": "9c64011d36c0d199c05100315b36d7c503e4f141850090116458c8579688de85",
+    "audioStored": true,
+    "deviceReclaimed": true
+  },
+  "actual": {
+    "firstConfirmedRecordingMs": 20,
+    "normalInstalledGuiObservedSeconds": 130,
+    "sameOriginalStartAfterReopen": true,
+    "sealedFirstSegmentBeforeExitBytes": 252012,
+    "afterReopenObservedRecordingMs": 132430,
+    "finalStop": "NOT_SENT_MISSING_GATT_CONTROL",
+    "finalRecovery": "ONE_PROTECTED_QUERY_AFTER_MAX_DURATION_ELAPSED",
+    "maximumDurationNaturalEnd": true,
+    "noReplacementStart": true,
+    "noReset": true,
+    "noSwd": true,
+    "noPairWindow": true,
+    "cloudCalls": 0,
+    "afterSnapshot": {
+      "seq": 382,
+      "reason": "query",
+      "sections": {
+        "ID": {
+          "fw": "0001029e",
+          "build": "20261004",
+          "board": "57424155",
+          "uid": "180010000d50335754363720",
+          "ui": 76,
+          "uptime_ms": 4032941
+        },
+        "CORE": {
+          "reset": "14000000",
+          "iwdg_reset": 0,
+          "faults": "00000000",
+          "clock": 0,
+          "lse": 0,
+          "io": 0,
+          "imu": 0,
+          "touch": 0,
+          "audio": 0,
+          "mic": 0,
+          "nor": 0,
+          "panel": 0,
+          "battery": 0,
+          "ram_gap": 40,
+          "stack_min": 2816,
+          "stack_low": 0,
+          "stack_guard": 0
+        },
+        "DISPLAY": {
+          "bound": 1,
+          "driver": 3,
+          "error": 0,
+          "presenter": 0,
+          "assets": 1,
+          "rendered": 277,
+          "failed": 1,
+          "stage": 11,
+          "busy": 0,
+          "transfer_calls": 151488,
+          "busy_timeouts": 0
+        },
+        "STORAGE": {
+          "jedec": "ef6018",
+          "size": 16777216,
+          "layout": 1,
+          "recording_ready": 1,
+          "rec_state": 6,
+          "rec_fault": 0,
+          "committed": 504024,
+          "suspend_ok": 1,
+          "erase_active": 0,
+          "erase_sus": 0,
+          "sus_ms": 2,
+          "resume_ms": 2,
+          "bfp_dw": 16,
+          "dw12": "337663e9",
+          "dw13": "757a757a"
+        },
+        "AUDIO": {
+          "mic_init": 1,
+          "mic_run": 0,
+          "mic_hal": 0,
+          "mic_irq_err": 0,
+          "mic_stale": 0,
+          "mic_overflow": 0,
+          "mic_reject": 0,
+          "frames": 24000,
+          "deadline": 0,
+          "speaker_ready": 1,
+          "fg_ms": 8,
+          "hal_ms": 7,
+          "rec_ms": 5,
+          "ble_ms": 2,
+          "runtime_ms": 1,
+          "present_ms": 5,
+          "render_ms": 55,
+          "pdm_ms": 3
+        },
+        "TIMING": {
+          "rec_id": 81,
+          "mic_starts": 1,
+          "tick_us": 1000,
+          "min_samples": 20,
+          "enc_n": 12000,
+          "enc_valid": 1,
+          "enc_p95_upper_ms": 6,
+          "enc_peak_upper_ms": 6,
+          "pdm_n": 24001,
+          "pdm_valid": 1,
+          "pdm_p95_upper_ms": 3,
+          "pdm_peak_upper_ms": 4
+        },
+        "BLE": {
+          "compiled": 1,
+          "init": 1,
+          "host": 1,
+          "host_error": 0,
+          "connection": "0000",
+          "linked": 1,
+          "secured": 1,
+          "fatal": 0,
+          "bond_lost": 0,
+          "rebond": 0,
+          "pair_status": 0,
+          "pair_reason": 0
+        },
+        "POWER": {
+          "adc": 1,
+          "voltage_valid": 0,
+          "percent_valid": 0,
+          "charger_valid": 0,
+          "charger_present": 0,
+          "mv": 0,
+          "pct": 255,
+          "charge": 0,
+          "ota_block": "0004",
+          "sleep_block": "00000000"
+        },
+        "BATTERY": {
+          "vref_raw": 2757,
+          "vref_cal": 1647,
+          "vdda_mv": 1792,
+          "vref_valid": 1,
+          "vref_age_ms": 1343,
+          "vref_n": 1515,
+          "raw": 3525,
+          "samples": 757,
+          "adc_error": 0,
+          "adc_failures": 0,
+          "divider_safe": 0,
+          "divider_verified": 0,
+          "reference_verified": 0,
+          "sample_errors": 0,
+          "gate_errors": 0,
+          "raw_mode": 1,
+          "input_mv": 1543,
+          "input_valid": 1,
+          "saturated": 0,
+          "sample_age_ms": 1342,
+          "vdda_min_mv": 1789,
+          "vdda_max_mv": 1798
+        },
+        "POWERCFG": {
+          "top_ohm": 100000,
+          "bottom_ohm": 68000,
+          "max_cell_mv": 4350,
+          "reference_floor_mv": 1700,
+          "charger_pullups_verified": 0,
+          "soc_curve_verified": 0
+        }
+      }
+    }
+  },
+  "retainedFailures": {
+    "initialObserver": "Initial R23 observer attempted confirmed.state on null and terminated its child before START confirmation; pending request retained, no recording claimed.",
+    "recoverBeforeStart": "Protected QUERY correctly refused to start an unaccepted initial intent. Same journal/wire retained.",
+    "r1": "Built source, post-build guard detected later source changes; candidate NOT copied/delivered/installed.",
+    "r2": "Formally installed, explicit same original START retry rejected by coordinator before BLE; fixed in r3. Not marked stable.",
+    "r3Stop": "Encrypted connection/discovery returned success but control UUID8f7a8001 missing; no STOP prepared/written. Exact Windows per-service status was not recorded, unique cause remains unknown.",
+    "legacyObserverLabel": "r3 GUI log contains inherited NORMAL_R23_REOPEN_STARTED print; actual package/source/install SHA is r3, no R23 reinstall."
+  },
+  "validation": {
+    "affectedTests": [
+      "confirmed durable restart plan and scheduler admission",
+      "explicit same unconfirmed START classifier",
+      "pairing/manual/autoconnect guards and automatic marker"
+    ],
+    "sourceInputs": 211,
+    "guiLaunch": "Normal installed application, no recovery/source flags or settings override; own process terminated after130s.",
+    "guiClickThrough": false,
+    "audioValidation": "Two COP1 frame walks, real WAV geometry and one320-sample preskip; no speech stimulus/ASR/semantic quality qualification."
+  },
+  "references": [
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.bluetoothledevice.getgattservicesforuuidasync?view=winrt-26100",
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.genericattributeprofile.gattcommunicationstatus?view=winrt-26100"
+  ],
+  "qualityTargetsChanged": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "next": [
+    "Fix incomplete Windows required-service enumeration on the same protected link, expose actual native status, no blind reconnect/PAIR/reset loops.",
+    "Continue recorder/power/minimal OTA gaps; strict physical install cut requires a concrete Owner time slot; speed waits Nordic."
+  ]
+}
