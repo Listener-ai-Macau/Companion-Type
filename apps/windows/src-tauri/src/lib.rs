@@ -1940,6 +1940,22 @@ fn run_delete_device_recording_cli(args: &[String]) -> Option<Result<(), String>
 }
 
 fn run_firmware_ota_cli(args: &[String]) -> Option<Result<(), String>> {
+    if args.iter().any(|arg|arg=="--system-ota-inspect") {
+        let result=(|| {
+            if args.iter().any(|arg|matches!(arg.as_str(),"--system-ota-transfer"|"--firmware-ota-transfer"|"--resource-ota-transfer"|"--system-ota-validate"|"--resource-ota-validate")) {
+                return Err("Read-only OTA inspection cannot be combined with a transfer or validation request".to_string());
+            }
+            let device=args.iter().position(|arg|arg=="--device-id").and_then(|i|args.get(i+1))
+                .ok_or("Read-only OTA inspection requires the exact device address")?;
+            #[cfg(windows)] {
+                let report=backend::ota_winrt::inspect_system_ota_winrt(device)?;
+                println!("system_ota_inspect_json={report}");Ok(())
+            }
+            #[cfg(not(windows))] {let _=device;Err("Native OTA inspection currently requires Windows".to_string())}
+        })();
+        if let Err(error)=&result {eprintln!("[cli] Companion OTA inspection failed: {error}");}
+        return Some(result);
+    }
     let transfer_flag = args
         .iter()
         .position(|arg| arg == "--firmware-ota-transfer" || arg == "--resource-ota-transfer" || arg=="--system-ota-transfer");

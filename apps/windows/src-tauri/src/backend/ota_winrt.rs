@@ -23,7 +23,7 @@ use denzic_ble_windows::{
 use windows::core::{GUID, HSTRING};
 use windows::Devices::Bluetooth::GenericAttributeProfile::{
     GattCharacteristic, GattCharacteristicProperties, GattCommunicationStatus, GattDeviceService,
-    GattSession, GattSessionStatus, GattWriteOption,
+    GattSession, GattSessionStatus, GattWriteOption, GattOpenStatus, GattSharingMode,
 };
 use windows::Devices::Bluetooth::{
     BluetoothAddressType, BluetoothCacheMode, BluetoothLEDevice, BluetoothLEPreferredConnectionParameters,
@@ -294,6 +294,23 @@ pub fn transfer_companion_ota_winrt(
         payload_metrics,
         system_bundle: None,
     })
+}
+
+/// Read-only native preflight for the existing single-file OTA path. Uses the
+/// same protected status and readiness reads; never BEGIN/ABORT/DATA/FINISH.
+pub(crate) fn inspect_system_ota_winrt(device_id:&str)->Result<serde_json::Value,String> {
+    let address=parse_ble_address(device_id)?;
+    let target=open_ota_target_for_address(address,&format_ble_address(address))?;
+    let bytes=read_simple_protected_status(&target)?;
+    let status=denzic_ota_core::parse_status(&bytes)?;
+    let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
+    let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
+    let readiness=read_wba_readiness(&target)?;
+    let sharing=target._service.SharingMode().map_err(|e|e.to_string())?;
+    Ok(serde_json::json!({"result":"OTA_PROTECTED_READ_ONLY_INSPECTION_COMPLETE","deviceId":target.device_id,
+        "state":status.state,"lastError":status.last_error,"bytesWritten":status.bytes_written,"expectedBytes":status.expected_size,
+        "readinessBlockers":readiness.blockers,"payloadCapacity":flow.payload_bytes,"windowChunks":flow.window_chunks,
+        "sharingMode":sharing.0,"controlWrites":0,"firmwareBytesSent":0,"downloadStarted":false,"fullChainAcceptance":"NOT_QUALIFIED"}))
 }
 
 pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
@@ -592,6 +609,24 @@ fn open_ota_target_for_service_id(
     open_chars_from_service(service, None, device_id_label, None)
 }
 
+fn require_shared_open(status:GattOpenStatus,mode:GattSharingMode)->Result<(),String> {
+    if matches!(status,GattOpenStatus::Success|GattOpenStatus::AlreadyOpened) && mode==GattSharingMode::SharedReadAndWrite {return Ok(());}
+    Err(format!("OTA shared service open failed: status={status:?} sharing={mode:?}; no exclusive fallback or upgrade bytes sent"))
+}
+
+fn ensure_shared_service(service:&GattDeviceService,cancel:&BleCancel)->Result<(),String> {
+    let before=service.SharingMode().map_err(|e|format!("OTA service sharing state: {e}"))?;
+    if before==GattSharingMode::SharedReadAndWrite {return Ok(());}
+    let op=service.RequestAccessAsync().map_err(|e|format!("OTA service access request: {e}"))?;
+    let access=wait_async_operation_with_cancel(op,DISCOVERY_TIMEOUT,"OTA service access",cancel)?;
+    if access!=DeviceAccessStatus::Allowed {return Err(format!("OTA service access not granted: {access:?}; no upgrade bytes sent"));}
+    let op=service.OpenAsync(GattSharingMode::SharedReadAndWrite).map_err(|e|format!("OTA shared service open: {e}"))?;
+    let opened=wait_async_operation_with_cancel(op,DISCOVERY_TIMEOUT,"OTA shared service open",cancel)?;
+    let after=service.SharingMode().map_err(|e|format!("OTA opened service sharing state: {e}"))?;
+    eprintln!("[companion-ota] shared_service_open access={access:?} before={before:?} opened={opened:?} after={after:?}");
+    require_shared_open(opened,after)
+}
+
 fn open_chars_from_service(
     service: GattDeviceService,
     device: Option<denzic_ble_windows::ScopedBleResource<BluetoothLEDevice>>,
@@ -605,15 +640,7 @@ fn open_chars_from_service(
         .map(denzic_ble_windows::ScopedBleResource::new));
     let service = denzic_ble_windows::ScopedBleResource::new(service);
     let cancel = BleCancel::NONE;
-    if let Ok(op) = service.RequestAccessAsync() {
-        if let Ok(access) =
-            wait_async_operation_with_cancel(op, DISCOVERY_TIMEOUT, "OTA access", &cancel)
-        {
-            if access != DeviceAccessStatus::Allowed && access != DeviceAccessStatus::Unspecified {
-                return Err(format!("OTA service access denied: {access:?}"));
-            }
-        }
-    }
+    ensure_shared_service(&service,&cancel)?;
     // Prefer an explicit device handle; otherwise reopen from the service DeviceId
     // so ThroughputOptimized can be held for the transfer lifetime.
     let resolved_id = device
@@ -791,6 +818,7 @@ fn open_write_char(
     label: &str,
 ) -> Result<GattCharacteristic, String> {
     let cancel = BleCancel::NONE;
+    ensure_shared_service(service,&cancel)?;
     let op = service
         .GetCharacteristicsForUuidWithCacheModeAsync(uuid, BluetoothCacheMode::Uncached)
         .map_err(|e| format!("OTA {label} discovery failed: {e}"))?;
@@ -828,6 +856,7 @@ fn open_read_char(
     label: &str,
 ) -> Result<GattCharacteristic, String> {
     let cancel = BleCancel::NONE;
+    ensure_shared_service(service,&cancel)?;
     let op = service
         .GetCharacteristicsForUuidWithCacheModeAsync(uuid, BluetoothCacheMode::Uncached)
         .map_err(|e| format!("OTA {label} discovery failed: {e}"))?;
@@ -1329,4 +1358,21 @@ fn parse_bluetooth_address_from_device_id(id: &str) -> Option<u64> {
         }
     }
     bare.into_iter().next()
+}
+
+#[cfg(test)]
+mod shared_open_tests {
+    use super::*;
+    #[test]
+    fn ota_service_open_preserves_denial_and_requires_actual_shared_mode() {
+        for status in [GattOpenStatus::Success,GattOpenStatus::AlreadyOpened] {
+            assert!(require_shared_open(status,GattSharingMode::SharedReadAndWrite).is_ok());
+            for mode in [GattSharingMode::Exclusive,GattSharingMode::SharedReadOnly,GattSharingMode::Unspecified] {
+                assert!(require_shared_open(status,mode).is_err());
+            }
+        }
+        for status in [GattOpenStatus::SharingViolation,GattOpenStatus::AccessDenied,GattOpenStatus::NotFound,GattOpenStatus::Unspecified,GattOpenStatus(77)] {
+            assert!(require_shared_open(status,GattSharingMode::SharedReadAndWrite).unwrap_err().contains("no exclusive fallback or upgrade bytes sent"));
+        }
+    }
 }

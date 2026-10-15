@@ -86,7 +86,7 @@ mod minutes;
 mod external_command;
 pub(crate) mod external_command_probe;
 #[cfg(windows)]
-mod ota_winrt;
+pub(crate) mod ota_winrt;
 mod persistence;
 mod session_store;
 pub(crate) mod meeting_workspace;
