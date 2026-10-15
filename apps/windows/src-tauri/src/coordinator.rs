@@ -164,11 +164,15 @@ impl CompanionCoordinator {
         request:CompanionV1ControlRequest)->Result<CompanionV1Snapshot,String> {
         use crate::companion_v1::CompanionV1ControlAction as Action;
         if !self.owns_recording_lease(lease)
-            || !matches!(request.action,Action::MeetingStart|Action::MeetingStop)
+            || !matches!(request.action,Action::MeetingStart|Action::MeetingStop|Action::DeviceConnect|Action::DeviceDisconnect)
             || request.session_id.as_deref().is_none_or(|id|!id.starts_with("board-online-"))
             || request.meeting_mode.as_deref()!=Some("onlineLive")
             || request.audio_path.is_some() || request.audio_bytes.is_some() {
             return Err("在线会议没有取得原录音操作，未发送控制。".into());
+        }
+        if matches!(request.action,Action::DeviceConnect|Action::DeviceDisconnect)
+            && !owned_offline_recording_link(&self.backend.snapshot()?,&request) {
+            return Err("在线会议重连没有唯一的原录音身份，未建立替代连接。".into());
         }
         self.backend.apply_control(request)
     }
@@ -473,6 +477,11 @@ mod tests {
         assert!(other.apply_online_capture_control(&lease,request.clone()).is_err());
         request.audio_path=Some("board://online/old-placeholder".into());
         assert!(owner.apply_online_capture_control(&lease,request).is_err());
+        for action in [crate::companion_v1::CompanionV1ControlAction::DeviceConnect,
+            crate::companion_v1::CompanionV1ControlAction::DeviceDisconnect] {
+            let mut request=crate::control_request(action,Some("board-online-unowned".into()));request.meeting_mode=Some("onlineLive".into());
+            assert!(owner.apply_online_capture_control(&lease,request).is_err());
+        }
         let mut cursor=crate::backend::recording_wire::receiver::LiveCursor::new(
             crate::backend::recording_wire::SessionKey {device_uid:[7;12],format_epoch:11,session_id:13}).unwrap();
         assert!(other.follow_online_capture(&lease,"board-online-owned",&mut cursor).is_err());

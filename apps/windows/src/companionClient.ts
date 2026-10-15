@@ -209,6 +209,7 @@ export type CompanionBoardOnlineLiveStartRequest = {
   maxDurationSeconds?: number;
   partialIntervalMs?: number;
   disconnectAfterSeconds?: number | null;
+  reconnectAfterSeconds?: number | null;
 };
 
 export type CompanionBoardOnlineLiveStatus = {

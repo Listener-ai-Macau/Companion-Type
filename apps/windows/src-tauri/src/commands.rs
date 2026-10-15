@@ -26,7 +26,8 @@ use crate::coordinator::CompanionCoordinator;
 type CompanionCoordinatorState<'a> = State<'a, Arc<CompanionCoordinator>>;
 type BoardOnlineLiveManagerState<'a> = State<'a, Arc<CompanionBoardOnlineLiveManager>>;
 mod segmented_online_live;
-pub(crate) use segmented_online_live::run_cli as run_segmented_online_cli;
+mod board_online_cli;
+pub(crate) use board_online_cli::run_cli as run_segmented_online_cli;
 
 #[tauri::command]
 pub async fn save_companion_bookmark(coordinator: CompanionCoordinatorState<'_>, manager: BoardOnlineLiveManagerState<'_>,
@@ -189,6 +190,7 @@ pub struct CompanionBoardOnlineLiveStartRequest {
     pub max_duration_seconds: Option<u16>,
     pub partial_interval_ms: Option<u64>,
     pub disconnect_after_seconds: Option<u16>,
+    pub reconnect_after_seconds: Option<u16>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -227,6 +229,7 @@ pub struct CompanionBoardOnlineLiveManager {
     status: Mutex<CompanionBoardOnlineLiveStatus>,
     stop_requested: Mutex<Option<Arc<AtomicBool>>>,
     bookmarks: Mutex<Option<Arc<crate::backend::recording_bookmarks::live_queue::LiveQueue>>>,
+    link_events: Mutex<(Vec<serde_json::Value>,u32)>,
 }
 
 impl CompanionBoardOnlineLiveManager {
@@ -235,6 +238,7 @@ impl CompanionBoardOnlineLiveManager {
             status: Mutex::new(CompanionBoardOnlineLiveStatus::default()),
             stop_requested: Mutex::new(None),
             bookmarks: Mutex::new(None),
+            link_events: Mutex::new((Vec::new(),0)),
         }
     }
 
@@ -243,6 +247,21 @@ impl CompanionBoardOnlineLiveManager {
             .lock()
             .map(|status| status.clone())
             .map_err(|_| "board onlineLive status lock failed".to_string())
+    }
+
+    fn observe_link(&self,phase:&str,snapshot:&CompanionV1Snapshot,session:&str,elapsed_ms:u64,
+        received_source_ms:u64,error:Option<&str>) {
+        let row=snapshot.host.sessions.iter().find(|r|r.id==session);
+        let event=serde_json::json!({"phase":phase,"hostUnixMs":SystemTime::now().duration_since(UNIX_EPOCH).unwrap_or_default().as_millis(),
+            "elapsedMs":elapsed_ms,"receivedSourceMs":received_source_ms,"connected":snapshot.device.connected,
+            "sessionId":session,"logicalKey":row.and_then(|r|r.device_recording_key.as_ref()),
+            "physicalAnchor":row.and_then(|r|r.device_recording_id),"startRequest":row.and_then(|r|r.recorder_control.as_ref()).map(|j|j.start_request),
+            "deviceDurationMs":row.and_then(|r|r.recorder_control.as_ref()).and_then(|j|j.confirmed.as_ref()).map(|c|c.duration_ms),
+            "error":error.map(|s|s.chars().take(512).collect::<String>())});
+        eprintln!("segmented_online_link_json={event}");
+        if let Ok(mut events)=self.link_events.lock() {
+            if events.0.len()<64 {events.0.push(event);} else {events.1+=1;}
+        }
     }
 
     fn set_status(&self, next: CompanionBoardOnlineLiveStatus) {

@@ -5,61 +5,11 @@ use crate::backend::recording_wire::{SessionKey,receiver::{LiveCursor,Receiver}}
 use crate::coordinator::CompanionDeviceOperationLease;
 use std::{sync::mpsc,time::{Duration,Instant}};
 
-/// Machine exercise of the installed GUI's exact start/stop/service path.
-/// It emits stages and the saved row, never full-product acceptance claims.
-pub(crate) fn run_cli(args:&[String])->Option<Result<(),String>> {
-    if !args.iter().any(|a|a=="--segmented-online-live") {return None;}
-    Some((|| {
-        let value=|key:&str|args.iter().position(|a|a==key).and_then(|n|args.get(n+1))
-            .filter(|v|!v.starts_with("--")).map(String::as_str).ok_or_else(||format!("{key} requires a value"));
-        let seconds=value("--seconds")?.parse::<u16>().map_err(|_|"--seconds must be an integer")?;
-        validate_board_online_duration(Some(seconds))?;
-        let output=std::path::Path::new(value("--output")?);
-        if !output.is_absolute() || output.exists() {return Err("输出必须是尚不存在的绝对路径，未启动录音。".into());}
-        let device=value("--device-id")?.to_string();
-        let _=crate::backend::product_settings::load_and_apply();
-        let coordinator=Arc::new(CompanionCoordinator::new_fixture());
-        let mut connect=crate::control_request(CompanionV1ControlAction::DeviceConnect,None);
-        connect.device_id=Some(device.clone());let connected=coordinator.apply_control(connect)?;
-        if !connected.device.connected || crate::backend::known_segmented_peer(&device).is_none() {
-            return Err("当前设备未确认连续录音能力，未开录。".into());
-        }
-        let manager=Arc::new(CompanionBoardOnlineLiveManager::new());
-        let started=start_board_online_live_owned(coordinator.clone(),manager.clone(),CompanionBoardOnlineLiveStartRequest {
-            title:Some("Companion 在线会议实机检查".into()),device_id:Some(device),max_duration_seconds:Some(seconds),
-            partial_interval_ms:Some(8000),disconnect_after_seconds:None })?;
-        let session=started.session_id.clone().ok_or("未创建在线会议任务。")?;
-        let until=Instant::now()+Duration::from_secs(u64::from(seconds)+1200);
-        let mut last=String::new();
-        loop {
-            let status=manager.snapshot()?;
-            let stage=format!("{}:{}",status.state,status.partial_count);
-            if stage!=last {eprintln!("segmented_online_status={}",serde_json::to_string(&status).map_err(|e|e.to_string())?);last=stage;}
-            if matches!(status.state.as_str(),"completed"|"pending"|"failed") {
-                let snapshot=coordinator.snapshot()?;
-                let row=snapshot.host.sessions.iter().find(|r|r.id==session);
-                let payload=serde_json::json!({"schema":"companion.segmented-online-product-stage.v1",
-                    "status":status,"session":row,"fullChainAcceptance":"NOT_QUALIFIED",
-                    "hostMic":false,"seed":false,"captureSource":"board_device"});
-                crate::backend::export::write_atomic(output,&serde_json::to_vec_pretty(&payload).map_err(|e|e.to_string())?)?;
-                return if status.state=="completed" {Ok(())} else {Err(status.error.unwrap_or_else(||"在线会议未完成，原记录已保存。".into()))};
-            }
-            if Instant::now()>=until {
-                // Do not exit while a capture might still own the board.
-                manager.request_stop()?;
-                return Err("在线会议处理超时，原控制和原音保留；进程退出后从会议列表恢复。".into());
-            }
-            std::thread::sleep(Duration::from_millis(200));
-        }
-    })())
-}
-
 pub(super) fn start(coordinator:Arc<CompanionCoordinator>,manager:Arc<CompanionBoardOnlineLiveManager>,
     lease:CompanionDeviceOperationLease,request:CompanionBoardOnlineLiveStartRequest,
     session:String,title:String,seconds:u16)->Result<CompanionBoardOnlineLiveStatus,String> {
-    if request.disconnect_after_seconds.is_some() {
-        return Err("在线会议入口不主动制造断连；请使用原会话恢复调试入口。".into());
-    }
+    recovery_schedule(&request,seconds)?;
+    *manager.link_events.lock().map_err(|_|"在线会议连接记录不可用。")?=(Vec::new(),0);
     let stop=Arc::new(AtomicBool::new(false));
     let queue=Arc::new(crate::backend::recording_bookmarks::live_queue::LiveQueue::new(&session));
     *manager.stop_requested.lock().map_err(|_|"在线会议停止状态不可用。")?=Some(stop.clone());
@@ -113,6 +63,34 @@ fn owned_row<'a>(snapshot:&'a CompanionV1Snapshot,session:&str,key:Option<&Sessi
     Ok(row)
 }
 
+pub(super) fn recovery_schedule(options:&CompanionBoardOnlineLiveStartRequest,seconds:u16)
+    ->Result<Option<(u16,u16)>,String> {
+    match (options.disconnect_after_seconds,options.reconnect_after_seconds) {
+        (None,None)=>Ok(None),
+        (Some(drop),reconnect)=>{
+            let reconnect=reconnect.unwrap_or_else(||drop.saturating_add(4));
+            if drop==0 || drop>=reconnect || reconnect>=seconds {
+                return Err("断连恢复时点须满足 0 < 断开 < 接回 < 录音时长，未发送开录。".into());
+            }
+            Ok(Some((drop,reconnect)))
+        }
+        _=>Err("接回时点必须同时指定断开时点，未发送开录。".into()),
+    }
+}
+
+fn original_reconfirmed(snapshot:&CompanionV1Snapshot,session:&str,key:&SessionKey,anchor:u32,start_request:u32)
+    ->Result<bool,String> {
+    let row=owned_row(snapshot,session,Some(key))?;
+    let journal=row.recorder_control.as_ref().ok_or("原录音控制记录缺失。")?;
+    if row.device_recording_id!=Some(anchor) || journal.start_request!=start_request || journal.pending.is_some()
+        || row.recorder_control_uncertain || !snapshot.device.connected {
+        return Err("重连尚未确认原录音与原开录指令，设备原件保留，没有重开。".into());
+    }
+    let confirmed=journal.confirmed.as_ref().ok_or("原录音状态尚未确认。")?;
+    if !matches!(confirmed.state,1..=3) {return Err("原录音返回未知状态，没有重开。".into());}
+    Ok(confirmed.state!=2)
+}
+
 fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineLiveManager>,
     lease:CompanionDeviceOperationLease,options:&CompanionBoardOnlineLiveStartRequest,
     session:&str,title:&str,seconds:u16,stop:&AtomicBool,
@@ -124,20 +102,63 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
     let key=SessionKey::from_public(row.device_recording_key.as_ref().ok_or("开录尚未确认连续会话身份；原控制已保存。")?)?;
     let anchor=row.device_recording_id.ok_or("开录尚未确认原录音编号；原控制已保存。")?;
     let device=row.source_device_id.clone().ok_or("开录缺少原设备身份。")?;
+    let start_request=row.recorder_control.as_ref().ok_or("原录音控制缺失。")?.start_request;
     // A late/ambiguous START is never a licence to create another recording.
     if row.recorder_control_uncertain || row.recorder_control.as_ref().and_then(|j|j.confirmed.as_ref())
         .is_none_or(|c|c.state!=1) {return Err("原开录尚待确认，请恢复这场录音。".into());}
     manager.mark_recording_active(anchor,0);
+    manager.observe_link("startConfirmed",&started,session,0,0,None);
     eprintln!("segmented_online phase=recording host={} anchor={} logical={:016x}",session,anchor,key.session_id);
+    let started_at=Instant::now();
     let capture_result=(|| ->Result<(),String> {
     let mut cursor=LiveCursor::new(key.clone())?;
-    let started_at=Instant::now();let mut next_follow=Instant::now();
+    let mut next_follow=Instant::now();
     let interval=Duration::from_millis(options.partial_interval_ms.unwrap_or(8000).max(2000));
     let mut next_partial=started_at+interval;
     let mut pending:Option<mpsc::Receiver<Result<String,String>>>=None;
     let mut live_error:Option<String>=None;let mut link_error:Option<String>=None;
     let mut last_window_ms=0;
+    let schedule=recovery_schedule(options,seconds)?;
+    let mut planned_drop_done=false;let mut planned_offline=false;
+    let mut reconnect_at:Option<Instant>=None;let mut reconnect_attempts=0u32;
+    let mut awaiting_prefix:Option<u64>=None;
     while started_at.elapsed()<Duration::from_secs(u64::from(seconds)) && !stop.load(Ordering::Acquire) {
+        let elapsed=||started_at.elapsed().as_millis().min(u128::from(u64::MAX)) as u64;
+        if !planned_drop_done && schedule.is_some_and(|(drop,_)|started_at.elapsed().as_secs()>=u64::from(drop)) {
+            planned_drop_done=true;
+            let before=coordinator.snapshot()?;
+            manager.observe_link("disconnectRequested",&before,session,elapsed(),cursor.captured_ms(),None);
+            let offline=coordinator.apply_online_capture_control(&lease,request(A::DeviceDisconnect,session,Some(device.clone()),title,0))?;
+            owned_row(&offline,session,Some(&key))?;
+            if offline.device.connected || !offline.meeting.active {return Err("断开未保留原录音状态，未制造替代录音。".into());}
+            manager.observe_link("offlineActionConfirmed",&offline,session,elapsed(),cursor.captured_ms(),None);
+            // A product action acknowledgement is not proof of physical radio
+            // loss. The CLI reports that gate as unknown until passive HCI.
+            planned_offline=true;link_error=Some("蓝牙已断开，设备继续离线录音。".into());
+            reconnect_at=Some(started_at+Duration::from_secs(u64::from(schedule.unwrap().1)));
+            awaiting_prefix=Some(cursor.captured_ms());
+        }
+        if link_error.is_some() && reconnect_at.is_some_and(|at|Instant::now()>=at) {
+            let current=coordinator.snapshot()?;
+            if planned_offline || (current.device.auto_reconnect_enabled && !current.device.manual_disconnect) {
+                reconnect_attempts+=1;
+                manager.observe_link("reconnectRequested",&current,session,elapsed(),cursor.captured_ms(),None);
+                let restored=coordinator.apply_online_capture_control(&lease,
+                    request(A::DeviceConnect,session,Some(device.clone()),title,0))
+                    .and_then(|snapshot|original_reconfirmed(&snapshot,session,&key,anchor,start_request).map(|active|(snapshot,active)));
+                match restored {
+                    Ok((snapshot,active))=>{
+                        manager.observe_link("originalReconfirmed",&snapshot,session,elapsed(),cursor.captured_ms(),None);
+                        link_error=None;planned_offline=false;reconnect_at=None;reconnect_attempts=0;next_follow=Instant::now();
+                        if !active {break;}
+                    }
+                    Err(error)=>{
+                        manager.observe_link("reconnectFailed",&coordinator.snapshot()?,session,elapsed(),cursor.captured_ms(),Some(&error));
+                        link_error=Some(error);reconnect_at=Some(Instant::now()+Duration::from_secs((1u64<<reconnect_attempts.min(4)).min(15)));
+                    }
+                }
+            } else {reconnect_at=None;}
+        }
         if let Some(job)=pending.as_ref() {
             match job.try_recv() {
                 Ok(Ok(text))=>{
@@ -159,7 +180,18 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
         if link_error.is_none() && Instant::now()>=next_follow {
             // One bounded receive borrows the existing original connection.
             // A link failure suspends this consumer, never the microphone.
-            if let Err(e)=coordinator.follow_online_capture(&lease,session,&mut cursor) {link_error=Some(e);}
+            match coordinator.follow_online_capture(&lease,session,&mut cursor) {
+                Ok(_)=>{
+                    if awaiting_prefix.is_some_and(|prior|cursor.captured_ms()>prior) {
+                        manager.observe_link("prefixResumed",&coordinator.snapshot()?,session,elapsed(),cursor.captured_ms(),None);
+                        awaiting_prefix=None;
+                    }
+                }
+                Err(error)=>{
+                    manager.observe_link("followFailed",&coordinator.snapshot()?,session,elapsed(),cursor.captured_ms(),Some(&error));
+                    link_error=Some(error);awaiting_prefix=Some(cursor.captured_ms());reconnect_at=Some(Instant::now()+Duration::from_secs(1));
+                }
+            }
             next_follow=Instant::now()+Duration::from_millis(500);
             manager.mark_recording_active(anchor,cursor.duration_ms().min(u64::from(u32::MAX)) as u32);
             if bookmarks.has_pending() && cursor.captured_ms()>0 {
@@ -203,6 +235,7 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
         return Err("录音结束／原音收齐尚未确认，请在原会议继续恢复。".into());
     }
     Receiver::verify_saved_row(row)?;
+    manager.observe_link("stopConfirmedSourceSaved",&stopped,session,started_at.elapsed().as_millis() as u64,row.duration_ms,None);
     eprintln!("segmented_online phase=original_saved host={} duration_ms={} reclaimed={}",session,row.duration_ms,row.device_reclaimed);
     drop(lease);
     if let Ok(mut s)=manager.status.lock() {s.state="finalizing".into();s.duration_ms=row.duration_ms;s.final_recording_path=row.audio_path.clone();}
@@ -218,4 +251,32 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
         coordinator.apply_control(r)?;
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn reconnect_must_keep_exact_logical_key_anchor_and_original_start() {
+        use crate::backend::recording_wire::{control::PausePeer,transport::Peer};
+        use crate::backend::recorder_control::{Journal,Confirmed};
+        let id="board-online-owned";let key=SessionKey{device_uid:[7;12],format_epoch:11,session_id:13};
+        let peer=Peer{uid:[7;12],epoch:11,capacity:64,max_value_bytes:509,logical_control:true,growing_tail:true,batch_interval:true,pause_control:true};
+        let pause=PausePeer::from_verified_peer(&peer).unwrap();
+        let mut journal=Journal::start(&pause,id,"AA:BB:CC:DD:EE:19",17,60).unwrap();
+        journal.key=Some(key.public_key());journal.anchor=Some(19);journal.pending=None;
+        journal.confirmed=Some(Confirmed{command:1,request:17,sequence:0,state:1,duration_ms:1000,finished_locally:false});
+        let mut s=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),request(
+            CompanionV1ControlAction::MeetingStart,id,None,"unit",60)).unwrap();
+        s.device.connected=true;
+        let r=&mut s.host.sessions[0];r.source="boardDevice".into();r.device_recording_key=Some(key.public_key());
+        r.device_recording_id=Some(19);r.recorder_control=Some(journal);
+        assert!(original_reconfirmed(&s,id,&key,19,17).unwrap());
+        for n in 0..4 {
+            let mut bad=s.clone();let row=&mut bad.host.sessions[0];
+            match n {0=>row.device_recording_id=Some(20),1=>row.recorder_control.as_mut().unwrap().start_request=18,
+                2=>row.device_recording_key.as_mut().unwrap().session_id="000000000000000e".into(),_=>row.recorder_control_uncertain=true}
+            assert!(original_reconfirmed(&bad,id,&key,19,17).is_err());
+        }
+    }
 }

@@ -1243,26 +1243,6 @@ pub(crate) fn pull_device_diagnostics(device_id: &str) -> Result<super::diagnost
     }))
 }
 
-pub(crate) fn record_board_online_live(
-    requested_device_id: Option<&str>,
-    capture_seconds: u16,
-    partial_interval_ms: u64,
-    disconnect_after_seconds: Option<u16>,
-    consumer: BoardPartialConsumer,
-) -> Result<BoardOnlineLiveReport, String> {
-    record_board_online_live_controlled(
-        requested_device_id,
-        capture_seconds,
-        partial_interval_ms,
-        disconnect_after_seconds,
-        consumer,
-        Arc::new(AtomicBool::new(false)),
-        None,
-        None,
-        None,
-    )
-}
-
 pub(crate) fn record_board_online_live_controlled(
     requested_device_id: Option<&str>,
     capture_seconds: u16,
@@ -3621,6 +3601,10 @@ async fn record_board_online_live_inner(
     bookmarks: Option<BoardBookmarkObserver>,
 ) -> Result<BoardOnlineLiveReport, String> {
     let mut device = connect_native_device(requested_device_id).await?;
+    if device.recording_peer.is_some() {
+        close_native_device(&device).await;
+        return Err("当前WBA连续录音必须使用原会话CMC3入口；未发送旧10字节开录指令。".into());
+    }
     let device_id = device.device_id();
     let mut characteristics = device.peripheral.characteristics();
     let mut char_control = find_characteristic(&characteristics, RECORDING_CONTROL_UUID)?;

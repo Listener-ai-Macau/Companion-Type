@@ -445,7 +445,7 @@ fn verified_device_recording_ids_for_policy(
 }
 pub use ble_bridge::CompanionBleBridgeStatus;
 pub(crate) use ble_bridge::{
-    record_board_online_live, record_board_online_live_controlled, BoardOnlineLiveReport,
+    record_board_online_live_controlled, BoardOnlineLiveReport,
     BoardPartialConsumer, BoardPartialObserver, BoardRecordingObserver, BoardBookmarkObserver,
 };
 use ble_bridge::{
@@ -2870,7 +2870,14 @@ impl CompanionBackend for FixtureCompanionBackend {
             ble_bridge::original_follow_scope(&snapshot, session)).transpose()?;
         let allowed = if scope.is_some() { recording_sync::owned_follow_allowed(&id) }
             else { recording_sync::automatic_allowed(&id) };
-        if !allowed || !ble_bridge::prepared_segmented_recording(&id) {
+        if !allowed {
+            return Ok(false);
+        }
+        if !ble_bridge::prepared_segmented_recording(&id) {
+            if live.is_some() {
+                snapshot.connected=false;snapshot.device.connected=false;snapshot.device.connection_phase="offline".into();
+                return Err("原在线接收连接已释放，设备继续离线录音，接收断点保留。".into());
+            }
             return Ok(false);
         }
         match ble_bridge::follow_prepared_recording_once(&id, scope.as_ref(),live) {
