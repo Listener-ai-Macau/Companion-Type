@@ -9,6 +9,55 @@ const MIN_OBSERVATIONS: usize = 12;
 const MAX_MATRIX: usize = 256;
 const MAX_ESTIMATE: usize = 8;
 
+/// A short recording cannot supply the observations required by NME. Compare
+/// cuts of the same constrained average-link tree using cosine silhouette,
+/// rather than treating every below-threshold variation as a new person.
+/// Only rejoin an existing >=3-group hypothesis; never create extra people,
+/// erase the last two voices, override provider identities or affect long NME.
+/// Silhouette follows Rousseeuw (1987), doi:10.1016/0377-0427(87)90125-7.
+pub(super) fn refine_short_cut(vectors:&[Vec<f32>],
+    constraints:&[Option<super::SpeakerConstraint>],baseline:&[usize])->Option<Vec<usize>> {
+    let n=vectors.len();
+    if !(3..MIN_OBSERVATIONS).contains(&n) || baseline.len()!=n { return None; }
+    let width=vectors.first()?.len();
+    if width==0 || vectors.iter().any(|v|v.len()!=width || v.iter().any(|x|!x.is_finite())
+        || v.iter().map(|&x|f64::from(x).powi(2)).sum::<f64>()<1e-16) { return None; }
+    let count=baseline.iter().copied().collect::<std::collections::BTreeSet<_>>().len();
+    if count<3 { return None; }
+    let mut distances=vec![vec![0.0;n];n];
+    for i in 0..n {for j in 0..i {
+        let distance=(1.0-f64::from(super::cosine(&vectors[i],&vectors[j]))).clamp(0.0,2.0);
+        distances[i][j]=distance;distances[j][i]=distance;
+    }}
+    let mut best_score=silhouette(&distances,baseline)?;let mut best=None;
+    for groups in 2..count {
+        // The existing merge routine preserves same-request cannot-link and
+        // must-link identities. A requested cut is not a forced people count.
+        let labels=super::ahc_cluster_with_minimum(vectors,-1.0,constraints,groups);
+        let Some(score)=silhouette(&distances,&labels) else {continue;};
+        if score>best_score+1e-9 {best_score=score;best=Some(labels);}
+    }
+    best
+}
+
+fn silhouette(distances:&[Vec<f64>],labels:&[usize])->Option<f64> {
+    let groups=labels.iter().copied().collect::<std::collections::BTreeSet<_>>();
+    if labels.len()<2 || groups.len()<2 || distances.len()!=labels.len() {return None;}
+    let mut sum=0.0;
+    for (i,&label) in labels.iter().enumerate() {
+        let own=labels.iter().enumerate().filter(|&(j,&group)|j!=i && group==label).map(|(j,_)|j).collect::<Vec<_>>();
+        // Conventional silhouette of a singleton is zero, not perfect unity.
+        if own.is_empty() {continue;}
+        let a=own.iter().map(|&j|distances[i][j]).sum::<f64>()/own.len() as f64;
+        let b=groups.iter().filter(|&&group|group!=label).map(|&group| {
+            let members=labels.iter().enumerate().filter(|&(_,&g)|g==group).map(|(j,_)|j).collect::<Vec<_>>();
+            members.iter().map(|&j|distances[i][j]).sum::<f64>()/members.len() as f64
+        }).min_by(f64::total_cmp)?;
+        let scale=a.max(b);if scale>1e-12 {sum+=(b-a)/scale;}
+    }
+    Some(sum/labels.len() as f64)
+}
+
 pub(super) fn estimate(vectors: &[Vec<f32>]) -> Option<usize> {
     let n = vectors.len();
     if n < MIN_OBSERVATIONS { return None; }
@@ -79,6 +128,21 @@ pub(super) fn estimate(vectors: &[Vec<f32>]) -> Option<usize> {
 
 #[cfg(test)] mod tests {
     use super::*;
+    #[test] fn short_tree_can_rejoin_voice_variation_without_merging_distinct_provider_identities() {
+        let vectors=vec![vec![1.0,0.0],vec![-1.0,0.0],vec![0.8,0.6],vec![0.8,-0.6]];
+        let labels=super::super::cluster_speakers(&vectors);
+        assert_eq!(labels[0],labels[2]);assert_eq!(labels[0],labels[3]);assert_ne!(labels[0],labels[1]);
+        let constraints=vec![Some(super::super::SpeakerConstraint{request:0,label:"A".into()}),
+            None,None,Some(super::super::SpeakerConstraint{request:0,label:"B".into()})];
+        let constrained=super::super::cluster_speakers_constrained(&vectors,&constraints);
+        assert_ne!(constrained[0],constrained[3]);
+    }
+    #[test] fn short_cut_keeps_singletons_neutral_and_declines_long_or_invalid_input() {
+        assert_eq!(silhouette(&[vec![0.0,1.0],vec![1.0,0.0]],&[0,1]),Some(0.0));
+        assert!(refine_short_cut(&vec![vec![1.0,0.0];12],&[],&vec![0;12]).is_none());
+        assert!(refine_short_cut(&vec![vec![f32::NAN,0.0];4],&[],&[0,1,2,3]).is_none());
+        assert!(refine_short_cut(&vec![vec![1.0,0.0];4],&[],&[0,0,1,1]).is_none());
+    }
     fn groups(count:usize)->Vec<Vec<f32>> {
         (0..count).flat_map(|group|(0..16).map(move |i| {
             let mut v=vec![0.15;count+2];v[group]=1.0;v[count]=0.001*i as f32;v

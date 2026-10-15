@@ -364,6 +364,7 @@ fn ahc_cluster_constrained(
     // Counting refines an existing multiple-voice hypothesis; it cannot turn
     // the current single-speaker result into extra people on a rank tie.
     if count<=1 || std::env::var_os("COMPANION_TYPE_DIARIZATION_COSINE_THRESHOLD").is_some() { return baseline; }
+    if let Some(refined)=speaker_count::refine_short_cut(embeddings,constraints,&baseline) { return refined; }
     let Some(estimate)=speaker_count::estimate(embeddings).filter(|&n|n>count) else { return baseline; };
     ahc_cluster_with_minimum(embeddings,threshold,constraints,estimate)
 }
