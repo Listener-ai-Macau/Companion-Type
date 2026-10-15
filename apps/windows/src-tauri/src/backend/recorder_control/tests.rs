@@ -4,11 +4,13 @@ use super::*;
 fn explicit_start_retry_is_only_the_original_unconfirmed_initial_request() {
     let mut snapshot=crate::companion_v1::fixture_snapshot();let pending=start();
     assert!(pending.unconfirmed_start_retry());assert!(!running().unconfirmed_start_retry());
+    snapshot.source="lastKnown";snapshot.device.device_id=Some(DEVICE.into());
     snapshot.host.persistence.status="ready".into();snapshot.host.sessions=vec![original_row(&pending)];
     let args=["companion-type","--recorder-control","retry-start","--session-id",HOST,"--device-id",DEVICE]
         .into_iter().map(str::to_owned).collect::<Vec<_>>();
     let (mut request,_)=crate::original_recorder_request(&args).unwrap();
     crate::bind_original_recorder_request(&snapshot,&mut request).unwrap();
+    assert!(unconfirmed_start_retry_request(&snapshot,&request));
     assert_eq!(request.action,crate::companion_v1::CompanionV1ControlAction::MeetingStart);
     assert_eq!(request.session_id.as_deref(),Some(HOST));assert_eq!(request.duration_ms,Some(u64::from(pending.max_seconds)*1000));
     assert_eq!(snapshot.host.sessions[0].recorder_control.as_ref().unwrap(),&pending);

@@ -790,10 +790,10 @@ fn bind_original_recorder_request(snapshot: &companion_v1::CompanionV1Snapshot,
     }
     request.device_id = Some(journal.device_id.clone());
     if request.action==companion_v1::CompanionV1ControlAction::MeetingStart {
-        if row.status!="recording" || !journal.unconfirmed_start_retry() {
+        request.duration_ms=Some(u64::from(journal.max_seconds)*1000);
+        if !backend::recorder_control::unconfirmed_start_retry_request(snapshot,request) {
             return Err("只有原始开始请求尚未确认时才能明确重试；未重开已确认录音。".into());
         }
-        request.duration_ms=Some(u64::from(journal.max_seconds)*1000);
     }
     Ok(())
 }

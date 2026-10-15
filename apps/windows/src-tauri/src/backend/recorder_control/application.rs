@@ -3,6 +3,22 @@ use super::*;
 use crate::companion_v1::{CompanionV1ControlAction as Action, CompanionV1ControlRequest,
     CompanionV1HostSession, CompanionV1Snapshot, CompanionV1ControlEcho, COMPANION_V1_GATT_BOUNDARY};
 
+pub(crate) fn unconfirmed_start_retry_request(snapshot:&CompanionV1Snapshot,request:&CompanionV1ControlRequest)->bool {
+    if request.action!=Action::MeetingStart || request.audio_path.is_some() || request.audio_bytes.is_some()
+        || snapshot.host.persistence.status!="ready" || !matches!(snapshot.source,"lastKnown"|"firmware") {return false;}
+    let Some(host)=request.session_id.as_deref() else{return false;};
+    let Some(device)=request.device_id.as_deref() else{return false;};
+    let mut active=snapshot.host.sessions.iter().filter(|row|row.status=="recording");
+    let Some(row)=active.next() else{return false;};
+    if active.next().is_some() || row.id!=host || row.source!="boardDevice"
+        || row.device_recording_id.is_some() || row.device_recording_key.is_some()
+        || row.source_device_id.as_deref().is_none_or(|id|!same_device(id,device))
+        || snapshot.device.device_id.as_deref().is_some_and(|id|!same_device(id,device)) {return false;}
+    row.recorder_control.as_ref().is_some_and(|journal|journal.schema==1 && journal.host_session==host
+        && same_device(&journal.device_id,device) && journal.unconfirmed_start_retry()
+        && request.duration_ms.is_none_or(|ms|ms==u64::from(journal.max_seconds)*1000))
+}
+
 /// A fresh host has no live GATT identity. A durable, already-confirmed
 /// original authorizes its protected QUERY/recovery, not a generic probe or
 /// a replacement START. The actual UID/epoch/journal are still checked on GATT.

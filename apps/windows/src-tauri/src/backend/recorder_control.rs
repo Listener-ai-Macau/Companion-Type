@@ -279,7 +279,7 @@ impl Store {
 }
 
 mod application;
-pub(crate) use application::{apply,restart_recovery_request};
+pub(crate) use application::{apply,restart_recovery_request,unconfirmed_start_retry_request};
 mod catalogue;
 pub(crate) use catalogue::SealedCatalogueEnd;
 mod retirement;

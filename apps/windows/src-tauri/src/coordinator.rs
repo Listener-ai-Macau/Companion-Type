@@ -401,7 +401,8 @@ impl CompanionCoordinator {
         } else {None};
         let snapshot = self.backend.snapshot()?;
         let original_sync=crate::backend::owned_segmented_recording_sync(&snapshot,&request).is_some();
-        if !original_sync && device_recording_blocks_control(&snapshot, request.action) {
+        let original_start_retry=crate::backend::recorder_control::unconfirmed_start_retry_request(&snapshot,&request);
+        if !original_sync && !original_start_retry && device_recording_blocks_control(&snapshot, request.action) {
             return Err(
                 "device operation cannot start while the Companion is recording; end the recording on the device, then read device status again"
                     .to_string(),
@@ -409,6 +410,7 @@ impl CompanionCoordinator {
         }
         if needs_device
             && !original_sync
+            && !original_start_retry
             && !owned_offline_recording_link(&snapshot,&request)
             && !(matches!(request.action,
                 crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings
