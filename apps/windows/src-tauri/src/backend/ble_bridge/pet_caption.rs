@@ -15,7 +15,7 @@ fn packet(op:u8,token:u32,start:u8,count:u8)->Vec<u8> {
     let mut p=b"PCP1".to_vec();p.extend_from_slice(&[op,start,count,0]);p.extend_from_slice(&token.to_le_bytes());p
 }
 fn admission_error(value:&[u8])->String {
-    if value.len()!=16 || value[7]>>4!=1 {
+    if value.len()!=16 || !matches!(value[7]>>4,1|2) {
         return "屏幕正在处理其它操作，回复已保留，稍后可重试上屏。".into();
     }
     let blocked=value[5];let surface=value[7]&3;
@@ -59,27 +59,42 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
             let chars=peer.peripheral.characteristics();
             let write=find_characteristic(&chars,WRITE)?;
             let status=find_characteristic(&chars,STATUS)?;
-            parse(&peer.peripheral.read(&status).await.map_err(|_|"无法读取宠物字幕状态")?)?;
+            let capability=peer.peripheral.read(&status).await.map_err(|_|"无法读取宠物字幕状态")?;
+            parse(&capability)?;
+            // Op5 is negotiated, so old firmware/hosts keep immediate BEGIN.
+            // Reservation drains one existing frame without relaxing its gate.
+            let begin=if capability[7]>>4==2 {5} else {1};
             let write_packet=|p:Vec<u8>| {
                 let peer=&peer;let write=&write;
                 async move {peer.peripheral.write(write,&p,WriteType::WithResponse).await.map_err(|_|"宠物字幕未发送完成".to_string())}
             };
             // Normal presenter backpressure is bounded; no reset, screen command
             // or recorder action is used to force admission.
-            let deadline=StdInstant::now()+StdDuration::from_secs(3);
+            let started=StdInstant::now();
+            let deadline=started+StdDuration::from_secs(3);
+            let mut reserved=false;
             loop {
-                if cancel.load(Ordering::Acquire) {return Err("聊天已取消。".into());}
-                write_packet(packet(1,token,0,0)).await?;
+                if cancel.load(Ordering::Acquire) {
+                    if begin==5 {let _=write_packet(packet(4,token,0,0)).await;}
+                    return Err("聊天已取消。".into());
+                }
+                write_packet(packet(begin,token,0,0)).await?;
                 // The board republishes status on this protected write even
                 // when BEGIN is refused. Use that request's gate snapshot,
                 // not a stale pre-recording capability value, for its reason.
                 let value=peer.peripheral.read(&status).await.map_err(|_|"无法确认宠物字幕接收")?;
                 let (state,owner,visible)=parse(&value)?;
                 if owner==token && state==3 && visible==token {return Ok(());}
-                if owner==token && state==1 {break;}
+                reserved|=begin==5 && owner==token && state==6;
+                if owner==token && state==1 {
+                    eprintln!("pet_caption_admitted request={} begin={} reserved={} wait_ms={}",
+                        token,begin,u8::from(reserved),started.elapsed().as_millis());
+                    break;
+                }
                 if StdInstant::now()>=deadline {
                     eprintln!("pet_caption_admission request={} schema={} surface={} blockers={:02x} state={} owner_match={}",
                         token,value[7]>>4,value[7]&3,value[5],state,u8::from(owner==token));
+                    if begin==5 {let _=write_packet(packet(4,token,0,0)).await;}
                     return Err(admission_error(&value));
                 }
                 sleep(StdDuration::from_millis(120)).await;
