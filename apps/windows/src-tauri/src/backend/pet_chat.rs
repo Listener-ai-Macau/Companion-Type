@@ -93,6 +93,10 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     if !super::device_connection::same_device_id(&idle(&coordinator.snapshot()?)?,&job.device) {
         return Err("连接的宠物变了，请重新开聊。".into());
     }
+    if super::ble_bridge::known_segmented_peer(&job.device)
+        .is_none_or(|peer| !peer.logical_control || !peer.pause_control) {
+        return Err("尚未确认这台 Companion 的短句录音协议，请先正常连接设备。".into());
+    }
     super::ble_bridge::pet_caption::supported(&job.device)?;
     if std::env::var("DEEPSEEK_API_KEY").ok().is_none_or(|s|s.trim().is_empty()) {
         return Err("请先配置现有聊天服务，再轻点开聊。".into());

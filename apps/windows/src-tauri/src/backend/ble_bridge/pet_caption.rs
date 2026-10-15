@@ -22,7 +22,11 @@ pub(crate) fn supported(device:&str)->Result<(),String> {
             let value=peer.peripheral.read(&status).await.map_err(|_|"无法读取宠物字幕能力")?;
             parse(&value).map(|_|())
         }.await;
-        close_native_device(&peer).await;result
+        // A successful capability read returns the same user-owned peer to
+        // the ordinary product owner. It must not disconnect Connect before
+        // the following recorder command takes that verified connection.
+        let cleanup=finish_native_device_operation(peer,result.is_ok()).await;
+        combine_operation_and_cleanup(result,cleanup)
     })
 }
 pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Result<(),String> {
@@ -78,6 +82,10 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
                 sleep(StdDuration::from_millis(100)).await;
             }
         }.await;
-        close_native_device(&peer).await;result
+        // Preserve the normal idle connection after the visible ACK. Errors
+        // still close it through the shared cleanup policy; no private timer
+        // or second Bluetooth owner is introduced for captions.
+        let cleanup=finish_native_device_operation(peer,result.is_ok()).await;
+        combine_operation_and_cleanup(result,cleanup)
     })
 }
