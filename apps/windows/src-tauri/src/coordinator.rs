@@ -5,7 +5,7 @@
 //! BLE/audio/ASR backend will implement.
 
 use std::sync::{
-    atomic::{AtomicU8, Ordering},
+    atomic::{AtomicBool, AtomicU8, Ordering},
     Arc,
 };
 
@@ -20,6 +20,14 @@ use crate::backend::diagnostics::{Operation, Span};
 pub struct CompanionCoordinator {
     backend: Arc<dyn CompanionBackend>,
     device_operation: Arc<AtomicU8>,
+    pet_foreground: Arc<AtomicBool>,
+}
+
+const PET_CAPTION_OPERATION:u8=15;
+const PET_CAPTURE_OPERATION:u8=16;
+struct PetForegroundGuard(Arc<AtomicBool>);
+impl Drop for PetForegroundGuard {
+    fn drop(&mut self) {self.0.store(false,Ordering::Release);}
 }
 
 pub struct CompanionDeviceOperationLease {
@@ -51,6 +59,8 @@ fn operation_name(kind: u8) -> &'static str {
         12 => "recording bookmark observation",
         13 => "continuous recording synchronization",
         14 => "local original recording recovery",
+        PET_CAPTION_OPERATION => "pet caption",
+        PET_CAPTURE_OPERATION => "pet utterance capture",
         _ => "unknown device operation",
     }
 }
@@ -90,7 +100,7 @@ fn device_recording_blocks_control(
 
 impl CompanionCoordinator {
     pub fn begin_desktop_update_operation(&self) -> Result<CompanionDeviceOperationLease,String> {
-        let lease=self.begin_device_operation_kind(11)?;
+        let lease=self.begin_foreground_operation_kind(11)?;
         let snapshot=self.backend.snapshot()?;
         if snapshot_has_active_recording(&snapshot) || snapshot.device.recording || snapshot.host.persistence.status!="ready" {
             return Err("请结束录音并安全保存会议，再更新软件。".into());
@@ -101,6 +111,7 @@ impl CompanionCoordinator {
         Self {
             backend: Arc::new(FixtureCompanionBackend::new()),
             device_operation: Arc::new(AtomicU8::new(0)),
+            pet_foreground: Arc::new(AtomicBool::new(false)),
         }
     }
 
@@ -135,7 +146,53 @@ impl CompanionCoordinator {
     pub fn begin_board_recording_operation(
         &self,
     ) -> Result<CompanionDeviceOperationLease, String> {
-        self.begin_device_operation_kind(2)
+        self.begin_foreground_operation_kind(2)
+    }
+
+    fn begin_foreground_operation_kind(&self,kind:u8)->Result<CompanionDeviceOperationLease,String> {
+        // Block new pet owners while the old owner performs its real cleanup.
+        // Never exchange an in-use radio/recording lease for an idle marker.
+        self.pet_foreground.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire)
+            .map_err(|_|"正在交接当前操作，请稍后再试。".to_string())?;
+        let _guard=PetForegroundGuard(Arc::clone(&self.pet_foreground));
+        let request=crate::backend::pet_chat::yield_for_foreground()?;
+        let started=std::time::Instant::now();
+        let until=started+std::time::Duration::from_secs(15);
+        loop {
+            if matches!(self.device_operation.load(Ordering::Acquire),PET_CAPTION_OPERATION|PET_CAPTURE_OPERATION) {
+                if std::time::Instant::now()>=until {
+                    return Err("宠物聊天还在安全收尾，这次操作尚未开始，请稍后重试。".into());
+                }
+                std::thread::sleep(std::time::Duration::from_millis(5));continue;
+            }
+            match self.begin_device_operation_kind(kind) {
+                Ok(lease)=>{
+                    if let Some(request)=request {
+                        eprintln!("pet_chat_foreground_handoff request={} operation={} wait_ms={}",
+                            request,kind,started.elapsed().as_millis());
+                    }
+                    return Ok(lease);
+                },
+                Err(_) if std::time::Instant::now()<until &&
+                    matches!(self.device_operation.load(Ordering::Acquire),0|PET_CAPTION_OPERATION|PET_CAPTURE_OPERATION)=>continue,
+                Err(error)=>return Err(error),
+            }
+        }
+    }
+
+    fn begin_pet_operation_kind(&self,kind:u8)->Result<CompanionDeviceOperationLease,String> {
+        if self.pet_foreground.load(Ordering::Acquire) {return Err("设备正在切换操作，聊天已让路。".into());}
+        let lease=self.begin_device_operation_kind(kind)?;
+        // Close the race with a foreground request between the first check
+        // and lease acquisition; dropping here has not opened a device handle.
+        if self.pet_foreground.load(Ordering::Acquire) {return Err("设备正在切换操作，聊天已让路。".into());}
+        Ok(lease)
+    }
+    pub(crate) fn begin_pet_capture_operation(&self)->Result<CompanionDeviceOperationLease,String> {
+        self.begin_pet_operation_kind(PET_CAPTURE_OPERATION)
+    }
+    pub(crate) fn begin_pet_caption_operation(&self)->Result<CompanionDeviceOperationLease,String> {
+        self.begin_pet_operation_kind(PET_CAPTION_OPERATION)
     }
 
     /// Pet capture already owns the recorder lease across START, the short
@@ -144,8 +201,8 @@ impl CompanionCoordinator {
     pub(crate) fn apply_pet_capture_control(&self, lease: &CompanionDeviceOperationLease,
         request: CompanionV1ControlRequest) -> Result<CompanionV1Snapshot,String> {
         use crate::companion_v1::CompanionV1ControlAction as Action;
-        if lease.kind != 2 || !Arc::ptr_eq(&lease.gate,&self.device_operation)
-            || self.device_operation.load(Ordering::Acquire) != 2
+        if lease.kind != PET_CAPTURE_OPERATION || !Arc::ptr_eq(&lease.gate,&self.device_operation)
+            || self.device_operation.load(Ordering::Acquire) != PET_CAPTURE_OPERATION
             || !matches!(request.action,Action::MeetingStart|Action::MeetingStop)
             || request.prompt_id.as_deref()!=Some(crate::backend::pet_chat::CAPTURE_PROMPT)
             || request.session_id.as_deref().is_none_or(|id| !id.starts_with("pet-chat-"))
@@ -305,6 +362,11 @@ impl CompanionCoordinator {
     fn apply_control_inner(
         &self, request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String> {
+        use crate::companion_v1::CompanionV1ControlAction as Action;
+        // Only explicit user controls preempt a pet reply. Background probes,
+        // diagnostics and ordinary sync do not cancel a conversation.
+        let priority_action=matches!(request.action,Action::MeetingStart|Action::MeetingStop|
+            Action::MeetingFinalize|Action::DeviceConnect|Action::DeviceDisconnect);
         if request.action==crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings {
             // Finish durable host data before radio setup. A later connection
             // failure cannot strand a complete original behind a virtual URI.
@@ -333,6 +395,9 @@ impl CompanionCoordinator {
             }
             _ => false,
         };
+        let priority_operation=if needs_device && priority_action {
+            Some(self.begin_foreground_operation_kind(1)?)
+        } else {None};
         let snapshot = self.backend.snapshot()?;
         let original_sync=crate::backend::owned_segmented_recording_sync(&snapshot,&request).is_some();
         if !original_sync && device_recording_blocks_control(&snapshot, request.action) {
@@ -363,7 +428,7 @@ impl CompanionCoordinator {
                     .to_string(),
             );
         }
-        let _operation = needs_device
+        let _operation = (needs_device && priority_operation.is_none())
             .then(|| self.begin_device_operation_kind(1))
             .transpose()?;
         self.backend.apply_control(request)
@@ -420,7 +485,7 @@ impl CompanionCoordinator {
     }
 
     fn transfer_firmware_ota_inner(&self, request: CompanionFirmwareOtaRequest) -> Result<CompanionFirmwareOtaReport, String> {
-        let _operation = self.begin_device_operation_kind(3)?;
+        let _operation = self.begin_foreground_operation_kind(3)?;
         let snapshot = self.backend.snapshot()?;
         if snapshot_has_active_recording(&snapshot) || snapshot.device.recording {
             return Err("firmware OTA cannot start while a recording or transfer is active".to_string());

@@ -88,17 +88,23 @@ pub(crate) fn finish(request_id:u32,cancel:bool)->Result<Status,String> {
     with(|s|->Result<(),String>{
         let job=s.job.as_ref().filter(|j|j.id==request_id).ok_or("这句聊天已经结束。")?;
         job.stop.store(true,Ordering::Release);
-        if cancel {
-            let capture_finished=matches!(s.status.phase.as_str(),"transcribing"|"thinking"|"replyReady"|"displayFailed");
-            job.cancel.store(true,Ordering::Release);s.status.phase="cancelled".into();
-            s.status.reply.clear();s.status.screen_visible=false;s.status.error=None;
-            if capture_finished || !job.running.load(Ordering::Acquire){s.job=None;}
-        }
+        if cancel {cancel_current(s);}
         Ok(())
     })??;status()
 }
+fn cancel_current(s:&mut Store)->Option<u32> {
+    let job=s.job.as_ref()?.clone();
+    let capture_finished=matches!(s.status.phase.as_str(),"transcribing"|"thinking"|"replyReady"|"displayFailed");
+    job.stop.store(true,Ordering::Release);job.cancel.store(true,Ordering::Release);
+    s.status.phase="cancelled".into();s.status.reply.clear();s.status.screen_visible=false;s.status.error=None;
+    if capture_finished || !job.running.load(Ordering::Acquire){s.job=None;}
+    Some(job.id)
+}
+pub(crate) fn yield_for_foreground()->Result<Option<u32>,String> {
+    with(|s|cancel_current(s))
+}
 fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
-    let lease=coordinator.begin_board_recording_operation()?;
+    let lease=coordinator.begin_pet_capture_operation()?;
     if !super::device_connection::same_device_id(&idle(&coordinator.snapshot()?)?,&job.device) {
         return Err("连接的宠物变了，请重新开聊。".into());
     }
@@ -236,7 +242,7 @@ pub(crate) fn display(coordinator:&CompanionCoordinator,request:u32,pixels:Vec<u
         s.status.phase="displaying".into();Ok(job)
     })??;
     let result=(||{
-        let _lease=coordinator.begin_board_recording_operation()?;
+        let _lease=coordinator.begin_pet_caption_operation()?;
         if !super::device_connection::same_device_id(&idle(&coordinator.snapshot()?)?,&job.device) {
             return Err("连接或录音状态已改变，回复保留，未发给其它宠物。".into());
         }
