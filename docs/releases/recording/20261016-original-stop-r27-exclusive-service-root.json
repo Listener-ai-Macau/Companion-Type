@@ -1,0 +1,900 @@
+{
+  "schema": "companion.original-stop.r27.v1",
+  "result": "IMPLICIT_EXCLUSIVE_SERVICE_CONFLICT_REPRODUCED_SHARED_NATIVE_PATH_WORKS_PRODUCT_FIX_PENDING",
+  "createdAtLocal": "2026-10-16T06:06:02+08:00",
+  "summary": "R27已找到跨进程AccessDenied机制：隐式枚举实际独占打开服务（sharing1），持有时第二进程被拒；显式共享双方均成功（sharing3）。零事件丢失HCI中失败未向录音服务61..67发特征查询、链路已加密；同一已结束原件连续QUERY亦首成次败，排除必须录音中才触发。",
+  "limitations": "本阶段为根因定位，当前产品仍已装R26、尚未集成共享打开修复；不能当STOP已修或全链通过。原5自然封口89.98秒已正常保存消费，未用替代录音。2h/低电功耗/OTA严格安装断电/100KiB/s仍开放。",
+  "installedSource": "583171b84588bb9d67f98f4fd0690118d271b314",
+  "firmware": "App415 normalBoot415 UI77; no writes/reset/SWD in this stage",
+  "actualOriginal": {
+    "schema": "companion.original-stop.r27.trace.v1",
+    "result": "NATIVE_DENIAL_TRACED_SAME_ORIGINAL_SAVED",
+    "startedAtLocal": "2026-10-16T05:51:21.564+08:00",
+    "sourceCommit": "583171b84588bb9d67f98f4fd0690118d271b314",
+    "installedExeSha256": "749407e30996dcfd9a359961f600e706beaa7dc5c01bcf9b3c4e3258c074e0ad",
+    "fullChainAcceptance": "NOT_QUALIFIED",
+    "swd": false,
+    "reset": false,
+    "newCloud": false,
+    "speedTuning": false,
+    "beforeSnapshot": {
+      "seq": 126,
+      "reason": "query",
+      "sections": {
+        "ID": {
+          "fw": "0001029f",
+          "build": "20261004",
+          "board": "57424155",
+          "uid": "180010000d50335754363720",
+          "ui": 77,
+          "uptime_ms": 1408750
+        },
+        "CORE": {
+          "reset": "14000000",
+          "iwdg_reset": 0,
+          "faults": "00000200",
+          "clock": 0,
+          "lse": 0,
+          "io": 0,
+          "imu": 0,
+          "touch": 0,
+          "audio": 0,
+          "mic": 0,
+          "nor": 0,
+          "panel": 0,
+          "battery": 1,
+          "ram_gap": 40,
+          "stack_min": 3136,
+          "stack_low": 0,
+          "stack_guard": 0
+        },
+        "DISPLAY": {
+          "bound": 1,
+          "driver": 3,
+          "error": 0,
+          "presenter": 0,
+          "assets": 1,
+          "rendered": 376,
+          "failed": 0,
+          "stage": 11,
+          "busy": 0,
+          "transfer_calls": 161197,
+          "busy_timeouts": 0
+        },
+        "STORAGE": {
+          "jedec": "ef6018",
+          "size": 16777216,
+          "layout": 1,
+          "recording_ready": 1,
+          "rec_state": 6,
+          "rec_fault": 0,
+          "committed": 189012,
+          "suspend_ok": 1,
+          "erase_active": 0,
+          "erase_sus": 0,
+          "sus_ms": 2,
+          "resume_ms": 2,
+          "bfp_dw": 16,
+          "dw12": "337663e9",
+          "dw13": "757a757a"
+        },
+        "AUDIO": {
+          "mic_init": 1,
+          "mic_run": 0,
+          "mic_hal": 0,
+          "mic_irq_err": 0,
+          "mic_stale": 0,
+          "mic_overflow": 0,
+          "mic_reject": 0,
+          "frames": 18003,
+          "deadline": 0,
+          "speaker_ready": 1,
+          "fg_ms": 8,
+          "hal_ms": 8,
+          "rec_ms": 5,
+          "ble_ms": 2,
+          "runtime_ms": 1,
+          "present_ms": 4,
+          "render_ms": 55,
+          "pdm_ms": 3
+        },
+        "TIMING": {
+          "rec_id": 3,
+          "mic_starts": 2,
+          "tick_us": 1000,
+          "min_samples": 20,
+          "enc_n": 4500,
+          "enc_valid": 1,
+          "enc_p95_upper_ms": 6,
+          "enc_peak_upper_ms": 6,
+          "pdm_n": 9001,
+          "pdm_valid": 1,
+          "pdm_p95_upper_ms": 3,
+          "pdm_peak_upper_ms": 4
+        },
+        "BLE": {
+          "compiled": 1,
+          "init": 1,
+          "host": 1,
+          "host_error": 0,
+          "connection": "ffff",
+          "linked": 0,
+          "secured": 0,
+          "fatal": 0,
+          "bond_lost": 0,
+          "rebond": 0,
+          "pair_status": 0,
+          "pair_reason": 0
+        },
+        "POWER": {
+          "adc": 1,
+          "voltage_valid": 0,
+          "percent_valid": 0,
+          "charger_valid": 0,
+          "charger_present": 0,
+          "mv": 0,
+          "pct": 255,
+          "charge": 0,
+          "ota_block": "0004",
+          "sleep_block": "00000040"
+        },
+        "BATTERY": {
+          "vref_raw": 2754,
+          "vref_cal": 1647,
+          "vdda_mv": 1794,
+          "vref_valid": 1,
+          "vref_age_ms": 1225,
+          "vref_n": 486,
+          "raw": 3526,
+          "samples": 243,
+          "adc_error": 0,
+          "adc_failures": 2,
+          "divider_safe": 0,
+          "divider_verified": 0,
+          "reference_verified": 0,
+          "sample_errors": 0,
+          "gate_errors": 0,
+          "raw_mode": 1,
+          "input_mv": 1545,
+          "input_valid": 1,
+          "saturated": 0,
+          "sample_age_ms": 1223,
+          "vdda_min_mv": 1790,
+          "vdda_max_mv": 1796
+        },
+        "POWERCFG": {
+          "top_ohm": 100000,
+          "bottom_ohm": 68000,
+          "max_cell_mv": 4350,
+          "reference_floor_mv": 1700,
+          "charger_pullups_verified": 0,
+          "soc_curve_verified": 0
+        }
+      }
+    },
+    "sessionId": "v1-real-installed-1792101088862",
+    "anchor": 5,
+    "key": {
+      "deviceUid": "180010000d50335754363720",
+      "formatEpoch": "b8b8334898156eb8",
+      "sessionId": "0000000000000004"
+    },
+    "originalStart": 3891896715,
+    "maxSeconds": 90,
+    "confirmedAtLocal": "2026-10-16T05:51:32.470+08:00",
+    "captureProcessExitedAtLocal": "2026-10-16T05:51:37.478+08:00",
+    "stopExitCode": 1,
+    "expectedNativeDenialObserved": true,
+    "finalRecoverExitCode": 0,
+    "sourceDurationMs": 89980,
+    "wavSha256": "89aefa4e427002e7fc9b6b751d99b3430d68a7eccd87e6599c555061740db171",
+    "wavBytes": 2879404,
+    "audioStored": true,
+    "deviceReclaimed": true,
+    "confirmedFinal": {
+      "command": 1,
+      "request": 3891896715,
+      "sequence": 0,
+      "state": 2,
+      "durationMs": 90000,
+      "finishedLocally": true
+    },
+    "traceStopCode": 0,
+    "finishedAtLocal": "2026-10-16T05:53:22.375+08:00",
+    "ownedHandlesClosed": true,
+    "uartErrors": [],
+    "traceStarted": true,
+    "traceStopped": true
+  },
+  "hci": {
+    "schema": "companion.original-stop.r27.hci-analysis.v1",
+    "result": "TARGET_HCI_ATT_PROJECTED",
+    "traceEventLoss": 0,
+    "connections": [
+      {
+        "time": "2026-10-15T21:51:25.1788313Z",
+        "handle": 2049,
+        "subevent": 10
+      },
+      {
+        "time": "2026-10-15T21:53:11.4035704Z",
+        "handle": 2049,
+        "subevent": 10
+      }
+    ],
+    "hci": [
+      {
+        "time": "2026-10-15T21:51:25.2899047Z",
+        "event": "encryption",
+        "handle": 2049,
+        "status": 0,
+        "enabled": 1
+      },
+      {
+        "time": "2026-10-15T21:51:50.6271967Z",
+        "event": "disconnect",
+        "handle": 2049,
+        "status": 0,
+        "reason": 22
+      },
+      {
+        "time": "2026-10-15T21:53:11.5136174Z",
+        "event": "encryption",
+        "handle": 2049,
+        "status": 0,
+        "enabled": 1
+      }
+    ],
+    "targetService": "8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "serviceRange": {
+      "start": 61,
+      "end": 67
+    },
+    "reassembly": {
+      "damaged": 0,
+      "pending": 0,
+      "overrun": 0,
+      "excludedShortNonAttSmpRecords": 2
+    },
+    "windows": {
+      "fresh-stop": {
+        "startLocal": "2026-10-16T05:51:37.481+08:00",
+        "finishLocal": "2026-10-16T05:51:39.570+08:00",
+        "exitCode": 1,
+        "pid": 29580,
+        "targetAttMessages": 85,
+        "opcodeCounts": {
+          "0xb": 1,
+          "0x10": 3,
+          "0x11": 2,
+          "0x1": 13,
+          "0x8": 22,
+          "0x9": 11,
+          "0x4": 15,
+          "0x5": 15,
+          "0x6": 2,
+          "0x7": 1
+        },
+        "recorderServiceEvents": [
+          {
+            "time": "2026-10-15T21:51:37.8241720Z",
+            "t": 1792101097.824172,
+            "direction": "tx",
+            "opcode": 16,
+            "length": 7,
+            "handle": 2049,
+            "start": 1,
+            "end": 65535,
+            "type": "2800",
+            "msAfterOperationStart": 343.172
+          },
+          {
+            "time": "2026-10-15T21:51:37.9069818Z",
+            "t": 1792101097.906981,
+            "direction": "tx",
+            "opcode": 16,
+            "length": 7,
+            "handle": 2049,
+            "start": 12,
+            "end": 65535,
+            "type": "2800",
+            "msAfterOperationStart": 425.981
+          }
+        ],
+        "errors": [
+          {
+            "time": "2026-10-15T21:51:38.1455418Z",
+            "t": 1792101098.145541,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 16,
+            "attribute": 94,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:38.3855199Z",
+            "t": 1792101098.385519,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 3,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:38.4755154Z",
+            "t": 1792101098.475515,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 11,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:38.5355223Z",
+            "t": 1792101098.535522,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 17,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:38.6555662Z",
+            "t": 1792101098.655566,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 23,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:38.7455426Z",
+            "t": 1792101098.745542,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 47,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:38.8955467Z",
+            "t": 1792101098.895546,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 51,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:38.9855629Z",
+            "t": 1792101098.985562,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 55,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:39.0756131Z",
+            "t": 1792101099.075613,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 59,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:39.1655741Z",
+            "t": 1792101099.165574,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 70,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:39.2556031Z",
+            "t": 1792101099.255603,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 83,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:39.4355804Z",
+            "t": 1792101099.43558,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 93,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:51:39.5256059Z",
+            "t": 1792101099.525605,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 6,
+            "attribute": 68,
+            "error": 10
+          }
+        ]
+      },
+      "after-natural-end": {
+        "startLocal": "2026-10-16T05:53:08.474+08:00",
+        "finishLocal": "2026-10-16T05:53:20.658+08:00",
+        "exitCode": 0,
+        "pid": 19700,
+        "targetAttMessages": 552,
+        "opcodeCounts": {
+          "0x2": 1,
+          "0x3": 1,
+          "0x10": 6,
+          "0x11": 4,
+          "0x1": 15,
+          "0x8": 26,
+          "0x9": 13,
+          "0x4": 21,
+          "0x5": 21,
+          "0xa": 3,
+          "0xb": 3,
+          "0x12": 17,
+          "0x13": 17,
+          "0x1b": 403,
+          "0x52": 1
+        },
+        "recorderServiceEvents": [
+          {
+            "time": "2026-10-15T21:53:11.5441930Z",
+            "t": 1792101191.544193,
+            "direction": "tx",
+            "opcode": 16,
+            "length": 7,
+            "handle": 2049,
+            "start": 1,
+            "end": 65535,
+            "type": "2800",
+            "msAfterOperationStart": 3070.193
+          },
+          {
+            "time": "2026-10-15T21:53:11.5746465Z",
+            "t": 1792101191.574646,
+            "direction": "tx",
+            "opcode": 16,
+            "length": 7,
+            "handle": 2049,
+            "start": 12,
+            "end": 65535,
+            "type": "2800",
+            "msAfterOperationStart": 3100.646
+          },
+          {
+            "time": "2026-10-15T21:53:11.6636075Z",
+            "t": 1792101191.663607,
+            "direction": "tx",
+            "opcode": 16,
+            "length": 7,
+            "handle": 2049,
+            "start": 1,
+            "end": 65535,
+            "type": "2800",
+            "msAfterOperationStart": 3189.607
+          },
+          {
+            "time": "2026-10-15T21:53:11.6937816Z",
+            "t": 1792101191.693781,
+            "direction": "tx",
+            "opcode": 16,
+            "length": 7,
+            "handle": 2049,
+            "start": 12,
+            "end": 65535,
+            "type": "2800",
+            "msAfterOperationStart": 3219.781
+          },
+          {
+            "time": "2026-10-15T21:53:12.7627595Z",
+            "t": 1792101192.762759,
+            "direction": "tx",
+            "opcode": 8,
+            "length": 7,
+            "handle": 2049,
+            "start": 61,
+            "end": 67,
+            "type": "2803",
+            "msAfterOperationStart": 4288.759
+          },
+          {
+            "time": "2026-10-15T21:53:12.7884027Z",
+            "t": 1792101192.788402,
+            "direction": "rx",
+            "opcode": 9,
+            "length": 44,
+            "handle": 2049,
+            "entries": [
+              {
+                "declaration": 62,
+                "properties": 24,
+                "value": 63,
+                "uuid": "8f7a8001-7b7d-4f3d-9d6f-6c2d1b7c0000"
+              },
+              {
+                "declaration": 65,
+                "properties": 18,
+                "value": 66,
+                "uuid": "8f7a8002-7b7d-4f3d-9d6f-6c2d1b7c0000"
+              }
+            ],
+            "msAfterOperationStart": 4314.402
+          },
+          {
+            "time": "2026-10-15T21:53:12.7888297Z",
+            "t": 1792101192.788829,
+            "direction": "tx",
+            "opcode": 8,
+            "length": 7,
+            "handle": 2049,
+            "start": 66,
+            "end": 67,
+            "type": "2803",
+            "msAfterOperationStart": 4314.829
+          },
+          {
+            "time": "2026-10-15T21:53:12.8182482Z",
+            "t": 1792101192.818248,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 66,
+            "error": 10,
+            "msAfterOperationStart": 4344.248
+          }
+        ],
+        "errors": [
+          {
+            "time": "2026-10-15T21:53:11.6333318Z",
+            "t": 1792101191.633331,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 16,
+            "attribute": 94,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:11.7532619Z",
+            "t": 1792101191.753261,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 16,
+            "attribute": 94,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:11.8431554Z",
+            "t": 1792101191.843155,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 3,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:11.9331655Z",
+            "t": 1792101191.933165,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 11,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:11.9931972Z",
+            "t": 1792101191.993197,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 17,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:12.1132831Z",
+            "t": 1792101192.113283,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 23,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:12.2031795Z",
+            "t": 1792101192.203179,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 37,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:12.3981960Z",
+            "t": 1792101192.398196,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 47,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:12.5482556Z",
+            "t": 1792101192.548255,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 51,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:12.6381732Z",
+            "t": 1792101192.638173,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 55,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:12.7282116Z",
+            "t": 1792101192.728211,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 59,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:12.8182482Z",
+            "t": 1792101192.818248,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 66,
+            "error": 10,
+            "msAfterOperationStart": 4344.248
+          },
+          {
+            "time": "2026-10-15T21:53:12.9381846Z",
+            "t": 1792101192.938184,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 70,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:13.0282337Z",
+            "t": 1792101193.028233,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 83,
+            "error": 10
+          },
+          {
+            "time": "2026-10-15T21:53:13.2082401Z",
+            "t": 1792101193.20824,
+            "direction": "rx",
+            "opcode": 1,
+            "length": 5,
+            "handle": 2049,
+            "requestOpcode": 8,
+            "attribute": 93,
+            "error": 10
+          }
+        ]
+      }
+    },
+    "boundary": "Host HCI/ATT only, not air capture. Direction follows native BIP type3=received,type4=sent, validated by ATT requests/responses. No unrelated identities, payloads or keys included."
+  },
+  "endedOriginalQueries": {
+    "schema": "companion.original-stop.r27.ended-query.v1",
+    "result": "ENDED_ORIGINAL_TWO_PROCESS_QUERY_OBSERVED",
+    "startedAtLocal": "2026-10-16T05:59:14.090+08:00",
+    "sessionId": "v1-real-installed-1792101088862",
+    "newRecording": false,
+    "originalAlreadyStored": true,
+    "originalAlreadyConsumed": true,
+    "queries": [
+      {
+        "index": 1,
+        "startLocal": "2026-10-16T05:59:14.090+08:00",
+        "endLocal": "2026-10-16T05:59:17.637+08:00",
+        "exitCode": 0,
+        "nativeAccessDenied": false
+      },
+      {
+        "index": 2,
+        "startLocal": "2026-10-16T05:59:17.637+08:00",
+        "endLocal": "2026-10-16T05:59:18.735+08:00",
+        "exitCode": 1,
+        "nativeAccessDenied": true
+      }
+    ],
+    "originalStartUnchanged": true,
+    "audioUnchanged": true,
+    "finishedAtLocal": "2026-10-16T05:59:18.744+08:00",
+    "ownedHandlesClosed": true
+  },
+  "nativeSharingComparison": {
+    "schema": "companion.gatt-sharing.r27.v1",
+    "startedAtLocal": "2026-10-16T06:03:05.418+08:00",
+    "result": "NATIVE_SERVICE_SHARING_COMPARISON_COMPLETE",
+    "newRecording": false,
+    "characteristicValuesRead": false,
+    "commandWrites": 0,
+    "implicitOwner": {
+      "characteristicCount": 2,
+      "characteristicStatus": 0,
+      "characteristicValuesRead": false,
+      "commandWrites": 0,
+      "deviceCloseOk": true,
+      "finished": true,
+      "holdSeconds": 12,
+      "mode": "implicit",
+      "pairedRequired": true,
+      "requestedAccess": 1,
+      "serviceCloseOk": true,
+      "serviceCount": 1,
+      "serviceStatus": 0,
+      "sharingAfter": 1,
+      "sharingBefore": 0
+    },
+    "implicitContender": {
+      "characteristicStatus": 3,
+      "characteristicValuesRead": false,
+      "commandWrites": 0,
+      "deviceCloseOk": true,
+      "finished": true,
+      "holdSeconds": 0,
+      "mode": "implicit",
+      "pairedRequired": true,
+      "requestedAccess": 1,
+      "serviceCloseOk": true,
+      "serviceCount": 1,
+      "serviceStatus": 0,
+      "sharingAfter": 0,
+      "sharingBefore": 0
+    },
+    "sharedContenderOfImplicit": {
+      "characteristicValuesRead": false,
+      "commandWrites": 0,
+      "deviceCloseOk": true,
+      "finished": true,
+      "holdSeconds": 0,
+      "mode": "explicitSharedReadAndWrite",
+      "openStatus": 4,
+      "pairedRequired": true,
+      "requestedAccess": 1,
+      "serviceCloseOk": true,
+      "serviceCount": 1,
+      "serviceStatus": 0,
+      "sharingBefore": 0
+    },
+    "sharedOwner": {
+      "characteristicCount": 2,
+      "characteristicStatus": 0,
+      "characteristicValuesRead": false,
+      "commandWrites": 0,
+      "deviceCloseOk": true,
+      "finished": true,
+      "holdSeconds": 12,
+      "mode": "explicitSharedReadAndWrite",
+      "openStatus": 1,
+      "pairedRequired": true,
+      "requestedAccess": 1,
+      "serviceCloseOk": true,
+      "serviceCount": 1,
+      "serviceStatus": 0,
+      "sharingAfter": 3,
+      "sharingBefore": 0
+    },
+    "sharedContender": {
+      "characteristicCount": 2,
+      "characteristicStatus": 0,
+      "characteristicValuesRead": false,
+      "commandWrites": 0,
+      "deviceCloseOk": true,
+      "finished": true,
+      "holdSeconds": 0,
+      "mode": "explicitSharedReadAndWrite",
+      "openStatus": 1,
+      "pairedRequired": true,
+      "requestedAccess": 1,
+      "serviceCloseOk": true,
+      "serviceCount": 1,
+      "serviceStatus": 0,
+      "sharingAfter": 3,
+      "sharingBefore": 0
+    },
+    "finishedAtLocal": "2026-10-16T06:03:33.898+08:00",
+    "ownedHandlesClosed": true
+  },
+  "inference": {
+    "confirmed": "Same target/service has implicit Exclusive1, exact Allowed access yet characteristic statusAccessDenied3 for the contender. Explicit SharedReadAndWrite produces native success for both live processes; an existing Exclusive owner correctly yields SharingViolation4 and is NOT bypassed.",
+    "caseCorrelation": "Product R26 implicitly calls GetCharacteristics without OpenAsync; same completed original first-query-success/second-immediate-query-denied and no ATT to required service agree with this service ownership conflict.",
+    "unknown": "Exact OS cleanup duration/retained reference attribution after process exit not measured; no claim that all Bluetooth failures have this cause. Trace is host HCI, not air retransmission capture.",
+    "fix": "Explicitly request normal access and SharedReadAndWrite before BOTH ordinary and strict required characteristic discovery; reject denied/open-failed or incompatible existing mode; preserve pairing, encryption and original identity."
+  },
+  "rawEvidence": {
+    "traceBytes": 4456448,
+    "traceSha256": "3752bbbf22249cc6e8e8ebe6d20abe335e8998d8fc0c8423df8df998391ddfdc",
+    "localOnly": "ETL/private-events retain raw frames/other Bluetooth devices; not committed or printed."
+  },
+  "retainedFailures": [
+    "First WPR profile put EventProvider after Profile; schema rejected before capture/START. Fixed provider order, retained failure.",
+    "Initial ATT parser rejected two short CID6 SMP records; they are non-ATT and excluded, no security payload published. All target ATT reassembly complete and tracerpt lostEvents0.",
+    "First isolated SDK probe build omitted direct windows-future default feature; fixed only private diagnostic manifest, no installed dependencies changed."
+  ],
+  "references": [
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.genericattributeprofile.gattdeviceservice.openasync?view=winrt-26100",
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.genericattributeprofile.gattsharingmode?view=winrt-26100",
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.genericattributeprofile.gattopenstatus?view=winrt-26100"
+  ],
+  "qualityTargetsChanged": false,
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
