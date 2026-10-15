@@ -15,6 +15,13 @@ fn text<'a>(v:&'a Value,key:&str)->Result<&'a str,String> {
     v[key].as_str().ok_or_else(||format!("整套升级包缺少字段：{key}"))
 }
 fn word(w:&[u8],at:usize)->u32 {u32::from_le_bytes(w[at..at+4].try_into().unwrap())}
+// CE has SRAM1 [0x20000000,0x20008000) and SRAM2
+// [0x20010000,0x20020000), with an unmapped hole in between.
+// A descending initial stack may start at a bank's top, never its bottom.
+fn ce_initial_stack(sp:u32)->bool {
+    sp%8==0 && ((sp>0x20000000 && sp<=0x20008000) ||
+                (sp>0x20010000 && sp<=0x20020000))
+}
 fn hex(s:&str)->Result<Vec<u8>,String> {
     if s.len()%2!=0 || !s.is_ascii(){return Err("升级包十六进制字段无效".into());}
     (0..s.len()).step_by(2).map(|i|u8::from_str_radix(&s[i..i+2],16).map_err(|_|"升级包十六进制字段无效".into())).collect()
@@ -87,7 +94,7 @@ pub(super) fn load(path:&Path)->Result<Package,String> {
     let firmware=payloads.remove(0);let resources=payloads.remove(0);
     if firmware.len()<8 || firmware.len()>475136 || resources.len()!=static_bytes as usize || word(&wire,260)!=word(&wire,112)||word(&wire,264)!=word(&wire,112){return Err("固件和资源未绑定同一版本".into());}
     let sp=word(&firmware,0);let reset=word(&firmware,4);
-    if sp<=0x20000000||sp>0x20020000||sp%8!=0||reset&1==0||(reset&!1)<0x08008000||(reset&!1)>=0x08008000+firmware.len() as u32 {return Err("固件入口超出CE应用区".into());}
+    if !ce_initial_stack(sp)||reset&1==0||(reset&!1)<0x08008000||(reset&!1)>=0x08008000+firmware.len() as u32 {return Err("固件入口超出CE应用区".into());}
     let aligned=(firmware.len() as u32+4095)&!4095;let claim=aligned+static_bytes+131072+8192;
     let expected=[0x41425743,0x45315643,0x44455631,0x08008000,475136,0x0807C000,16777216,static_bytes,131072,0,aligned,claim,static_bytes-8192,static_bytes-4096];
     if claim>16777216-static_bytes-131072 || expected.iter().enumerate().any(|(i,n)|word(&wire,8+4*i)!=*n){return Err("整套签名Flash边界不符".into());}
@@ -99,6 +106,15 @@ pub(super) fn load(path:&Path)->Result<Package,String> {
 
 #[cfg(test)] mod tests {
     use super::*;
+    #[test] fn ce_stack_accepts_real_bank_tops_and_rejects_unmapped_gap() {
+        for sp in [0x20000008,0x20007ff8,0x20008000,0x20010008,0x2001fff8,0x20020000] {
+            assert!(ce_initial_stack(sp), "real CE SRAM stack {sp:08x}");
+        }
+        for sp in [0,0x1ffffff8,0x20000000,0x20000004,0x20008008,0x2000fff8,
+                   0x20010000,0x20010004,0x20020008,0x20028000] {
+            assert!(!ce_initial_stack(sp), "invalid CE SRAM stack {sp:08x}");
+        }
+    }
     #[test] fn canonical_matches_unicode_and_sorted_producer() {
         let d=serde_json::json!({"z":"宠物😀","a":{"version":3}});
         assert_eq!(String::from_utf8(canonical(&d).unwrap()).unwrap(),r#"{"a":{"version":3},"z":"\u5ba0\u7269\ud83d\ude00"}"#);
