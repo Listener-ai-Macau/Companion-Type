@@ -334,7 +334,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         }
     }).map_err(|e|format!("完整升级包传输未完成；断开后请从头重新下载：{e}"))?;
     if report.resumed_bytes!=0 {return Err("单文件升级意外返回了非零起点，不能当作本次完整传输".into());}
-    let payload_metrics=window.finish(&report,true);
+    let mut payload_metrics=window.finish(&report,true);
+    payload_metrics.exclude_package_header(176);
     drop(transport);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();let mut connection=Some(target);
     // FINISH only retained the file. Boot verifies the signature before erase,

@@ -74,6 +74,19 @@ pub struct PayloadMetrics {
     pub full_chain_acceptance: bool,
 }
 impl PayloadMetrics {
+    /// CUP3 embeds its signature/descriptor in the DOV1 file. The frozen OTA
+    /// gate counts only new App+UI image bytes; keep the original whole data
+    /// window (including header time), never inflate it with envelope bytes.
+    pub(super) fn exclude_package_header(&mut self, bytes:usize) {
+        self.new_payload_bytes=self.new_payload_bytes.saturating_sub(bytes);
+        let seconds=self.payload_elapsed_us.map(|us|us as f64/1_000_000.0).unwrap_or(0.0);
+        self.actual_payload_kib_s=(self.new_payload_bytes>0&&seconds>0.0)
+            .then(||self.new_payload_bytes as f64/1024.0/seconds);
+        let qualified=self.payload_gate!="not_evaluated"&&self.new_payload_bytes>=targets::OTA_MINIMUM_NEW_PAYLOAD_BYTES&&self.actual_payload_kib_s.is_some();
+        let met=qualified&&self.actual_payload_kib_s.is_some_and(|r|if targets::OTA_PAYLOAD_DELIVERY_STRICT {r>targets::OTA_PAYLOAD_DELIVERY_KIB_S}else{r>=targets::OTA_PAYLOAD_DELIVERY_KIB_S});
+        self.payload_gate=if !qualified {"not_evaluated"}else if met {"met"}else{"not_met"};
+        self.rate_basis="new_device_accepted_app_and_resource_image_bytes";
+    }
     pub(super) fn paired(new_bytes:usize,resumed:usize,elapsed:Option<Duration>)->Self {
         let seconds=elapsed.map(|d|d.as_secs_f64()).unwrap_or(0.0);
         let rate=(new_bytes>0&&seconds>0.0).then(||new_bytes as f64/1024.0/seconds);
@@ -137,6 +150,19 @@ mod tests {
         assert_eq!(format!("{:.2}",m.actual_payload_kib_s.unwrap()),"100.00");
         assert_eq!(m.payload_gate,"not_met");
         assert_eq!(m.floor_kib_s,100.0);
+    }
+    #[test]
+    fn single_package_metadata_does_not_inflate_the_frozen_image_rate() {
+        for us in [3_000_000,3_000_001] {
+            let total=307_200+176;
+            let mut w=PayloadWindow::default();w.observe(0,total,Duration::ZERO);
+            w.observe(total,total,Duration::from_micros(us));
+            let mut m=w.finish(&report(total,0),true);assert_eq!(m.payload_gate,"met");
+            m.exclude_package_header(176);
+            assert_eq!(m.new_payload_bytes,307_200);
+            assert_eq!(m.payload_elapsed_us,Some(u128::from(us)));
+            assert_eq!(m.payload_gate,if us==3_000_000 {"met"}else{"not_met"});
+        }
     }
     #[test]
     fn ota_wrong_identity_or_bad_time_has_no_numeric_speed_claim() {
