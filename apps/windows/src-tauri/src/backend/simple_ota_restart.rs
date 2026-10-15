@@ -3,6 +3,23 @@
 use denzic_ota_core::{OtaV1Transport,Operation,control_packet,parse_status,STATE_IDLE,STATE_COMPLETE};
 use std::time::{Duration,Instant};
 
+/// A timed-out ATT write is ambiguous. Only this same admitted file's exact
+/// device receipt may complete the packet or allow ONE identical retry.
+pub(super) fn acknowledged_write_receipt(packet:&[u8],file_bytes:u32,bytes:&[u8])->Result<bool,String> {
+    super::ota_flow::WbaFlow::from_simple_status(bytes,false)?;
+    if packet.len()<=4 {return Err("升级数据包缺少有效载荷。".into());}
+    let offset=u32::from_le_bytes(packet[..4].try_into().unwrap());
+    let end=offset.checked_add(u32::try_from(packet.len()-4).map_err(|_|"升级包长度溢出")?)
+        .filter(|n|*n<=file_bytes).ok_or("升级数据范围超出本次文件。")?;
+    let status=parse_status(bytes)?;
+    if status.state!=denzic_ota_core::STATE_RECEIVING || status.last_error!=0 || status.expected_size!=file_bytes {
+        return Err("设备未确认本次文件仍可继续，保留原写入失败。".into());
+    }
+    if status.bytes_written==end {return Ok(true);}
+    if status.bytes_written==offset {return Ok(false);}
+    Err("设备接收位置不属于本次单包，未猜测写入完成。".into())
+}
+
 pub(super) fn prepare_fresh_download<T:OtaV1Transport>(transport:&mut T,initial:&[u8],
     mut readiness:impl FnMut()->Result<u16,String>)->Result<(),String> {
     let status=parse_status(initial)?;
@@ -70,5 +87,21 @@ mod tests {
         let mut error=status(STATE_IDLE,0,0);error[6]=6;
         let mut peer=Peer{reads:VecDeque::from([error.clone()]),controls:vec![]};
         assert!(prepare_fresh_download(&mut peer,&error,||panic!("a stale idle error cannot authorize a fresh file")).is_err());
+    }
+    #[test]
+    fn ambiguous_ack_only_accepts_exact_same_file_commit_or_identical_retry_offset() {
+        let packet=[10,0,0,0,1,2,3,4];
+        let receipt=|accepted,total,state,error| {
+            let mut p=status(state,accepted,total);p[6]=error;
+            p.extend_from_slice(b"WOC2");p.extend_from_slice(&240u16.to_le_bytes());
+            p.extend_from_slice(&244u16.to_le_bytes());p.extend_from_slice(&16u16.to_le_bytes());p.extend_from_slice(&5u16.to_le_bytes());p
+        };
+        assert!(acknowledged_write_receipt(&packet,100,&receipt(14,100,denzic_ota_core::STATE_RECEIVING,0)).unwrap());
+        assert!(!acknowledged_write_receipt(&packet,100,&receipt(10,100,denzic_ota_core::STATE_RECEIVING,0)).unwrap());
+        for p in [receipt(14,101,2,0),receipt(13,100,2,0),receipt(15,100,2,0),
+            receipt(14,100,denzic_ota_core::STATE_COMPLETE,0),receipt(14,100,2,5),receipt(14,100,0,0)] {
+            assert!(acknowledged_write_receipt(&packet,100,&p).is_err());
+        }
+        assert!(acknowledged_write_receipt(&packet,13,&receipt(14,100,2,0)).is_err());
     }
 }

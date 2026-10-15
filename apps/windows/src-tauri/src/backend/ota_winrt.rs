@@ -79,6 +79,7 @@ struct CompanionOtaWinrtTransport<'a> {
     wba_signed: bool,
     pipeline_depth: usize,
     system_component: Option<u8>,
+    simple_file_bytes: Option<u32>,
 }
 
 impl Drop for CompanionOtaWinrtTransport<'_> {
@@ -228,6 +229,7 @@ pub fn transfer_companion_ota_winrt(
         wba_signed: wba_manifest.is_some(),
         pipeline_depth: pipeline,
         system_component: None,
+        simple_file_bytes: None,
     };
 
     let progress_started = Instant::now();
@@ -326,7 +328,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
     eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0",flow.window_chunks);
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::new(),pending_wwr_b:Vec::new(),
-        status_error_started:None,wba_signed:true,pipeline_depth:1,system_component:None};
+        status_error_started:None,wba_signed:true,pipeline_depth:1,system_component:None,
+        simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?)};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
@@ -946,6 +949,41 @@ impl CompanionOtaWinrtTransport<'_> {
     }
 }
 
+impl CompanionOtaWinrtTransport<'_> {
+    fn write_simple_acknowledged_data(&mut self,packet:&[u8],file_bytes:u32)->Result<(),String> {
+        for attempt in 0..2 {
+            let error=match write_gatt_value_with_timeout(&self.target.data,packet,
+                GattWriteOption::WriteWithResponse,OTA_WRITE_TIMEOUT,"Companion OTA data") {
+                Ok(_)=>return Ok(()),Err(error)=>error,
+            };
+            let lower=error.to_ascii_lowercase();
+            if !lower.contains("timed out") && !lower.contains("timeout")
+                && !lower.contains("canceled") && !lower.contains("cancelled") {return Err(error);}
+            // No reconnect and no new BEGIN here. The one same-file packet
+            // may have committed even though Windows lost its completion.
+            let bytes=read_characteristic_bytes_with_timeout(&self.target.status,BluetoothCacheMode::Uncached,
+                "升级写入超时后的设备收据",STATUS_READ_TIMEOUT,&BleCancel::NONE)
+                .map_err(|e|format!("{error}；设备收据无法核对，未猜测完成或重连：{e}"))?;
+            let receipt=denzic_ota_core::parse_status(&bytes)?;
+            let offset=packet.get(..4).map(|b|u32::from_le_bytes(b.try_into().unwrap()));
+            eprintln!("[companion-ota] data_completion_fault attempt={} packet_offset={offset:?} payload_bytes={} api_timeout=1 receipt_state={} receipt_error={} accepted={} expected={} no_reconnect=1",
+                attempt+1,packet.len().saturating_sub(4),receipt.state,receipt.last_error,receipt.bytes_written,receipt.expected_size);
+            match super::simple_ota_restart::acknowledged_write_receipt(packet,file_bytes,&bytes) {
+                Ok(true)=>{
+                    eprintln!("[companion-ota] data_completion_resolved exact_device_commit=1 stop_or_finish_fabricated=0");
+                    return Ok(());
+                },
+                Ok(false) if attempt==0=>{
+                    eprintln!("[companion-ota] data_completion_retry same_packet_same_offset=1 limit=1");
+                },
+                Ok(false)=>return Err(format!("{error}；相同数据仅重试一次后仍未写入，原文件状态保留。")),
+                Err(e)=>return Err(format!("{error}；{e}")),
+            }
+        }
+        unreachable!("bounded acknowledged data attempts return")
+    }
+}
+
 impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
     fn write_control(
         &mut self,
@@ -1054,6 +1092,9 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
             }
         } else {
             self.flush_pending_wwr()?;
+            if let Some(file_bytes)=self.simple_file_bytes {
+                return self.write_simple_acknowledged_data(packet,file_bytes);
+            }
         }
         write_gatt_value_with_timeout(
             &self.target.data,
