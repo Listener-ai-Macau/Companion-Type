@@ -31,6 +31,20 @@ fn admission_error(value:&[u8])->String {
         else {"这次字幕尚未获接收，回复已保留，稍后可重试。"};
     message.into()
 }
+async fn withdraw(peer:&NativeDevice,write:&Characteristic,status:&Characteristic,token:u32)->bool {
+    let started=StdInstant::now();
+    let sent=bounded_ble_result("withdraw pet caption",StdDuration::from_secs(3),
+        peer.peripheral.write(write,&packet(4,token,0,0),WriteType::WithResponse)).await.is_ok();
+    let value=if sent {
+        bounded_ble_result("confirm pet caption withdrawal",StdDuration::from_secs(3),
+            peer.peripheral.read(status)).await.ok()
+    } else {None};
+    let confirmed=value.as_deref().is_some_and(|value|parse(value).is_ok_and(|(state,owner,visible)|
+        state==5 && owner==token && visible==0 && value[6]==0));
+    eprintln!("pet_caption_withdrawal request={} sent={} confirmed={} wait_ms={}",
+        token,u8::from(sent),u8::from(confirmed),started.elapsed().as_millis());
+    confirmed
+}
 pub(crate) fn supported(device:&str)->Result<(),String> {
     run_native_blocking(async {
         let peer=connect_native_device(Some(device)).await?;
@@ -55,12 +69,14 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
     }
     run_native_blocking(async {
         let peer=connect_native_device(Some(device)).await?;
+        let mut cancel_reusable=false;
         let result=async {
             let chars=peer.peripheral.characteristics();
             let write=find_characteristic(&chars,WRITE)?;
             let status=find_characteristic(&chars,STATUS)?;
             let capability=peer.peripheral.read(&status).await.map_err(|_|"无法读取宠物字幕状态")?;
-            parse(&capability)?;
+            let (initial_state,initial_owner,_)=parse(&capability)?;
+            let no_initial_own_caption=initial_owner!=token || matches!(initial_state,0|4|5);
             // Op5 is negotiated, so old firmware/hosts keep immediate BEGIN.
             // Reservation drains one existing frame without relaxing its gate.
             let begin=if capability[7]>>4==2 {5} else {1};
@@ -73,11 +89,18 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
             let started=StdInstant::now();
             let deadline=started+StdDuration::from_secs(3);
             let mut reserved=false;
+            let mut began=false;
             loop {
                 if cancel.load(Ordering::Acquire) {
-                    if begin==5 {let _=write_packet(packet(4,token,0,0)).await;}
+                    if !began && no_initial_own_caption {
+                        // Fresh protected status, and this call sent no BEGIN:
+                        // no owned caption needs withdrawal or a radio teardown.
+                        cancel_reusable=true;
+                        eprintln!("pet_caption_cancel_unstarted request={} reusable=1",token);
+                    } else {cancel_reusable=withdraw(&peer,&write,&status,token).await;}
                     return Err("聊天已取消。".into());
                 }
+                began=true;
                 write_packet(packet(begin,token,0,0)).await?;
                 // The board republishes status on this protected write even
                 // when BEGIN is refused. Use that request's gate snapshot,
@@ -94,7 +117,7 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
                 if StdInstant::now()>=deadline {
                     eprintln!("pet_caption_admission request={} schema={} surface={} blockers={:02x} state={} owner_match={}",
                         token,value[7]>>4,value[7]&3,value[5],state,u8::from(owner==token));
-                    if begin==5 {let _=write_packet(packet(4,token,0,0)).await;}
+                    if begin==5 {let _=withdraw(&peer,&write,&status,token).await;}
                     return Err(admission_error(&value));
                 }
                 sleep(StdDuration::from_millis(120)).await;
@@ -104,7 +127,7 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
                 p.extend_from_slice(&pixels[start as usize*25..(start+count) as usize*25]);
                 write_packet(p).await?;
                 if cancel.load(Ordering::Acquire) {
-                    let _=write_packet(packet(4,token,0,0)).await;
+                    cancel_reusable=withdraw(&peer,&write,&status,token).await;
                     return Err("聊天已取消。".into());
                 }
             }
@@ -113,7 +136,8 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
             let deadline=StdInstant::now()+StdDuration::from_secs(7);
             loop {
                 if cancel.load(Ordering::Acquire) {
-                    let _=write_packet(packet(4,token,0,0)).await;return Err("聊天已取消。".into());
+                    cancel_reusable=withdraw(&peer,&write,&status,token).await;
+                    return Err("聊天已取消。".into());
                 }
                 let (state,owner,visible)=parse(&peer.peripheral.read(&status).await.map_err(|_|"无法确认宠物字幕显示")?)?;
                 if owner!=token || state>=4 {return Err("这次字幕没有显示完成；回复已保留。".into());}
@@ -122,10 +146,10 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
                 sleep(StdDuration::from_millis(100)).await;
             }
         }.await;
-        // Preserve the normal idle connection after the visible ACK. Errors
-        // still close it through the shared cleanup policy; no private timer
-        // or second Bluetooth owner is introduced for captions.
-        let cleanup=finish_native_device_operation(peer,result.is_ok()).await;
+        // Qualified visibility or a confirmed cancellation can return the
+        // existing user-owned connection. Unconfirmed/transport failures close
+        // it normally. Cancellation stays an error, never a visible ACK.
+        let cleanup=finish_native_device_operation(peer,result.is_ok()||cancel_reusable).await;
         combine_operation_and_cleanup(result,cleanup)
     })
 }
