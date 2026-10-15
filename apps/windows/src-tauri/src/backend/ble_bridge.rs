@@ -1461,7 +1461,11 @@ pub(crate) struct FollowObservation {
 }
 
 pub(crate) fn follow_prepared_recording_once(device_id: &str,
-    original_scope: Option<&super::recording_wire::SessionKey>) -> Result<Option<FollowObservation>, String> {
+    original_scope: Option<&super::recording_wire::SessionKey>,
+    mut live: Option<&mut super::recording_wire::receiver::LiveCursor>) -> Result<Option<FollowObservation>, String> {
+    if live.as_ref().is_some_and(|c|original_scope!=Some(c.key())) {
+        return Err("在线转写游标不属于原录音，未读取其它会话。".into());
+    }
     let allowed = if original_scope.is_some() { recording_sync::owned_follow_allowed(device_id) }
         else { recording_sync::automatic_allowed(device_id) };
     if !allowed || !prepared_segmented_recording(device_id) {
@@ -1509,9 +1513,10 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
             let mut policy = SealedLinkPolicy::default();
             let (mut batch, deferred) = segmented::sync_catalog_limited(&device, &chars, peer.clone(), catalog.entries,
                 &job, &mut policy, Some(1), owned.as_ref().and_then(|lease| lease.logical_key.as_ref())).await?;
+            if let Some(live)=live.as_deref_mut() {live.sealed(&native_recording_root()?,device_id);}
             if !deferred&&!batch.paused&&batch.failures.is_empty()&&peer.growing_tail {
                 if let Some(scope)=tail_scope {
-                    match segmented::follow_tail(&device,&chars,&peer,scope,&job).await {
+                    match segmented::follow_tail(&device,&chars,&peer,scope,&job,live.as_deref_mut()).await {
                         Ok(())=>(),Err(e) if e==recording_sync::PAUSED=>batch.paused=true,
                         Err(e)=>{batch.failures.push(e);batch.connection_reusable=false;}
                     }

@@ -190,6 +190,10 @@ pub fn run() {
         }
         process::exit(if result.is_ok() { 0 } else { 1 });
     }
+    if let Some(result) = commands::run_segmented_online_cli(&args) {
+        if let Err(err)=result {eprintln!("segmented_online_error={err}");std::process::exit(1);}
+        return;
+    }
     if let Some(result) = run_board_online_live_cli(&args) {
         if let Err(err) = &result {
             eprintln!("board_online_live_error={err}");

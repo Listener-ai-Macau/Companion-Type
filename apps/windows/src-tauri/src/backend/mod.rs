@@ -6,6 +6,7 @@
 
 mod ble_bridge;
 pub(crate) use ble_bridge::benchmark_recording_upload;
+pub(crate) use ble_bridge::known_segmented_peer;
 mod ble_mtu;
 use ble_bridge::CompanionBleOperation;
 #[cfg(windows)]
@@ -629,7 +630,8 @@ pub trait CompanionBackend: Send + Sync {
         meeting_mode: &str,
     ) -> Result<(), String>;
     fn automatic_reconnect_once(&self) -> Result<CompanionV1Snapshot, String>;
-    fn follow_recording_once(&self, original_session: Option<&str>) -> Result<bool, String>;
+    fn follow_recording_once(&self, original_session: Option<&str>,
+        live:Option<&mut recording_wire::receiver::LiveCursor>) -> Result<bool, String>;
     fn transfer_firmware_ota(
         &self,
         request: CompanionFirmwareOtaRequest,
@@ -2850,7 +2852,8 @@ impl CompanionBackend for FixtureCompanionBackend {
         Ok(next)
     }
 
-    fn follow_recording_once(&self, original_session: Option<&str>) -> Result<bool, String> {
+    fn follow_recording_once(&self, original_session: Option<&str>,
+        live:Option<&mut recording_wire::receiver::LiveCursor>) -> Result<bool, String> {
         // Keep this same state/library serialization as foreground V2 import:
         // an editor must not persist stale rows over a newly published segment.
         let mut snapshot = self.snapshot.lock().map_err(|_| "Companion backend state lock failed")?;
@@ -2867,7 +2870,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         if !allowed || !ble_bridge::prepared_segmented_recording(&id) {
             return Ok(false);
         }
-        match ble_bridge::follow_prepared_recording_once(&id, scope.as_ref()) {
+        match ble_bridge::follow_prepared_recording_once(&id, scope.as_ref(),live) {
             Ok(Some(observation)) => {
                 apply_device_identity(&mut snapshot, &observation.identity);
                 let Some(operation) = observation.operation else { return Ok(snapshot.device.recording); };

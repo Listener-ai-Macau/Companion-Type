@@ -141,7 +141,8 @@ async fn consume(device: &NativeDevice, chars: &std::collections::BTreeSet<Chara
 }
 
 pub(super) async fn follow_tail(device:&NativeDevice,
-    chars:&std::collections::BTreeSet<Characteristic>,peer:&Peer,key:&SessionKey,job:&RecordingSyncJob)->Result<(),String> {
+    chars:&std::collections::BTreeSet<Characteristic>,peer:&Peer,key:&SessionKey,job:&RecordingSyncJob,
+    live:Option<&mut super::super::recording_wire::receiver::LiveCursor>)->Result<(),String> {
     if job.is_paused() {return Err(recording_sync::PAUSED.into());}
     let control=find_characteristic(chars,RECORDING_CONTROL_UUID)?;
     let list=find_characteristic(chars,RECORDING_LIST_UUID)?;
@@ -171,7 +172,9 @@ pub(super) async fn follow_tail(device:&NativeDevice,
     let Some(tail)=tail else{return Ok(())};
     let root=native_recording_root()?;
     let (cursor,bytes)=Prefix::load(&root,&tail,peer)?;
-    if bytes.len()==tail.encoded_length as usize {return Ok(());}
+    if bytes.len()==tail.encoded_length as usize {
+        if let Some(live)=live {live.tail(&tail,&bytes);}return Ok(());
+    }
     job.recording(tail.recording_id,tail.encoded_length);
     let e=RecordingEntry{capture_incomplete:false,recording_id:tail.recording_id,
         started_unix_s:tail.started_unix_s,duration_ms:(tail.sample_count/16) as u32,
@@ -182,6 +185,7 @@ pub(super) async fn follow_tail(device:&NativeDevice,
         device.address_type,Some(bytes),Some(job),None).await;
     PullSession::close(&mut session).await;
     let received=received?;job.saving();cursor.save(&tail,&received,peer)?;
+    if let Some(live)=live {live.tail(&tail,&received);}
     eprintln!("recording_tail durable uid={} epoch={:016x} session={:016x} segment={} id={} bytes={} consume=0",
         hex_lower(&key.device_uid),key.format_epoch,key.session_id,tail.segment_index,tail.recording_id,received.len());
     Ok(())

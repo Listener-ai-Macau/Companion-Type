@@ -155,6 +155,34 @@ impl CompanionCoordinator {
         self.backend.apply_control(request)
     }
 
+    fn owns_recording_lease(&self,lease:&CompanionDeviceOperationLease)->bool {
+        lease.kind==2 && Arc::ptr_eq(&lease.gate,&self.device_operation)
+            && self.device_operation.load(Ordering::Acquire)==2
+    }
+
+    pub(crate) fn apply_online_capture_control(&self,lease:&CompanionDeviceOperationLease,
+        request:CompanionV1ControlRequest)->Result<CompanionV1Snapshot,String> {
+        use crate::companion_v1::CompanionV1ControlAction as Action;
+        if !self.owns_recording_lease(lease)
+            || !matches!(request.action,Action::MeetingStart|Action::MeetingStop)
+            || request.session_id.as_deref().is_none_or(|id|!id.starts_with("board-online-"))
+            || request.meeting_mode.as_deref()!=Some("onlineLive")
+            || request.audio_path.is_some() || request.audio_bytes.is_some() {
+            return Err("在线会议没有取得原录音操作，未发送控制。".into());
+        }
+        self.backend.apply_control(request)
+    }
+
+    pub(crate) fn follow_online_capture(&self,lease:&CompanionDeviceOperationLease,session:&str,
+        live:&mut crate::backend::recording_wire::receiver::LiveCursor)->Result<bool,String> {
+        if !self.owns_recording_lease(lease) {return Err("在线会议原录音操作已结束。".into());}
+        // Acquiring the foreground recorder lease may have yielded a follower.
+        // This scoped follower now borrows that same lease and must reopen its
+        // background budget, just like the ordinary kind-13 follower does.
+        crate::backend::recording_sync::prepare_background();
+        self.backend.follow_recording_once(Some(session),Some(live))
+    }
+
     pub fn pull_device_diagnostics(&self) -> Result<crate::backend::diagnostics::DeviceLogPage, String> {
         let _operation = self.begin_device_operation_kind(5)?;
         let snapshot = self.backend.snapshot()?;
@@ -345,12 +373,12 @@ impl CompanionCoordinator {
 
     pub fn follow_recording_once(&self) -> Result<bool, String> {
         let _operation = self.begin_device_operation_kind(13)?;
-        self.backend.follow_recording_once(None)
+        self.backend.follow_recording_once(None,None)
     }
 
     pub fn follow_original_recording_once(&self, session_id: &str) -> Result<bool, String> {
         let _operation = self.begin_device_operation_kind(13)?;
-        self.backend.follow_recording_once(Some(session_id))
+        self.backend.follow_recording_once(Some(session_id),None)
     }
 
     pub fn record_meeting_recovery_failure(
@@ -436,6 +464,36 @@ impl CompanionCoordinator {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn online_capture_rejects_foreign_lease_before_any_backend_control() {
+        let owner=CompanionCoordinator::new_fixture();let other=CompanionCoordinator::new_fixture();
+        let lease=owner.begin_board_recording_operation().unwrap();
+        let mut request=crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart,
+            Some("board-online-owned".into()));request.meeting_mode=Some("onlineLive".into());
+        assert!(other.apply_online_capture_control(&lease,request.clone()).is_err());
+        request.audio_path=Some("board://online/old-placeholder".into());
+        assert!(owner.apply_online_capture_control(&lease,request).is_err());
+        let mut cursor=crate::backend::recording_wire::receiver::LiveCursor::new(
+            crate::backend::recording_wire::SessionKey {device_uid:[7;12],format_epoch:11,session_id:13}).unwrap();
+        assert!(other.follow_online_capture(&lease,"board-online-owned",&mut cursor).is_err());
+    }
+    #[test]
+    fn online_capture_follower_reopens_the_budget_yielded_by_its_start_lease() {
+        let owner=CompanionCoordinator::new_fixture();
+        let lease=owner.begin_board_recording_operation().unwrap();
+        // Simulate the flag retained after handing an active kind-13 follower
+        // to this foreground owner; an already-idle gate does not set it.
+        crate::backend::recording_sync::yield_background();
+        let prior=crate::backend::recording_sync::Job::begin_background("AA:BB:CC:DD:EE:19").unwrap();
+        assert!(prior.yielded());drop(prior);
+        let mut cursor=crate::backend::recording_wire::receiver::LiveCursor::new(
+            crate::backend::recording_wire::SessionKey {device_uid:[7;12],format_epoch:11,session_id:13}).unwrap();
+        // Fixture has no radio. The check concerns the shared scheduler budget,
+        // not a fabricated successful recording or data receipt.
+        assert!(!owner.follow_online_capture(&lease,"board-online-owned",&mut cursor).unwrap());
+        let next=crate::backend::recording_sync::Job::begin_background("AA:BB:CC:DD:EE:19").unwrap();
+        assert!(!next.yielded());
+    }
     #[test]
     fn confirmed_discard_has_exclusive_lease_and_fixture_never_asks_to_destroy() {
         let coordinator = CompanionCoordinator::new_fixture();

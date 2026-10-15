@@ -25,6 +25,8 @@ use crate::coordinator::CompanionCoordinator;
 
 type CompanionCoordinatorState<'a> = State<'a, Arc<CompanionCoordinator>>;
 type BoardOnlineLiveManagerState<'a> = State<'a, Arc<CompanionBoardOnlineLiveManager>>;
+mod segmented_online_live;
+pub(crate) use segmented_online_live::run_cli as run_segmented_online_cli;
 
 #[tauri::command]
 pub async fn save_companion_bookmark(coordinator: CompanionCoordinatorState<'_>, manager: BoardOnlineLiveManagerState<'_>,
@@ -477,6 +479,12 @@ pub fn start_companion_board_online_live(
     manager: BoardOnlineLiveManagerState<'_>,
     request: CompanionBoardOnlineLiveStartRequest,
 ) -> Result<CompanionBoardOnlineLiveStatus, String> {
+    start_board_online_live_owned(coordinator.inner().clone(),manager.inner().clone(),request)
+}
+
+pub(crate) fn start_board_online_live_owned(coordinator:Arc<CompanionCoordinator>,
+    manager:Arc<CompanionBoardOnlineLiveManager>,request:CompanionBoardOnlineLiveStartRequest)
+    ->Result<CompanionBoardOnlineLiveStatus,String> {
     let current = manager.snapshot()?;
     if matches!(
         current.state.as_str(),
@@ -486,11 +494,9 @@ pub fn start_companion_board_online_live(
     }
     let max_duration_seconds=validate_board_online_duration(request.max_duration_seconds)?;
 
-    let coordinator = coordinator.inner().clone();
     // Hold the shared device gate for the whole board capture/pull/finalize
     // lifecycle. OTA, OOBE, reconnect, and manual device controls must wait.
     let device_operation = coordinator.begin_board_recording_operation()?;
-    let manager = manager.inner().clone();
     let snapshot = coordinator.snapshot()?;
     // The operation lease is already held, so a concurrent device action cannot
     // invalidate this final state check before the session and worker are born.
@@ -513,6 +519,14 @@ pub fn start_companion_board_online_live(
         .map(|value| value.trim().to_string())
         .filter(|value| !value.is_empty())
         .unwrap_or_else(|| "Companion 板端在线会议".to_string());
+    let segmented_peer=device_id.as_deref().and_then(crate::backend::known_segmented_peer);
+    if segmented_peer.is_some() || snapshot.device.board_id==Some(0x5742_4155) {
+        if !segmented_peer.is_some_and(|p|p.pause_control && p.growing_tail) {
+            return Err("请先正常连接当前 Companion 并读取连续录音能力，再开始在线会议；未发送旧版录音命令。".into());
+        }
+        let mut request=request;request.device_id=device_id;
+        return segmented_online_live::start(coordinator,manager,device_operation,request,session_id,title,max_duration_seconds);
+    }
     let prepared = coordinator.apply_control(CompanionV1ControlRequest {
         action: CompanionV1ControlAction::MeetingStart,
         ble_name: None,

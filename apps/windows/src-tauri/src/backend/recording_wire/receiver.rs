@@ -623,5 +623,7 @@ mod pause_tests;
 mod probe;
 mod publish;
 mod local;
+mod live;
+pub(crate) use live::LiveCursor;
 pub(crate) use local::{LocalRestoreReport, restore_local_product};
 pub(crate) use probe::{phase, verify};
