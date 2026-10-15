@@ -1,0 +1,55 @@
+{
+  "createdAtLocal": "2026-10-15T18:49:17+08:00",
+  "result": "LOCAL_RECORDING_ENTRY_BUILT_INSTALLED_BOARD_OPERATION_NOT_QUALIFIED",
+  "sourceCommit": "21060b7fa114245c5c974937b7e3872a793dd365",
+  "sourceTag": "companion-recording-entry-r13-r2-20261015-source",
+  "msiSha256": "2158a308ba5317cda83c42773662276ecaea51b528215b1f40926d64484ad8ef",
+  "installedExeSha256": "7341720c6563f45b65541d312572e876e75713f8ce5e1e35859df8a5dee0b362",
+  "installedDllSha256": "3ff0f6c78c7d89fbb55b69ccd9be3a7d70cfa330ea630dd92e290fc3503d4aea",
+  "changes": [
+    "Normal page exposes Start recording without cloud credentials or advanced tools",
+    "Local START uses existing meetingStart/offlineStore, exact connected device and requested duration; no host microphone fallback",
+    "Original-session stop remains scoped and is labelled Stop and save; uncertain state still requires protected reconciliation",
+    "Offline controlled recordings refresh durable state even when auto reconnect preference is disabled; no online ASR manager polling added",
+    "Removed obsolete statement denying continuous physical segmentation; actual stored pieces remain one logical original"
+  ],
+  "nativeRecordingBleOtaCloudImplementationChanged": false,
+  "cloudConfigurationChanged": false,
+  "componentVerification": [
+    "No cloud settings still allows board START",
+    "Disconnected board disables local entry rather than selecting host mic",
+    "Existing capture hides new START",
+    "Original STOP/pause/resume/uncertain state remain scoped",
+    "Offline capture refresh persists without auto reconnect or online manager"
+  ],
+  "firstBuildFailure": {
+    "sourceCommit": "6ccae532ed1711a62f632f1409b45150f87dcb36",
+    "reason": "New deviceId property allowed null but control contract permits only string or undefined",
+    "fixed": "Explicit null-to-undefined conversion; final Windows TypeScript/Vite/native release/MSI build completed",
+    "evidence": "Companion-Type/.cache/recorder-completion-20261015/recording-entry-r13/build.log"
+  },
+  "hardwareAttempt": {
+    "requestedSeconds": 1800,
+    "captureStarted": false,
+    "firmwareLastConfirmed": "App400/Boot400/UI75; no writes in this stage",
+    "firstResult": "Windows pairing result19 before START",
+    "secondResult": "Normal finite PAIR window actually opened, Windows still returned19 before START",
+    "furtherBleRetries": 0,
+    "bondCleared": false,
+    "encryptionWeakened": false,
+    "swdOrReset": false,
+    "subsequentNormalUart": "One cause-query returned no complete snapshot; no voltage or power investigation, cause unknown",
+    "evidence": [
+      ".cache/ota-completion-20261015/recorder400-long-ce-r12/result.json",
+      ".cache/ota-completion-20261015/recorder400-long-ce-r12-pair-window/result.json",
+      ".cache/ota-completion-20261015/recorder400-pair-failure-cause/uart/result.json"
+    ],
+    "windowsStatusSource": "https://learn.microsoft.com/en-us/uwp/api/windows.devices.enumeration.devicepairingresultstatus"
+  },
+  "lastActualRecordingResult": "397/R11 real325.34s and R12 exact-session processing remain historical actual evidence; not repeated or inherited as400/R13 qualification",
+  "installedGuiInteraction": "NOT_RUN",
+  "longRecording": "NOT_RUN_CAPTURE_NEVER_STARTED",
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "ownedHardwareHandlesClosed": true,
+  "next": "Complete pure recording/long capture when actual connection changes; physical OTA interruption recovery and content quality remain open; no speed tuning before Nordic"
+}
