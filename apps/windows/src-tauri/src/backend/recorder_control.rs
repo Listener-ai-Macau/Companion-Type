@@ -197,6 +197,10 @@ impl Journal {
                     self.pending=None;return Ok(Observation::Confirmed);
                 }
                 let transitional=match pending.command {1|5=>5,2|3=>6,4=>4,_=>255};
+                // A local cancellation/capacity stop can drain the accepted
+                // START before its first PCM block. Wait for this exact
+                // command's final state; never resend START or claim capture.
+                if pending.command==1 && status.state==6 {return Ok(Observation::Accepted);}
                 if status.state==transitional {return Ok(Observation::Accepted);}
                 return Err(failure("设备尚未到达请求的稳定状态"));
             }

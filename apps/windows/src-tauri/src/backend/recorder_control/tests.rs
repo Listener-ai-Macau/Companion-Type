@@ -257,6 +257,30 @@ fn natural_end_recovery_keeps_unknown_stop_time_and_preserves_real_stop_observat
     assert!(owned.stopped_at.is_some());assert!(!explicit.confirmed.as_ref().unwrap().finished_locally);
 }
 
+#[test]
+fn actual_fw402_start_stopping_waits_for_exact_local_end_without_replacement_start() {
+    let (mut status,anchor,_)=c_status(0);
+    let mut journal=Journal::start(&peer(),HOST,DEVICE,status.request,1830).unwrap();
+    status.state=6;
+    let before=journal.clone();
+    assert_eq!(journal.observe(&status,anchor,0).unwrap(),Observation::Accepted);
+    assert_eq!(journal,before); // no live recording or fabricated STOP ACK
+    for which in 0..4 {
+        let mut rejected=status.clone();
+        let observed_anchor=match which {0=>{rejected.last_error=1;anchor},
+            1=>{rejected.timeline=false;anchor},2=>{rejected.device_uid[0]^=1;anchor},_=>0};
+        assert!(journal.observe(&rejected,observed_anchor,0).is_err());
+        assert_eq!(journal,before);
+    }
+    status.state=2;
+    assert_eq!(journal.observe(&status,anchor,0).unwrap(),Observation::Confirmed);
+    assert!(journal.pending.is_none());
+    let ended=journal.confirmed.as_ref().unwrap();
+    assert_eq!((ended.command,ended.sequence,ended.state,ended.duration_ms),(1,0,2,0));
+    assert!(ended.finished_locally);
+    assert!(journal.prepare(&peer(),1).is_err());
+}
+
 fn ended_journal()->Journal {
     let mut j=running();let (mut s,id,ms)=c_status(0);s.state=2;
     assert_eq!(j.observe(&s,id,ms).unwrap(),Observation::Confirmed);j

@@ -26,7 +26,7 @@ use windows::Devices::Bluetooth::GenericAttributeProfile::{
     GattSession, GattSessionStatus, GattWriteOption,
 };
 use windows::Devices::Bluetooth::{
-    BluetoothCacheMode, BluetoothLEDevice, BluetoothLEPreferredConnectionParameters,
+    BluetoothAddressType, BluetoothCacheMode, BluetoothLEDevice, BluetoothLEPreferredConnectionParameters,
     BluetoothLEPreferredConnectionParametersRequest,
 };
 use windows::Devices::Enumeration::{DeviceAccessStatus, DeviceInformation};
@@ -532,8 +532,26 @@ fn open_ota_target_for_address(
     device_id_label: &str,
 ) -> Result<OpenOtaTarget, String> {
     let cancel = BleCancel::NONE;
+    // Pairing owns/closes a temporary WinRT device. Complete that lifetime
+    // before opening the device/session that will own OTA discovery and I/O.
+    let address_type = {
+        let probe = denzic_ble_windows::ScopedBleResource::new(
+            open_ble_device_with_timeout(address, DISCOVERY_TIMEOUT, false, &cancel)?);
+        probe.BluetoothAddressType().map_err(|e| format!("OTA address type: {e}"))?
+    };
+    super::ble_pairing::ensure_paired_for_ota(address,address_type)?;
     let device = denzic_ble_windows::ScopedBleResource::new(
-        open_ble_device_with_timeout(address, DISCOVERY_TIMEOUT, false, &cancel)?);
+        open_ble_device_with_timeout(address, DISCOVERY_TIMEOUT,
+            address_type==BluetoothAddressType::Random, &cancel)?);
+    if device.BluetoothAddress().map_err(|e|e.to_string())?!=address
+        || device.BluetoothAddressType().map_err(|e|e.to_string())?!=address_type {
+        return Err("OTA reopened device identity changed; no firmware sent".into());
+    }
+    let id=device.BluetoothDeviceId().map_err(|e|format!("OTA session identity: {e}"))?;
+    let operation=GattSession::FromDeviceIdAsync(&id).map_err(|e|format!("OTA session open: {e}"))?;
+    let session=denzic_ble_windows::ScopedBleResource::new(
+        wait_async_operation_with_cancel(operation,DISCOVERY_TIMEOUT,"OTA connection session",&cancel)?);
+    activate_gatt_session(&session)?;
     // Always label with the radio address from the open handle (not service-id UUID crumbs).
     let label = device
         .BluetoothAddress()
@@ -541,7 +559,6 @@ fn open_ota_target_for_address(
         .map(format_ble_address)
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| device_id_label.to_string());
-    super::ble_pairing::ensure_paired_for_ota(address,device.BluetoothAddressType().map_err(|e|e.to_string())?)?;
     let services_op = device
         .GetGattServicesForUuidWithCacheModeAsync(OTA_SERVICE_UUID, BluetoothCacheMode::Uncached)
         .map_err(|e| format!("OTA GetGattServices failed: {e}"))?;
@@ -560,7 +577,7 @@ fn open_ota_target_for_address(
         return Err("OTA service not present on device".to_string());
     }
     let service = services.GetAt(0).map_err(|e| format!("OTA service: {e}"))?;
-    open_chars_from_service(service, Some(device), &label)
+    open_chars_from_service(service, Some(device), &label, Some(session))
 }
 
 fn open_ota_target_for_service_id(
@@ -572,13 +589,14 @@ fn open_ota_target_for_service_id(
         .map_err(|e| format!("OTA FromIdAsync failed: {e}"))?;
     let service =
         wait_async_operation_with_cancel(op, DISCOVERY_TIMEOUT, "OTA service from id", &cancel)?;
-    open_chars_from_service(service, None, device_id_label)
+    open_chars_from_service(service, None, device_id_label, None)
 }
 
 fn open_chars_from_service(
     service: GattDeviceService,
     device: Option<denzic_ble_windows::ScopedBleResource<BluetoothLEDevice>>,
     device_id_label: &str,
+    owned_session: Option<denzic_ble_windows::ScopedBleResource<GattSession>>,
 ) -> Result<OpenOtaTarget, String> {
     // Acquire ownership before access/characteristic checks can return early.
     // Device first, then service/session: early local exits also close in the
@@ -612,7 +630,7 @@ fn open_chars_from_service(
             }
         })
         .unwrap_or_else(|| device_id_label.to_string());
-    let session = prepare_gatt_session(&service)?;
+    let session = match owned_session {Some(session)=>Some(session),None=>prepare_gatt_session(&service)?};
     let control = open_write_char(&service, OTA_CONTROL_UUID, "control")?;
     let data = open_write_char(&service, OTA_DATA_UUID, "data")?;
     let data_b = open_write_char(&service, OTA_DATA_B_UUID, "data_b").ok();
@@ -666,19 +684,30 @@ fn prepare_gatt_session(service: &GattDeviceService) -> Result<Option<denzic_ble
         Ok(s) => denzic_ble_windows::ScopedBleResource::new(s),
         Err(_) => return Ok(None),
     };
-    let deadline = Instant::now() + GATT_READY_TIMEOUT;
+    activate_gatt_session(&session)?;
+    Ok(Some(session))
+}
+
+fn activate_gatt_session(session: &GattSession) -> Result<(), String> {
+    if !session.CanMaintainConnection().map_err(|e|format!("OTA maintain capability: {e}"))? {
+        return Err("Windows cannot maintain this OTA connection; no firmware sent".into());
+    }
+    // Request before waiting. An idle Windows session need not become Active
+    // while nobody owns a connection request; the old code waited first.
+    session.SetMaintainConnection(true).map_err(|e|format!("OTA maintain connection: {e}"))?;
+    let started=Instant::now();
+    eprintln!("OTA connection_session maintain_requested=1 requested_before_wait=1 owner=ota");
+    let deadline = started + GATT_READY_TIMEOUT;
     while Instant::now() < deadline {
         if let Ok(status) = session.SessionStatus() {
             if status == GattSessionStatus::Active {
-                let _ = session.SetMaintainConnection(true);
-                return Ok(Some(session));
+                eprintln!("OTA connection_session active=1 elapsed_ms={}",started.elapsed().as_millis());
+                return Ok(());
             }
         }
         std::thread::sleep(Duration::from_millis(100));
     }
-    // Best-effort: continue without active session flag.
-    let _ = session.SetMaintainConnection(true);
-    Ok(Some(session))
+    Err("OTA connection session did not become active within its bounded wait; no firmware sent".into())
 }
 
 fn wb_sync_settle(wba_signed: bool, option: GattWriteOption, is_sync: bool) -> bool {
