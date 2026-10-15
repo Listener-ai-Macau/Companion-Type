@@ -91,7 +91,9 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
       </section>
       {device?.rememberedDeviceId ? <div className="ct-reconnect-setting">
         <label><input type="checkbox" checked={device.autoReconnectEnabled} disabled={blocked} onChange={(event) => onControl({ action: event.target.checked ? 'deviceEnableAutoReconnect' : 'deviceDisableAutoReconnect' })} />自动连接我的 Companion</label>
-        <small>{device.manualDisconnect ? '你已主动断开。点击连接或重新开启此选项后才会恢复。'
+        <small>{!device.autoReconnectEnabled ? '自动连接已关闭；需要时可主动连接设备。'
+          : device.manualDisconnect ? '你已主动断开。点击连接或重新开启此选项后才会恢复。'
+          : device.connectionPhase === 'pairingRequired' ? 'Windows 配对未完成，已暂停自动重试。请检查设备配对入口后点击连接；原录音保留。'
           : device.connectionPhase === 'reconnecting' || device.connectionPhase === 'checking' ? '正在寻找上次连接的设备…'
             : device.connectionPhase === 'offline' ? '设备暂时不在附近，稍后会重试；已有会议可继续查看。'
               : '只连接已记住的设备；不会自动开始录音或上传内容。'}</small>

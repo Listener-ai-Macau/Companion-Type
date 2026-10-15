@@ -167,7 +167,7 @@ export interface CompanionV1DeviceTransportState {
   /** Last validated device report. Refreshed on connection/sync; START checks again. */
   recordingCapacity?: CompanionV1RecordingCapacity | null;
   /** Transactional BLE readiness; ready means verified and connect-on-demand. */
-  connectionPhase: 'idle' | 'discovered' | 'checking' | 'ready' | 'reconnecting' | 'offline' | 'manualDisconnected' | 'busy';
+  connectionPhase: 'idle' | 'discovered' | 'checking' | 'ready' | 'reconnecting' | 'offline' | 'manualDisconnected' | 'busy' | 'pairingRequired';
   rememberedDeviceId: string | null;
   autoReconnectEnabled: boolean;
   manualDisconnect: boolean;

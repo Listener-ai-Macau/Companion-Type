@@ -36,7 +36,13 @@ impl Drop for PairingHandler {
     fn drop(&mut self) { let _ = self.custom.RemovePairingRequested(self.token); }
 }
 
-pub(super) fn is_pairing_error(error: &str) -> bool { error.starts_with(PAIR_ERROR) }
+pub(super) fn is_pairing_error(error: &str) -> bool {
+    // These two product boundaries retain the original native category inside
+    // a context prefix. Do not misclassify them as a retryable offline peer.
+    let native=error.strip_prefix("Native BLE connect failed: ")
+        .or_else(||error.strip_prefix("Remembered Companion is offline: ")).unwrap_or(error);
+    native.starts_with(PAIR_ERROR)
+}
 
 /* OTA's synchronous WinRT path must use the same normal pairing ceremony as
  * recorder connect, with the address type read from its actual device handle.
@@ -201,6 +207,14 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn native_pairing_category_survives_only_known_product_contexts() {
+        for context in ["","Native BLE connect failed: ","Remembered Companion is offline: "] {
+            assert!(is_pairing_error(&format!("{context}Windows BLE pairing required: Windows 状态 19")));
+        }
+        assert!(!is_pairing_error("Remembered Companion is offline: GATT device unreachable"));
+        assert!(!is_pairing_error("A payload happened to contain Windows BLE pairing required: text"));
+    }
 
     #[test]
     fn only_confirm_only_can_be_accepted_without_user_pin_or_comparison() {

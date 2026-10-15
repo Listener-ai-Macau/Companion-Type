@@ -17,6 +17,8 @@ pub(crate) struct DeviceConnectionPreference {
     pub remembered_device_id: Option<String>,
     pub auto_reconnect_enabled: bool,
     pub manual_disconnect: bool,
+    #[serde(default)]
+    pub pairing_required: bool,
     pub last_connected_at: Option<String>,
 }
 
@@ -26,6 +28,7 @@ impl Default for DeviceConnectionPreference {
             remembered_device_id: None,
             auto_reconnect_enabled: true,
             manual_disconnect: false,
+            pairing_required: false,
             last_connected_at: None,
         }
     }
@@ -62,6 +65,7 @@ impl DeviceConnectionPreference {
     pub(crate) fn can_automatically_reconnect(&self) -> bool {
         self.auto_reconnect_enabled
             && !self.manual_disconnect
+            && !self.pairing_required
             && self.remembered_device_id.as_deref().is_some_and(stable_device_id)
     }
 
@@ -71,6 +75,7 @@ impl DeviceConnectionPreference {
         }
         self.remembered_device_id = Some(device_id.trim().to_string());
         self.manual_disconnect = false;
+        self.pairing_required = false;
         self.last_connected_at = Some(at);
         true
     }
@@ -79,11 +84,28 @@ impl DeviceConnectionPreference {
         self.manual_disconnect = self.remembered_device_id.is_some();
     }
 
+    pub(crate) fn mark_pairing_required(&mut self, device_id:&str)->bool {
+        if self.remembered_device_id.as_deref().is_none_or(|id|!same_device_id(id,device_id)) {return false;}
+        self.pairing_required=true;true
+    }
+
+    /// A protected original-session recovery may resolve pairing without
+    /// undoing the user's independent manual-disconnect/auto-connect choice.
+    pub(crate) fn observe_confirmed_pairing(&mut self,snapshot:&crate::companion_v1::CompanionV1Snapshot)->bool {
+        if !self.pairing_required || snapshot.source!="firmware" || snapshot.device.mode!="windowsNative"
+            || !snapshot.connected || !snapshot.device.connected
+            || snapshot.device.device_id.as_deref().is_none_or(|id|self.remembered_device_id.as_deref().is_none_or(|known|!same_device_id(known,id))) {
+            return false;
+        }
+        self.pairing_required=false;true
+    }
+
     pub(crate) fn set_auto_reconnect(&mut self, enabled: bool) {
         self.auto_reconnect_enabled = enabled;
         if enabled {
             // Turning the preference back on is an explicit request to resume.
             self.manual_disconnect = false;
+            self.pairing_required = false;
         }
     }
 }
@@ -152,6 +174,48 @@ pub(super) fn save_to(path: &Path, preference: &DeviceConnectionPreference) -> R
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn pairing_pause_is_exact_durable_and_does_not_change_user_opt_in() {
+        let mut preference=DeviceConnectionPreference::default();
+        preference.remember_native_success("C8:92:FF:DD:3B:CA","before".into());
+        assert!(!preference.mark_pairing_required("AA:BB:CC:DD:EE:FF"));
+        assert!(preference.can_automatically_reconnect());
+        assert!(preference.mark_pairing_required("c8-92-ff-dd-3b-ca"));
+        assert!(preference.auto_reconnect_enabled && !preference.manual_disconnect);
+        assert!(!preference.can_automatically_reconnect());
+        let path=std::env::temp_dir().join(format!("companion-pairing-pause-{}.json",uuid::Uuid::new_v4()));
+        save_to(&path,&preference).unwrap();
+        let mut restarted=load_from(&path).unwrap();assert_eq!(restarted,preference);
+        let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.device.connected=false;
+        super::super::apply_connection_preference(&mut snapshot,&restarted);
+        assert_eq!(snapshot.device.connection_phase,"pairingRequired");
+        restarted.set_auto_reconnect(true);
+        assert!(restarted.can_automatically_reconnect());
+        super::super::apply_connection_preference(&mut snapshot,&restarted);
+        assert_eq!(snapshot.device.connection_phase,"offline");
+        std::fs::remove_file(path).unwrap();
+    }
+
+    #[test]
+    fn protected_recovery_resolves_pairing_without_reversing_manual_disconnect() {
+        let mut p=DeviceConnectionPreference::default();p.remember_native_success("C8:92:FF:DD:3B:CA","old".into());
+        p.mark_pairing_required("C8:92:FF:DD:3B:CA");p.set_auto_reconnect(false);p.mark_manual_disconnect();
+        let mut s=crate::companion_v1::fixture_snapshot();s.source="firmware";s.connected=true;s.device.connected=true;
+        s.device.mode="windowsNative".into();s.device.device_id=Some("AA:BB:CC:DD:EE:FF".into());
+        assert!(!p.observe_confirmed_pairing(&s));assert!(p.pairing_required);
+        s.device.device_id=Some("C8:92:FF:DD:3B:CA".into());s.device.connected=false;assert!(!p.observe_confirmed_pairing(&s));
+        s.device.connected=true;assert!(p.observe_confirmed_pairing(&s));
+        assert!(!p.pairing_required && p.manual_disconnect && !p.auto_reconnect_enabled);
+        assert!(!p.can_automatically_reconnect());
+    }
+
+    #[test]
+    fn legacy_preference_without_pause_field_keeps_its_original_choices() {
+        let old=br#"{"rememberedDeviceId":"C8:92:FF:DD:3B:CA","autoReconnectEnabled":false,"manualDisconnect":true,"lastConnectedAt":null}"#;
+        let preference:DeviceConnectionPreference=serde_json::from_slice(old).unwrap();
+        assert!(!preference.pairing_required && !preference.auto_reconnect_enabled && preference.manual_disconnect);
+    }
 
     #[test]
     fn protected_recorder_connect_retires_disconnect_but_other_controls_or_failed_observations_do_not() {

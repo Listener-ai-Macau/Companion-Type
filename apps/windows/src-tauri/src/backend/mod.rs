@@ -1006,6 +1006,14 @@ fn apply_connection_preference(
     snapshot.device.auto_reconnect_enabled = preference.auto_reconnect_enabled;
     snapshot.device.manual_disconnect = preference.manual_disconnect;
     snapshot.device.last_connected_at = preference.last_connected_at.clone();
+    if !snapshot.device.connected && preference.pairing_required && preference.auto_reconnect_enabled && !preference.manual_disconnect {
+        snapshot.device.connection_phase="pairingRequired".into();
+        snapshot.device.message="Windows 配对未完成，已暂停自动重试。请检查设备配对入口后主动连接；原录音保留。".into();
+    } else if !preference.pairing_required && snapshot.device.connection_phase=="pairingRequired" {
+        snapshot.device.connection_phase=if snapshot.device.connected {"ready"}
+            else if preference.manual_disconnect {"manualDisconnected"}
+            else if preference.remembered_device_id.is_some() {"offline"} else {"idle"}.into();
+    }
 }
 
 fn connection_timestamp() -> String {
@@ -1059,6 +1067,8 @@ impl FixtureCompanionBackend {
         snapshot.device.device_id = connection_preference.remembered_device_id.clone();
         snapshot.device.connection_phase = if connection_preference.manual_disconnect {
             "manualDisconnected"
+        } else if connection_preference.pairing_required {
+            "pairingRequired"
         } else if connection_preference.remembered_device_id.is_some() {
             "offline"
         } else {
@@ -1070,6 +1080,7 @@ impl FixtureCompanionBackend {
         } else {
             "unavailable"
         };
+        apply_connection_preference(&mut snapshot,&connection_preference);
         Self {
             snapshot: Mutex::new(snapshot),
             meeting_processing: Mutex::new(()),
@@ -1114,6 +1125,20 @@ impl FixtureCompanionBackend {
             return Err(MEETING_WORK_SUPERSEDED.into());
         }
         Ok((snapshot,result))
+    }
+
+    fn observe_pairing_failure(&self,snapshot:&mut CompanionV1Snapshot,target:Option<&str>,error:&str) {
+        if !reconnect_requires_pairing(error) {return;}
+        let Some(target)=target else{return;};
+        let Ok(mut preference)=self.connection_preference.lock() else{return;};
+        if !preference.mark_pairing_required(target) {return;}
+        snapshot.connected=false;snapshot.device.connected=false;
+        apply_connection_preference(snapshot,&preference);
+        snapshot.device.message=error.into();
+        if let Err(save_error)=device_connection::save(&preference) {
+            snapshot.device.message=format!("{error}；自动重试已在本次运行暂停，但暂停状态未保存：{save_error}");
+            eprintln!("[device-reconnect] pairing pause checkpoint failed; current process remains paused: {save_error}");
+        }
     }
 
     fn merge_live_asr_into_session(
@@ -1612,13 +1637,21 @@ impl CompanionBackend for FixtureCompanionBackend {
                 }
             }
         }
-        if recorder_control::apply(&mut snapshot, &request, &self.ble_bridge)? {
+        let recorder_target=request.device_id.clone().or_else(||request.session_id.as_deref()
+            .and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id)).and_then(|s|s.source_device_id.clone()))
+            .or_else(||snapshot.device.device_id.clone());
+        let recorder_applied=match recorder_control::apply(&mut snapshot,&request,&self.ble_bridge) {
+            Ok(applied)=>applied,
+            Err(error)=>{self.observe_pairing_failure(&mut snapshot,recorder_target.as_deref(),&error);return Err(error);}
+        };
+        if recorder_applied {
             // A live CMC3 Connect returns here, before ordinary DeviceConnect.
             // Only the successful protected original-session observation may
             // retire a prior manual Disconnect and re-enable its follower.
             let mut preference = self.connection_preference.lock()
                 .map_err(|_| "device connection preference lock failed".to_string())?;
-            if preference.remember_confirmed_recorder_connect(action, &snapshot, connection_timestamp()) {
+            let pairing_confirmed=preference.observe_confirmed_pairing(&snapshot);
+            if preference.remember_confirmed_recorder_connect(action, &snapshot, connection_timestamp()) || pairing_confirmed {
                 device_connection::save(&preference)?;
                 apply_connection_preference(&mut snapshot, &preference);
             }
@@ -1964,6 +1997,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                     snapshot.device.connected = false;
                     snapshot.device.connection_phase = "offline".to_string();
                     snapshot.device.message = operation.message.clone();
+                    self.observe_pairing_failure(&mut snapshot,request.device_id.as_deref(),&operation.message);
                     return Err(operation.message);
                 }
                 request.device_id = operation.device_id.clone();
@@ -2997,6 +3031,16 @@ impl CompanionBackend for FixtureCompanionBackend {
             snapshot.device.connected = false;
             snapshot.device.connection_phase = "offline".to_string();
             snapshot.device.message = operation.message.clone();
+            // The exact remembered-device claim was rechecked above, so a
+            // late failure cannot pause another device or overwrite opt-out.
+            if reconnect_requires_pairing(&operation.message) && preference.mark_pairing_required(&remembered_device_id) {
+                apply_connection_preference(&mut snapshot,&preference);
+                snapshot.device.message=operation.message.clone();
+                if let Err(error)=device_connection::save(&preference) {
+                    snapshot.device.message=format!("{}；暂停状态未保存：{error}",operation.message);
+                    eprintln!("[device-reconnect] pairing pause checkpoint failed: {error}");
+                }
+            }
             return Err(operation.message);
         }
         let returned_device_id = operation.device_id.as_deref().ok_or_else(|| {

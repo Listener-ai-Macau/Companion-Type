@@ -328,6 +328,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-bookmark-request" => Some((i,3)),
         "--meeting-note-request" => Some((i,4)),
         "--meeting-speakers-request" => Some((i,5)),
+        "--device-connect-request" => Some((i,6)),
         _ => None,
     })?;
     Some((|| {
@@ -337,6 +338,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         if file.metadata().map_err(|_| "无法读取请求文件大小。")?.len() > 4*1024*1024 {
             return Err("会议请求文件不能超过 4 MB。".into());
         }
+        if operation==6 {let _=backend::product_settings::load_and_apply();}
         let coordinator = CompanionCoordinator::new_fixture();
         if operation == 0 {
             let request: backend::meeting_workspace::MeetingEditRequest = serde_json::from_reader(file)
@@ -376,6 +378,19 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
                 "fullChainAcceptance":"NOT_RUN", "hardwareAcceptance":"NOT_RUN"
             })).map_err(|_| "无法生成备注保存结果。")?)?;
             println!("meeting_workspace_result=SAVED_LOCAL_USER_NOTE");
+        } else if operation == 6 {
+            #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
+            struct ConnectRequest {device_id:String}
+            let request:ConnectRequest=serde_json::from_reader(file).map_err(|_|"连接请求只接受明确设备地址。")?;
+            if !backend::same_device_id(&request.device_id,&request.device_id) {return Err("设备地址无效，未扫描或连接。".into());}
+            let mut control=control_request(companion_v1::CompanionV1ControlAction::DeviceConnect,None);control.device_id=Some(request.device_id);
+            let result=coordinator.apply_control(control);let snapshot=coordinator.snapshot()?;
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&serde_json::json!({
+                "result":if result.is_ok(){"NORMAL_DEVICE_CONNECT_CONFIRMED"}else{"NORMAL_DEVICE_CONNECT_NOT_CONFIRMED"},
+                "source":snapshot.source,"connected":snapshot.connected,"device":snapshot.device,"error":result.as_ref().err(),
+                "moduleChecks":"NOT_RUN","newRecording":false,"asrRequests":0,"fullChainAcceptance":"NOT_QUALIFIED"
+            })).map_err(|_|"无法保存连接结果。")?)?;
+            result?;println!("device_connection_result=NORMAL_DEVICE_CONNECT_CONFIRMED");
         } else if operation == 5 {
             let request:backend::speaker_refinement::Request=serde_json::from_reader(file).map_err(|_|"本地分组请求格式不正确。")?;
             let snapshot=coordinator.refine_meeting_speakers(&request.session_id)?;
@@ -638,7 +653,7 @@ fn should_attempt_device_reconnect(snapshot: &companion_v1::CompanionV1Snapshot)
         && !snapshot.device.manual_disconnect
         && (!backend::segmented_link_change_allowed(snapshot) || !snapshot.device.connected)
         && snapshot.device.remembered_device_id.is_some()
-        && !matches!(snapshot.device.connection_phase.as_str(), "reconnecting" | "busy")
+        && !matches!(snapshot.device.connection_phase.as_str(), "reconnecting" | "busy" | "pairingRequired")
         && (backend::segmented_link_change_allowed(snapshot) || (!snapshot.meeting.active
         && !snapshot
             .host
@@ -705,6 +720,11 @@ fn spawn_automatic_device_reconnect(coordinator: Arc<CompanionCoordinator>) {
                 }
                 Err(error) if error.contains("device is busy with") => {
                     std::thread::sleep(std::time::Duration::from_secs(2));
+                }
+                Err(error) if backend::reconnect_requires_pairing(&error) => {
+                    failed_attempts=0;
+                    eprintln!("[device-reconnect] pairing needs explicit action; original recording kept; automatic pairing paused: {error}");
+                    std::thread::sleep(std::time::Duration::from_secs(5));
                 }
                 Err(error) => {
                     failed_attempts = failed_attempts.saturating_add(1).min(8);
@@ -2346,6 +2366,8 @@ mod tests {
         snapshot.device.recording = true;
         assert!(should_attempt_device_reconnect(&snapshot));
         snapshot.device.connection_phase = "reconnecting".to_string();
+        assert!(!should_attempt_device_reconnect(&snapshot));
+        snapshot.device.connection_phase="pairingRequired".into();
         assert!(!should_attempt_device_reconnect(&snapshot));
     }
 
