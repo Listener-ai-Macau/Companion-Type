@@ -1,0 +1,78 @@
+{
+  "createdAtLocal": "2026-10-15T19:08:19+08:00",
+  "result": "FIRST_TURN_RECOGNITION_FAILURE_LOCALIZED_NOT_PRODUCT_QUALIFIED",
+  "installedType": "R13 unchanged",
+  "installedTypeSourceCommit": "21060b7fa114245c5c974937b7e3872a793dd365",
+  "captureOriginalFirmware": "App397/UI75/Boot396 at original capture, not a new400 capture",
+  "boardOriginalSha256": "89ce0aa69c4a4b370d7367eef0ee27c89c2c5b11cd166b6c610985c63b4db368",
+  "referenceCharacters": 120,
+  "durationMs": 33250,
+  "cases": [
+    {
+      "source": "Known mechanical voice before computer speaker, digital source only",
+      "distance": 4,
+      "cer": 0.03333333333333333,
+      "recognizedCharacters": 120,
+      "boardEvidence": false,
+      "providedReference": false
+    },
+    {
+      "source": "Same source through current CELT16 adapter and host CELT-only library, then normal product decoder",
+      "distance": 2,
+      "cer": 0.016666666666666666,
+      "recognizedCharacters": 120,
+      "boardEvidence": false,
+      "armBinaryExecuted": false,
+      "providedReference": false
+    },
+    {
+      "source": "Corresponding already-saved real board acoustic capture",
+      "distance": 11,
+      "cer": 0.09166666666666666,
+      "recognizedCharacters": 111,
+      "boardEvidence": "Real397 original crop; this standalone comparison is not a new full-chain qualification",
+      "providedReference": false
+    }
+  ],
+  "knownSyntheticTermObservation": "Companion present in both digital results but absent in the real capture result; 实板 is not recognized exactly even from the digital source",
+  "speakerScope": "All three first-turn results contained one reported speaker label; this does not qualify whole meeting diarization",
+  "codecEvidence": {
+    "result": "DIGITAL_SOURCE_CURRENT_ADAPTER_CELT16_ENCODED_STANDARD_DECODER",
+    "hardwareEvidence": false,
+    "armBinaryExecuted": false,
+    "adapterSha256": "83a583f3a55f8e70f702977c0f024c868cc0eadb6bef93ac8df9c5060cb09e63",
+    "nativeLibrarySha256": "3a81f10d4efa3e66e2d2a5bc30af56e2b8ef8bbe80f3c3e7044bff1f6f8d1a78",
+    "sourceSha256": "80141daae067bd3d86026c7df188602884fd29021e37fa8417af57ad010700cb",
+    "encodedBytes": 69858,
+    "encodedSha256": "609b2c877e95e7d237fe045a7dd9266a937a4a760c2c5f8617a90034baf8fe02",
+    "decodedSha256": "cf89ab46d3ccacf8cf8724aadebc90727b70394ceb48d3ba70b013f6156eebca",
+    "scope": "Actual current adapter and earlier CELT-only host library, same16k/16kbps/20ms/complexity0 profile; not the ARM build or physical PDM path"
+  },
+  "inference": "The current CELT16 settings are not sufficient by themselves to explain the observed whole-meeting18.03% CER. The real acoustic-path crop had more errors in this one comparison; room/playback/PDM/physical codec execution/request variability are not separated. Clean-source homophone errors also remain.",
+  "notConcluded": [
+    "Microphone hardware defect",
+    "Unique acoustic/noise/PDM root cause",
+    "ARM encoder identical to host DLL",
+    "Codec or full meeting quality qualified",
+    "Gain, bitrate or compression mode must change",
+    "Whole meeting CER replaced by first-turn metric"
+  ],
+  "actions": "Preserve current bitrate/quality/timing protections and existing cloud config; do not force three speakers or replace ASR with reference. Next acoustic/PDM comparison requires working hardware or completed Listener enhancement evidence, not another blind encoder change.",
+  "fullMeetingBaseline": {
+    "cer": 0.1802536231884058,
+    "referenceCharacters": 1104,
+    "distance": 199,
+    "result": "NOT_QUALIFIED",
+    "referenceProvidedToProduct": false
+  },
+  "cloud": "Existing configured ASR only; no new endpoint, model, subscription or changed configuration; no new minutes calls",
+  "normalProductLibraryTouched": false,
+  "newCapture": false,
+  "newHardwareAccess": false,
+  "productionCodeChanged": false,
+  "otaReadScope": "Read current minimal install/retained-file/claim code; no new defect established, no gratuitous change or rerun of already-passed tests. Physical power-cut recovery remains unqualified.",
+  "handlesClosed": true,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "privateEvidence": ".cache/ota-completion-20261015/meeting397-firstturn-asr-comparison",
+  "rawTranscriptAndAudioPublished": false
+}
