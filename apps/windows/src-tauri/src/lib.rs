@@ -1960,6 +1960,23 @@ fn control_request(
 /// run the same select -> real ASR -> minutes controls used by the GUI for
 /// every board recording. This intentionally does not accept transcript text,
 /// so an unconfigured or failing ASR provider fails the command.
+fn recording_library_targets(mut candidates: Vec<(u32,String,bool)>, recording: Option<u32>, host: Option<&str>)
+    -> Result<Vec<(u32,String,bool)>,String> {
+    if host.is_some_and(|id| id.is_empty() || id.starts_with("--")) {
+        return Err("--session-id requires the exact saved meeting identity; no recording was processed".into());
+    }
+    candidates.retain(|(id,session,_)| recording.is_none_or(|wanted|wanted==*id)
+        && host.is_none_or(|wanted|wanted==session));
+    if recording.is_some() && host.is_none() && candidates.len()>1 {
+        return Err("The device recording number belongs to multiple saved meetings. Specify --session-id; no recording was processed".into());
+    }
+    if candidates.is_empty() || (host.is_some() && candidates.len()!=1) {
+        return Err("No unique saved board meeting matches this recording/session identity; no recording was processed".into());
+    }
+    candidates.sort_by(|a,b|a.0.cmp(&b.0).then(a.1.cmp(&b.1)));
+    Ok(candidates)
+}
+
 fn run_process_device_library_cli(args: &[String]) -> Option<Result<(), String>> {
     if !args
         .iter()
@@ -1977,11 +1994,21 @@ fn run_process_device_library_cli(args: &[String]) -> Option<Result<(), String>>
                     .map_err(|_| format!("invalid --recording-id: {}", pair[1]))
             })
             .transpose()?;
+        let requested_session_id=if let Some(index)=args.iter().position(|arg|arg=="--session-id") {
+            if args.iter().filter(|arg|arg.as_str()=="--session-id").count()!=1 {
+                return Err("--session-id must occur once; no recording was processed".into());
+            }
+            Some(args.get(index+1).filter(|id|!id.is_empty()&&!id.starts_with("--"))
+                .ok_or("--session-id requires the exact saved meeting identity")?.clone())
+        } else {None};
         let recovery_audio_path = args
             .windows(2)
             .find(|pair| pair[0] == "--recover-audio-path")
             .map(|pair| PathBuf::from(&pair[1]));
         if let Some(path) = recovery_audio_path.as_ref() {
+            if requested_session_id.is_some() {
+                return Err("Legacy --recover-audio-path cannot be combined with a segmented meeting identity; use normal original-recording recovery".into());
+            }
             let recording_id = requested_recording_id
                 .ok_or_else(|| "--recover-audio-path requires --recording-id".to_string())?;
             let recovered_session = backend::recover_persisted_board_recording(recording_id, path)?;
@@ -1993,7 +2020,7 @@ fn run_process_device_library_cli(args: &[String]) -> Option<Result<(), String>>
         let _ = backend::product_settings::load_and_apply();
         let coordinator = CompanionCoordinator::new_fixture();
         let initial = coordinator.snapshot()?;
-        let mut targets = initial
+        let candidates = initial
             .host
             .sessions
             .iter()
@@ -2005,19 +2032,9 @@ fn run_process_device_library_cli(args: &[String]) -> Option<Result<(), String>>
                     (recording_id, session.id.clone(), complete)
                 })
             })
-            .filter(|(recording_id, _, _)| {
-                requested_recording_id.is_none_or(|requested| requested == *recording_id)
-            })
             .collect::<Vec<_>>();
-        targets.sort_by_key(|(recording_id, _, _)| *recording_id);
-        if targets.is_empty() {
-            return Err(match requested_recording_id {
-                Some(recording_id) => {
-                    format!("recording library contains no board session id={recording_id}")
-                }
-                None => "recording library contains no board sessions".to_string(),
-            });
-        }
+        let targets=recording_library_targets(candidates,requested_recording_id,requested_session_id.as_deref())?;
+        let selected_hosts=targets.iter().map(|(_,host,_)|host.clone()).collect::<std::collections::BTreeSet<_>>();
 
         let mut failures = Vec::new();
         for (recording_id, session_id, complete) in targets {
@@ -2097,7 +2114,7 @@ fn run_process_device_library_cli(args: &[String]) -> Option<Result<(), String>>
             .iter()
             .filter_map(|session| {
                 let recording_id = session.device_recording_id?;
-                if requested_recording_id.is_some_and(|requested| requested != recording_id) {
+                if !selected_hosts.contains(&session.id) {
                     return None;
                 }
                 let generated = session.minutes.as_ref()?;
@@ -2132,6 +2149,7 @@ fn run_process_device_library_cli(args: &[String]) -> Option<Result<(), String>>
             "status": status,
             "realAsr": true,
             "requestedRecordingId": requested_recording_id,
+            "requestedSessionId": requested_session_id,
             "sessions": reports,
             "failures": failures,
         });
@@ -2466,6 +2484,16 @@ fn wav_data_chunk_bytes(audio_path: &Path) -> Option<u64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn recording_library_scope_reused_device_id_requires_exact_host() {
+        let rows=vec![(3,"legacy-recording-3".to_string(),false),(3,"current-original".to_string(),false),(4,"another".to_string(),false)];
+        assert!(recording_library_targets(rows.clone(),Some(3),None).unwrap_err().contains("multiple saved meetings"));
+        assert_eq!(recording_library_targets(rows.clone(),Some(3),Some("current-original")).unwrap(),vec![(3,"current-original".into(),false)]);
+        assert!(recording_library_targets(rows.clone(),Some(4),Some("current-original")).is_err());
+        assert!(recording_library_targets(rows.clone(),None,Some("missing")).is_err());
+        assert_eq!(recording_library_targets(rows,None,None).unwrap().len(),3,"explicit whole-library operation remains available");
+    }
 
     #[test]
     fn sync_result_keeps_verified_original_when_another_selected_capture_is_partial() {

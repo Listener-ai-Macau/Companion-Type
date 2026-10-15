@@ -518,27 +518,8 @@ pub(crate) fn recover_persisted_board_recording(
     let mut sessions = persistence::load_sessions()
         .ok_or_else(|| "recording library is unavailable for recovery".to_string())?;
 
-    let session = if let Some(index) = sessions
-        .iter()
-        .position(|session| session.device_recording_id == Some(recording_id))
-    {
-        &mut sessions[index]
-    } else {
-        sessions
-            .iter_mut()
-            .find(|session| {
-                session.device_recording_id.is_none()
-                    && session.meeting_mode == "onlineLive"
-                    && session
-                        .audio_path
-                        .as_deref()
-                        .is_some_and(|path| path.starts_with("board://"))
-                    && matches!(session.status.as_str(), "recording" | "captured")
-            })
-            .ok_or_else(|| {
-                format!("no interrupted onlineLive session can own recording_id={recording_id}")
-            })?
-    };
+    let owner=legacy_recording_recovery_owner(&sessions,recording_id)?;
+    let session=&mut sessions[owner];
     session.source = "deviceFlash".to_string();
     session.status = "captured".to_string();
     session.pending_reason = Some("needs_transcription".to_string());
@@ -565,6 +546,26 @@ pub(crate) fn recover_persisted_board_recording(
     let session_id = session.id.clone();
     persistence::save_sessions_to(&persistence::state_file_path(), &sessions)?;
     Ok(session_id)
+}
+
+fn legacy_recording_recovery_owner(sessions:&[CompanionV1HostSession],recording_id:u32)->Result<usize,String> {
+    let exact=sessions.iter().enumerate().filter(|(_,row)|row.device_recording_id==Some(recording_id))
+        .map(|(index,_)|index).collect::<Vec<_>>();
+    if exact.len()>1 {return Err("Device recording number is ambiguous; original library was not changed".into());}
+    if let Some(&index)=exact.first() {
+        if sessions[index].device_recording_key.is_some() || sessions[index].recorder_control.is_some() {
+            return Err("Segmented originals require their exact normal recovery proof, not legacy WAV reattachment; original library was not changed".into());
+        }
+        return Ok(index);
+    }
+    let pending=sessions.iter().enumerate().filter(|(_,row)|row.device_recording_id.is_none()
+        && row.device_recording_key.is_none() && row.recorder_control.is_none()
+        && row.meeting_mode=="onlineLive"
+        && row.audio_path.as_deref().is_some_and(|path|path.starts_with("board://"))
+        && matches!(row.status.as_str(),"recording"|"captured"))
+        .map(|(index,_)|index).collect::<Vec<_>>();
+    if pending.len()!=1 {return Err("No unique interrupted legacy meeting can own this recording; original library was not changed".into());}
+    Ok(pending[0])
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -3693,6 +3694,24 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn recording_library_scope_legacy_recovery_never_replaces_segmented_original() {
+        let snapshot=super::apply_fixture_control(super::fixture_snapshot(),crate::control_request(
+            crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("owner".into()))).unwrap();
+        let mut legacy=snapshot.host.sessions.into_iter().find(|row|row.id=="owner").unwrap();
+        legacy.device_recording_id=Some(3);legacy.device_recording_key=None;legacy.recorder_control=None;
+        assert_eq!(super::legacy_recording_recovery_owner(&[legacy.clone()],3).unwrap(),0);
+        let mut current=legacy.clone();current.id="new-original".into();
+        current.device_recording_key=Some(crate::companion_v1::CompanionV1RecordingKey {
+            device_uid:"180010000d50335754363720".into(),format_epoch:"5f72b599c3872a1f".into(),session_id:"0000000000000003".into()});
+        assert!(super::legacy_recording_recovery_owner(&[current.clone()],3).unwrap_err().contains("Segmented originals"));
+        assert!(super::legacy_recording_recovery_owner(&[legacy.clone(),current],3).unwrap_err().contains("ambiguous"));
+        legacy.device_recording_id=None;legacy.meeting_mode="onlineLive".into();legacy.status="captured".into();legacy.audio_path=Some("board://pending".into());
+        assert_eq!(super::legacy_recording_recovery_owner(&[legacy.clone()],3).unwrap(),0);
+        let mut another=legacy.clone();another.id="another-pending".into();
+        assert!(super::legacy_recording_recovery_owner(&[legacy,another],3).is_err());
+    }
+
     #[test]
     fn stop_retry_keeps_durable_audio_without_inventing_physical_consumption() {
         let source = "C8:92:FF:DD:3B:CA";
