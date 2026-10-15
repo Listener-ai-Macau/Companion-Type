@@ -181,7 +181,10 @@ impl Receiver {
             s.device_total_length = None;
             s.device_sha256 = None;
             s.device_reclaimed = reclaimed;
-            s.capture_incomplete = plan.capture_incomplete;
+            // A missed terminal control may already have marked this exact
+            // original interrupted. Complete payload is not proof of a clean
+            // capture; never erase that warning while publishing its audio.
+            s.capture_incomplete |= plan.capture_incomplete;
             s.audio_path = Some(audio_path.clone());
             s.audio_stored = complete;
             s.retention.audio_cached = true;

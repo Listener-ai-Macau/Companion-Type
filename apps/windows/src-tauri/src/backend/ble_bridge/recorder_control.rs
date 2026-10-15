@@ -5,6 +5,15 @@ use crate::backend::{recorder_control::{Journal, Observation, Store},
     recording_wire::{SessionKey, control::{PausePeer, PauseStatus}}};
 
 type Observed=(PauseStatus,u32,u32,u8);
+fn sealed_end_report(device:&NativeDevice,journal:&Journal)->Result<CompanionMeetingControlReport,String> {
+    let end=journal.sealed_catalogue_end.as_ref().ok_or("原封口证据缺失。")?;
+    journal.validate_sealed_end()?;
+    // Functional finalized state, explicitly NOT a live CMC3/STOP reply.
+    // Zero request ID prevents inventing an acknowledgement for the old intent.
+    Ok(CompanionMeetingControlReport{device_id:device.device_id(),request_id:0,state:2,last_error:0,
+        meeting_id:journal.anchor.ok_or("原锚点缺失。")?,duration_ms:end.duration_ms,sync_state:0,
+        logical_key:journal.key.as_ref().map(SessionKey::from_public).transpose()?})
+}
 fn fields(wire:&[u8])->Result<Observed,String> {
     let status=PauseStatus::decode(wire)?;
     Ok((status,u32::from_le_bytes(wire[12..16].try_into().unwrap()),
@@ -86,6 +95,15 @@ pub(super) async fn execute_owned(
             .ok_or("设备身份读取失败，未发录音控制。")?;
         let peer=PausePeer::from_status(&identity)?.ok_or("当前固件没有明确支持暂停；未停止重开。")?;
         journal.matches(&peer,host_session,&device.device_id())?;
+        let actual_peer=crate::backend::recording_wire::transport::Peer::from_status(&identity)?.ok_or("逻辑录音能力缺失。")?;
+        device.verified_uid=Some(hex_lower(&actual_peer.uid));device.recording_peer=Some(actual_peer.clone());device.user_connection=true;
+        device.observed_identity=Some(parse_device_identity(Some(&identity),None,None));
+        if journal.sealed_catalogue_end.is_some() {
+            if !matches!(command,0|2|3) {return Err("原录音已封口，不能再暂停/继续或重开。".into());}
+            store.commit_bound(journal.clone())?;
+            if let Some(anchor)=journal.anchor {offline_connection_lock()?.forget(&device.device_id(),start_request,anchor);}
+            return Ok((sealed_end_report(&device,&journal)?,journal.clone()));
+        }
         let wire=bounded_ble_result("read original CMC3 recorder",StdDuration::from_secs(8),device.peripheral.read(&status)).await?;
         let mut observed=if wire.len()==80 {Some(fields(&wire)?)} else {
             // A new START switches CMS2 to CMS3. Before the switch require a
@@ -96,7 +114,31 @@ pub(super) async fn execute_owned(
             None
         };
         if let Some((s,anchor,duration,_))=observed.as_ref() {
-            if journal.observe(s,*anchor,*duration)?==Observation::Confirmed {store.commit_bound(journal.clone())?;}
+            match journal.observe(s,*anchor,*duration) {
+                Ok(Observation::Confirmed)=>store.commit_bound(journal.clone())?,
+                Ok(_)=>{},
+                Err(original_error) if command==0 && s.last_error==0 && matches!(s.state,0|2) => {
+                    // The recorder only exposes the latest live CMS3. An old
+                    // original may still have a complete immutable catalogue.
+                    // Require one stable status around that protected snapshot;
+                    // never infer completion merely because another ID is idle.
+                    let catalog=read_recording_catalog(&device,&chars).await?;
+                    let catalog_peer=catalog.peer.as_ref().ok_or("原目录协议缺失。")?;
+                    if (catalog_peer.uid,catalog_peer.epoch)!=peer.identity() {return Err(original_error);}
+                    let key=journal.key.as_ref().map(SessionKey::from_public).transpose()?.ok_or(original_error.clone())?;
+                    let originals:Vec<_>=catalog.entries.iter().filter_map(|e|e.segment.as_ref())
+                        .filter(|d|d.key==key).cloned().collect();
+                    let after=bounded_ble_result("recheck sealed original catalogue status",StdDuration::from_secs(8),device.peripheral.read(&status)).await?;
+                    let _=fields(&after)?;
+                    if after!=wire {return Err("设备录音状态在目录读取期间变化；原会话保留，未声明结束。".into());}
+                    journal.end_from_sealed_catalogue(&originals)?;
+                    store.commit_bound(journal.clone())?;
+                    if let Some(anchor)=journal.anchor {offline_connection_lock()?.forget(&device.device_id(),start_request,anchor);}
+                    eprintln!("recorder_control archived_catalogue_end=1 host_session={host_session} original_anchor={} command_writes=0 stop_ack_fabricated=0",journal.anchor.unwrap_or(0));
+                    return Ok((sealed_end_report(&device,&journal)?,journal.clone()));
+                },
+                Err(error)=>return Err(error),
+            }
         }
         if journal.confirmed.is_none() && journal.pending.as_ref().is_some_and(|p|p.command==1) {
             if let Some(capacity)=crate::backend::recording_capacity::parse(&identity) {

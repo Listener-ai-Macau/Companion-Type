@@ -769,7 +769,9 @@ fn run_recorder_control_cli(args: &[String]) -> Option<Result<(), String>> {
         // durably confirmed a command before receipt/another step failed.
         let snapshot = coordinator.snapshot()?;
         let row = snapshot.host.sessions.iter().find(|row| row.id == host).ok_or("控制后原录音行缺失。")?;
-        let payload = serde_json::json!({"result": if result.is_ok() {"ORIGINAL_CONTROL_CONFIRMED"} else {"ORIGINAL_CONTROL_FAILED_OR_UNCONFIRMED"},
+        let catalogue_ended=row.recorder_control.as_ref().is_some_and(|j|j.sealed_catalogue_end.is_some());
+        let payload = serde_json::json!({"result": if result.is_ok() && catalogue_ended {"ORIGINAL_SEALED_RECORDING_RECOVERED_FROM_CATALOGUE"}
+            else if result.is_ok() {"ORIGINAL_CONTROL_CONFIRMED"} else {"ORIGINAL_CONTROL_FAILED_OR_UNCONFIRMED"},
             "sessionId": host, "error": result.as_ref().err(), "meetingStatus": snapshot.meeting.status,
             "connected": snapshot.device.connected, "recording": snapshot.device.recording,
             "session": row, "lastControl": snapshot.last_control});

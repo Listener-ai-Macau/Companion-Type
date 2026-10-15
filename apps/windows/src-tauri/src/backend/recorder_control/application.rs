@@ -17,8 +17,25 @@ impl Journal {
                 || old.confirmed.as_ref().is_some_and(|c|self.confirmed.as_ref().is_none_or(|next|next.sequence<c.sequence)) {
                 return Err(failure("拒绝用另一命令或旧确认覆盖原录音"));
             }
+            if old.sealed_catalogue_end.is_some() && old.sealed_catalogue_end!=self.sealed_catalogue_end {
+                return Err(failure("拒绝撤回或替换原封口目录证据"));
+            }
         }
+        self.validate_sealed_end()?;
         row.recorder_control=Some(self.clone());
+        if let Some(end)=self.sealed_catalogue_end.as_ref() {
+            row.device_recording_id=self.anchor;row.device_recording_key=self.key.clone();
+            row.recorder_control_uncertain=false;
+            if !row.audio_stored {row.duration_ms=u64::from(end.duration_ms);row.status="captured".into();}
+            else if row.status=="recording" {row.status="captured".into();}
+            // A sealed original proves capture ended, not why or exactly when.
+            // Preserve the warning and keep automatic cloud work paused after
+            // receiving; source audio is still verified independently.
+            row.capture_incomplete=true;
+            row.pending_reason=(!row.audio_stored).then(||"needs_device_sync".into());
+            if row.audio_stored {super::super::interrupted_capture::hold(row);}
+            return Ok(());
+        }
         row.recorder_control_uncertain=self.pending.is_some();
         if let Some(c)=self.confirmed.as_ref() {
             row.device_recording_id=self.anchor;row.device_recording_key=self.key.clone();
@@ -85,9 +102,10 @@ pub(crate) fn restore_snapshot(snapshot:&mut CompanionV1Snapshot,host:&str)->Res
         .map_err(|e|format!("读取原录音库：{e}"))?;
     let row=rows.into_iter().find(|row|row.id==host).ok_or("原录音行缺失，未创建替代录音。")?;
     let j=row.recorder_control.as_ref().ok_or("原录音控制缺失。")?;
-    let ended=j.pending.is_none() && j.confirmed.as_ref().is_some_and(|c|c.state==2);
-    let state=if j.pending.is_some() || row.recorder_control_uncertain {"controlPending"}
-        else if ended {"captured"} else if j.confirmed.as_ref().is_some_and(|c|c.state==3) {"paused"} else {"recording"};
+    j.validate_sealed_end()?;
+    let ended=j.ended();
+    let state=if ended {"captured"} else if j.pending.is_some() || row.recorder_control_uncertain {"controlPending"}
+        else if j.confirmed.as_ref().is_some_and(|c|c.state==3) {"paused"} else {"recording"};
     snapshot.meeting.active=!ended;snapshot.meeting.status=state.into();
     snapshot.meeting.duration_ms=row.duration_ms;snapshot.meeting.started_at=row.started_at.clone();
     snapshot.device.recording=state=="recording";
@@ -166,8 +184,8 @@ pub(crate) fn apply(snapshot:&mut CompanionV1Snapshot,request:&CompanionV1Contro
     if let Some(operation)=operation {
         if !operation.ready && !operation.sync_paused {return Err(format!("设备已结束录音，原会议已保存；收取尚未完成：{}",operation.message));}
     }
-    let message=match report.state {1=>"设备已确认录音中。",3=>"设备已暂停，继续后仍是同一场录音。",
-        2=>"设备已结束录音，原音按同一场会议收取。",_=>"设备控制结果已核对。"};
+    let message=if _journal.sealed_catalogue_end.is_some() {"原录音的封口目录已核对，原音按同一场恢复；结束原因未确认，没有重开或伪造停止确认。"} else {match report.state {1=>"设备已确认录音中。",3=>"设备已暂停，继续后仍是同一场录音。",
+        2=>"设备已结束录音，原音按同一场会议收取。",_=>"设备控制结果已核对。"}};
     snapshot.last_control=Some(CompanionV1ControlEcho{action:request.action,
         characteristic_uuid:COMPANION_V1_GATT_BOUNDARY.meeting_control_uuid,
         payload_hex:String::new(),accepted:true,message:message.into()});

@@ -33,11 +33,12 @@ fn retain_store(state:&Path,host:&str,row:Option<&CompanionV1HostSession>)->Resu
     }
     let store=Store::open(state,host)?;
     let j=store.journal.as_ref().ok_or("原录音控制记录在核对期间改变，未清除")?;
-    if j.pending.is_some() || !j.confirmed.as_ref().is_some_and(|c|matches!(c.state,1|2|3))
+    j.validate_sealed_end()?;
+    if (!j.ended() && j.pending.is_some()) || !j.confirmed.as_ref().is_some_and(|c|matches!(c.state,1|2|3))
         || j.key.is_none() || !j.anchor.is_some_and(|id|id>0) {
         return Err("原录音命令尚未核对为结束，未清除恢复记录；请先核对原录音。".into());
     }
-    let ended=j.confirmed.as_ref().is_some_and(|c|c.state==2);
+    let ended=j.ended();
     if let Some(row)=row {
         if row.status=="recording" || row.recorder_control_uncertain {
             return Err("原录音仍在进行或待核对，未删除恢复记录。".into());

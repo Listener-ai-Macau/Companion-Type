@@ -473,8 +473,14 @@ mod tests {
         assert!(!row().device_reclaimed, "complete metadata is insufficient without durable payload and physical ACK");
         r.accept_segment(&ds[1].encode().unwrap(), &payload).unwrap();
         r.assemble().unwrap();
+        session_store::update_checked(&index, |rows| {
+            rows[0].capture_incomplete=true;Ok(())
+        }).unwrap();
         r.publish(&index, DEVICE).unwrap();
         assert!(row().audio_stored);
+        assert!(row().capture_incomplete, "complete received payload cannot erase an earlier interruption warning");
+        assert_eq!(row().recovery.stage,"paused");
+        assert_eq!(row().pending_reason.as_deref(),Some("capture_interrupted"));
         assert!(!row().device_reclaimed, "complete local audio still needs the last physical receipt");
         for ack in r.ack_candidates(&index).unwrap() { r.confirm_acked(&ack).unwrap(); }
         r.publish(&index, DEVICE).unwrap();

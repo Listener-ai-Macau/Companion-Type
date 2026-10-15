@@ -367,7 +367,7 @@ impl GroupPlan {
         segment_limit.is_none() && self.metadata_complete
     }
 }
-fn plan_group(items: &[Descriptor], verified: &BTreeSet<u32>) -> Result<GroupPlan, String> {
+pub(crate) fn plan_group(items: &[Descriptor], verified: &BTreeSet<u32>) -> Result<GroupPlan, String> {
     let first = items.first().ok_or_else(|| fail("empty session group"))?;
     let mut segments = BTreeMap::<u32, &Descriptor>::new();
     let mut ids = BTreeMap::new();

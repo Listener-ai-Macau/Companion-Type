@@ -55,6 +55,52 @@ fn start()->Journal {
 fn running()->Journal {
     let mut j=start();let (s,id,ms)=c_status(0);assert_eq!(j.observe(&s,id,ms).unwrap(),Observation::Confirmed);j
 }
+
+fn sealed_catalogue(j:&Journal)->Vec<crate::backend::recording_wire::Descriptor> {
+    use crate::backend::recording_wire::{Descriptor,SessionKey};
+    let key=SessionKey::from_public(j.key.as_ref().unwrap()).unwrap();
+    (0..2).map(|i|Descriptor{key:key.clone(),recording_id:j.anchor.unwrap()+i,
+        segment_index:i,sample_offset:u64::from(i)*64000,sample_count:64000,
+        encoded_length:2012,content_crc32:42,sha256:[42;32],total_segments:if i==1 {2}else{0},
+        flags:if i==1 {7}else{1},codec:3,source_mode:1,sync_state:0}).collect()
+}
+
+#[test]
+fn archived_original_end_keeps_actual_intent_and_persists_without_a_stop_ack_or_new_start() {
+    let root=Temp::new();let path=root.0.join("sessions.json");let mut j=running();
+    j.prepare(&peer(),4).unwrap();let confirmed=j.confirmed.clone();let pending=j.pending.clone();
+    let mut row=original_row(&j);row.audio_stored=false;
+    super::super::session_store::save(&path,&[row]).unwrap();
+    j.end_from_sealed_catalogue(&sealed_catalogue(&j)).unwrap();j.matches(&peer(),HOST,DEVICE).unwrap();
+    assert!(j.ended());assert_eq!(j.confirmed,confirmed);assert_eq!(j.pending,pending);
+    assert!(j.prepare(&peer(),1).is_err());assert!(j.prepare(&peer(),2).is_err());
+    let mut store=Store::open(&path,HOST).unwrap();store.commit_bound(j.clone()).unwrap();drop(store);
+    let loaded=super::super::persistence::load_sessions_from(&path).unwrap();let row=&loaded[0];
+    assert_eq!(row.id,HOST);assert_eq!(row.status,"captured");assert_eq!(row.duration_ms,8000);
+    assert!(row.capture_incomplete);assert!(!row.audio_stored);assert!(!row.device_reclaimed);
+    assert!(!row.recorder_control_uncertain);assert!(row.stopped_at.is_none());
+    assert_eq!(row.pending_reason.as_deref(),Some("needs_device_sync"));
+    assert_eq!(row.recorder_control.as_ref(),Some(&j));
+    assert_eq!(Store::open(&path,HOST).unwrap().journal,Some(j));
+}
+
+#[test]
+fn archived_original_rejects_wrong_scope_missing_terminal_holes_and_corruption_without_mutation() {
+    for variant in 0..10 {
+        let mut j=running();let before=j.clone();let mut items=sealed_catalogue(&j);
+        match variant {
+            0=>items[0].key.device_uid[0]^=1,1=>items[0].key.format_epoch+=1,
+            2=>items[0].key.session_id+=1,3=>items[0].recording_id+=10,
+            4=>{items[1].flags=1;items[1].total_segments=0;},
+            5=>{items.remove(0);},6=>items[1].sample_offset+=320,
+            7=>items[1].sha256=[0;32],8=>items[1].source_mode=2,_=>items[1].encoded_length=1,
+        }
+        assert!(j.end_from_sealed_catalogue(&items).is_err(),"variant {variant}");assert_eq!(j,before);
+    }
+    let mut j=running();j.end_from_sealed_catalogue(&sealed_catalogue(&j)).unwrap();
+    let mut json=serde_json::to_value(&j).unwrap();json["sealedCatalogueEnd"]["anchor"]=123.into();
+    let bad:Journal=serde_json::from_value(json).unwrap();assert!(bad.matches(&peer(),HOST,DEVICE).is_err());
+}
 struct Temp(PathBuf);
 impl Temp {fn new()->Self {let p=std::env::temp_dir().join(format!("companion-recorder-journal-{}",uuid::Uuid::new_v4()));fs::create_dir(&p).unwrap();Self(p)}}
 impl Drop for Temp {fn drop(&mut self){let _=fs::remove_dir_all(&self.0);}}

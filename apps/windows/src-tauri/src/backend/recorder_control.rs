@@ -44,6 +44,10 @@ pub struct Journal {
     pub(crate) anchor: Option<u32>,
     pub(crate) confirmed: Option<Confirmed>,
     pub(crate) pending: Option<Command>,
+    /// A later protected, complete sealed catalogue can prove an old capture
+    /// ended after its live CMS3 identity was replaced. This is NOT a STOP ACK.
+    #[serde(default, skip_serializing_if="Option::is_none")]
+    pub(crate) sealed_catalogue_end: Option<SealedCatalogueEnd>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -77,7 +81,7 @@ impl Journal {
         let wire=peer.request(None,1,request,request,max_seconds,0,true)?.to_vec();
         Ok(Self{schema:1,host_session:host_session.into(),device_id:device_id.into(),uid,epoch,
             start_request:request,max_seconds,key:None,anchor:None,confirmed:None,
-            pending:Some(Command{command:1,request,sequence:0,wire})})
+            pending:Some(Command{command:1,request,sequence:0,wire}),sealed_catalogue_end:None})
     }
 
     pub(crate) fn matches(&self, peer: &PausePeer, host: &str, device: &str) -> Result<(),String> {
@@ -108,6 +112,7 @@ impl Journal {
                 if pending.command==1 {self.max_seconds}else{0},pending.sequence,pending.command==1)?;
             if pending.wire!=expected {return Err(failure("待发字节与耐久会话／序号不一致"));}
         }
+        self.validate_sealed_end()?;
         Ok(())
     }
 
@@ -115,6 +120,7 @@ impl Journal {
     /// not turn a lost PAUSE response into a fresh RESUME or a new recording.
     pub(crate) fn prepare(&mut self, peer: &PausePeer, command: u8) -> Result<bool,String> {
         self.matches(peer,&self.host_session,&self.device_id)?;
+        if self.sealed_catalogue_end.is_some() {return Err(failure("原录音已由封口目录确认结束，未重发旧控制或重开"));}
         if let Some(pending)=self.pending.as_ref() {
             if pending.command!=command {return Err(failure("请先核对上一次控制结果，再发送下一项操作"));}
             return Ok(true);
@@ -143,6 +149,7 @@ impl Journal {
 
     pub(crate) fn observe(&mut self, status: &PauseStatus, anchor: u32, duration: u32)
         -> Result<Observation,String> {
+        if self.sealed_catalogue_end.is_some() {return Err(failure("原录音已封口，不能用后来的实时控制替换目录证据"));}
         if (status.device_uid,status.format_epoch)!=(self.uid,self.epoch) {
             return Err(failure("控制确认的芯片或格式代次不同"));
         }
@@ -264,6 +271,8 @@ impl Store {
 
 mod application;
 pub(crate) use application::apply;
+mod catalogue;
+pub(crate) use catalogue::SealedCatalogueEnd;
 mod retirement;
 pub(crate) use retirement::prepare_privacy_retirement;
 
