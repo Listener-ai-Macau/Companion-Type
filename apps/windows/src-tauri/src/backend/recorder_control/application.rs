@@ -81,6 +81,10 @@ pub(crate) fn reserve_start(snapshot:&mut CompanionV1Snapshot,request:&Companion
         let mut row=crate::companion_v1::create_host_session(snapshot,&request,"");
         row.source="boardDevice".into();row.started_at=None;row.stopped_at=None;
         row.audio_path=None;row.audio_bytes=0;row.duration_ms=0;row.audio_stored=false;row.chunks.clear();
+        if request.prompt_id.as_deref()==Some(super::super::pet_chat::CAPTURE_PROMPT)
+            && host.starts_with("pet-chat-") {
+            row.recovery.intent=super::super::pet_chat::CAPTURE_INTENT.into();
+        }
         journal.checkpoint_row(&mut row)?;snapshot.host.sessions.insert(0,row);journal
     };
     snapshot.host.active_session_id=Some(host.into());snapshot.host.selected_session_id=Some(host.into());

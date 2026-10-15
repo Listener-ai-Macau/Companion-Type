@@ -138,6 +138,23 @@ impl CompanionCoordinator {
         self.begin_device_operation_kind(2)
     }
 
+    /// Pet capture already owns the recorder lease across START, the short
+    /// utterance and durable STOP/receive. Re-enter the same product backend
+    /// without trying to acquire a second, conflicting device-control lease.
+    pub(crate) fn apply_pet_capture_control(&self, lease: &CompanionDeviceOperationLease,
+        request: CompanionV1ControlRequest) -> Result<CompanionV1Snapshot,String> {
+        use crate::companion_v1::CompanionV1ControlAction as Action;
+        if lease.kind != 2 || !Arc::ptr_eq(&lease.gate,&self.device_operation)
+            || self.device_operation.load(Ordering::Acquire) != 2
+            || !matches!(request.action,Action::MeetingStart|Action::MeetingStop)
+            || request.prompt_id.as_deref()!=Some(crate::backend::pet_chat::CAPTURE_PROMPT)
+            || request.session_id.as_deref().is_none_or(|id| !id.starts_with("pet-chat-"))
+            || request.audio_path.is_some() || request.audio_bytes.is_some() {
+            return Err("宠物聊天没有取得原录音操作，未发送控制。".into());
+        }
+        self.backend.apply_control(request)
+    }
+
     pub fn pull_device_diagnostics(&self) -> Result<crate::backend::diagnostics::DeviceLogPage, String> {
         let _operation = self.begin_device_operation_kind(5)?;
         let snapshot = self.backend.snapshot()?;

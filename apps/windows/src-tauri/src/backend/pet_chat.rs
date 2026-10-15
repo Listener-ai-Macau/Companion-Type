@@ -8,6 +8,8 @@ use crate::{coordinator::CompanionCoordinator,companion_v1::CompanionV1Snapshot}
 
 pub(crate) const RECORD_PHRASE:&str="开始录音";
 pub(crate) const CHAT_PHRASE:&str="聊聊天";
+pub(crate) const CAPTURE_PROMPT:&str="__companion_pet_chat__";
+pub(crate) const CAPTURE_INTENT:&str="petChat";
 #[derive(Clone,Default,Serialize)]
 #[serde(rename_all="camelCase")]
 pub(crate) struct Status {
@@ -96,37 +98,67 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
         return Err("请先配置现有聊天服务，再轻点开聊。".into());
     }
     cancelled(job)?;
-    // The established board path verifies and durably saves the sealed source
-    // before reclaiming it. No partial ASR/network work is run during capture.
-    let consumer:super::BoardPartialConsumer=Arc::new(|_|Ok(String::new()));
-    let observer_job=job.clone();
-    let observer:super::BoardRecordingObserver=Arc::new(move|_,id,_,_|{
-        with(|s|{if s.job.as_ref().is_some_and(|j|j.id==observer_job.id) &&
-            !observer_job.cancel.load(Ordering::Acquire) {
-            s.status.phase="listening".into();s.status.recording_id=Some(id);
-        }})
-    });
-    let report=super::record_board_online_live_controlled(Some(&job.device),12,60_000,None,consumer,
-        job.stop.clone(),Some(observer),None,None)?;
+    // The legacy10-byte RECORDING_CONTROL START is deliberately disabled on
+    // the current segmented WBA. Use its existing durable CMC3 recorder path,
+    // including exact original-session STOP, receive, validation and consume.
+    use crate::companion_v1::{CompanionV1ControlAction as Action,CompanionV1ControlRequest};
+    let session_id=format!("pet-chat-{}-{}",job.id,uuid::Uuid::new_v4());
+    let request=|action|CompanionV1ControlRequest{action,ble_name:None,session_id:Some(session_id.clone()),
+        prompt_id:Some(CAPTURE_PROMPT.into()),title:Some("宠物聊天".into()),transcript_text:None,
+        meeting_mode:Some("offlineStore".into()),audio_path:None,audio_bytes:None,
+        device_id:Some(job.device.clone()),
+        // Normal capture stops at12s.30s is the existing device safety ceiling
+        // if this host disappears; allocation/activation cannot create a long
+        // meeting or a second, unowned recording on a retry.
+        duration_ms:(action==Action::MeetingStart).then_some(30_000)};
+    let started=coordinator.apply_pet_capture_control(&lease,request(Action::MeetingStart))?;
+    let original=started.host.sessions.iter().find(|s|s.id==session_id)
+        .ok_or("没有取得这句聊天的原录音身份；请核对当前录音。")?;
+    let anchor=original.device_recording_id;let key=original.device_recording_key.clone();
+    if original.source!="boardDevice" || anchor.is_none() || key.is_none()
+        || original.recorder_control.as_ref().is_none_or(|j|j.pending.is_some()
+            || j.confirmed.as_ref().is_none_or(|c|c.state!=1)) {
+        let _=coordinator.apply_pet_capture_control(&lease,request(Action::MeetingStop));
+        return Err("这句聊天的开始尚未确认，原请求保留，未发起另一句。".into());
+    }
+    let status_result=with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id)
+        && !job.cancel.load(Ordering::Acquire) {
+        s.status.phase="listening".into();s.status.recording_id=anchor;
+    }});
+    let until=Instant::now()+Duration::from_secs(12);
+    while status_result.is_ok() && !job.stop.load(Ordering::Acquire) && Instant::now()<until {
+        std::thread::sleep(Duration::from_millis(25));
+    }
+    // Even cancellation/status failure must stop this exact source and save
+    // it; provider work happens only after the owned recording lease is gone.
+    let stopped=coordinator.apply_pet_capture_control(&lease,request(Action::MeetingStop))?;
     drop(lease); // ASR/LLM cannot monopolize the device while waiting on network.
-    if report.capture_incomplete || report.sync_paused || report.final_recording_path.is_empty() ||
-       !super::device_connection::same_device_id(&report.device_id,&job.device) {
+    status_result?;
+    let source=stopped.host.sessions.iter().find(|s|s.id==session_id)
+        .filter(|s|s.source=="boardDevice" && s.device_recording_id==anchor && s.device_recording_key==key
+            && s.source_device_id.as_deref().is_some_and(|d|super::device_connection::same_device_id(d,&job.device))
+            && s.audio_stored && !s.capture_incomplete && s.status!="recording")
+        .ok_or("这句录音尚未完整保存，未送去聊天。")?;
+    super::recording_wire::receiver::Receiver::verify_saved_row(source)?;
+    let audio=source.audio_path.as_deref().filter(|p|!p.is_empty())
+        .ok_or("这句录音尚未完整保存，未送去聊天。")?;
+    if stopped.device.recording || stopped.meeting.active {
         return Err("这句录音尚未完整保存，未送去聊天。".into());
     }
     with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id){
-        s.status.audio_path=Some(report.final_recording_path.clone());s.status.recording_id=Some(report.recording_id);
+        s.status.audio_path=Some(audio.to_string());s.status.recording_id=anchor;
     }})?;
     // Persist provenance before any provider call; never replace failed board
     // capture with a host microphone/file fixture or an unrelated old session.
     let root=super::product_settings::settings_path().parent().ok_or("聊天保存目录不可用")?.join("pet-chat");
     std::fs::create_dir_all(&root).map_err(|_|"聊天录音已保存，但来源记录尚未保存")?;
-    let receipt=json!({"requestId":job.id,"deviceId":report.device_id,"recordingId":report.recording_id,
-        "audioPath":report.final_recording_path,"encodedSha256":report.final_sha256,
-        "encodedBytes":report.final_total_length,"source":"boardDevice"});
+    let receipt=json!({"requestId":job.id,"deviceId":job.device,"recordingId":anchor,
+        "sessionId":session_id,"logicalKey":key,"audioPath":audio,"source":"boardDevice",
+        "sourceLibraryRow":source,"provenance":"verified CMC3 original and CRV2 durable receiver"});
     super::export::write_atomic(&root.join(format!("{}-{}.json",job.id,uuid::Uuid::new_v4())),
         &serde_json::to_vec(&receipt).map_err(|_|"无法保存聊天来源")?)?;
     cancelled(job)?;update(job,"transcribing",None)?;
-    let transcript=super::CompanionTranscriptionManager::new().transcribe_pet_audio(Path::new(&report.final_recording_path))?;
+    let transcript=super::CompanionTranscriptionManager::new().transcribe_pet_audio(Path::new(audio))?;
     // This routes an explicit chat utterance, not ambient/acoustic wake evidence.
     // "开始录音" stays reserved and is never interpreted as a chat question.
     let text=transcript.trim().strip_prefix(CHAT_PHRASE).unwrap_or(transcript.trim())

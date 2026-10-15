@@ -115,6 +115,10 @@ fn unix_time_ms() -> u64 {
 }
 
 fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
+    // This explicit short capture belongs to the pet reply worker. Its raw
+    // audio keeps the normal durable library/consume contract, without an
+    // additional automatic meeting ASR/minutes job after STOP or restart.
+    if session.recovery.intent == pet_chat::CAPTURE_INTENT { return; }
     if session.recovery.intent != "processMeeting" {
         session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
     }
