@@ -22,7 +22,7 @@ use windows::{
         BluetoothCacheMode, BluetoothConnectionStatus, BluetoothLEDevice,
         GenericAttributeProfile::{
             GattCharacteristic, GattCommunicationStatus, GattDescriptor, GattDeviceService,
-            GattDeviceServicesResult,
+            GattDeviceServicesResult, GattOpenStatus, GattSharingMode,
         },
     },
     Devices::Enumeration::DeviceAccessStatus,
@@ -63,6 +63,39 @@ fn require_service_access(status: DeviceAccessStatus, service: Uuid) -> Result<(
     Err(Error::Other(format!(
         "required_service_access service={service} access={label} ({status:?}); no characteristics or control command requested"
     ).into()))
+}
+
+fn require_shared_service(status: GattOpenStatus, mode: Option<GattSharingMode>, service: Uuid) -> Result<()> {
+    if matches!(status, GattOpenStatus::Success|GattOpenStatus::AlreadyOpened)
+        && mode==Some(GattSharingMode::SharedReadAndWrite) { return Ok(()); }
+    let label=match status {
+        GattOpenStatus::SharingViolation=>"SharingViolation",
+        GattOpenStatus::AccessDenied=>"AccessDenied",
+        GattOpenStatus::NotFound=>"NotFound",
+        GattOpenStatus::AlreadyOpened=>"AlreadyOpenedIncompatibleMode",
+        GattOpenStatus::Success=>"OpenedIncompatibleMode",
+        GattOpenStatus::Unspecified=>"Unspecified",
+        _=>"Unknown",
+    };
+    Err(Error::Other(format!(
+        "shared_service_open service={service} status={label} ({status:?}) sharing={mode:?}; no exclusive fallback or control command"
+    ).into()))
+}
+
+async fn open_shared_service(service: &GattDeviceService) -> Result<()> {
+    let uuid=utils::to_uuid(&service.Uuid()?);
+    let previous_access=service.DeviceAccessInformation().and_then(|info|info.CurrentStatus());
+    let before=service.SharingMode();
+    let access=await_cancellable_gatt(service.RequestAccessAsync()?).await?;
+    require_service_access(access,uuid)?;
+    // Implicit GetCharacteristics opens Exclusive on this Windows backend.
+    // A previous client's live/retiring lease then blocks the next process
+    // before ATT, despite Allowed access. All our discovery paths must open
+    // shared explicitly, including the first client, not only a later retry.
+    let opened=await_cancellable_gatt(service.OpenAsync(GattSharingMode::SharedReadAndWrite)?).await?;
+    let after=service.SharingMode().ok();
+    eprintln!("BLE shared_service_open service={uuid} previous_access={previous_access:?} access={access:?} before={before:?} opened={opened:?} after={after:?}");
+    require_shared_service(opened,after,uuid)
 }
 
 impl BLEDevice {
@@ -133,32 +166,15 @@ impl BLEDevice {
     pub async fn get_characteristics(
         service: &GattDeviceService,
     ) -> Result<Vec<GattCharacteristic>> {
-        let async_result = service
-            .GetCharacteristicsWithCacheModeAsync(BluetoothCacheMode::Uncached)?
-            .into_future()
-            .await?;
-
-        match async_result.Status() {
-            Ok(GattCommunicationStatus::Success) => {
-                let results = async_result.Characteristics()?;
-                debug!("characteristics {:?}", results.Size());
-                Ok(results.into_iter().collect())
-            }
-            Ok(GattCommunicationStatus::ProtocolError) => Err(Error::Other(
-                format!(
-                    "get_characteristics for {:?} encountered a protocol error",
-                    service
-                )
-                .into(),
-            )),
-            Ok(status) => {
-                debug!("characteristic read failed due to {:?}", status);
-                Ok(vec![])
-            }
-            Err(e) => Err(Error::Other(
-                format!("get_characteristics for {:?} failed: {:?}", service, e).into(),
-            )),
-        }
+        open_shared_service(service).await?;
+        let result = await_cancellable_gatt(service
+            .GetCharacteristicsWithCacheModeAsync(BluetoothCacheMode::Uncached)?).await?;
+        let status=result.Status()?;
+        let protocol_error=if status==GattCommunicationStatus::ProtocolError {
+            result.ProtocolError().and_then(|value|value.Value()).ok()
+        } else {None};
+        require_discovery_success(status,"get_characteristics",utils::to_uuid(&service.Uuid()?),protocol_error)?;
+        Ok(result.Characteristics()?.into_iter().collect())
     }
 
     /// A bounded caller may refresh an incomplete required service on its
@@ -187,23 +203,7 @@ impl BLEDevice {
 
     pub async fn get_characteristics_strict(service: &GattDeviceService) -> Result<Vec<GattCharacteristic>> {
         let uuid = utils::to_uuid(&service.Uuid()?);
-        // Follow Microsoft's BluetoothLE client sample: an established paired
-        // device/session is not the service access grant. Respect a denial;
-        // never substitute pairing, alternate handles or a cached characteristic.
-        let previous_access = service.DeviceAccessInformation().and_then(|info| info.CurrentStatus());
-        let sharing = service.SharingMode();
-        let access = await_cancellable_gatt(service.RequestAccessAsync()?).await?;
-        eprintln!("BLE required_service_access service={uuid} previous={previous_access:?} sharing={sharing:?} requested={access:?}");
-        require_service_access(access, uuid)?;
-        let result = await_cancellable_gatt(service.GetCharacteristicsWithCacheModeAsync(
-            BluetoothCacheMode::Uncached,
-        )?).await?;
-        let status = result.Status()?;
-        let protocol_error = if status == GattCommunicationStatus::ProtocolError {
-            result.ProtocolError().and_then(|value| value.Value()).ok()
-        } else { None };
-        require_discovery_success(status, "get_characteristics_strict", uuid, protocol_error)?;
-        let characteristics: Vec<_> = result.Characteristics()?.into_iter().collect();
+        let characteristics=Self::get_characteristics(service).await?;
         if characteristics.is_empty() {
             return Err(Error::Other(format!(
                 "get_characteristics_strict service={uuid} status=Success characteristic_count=0"
@@ -308,6 +308,21 @@ mod discovery_tests {
         ] {
             let error=require_service_access(status,uuid).unwrap_err().to_string();
             assert!(error.contains(label) && error.contains("no characteristics or control command requested"));
+        }
+    }
+
+    #[test]
+    fn shared_service_open_requires_real_shared_read_write_and_respects_denial() {
+        let uuid=Uuid::from_u128(0x8f7a00087b7d4f3d9d6f6c2d1b7c0000);
+        for status in [GattOpenStatus::Success,GattOpenStatus::AlreadyOpened] {
+            assert!(require_shared_service(status,Some(GattSharingMode::SharedReadAndWrite),uuid).is_ok());
+            for mode in [None,Some(GattSharingMode::Exclusive),Some(GattSharingMode::SharedReadOnly),Some(GattSharingMode::Unspecified)] {
+                assert!(require_shared_service(status,mode,uuid).is_err());
+            }
+        }
+        for status in [GattOpenStatus::SharingViolation,GattOpenStatus::AccessDenied,GattOpenStatus::NotFound,GattOpenStatus::Unspecified,GattOpenStatus(77)] {
+            let error=require_shared_service(status,Some(GattSharingMode::SharedReadAndWrite),uuid).unwrap_err().to_string();
+            assert!(error.contains("no exclusive fallback or control command"));
         }
     }
 }
