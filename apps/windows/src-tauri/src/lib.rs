@@ -8,6 +8,7 @@ mod commands;
 mod companion_v1;
 mod coordinator;
 mod pet_chat_commands;
+mod recorder_sync_exercise;
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -896,6 +897,8 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             _ => return Err("Capture recovery requires 0 < disconnect < reconnect < recording seconds and cannot combine with limit recovery".into()),
         };
         let capture_pause = capture_pause_schedule(args,seconds,recover_after_limit||capture_recovery.is_some()||follow_original)?;
+        let sync_schedule=recorder_sync_exercise::schedule(args,seconds,
+            follow_original && !recover_after_limit && capture_recovery.is_none() && capture_pause.is_none())?;
         let coordinator = CompanionCoordinator::new_fixture();
 
         let device_id = if let Some(id)=requested_device {id} else {
@@ -963,6 +966,9 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         // a new START while capture is active; that guard is not a second step
         // in normal recording and must not abort this STOP/receive exercise.
         let capture_started=std::time::Instant::now();
+        let sync_pause=sync_schedule.map(|(pause,_)|recorder_sync_exercise::Pause::start(device_id.clone(),capture_started,pause));
+        let mut sync_pause_observed:Option<serde_json::Value>=None;
+        let mut sync_resume_observed:Option<serde_json::Value>=None;
         let capture_deadline=capture_started+std::time::Duration::from_secs(seconds + if recover_after_limit {3} else {0});
         let mut followed_during_capture=false;
         let mut sealed_segments_during_capture=0usize;
@@ -974,6 +980,44 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             let poll = if capture_pause.is_some() {std::time::Duration::from_millis(100)}
                 else {std::time::Duration::from_secs(5)};
             std::thread::sleep(capture_deadline.saturating_duration_since(std::time::Instant::now()).min(poll));
+            if let (Some((_,resume_at)),Some(exercise))=(sync_schedule,sync_pause.as_ref()) {
+                if sync_pause_observed.is_none() {
+                    if let Some(observation)=exercise.observation()? {
+                        let snapshot=coordinator.snapshot()?;
+                        let row=snapshot.host.sessions.iter().find(|r|r.id==session_id).ok_or("Sync pause lost original row")?;
+                        if row.status!="recording" || !snapshot.device.recording || row.device_recording_key!=started_logical_key
+                            || row.recorder_control.as_ref().map(|j|j.start_request)!=started_session.recorder_control.as_ref().map(|j|j.start_request)
+                            || backend::recording_sync::owned_follow_allowed(&device_id) {
+                            return Err("Sync pause did not retain the same active original".into());
+                        }
+                        sync_pause_observed=Some(serde_json::json!({"pause":observation,"chunksAtPause":row.chunks.len(),
+                            "recordingStillActive":true,"originalStartUnchanged":true,"logicalKey":row.device_recording_key}));
+                    }
+                }
+                if sync_resume_observed.is_none() && capture_started.elapsed().as_secs()>=resume_at {
+                    let paused=sync_pause_observed.as_ref().ok_or("Sync pause was not confirmed before resume")?;
+                    let before=coordinator.snapshot()?;
+                    let row=before.host.sessions.iter().find(|r|r.id==session_id).ok_or("Original row missing before resume")?;
+                    if row.chunks.len() as u64!=paused["chunksAtPause"].as_u64().ok_or("Pause chunk count missing")?
+                        || backend::recording_sync::owned_follow_allowed(&device_id) {
+                        return Err("A paused original received new segments before explicit resume".into());
+                    }
+                    let mut request=control_request(companion_v1::CompanionV1ControlAction::DeviceSyncRecordings,Some(session_id.clone()));
+                    request.device_id=Some(device_id.clone());
+                    let resumed=coordinator.apply_control(request)?;
+                    let row=resumed.host.sessions.iter().find(|r|r.id==session_id).ok_or("Resume lost original row")?;
+                    if row.status!="recording" || !resumed.device.recording || row.device_recording_key!=started_logical_key
+                        || row.device_recording_id!=Some(start_recording_id) || row.device_reclaimed
+                        || row.recorder_control.as_ref().map(|j|j.start_request)!=started_session.recorder_control.as_ref().map(|j|j.start_request)
+                        || !backend::recording_sync::owned_follow_allowed(&device_id) || row.chunks.is_empty() {
+                        return Err("Resume did not receive the same active original; no replacement START sent".into());
+                    }
+                    sync_resume_observed=Some(serde_json::json!({"elapsedMs":capture_started.elapsed().as_millis(),
+                        "chunksAfterResume":row.chunks,"recordingStillActive":true,"originalStartUnchanged":true,
+                        "logicalKey":row.device_recording_key,"wholeDeviceReclaimed":row.device_reclaimed}));
+                    eprintln!("capture_sync_pause stage=resumed_same_original elapsed_ms={} received_segments={} microphone_command=false",capture_started.elapsed().as_millis(),row.chunks.len());
+                }
+            }
             if let Some((pause_at,resume_at))=capture_pause {
                 let requested = if pause_confirmed.is_none() && capture_started.elapsed().as_secs()>=pause_at {
                     Some((companion_v1::CompanionV1ControlAction::MeetingPause,4u8,3u8))
@@ -1134,6 +1178,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
                 || (capture_disconnect_requested && capture_reconnect_original_confirmed),
             "originalLiveSegmentsReceived": !follow_original || followed_during_capture,
             "originalPauseResumeConfirmed": capture_pause.is_none() || (pause_confirmed.is_some() && resume_confirmed.is_some()),
+            "syncPauseAndResumeSameRecording": sync_schedule.is_none() || (sync_pause_observed.is_some() && sync_resume_observed.is_some()),
         });
         let pass = checks.as_object().is_some_and(|checks| {
             checks
@@ -1143,6 +1188,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         let payload = serde_json::json!({
             "schema": "companion.real-recording-control.v2",
             "sealedSegmentsReceivedDuringCapture": sealed_segments_during_capture,
+            "syncPause":sync_pause_observed,"syncResume":sync_resume_observed,
             "result": if pass { "PASS_RECORDING_CONTROL_AND_RECEIVE_STAGE_ONLY" } else { "FAIL_RECORDING_CONTROL_AND_RECEIVE_STAGE" },
             "scope": if recover_after_limit { "original_ended_recording_reconnect_and_durable_receive_only" }
                 else { "recording_control_and_durable_receive_only" },

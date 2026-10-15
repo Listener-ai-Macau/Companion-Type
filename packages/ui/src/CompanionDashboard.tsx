@@ -314,6 +314,10 @@ export function CompanionDashboard({
     && (!device?.deviceId || device.deviceId.replace(/[:-]/g, '').toLowerCase()
       === activeRecorders[0].sourceDeviceId.replace(/[:-]/g, '').toLowerCase())
     ? activeRecorders[0] : null;
+  const pausedSyncRecorder = originalSyncRecorder && recordingSync?.deviceId
+    && recordingSync.deviceId.replace(/[:-]/g, '').toLowerCase()
+      === originalSyncRecorder.sourceDeviceId!.replace(/[:-]/g, '').toLowerCase()
+    ? originalSyncRecorder : null;
   const privacy = snapshot?.privacy;
   const recordingLibrary = snapshot?.host.sessions ?? [];
   const readableLibrary = useMemo(
@@ -850,8 +854,9 @@ export function CompanionDashboard({
       </section> : null}
 
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
-        resumeBlocked={controlsBusy || oobeBlockedByRecording} onPause={onPauseSync}
-        onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle })} />
+        resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync}
+        onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle,
+          ...(pausedSyncRecorder ? { sessionId: pausedSyncRecorder.id } : {}) })} />
 
       {!boardLiveActive ? <CompanionRecorderControl session={controlledRecorder} busy={controlsBusy} onControl={onControl} /> : null}
 
