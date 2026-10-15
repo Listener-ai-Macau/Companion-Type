@@ -15,7 +15,7 @@ pub(crate) const CAPTURE_INTENT:&str="petChat";
 pub(crate) struct Status {
     pub request_id:u32,pub phase:String,pub transcript:String,pub reply:String,
     pub error:Option<String>,pub audio_path:Option<String>,pub device_id:Option<String>,
-    pub recording_id:Option<u32>,pub screen_visible:bool,
+    pub recording_id:Option<u32>,pub screen_visible:bool,pub can_start:bool,
     pub wake_supported:bool,pub record_phrase:String,pub chat_phrase:String,
 }
 struct Job {id:u32,device:String,stop:Arc<AtomicBool>,cancel:AtomicBool,running:AtomicBool}
@@ -27,6 +27,7 @@ fn with<T>(f:impl FnOnce(&mut Store)->T)->Result<T,String> {
 }
 pub(crate) fn status()->Result<Status,String> {with(|s|{
     let mut value=s.status.clone();if value.phase.is_empty(){value.phase="idle".into();}
+    value.can_start=s.job.is_none();
     value.record_phrase=RECORD_PHRASE.into();value.chat_phrase=CHAT_PHRASE.into();value
 })}
 pub(crate) fn clear()->Result<Status,String> {
@@ -83,6 +84,7 @@ pub(crate) fn finish(request_id:u32,cancel:bool)->Result<Status,String> {
         if cancel {
             let capture_finished=matches!(s.status.phase.as_str(),"transcribing"|"thinking"|"replyReady"|"displayFailed");
             job.cancel.store(true,Ordering::Release);s.status.phase="cancelled".into();
+            s.status.reply.clear();s.status.screen_visible=false;s.status.error=None;
             if capture_finished || !job.running.load(Ordering::Acquire){s.job=None;}
         }
         Ok(())
@@ -165,10 +167,8 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     let transcript=super::CompanionTranscriptionManager::new().transcribe_pet_audio(Path::new(audio))?;
     // This routes an explicit chat utterance, not ambient/acoustic wake evidence.
     // "开始录音" stays reserved and is never interpreted as a chat question.
-    let text=transcript.trim().strip_prefix(CHAT_PHRASE).unwrap_or(transcript.trim())
-        .trim_start_matches(|c:char|c.is_whitespace()||"，,。.!！:：".contains(c)).to_string();
+    let text=question(&transcript);
     if text.starts_with(RECORD_PHRASE){return Err("“开始录音”用于录音；和我聊天请说“聊聊天”。".into());}
-    let text=if text.is_empty(){"向我打个简短招呼。".to_string()}else{text};
     cancelled(job)?;
     let context=with(|s|->Result<Vec<Value>,String>{
         if !s.job.as_ref().is_some_and(|j|j.id==job.id) || job.cancel.load(Ordering::Acquire) {
@@ -181,11 +181,15 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     })??;
     let reply=reply(&text,context)?;cancelled(job)?;
     with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id) && !job.cancel.load(Ordering::Acquire){
-        s.history.push(json!({"role":"user","content":text}));
-        s.history.push(json!({"role":"assistant","content":reply}));
-        if s.history.len()>6{s.history.drain(..s.history.len()-6);}
-        s.last_turn=Some(Instant::now());s.status.reply=reply;s.status.phase="replyReady".into();
+        // A prepared answer may still be cancelled or refused by the screen.
+        // It becomes conversation history only after qualified visibility.
+        s.status.reply=reply;s.status.phase="replyReady".into();
     }})?;Ok(())
+}
+fn question(transcript:&str)->String {
+    let text=transcript.trim().strip_prefix(CHAT_PHRASE).unwrap_or(transcript.trim())
+        .trim_start_matches(|c:char|c.is_whitespace()||"，,。.!！:：".contains(c));
+    if text.is_empty(){"向我打个简短招呼。".to_string()}else{text.to_string()}
 }
 fn reply(text:&str,mut context:Vec<Value>)->Result<String,String> {
     let key=std::env::var("DEEPSEEK_API_KEY").ok().filter(|s|!s.trim().is_empty())
@@ -227,7 +231,22 @@ pub(crate) fn display(coordinator:&CompanionCoordinator,request:u32,pixels:Vec<u
         super::ble_bridge::pet_caption::show(&job.device,job.id,&pixels,&job.cancel)
     })();
     with(|s|{if s.job.as_ref().is_some_and(|j|j.id==request){
-        if let Err(error)=result {s.status.phase="displayFailed".into();s.status.error=Some(error);}
-        else{s.status.phase="replied".into();s.status.screen_visible=true;s.status.error=None;s.job=None;}
+        // Cancellation can arrive while the final display/cleanup is pending.
+        // Never resurrect its reply or history from a late completion.
+        if job.cancel.load(Ordering::Acquire) {
+            s.status.phase="cancelled".into();s.status.reply.clear();
+            s.status.screen_visible=false;s.status.error=None;s.job=None;
+        } else if let Err(error)=result {s.status.phase="displayFailed".into();s.status.error=Some(error);}
+        else{
+            if s.history_device!=job.device || s.last_turn.is_none_or(|t|t.elapsed()>Duration::from_secs(600)) {
+                s.history.clear();s.history_device=job.device.clone();
+            }
+            let text=question(&s.status.transcript);let reply=s.status.reply.clone();
+            s.history.push(json!({"role":"user","content":text}));
+            s.history.push(json!({"role":"assistant","content":reply}));
+            if s.history.len()>6{s.history.drain(..s.history.len()-6);}
+            s.last_turn=Some(Instant::now());
+            s.status.phase="replied".into();s.status.screen_visible=true;s.status.error=None;s.job=None;
+        }
     }})?;status()
 }
