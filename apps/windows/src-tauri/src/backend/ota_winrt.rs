@@ -327,6 +327,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0",flow.window_chunks);
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::new(),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:1,system_component:None};
+    super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
+        ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
     let mut progress_bucket=usize::MAX;
     let mut report=denzic_ota_core::transfer(&mut transport,&package.file,options,|accepted,total|{
