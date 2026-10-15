@@ -1,0 +1,183 @@
+{
+  "schema": "companion.short-speaker-refinement.r23.v1",
+  "result": "INSTALLED_SHORT_VOICE_FRAGMENTS_REJOINED_LONG_ORIGINAL_UNCHANGED",
+  "createdAtLocal": "2026-10-16T04:07:04+08:00",
+  "summary": "R23正式安装：修少于12条有效声纹时同人被拆多；同一公开四人原生样本6→4、九段主说话人对应独立参考。安装版本对同一实板51号429.98秒原音本地4.24秒重算，三组/四段未知、整行数据及双纪要final原样保持。",
+  "limitations": "四人样本为公开本地诊断，不是新实板采集/完整DER；相似双人漏分及完整会议术语/事实质量仍OPEN。首次失链、OTA严格安装断电route3、2h、合格低电安全收尾/实测功耗和100KiB/s未因此通过；提速等Nordic。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "8284b0ec9726050aea0531dc03054c73f8b00e21",
+    "tag": "companion-short-speakers-r23-20261016-source",
+    "parent": "4541ad9bbc43199d9299c8db7dcf6da08f8f9f36",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T03:59:33"
+  },
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\speaker-r23\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10448896,
+    "sha256": "5484b6b7c25b2019e45aa65373b0b74744b1058a16a663426235b0d2275659fb"
+  },
+  "install": {
+    "result": "PASS_INSTALL_IDENTITY_ONLY",
+    "exeSha256": "13313f5dd60af87005c9503c0dccb0c9ecc72666cdb1397e317ff1ef9f5f3266",
+    "dllSha256": "e427132fa8bc3355b72e1c38a2b64d85513c6218c9e557dc14447f0ce571010c",
+    "payloadMatch": true
+  },
+  "actual": {
+    "schema": "companion.short-speaker-r23.installed.v1",
+    "result": "R23_INSTALLED_SAME_LONG_ORIGINAL_AND_DOCUMENTS_UNCHANGED",
+    "startedAtLocal": "2026-10-16T04:04:51.939+08:00",
+    "newRecording": false,
+    "boardConnection": false,
+    "asrRequests": 0,
+    "cloudCalls": 0,
+    "installedModelsChanged": false,
+    "fullChainAcceptance": "NOT_QUALIFIED",
+    "installed": true,
+    "sourceCommit": "8284b0ec9726050aea0531dc03054c73f8b00e21",
+    "exeSha256": "13313f5dd60af87005c9503c0dccb0c9ecc72666cdb1397e317ff1ef9f5f3266",
+    "dllSha256": "e427132fa8bc3355b72e1c38a2b64d85513c6218c9e557dc14447f0ce571010c",
+    "localRefineMs": 4236.137099913321,
+    "sameNormalRow": true,
+    "sourceWavSha256": "fa82bda2f90918bbed79ba0089b150765bbdd38764d5a1b73d1a7ce781445ef5",
+    "speakers": 3,
+    "unknown": 4,
+    "bothMinutesRetainedFinal": true,
+    "finishedAtLocal": "2026-10-16T04:05:27.842+08:00",
+    "ownedHandlesClosed": true
+  },
+  "publicSampleEvaluation": {
+    "scope": "Independent dominant-speaker reference for the nine retained public test segments, based on official diarization intervals. Not full DER, board capture or complete meeting acceptance.",
+    "source": "Companion-Type/docs/validation/four-speakers-zh.wav",
+    "sha256": "bedf036caed208386c67b4ef4b11f83d74dd0d420b102163a1c33cd09cde7010",
+    "referenceSource": "https://k2-fsa.github.io/sherpa/onnx/speaker-diarization/models.html",
+    "beforeCount": 6,
+    "afterCount": 4,
+    "retainedSegments": 9,
+    "allDominantAssignmentsMatchOneToOne": true,
+    "knownCountGivenToProduct": false,
+    "newRecording": false,
+    "asrRequests": 0,
+    "modelsChanged": false,
+    "retainedAssignments": [
+      [
+        4500,
+        6400,
+        0
+      ],
+      [
+        8500,
+        10200,
+        1
+      ],
+      [
+        13000,
+        15800,
+        2
+      ],
+      [
+        22200,
+        24300,
+        0
+      ],
+      [
+        27700,
+        29400,
+        3
+      ],
+      [
+        30000,
+        31500,
+        3
+      ],
+      [
+        34800,
+        36300,
+        3
+      ],
+      [
+        48200,
+        49800,
+        2
+      ],
+      [
+        52600,
+        54500,
+        0
+      ]
+    ],
+    "fullDer": "NOT_QUALIFIED"
+  },
+  "diagnosis": {
+    "sameSpeakerCosines": [
+      0.613,
+      0.627,
+      0.64
+    ],
+    "fixedThreshold": 0.68,
+    "previousLimit": "NME declines below12 observations, and the prior count correction could only retain extra groups, never rejoin over-split groups.",
+    "newMethod": "Compare lower cuts of the SAME constrained average-link tree by mean cosine silhouette; reuse provider must-link/cannot-link handling. No expected people count, names or transcript reference enters clustering.",
+    "boundaries": "Only3..11 observations and baseline>=3 groups. Existing1/2 groups unchanged; candidates retain at least2 groups. Explicit threshold override and >=12 NME unchanged; invalid/zero vectors decline. Singleton silhouette0; ties keep original.",
+    "wholeTaskBoundary": "Improves this real public four-person counterexample, not complete diarization accuracy or per-speaker DER."
+  },
+  "rejected": {
+    "globalSilhouette": "Prototype selected2 for the three-person original; NOT adopted globally. Existing long NME retained.",
+    "officialSegmentation": {
+      "runtime": "Same installed sherpa1.13.1, official pyannote3.0 isolated model candidate, automatic unknown count / fixed distance0.5, no source truth provided.",
+      "currentEmbedding": [
+        {
+          "name": "four-official",
+          "speakers": 5,
+          "segments": 10,
+          "elapsedMs": 5314.249399933033
+        },
+        {
+          "name": "original51",
+          "speakers": 4,
+          "segments": 46,
+          "elapsedMs": 49196.06629991904
+        }
+      ],
+      "alternativeEmbedding": [
+        {
+          "name": "four-official",
+          "speakers": 6,
+          "segments": 10,
+          "elapsedMs": 10058.19800007157
+        },
+        {
+          "name": "original51",
+          "speakers": 4,
+          "segments": 46,
+          "elapsedMs": 111577.48420001008
+        }
+      ],
+      "conclusion": "CAM++ full segmentation predicted5/4 for true4/3; existing ERes2Net candidate predicted6/4. Neither replaces installed pipeline/model. Candidate files/license/hashes retained only in cache."
+    },
+    "anchorPrototype": "Independent numpy anchor-count experiment predicted1 on the four-person vectors for all five seeds; not NeMo exact implementation and NOT adopted."
+  },
+  "references": [
+    "https://www.sciencedirect.com/science/article/pii/0377042787901257",
+    "https://k2-fsa.github.io/sherpa/onnx/speaker-diarization/models.html",
+    "https://raw.githubusercontent.com/NVIDIA/NeMo/v2.0.0/nemo/collections/asr/parts/utils/offline_clustering.py"
+  ],
+  "inherited": "R22/P129/P128/R21 unchanged outside the two clustering files; App413/normalBoot413/UI76 retained, MCU space unchanged. P131/414 is separate screen candidate, not installed by R23.",
+  "validation": {
+    "affectedUnitTests": 9,
+    "publicNativeProbe": "Same source file9 dominant intervals now4 speakers; interpreted actual numeric results, not old weak >=2 exit status.",
+    "installedOperation": "Normal local speaker-refinement entry on exact durable original51, unchanged row/audio/words/timing/documents after operation.",
+    "noBoardConnection": true,
+    "newRecording": false,
+    "asrRequests": 0,
+    "cloudCalls": 0,
+    "installedModelsChanged": false,
+    "sourceInputs": 211,
+    "guiClickThrough": false
+  },
+  "qualityTargetsChanged": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "next": [
+    "Continue real recording/recovery/low-power and minimal OTA gaps; do not repeat unchanged old passes or tune speed before Nordic.",
+    "Retain separate automatic similar-voice/unknown/DER/critical-term failures; numerical grouping count alone does not qualify meeting quality."
+  ]
+}
