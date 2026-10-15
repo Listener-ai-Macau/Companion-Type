@@ -123,7 +123,8 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     let receipt=json!({"requestId":job.id,"deviceId":report.device_id,"recordingId":report.recording_id,
         "audioPath":report.final_recording_path,"encodedSha256":report.final_sha256,
         "encodedBytes":report.final_total_length,"source":"boardDevice"});
-    super::export::write_atomic(&root.join(format!("{}.json",job.id)),&serde_json::to_vec(&receipt).map_err(|_|"无法保存聊天来源")?)?;
+    super::export::write_atomic(&root.join(format!("{}-{}.json",job.id,uuid::Uuid::new_v4())),
+        &serde_json::to_vec(&receipt).map_err(|_|"无法保存聊天来源")?)?;
     cancelled(job)?;update(job,"transcribing",None)?;
     let transcript=super::CompanionTranscriptionManager::new().transcribe_pet_audio(Path::new(&report.final_recording_path))?;
     // This routes an explicit chat utterance, not ambient/acoustic wake evidence.

@@ -10,9 +10,13 @@ function raster(text:string):number[]{
   const canvas=document.createElement('canvas');canvas.width=200;canvas.height=13;
   const ctx=canvas.getContext('2d');if(!ctx)throw new Error('字幕绘制暂时不可用。');
   ctx.fillStyle='white';ctx.fillRect(0,0,200,13);
-  ctx.font='12px "Microsoft YaHei", sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  if(ctx.measureText(text).width>176)throw new Error('这句回复超过一行，已保留原句。');
-  ctx.fillStyle='black';ctx.fillText(text,100,6.5);
+  ctx.font='12px "Microsoft YaHei", sans-serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  const measure=ctx.measureText(text);
+  const width=measure.actualBoundingBoxLeft+measure.actualBoundingBoxRight;
+  const height=measure.actualBoundingBoxAscent+measure.actualBoundingBoxDescent;
+  if(Math.max(width,measure.width)>176||height>13)throw new Error('这句回复超过一行，已保留原句。');
+  ctx.fillStyle='black';ctx.fillText(text,(200-width)/2+measure.actualBoundingBoxLeft,
+    (13-height)/2+measure.actualBoundingBoxAscent);
   const pixels=ctx.getImageData(0,0,200,13).data;const result=new Array<number>(325).fill(255);
   for(let y=0;y<13;y++)for(let x=12;x<188;x++){
     const i=(y*200+x)*4;
