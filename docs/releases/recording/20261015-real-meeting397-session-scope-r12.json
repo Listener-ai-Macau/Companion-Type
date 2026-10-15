@@ -1,0 +1,157 @@
+{
+  "createdAtLocal": "2026-10-15T18:29:39+08:00",
+  "result": "ACTUAL_DATA_CHAIN_CONFIRMED_CONTENT_QUALITY_NOT_QUALIFIED",
+  "captureFirmware": "App397/UI75/Boot396 at 17:37-17:43; later screen installs are separate stages",
+  "firmwareSourceCommit": "0d7e4ac543296d6fb5e164dea5c337388ffa65db",
+  "captureType": "Installed R11; R12 exact saved-session processing installed afterwards",
+  "typeSourceCommit": "53fd479f112db4215648dd6d2d6d85c026eaba44",
+  "typeSourceTag": "companion-recording-exact-session-r12-20261015-source",
+  "typeInstalled": "R12",
+  "msiSha256": "472bff65e5042b0e7cf650b53332e535133ba54f7979a322c079e5861e3d49b3",
+  "installedExeSha256": "f4fa522d0859ae9d9d45fb73201d5e2223391b9d0551ef39728072310e87964a",
+  "source": "board_device",
+  "hostMic": false,
+  "seed": false,
+  "referenceProvidedToProduct": false,
+  "durationMs": 325340,
+  "normalStop": true,
+  "sealedSegments": 3,
+  "sealedSegmentsConsumedDuringCapture": 2,
+  "stopToDurableReceiveMs": 7072,
+  "nativeDisconnectRequestedAtMs": 149385,
+  "originalReconnectedAtMs": 208359,
+  "newStartOnReconnect": false,
+  "independentRadioLossQualified": false,
+  "radioScope": "Native disconnect/reconnect actions and original identity confirmed; independent HCI/offline capture not observed",
+  "audioSha256": "89ce0aa69c4a4b370d7367eef0ee27c89c2c5b11cd166b6c610985c63b4db368",
+  "stimulusSha256": "C023D49D601CDFAF64408DEA41AB1F732E43CBD5D5DAE2705345131B0D716A1A",
+  "compression": {
+    "opusFrames": 16268,
+    "encodedSamples": 5205760,
+    "decodedSamples": 5205440,
+    "decoderSampleDifference": 320,
+    "opusBytes": 650720,
+    "storedCop1Bytes": 683292,
+    "pcmDataBytes": 10410880,
+    "wavFileBytes": 10410924,
+    "pureOpusBitrateBps": 16000.0,
+    "storedCop1BitrateBps": 16800.885173346447,
+    "pcmToOpusRatio": 15.999016474059504,
+    "pcmToStoredCop1Ratio": 15.23635576005573,
+    "storedFractionOfPcm": 0.06563249216204586,
+    "containerOverheadBytes": 32572,
+    "paddingBytes": 0,
+    "eventCount": 0,
+    "ratioScope": "Actual original file bytes; no PCM-equivalent BLE speed claim"
+  },
+  "captureDiagnostics": {
+    "pcmBlocksDelta": 32536,
+    "deadlineDelta": 0,
+    "overflowDelta": 0,
+    "staleDelta": 0,
+    "rejectDelta": 0,
+    "irqErrorDelta": 0,
+    "stackMinBytes": 2872,
+    "stackGuard": 0,
+    "foregroundMaxMs": 8,
+    "encoderP95UpperMs": 6,
+    "encoderPeakUpperMs": 7,
+    "qm10TimingHeadroomQualified": false,
+    "displayFailedDelta": 6,
+    "displayDriverError": 0,
+    "displayBusyTimeouts": 0
+  },
+  "acoustic": {
+    "rmsDbfs": -22.377436950624393,
+    "peak": 0.9124755859375,
+    "clippedSamples": 0,
+    "stimulusAlignmentEstimateMs": 2740,
+    "envelopeCorrelation": 0.5488200361687776,
+    "physicalJoins": [
+      {
+        "recordedPhysicalBoundaryMs": 120000,
+        "windowMs": 10000,
+        "relativeLagMs": 0,
+        "envelopeCorrelation": 0.7237708234750704
+      },
+      {
+        "recordedPhysicalBoundaryMs": 240000,
+        "windowMs": 10000,
+        "relativeLagMs": 10,
+        "envelopeCorrelation": 0.5674819162090857
+      }
+    ]
+  },
+  "existingCloudServices": "Existing ASR/DeepSeek unchanged; no new endpoint, model, permission or plan",
+  "processingSeconds": 571,
+  "connectionTimeoutRetries": 10,
+  "savedModes": [
+    "offlineStore",
+    "onlineLive"
+  ],
+  "realOnlinePartialsQualified": false,
+  "qualityResult": "ACTUAL_CONTENT_QUALITY_NOT_QUALIFIED",
+  "characterError": {
+    "referenceCharacters": 1104,
+    "hypothesisCharacters": 1011,
+    "substitutions": 98,
+    "deletions": 97,
+    "insertions": 4,
+    "distance": 199,
+    "cer": 0.1802536231884058
+  },
+  "reportedSpeakerLabelCount": 9,
+  "unknownSpeakerUtterances": 4,
+  "sceneQualification": "Uncontrolled acoustic environment; unrelated recognized content not attributed to ambient speech or ASR",
+  "knownSyntheticTermErrors": [
+    {
+      "expected": "实板",
+      "recognized": "石板",
+      "observed": true
+    },
+    {
+      "expected": "Opus",
+      "recognized": "OPPO",
+      "observed": true
+    },
+    {
+      "expected": "原音",
+      "recognized": "原因",
+      "observed": true
+    },
+    {
+      "expected": "重新开录",
+      "recognized": "重新开路",
+      "observed": true
+    },
+    {
+      "expected": "升级和低功耗也属于交付范围",
+      "recognized": "升级和低功耗已屏蔽交互范围",
+      "observed": true
+    }
+  ],
+  "bothSavedMinutesContainRecognitionErrors": true,
+  "referenceIssue": "Critical term 供电 is absent from the independent spoken reference, so not scored as an ASR miss",
+  "productFix": "R12 requires exact saved session identity when device recording numbers are reused; legacy audio recovery refuses ambiguous or segmented owners",
+  "actualAmbiguousSelection": "Installed R12 rejected numeric id3 before cloud calls, library bytes unchanged; exact current original processed successfully",
+  "firstProcessingUnselectedRowsRawUnchanged": false,
+  "unselectedRowsScope": "First load/save also runs existing all-row date/recovery migrations. One old original reproduced exactly by restoring pseudo-date sentinels; remaining raw differences not fully attributed. Old id3 had no new transcript/minutes.",
+  "secondModeUnselectedRowsUnchanged": true,
+  "guiPlaybackQualified": false,
+  "hardwareButtonEntryQualifiedThisStage": false,
+  "throughputQualified": false,
+  "powerQualified": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "open": [
+    "Recognition/terms/speaker attribution/minutes facts",
+    "Existing service timeouts and processing latency",
+    "True online partial transcription",
+    "Current CE 30min/2h capture",
+    "Physical OTA interruption recovery",
+    "Production trust and actual energy/current",
+    "Frozen >=100KiB/s gates; optimization waits for Nordic"
+  ],
+  "ownedHandlesClosed": true,
+  "privateEvidenceRoot": ".cache/ota-completion-20261015/recorder397-speaker-live-offline-reconnect",
+  "privacy": "Raw transcript/minutes, full session library and unrelated recognized speech remain local; aggregate metrics and known synthetic-reference errors only are published"
+}
