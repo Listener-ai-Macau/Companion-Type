@@ -1,0 +1,64 @@
+{
+  "schema": "companion.pet-admission-p125.type.installed.v1",
+  "createdAtLocal": "2026-10-16T01:18:01+08:00",
+  "summary": "P125/FW412已安装并完整读回，原UI76、配对NVM、设置和录音元数据保持；TypeR18正式联合包包含P124/P125。一次真实板麦6.60秒→现有ASR/短答“当然，我就在这陪你。”→实际合格可见回执。新增具体字幕拒收状态，未改波形/等待或准入门；本次未再拒收，P124根因仍OPEN，取消和其它体验项未扩大通过。",
+  "source": "e8d0aa3bad3709f5c25b5e521cf40953e5ef9bf7",
+  "petSource": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "e3ef9abbd41b97fe1c68c34f68a99baa9e8ed4cc",
+    "tag": "pet-admission-p125-20261016-type-source",
+    "parent": "ff4d72e8e578be2167b5fc10de6e51c817e35959",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T01:00:23",
+    "source_file": "apps/windows/src-tauri/src/backend/ble_bridge/pet_caption.rs",
+    "sha256": "b4f58faf2c277978cac89b73a1e2bfdacf0e93ba6ab7ec783b0d8b3c86c8ff0d"
+  },
+  "firmwareEvidence": "Companion-Firmware/docs/releases/screen/pet-admission-p125-fw412-20261016.json",
+  "type": {
+    "source": "e8d0aa3bad3709f5c25b5e521cf40953e5ef9bf7",
+    "msi_sha256": "c5205716579a07fc9b9e84a1ccff3c88db485eb281bb60f6484cdd07d0411378",
+    "exe_sha256": "fe980c4529f615dd74958e77f2cb6c49bc08b8fb93a86df32c82d7186dcc56ca",
+    "dll_sha256": "001df61bb6703edae7b9adac1ac24496f289b230192da8ccc7a43214efb49b67",
+    "buildReceipt": ".cache/ota-completion-20261015/capture-policy-r18/msi/build-receipt.json",
+    "installReceipt": ".cache/ota-completion-20261015/capture-policy-r18/install/result.json"
+  },
+  "chat": {
+    "result": "BOARD_MIC_CHAT_VISIBLE_ACK",
+    "startedAtLocal": "2026-10-16T01:11:55.477+08:00",
+    "boardCapture": true,
+    "mechanicalSpeechPlayed": true,
+    "hostMic": false,
+    "seed": false,
+    "autoRecoveryDisabled": false,
+    "autoReconnectDisabledThisProcess": true,
+    "recordingId": 43,
+    "status": {
+      "requestId": 1519178867,
+      "phase": "replied",
+      "transcript": "聊聊天，今天有点累，可以陪我一会儿吗？",
+      "reply": "当然，我就在这陪你。",
+      "error": null,
+      "audioPath": "\\\\?\\C:\\Users\\Billy\\AppData\\Local\\Companion Type\\recordings\\board-session-49b17e020b29b989fb61d8eb7f369f10c4090dccda34c3233a798060ae6cb714.wav",
+      "deviceId": "C8:92:FF:DD:3B:CA",
+      "recordingId": 43,
+      "screenVisible": true,
+      "canStart": true,
+      "wakeSupported": false,
+      "recordPhrase": "开始录音",
+      "chatPhrase": "聊聊天"
+    },
+    "requestId": 1519178867,
+    "finishedAtLocal": "2026-10-16T01:12:28.946+08:00"
+  },
+  "captionReasonExtensionInstalled": true,
+  "actualFailedReasonNotObserved": true,
+  "notQualified": [
+    "Refusal reason on a newly failing request",
+    "In-flight display cancel button",
+    "Provider/late-completion cancellation",
+    "Cold/sustained reconnect",
+    "Original pet touch/menu/IMU/sound/game physical gates",
+    "All frozen QM17–QM22 and deferred optical/BUSY defects"
+  ],
+  "wholeGoalComplete": false
+}
