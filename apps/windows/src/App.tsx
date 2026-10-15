@@ -7,6 +7,7 @@ import {
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
+import { PetChat } from './PetChat';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 import '../../../packages/ui/src/companionUi.css';
 
@@ -199,6 +200,7 @@ export function App() {
 
   return (
     <div className="ct-window-shell">
+    {isTauriRuntime()?<PetChat disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>:null}
     <CompanionDashboard
       onUnsavedChange={setUnsavedEdits}
       snapshot={snapshot}

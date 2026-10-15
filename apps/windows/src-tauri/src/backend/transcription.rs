@@ -75,6 +75,23 @@ impl CompanionTranscriptionManager {
         Self
     }
 
+    /// Explicit pet utterance, using the configured real provider only. Meeting
+    /// correction rules, sidecars, env-text fixtures and speaker clustering do
+    /// not rewrite or substitute this microphone utterance.
+    pub(crate) fn transcribe_pet_audio(&self,path:&Path)->Result<String,String> {
+        let _usage=super::audio_artifacts::usage(path)?;
+        let provider=std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default();
+        let text=if provider.eq_ignore_ascii_case("volcengine") && volcengine_provider_configured() {
+            volcengine_client()?.transcribe_file(path)?.0
+        } else if matches!(provider.to_ascii_lowercase().as_str(),"openai"|"openai-compatible") && openai_provider_configured() {
+            openai_compatible_transcript(path)?.text
+        } else {return Err("请先在现有设置中配置语音转写，聊天不会另选服务。".into());};
+        let text=platform_normalize_transcript(&text);
+        if text.trim().is_empty() {return Err("这次没有听清，轻点开聊后再说一次。".into());}
+        if text.chars().count()>400 {return Err("这句话太长，请分成短句再聊。".into());}
+        Ok(text)
+    }
+
     pub fn transcribe_session_owned(&self, session: &str, primary: Option<&str>, chunks: &[String]) -> Result<CompanionTranscript, String> {
         let result = self.transcribe_session(primary, chunks);
         let paths: Vec<String> = primary.iter().map(|p| p.to_string()).chain(chunks.iter().cloned()).collect();

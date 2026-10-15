@@ -1,0 +1,196 @@
+//! Bounded, explicit board-microphone pet conversations. This is not an idle
+//! wake engine: the future acoustic adapter owns wake evidence and streaming.
+use std::{path::Path, sync::{Arc,Mutex,LazyLock,atomic::{AtomicBool,Ordering}},time::{Duration,Instant}};
+use serde::Serialize;
+use serde_json::{json,Value};
+use denzic_host_audio_v1_core::http_policy;
+use crate::{coordinator::CompanionCoordinator,companion_v1::CompanionV1Snapshot};
+
+pub(crate) const RECORD_PHRASE:&str="开始录音";
+pub(crate) const CHAT_PHRASE:&str="聊聊天";
+#[derive(Clone,Default,Serialize)]
+#[serde(rename_all="camelCase")]
+pub(crate) struct Status {
+    pub request_id:u32,pub phase:String,pub transcript:String,pub reply:String,
+    pub error:Option<String>,pub audio_path:Option<String>,pub device_id:Option<String>,
+    pub recording_id:Option<u32>,pub screen_visible:bool,
+    pub wake_supported:bool,pub record_phrase:String,pub chat_phrase:String,
+}
+struct Job {id:u32,device:String,stop:Arc<AtomicBool>,cancel:AtomicBool,running:AtomicBool}
+#[derive(Default)]
+struct Store {job:Option<Arc<Job>>,status:Status,history:Vec<Value>,history_device:String,last_turn:Option<Instant>}
+static STORE:LazyLock<Mutex<Store>>=LazyLock::new(||Mutex::new(Store::default()));
+fn with<T>(f:impl FnOnce(&mut Store)->T)->Result<T,String> {
+    let mut store=STORE.lock().map_err(|_|"宠物聊天暂时不可用")?;Ok(f(&mut store))
+}
+pub(crate) fn status()->Result<Status,String> {with(|s|{
+    let mut value=s.status.clone();if value.phase.is_empty(){value.phase="idle".into();}
+    value.record_phrase=RECORD_PHRASE.into();value.chat_phrase=CHAT_PHRASE.into();value
+})}
+pub(crate) fn clear()->Result<Status,String> {
+    with(|s|->Result<(),String>{
+        if s.job.is_some(){return Err("请先结束这句聊天，再清空对话。".into());}
+        s.history.clear();s.history_device.clear();s.last_turn=None;s.status=Status::default();Ok(())
+    })??;status()
+}
+fn update(job:&Job,phase:&str,error:Option<String>)->Result<(),String> {
+    with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id){s.status.phase=phase.into();s.status.error=error;}})
+}
+fn cancelled(job:&Job)->Result<(),String> {
+    if job.cancel.load(Ordering::Acquire){Err("聊天已取消。".into())}else{Ok(())}
+}
+fn idle(snapshot:&CompanionV1Snapshot)->Result<String,String> {
+    if snapshot.source!="firmware" || snapshot.device.recording || snapshot.meeting.active ||
+       snapshot.host.sessions.iter().any(|s|s.status=="recording") {
+        return Err("请先结束当前录音，宠物聊天不会接管它。".into());
+    }
+    snapshot.device.device_id.clone().filter(|id|super::device_connection::stable_device_id(id))
+        .ok_or("请先连接 Companion，再轻点开聊。".into())
+}
+pub(crate) fn begin(coordinator:Arc<CompanionCoordinator>)->Result<Status,String> {
+    let device=idle(&coordinator.snapshot()?)?;
+    // A separate opt-in action starts each utterance. No boot/background loop,
+    // host microphone, silence timeout on meetings or hidden recording is added.
+    let job=with(|s|->Result<Arc<Job>,String>{
+        if s.job.is_some(){return Err("请先结束或取消上一句聊天。".into());}
+        let mut id=u32::from_le_bytes(uuid::Uuid::new_v4().as_bytes()[..4].try_into().unwrap());if id==0{id=1;}
+        let job=Arc::new(Job{id,device:device.clone(),stop:Arc::new(AtomicBool::new(false)),
+            cancel:AtomicBool::new(false),running:AtomicBool::new(true)});
+        s.status=Status{request_id:id,phase:"preparing".into(),device_id:Some(device),..Default::default()};
+        s.job=Some(job.clone());Ok(job)
+    })??;
+    let worker=job.clone();
+    if std::thread::Builder::new().name("companion-pet-chat".into()).spawn(move||{
+        let result=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||run(&coordinator,&worker)));
+        let error=match result {Ok(Ok(()))=>None,Ok(Err(error))=>Some(error),Err(_)=>Some("这次聊天未完成，请重新开聊。".into())};
+        worker.running.store(false,Ordering::Release);
+        if worker.cancel.load(Ordering::Acquire) {
+            let _=update(&worker,"cancelled",None);
+            let _=with(|s|{if s.job.as_ref().is_some_and(|j|j.id==worker.id){s.job=None;}});
+        } else if let Some(error)=error {
+            let _=update(&worker,if worker.cancel.load(Ordering::Acquire){"cancelled"}else{"failed"},Some(error));
+            let _=with(|s|{if s.job.as_ref().is_some_and(|j|j.id==worker.id){s.job=None;}});
+        }
+    }).is_err(){let _=with(|s|{s.job=None;s.status.phase="failed".into();});return Err("无法开始这次聊天，请稍后再试。".into());}
+    status()
+}
+pub(crate) fn finish(request_id:u32,cancel:bool)->Result<Status,String> {
+    with(|s|->Result<(),String>{
+        let job=s.job.as_ref().filter(|j|j.id==request_id).ok_or("这句聊天已经结束。")?;
+        job.stop.store(true,Ordering::Release);
+        if cancel {
+            let capture_finished=matches!(s.status.phase.as_str(),"transcribing"|"thinking"|"replyReady"|"displayFailed");
+            job.cancel.store(true,Ordering::Release);s.status.phase="cancelled".into();
+            if capture_finished || !job.running.load(Ordering::Acquire){s.job=None;}
+        }
+        Ok(())
+    })??;status()
+}
+fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
+    let lease=coordinator.begin_board_recording_operation()?;
+    if !super::device_connection::same_device_id(&idle(&coordinator.snapshot()?)?,&job.device) {
+        return Err("连接的宠物变了，请重新开聊。".into());
+    }
+    super::ble_bridge::pet_caption::supported(&job.device)?;
+    if std::env::var("DEEPSEEK_API_KEY").ok().is_none_or(|s|s.trim().is_empty()) {
+        return Err("请先配置现有聊天服务，再轻点开聊。".into());
+    }
+    cancelled(job)?;
+    // The established board path verifies and durably saves the sealed source
+    // before reclaiming it. No partial ASR/network work is run during capture.
+    let consumer:super::BoardPartialConsumer=Arc::new(|_|Ok(String::new()));
+    let observer_job=job.clone();
+    let observer:super::BoardRecordingObserver=Arc::new(move|_,id,_,_|{
+        with(|s|{if s.job.as_ref().is_some_and(|j|j.id==observer_job.id) &&
+            !observer_job.cancel.load(Ordering::Acquire) {
+            s.status.phase="listening".into();s.status.recording_id=Some(id);
+        }})
+    });
+    let report=super::record_board_online_live_controlled(Some(&job.device),12,60_000,None,consumer,
+        job.stop.clone(),Some(observer),None,None)?;
+    drop(lease); // ASR/LLM cannot monopolize the device while waiting on network.
+    if report.capture_incomplete || report.sync_paused || report.final_recording_path.is_empty() ||
+       !super::device_connection::same_device_id(&report.device_id,&job.device) {
+        return Err("这句录音尚未完整保存，未送去聊天。".into());
+    }
+    with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id){
+        s.status.audio_path=Some(report.final_recording_path.clone());s.status.recording_id=Some(report.recording_id);
+    }})?;
+    // Persist provenance before any provider call; never replace failed board
+    // capture with a host microphone/file fixture or an unrelated old session.
+    let root=super::product_settings::settings_path().parent().ok_or("聊天保存目录不可用")?.join("pet-chat");
+    std::fs::create_dir_all(&root).map_err(|_|"聊天录音已保存，但来源记录尚未保存")?;
+    let receipt=json!({"requestId":job.id,"deviceId":report.device_id,"recordingId":report.recording_id,
+        "audioPath":report.final_recording_path,"encodedSha256":report.final_sha256,
+        "encodedBytes":report.final_total_length,"source":"boardDevice"});
+    super::export::write_atomic(&root.join(format!("{}.json",job.id)),&serde_json::to_vec(&receipt).map_err(|_|"无法保存聊天来源")?)?;
+    cancelled(job)?;update(job,"transcribing",None)?;
+    let transcript=super::CompanionTranscriptionManager::new().transcribe_pet_audio(Path::new(&report.final_recording_path))?;
+    // This routes an explicit chat utterance, not ambient/acoustic wake evidence.
+    // "开始录音" stays reserved and is never interpreted as a chat question.
+    let text=transcript.trim().strip_prefix(CHAT_PHRASE).unwrap_or(transcript.trim())
+        .trim_start_matches(|c:char|c.is_whitespace()||"，,。.!！:：".contains(c)).to_string();
+    if text.starts_with(RECORD_PHRASE){return Err("“开始录音”用于录音；和我聊天请说“聊聊天”。".into());}
+    let text=if text.is_empty(){"向我打个简短招呼。".to_string()}else{text};
+    cancelled(job)?;
+    let context=with(|s|->Result<Vec<Value>,String>{
+        if !s.job.as_ref().is_some_and(|j|j.id==job.id) || job.cancel.load(Ordering::Acquire) {
+            return Err("聊天已取消。".into());
+        }
+        if s.history_device!=job.device || s.last_turn.is_none_or(|t|t.elapsed()>Duration::from_secs(600)) {
+            s.history.clear();s.history_device=job.device.clone();
+        }
+        s.status.transcript=transcript;s.status.phase="thinking".into();Ok(s.history.clone())
+    })??;
+    let reply=reply(&text,context)?;cancelled(job)?;
+    with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id) && !job.cancel.load(Ordering::Acquire){
+        s.history.push(json!({"role":"user","content":text}));
+        s.history.push(json!({"role":"assistant","content":reply}));
+        if s.history.len()>6{s.history.drain(..s.history.len()-6);}
+        s.last_turn=Some(Instant::now());s.status.reply=reply;s.status.phase="replyReady".into();
+    }})?;Ok(())
+}
+fn reply(text:&str,mut context:Vec<Value>)->Result<String,String> {
+    let key=std::env::var("DEEPSEEK_API_KEY").ok().filter(|s|!s.trim().is_empty())
+        .ok_or("现有聊天服务尚未配置，录音已保留。")?;
+    let base=std::env::var("DEEPSEEK_BASE_URL").unwrap_or_else(|_|"https://api.deepseek.com/v1".into());
+    let model=std::env::var("DEEPSEEK_MODEL").unwrap_or_else(|_|"deepseek-v4-flash".into());
+    let endpoint=http_policy::endpoint(&format!("{}/chat/completions",base.trim_end_matches('/')))
+        .map_err(|_|"现有聊天服务地址不可用")?;
+    let client=http_policy::client(Duration::from_secs(35)).map_err(|_|"聊天服务暂时不可用")?;
+    context.insert(0,json!({"role":"system","content":"你是Companion，一只温和、有一点俏皮的屏幕宠物。用中文回应用户，亲切自然、不说教、不连续提问。不声称执行了录音、设置、上网或其它设备操作。不要Markdown、emoji、换行或角色前缀。只输出JSON：{\"text\":\"一句简短回应\"}。text最多12个汉字或标点，只说一句完整短话，适合176×13像素的一行墨水屏。用户情绪低落时简单陪伴，闲聊时可以轻微幽默。"}));
+    context.push(json!({"role":"user","content":text}));
+    let mut body=json!({"model":model,"messages":context,"temperature":0.65,
+        "max_tokens":96,"response_format":{"type":"json_object"}});
+    if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":"disabled"});}
+    let response=client.post(endpoint).bearer_auth(key).json(&body).send().map_err(|_|"暂时没连上聊天服务，录音已保留。")?;
+    let payload=http_policy::response_json(response,8192).map_err(|_|"这次聊天服务没有正常回应。")?;
+    if payload.pointer("/choices/0/finish_reason").and_then(Value::as_str)!=Some("stop") {return Err("这次回复未完整生成，请重新开聊。".into());}
+    let content=payload.pointer("/choices/0/message/content").and_then(Value::as_str).ok_or("这次没有收到回复。")?;
+    let object:Value=serde_json::from_str(content).map_err(|_|"这次回复格式不完整。")?;
+    let text=object.get("text").and_then(Value::as_str).map(str::trim).filter(|s|!s.is_empty()).ok_or("这次没有收到回复。")?;
+    if text.chars().count()>12 || text.chars().any(|c| c.is_control() || (!c.is_ascii() && !matches!(c,'\u{3000}'..='\u{303f}'|'\u{3400}'..='\u{9fff}'|'\u{ff00}'..='\u{ffef}'))) {
+        return Err("这次回复不适合一行显示，未截断句子或滚动刷屏。".into());
+    }
+    Ok(text.to_string())
+}
+pub(crate) fn display(coordinator:&CompanionCoordinator,request:u32,pixels:Vec<u8>)->Result<Status,String> {
+    let job=with(|s|->Result<Arc<Job>,String>{
+        let job=s.job.as_ref().filter(|j|j.id==request).cloned().ok_or("这句聊天已取消或过期。")?;
+        if !matches!(s.status.phase.as_str(),"replyReady"|"displayFailed"){return Err("这句回复尚未就绪或已经显示。".into());}
+        if job.cancel.load(Ordering::Acquire){return Err("聊天已取消。".into());}
+        s.status.phase="displaying".into();Ok(job)
+    })??;
+    let result=(||{
+        let _lease=coordinator.begin_board_recording_operation()?;
+        if !super::device_connection::same_device_id(&idle(&coordinator.snapshot()?)?,&job.device) {
+            return Err("连接或录音状态已改变，回复保留，未发给其它宠物。".into());
+        }
+        cancelled(&job)?;
+        super::ble_bridge::pet_caption::show(&job.device,job.id,&pixels,&job.cancel)
+    })();
+    with(|s|{if s.job.as_ref().is_some_and(|j|j.id==request){
+        if let Err(error)=result {s.status.phase="displayFailed".into();s.status.error=Some(error);}
+        else{s.status.phase="replied".into();s.status.screen_visible=true;s.status.error=None;s.job=None;}
+    }})?;status()
+}

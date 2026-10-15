@@ -83,6 +83,7 @@ pub mod product_settings;
 /// In-memory import/fixture coordinator; the board owns physical NOR storage.
 pub mod recording_ring;
 mod transcription;
+pub(crate) mod pet_chat;
 pub(crate) use transcription::verify_asr_cache;
 pub(crate) use transcription::verify_cache_privacy;
 mod volcengine;

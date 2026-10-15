@@ -7,6 +7,7 @@ mod backend;
 mod commands;
 mod companion_v1;
 mod coordinator;
+mod pet_chat_commands;
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -248,6 +249,11 @@ pub fn run() {
         .manage(coordinator)
         .manage(board_online_live)
         .invoke_handler(tauri::generate_handler![
+            pet_chat_commands::get_companion_pet_chat,
+            pet_chat_commands::clear_companion_pet_chat,
+            pet_chat_commands::start_companion_pet_chat,
+            pet_chat_commands::finish_companion_pet_chat,
+            pet_chat_commands::display_companion_pet_chat,
             backend::desktop_update::get_companion_type_update,
             backend::desktop_update::check_companion_type_update,
             backend::desktop_update::download_companion_type_update,

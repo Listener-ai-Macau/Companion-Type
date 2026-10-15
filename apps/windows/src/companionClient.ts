@@ -115,10 +115,10 @@ export async function exportCompanionMeeting(request: {
   return invoke('export_companion_meeting', { request });
 }
 
-export async function prepareCompanionAudio(sessionId: string): Promise<{sessionId: string; url: string}> {
+export async function prepareCompanionAudio(sessionId: string): Promise<{sessionId: string; url: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null}> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中回听这场会议的本机录音。浏览器演示没有原音。');
-  const path = await invoke<string>('prepare_companion_audio', { sessionId });
-  return { sessionId, url: convertFileSrc(path) };
+  const prepared = await invoke<{path: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null}>('prepare_companion_audio_with_timeline', { sessionId });
+  return { sessionId, url: convertFileSrc(prepared.path), pauseTimeline: prepared.pauseTimeline };
 }
 
 export async function exportCompanionDiagnostics(includeDevice: boolean): Promise<{path:string;bytes:number;warning?:string|null}|null> {

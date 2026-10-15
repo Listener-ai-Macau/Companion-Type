@@ -36,6 +36,7 @@ use std::{
     collections::{BTreeSet, HashMap, HashSet},
     convert::TryInto,
     fmt::{self, Debug, Display, Formatter},
+    future::IntoFuture,
     pin::Pin,
     sync::atomic::{AtomicBool, Ordering},
     sync::{Arc, RwLock},
@@ -47,7 +48,9 @@ use uuid::Uuid;
 use std::sync::Weak;
 use windows::core::GUID;
 use windows::Devices::Bluetooth::GenericAttributeProfile::GattCharacteristic;
-use windows::Devices::Bluetooth::{Advertisement::*, BluetoothAddressType};
+use windows::Devices::Bluetooth::{
+    Advertisement::*, BluetoothAddressType, BluetoothConnectionStatus, BluetoothLEDevice,
+};
 
 #[cfg_attr(
     feature = "serde",
@@ -89,6 +92,44 @@ struct Shared {
 }
 
 impl Peripheral {
+    /// Acquire metadata for an exact, already-paired and connected Windows
+    /// device. Connected peripherals need not advertise; a fresh adapter's
+    /// advertisement registry cannot discover them. This performs no pairing,
+    /// GATT operation or connection request. The normal connect/discovery path
+    /// still owns its handles and validates the protected services afterwards.
+    pub async fn from_connected_paired_address(address: BDAddr) -> Result<Self> {
+        let device = BluetoothLEDevice::FromBluetoothAddressAsync(address.into())
+            .map_err(|error| Error::Other(Box::new(error)))?
+            .into_future().await.map_err(|error| Error::Other(Box::new(error)))?;
+        if device.BluetoothAddress().map_err(|error| Error::Other(Box::new(error)))?
+            != u64::from(address) {
+            return Err(Error::DeviceNotFound);
+        }
+        if device.ConnectionStatus().map_err(|error| Error::Other(Box::new(error)))?
+            != BluetoothConnectionStatus::Connected {
+            return Err(Error::NotConnected);
+        }
+        let paired = device.DeviceInformation()
+            .and_then(|information| information.Pairing())
+            .and_then(|pairing| pairing.IsPaired())
+            .map_err(|error| Error::Other(Box::new(error)))?;
+        if !paired { return Err(Error::PermissionDenied); }
+        let address_type = match device.BluetoothAddressType()
+            .map_err(|error| Error::Other(Box::new(error)))? {
+            BluetoothAddressType::Public => AddressType::Public,
+            BluetoothAddressType::Random => AddressType::Random,
+            _ => return Err(Error::NotSupported("Unknown Windows Bluetooth address type".into())),
+        };
+        let name = device.Name().map_err(|error| Error::Other(Box::new(error)))?.to_string();
+        let peripheral = Self::new(Weak::new(), address);
+        *peripheral.shared.address_type.write()? = Some(address_type);
+        *peripheral.shared.local_name.write()? = Some(name);
+        // Leave connected=false until connect() installs its own callbacks and
+        // device handle. Drop only this borrowed COM reference: Close() could
+        // invalidate another owner's live WinRT device/GATT objects.
+        Ok(peripheral)
+    }
+
     pub(crate) fn new(adapter: Weak<AdapterManager<Self>>, address: BDAddr) -> Self {
         let (broadcast_sender, _) =
             broadcast::channel(crate::common::util::WINDOWS_NOTIFICATION_CAPACITY);
@@ -121,6 +162,87 @@ impl Peripheral {
         crate::common::util::checked_notifications_stream_from_broadcast_receiver(
             self.shared.notifications_channel.subscribe(),
         )
+    }
+
+    /// Discover fresh services and characteristics for a caller that only uses
+    /// characteristic reads/writes and WinRT CCCD subscriptions. Skips raw
+    /// descriptor discovery, not encryption, live GATT discovery or access
+    /// checks. The ordinary trait preserves full descriptor discovery.
+    pub async fn discover_services_without_descriptors(&self) -> Result<()> {
+        self.discover_services_impl(false).await
+    }
+
+    async fn discover_services_impl(&self, include_descriptors: bool) -> Result<()> {
+        let mut device = self.shared.device.lock().await;
+        if let Some(ref mut device) = *device {
+            let gatt_services = device.discover_services().await?;
+            for service in gatt_services {
+                let uuid = utils::to_uuid(&service.Uuid().unwrap());
+                if !self.shared.ble_services.contains_key(&uuid) {
+                    match BLEDevice::get_characteristics(service).await {
+                        Ok(characteristics) => {
+                            let characteristics = characteristics
+                                .into_iter()
+                                .fold(
+                                    // Only consider the first characteristic of each UUID
+                                    // This "should" be unique, but of course it's not enforced
+                                    HashMap::<GUID, GattCharacteristic>::new(),
+                                    |mut map, gatt_characteristic| {
+                                        let uuid = gatt_characteristic.Uuid().unwrap_or_default();
+                                        if !map.contains_key(&uuid) {
+                                            map.insert(uuid, gatt_characteristic);
+                                        }
+                                        map
+                                    },
+                                )
+                                .into_iter()
+                                .map(|(_, characteristic)| async {
+                                    let c = characteristic.clone();
+                                    (
+                                        characteristic,
+                                        if include_descriptors {
+                                            BLEDevice::get_characteristic_descriptors(&c)
+                                                .await
+                                                .unwrap_or(Vec::new())
+                                        } else {
+                                            Vec::new()
+                                        }
+                                            .into_iter()
+                                            .map(|descriptor| {
+                                                let descriptor = BLEDescriptor::new(descriptor);
+                                                (descriptor.uuid(), descriptor)
+                                            })
+                                            .collect(),
+                                    )
+                                });
+
+                            let characteristics = futures::future::join_all(characteristics)
+                                .await
+                                .into_iter()
+                                .map(|(characteristic, descriptors)| {
+                                    let characteristic =
+                                        BLECharacteristic::new(characteristic, descriptors);
+                                    (characteristic.uuid(), characteristic)
+                                })
+                                .collect();
+
+                            self.shared.ble_services.insert(
+                                uuid,
+                                BLEService {
+                                    uuid,
+                                    characteristics,
+                                },
+                            );
+                        }
+                        Err(e) => {
+                            warn!("get_characteristics_async {:?}", e);
+                        }
+                    }
+                }
+            }
+            return Ok(());
+        }
+        Err(Error::NotConnected)
     }
 
     // TODO: see if the other backends can also be similarly decoupled from PeripheralProperties
@@ -420,72 +542,7 @@ impl ApiPeripheral for Peripheral {
 
     /// Discovers all characteristics for the device. This is a synchronous operation.
     async fn discover_services(&self) -> Result<()> {
-        let mut device = self.shared.device.lock().await;
-        if let Some(ref mut device) = *device {
-            let gatt_services = device.discover_services().await?;
-            for service in gatt_services {
-                let uuid = utils::to_uuid(&service.Uuid().unwrap());
-                if !self.shared.ble_services.contains_key(&uuid) {
-                    match BLEDevice::get_characteristics(service).await {
-                        Ok(characteristics) => {
-                            let characteristics = characteristics
-                                .into_iter()
-                                .fold(
-                                    // Only consider the first characteristic of each UUID
-                                    // This "should" be unique, but of course it's not enforced
-                                    HashMap::<GUID, GattCharacteristic>::new(),
-                                    |mut map, gatt_characteristic| {
-                                        let uuid = gatt_characteristic.Uuid().unwrap_or_default();
-                                        if !map.contains_key(&uuid) {
-                                            map.insert(uuid, gatt_characteristic);
-                                        }
-                                        map
-                                    },
-                                )
-                                .into_iter()
-                                .map(|(_, characteristic)| async {
-                                    let c = characteristic.clone();
-                                    (
-                                        characteristic,
-                                        BLEDevice::get_characteristic_descriptors(&c)
-                                            .await
-                                            .unwrap_or(Vec::new())
-                                            .into_iter()
-                                            .map(|descriptor| {
-                                                let descriptor = BLEDescriptor::new(descriptor);
-                                                (descriptor.uuid(), descriptor)
-                                            })
-                                            .collect(),
-                                    )
-                                });
-
-                            let characteristics = futures::future::join_all(characteristics)
-                                .await
-                                .into_iter()
-                                .map(|(characteristic, descriptors)| {
-                                    let characteristic =
-                                        BLECharacteristic::new(characteristic, descriptors);
-                                    (characteristic.uuid(), characteristic)
-                                })
-                                .collect();
-
-                            self.shared.ble_services.insert(
-                                uuid,
-                                BLEService {
-                                    uuid,
-                                    characteristics,
-                                },
-                            );
-                        }
-                        Err(e) => {
-                            warn!("get_characteristics_async {:?}", e);
-                        }
-                    }
-                }
-            }
-            return Ok(());
-        }
-        Err(Error::NotConnected)
+        self.discover_services_impl(true).await
     }
 
     /// Write some data to the characteristic. Returns an error if the write couldn't be send or (in
