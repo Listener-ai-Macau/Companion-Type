@@ -91,6 +91,11 @@ fn original_reconfirmed(snapshot:&CompanionV1Snapshot,session:&str,key:&SessionK
     Ok(confirmed.state!=2)
 }
 
+fn reconnect_retry_delay(error:&str,attempts:u32)->Option<Duration> {
+    if crate::backend::reconnect_requires_pairing(error) { return None; }
+    Some(Duration::from_secs((1u64<<attempts.min(4)).min(15)))
+}
+
 fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineLiveManager>,
     lease:CompanionDeviceOperationLease,options:&CompanionBoardOnlineLiveStartRequest,
     session:&str,title:&str,seconds:u16,stop:&AtomicBool,
@@ -154,7 +159,11 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
                     }
                     Err(error)=>{
                         manager.observe_link("reconnectFailed",&coordinator.snapshot()?,session,elapsed(),cursor.captured_ms(),Some(&error));
-                        link_error=Some(error);reconnect_at=Some(Instant::now()+Duration::from_secs((1u64<<reconnect_attempts.min(4)).min(15)));
+                        reconnect_at=reconnect_retry_delay(&error,reconnect_attempts).map(|delay|Instant::now()+delay);
+                        if reconnect_at.is_none() {
+                            manager.observe_link("reconnectNeedsPairing",&coordinator.snapshot()?,session,elapsed(),cursor.captured_ms(),Some(&error));
+                        }
+                        link_error=Some(error);
                     }
                 }
             } else {reconnect_at=None;}
@@ -256,6 +265,19 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn ordinary_link_loss_keeps_paced_retry_without_overflow() {
+        assert_eq!(reconnect_retry_delay("GATT peer unreachable",1),Some(Duration::from_secs(2)));
+        assert_eq!(reconnect_retry_delay("GATT peer unreachable",u32::MAX),Some(Duration::from_secs(15)));
+    }
+    #[cfg(windows)]
+    #[test]
+    fn pairing_failure_waits_for_explicit_reconnect_instead_of_repeating_ceremony() {
+        for attempt in [1,2,15,u32::MAX] {
+            assert_eq!(reconnect_retry_delay("Windows BLE pairing required: Windows 状态 19",attempt),None);
+        }
+        assert!(reconnect_retry_delay("GATT peer unreachable",1).is_some());
+    }
     #[test]
     fn reconnect_must_keep_exact_logical_key_anchor_and_original_start() {
         use crate::backend::recording_wire::{control::PausePeer,transport::Peer};

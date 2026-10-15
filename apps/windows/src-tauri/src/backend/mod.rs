@@ -11,6 +11,14 @@ mod ble_mtu;
 use ble_bridge::CompanionBleOperation;
 #[cfg(windows)]
 mod ble_pairing;
+/// Pairing needs the normal user/device ceremony; automatic reconnect must
+/// retain the recording rather than repeatedly start that ceremony.
+pub(crate) fn reconnect_requires_pairing(error: &str) -> bool {
+    #[cfg(windows)]
+    { ble_pairing::is_pairing_error(error) }
+    #[cfg(not(windows))]
+    { let _ = error; false }
+}
 #[cfg(windows)]
 mod ble_throughput;
 pub(crate) use ble_bridge::{owned_offline_recording_link,owned_segmented_recording_sync};
