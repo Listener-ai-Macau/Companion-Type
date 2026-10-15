@@ -25,6 +25,7 @@ use windows::{
             GattDeviceServicesResult,
         },
     },
+    Devices::Enumeration::DeviceAccessStatus,
     Foundation::TypedEventHandler,
 };
 
@@ -48,6 +49,19 @@ fn require_discovery_success(
     };
     Err(Error::Other(format!(
         "{operation} service={service} status={label} ({status:?}) protocol_error={protocol_error:?}"
+    ).into()))
+}
+
+fn require_service_access(status: DeviceAccessStatus, service: Uuid) -> Result<()> {
+    if status == DeviceAccessStatus::Allowed { return Ok(()); }
+    let label = match status {
+        DeviceAccessStatus::DeniedByUser => "DeniedByUser",
+        DeviceAccessStatus::DeniedBySystem => "DeniedBySystem",
+        DeviceAccessStatus::Unspecified => "Unspecified",
+        _ => "Unknown",
+    };
+    Err(Error::Other(format!(
+        "required_service_access service={service} access={label} ({status:?}); no characteristics or control command requested"
     ).into()))
 }
 
@@ -173,6 +187,14 @@ impl BLEDevice {
 
     pub async fn get_characteristics_strict(service: &GattDeviceService) -> Result<Vec<GattCharacteristic>> {
         let uuid = utils::to_uuid(&service.Uuid()?);
+        // Follow Microsoft's BluetoothLE client sample: an established paired
+        // device/session is not the service access grant. Respect a denial;
+        // never substitute pairing, alternate handles or a cached characteristic.
+        let previous_access = service.DeviceAccessInformation().and_then(|info| info.CurrentStatus());
+        let sharing = service.SharingMode();
+        let access = await_cancellable_gatt(service.RequestAccessAsync()?).await?;
+        eprintln!("BLE required_service_access service={uuid} previous={previous_access:?} sharing={sharing:?} requested={access:?}");
+        require_service_access(access, uuid)?;
         let result = await_cancellable_gatt(service.GetCharacteristicsWithCacheModeAsync(
             BluetoothCacheMode::Uncached,
         )?).await?;
@@ -271,6 +293,21 @@ mod discovery_tests {
             let error=require_discovery_success(status,"characteristics",uuid,code).unwrap_err().to_string();
             assert!(error.contains(label) && error.contains(&uuid.to_string()));
             if code.is_some() { assert!(error.contains("Some(5)")); }
+        }
+    }
+
+    #[test]
+    fn required_service_access_only_allows_an_explicit_allowed_result() {
+        let uuid=Uuid::from_u128(0x8f7a00087b7d4f3d9d6f6c2d1b7c0000);
+        assert!(require_service_access(DeviceAccessStatus::Allowed,uuid).is_ok());
+        for (status,label) in [
+            (DeviceAccessStatus::DeniedByUser,"DeniedByUser"),
+            (DeviceAccessStatus::DeniedBySystem,"DeniedBySystem"),
+            (DeviceAccessStatus::Unspecified,"Unspecified"),
+            (DeviceAccessStatus(77),"Unknown"),
+        ] {
+            let error=require_service_access(status,uuid).unwrap_err().to_string();
+            assert!(error.contains(label) && error.contains("no characteristics or control command requested"));
         }
     }
 }
