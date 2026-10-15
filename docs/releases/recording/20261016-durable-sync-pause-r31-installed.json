@@ -1,0 +1,116 @@
+{
+  "schema": "companion.recorder.durable-sync-pause.r31.v1",
+  "result": "R31_INSTALLED_DURABLE_PAUSE_RESTART_RESUME_AND_BLOCKED_STATE_CONFIRMED_LOCALLY",
+  "createdAtLocal": "2026-10-16T07:01:27+08:00",
+  "summary": "R31正式安装：用户暂停同步按设备耐久保存，重开Type继续暂停；明确继续同步/停止并保存才恢复。旧版独立进程反例已复现，修后跨进程及安装版本机读取成立；坏设置/保存失败保留原音并明确阻塞。",
+  "limitations": "本轮安装版本的暂停重开为隔离本机配置检查，不冒充新实板长录/GUI点击或录中断链验收；未改变MCU/编码/无线/云。实际仍App415/正常Boot415/UI77，06:49官方只读Boot确认无临时窗口，不必刷写。416物理安装断电route3仍待Owner当前时段；2h、低电/功耗、内容质量及>=100KiB/s仍开放，提速等Nordic。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "909cb9721889aa761f779afaed49f3dc18ef1d1d",
+    "tag": "companion-sync-pause-r31-20261016-source",
+    "parent": "8c2a523ee2d89719dcf064d88dd326c02fa1b673",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T06:57:30"
+  },
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\sync-pause-r31\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10481664,
+    "sha256": "8a47b99844ba13c5f099438b89289cd9ec6299c89fe88eb98060afd724d68d59"
+  },
+  "install": {
+    "result": "PASS_INSTALL_IDENTITY_ONLY",
+    "payloadMatch": true,
+    "exeSha256": "d3575efb6a7cf9fbe4f00024f593d865d2cba7d98d7aca0c16b21ea2bb8212fb",
+    "dllSha256": "d5e10648af56ea2b4e8ce3e1016bd7301b81a8c089dd663ee25165179e67ce97",
+    "sourceInputs": 215
+  },
+  "actual": {
+    "result": "R31_INSTALLED_DURABLE_PAUSE_RESTART_RESUME_AND_BLOCKED_STATE_CONFIRMED_LOCALLY",
+    "startedAtLocal": "2026-10-16T07:00:30.895+08:00",
+    "boardAccess": false,
+    "newRecording": false,
+    "cloudCallsRequested": 0,
+    "fullChainAcceptance": "NOT_QUALIFIED",
+    "installed": true,
+    "sourceCommit": "909cb9721889aa761f779afaed49f3dc18ef1d1d",
+    "installedExeSha256": "d3575efb6a7cf9fbe4f00024f593d865d2cba7d98d7aca0c16b21ea2bb8212fb",
+    "installedDllSha256": "d5e10648af56ea2b4e8ce3e1016bd7301b81a8c089dd663ee25165179e67ce97",
+    "normalProfileReadOnlyStatus": {
+      "jobId": null,
+      "deviceId": null,
+      "phase": "idle",
+      "recordingId": 0,
+      "receivedBytes": 0,
+      "totalBytes": 0,
+      "pauseRequested": false
+    },
+    "isolatedPreferenceWriterTestBinarySha256": "0f1a52cd2e8bbfb5ad6243ecff14ac654cc32ebbd8f8012346d040468dcd7b68",
+    "afterPause": {
+      "jobId": null,
+      "deviceId": "AA:BB:CC:DD:EE:01",
+      "phase": "paused",
+      "recordingId": 0,
+      "receivedBytes": 0,
+      "totalBytes": 0,
+      "pauseRequested": false
+    },
+    "afterResume": {
+      "jobId": null,
+      "deviceId": null,
+      "phase": "idle",
+      "recordingId": 0,
+      "receivedBytes": 0,
+      "totalBytes": 0,
+      "pauseRequested": false
+    },
+    "corruptChoiceStatus": {
+      "jobId": null,
+      "deviceId": null,
+      "phase": "blocked",
+      "recordingId": 0,
+      "receivedBytes": 0,
+      "totalBytes": 0,
+      "pauseRequested": false,
+      "error": "录音同步设置暂时不可读取，自动同步已暂停；设备原录音保留。请恢复本机设置文件后重试。"
+    },
+    "normalLibraryPreferencesAndOriginal7Unchanged": true,
+    "finishedAtLocal": "2026-10-16T07:01:04.700+08:00",
+    "ownedHandlesClosed": true
+  },
+  "changes": [
+    "Persist only per-device user sync preference through existing atomic flush/replace, distinct from microphone controls, partial-file cursor, cloud processing and temporary coordinator handoff.",
+    "Ordinary and owned background followers retain pause after restart; explicit Continue/Stop-and-save persists resumed choice before receive. Resume failure closes an already-owned native connection before surfacing the error.",
+    "Unreadable/corrupt/unknown-version settings stop automatic receive; current pause still stops its job if saving fails, and failure is surfaced rather than claiming restart durability. Failed resume publication retains old in-memory choice.",
+    "UI explains restart persistence and no effect on device capture; blocked settings show the real error without a false Continue action. Read-only --recording-sync-status opens no BLE/recorder or cloud workflow.",
+    "Existing previously-untracked UI test/stub files are saved with four-line missing speaker-test export and affected assertions; their old contents are inherited, not all newly developed."
+  ],
+  "validation": {
+    "oldFreshProcessCounterexample": "FAILED as expected: restart allowed auto receive",
+    "affectedNativeTests": 7,
+    "additionalActualPublicationFailureAndCorruptTests": 2,
+    "affectedReactPath": true,
+    "installedProcessReads": [
+      "normal profile read-only",
+      "fresh paused per-device preference",
+      "fresh explicit-resume preference",
+      "corrupt isolated preference blocked without overwrite"
+    ]
+  },
+  "boardReadOnlyConfirmation": {
+    "result": "NORMAL_BOOT415_CONFIRMED_NO_TEMPORARY_CUT_WINDOW",
+    "startedAtLocal": "2026-10-16T06:48:59.447+08:00",
+    "finishedAtLocal": "2026-10-16T06:49:05.659+08:00",
+    "normalBootExact": true,
+    "diagnosticBootExact": false,
+    "bootReadbackSha256": "d22a5a4d826be1642b8d0a51914a532f7cb43e1563a61e1c66cc94e13e0b2307",
+    "writesStarted": false,
+    "softwareReset": false,
+    "ownedHandlesClosed": true
+  },
+  "preservedFailures": [
+    "Baseline lost-pause failure retained.",
+    "Initial UI test stub lacked existing speaker export; fixed test stub only, original error retained.",
+    "First helper-generation command ran from src-tauri and could not find root cache; corrected working directory, no product/hardware mutation."
+  ],
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
