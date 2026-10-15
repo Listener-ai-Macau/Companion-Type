@@ -296,84 +296,60 @@ pub fn transfer_companion_ota_winrt(
 
 pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
     let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
-    let mtu=wait_ota_mtu(&target,true)?;
-    if mtu<455{return Err(format!("整套签名需要ATT MTU至少455，当前{mtu}；尚未发送升级内容"));}
+    // Protected capability read establishes encryption before public readiness.
     let bytes=read_characteristic_bytes_with_timeout(&target.status,BluetoothCacheMode::Uncached,
-        "整套OTA能力",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+        "单文件OTA能力",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
     check_wba_readiness(&target)?;
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
-    let flow=super::ota_flow::WbaFlow::from_pair_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
+    let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
+    let identity=open_read_char(&target._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"当前升级版本")?;
+    let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"当前升级版本",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
+    package.admit(&current)?;drop(identity);
+    let mtu=wait_ota_mtu(&target,false)?;
     target.data_write_option=if flow.pipelined {GattWriteOption::WriteWithoutResponse}else{GattWriteOption::WriteWithResponse};
-    // Match sealed recording's normal bootstrap: Balanced only until the peer
-    // accepts ownership; no old permanent ThroughputOptimized or fixed700ms.
     if let Some(device)=target._device.as_ref() {
         if let Ok(p)=BluetoothLEPreferredConnectionParameters::Balanced() {
             if let Ok(r)=device.RequestPreferredConnectionParameters(&p) {target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(r));}
         }
     }
-    let manifest=open_write_char(&target._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"整套签名")?;
-    let crc=crc32fast::hash(&package.wire[..448]);let mut accepted=[0u8;8];accepted[..4].copy_from_slice(b"WMA2");accepted[4..].copy_from_slice(&crc.to_le_bytes());
-    write_gatt_value_with_timeout(&manifest,&package.wire,GattWriteOption::WriteWithResponse,OTA_WRITE_TIMEOUT,"整套签名")?;
-    let mut joint=[0u8;40];joint[..4].copy_from_slice(b"WMC2");joint[4..36].copy_from_slice(&package.wire[64..96]);joint[36..].copy_from_slice(&crc.to_le_bytes());
-    let deadline=Instant::now()+OTA_WRITE_TIMEOUT;
-    loop {
-        let receipt=read_characteristic_bytes_with_timeout(&manifest,BluetoothCacheMode::Uncached,"整套签名验证",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
-        if receipt==accepted || receipt==joint {break;}
-        if Instant::now()>=deadline {
-            if let Ok(r)=read_wba_readiness(&target){if let Some(reason)=r.blocker_message(){return Err(reason);}}
-            return Err("设备未验证整套签名／版本／可用空间；没有发送固件或资源".into());
-        }
-        std::thread::sleep(Duration::from_millis(50));
-    }
-    drop(target._conn_pref_request.take());
-    let payload=ota_payload_for_mtu(flow.payload_bytes,mtu,true,flow.payload_bytes)?;
+    // Signature travels inside the file. Only DATA geometry is relevant;
+    // do not inherit WB's244 cap or the former separate-manifest147 minimum.
+    let payload=flow.payload_bytes.min(mtu.saturating_sub(7));
+    if payload==0{return Err("当前ATT MTU不能承载升级数据".into());}
     let mut options=denzic_ota_core::TransferOptions::dual_lane_bulk(payload);
     options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(flow.pipeline_depth()),pending_wwr_b:Vec::new(),
-        status_error_started:None,wba_signed:true,pipeline_depth:flow.pipeline_depth(),system_component:Some(0)};
-    let mut reports=Vec::new();let mut metrics=Vec::new();let mut first=None;let mut last=None;
-    for (index,p) in [&package.firmware,&package.resources].into_iter().enumerate() {
-        transport.system_component=Some(index as u8);let mut window=super::ota_metrics::PayloadWindow::default();
-        let mut had_new=false;let mut component_done=false;
-        let report=denzic_ota_core::transfer(&mut transport,p,options,|accepted,total|{
-            let at=started.elapsed();window.observe(accepted,total,at);
-            if accepted<total {had_new=true;if first.is_none(){first=Some(at);}}
-            if had_new&&accepted==total&&!component_done {last=Some(at);component_done=true;}
-        }).map_err(|e|format!("{}传输未完成，设备保留耐久前缀，可用同一整套包继续：{e}",if index==0 {"固件"}else{"资源"}))?;
-        metrics.push(window.finish(&report,true));reports.push(report);
-    }
-    drop(transport);let device_id=target.device_id.clone();
-    // FINISH is only receipt of both payloads. Keep this connection until the
-    // expected install reboot, then reopen ONLY the same address. No reset or
-    // arbitrary reconnect is injected; all owned WinRT handles close first.
-    let mut connection=Some(target);let deadline=Instant::now()+Duration::from_secs(240);let mut last_error=String::new();
+        status_error_started:None,wba_signed:true,pipeline_depth:flow.pipeline_depth(),system_component:None};
+    let mut window=super::ota_metrics::PayloadWindow::default();
+    let mut report=denzic_ota_core::transfer(&mut transport,&package.file,options,|accepted,total|{
+        window.observe(accepted,total,started.elapsed());
+    }).map_err(|e|format!("完整升级包传输未完成；断开后请从头重新下载：{e}"))?;
+    if report.resumed_bytes!=0 {return Err("单文件升级意外返回了非零起点，不能当作本次完整传输".into());}
+    let payload_metrics=window.finish(&report,true);
+    drop(transport);drop(target._conn_pref_request.take());
+    let device_id=target.device_id.clone();let mut connection=Some(target);
+    // FINISH only retained the file. Boot verifies the signature before erase,
+    // installs both destinations, then normal App reports actual running IDs.
+    let deadline=Instant::now()+Duration::from_secs(180);let mut last_error=String::new();
     loop {
-        if Instant::now()>=deadline {return Err(format!("固件和资源已传入，但尚未取得同一整套版本的启动／空间释放确认；可用同包继续。最后状态：{last_error}"));}
+        if Instant::now()>=deadline {return Err(format!("完整包已传入，但尚未看到新程序和资源正常启动；没有判升级成功。最后状态：{last_error}"));}
         if connection.is_none() {
             match open_ota_target(Some(&device_id)) {Ok(t)=>connection=Some(t),Err(e)=>{last_error=e;std::thread::sleep(Duration::from_millis(500));continue;}}
         }
         let t=connection.as_ref().unwrap();
-        let result=open_write_char(&t._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"整套启动确认")
-            .and_then(|c|read_characteristic_bytes_with_timeout(&c,BluetoothCacheMode::Uncached,"整套启动确认",STATUS_READ_TIMEOUT,&BleCancel::NONE));
+        let result=open_read_char(&t._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"升级后实际版本")
+            .and_then(|c|read_characteristic_bytes_with_timeout(&c,BluetoothCacheMode::Uncached,"升级后实际版本",STATUS_READ_TIMEOUT,&BleCancel::NONE));
         match result {
-            Ok(r) if r==joint=>break,
-            Ok(_)=>{std::thread::sleep(Duration::from_millis(100));},
+            Ok(r) if package.installed(&r)=>break,
+            Ok(_)=>std::thread::sleep(Duration::from_millis(200)),
             Err(e)=>{last_error=e;drop(connection.take());std::thread::sleep(Duration::from_millis(500));},
         }
     }
-    let new_bytes=metrics.iter().map(|m|m.new_payload_bytes).sum();
-    let resumed=reports.iter().map(|r|r.resumed_bytes).sum();
-    let elapsed=first.and_then(|a|last.and_then(|b|b.checked_sub(a)));
-    let payload_metrics=super::ota_metrics::PayloadMetrics::paired(new_bytes,resumed,elapsed);
-    let mut total=reports.remove(0);let ui=reports.remove(0);
-    total.firmware_bytes+=ui.firmware_bytes;total.resumed_bytes+=ui.resumed_bytes;total.data_writes+=ui.data_writes;total.status_reads+=ui.status_reads;
-    total.recovered_offsets+=ui.recovered_offsets;total.active_link_confirmed &= ui.active_link_confirmed;total.finish_confirmed &=ui.finish_confirmed;
-    total.timings.total=started.elapsed();total.timings.connect+=ui.timings.connect;total.timings.data_write+=ui.timings.data_write;
-    total.timings.control_write+=ui.timings.control_write;total.timings.status_read+=ui.timings.status_read;total.timings.status_retry_wait+=ui.timings.status_retry_wait;
+    report.timings.total=started.elapsed();
     let system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
-        "receipt":"WMC2-full-bundle-id","firmwareBytes":package.firmware.len(),"resourceBytes":package.resources.len(),
-        "componentPayloadMetrics":metrics,"installationElapsedMs":started.elapsed().as_millis()}));
-    Ok(CompanionOtaBleReport{device_id,transfer:total,payload_metrics,system_bundle})
+        "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
+        "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis()}));
+    Ok(CompanionOtaBleReport{device_id,transfer:report,payload_metrics,system_bundle})
 }
 
 fn check_wba_readiness(target:&OpenOtaTarget)->Result<(),String> {

@@ -17,21 +17,24 @@ impl WbaFlow {
         } Ok(())
     }
     pub fn from_status(status: &[u8], supports_wwr: bool) -> Result<Self, String> {
-        Self::parse(status,supports_wwr,false)
+        Self::parse(status,supports_wwr,1)
     }
     pub fn from_pair_status(status: &[u8], supports_wwr: bool) -> Result<Self, String> {
-        Self::parse(status,supports_wwr,true)
+        Self::parse(status,supports_wwr,3)
     }
-    fn parse(status: &[u8], supports_wwr: bool, pair:bool) -> Result<Self, String> {
+    pub fn from_simple_status(status:&[u8], supports_wwr:bool)->Result<Self,String> {
+        Self::parse(status,supports_wwr,5)
+    }
+    fn parse(status: &[u8], supports_wwr: bool, contract:u16) -> Result<Self, String> {
         denzic_ota_core::parse_status(status)?;
         let mut flow = Self { payload_bytes: 240, window_chunks: 8, pipelined: false };
-        if status.len() == 24 && !pair { return Ok(flow); }
+        if status.len() == 24 && contract==1 { return Ok(flow); }
         let v1 = status.len() == 32 && &status[24..28] == b"WOC1";
         let v2 = status.len() == 36 && &status[24..28] == b"WOC2";
         if !v1 && !v2 {
             return Err("Invalid WBA OTA capacity; no payload was sent".into());
         }
-        if pair && !v2 {return Err("设备没有整套固件与资源升级能力，尚未发送内容".into());}
+        if contract!=1 && !v2 {return Err("设备没有整套固件与资源升级能力，尚未发送内容".into());}
         let payload = u16::from_le_bytes(status[28..30].try_into().unwrap());
         let value = u16::from_le_bytes(status[30..32].try_into().unwrap());
         if !(240..=505).contains(&payload) || value != payload + 4 {
@@ -41,7 +44,7 @@ impl WbaFlow {
         if v2 {
             let window = u16::from_le_bytes(status[32..34].try_into().unwrap());
             let flags = u16::from_le_bytes(status[34..36].try_into().unwrap());
-            if !(1..=16).contains(&window) || flags != if pair {3} else {1} {
+            if !(1..=16).contains(&window) || flags != contract {
                 return Err("Unsupported WBA OTA bounded window".into());
             }
             flow.window_chunks = window;
@@ -130,5 +133,15 @@ mod tests {
         let mut s=status(b"WOC2",16,3);s[7]=0x81;
         assert!(WbaFlow::check_component(&s,0).is_ok());assert!(WbaFlow::check_component(&s,1).is_err());
         s[7]=0x83;assert!(WbaFlow::check_component(&s,1).is_ok());assert!(WbaFlow::check_component(&s,0).is_err());
+    }
+    #[test]
+    fn simple_file_requires_its_own_explicit_capability() {
+        let simple=status(b"WOC2",16,5);
+        let flow=WbaFlow::from_simple_status(&simple,true).unwrap();
+        assert_eq!(flow.payload_bytes,505);assert_eq!(flow.window_chunks,16);
+        assert!(flow.pipelined);
+        assert!(WbaFlow::from_pair_status(&simple,true).is_err());
+        assert!(WbaFlow::from_status(&simple,true).is_err());
+        assert!(WbaFlow::from_simple_status(&status(b"WOC2",16,3),true).is_err());
     }
 }

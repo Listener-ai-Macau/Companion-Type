@@ -118,8 +118,8 @@ pub fn validate_ota_package(
     if super::system_ota::is_bundle(Path::new(&request.manifest_path))? {
         let p=super::system_ota::load(Path::new(&request.manifest_path))?;
         return Ok(CompanionOtaPackageValidation{ok:true,package_type:"companion-system-ota".into(),
-            version_note:"整套固件＋资源，同一次启动确认".into(),payload_bytes:p.firmware.len()+p.resources.len(),chunk_bytes:505,
-            payload_sha256:p.id,message:"整套内容与签名线格式已核对；设备须验证三份签名后才允许发送，重启后的共同确认才算升级成功。".into()});
+            version_note:"固件＋资源单文件，断开后重新下载".into(),payload_bytes:p.file.len(),chunk_bytes:505,
+            payload_sha256:p.id,message:"单文件内容已核对；Boot 在覆盖前验证签名。新版本正常启动且临时空间释放后才显示升级成功。".into()});
     }
     let package = validate_package(
         Path::new(&request.manifest_path),
