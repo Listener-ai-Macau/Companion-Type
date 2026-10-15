@@ -1,0 +1,115 @@
+{
+  "schema": "companion.connection-recovery.r22.v1",
+  "result": "INSTALLED_PAIRING_PAUSE_AND_NORMAL_EXACT_DEVICE_CONNECT_CONFIRMED_INITIAL_LOSS_OPEN",
+  "createdAtLocal": "2026-10-16T03:41:49+08:00",
+  "summary": "R22正式安装含P129/P128/R21：按精确设备持久暂停已知配对失败，普通临时断连仍可重连；真实正常BLE连接一次成功，正确UID/413/UI76、原51会议与429.98秒原音完整、用户自动连接选择不变。",
+  "limitations": "首次意外断链/失配发起者仍未确定；本轮没有制造失配，暂停持久化/恢复边界为受影响软件验证，不能当无干预断连恢复通过。OTA严格安装断电route3、2h、会议内容/分人、实测功耗和100KiB/s仍OPEN，提速等Nordic。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "71be9da39f1dca8a307d8fc22f7cd9e41f9e4837",
+    "tag": "companion-connection-recovery-r22-20261016-source",
+    "parent": "bd5e0a9326034cade929bbaa68e28f4855ad7362",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T03:29:12"
+  },
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\connection-recovery-r22\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10440704,
+    "sha256": "e6b4a58976fcedebf3a9d73b0694003bf45f44c5a3a48be5e960e538ff84ca7e"
+  },
+  "install": {
+    "result": "PASS_INSTALL_IDENTITY_ONLY",
+    "exeSha256": "848386da4baf822d2d38bc2b036abd953429896d58c0a69d67f3c82b30b0ce15",
+    "dllSha256": "86d87a7aefe663a68f268994ab2a905d7191cbb77a43050fba0858f7f9a6eda0",
+    "payloadMatch": true
+  },
+  "actual": {
+    "schema": "companion.connection-recovery.r22.actual.v1",
+    "result": "R22_INSTALLED_NORMAL_PROTECTED_CONNECT_CONFIRMED",
+    "startedAtLocal": "2026-10-16T03:39:22.147+08:00",
+    "newRecording": false,
+    "asrRequests": 0,
+    "swd": false,
+    "reset": false,
+    "pairWindow": false,
+    "unpair": false,
+    "fullChainAcceptance": "NOT_QUALIFIED",
+    "installed": true,
+    "sourceCommit": "71be9da39f1dca8a307d8fc22f7cd9e41f9e4837",
+    "installedExeSha256": "848386da4baf822d2d38bc2b036abd953429896d58c0a69d67f3c82b30b0ce15",
+    "installedDllSha256": "86d87a7aefe663a68f268994ab2a905d7191cbb77a43050fba0858f7f9a6eda0",
+    "connectExitCode": 0,
+    "connectWallMs": 6185.375900007784,
+    "connectionPhase": "ready",
+    "connected": true,
+    "nativeSource": "firmware",
+    "error": null,
+    "existingOriginal51Unchanged": true,
+    "existingOriginalSha256": "fa82bda2f90918bbed79ba0089b150765bbdd38764d5a1b73d1a7ce781445ef5",
+    "userAutoConnectChoiceUnchanged": true,
+    "mcuUid": "180010000d50335754363720",
+    "firmwareVersion": 66205,
+    "uiGeneration": 76,
+    "finishedAtLocal": "2026-10-16T03:40:02.414+08:00",
+    "ownedHandlesClosed": true
+  },
+  "changes": [
+    "Recognize native pairing category through the two existing product context wrappers; ordinary offline errors remain retryable.",
+    "Persist pairingRequired only against the exact remembered native address; keep autoReconnectEnabled and manualDisconnect independent.",
+    "Pause ordinary background/follower retry and show an explicit actionable connection state; a Type restart does not resume failed automatic pairing.",
+    "Explicit normal Connect or explicit auto-connect enable may retry; protected exact-original recovery may resolve pairing without reversing manual opt-out.",
+    "CLI --device-connect-request uses the normal coordinator Connect without OOBE/module checks, replacement recording or cloud processing."
+  ],
+  "provenance": {
+    "typeParent": "P129 bd5e0a9326034cade929bbaa68e28f4855ad7362",
+    "firmware": "Current413/normalBoot413/UI76 retained; no MCU write, reset or SWD in this stage.",
+    "original51": "Unchanged normal-library row and same WAV SHA; no re-record/ASR. Existing successful recovery is not reclassified as normal unattended reconnect."
+  },
+  "initialLoss": {
+    "state": "OPEN_CALLER_AND_BOND_TRANSITION_NOT_DETERMINED",
+    "source": ".cache/ota-completion-20261015/online-recovery-r19/actual310/hci/bluetooth-private.etl",
+    "firstHciDisconnectUtc": "2026-10-15T17:51:25.7720803Z",
+    "provider": "Microsoft-Windows-BTH-BTHPORT",
+    "eventId": 402,
+    "processId": 3492,
+    "processObserved": "svchost.exe -k LocalSystemNetworkRestricted -p -s DeviceAssociationService",
+    "processStartObservedLocal": "2026-10-06T14:50:07.515522+08:00",
+    "commandReason": "0x13",
+    "completionReason": "0x16",
+    "laterReconnectReason": "0x05",
+    "subsequentSystemEvent": {
+      "provider": "Microsoft-Windows-DeviceAssociationService",
+      "id": 3505,
+      "timeLocal": "2026-10-16T01:51:30.5919396+08:00",
+      "meaning": "Device association enumerator failure AFTER initial loss, at first failed reconnect."
+    },
+    "boundary": "Service process context is not proof of original requesting application or policy. Existing HCI capture lacks caller/API stacks; no attribution to hardware, user unpairing or OS policy.",
+    "liveCapture": false,
+    "serviceSettingsChanged": false
+  },
+  "validation": {
+    "affectedPreferences": 10,
+    "pairingCategory": 5,
+    "backgroundEligibility": 1,
+    "frontend": "TypeScript/Vite built in frozen source",
+    "scope": "No full-suite, fresh recording, OOBE, ASR, speed, WPR or physical power-cut test.",
+    "actualPairingFaultInjected": false,
+    "guiClickThrough": false,
+    "stlinkConnectionAttempted": false,
+    "stlinkReason": "Original temporary installation-cut window had already been removed by the delivered normal Boot; no redundant rewrite.",
+    "sourceInputs": 211,
+    "normalIndexOriginalPreserved": true
+  },
+  "retainedBuildFailures": [
+    "Initial shared-tree compile overlapped unfrozen P129 cancel_reusable edit; all five errors were in that pet file. Frozen P129/R22 source built successfully; no pet WIP overwritten.",
+    "First private Rust test lacked generated frontendDist. Generated frontend in same frozen tree, resumed exact source, preserved original failure log.",
+    "First install launcher used Windows PowerShell lacking Get-FileHash under this environment and stopped before installation/device access. Verified bundled pwsh supports it; same candidate installed normally."
+  ],
+  "qualityTargetsChanged": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "next": [
+    "Continue same-trace initial loss attribution only with a new observable hypothesis; do not repeat pairing/reset attempts.",
+    "Keep pending strict installation-cut test for a concrete physical Owner slot; ordinary OTA and cold-start proofs remain distinct.",
+    "Continue recorder quality, low-battery/full-storage recovery and actual low-power gaps; no new cloud/mobile/dock or speed tuning."
+  ]
+}
