@@ -208,6 +208,13 @@ impl Journal {
             // permits writing the already-durable new START to this known peer.
             return Ok(Observation::Previous);
         }
+        // Keep the actual rejected observation once, outside the capture path.
+        // A user-facing error alone cannot distinguish a locally ended
+        // capture, device error, stale ACK, or another recording identity.
+        eprintln!("recorder_control observation_mismatch state={} command={} request={} sequence={} error={} timeline={} anchor={} duration_ms={} key_matches={} anchor_matches={} confirmed={:?} pending={:?}",
+            status.state,status.command,status.request,status.sequence,status.last_error,status.timeline,
+            anchor,duration,key_matches,anchor_matches,self.confirmed,
+            self.pending.as_ref().map(|p|(p.command,p.request,p.sequence)));
         Err(failure("设备状态既不属于待确认命令，也不属于上次确认"))
     }
 }
