@@ -1,0 +1,239 @@
+{
+  "schema": "companion.required-gatt.r25.v1",
+  "result": "INSTALLED_NATIVE_ACCESS_DENIED_IDENTIFIED_STOP_STILL_OPEN",
+  "createdAtLocal": "2026-10-16T05:37:04+08:00",
+  "summary": "R25正式安装：必需CMC3服务缺失时同连接补查一次，失败不再当空列表；实测抓到Windows GetCharacteristics返回AccessDenied(3)，新进程STOP仍未发出。原90秒录音自然封口后，同原件正常收齐/消费90020ms。",
+  "limitations": "访问拒绝的底层原因未定、STOP缺陷未修好；已配对/正常GattSession不等于必需服务可用。不能算正常重启后停止通过，未清配对/复位/改固件。2h/功耗/OTA严格安装断电/100KiB/s仍开放。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "242d526d9f9acb8ec4cdd63b5eebf3150878351b",
+    "tag": "companion-required-gatt-r25-20261016-source",
+    "parent": "834e3552e99609b1b1f90abc05660ae4215ec188",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T05:26:50"
+  },
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\required-gatt-r25\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10452992,
+    "sha256": "5395aaaf5d48ebb7e578032ec53f1b94ac7b96bdda5c9342133773554357d94e"
+  },
+  "install": {
+    "exeSha256": "eb41eea923b0246275c1f66dcbb8ebe5e8a2b65fa60508268ea67a319a37216d",
+    "dllSha256": "a0ba504af67ddbe6dbfcf4e8e4e8a532dca13e508addee797e2aff9576c20626",
+    "payloadMatch": true
+  },
+  "actual": {
+    "sessionId": "v1-real-installed-1792099868472",
+    "anchor": 1,
+    "key": {
+      "deviceUid": "180010000d50335754363720",
+      "formatEpoch": "b8b8334898156eb8",
+      "sessionId": "0000000000000002"
+    },
+    "originalStart": 3688720820,
+    "nativeInitiallyPaired": true,
+    "nativeInitiallyConnected": true,
+    "gattSessionActive": true,
+    "ordinaryDiscoveryMs": 1663,
+    "ordinaryCharacteristicCount": 23,
+    "targetedRefreshTriggered": true,
+    "exactNativeStatus": "AccessDenied",
+    "exactNativeStatusCode": 3,
+    "protocolError": null,
+    "stopPreparedOrWritten": false,
+    "finalSourceMs": 90020,
+    "finalWavBytes": 2880684,
+    "finalWavSha256": "b704453b5b42974f73a668f80d828611292b4c27243d0e2af2a2f82e7d4638cb",
+    "savedAndConsumed": true,
+    "naturalDurationEnd": true,
+    "beforeRecoverySnapshot": {
+      "seq": 33,
+      "reason": "query",
+      "sections": {
+        "ID": {
+          "fw": "0001029f",
+          "build": "20261004",
+          "board": "57424155",
+          "uid": "180010000d50335754363720",
+          "ui": 77,
+          "uptime_ms": 400999
+        },
+        "CORE": {
+          "reset": "14000000",
+          "iwdg_reset": 0,
+          "faults": "00000200",
+          "clock": 0,
+          "lse": 0,
+          "io": 0,
+          "imu": 0,
+          "touch": 0,
+          "audio": 0,
+          "mic": 0,
+          "nor": 0,
+          "panel": 0,
+          "battery": 1,
+          "ram_gap": 40,
+          "stack_min": 3136,
+          "stack_low": 0,
+          "stack_guard": 0
+        },
+        "DISPLAY": {
+          "bound": 1,
+          "driver": 3,
+          "error": 0,
+          "presenter": 0,
+          "assets": 1,
+          "rendered": 253,
+          "failed": 0,
+          "stage": 11,
+          "busy": 0,
+          "transfer_calls": 99946,
+          "busy_timeouts": 0
+        },
+        "STORAGE": {
+          "jedec": "ef6018",
+          "size": 16777216,
+          "layout": 1,
+          "recording_ready": 1,
+          "rec_state": 6,
+          "rec_fault": 0,
+          "committed": 189096,
+          "suspend_ok": 1,
+          "erase_active": 0,
+          "erase_sus": 0,
+          "sus_ms": 2,
+          "resume_ms": 2,
+          "bfp_dw": 16,
+          "dw12": "337663e9",
+          "dw13": "757a757a"
+        },
+        "AUDIO": {
+          "mic_init": 1,
+          "mic_run": 0,
+          "mic_hal": 0,
+          "mic_irq_err": 0,
+          "mic_stale": 0,
+          "mic_overflow": 0,
+          "mic_reject": 0,
+          "frames": 9003,
+          "deadline": 0,
+          "speaker_ready": 1,
+          "fg_ms": 8,
+          "hal_ms": 7,
+          "rec_ms": 5,
+          "ble_ms": 2,
+          "runtime_ms": 1,
+          "present_ms": 4,
+          "render_ms": 55,
+          "pdm_ms": 3
+        },
+        "TIMING": {
+          "rec_id": 1,
+          "mic_starts": 1,
+          "tick_us": 1000,
+          "min_samples": 20,
+          "enc_n": 4501,
+          "enc_valid": 1,
+          "enc_p95_upper_ms": 6,
+          "enc_peak_upper_ms": 6,
+          "pdm_n": 9004,
+          "pdm_valid": 1,
+          "pdm_p95_upper_ms": 3,
+          "pdm_peak_upper_ms": 4
+        },
+        "BLE": {
+          "compiled": 1,
+          "init": 1,
+          "host": 1,
+          "host_error": 0,
+          "connection": "ffff",
+          "linked": 0,
+          "secured": 0,
+          "fatal": 0,
+          "bond_lost": 0,
+          "rebond": 0,
+          "pair_status": 0,
+          "pair_reason": 0
+        },
+        "POWER": {
+          "adc": 1,
+          "voltage_valid": 0,
+          "percent_valid": 0,
+          "charger_valid": 0,
+          "charger_present": 0,
+          "mv": 0,
+          "pct": 255,
+          "charge": 0,
+          "ota_block": "0004",
+          "sleep_block": "00000040"
+        },
+        "BATTERY": {
+          "vref_raw": 2753,
+          "vref_cal": 1647,
+          "vdda_mv": 1795,
+          "vref_valid": 1,
+          "vref_age_ms": 1822,
+          "vref_n": 120,
+          "raw": 3520,
+          "samples": 60,
+          "adc_error": 0,
+          "adc_failures": 2,
+          "divider_safe": 0,
+          "divider_verified": 0,
+          "reference_verified": 0,
+          "sample_errors": 0,
+          "gate_errors": 0,
+          "raw_mode": 1,
+          "input_mv": 1543,
+          "input_valid": 1,
+          "saturated": 0,
+          "sample_age_ms": 1820,
+          "vdda_min_mv": 1790,
+          "vdda_max_mv": 1796
+        },
+        "POWERCFG": {
+          "top_ohm": 100000,
+          "bottom_ohm": 68000,
+          "max_cell_mv": 4350,
+          "reference_floor_mv": 1700,
+          "charger_pullups_verified": 0,
+          "soc_curve_verified": 0
+        }
+      }
+    },
+    "handlesClosed": true,
+    "cloudCalls": 0,
+    "swd": false,
+    "reset": false,
+    "pairWindow": false
+  },
+  "changes": [
+    "Require correct CMC3 service plus WRITE control and READ+NOTIFY status before control commands.",
+    "If incomplete, refresh exactly one required service on the same connection using uncached official WinRT API, no reconnect/PAIR loop.",
+    "Strict required enumeration records native communication status/protocol error; rejects empty success/duplicates; publishes fresh map only after complete native enumeration.",
+    "Reuse existing cancellable WinRT await helper so a timed out request requests native cancellation; do not infer cancellation completion."
+  ],
+  "validation": {
+    "productMetadataGuard": "1 directly affected test passed",
+    "vendorStatus": "1 directly affected standalone vendor test passed; production also compiled windows0.61.3, standalone lock windows0.61.1.",
+    "retainedToolFailures": [
+      "Dependency crate cannot be tested as nonworkspace member; standalone offline first lacked pretty_env_logger; bounded normal dev dependency fetch completed the same standalone test.",
+      "PowerShell inline helper preparation quoting failed before board access; actual helper saved via file and then ran once."
+    ]
+  },
+  "diagnosis": {
+    "confirmed": "Missing CMC3 in this real STOP is a native AccessDenied result, not just UUID absence. Exact encrypted security state at the failed call was not passively sampled.",
+    "notConfirmed": [
+      "No proof of user denial, policy, lost bond, firmware gating, process-sharing state or unique root cause.",
+      "Recording ended before the later successful QUERY; time/process/recording state differ, correlation alone does not prove cause."
+    ],
+    "next": "Follow official Microsoft sample: request service access before characteristic enumeration, preserve denial, record exact device access/sharing state. Do not relax encryption or original identity."
+  },
+  "references": [
+    "https://github.com/microsoft/Windows-universal-samples/blob/main/Samples/BluetoothLE/cs/Scenario2_Client.xaml.cs",
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.genericattributeprofile.gattdeviceservice.requestaccessasync?view=winrt-26100",
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.genericattributeprofile.gattcommunicationstatus?view=winrt-26100"
+  ],
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "qualityTargetsChanged": false
+}
