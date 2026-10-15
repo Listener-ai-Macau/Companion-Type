@@ -3,6 +3,15 @@
 use denzic_ota_core::{OtaV1Transport,Operation,control_packet,parse_status,STATE_IDLE,STATE_COMPLETE};
 use std::time::{Duration,Instant};
 
+/// Windows can report ERROR_CANCELLED as a numeric HRESULT without spelling
+/// out "cancelled". This only permits a protected exact receipt read; it
+/// never proves that the packet committed or that a retry is authorized.
+pub(super) fn ambiguous_write_completion(error:&str)->bool {
+    let lower=error.to_ascii_lowercase();
+    lower.contains("timed out") || lower.contains("timeout") || lower.contains("canceled")
+        || lower.contains("cancelled") || lower.contains("hresult(0x800704c7)")
+}
+
 /// A timed-out ATT write is ambiguous. Only this same admitted file's exact
 /// device receipt may complete the packet or allow ONE identical retry.
 pub(super) fn acknowledged_write_receipt(packet:&[u8],file_bytes:u32,bytes:&[u8])->Result<bool,String> {
@@ -54,6 +63,14 @@ pub(super) fn prepare_fresh_download<T:OtaV1Transport>(transport:&mut T,initial:
 mod tests {
     use super::*;
     use std::collections::VecDeque;
+    #[test]
+    fn actual_windows_cancel_hresult_requires_receipt_instead_of_immediate_abort() {
+        assert!(ambiguous_write_completion("BLE Companion OTA data write async error: Some(HRESULT(0x800704C7))"));
+        assert!(ambiguous_write_completion("OTA data write timed out"));
+        for fatal in ["ATT access denied", "HRESULT(0x80070005)", "CRC mismatch", "device rejected manifest", "HRESULT(0x800704C8)"] {
+            assert!(!ambiguous_write_completion(fatal),"{fatal}");
+        }
+    }
     fn status(state:u8,accepted:u32,total:u32)->Vec<u8> {
         let mut p=vec![0u8;24];p[..4].copy_from_slice(b"DOV1");p[4]=1;p[5]=state;
         p[8..12].copy_from_slice(&accepted.to_le_bytes());p[12..16].copy_from_slice(&total.to_le_bytes());p

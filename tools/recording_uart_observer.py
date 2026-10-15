@@ -85,6 +85,7 @@ class RecordingUartObserver:
                     startedAt=datetime.now(timezone.utc).isoformat(),
                     startedMonotonicNs=time.monotonic_ns())
                 self.ready.set()
+                last_received = time.monotonic()
                 while not self.stop.is_set():
                     if self.setup_query.is_set() and not self.setup_query_sent.is_set():
                         self.lease_guard()
@@ -95,10 +96,15 @@ class RecordingUartObserver:
                             setupQueryStartByteOffset=self.summary['bytes'],
                             setupQuerySentAt=datetime.now(timezone.utc).isoformat())
                         self.setup_query_sent.set()
-                    if self.setup_pair.is_set() and not self.setup_pair_sent.is_set():
+                    if self.setup_pair.is_set() and not self.setup_pair_sent.is_set() and time.monotonic() - last_received >= .150:
                         self.lease_guard()
-                        port.write(b'PAIR\n')
-                        port.flush()
+                        # Polling RX cannot safely accept a burst during the
+                        # target's blocking diagnostic output. Idle first,
+                        # then one paced, newline-delimited service command.
+                        for byte in b'\nPAIR\n':
+                            port.write(bytes([byte]))
+                            port.flush()
+                            time.sleep(.020)
                         self.summary.update(commandsSent=self.summary['commandsSent'] + 1,
                             scope='one_idle_setup_query_and_explicit_guarded_pair_window_then_passive',
                             guardedPairWindowSentAt=datetime.now(timezone.utc).isoformat())
@@ -106,6 +112,7 @@ class RecordingUartObserver:
                     data = port.read(4096)
                     if not data:
                         continue
+                    last_received = time.monotonic()
                     if self.summary['bytes'] + len(data) > 8 * 1024 * 1024:
                         raise RuntimeError('UART evidence exceeded its 8 MiB bound')
                     arrival = {'readCompletedAt': datetime.now(timezone.utc).isoformat(),

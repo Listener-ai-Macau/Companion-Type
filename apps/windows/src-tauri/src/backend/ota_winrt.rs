@@ -985,9 +985,7 @@ impl CompanionOtaWinrtTransport<'_> {
                 GattWriteOption::WriteWithResponse,OTA_WRITE_TIMEOUT,"Companion OTA data") {
                 Ok(_)=>return Ok(()),Err(error)=>error,
             };
-            let lower=error.to_ascii_lowercase();
-            if !lower.contains("timed out") && !lower.contains("timeout")
-                && !lower.contains("canceled") && !lower.contains("cancelled") {return Err(error);}
+            if !super::simple_ota_restart::ambiguous_write_completion(&error) {return Err(error);}
             // No reconnect and no new BEGIN here. The one same-file packet
             // may have committed even though Windows lost its completion.
             let bytes=read_characteristic_bytes_with_timeout(&self.target.status,BluetoothCacheMode::Uncached,
