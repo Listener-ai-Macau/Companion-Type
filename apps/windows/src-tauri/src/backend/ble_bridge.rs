@@ -773,6 +773,7 @@ impl CompanionBleBridge {
         expected_key: Option<&crate::companion_v1::CompanionV1RecordingKey>,
         fresh_start: bool,
         known_recording_ids: &[u32],
+        automatic_recovery: bool,
     ) -> Result<(CompanionMeetingControlReport, super::recorder_control::Journal, Option<CompanionBleOperation>), String> {
         if !native_ble_available() {
             return Err("暂停录音控制需要正式 Windows 蓝牙，不能用模拟控制替代。".into());
@@ -785,7 +786,13 @@ impl CompanionBleBridge {
             if report.state!=2 {return Ok((report,journal,None));}
             // The original row and STOP/natural-seal confirmation are already
             // durable. Receive on the same owner; no re-pair/clock/START here.
-            recording_sync::resume_explicit(Some(&device.device_id()));
+            if automatic_recovery && !recording_sync::automatic_allowed(&device.device_id()) {
+                // A background original-state observation cannot undo the
+                // independent user pause or receive/consume a sealed original.
+                finish_native_device_operation(device,true).await?;
+                return Ok((report,journal,None));
+            }
+            if !automatic_recovery {recording_sync::resume_explicit(Some(&device.device_id()));}
             let pulled=sync_native_recordings_with_link_policy(&device,known_recording_ids,
                 Some(report.meeting_id),&mut SealedLinkPolicy::default(),report.logical_key.as_ref()).await;
             let reusable=pulled.as_ref().is_ok_and(|batch|batch.connection_reusable);

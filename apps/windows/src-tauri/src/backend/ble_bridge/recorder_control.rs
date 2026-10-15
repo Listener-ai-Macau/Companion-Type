@@ -150,8 +150,11 @@ pub(super) async fn execute_owned(
         if matches!(command,0|2|3) && journal.pending.is_some() {
             observed=Some(settle(&device,&control,&status,&mut store,&mut journal,observed,false).await?);
         }
+        // Only an explicit START retry may resend an unaccepted initial
+        // intent. Automatic QUERY/STOP recovery retains its no-restart guard.
+        let allow_initial_start=fresh_start || (command==1 && journal.unconfirmed_start_retry());
         if command!=0 && journal.prepare(&peer,command)? {
-            observed=Some(settle(&device,&control,&status,&mut store,&mut journal,observed,fresh_start).await?);
+            observed=Some(settle(&device,&control,&status,&mut store,&mut journal,observed,allow_initial_start).await?);
         }
         let (observed,anchor,duration,sync_state)=observed.ok_or("设备尚未确认原控制。")?;
         if !matches!(observed.state,1|2|3) || observed.last_error!=0 || !observed.timeline {

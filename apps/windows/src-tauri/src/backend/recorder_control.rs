@@ -72,6 +72,11 @@ fn stable_state(command: u8) -> Option<u8> {
 }
 
 impl Journal {
+    pub(crate) fn unconfirmed_start_retry(&self)->bool {
+        self.confirmed.is_none() && self.key.is_none() && self.anchor.is_none()
+            && self.pending.as_ref().is_some_and(|pending|pending.command==1
+                && pending.request==self.start_request && pending.sequence==0)
+    }
     pub(crate) fn start(peer: &PausePeer, host_session: &str, device_id: &str,
         request: u32, max_seconds: u16) -> Result<Self,String> {
         if host_session.trim().is_empty() || host_session.len()>256 || !same_device(device_id,device_id) {

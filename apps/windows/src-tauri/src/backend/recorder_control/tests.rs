@@ -3,6 +3,7 @@ use super::*;
 #[test]
 fn explicit_start_retry_is_only_the_original_unconfirmed_initial_request() {
     let mut snapshot=crate::companion_v1::fixture_snapshot();let pending=start();
+    assert!(pending.unconfirmed_start_retry());assert!(!running().unconfirmed_start_retry());
     snapshot.host.persistence.status="ready".into();snapshot.host.sessions=vec![original_row(&pending)];
     let args=["companion-type","--recorder-control","retry-start","--session-id",HOST,"--device-id",DEVICE]
         .into_iter().map(str::to_owned).collect::<Vec<_>>();
@@ -28,6 +29,7 @@ fn restart_recovery_uses_confirmed_durable_original_without_volatile_peer_cache(
     let request=restart_recovery_request(&snapshot,DEVICE).expect("durable original is sufficient to attempt protected verification");
     assert_eq!(request.action,crate::companion_v1::CompanionV1ControlAction::MeetingRecoverControl);
     assert_eq!(request.session_id.as_deref(),Some(HOST));assert_eq!(request.device_id.as_deref(),Some(DEVICE));
+    assert_eq!(request.prompt_id.as_deref(),Some("__companion_original_auto_reconnect__"));
     assert!(super::super::automatic_original_reconnect_pending(&snapshot));
     assert!(crate::should_attempt_device_reconnect(&snapshot));
     let mut paused_retry=snapshot.clone();paused_retry.device.connection_phase="pairingRequired".into();

@@ -26,7 +26,7 @@ pub(crate) fn restart_recovery_request(snapshot:&CompanionV1Snapshot,device:&str
         || journal.sealed_catalogue_end.is_some()
         || snapshot.device.mcu_uid.as_deref().is_some_and(|uid|!uid.eq_ignore_ascii_case(&key.public_key().device_uid)) {return None;}
     Some(CompanionV1ControlRequest {action:Action::MeetingRecoverControl,session_id:Some(row.id.clone()),
-        device_id:Some(device.into()),ble_name:None,prompt_id:None,title:None,transcript_text:None,
+        device_id:Some(device.into()),ble_name:None,prompt_id:Some("__companion_original_auto_reconnect__".into()),title:None,transcript_text:None,
         meeting_mode:None,audio_path:None,audio_bytes:None,duration_ms:None})
 }
 
@@ -191,7 +191,8 @@ pub(crate) fn apply(snapshot:&mut CompanionV1Snapshot,request:&CompanionV1Contro
     let owned=snapshot.host.sessions.iter().find(|r|r.id==host).ok_or("原录音尚未保存。")?;
     let anchor=owned.device_recording_id;let key=owned.device_recording_key.clone();
     let known=super::super::verified_device_recording_ids(snapshot,Some(&device));
-    let result=bridge.pausable_meeting_control(&device,command,max_seconds,&host,anchor,key.as_ref(),new_start,&known);
+    let automatic_recovery=request.prompt_id.as_deref()==Some("__companion_original_auto_reconnect__");
+    let result=bridge.pausable_meeting_control(&device,command,max_seconds,&host,anchor,key.as_ref(),new_start,&known,automatic_recovery);
     // Reload even on timeout/pull failure: START intent or the real STOP ACK
     // was saved before any BLE write/receive, so neither can disappear.
     let restored=restore_snapshot(snapshot,&host);
