@@ -14,6 +14,23 @@ fn parse(value:&[u8])->Result<(u8,u32,u32),String> {
 fn packet(op:u8,token:u32,start:u8,count:u8)->Vec<u8> {
     let mut p=b"PCP1".to_vec();p.extend_from_slice(&[op,start,count,0]);p.extend_from_slice(&token.to_le_bytes());p
 }
+fn admission_error(value:&[u8])->String {
+    if value.len()!=16 || value[7]>>4!=1 {
+        return "屏幕正在处理其它操作，回复已保留，稍后可重试上屏。".into();
+    }
+    let blocked=value[5];let surface=value[7]&3;
+    let message=if blocked&64!=0 {"设备正在升级，回复已保留。"}
+        else if blocked&2!=0 {"设备正在处理录音，回复已保留。"}
+        else if blocked&1!=0 {"屏幕资源尚未就绪，回复已保留。"}
+        else if blocked&4!=0 && surface==1 {"请先返回宠物首页，再重试这句回复。"}
+        else if blocked&4!=0 && surface==2 {"宠物已休息，短按实体键唤醒后可重试这句回复。"}
+        else if blocked&8!=0 {"请先松开屏幕，再重试这句回复。"}
+        else if blocked&128!=0 {"设备正在完成连接或存储操作，回复已保留。"}
+        else if blocked&(16|32)!=0 {"屏幕正在完成上一幅画面，回复已保留。"}
+        else if blocked&4!=0 {"宠物正在进行其它互动，回复已保留。"}
+        else {"这次字幕尚未获接收，回复已保留，稍后可重试。"};
+    message.into()
+}
 pub(crate) fn supported(device:&str)->Result<(),String> {
     run_native_blocking(async {
         let peer=connect_native_device(Some(device)).await?;
@@ -53,10 +70,18 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
             loop {
                 if cancel.load(Ordering::Acquire) {return Err("聊天已取消。".into());}
                 write_packet(packet(1,token,0,0)).await?;
-                let (state,owner,visible)=parse(&peer.peripheral.read(&status).await.map_err(|_|"无法确认宠物字幕接收")?)?;
+                // The board republishes status on this protected write even
+                // when BEGIN is refused. Use that request's gate snapshot,
+                // not a stale pre-recording capability value, for its reason.
+                let value=peer.peripheral.read(&status).await.map_err(|_|"无法确认宠物字幕接收")?;
+                let (state,owner,visible)=parse(&value)?;
                 if owner==token && state==3 && visible==token {return Ok(());}
                 if owner==token && state==1 {break;}
-                if StdInstant::now()>=deadline {return Err("屏幕正在处理其它操作，回复已保留，稍后可重试上屏。".into());}
+                if StdInstant::now()>=deadline {
+                    eprintln!("pet_caption_admission request={} schema={} surface={} blockers={:02x} state={} owner_match={}",
+                        token,value[7]>>4,value[7]&3,value[5],state,u8::from(owner==token));
+                    return Err(admission_error(&value));
+                }
                 sleep(StdDuration::from_millis(120)).await;
             }
             for (start,count) in [(0u8,6u8),(6u8,7u8)] {
