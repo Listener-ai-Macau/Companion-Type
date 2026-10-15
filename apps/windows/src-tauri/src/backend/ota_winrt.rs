@@ -305,7 +305,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"当前升级版本",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
     package.admit(&current)?;drop(identity);
     let mtu=wait_ota_mtu(&target,false)?;
-    target.data_write_option=if flow.pipelined {GattWriteOption::WriteWithoutResponse}else{GattWriteOption::WriteWithResponse};
+    // First CE release uses one acknowledged <=244-byte ATT value. The
+    // observed509-byte burst did not advance offset0; throughput work remains
+    // deferred, rather than making fragmented WWR a prerequisite for OTA.
+    target.data_write_option=GattWriteOption::WriteWithResponse;
     if let Some(device)=target._device.as_ref() {
         if let Ok(p)=BluetoothLEPreferredConnectionParameters::Balanced() {
             if let Ok(r)=device.RequestPreferredConnectionParameters(&p) {target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(r));}
@@ -313,12 +316,13 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     }
     // Signature travels inside the file. Only DATA geometry is relevant;
     // do not inherit WB's244 cap or the former separate-manifest147 minimum.
-    let payload=flow.payload_bytes.min(mtu.saturating_sub(7));
+    let payload=240u16.min(flow.payload_bytes).min(mtu.saturating_sub(7));
     if payload==0{return Err("当前ATT MTU不能承载升级数据".into());}
     let mut options=denzic_ota_core::TransferOptions::dual_lane_bulk(payload);
-    options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
-    let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(flow.pipeline_depth()),pending_wwr_b:Vec::new(),
-        status_error_started:None,wba_signed:true,pipeline_depth:flow.pipeline_depth(),system_component:None};
+    options.window_chunks=1;options.inactive_link_window_chunks=Some(1);options.prefer_dual_lane=false;
+    eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window=1 download_resume=0");
+    let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::new(),pending_wwr_b:Vec::new(),
+        status_error_started:None,wba_signed:true,pipeline_depth:1,system_component:None};
     let mut window=super::ota_metrics::PayloadWindow::default();
     let mut report=denzic_ota_core::transfer(&mut transport,&package.file,options,|accepted,total|{
         window.observe(accepted,total,started.elapsed());
