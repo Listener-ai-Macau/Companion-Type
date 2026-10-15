@@ -83,6 +83,8 @@ pub mod product_settings;
 /// In-memory import/fixture coordinator; the board owns physical NOR storage.
 pub mod recording_ring;
 mod transcription;
+#[cfg(test)]
+mod meeting_processing_tests;
 pub(crate) mod pet_chat;
 pub(crate) use transcription::verify_asr_cache;
 pub(crate) use transcription::verify_cache_privacy;
@@ -100,6 +102,8 @@ use crate::companion_v1::{
     CompanionV1HostSession, CompanionV1MeetingRecovery, CompanionV1MinutesByMode, CompanionV1MinutesVariant,
     CompanionV1OobeCheck, CompanionV1Snapshot, CompanionV1UtteranceSegment,
 };
+
+const MEETING_WORK_SUPERSEDED: &str = "处理期间会议内容已变化，旧结果未覆盖当前内容；已有原音和服务缓存保留，请按当前会议状态继续。";
 
 fn unix_time_ms() -> u64 {
     SystemTime::now()
@@ -1006,6 +1010,7 @@ fn speaker_prompt_id(value: Option<&str>) -> Result<u8, String> {
 
 pub struct FixtureCompanionBackend {
     snapshot: Mutex<CompanionV1Snapshot>,
+    meeting_processing: Mutex<()>,
     host_recording: HostRecordingManager,
     live_asr: Arc<LiveAsrHub>,
     transcription: CompanionTranscriptionManager,
@@ -1049,6 +1054,7 @@ impl FixtureCompanionBackend {
         };
         Self {
             snapshot: Mutex::new(snapshot),
+            meeting_processing: Mutex::new(()),
             host_recording: HostRecordingManager::new(),
             live_asr: Arc::new(LiveAsrHub::new()),
             transcription: CompanionTranscriptionManager::new(),
@@ -1058,6 +1064,38 @@ impl FixtureCompanionBackend {
             pending_meeting_start: Mutex::new(None),
             connection_preference: Mutex::new(connection_preference),
         }
+    }
+
+    /// External ASR/minutes work must not own the UI/recorder state lock.
+    /// Re-enter against the exact target, never a newly selected session, and
+    /// reject late output after edits/deletion instead of restoring stale state.
+    fn run_meeting_work<'a,T>(&'a self,
+        snapshot: std::sync::MutexGuard<'a,CompanionV1Snapshot>,
+        request: &CompanionV1ControlRequest, work: impl FnOnce()->T,
+    )->Result<(std::sync::MutexGuard<'a,CompanionV1Snapshot>,T),String> {
+        let input=request.session_id.as_deref()
+            .and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id)).cloned();
+        let input_bytes=serde_json::to_vec(&input).map_err(|_|"无法核对会议处理输入。")?;
+        drop(snapshot);
+        let result=work();
+        let mut snapshot=self.snapshot.lock().map_err(|_|"Companion backend state lock failed")?;
+        let current=request.session_id.as_deref()
+            .and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id));
+        if serde_json::to_vec(&current).map_err(|_|"无法核对会议处理结果。")?!=input_bytes {
+            if let (Some(input),Some(current))=(input.as_ref(),request.session_id.as_deref()
+                .and_then(|id|snapshot.host.sessions.iter_mut().find(|s|s.id==id))) {
+                // Only retire our unchanged in-flight claim. A user import,
+                // privacy action or pause may already have superseded it.
+                if serde_json::to_vec(&current.recovery).map_err(|_|"无法核对当前处理状态。")?
+                    ==serde_json::to_vec(&input.recovery).map_err(|_|"无法核对原处理状态。")?
+                    && matches!(current.recovery.stage.as_str(),"transcribing"|"generatingMinutes") {
+                    schedule_recovery_failure(current,MEETING_WORK_SUPERSEDED);
+                    persistence::save_snapshot(&mut snapshot)?;
+                }
+            }
+            return Err(MEETING_WORK_SUPERSEDED.into());
+        }
+        Ok((snapshot,result))
     }
 
     fn merge_live_asr_into_session(
@@ -1253,11 +1291,21 @@ impl CompanionBackend for FixtureCompanionBackend {
             request.meeting_mode = Some(mode);
         }
 
+        // Serialize service jobs separately; a retry can wait here without
+        // holding the shared state needed by snapshots, capture and selection.
+        let action=request.action;
+        let _processing=if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio
+            | CompanionV1ControlAction::MeetingGenerateMinutes) {
+            Some(self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?)
+        } else {None};
         let mut snapshot = self
             .snapshot
             .lock()
             .map_err(|_| "Companion backend state lock failed".to_string())?;
-        let action = request.action;
+        if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio
+            | CompanionV1ControlAction::MeetingGenerateMinutes) && request.session_id.is_none() {
+            request.session_id=selected_session(&snapshot).map(|s|s.id.clone());
+        }
         privacy::validate_control(&snapshot, &request, self.live_asr.snapshot().active)?;
         if action == CompanionV1ControlAction::HostRetrySave {
             if snapshot.host.persistence.status == "blocked" {
@@ -1310,7 +1358,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         // command locks through the sanitized index checkpoint below.
         let mut privacy_retirement=recorder_control::prepare_privacy_retirement(
             &snapshot,&request,&persistence::state_file_path())?;
-        let original_selected_session_id = snapshot.host.selected_session_id.clone();
+        let mut original_selected_session_id = snapshot.host.selected_session_id.clone();
         if snapshot.device.recording
             && owned_segmented_recording_sync(&snapshot,&request).is_none()
             && matches!(
@@ -2179,10 +2227,12 @@ impl CompanionBackend for FixtureCompanionBackend {
                 request.transcript_text = session.map(|session| session.transcript_text.clone());
                 request
             } else {
-                match self
-                    .transcription
-                    .transcribe_session_owned(session.map(|s| s.id.as_str()).unwrap_or(""), audio_path.as_deref(), &chunk_paths)
-                {
+                let owner=session.map(|s|s.id.clone()).unwrap_or_default();
+                let (fresh,result)=self.run_meeting_work(snapshot,&request,||
+                    self.transcription.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths))?;
+                snapshot=fresh;
+                original_selected_session_id=snapshot.host.selected_session_id.clone();
+                match result {
                 Ok(transcript) => {
                     transcription_note = Some(format!(
                         "{} ({}){}",
@@ -2589,8 +2639,12 @@ impl CompanionBackend for FixtureCompanionBackend {
                     .and_then(|id| snapshot.host.sessions.iter().find(|session| session.id == id))
                     .or_else(|| selected_session(&snapshot)).cloned();
                 if let Some(mut session) = input.filter(|session| !session.transcript_text.trim().is_empty()) {
-                    let failure = refresh_minutes_products_for_mode(&mut session, &generated_at, request.meeting_mode.as_deref(),
-                        |input| self.minutes.generate(input, &generated_at));
+                    let (fresh,failure)=self.run_meeting_work(snapshot,&request,||
+                        refresh_minutes_products_for_mode(&mut session,&generated_at,request.meeting_mode.as_deref(),
+                            |input|self.minutes.generate(input,&generated_at)))?;
+                    snapshot=fresh;
+                    original_selected_session_id=snapshot.host.selected_session_id.clone();
+                    next=apply_control_at(snapshot.clone(),request.clone(),&observation_timestamp())?;
                     next.meeting.status = session.status.clone();
                     if let Some(target) = next.host.sessions.iter_mut().find(|target| target.id == session.id) {
                         *target = session;
@@ -2769,6 +2823,10 @@ impl CompanionBackend for FixtureCompanionBackend {
             _ => {}
         }
 
+        if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio
+            | CompanionV1ControlAction::MeetingGenerateMinutes) {
+            next=merge_meeting_work(&snapshot,next,requested_session_id.as_deref());
+        }
         if automatic_recovery {
             next.host.selected_session_id = original_selected_session_id;
         }
@@ -2928,6 +2986,9 @@ impl CompanionBackend for FixtureCompanionBackend {
         retry_stage: &str,
         error: &str,
     ) -> Result<(), String> {
+        // The lock-free worker already reconciled its own superseded claim.
+        // Do not re-arm a deleted/reviewed job or consume a second attempt.
+        if error==MEETING_WORK_SUPERSEDED { return Ok(()); }
         let mut snapshot = self
             .snapshot
             .lock()
@@ -3414,6 +3475,25 @@ impl CompanionBackend for FixtureCompanionBackend {
         let _ = persistence::save_snapshot(&mut snapshot);
         Ok(snapshot.clone())
     }
+}
+
+/// A completed old meeting must not restore pre-work device/UI state or stop
+/// a newer capture. Apply only its session into the latest locked snapshot.
+fn merge_meeting_work(current:&CompanionV1Snapshot,next:CompanionV1Snapshot,id:Option<&str>)
+    ->CompanionV1Snapshot {
+    let Some(id)=id else {return next};
+    let Some(session)=next.host.sessions.iter().find(|s|s.id==id) else {return next};
+    let mut merged=current.clone();
+    let Some(target)=merged.host.sessions.iter_mut().find(|s|s.id==id) else {return merged};
+    *target=session.clone();
+    if !current.meeting.active && current.host.selected_session_id.as_deref()==Some(id) {
+        merged.meeting=next.meeting;
+    }
+    merged.meeting.transcript_count=merged.host.sessions.iter()
+        .filter(|s|!s.transcript_text.trim().is_empty()).count() as u32;
+    merged.updated_at=next.updated_at;
+    merged.last_control=next.last_control;
+    merged
 }
 
 fn selected_session_mut(snapshot: &mut CompanionV1Snapshot) -> Option<&mut CompanionV1HostSession> {

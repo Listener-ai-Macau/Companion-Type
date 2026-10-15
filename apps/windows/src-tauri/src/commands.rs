@@ -296,10 +296,12 @@ fn ensure_board_online_live_start_is_idle(snapshot: &CompanionV1Snapshot) -> Res
 }
 
 #[tauri::command]
-pub fn get_companion_v1_snapshot(
+pub async fn get_companion_v1_snapshot(
     coordinator: CompanionCoordinatorState<'_>,
 ) -> Result<CompanionV1Snapshot, String> {
-    coordinator.snapshot()
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||coordinator.snapshot()).await
+        .map_err(|_|"读取 Companion 状态任务未完成，请重试。".to_string())?
 }
 
 #[tauri::command]
