@@ -298,6 +298,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
     // Protected capability read establishes encryption before public readiness.
     let bytes=read_simple_protected_status(&target)?;
+    let preflight=denzic_ota_core::parse_status(&bytes)?;
+    eprintln!("[companion-ota] preflight_receive state={} accepted={} expected={} error={}",preflight.state,preflight.bytes_written,preflight.expected_size,preflight.last_error);
     check_wba_readiness(&target)?;
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
     let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
@@ -319,8 +321,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let payload=240u16.min(flow.payload_bytes).min(mtu.saturating_sub(7));
     if payload==0{return Err("当前ATT MTU不能承载升级数据".into());}
     let mut options=denzic_ota_core::TransferOptions::dual_lane_bulk(payload);
-    options.window_chunks=1;options.inactive_link_window_chunks=Some(1);options.prefer_dual_lane=false;
-    eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window=1 download_resume=0");
+    // Each DATA remains ATT-acknowledged. Reuse the existing bounded device
+    // checkpoint window, so SYNC+READ are not repeated for every single DATA.
+    options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
+    eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0",flow.window_chunks);
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::new(),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:1,system_component:None};
     let mut window=super::ota_metrics::PayloadWindow::default();
