@@ -1,0 +1,300 @@
+{
+  "schema": "companion.local-speaker-refinement.r21.v1",
+  "result": "INSTALLED_SAME_REAL_ORIGINAL_LOCAL_THREE_VOICE_REFINEMENT_CONFIRMED_QUALITY_OPEN",
+  "createdAtLocal": "2026-10-16T03:02:55+08:00",
+  "summary": "R21已正式安装，会议页新增“重新区分说话人（本地）”；同一51号429.98秒原音在4.08秒本地重算为3组，47个已归属片段按独立原声轮次一一对应、4段仍未知；原音/文字/时间轴不变、ASR调用0，旧双纪要先保留为草稿，再沿既有服务显式更新双纪要。",
+  "limitations": "三人场景的声纹过并已改善，不等于DER或全场景合格：相似双人对照仍合并1组，独立四人样本原链仍6组。原ASR实板→石板、原音→原因也进入双纪要，关键术语零错误门未过；未改云/模型。蓝牙首次失配、OTA严格安装断电、2h、实测功耗及100KiB/s仍OPEN。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "a60df79eb53b69e9acdde3ed52087009fb6aefd5",
+    "tag": "companion-local-speakers-r21-20261016-source",
+    "parent": "a33dcd57a25ca325417d1de20cb717690ff859cc",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T02:52:41"
+  },
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\speaker-r21\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10416128,
+    "sha256": "d8ef538647588b27096e144b7f08404aff650c7cfad3284395705c2ede458de9"
+  },
+  "install": {
+    "result": "PASS_INSTALL_IDENTITY_ONLY",
+    "exeSha256": "d79d5f9f24298fab1ce8c0f7fd3ee1ef9e144f8f758f4f8228fe846794b8308c",
+    "dllSha256": "a9f0b8cbb08922d9539c8b8b79b33bbed4580606afa84263f5b6ca1032096e80",
+    "payloadMatch": true
+  },
+  "inherited": {
+    "typeParent": "a33dcd57a25ca325417d1de20cb717690ff859cc",
+    "pet": "P128 foreground lease/cancel two-file change and existing btleplug manifest source included; R20/P127/R18/R16 preserved.",
+    "firmware": "Actual source audio captured on412/UI76. This stage no board connection/firmware write; current413/normalBoot413/UI76 belongs to screen-side install."
+  },
+  "product": {
+    "entry": "会议页 → 转写旁 → 重新区分说话人（本地）",
+    "nativeCli": "--meeting-speakers-request {sessionId} output uses the exact same coordinator/backend as GUI.",
+    "localOnly": "Existing pinned CAM++/sherpa runtime; no ASR/LLM/network/provider settings in the reprocess function. Explicit later minutes actions use existing service.",
+    "audioSafety": "Only exact library-owned saved WAV/timed final transcript; source path/text/count cannot be supplied by renderer/request. Current capture/partial source unavailable; words/time cannot change.",
+    "humanEdits": "Active or stale human review and userEdited minute products reject automatic re-grouping; unsaved frontend drafts disable the button.",
+    "staleWork": "Reuse existing serialized service work and exact-row stale-result guard outside shared snapshot lock; edits/deletion are not recreated or overwritten.",
+    "minuteSafety": "Keep both old documents/source in library, downgrade to explicit draft after changed grouping; no hidden regeneration, reset automatic recovery intent. Subsequent chosen-mode generation independently restores final status."
+  },
+  "algorithm": {
+    "change": "NME acoustic count prevents the last over-merge in existing constrained AHC; same-request provider distinctions retained, explicit threshold honored.",
+    "knownCountInput": false,
+    "referenceProvided": false,
+    "defaultCosineUnchanged": 0.68,
+    "nearIdenticalMergeProtection": 0.9,
+    "limits": "NME12..256 vectors only; no subsampling that may erase a brief speaker. Larger/insufficient/invalid input retains current AHC. Single-speaker baseline and high-cosine ties guarded; this hybrid cannot yet separate the similar-voice-only two-person control.",
+    "references": [
+      "https://arxiv.org/abs/2003.02405",
+      "https://raw.githubusercontent.com/NVIDIA/NeMo/v2.0.0/nemo/collections/asr/parts/utils/offline_clustering.py"
+    ],
+    "implementation": "Independent NME counting with nalgebra0.33.2 symmetric eigen solver, followed by existing AHC; not a claim of full NeMo spectral diarization."
+  },
+  "actual": {
+    "schema": "companion.local-speakers.actual.v1",
+    "result": "SAME_ORIGINAL51_THREE_VOICES_LOCAL_REFINEMENT_AND_DUAL_MINUTES_SAVED",
+    "startedAtLocal": "2026-10-16T02:57:43.895+08:00",
+    "sessionId": "board-online-1792086663120",
+    "originalRecordingId": 51,
+    "boardConnection": false,
+    "newRecording": false,
+    "asrRequested": false,
+    "newService": false,
+    "referenceProvidedToProduct": false,
+    "modelsChanged": false,
+    "localRefineMs": 4083.624399965629,
+    "speakersBefore": 2,
+    "speakersAfter": 3,
+    "unknownBefore": 4,
+    "unknownAfter": 4,
+    "utterances": 51,
+    "wordsAndTimelineUnchanged": true,
+    "oldMinutesRetainedAsDraft": true,
+    "audioSha256": "fa82bda2f90918bbed79ba0089b150765bbdd38764d5a1b73d1a7ce781445ef5",
+    "normalIndexReopened": true,
+    "minutesModes": {
+      "offlineStore": "minutesReady",
+      "onlineLive": "minutesReady"
+    },
+    "fullChainAcceptance": "NOT_QUALIFIED",
+    "derQualification": "NOT_MEASURED",
+    "finishedAtLocal": "2026-10-16T02:58:19.684+08:00",
+    "ownedHandlesClosed": true
+  },
+  "evaluation": {
+    "scope": "Known stimulus turn mapping only after installed product completion; no expected count/name supplied to product. Not DER or independent real-human acceptance.",
+    "audioSha256": "fa82bda2f90918bbed79ba0089b150765bbdd38764d5a1b73d1a7ce781445ef5",
+    "wordsAndTimesSha256": "add00ee517e4aee1c050cfd15cc95a9191c6c8d8c4005a087bac389a1c44cfc2",
+    "wordsAndTimesUnchanged": true,
+    "previousCerRetained": 0.027174,
+    "cerReferenceCharacters": 1104,
+    "cerErrors": 30,
+    "speakersBefore": 2,
+    "speakersAfter": 3,
+    "unknown": 4,
+    "mapping": {
+      "林经理": {
+        "0": 13,
+        "None": 2
+      },
+      "小王": {
+        "1": 18,
+        "None": 1
+      },
+      "小陈": {
+        "2": 16,
+        "None": 1
+      }
+    },
+    "allAttributedTurnsMatchOneToOne": true
+  },
+  "criticalTerms": {
+    "schema": "companion.recording.frozen-term-diagnostic.v1",
+    "scope": "Existing independently frozen terms, NFC/alphanumeric/lowercase only. No homophone repair, no ASR or minute request; presence is not semantic accuracy.",
+    "terms": [
+      {
+        "term": "实板",
+        "spoken": true,
+        "recognized": false,
+        "byMode": {
+          "offlineStore": false,
+          "onlineLive": false
+        }
+      },
+      {
+        "term": "供电",
+        "spoken": false,
+        "recognized": false,
+        "byMode": {
+          "offlineStore": false,
+          "onlineLive": false
+        }
+      },
+      {
+        "term": "Opus",
+        "spoken": true,
+        "recognized": true,
+        "byMode": {
+          "offlineStore": true,
+          "onlineLive": true
+        }
+      },
+      {
+        "term": "原音",
+        "spoken": true,
+        "recognized": false,
+        "byMode": {
+          "offlineStore": false,
+          "onlineLive": false
+        }
+      },
+      {
+        "term": "断线恢复",
+        "spoken": true,
+        "recognized": true,
+        "byMode": {
+          "offlineStore": true,
+          "onlineLive": true
+        }
+      },
+      {
+        "term": "耐久游标",
+        "spoken": true,
+        "recognized": true,
+        "byMode": {
+          "offlineStore": true,
+          "onlineLive": true
+        }
+      },
+      {
+        "term": "内部测试版",
+        "spoken": true,
+        "recognized": true,
+        "byMode": {
+          "offlineStore": true,
+          "onlineLive": true
+        }
+      }
+    ],
+    "failedSpokenTerms": [
+      "实板",
+      "原音"
+    ],
+    "qualityQualified": false,
+    "minutesAccuracyQualified": false,
+    "reason": "实板/原音 retain wrong homophones in actual ASR and both minute products; frozen zero-critical-error requirement is not satisfied.",
+    "referenceProvidedToProduct": false
+  },
+  "prototypeControls": {
+    "scope": "Offline algorithm prototype with verified actual voice vectors; labels select held control inputs only, never given to the counting function; not native/DER/hardware acceptance.",
+    "cases": [
+      {
+        "expected": 1,
+        "observed": 1,
+        "voices": [
+          "小王"
+        ],
+        "vectors": 18,
+        "nme": 1,
+        "passed": true
+      },
+      {
+        "expected": 1,
+        "observed": 1,
+        "voices": [
+          "小陈"
+        ],
+        "vectors": 16,
+        "nme": 1,
+        "passed": true
+      },
+      {
+        "expected": 1,
+        "observed": 1,
+        "voices": [
+          "林经理"
+        ],
+        "vectors": 13,
+        "nme": 1,
+        "passed": true
+      },
+      {
+        "expected": 2,
+        "observed": 2,
+        "voices": [
+          "小王",
+          "小陈"
+        ],
+        "vectors": 34,
+        "nme": 2,
+        "passed": true
+      },
+      {
+        "expected": 2,
+        "observed": 2,
+        "voices": [
+          "小王",
+          "林经理"
+        ],
+        "vectors": 31,
+        "nme": 2,
+        "passed": true
+      },
+      {
+        "expected": 2,
+        "observed": 1,
+        "voices": [
+          "小陈",
+          "林经理"
+        ],
+        "vectors": 29,
+        "nme": 1,
+        "passed": false
+      },
+      {
+        "expected": 3,
+        "observed": 3,
+        "voices": [
+          "小王",
+          "小陈",
+          "林经理"
+        ],
+        "vectors": 47,
+        "nme": 3,
+        "passed": true
+      }
+    ]
+  },
+  "realFourSpeakerCounterexample": {
+    "source": "docs/validation/four-speakers-zh.wav",
+    "segments": 9,
+    "expected": 4,
+    "observed": 6,
+    "qualified": false,
+    "note": "Existing ignored probe exits0 because it only asserts>=2; numeric6 is retained as a failure of four-person quality, not accepted as success. NME is not active at9 vectors; existing defect persists."
+  },
+  "rejectedDirections": {
+    "dominantVad": "Fresh per-utterance embedding alone still2; full original pipeline reproduced2 including unknown4. Not applied as root fix.",
+    "alternateModel": "Official ERes2Net-base-200k candidate39,593,765B locally evaluated, same fixed cut still2; not installed and not added to default components.",
+    "diagnosticFailures": "Initial Rust float syntax error retained; count-only homogeneous/rank and sparse-graph toy cases exposed over-splitting, corrected acoustic protection then final affected checks passed. Initial source verification tried Git-show through gitlink; corrected to exact dependency Git source, no production failure/rebuild disguised."
+  },
+  "validation": {
+    "affectedRust": "7 algorithm tests and1 local-save/human-guard test; no full-suite or unrelated board checks.",
+    "frontend": "TypeScript/Vite from formal MSI build; native saved-source backend operation actual. GUI click-through not performed.",
+    "sourceInputs": 211,
+    "normalIndex": true,
+    "sameWav": true,
+    "asrRequests": 0,
+    "modelsChanged": false,
+    "newCloudService": false,
+    "cloudConfigurationChanged": false,
+    "boardHandles": false
+  },
+  "qualityTargetsChanged": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "next": [
+    "Use existing sources to address similar two-voice and short/oversegmented four-voice cases; do not hardcode people or train on reference words.",
+    "Keep frozen term failures in ASR and both minute modes; do not silently fix benchmark homophones or call low CER full accuracy.",
+    "Continue recorder/BLE/OTA/power gaps with latest joint source. Actual install-cut requires concrete Owner physical timing; speed tuning still awaits Nordic."
+  ]
+}
