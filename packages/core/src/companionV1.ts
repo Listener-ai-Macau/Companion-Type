@@ -398,6 +398,8 @@ export interface CompanionTranscriptReviewEdit {
   speakerNames?: CompanionSpeakerName[];
 }
 
+export const COMPANION_CAPTURE_ONLY_PROMPT = '__companion_capture_only__';
+
 export interface CompanionV1HostSession {
   id: string;
   title: string;
@@ -405,6 +407,8 @@ export interface CompanionV1HostSession {
   status: CompanionV1HostSessionStatus;
   /** offlineStore = store-first; onlineLive = live partials during capture. */
   meetingMode: CompanionV1MeetingMode;
+  /** Persisted choice; older rows keep automatic meeting processing. */
+  processingPolicy?: 'automatic' | 'manual';
   /** Blocker after capture (needs ASR, network, or device pull). */
   pendingReason: CompanionV1SessionPendingReason;
   startedAt: string | null;
@@ -471,7 +475,7 @@ export interface CompanionV1MinutesVariant {
 }
 
 export interface CompanionV1MeetingRecovery {
-  intent: 'none' | 'processMeeting';
+  intent: 'none' | 'processMeeting' | 'petChat';
   requestedMeetingMode: string;
   stage: 'idle' | 'pendingTranscription' | 'transcribing' | 'pendingMinutes'
     | 'generatingMinutes' | 'retryBackoff' | 'paused' | 'complete';
@@ -1314,6 +1318,12 @@ export function describeCompanionMeetingRecovery(session: CompanionV1HostSession
       retryAction: companionSessionHasFinalTranscript(session) ? 'meetingGenerateMinutes' : 'meetingTranscribeAudio',
       isProcessing: false };
   }
+  if (session.processingPolicy === 'manual' && recovery?.lastError && recovery.stage === 'paused') {
+    return { label: session.pendingReason === 'no_speech_detected' ? '未识别到人声' : '处理未完成',
+      message: `${recovery.lastError} 原音已保留，选择转写或生成纪要可手动重试。`,
+      retryAction: companionSessionHasFinalTranscript(session) ? 'meetingGenerateMinutes' : 'meetingTranscribeAudio',
+      isProcessing: false };
+  }
   if (!recovery || recovery.intent !== 'processMeeting' || session.status === 'recording'
     || recovery.stage === 'idle' || recovery.stage === 'complete') return null;
   if (recovery.requestedMeetingMode !== session.meetingMode) {
@@ -1542,6 +1552,7 @@ function createHostSession(
     source: suppliedAudioPath ? 'deviceFlash' : 'hostMicrophone',
     status: 'recording',
     meetingMode,
+    processingPolicy: request.promptId === COMPANION_CAPTURE_ONLY_PROMPT ? 'manual' : 'automatic',
     pendingReason: null,
     startedAt: now,
     stoppedAt: null,

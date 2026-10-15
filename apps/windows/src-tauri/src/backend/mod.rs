@@ -119,7 +119,8 @@ fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
     // This explicit short capture belongs to the pet reply worker. Its raw
     // audio keeps the normal durable library/consume contract, without an
     // additional automatic meeting ASR/minutes job after STOP or restart.
-    if session.recovery.intent == pet_chat::CAPTURE_INTENT { return; }
+    if session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
+        || session.recovery.intent == pet_chat::CAPTURE_INTENT { return; }
     if session.recovery.intent != "processMeeting" {
         session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
     }
@@ -161,7 +162,8 @@ fn schedule_recovery_failure(session: &mut CompanionV1HostSession, error: &str) 
     }
     session.recovery.last_error = Some(error.chars().take(512).collect());
     let exhausted = session.recovery.attempt_count >= session.recovery.max_attempts.max(1);
-    if exhausted || recovery_error_is_permanent(error) {
+    if exhausted || recovery_error_is_permanent(error)
+        || session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual {
         session.recovery.stage = "paused".to_string();
         session.recovery.next_retry_at_unix_ms = None;
         session.pending_reason = Some(if volcengine::is_no_speech_error(error) {
@@ -1501,7 +1503,8 @@ impl CompanionBackend for FixtureCompanionBackend {
                     .any(|candidate| candidate.status == "recording");
             if let Some(index) = target_index {
                 let session = &mut snapshot.host.sessions[index];
-                if automatic_recovery && session.recovery.intent != "processMeeting" {
+                if automatic_recovery && (session.recovery.intent != "processMeeting"
+                    || session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual) {
                     return Ok(snapshot.clone());
                 }
                 if automatic_recovery && interrupted_capture::hold(session) {
@@ -3728,7 +3731,7 @@ fn merge_synced_recordings(snapshot: &mut CompanionV1Snapshot, recordings: &[Com
         if !session.transcript_final {
             session.status = "captured".into();
             session.pending_reason = Some("needs_transcription".into());
-            if was_waiting_for_sync {
+            if was_waiting_for_sync && session.processing_policy != crate::companion_v1::CompanionV1ProcessingPolicy::Manual {
                 session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
             } else { arm_meeting_recovery(session); }
             interrupted_capture::hold(session);
@@ -3782,6 +3785,32 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn manual_processing_policy_blocks_stale_automatic_work_but_accepts_manual_transcribe() {
+        use super::*;
+        use crate::companion_v1::{CAPTURE_ONLY_PROMPT,CompanionV1ProcessingPolicy};
+        let mut start=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("manual-policy".into()));
+        start.prompt_id=Some(CAPTURE_ONLY_PROMPT.into());
+        let mut state=apply_fixture_control(fixture_snapshot(),start).unwrap();
+        state.host.active_session_id=None;state.meeting.active=false;state.device.recording=false;
+        let row=&mut state.host.sessions[0];row.status="captured".into();row.audio_stored=true;
+        row.audio_path=Some("manual-policy-unit-does-not-exist.wav".into());
+        assert_eq!(row.processing_policy,CompanionV1ProcessingPolicy::Manual);
+        arm_meeting_recovery(row);assert_eq!(row.recovery.intent,"none");
+        // An interrupted capture or stale queued request may still carry an
+        // armed recovery. The durable policy independently forbids auto work.
+        row.recovery=CompanionV1MeetingRecovery::armed("offlineStore");
+        let before=serde_json::to_value(&state).unwrap();
+        let backend=FixtureCompanionBackend::new();*backend.snapshot.lock().unwrap()=state;
+        let skipped=backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingTranscribeAudio,"manual-policy",true)).unwrap();
+        assert_eq!(serde_json::to_value(&skipped).unwrap(),before);
+        let attempted=backend.apply_control(recovery_request(CompanionV1ControlAction::MeetingTranscribeAudio,"manual-policy",false)).unwrap();
+        let row=attempted.host.sessions.iter().find(|r|r.id=="manual-policy").unwrap();
+        assert_eq!(row.processing_policy,CompanionV1ProcessingPolicy::Manual);
+        assert_eq!(row.recovery.stage,"paused");assert!(row.recovery.last_error.is_some());
+        assert!(row.recovery.next_retry_at_unix_ms.is_none());
+    }
+
     #[test]
     fn recording_library_scope_legacy_recovery_never_replaces_segmented_original() {
         let snapshot=super::apply_fixture_control(super::fixture_snapshot(),crate::control_request(

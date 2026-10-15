@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 
 import {
+  COMPANION_CAPTURE_ONLY_PROMPT,
   type CompanionV1ControlAction,
   type CompanionV1ControlRequest,
   type CompanionV1MeetingMode,
@@ -830,7 +831,7 @@ export function CompanionDashboard({
       {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="开始设备录音">
         <div><strong>用 Companion 录音</strong>
           <p>{connected
-            ? `先把原音保存下来，无需网络或转写配置。当前最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整。`
+            ? `只保存原音，转写与纪要稍后手动启动。无需网络或转写配置。当前最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整。`
             : '连接后可从这里开始，也可以直接用设备按键离线录音。'}</p>
           {!durationValid ? <p role="alert">请输入有效的录音时长。</p> : null}
         </div>
@@ -838,6 +839,7 @@ export function CompanionDashboard({
           <button type="button" className="ct-action ct-action-primary"
             disabled={controlsBusy || storageBlocked || !connected || !device?.deviceId || !durationValid}
             onClick={() => onControl({ action: 'meetingStart', meetingMode: 'offlineStore',
+              promptId: COMPANION_CAPTURE_ONLY_PROMPT,
               deviceId: device?.deviceId ?? undefined, title: newMeetingTitle.trim() || 'Companion 录音', durationMs: requestedDurationMs })}>
             <Mic size={16} /><span>开始录音</span>
           </button>
@@ -1840,6 +1842,7 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   ];
   return <section className="ct-safety-card" aria-label="录音安全状态">
     <header><strong>录音安全状态</strong><span>{saveFailed ? '需要处理' : localAudio ? '电脑已有副本' : partialAudio ? '本机已保存分段' : '内容仍在流转'}</span></header>
+    {session.processingPolicy === 'manual' ? <p>这是一份普通录音。转写和纪要由你手动启动，同步原音后不会自动提交云端处理。</p> : null}
     <ol>{steps.map((step) => <li key={step.label} className={`ct-safety-${step.kind}`}><span aria-hidden="true" />
       <div><strong>{step.label}</strong><small>{step.state}</small></div></li>)}</ol>
     {session.pendingReason === 'needs_device_sync' ? <p>录音仍在来源设备；重连同一台 Companion 后会从断点继续。</p> : null}

@@ -521,7 +521,8 @@ fn next_automatic_recovery(
     let mut next_wake = None;
     for session in &snapshot.host.sessions {
         let recovery = &session.recovery;
-        if recovery.intent != "processMeeting"
+        if session.processing_policy == companion_v1::CompanionV1ProcessingPolicy::Manual
+            || recovery.intent != "processMeeting"
             || recovery.requested_meeting_mode != session.meeting_mode
             || matches!(recovery.stage.as_str(), "idle" | "paused" | "complete")
         {
@@ -882,6 +883,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             Some(session_id.clone()),
         );
         start.title = Some("Companion 实板录音控制与收取".to_string());
+        start.prompt_id = Some(companion_v1::CAPTURE_ONLY_PROMPT.into());
         start.meeting_mode = Some("offlineStore".to_string());
         start.device_id = Some(device_id.clone());
         start.duration_ms = Some((seconds + if recover_after_limit { 0 } else { 30 }) * 1_000);
@@ -1110,6 +1112,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             "seed": false,
             "asr": "NOT_RUN",
             "minutes": "NOT_RUN",
+            "processingPolicy": session.processing_policy,
             "fullChainAcceptance": "NOT_RUN",
             "stopToDurableReceiveMs": if recover_after_limit { None } else { Some(stop_to_durable_receive_ms) },
             "reconnectToDurableReceiveMs": if recover_after_limit { Some(stop_to_durable_receive_ms) } else { None },
@@ -2494,6 +2497,29 @@ fn wav_data_chunk_bytes(audio_path: &Path) -> Option<u64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn manual_processing_policy_survives_restart_and_does_not_enter_automatic_queue() {
+        use companion_v1::{CompanionV1ProcessingPolicy as Policy,CompanionV1ControlAction as A};
+        let mut req=control_request(A::MeetingStart,Some("manual-policy".into()));
+        req.prompt_id=Some(companion_v1::CAPTURE_ONLY_PROMPT.into());
+        let mut state=companion_v1::apply_fixture_control(companion_v1::fixture_snapshot(),req).unwrap();
+        state.meeting.active=false;state.host.active_session_id=None;state.device.recording=false;
+        let row=&mut state.host.sessions[0];row.status="captured".into();row.audio_stored=true;
+        row.recovery=companion_v1::CompanionV1MeetingRecovery::armed("offlineStore");
+        let mut restored=state.clone();
+        restored.host.sessions=serde_json::from_slice(&serde_json::to_vec(&state.host.sessions).unwrap()).unwrap();
+        assert_eq!(restored.host.sessions[0].processing_policy,Policy::Manual);
+        assert!(next_automatic_recovery(&restored,0).0.is_none());
+        let mut old=serde_json::to_value(&state.host.sessions).unwrap();
+        old[0].as_object_mut().unwrap().remove("processingPolicy");
+        let mut legacy=state.clone();legacy.host.sessions=serde_json::from_value(old).unwrap();
+        assert_eq!(legacy.host.sessions[0].processing_policy,Policy::Automatic);
+        assert!(next_automatic_recovery(&legacy,0).0.is_some());
+        let erased=companion_v1::apply_fixture_control(restored,
+            control_request(A::PrivacyEraseTranscript,Some("manual-policy".into()))).unwrap();
+        assert_eq!(erased.host.sessions[0].processing_policy,Policy::Manual);
+    }
 
     #[test]
     fn recording_library_scope_reused_device_id_requires_exact_host() {

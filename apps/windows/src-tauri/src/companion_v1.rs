@@ -297,6 +297,10 @@ pub struct CompanionV1HostSession {
     /// offlineStore = store-first batch ASR later; onlineLive = live partials while recording.
     #[serde(default = "default_meeting_mode_offline")]
     pub meeting_mode: String,
+    /// Durable user choice, separate from retry/recovery state. Old rows retain
+    /// automatic behavior; a plain recording only uses cloud services on demand.
+    #[serde(default)]
+    pub processing_policy: CompanionV1ProcessingPolicy,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pending_reason: Option<String>,
     pub started_at: Option<String>,
@@ -366,6 +370,16 @@ pub struct CompanionV1HostSession {
     pub export_markdown: String,
     pub exported_at: Option<String>,
     pub retention: CompanionV1SessionRetention,
+}
+
+pub const CAPTURE_ONLY_PROMPT: &str = "__companion_capture_only__";
+
+#[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub enum CompanionV1ProcessingPolicy {
+    #[default]
+    Automatic,
+    Manual,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -1492,6 +1506,9 @@ pub(crate) fn create_host_session(
         .filter(|mode| *mode == "onlineLive" || *mode == "offlineStore")
         .map(str::to_string)
         .unwrap_or_else(|| snapshot.host.recording_policy.default_meeting_mode.clone());
+    let processing_policy=if request.prompt_id.as_deref()==Some(CAPTURE_ONLY_PROMPT) {
+        CompanionV1ProcessingPolicy::Manual
+    } else {CompanionV1ProcessingPolicy::Automatic};
     CompanionV1HostSession {
         note_revision: 0, meeting_notes: vec![],
         bookmark_revision: 0,
@@ -1512,6 +1529,7 @@ pub(crate) fn create_host_session(
         },
         status: "recording".to_string(),
         meeting_mode,
+        processing_policy,
         pending_reason: None,
         started_at: Some(now.to_string()),
         stopped_at: None,

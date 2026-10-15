@@ -130,4 +130,22 @@ mod tests {
         assert!(!rows[0].audio_stored && !rows[0].device_reclaimed && rows[0].audio_path.as_ref().unwrap().starts_with("host://"));
         fs::remove_dir_all(root).unwrap();
     }
+    #[test]
+    fn manual_processing_policy_survives_partial_and_complete_source_publication() {
+        use crate::companion_v1::CompanionV1ProcessingPolicy as Policy;
+        let (root,index,d,payload,id)=case();
+        session_store::update_checked(&index,|rows| {
+            let row=rows.iter_mut().find(|r|r.id==id).unwrap();
+            row.processing_policy=Policy::Manual;row.recovery=Default::default();Ok(())
+        }).unwrap();
+        let mut receiver=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        receiver.accept_segment(&d.encode().unwrap(),&payload).unwrap();receiver.assemble().unwrap();
+        receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        let row=rows.iter().find(|r|r.id==id).unwrap();assert_eq!(row.processing_policy,Policy::Manual);
+        assert_eq!(row.recovery.intent,"none");assert!(row.audio_stored && !row.device_reclaimed);
+        assert_eq!(receiver.ack_candidates(&index).unwrap().len(),1,"manual processing still allows exact local sync/consume");
+        drop(receiver);fs::remove_dir_all(root).unwrap();
+    }
 }

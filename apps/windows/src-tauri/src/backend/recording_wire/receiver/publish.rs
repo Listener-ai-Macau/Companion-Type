@@ -203,7 +203,8 @@ impl Receiver {
                 );
                 if complete {
                     crate::backend::arm_meeting_recovery(s);
-                } else if s.recovery.intent != crate::backend::pet_chat::CAPTURE_INTENT {
+                } else if s.processing_policy != crate::companion_v1::CompanionV1ProcessingPolicy::Manual
+                    && s.recovery.intent != crate::backend::pet_chat::CAPTURE_INTENT {
                     s.recovery = Default::default();
                 }
             }
