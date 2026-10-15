@@ -172,6 +172,30 @@ impl Peripheral {
         self.discover_services_impl(false).await
     }
 
+    /// Refresh one incomplete required service on this same connection. This
+    /// does not pair, reconnect, reuse stale cache or relax protected access.
+    /// Replace its native characteristic map only after fresh enumeration has
+    /// succeeded. WinRT subscribe() still writes the normal protected CCCD.
+    pub async fn refresh_service_without_descriptors(&self, uuid: Uuid) -> Result<()> {
+        let mut device = self.shared.device.lock().await;
+        let device = device.as_mut().ok_or(Error::NotConnected)?;
+        let service = device.discover_exact_service(uuid).await?;
+        let native = BLEDevice::get_characteristics_strict(&service).await?;
+        let mut characteristics = HashMap::new();
+        for characteristic in native {
+            let actual_uuid = utils::to_uuid(&characteristic.Uuid()?);
+            // Ambiguous duplicates are not a usable protected control channel.
+            if characteristics.contains_key(&actual_uuid) {
+                return Err(Error::Other(format!(
+                    "refresh_service service={uuid} duplicate_characteristic={actual_uuid}"
+                ).into()));
+            }
+            characteristics.insert(actual_uuid, BLECharacteristic::new(characteristic, HashMap::new()));
+        }
+        self.shared.ble_services.insert(uuid, BLEService { uuid, characteristics });
+        Ok(())
+    }
+
     async fn discover_services_impl(&self, include_descriptors: bool) -> Result<()> {
         let mut device = self.shared.device.lock().await;
         if let Some(ref mut device) = *device {

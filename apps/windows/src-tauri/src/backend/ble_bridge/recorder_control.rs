@@ -1,10 +1,39 @@
 //! Exact CMC3 intent and original index precede every write. STOP confirmation
 //! precedes receipt on this same connection owner.
 use super::*;
+use std::collections::BTreeSet;
 use crate::backend::{recorder_control::{Journal, Observation, Store},
     recording_wire::{SessionKey, control::{PausePeer, PauseStatus}}};
 
 type Observed=(PauseStatus,u32,u32,u8);
+const RECORDER_SERVICE_UUID:Uuid=Uuid::from_u128(0x8f7a00087b7d4f3d9d6f6c2d1b7c0000);
+
+fn recorder_channel(chars:&BTreeSet<Characteristic>)->Option<(Characteristic,Characteristic)> {
+    let control=chars.iter().find(|c|c.service_uuid==RECORDER_SERVICE_UUID && c.uuid==MEETING_CONTROL_UUID
+        && c.properties.contains(CharPropFlags::WRITE))?;
+    let status=chars.iter().find(|c|c.service_uuid==RECORDER_SERVICE_UUID && c.uuid==MEETING_STATUS_UUID
+        && c.properties.contains(CharPropFlags::READ|CharPropFlags::NOTIFY))?;
+    Some((control.clone(),status.clone()))
+}
+
+async fn require_recorder_channel(device:&NativeDevice)->Result<(BTreeSet<Characteristic>,Characteristic,Characteristic),String> {
+    let mut chars=device.peripheral.characteristics();
+    if recorder_channel(&chars).is_none() {
+        let started=StdInstant::now();
+        eprintln!("recorder_gatt incomplete=1 service={RECORDER_SERVICE_UUID} characteristic_count={} targeted_refresh_attempts=1 same_connection=1",chars.len());
+        #[cfg(target_os="windows")]
+        bounded_ble_result("refresh required CMC3 service",StdDuration::from_secs(12),
+            device.peripheral.refresh_service_without_descriptors(RECORDER_SERVICE_UUID)).await?;
+        #[cfg(not(target_os="windows"))]
+        return Err("设备缺少完整录音控制通道；原录音保留，未发送命令。".into());
+        chars=device.peripheral.characteristics();
+        eprintln!("recorder_gatt refreshed=1 service={RECORDER_SERVICE_UUID} characteristic_count={} complete={} elapsed_ms={}",chars.len(),recorder_channel(&chars).is_some(),started.elapsed().as_millis());
+    }
+    let (control,status)=recorder_channel(&chars)
+        .ok_or("设备仍缺少完整的受保护录音控制通道；原录音保留，未发送命令。")?;
+    Ok((chars,control,status))
+}
+
 fn sealed_end_report(device:&NativeDevice,journal:&Journal)->Result<CompanionMeetingControlReport,String> {
     let end=journal.sealed_catalogue_end.as_ref().ok_or("原封口证据缺失。")?;
     journal.validate_sealed_end()?;
@@ -86,11 +115,7 @@ pub(super) async fn execute_owned(
         // Retrying an original capture must not rewrite its clock.
         None=>connect_native_device_with_clock(Some(device_id),false).await?};
     let result=async {
-        let chars=device.peripheral.characteristics();
-        let control=find_characteristic(&chars,MEETING_CONTROL_UUID)?;
-        let status=find_characteristic(&chars,MEETING_STATUS_UUID)?;
-        if !control.properties.contains(CharPropFlags::WRITE) || !status.properties.contains(CharPropFlags::NOTIFY)
-            || !status.properties.contains(CharPropFlags::READ) {return Err("设备没有完整的受保护录音控制通道。".into());}
+        let (chars,control,status)=require_recorder_channel(&device).await?;
         let identity=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
             .ok_or("设备身份读取失败，未发录音控制。")?;
         let peer=PausePeer::from_status(&identity)?.ok_or("当前固件没有明确支持暂停；未停止重开。")?;
@@ -182,4 +207,33 @@ pub(super) async fn execute_owned(
     }
     eprintln!("recorder_control scope=CMC3 original_session={host_session} command={command} connection_reused={reused} result_confirmed={}",result.is_ok());
     result.map(|(report,journal)|(report,journal,device))
+}
+
+#[cfg(test)]
+mod gatt_tests {
+    use super::*;
+
+    #[test]
+    fn recorder_channel_requires_both_characteristics_properties_and_exact_service() {
+        let characteristic=|uuid,properties| Characteristic {
+            uuid,service_uuid:RECORDER_SERVICE_UUID,properties,descriptors:BTreeSet::new(),
+        };
+        let control=characteristic(MEETING_CONTROL_UUID,CharPropFlags::WRITE);
+        let status=characteristic(MEETING_STATUS_UUID,CharPropFlags::READ|CharPropFlags::NOTIFY);
+        let complete=BTreeSet::from([control.clone(),status.clone()]);
+        assert!(recorder_channel(&complete).is_some());
+        assert_eq!(RECORDER_SERVICE_UUID.to_string(),crate::companion_v1::COMPANION_V1_GATT_BOUNDARY.meeting_service_uuid);
+        for incomplete in [BTreeSet::new(),BTreeSet::from([control.clone()]),BTreeSet::from([status.clone()])] {
+            assert!(recorder_channel(&incomplete).is_none());
+        }
+        let mut wrong=control.clone();wrong.properties=CharPropFlags::WRITE_WITHOUT_RESPONSE;
+        assert!(recorder_channel(&BTreeSet::from([wrong,status.clone()])).is_none());
+        let mut wrong=status.clone();wrong.properties=CharPropFlags::READ|CharPropFlags::INDICATE;
+        assert!(recorder_channel(&BTreeSet::from([control.clone(),wrong])).is_none());
+        for change_control in [false,true] {
+            let (mut c,mut s)=(control.clone(),status.clone());
+            if change_control { c.service_uuid=Uuid::nil(); } else { s.service_uuid=Uuid::nil(); }
+            assert!(recorder_channel(&BTreeSet::from([c,s])).is_none());
+        }
+    }
 }

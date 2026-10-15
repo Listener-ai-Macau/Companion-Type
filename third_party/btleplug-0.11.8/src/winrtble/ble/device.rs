@@ -12,8 +12,10 @@
 // Copyright (c) 2014 The Rust Project Developers
 
 use crate::{api::BDAddr, winrtble::utils, Error, Result};
+use super::characteristic::await_cancellable_gatt;
 use log::{debug, trace};
 use std::future::IntoFuture;
+use uuid::Uuid;
 use windows::{
     core::Ref,
     Devices::Bluetooth::{
@@ -32,6 +34,21 @@ pub struct BLEDevice {
     device: BluetoothLEDevice,
     connection_token: i64,
     services: Vec<GattDeviceService>,
+}
+
+fn require_discovery_success(
+    status: GattCommunicationStatus, operation: &str, service: Uuid, protocol_error: Option<u8>,
+) -> Result<()> {
+    if status == GattCommunicationStatus::Success { return Ok(()); }
+    let label = match status {
+        GattCommunicationStatus::Unreachable => "Unreachable",
+        GattCommunicationStatus::ProtocolError => "ProtocolError",
+        GattCommunicationStatus::AccessDenied => "AccessDenied",
+        _ => "Unknown",
+    };
+    Err(Error::Other(format!(
+        "{operation} service={service} status={label} ({status:?}) protocol_error={protocol_error:?}"
+    ).into()))
 }
 
 impl BLEDevice {
@@ -130,6 +147,49 @@ impl BLEDevice {
         }
     }
 
+    /// A bounded caller may refresh an incomplete required service on its
+    /// existing connection. Never return stale services or an empty-success
+    /// characteristic list when Windows actually returned a communication error.
+    pub async fn discover_exact_service(&mut self, uuid: Uuid) -> Result<GattDeviceService> {
+        let result = await_cancellable_gatt(self.device.GetGattServicesForUuidWithCacheModeAsync(
+            utils::to_guid(&uuid), BluetoothCacheMode::Uncached,
+        )?).await?;
+        let status = result.Status()?;
+        let protocol_error = if status == GattCommunicationStatus::ProtocolError {
+            result.ProtocolError().and_then(|value| value.Value()).ok()
+        } else { None };
+        require_discovery_success(status, "discover_exact_service", uuid, protocol_error)?;
+        let services: Vec<_> = result.Services()?.into_iter().collect();
+        // Own fresh service handles until disconnect, including a failed
+        // characteristic enumeration. Do not Close another live owner's object.
+        self.services.extend(services.iter().cloned());
+        if services.len() != 1 || utils::to_uuid(&services[0].Uuid()?) != uuid {
+            return Err(Error::Other(format!(
+                "discover_exact_service service={uuid} status=Success matching_count={}", services.len()
+            ).into()));
+        }
+        Ok(services[0].clone())
+    }
+
+    pub async fn get_characteristics_strict(service: &GattDeviceService) -> Result<Vec<GattCharacteristic>> {
+        let uuid = utils::to_uuid(&service.Uuid()?);
+        let result = await_cancellable_gatt(service.GetCharacteristicsWithCacheModeAsync(
+            BluetoothCacheMode::Uncached,
+        )?).await?;
+        let status = result.Status()?;
+        let protocol_error = if status == GattCommunicationStatus::ProtocolError {
+            result.ProtocolError().and_then(|value| value.Value()).ok()
+        } else { None };
+        require_discovery_success(status, "get_characteristics_strict", uuid, protocol_error)?;
+        let characteristics: Vec<_> = result.Characteristics()?.into_iter().collect();
+        if characteristics.is_empty() {
+            return Err(Error::Other(format!(
+                "get_characteristics_strict service={uuid} status=Success characteristic_count=0"
+            ).into()));
+        }
+        Ok(characteristics)
+    }
+
     pub async fn get_characteristic_descriptors(
         characteristic: &GattCharacteristic,
     ) -> Result<Vec<GattDescriptor>> {
@@ -190,6 +250,27 @@ impl Drop for BLEDevice {
         let result = self.device.Close();
         if let Err(err) = result {
             debug!("Drop:close {:?}", err);
+        }
+    }
+}
+
+#[cfg(test)]
+mod discovery_tests {
+    use super::*;
+
+    #[test]
+    fn required_discovery_never_converts_native_failure_to_empty_success() {
+        let uuid=Uuid::from_u128(0x8f7a00087b7d4f3d9d6f6c2d1b7c0000);
+        assert!(require_discovery_success(GattCommunicationStatus::Success,"services",uuid,None).is_ok());
+        for (status,label,code) in [
+            (GattCommunicationStatus::Unreachable,"Unreachable",None),
+            (GattCommunicationStatus::AccessDenied,"AccessDenied",None),
+            (GattCommunicationStatus::ProtocolError,"ProtocolError",Some(5)),
+            (GattCommunicationStatus(77),"Unknown",None),
+        ] {
+            let error=require_discovery_success(status,"characteristics",uuid,code).unwrap_err().to_string();
+            assert!(error.contains(label) && error.contains(&uuid.to_string()));
+            if code.is_some() { assert!(error.contains("Some(5)")); }
         }
     }
 }

@@ -62,7 +62,7 @@ impl<T: RuntimeType + 'static> Drop for CancelPendingGatt<T> {
     }
 }
 
-fn await_cancellable_gatt<T: RuntimeType + 'static>(
+pub(super) fn await_cancellable_gatt<T: RuntimeType + 'static>(
     operation: IAsyncOperation<T>,
 ) -> impl Future<Output = windows::core::Result<T>> {
     // Arm before returning a future: WinRT operations are hot-started, even if
