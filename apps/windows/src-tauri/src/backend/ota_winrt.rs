@@ -324,8 +324,14 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::new(),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:1,system_component:None};
     let mut window=super::ota_metrics::PayloadWindow::default();
+    let mut progress_bucket=usize::MAX;
     let mut report=denzic_ota_core::transfer(&mut transport,&package.file,options,|accepted,total|{
         window.observe(accepted,total,started.elapsed());
+        let bucket=accepted/(64*1024);
+        if bucket!=progress_bucket||accepted==total {
+            eprintln!("[companion-ota] payload_progress accepted={accepted} total={total}");
+            progress_bucket=bucket;
+        }
     }).map_err(|e|format!("完整升级包传输未完成；断开后请从头重新下载：{e}"))?;
     if report.resumed_bytes!=0 {return Err("单文件升级意外返回了非零起点，不能当作本次完整传输".into());}
     let payload_metrics=window.finish(&report,true);

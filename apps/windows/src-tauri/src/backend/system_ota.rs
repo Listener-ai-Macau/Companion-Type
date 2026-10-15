@@ -71,7 +71,11 @@ impl Package {
         word(identity,16)==0&&word(identity,20)==1&&identity[24..56]==self.payload_sha
     }
     pub(super) fn admit(&self,identity:&[u8])->Result<(),String> {
-        if identity.len()!=56||&identity[..4]!=b"WSI3"||word(identity,20)!=1||word(identity,16)!=0 {
+        // A new explicit BEGIN replaces an incomplete receive from byte0.
+        // Windows can retain a physical link after the previous app exits;
+        // an old volatile download claim must not block that fresh start.
+        // Pending installation still reports ready=0 and cannot be replaced.
+        if identity.len()!=56||&identity[..4]!=b"WSI3"||word(identity,20)!=1 {
             return Err("设备尚未准备好单文件升级，未发送内容".into());
         }
         if word(identity,12)!=self.static_bytes {return Err("第一版不在线搬移资源边界，需要匹配当前静态区的包".into());}
