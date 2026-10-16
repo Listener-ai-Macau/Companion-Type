@@ -10,9 +10,8 @@ use denzic_ble_windows::{wait_async_operation_with_cancel, BleCancel};
 use windows::Devices::Bluetooth::{BluetoothAddressType, BluetoothLEDevice};
 use windows::Devices::Enumeration::{
     DeviceInformation, DeviceInformationCustomPairing, DevicePairingKinds,
-    DeviceInformationKind, DevicePairingProtectionLevel, DevicePairingRequestedEventArgs, DevicePairingResultStatus,
+    DevicePairingProtectionLevel, DevicePairingRequestedEventArgs, DevicePairingResultStatus,
 };
-use windows::core::HSTRING;
 use windows::Foundation::{EventRegistrationToken, TypedEventHandler};
 
 const OPEN_TIMEOUT: Duration = Duration::from_secs(8);
@@ -82,48 +81,6 @@ fn confirmation_supported(kind: DevicePairingKinds) -> bool {
     kind == DevicePairingKinds::ConfirmOnly
 }
 
-fn exact_endpoint_index(ids:&[String],expected:&str)->Result<Option<usize>,String> {
-    let mut matched=None;
-    for (index,id) in ids.iter().enumerate() {
-        if id.eq_ignore_ascii_case(expected) {
-            if matched.is_some(){return Err("Windows 返回了重复的目标配对端点，未选择其它设备。".into());}
-            matched=Some(index);
-        }
-    }
-    Ok(matched)
-}
-
-fn enumerated_pairing_endpoint(address:u64,expected_id:&str,cancel:&BleCancel)
-    ->Result<Option<DeviceInformation>,String>
-{
-    // Microsoft pairing samples pair the enumerated AssociationEndpoint.
-    // Listener also resolves AEPs for failures before a ceremony starts.
-    // Resolve once before PairAsync, never retry authentication or choose a
-    // same-name/other-adapter endpoint. No Bluetooth/GATT link is opened here.
-    let compact=format!("{address:012X}");
-    let target=compact.as_bytes().chunks_exact(2)
-        .map(|pair|std::str::from_utf8(pair).unwrap()).collect::<Vec<_>>().join(":");
-    let selector=HSTRING::from(format!(
-        "(System.Devices.Aep.ProtocolId:=\"{{bb7bb05e-5972-42b5-94fc-76eaa7084d49}}\") AND (System.Devices.Aep.DeviceAddress:=\"{target}\")"));
-    let started=std::time::Instant::now();
-    let operation=DeviceInformation::FindAllAsyncWithKindAqsFilterAndAdditionalProperties(
-        &selector,None::<&windows::Foundation::Collections::IIterable<HSTRING>>,
-        DeviceInformationKind::AssociationEndpoint)
-        .map_err(|e|format!("查询目标 Windows 配对端点失败：{e}"))?;
-    let entries=wait_async_operation_with_cancel(operation,OPEN_TIMEOUT,"exact pairing endpoint enumeration",cancel)?;
-    let count=entries.Size().map_err(|e|format!("读取配对端点数量失败：{e}"))?;
-    let mut infos=Vec::new();let mut ids=Vec::new();
-    for index in 0..count {
-        let info=entries.GetAt(index).map_err(|e|format!("读取配对端点失败：{e}"))?;
-        if info.Kind().map_err(|e|format!("读取配对端点类型失败：{e}"))?!=DeviceInformationKind::AssociationEndpoint {continue;}
-        ids.push(info.Id().map_err(|e|format!("读取配对端点身份失败：{e}"))?.to_string_lossy());
-        infos.push(info);
-    }
-    let matched=exact_endpoint_index(&ids,expected_id)?;
-    eprintln!("BLE pairing_trace stage=enumerated_exact_endpoint address={address:012X} elapsed_us={} candidates={count} exact_match={} same_native_id_required=1",started.elapsed().as_micros(),matched.is_some());
-    Ok(matched.map(|index|infos.swap_remove(index)))
-}
-
 fn verify_pair_result(status: DevicePairingResultStatus) -> Result<(), String> {
     if status == DevicePairingResultStatus::Paired || status == DevicePairingResultStatus::AlreadyPaired {
         Ok(())
@@ -187,21 +144,13 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
     let is_paired = pairing.IsPaired().map_err(|error| format!("读取配对状态失败：{error}"))?;
     eprintln!("BLE pairing_trace stage=refreshed_windows_state address={address:012X} address_type={address_type:?} paired={is_paired} information_kind={:?} id_matches={}",
         information.Kind().ok(),information.Id().ok().as_ref()==Some(&id));
-    // Listener returns DeviceInformation after releasing this transient
-    // BluetoothLEDevice reference. Pairing owns the enumeration object, not
-    // a retained pre-pair GATT-device wrapper. Release COM normally (no Close).
+    // As in Listener, release the temporary BluetoothLEDevice before PairAsync.
+    // DeviceInformation owns the pairing metadata; no explicit Close or GATT.
     drop(initial_information);
     drop(device);
     eprintln!("BLE pairing_trace stage=temporary_device_released address={address:012X} before_ceremony=1 explicit_close=0");
     if is_paired {
         eprintln!("BLE Windows pairing already_paired before GATT address={address:012X}");
-        return Ok(());
-    }
-    let information=enumerated_pairing_endpoint(address,&id.to_string_lossy(),cancel)?
-        .unwrap_or(information);
-    let pairing=information.Pairing().map_err(|e|format!("读取枚举配对端点状态失败：{e}"))?;
-    if pairing.IsPaired().map_err(|e|format!("刷新目标配对状态失败：{e}"))? {
-        eprintln!("BLE Windows pairing already_paired on exact enumerated endpoint address={address:012X}");
         return Ok(());
     }
     let can_pair = pairing.CanPair().map_err(|error| format!("读取配对可用状态失败：{error}"))?;
@@ -263,20 +212,6 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[test]
-    fn r56_pairing_endpoint_selection_never_substitutes_peer_adapter_or_ambiguous_id() {
-        let expected="BluetoothLE#BluetoothLE00:11:22:33:44:55-c0:11:22:33:44:66";
-        let others=vec![
-            "BluetoothLE#BluetoothLE00:11:22:33:44:55-c0:11:22:33:44:77".into(),
-            "BluetoothLE#BluetoothLE00:11:22:33:44:88-c0:11:22:33:44:66".into(),
-            "Bluetooth#Bluetooth00:11:22:33:44:55-c0:11:22:33:44:66".into()];
-        assert_eq!(exact_endpoint_index(&others,expected).unwrap(),None);
-        let mut exact=others;exact.push(expected.to_ascii_lowercase());
-        assert_eq!(exact_endpoint_index(&exact,expected).unwrap(),Some(3));
-        exact.push(expected.into());
-        assert!(exact_endpoint_index(&exact,expected).is_err());
-        assert_eq!(exact_endpoint_index(&[],expected).unwrap(),None);
-    }
     #[test]
     fn native_pairing_category_survives_only_known_product_contexts() {
         for context in ["","Native BLE connect failed: ","Remembered Companion is offline: "] {
