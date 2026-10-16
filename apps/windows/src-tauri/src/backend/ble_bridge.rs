@@ -463,95 +463,33 @@ impl CompanionBleBridge {
                                     upload_ack_count: 0,
                                 }
                             });
-                    // 2) Board store auto-upload on connect (Sync remains fallback, not sole path).
-                    let mut recording_path = drain.host_paths.first().cloned();
-                    let mut operation_recordings = Vec::new();
-                    let mut sync_paused = false;
-                    let mut pull_msg = String::new();
-                    if device_recording == Some(true) && !probe.segmented_recording {
-                        pull_msg = "; board recording is active; automatic recording pull deferred"
-                            .to_string();
-                    } else if device_recording.is_none() {
-                        pull_msg = "; board recording state is unavailable; automatic recording pull deferred"
-                            .to_string();
-                    } else if !recording_sync::automatic_allowed(&actual_device_id) {
-                        sync_paused = true;
-                        pull_msg = "; 录音同步已暂停，点击同步录音可从断点继续".into();
-                    } else if probe.segmented_recording || should_auto_pull_recordings(
-                        device_recording,
-                        probe.recordings_available,
-                    ) {
-                        match run_native_blocking(sync_native_recordings_excluding(
-                            Some(&actual_device_id),
-                            known_recording_ids,
-                        )) {
-                            Ok(batch) => {
-                                if !super::device_connection::same_device_id(
-                                    &actual_device_id,
-                                    &batch.device_id,
-                                ) {
-                                    super::recording_ring::product_on_ble_disconnected();
-                                    return CompanionBleOperation {
-                                        provider_id: "companion-type-windows-ble".to_string(),
-                                        mode: "windows-native-connect-auto-upload".to_string(),
-                                        ready: false,
-                                        sync_paused: false,
-                                        device_id: Some(actual_device_id),
-                                        recording_path: None,
-                                        recordings: Vec::new(),
-                                        device_identity: None,
-                                        message: format!(
-                                            "Native BLE recording pull changed devices after probe (batch device={}); refusing cross-device merge",
-                                            batch.device_id
-                                        ),
-                                    };
-                                }
-                                if let Some(last) = batch.recordings.last() {
-                                    recording_path = Some(last.recording_path.clone());
-                                }
-                                pull_msg = format!(
-                                    "; auto_device_pull count={} ids={:?} isolated_failures={:?}",
-                                    batch.recordings.len(),
-                                    batch
-                                        .recordings
-                                        .iter()
-                                        .map(|item| item.recording_id)
-                                        .collect::<Vec<_>>(),
-                                    batch.failures
-                                );
-                                if let Some(sessions) = batch.segmented.as_ref() {
-                                    pull_msg.push_str(&format!("; continuous_sessions_saved={}", sessions.len()));
-                                }
-                                sync_paused = batch.paused;
-                                if sync_paused { pull_msg.push_str(&format!("; {}", recording_sync::PAUSED)); }
-                                operation_recordings = batch.recordings;
-                            }
-                            Err(err) => {
-                                pull_msg = format!("; auto_device_pull deferred: {err}");
-                            }
-                        }
-                    }
-                    CompanionBleOperation {
-                        provider_id: "companion-type-windows-ble".to_string(),
+                    // Connection readiness belongs to the final transport,
+                    // independently of any audio already committed to disk.
+                    let mut operation = CompanionBleOperation {
+                        provider_id: "companion-type-windows-ble".into(),
                         mode: if probe.segmented_recording { "windows-native-connect-auto-upload-segmented" }
-                            else { "windows-native-connect-auto-upload" }.to_string(),
-                        ready: true,
-                        sync_paused,
-                        device_id: Some(actual_device_id),
-                        recording_path,
-                        recordings: operation_recordings,
+                            else { "windows-native-connect-auto-upload" }.into(),
+                        ready: true, sync_paused: false,
+                        device_id: Some(actual_device_id.clone()),
+                        recording_path: drain.host_paths.first().cloned(), recordings: Vec::new(),
                         device_identity: Some(probe.identity),
-                        message: format!(
-                            "Native BLE ready probe: services={} characteristics={} recordings={}; owned_recording_connection_retained={}; ring auto_drain enqueued={:?} transferred={:?}{}",
-                            probe.service_count,
-                            probe.characteristic_count,
-                            probe.recordings_available,
-                            probe.owned_recording_connection_retained,
-                            drain.enqueued,
-                            drain.transferred_ids,
-                            pull_msg
-                        ),
+                        message: format!("Native BLE protected probe: services={} characteristics={} recordings={}; owned_recording_connection_retained={}; ring auto_drain enqueued={:?} transferred={:?}",
+                            probe.service_count, probe.characteristic_count, probe.recordings_available,
+                            probe.owned_recording_connection_retained, drain.enqueued, drain.transferred_ids),
+                    };
+                    if device_recording == Some(true) && !probe.segmented_recording {
+                        operation.message.push_str("; board recording is active; automatic recording pull deferred");
+                    } else if device_recording.is_none() {
+                        operation.message.push_str("; board recording state is unavailable; automatic recording pull deferred");
+                    } else if !recording_sync::automatic_allowed(&actual_device_id) {
+                        operation.sync_paused = true;
+                        operation.message.push_str("; 录音同步已暂停，点击同步录音可从断点继续");
+                    } else if probe.segmented_recording || should_auto_pull_recordings(
+                        device_recording, probe.recordings_available) {
+                        complete_connect_sync(&mut operation, run_native_blocking(sync_native_recordings_excluding(
+                            Some(&actual_device_id), known_recording_ids)));
                     }
+                    operation
                 }
                 Err(err) => {
                     super::recording_ring::product_on_ble_disconnected();
@@ -1677,6 +1615,40 @@ struct NativeRecordingBatch {
     // V2 rows are already durably published with UID/epoch/session keys. They
     // must never pass through the V1 physical-ID import reducer.
     segmented: Option<Vec<String>>,
+}
+
+// A successful initial probe cannot outlive a failed automatic sync. A
+// partial durable receipt is still a successful SAVE, not a live connection.
+fn complete_connect_sync(operation: &mut CompanionBleOperation, result: Result<NativeRecordingBatch, String>) {
+    match result {
+        Ok(batch) => {
+            if operation.device_id.as_deref().is_none_or(|id|
+                !super::device_connection::same_device_id(id, &batch.device_id)) {
+                operation.ready=false;
+                operation.message="Native BLE connect failed: 自动收取返回了另一设备；未合并到当前设备。".into();
+                super::recording_ring::product_on_ble_disconnected();
+                return;
+            }
+            operation.sync_paused=batch.paused;
+            if let Some(last)=batch.recordings.last(){operation.recording_path=Some(last.recording_path.clone());}
+            operation.message.push_str(&format!("; auto_device_pull count={} continuous_sessions_saved={} isolated_failures={:?}",
+                batch.recordings.len(),batch.segmented.as_ref().map_or(0,Vec::len),batch.failures));
+            operation.recordings=batch.recordings;
+            if batch.paused {operation.message.push_str(&format!("; {}",recording_sync::PAUSED));}
+            if !batch.connection_reusable {
+                operation.ready=false;
+                operation.message=format!("蓝牙连接/自动收取未完成；已耐久保存的内容保留，未确认的录音仍在设备，需重连核对。{}",operation.message);
+                super::recording_ring::product_on_ble_disconnected();
+            }
+        }
+        Err(error) => {
+            operation.ready=false;
+            // Keep the native category at the known prefix so a genuine
+            // pairing failure pauses automatic pairing attempts as before.
+            operation.message=format!("Native BLE connect failed: {error}；自动收取未完成，已保存内容保留，未确认录音没有消费。");
+            super::recording_ring::product_on_ble_disconnected();
+        }
+    }
 }
 
 fn native_recording_operation(result: Result<NativeRecordingBatch, String>) -> CompanionBleOperation {
@@ -5839,6 +5811,41 @@ fn hex_lower(bytes: &[u8]) -> String {
 
 #[cfg(test)]
 mod tests {
+    fn connect_transport_operation()->CompanionBleOperation {
+        CompanionBleOperation{provider_id:"companion-type-windows-ble".into(),mode:"windows-native-connect-auto-upload-segmented".into(),
+            ready:true,sync_paused:false,device_id:Some("C8:92:FF:DD:3B:CA".into()),recording_path:None,recordings:Vec::new(),
+            device_identity:None,message:"protected GATT probe succeeded".into()}
+    }
+    #[test]
+    fn connect_transport_failure_keeps_saved_rows_but_cannot_claim_connection_ready() {
+        let mut operation=connect_transport_operation();
+        complete_connect_sync(&mut operation,Ok(NativeRecordingBatch{
+            device_id:"C8:92:FF:DD:3B:CA".into(),recordings:Vec::new(),
+            failures:vec!["id18 offset2081: native GATT session lost".into()],paused:false,
+            connection_reusable:false,segmented:Some(vec!["durable-partial-original".into()]),
+        }));
+        assert!(!operation.ready,"saved partials cannot prove the failed link is ready");
+        assert_eq!(operation.mode,"windows-native-connect-auto-upload-segmented");
+        assert!(operation.message.contains("id18 offset2081")&&operation.message.contains("continuous_sessions_saved=1"));
+        assert_eq!(operation.device_id.as_deref(),Some("C8:92:FF:DD:3B:CA"));
+        let mut wrong=connect_transport_operation();
+        complete_connect_sync(&mut wrong,Ok(NativeRecordingBatch{device_id:"AA:BB:CC:DD:EE:FF".into(),recordings:Vec::new(),
+            failures:Vec::new(),paused:false,connection_reusable:true,segmented:Some(vec!["foreign".into()])}));
+        assert!(!wrong.ready&&wrong.message.contains("另一设备"));
+    }
+    #[test]
+    fn connect_transport_success_pause_and_pairing_failure_have_distinct_outcomes() {
+        for paused in [false,true] {
+            let mut operation=connect_transport_operation();
+            complete_connect_sync(&mut operation,Ok(NativeRecordingBatch{device_id:"C8:92:FF:DD:3B:CA".into(),recordings:Vec::new(),
+                failures:Vec::new(),paused,connection_reusable:true,segmented:Some(Vec::new())}));
+            assert!(operation.ready);assert_eq!(operation.sync_paused,paused);
+        }
+        let mut failed=connect_transport_operation();
+        complete_connect_sync(&mut failed,Err("Windows BLE pairing required: Windows 状态19".into()));
+        assert!(!failed.ready&&super::super::reconnect_requires_pairing(&failed.message));
+    }
+
     use super::*;
 
     #[test]

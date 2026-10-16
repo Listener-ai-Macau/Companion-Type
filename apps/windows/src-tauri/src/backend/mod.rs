@@ -2030,12 +2030,9 @@ impl CompanionBackend for FixtureCompanionBackend {
                     .ble_bridge
                     .connect_with_owned_recording(request.device_id.as_deref(), &known_recording_ids, owned_recording.as_ref());
                 if !operation.ready {
-                    snapshot.connected = false;
-                    snapshot.device.connected = false;
-                    snapshot.device.connection_phase = "offline".to_string();
-                    snapshot.device.message = operation.message.clone();
-                    self.observe_pairing_failure(&mut snapshot,request.device_id.as_deref(),&operation.message);
-                    return Err(operation.message);
+                    let error=observe_failed_device_connect(&mut snapshot,&operation,&persistence::state_file_path());
+                    self.observe_pairing_failure(&mut snapshot,request.device_id.as_deref(),&error);
+                    return Err(error);
                 }
                 request.device_id = operation.device_id.clone();
                 connected_device_identity = operation.device_identity.clone();
@@ -3811,6 +3808,29 @@ fn reload_segmented_library(snapshot: &mut CompanionV1Snapshot, path: &std::path
     Ok(())
 }
 
+// The receiver may have committed partial rows before its transport failed.
+// Bring those exact rows into the live model without promoting that failure to
+// "connected", completing a pending recording, or acknowledging more bytes.
+fn observe_failed_device_connect(snapshot:&mut CompanionV1Snapshot,operation:&CompanionBleOperation,index:&std::path::Path)->String {
+    let mut error=operation.message.clone();
+    if operation.mode=="windows-native-connect-auto-upload-segmented" {
+        if let Err(e)=reload_segmented_library(snapshot,index){error.push_str(&format!("；本地已保存部分待重新读取：{e}"));}
+    } else if !operation.recordings.is_empty() {
+        if let Some(device)=operation.device_id.as_ref(){snapshot.device.device_id=Some(device.clone());}
+        merge_synced_recordings(snapshot,&operation.recordings);
+        if let Err(e)=persistence::save_snapshot(snapshot){error.push_str(&format!("；本地索引保存待重试：{e}"));}
+    }
+    if let Some(identity)=operation.device_identity.as_ref(){snapshot.source="firmware";apply_device_identity(snapshot,identity);}
+    if let Some(device)=operation.device_id.as_ref(){snapshot.device.device_id=Some(device.clone());}
+    snapshot.connected=false;snapshot.device.connected=false;snapshot.device.connection_phase="offline".into();
+    snapshot.device.message=error.clone();snapshot.updated_at=observation_timestamp();
+    snapshot.last_control=Some(crate::companion_v1::CompanionV1ControlEcho{
+        action:CompanionV1ControlAction::DeviceConnect,characteristic_uuid:"8f7a3002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+        payload_hex:String::new(),accepted:false,message:error.clone(),
+    });
+    refresh_privacy_counts(snapshot);error
+}
+
 fn observe_segmented_library(snapshot: &mut CompanionV1Snapshot,
     operation: &CompanionBleOperation, index: &std::path::Path, action: CompanionV1ControlAction) -> Result<(), String> {
     reload_segmented_library(snapshot, index)?;
@@ -3922,6 +3942,39 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn connect_transport_failure_reloads_durable_partials_without_stopping_original_or_rewriting_index() {
+        let root=std::env::temp_dir().join(format!("companion-connect-result-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let index=root.join("sessions.json");
+        let mut snapshot=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            serde_json::from_value(serde_json::json!({"action":"meetingStart","sessionId":"ongoing-original"})).unwrap()).unwrap();
+        snapshot.host.sessions[0].source="boardDevice".into();snapshot.device.recording=true;
+        let mut partial=snapshot.host.sessions[0].clone();partial.id="saved-partial".into();partial.status="pending".into();
+        partial.audio_stored=false;partial.device_reclaimed=false;partial.title="Original name retained".into();
+        let mut durable=snapshot.host.sessions.clone();durable.push(partial.clone());
+        session_store::save(&index,&durable).unwrap();let before=std::fs::read(&index).unwrap();
+        let operation=CompanionBleOperation{provider_id:"companion-type-windows-ble".into(),
+            mode:"windows-native-connect-auto-upload-segmented".into(),ready:false,sync_paused:false,
+            device_id:Some("C8:92:FF:DD:3B:CA".into()),recording_path:None,recordings:Vec::new(),device_identity:None,
+            message:"id18 offset2081: native GATT session lost".into()};
+        let error=observe_failed_device_connect(&mut snapshot,&operation,&index);
+        assert_eq!(error,operation.message);assert!(!snapshot.connected&&!snapshot.device.connected);
+        assert_eq!(snapshot.device.connection_phase,"offline");assert_eq!(snapshot.device.message,error);
+        assert!(!snapshot.last_control.as_ref().unwrap().accepted);
+        assert_eq!(snapshot.last_control.as_ref().unwrap().action,CompanionV1ControlAction::DeviceConnect);
+        assert!(snapshot.device.recording&&snapshot.meeting.active);
+        assert_eq!(snapshot.host.active_session_id.as_deref(),Some("ongoing-original"));
+        let loaded=snapshot.host.sessions.iter().find(|r|r.id==partial.id).unwrap();
+        assert_eq!(serde_json::to_vec(loaded).unwrap(),serde_json::to_vec(&partial).unwrap());
+        assert_eq!(std::fs::read(&index).unwrap(),before,"failure observation cannot consume or complete the saved partial");
+        let retained=serde_json::to_vec(&snapshot.host.sessions).unwrap();
+        assert!(observe_failed_device_connect(&mut snapshot,&operation,&root.join("missing.json")).contains("待重新读取"));
+        assert_eq!(serde_json::to_vec(&snapshot.host.sessions).unwrap(),retained);
+        std::fs::remove_file(&index).unwrap();
+        for entry in std::fs::read_dir(&root).unwrap(){std::fs::remove_file(entry.unwrap().path()).unwrap();}
+        std::fs::remove_dir(&root).unwrap();
+    }
+
     #[test]
     fn manual_processing_policy_blocks_stale_automatic_work_but_accepts_manual_transcribe() {
         use super::*;
