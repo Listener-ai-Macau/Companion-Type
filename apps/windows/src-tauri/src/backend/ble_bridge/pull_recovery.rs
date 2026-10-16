@@ -9,6 +9,7 @@ pub(super) trait Attempt {
 }
 
 pub(super) fn receiver_overrun(error: &str) -> bool {
+    if error.contains(super::pull_session::RETIRED_CLEANUP) {return false;}
     error.starts_with("recording receive queue overflow;")
         || error.starts_with("recording native receive:")
             && error.contains("Windows BLE notification queue overflow:")
@@ -32,6 +33,7 @@ pub(super) fn transport_lost(error: &str) -> bool {
 
 pub(super) fn retire_connection(error: &str) -> bool {
     receiver_overrun(error) || transport_lost(error)
+        || error.contains(super::pull_session::RETIRED_CLEANUP)
         || error.starts_with("sealed stream release failed before reclaim:")
 }
 

@@ -4644,7 +4644,9 @@ async fn sync_native_recordings_with_link_policy(
             break;
         }
     }
-    PullSession::close(&mut pull_session).await;
+    if let Err(error)=PullSession::quiesce_for_control(&mut pull_session).await {
+        failures.push(error);connection_reusable=false;
+    }
     Ok(NativeRecordingBatch {
         device_id: device.device_id(),
         recordings,
@@ -5078,7 +5080,13 @@ impl pull_recovery::Attempt for RecordingPull<'_> {
                 self.initial_data.take(), self.job, self.link_policy.as_deref_mut())).await;
             // A session loss can cancel an in-flight receive. Join/drain its
             // durable cursor first, then retire both owned notification lanes.
-            if result.is_err() { PullSession::close(self.session).await; }
+            if result.is_err() {
+                let cleanup=PullSession::quiesce_for_control(self.session).await;
+                if cleanup.is_err() || result.as_ref().err().is_some_and(|e|e.contains(pull_session::RETIRED_CLEANUP)) {
+                    close_native_device(self.device).await;
+                }
+                return pull_session::finish_receive(result,cleanup);
+            }
             result
         })
     }
@@ -5096,19 +5104,19 @@ async fn pull_recording_bytes_once(
     link_policy: Option<&mut SealedLinkPolicy>,
 ) -> Result<Vec<u8>, String> {
     if session.is_none() {
-        let opening = PullSession::open(peripheral, characteristics,
-            env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS", 8_000));
+        let budget=env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS",8_000);
+        let opening = PullSession::prepare(peripheral, characteristics,budget);
         *session = Some(if let Some(job) = job { job.receive(opening).await? } else { opening.await? });
+        // Store ownership before the first cancellable CCCD write. On pause
+        // or link loss RecordingPull drains this exact lease before return.
+        session.as_mut().expect("prepared recording pull session").subscribe(budget,job).await?;
     }
     let work = pull_recording_bytes_in_session(peripheral,
         session.as_mut().expect("opened recording pull session"), entry,
         device_address, device_address_type, initial_data, job, link_policy);
     let result = if let Some(job) = job { job.receive(work).await } else { work.await };
-    if result.is_err() {
-        // Failed entry/window retries re-open both lanes. Successful prefixes
-        // and backlog entries keep the same receiver until connection close.
-        PullSession::close(session).await;
-    }
+    // The outer RecordingPull owns cleanup even when the native link guard
+    // cancels this future; never detach this lease before a same-link retry.
     result
 }
 

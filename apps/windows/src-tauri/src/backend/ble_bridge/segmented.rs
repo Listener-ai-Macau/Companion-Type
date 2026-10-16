@@ -183,8 +183,10 @@ pub(super) async fn follow_tail(device:&NativeDevice,
     let mut session=None;
     let received=pull_recording_bytes(device,chars,&mut session,&e,&device.address,
         device.address_type,Some(bytes),Some(job),None).await;
-    PullSession::close(&mut session).await;
-    let received=received?;job.saving();cursor.save(&tail,&received,peer)?;
+    let cleanup=PullSession::quiesce_for_control(&mut session).await;
+    if cleanup.is_err() {close_native_device(device).await;}
+    let received=super::pull_session::finish_receive(received,cleanup)?;
+    job.saving();cursor.save(&tail,&received,peer)?;
     if let Some(live)=live {live.tail(&tail,&received);}
     eprintln!("recording_tail durable uid={} epoch={:016x} session={:016x} segment={} id={} bytes={} consume=0",
         hex_lower(&key.device_uid),key.format_epoch,key.session_id,tail.segment_index,tail.recording_id,received.len());
@@ -389,7 +391,9 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
             }
         }
     }
-    PullSession::close(&mut pull_session).await;
+    if let Err(error)=PullSession::quiesce_for_control(&mut pull_session).await {
+        batch.failures.push(error);batch.connection_reusable=false;
+    }
     if let Some(interval)=interval {
         if let Err(error)=interval.close().await {
             batch.failures.push(error);batch.connection_reusable=false;

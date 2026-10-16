@@ -62,11 +62,19 @@ impl<P: SubscriptionPort> SubscriptionLease<P> {
                 .map_err(|_| format!("subscribe recording lane {} timed out", lane + 1))
                 .and_then(|r| r);
             if let Err(error) = result {
-                self.close().await;
-                return Err(error);
+                let cleanup=self.quiesce_for_control().await;
+                return finish_receive(Err(error),cleanup);
             }
         }
         Ok(())
+    }
+
+    pub(super) async fn subscribe_for_job(&mut self,lanes:usize,read_timeout:Duration,
+        job:Option<&crate::backend::recording_sync::Job>)->Result<(),String> {
+        // The prepared pull session owns this lease outside the cancellable
+        // future. Its caller awaits retirement on every failed/cancelled open.
+        let opening=self.subscribe_lanes(lanes,read_timeout);
+        if let Some(job)=job {job.receive(opening).await} else {opening.await}
     }
 
     pub(super) async fn close(&mut self) {
@@ -131,7 +139,7 @@ pub(super) struct PullSession {
     lease: SubscriptionLease<NativeSubscriptions>,
 }
 impl PullSession {
-    pub async fn open(peripheral: &Peripheral, characteristics: &std::collections::BTreeSet<Characteristic>, read_timeout: Duration)
+    pub async fn prepare(peripheral: &Peripheral, characteristics: &std::collections::BTreeSet<Characteristic>, read_timeout: Duration)
         -> Result<Self, String>
     {
         let chunk = find_characteristic(characteristics, RECORDING_CHUNK_PULL_UUID)?;
@@ -159,10 +167,16 @@ impl PullSession {
         let dual_lane = second.is_some();
         let mut lanes = vec![chunk.clone()];
         if let Some(second) = second { lanes.push(second); }
-        let count = lanes.len();
-        let lease = SubscriptionLease::open(NativeSubscriptions { peripheral: peripheral.clone(), lanes }, count, read_timeout).await?;
-        eprintln!("recording pull session opened dual_lane={dual_lane} reused_until_connection_end=1");
+        // No CCCD write until this owner is in the caller's session slot.
+        let lease = SubscriptionLease::pending(NativeSubscriptions { peripheral: peripheral.clone(), lanes }, read_timeout);
         Ok(Self { chunk, dual_lane, notifications, lease })
+    }
+
+    pub async fn subscribe(&mut self,read_timeout:Duration,job:Option<&crate::backend::recording_sync::Job>)
+        ->Result<(),String> {
+        self.lease.subscribe_for_job(if self.dual_lane {2}else{1},read_timeout,job).await?;
+        eprintln!("recording pull session opened dual_lane={} reused_until_connection_end=1",self.dual_lane);
+        Ok(())
     }
 
     pub async fn close(session: &mut Option<Self>) {
@@ -176,6 +190,17 @@ impl PullSession {
         let Some(mut current) = session.take() else { return Ok(()); };
         current.notifications.close();
         current.lease.quiesce_for_control().await
+    }
+}
+
+/// Preserve the original receive/storage error while making an uncertain
+/// cleanup unambiguously terminal to the same-connection retry policy.
+pub(super) const RETIRED_CLEANUP:&str="recording connection retired after cleanup failure:";
+pub(super) fn finish_receive<T>(operation:Result<T,String>,cleanup:Result<(),String>)->Result<T,String> {
+    match (operation,cleanup) {
+        (result,Ok(()))=>result,
+        (Ok(_),Err(error))=>Err(format!("{RETIRED_CLEANUP} {error}")),
+        (Err(original),Err(error))=>Err(format!("{original}\n{RETIRED_CLEANUP} {error}")),
     }
 }
 
@@ -288,5 +313,66 @@ mod tests {
             drop(lease);
             assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
         }
+    }
+
+    #[tokio::test]
+    async fn r67_pause_during_owned_subscription_awaits_both_lanes_before_next_owner() {
+        use crate::backend::recording_sync::{self,Job};
+        const DEVICE:&str="AA:BB:CC:DD:EE:67";
+        let job=Job::begin(DEVICE).unwrap();
+        let id=recording_sync::status().unwrap().job_id.unwrap();
+        let port=Port{pending_second:true,..Default::default()};
+        let mut owned=SubscriptionLease::pending(port.clone(),Duration::from_millis(20));
+        let calls=port.calls.clone();
+        let pause=tokio::spawn(async move {
+            while calls.lock().unwrap().len()<2 {tokio::task::yield_now().await;}
+            assert!(recording_sync::pause(&id).unwrap());
+        });
+        let result=owned.subscribe_for_job(2,Duration::from_secs(1),Some(&job)).await;
+        pause.await.unwrap();assert_eq!(result.unwrap_err(),recording_sync::PAUSED);
+        assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1)],"lease remains in original owner, no detached Drop cleanup");
+        let cleanup=owned.quiesce_for_control().await;
+        assert_eq!(finish_receive::<()>(Err(recording_sync::PAUSED.into()),cleanup).unwrap_err(),recording_sync::PAUSED);
+        drop(owned);drop(job);recording_sync::resume_explicit(Some(DEVICE)).unwrap();
+        let mut fresh=SubscriptionLease::open(port.clone(),1,Duration::from_millis(20)).await.unwrap();
+        fresh.close().await;drop(fresh);
+        tokio::task::yield_now().await;
+        assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1),(true,0),(false,0)]);
+    }
+
+    #[tokio::test]
+    async fn r67_failed_receive_cleanup_preserves_first_error_and_blocks_same_link_retry() {
+        struct Attempt {port:Port,count:usize}
+        impl super::super::pull_recovery::Attempt for Attempt {
+            fn receive(&mut self)->BoxFuture<'_,Result<Vec<u8>,String>> {
+                Box::pin(async move {
+                    self.count+=1;
+                    let mut owner=SubscriptionLease::open(self.port.clone(),2,Duration::from_millis(10)).await?;
+                    let result=Err("recording receive queue overflow; original recording not consumed".into());
+                    finish_receive(result,owner.quiesce_for_control().await)
+                })
+            }
+        }
+        for pending in [false,true] {
+            let port=Port{fail_first_release:!pending,pending_first_release:pending,..Default::default()};
+            let mut attempt=Attempt{port:port.clone(),count:0};
+            let error=super::super::pull_recovery::receive(&mut attempt,true,67).await.unwrap_err();
+            assert!(error.starts_with("recording receive queue overflow; original recording not consumed\n"));
+            assert!(error.contains(RETIRED_CLEANUP));
+            assert!(super::super::pull_recovery::retire_connection(&error));
+            assert_eq!(attempt.count,1,"uncertain CCCDs cannot be re-armed by overrun retries");
+            assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1)]);
+        }
+    }
+
+    #[tokio::test]
+    async fn r67_failed_subscribe_and_cleanup_report_both_causes_without_drop_retry() {
+        let port=Port{fail_second:true,fail_first_release:true,..Default::default()};
+        let error=match SubscriptionLease::open(port.clone(),2,Duration::from_millis(10)).await {
+            Ok(_)=>panic!("failed native subscription must not open"),Err(error)=>error,
+        };
+        assert!(error.starts_with("second lane failed\n"));assert!(error.contains("native first lane release failed"));
+        assert!(super::super::pull_recovery::retire_connection(&error));
+        assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1)]);
     }
 }
