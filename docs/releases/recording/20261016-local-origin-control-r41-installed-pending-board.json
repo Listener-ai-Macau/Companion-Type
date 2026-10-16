@@ -1,0 +1,74 @@
+{
+  "schema": "companion.type.local-origin-control.r41.v1",
+  "time": "2026-10-16T11:05:35+08:00",
+  "result": "R41_INSTALLED_LOCAL_ORIGIN_CONTROL_PENDING_BOARD",
+  "summary": "正式TypeR41已构建/安装且载荷一致；补设备本地新录音接入：普通受保护Connect读取真实CMS3原START/token/key/锚点和序号，持久化同一手动处理录音行，后续控制/重连沿原token，不发送新START；未知开始时间与时长上限保持未知。连接先排除RUNNING/PAUSED再做原空闲校时。固件沿实际426/UI78，保留425重复暂停修复。",
+  "limitations": "实板首次普通UART查询0B，在本地REC START和BLE连接前已停止并释放；新本地原件接入、原件暂停/继续/STOP保存消费尚未实测。没有新录音/原件、重录、PAIR、SWD、刷写、复位、云调用或速度成绩。27项同原控制（含实际C本地状态向量）及12项owner/连接软件检查通过，只认软件；HOLD/物理键、长录全部场景、内容质量及真实低功耗仍开放。",
+  "next": [
+    "先做HOLD误触锁的软件联动和紧急停止，屏幕入口沿共用文件衔接。",
+    "现场连接出现明确恢复变化后，执行已准备的单一本地开录→Type接入→同原件控制/保存消费；不在当前0B现场盲重试。",
+    "继续离线重点/列表、低电满盘收尾和低功耗；OTA已过功能沿用，速度等Nordic，现有云端不改。"
+  ],
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "4810a8c723e15b97a04865671d21ee7c05bf3b6b",
+    "tag": "companion-local-adoption-r41-20261016-source",
+    "parent": "fe306ad3c33a9e252c37434b3d9a14798c6c8f4c",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T10:57:33"
+  },
+  "parentInstalledR39Source": "661480478bcf0abf39e7cca48185fbab94ec950c",
+  "parentInstalledR39Stage": "fe306ad3c33a9e252c37434b3d9a14798c6c8f4c",
+  "changedInputs": [
+    "apps/windows/src-tauri/src/backend/recorder_control.rs",
+    "apps/windows/src-tauri/src/backend/recorder_control/application.rs",
+    "apps/windows/src-tauri/src/backend/recorder_control/local_adoption.rs",
+    "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+    "apps/windows/src-tauri/src/backend/ble_bridge/recorder_control.rs",
+    "apps/windows/src-tauri/src/backend/ble_bridge/offline_connection.rs",
+    "apps/windows/src-tauri/src/backend/mod.rs"
+  ],
+  "dependencyCommit": "438e4943c1ea8344203c76839df770b188b4af6f",
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\local-adoption-r41-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10522624,
+    "sha256": "0ad2bcd46cf37adbed2274d3b9288462cff0854fc3a9b2c7401194ed7392cfa0"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "9f40def083b18c7e76080e386772276eb6f54e93a0d255cc6888b25a45b56c01",
+    "payloadMatch": true
+  },
+  "software": {
+    "recorderControlTests": 27,
+    "ownerTests": 12,
+    "realCFixture": "apps/windows/src-tauri/src/backend/cop1/tests/engine-local-controls.cms3",
+    "fixtureScope": "production C/real-Opus software vectors, not physical board",
+    "logs": [
+      "Companion-Type/.cache/local-adoption-r41-tests-first.log",
+      "Companion-Type/.cache/local-adoption-r41-owner-tests.log"
+    ]
+  },
+  "actual": {
+    "result": "R41_LOCAL_START_ORIGINAL_NOT_COMPLETED",
+    "uartBytes": 0,
+    "deviceStartCommands": 0,
+    "hostStartCommands": 0,
+    "newOriginal": false,
+    "bleConnections": 0,
+    "ownedHandlesClosed": true,
+    "error": "RuntimeError('No complete current normal UART query; no retry/reset')"
+  },
+  "firmwareVersion": 426,
+  "uiGeneration": 78,
+  "firmwareWritten": false,
+  "newCloudCalls": 0,
+  "hardwareQualified": false,
+  "physicalKeyQualified": false,
+  "speedQualified": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "evidence": [
+    ".cache/local-adoption-r41-20261016/type/install/result.json",
+    ".cache/local-adoption-r41-20261016/actual-local-start/result.json"
+  ]
+}
