@@ -49,6 +49,42 @@ fn fields(wire:&[u8])->Result<Observed,String> {
         u32::from_le_bytes(wire[20..24].try_into().unwrap()),wire[24]))
 }
 
+/// The normal protected connect observes an already running local capture.
+/// Wait only for its current transition, without any CMC3 command or clock
+/// write. The durable index and sidecar bind the actual device START token.
+pub(super) async fn observe_local_original(device:&NativeDevice,
+    peer:&crate::backend::recording_wire::transport::Peer)->Result<(Option<String>,bool),String> {
+    let pause=PausePeer::from_verified_peer(peer)?;
+    let (_,_,status)=require_recorder_channel(device).await?;
+    let deadline=StdInstant::now()+StdDuration::from_secs(15);
+    loop {
+        let wire=bounded_ble_result("observe device-local original",remaining_deadline_budget(deadline,StdDuration::from_secs(8)),
+            device.peripheral.read(&status)).await?;
+        if wire.len()!=80 {
+            let old=parse_meeting_status(&wire)?;
+            if wire.len()!=64 || wire[32..44]!=peer.uid || wire[44..52]!=peer.epoch.to_le_bytes() {
+                return Err("本地录音状态与已验证设备不同，未接管。".into());
+            }
+            return Ok((None,!matches!(old.state,0|2)));
+        }
+        let (observed,anchor,duration,_)=fields(&wire)?;
+        if (observed.device_uid,observed.format_epoch)!=(peer.uid,peer.epoch) || observed.last_error!=0 {
+            return Err("本地录音状态与已验证设备不同或存在错误，未接管。".into());
+        }
+        if observed.local_start.is_none() {return Ok((None,!matches!(observed.state,0|2)));}
+        if matches!(observed.state,1|3) {
+            let host=crate::backend::recorder_control::adopt_local(&crate::backend::persistence::state_file_path(),
+                &pause,&device.device_id(),&observed,anchor,duration)?;
+            eprintln!("recorder_local adopted=1 original_start={} original_anchor={anchor} source_ms={duration} sequence={} host_session={host} command_writes=0 clock_write=0",
+                observed.local_start.unwrap(),observed.sequence);
+            return Ok((Some(host),true));
+        }
+        if matches!(observed.state,0|2) {return Ok((None,false));}
+        if StdInstant::now()>=deadline {return Err("设备本地录音仍在切换状态；原录音保留，未重开。".into());}
+        tokio::time::sleep(StdDuration::from_millis(100)).await;
+    }
+}
+
 /// A reboot can replace live CMS3 with an idle CMS2 while its original audio
 /// remains durable. This only admits a read-only catalogue query; its complete
 /// exact-session descriptors, not the idle status, must prove the original end.
@@ -137,17 +173,18 @@ async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteris
 }
 
 pub(super) async fn execute_owned(
-    device_id:&str,command:u8,max_seconds:u16,host_session:&str,start_request:u32,
+    device_id:&str,command:u8,max_seconds:u16,host_session:&str,
     expected_anchor:Option<u32>,expected_key:Option<&crate::companion_v1::CompanionV1RecordingKey>,
     fresh_start:bool,
 ) -> Result<(CompanionMeetingControlReport,Journal,NativeDevice),String> {
-    if command>5 || start_request==0 || (command!=1 && max_seconds!=0) {
+    if command>5 || (command!=1 && max_seconds!=0) {
         return Err("录音控制缺少原会话或有效命令；没有连接设备。".into());
     }
     let expected_key=expected_key.map(SessionKey::from_public).transpose()?;
     let mut store=Store::open(&crate::backend::persistence::state_file_path(),host_session)?;
     let mut journal=store.journal.clone().ok_or("原命令尚未耐久保存；未连接或新开录音。")?;
-    if journal.start_request!=start_request || normalize_device_id(&journal.device_id)!=normalize_device_id(device_id)
+    let start_request=journal.start_request;
+    if start_request==0 || normalize_device_id(&journal.device_id)!=normalize_device_id(device_id)
         || journal.anchor!=expected_anchor || journal.key.as_ref().map(SessionKey::from_public).transpose()?!=expected_key
         || (command==1 && journal.max_seconds!=max_seconds) {
         return Err("控制与耐久保存的原录音不同；未连接其它录音。".into());

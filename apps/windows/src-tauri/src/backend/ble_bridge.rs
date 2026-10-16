@@ -781,7 +781,7 @@ impl CompanionBleBridge {
         run_native_blocking(async {
             let (report,journal,device)=recorder_control::execute_owned(
                 requested_device_id, command, max_seconds, session_id,
-                meeting_idempotency_request_id(session_id,1), expected_recording_id, expected_key, fresh_start,
+                expected_recording_id, expected_key, fresh_start,
             ).await?;
             if report.state!=2 {return Ok((report,journal,None));}
             // The original row and STOP/natural-seal confirmation are already
@@ -2505,7 +2505,7 @@ async fn connect_native_probe(
     };
     let mut device = match retained {
         Some(lease) => lease.device,
-        None => connect_native_device_with_clock(requested_device_id, owner.is_none() && expected_peer.is_none()).await?,
+        None => connect_native_device_with_clock(requested_device_id, false).await?,
     };
     let mut retain_active_recording = false;
     let result = async {
@@ -2530,6 +2530,14 @@ async fn connect_native_probe(
     let actual_peer = super::recording_wire::transport::Peer::from_status(
         device_status.as_deref().expect("required device status"))?;
     require_same_recorder(expected_peer.as_ref(), actual_peer.as_ref())?;
+    let recorder_active=if owner.is_none() && actual_peer.as_ref().is_some_and(|p|p.pause_control) {
+        recorder_control::observe_local_original(&device,actual_peer.as_ref().unwrap()).await?.1
+    } else {identity.recording!=Some(false)};
+    // Preserve ordinary idle clock sync after ruling out a device-local
+    // RUNNING/PAUSED capture. Connecting must not rewrite its original axis.
+    if owner.is_none() && expected_peer.is_none() && !recorder_active {
+        let _=sync_device_utc_clock(&device.peripheral).await;
+    }
     if let Some(key) = owner.and_then(|owner| owner.logical_key.as_ref()) {
         if actual_peer.as_ref().is_none_or(|peer| !peer.logical_control ||
             peer.uid != key.device_uid || peer.epoch != key.format_epoch) {

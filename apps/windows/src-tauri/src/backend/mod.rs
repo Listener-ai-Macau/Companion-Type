@@ -2454,6 +2454,9 @@ impl CompanionBackend for FixtureCompanionBackend {
         merge_synced_recordings(&mut next, &synced_batch);
         if segmented_library_updated {
             reload_segmented_library(&mut next, &persistence::state_file_path())?;
+            if action==CompanionV1ControlAction::DeviceConnect {
+                if let Some(device)=request.device_id.as_deref() {recorder_control::restore_connected_local(&mut next,device)?;}
+            }
             if let Some(owner) = reconnected_closed_owner.as_ref() {
                 owner.retain_closed_after_reload(&mut next, &snapshot)?;
             }

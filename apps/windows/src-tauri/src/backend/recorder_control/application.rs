@@ -34,7 +34,7 @@ pub(crate) fn restart_recovery_request(snapshot:&CompanionV1Snapshot,device:&str
     let key=SessionKey::from_public(row.device_recording_key.as_ref()?).ok()?;
     if journal.schema!=1 || journal.host_session!=row.id || !same_device(&journal.device_id,device)
         || journal.uid!=key.device_uid || journal.epoch!=key.format_epoch
-        || journal.start_request==0 || journal.max_seconds==0
+        || journal.start_request==0 || (journal.max_seconds==0 && !journal.local_origin)
         || journal.key.as_ref()!=row.device_recording_key.as_ref()
         || journal.anchor.is_none_or(|id|id==0) || journal.anchor!=row.device_recording_id
         || journal.confirmed.as_ref().is_none_or(|confirmed|!matches!(confirmed.state,1|3))
@@ -56,7 +56,7 @@ impl Journal {
         }
         if let Some(old)=row.recorder_control.as_ref() {
             if old.host_session!=self.host_session || old.start_request!=self.start_request
-                || old.max_seconds!=self.max_seconds || (old.uid,old.epoch)!=(self.uid,self.epoch)
+                || old.max_seconds!=self.max_seconds || old.local_origin!=self.local_origin || (old.uid,old.epoch)!=(self.uid,self.epoch)
                 || old.confirmed.as_ref().is_some_and(|c|self.confirmed.as_ref().is_none_or(|next|next.sequence<c.sequence)) {
                 return Err(failure("拒绝用另一命令或旧确认覆盖原录音"));
             }
@@ -85,7 +85,7 @@ impl Journal {
             // Source samples exclude every pause. Never derive this from host
             // wall time, and never overwrite a received WAV with an estimate.
             if !row.audio_stored {row.duration_ms=u64::from(c.duration_ms);}
-            if matches!(c.state,1|3) && row.started_at.is_none() {
+            if !self.local_origin && matches!(c.state,1|3) && row.started_at.is_none() {
                 row.started_at=Some(super::super::observation_timestamp());
             }
             if c.state==2 {

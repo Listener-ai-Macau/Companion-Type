@@ -108,14 +108,15 @@ impl OwnedRecorder {
     pub(crate) fn session_id(&self) -> &str { &self.session_id }
 
     pub(super) fn start_token(&self) -> u32 {
-        super::meeting_idempotency_request_id(&self.session_id, 1)
+        self.journal.as_ref().map_or_else(||super::meeting_idempotency_request_id(&self.session_id, 1),|j|j.start_request)
     }
 
     pub(super) fn verify_status(&self, observed: &super::MeetingStatus) -> Result<(), String> {
         if let Some(journal)=self.journal.as_ref() {
             let mut journal=journal.clone();
             let status=observed.pause_status.as_ref().ok_or("原录音的暂停协议确认缺失。")?;
-            journal.observe(status,observed.meeting_id,observed.duration_ms)?;
+            if status.local_start.is_some() {journal.check_local_scope(status,observed.meeting_id,observed.duration_ms)?;}
+            else {journal.observe(status,observed.meeting_id,observed.duration_ms)?;}
             if !matches!(observed.state,1|3) || journal.pending.is_some()
                 || journal.key.as_ref().map(crate::backend::recording_wire::SessionKey::from_public)
                     .transpose()?.as_ref()!=self.logical_key.as_ref() || observed.meeting_id!=self.recording_id {
@@ -304,7 +305,9 @@ impl<T> Lease<T> {
             || identity.mcu_uid.as_deref() != expected_uid
             || super::normalize_device_id(actual_device_id)
                 != super::normalize_device_id(&self.device_id)
-            || !self.accepts_status(status.meeting_id, status.request_id, current_request)
+            || (!self.accepts_status(status.meeting_id, status.request_id, current_request)
+                && !status.pause_status.as_ref().is_some_and(|s|s.local_start==Some(self.start_token)
+                    && self.logical_key.is_some() && s.key.as_ref()==self.logical_key.as_ref()))
             || self.logical_key.as_ref().is_some_and(|key| status.logical_key.as_ref() != Some(key))
             || status.last_error != 0
             || !(matches!(status.state, super::MEETING_STATE_RECORDING | super::MEETING_STATE_FINALIZED)

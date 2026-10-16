@@ -42,6 +42,10 @@ pub struct Journal {
     epoch: u64,
     pub(crate) start_request: u32,
     pub(crate) max_seconds: u16,
+    /// A local START has no host-selected duration limit. Zero is unknown,
+    /// never permission to send a replacement START.
+    #[serde(default)]
+    pub(crate) local_origin: bool,
     pub(crate) key: Option<CompanionV1RecordingKey>,
     pub(crate) anchor: Option<u32>,
     pub(crate) confirmed: Option<Confirmed>,
@@ -91,13 +95,15 @@ impl Journal {
         let (uid,epoch)=peer.identity();
         let wire=peer.request(None,1,request,request,max_seconds,0,true)?.to_vec();
         Ok(Self{schema:1,host_session:host_session.into(),device_id:device_id.into(),uid,epoch,
-            start_request:request,max_seconds,key:None,anchor:None,confirmed:None,
+            start_request:request,max_seconds,local_origin:false,key:None,anchor:None,confirmed:None,
             pending:Some(Command{command:1,request,sequence:0,wire}),superseded:None,sealed_catalogue_end:None})
     }
 
     pub(crate) fn matches(&self, peer: &PausePeer, host: &str, device: &str) -> Result<(),String> {
         if self.schema!=1 || self.host_session!=host || !same_device(&self.device_id,device)
-            || (self.uid,self.epoch)!=peer.identity() || self.start_request==0 {
+            || (self.uid,self.epoch)!=peer.identity() || self.start_request==0
+            || (self.local_origin && (self.max_seconds!=0 || self.confirmed.is_none()
+                || self.pending.as_ref().is_some_and(|p|p.command==1))) {
             return Err(failure("主机、蓝牙地址、芯片或格式代次与原命令不同"));
         }
         let key=self.key.as_ref().map(SessionKey::from_public).transpose()?;
@@ -150,6 +156,7 @@ impl Journal {
         }
         let prior=self.confirmed.as_ref().ok_or_else(||failure("尚无设备开始确认"))?;
         if command==1 {
+            if self.local_origin {return Err(failure("设备本地开始的原录音不能重新发送开始命令"));}
             if prior.command==1 && prior.sequence==0 && prior.state==1 {return Ok(false);}
             return Err(failure("这场录音已经开始，不能重开"));
         }
@@ -258,10 +265,7 @@ impl Journal {
     /// A physical action can race an outstanding host write. Its protected
     /// origin, original START, full key, anchor and monotonic sequence must all
     /// match. Preserve a displaced intent; STOP is rebased, never dropped.
-    pub(crate) fn observe_with_peer(&mut self, peer:&PausePeer, status:&PauseStatus,
-        anchor:u32, duration:u32)->Result<Observation,String> {
-        if status.local_start.is_none() {return self.observe(status,anchor,duration);}
-        self.matches(peer,&self.host_session,&self.device_id)?;
+    pub(crate) fn check_local_scope(&self,status:&PauseStatus,anchor:u32,duration:u32)->Result<(),String> {
         let previous=self.confirmed.as_ref().ok_or_else(||failure("原开始尚未确认，不能由本地状态替代"))?;
         if self.sealed_catalogue_end.is_some() || status.local_start!=Some(self.start_request)
             || (status.device_uid,status.format_epoch)!=(self.uid,self.epoch)
@@ -272,6 +276,14 @@ impl Journal {
                 previous.command!=status.command || previous.request!=status.request)) {
             return Err(failure("本地控制不属于同一原录音或序号已过期"));
         }
+        Ok(())
+    }
+    pub(crate) fn observe_with_peer(&mut self, peer:&PausePeer, status:&PauseStatus,
+        anchor:u32, duration:u32)->Result<Observation,String> {
+        if status.local_start.is_none() {return self.observe(status,anchor,duration);}
+        self.matches(peer,&self.host_session,&self.device_id)?;
+        self.check_local_scope(status,anchor,duration)?;
+        let previous=self.confirmed.as_ref().ok_or_else(||failure("原开始尚未确认"))?;
         let stable=stable_state(status.command).ok_or_else(||failure("未知本地操作"))?;
         let transition=match status.command {4=>4,5=>5,_=>255};
         if status.state==transition {return Ok(Observation::Accepted);}
@@ -347,6 +359,8 @@ impl Store {
 
 mod application;
 pub(crate) use application::{apply,restart_recovery_request,unconfirmed_start_retry_request};
+mod local_adoption;
+pub(crate) use local_adoption::{adopt_local,restore_connected_local};
 mod catalogue;
 pub(crate) use catalogue::SealedCatalogueEnd;
 mod retirement;
