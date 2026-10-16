@@ -138,7 +138,10 @@ mod tests {
         let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();r.accept_segment(&d.encode().unwrap(),&payload).unwrap();
         let raw=r.payload_path(&d);let wav=r.audio_path();let receipt=r.receipt_path();r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();drop(r);
         let before_receipt=fs::read(&receipt).unwrap();fs::create_dir(&wav).unwrap(); // Actual destination conflict, not physical ENOSPC.
-        let failed=restore_local_scope(&root,&index,Some(&id)).unwrap();assert_eq!(failed.failures.len(),1);
+        session_store::update_checked(&index,|rows|{rows[0].pending_reason=Some("needs_segments".into());Ok(())}).unwrap();
+        let startup=crate::coordinator::CompanionCoordinator::new_fixture();
+        let failed=startup.restore_local_recordings().unwrap();assert_eq!(failed.failures.len(),1);
+        assert_eq!(startup.snapshot().unwrap().host.sessions[0].pending_reason.as_deref(),Some("needs_local_audio"));drop(startup);
         let pending=crate::backend::persistence::load_sessions_from(&index).unwrap().remove(0);
         assert_eq!(pending.status,"captured");assert_eq!(pending.pending_reason.as_deref(),Some("needs_local_audio"));
         assert!(!pending.audio_stored&&!pending.device_reclaimed);assert_eq!(pending.recovery.intent,"none");
@@ -149,11 +152,13 @@ mod tests {
         let mut r=Receiver::open(&root,&other.encode().unwrap()).unwrap();r.accept_segment(&other.encode().unwrap(),&payload).unwrap();
         let other_id=r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();let other_path=r.payload_path(&other);drop(r);
         fs::write(&other_path,b"preserve unrelated failure").unwrap();
+        session_store::update_checked(&index,|rows|{rows.iter_mut().find(|row|row.id==id).unwrap().pending_reason=Some("needs_segments".into());Ok(())}).unwrap();
         let before:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&fs::read(&index).unwrap()).unwrap();
         let other_before=serde_json::to_value(before.iter().find(|row|row.id==other_id).unwrap()).unwrap();
         let backend=crate::coordinator::CompanionCoordinator::new_fixture();
         let request=serde_json::from_value(serde_json::json!({"action":"meetingRestoreAudio","sessionId":id})).unwrap();
         assert!(backend.apply_control(request).is_err());
+        assert_eq!(backend.snapshot().unwrap().host.sessions.iter().find(|row|row.id==id).unwrap().pending_reason.as_deref(),Some("needs_local_audio"));
         fs::remove_dir(&wav).unwrap();
         let request=serde_json::from_value(serde_json::json!({"action":"meetingRestoreAudio","sessionId":id})).unwrap();
         let result=backend.apply_control(request).unwrap();let row=result.host.sessions.iter().find(|row|row.id==id).unwrap();

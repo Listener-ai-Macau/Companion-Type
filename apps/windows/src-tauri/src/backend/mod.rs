@@ -1220,11 +1220,15 @@ impl CompanionBackend for FixtureCompanionBackend {
     }
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport,String> {
         let report=recording_wire::receiver::restore_local_product()?;
-        if !report.restored.is_empty() {
+        if !report.restored.is_empty() || !report.failures.is_empty() {
             let mut snapshot=self.snapshot.lock().map_err(|_| "会议状态暂时不可用，原音已保存。")?;
-            reload_segmented_library(&mut snapshot,&persistence::state_file_path())?;
-            snapshot.updated_at=observation_timestamp();
-            refresh_privacy_counts(&mut snapshot);
+            if !report.restored.is_empty() || snapshot.host.persistence.status=="ready" {
+                // Publishing verified raw completeness can precede a failed
+                // WAV write. Surface that durable state without restarting,
+                // while failure-only refresh never discards unsaved edits.
+                reload_segmented_library(&mut snapshot,&persistence::state_file_path())?;
+                snapshot.updated_at=observation_timestamp();refresh_privacy_counts(&mut snapshot);
+            }
         }
         Ok(report)
     }
@@ -1462,9 +1466,12 @@ impl CompanionBackend for FixtureCompanionBackend {
             library_lifecycle::require_available(row)?;
             if row.status=="recording" {return Err("请先结束这份录音，再生成回听文件。".into());}
             let report=recording_wire::receiver::restore_local_session(&id)?;
-            if let Some(failure)=report.failures.first() {return Err(failure.error.clone());}
+            let refreshed=reload_segmented_library(&mut snapshot,&persistence::state_file_path());
+            if let Some(failure)=report.failures.first() {
+                return Err(match refreshed {Ok(())=>failure.error.clone(),Err(error)=>format!("{}；本机状态更新未完成：{error}",failure.error)});
+            }
+            refreshed?;
             if !report.waiting_for_segments.is_empty() {return Err("本机原音仍有缺段，请连接来源设备补收；未恢复其它录音。".into());}
-            reload_segmented_library(&mut snapshot,&persistence::state_file_path())?;
             if !snapshot.host.sessions.iter().any(|row|row.id==id&&row.audio_stored&&row.retention.audio_cached) {
                 return Err("本机回听文件尚未生成，现有原音和恢复记录保留。".into());
             }

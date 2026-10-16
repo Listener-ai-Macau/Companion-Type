@@ -102,7 +102,7 @@ export function App() {
             setError('录音清理已处理，但本机回听位置尚未清除，请检查本机存储权限。');
         } catch (controlError) {
           if (['meetingStart', 'meetingStop', 'meetingFinalize', 'meetingPause', 'meetingResume',
-            'meetingRecoverControl', 'deviceSyncRecordings'].includes(request.action)) {
+            'meetingRecoverControl', 'deviceSyncRecordings', 'meetingRestoreAudio'].includes(request.action)) {
             // STOP or a partial sync can commit real state before its transfer
             // fails. Read that checkpoint while this operation still owns the
             // UI gate; never infer a STOP or replay a recording command.
