@@ -1,0 +1,209 @@
+{
+  "schema": "companion.pause-original-r36.installed.v1",
+  "result": "INSTALLED_NORMAL_PAUSE_REOPEN_AND_INTERRUPTED_ORIGINAL_RECOVERY_QUALIFIED_FOR_RECORDED_SCOPE",
+  "createdAtLocal": "2026-10-16T08:36:54+08:00",
+  "summary": "TypeR36已正式安装：修复重启后CMS2基础状态挡住原录音目录恢复；同原12号已找回8.28秒原音/暂停事件，耐久保存并消费、保留中断警告和真实PAUSE。另同一正常原录音完成暂停→进程退出→新进程核对→继续→再次暂停→STOP，18.40秒原音保存/消费、两段暂停位置闭合。",
+  "limitations": "本阶段确认Type正常控制/跨进程恢复和实际已中断原件收回，不是GUI实际点击、设备无手机控制、2h、会议语义、功耗或速度通过。中间设备运行时间回落且实时CMS3消失，重启原因未确认；未SWD/复位/重刷/清配对，不把它判为唯一硬件或看门狗根因。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "2be62d74397aa2616efd7a609694ddf16a249848",
+    "tag": "companion-pause-reopen-r36-20261016-source",
+    "parent": "851709ffcec397bb7961d564a1a9eacf1c8e61c0",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T08:22:19"
+  },
+  "installedExeSha256": "109ecc64ce1aa8653085bd5679b55efd5a0b55ca72ed8cfe2d9c7e341885388e",
+  "installedDllSha256": "3253bf70fcd250390cef1d653507a02467ef8f4bc8782138099179cc2a4150d1",
+  "msiSha256": "6b67f879ec315780fad075c52a8e04336dad66d0090c5ffb1dfc0afce327e3f3",
+  "buildInputs": 217,
+  "firmwareUnchanged": "FW417/normalBoot417/UI77, legalCE96KiB/512KiB",
+  "change": "One Type production file: CRC-checked idleCMS2 only permits QUERY of complete exact original catalogue; reuses stable before/after status, matching peer UID/epoch and source/anchor/LAST/SHA/sample continuity. Never ends from idle alone, never issues START/STOP for that recovery. Existing CMS3 archived path shares implementation.",
+  "normal": {
+    "sessionId": "v1-real-installed-1792110567503",
+    "originalStartRequest": 4263151375,
+    "key": {
+      "deviceUid": "180010000d50335754363720",
+      "formatEpoch": "b8b8334898156eb8",
+      "sessionId": "0000000000000008"
+    },
+    "anchor": 14,
+    "originalConfirmedPauseMs": 8640,
+    "recoveredState": 3,
+    "controlSequence": [
+      1,
+      4,
+      0,
+      5,
+      4,
+      2
+    ],
+    "finalStop": {
+      "command": 2,
+      "request": 4208243559,
+      "sequence": 4,
+      "state": 2,
+      "durationMs": 18420,
+      "finishedLocally": false
+    },
+    "audio": {
+      "rawBytes": 39928,
+      "opusFrames": 921,
+      "opusPacketBytes": 36840,
+      "paddingBytes": 1106,
+      "sourcePcmSamples": 294720,
+      "wavSamples": 294400,
+      "oneWholeOriginalPreskipSamples": 320,
+      "decodedDurationMs": 18400,
+      "wavBytes": 588844,
+      "wavSha256": "558367d5224c383ca473a229ae156e56ff9d2f3fbad1782d4f72d7c247f26b7e",
+      "events": [
+        {
+          "kind": 1,
+          "sequence": 1,
+          "sampleOffset": 138240,
+          "elapsedMs": 8652
+        },
+        {
+          "kind": 2,
+          "sequence": 2,
+          "sampleOffset": 138240,
+          "elapsedMs": 14416
+        },
+        {
+          "kind": 1,
+          "sequence": 3,
+          "sampleOffset": 294720,
+          "elapsedMs": 24214
+        },
+        {
+          "kind": 3,
+          "sequence": 4,
+          "sampleOffset": 294720,
+          "elapsedMs": 27107
+        }
+      ],
+      "segments": [
+        {
+          "rawBytes": 39928,
+          "sha256": "7460b8186ec607c596d95b8a5380963d97d2a01e4d5b1d5cc4202300fe77a8be",
+          "frames": 921
+        }
+      ]
+    },
+    "pauseTimeline": {
+      "capturedDurationMs": 18400,
+      "gaps": [
+        {
+          "audioPositionMs": 8620,
+          "pausedAtMs": 8652,
+          "resumedAtMs": 14416,
+          "durationMs": 5764,
+          "endedDuringPause": false
+        },
+        {
+          "audioPositionMs": 18400,
+          "pausedAtMs": 24214,
+          "resumedAtMs": null,
+          "durationMs": 2893,
+          "endedDuringPause": true
+        }
+      ]
+    },
+    "audioStored": true,
+    "deviceReclaimed": true,
+    "captureIncomplete": false
+  },
+  "interrupted": {
+    "sessionId": "v1-real-installed-1792109420424",
+    "originalStartRequest": 452280907,
+    "key": {
+      "deviceUid": "180010000d50335754363720",
+      "formatEpoch": "b8b8334898156eb8",
+      "sessionId": "0000000000000007"
+    },
+    "anchor": 12,
+    "preservedActualPause": {
+      "command": 4,
+      "request": 1943436034,
+      "sequence": 1,
+      "state": 3,
+      "durationMs": 8300,
+      "finishedLocally": false
+    },
+    "sealedCatalogueEnd": {
+      "key": {
+        "deviceUid": "180010000d50335754363720",
+        "formatEpoch": "b8b8334898156eb8",
+        "sessionId": "0000000000000007"
+      },
+      "anchor": 12,
+      "terminalRecordingId": 12,
+      "terminalSha256": "52e913e0df12af0c25be46fcc19f8caac26652af0eed1a1112569564669031c6",
+      "totalSegments": 1,
+      "durationMs": 8300
+    },
+    "audio": {
+      "rawBytes": 17856,
+      "opusFrames": 415,
+      "opusPacketBytes": 16600,
+      "paddingBytes": 382,
+      "sourcePcmSamples": 132800,
+      "wavSamples": 132480,
+      "oneWholeOriginalPreskipSamples": 320,
+      "decodedDurationMs": 8280,
+      "wavBytes": 265004,
+      "wavSha256": "4db2e95d1d67e0813bff4d4061c887446707d70eec9fb6ff7ad463caca5ccffa",
+      "events": [
+        {
+          "kind": 1,
+          "sequence": 1,
+          "sampleOffset": 132800,
+          "elapsedMs": 8312
+        }
+      ],
+      "segments": [
+        {
+          "rawBytes": 17856,
+          "sha256": "52e913e0df12af0c25be46fcc19f8caac26652af0eed1a1112569564669031c6",
+          "frames": 415
+        }
+      ]
+    },
+    "pauseTimeline": {
+      "capturedDurationMs": 8280,
+      "gaps": [
+        {
+          "audioPositionMs": 8280,
+          "pausedAtMs": 8312,
+          "resumedAtMs": null,
+          "durationMs": null,
+          "endedDuringPause": false
+        }
+      ]
+    },
+    "audioStored": true,
+    "deviceReclaimed": true,
+    "captureIncomplete": true,
+    "newCaptureCommands": 0,
+    "stopAckFabricated": false
+  },
+  "affectedSoftwareChecks": [
+    "New native idleCMS2 query admission and command/state/UID/epoch/CRC/unconfirmed boundaries:1 passed",
+    "Existing moved catalogue completion and10wrong/incomplete/corrupt descriptor variants:2 passed"
+  ],
+  "retainedFailures": [
+    "First R36 observer required a UART query while the protected capture was still open;12s without snapshot caused observer termination, not an established capture fault.",
+    "Old installedR32 fresh original QUERY reached encrypted GATT but rejected non-CMS3 base status before checking original catalogue; actual original and rejection retained.",
+    "Normal after-fix control/recovery/save/consume all succeeded; observer compared raw18.42s control duration to18.40s decoded WAV without the single320-sample pre-skip and failed. Finalized from original files/events, no repeat capture.",
+    "Initial helper generation used the Rust cwd and failed before producing a helper or device access; corrected root and continued existing test session."
+  ],
+  "rawEvidence": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\pause-reopen-r36\\installed-board\\result.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\pause-reopen-r36\\original-continuation\\result.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\pause-reopen-r36\\installed-original-recovery\\result.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ota-completion-20261015\\pause-reopen-r36\\normal-pause-after-fix\\result.json"
+  ],
+  "ownedHandlesClosed": true,
+  "newCloudCalls": 0,
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
