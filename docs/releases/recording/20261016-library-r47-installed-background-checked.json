@@ -1,0 +1,81 @@
+{
+  "schema": "companion.type.library.r47.v1",
+  "time": "2026-10-16T13:26:37+08:00",
+  "result": "R47_INSTALLED_NATIVE_BACKGROUND_CHECKED",
+  "summary": "正式TypeR47已安装：资料库增加本地日期范围筛选（首尾含当日、未知时间不猜测），精确多选批量导出原音WAV/TXT/JSON/Markdown/SRT，可选原录音/离线/在线纪要；每次新目录、同名序号区分和含完整SHA的清单。任一缺失/版本冲突/内容未就绪整批拒绝，取消/失败保留选择，不调用云端补内容。",
+  "actual": "正式安装EXE后台接口使用两份已有真实WBA原音的隔离资料库副本，分类耐久保存/新进程读取、拒绝过期修改及缺失/过期导出、批量WAV与JSON保存均实际完成；WAV全SHA与源一致，JSON包含本地用户笔记和分类，真实资料库/原音保持不变。不是新录音、ASR或会议事实。",
+  "limitations": "全程无Computer Use、前台窗口、UART/SWD/BLE、外放或云调用；只资格本机文件与原生后端保存路径，不资格GUI视觉、物理采音/消费、会议质量或整机。批量删除、录音保护/回收站、非破坏编辑及整库备份恢复仍未齐；导出清单不是可恢复备份。R46被Esc停止的视觉检查保留未完成，R45已有原生回听结果沿用。",
+  "next": [
+    "CP27-16先接显式录音保护，与现有所有破坏性清理入口和恢复联动；随后CP27-27可恢复删除/回收站。",
+    "沿同一库和原音身份接整库备份恢复及非破坏派生件，不把批量分享导出冒充备份。",
+    "后台操作优先，机器可查自行完成；实板交接/会议质量/低功耗和分析器后续项继续同树，不重复已过OTA或测速。"
+  ],
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "284d2993c9c71eb3b666224b655400ef7bd8dbd0",
+    "tag": "companion-library-r47-20261016-source",
+    "parent": "eea9d9739b8af6a15517b0aabac2d4374df7fb5a",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T13:20:57"
+  },
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\library-r47-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10620928,
+    "sha256": "dfca58c5da27ca8ee8e6d974439451171f230b8840c70da903628751b3e20eff"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "a2e944b104c8a3b6692cff3112766dd576350ee0bd2f0e53f7ca5eefeb7375f7",
+    "payloadMatch": true
+  },
+  "native": {
+    "evidence": ".cache/library-r47-20261016/native-background/result.json",
+    "source": "two previously saved real WBA originals, read only; isolated copy of their durable index",
+    "checks": [
+      "native organization durable save and next-process reload",
+      "stale revision rejected without index/output change",
+      "original WAV batch copies match full source SHA",
+      "JSON exports preserve local notes and organization",
+      "manifest IDs, unique filenames, lengths and SHA match saved files",
+      "missing/stale batch publishes no partial directory",
+      "real library and original WAVs unchanged"
+    ],
+    "audioExport": {
+      "path": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\library-r47-20261016\\native-background\\exports\\Companion-export-3ed07297-cfc1-43e1-8670-8b86ccabc014",
+      "sessions": 2,
+      "files": 3,
+      "bytes": 1454808
+    },
+    "documentExport": {
+      "path": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\library-r47-20261016\\native-background\\exports\\Companion-export-3e0fcae0-15ff-4d71-9290-daf2803ff0fc",
+      "sessions": 2,
+      "files": 3,
+      "bytes": 3223
+    },
+    "isolation": "explicit state/recording-directory overrides; two indexed original recordings read only; local notes explicitly user-authored in isolated copy",
+    "guiUsed": false,
+    "hardwareAccess": false,
+    "cloudCalls": 0
+  },
+  "software": {
+    "rustTests": {
+      "passed": 2,
+      "failed": 0,
+      "evidence": "Companion-Type/.cache/library-r47-20261016/rust.log"
+    },
+    "uiEvidence": "Companion-Type/.cache/library-r47-20261016/ui-r2.log",
+    "frontend": "Companion-Type/.cache/library-r47-build.log",
+    "scope": "inclusive local dates, unknown/invalid time, exact selection/mode/revision, retained cancel/error selection, recording gate; no GUI claim"
+  },
+  "failures": [
+    {
+      "stage": "first UI test runner",
+      "result": "missing @companion-type/core alias; existing project alias added in runner, affected test then passed; no product failure or bad install"
+    },
+    {
+      "stage": "initial Rust invocation",
+      "result": "caller omitted live session ID in printed response; verified cargo PID19112 until terminal; one logged affected rerun produced retained 2/0 result; not a product improvement"
+    }
+  ],
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
