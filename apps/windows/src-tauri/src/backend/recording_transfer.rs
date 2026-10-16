@@ -77,7 +77,7 @@ pub(crate) struct Cursor {
 impl Cursor {
     pub(crate) fn open(root: &Path, source: Source) -> Result<(Self, Vec<u8>), String> {
         // Canonical parents also allow long Windows paths without a registry change.
-        let root = root.canonicalize().map_err(|_| fail())?;
+        let root = root.canonicalize().map_err(|e|super::export::local_write_error("打开录音保存目录",&e))?;
         let key = source.key()?;
         let path = path(&root, &source)?;
         let receipt_path = root.join(format!(".device-recording-{key}.json"));
@@ -89,7 +89,7 @@ impl Cursor {
             .read(true)
             .write(true)
             .open(lock_path)
-            .map_err(|_| fail())?;
+            .map_err(|e|super::export::local_write_error("打开录音写入锁",&e))?;
         lock.try_lock().map_err(|_| fail())?;
         let mut body_exists = no_link(&path)?;
         let mut receipt = if no_link(&receipt_path)? {
@@ -140,7 +140,7 @@ impl Cursor {
             .write(true)
             .create_new(!body_exists)
             .open(&path)
-            .map_err(|_| fail())?;
+            .map_err(|e|super::export::local_write_error("打开接收文件",&e))?;
         let len = file.metadata().map_err(|_| fail())?.len();
         if len < receipt.bytes || len > u64::from(receipt.source.total_length) {
             return Err(fail());
@@ -163,11 +163,11 @@ impl Cursor {
         }
         // Only the uncommitted tail of our own, validated file may be replayed.
         if len != receipt.bytes {
-            file.set_len(receipt.bytes).map_err(|_| fail())?;
-            file.sync_all().map_err(|_| fail())?;
+            file.set_len(receipt.bytes).map_err(|e|super::export::local_write_error("恢复录音写入位置",&e))?;
+            file.sync_all().map_err(|e|super::export::local_write_error("提交录音恢复位置",&e))?;
         }
         file.seek(SeekFrom::Start(receipt.bytes))
-            .map_err(|_| fail())?;
+            .map_err(|e|super::export::local_write_error("定位录音写入位置",&e))?;
         let bytes = receipt.bytes;
         Ok((
             Self {
@@ -192,7 +192,7 @@ impl Cursor {
             .as_mut()
             .ok_or_else(fail)?
             .write_all(bytes)
-            .map_err(|_| fail())?;
+            .map_err(|e|super::export::local_write_error("写入录音片段",&e))?;
         self.hasher.update(bytes);
         self.bytes += bytes.len() as u64;
         if self.bytes - self.receipt.bytes >= CHECKPOINT_BYTES {
@@ -204,8 +204,8 @@ impl Cursor {
         let file = self.file.as_mut().ok_or_else(fail)?;
         // A receipt may describe only audio that reached durable storage.
         // Flush the user-space batch before syncing and atomically saving it.
-        file.flush().map_err(|_| fail())?;
-        file.get_ref().sync_all().map_err(|_| fail())?;
+        file.flush().map_err(|e|super::export::local_write_error("刷新录音接收文件",&e))?;
+        file.get_ref().sync_all().map_err(|e|super::export::local_write_error("提交录音接收文件",&e))?;
         let mut next = self.receipt.clone();
         next.bytes = self.bytes;
         next.sha256 = format!("{:x}", self.hasher.clone().finalize());

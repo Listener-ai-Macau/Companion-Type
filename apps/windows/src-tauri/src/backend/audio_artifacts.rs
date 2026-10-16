@@ -243,7 +243,6 @@ fn save(root: &Path, data: &Manifest) -> Result<(), String> {
     }
     super::export::write_atomic(&root.join(MANIFEST), &bytes)
         .map(|_| ())
-        .map_err(|_| fail())
 }
 fn lock(root: &Path) -> Result<File, String> {
     let path = root.join(".audio-artifacts.lock");
@@ -402,7 +401,7 @@ impl WriteLease {
                 .write(true)
                 .open(self.root.join(&self.leaf))
                 .and_then(|f| f.sync_all())
-                .map_err(|_| fail())?;
+                .map_err(|e|super::export::local_write_error("提交录音文件",&e))?;
         }
         let identity = fingerprint(&self.root.join(&self.leaf))?;
         if phase == Phase::Sealed && !self.purpose.temporary() && identity.is_none() {

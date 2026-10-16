@@ -67,7 +67,10 @@ async fn worker_write_failure_preserves_durable_prefix_and_refuses_finish() {
         for packet in body[4_321..].chunks(224) { cursor.append(packet).await?; }
         cursor.finish(body.len(), Sha256::digest(&body).into(), crc32fast::hash(&body)).await
     }.await;
-    assert!(result.is_err());
+    let error=result.unwrap_err();
+    println!("r64_underlying_write_error={error}");
+    assert!(error.contains("os error"),"the real write failure must survive the worker queue, not become a generic closed-channel error: {error}");
+    assert_eq!(cursor.checkpoint().await.unwrap_err(),error,"closed queue retains the first cause without another disk write");
     drop(cursor);
     let (cursor, recovered) = Cursor::open(&root, source.clone()).unwrap();
     assert_eq!(recovered, body[..4_321]);

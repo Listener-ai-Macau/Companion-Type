@@ -1781,10 +1781,13 @@ fn native_recording_operation(result: Result<NativeRecordingBatch, String>) -> C
             recordings: batch.recordings.clone(),
             device_identity: None,
             message: if let Some(sessions) = batch.segmented.as_ref() {
-                format!("设备连续录音已保存到录音库：{}场；{}。{:?}", sessions.len(),
+                if !batch.failures.is_empty() {
+                    format!("设备录音同步未完成，本次已收录{}场。已保存的片段和恢复记录保留，未收齐内容没有确认清理。原因：{}",
+                        sessions.len(),batch.failures.join("；"))
+                } else {format!("设备连续录音本次收录：{}场；{}。", sessions.len(),
                     if batch.paused { "同步已暂停，设备录音继续" }
-                    else if !batch.connection_reusable { "回收确认未完成，原音已保存并保留精确重试记录" }
-                    else { "未封口尾段仍留在设备，确认后才回收已保存段" }, batch.failures)
+                    else if !batch.connection_reusable { "后续收取或确认未完成，已保存片段和精确重试记录保留" }
+                    else { "按已保存片段逐段确认清理；未封口尾段仍留在设备" })}
             } else if batch.paused {
                 format!("{} 本次已完整保存{}条录音；未收齐的录音没有消费。", recording_sync::PAUSED, batch.recordings.len())
             } else if batch.recordings.is_empty() && batch.failures.is_empty() {
@@ -1811,6 +1814,27 @@ fn native_recording_operation(result: Result<NativeRecordingBatch, String>) -> C
             device_identity: None,
             message: format!("Native BLE recording sync failed: {error}"),
         },
+    }
+}
+
+#[cfg(test)]
+mod storage_failure_message_tests {
+    use super::*;
+    #[test]
+    fn r64_local_write_failure_is_not_reported_as_a_saved_original_or_only_an_ack_error() {
+        let cause=super::super::export::local_write_error("刷新录音接收文件",
+            &std::io::Error::new(std::io::ErrorKind::StorageFull,"storage-full-model"));
+        for ids in [Vec::new(),vec!["durable-prefix-session".into()]] {
+            let count=ids.len();
+            let operation=native_recording_operation(Ok(NativeRecordingBatch {
+                device_id:"A1:B2:C3:D4:E5:F6".into(),recordings:vec![],failures:vec![cause.clone()],
+                paused:false,connection_reusable:false,segmented:Some(ids),
+            }));
+            assert_eq!(operation.ready,count!=0,"importable partial rows do not prove a reusable BLE connection");
+            assert!(operation.message.contains("同步未完成")&&operation.message.contains(&cause));
+            assert!(!operation.message.contains("原音已保存")&&!operation.message.contains("已保存到录音库"));
+            assert!(!operation.message.contains("回收确认未完成"));
+        }
     }
 }
 

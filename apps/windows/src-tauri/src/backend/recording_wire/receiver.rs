@@ -609,7 +609,7 @@ fn decode(
 ) -> Result<Option<cop1::Timeline>, String> {
     use denzic_host_audio_v1_core::{opus_decoder::MonoDecoder, wav::WavWriter};
     let mut decoder = MonoDecoder::new(16000)?;
-    let mut wav = WavWriter::create(output).map_err(|_| fail())?;
+    let mut wav = WavWriter::create(output).map_err(|e|export::local_write_error("创建录音回听文件",&e))?;
     let mut frames = 0u64;
     let mut schema=None;let mut timeline=None;
     for (d, file) in ds.iter().zip(files) {
@@ -633,7 +633,7 @@ fn decode(
                 .into_iter()
                 .flat_map(|v| v.clamp(-29900, 29900).to_le_bytes())
                 .collect::<Vec<_>>();
-            wav.append_bytes(&pcm).map_err(|_| fail())?;
+            wav.append_bytes(&pcm).map_err(|e|export::local_write_error("写入录音回听文件",&e))?;
         }
         let summary=reader.finish(d.flags&4!=0)?;
         if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
@@ -641,13 +641,13 @@ fn decode(
     if (frames - 1) * 320 != expected {
         return Err(fail());
     }
-    wav.finalize().map_err(|_| fail())?;
+    wav.finalize().map_err(|e|export::local_write_error("完成录音回听文件",&e))?;
     drop(wav);
     OpenOptions::new()
         .write(true)
         .open(output)
         .and_then(|f| f.sync_all())
-        .map_err(|_| fail())?;
+        .map_err(|e|export::local_write_error("提交录音回听文件",&e))?;
     Ok(timeline)
 }
 

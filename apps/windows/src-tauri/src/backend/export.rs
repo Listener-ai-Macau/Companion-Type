@@ -302,16 +302,43 @@ fn render_json_for_mode(
     .map_err(|error| format!("serialize export json: {error}"))
 }
 
+pub(crate) fn local_write_error(action:&str,error:&std::io::Error)->String {
+    use std::io::ErrorKind;
+    #[cfg(windows)]
+    let occupied=error.raw_os_error().is_some_and(|code|{
+        use windows::Win32::Foundation::{ERROR_SHARING_VIOLATION,ERROR_LOCK_VIOLATION};
+        code==ERROR_SHARING_VIOLATION.0 as i32||code==ERROR_LOCK_VIOLATION.0 as i32
+    });
+    #[cfg(not(windows))]
+    let occupied=false;
+    let remedy=if occupied {"保存文件正在使用中，请解除文件占用后重试"} else {match error.kind() {
+        ErrorKind::StorageFull=>"本机磁盘空间不足，请释放保存位置所在磁盘的空间",
+        ErrorKind::PermissionDenied|ErrorKind::ReadOnlyFilesystem=>"无法写入保存位置，请检查目录权限或解除文件占用",
+        _=>"请检查保存位置和磁盘是否可用",
+    }};
+    format!("{action}失败：{remedy}。已有文件保留，本次保存未完成；处理后可重试。原因：{error}")
+}
+#[cfg(windows)]
+fn windows_commit_error(error:windows::core::Error)->String {
+    // Decode only HRESULT_FROM_WIN32 values. Other facilities retain their
+    // original diagnostic; truncating arbitrary HRESULTs invents OS causes.
+    // https://learn.microsoft.com/windows/win32/api/winerror/nf-winerror-hresult_from_win32
+    let code=error.code().0 as u32;
+    if code&0xffff0000==0x80070000 {
+        local_write_error("提交保存文件",&std::io::Error::from_raw_os_error((code&0xffff) as i32))
+    } else {format!("提交保存文件失败，已有文件保留；请处理后重试。原因：{error}")}
+}
+
 pub fn write_atomic(path: &Path, bytes: &[u8]) -> Result<u64, String> {
     let file_name = path.file_name().ok_or("export destination has no file name")?;
     let parent = path.parent().filter(|parent| !parent.as_os_str().is_empty())
         .unwrap_or_else(|| Path::new("."));
     fs::create_dir_all(parent)
-        .map_err(|error| format!("create export directory {}: {error}", parent.display()))?;
+        .map_err(|error| local_write_error("创建保存目录",&error))?;
     // Resolve the parent once. Rust supplies the Win32 verbatim form for long
     // paths; preserve the final component rather than following a file symlink.
     let parent = parent.canonicalize()
-        .map_err(|error| format!("resolve export directory {}: {error}", parent.display()))?;
+        .map_err(|error| local_write_error("打开保存目录",&error))?;
     let destination = parent.join(file_name);
     // Do not append the destination's name: a valid 255-character filename
     // must not become an invalid temporary filename after adding a UUID.
@@ -321,11 +348,11 @@ pub fn write_atomic(path: &Path, bytes: &[u8]) -> Result<u64, String> {
             .write(true)
             .create_new(true)
             .open(&temp_path)
-            .map_err(|error| format!("create export temp file {}: {error}", temp_path.display()))?;
+            .map_err(|error| local_write_error("创建保存文件",&error))?;
         file.write_all(bytes)
-            .map_err(|error| format!("write export temp file {}: {error}", temp_path.display()))?;
+            .map_err(|error| local_write_error("写入保存文件",&error))?;
         file.sync_all()
-            .map_err(|error| format!("flush export temp file {}: {error}", temp_path.display()))?;
+            .map_err(|error| local_write_error("提交保存文件",&error))?;
         drop(file);
         replace_file(&temp_path, &destination)?;
         Ok(bytes.len() as u64)
@@ -369,13 +396,7 @@ pub(crate) fn replace_file(source: &Path, destination: &Path) -> Result<(), Stri
             PCWSTR(destination_wide.as_ptr()),
             MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH,
         )
-        .map_err(|error| {
-            format!(
-                "commit export {} -> {}: {error}",
-                source.display(),
-                destination.display()
-            )
-        })
+        .map_err(windows_commit_error)
     }
 }
 
@@ -859,5 +880,27 @@ mod tests {
             "temporary file must not remain after commit"
         );
         std::fs::remove_dir_all(directory).unwrap();
+    }
+    #[test]
+    fn r64_storage_full_and_permission_errors_offer_the_matching_recovery_action() {
+        use std::io::{Error,ErrorKind};
+        // OS error classification only, not physical-disk-full qualification.
+        let full=local_write_error("提交接收文件",&Error::new(ErrorKind::StorageFull,"storage-full-model"));
+        assert!(full.contains("磁盘空间不足")&&full.contains("保存未完成")&&full.contains("storage-full-model"));
+        for kind in [ErrorKind::PermissionDenied,ErrorKind::ReadOnlyFilesystem] {
+            let denied=local_write_error("提交接收文件",&Error::new(kind,"permission-model"));
+            assert!(denied.contains("目录权限或解除文件占用")&&!denied.contains("磁盘空间不足"));
+        }
+    }
+    #[cfg(windows)]
+    #[test]
+    fn r64_commit_preserves_win32_storage_class_without_truncating_other_hresult_facilities() {
+        use windows::core::{Error,HRESULT};
+        let full=windows_commit_error(Error::from_hresult(HRESULT(0x80070070u32 as i32)));
+        assert!(full.contains("磁盘空间不足")&&full.contains("os error 112"));
+        let occupied=windows_commit_error(Error::from_hresult(HRESULT(0x80070020u32 as i32)));
+        assert!(occupied.contains("文件占用")&&occupied.contains("os error 32"),"{occupied}");
+        let other=windows_commit_error(Error::from_hresult(HRESULT(0x80040070u32 as i32)));
+        assert!(!other.contains("磁盘空间不足"),"another facility is not Windows disk-full error 112");
     }
 }

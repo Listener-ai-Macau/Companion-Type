@@ -3,7 +3,7 @@
 use super::{fail, Cursor, Source};
 use std::{
     path::Path,
-    sync::{atomic::{AtomicU64, Ordering}, Arc},
+    sync::{atomic::{AtomicU64, Ordering}, Arc,Mutex},
     thread::JoinHandle,
     time::Instant,
 };
@@ -35,6 +35,7 @@ pub(crate) struct ReceiveCursor {
     expected_bytes: u64,
     timing: Arc<Timing>,
     queue_wait_us: u64,
+    failure:Arc<Mutex<Option<String>>>,
 }
 
 impl ReceiveCursor {
@@ -50,6 +51,7 @@ impl ReceiveCursor {
         let (done, complete) = oneshot::channel();
         let timing = Arc::new(Timing::default());
         let worker_timing = timing.clone();
+        let failure=Arc::new(Mutex::new(None));let worker_failure=failure.clone();
         let accepted_bytes = cursor.bytes;
         let expected_bytes = u64::from(cursor.receipt.source.total_length);
         let worker = std::thread::Builder::new().name("companion-recording-store".into())
@@ -84,13 +86,20 @@ impl ReceiveCursor {
                     // Cursor::drop checkpoints the accepted queue prefix.
                     Ok(())
                 })();
+                if let Err(error)=&result {
+                    // Publish the original failure BEFORE closing the command
+                    // channel. A producer blocked on that queue must receive
+                    // the real disk/checkpoint error, not a transport failure.
+                    if let Ok(mut saved)=worker_failure.lock() {*saved=Some(error.clone());}
+                    receiver.close();
+                }
                 drop(cursor);
                 let _ = done.send(result);
             }).map_err(|_| fail())?;
         Ok(Self {
             sender: Some(sender), complete: Some(complete), worker: Some(worker),
             pending: Vec::with_capacity(BATCH_BYTES), accepted_bytes, expected_bytes,
-            timing, queue_wait_us: 0,
+            timing, queue_wait_us: 0,failure,
         })
     }
 
@@ -113,7 +122,8 @@ impl ReceiveCursor {
         let started = Instant::now();
         // Reserve before taking the batch: cancelling a blocked send cannot
         // discard a buffer while leaving this object usable with a gap.
-        let permit = self.sender.as_ref().ok_or_else(fail)?.reserve().await.map_err(|_| fail())?;
+        let permit = self.sender.as_ref().ok_or_else(||self.worker_error())?.reserve().await
+            .map_err(|_|self.worker_error())?;
         self.queue_wait_us = self.queue_wait_us.saturating_add(micros(started));
         permit.send(Command::Append(std::mem::replace(&mut self.pending, Vec::with_capacity(BATCH_BYTES))));
         Ok(())
@@ -122,8 +132,9 @@ impl ReceiveCursor {
     pub(crate) async fn checkpoint(&mut self) -> Result<(), String> {
         self.flush_pending().await?;
         let (reply, response) = oneshot::channel();
-        self.sender.as_ref().ok_or_else(fail)?.send(Command::Checkpoint(reply)).await.map_err(|_| fail())?;
-        response.await.map_err(|_| fail())?
+        self.sender.as_ref().ok_or_else(||self.worker_error())?.send(Command::Checkpoint(reply)).await
+            .map_err(|_|self.worker_error())?;
+        response.await.map_err(|_|self.worker_error())?
     }
 
     pub(crate) async fn finish(&mut self, length: usize, digest: [u8; 32], crc32: u32) -> Result<(), String> {
@@ -131,10 +142,10 @@ impl ReceiveCursor {
             return Err(fail());
         }
         self.flush_pending().await?;
-        self.sender.as_ref().ok_or_else(fail)?
-            .send(Command::Finish { length, digest, crc32 }).await.map_err(|_| fail())?;
+        self.sender.as_ref().ok_or_else(||self.worker_error())?
+            .send(Command::Finish { length, digest, crc32 }).await.map_err(|_|self.worker_error())?;
         drop(self.sender.take());
-        let result = self.complete.take().ok_or_else(fail)?.await.map_err(|_| fail())?;
+        let result = self.complete.take().ok_or_else(||self.worker_error())?.await.map_err(|_|self.worker_error())?;
         self.join()?;
         result
     }
@@ -149,6 +160,9 @@ impl ReceiveCursor {
     fn join(&mut self) -> Result<(), String> {
         if let Some(worker) = self.worker.take() { worker.join().map_err(|_| fail())?; }
         Ok(())
+    }
+    fn worker_error(&self)->String {
+        self.failure.lock().ok().and_then(|saved|saved.clone()).unwrap_or_else(fail)
     }
 }
 
