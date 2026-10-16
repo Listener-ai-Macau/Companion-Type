@@ -31,6 +31,16 @@ impl LiveQueue {
     }
     pub fn stamp<F>(&self, device_id: &str, recording_id:u32, position_ms:u32, mut save:F)
     where F:FnMut(Request,LiveStamp)->Reply {
+        self.stamp_key(device_id,recording_id,position_ms,None,&mut save);
+    }
+    pub fn stamp_logical<F>(&self,device_id:&str,recording_id:u32,position_ms:u32,
+        key:&crate::backend::recording_wire::SessionKey,mut save:F)
+    where F:FnMut(Request,LiveStamp)->Reply {
+        self.stamp_key(device_id,recording_id,position_ms,Some(key.public_key()),&mut save);
+    }
+    fn stamp_key<F>(&self,device_id:&str,recording_id:u32,position_ms:u32,
+        key:Option<crate::companion_v1::CompanionV1RecordingKey>,mut save:F)
+    where F:FnMut(Request,LiveStamp)->Reply {
         // Release the queue lock before the coordinator's durable file commit.
         let pending = self.state.lock().map(|mut s| std::mem::take(&mut s.pending)).unwrap_or_default();
         for item in pending {
@@ -38,7 +48,7 @@ impl LiveQueue {
                 Err("未及时取得设备录音时间；这次没有添加重点，请重试。".into())
             } else {
                 save(item.request, LiveStamp { session_id:self.session_id.clone(), device_id:device_id.into(),
-                    recording_id, position_ms:u64::from(position_ms) })
+                    recording_id, position_ms:u64::from(position_ms),recording_key:key.clone() })
             };
             let _ = item.reply.send(result);
         }
@@ -77,8 +87,20 @@ mod tests {
         q.stamp("dev",17,2460,|r,s| {
             assert_eq!(r.session_id,s.session_id); assert_eq!(s.device_id,"dev");
             assert_eq!(s.recording_id,17); assert_eq!(s.position_ms,2460);
+            assert!(s.recording_key.is_none());
             Ok(crate::companion_v1::fixture_snapshot())
         });
         assert!(receiver.recv().unwrap().is_ok()); assert!(!q.has_pending());
+    }
+    #[test]
+    fn r66_logical_worker_stamp_retains_verified_session_identity() {
+        let q=LiveQueue::new("s");let receiver=q.enqueue(request("s")).unwrap();
+        let key=crate::backend::recording_wire::SessionKey{device_uid:[0x35;12],format_epoch:7,session_id:23};
+        q.stamp_logical("dev",17,2460,&key,|_,stamp| {
+            assert_eq!(stamp.recording_key,Some(key.public_key()));
+            assert_eq!(stamp.position_ms,2460);
+            Ok(crate::companion_v1::fixture_snapshot())
+        });
+        assert!(receiver.recv().unwrap().is_ok());assert!(!q.has_pending());
     }
 }

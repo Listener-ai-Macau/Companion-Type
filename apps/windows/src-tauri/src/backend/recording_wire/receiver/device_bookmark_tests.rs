@@ -53,6 +53,78 @@ fn rows(index:&Path)->Vec<crate::companion_v1::CompanionV1HostSession> {
 }
 
 #[test]
+fn r66_live_marks_follow_the_verified_logical_capture_axis_across_pause_and_segments() {
+    let root=root();let index=root.join("sessions.json");let p0=payload(0);let p1=payload(1);
+    let ds=[descriptor(&p0,0,false),descriptor(&p1,1,true)];
+    let mut receiver=Receiver::open(&root,&ds[1].encode().unwrap()).unwrap();
+    let id=receiver.publish(&index,DEVICE).unwrap();
+    let mut library=rows(&index);let row=&mut library[0];
+    row.status="recording".into();row.device_recording_id=Some(ds[0].recording_id);
+    for position_ms in [40,120] {
+        let request=recording_bookmarks::Request{session_id:id.clone(),bookmark_id:uuid::Uuid::new_v4().to_string(),
+            expected_revision:row.bookmark_revision,action:recording_bookmarks::Action::AddLive,
+            label:Some(format!("live {position_ms}")),position_ms:None};
+        let stamp=recording_bookmarks::LiveStamp{session_id:id.clone(),device_id:DEVICE.into(),
+            recording_id:ds[0].recording_id,position_ms,recording_key:Some(ds[0].key.public_key())};
+        recording_bookmarks::apply(row,&request,Some(&stamp),None,"native").unwrap();
+        assert_eq!(row.bookmarks.last().unwrap().source_recording_key,row.device_recording_key);
+    }
+    session_store::save(&index,&library).unwrap();
+    receiver.accept_segment(&ds[0].encode().unwrap(),&p0).unwrap();receiver.publish(&index,DEVICE).unwrap();
+    assert!(rows(&index)[0].bookmarks.iter().filter(|b|b.origin=="boardRecording").all(|b|b.audio_position_ms.is_none()));
+    receiver.accept_segment(&ds[1].encode().unwrap(),&p1).unwrap();receiver.assemble().unwrap();
+    receiver.publish(&index,DEVICE).unwrap();
+    let mut saved=rows(&index).remove(0);
+    let live=saved.bookmarks.iter().filter(|b|b.origin=="boardRecording").collect::<Vec<_>>();
+    assert_eq!(live.iter().map(|b|b.audio_position_ms).collect::<Vec<_>>(),[Some(20),Some(100)]);
+    assert_eq!(live.iter().map(|b|b.position_ms).collect::<Vec<_>>(),[40,120]);
+    assert_eq!(receiver.receipt.audio.as_ref().unwrap().timeline.as_ref().unwrap().closed_pause_ms(),300);
+    assert_eq!(receiver.ack_candidates(&index).unwrap().len(),2);
+    saved.bookmarks.iter_mut().filter(|b|b.origin=="boardRecording").for_each(|b|b.audio_position_ms=None);
+    session_store::save(&index,&[saved]).unwrap();
+    assert!(receiver.ack_candidates(&index).is_err(),"mapping must be durable before exact consume");
+    receiver.publish(&index,DEVICE).unwrap();
+    let mut edited=rows(&index).remove(0);
+    let removed=edited.bookmarks.iter().find(|b|b.origin=="boardRecording").unwrap().id.clone();
+    edited.bookmarks.retain(|b|b.id!=removed);
+    edited.bookmarks.iter_mut().filter(|b|b.origin=="boardRecording").for_each(|b|b.label="my decision".into());
+    session_store::save(&index,&[edited]).unwrap();
+    let bytes=fs::read(receiver.audio_path()).unwrap();let raw=fs::read(receiver.payload_path(&ds[0])).unwrap();
+    drop(receiver);let mut receiver=Receiver::open(&root,&ds[1].encode().unwrap()).unwrap();
+    receiver.publish(&index,DEVICE).unwrap();let saved=rows(&index).remove(0);
+    assert!(!saved.bookmarks.iter().any(|b|b.id==removed));
+    assert_eq!(saved.bookmarks.iter().find(|b|b.origin=="boardRecording").unwrap().label,"my decision");
+    assert_eq!(fs::read(receiver.audio_path()).unwrap(),bytes);
+    assert_eq!(fs::read(receiver.payload_path(&ds[0])).unwrap(),raw);
+    assert_eq!(receiver.ack_candidates(&index).unwrap().len(),2);
+    drop(receiver);fs::remove_dir_all(root).unwrap();
+}
+
+#[test]
+fn r66_logical_marks_without_device_marks_refuse_other_identity_and_keep_original_axis() {
+    let root=root();let index=root.join("sessions.json");
+    let p=crate::backend::cop1::tests::fixture(0); // schema2, no device bookmarks.
+    let d=descriptor(&p,0,true);let mut receiver=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+    receiver.accept_segment(&d.encode().unwrap(),&p).unwrap();receiver.publish(&index,DEVICE).unwrap();
+    let mut library=rows(&index);let row=&mut library[0];row.device_recording_id=Some(d.recording_id);
+    for (label,ms) in [("valid",40),("pastEnd",100),("otherDevice",40),("otherAnchor",40),("otherKey",40),("legacyUnknown",40)] {
+        row.bookmarks.push(recording_bookmarks::Bookmark{id:uuid::Uuid::new_v4().to_string(),label:label.into(),
+            position_ms:ms,audio_position_ms:None,created_at:"native".into(),origin:"boardRecording".into(),
+            source_device_id:Some(if label=="otherDevice" {"AA:BB:CC:DD:EE:FF"} else {DEVICE}.into()),
+            recording_id:Some(if label=="otherAnchor" {999} else {d.recording_id}),source_sha256:None,
+            source_recording_key:if label=="legacyUnknown" {None} else {let mut key=d.key.clone();
+                if label=="otherKey" {key.format_epoch+=1;}Some(key.public_key())}});
+    }
+    session_store::save(&index,&library).unwrap();receiver.assemble().unwrap();receiver.publish(&index,DEVICE).unwrap();
+    let saved=rows(&index).remove(0);
+    assert!(saved.device_bookmark_imports.is_empty());
+    for b in &saved.bookmarks {assert_eq!(b.audio_position_ms,if b.label=="valid" {Some(20)} else {None},"{}",b.label);}
+    assert_eq!(saved.bookmarks.iter().find(|b|b.label=="valid").unwrap().position_ms,40);
+    assert_eq!(receiver.ack_candidates(&index).unwrap().len(),1);
+    drop(receiver);fs::remove_dir_all(root).unwrap();
+}
+
+#[test]
 fn offline_device_bookmarks_durable_before_consume_and_preserve_user_edits_after_restart() {
     let root=root();let index=root.join("sessions.json");let p0=payload(0);let p1=payload(1);
     let d0=descriptor(&p0,0,false);let d1=descriptor(&p1,1,true);

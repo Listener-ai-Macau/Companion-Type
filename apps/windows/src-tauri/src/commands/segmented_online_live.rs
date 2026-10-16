@@ -204,7 +204,7 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
             next_follow=Instant::now()+Duration::from_millis(500);
             manager.mark_recording_active(anchor,cursor.duration_ms().min(u64::from(u32::MAX)) as u32);
             if bookmarks.has_pending() && cursor.captured_ms()>0 {
-                bookmarks.stamp(&device,anchor,cursor.captured_ms().min(u64::from(u32::MAX)) as u32,
+                bookmarks.stamp_logical(&device,anchor,cursor.captured_ms().min(u64::from(u32::MAX)) as u32,&key,
                     |r,s|coordinator.save_live_bookmark(r,s));
             }
         }

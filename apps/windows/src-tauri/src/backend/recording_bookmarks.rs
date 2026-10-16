@@ -44,6 +44,7 @@ pub struct LiveStamp {
     pub(crate) device_id: String,
     pub(crate) recording_id: u32,
     pub(crate) position_ms: u64,
+    pub(crate) recording_key: Option<crate::companion_v1::CompanionV1RecordingKey>,
 }
 
 fn label(request: &Request) -> Result<String, String> {
@@ -95,6 +96,7 @@ pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request,
                 let stamp = stamp.ok_or("尚未取得这场设备录音的实际时间，请重试。")?;
                 if stamp.session_id != session.id || stamp.recording_id == 0
                     || session.device_recording_id != Some(stamp.recording_id)
+                    || session.device_recording_key != stamp.recording_key
                     || session.source_device_id.as_deref().is_none_or(|s| !super::device_connection::same_device_id(s, &stamp.device_id))
                     || stamp.position_ms == 0 {
                     return Err("设备录音身份或时间已变化；未将重点写入其他录音。".into());
@@ -110,7 +112,8 @@ pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request,
             next.push(Bookmark { id: request.bookmark_id.clone(), label: label(request)?, position_ms,
                 audio_position_ms: (request.action == Action::AddAt).then_some(position_ms),
                 created_at: now.into(), origin: origin.into(), source_device_id: session.source_device_id.clone(),
-                recording_id: session.device_recording_id, source_sha256: session.device_sha256.clone(),source_recording_key:None });
+                recording_id: session.device_recording_id, source_sha256: session.device_sha256.clone(),
+                source_recording_key:if request.action==Action::AddLive {session.device_recording_key.clone()} else {None} });
             next.sort_by_key(|b| b.position_ms);
         }
         Action::Rename => {
@@ -168,6 +171,7 @@ fn commit_to(path: &std::path::Path, session:&mut CompanionV1HostSession, expect
         };
         if row.bookmark_revision != expected_revision
             || row.device_recording_id != session.device_recording_id
+            || row.device_recording_key != session.device_recording_key
             || row.source_device_id != session.source_device_id {
             conflict=Some(fail.to_string()); return Err(fail.into());
         }
@@ -219,6 +223,7 @@ fn received_timing(session: &CompanionV1HostSession) -> Option<(u64,u64)> {
 
 pub(crate) mod live_queue;
 pub(crate) mod device;
+pub(crate) mod logical;
 pub(crate) mod probe;
 
 #[cfg(test)]

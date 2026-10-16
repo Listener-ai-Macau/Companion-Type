@@ -9,7 +9,7 @@ fn session() -> CompanionV1HostSession {
 fn request(s:&CompanionV1HostSession) -> Request { Request { session_id:s.id.clone(), bookmark_id:uuid::Uuid::new_v4().to_string(),
     expected_revision:s.bookmark_revision, action:Action::AddLive, label:Some("确认预算".into()), position_ms:None } }
 fn stamp(s:&CompanionV1HostSession,ms:u64) -> LiveStamp { LiveStamp { session_id:s.id.clone(), device_id:s.source_device_id.clone().unwrap(),
-    recording_id:s.device_recording_id.unwrap(), position_ms:ms } }
+    recording_id:s.device_recording_id.unwrap(), position_ms:ms,recording_key:s.device_recording_key.clone() } }
 
 #[test]
 fn live_time_is_board_authored_idempotent_and_edits_preserve_original() {
@@ -28,11 +28,13 @@ fn live_time_is_board_authored_idempotent_and_edits_preserve_original() {
 
 #[test]
 fn foreign_stale_estimated_out_of_audio_and_malformed_marks_are_atomic() {
-    for failure in ["foreignSession","foreignDevice","foreignRecording","staleRevision","hostTime","missingStamp","zeroTime","badLabel","badId","outOfAudio","duringCapture"] {
+    for failure in ["foreignSession","foreignDevice","foreignRecording","foreignLogical","staleRevision","hostTime","missingStamp","zeroTime","badLabel","badId","outOfAudio","duringCapture"] {
         let mut s=session(); let mut r=request(&s); let mut time=stamp(&s,2000);
         match failure {
             "foreignSession" => time.session_id="other".into(), "foreignDevice" => time.device_id="11:22:33:44:55:66".into(),
             "foreignRecording" => time.recording_id=99, "staleRevision" => r.expected_revision=44,
+            "foreignLogical" => s.device_recording_key=Some(super::super::recording_wire::SessionKey {
+                device_uid:[0x35;12],format_epoch:7,session_id:23}.public_key()),
             "hostTime" => r.position_ms=Some(1234), "zeroTime" => time.position_ms=0,
             "badLabel" => r.label=Some("bad\nlabel".into()), "badId" => r.bookmark_id="bad".into(),
             "outOfAudio" => {s.status="captured".into(); r.action=Action::AddAt; r.position_ms=Some(3000);},

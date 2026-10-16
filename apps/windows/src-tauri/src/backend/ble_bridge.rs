@@ -3323,7 +3323,7 @@ pub(crate) fn live_recording_stamp(device_id: &str, session_id: &str, recording_
     eprintln!("bookmark_native_read_elapsed_ms={} recording_id={} board_position_ms={} clock_write=false",
         begun.elapsed().as_millis(),recording_id,position_ms);
     Ok(super::recording_bookmarks::LiveStamp { session_id:session_id.into(), device_id:device_id.into(),
-        recording_id, position_ms })
+        recording_id, position_ms,recording_key:key.cloned() })
 }
 
 pub(crate) fn bookmarks_probe_preflight(device_id:&str, expected_uid:&str)->Result<(),String> {

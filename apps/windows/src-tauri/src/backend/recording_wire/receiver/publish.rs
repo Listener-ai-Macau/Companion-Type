@@ -27,7 +27,10 @@ impl Receiver {
         Ok(marks)
     }
     fn complete_captured_samples(&self)->Option<u64> {
-        self.receipt.audio.as_ref().and_then(|a|a.timeline.as_ref()).map(|t|t.captured_samples)
+        self.receipt.audio.as_ref().and_then(|a|a.timeline.as_ref().map(|t|t.captured_samples)
+            // Schema1 has no pause events; verify_audio/decode still prove the
+            // exact frame/sample count and one 320-sample logical pre-skip.
+            .or_else(||a.samples.checked_add(320)))
     }
     /// An idempotent user STOP can return the existing completed result only
     /// after reopening the exact receipt and rechecking original segments/WAV.
@@ -246,6 +249,8 @@ impl Receiver {
             }
             crate::backend::recording_bookmarks::device::merge(s,&device_marks,
                 &SessionKey::from_public(&logical_key)?,complete_samples)?;
+            crate::backend::recording_bookmarks::logical::bind(s,
+                &SessionKey::from_public(&logical_key)?,complete_samples)?;
             *sessions = next;
             Ok(())
         })?;
@@ -291,6 +296,8 @@ impl Receiver {
             return Err(fail());
         }
         crate::backend::recording_bookmarks::device::require_saved(row,&self.received_device_marks()?,
+            &SessionKey::from_public(&key)?,self.complete_captured_samples())?;
+        crate::backend::recording_bookmarks::logical::require_saved(row,
             &SessionKey::from_public(&key)?,self.complete_captured_samples())?;
         let mut acks = Vec::new();
         for (s, d) in self.receipt.segments.iter().zip(self.descriptors()?) {
