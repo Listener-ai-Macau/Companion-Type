@@ -49,6 +49,43 @@ fn fields(wire:&[u8])->Result<Observed,String> {
         u32::from_le_bytes(wire[20..24].try_into().unwrap()),wire[24]))
 }
 
+/// A reboot can replace live CMS3 with an idle CMS2 while its original audio
+/// remains durable. This only admits a read-only catalogue query; its complete
+/// exact-session descriptors, not the idle status, must prove the original end.
+fn idle_original_catalogue_query(command:u8,journal:&Journal,wire:&[u8])->Result<bool,String> {
+    let current=parse_meeting_status(wire)?;
+    let key=journal.key.as_ref().map(SessionKey::from_public).transpose()?;
+    Ok(command==0 && wire.len()==64 && current.last_error==0 && matches!(current.state,0|2)
+        && journal.confirmed.is_some() && journal.key.is_some() && journal.anchor.is_some()
+        && !journal.unconfirmed_start_retry()
+        && key.as_ref().is_some_and(|key|wire[32..44]==key.device_uid && wire[44..52]==key.format_epoch.to_le_bytes()))
+}
+
+async fn archived_original_end(device:&NativeDevice,chars:&BTreeSet<Characteristic>,status:&Characteristic,
+    wire:&[u8],peer:&PausePeer,store:&mut Store,journal:&mut Journal)
+    ->Result<CompanionMeetingControlReport,String> {
+    let catalog=read_recording_catalog(device,chars).await?;
+    let catalog_peer=catalog.peer.as_ref().ok_or("原目录协议缺失。")?;
+    if (catalog_peer.uid,catalog_peer.epoch)!=peer.identity() {
+        return Err("原封口目录芯片或存储代次不同；原录音保留。".into());
+    }
+    let key=journal.key.as_ref().map(SessionKey::from_public).transpose()?.ok_or("原会话尚未确认。")?;
+    let originals:Vec<_>=catalog.entries.iter().filter_map(|e|e.segment.as_ref())
+        .filter(|d|d.key==key).cloned().collect();
+    let after=bounded_ble_result("recheck sealed original catalogue status",StdDuration::from_secs(8),device.peripheral.read(status)).await?;
+    // Equality also preserves the original format/CRC/identity validation;
+    // a new capture, changing duration or status cannot close the old row.
+    if after!=wire {return Err("设备录音状态在目录读取期间变化；原会话保留，未声明结束。".into());}
+    journal.end_from_sealed_catalogue(&originals)?;
+    store.commit_bound(journal.clone())?;
+    if let Some(anchor)=journal.anchor {
+        offline_connection_lock()?.forget(&device.device_id(),journal.start_request,anchor);
+    }
+    eprintln!("recorder_control archived_catalogue_end=1 host_session={} original_anchor={} status_bytes={} command_writes=0 stop_ack_fabricated=0",
+        journal.host_session,journal.anchor.unwrap_or(0),wire.len());
+    sealed_end_report(device,journal)
+}
+
 async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteristic,
     store:&mut Store,journal:&mut Journal,initial:Option<Observed>,fresh_start:bool)->Result<Observed,String> {
     let Some(pending)=journal.pending.clone() else {return initial.ok_or("原确认缺失。".into())};
@@ -134,6 +171,10 @@ pub(super) async fn execute_owned(
             // A new START switches CMS2 to CMS3. Before the switch require a
             // checked idle/sealed status; never manufacture an extended ACK.
             let old=parse_meeting_status(&wire)?;
+            if idle_original_catalogue_query(command,&journal,&wire)? {
+                let report=archived_original_end(&device,&chars,&status,&wire,&peer,&mut store,&mut journal).await?;
+                return Ok((report,journal.clone()));
+            }
             if journal.confirmed.is_some() || journal.pending.as_ref().is_none_or(|p|p.command!=1)
                 || old.last_error!=0 || !matches!(old.state,0|2) {return Err("设备当前状态不能确认原开始请求；未重开。".into());}
             None
@@ -142,25 +183,13 @@ pub(super) async fn execute_owned(
             match journal.observe(s,*anchor,*duration) {
                 Ok(Observation::Confirmed)=>store.commit_bound(journal.clone())?,
                 Ok(_)=>{},
-                Err(original_error) if command==0 && s.last_error==0 && matches!(s.state,0|2) => {
+                Err(_) if command==0 && s.last_error==0 && matches!(s.state,0|2) => {
                     // The recorder only exposes the latest live CMS3. An old
                     // original may still have a complete immutable catalogue.
                     // Require one stable status around that protected snapshot;
                     // never infer completion merely because another ID is idle.
-                    let catalog=read_recording_catalog(&device,&chars).await?;
-                    let catalog_peer=catalog.peer.as_ref().ok_or("原目录协议缺失。")?;
-                    if (catalog_peer.uid,catalog_peer.epoch)!=peer.identity() {return Err(original_error);}
-                    let key=journal.key.as_ref().map(SessionKey::from_public).transpose()?.ok_or(original_error.clone())?;
-                    let originals:Vec<_>=catalog.entries.iter().filter_map(|e|e.segment.as_ref())
-                        .filter(|d|d.key==key).cloned().collect();
-                    let after=bounded_ble_result("recheck sealed original catalogue status",StdDuration::from_secs(8),device.peripheral.read(&status)).await?;
-                    let _=fields(&after)?;
-                    if after!=wire {return Err("设备录音状态在目录读取期间变化；原会话保留，未声明结束。".into());}
-                    journal.end_from_sealed_catalogue(&originals)?;
-                    store.commit_bound(journal.clone())?;
-                    if let Some(anchor)=journal.anchor {offline_connection_lock()?.forget(&device.device_id(),start_request,anchor);}
-                    eprintln!("recorder_control archived_catalogue_end=1 host_session={host_session} original_anchor={} command_writes=0 stop_ack_fabricated=0",journal.anchor.unwrap_or(0));
-                    return Ok((sealed_end_report(&device,&journal)?,journal.clone()));
+                    let report=archived_original_end(&device,&chars,&status,&wire,&peer,&mut store,&mut journal).await?;
+                    return Ok((report,journal.clone()));
                 },
                 Err(error)=>return Err(error),
             }
@@ -212,6 +241,38 @@ pub(super) async fn execute_owned(
 #[cfg(test)]
 mod gatt_tests {
     use super::*;
+
+    #[test]
+    fn reboot_idle_cms2_can_only_query_the_same_confirmed_original_catalogue() {
+        // The R36 paused original: CMS3 command4 was durable, but the next
+        // native connection found base CMS2 after uptime returned to~25s.
+        let mut journal:Journal=serde_json::from_value(serde_json::json!({
+            "schema":1,"hostSession":"r36-paused-original","deviceId":"C8:92:FF:DD:3B:CA",
+            "uid":[24,0,16,0,13,80,51,87,84,54,55,32],"epoch":13310445085575704248u64,
+            "startRequest":452280907,"maxSeconds":150,
+            "key":{"deviceUid":"180010000d50335754363720","formatEpoch":"b8b8334898156eb8","sessionId":"0000000000000007"},
+            "anchor":12,"confirmed":{"command":4,"request":1943436034,"sequence":1,"state":3,"durationMs":8300,"finishedLocally":false},
+            "pending":null
+        })).unwrap();
+        let key=SessionKey::from_public(journal.key.as_ref().unwrap()).unwrap();
+        let mut wire=vec![0;64];wire[0]=1;wire[28..32].copy_from_slice(b"CMS2");
+        wire[32..44].copy_from_slice(&key.device_uid);wire[44..52].copy_from_slice(&key.format_epoch.to_le_bytes());
+        let seal=|wire:&mut Vec<u8>|{let crc=crc32fast::hash(&wire[..60]);wire[60..64].copy_from_slice(&crc.to_le_bytes());};
+        seal(&mut wire);
+        assert!(idle_original_catalogue_query(0,&journal,&wire).unwrap());
+        let original=journal.clone();
+        for command in 1..=5 {assert!(!idle_original_catalogue_query(command,&journal,&wire).unwrap());}
+        assert_eq!(journal,original,"a status can never end or rewrite the original by itself");
+        for variant in 0..5 {
+            let mut bad=wire.clone();
+            match variant {0=>bad[1]=1,1=>bad[1]=3,2=>bad[2]=1,3=>bad[32]^=1,_=>bad[44]^=1};
+            seal(&mut bad);assert!(!idle_original_catalogue_query(0,&journal,&bad).unwrap());
+        }
+        let mut corrupt=wire.clone();corrupt[60]^=1;
+        assert!(idle_original_catalogue_query(0,&journal,&corrupt).is_err());
+        journal.confirmed=None;
+        assert!(!idle_original_catalogue_query(0,&journal,&wire).unwrap());
+    }
 
     #[test]
     fn recorder_channel_requires_both_characteristics_properties_and_exact_service() {
