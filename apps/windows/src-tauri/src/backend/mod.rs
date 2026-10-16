@@ -45,6 +45,7 @@ pub(crate) mod meeting_notes;
 pub(crate) mod library_organization;
 pub(crate) mod library_export;
 pub(crate) mod library_lifecycle;
+pub(crate) mod library_backup;
 pub(crate) mod board_meeting;
 mod board_stop;
 mod interrupted_capture;
@@ -624,6 +625,7 @@ pub struct CompanionServiceBoundary {
 }
 
 pub trait CompanionBackend: Send + Sync {
+    fn reload_library_index(&self)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持重新读取资料库。".into())}
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
     fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport, String>;
@@ -1059,8 +1061,12 @@ pub struct FixtureCompanionBackend {
 impl FixtureCompanionBackend {
     pub fn new() -> Self {
         let mut snapshot = fixture_snapshot();
+        let pending_restore=if !cfg!(test)||std::env::var_os("COMPANION_TYPE_STATE_PATH").is_some(){
+            audio_storage::recording_root().and_then(|root|library_backup::recover_pending(&persistence::state_file_path(),&root)).err()
+        }else{None};
         let (sessions, storage) = persistence::load_sessions_with_status();
         snapshot.host.persistence = storage;
+        if let Some(error)=pending_restore{snapshot.host.persistence.message=Some(format!("上次恢复准备未完成，已有资料保留；备份/恢复前可重试：{error}"));}
         if let Some(sessions) = sessions {
             snapshot.host.sessions = sessions;
         } else if !cfg!(test) || snapshot.host.persistence.status == "blocked" {
@@ -1177,6 +1183,16 @@ impl Default for FixtureCompanionBackend {
 }
 
 impl CompanionBackend for FixtureCompanionBackend {
+    fn reload_library_index(&self)->Result<CompanionV1Snapshot,String>{
+        let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        if snapshot.meeting.active||snapshot.device.recording||snapshot.host.sessions.iter().any(|r|r.status=="recording"){return Err("录音进行中，不能替换本机资料库。".into());}
+        let (rows,status)=persistence::load_sessions_with_status();snapshot.host.persistence=status;
+        if let Some(rows)=rows{snapshot.host.sessions=rows;}
+        if snapshot.host.selected_session_id.as_ref().is_some_and(|id|!snapshot.host.sessions.iter().any(|r|&r.id==id)){
+            snapshot.host.selected_session_id=snapshot.host.sessions.iter().find(|r|r.organization.trashed_at.is_none()).map(|r|r.id.clone());
+        }
+        refresh_privacy_counts(&mut snapshot);snapshot.updated_at=connection_timestamp();Ok(snapshot.clone())
+    }
     fn save_library_lifecycle(&self,request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{
         let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
         if snapshot.host.persistence.status!="ready"{return Err("请先恢复或保存会议库，未改变保护或回收站状态。".into());}
@@ -1399,6 +1415,7 @@ impl CompanionBackend for FixtureCompanionBackend {
             request.session_id=selected_session(&snapshot).map(|s|s.id.clone());
         }
         let _library_privacy_guard=library_lifecycle::privacy_guard(&snapshot,&request,&persistence::state_file_path())?;
+        if _library_privacy_guard.is_some(){library_backup::cleanup_pending(&persistence::state_file_path(),&audio_storage::recording_root()?)?;}
         privacy::validate_control(&snapshot, &request, self.live_asr.snapshot().active)?;
         if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio|CompanionV1ControlAction::MeetingGenerateMinutes){
             if let Some(row)=request.session_id.as_deref().and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id)){library_lifecycle::require_available(row)?;}

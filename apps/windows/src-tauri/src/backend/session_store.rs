@@ -206,6 +206,11 @@ fn save_locked(
 pub fn save(path: &Path, sessions: &[CompanionV1HostSession]) -> Result<(), String> {
     save_with(path, sessions, |destination, bytes| super::export::write_atomic(destination, bytes).map(|_| ()))
 }
+pub(crate) fn inspect_locked<T>(path:&Path,inspect:impl FnOnce(&[CompanionV1HostSession])->Result<T,String>)->Result<T,String>{
+    let _lock=lock(path)?;let loaded=load_locked(path)?;
+    if loaded.state.status!="ready"{return Err("请先恢复会议库，未清理任何准备文件。".into());}
+    let rows=loaded.bytes.map(|b|decode(&b)).transpose()?.unwrap_or_default();inspect(&rows)
+}
 
 /// The transport commits its verified recording before acknowledging deletion
 /// on the device. Hold one lock across read/merge/write so a backlog never loses
