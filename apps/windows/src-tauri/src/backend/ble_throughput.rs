@@ -449,6 +449,54 @@ mod session_loss_tests {
     const ADDRESS:u64=0xc892ffdd3bca;
 
     #[tokio::test]
+    async fn r53_session_loss_interrupts_control_wait_and_preserves_exact_durable_command() {
+        use crate::backend::recorder_control::{Journal,Store};
+        use crate::backend::recording_wire::control::{PausePeer,PauseStatus};
+        let root=std::env::temp_dir().join(format!("companion-control-loss-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let path=root.join("library.json");
+        let bytes=include_bytes!("cop1/tests/engine-local-controls.cms3");
+        let wire=&bytes[8..88];let status=PauseStatus::decode(wire).unwrap();
+        let peer=PausePeer::from_verified_peer(&crate::backend::recording_wire::transport::Peer {
+            uid:status.device_uid,epoch:status.format_epoch,capacity:64,max_value_bytes:248,
+            logical_control:true,growing_tail:true,pause_control:true,batch_interval:true,
+        }).unwrap();
+        let mut journal=Journal::start(&peer,"r53-original","C8:92:FF:DD:3B:CA",status.request,600).unwrap();
+        journal.observe_with_peer(&peer,&status,u32::from_le_bytes(wire[12..16].try_into().unwrap()),
+            u32::from_le_bytes(wire[20..24].try_into().unwrap())).unwrap();
+        journal.prepare(&peer,4).unwrap();let original=journal.clone();
+        let mut store=Store::open(&path,&journal.host_session).unwrap();store.commit(journal).unwrap();
+        let state=Arc::new(SessionObservation::new());state.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        let worker=state.clone();let (entered,ready)=tokio::sync::oneshot::channel();
+        let task=tokio::spawn(async move {
+            // This is the same sticky guard now used by setup/probe/CMC3,
+            // with an actual persisted intent held through the cancelled wait.
+            worker.guard(async {
+                let _store=store;let _=entered.send(());
+                tokio::time::sleep(Duration::from_secs(60)).await;
+                Ok::<_,String>("incorrectly confirmed by a late control wait")
+            }).await
+        });
+        ready.await.unwrap();state.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+        let error=tokio::time::timeout(Duration::from_secs(1),task).await.unwrap().unwrap().unwrap_err();
+        assert!(error.starts_with("BLE session disconnected:"));
+        let restored=Store::open(&path,"r53-original").unwrap();
+        assert_eq!(restored.journal.as_ref(),Some(&original),"loss is neither a PAUSE acknowledgement nor a replacement START");
+        drop(restored);std::fs::remove_dir_all(root).unwrap();
+    }
+
+    #[tokio::test]
+    async fn r53_session_loss_cannot_publish_late_setup_success() {
+        let state=SessionObservation::new();state.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        let result=state.guard(async {
+            // WinRT may complete an already queued read at the same time as
+            // the terminal callback; that read cannot qualify this old link.
+            state.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+            Ok("ready")
+        }).await;
+        assert!(result.unwrap_err().starts_with("BLE session disconnected:"));
+    }
+
+    #[tokio::test]
     async fn session_loss_initial_closed_is_not_failure_but_active_loss_is_sticky() {
         let state=SessionObservation::new();
         state.observe(ADDRESS,Some(GattSessionStatus::Closed),None);

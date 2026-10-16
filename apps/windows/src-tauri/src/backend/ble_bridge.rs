@@ -1303,9 +1303,28 @@ struct NativeDevice {
 
 async fn on_native_link<T>(device: &NativeDevice,
     work: impl std::future::Future<Output=Result<T,String>>) -> Result<T,String> {
+    NativeLinkGuard::capture(device).run(work).await
+}
+
+/// Capture only the session guard before an operation mutates its local
+/// device metadata. No additional device/session is opened. Setup, identity
+/// probes and recorder controls must retire on the same loss as the receiver.
+struct NativeLinkGuard {
     #[cfg(windows)]
-    if let Some(session)=device.connection_session.as_ref() { return session.guard(work).await; }
-    work.await
+    session: Option<Arc<super::ble_throughput::ConnectionSession>>,
+}
+impl NativeLinkGuard {
+    fn capture(device: &NativeDevice) -> Self {
+        #[cfg(not(windows))]
+        let _ = device;
+        Self { #[cfg(windows)] session: device.connection_session.clone() }
+    }
+
+    async fn run<T>(&self, work: impl std::future::Future<Output=Result<T,String>>) -> Result<T,String> {
+        #[cfg(windows)]
+        if let Some(session)=self.session.as_ref() { return session.guard(work).await; }
+        work.await
+    }
 }
 
 async fn disconnect_native_device(device: &NativeDevice) -> Result<(), String> {
@@ -1432,7 +1451,8 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
                 .ok_or("连续录音连接已断开；设备继续离线录音，接收断点保留。")?
         };
         let mut identity = device.observed_identity.clone();
-        let result = async {
+        let link = NativeLinkGuard::capture(&device);
+        let result = link.run(async {
             let peer = device.recording_peer.clone().ok_or("连续录音连接身份不可用。")?;
             let chars = device.peripheral.characteristics();
             if let Some(lease) = owned.as_ref() {
@@ -1477,7 +1497,7 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
                 batch.connection_reusable = false;
             }
             Ok::<_, String>(Some(batch))
-        }.await;
+        }).await;
         let reusable = result.as_ref().is_ok_and(|batch| batch.as_ref().is_none_or(|batch| batch.connection_reusable));
         if reusable {
             if let Some(lease) = owned.as_mut() {
@@ -2264,6 +2284,8 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
     if intent == ConnectionIntent::Normal { setup_preference = super::ble_throughput::request_for_connection_setup(
         &device.address, device.address_type,
     ).await; }
+    let link = NativeLinkGuard::capture(&device);
+    link.run(async {
     if !connected {
         let connect_begun = StdInstant::now();
         timeout(connect_timeout, device.peripheral.connect())
@@ -2311,6 +2333,7 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
             clock_begun.elapsed().as_millis(), clock_result.is_ok());
     }
     Ok(())
+    }).await
     }.await;
     if result.is_err() {
         #[cfg(windows)]
@@ -2494,7 +2517,8 @@ async fn connect_native_probe(
         None => connect_native_device_with_clock(requested_device_id, false).await?,
     };
     let mut retain_active_recording = false;
-    let result = async {
+    let link = NativeLinkGuard::capture(&device);
+    let result = link.run(async {
     let characteristics = device.peripheral.characteristics();
     let device_status = Some(read_optional_status(
         &device.peripheral, &characteristics, DEVICE_STATUS_UUID, 20,
@@ -2580,7 +2604,7 @@ async fn connect_native_probe(
         segmented_recording,
     };
     Ok(probe)
-    }.await;
+    }).await;
     if result.is_err() {
         if let Some(owner) = owner {
             offline_connection_lock()?.forget(

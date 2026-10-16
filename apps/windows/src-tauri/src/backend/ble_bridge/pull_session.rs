@@ -41,24 +41,35 @@ pub(super) struct SubscriptionLease<P: SubscriptionPort> {
     cleanup_timeout: Duration,
 }
 impl<P: SubscriptionPort> SubscriptionLease<P> {
+    pub(super) fn pending(port: P, read_timeout: Duration) -> Self {
+        Self { port, active: [false; 2], cleanup_timeout: read_timeout.min(Duration::from_secs(1)) }
+    }
+
     pub(super) async fn open(port: P, lanes: usize, read_timeout: Duration) -> Result<Self, String> {
-        let mut lease = Self { port, active: [false; 2], cleanup_timeout: read_timeout.min(Duration::from_secs(1)) };
-        for lane in 0..lanes {
-            // A timed-out/cancelled CCCD write may still have reached Windows.
-            // Record intent before awaiting so its cleanup is never skipped.
-            lease.active[lane] = true;
-            let result = timeout(read_timeout, lease.port.subscribe(lane)).await
-                .map_err(|_| format!("subscribe recording lane {} timed out", lane + 1))
-                .and_then(|r| r);
-            if let Err(error) = result {
-                lease.close().await;
-                return Err(error);
-            }
-        }
+        let mut lease = Self::pending(port, read_timeout);
+        lease.subscribe_lanes(lanes, read_timeout).await?;
         Ok(lease)
     }
 
-    async fn close(&mut self) {
+    // A caller that races native link loss keeps this lease outside the
+    // cancelled future, then awaits close before retiring the connection.
+    pub(super) async fn subscribe_lanes(&mut self, lanes: usize, read_timeout: Duration) -> Result<(), String> {
+        for lane in 0..lanes {
+            // A timed-out/cancelled CCCD write may still have reached Windows.
+            // Record intent before awaiting so its cleanup is never skipped.
+            self.active[lane] = true;
+            let result = timeout(read_timeout, self.port.subscribe(lane)).await
+                .map_err(|_| format!("subscribe recording lane {} timed out", lane + 1))
+                .and_then(|r| r);
+            if let Err(error) = result {
+                self.close().await;
+                return Err(error);
+            }
+        }
+        Ok(())
+    }
+
+    pub(super) async fn close(&mut self) {
         for lane in 0..self.active.len() {
             if self.active[lane] {
                 cleanup_lane(&self.port, lane, self.cleanup_timeout).await;
@@ -230,6 +241,41 @@ mod tests {
             while port.calls.lock().unwrap().len() < 4 { tokio::task::yield_now().await; }
         }).await.unwrap();
         assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
+    }
+
+    #[tokio::test]
+    async fn r53_control_subscription_is_drained_before_a_fresh_owner_after_cancel() {
+        // The CMC3 caller owns the lease outside its guarded future. Exercise
+        // cancellation both inside a CCCD write and after notification setup.
+        for during_subscribe in [true,false] {
+            let port=Port {pending_second:during_subscribe,..Default::default()};
+            let mut lease=SubscriptionLease::pending(port.clone(),Duration::from_secs(8));
+            let (cancel,mut cancelled)=tokio::sync::oneshot::channel();
+            let calls=port.calls.clone();
+            let signaller=tokio::spawn(async move {
+                loop {
+                    if calls.lock().unwrap().len()==2 {let _=cancel.send(());break;}
+                    tokio::task::yield_now().await;
+                }
+            });
+            {
+                let work=async {
+                    lease.subscribe_lanes(2,Duration::from_secs(8)).await.unwrap();
+                    std::future::pending::<()>().await;
+                };
+                tokio::pin!(work);
+                tokio::select! { _=&mut cancelled=>{}, _=&mut work=>unreachable!() }
+            }
+            signaller.await.unwrap();
+            // No detached Drop cleanup: await both intended lanes while the
+            // original connection is still the only owner of this port.
+            lease.close().await;
+            assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1)]);
+            let fresh=Port {calls:port.calls.clone(),..Default::default()};
+            let mut fresh=SubscriptionLease::open(fresh,1,Duration::from_secs(1)).await.unwrap();
+            assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1),(true,0)]);
+            fresh.close().await;
+        }
     }
 
     #[tokio::test]

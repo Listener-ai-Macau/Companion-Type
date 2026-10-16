@@ -4,6 +4,7 @@ use super::*;
 use std::collections::BTreeSet;
 use crate::backend::{recorder_control::{Command, Journal, Observation, Store},
     recording_wire::{SessionKey, control::{PausePeer, PauseStatus}}};
+use super::pull_session::{NativeSubscriptions, SubscriptionLease};
 
 type Observed=(PauseStatus,u32,u32,u8);
 const RECORDER_SERVICE_UUID:Uuid=Uuid::from_u128(0x8f7a00087b7d4f3d9d6f6c2d1b7c0000);
@@ -148,7 +149,8 @@ fn settlement_action(journal:&Journal,disposition:Observation,initial:bool,
 }
 
 async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteristic,
-    peer:&PausePeer,store:&mut Store,journal:&mut Journal,initial:Option<Observed>,fresh_start:bool)->Result<Observed,String> {
+    peer:&PausePeer,store:&mut Store,journal:&mut Journal,initial:Option<Observed>,fresh_start:bool,
+    subscription:&mut Option<SubscriptionLease<NativeSubscriptions>>)->Result<Observed,String> {
     let disposition=if let Some((s,anchor,duration,_))=initial.as_ref() {
         journal.observe_with_peer(peer,s,*anchor,*duration)?
     } else {Observation::Previous};
@@ -159,7 +161,14 @@ async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteris
     if first==SettlementAction::Complete {return initial.ok_or("实际确认缺失。".into());}
     let deadline=StdInstant::now()+env_timeout("COMPANION_TYPE_MEETING_STATUS_TIMEOUT_MS",60_000);
     let mut notifications=bounded_ble_result("CMC3 notifications",StdDuration::from_secs(8),device.peripheral.notifications()).await?;
-    bounded_ble_result("subscribe CMC3 status",StdDuration::from_secs(8),device.peripheral.subscribe(status)).await?;
+    // The outer link guard can cancel this wait on a real session loss. Keep
+    // an owned CCCD lease so that cancellation also releases an in-flight
+    // subscription, just as the audio receiver already does.
+    *subscription=Some(SubscriptionLease::pending(NativeSubscriptions {
+        peripheral:device.peripheral.clone(), lanes:vec![status.clone()],
+    },StdDuration::from_secs(8)));
+    subscription.as_mut().expect("owned CMC3 subscription")
+        .subscribe_lanes(1,StdDuration::from_secs(8)).await?;
     let result:Result<Observed,String>=async {
         if let SettlementAction::Write(pending)=first {
             bounded_ble_result("write durable CMC3 command",remaining_deadline_budget(deadline,StdDuration::from_secs(8)),
@@ -192,7 +201,7 @@ async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteris
             }
         }
     }.await;
-    let _=bounded_ble_result("unsubscribe CMC3 status",StdDuration::from_secs(1),device.peripheral.unsubscribe(status)).await;
+    if let Some(mut lease)=subscription.take() {lease.close().await;}
     result
 }
 
@@ -220,7 +229,12 @@ pub(super) async fn execute_owned(
     let mut device=match retained {Some(lease)=>lease.device,
         // Retrying an original capture must not rewrite its clock.
         None=>connect_native_device_with_clock(Some(device_id),false).await?};
-    let result=async {
+    // Own the subscription outside the cancellable work. On link loss both
+    // an in-flight CCCD write and a confirmation wait are drained before the
+    // connection closes, never left to unsubscribe a later fresh connection.
+    let mut subscription=None;
+    let link=NativeLinkGuard::capture(&device);
+    let result=link.run(async {
         let (chars,control,status)=require_recorder_channel(&device).await?;
         let identity=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
             .ok_or("设备身份读取失败，未发录音控制。")?;
@@ -271,13 +285,13 @@ pub(super) async fn execute_owned(
         // STOP settles the exact lost PAUSE/RESUME/START, then uses the next
         // sequence. Recovery only settles the original pending intent.
         if disposition==Observation::Accepted || (matches!(command,0|2|3) && journal.pending.is_some()) {
-            observed=Some(settle(&device,&control,&status,&peer,&mut store,&mut journal,observed,false).await?);
+            observed=Some(settle(&device,&control,&status,&peer,&mut store,&mut journal,observed,false,&mut subscription).await?);
         }
         // Only an explicit START retry may resend an unaccepted initial
         // intent. Automatic QUERY/STOP recovery retains its no-restart guard.
         let allow_initial_start=fresh_start || (command==1 && journal.unconfirmed_start_retry());
         if command!=0 && journal.prepare(&peer,command)? {
-            observed=Some(settle(&device,&control,&status,&peer,&mut store,&mut journal,observed,allow_initial_start).await?);
+            observed=Some(settle(&device,&control,&status,&peer,&mut store,&mut journal,observed,allow_initial_start,&mut subscription).await?);
         }
         let (observed,anchor,duration,sync_state)=observed.ok_or("设备尚未确认原控制。")?;
         if !matches!(observed.state,1|2|3) || observed.last_error!=0 || !observed.timeline {
@@ -298,9 +312,13 @@ pub(super) async fn execute_owned(
         } else {offline_connection_lock()?.forget(&device.device_id(),start_request,anchor);}
         Ok((CompanionMeetingControlReport{device_id:device.device_id(),request_id:observed.request,state:observed.state,
             last_error:observed.last_error,meeting_id:anchor,duration_ms:duration,sync_state,logical_key:observed.key},journal.clone()))
-    }.await;
+    }).await;
+    if let Some(mut lease)=subscription.take() {lease.close().await;}
     if result.is_err() {
-        if let Some(anchor)=expected_anchor {offline_connection_lock()?.forget(device_id,start_request,anchor);}
+        // A fresh START may have acquired its anchor immediately before the
+        // loss callback. Retire that exact lease as well; the durable original
+        // and its confirmed/pending command remain available for recovery.
+        if let Some(anchor)=journal.anchor.or(expected_anchor) {offline_connection_lock()?.forget(device_id,start_request,anchor);}
         close_native_device(&device).await;
     }
     eprintln!("recorder_control scope=CMC3 original_session={host_session} command={command} connection_reused={reused} result_confirmed={}",result.is_ok());
