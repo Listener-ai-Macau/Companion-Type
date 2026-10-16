@@ -96,3 +96,45 @@ fn offline_device_bookmarks_failed_publication_keeps_raw_and_allows_later_retry(
     let good=root.join("sessions.json");r.publish(&good,DEVICE).unwrap();assert_eq!(r.ack_candidates(&good).unwrap().len(),1);
     drop(r);fs::remove_dir_all(root).unwrap();
 }
+
+#[test]
+fn c_engine_offline_marks_cross_decoder_preserves_audio_and_durable_positions() {
+    // Produced by the production C recorder/NOR/Opus software model, not a
+    // physical capture. Mark padding, shortened roll and both descriptors
+    // must agree with this receiver without re-encoding or invented samples.
+    let golden=include_bytes!("../../cop1/tests/engine-bookmarks.cmb3");
+    fn take<'a>(data:&'a [u8],at:&mut usize,n:usize)->&'a [u8] {let out=&data[*at..*at+n];*at+=n;out}
+    let mut at=0;assert_eq!(take(golden,&mut at,4),b"CMB3");
+    let count=u32::from_le_bytes(take(golden,&mut at,4).try_into().unwrap());assert_eq!(count,2);
+    let mut segments=Vec::new();let mut samples=0;
+    for _ in 0..count {
+        let length=u32::from_le_bytes(take(golden,&mut at,4).try_into().unwrap()) as usize;
+        let wire=take(golden,&mut at,112).to_vec();let payload=take(golden,&mut at,length).to_vec();
+        let d=Descriptor::decode(&wire).unwrap();d.verify_payload(&payload).unwrap();
+        assert_eq!(d.sample_offset,samples);samples+=d.sample_count;
+        segments.push((wire,payload));
+    }
+    let n=u32::from_le_bytes(take(golden,&mut at,4).try_into().unwrap()) as usize;
+    let baseline=take(golden,&mut at,n);assert_eq!(at,golden.len());
+    let root=root();let index=root.join("sessions.json");
+    let mut receiver=Receiver::open(&root,&segments[1].0).unwrap();
+    for (wire,payload) in &segments {receiver.accept_segment(wire,payload).unwrap();}
+    let output=receiver.assemble().unwrap();let timeline=receiver.receipt.audio.as_ref().unwrap().timeline.as_ref().unwrap();
+    assert_eq!(timeline.captured_samples,samples);assert_eq!(timeline.bookmarks.len(),17);
+    assert!(timeline.events.is_empty());assert_eq!(timeline.closed_pause_ms(),0);
+    assert_eq!(timeline.bookmarks[0].sample_offset,960,"queued half-packet rounds down on the original sample axis");
+    let positions=timeline.bookmarks.iter().map(|p|p.sample_offset.saturating_sub(320)/16).collect::<Vec<_>>();
+    let original=fs::read(output).unwrap();assert_eq!(original.len() as u64,44+(samples-320)*2);
+    let input=root.join("unmarked-baseline.cop1");let expected=root.join("baseline.wav");fs::write(&input,baseline).unwrap();
+    crate::backend::audio_decode::decode_recording(&input,&expected,false).unwrap();
+    assert_eq!(fs::read(expected).unwrap(),original,"one decoder and one preskip across mark pages and segment roll");
+    assert!(receiver.ack_candidates(&index).is_err(),"source bytes alone cannot authorize consumption");
+    receiver.publish(&index,DEVICE).unwrap();let saved=rows(&index).remove(0);
+    assert_eq!(saved.device_bookmark_imports.len(),17);assert_eq!(saved.bookmarks.len(),17);
+    assert_eq!(saved.bookmarks.iter().map(|p|p.audio_position_ms.unwrap()).collect::<Vec<_>>(),positions);
+    assert!(saved.bookmarks.iter().all(|p|p.source_recording_key==saved.device_recording_key&&p.origin=="boardOffline"));
+    assert_eq!(receiver.ack_candidates(&index).unwrap().len(),2);
+    drop(receiver);let mut reopened=Receiver::open(&root,&segments[1].0).unwrap();reopened.publish(&index,DEVICE).unwrap();
+    assert_eq!(rows(&index)[0].bookmarks,saved.bookmarks);assert_eq!(fs::read(reopened.audio_path()).unwrap(),original);
+    assert!(reopened.receipt.segments.iter().all(|s|!s.acked));drop(reopened);fs::remove_dir_all(root).unwrap();
+}
