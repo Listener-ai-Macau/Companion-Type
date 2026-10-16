@@ -2,7 +2,7 @@
 //! precedes receipt on this same connection owner.
 use super::*;
 use std::collections::BTreeSet;
-use crate::backend::{recorder_control::{Journal, Observation, Store},
+use crate::backend::{recorder_control::{Command, Journal, Observation, Store},
     recording_wire::{SessionKey, control::{PausePeer, PauseStatus}}};
 
 type Observed=(PauseStatus,u32,u32,u8);
@@ -122,22 +122,46 @@ async fn archived_original_end(device:&NativeDevice,chars:&BTreeSet<Characterist
     sealed_end_report(device,journal)
 }
 
+#[derive(Debug,PartialEq,Eq)]
+enum SettlementAction { Complete, Wait, Write(Command) }
+
+/// A physical transition has no pending host command. Keep observing it
+/// without a write; a queued previous stable status cannot finish that wait.
+/// Only an explicit fresh START may write an unaccepted initial intent.
+fn settlement_action(journal:&Journal,disposition:Observation,initial:bool,
+    fresh_start:bool,write_floor:&mut Option<u32>)->Result<SettlementAction,String> {
+    if initial {*write_floor=journal.pending.as_ref().map(|p|p.sequence);}
+    if let Some(pending)=journal.pending.as_ref() {
+        if initial && pending.command==1 && disposition==Observation::Previous && !fresh_start {
+            return Err("设备尚未确认上次开始；可能已重启，未自动重新开录。原命令与会议保留。".into());
+        }
+        if disposition==Observation::Previous
+            && (initial || write_floor.is_none_or(|sequence|pending.sequence>sequence)) {
+            *write_floor=Some(pending.sequence);
+            return Ok(SettlementAction::Write(pending.clone()));
+        }
+        return Ok(SettlementAction::Wait);
+    }
+    Ok(if disposition==Observation::Confirmed || (initial && disposition==Observation::Previous) {
+        SettlementAction::Complete
+    } else {SettlementAction::Wait})
+}
+
 async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteristic,
     peer:&PausePeer,store:&mut Store,journal:&mut Journal,initial:Option<Observed>,fresh_start:bool)->Result<Observed,String> {
     let disposition=if let Some((s,anchor,duration,_))=initial.as_ref() {
         journal.observe_with_peer(peer,s,*anchor,*duration)?
     } else {Observation::Previous};
     store.commit_bound(journal.clone())?;
-    let Some(pending)=journal.pending.clone() else {return initial.ok_or("实际确认缺失。".into());};
-    if pending.command==1 && disposition==Observation::Previous && !fresh_start {
-        return Err("设备尚未确认上次开始；可能已重启，未自动重新开录。原命令与会议保留。".into());
-    }
+    let waiting_for_start=journal.pending.as_ref().is_some_and(|p|p.command==1);
+    let mut write_floor=None;
+    let first=settlement_action(journal,disposition,true,fresh_start,&mut write_floor)?;
+    if first==SettlementAction::Complete {return initial.ok_or("实际确认缺失。".into());}
     let deadline=StdInstant::now()+env_timeout("COMPANION_TYPE_MEETING_STATUS_TIMEOUT_MS",60_000);
     let mut notifications=bounded_ble_result("CMC3 notifications",StdDuration::from_secs(8),device.peripheral.notifications()).await?;
     bounded_ble_result("subscribe CMC3 status",StdDuration::from_secs(8),device.peripheral.subscribe(status)).await?;
     let result:Result<Observed,String>=async {
-        let mut sent_sequence=pending.sequence;
-        if disposition==Observation::Previous {
+        if let SettlementAction::Write(pending)=first {
             bounded_ble_result("write durable CMC3 command",remaining_deadline_budget(deadline,StdDuration::from_secs(8)),
                 device.peripheral.write(control,&pending.wire,WriteType::WithResponse)).await?;
         }
@@ -150,20 +174,20 @@ async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteris
             let wire=match notified {Some(wire)=>wire,None=>bounded_ble_result("read durable CMC3 confirmation",
                 remaining_deadline_budget(deadline,StdDuration::from_secs(8)),device.peripheral.read(status)).await?};
             // A queued pre-START CMS2 idle notification is not a CMC3 ACK.
-            if pending.command==1 && wire.len()==64 {
+            if waiting_for_start && wire.len()==64 {
                 let old=parse_meeting_status(&wire)?;
                 if old.last_error==0 && matches!(old.state,0|2) {continue;}
             }
             let observed=fields(&wire)?;
             let disposition=journal.observe_with_peer(peer,&observed.0,observed.1,observed.2)?;
             store.commit_bound(journal.clone())?;
-            if journal.pending.is_none() && disposition==Observation::Confirmed {return Ok(observed);}
-            if disposition==Observation::Previous {
-                if let Some(rebased)=journal.pending.as_ref().filter(|p|p.sequence>sent_sequence) {
+            match settlement_action(journal,disposition,false,false,&mut write_floor)? {
+                SettlementAction::Complete=>return Ok(observed),
+                SettlementAction::Wait=>{},
+                SettlementAction::Write(rebased)=>{
                     bounded_ble_result("write rebased original STOP after physical control",
                         remaining_deadline_budget(deadline,StdDuration::from_secs(8)),
                         device.peripheral.write(control,&rebased.wire,WriteType::WithResponse)).await?;
-                    sent_sequence=rebased.sequence;
                 }
             }
         }
@@ -224,10 +248,10 @@ pub(super) async fn execute_owned(
                 || old.last_error!=0 || !matches!(old.state,0|2) {return Err("设备当前状态不能确认原开始请求；未重开。".into());}
             None
         };
+        let mut disposition=Observation::Previous;
         if let Some((s,anchor,duration,_))=observed.as_ref() {
             match journal.observe_with_peer(&peer,s,*anchor,*duration) {
-                Ok(Observation::Confirmed)=>store.commit_bound(journal.clone())?,
-                Ok(_)=>{},
+                Ok(value)=>{disposition=value;store.commit_bound(journal.clone())?;},
                 Err(_) if command==0 && s.last_error==0 && matches!(s.state,0|2) => {
                     // The recorder only exposes the latest live CMS3. An old
                     // original may still have a complete immutable catalogue.
@@ -246,7 +270,7 @@ pub(super) async fn execute_owned(
         }
         // STOP settles the exact lost PAUSE/RESUME/START, then uses the next
         // sequence. Recovery only settles the original pending intent.
-        if matches!(command,0|2|3) && journal.pending.is_some() {
+        if disposition==Observation::Accepted || (matches!(command,0|2|3) && journal.pending.is_some()) {
             observed=Some(settle(&device,&control,&status,&peer,&mut store,&mut journal,observed,false).await?);
         }
         // Only an explicit START retry may resend an unaccepted initial
@@ -286,6 +310,118 @@ pub(super) async fn execute_owned(
 #[cfg(test)]
 mod gatt_tests {
     use super::*;
+
+    fn local_fixture(index:usize,state:Option<u8>)->Observed {
+        // Produced by the actual portable C recorder. Only explicit drain/
+        // error cases below alter its bytes and recompute the protocol CRC.
+        let bytes=include_bytes!("../cop1/tests/engine-local-controls.cms3");
+        let mut wire=bytes[8+index*80..8+(index+1)*80].to_vec();
+        if let Some(state)=state {wire[1]=state;let crc=crc32fast::hash(&wire[..76]);wire[76..].copy_from_slice(&crc.to_le_bytes());}
+        fields(&wire).unwrap()
+    }
+
+    fn fixture_original(local:bool)->(PausePeer,Journal) {
+        let (s,anchor,ms,_)=local_fixture(if local {8}else{0},None);
+        let peer=PausePeer::from_verified_peer(&crate::backend::recording_wire::transport::Peer {
+            uid:s.device_uid,epoch:s.format_epoch,capacity:64,max_value_bytes:248,
+            logical_control:true,growing_tail:true,pause_control:true,batch_interval:true}).unwrap();
+        let journal=if local {
+            serde_json::from_value(serde_json::json!({
+                "schema":1,"hostSession":"settlement-original","deviceId":"C8:92:FF:DD:3B:CA",
+                "uid":s.device_uid,"epoch":s.format_epoch,"startRequest":s.local_start.unwrap(),
+                "maxSeconds":0,"localOrigin":true,"key":s.key.as_ref().unwrap().public_key(),
+                "anchor":anchor,"confirmed":{"command":s.command,"request":s.request,
+                    "sequence":s.sequence,"state":s.state,"durationMs":ms,"localControl":true},"pending":null
+            })).unwrap()
+        } else {
+            let mut j=Journal::start(&peer,"settlement-original","C8:92:FF:DD:3B:CA",s.request,600).unwrap();
+            j.observe_with_peer(&peer,&s,anchor,ms).unwrap();j
+        };
+        journal.matches(&peer,&journal.host_session,&journal.device_id).unwrap();
+        (peer,journal)
+    }
+
+    #[test]
+    fn physical_transitions_wait_without_host_intent_and_ignore_previous_stable_notification() {
+        let (peer,mut journal)=fixture_original(true);let start=journal.start_request;
+        for (transient,stable,old) in [(9,10,8),(11,12,10)] {
+            let mut floor=None;
+            let (s,anchor,ms,_)=local_fixture(transient,None);
+            let disposition=journal.observe_with_peer(&peer,&s,anchor,ms).unwrap();
+            assert_eq!(disposition,Observation::Accepted);assert!(journal.pending.is_none());
+            assert_eq!(settlement_action(&journal,disposition,true,false,&mut floor).unwrap(),SettlementAction::Wait);
+            let (s,anchor,ms,_)=local_fixture(old,None);
+            let disposition=journal.observe_with_peer(&peer,&s,anchor,ms).unwrap();
+            assert_eq!(disposition,Observation::Previous);
+            assert_eq!(settlement_action(&journal,disposition,false,false,&mut floor).unwrap(),SettlementAction::Wait,
+                "an old queued stable notification is not completion of a newer physical transition");
+            let (s,anchor,ms,_)=local_fixture(stable,None);
+            let disposition=journal.observe_with_peer(&peer,&s,anchor,ms).unwrap();
+            assert_eq!(settlement_action(&journal,disposition,false,false,&mut floor).unwrap(),SettlementAction::Complete);
+            assert_eq!(floor,None,"QUERY/physical pause/resume must never send a CMC3 command");
+            assert_eq!(journal.start_request,start);assert!(journal.pending.is_none());
+        }
+    }
+
+    #[test]
+    fn physical_stop_drain_waits_for_same_original_and_does_not_fabricate_stop_ack() {
+        for local in [false,true] {
+            let (peer,mut journal)=fixture_original(local);let original=journal.clone();let mut floor=None;
+            let (s,anchor,ms,_)=local_fixture(if local {8}else{0},Some(6));
+            let disposition=journal.observe_with_peer(&peer,&s,anchor,ms).unwrap();
+            assert_eq!(disposition,Observation::Accepted);assert_eq!(journal,original);
+            assert_eq!(settlement_action(&journal,disposition,true,false,&mut floor).unwrap(),SettlementAction::Wait);
+            for field in 0..4 {
+                let mut bad=s.clone();let mut id=anchor;
+                match field {0=>bad.device_uid[0]^=1,1=>bad.last_error=1,2=>id+=1,_=>bad.key.as_mut().unwrap().session_id+=1}
+                assert!(journal.observe_with_peer(&peer,&bad,id,ms).is_err());assert_eq!(journal,original);
+            }
+            let (ended,anchor,ms,_)=local_fixture(if local {8}else{0},Some(2));
+            let disposition=journal.observe_with_peer(&peer,&ended,anchor,ms).unwrap();
+            assert_eq!(settlement_action(&journal,disposition,false,false,&mut floor).unwrap(),SettlementAction::Complete);
+            let c=journal.confirmed.as_ref().unwrap();assert!(c.finished_locally);assert_eq!(c.command,1);
+            assert_eq!(c.request,original.start_request);assert_eq!(floor,None);assert!(journal.pending.is_none());
+            let sealed=journal.clone();
+            assert!(journal.observe_with_peer(&peer,&s,anchor,ms).is_err(),"a delayed draining status cannot revive an ended original");
+            assert_eq!(journal,sealed);
+        }
+    }
+
+    #[test]
+    fn pending_stop_survives_physical_transition_and_writes_only_the_rebased_sequence() {
+        let (peer,mut journal)=fixture_original(true);journal.prepare(&peer,2).unwrap();
+        let original_stop=journal.pending.clone().unwrap();let mut floor=None;
+        let (s,anchor,ms,_)=local_fixture(9,None);
+        let disposition=journal.observe_with_peer(&peer,&s,anchor,ms).unwrap();
+        assert_eq!(settlement_action(&journal,disposition,true,false,&mut floor).unwrap(),SettlementAction::Wait);
+        assert_eq!(journal.pending.as_ref(),Some(&original_stop));
+        let (s,anchor,ms,_)=local_fixture(10,None);
+        let disposition=journal.observe_with_peer(&peer,&s,anchor,ms).unwrap();
+        let rebased=match settlement_action(&journal,disposition,false,false,&mut floor).unwrap() {
+            SettlementAction::Write(command)=>command,other=>panic!("STOP must follow physical PAUSE: {other:?}"),
+        };
+        assert_eq!(rebased.command,2);assert_eq!(rebased.sequence,2);assert_eq!(journal.superseded.as_ref(),Some(&original_stop));
+        assert_eq!(settlement_action(&journal,Observation::Previous,false,false,&mut floor).unwrap(),SettlementAction::Wait,
+            "repeated notifications must not resend rebased STOP");
+        // Model the exact remote STOP response after its one allowed write.
+        let mut final_status=s;final_status.local_start=None;final_status.state=2;final_status.command=2;
+        final_status.sequence=rebased.sequence;final_status.request=rebased.request;
+        let disposition=journal.observe_with_peer(&peer,&final_status,anchor,ms).unwrap();
+        assert_eq!(settlement_action(&journal,disposition,false,false,&mut floor).unwrap(),SettlementAction::Complete);
+        assert!(!journal.confirmed.as_ref().unwrap().finished_locally);assert!(journal.pending.is_none());
+    }
+
+    #[test]
+    fn automatic_settlement_never_writes_an_unaccepted_replacement_start() {
+        let (peer,original)=fixture_original(false);
+        let journal=Journal::start(&peer,&original.host_session,&original.device_id,original.start_request,600).unwrap();
+        let mut floor=None;
+        assert!(settlement_action(&journal,Observation::Previous,true,false,&mut floor).is_err());
+        let write=settlement_action(&journal,Observation::Previous,true,true,&mut floor).unwrap();
+        assert_eq!(write,SettlementAction::Write(journal.pending.clone().unwrap()));
+        assert_eq!(settlement_action(&journal,Observation::Accepted,false,false,&mut floor).unwrap(),SettlementAction::Wait);
+        assert_eq!(journal.pending.as_ref().unwrap().sequence,0);
+    }
 
     #[test]
     fn reboot_idle_cms2_can_only_query_the_same_confirmed_original_catalogue() {

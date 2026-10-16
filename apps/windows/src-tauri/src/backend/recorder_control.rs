@@ -193,14 +193,18 @@ impl Journal {
         // A physical button/capacity/time limit can seal a capture without a
         // new host command. Only the exact pending/confirmed identity may end
         // the row. Idle, a later session or a fabricated STOP cannot do so.
-        let local_finish = status.state==2 && status.timeline && status.last_error==0
+        let local_finish = matches!(status.state,2|6) && status.timeline && status.last_error==0
             && key_matches && anchor_matches && matches!(status.command,1|4|5)
             && self.confirmed.as_ref().is_none_or(|c| duration>=c.duration_ms)
+            && self.confirmed.as_ref().is_none_or(|c| c.state!=2 || status.state==2)
             && (self.pending.as_ref().is_some_and(|p| p.command==status.command
                 && p.request==status.request && p.sequence==status.sequence)
                 || (self.pending.as_ref().is_none_or(|p|p.command!=1) && self.confirmed.as_ref().is_some_and(|c|
                     c.command==status.command && c.request==status.request && c.sequence==status.sequence)));
         if local_finish {
+            // A physical/time/capacity stop may still be draining the original
+            // audio. It is accepted, not a fabricated remote STOP or final ACK.
+            if status.state==6 {return Ok(Observation::Accepted);}
             self.key=key.map(SessionKey::public_key);self.anchor=Some(anchor);
             self.confirmed=Some(Confirmed{command:status.command,request:status.request,sequence:status.sequence,
                 state:2,duration_ms:duration,finished_locally:true,local_control:false});
@@ -272,6 +276,7 @@ impl Journal {
             || status.key.as_ref().map(SessionKey::public_key).as_ref()!=self.key.as_ref()
             || self.anchor!=Some(anchor) || anchor==0 || !status.timeline || status.last_error!=0
             || duration<previous.duration_ms || status.sequence<previous.sequence
+            || (previous.state==2 && status.state!=2)
             || (status.sequence==previous.sequence && (!previous.local_control ||
                 previous.command!=status.command || previous.request!=status.request)) {
             return Err(failure("本地控制不属于同一原录音或序号已过期"));
@@ -286,7 +291,7 @@ impl Journal {
         let previous=self.confirmed.as_ref().ok_or_else(||failure("原开始尚未确认"))?;
         let stable=stable_state(status.command).ok_or_else(||failure("未知本地操作"))?;
         let transition=match status.command {4=>4,5=>5,_=>255};
-        if status.state==transition {return Ok(Observation::Accepted);}
+        if status.state==transition || status.state==6 {return Ok(Observation::Accepted);}
         if status.state!=stable && status.state!=2 {return Err(failure("本地操作尚未到达稳定状态"));}
         if status.sequence==previous.sequence && status.state==previous.state {
             self.confirmed.as_mut().unwrap().duration_ms=duration;
