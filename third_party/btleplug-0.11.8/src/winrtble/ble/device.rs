@@ -11,7 +11,7 @@
 //
 // Copyright (c) 2014 The Rust Project Developers
 
-use crate::{api::BDAddr, winrtble::utils, Error, Result};
+use crate::{api::{AddressType, BDAddr}, winrtble::utils, Error, Result};
 use super::characteristic::await_cancellable_gatt;
 use log::{debug, trace};
 use std::future::IntoFuture;
@@ -19,7 +19,7 @@ use uuid::Uuid;
 use windows::{
     core::Ref,
     Devices::Bluetooth::{
-        BluetoothCacheMode, BluetoothConnectionStatus, BluetoothLEDevice,
+        BluetoothAddressType, BluetoothCacheMode, BluetoothConnectionStatus, BluetoothLEDevice,
         GenericAttributeProfile::{
             GattCharacteristic, GattCommunicationStatus, GattDescriptor, GattDeviceService,
             GattDeviceServicesResult, GattOpenStatus, GattSharingMode,
@@ -101,14 +101,31 @@ async fn open_shared_service(service: &GattDeviceService) -> Result<()> {
 impl BLEDevice {
     pub async fn new(
         address: BDAddr,
+        address_type: Option<AddressType>,
         connection_status_changed: ConnectedEventHandler,
     ) -> Result<Self> {
-        let async_op = BluetoothLEDevice::FromBluetoothAddressAsync(address.into())
+        // Pairing and GATT must name the same native identity. In particular,
+        // WBA static-random identities cannot lose their advertised type here.
+        // Only genuinely unknown types use the SDK's untyped overload.
+        let requested_type=address_type.map(|kind|match kind {
+            AddressType::Public=>BluetoothAddressType::Public,
+            AddressType::Random=>BluetoothAddressType::Random,
+        });
+        let async_op = match requested_type {
+            Some(kind)=>BluetoothLEDevice::FromBluetoothAddressWithBluetoothAddressTypeAsync(address.into(),kind),
+            None=>BluetoothLEDevice::FromBluetoothAddressAsync(address.into()),
+        }
             .map_err(|_| Error::DeviceNotFound)?;
         let device = async_op
             .into_future()
             .await
             .map_err(|_| Error::DeviceNotFound)?;
+        let actual_address=device.BluetoothAddress().map_err(|e|Error::Other(Box::new(e)))?;
+        let actual_type=device.BluetoothAddressType().map_err(|e|Error::Other(Box::new(e)))?;
+        if actual_address!=u64::from(address) || requested_type.is_some_and(|kind|kind!=actual_type) {
+            return Err(Error::Other("native GATT identity differs from the advertised address/type; no alternate identity fallback".into()));
+        }
+        eprintln!("BLE native_gatt_identity address={address} requested_type={requested_type:?} actual_type={actual_type:?} matched=1");
         let connection_status_handler =
             TypedEventHandler::new(move |sender: Ref<BluetoothLEDevice>, _| {
                 if let Ok(sender) = sender.ok() {

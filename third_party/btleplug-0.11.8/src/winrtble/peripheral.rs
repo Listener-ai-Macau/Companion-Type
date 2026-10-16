@@ -528,8 +528,10 @@ impl ApiPeripheral for Peripheral {
         let shared_clone = Arc::downgrade(&self.shared);
         let adapter_clone = self.shared.adapter.clone();
         let address = self.shared.address;
+        let address_type = *self.shared.address_type.read()?;
         let device = BLEDevice::new(
             self.shared.address,
+            address_type,
             Box::new(move |is_connected| {
                 if let Some(shared) = shared_clone.upgrade() {
                     shared.connected.store(is_connected, Ordering::Relaxed);
