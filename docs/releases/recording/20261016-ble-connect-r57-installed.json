@@ -1,0 +1,264 @@
+{
+  "schema": "companion.ble.connect.r57.installed.v1",
+  "time": "2026-10-16T17:47:55+08:00",
+  "result": "INSTALLED_NORMAL_PAIRING_CLEAN_EXIT_AND_PAIRED_REOPEN_CHECKED",
+  "summary": "正式TypeR57已装：取得Windows配对信息后、开始PairAsync之前释放临时BluetoothLEDevice和初始元数据引用，沿Listener正常COM释放，不调用Close；恢复原单次加密配对路径。",
+  "problem": "R55实板配对状态19的同次Windows System事件3505，精确AepId吻合，ProtocolError2147943567/0x8007048F。代码仍持有配对前临时设备引用，与Listener在PairAsync前释放的顺序不同。",
+  "withdrawn": "R56精确AEP枚举候选已撤回：8秒枚举超时挡住原配对调用，没有到达PairAsync，不资格修复；首个R56候选未装，r2曾装后已由R57替换。未通过降级加密、自动删配对或重启适配器恢复。",
+  "physical": "实板FW447/UI80（继承446，BLE三文件逐字节一致）：一次正常PAIR窗口后，R57首次2.010116秒完成PairAsync，回调1次接受1次/status0，受保护身份和目录成功；完整Connect13.375秒。正常退出主动释放1个连接，16秒后配对仍在；被动UART确认窗口已自然关闭，第二进程沿原配对Connect7.094秒成功，无新配对，退出20秒后仍paired。目标Windows只有成功配对事件8，无新事件10；原WAV SHA和用户重连/同步选择保持。",
+  "security": "Windows ProtectionLevelUsed实际报告None（1），不能用该字段冒充实际加密；独立板端UART已确认linked1/secured1、HCI encryption enabled1/status00、两次secured reason13正常断开。旧Windows无钥而板仍有旧bond，有限窗口内实际bond_lost1/rebond1且NVM写成功1/失败0；第二次无增量。没有把Windows元数据当作安全门替代。",
+  "limits": "只资格本次普通配对、受保护连接、正常退出/新进程重开和16/20秒配对保持。R54同进程原生对象替换、真实异常无线掉线/历史0x08与长期配对稳定、GUI、长录/全容量/低电/功耗及全部质量门仍OPEN；未新录音、STOP、消费、云、GUI、SWD/刷固件或测速。其它聊天在本阶段前装447，阶段全程同实板占用，无中途调试干扰。",
+  "next": "先补已知蓝牙范围内同进程连接所有者替换/重开及真实失效的恢复；已过普通配对/退出重开不重跑。之后补异常收尾、必要状态和低功耗，功能具备后最后集中实录。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "b6f9b76a7503be80a5675b0a4a38d02e54a2e0a5",
+    "tag": "companion-ble-connect-r57-20261016-source",
+    "parent": "21e6edcbe8e0b4e27d1916fbbedb06a7a70ab0e6",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T17:38:30"
+  },
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ble-connect-r57-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10297344,
+    "sha256": "c867f2d1b540321effa09bc0d6ffde7573c4de445ea255a25a0cf4173fe343b1"
+  },
+  "installed": {
+    "installed_exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "installed_exe_sha256": "74243c009a9994627dde391bffc91367037eb9f8ad3cb1d0188e7af01cf1e8d7",
+    "installed_dll_sha256": "63193ba6731a2e2d44b32e06c57f15ab7184fb0a0f98d4a8f364cc5d820eb796",
+    "installed_payload_match": true
+  },
+  "actual": {
+    "result": "R57_RELEASED_TEMPORARY_DEVICE_CLEAN_EXIT_AND_PAIRED_REOPEN",
+    "startedAtLocal": "2026-10-16T17:43:57.177+08:00",
+    "installedExeSha256": "74243c009a9994627dde391bffc91367037eb9f8ad3cb1d0188e7af01cf1e8d7",
+    "newRecording": false,
+    "boardStopCommands": 0,
+    "swd": false,
+    "reset": false,
+    "cloud": false,
+    "gui": false,
+    "ownedHandlesClosed": true,
+    "connects": [
+      {
+        "index": 1,
+        "uartBytesAtExit": 13183,
+        "seconds": 13.375,
+        "finishedAtLocal": "2026-10-16T17:44:12.055+08:00",
+        "exitCode": 0,
+        "reply": {
+          "asrRequests": 0,
+          "connected": true,
+          "connectionLifetime": "commandScoped",
+          "device": {
+            "autoReconnectEnabled": true,
+            "boardId": 1463959893,
+            "buildId": 539365380,
+            "connected": true,
+            "connectionPhase": "ready",
+            "deviceId": "C8:92:FF:DD:3B:CA",
+            "firmwareVersion": 66239,
+            "hardwareRevision": "COMPANION-WBA55-V1.1",
+            "lastConnectedAt": "1792143851868",
+            "lastReconnectAttemptAt": null,
+            "lastSeenAt": "2026-10-16T09:44:11.875Z",
+            "lastSyncAt": null,
+            "manualDisconnect": false,
+            "mcuUid": "180010000d50335754363720",
+            "message": "Companion device connected",
+            "mode": "windowsNative",
+            "providerId": "companion-type-windows-ble",
+            "reconnectAttemptCount": 0,
+            "recording": false,
+            "recordingCapacity": null,
+            "recordingsAvailable": 0,
+            "rememberedDeviceId": "C8:92:FF:DD:3B:CA",
+            "scanning": false,
+            "signalRssi": -48,
+            "supported": true,
+            "uiGeneration": 80
+          },
+          "error": null,
+          "fullChainAcceptance": "NOT_QUALIFIED",
+          "moduleChecks": "NOT_RUN",
+          "newRecording": false,
+          "postExitPairingVerified": false,
+          "result": "NORMAL_DEVICE_CONNECT_CONFIRMED",
+          "source": "firmware"
+        },
+        "cleanupComplete": true,
+        "maintainReleased": true,
+        "pairingStarted": true
+      },
+      {
+        "index": 2,
+        "uartBytesAtExit": 27776,
+        "seconds": 7.094000000040978,
+        "finishedAtLocal": "2026-10-16T17:44:35.212+08:00",
+        "exitCode": 0,
+        "reply": {
+          "asrRequests": 0,
+          "connected": true,
+          "connectionLifetime": "commandScoped",
+          "device": {
+            "autoReconnectEnabled": true,
+            "boardId": 1463959893,
+            "buildId": 539365380,
+            "connected": true,
+            "connectionPhase": "ready",
+            "deviceId": "C8:92:FF:DD:3B:CA",
+            "firmwareVersion": 66239,
+            "hardwareRevision": "COMPANION-WBA55-V1.1",
+            "lastConnectedAt": "1792143875104",
+            "lastReconnectAttemptAt": null,
+            "lastSeenAt": "2026-10-16T09:44:35.112Z",
+            "lastSyncAt": null,
+            "manualDisconnect": false,
+            "mcuUid": "180010000d50335754363720",
+            "message": "Companion device connected",
+            "mode": "windowsNative",
+            "providerId": "companion-type-windows-ble",
+            "reconnectAttemptCount": 0,
+            "recording": false,
+            "recordingCapacity": null,
+            "recordingsAvailable": 0,
+            "rememberedDeviceId": "C8:92:FF:DD:3B:CA",
+            "scanning": false,
+            "signalRssi": -48,
+            "supported": true,
+            "uiGeneration": 80
+          },
+          "error": null,
+          "fullChainAcceptance": "NOT_QUALIFIED",
+          "moduleChecks": "NOT_RUN",
+          "newRecording": false,
+          "postExitPairingVerified": false,
+          "result": "NORMAL_DEVICE_CONNECT_CONFIRMED",
+          "source": "firmware"
+        },
+        "cleanupComplete": true,
+        "maintainReleased": true,
+        "pairingStarted": false
+      }
+    ],
+    "pairingObservations": [
+      {
+        "source": "Windows DeviceInformation association endpoint",
+        "time": "2026-10-16T17:43:57.260+08:00",
+        "nativeId": "BluetoothLE#BluetoothLE68:34:21:92:02:24-c8:92:ff:dd:3b:ca",
+        "paired": false,
+        "canPair": true,
+        "kind": "5",
+        "bluetoothDeviceHandleOpened": false,
+        "gattAccess": false,
+        "pairingRequested": false,
+        "phase": "before_recovery"
+      },
+      {
+        "source": "Windows DeviceInformation association endpoint",
+        "time": "2026-10-16T17:44:12.060+08:00",
+        "nativeId": "BluetoothLE#BluetoothLE68:34:21:92:02:24-c8:92:ff:dd:3b:ca",
+        "paired": true,
+        "canPair": false,
+        "kind": "5",
+        "bluetoothDeviceHandleOpened": false,
+        "gattAccess": false,
+        "pairingRequested": false,
+        "phase": "immediate_after_first_exit"
+      },
+      {
+        "source": "Windows DeviceInformation association endpoint",
+        "time": "2026-10-16T17:44:28.097+08:00",
+        "nativeId": "BluetoothLE#BluetoothLE68:34:21:92:02:24-c8:92:ff:dd:3b:ca",
+        "paired": true,
+        "canPair": false,
+        "kind": "5",
+        "bluetoothDeviceHandleOpened": false,
+        "gattAccess": false,
+        "pairingRequested": false,
+        "phase": "sixteen_seconds_after_first_exit"
+      },
+      {
+        "source": "Windows DeviceInformation association endpoint",
+        "time": "2026-10-16T17:44:28.103+08:00",
+        "nativeId": "BluetoothLE#BluetoothLE68:34:21:92:02:24-c8:92:ff:dd:3b:ca",
+        "paired": true,
+        "canPair": false,
+        "kind": "5",
+        "bluetoothDeviceHandleOpened": false,
+        "gattAccess": false,
+        "pairingRequested": false,
+        "phase": "before_second_connect_window_closed"
+      },
+      {
+        "source": "Windows DeviceInformation association endpoint",
+        "time": "2026-10-16T17:44:55.238+08:00",
+        "nativeId": "BluetoothLE#BluetoothLE68:34:21:92:02:24-c8:92:ff:dd:3b:ca",
+        "paired": true,
+        "canPair": false,
+        "kind": "5",
+        "bluetoothDeviceHandleOpened": false,
+        "gattAccess": false,
+        "pairingRequested": false,
+        "phase": "twenty_seconds_after_second_exit"
+      }
+    ],
+    "originalWavSha256": "f57ff29885f3de18924e0737f0b6ed5ea8673b5459e763d5e5fb3cf2a1bc49c6",
+    "choiceBefore": {
+      "rememberedDeviceId": "C8:92:FF:DD:3B:CA",
+      "autoReconnectEnabled": true,
+      "manualDisconnect": false
+    },
+    "syncPreferenceSha256Before": "cb9a010c4c8088d8e182142c037c334650cbe8ed1bdeff1603bcbf57a6374781",
+    "normalPairWindowRequests": 1,
+    "pairRequestAtLocal": "2026-10-16T17:43:58.391+08:00",
+    "pairWindowConfirmedAtLocal": "2026-10-16T17:43:58.679+08:00",
+    "pairWindowClosedObservedAtLocal": "2026-10-16T17:44:28.099+08:00",
+    "pairWindowClosedEvidence": "new passive UART after first cleaned exit",
+    "windowsTargetEvents": {
+      "error": null,
+      "start": "2026-10-16T17:43:57.177+08:00",
+      "target": "C8:92:FF:DD:3B:CA",
+      "events": [
+        {
+          "TimeCreated": "2026-10-16T17:44:02.4886152+08:00",
+          "Id": 8,
+          "RecordId": 137826,
+          "Message": "远程适配器 (c8:92:ff:dd:3b:ca) 成功地与本地适配器配对。"
+        }
+      ]
+    },
+    "finishedAtLocal": "2026-10-16T17:44:56.109+08:00"
+  },
+  "withdrawnCandidate": {
+    "source": {
+      "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+      "commit": "21e6edcbe8e0b4e27d1916fbbedb06a7a70ab0e6",
+      "tag": "companion-ble-connect-r56-20261016-source-r2",
+      "parent": "b024e78ead8eba44ed05e3cb7f266b1726d7a1b1",
+      "normalHeadAndIndexUnchanged": true,
+      "createdAtLocal": "2026-10-16T17:32:00"
+    },
+    "artifact": {
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ble-connect-r56-20261016\\type-r2\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+      "bytes": 10301440,
+      "sha256": "5a2b5965375757fc608c3de76596f212c90af0b48928bc9c0b45ff1f2b25985e"
+    },
+    "exeSha256": "024df3cde2e4ad47fd6048fc5f0ceb94f6971c33dc4d72f3b61898b6870472e0",
+    "actualResult": "NOT_COMPLETED",
+    "reason": "optional exact AEP enumeration timed out; removed as prerequisite, never reached pairing"
+  },
+  "software": "R57 release/MSI compiled; R56 endpoint-selection software check passed but that path withdrawn, not counted as a retained R57 feature or extra physical success",
+  "listener": "C:/Users/Billy/Desktop/Denzic/Listener/Listener-Type/src-tauri/src/embedded_ble/windows_ble/pairing.rs:pairing_device_information_from_bluetooth_address_handle, releases temporary object before returning metadata for pairing",
+  "official": [
+    "https://learn.microsoft.com/en-us/windows/apps/develop/devices-sensors/pair-devices",
+    "https://github.com/microsoft/Windows-universal-samples/blob/main/Samples/DeviceEnumerationAndPairing/cppwinrt/Scenario9_CustomPairDevice.cpp"
+  ],
+  "evidence": [
+    ".cache/ble-connect-r57-20261016/actual-pairing-exit/result.json",
+    ".cache/ble-connect-r57-20261016/actual-pairing-exit/uart.private.log",
+    ".cache/ble-connect-r57-20261016/association-failure3505.private.xml",
+    ".cache/ble-connect-r56-20261016/actual-pairing-exit/result.json"
+  ],
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
