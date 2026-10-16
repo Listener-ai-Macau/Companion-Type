@@ -163,6 +163,10 @@ export async function saveCompanionMeetingNote(request:CompanionMeetingNoteReque
   if (!isTauriRuntime()) throw new Error('请在 Companion Type 桌面版保存备注。');
   return invoke('save_companion_meeting_note',{request});
 }
+export async function saveCompanionLibraryOrganization(request:import('../../../packages/core/src/libraryOrganization').CompanionLibraryOrganizationRequest):Promise<CompanionV1Snapshot>{
+  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中保存真实录音分类。');
+  return invoke('save_companion_library_organization',{request});
+}
 
 export async function getProductSettings(): Promise<CompanionProductSettingsPublic> {
   if (isTauriRuntime()) {

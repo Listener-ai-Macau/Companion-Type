@@ -16,6 +16,7 @@ const time = (seconds: number) => {
 interface PlayerProps {
   src: string;
   sourceIdentity?: string;
+  sessionId?:string;
   playerRef: RefObject<HTMLAudioElement>;
   onError: () => void;
   pauseTimeline?: CompanionPauseTimeline | null;
@@ -26,10 +27,10 @@ interface PlayerProps {
 export function CompanionAudioPlayer(props: PlayerProps) {
   // Reset all transient controls even when the parent omits a key. The native
   // fingerprint isolates replaced same-path/same-length originals as well.
-  return <SourcePlayer key={JSON.stringify([props.sourceIdentity ?? '', props.src])} {...props} />;
+  return <SourcePlayer key={JSON.stringify([props.sessionId??'',props.sourceIdentity ?? '', props.src])} {...props} />;
 }
-function SourcePlayer({ src, sourceIdentity, playerRef, onError, pauseTimeline, externalSeekRef, onFinished, autoPlay }: PlayerProps) {
-  const [memory] = useState(() => loadPlaybackMemory(sourceIdentity));
+function SourcePlayer({ src, sourceIdentity,sessionId, playerRef, onError, pauseTimeline, externalSeekRef, onFinished, autoPlay }: PlayerProps) {
+  const [memory] = useState(() => loadPlaybackMemory(sourceIdentity,sessionId));
   const [duration, setDuration] = useState(0);
   const [position, setPosition] = useState(0);
   const [speed, setSpeed] = useState(memory.value?.speed ?? 1);
@@ -56,7 +57,7 @@ function SourcePlayer({ src, sourceIdentity, playerRef, onError, pauseTimeline, 
     lastSave.current = now;
     const ok = savePlaybackMemory(sourceIdentity, {version:1,
       position:completed.current ? 0 : Math.min(player.duration, Math.max(0, player.currentTime)),
-      duration:player.duration, speed:savedSpeed.current, completed:completed.current});
+      duration:player.duration, speed:savedSpeed.current, completed:completed.current},sessionId,memory.generation,memory.epoch);
     setMemoryFailed(!ok);
   };
 
@@ -123,8 +124,9 @@ function SourcePlayer({ src, sourceIdentity, playerRef, onError, pauseTimeline, 
         const prior = memory.value;
         if (prior && !prior.completed && Math.abs(prior.duration-value) <= 0.25 && prior.position < value-0.25) {
           player.currentTime = prior.position; setPosition(prior.position);
-          if (prior.position > 0) setMessage(`已恢复到 ${time(prior.position)}，点击播放即可继续。`);
+          if (prior.position > 0) setMessage(`已恢复到 ${time(prior.position)}${autoPlay?'。':'，点击播放即可继续。'}`);
         }
+        remember(player,true); // Also migrate an R45 preference after actual metadata is ready.
         if (autoPlay) void player.play().catch(() => setMessage('连续播放已暂停，请点击播放继续。'));
       }}
       onTimeUpdate={() => {

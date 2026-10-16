@@ -6,7 +6,7 @@ import {
   type CompanionV1Snapshot,
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
-import {clearPlaybackMemory} from '../../../packages/ui/src/playbackMemory';
+import {clearPlaybackMemory,clearSessionPlaybackMemory} from '../../../packages/ui/src/playbackMemory';
 import { refineCompanionMeetingSpeakers } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
@@ -27,6 +27,7 @@ import {
   saveCompanionMeetingEdit,
   saveCompanionBookmark,
   saveCompanionMeetingNote,
+  saveCompanionLibraryOrganization,
   isTauriRuntime,
   getBoardOnlineLiveStatus,
   getCompanionSnapshot,
@@ -86,6 +87,7 @@ export function App() {
 
   const runControl = async (request: CompanionV1ControlRequest) => {
     if (operationActive.current) return;
+    const cleanupSessionId=request.sessionId??snapshot?.host.selectedSessionId;
     setError(null);
     try {
       await exclusive(request.action, async () => {
@@ -93,6 +95,8 @@ export function App() {
           setSnapshot(await applyCompanionControl(request));
           if(request.action==='privacyEraseAll'&&!clearPlaybackMemory())
             setError('本机会议已清理，但回听位置尚未清除；请检查本机存储权限后重试清理。');
+          if((request.action==='privacyEraseAudio'||request.action==='privacyDeleteSession')&&cleanupSessionId&&!clearSessionPlaybackMemory(cleanupSessionId))
+            setError('录音清理已处理，但本机回听位置尚未清除，请检查本机存储权限。');
         } catch (controlError) {
           if (['meetingStart', 'meetingStop', 'meetingFinalize', 'meetingPause', 'meetingResume',
             'meetingRecoverControl', 'deviceSyncRecordings'].includes(request.action)) {
@@ -248,6 +252,10 @@ export function App() {
       onSaveNote={isTauriRuntime() ? (request) => exclusive('refresh',async()=>{
         try { const saved=await saveCompanionMeetingNote(request);setSnapshot(saved);return saved; }
         catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* retain the last readable library */ } throw error; }
+      }):undefined}
+      onSaveLibraryOrganization={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{
+        try{const saved=await saveCompanionLibraryOrganization(request);setSnapshot(saved);return saved;}
+        catch(error){try{setSnapshot(await getCompanionSnapshot());}catch{/* retain last readable library */}throw error;}
       }):undefined}
       onStartBoardOnlineLive={async (request) => {
         if (operationActive.current) return;

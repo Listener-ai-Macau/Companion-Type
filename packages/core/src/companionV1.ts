@@ -1,4 +1,5 @@
 import type { CompanionRecordingBookmark } from './recordingBookmarks';
+import type {CompanionLibraryOrganization} from './libraryOrganization';
 
 export const COMPANION_V1_SCHEMA = 'companion.host.v1' as const;
 export const COMPANION_V1_DEFAULT_BLE_NAME = 'companion';
@@ -450,6 +451,7 @@ export interface CompanionV1HostSession {
   transcriptReview?: CompanionTranscriptReview | null;
   bookmarkRevision?: number;
   bookmarks?: CompanionRecordingBookmark[];
+  organization?: CompanionLibraryOrganization;
   deviceBookmarkImports?: string[];
   noteRevision?: number;
   meetingNotes?: import('./meetingNotes').CompanionMeetingNote[];

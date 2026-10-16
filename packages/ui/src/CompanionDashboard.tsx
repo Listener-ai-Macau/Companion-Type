@@ -4,6 +4,8 @@ import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
 import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
 import {useListeningQueue} from './useListeningQueue';
+import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
+import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
@@ -176,6 +178,7 @@ export interface CompanionDashboardProps {
   onRefineSpeakers?: (sessionId:string) => Promise<CompanionV1Snapshot>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
+  onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   /** Host-only resource/firmware package validation (Windows Tauri). */
   onValidateOtaPackage?: (paths: {
     manifestPath: string;
@@ -217,6 +220,7 @@ export function CompanionDashboard({
   onRefineSpeakers,
   onSaveBookmark,
   onSaveNote,
+  onSaveLibraryOrganization,
   onValidateOtaPackage,
   onTransferOtaPackage,
 }: CompanionDashboardProps) {
@@ -231,6 +235,10 @@ export function CompanionDashboard({
   const [showWorkflow, setShowWorkflow] = useState(false);
   const [onlyPendingSessions, setOnlyPendingSessions] = useState(false);
   const [libraryQuery, setLibraryQuery] = useState('');
+  const [libraryFilters,setLibraryFilters]=useState<LibraryFilters>({folder:'*',tag:'',favorites:false});
+  const [librarySelection,setLibrarySelection]=useState<Record<string,number>>({});
+  const [libraryBusy,setLibraryBusy]=useState(false);
+  const [libraryUnsaved,setLibraryUnsaved]=useState(false);
   const [detailView, setDetailView] = useState<'minutes' | 'transcript'>('minutes');
   const [meetingMode, setMeetingMode] = useState<CompanionV1MeetingMode>('offlineStore');
   const [minutesSelection, setMinutesSelection] = useState<{ sessionId: string; mode: CompanionV1MeetingMode } | null>(null);
@@ -338,11 +346,16 @@ export function CompanionDashboard({
   const pendingLibrary = recordingLibrary.filter((session) => !meetingHasFinalMinutes(session)
     || Boolean(describeCompanionMeetingRecovery(session)));
   const visibleLibrary = useMemo(() => {
-    const base = onlyPendingSessions ? pendingLibrary : recordingLibrary;
+    const base = (onlyPendingSessions ? pendingLibrary : recordingLibrary).filter(s=>{
+      const org=s.organization;const folder=org?.folder??'';
+      return (libraryFilters.folder==='*'||folder===libraryFilters.folder||Boolean(libraryFilters.folder)&&folder.startsWith(libraryFilters.folder+'/'))
+        &&(!libraryFilters.tag||org?.tags.some(t=>t.toLocaleLowerCase()===libraryFilters.tag.toLocaleLowerCase()))
+        &&(!libraryFilters.favorites||org?.favorite);
+    });
     const query = libraryQuery.trim().toLocaleLowerCase();
     if (!query) return base;
-    return base.filter((session) => meetingSearchText(session).includes(query));
-  }, [onlyPendingSessions, pendingLibrary, recordingLibrary, libraryQuery]);
+    return base.filter((session) => (meetingSearchText(session)+' '+(session.organization?.folder??'')+' '+(session.organization?.tags.join(' ')??'')).toLocaleLowerCase().includes(query));
+  }, [onlyPendingSessions, pendingLibrary, recordingLibrary, libraryQuery,libraryFilters]);
   const connected = Boolean(snapshot?.connected || device?.connected);
 
   useEffect(() => {
@@ -473,7 +486,7 @@ export function CompanionDashboard({
     || recordingLibrary.some((session) => session.status === 'recording')
     || boardLiveActive,
   );
-  const controlsBusy = busyAction !== null || Boolean(recordingSync?.jobId) || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy;
+  const controlsBusy = busyAction !== null || Boolean(recordingSync?.jobId) || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy ||libraryBusy;
   const lossBudgetSeconds = Math.ceil(boardMaxDurationSeconds + (meetingMode === 'onlineLive' ? 120 : 0));
   const lossBudgetValid = durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
   const captureBudgetBytes = capacity && lossBudgetValid
@@ -524,8 +537,8 @@ export function CompanionDashboard({
     ? Boolean(productSettings.volcAppKeySet && productSettings.volcAccessKeySet)
     : Boolean(productSettings?.openaiAsrApiKeySet);
   useEffect(() => {
-    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.keys(meetingDrafts).length > 0 || transcriptEditor.current.dirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved);
-  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved]);
+    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.keys(meetingDrafts).length > 0 || transcriptEditor.current.dirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved);
+  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
@@ -583,11 +596,11 @@ export function CompanionDashboard({
   const preparedAudio = selectedSession && audioSources[selectedSession.id]?.identity === audioIdentity && !audioBlockedReason
     ? audioSources[selectedSession.id] : null;
   const listeningQueue=useListeningQueue({
-    rows:recordingLibrary.map(row=>({id:row.id,title:meetingTitle(row),identity:listeningIdentity(row),
+    rows:recordingLibrary.map(row=>({id:row.id,title:`${meetingTitle(row)} · ${formatDuration(row.durationMs)} · ${row.deviceRecordingId!=null?`#${row.deviceRecordingId}`:'录音'} · ${row.startedAt??row.id.slice(-8)}`,identity:listeningIdentity(row),
       ready:row.status!=='recording'&&row.pendingReason!=='needs_device_sync'&&row.audioStored&&row.retention.audioCached
         &&Boolean(row.audioPath)&&!describeCompanionMeetingRecovery(row)?.isProcessing})),
     selectedId:selectedSession?.id??'',
-    disabled:controlsBusy||audioBusy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved,
+    disabled:controlsBusy||audioBusy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved||libraryUnsaved,
     hardBlocked:oobeBlockedByRecording||storageBlocked,prepare:onPrepareAudio,
     select:id=>onControl({action:'meetingSelectSession',sessionId:id}),
     pause:()=>audioElement.current?.pause(),
@@ -947,7 +960,13 @@ export function CompanionDashboard({
             placeholder="搜索标题、转写或纪要" aria-label="搜索标题、转写或纪要" />
           {libraryQuery ? <button type="button" onClick={() => setLibraryQuery('')}>清除</button> : null}
         </label>
-        {visibleLibrary.length === 0 ? (
+        <CompanionLibraryTools sessions={recordingLibrary} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
+          filters={libraryFilters} setFilters={setLibraryFilters} blocked={controlsBusy||oobeBlockedByRecording||storageBlocked}
+          onSave={onSaveLibraryOrganization} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
+        {visibleLibrary.length===0&&(libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites)?<div className="ct-library-empty">
+          <strong>当前筛选没有录音</strong><p>文件夹、标签、收藏与搜索会同时筛选。清除筛选后可查看已有录音。</p>
+          <button type="button" className="ct-action" onClick={()=>{setLibraryFilters({folder:'*',tag:'',favorites:false});setLibraryQuery('');setOnlyPendingSessions(false);}}>清除分类筛选</button>
+        </div>:visibleLibrary.length === 0 ? (
           <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关会议' : onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的会议' : '把值得记住的事，留在这里'}</strong><p>{libraryQuery ? '搜索会同时检查标题、完整转写和两个模式的纪要。' : onlyPendingSessions && recordingLibrary.length ? '切回全部会议，可以查看已完成的内容。' : '在 Companion 上长按按键开始录音，结束后回到电脑同步。转写与纪要需要已配置的服务。'}</p><button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openWorkflow}>{libraryQuery ? '清除搜索' : onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : '查看录音与同步步骤'}</button></div>
         ) : (
           <div className="ct-library-list">
@@ -965,6 +984,10 @@ export function CompanionDashboard({
                       ? '录制中'
                       : '已保存');
               return (
+                <div className="ct-library-entry" key={session.id}>
+                {onSaveLibraryOrganization?<input type="checkbox" aria-label={`选择整理 ${meetingTitle(session)} ${formatDuration(session.durationMs)}`}
+                  checked={Object.hasOwn(librarySelection,session.id)} disabled={controlsBusy||oobeBlockedByRecording||storageBlocked}
+                  onChange={e=>setLibrarySelection(old=>{const next={...old};if(e.target.checked)next[session.id]=session.organization?.revision??0;else delete next[session.id];return next;})}/>:null}
                 <button
                   type="button"
                   key={session.id}
@@ -977,6 +1000,9 @@ export function CompanionDashboard({
                   <span className="ct-library-icon"><FileText size={17} /></span>
                   <span className="ct-library-card-main">
                     <strong>{meetingTitle(session)}</strong>
+                    {session.organization&&(session.organization.favorite||session.organization.folder||session.organization.tags.length)?<small>
+                      {session.organization.favorite?'★ 收藏 · ':''}{session.organization.folder||'未分类'}{session.organization.tags.length?' · '+session.organization.tags.join(' · '):''}
+                    </small>:null}
                     <small>
                       {meetingSource(session)}{boardId != null ? ` #${boardId}` : ''}
                       {' · '}{formatDuration(session.durationMs)}
@@ -986,6 +1012,7 @@ export function CompanionDashboard({
                   </span>
                   <span className={`ct-library-status ct-library-status-${session.status}`}>{statusLabel}</span>
                 </button>
+                </div>
               );
             })}
           </div>
@@ -998,7 +1025,7 @@ export function CompanionDashboard({
         <div className="ct-audio-tools">
           <button type="button" className="ct-action" disabled={Boolean(audioBlockedReason)||controlsBusy||audioBusy||listeningQueue.busy}
             onClick={()=>void listeningQueue.add()}>将当前录音加入队列</button>
-          <button type="button" className="ct-action" disabled={!listeningQueue.items.length||Boolean(listeningQueue.active)||controlsBusy||oobeBlockedByRecording||storageBlocked||listeningQueue.busy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved}
+          <button type="button" className="ct-action" disabled={!listeningQueue.items.length||Boolean(listeningQueue.active)||controlsBusy||oobeBlockedByRecording||storageBlocked||listeningQueue.busy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved||libraryUnsaved}
             onClick={listeningQueue.start}>开始连续播放</button>
           <button type="button" className="ct-action" disabled={!listeningQueue.active} onClick={()=>listeningQueue.stop()}>停止连续播放</button>
           <button type="button" className="ct-action" disabled={!listeningQueue.items.length||listeningQueue.busy} onClick={listeningQueue.clear}>清空播放队列</button>
@@ -1036,6 +1063,7 @@ export function CompanionDashboard({
             <div><strong><Headphones size={16} />本机原音</strong><p>{audioBlockedReason ?? '由桌面端为当前会议临时授权，只能回听这场会议。'}</p></div>
             {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
               sourceIdentity={preparedAudio.sourceIdentity}
+              sessionId={selectedSession.id}
               autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
               onFinished={()=>listeningQueue.finished(preparedAudio.sourceIdentity)}
               externalSeekRef={externalAudioSeek}

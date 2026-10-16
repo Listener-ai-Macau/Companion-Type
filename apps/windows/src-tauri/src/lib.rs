@@ -274,6 +274,7 @@ pub fn run() {
             commands::save_companion_bookmark,
             commands::prepare_companion_audio,
             commands::prepare_companion_audio_with_timeline,
+            commands::save_companion_library_organization,
             commands::apply_companion_v1_control,
             commands::get_companion_recording_sync_status,
             commands::pause_companion_recording_sync,

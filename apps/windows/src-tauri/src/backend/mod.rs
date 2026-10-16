@@ -42,6 +42,7 @@ mod recording_metrics;
 pub(crate) mod recording_bookmarks;
 pub(crate) mod recording_pause_view;
 pub(crate) mod meeting_notes;
+pub(crate) mod library_organization;
 pub(crate) mod board_meeting;
 mod board_stop;
 mod interrupted_capture;
@@ -621,6 +622,7 @@ pub struct CompanionServiceBoundary {
 }
 
 pub trait CompanionBackend: Send + Sync {
+    fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport, String>;
     fn save_meeting_note(&self, request: meeting_notes::Request) -> Result<CompanionV1Snapshot, String>;
     fn save_bookmark(&self, request: recording_bookmarks::Request, stamp: Option<recording_bookmarks::LiveStamp>)
@@ -1172,6 +1174,19 @@ impl Default for FixtureCompanionBackend {
 }
 
 impl CompanionBackend for FixtureCompanionBackend {
+    fn save_library_organization(&self,request:library_organization::Request)->Result<CompanionV1Snapshot,String>{
+        let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        if snapshot.host.persistence.status!="ready" {return Err("请先恢复或重试保存资料库；分类输入仍保留。".into());}
+        if snapshot.meeting.active||snapshot.device.recording||snapshot.host.sessions.iter().any(|r|r.status=="recording"){
+            return Err("请先结束并保存录音，再整理资料库。".into());
+        }
+        if cfg!(test)&&std::env::var("COMPANION_TYPE_STATE_PATH").is_err(){
+            library_organization::apply(&mut snapshot.host.sessions,&request)?;
+        }else{
+            snapshot.host.sessions=library_organization::commit(&persistence::state_file_path(),&request)?;
+        }
+        snapshot.updated_at=connection_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
+    }
     fn refine_meeting_speakers(&self,id:&str)->Result<CompanionV1Snapshot,String> {
         let _processing=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
         let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;

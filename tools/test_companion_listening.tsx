@@ -88,5 +88,6 @@ await act(async()=>tree.root.findByType('audio').props.onLoadedMetadata());asser
 assert.equal(tree.root.findByType('audio').props.src,`asset://${second.id}`);
 await act(async()=>tree.root.findByType('audio').props.onEnded());assert.match(text(tree.toJSON()),/队列已播放完毕/);
 assert.deepEqual(nativeCalls,[first.id,second.id,first.id,second.id]);act(()=>tree.unmount());
-records.set('other-setting','keep');assert.ok(clearPlaybackMemory());assert.deepEqual([...records.keys()],['other-setting']);
+records.set('other-setting','keep');assert.ok(clearPlaybackMemory());assert.equal(records.get('other-setting'),'keep');
+assert.ok([...records.keys()].every(k=>k==='other-setting'||k==='companion.playback.reset'));
 console.log('PASS dashboard listening: enqueue/select/re-authorize/play/advance both originals and explicit local privacy cleanup; software component only, not native speaker evidence');

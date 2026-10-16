@@ -1,4 +1,5 @@
 export * from './companionV1';
+export * from './libraryOrganization';
 export * from './transcriptReview';
 export * from './recordingBookmarks';
 export * from './meetingNotes';

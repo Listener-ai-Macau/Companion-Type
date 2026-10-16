@@ -175,6 +175,11 @@ fn save_locked(
         .is_some_and(|before| removes_private_data(before, sessions));
     if let Some(before) = previous.map(decode).transpose()? {
         for row in &before {
+            if sessions.iter().find(|s|s.id==row.id).is_some_and(|next|
+                next.organization.revision<row.organization.revision||
+                next.organization.revision==row.organization.revision&&next.organization!=row.organization){
+                return Err("磁盘中的录音分类已变化；拒绝用旧窗口覆盖，请重新载入后核对。".into());
+            }
             if sessions.iter().find(|s| s.id == row.id).is_some_and(|next|
                 next.note_revision < row.note_revision || (next.note_revision == row.note_revision && next.meeting_notes != row.meeting_notes)) {
                 return Err("磁盘中的会议备注已变化；拒绝用旧窗口覆盖，请重新载入后核对。".into());

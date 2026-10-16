@@ -25,6 +25,11 @@ use crate::coordinator::CompanionCoordinator;
 
 type CompanionCoordinatorState<'a> = State<'a, Arc<CompanionCoordinator>>;
 type BoardOnlineLiveManagerState<'a> = State<'a, Arc<CompanionBoardOnlineLiveManager>>;
+#[tauri::command]
+pub async fn save_companion_library_organization(coordinator:CompanionCoordinatorState<'_>,request:crate::backend::library_organization::Request)->Result<CompanionV1Snapshot,String>{
+    let coordinator=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||coordinator.save_library_organization(request))
+        .await.map_err(|e|format!("资料整理任务未完成：{e}"))?
+}
 mod segmented_online_live;
 mod board_online_cli;
 pub(crate) use board_online_cli::run_cli as run_segmented_online_cli;

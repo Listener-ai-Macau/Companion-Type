@@ -316,6 +316,10 @@ impl CompanionCoordinator {
     pub fn save_meeting_edit(&self, request: crate::backend::meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String> {
         self.backend.save_meeting_edit(request)
     }
+    pub fn save_library_organization(&self,request:crate::backend::library_organization::Request)->Result<CompanionV1Snapshot,String>{
+        let _lease=self.begin_device_operation_kind(18)?;
+        self.backend.save_library_organization(request)
+    }
     pub fn refine_meeting_speakers(&self,id:&str)->Result<CompanionV1Snapshot,String> {self.backend.refine_meeting_speakers(id)}
 
     pub fn save_meeting_note(&self, request: crate::backend::meeting_notes::Request) -> Result<CompanionV1Snapshot, String> {
