@@ -19,6 +19,8 @@ pub struct Bookmark {
     pub recording_id: Option<u32>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_sha256: Option<String>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub source_recording_key: Option<crate::companion_v1::CompanionV1RecordingKey>,
 }
 
 #[derive(Clone, Copy, Debug, Deserialize, PartialEq, Eq)]
@@ -108,7 +110,7 @@ pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request,
             next.push(Bookmark { id: request.bookmark_id.clone(), label: label(request)?, position_ms,
                 audio_position_ms: (request.action == Action::AddAt).then_some(position_ms),
                 created_at: now.into(), origin: origin.into(), source_device_id: session.source_device_id.clone(),
-                recording_id: session.device_recording_id, source_sha256: session.device_sha256.clone() });
+                recording_id: session.device_recording_id, source_sha256: session.device_sha256.clone(),source_recording_key:None });
             next.sort_by_key(|b| b.position_ms);
         }
         Action::Rename => {
@@ -216,6 +218,7 @@ fn received_timing(session: &CompanionV1HostSession) -> Option<(u64,u64)> {
 }
 
 pub(crate) mod live_queue;
+pub(crate) mod device;
 pub(crate) mod probe;
 
 #[cfg(test)]

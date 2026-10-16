@@ -18,6 +18,7 @@ pub(crate) struct Tail {
     pub(crate) encoded_length: u32,
     pub(crate) started_unix_s: u32,
     timeline: bool,
+    bookmarks: bool,
     wire: Vec<u8>,
 }
 impl Tail {
@@ -32,17 +33,17 @@ impl Tail {
         if p.len()!=80 || &p[..8]!=b"CLP2\x02\x00\x50\x00" || !peer.growing_tail || nonce==0
             || p[8..20]!=peer.uid || key.device_uid!=peer.uid || key.format_epoch!=peer.epoch
             || u64le(p,20)!=peer.epoch || u64le(p,28)!=key.session_id || key.session_id==0
-            || u32le(p,68)!=nonce || p[72]!=3 || p[73]!=super::SOURCE_MIC_SAI || !matches!(u16le(p,74),1|3)
+            || u32le(p,68)!=nonce || p[72]!=3 || p[73]!=super::SOURCE_MIC_SAI || !matches!(u16le(p,74),1|3|7)
             || crc32fast::hash(&p[..76])!=u32le(p,76) {
             return Err(fail("invalid growing tail identity or frame"));
         }
-        let n=u32le(p,60);let samples=u64le(p,52);let at=u64le(p,44);let timeline=u16le(p,74)==3;
+        let n=u32le(p,60);let samples=u64le(p,52);let at=u64le(p,44);let timeline=u16le(p,74)&2!=0;
         if u32le(p,36)==0 || u32le(p,40)>=1024 || !(54..=super::MAX_ENCODED).contains(&n)
             || samples==0 || samples%320!=0 || samples>u64::from((n-12)/42)*320
             || (!timeline && ((n-12)%42!=0 || samples!=u64::from((n-12)/42)*320)) || at%320!=0
             || at.checked_add(samples).is_none() { return Err(fail("tail is not a complete COP1 frame prefix")); }
         Ok(Self { key:key.clone(),recording_id:u32le(p,36),segment_index:u32le(p,40),sample_offset:at,
-            sample_count:samples,encoded_length:n,started_unix_s:u32le(p,64),timeline,wire:p.to_vec() })
+            sample_count:samples,encoded_length:n,started_unix_s:u32le(p,64),timeline,bookmarks:u16le(p,74)==7,wire:p.to_vec() })
     }
     pub(crate) fn pull(&self, offset:u32, flags:u8) -> Result<Vec<u8>,String> {
         if offset>=self.encoded_length || flags & !4 !=0 { return Err(fail("invalid tail pull offset")); }
@@ -55,7 +56,7 @@ impl Tail {
     fn stem(&self) -> Result<String,String> { stem(&self.key,self.recording_id,self.segment_index,self.sample_offset) }
     fn same_extent(&self,other:&Self)->bool {
         self.key==other.key&&self.recording_id==other.recording_id&&self.segment_index==other.segment_index
-            &&self.sample_offset==other.sample_offset&&self.started_unix_s==other.started_unix_s&&self.timeline==other.timeline
+            &&self.sample_offset==other.sample_offset&&self.started_unix_s==other.started_unix_s&&self.timeline==other.timeline&&self.bookmarks==other.bookmarks
     }
 }
 fn stem(key:&SessionKey,id:u32,index:u32,offset:u64)->Result<String,String> {
@@ -148,7 +149,7 @@ impl Prefix {
 fn validate_audio(tail:&Tail,bytes:&[u8])->Result<(),String> {
     if bytes.len()!=tail.encoded_length as usize{return Err(fail("invalid durable COP1 tail length"));}
     let mut reader=crate::backend::cop1::Reader::new(bytes,tail.sample_offset,false).map_err(|e|fail(&e))?;
-    if reader.schema!=(if tail.timeline{2}else{1})||reader.source_rate!=16000||reader.frame_ms!=20 {
+    if reader.schema!=(if tail.bookmarks {3}else if tail.timeline{2}else{1})||reader.source_rate!=16000||reader.frame_ms!=20 {
         return Err(fail("tail format differs from committed COP1 prefix"));
     }
     while let Some(record)=reader.next().map_err(|e|fail(&e))? {

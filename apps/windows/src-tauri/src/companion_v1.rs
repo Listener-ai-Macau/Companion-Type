@@ -355,6 +355,10 @@ pub struct CompanionV1HostSession {
     pub bookmark_revision: u64,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub bookmarks: Vec<crate::backend::recording_bookmarks::Bookmark>,
+    /// Imported device-event IDs survive a user deleting a bookmark. A
+    /// repeated segment publication must not resurrect that deleted point.
+    #[serde(default,skip_serializing_if="Vec::is_empty")]
+    pub device_bookmark_imports: Vec<String>,
     #[serde(default)]
     pub note_revision: u64,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -1513,6 +1517,7 @@ pub(crate) fn create_host_session(
         note_revision: 0, meeting_notes: vec![],
         bookmark_revision: 0,
         bookmarks: vec![],
+        device_bookmark_imports: vec![],
         transcript_review: None,
         id: id.clone(),
         title: request

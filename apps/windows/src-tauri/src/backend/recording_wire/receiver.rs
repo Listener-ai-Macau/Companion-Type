@@ -1,7 +1,7 @@
 //! Durable V2 segment consumer. No BLE action is performed here. The caller
 //! must negotiate V2 and validate the actual UID. Every pathname is derived from validated
 //! immutable metadata, never loaded as an arbitrary path from a receipt.
-use super::{plan_group, Descriptor, GroupPlan, MAX_SEGMENTS};
+use super::{plan_group, Descriptor, GroupPlan, SessionKey, MAX_SEGMENTS};
 use crate::backend::{audio_artifacts, cop1, export, session_store};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -599,7 +599,7 @@ fn decode(
 
 fn select_schema(schema:&mut Option<u8>,timeline:&mut Option<cop1::Timeline>,current:u8)->Result<(),String> {
     if schema.is_some_and(|old|old!=current) {return Err("同一录音的原音格式发生变化，原件已保留。".into());}
-    if schema.is_none() {if current==2 {*timeline=Some(cop1::Timeline::default());}*schema=Some(current);}
+    if schema.is_none() {if matches!(current,2|3) {*timeline=Some(cop1::Timeline::default());}*schema=Some(current);}
     Ok(())
 }
 fn collect_timeline(ds:&[Descriptor],files:&mut [File])->Result<Option<cop1::Timeline>,String> {
@@ -619,6 +619,8 @@ fn collect_timeline(ds:&[Descriptor],files:&mut [File])->Result<Option<cop1::Tim
 
 #[cfg(test)]
 mod pause_tests;
+#[cfg(test)]
+mod device_bookmark_tests;
 
 mod probe;
 mod publish;

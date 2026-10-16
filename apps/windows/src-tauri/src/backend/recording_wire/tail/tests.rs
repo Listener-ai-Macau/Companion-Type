@@ -1,5 +1,24 @@
 use super::*;
 use crate::backend::cop1::{Reader,Record,Timeline};
+
+#[test]
+fn offline_device_bookmarks_tail_requires_explicit_schema3_flags_and_keeps_prefix_unconsumable() {
+    let (peer,tail,mut raw)=fixture(4);
+    raw[4]=3;raw[7]=3;
+    crate::backend::cop1::tests::event(&mut raw,4,1,tail.sample_offset+1280,80);
+    let wire=rewrite_wire(&tail,1280,raw.len() as u32,7);
+    let marked=Tail::decode(&wire,&peer,&tail.key,u32le(&wire,68)).unwrap();
+    validate_audio(&marked,&raw).unwrap();assert!(marked.timeline&&marked.bookmarks);
+    let old_wire=rewrite_wire(&tail,1280,raw.len() as u32,3);
+    let old=Tail::decode(&old_wire,&peer,&tail.key,u32le(&old_wire,68)).unwrap();
+    assert!(validate_audio(&old,&raw).is_err());assert!(!old.same_extent(&marked));
+    let root=root();let (prefix,empty)=Prefix::load(&root,&marked,&peer).unwrap();assert!(empty.is_empty());
+    prefix.save(&marked,&raw,&peer).unwrap();drop(prefix);
+    let (prefix,saved)=Prefix::load(&root,&marked,&peer).unwrap();assert_eq!(saved,raw);
+    drop(prefix);
+    assert!(Prefix::load(&root,&old,&peer).is_err(),"format identity cannot change behind an existing durable prefix");
+    fs::remove_dir_all(root).unwrap();
+}
 fn engine_fixture()->(Peer,Vec<(Tail,Vec<u8>)>,Descriptor,Vec<u8>) {
     let bytes=include_bytes!("../../cop1/tests/engine-pause-tail.cpt2");
     fn take<'a>(bytes:&'a [u8],at:&mut usize,n:usize)->&'a [u8]{let out=&bytes[*at..*at+n];*at+=n;out}

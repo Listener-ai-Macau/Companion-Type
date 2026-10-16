@@ -16,6 +16,10 @@ pub(crate) struct Event {
 #[serde(rename_all="camelCase", deny_unknown_fields)]
 pub(crate) struct Timeline {
     pub events: Vec<Event>,
+    /// Schema3 device-authored marks have their own sequence. Keeping them
+    /// separate preserves the paired pause/control sequence and UI contract.
+    #[serde(default,skip_serializing_if="Vec::is_empty")]
+    pub bookmarks: Vec<Event>,
     pub captured_samples: u64,
     pub audio_packet_bytes: u64,
     pub event_bytes: u64,
@@ -25,10 +29,20 @@ pub(crate) struct Timeline {
 }
 impl Timeline {
     pub(crate) fn push(&mut self, event: Event) -> Result<(),String> {
-        if self.ended_paused || self.events.last().is_some_and(|last|
-            event.sequence<=last.sequence || event.elapsed_ms<last.elapsed_ms ||
-            event.sample_offset<last.sample_offset) {
+        if self.ended_paused || event.sequence==0 || event.sample_offset%320!=0
+            || self.events.last().into_iter().chain(self.bookmarks.last()).any(|last|
+                event.elapsed_ms<last.elapsed_ms || event.sample_offset<last.sample_offset) {
             return Err("COP1 timeline order changed across segments".into());
+        }
+        if event.kind==4 {
+            if self.bookmarks.last().is_some_and(|last|event.sequence<=last.sequence)
+                || (self.pause_open_at_end && self.events.last().is_none_or(|pause|pause.sample_offset!=event.sample_offset)) {
+                return Err("COP1 device bookmark identity/order changed".into());
+            }
+            self.bookmarks.push(event);return Ok(());
+        }
+        if self.events.last().is_some_and(|last|event.sequence<=last.sequence) {
+            return Err("COP1 control sequence changed across segments".into());
         }
         match event.kind {
             1 if !self.pause_open_at_end => self.pause_open_at_end=true,
@@ -80,6 +94,8 @@ pub(crate) struct Reader<R: Read> {
     done: bool,
     summary: Summary,
     last_event: Option<Event>,
+    last_control_sequence:u32,
+    last_bookmark_sequence:u32,
 }
 impl<R: Read> Reader<R> {
     pub(crate) fn new(input: R, source_offset: u64, live_prefix: bool) -> Result<Self,String> {
@@ -87,14 +103,15 @@ impl<R: Read> Reader<R> {
         input.read_exact(&mut header).map_err(|_|"truncated COP1 header")?;
         let rate=u32::from_le_bytes(header[8..12].try_into().unwrap());
         if &header[..4]!=b"COP1" || header[5]!=1 ||
-            !matches!((header[4],header[7]),(1,0)|(2,1)) ||
+            !matches!((header[4],header[7]),(1,0)|(2,1)|(3,3)) ||
             !matches!(header[6],10|20|40|60) ||
             !matches!(rate,8000|12000|16000|24000|48000) ||
-            (header[4]==2 && (header[6]!=20 || rate!=16000 || source_offset%320!=0)) {
+            (header[4]>=2 && (header[6]!=20 || rate!=16000 || source_offset%320!=0)) {
             return Err("unsupported COP1 schema/channels/header".into());
         }
         Ok(Self{input,schema:header[4],frame_ms:usize::from(header[6]),source_rate:rate,
-            source_offset,live_prefix,done:false,summary:Summary{encoded_bytes:12,..Summary::default()},last_event:None})
+            source_offset,live_prefix,done:false,summary:Summary{encoded_bytes:12,..Summary::default()},
+            last_event:None,last_control_sequence:0,last_bookmark_sequence:0})
     }
     fn exact(&mut self, output:&mut [u8]) -> Result<bool,String> {
         let mut at=0;
@@ -115,14 +132,14 @@ impl<R: Read> Reader<R> {
             let n=self.input.read(&mut prefix[..1]).map_err(|e|format!("read COP1: {e}"))?;
             if n==0 {self.done=true;return Ok(None);}
             self.summary.encoded_bytes+=1;
-            if self.schema==2 && prefix[0]==255 {self.summary.padding_bytes+=1;continue;}
+            if self.schema>=2 && prefix[0]==255 {self.summary.padding_bytes+=1;continue;}
             if !self.exact(&mut prefix[1..])? {return Ok(None);}
             let count=usize::from(u16::from_le_bytes(prefix));
-            if self.schema==2 && count==0 {
+            if self.schema>=2 && count==0 {
                 let mut wire=[0;32];
                 if !self.exact(&mut wire[2..])? {return Ok(None);}
                 if begin%248!=0 || &wire[2..6]!=b"CPG1" || wire[7]!=0 ||
-                    !matches!(wire[6],1..=3) || crc32fast::hash(&wire[..28])!=u32::from_le_bytes(wire[28..].try_into().unwrap()) {
+                    !(matches!(wire[6],1..=3) || (self.schema==3 && wire[6]==4)) || crc32fast::hash(&wire[..28])!=u32::from_le_bytes(wire[28..].try_into().unwrap()) {
                     return Err("invalid COP1 pause event alignment/schema/CRC".into());
                 }
                 let event=Event{kind:wire[6],sequence:u32::from_le_bytes(wire[8..12].try_into().unwrap()),
@@ -131,18 +148,21 @@ impl<R: Read> Reader<R> {
                 let sample=self.source_offset.checked_add(self.summary.frames.checked_mul(320)
                     .ok_or("COP1 source sample overflow")?).ok_or("COP1 source sample overflow")?;
                 if event.sequence==0 || event.sample_offset!=sample || self.summary.ended_paused ||
-                    self.last_event.is_some_and(|last|event.sequence<=last.sequence || event.elapsed_ms<last.elapsed_ms) {
+                    self.last_event.is_some_and(|last|event.elapsed_ms<last.elapsed_ms)
+                    || event.sequence<=if event.kind==4 {self.last_bookmark_sequence}else{self.last_control_sequence} {
                     return Err("COP1 pause event source/time/sequence mismatch".into());
                 }
                 match event.kind {
+                    4=>self.last_bookmark_sequence=event.sequence,
                     1 if !self.summary.pause_open => self.summary.pause_open=true,
                     2 | 3 if self.summary.pause_open => {self.summary.pause_open=false;self.summary.ended_paused=event.kind==3;}
                     _ => return Err("COP1 pause events are not paired".into()),
                 }
+                if event.kind!=4 {self.last_control_sequence=event.sequence;}
                 self.last_event=Some(event);self.summary.event_bytes+=32;
                 return Ok(Some(Record::Event(event)));
             }
-            if count==0 || count>1275 || (self.schema==2 && (count!=40 || self.summary.pause_open || self.summary.ended_paused)) {
+            if count==0 || count>1275 || (self.schema>=2 && (count!=40 || self.summary.pause_open || self.summary.ended_paused)) {
                 return Err("invalid COP1 audio record or audio inside paused interval".into());
             }
             let mut packet=vec![0;count];if !self.exact(&mut packet)? {return Ok(None);}

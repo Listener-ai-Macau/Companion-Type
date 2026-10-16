@@ -531,7 +531,7 @@ mod tests {
     ) -> CompanionV1HostSession {
         CompanionV1HostSession { processing_policy: Default::default(), recorder_control: None, recorder_control_uncertain: false, device_recording_key: None, 
             transcript_review: None,
-            bookmark_revision: 0, bookmarks: vec![],
+            bookmark_revision: 0, bookmarks: vec![], device_bookmark_imports: vec![],
             note_revision: 0, meeting_notes: vec![],
             id: "s1".into(),
             title: "Q3 Review".into(),

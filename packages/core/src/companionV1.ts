@@ -450,6 +450,7 @@ export interface CompanionV1HostSession {
   transcriptReview?: CompanionTranscriptReview | null;
   bookmarkRevision?: number;
   bookmarks?: CompanionRecordingBookmark[];
+  deviceBookmarkImports?: string[];
   noteRevision?: number;
   meetingNotes?: import('./meetingNotes').CompanionMeetingNote[];
   minutes: CompanionV1MeetingMinutes | null;

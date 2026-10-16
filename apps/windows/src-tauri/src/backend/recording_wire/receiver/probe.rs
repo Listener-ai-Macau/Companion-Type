@@ -442,8 +442,12 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
 }
 #[cfg(test)]
 mod tests {
+    // Both diagnostics change one process-wide directory. Serialize the outer
+    // tests, not nested verify()/phase() calls or unrelated receiver tests.
+    static RECORDING_ENV:std::sync::Mutex<()>=std::sync::Mutex::new(());
     #[test]
     fn sealed_segment_acks_do_not_claim_the_whole_growing_session_is_reclaimed() {
+        let _environment=RECORDING_ENV.lock().unwrap_or_else(|e|e.into_inner());
         use super::*;
         let root = std::env::temp_dir().join(format!("companion-open-reclaim-{}", uuid::Uuid::new_v4()));
         fs::create_dir_all(&root).unwrap();
@@ -494,6 +498,7 @@ mod tests {
     }
     #[test]
     fn durable_receiver_missing_reordered_restart_and_exact_ack() {
+        let _environment=RECORDING_ENV.lock().unwrap_or_else(|e|e.into_inner());
         let root = std::env::temp_dir().join(format!(
             "companion-session-receiver-{}",
             uuid::Uuid::new_v4()

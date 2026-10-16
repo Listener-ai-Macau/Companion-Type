@@ -406,7 +406,7 @@ mod tests {
         let bytes = fs::metadata(path).unwrap().len();
         CompanionV1HostSession { processing_policy: Default::default(), recorder_control: None, recorder_control_uncertain: false, device_recording_key: None, 
             transcript_review: None,
-            bookmark_revision: 0, bookmarks: vec![],
+            bookmark_revision: 0, bookmarks: vec![], device_bookmark_imports: vec![],
             note_revision: 0, meeting_notes: vec![],
             id: "legacy-audio".into(), title: "Legacy audio".into(), source: "hostMicrophone".into(),
             status: "captured".into(), meeting_mode: "offlineStore".into(), pending_reason: None,
