@@ -45,6 +45,7 @@ struct SessionHandles {
     device: BluetoothLEDevice,
     session: Option<GattSession>,
     status_token: Option<EventRegistrationToken>,
+    maintain_requested: bool,
     observation: Arc<SessionObservation>,
 }
 impl Drop for SessionHandles {
@@ -55,11 +56,15 @@ impl Drop for SessionHandles {
             if let Some(token) = self.status_token.take() {
                 let _ = session.RemoveSessionStatusChanged(token);
             }
-            let _ = session.SetMaintainConnection(false);
-            let _ = session.Close();
-            eprintln!("BLE connection_session maintain_requested=0 released=1");
+            if self.maintain_requested {
+                let _ = session.SetMaintainConnection(false);
+                self.maintain_requested=false;
+                eprintln!("BLE connection_session maintain_requested=0 released=1");
+            }
+            // Release this wrapper's COM reference after detaching its event.
+            // The peripheral owns a separate device/service reference.
+            drop(session);
         }
-        let _ = self.device.Close();
     }
 }
 
@@ -190,7 +195,8 @@ pub(super) async fn maintain_connection(
         let cancel = BleCancel::new(cancel, "cancelled Companion connection session");
         let device = open_device(address, address_type, &cancel)?;
         let observation = Arc::new(SessionObservation::new());
-        let mut handles = SessionHandles { device, session: None, status_token: None, observation: observation.clone() };
+        let mut handles = SessionHandles { device, session: None, status_token: None,
+            maintain_requested:false, observation: observation.clone() };
         let id = handles.device.BluetoothDeviceId().map_err(|e| format!("connection device identity: {e}"))?;
         let operation = GattSession::FromDeviceIdAsync(&id).map_err(|e| format!("create connection session: {e}"))?;
         handles.session = Some(wait_async_operation_with_cancel(
@@ -212,6 +218,7 @@ pub(super) async fn maintain_connection(
             return Err("Windows 当前不能为此设备维持蓝牙会话；未发送开录命令。".into());
         }
         session.SetMaintainConnection(true).map_err(|e| format!("maintain Companion connection: {e}"))?;
+        handles.maintain_requested=true;
         if cancel.requested() { return Err(cancel.cancelled_error("connection session")); }
         eprintln!("BLE connection_session maintain_requested=1 status={:?} owner=normal_user_or_recorder", session.SessionStatus().ok());
         Ok(Arc::new(ConnectionSession { handles: Mutex::new(Some(handles)), observation }))

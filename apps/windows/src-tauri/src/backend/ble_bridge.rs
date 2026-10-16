@@ -1617,6 +1617,62 @@ impl NativeDevice {
     }
 }
 
+#[cfg(all(test,windows))]
+mod native_owner_reopen_tests {
+    use super::*;
+
+    #[tokio::test]
+    #[ignore = "actual Companion board; requires explicit shared-board lease and exact peer/UID environment"]
+    async fn r54_native_cached_replacement_and_owner_reopen_keep_exact_recorder() -> Result<(),String> {
+        let address=std::env::var("COMPANION_R54_BOARD_ADDRESS").map_err(|_|"explicit board address required")?;
+        let uid=std::env::var("COMPANION_R54_BOARD_UID").map_err(|_|"explicit board UID required")?;
+        if !super::super::device_connection::stable_device_id(&address) || uid.len()!=24 {
+            return Err("exact address/UID required before native access".into());
+        }
+        async fn observe(device:&NativeDevice,uid:&str,phase:&str)->Result<serde_json::Value,String> {
+            on_native_link(device,async {
+                let chars=device.peripheral.characteristics();
+                let wire=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
+                    .ok_or("actual device identity unavailable")?;
+                let identity=parse_device_identity(Some(&wire),None,None);
+                if identity.mcu_uid.as_deref()!=Some(uid) {return Err("actual recorder UID differs".into());}
+                let catalogue=read_recording_catalog(device,&chars).await?;
+                if catalogue.peer.as_ref().is_none_or(|peer|hex_lower(&peer.uid)!=uid) {
+                    return Err("protected catalogue identity differs".into());
+                }
+                Ok(serde_json::json!({"phase":phase,"uid":uid,"firmwareVersion":identity.firmware_version,
+                    "uiGeneration":identity.ui_generation,"catalogueEntries":catalogue.entries.len()}))
+            }).await
+        }
+        let mut device=connect_native_device_with_clock(Some(&address),false).await?;
+        let result=async {
+            let initial=observe(&device,&uid,"initial_owned_connection").await?;
+            // Exercise the actual vendor API with its old device still stored:
+            // replacement must release the old wrapper before opening the new.
+            on_native_link(&device,async {
+                device.peripheral.connect().await.map_err(|e|e.to_string())?;
+                device.peripheral.discover_services().await.map_err(|e|e.to_string())
+            }).await?;
+            let replaced=observe(&device,&uid,"same_peripheral_native_replacement").await?;
+            let retired=device.clone();
+            disconnect_native_device(&device).await?;
+            if retired.connection_session.as_ref().is_none_or(|s|s.is_open()) {
+                return Err("intentional disconnect did not retire the old owner".into());
+            }
+            device=connect_known_native_device_with_clock(device.clone(),false).await?;
+            drop(retired);
+            let reopened=observe(&device,&uid,"fresh_owner_after_explicit_disconnect").await?;
+            Ok::<_,String>(serde_json::json!({"result":"R54_SAME_PROCESS_NATIVE_REPLACEMENT_AND_OWNER_REOPEN",
+                "stages":[initial,replaced,reopened],"newRecording":false,"consume":false,
+                "firmwareWrite":false,"reset":false,"cloud":false,"abnormalRadioLossQualified":false}))
+        }.await;
+        close_native_device(&device).await;
+        eprintln!("R54 native owner check actual handles closed");
+        println!("R54_NATIVE_OWNER_RESULT={}",serde_json::to_string(&result.as_ref().map_err(|e|e.as_str())).unwrap());
+        result.map(|_|())
+    }
+}
+
 struct NativeConnectProbe {
     device_id: String,
     service_count: usize,
@@ -2243,6 +2299,20 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
     #[cfg(windows)]
     let mut setup_preference = None;
     let result = async {
+    #[cfg(windows)]
+    if device.connection_session.as_ref().is_some_and(|session| !session.is_open()) {
+        if require_existing_connection {
+            return Err("Diagnostic warm session was retired; no reconnect or payload was attempted".into());
+        }
+        // SetMaintainConnection is shared native state. Release the exact old
+        // owner before a fresh owner asserts true, never by assignment after
+        // the fresh session is already live. All clones of the old guard are
+        // closed together; its durable recorder identity is not changed.
+        if let Some(old)=device.connection_session.take() {old.close();}
+        bounded_ble_result("retire lost native connection before fresh setup",
+            env_timeout("COMPANION_TYPE_BLE_DISCONNECT_TIMEOUT_MS",3_000),
+            device.peripheral.disconnect()).await?;
+    }
     let connected = timeout(connect_timeout, device.peripheral.is_connected())
         .await
         .map_err(|_| {

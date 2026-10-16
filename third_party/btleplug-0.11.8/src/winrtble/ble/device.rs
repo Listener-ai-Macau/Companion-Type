@@ -301,16 +301,10 @@ impl Drop for BLEDevice {
             debug!("Drop:remove_connection_status_changed {:?}", err);
         }
 
-        self.services.iter().for_each(|service| {
-            if let Err(err) = service.Close() {
-                debug!("Drop:remove_gatt_Service {:?}", err);
-            }
-        });
-
-        let result = self.device.Close();
-        if let Err(err) = result {
-            debug!("Drop:close {:?}", err);
-        }
+        // Match Companion's pairing/parameter references and Listener: detach
+        // our callback, then release the COM fields normally. Explicit Close
+        // can invalidate another live wrapper or an in-flight native request.
+        // Peripheral disconnect clears its characteristic/service cache too.
     }
 }
 

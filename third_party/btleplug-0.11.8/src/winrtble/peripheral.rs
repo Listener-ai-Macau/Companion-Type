@@ -38,7 +38,7 @@ use std::{
     fmt::{self, Debug, Display, Formatter},
     future::IntoFuture,
     pin::Pin,
-    sync::atomic::{AtomicBool, Ordering},
+    sync::atomic::{AtomicU64, Ordering},
     sync::{Arc, RwLock},
     time::Instant,
 };
@@ -76,7 +76,7 @@ struct Shared {
     device: tokio::sync::Mutex<Option<BLEDevice>>,
     adapter: Weak<AdapterManager<Peripheral>>,
     address: BDAddr,
-    connected: AtomicBool,
+    connection: ConnectionState,
     ble_services: DashMap<Uuid, BLEService>,
     notifications_channel: broadcast::Sender<(ValueNotification, Instant)>,
 
@@ -89,6 +89,36 @@ struct Shared {
     latest_service_data: RwLock<HashMap<Uuid, Vec<u8>>>,
     services: RwLock<HashSet<Uuid>>,
     class: RwLock<Option<u32>>,
+}
+
+/// Pack the attempt identity and connected bit into one atomic value. A
+/// queued callback from a retired native object cannot change a newer link.
+#[derive(Default)]
+struct ConnectionState(AtomicU64);
+impl ConnectionState {
+    fn begin(&self) -> ConnectionAttempt<'_> {
+        let old=self.0.fetch_update(Ordering::AcqRel,Ordering::Acquire,
+            |current|Some(current.wrapping_add(2)&!1)).expect("generation update always has a value");
+        let generation=old.wrapping_add(2)&!1;
+        ConnectionAttempt {state:self,generation,committed:false}
+    }
+    fn connected(&self)->bool {self.0.load(Ordering::Acquire)&1!=0}
+    fn publish(&self,generation:u64,connected:bool)->bool {
+        self.0.fetch_update(Ordering::AcqRel,Ordering::Acquire,|current|
+            (current&!1==generation).then_some(generation|u64::from(connected))).is_ok()
+    }
+    fn retire(&self,generation:u64) {
+        let _=self.0.fetch_update(Ordering::AcqRel,Ordering::Acquire,|current|
+            (current&!1==generation).then_some(generation.wrapping_add(2)&!1));
+    }
+}
+struct ConnectionAttempt<'a> {
+    state:&'a ConnectionState,
+    generation:u64,
+    committed:bool,
+}
+impl Drop for ConnectionAttempt<'_> {
+    fn drop(&mut self) {if !self.committed {self.state.retire(self.generation);}}
 }
 
 impl Peripheral {
@@ -138,7 +168,7 @@ impl Peripheral {
                 adapter,
                 device: tokio::sync::Mutex::new(None),
                 address,
-                connected: AtomicBool::new(false),
+                connection: ConnectionState::default(),
                 ble_services: DashMap::new(),
                 notifications_channel: broadcast_sender,
                 address_type: RwLock::new(None),
@@ -455,7 +485,7 @@ impl Peripheral {
 
 impl Display for Peripheral {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        let connected = if self.shared.connected.load(Ordering::Relaxed) {
+        let connected = if self.shared.connection.connected() {
             " connected"
         } else {
             ""
@@ -477,7 +507,7 @@ impl Display for Peripheral {
 
 impl Debug for Peripheral {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        let connected = if self.shared.connected.load(Ordering::Relaxed) {
+        let connected = if self.shared.connection.connected() {
             " connected"
         } else {
             ""
@@ -518,13 +548,20 @@ impl ApiPeripheral for Peripheral {
 
     /// Returns true iff we are currently connected to the device.
     async fn is_connected(&self) -> Result<bool> {
-        Ok(self.shared.connected.load(Ordering::Relaxed))
+        Ok(self.shared.connection.connected())
     }
 
     /// Creates a connection to the device. This is a synchronous operation; if this method returns
     /// Ok there has been successful connection. Note that peripherals allow only one connection at
     /// a time. Operations that attempt to communicate with a device will fail until it is connected.
     async fn connect(&self) -> Result<()> {
+        // Serialize native replacement with disconnect. Retire the callback
+        // generation and old references BEFORE opening the new native object.
+        let mut current=self.shared.device.lock().await;
+        let mut attempt=self.shared.connection.begin();
+        let generation=attempt.generation;
+        self.shared.ble_services.clear();
+        drop(current.take());
         let shared_clone = Arc::downgrade(&self.shared);
         let adapter_clone = self.shared.adapter.clone();
         let address = self.shared.address;
@@ -533,9 +570,8 @@ impl ApiPeripheral for Peripheral {
             self.shared.address,
             address_type,
             Box::new(move |is_connected| {
-                if let Some(shared) = shared_clone.upgrade() {
-                    shared.connected.store(is_connected, Ordering::Relaxed);
-                }
+                let Some(shared)=shared_clone.upgrade() else {return;};
+                if !shared.connection.publish(generation,is_connected) {return;}
 
                 if !is_connected {
                     if let Some(adapter) = adapter_clone.upgrade() {
@@ -547,9 +583,9 @@ impl ApiPeripheral for Peripheral {
         .await?;
 
         device.connect().await?;
-        let mut d = self.shared.device.lock().await;
-        *d = Some(device);
-        self.shared.connected.store(true, Ordering::Relaxed);
+        *current = Some(device);
+        if !self.shared.connection.publish(generation,true) {return Err(Error::NotConnected);}
+        attempt.committed=true;
         self.emit_event(CentralEvent::DeviceConnected(self.shared.address.into()));
         Ok(())
     }
@@ -558,10 +594,12 @@ impl ApiPeripheral for Peripheral {
     async fn disconnect(&self) -> Result<()> {
         // We need to clear the services because if this device is re-connected,
         // the cached service objects will no longer be valid (they must be refreshed).
-        self.shared.ble_services.clear();
         let mut device = self.shared.device.lock().await;
+        // Drop the uncommitted attempt immediately: its generation becomes
+        // unusable before callbacks can run during resource teardown.
+        drop(self.shared.connection.begin());
+        self.shared.ble_services.clear();
         *device = None;
-        self.shared.connected.store(false, Ordering::Relaxed);
         self.emit_event(CentralEvent::DeviceDisconnected(self.shared.address.into()));
         Ok(())
     }
@@ -690,5 +728,39 @@ impl ApiPeripheral for Peripheral {
 impl From<BDAddr> for PeripheralId {
     fn from(address: BDAddr) -> Self {
         PeripheralId(address)
+    }
+}
+
+#[cfg(test)]
+mod connection_generation_tests {
+    use super::*;
+
+    #[test]
+    fn r54_old_callback_cannot_disconnect_or_reconnect_a_new_native_owner() {
+        let state=ConnectionState::default();
+        let mut old=state.begin();let old_generation=old.generation;
+        assert!(state.publish(old_generation,true));old.committed=true;drop(old);
+        let mut fresh=state.begin();let generation=fresh.generation;
+        assert!(state.publish(generation,true));fresh.committed=true;
+        for callback in [false,true,false] {
+            assert!(!state.publish(old_generation,callback));
+            assert!(state.connected());
+        }
+        assert!(state.publish(generation,false));assert!(!state.connected());
+        assert!(state.publish(generation,true));assert!(state.connected());
+    }
+
+    #[test]
+    fn r54_cancelled_or_failed_open_retires_its_callbacks_without_poisoning_fresh_owner() {
+        let state=ConnectionState::default();
+        let abandoned=state.begin();let abandoned_generation=abandoned.generation;
+        assert!(state.publish(abandoned_generation,true));drop(abandoned);
+        assert!(!state.connected());assert!(!state.publish(abandoned_generation,true));
+        let mut fresh=state.begin();let generation=fresh.generation;
+        assert!(state.publish(generation,true));fresh.committed=true;drop(fresh);
+        assert!(state.connected());
+        state.retire(abandoned_generation);assert!(state.connected());
+        drop(state.begin());assert!(!state.connected());
+        assert!(!state.publish(generation,true),"explicit disconnect invalidates even a queued connected callback");
     }
 }
