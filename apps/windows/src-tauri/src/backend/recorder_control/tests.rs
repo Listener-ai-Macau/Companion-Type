@@ -1,6 +1,29 @@
 use super::*;
 
 #[test]
+fn r60_actual_c_terminal_cause_and_empty_cancellation_decode_without_fake_stop_ack() {
+    use crate::companion_v1::CompanionV1RecordingEndReason as End;
+    let raw=include_bytes!("../cop1/tests/engine-terminal-cause.cms3");
+    assert_eq!(raw.len(),160);
+    let finalized=PauseStatus::decode(&raw[..80]).unwrap();
+    assert_eq!(finalized.state,2);assert_eq!(finalized.end_reason,Some(End::LowBattery));
+    assert_eq!(finalized.command,1);assert_eq!(finalized.sequence,0);assert_eq!(finalized.local_start,None);
+    let anchor=u32::from_le_bytes(raw[12..16].try_into().unwrap());
+    let duration=u32::from_le_bytes(raw[20..24].try_into().unwrap());
+    let mut journal=running();
+    assert_eq!(journal.observe_with_peer(&peer(),&finalized,anchor,duration).unwrap(),Observation::Confirmed);
+    assert!(journal.ended());assert_eq!(journal.end_reason,Some(End::LowBattery));
+    let confirmed=journal.confirmed.as_ref().unwrap();
+    assert!(confirmed.finished_locally);assert_eq!(confirmed.command,1,"no remote STOP was sent");
+    let cancelled=PauseStatus::decode(&raw[80..]).unwrap();
+    assert_eq!(cancelled.state,0);assert_eq!(cancelled.last_error,5);
+    assert!(cancelled.key.is_none()&&cancelled.end_reason.is_none());
+    let mut pending=start();let before=pending.clone();
+    assert!(pending.observe_with_peer(&peer(),&cancelled,0,0).is_err());
+    assert_eq!(pending,before);assert!(!pending.ended());
+}
+
+#[test]
 fn r60_end_reason_waits_for_exact_finalized_original_and_survives_index_restart() {
     use crate::companion_v1::CompanionV1RecordingEndReason as End;
     let mut journal=running();let (initial,anchor,duration)=c_status(0);
