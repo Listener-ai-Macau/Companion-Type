@@ -1321,9 +1321,11 @@ impl NativeLinkGuard {
     }
 
     async fn run<T>(&self, work: impl std::future::Future<Output=Result<T,String>>) -> Result<T,String> {
+        super::lifecycle::PROCESS.run(async {
         #[cfg(windows)]
         if let Some(session)=self.session.as_ref() { return session.guard(work).await; }
         work.await
+        }).await
     }
 }
 
@@ -1340,6 +1342,9 @@ async fn close_native_device(device: &NativeDevice) {
 }
 
 async fn remember_prepared_device(device: NativeDevice) -> Result<(), String> {
+    if super::lifecycle::PROCESS.requested() {
+        close_native_device(&device).await;return Err(super::lifecycle::CLOSING.into());
+    }
     let saved = PREPARED_DEVICE_CONNECTION.lock()
         .map_err(|_| "已连接设备状态锁不可用".to_string())
         .map(|mut store| store
@@ -1605,6 +1610,24 @@ pub(crate) fn disconnect_retained_recording(device_id: Option<&str>) -> Result<(
         run_native_blocking(async { disconnect_native_device(&lease.device).await })?;
     }
     Ok(())
+}
+
+/// Release process-owned transports directly, preserving the user's saved
+/// reconnect/sync choices and the device's live recording. No DeviceDisconnect
+/// action, START/STOP, scan or pairing is issued during shutdown.
+pub(crate) fn release_process_device_links()->Result<usize,String> {
+    let prepared=PREPARED_DEVICE_CONNECTION.lock().unwrap_or_else(|e|e.into_inner()).disconnect(None);
+    let original=OFFLINE_RECORDER_CONNECTION.lock().unwrap_or_else(|e|e.into_inner()).take_device(None);
+    let devices:Vec<_>=prepared.map(|p|p.device).into_iter().chain(original.map(|p|p.device)).collect();
+    let count=devices.len();
+    if count==0 {return Ok(0);}
+    run_native_blocking(async move {
+        let mut errors=Vec::new();
+        for device in devices {
+            if let Err(error)=disconnect_native_device(&device).await {errors.push(error);}
+        }
+        if errors.is_empty(){Ok(count)}else{Err(format!("device exit cleanup incomplete: {}",errors.join("; ")))}
+    })
 }
 
 impl NativeDevice {
@@ -2218,8 +2241,10 @@ async fn connect_native_device_once(
     sync_clock: bool,
     intent: ConnectionIntent,
 ) -> Result<NativeConnectionSetup, String> {
+    super::lifecycle::PROCESS.run(async {
     let device = scan_native_device(requested_device_id).await?;
     connect_known_native_device_setup(device,sync_clock,intent).await
+    }).await
 }
 
 async fn connect_native_device(requested_device_id: Option<&str>) -> Result<NativeDevice, String> {
@@ -2298,7 +2323,7 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
     let started = StdInstant::now();
     #[cfg(windows)]
     let mut setup_preference = None;
-    let result = async {
+    let result = super::lifecycle::PROCESS.run(async {
     #[cfg(windows)]
     if device.connection_session.as_ref().is_some_and(|session| !session.is_open()) {
         if require_existing_connection {
@@ -2404,7 +2429,7 @@ async fn connect_known_native_device_setup_guarded(mut device: NativeDevice,sync
     }
     Ok(())
     }).await
-    }.await;
+    }).await;
     if result.is_err() {
         #[cfg(windows)]
         drop(setup_preference.take());

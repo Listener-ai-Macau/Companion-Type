@@ -29,6 +29,14 @@ pub(crate) fn yield_background() {
     if let Some(job) = job.filter(|j| j.background) { job.signal.notify_one(); }
 }
 
+/// Quit interrupts the in-process transfer only. Do not save the user's sync
+/// preference, ACK an incomplete segment, or send any microphone control.
+pub(crate) fn request_process_shutdown() {
+    BACKGROUND_YIELD.store(true,Ordering::Release);
+    let job=STORE.lock().ok().and_then(|s|s.active.as_ref().and_then(Weak::upgrade));
+    if let Some(job)=job {job.request_pause();}
+}
+
 pub(crate) fn bind_app(app: tauri::AppHandle) {
     use tauri::Emitter;
     let _ = OBSERVER.set(Box::new(move |status| { let _ = app.emit("companion-recording-sync", status); }));
@@ -86,6 +94,7 @@ impl Job {
         Self::begin_kind(device, true)
     }
     fn begin_kind(device: &str, background: bool) -> Result<Arc<Self>, String> {
+        if super::lifecycle::PROCESS.requested() {return Err(super::lifecycle::CLOSING.into());}
         let mut store = STORE.lock().map_err(|_| "同步暂停状态暂时不可用")?;
         if let Some(error) = &store.storage_error { return Err(error.clone()); }
         let active = store.active.as_ref().and_then(Weak::upgrade);

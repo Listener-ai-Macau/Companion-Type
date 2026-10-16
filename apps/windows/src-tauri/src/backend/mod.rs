@@ -5,6 +5,8 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+pub(crate) mod lifecycle;
+pub(crate) use ble_bridge::release_process_device_links;
 pub(crate) mod speaker_refinement;
 pub(crate) use ble_bridge::benchmark_recording_upload;
 pub(crate) use ble_bridge::known_segmented_peer;

@@ -21,6 +21,7 @@ pub struct CompanionCoordinator {
     backend: Arc<dyn CompanionBackend>,
     device_operation: Arc<AtomicU8>,
     pet_foreground: Arc<AtomicBool>,
+    shutdown:Arc<crate::backend::lifecycle::Shutdown>,
 }
 
 const PET_CAPTION_OPERATION:u8=15;
@@ -49,6 +50,16 @@ impl Drop for CompanionDeviceOperationLease {
             .gate
             .compare_exchange(self.kind, 0, Ordering::AcqRel, Ordering::Acquire);
     }
+}
+
+fn claim_device_operation(gate:&Arc<AtomicU8>,shutdown:&crate::backend::lifecycle::Shutdown,kind:u8)
+    ->Result<CompanionDeviceOperationLease,String> {
+    if shutdown.requested(){return Err(crate::backend::lifecycle::CLOSING.into());}
+    gate.compare_exchange(0,kind,Ordering::AcqRel,Ordering::Acquire)
+        .map_err(|active|format!("device is busy with {}; {} cannot start",operation_name(active),operation_name(kind)))?;
+    let lease=CompanionDeviceOperationLease{gate:Arc::clone(gate),kind};
+    if shutdown.requested(){return Err(crate::backend::lifecycle::CLOSING.into());}
+    Ok(lease)
 }
 
 fn operation_name(kind: u8) -> &'static str {
@@ -122,6 +133,22 @@ fn device_recording_blocks_control(
 }
 
 impl CompanionCoordinator {
+    pub(crate) fn is_shutting_down(&self)->bool {self.shutdown.requested()}
+    pub(crate) fn request_shutdown(&self) {
+        self.shutdown.request();
+        crate::backend::recording_sync::request_process_shutdown();
+    }
+    pub(crate) fn finish_shutdown(&self,budget:std::time::Duration)->Result<usize,String> {
+        self.request_shutdown();
+        let until=std::time::Instant::now()+budget;
+        while self.device_operation.load(Ordering::Acquire)!=0 {
+            if std::time::Instant::now()>=until {
+                return Err(format!("仍在安全结束{}，未强行退出",operation_name(self.device_operation.load(Ordering::Acquire))));
+            }
+            std::thread::sleep(std::time::Duration::from_millis(5));
+        }
+        crate::backend::release_process_device_links()
+    }
     pub fn begin_desktop_update_operation(&self) -> Result<CompanionDeviceOperationLease,String> {
         let lease=self.begin_foreground_operation_kind(11)?;
         let snapshot=self.backend.snapshot()?;
@@ -135,6 +162,7 @@ impl CompanionCoordinator {
             backend: Arc::new(FixtureCompanionBackend::new()),
             device_operation: Arc::new(AtomicU8::new(0)),
             pet_foreground: Arc::new(AtomicBool::new(false)),
+            shutdown:Arc::clone(&crate::backend::lifecycle::PROCESS),
         }
     }
 
@@ -142,6 +170,7 @@ impl CompanionCoordinator {
         &self,
         kind: u8,
     ) -> Result<CompanionDeviceOperationLease, String> {
+        if self.is_shutting_down(){return Err(crate::backend::lifecycle::CLOSING.into());}
         if kind == 13 && self.device_operation.load(Ordering::Acquire) == 0 {
             crate::backend::recording_sync::prepare_background();
         } else if kind != 13 && self.device_operation.load(Ordering::Acquire) == 13 {
@@ -151,19 +180,7 @@ impl CompanionCoordinator {
                 std::thread::sleep(std::time::Duration::from_millis(5));
             }
         }
-        self.device_operation
-            .compare_exchange(0, kind, Ordering::AcqRel, Ordering::Acquire)
-            .map_err(|active| {
-                format!(
-                    "device is busy with {}; {} cannot start",
-                    operation_name(active),
-                    operation_name(kind)
-                )
-            })?;
-        Ok(CompanionDeviceOperationLease {
-            gate: Arc::clone(&self.device_operation),
-            kind,
-        })
+        claim_device_operation(&self.device_operation,&self.shutdown,kind)
     }
 
     pub fn begin_board_recording_operation(
@@ -396,6 +413,7 @@ impl CompanionCoordinator {
         &self,
         request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String> {
+        if self.is_shutting_down(){return Err(crate::backend::lifecycle::CLOSING.into());}
         // Request handoff before snapshot() can wait behind the follower's
         // state/library lock. This signal is not the user's Pause Sync choice.
         if self.device_operation.load(Ordering::Acquire) == 13 {
@@ -590,6 +608,20 @@ impl CompanionCoordinator {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn r55_shutdown_does_not_steal_active_operation_and_rejects_new_owners() {
+        let shutdown=crate::backend::lifecycle::Shutdown::new();
+        let gate=Arc::new(AtomicU8::new(0));
+        let old=claim_device_operation(&gate,&shutdown,3).unwrap();
+        shutdown.request();
+        for kind in [1,2,3,4,13,14,15,16] {
+            assert!(claim_device_operation(&gate,&shutdown,kind).is_err());
+            assert_eq!(gate.load(Ordering::Acquire),3);
+        }
+        drop(old);assert_eq!(gate.load(Ordering::Acquire),0);
+        assert!(claim_device_operation(&gate,&shutdown,4).is_err());
+    }
     #[test]
     fn explicit_original_restart_connect_requires_one_exact_durable_original() {
         use crate::companion_v1::{fixture_snapshot,create_host_session,CompanionV1ControlAction as A};

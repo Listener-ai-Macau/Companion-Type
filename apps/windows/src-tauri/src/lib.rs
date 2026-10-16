@@ -21,15 +21,31 @@ use backend::{
 use coordinator::CompanionCoordinator;
 use sha2::{Digest, Sha256};
 
+fn exit_after_device_cleanup(code:i32)->! {
+    backend::lifecycle::PROCESS.request();
+    backend::recording_sync::request_process_shutdown();
+    let result=backend::release_process_device_links();
+    match result {
+        Ok(owners)=>{
+            eprintln!("device_process_exit cleanup=complete released_owner_records={owners} board_stop_commands=0 saved_preferences_changed=0");
+            process::exit(code)
+        },
+        Err(error)=>{
+            eprintln!("device_process_exit cleanup=incomplete error={error} original_exit_code={code}");
+            process::exit(if code==0 {1}else{code})
+        },
+    }
+}
+
 pub fn run() {
     let args = std::env::args().collect::<Vec<_>>();
     if args.iter().any(|arg|arg=="--recording-sync-status") {
-        if args.len()!=2 {eprintln!("recording_sync_status_error=此只读入口不能与其它操作组合。");process::exit(1);}
+        if args.len()!=2 {eprintln!("recording_sync_status_error=此只读入口不能与其它操作组合。");exit_after_device_cleanup(1);}
         match backend::recording_sync::status() {
             Ok(status)=>println!("recording_sync_status_json={}",serde_json::to_string(&status).unwrap()),
-            Err(error)=>{eprintln!("recording_sync_status_error={error}");process::exit(1);}
+            Err(error)=>{eprintln!("recording_sync_status_error={error}");exit_after_device_cleanup(1);}
         }
-        process::exit(0);
+        exit_after_device_cleanup(0);
     }
     if args.iter().any(|arg|arg=="--restore-local-recordings") {
         let result=backend::recording_wire::receiver::restore_local_product();
@@ -38,24 +54,24 @@ pub fn run() {
             Ok(report)=>println!("local_recording_restore_json={}",serde_json::to_string(&report).unwrap()),
             Err(error)=>eprintln!("local_recording_restore_error={error}"),
         }
-        process::exit(if good {0} else {1});
+        exit_after_device_cleanup(if good {0} else {1});
     }
     if let Some(result) = run_meeting_workspace_cli(&args) {
         if let Err(error) = &result { eprintln!("meeting_workspace_error={error}"); }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--recording-session-self-test") {
         let result=args.get(index+1).ok_or_else(||"--recording-session-self-test requires a fresh output folder".to_string())
             .and_then(|output|backend::recording_wire::receiver::verify(Path::new(output)));
         match &result {Ok(r)=>println!("recording_session_json={r}"),Err(e)=>eprintln!("recording_session_error={e}")}
-        process::exit(if result.is_ok(){0}else{1});
+        exit_after_device_cleanup(if result.is_ok(){0}else{1});
     }
     if let Some(index) = args.iter().position(|arg| arg == "--recording-session-probe-phase") {
         let result=(|| {let output=args.get(index+1).ok_or_else(||"missing isolated probe folder".to_string())?;
             let phase=args.get(index+2).ok_or_else(||"missing isolated probe phase".to_string())?;
             backend::recording_wire::receiver::phase(Path::new(output),phase)})();
         match &result {Ok(r)=>println!("recording_session_phase_json={r}"),Err(e)=>eprintln!("recording_session_phase_error={e}")}
-        process::exit(if result.is_ok(){0}else{1});
+        exit_after_device_cleanup(if result.is_ok(){0}else{1});
     }
     if let Some(index) = args.iter().position(|arg| arg == "--desktop-update-verify-package") {
         let result = (|| {
@@ -71,7 +87,7 @@ pub fn run() {
             Ok(report)=>println!("desktop_update_verification_json={report}"),
             Err(error)=>eprintln!("desktop_update_verification_error={error}"),
         }
-        process::exit(if result.is_ok(){0}else{1});
+        exit_after_device_cleanup(if result.is_ok(){0}else{1});
     }
     if let Some(index) = args.iter().position(|arg| arg == "--desktop-update-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--desktop-update-self-test requires a fresh output folder".to_string())
@@ -80,11 +96,11 @@ pub fn run() {
             Ok(report) => println!("desktop_update_json={report}"),
             Err(error) => eprintln!("desktop_update_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result)=backend::recording_bookmarks::probe::run(&args) {
         if let Err(error)=&result {eprintln!("recording_bookmarks_error={error}");}
-        process::exit(if result.is_ok(){0}else{1});
+        exit_after_device_cleanup(if result.is_ok(){0}else{1});
     }
     if let Some(index) = args.iter().position(|arg| arg == "--recording-wire-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--recording-wire-self-test requires a fresh output folder".to_string())
@@ -93,7 +109,7 @@ pub fn run() {
             Ok(report) => println!("recording_wire_json={report}"),
             Err(error) => eprintln!("recording_wire_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--recording-transfer-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--recording-transfer-self-test requires a fresh output folder".to_string())
@@ -102,7 +118,7 @@ pub fn run() {
             Ok(report) => println!("recording_transfer_json={report}"),
             Err(error) => eprintln!("recording_transfer_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--cache-privacy-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--cache-privacy-self-test requires a fresh output folder".to_string())
@@ -111,7 +127,7 @@ pub fn run() {
             Ok(report) => println!("cache_privacy_json={report}"),
             Err(error) => eprintln!("cache_privacy_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--audio-artifacts-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--audio-artifacts-self-test requires a fresh output folder".to_string())
@@ -120,7 +136,7 @@ pub fn run() {
             Ok(report) => println!("audio_artifacts_json={report}"),
             Err(error) => eprintln!("audio_artifacts_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--file-storage-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--file-storage-self-test requires a fresh output folder".to_string())
@@ -129,7 +145,7 @@ pub fn run() {
             Ok(report) => println!("file_storage_json={report}"),
             Err(error) => eprintln!("file_storage_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--privacy-delete-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--privacy-delete-self-test requires a fresh output folder".to_string())
@@ -138,10 +154,10 @@ pub fn run() {
             Ok(report) => println!("privacy_delete_json={report}"),
             Err(error) => eprintln!("privacy_delete_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if args.get(1).is_some_and(|arg| arg == "--external-command-test-fixture") {
-        process::exit(backend::external_command_probe::fixture_main(&args[2..]));
+        exit_after_device_cleanup(backend::external_command_probe::fixture_main(&args[2..]));
     }
     if let Some(index) = args.iter().position(|arg| arg == "--external-command-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--external-command-self-test requires a fresh output folder".to_string())
@@ -150,7 +166,7 @@ pub fn run() {
             Ok(report) => println!("external_command_json={report}"),
             Err(error) => eprintln!("external_command_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--service-network-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--service-network-self-test requires a fresh output folder".to_string())
@@ -159,7 +175,7 @@ pub fn run() {
             Ok(report) => println!("service_network_json={report}"),
             Err(error) => eprintln!("service_network_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--asr-cache-self-test") {
         let result = args.get(index + 1).ok_or_else(|| "--asr-cache-self-test requires a fresh output folder".to_string())
@@ -168,7 +184,7 @@ pub fn run() {
             Ok(report) => println!("asr_cache_json={report}"),
             Err(error) => eprintln!("asr_cache_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(index) = args.iter().position(|arg| arg == "--settings-storage-self-test") {
         #[cfg(windows)]
@@ -180,53 +196,53 @@ pub fn run() {
             Ok(report) => println!("settings_storage_json={report}"),
             Err(error) => eprintln!("settings_storage_error={error}"),
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_diagnostics_cli(&args) {
         if let Err(error) = &result { eprintln!("diagnostics_error={error}"); }
-        process::exit(if result.is_ok() {0} else {1});
+        exit_after_device_cleanup(if result.is_ok() {0} else {1});
     }
     if let Some(result) = run_firmware_ota_cli(&args) {
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_recorder_control_cli(&args) {
         if let Err(error) = &result { eprintln!("recorder_control_error={error}"); }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_v1_real_meeting_cli(&args) {
         if let Err(err) = &result {
             eprintln!("v1_real_meeting_error={err}");
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = commands::run_segmented_online_cli(&args) {
-        if let Err(err)=result {eprintln!("segmented_online_error={err}");std::process::exit(1);}
+        if let Err(err)=result {eprintln!("segmented_online_error={err}");exit_after_device_cleanup(1);}
         return;
     }
     if let Some(result) = run_recording_upload_benchmark_cli(&args) {
         if let Err(error) = &result { eprintln!("recording_upload_benchmark_error={error}"); }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_sync_device_recording_cli(&args) {
         if let Err(err) = &result {
             eprintln!("sync_device_recording_error={err}");
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_process_device_library_cli(&args) {
         if let Err(err) = &result {
             eprintln!("process_device_library_error={err}");
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_delete_device_recording_cli(&args) {
         if let Err(err) = &result {
             eprintln!("delete_device_recording_error={err}");
         }
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
     if let Some(result) = run_embedded_audio_cli(args) {
-        process::exit(if result.is_ok() { 0 } else { 1 });
+        exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
 
     // Load ASR / DeepSeek / compress preferences into process env before IPC.
@@ -253,7 +269,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(backend::desktop_update::Manager::default())
-        .manage(coordinator)
+        .manage(Arc::clone(&coordinator))
         .manage(board_online_live)
         .invoke_handler(tauri::generate_handler![
             pet_chat_commands::get_companion_pet_chat,
@@ -327,8 +343,51 @@ pub fn run() {
             builder.build()?;
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running Companion Type");
+        .build(tauri::generate_context!())
+        .expect("error while building Companion Type")
+        .run({
+            let worker=Arc::new(std::sync::atomic::AtomicBool::new(false));
+            let completed=Arc::new(std::sync::atomic::AtomicBool::new(false));
+            move |app,event| {
+                use std::sync::atomic::Ordering;
+                use tauri::Manager;
+                match event {
+                    tauri::RunEvent::WindowEvent{label,event:tauri::WindowEvent::CloseRequested{api,..},..}
+                        if label=="main" && !completed.load(Ordering::Acquire)=>{
+                        // Keep the last window until cleanup succeeds; an
+                        // incomplete cleanup must leave a way to retry Close.
+                        api.prevent_close();app.exit(0);
+                    },
+                    tauri::RunEvent::ExitRequested{code,api,..} if !completed.load(Ordering::Acquire)=>{
+                        api.prevent_exit();
+                        if worker.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire).is_ok() {
+                            if let Some(window)=app.get_webview_window("main") {let _=window.set_title("Companion Type · 正在退出，请稍候");}
+                            coordinator.request_shutdown();
+                            let coordinator=Arc::clone(&coordinator);let app=app.clone();
+                            let worker=Arc::clone(&worker);let completed=Arc::clone(&completed);
+                            std::thread::spawn(move || {
+                                match coordinator.finish_shutdown(std::time::Duration::from_secs(30)) {
+                                    Ok(owners)=>{
+                                        eprintln!("device_process_exit cleanup=complete released_owner_records={owners} board_stop_commands=0 saved_preferences_changed=0 path=desktop");
+                                        completed.store(true,Ordering::Release);
+                                        app.exit(code.unwrap_or(0));
+                                    },
+                                    Err(error)=>{
+                                        // Keep the app alive rather than kill an operation that
+                                        // has not finished cleanup. A later Close can retry.
+                                        eprintln!("device_process_exit cleanup=pending path=desktop error={error}");
+                                        if let Some(window)=app.get_webview_window("main") {let _=window.set_title("Companion Type · 当前操作尚未结束，可稍后再关闭");}
+                                        worker.store(false,Ordering::Release);
+                                    },
+                                }
+                            });
+                        }
+                    },
+                    tauri::RunEvent::Exit=>coordinator.request_shutdown(),
+                    _=>{},
+                }
+            }
+        });
 }
 
 // Headless local review uses the very same persistence and export boundary as
@@ -443,6 +502,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
                 "result":if result.is_ok(){"NORMAL_DEVICE_CONNECT_CONFIRMED"}else{"NORMAL_DEVICE_CONNECT_NOT_CONFIRMED"},
                 "source":snapshot.source,"connected":snapshot.connected,"device":snapshot.device,"error":result.as_ref().err(),
                 "moduleChecks":"NOT_RUN","newRecording":false,"asrRequests":0,"fullChainAcceptance":"NOT_QUALIFIED"
+                ,"connectionLifetime":"commandScoped","postExitPairingVerified":false
             })).map_err(|_|"无法保存连接结果。")?)?;
             result?;println!("device_connection_result=NORMAL_DEVICE_CONNECT_CONFIRMED");
         } else if operation == 5 {
@@ -655,6 +715,7 @@ fn spawn_automatic_meeting_recovery(coordinator: Arc<CompanionCoordinator>) {
     std::thread::spawn(move || {
         std::thread::sleep(std::time::Duration::from_millis(500));
         loop {
+            if coordinator.is_shutting_down(){break;}
             let snapshot = match coordinator.snapshot() {
                 Ok(snapshot) => snapshot,
                 Err(error) => {
@@ -721,6 +782,7 @@ fn spawn_continuous_recording_sync(coordinator: Arc<CompanionCoordinator>) {
     std::thread::spawn(move || {
         let mut failures = 0u32;
         loop {
+            if coordinator.is_shutting_down(){break;}
             let work = coordinator.snapshot().and_then(|snapshot| {
                 if !snapshot.device.connected && (backend::segmented_link_change_allowed(&snapshot)
                     || backend::automatic_original_reconnect_pending(&snapshot))
@@ -753,6 +815,7 @@ fn spawn_automatic_device_reconnect(coordinator: Arc<CompanionCoordinator>) {
         std::thread::sleep(std::time::Duration::from_millis(750));
         let mut failed_attempts = 0u32;
         loop {
+            if coordinator.is_shutting_down(){break;}
             let snapshot = match coordinator.snapshot() {
                 Ok(snapshot) => snapshot,
                 Err(error) => {
