@@ -93,7 +93,7 @@ fn path_text(path: &Path) -> String {
     path.to_string_lossy().into_owned()
 }
 
-fn fingerprint(path: &Path) -> Result<(u64, String), String> {
+pub(crate) fn fingerprint(path: &Path) -> Result<(u64, String), String> {
     let mut file = File::open(path).map_err(|error| format!("open audio {}: {error}", path.display()))?;
     let before = file.metadata().map_err(|error| format!("inspect audio {}: {error}", path.display()))?;
     if !before.is_file() { return Err(format!("audio is not a file: {}", path.display())); }

@@ -6,6 +6,7 @@ import {
   type CompanionV1Snapshot,
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
+import {clearPlaybackMemory} from '../../../packages/ui/src/playbackMemory';
 import { refineCompanionMeetingSpeakers } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
@@ -90,6 +91,8 @@ export function App() {
       await exclusive(request.action, async () => {
         try {
           setSnapshot(await applyCompanionControl(request));
+          if(request.action==='privacyDeleteAllLocal'&&!clearPlaybackMemory())
+            setError('本机会议已清理，但回听位置尚未清除；请检查本机存储权限后重试清理。');
         } catch (controlError) {
           if (['meetingStart', 'meetingStop', 'meetingFinalize', 'meetingPause', 'meetingResume',
             'meetingRecoverControl', 'deviceSyncRecordings'].includes(request.action)) {

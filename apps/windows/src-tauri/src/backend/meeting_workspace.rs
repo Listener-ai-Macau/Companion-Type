@@ -1,8 +1,9 @@
 //! Local meeting review: optimistic edits and a narrowly authorized WAV source.
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
-use std::path::PathBuf;
+use std::path::{Path,PathBuf};
 use serde::Deserialize;
+use sha2::{Digest,Sha256};
 use crate::companion_v1::{CompanionV1HostSession, CompanionV1MinutesVariant, CompanionV1Snapshot};
 
 #[derive(Debug, Deserialize)]
@@ -129,11 +130,35 @@ pub fn local_audio_path(snapshot: &CompanionV1Snapshot, session_id: &str) -> Res
     Ok(path)
 }
 
+/// A renderer may remember this opaque original identity, never a path or
+/// caller-provided digest. Same bytes at a new path retain progress; another
+/// session or a replaced same-length WAV never inherits it.
+pub fn playback_identity(session_id:&str,path:&Path)->Result<String,String> {
+    let (bytes,digest)=super::audio_storage::fingerprint(path)?;
+    let mut hash=Sha256::new();hash.update(b"Companion playback original v1\0");
+    hash.update((session_id.len() as u64).to_le_bytes());hash.update(session_id.as_bytes());
+    hash.update(bytes.to_le_bytes());hash.update(digest.as_bytes());
+    Ok(format!("{:x}",hash.finalize()))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::companion_v1::{apply_fixture_control, fixture_snapshot};
     use super::super::{export::{prepare_meeting_export, MeetingExportFormat}, persistence};
+
+    #[test]
+    fn playback_identity_binds_actual_content_and_session_but_not_path() {
+        let root=std::env::temp_dir().join(format!("companion-playback-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let first=root.join("first.wav");let moved=root.join("moved.wav");
+        std::fs::write(&first,b"same length original A").unwrap();
+        let original=playback_identity("one",&first).unwrap();assert_eq!(original.len(),64);
+        assert_ne!(original,playback_identity("two",&first).unwrap());
+        std::fs::rename(&first,&moved).unwrap();assert_eq!(original,playback_identity("one",&moved).unwrap());
+        std::fs::write(&moved,b"same length original B").unwrap();
+        assert_ne!(original,playback_identity("one",&moved).unwrap());
+        assert!(playback_identity("one",&first).is_err());std::fs::remove_dir_all(root).unwrap();
+    }
 
     fn sample() -> CompanionV1HostSession {
         let request = serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap();

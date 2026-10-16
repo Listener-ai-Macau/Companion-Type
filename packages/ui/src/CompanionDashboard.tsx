@@ -3,6 +3,7 @@ import { CompanionSetup } from './CompanionSetup';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
 import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
+import {useListeningQueue} from './useListeningQueue';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
@@ -77,6 +78,9 @@ export type CompanionProductSettingsPublic = {
   storageWarning?: string | null;
   storageSaveBlocked?: boolean;
 };
+
+const listeningIdentity = (session:CompanionV1HostSession) => JSON.stringify([session.id,session.audioPath??'',
+  session.audioBytes,session.deviceSha256??'',session.deviceRecordingKey??'',session.audioStored,session.retention.audioCached]);
 
 export type CompanionProductSettingsPatch = {
   defaultMeetingMode: string;
@@ -161,7 +165,7 @@ export interface CompanionDashboardProps {
   onPrepareAudioComponents?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
-  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; pauseTimeline?: CompanionPauseTimeline | null }>;
+  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>;
   onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
   onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
@@ -262,10 +266,11 @@ export function CompanionDashboard({
   const [noteUnsaved,setNoteUnsaved]=useState(false);
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; message: string } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
-  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; pauseTimeline?: CompanionPauseTimeline | null }>>({});
+  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>>({});
   const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
   const audioElement = useRef<HTMLAudioElement | null>(null);
   const audioRequestId = useRef(0);
+  const [listeningEpoch,setListeningEpoch]=useState(0);
   const [formAsrProvider, setFormAsrProvider] = useState('volcengine');
   const [formVolcApp, setFormVolcApp] = useState('');
   const [formVolcAccess, setFormVolcAccess] = useState('');
@@ -566,8 +571,7 @@ export function CompanionDashboard({
         : !hasSyncedAudio ? '这场会议还没有可回听的本机原音'
           : !onPrepareAudio ? '原音回听仅在 Companion Type 桌面版可用'
             : null;
-  const audioIdentity = selectedSession ? [selectedSession.id, selectedSession.audioPath ?? '', selectedSession.audioBytes,selectedSession.deviceSha256??'',
-    selectedSession.audioStored ? 1 : 0, selectedSession.retention.audioCached ? 1 : 0].join('|') : '';
+  const audioIdentity = selectedSession ? listeningIdentity(selectedSession) : '';
   const [sourceSelection, setSourceSelection] = useState<CompanionTranscriptSource | null>(null);
   const transcriptSources = useMemo(() => selectedSession ? companionTranscriptSources(selectedSession) : [], [selectedSession]);
   const sourceContext = useRef({ session: selectedSession, blocked: false });
@@ -578,6 +582,21 @@ export function CompanionDashboard({
   audioContext.current = { sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) };
   const preparedAudio = selectedSession && audioSources[selectedSession.id]?.identity === audioIdentity && !audioBlockedReason
     ? audioSources[selectedSession.id] : null;
+  const listeningQueue=useListeningQueue({
+    rows:recordingLibrary.map(row=>({id:row.id,title:meetingTitle(row),identity:listeningIdentity(row),
+      ready:row.status!=='recording'&&row.pendingReason!=='needs_device_sync'&&row.audioStored&&row.retention.audioCached
+        &&Boolean(row.audioPath)&&!describeCompanionMeetingRecovery(row)?.isProcessing})),
+    selectedId:selectedSession?.id??'',
+    disabled:controlsBusy||audioBusy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved,
+    hardBlocked:oobeBlockedByRecording||storageBlocked,prepare:onPrepareAudio,
+    select:id=>onControl({action:'meetingSelectSession',sessionId:id}),
+    pause:()=>audioElement.current?.pause(),
+    ready:(entry,audio,epoch)=>{
+      setAudioSources(sources=>({...sources,[entry.id]:{url:audio.url,identity:entry.identity,
+        sourceIdentity:audio.sourceIdentity,pauseTimeline:audio.pauseTimeline}}));
+      setListeningEpoch(epoch);
+    },
+  });
 
   useEffect(() => {
     audioRequestId.current += 1;
@@ -722,6 +741,7 @@ export function CompanionDashboard({
   };
   const prepareAudio = async () => {
     if (!selectedSession || !onPrepareAudio || audioBusy || audioBlockedReason) return;
+    if(listeningQueue.active)listeningQueue.stop();
     const sessionId = selectedSession.id;
     const requestedIdentity = audioIdentity;
     const requestId = ++audioRequestId.current;
@@ -733,7 +753,7 @@ export function CompanionDashboard({
       const current = audioContext.current;
       if (requestId !== audioRequestId.current || current.sessionId !== sessionId
         || current.identity !== requestedIdentity || current.blocked) return;
-      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, pauseTimeline: prepared.pauseTimeline } }));
+      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline } }));
     } catch (prepareError) {
       setAudioResult({ sessionId, message: `无法回听：${prepareError instanceof Error ? prepareError.message : String(prepareError)}` });
     } finally {
@@ -972,6 +992,23 @@ export function CompanionDashboard({
         )}
       </section>
 
+      {surface==='windows'&&onPrepareAudio ? <section className="ct-audio-card" aria-label="原音播放队列">
+        <strong>原音播放队列</strong>
+        <p>加入要回听的录音，再开始连续播放。切换会议、开始录音或原音发生变化时会停止；队列仅用于本次打开的软件。</p>
+        <div className="ct-audio-tools">
+          <button type="button" className="ct-action" disabled={Boolean(audioBlockedReason)||controlsBusy||audioBusy||listeningQueue.busy}
+            onClick={()=>void listeningQueue.add()}>将当前录音加入队列</button>
+          <button type="button" className="ct-action" disabled={!listeningQueue.items.length||Boolean(listeningQueue.active)||controlsBusy||oobeBlockedByRecording||storageBlocked||listeningQueue.busy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved}
+            onClick={listeningQueue.start}>开始连续播放</button>
+          <button type="button" className="ct-action" disabled={!listeningQueue.active} onClick={()=>listeningQueue.stop()}>停止连续播放</button>
+          <button type="button" className="ct-action" disabled={!listeningQueue.items.length||listeningQueue.busy} onClick={listeningQueue.clear}>清空播放队列</button>
+        </div>
+        {listeningQueue.items.length ? <ol>{listeningQueue.items.map(item=><li key={item.id}>
+          <span>{item.title}{listeningQueue.active?.entry.id===item.id?' · 当前回听':''}</span>{' '}
+          <button type="button" className="ct-text-button" onClick={()=>listeningQueue.remove(item.id)} aria-label={`从队列移除${item.title}`}>移除</button>
+        </li>)}</ol> : <p>队列为空。</p>}
+        {listeningQueue.message?<p role="status">{listeningQueue.message}</p>:null}
+      </section>:null}
       {selectedSession ? (
         <section className="ct-meeting-workspace" aria-label="当前会议">
           <header className="ct-meeting-hero">
@@ -997,10 +1034,14 @@ export function CompanionDashboard({
           <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} />
           <section className="ct-audio-card" aria-label="本机原音回听">
             <div><strong><Headphones size={16} />本机原音</strong><p>{audioBlockedReason ?? '由桌面端为当前会议临时授权，只能回听这场会议。'}</p></div>
-            {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
+            {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
+              sourceIdentity={preparedAudio.sourceIdentity}
+              autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
+              onFinished={()=>listeningQueue.finished(preparedAudio.sourceIdentity)}
               externalSeekRef={externalAudioSeek}
               onError={() => {
                 if (audioContext.current.sessionId !== selectedSession.id || audioContext.current.identity !== preparedAudio.identity) return;
+                if(listeningQueue.active)listeningQueue.stop('原音无法播放，连续播放已停止。');
                 const player = audioElement.current;
                 player?.pause();
                 if (player) { player.removeAttribute('src'); player.load(); }

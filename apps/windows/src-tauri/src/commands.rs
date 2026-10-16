@@ -129,6 +129,7 @@ pub fn prepare_companion_audio(
 #[serde(rename_all="camelCase")]
 pub struct PreparedAudioTimeline {
     path:String,
+    source_identity:String,
     pause_timeline:Option<crate::backend::recording_pause_view::PauseTimeline>,
 }
 
@@ -142,7 +143,8 @@ pub async fn prepare_companion_audio_with_timeline(
         let snapshot=coordinator.snapshot()?;
         let path=crate::backend::meeting_workspace::local_audio_path(&snapshot,&session_id)?;
         let pause_timeline=crate::backend::recording_pause_view::prepare(&snapshot,&session_id)?;
-        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),pause_timeline})
+        let source_identity=crate::backend::meeting_workspace::playback_identity(&session_id,&path)?;
+        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),source_identity,pause_timeline})
     }).await.map_err(|e|format!("准备原音任务失败：{e}"))??;
     app.asset_protocol_scope().allow_file(&prepared.path).map_err(|e|format!("无法准备回听：{e}"))?;
     Ok(prepared)
