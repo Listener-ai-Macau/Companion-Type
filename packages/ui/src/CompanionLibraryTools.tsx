@@ -2,12 +2,16 @@ import {useEffect,useRef,useState} from 'react';
 import type {CompanionV1HostSession,CompanionV1Snapshot} from '../../core/src/companionV1';
 import {emptyLibraryOrganization,type CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '../../core/src/libraryOrganization';
-export interface LibraryFilters {folder:string;tag:string;favorites:boolean;from?:string;to?:string}
-export function CompanionLibraryTools({sessions,visible,selection,setSelection,filters,setFilters,blocked,onSave,onExport,onBusyChange,onUnsavedChange}:{
+import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
+import {CompanionLibraryLifeActions} from './CompanionLibraryLifeActions';
+export interface LibraryFilters {folder:string;tag:string;favorites:boolean;from?:string;to?:string;trash?:boolean}
+export function CompanionLibraryTools({sessions,visible,selection,setSelection,filters,setFilters,blocked,onSave,onExport,onSaveLifecycle,onPurge,onBusyChange,onUnsavedChange}:{
   sessions:CompanionV1HostSession[];visible:CompanionV1HostSession[];selection:Record<string,number>;
   setSelection:(v:Record<string,number>)=>void;filters:LibraryFilters;setFilters:(v:LibraryFilters)=>void;blocked:boolean;
   onSave?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExport?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
+  onSaveLifecycle?:(request:CompanionLibraryStateRequest)=>Promise<CompanionV1Snapshot>;
+  onPurge?:(request:CompanionLibraryPurgeRequest)=>Promise<CompanionLibraryPurgeResult>;
   onBusyChange?:(v:boolean)=>void;onUnsavedChange?:(v:boolean)=>void;
 }) {
  const [folder,setFolder]=useState('');const [applyFolder,setApplyFolder]=useState(false);
@@ -49,6 +53,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
     <option value="">全部标签</option>{allTags.map(t=><option key={t} value={t}>{t}</option>)}
    </select></label>
    <button type="button" className="ct-action" aria-pressed={filters.favorites} onClick={()=>setFilters({...filters,favorites:!filters.favorites})}>{filters.favorites?'查看全部收藏状态':'只看收藏'}</button>
+   <button type="button" className="ct-action" disabled={blocked||busy||draft} aria-pressed={Boolean(filters.trash)} onClick={()=>{setFilters({folder:'*',tag:'',favorites:false,trash:!filters.trash});setSelection({});}}>{filters.trash?'返回录音库':`回收站（${sessions.filter(s=>s.organization?.trashedAt).length}）`}</button>
    <label>开始日期 <input type="date" aria-label="筛选录音开始日期" value={filters.from??''} onChange={e=>setFilters({...filters,from:e.target.value})}/></label>
    <label>结束日期 <input type="date" aria-label="筛选录音结束日期" value={filters.to??''} onChange={e=>setFilters({...filters,to:e.target.value})}/></label>
   </div>
@@ -56,11 +61,11 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   <details><summary>整理所选录音 · 已选 {ids.length} 场</summary>
    <p>文件夹是本机资料分类，不移动原音文件。支持四层路径，如“工作/项目”；标签用逗号分隔。批量保存只改已选录音。</p>
    <div className="ct-audio-tools">
-    <button type="button" className="ct-action" disabled={blocked||(!onSave&&!onExport)||!visible.length||visible.length>1000} onClick={()=>setSelection(Object.fromEntries(visible.map(s=>[s.id,(s.organization??emptyLibraryOrganization()).revision])))}>选择当前筛选结果（{visible.length} 场）</button>
+    <button type="button" className="ct-action" disabled={blocked||(!onSave&&!onExport&&!onSaveLifecycle)||!visible.length||visible.length>1000} onClick={()=>setSelection(Object.fromEntries(visible.map(s=>[s.id,(s.organization??emptyLibraryOrganization()).revision])))}>选择当前筛选结果（{visible.length} 场）</button>
     <button type="button" className="ct-action" disabled={busy||!ids.length} onClick={()=>setSelection({})}>清除整理选择</button>
     <span>其中 {ids.filter(id=>!visible.some(s=>s.id===id)).length} 场不在当前筛选中</span>
    </div>
-   <fieldset disabled={blocked||busy||!onSave}>
+   <fieldset disabled={blocked||busy||!onSave||filters.trash}>
     <label><input type="checkbox" aria-label="修改文件夹" checked={applyFolder} onChange={e=>setApplyFolder(e.target.checked)}/>修改文件夹</label>
     <input aria-label="目标录音文件夹" maxLength={120} value={folder} disabled={!applyFolder} onChange={e=>setFolder(e.target.value)} placeholder="留空表示移到未分类"/>
     <label>标签操作 <select aria-label="批量标签操作" value={tagAction} onChange={e=>setTagAction(e.target.value)}>
@@ -72,7 +77,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
     </select></label>
     <button type="button" className="ct-action" disabled={!ids.length||!draft} onClick={()=>void save()}>{busy?'正在保存分类…':`保存 ${ids.length} 场分类`}</button>
    </fieldset>
-   {onExport?<fieldset disabled={blocked||busy}>
+   {onExport&&!filters.trash?<fieldset disabled={blocked||busy}>
     <legend>导出所选录音</legend>
     <label>内容 <select aria-label="批量导出格式" value={exportFormat} onChange={e=>setExportFormat(e.target.value as CompanionLibraryExportRequest['format'])}>
      <option value="audio">原音 WAV</option><option value="txt">转写与笔记 TXT</option><option value="json">结构化记录 JSON</option>
@@ -85,6 +90,8 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
     {draft?<p>请先保存或撤销上面的分类修改，再导出。</p>:null}
     <button type="button" className="ct-action" disabled={!ids.length||ids.length>1000||draft} onClick={()=>void exportSelection()}>{busy?'正在处理所选录音…':`导出 ${ids.length} 场录音`}</button>
    </fieldset>:null}
+   {onSaveLifecycle||onPurge?<CompanionLibraryLifeActions sessions={sessions} selection={selection} setSelection={setSelection} trash={Boolean(filters.trash)}
+    blocked={blocked||busy} draft={draft} onSave={onSaveLifecycle} onPurge={onPurge} onBusyChange={onBusyChange}/>:null}
    {visible.length>1000?<p>一次最多整理1000场，请先缩小筛选范围。</p>:null}
   </details>
   {message?<p role="status">{message}</p>:null}

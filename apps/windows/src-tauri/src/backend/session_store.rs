@@ -175,6 +175,9 @@ fn save_locked(
         .is_some_and(|before| removes_private_data(before, sessions));
     if let Some(before) = previous.map(decode).transpose()? {
         for row in &before {
+            if row.organization.protected && !sessions.iter().any(|s|s.id==row.id){
+                return Err("磁盘中的受保护录音不能从资料库移除；请先明确解除保护。".into());
+            }
             if sessions.iter().find(|s|s.id==row.id).is_some_and(|next|
                 next.organization.revision<row.organization.revision||
                 next.organization.revision==row.organization.revision&&next.organization!=row.organization){

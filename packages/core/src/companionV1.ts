@@ -1174,7 +1174,8 @@ export function applyCompanionV1ControlFixture(
       break;
     }
     case 'meetingResetSession':
-      next.host = createDefaultHostState();
+      next.host.selectedSessionId = null;
+      next.host.activeSessionId = null;
       next.meeting = {
         ...next.meeting,
         active: false,

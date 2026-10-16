@@ -34,6 +34,14 @@ pub struct CompanionDeviceOperationLease {
     gate: Arc<AtomicU8>,
     kind: u8,
 }
+#[derive(serde::Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct CompanionLibraryPurgeReport {
+    pub snapshot:CompanionV1Snapshot,pub deleted:Vec<String>,pub failures:Vec<CompanionLibraryPurgeFailure>,
+}
+#[derive(serde::Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct CompanionLibraryPurgeFailure{pub session_id:String,pub message:String}
 
 impl Drop for CompanionDeviceOperationLease {
     fn drop(&mut self) {
@@ -61,6 +69,8 @@ fn operation_name(kind: u8) -> &'static str {
         14 => "local original recording recovery",
         PET_CAPTION_OPERATION => "pet caption",
         PET_CAPTURE_OPERATION => "pet utterance capture",
+        18 => "library organization",
+        19 => "library protection/trash",
         _ => "unknown device operation",
     }
 }
@@ -319,6 +329,31 @@ impl CompanionCoordinator {
     pub fn save_library_organization(&self,request:crate::backend::library_organization::Request)->Result<CompanionV1Snapshot,String>{
         let _lease=self.begin_device_operation_kind(18)?;
         self.backend.save_library_organization(request)
+    }
+    pub fn save_library_lifecycle(&self,request:crate::backend::library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{
+        let _lease=self.begin_device_operation_kind(19)?;self.backend.save_library_lifecycle(request)
+    }
+    pub fn purge_library(&self,request:crate::backend::library_lifecycle::PurgeRequest)->Result<CompanionLibraryPurgeReport,String>{
+        use crate::backend::library_lifecycle;
+        let _lease=self.begin_device_operation_kind(19)?;let before=self.backend.snapshot()?;
+        library_lifecycle::validate_purge(&before,&request)?;
+        let selected=before.host.selected_session_id;let mut deleted=Vec::new();let mut failures=Vec::new();
+        for target in &request.targets{
+            let result=(||{
+                // Recheck each target immediately before destructive work; an
+                // intervening failure/change is reported, never silently skipped.
+                library_lifecycle::validate_purge(&self.backend.snapshot()?,&library_lifecycle::PurgeRequest{targets:vec![target.clone()]})?;
+                let select=serde_json::from_value(serde_json::json!({"action":"meetingSelectSession","sessionId":target.session_id})).map_err(|e|e.to_string())?;
+                self.backend.apply_control(select)?;
+                let erase=serde_json::from_value(serde_json::json!({"action":"privacyDeleteSession","sessionId":target.session_id,"promptId":library_lifecycle::LOCAL_TRASH_PERMANENT})).map_err(|e|e.to_string())?;
+                self.backend.apply_control(erase)?;Ok::<(),String>(())
+            })();
+            match result{Ok(())=>deleted.push(target.session_id.clone()),Err(message)=>failures.push(CompanionLibraryPurgeFailure{session_id:target.session_id.clone(),message})}
+        }
+        if let Some(id)=selected.filter(|id|self.backend.snapshot().is_ok_and(|s|s.host.sessions.iter().any(|r|&r.id==id))){
+            if let Ok(select)=serde_json::from_value(serde_json::json!({"action":"meetingSelectSession","sessionId":id})){let _=self.backend.apply_control(select);}
+        }
+        Ok(CompanionLibraryPurgeReport{snapshot:self.backend.snapshot()?,deleted,failures})
     }
     pub fn refine_meeting_speakers(&self,id:&str)->Result<CompanionV1Snapshot,String> {self.backend.refine_meeting_speakers(id)}
 

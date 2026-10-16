@@ -157,6 +157,7 @@ pub fn prepare_meeting_export(
     meeting_mode: &str,
     format: MeetingExportFormat,
 ) -> Result<PreparedMeetingExport, String> {
+    super::library_lifecycle::require_available(session)?;
     if !matches!(meeting_mode, "offlineStore" | "onlineLive") {
         return Err(format!("不支持的会议模式：{meeting_mode}"));
     }

@@ -21,6 +21,8 @@ import {
   exportCompanionMeeting,
   exportCompanionAudio,
   exportCompanionLibrary,
+  saveCompanionLibraryState,
+  purgeCompanionLibrary,
   exportCompanionDiagnostics,
   prepareCompanionAudioComponents,
   checkCompanionService,
@@ -231,6 +233,15 @@ export function App() {
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}
       onExportAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => exportCompanionAudio(sessionId)) : undefined}
       onExportLibrary={isTauriRuntime()?(request)=>exclusive('refresh',()=>exportCompanionLibrary(request)):undefined}
+      onSaveLibraryLifecycle={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{
+        const next=await saveCompanionLibraryState(request);setSnapshot(next);return next;
+      }):undefined}
+      onPurgeLibrary={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{
+        const result=await purgeCompanionLibrary(request);setSnapshot(result.snapshot);
+        let memoryFailed=false;for(const id of result.deleted)if(!clearSessionPlaybackMemory(id))memoryFailed=true;
+        if(memoryFailed)result.warning='部分回听位置未清除，请检查本机存储权限。';
+        return result;
+      }):undefined}
       onDiscardOldestRecording={isTauriRuntime() ? (seconds) => exclusive('refresh', async () => {
         const result = await discardOldestDeviceRecording(seconds);
         if (result.status === 'deleted') {

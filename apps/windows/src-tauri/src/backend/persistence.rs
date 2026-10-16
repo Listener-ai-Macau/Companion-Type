@@ -49,6 +49,7 @@ fn recovery_audio_is_owned(session: &CompanionV1HostSession) -> bool {
 /// deliberately conservative: only an already-armed product session can be
 /// queued, and an arbitrary/legacy WAV never gains recovery intent here.
 pub(crate) fn reconcile_session_recovery(session: &mut CompanionV1HostSession) {
+    if session.organization.trashed_at.is_some(){session.recovery=Default::default();return;}
     if session.recovery.intent != "processMeeting" {
         return;
     }

@@ -1,4 +1,5 @@
-export interface CompanionLibraryOrganization {revision:number;folder:string;tags:string[];favorite:boolean}
+import type {CompanionV1Snapshot} from './companionV1';
+export interface CompanionLibraryOrganization {revision:number;folder:string;tags:string[];favorite:boolean;protected?:boolean;trashedAt?:string|null}
 export interface CompanionLibraryOrganizationRequest {
   targets:Array<{sessionId:string;expectedRevision:number}>;
   folder?:string;tags?:string[];tagAction?:'add'|'remove'|'replace';favorite?:boolean;
@@ -10,3 +11,6 @@ export interface CompanionLibraryExportRequest {
  meetingMode?:'recorded'|'offlineStore'|'onlineLive';
 }
 export interface CompanionLibraryExportResult {path:string;sessions:number;files:number;bytes:number}
+export interface CompanionLibraryStateRequest {targets:Array<{sessionId:string;expectedRevision:number}>;action:'protect'|'unprotect'|'trash'|'restore'}
+export interface CompanionLibraryPurgeRequest {targets:Array<{sessionId:string;expectedRevision:number}>}
+export interface CompanionLibraryPurgeResult {snapshot:CompanionV1Snapshot;deleted:string[];failures:Array<{sessionId:string;message:string}>;warning?:string}

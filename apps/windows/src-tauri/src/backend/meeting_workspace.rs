@@ -19,6 +19,7 @@ pub struct MeetingEditRequest {
 }
 
 pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditRequest, now: &str) -> Result<(), String> {
+    super::library_lifecycle::require_available(session)?;
     if session.id != request.session_id { return Err("会议标识不匹配".into()); }
     if session.status == "recording" || matches!(session.recovery.stage.as_str(), "transcribing" | "generatingMinutes") {
         return Err("这场会议仍在处理，请等待完成后修改。".into());
@@ -111,6 +112,7 @@ pub fn local_audio_path(snapshot: &CompanionV1Snapshot, session_id: &str) -> Res
         return Err("录音期间暂不回放，避免把扬声器声音再次录入。".into());
     }
     let session = snapshot.host.sessions.iter().find(|s| s.id == session_id).ok_or("找不到这场会议")?;
+    super::library_lifecycle::require_available(session)?;
     if !session.audio_stored || !session.retention.audio_cached || session.pending_reason.as_deref() == Some("needs_device_sync") {
         return Err("这场录音尚未保存在电脑，或本机音频已删除。".into());
     }

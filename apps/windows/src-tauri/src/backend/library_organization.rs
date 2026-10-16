@@ -4,7 +4,10 @@ use serde::{Deserialize,Serialize};
 use crate::companion_v1::CompanionV1HostSession;
 #[derive(Clone,Debug,Default,Deserialize,Serialize,PartialEq,Eq)]
 #[serde(default,rename_all="camelCase",deny_unknown_fields)]
-pub struct Metadata {pub revision:u64,pub folder:String,pub tags:Vec<String>,pub favorite:bool}
+pub struct Metadata {pub revision:u64,pub folder:String,pub tags:Vec<String>,pub favorite:bool,
+ #[serde(skip_serializing_if="is_false")] pub protected:bool,
+ #[serde(skip_serializing_if="Option::is_none")] pub trashed_at:Option<String>}
+fn is_false(v:&bool)->bool{!*v}
 impl Metadata {pub fn is_empty(&self)->bool{self==&Self::default()}}
 #[derive(Clone,Debug,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
@@ -38,6 +41,7 @@ pub(crate) fn apply(rows:&mut [CompanionV1HostSession],request:&Request)->Result
  for target in &request.targets {
   if !seen.insert(&target.session_id){return Err("批量选择包含重复录音。".into());}
   let row=rows.iter().find(|r|r.id==target.session_id).ok_or("所选录音已被移除，请刷新后核对；整批未修改。")?;
+  super::library_lifecycle::require_available(row)?;
   if row.status=="recording"||matches!(row.recovery.stage.as_str(),"transcribing"|"generatingMinutes"){return Err("所选录音仍在采集或处理，请完成后整理；整批未修改。".into());}
   if row.organization.revision!=target.expected_revision{return Err("分类在另一窗口中已变化，请刷新后核对；整批未修改，输入仍保留。".into());}
   let mut value=row.organization.clone();if let Some(folder)=&new_folder{value.folder=folder.clone();}

@@ -21,6 +21,7 @@ pub(super) fn validate_control(
     ) {
         return Ok(());
     }
+    super::library_lifecycle::validate_privacy(snapshot,request)?;
     if snapshot.device.recording || super::oobe_blocked_by_active_recording(snapshot, live_active) {
         return Err("正在录音或在线转写，不能删除资料；请先停止并完成当前会议".into());
     }

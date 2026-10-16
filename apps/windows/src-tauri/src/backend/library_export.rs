@@ -40,6 +40,7 @@ fn plans(snapshot: &CompanionV1Snapshot, request: &Request) -> Result<Vec<Plan>,
     request.targets.iter().enumerate().map(|(index,target)| {
         if !seen.insert(&target.session_id) { return Err("批量选择包含重复录音，未导出。".into()); }
         let row=snapshot.host.sessions.iter().find(|s|s.id==target.session_id).ok_or("所选录音已移除，请刷新后核对。")?;
+        super::library_lifecycle::require_available(row)?;
         if row.organization.revision!=target.expected_revision { return Err(format!("“{}”的分类已变化，请刷新选择后重试；整批未导出。",row.title)); }
         if matches!(row.recovery.stage.as_str(),"transcribing"|"generatingMinutes") { return Err(format!("“{}”仍在处理，请完成后导出。",row.title)); }
         let mode=match request.meeting_mode.as_deref() {None|Some("recorded")=>row.meeting_mode.as_str(),Some(m)=>m};

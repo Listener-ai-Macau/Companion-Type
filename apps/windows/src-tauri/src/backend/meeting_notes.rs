@@ -39,6 +39,7 @@ pub(crate) fn normalize_text(text: &str) -> Result<String, String> {
 }
 
 pub(crate) fn apply(session: &mut CompanionV1HostSession, request: &Request, now: &str) -> Result<bool, String> {
+    super::library_lifecycle::require_available(session)?;
     if request.session_id != session.id || uuid::Uuid::parse_str(&request.note_id).is_err() {
         return Err("备注所属会议或请求标识无效；未修改其他会议。".into());
     }

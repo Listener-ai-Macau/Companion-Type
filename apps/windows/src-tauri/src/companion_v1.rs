@@ -734,6 +734,7 @@ pub(crate) fn apply_control_at(
     observed_at: &str,
 ) -> Result<CompanionV1Snapshot, String> {
     let now = observed_at.to_string();
+    crate::backend::library_lifecycle::validate_privacy(&snapshot,&request)?;
     snapshot.updated_at = now.clone();
 
     if (matches!(
@@ -1253,7 +1254,9 @@ pub(crate) fn apply_control_at(
             snapshot.host.selected_session_id = Some(id.to_string());
         }
         CompanionV1ControlAction::MeetingResetSession => {
-            snapshot.host = default_host_state();
+            // Starting a new workspace is not authorization to erase the library.
+            snapshot.host.selected_session_id = None;
+            snapshot.host.active_session_id = None;
             snapshot.meeting.active = false;
             snapshot.meeting.status = "idle".to_string();
             snapshot.meeting.started_at = None;
@@ -1329,7 +1332,7 @@ pub(crate) fn apply_control_at(
             let removed_id = snapshot.host.sessions[index].id.clone();
             snapshot.host.sessions.remove(index);
             snapshot.host.selected_session_id =
-                snapshot.host.sessions.first().map(|s| s.id.clone());
+                snapshot.host.sessions.iter().find(|s|s.organization.trashed_at.is_none()).map(|s| s.id.clone());
             snapshot.host.active_session_id = snapshot
                 .host
                 .active_session_id

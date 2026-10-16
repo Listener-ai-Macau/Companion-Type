@@ -282,6 +282,8 @@ pub fn run() {
             commands::export_companion_meeting,
             commands::export_companion_audio,
             commands::export_companion_library,
+            commands::save_companion_library_lifecycle,
+            commands::purge_companion_library,
             commands::export_companion_diagnostics,
             commands::prepare_companion_audio_components,
             commands::get_companion_backend_capabilities,
@@ -342,6 +344,9 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--device-connect-request" => Some((i,6)),
         "--library-organize-request" => Some((i,7)),
         "--library-export-request" => Some((i,8)),
+        "--library-state-request" => Some((i,9)),
+        "--library-purge-request" => Some((i,10)),
+        "--library-control-request" => Some((i,11)),
         _ => None,
     })?;
     Some((|| {
@@ -353,7 +358,30 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         }
         if operation==6 {let _=backend::product_settings::load_and_apply();}
         let coordinator = CompanionCoordinator::new_fixture();
-        if operation == 7 {
+        if operation == 11 {
+            let mut request:companion_v1::CompanionV1ControlRequest=serde_json::from_reader(file).map_err(|_|"本机资料控制请求格式不正确。")?;
+            use companion_v1::CompanionV1ControlAction as A;
+            if !matches!(request.action,A::PrivacyEraseAudio|A::PrivacyEraseTranscript|A::PrivacyDeleteSession|A::PrivacyEraseAll|A::MeetingResetSession){return Err("此后台入口只接受明确的本机隐私清理或新工作区操作。".into());}
+            request.prompt_id=if request.action==A::PrivacyDeleteSession{Some(backend::library_lifecycle::LOCAL_TRASH_PERMANENT.into())}else{None};
+            if let Some(id)=request.session_id.as_deref(){
+                let select=serde_json::from_value(serde_json::json!({"action":"meetingSelectSession","sessionId":id})).map_err(|e|e.to_string())?;
+                coordinator.apply_control(select)?;
+            }
+            let snapshot=coordinator.apply_control(request)?;
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&snapshot).map_err(|e|e.to_string())?)?;
+            println!("library_control_result=LOCAL_CONTROL_COMPLETED");
+        } else if operation == 9 {
+            let request:backend::library_lifecycle::Request=serde_json::from_reader(file).map_err(|_|"录音保护/回收站请求格式不正确。")?;
+            let snapshot=coordinator.save_library_lifecycle(request)?;
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&snapshot).map_err(|e|e.to_string())?)?;
+            println!("library_state_result=SAVED_LOCAL_PROTECTION_OR_TRASH");
+        } else if operation == 10 {
+            let request:backend::library_lifecycle::PurgeRequest=serde_json::from_reader(file).map_err(|_|"永久清除请求格式不正确。")?;
+            let result=coordinator.purge_library(request)?;
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|e|e.to_string())?)?;
+            if !result.failures.is_empty(){return Err("部分回收站录音未永久清除；逐条结果已保存，请核对后重试。".into());}
+            println!("library_purge_result=PERMANENTLY_ERASED_LOCAL_TRASH_ONLY");
+        } else if operation == 7 {
             let request:backend::library_organization::Request=serde_json::from_reader(file).map_err(|_|"录音分类请求格式不正确。")?;
             let snapshot=coordinator.save_library_organization(request)?;
             backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&serde_json::json!({

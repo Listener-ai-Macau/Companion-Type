@@ -171,6 +171,14 @@ export async function exportCompanionLibrary(request:import('../../../packages/c
   if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中导出本机录音。');
   return invoke('export_companion_library',{request});
 }
+export async function saveCompanionLibraryState(request:import('../../../packages/core/src/libraryOrganization').CompanionLibraryStateRequest):Promise<CompanionV1Snapshot>{
+ if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中操作真实资料库。');
+ return invoke('save_companion_library_lifecycle',{request});
+}
+export async function purgeCompanionLibrary(request:import('../../../packages/core/src/libraryOrganization').CompanionLibraryPurgeRequest):Promise<import('../../../packages/core/src/libraryOrganization').CompanionLibraryPurgeResult>{
+ if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中清理回收站。');
+ return invoke('purge_companion_library',{request});
+}
 
 export async function getProductSettings(): Promise<CompanionProductSettingsPublic> {
   if (isTauriRuntime()) {

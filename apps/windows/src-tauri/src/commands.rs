@@ -31,6 +31,14 @@ pub async fn save_companion_library_organization(coordinator:CompanionCoordinato
         .await.map_err(|e|format!("资料整理任务未完成：{e}"))?
 }
 mod segmented_online_live;
+#[tauri::command]
+pub async fn save_companion_library_lifecycle(coordinator:CompanionCoordinatorState<'_>,request:crate::backend::library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{
+ let coordinator=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||coordinator.save_library_lifecycle(request)).await.map_err(|e|format!("录音整理未完成：{e}"))?
+}
+#[tauri::command]
+pub async fn purge_companion_library(coordinator:CompanionCoordinatorState<'_>,request:crate::backend::library_lifecycle::PurgeRequest)->Result<crate::coordinator::CompanionLibraryPurgeReport,String>{
+ let coordinator=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||coordinator.purge_library(request)).await.map_err(|e|format!("回收站清理未完成：{e}"))?
+}
 mod board_online_cli;
 pub(crate) use board_online_cli::run_cli as run_segmented_online_cli;
 

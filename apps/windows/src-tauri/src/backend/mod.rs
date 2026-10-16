@@ -44,6 +44,7 @@ pub(crate) mod recording_pause_view;
 pub(crate) mod meeting_notes;
 pub(crate) mod library_organization;
 pub(crate) mod library_export;
+pub(crate) mod library_lifecycle;
 pub(crate) mod board_meeting;
 mod board_stop;
 mod interrupted_capture;
@@ -134,7 +135,7 @@ fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
     // This explicit short capture belongs to the pet reply worker. Its raw
     // audio keeps the normal durable library/consume contract, without an
     // additional automatic meeting ASR/minutes job after STOP or restart.
-    if session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
+    if session.organization.trashed_at.is_some() || session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
         || session.recovery.intent == pet_chat::CAPTURE_INTENT { return; }
     if session.recovery.intent != "processMeeting" {
         session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
@@ -623,6 +624,7 @@ pub struct CompanionServiceBoundary {
 }
 
 pub trait CompanionBackend: Send + Sync {
+    fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
     fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport, String>;
     fn save_meeting_note(&self, request: meeting_notes::Request) -> Result<CompanionV1Snapshot, String>;
@@ -1175,6 +1177,16 @@ impl Default for FixtureCompanionBackend {
 }
 
 impl CompanionBackend for FixtureCompanionBackend {
+    fn save_library_lifecycle(&self,request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{
+        let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        if snapshot.host.persistence.status!="ready"{return Err("请先恢复或保存会议库，未改变保护或回收站状态。".into());}
+        if snapshot.meeting.active||snapshot.device.recording||snapshot.host.sessions.iter().any(|r|r.status=="recording"){
+            return Err("请先结束并保存录音，再整理保护或回收站。".into());
+        }
+        if cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none(){library_lifecycle::apply(&mut snapshot.host.sessions,&request,&connection_timestamp())?;}
+        else{snapshot.host.sessions=library_lifecycle::commit(&persistence::state_file_path(),&request,&connection_timestamp())?;}
+        snapshot.updated_at=connection_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
+    }
     fn save_library_organization(&self,request:library_organization::Request)->Result<CompanionV1Snapshot,String>{
         let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
         if snapshot.host.persistence.status!="ready" {return Err("请先恢复或重试保存资料库；分类输入仍保留。".into());}
@@ -1232,6 +1244,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         }
         let mut candidate=snapshot.host.sessions.iter().find(|s| s.id == request.session_id)
             .ok_or("这场会议已不存在，未修改其他会议。")?.clone();
+        library_lifecycle::require_available(&candidate)?;
         if recording_bookmarks::duplicate(&candidate,&request)? { return Ok(snapshot.clone()); }
         if request.expected_revision != candidate.bookmark_revision {
             return Err("会议重点已变化；你的输入仍保留，请刷新后核对。".into());
@@ -1385,7 +1398,11 @@ impl CompanionBackend for FixtureCompanionBackend {
             | CompanionV1ControlAction::MeetingGenerateMinutes) && request.session_id.is_none() {
             request.session_id=selected_session(&snapshot).map(|s|s.id.clone());
         }
+        let _library_privacy_guard=library_lifecycle::privacy_guard(&snapshot,&request,&persistence::state_file_path())?;
         privacy::validate_control(&snapshot, &request, self.live_asr.snapshot().active)?;
+        if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio|CompanionV1ControlAction::MeetingGenerateMinutes){
+            if let Some(row)=request.session_id.as_deref().and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id)){library_lifecycle::require_available(row)?;}
+        }
         if action == CompanionV1ControlAction::HostRetrySave {
             if snapshot.host.persistence.status == "blocked" {
                 let (sessions, storage) = persistence::load_sessions_with_status();
@@ -2202,7 +2219,10 @@ impl CompanionBackend for FixtureCompanionBackend {
                     session.source_device_id.clone(),
                     session.device_reclaimed,
                 );
-                match board_extent {
+                if request.prompt_id.as_deref()==Some(library_lifecycle::LOCAL_TRASH_PERMANENT){
+                    if session.organization.trashed_at.is_none(){return Err("仅可永久清除已在本机回收站的录音。".into());}
+                    device_note=Some("Only the explicitly selected local recycled recording was erased; device data was not accessed".into());
+                }else{match board_extent {
                     (Some(recording_id), Some(total_length), Some(sha256), Some(source_device_id), false) => {
                         let requested_device_id = request
                             .device_id
@@ -2254,6 +2274,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                                 .to_string(),
                         );
                     }
+                }
                 }
                 privacy_report = Some(self.privacy.erase_selected_audio(&snapshot));
             }
