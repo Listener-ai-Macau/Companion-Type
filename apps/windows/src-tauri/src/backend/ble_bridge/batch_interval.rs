@@ -43,8 +43,8 @@ impl BatchInterval {
         if !peer.batch_interval {return Ok(None);}
         let control=find_characteristic(chars,RECORDING_CONTROL_UUID)?;
         let budget=env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS",8_000);
-        let mut lease=SubscriptionLease::open(NativeSubscriptions {
-            peripheral:device.peripheral.clone(),lanes:vec![control.clone()]},1,budget).await?;
+        let mut lease=SubscriptionLease::open(NativeSubscriptions::new(
+            device.peripheral.clone(),vec![control.clone()]),1,budget).await?;
         let request=peer.interval_request(nonce,true)?;
         let result=exchange(&device.peripheral,&control,&request,budget).await;
         match result {

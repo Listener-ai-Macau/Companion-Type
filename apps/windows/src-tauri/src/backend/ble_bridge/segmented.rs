@@ -54,8 +54,8 @@ pub(super) async fn read_catalog_with_profile(device: &NativeDevice,
     let actual_mtu=251u16;
     let mut notifications = bounded_ble_result("open V2 control notifications", budget,
         peripheral.notifications()).await?;
-    let mut lease = SubscriptionLease::open(NativeSubscriptions {
-        peripheral: peripheral.clone(), lanes: vec![control.clone(), list.clone()] }, 2, budget).await?;
+    let mut lease = SubscriptionLease::open(NativeSubscriptions::new(
+        peripheral.clone(),vec![control.clone(), list.clone()]), 2, budget).await?;
     let result = timeout(remaining_deadline_budget(deadline, budget), async {
         let request = peer.negotiate_capacity(nonce(),actual_mtu,profile)?;
         eprintln!("BLE recording_packet_profile actual_att_mtu={actual_mtu} peer_value_max={} requested={profile} selected={}",
@@ -115,8 +115,8 @@ async fn consume(device: &NativeDevice, chars: &std::collections::BTreeSet<Chara
     let budget = env_timeout("COMPANION_TYPE_BLE_WRITE_TIMEOUT_MS", 8_000);
     let mut notifications = bounded_ble_result("open V2 physical receipt", budget,
         device.peripheral.notifications()).await?;
-    let mut lease = SubscriptionLease::open(NativeSubscriptions {
-        peripheral: device.peripheral.clone(), lanes: vec![control.clone()] }, 1, budget).await?;
+    let mut lease = SubscriptionLease::open(NativeSubscriptions::new(
+        device.peripheral.clone(),vec![control.clone()]), 1, budget).await?;
     let length = u32::from_le_bytes(request[44..48].try_into().unwrap());
     let wait = StdDuration::from_millis(device_reclaim_timeout_ms(DELETE_PRIVACY_OP_DELETE_RECORDING, length));
     let result = async {
@@ -149,8 +149,8 @@ pub(super) async fn follow_tail(device:&NativeDevice,
     let budget=env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS",8_000);
     let n=nonce();let request=Tail::request(peer,key,n)?;
     let mut notifications=bounded_ble_result("open committed tail snapshot",budget,device.peripheral.notifications()).await?;
-    let mut lease=SubscriptionLease::open(NativeSubscriptions{peripheral:device.peripheral.clone(),
-        lanes:vec![control.clone(),list]},2,budget).await?;
+    let mut lease=SubscriptionLease::open(NativeSubscriptions::new(device.peripheral.clone(),
+        vec![control.clone(),list]),2,budget).await?;
     let result=timeout(budget,async {
         bounded_ble_result("request committed tail",budget,
             device.peripheral.write(&control,&request,WriteType::WithResponse)).await?;

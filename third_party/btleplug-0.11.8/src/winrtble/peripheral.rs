@@ -21,7 +21,7 @@ use crate::{
         AddressType, BDAddr, CentralEvent, Characteristic, Descriptor, Peripheral as ApiPeripheral,
         PeripheralProperties, Service, ValueNotification, WriteType,
     },
-    common::{adapter_manager::AdapterManager, util::notifications_stream_from_broadcast_receiver},
+    common::adapter_manager::AdapterManager,
     Error, Result,
 };
 use async_trait::async_trait;
@@ -76,9 +76,9 @@ struct Shared {
     device: tokio::sync::Mutex<Option<BLEDevice>>,
     adapter: Weak<AdapterManager<Peripheral>>,
     address: BDAddr,
-    connection: ConnectionState,
+    connection: Arc<ConnectionState>,
     ble_services: DashMap<Uuid, BLEService>,
-    notifications_channel: broadcast::Sender<(ValueNotification, Instant)>,
+    notifications_channel: broadcast::Sender<((ValueNotification, Instant), u64)>,
 
     // Mutable, advertised, state...
     address_type: RwLock<Option<AddressType>>,
@@ -103,6 +103,18 @@ impl ConnectionState {
         ConnectionAttempt {state:self,generation,committed:false}
     }
     fn connected(&self)->bool {self.0.load(Ordering::Acquire)&1!=0}
+    fn generation(&self)->u64 {self.0.load(Ordering::Acquire)&!1}
+    fn accepts_notification(&self,generation:u64)->bool {
+        self.0.load(Ordering::Acquire)==(generation|1)
+    }
+    fn subscription_owned(&self,generation:u64,subscribe:bool)->Result<bool> {
+        let current=self.0.load(Ordering::Acquire);
+        if current&!1!=generation {
+            return if subscribe {Err(Error::NotConnected)} else {Ok(false)};
+        }
+        if subscribe && current&1==0 {return Err(Error::NotConnected);}
+        Ok(true)
+    }
     fn publish(&self,generation:u64,connected:bool)->bool {
         self.0.fetch_update(Ordering::AcqRel,Ordering::Acquire,|current|
             (current&!1==generation).then_some(generation|u64::from(connected))).is_ok()
@@ -119,6 +131,21 @@ struct ConnectionAttempt<'a> {
 }
 impl Drop for ConnectionAttempt<'_> {
     fn drop(&mut self) {if !self.committed {self.state.retire(self.generation);}}
+}
+
+fn generation_notifications<T:Clone+Send+'static>(receiver:broadcast::Receiver<(T,u64)>,
+    state:Arc<ConnectionState>,generation:u64)->Pin<Box<dyn Stream<Item=Result<T>>+Send>> {
+    Box::pin(crate::common::util::checked_notifications_stream_from_broadcast_receiver(receiver)
+        .filter_map(move |value| {
+            let value=if !state.accepts_notification(generation) {Some(Err(Error::NotConnected))} else {
+                match value {
+                    Ok((value,owner)) if owner==generation=>Some(Ok(value)),
+                    Ok(_)=>None, // Late callback queued after native replacement.
+                    Err(error)=>Some(Err(error)), // Never hide active queue lag.
+                }
+            };
+            futures::future::ready(value)
+        }))
 }
 
 impl Peripheral {
@@ -168,7 +195,7 @@ impl Peripheral {
                 adapter,
                 device: tokio::sync::Mutex::new(None),
                 address,
-                connection: ConnectionState::default(),
+                connection: Arc::new(ConnectionState::default()),
                 ble_services: DashMap::new(),
                 notifications_channel: broadcast_sender,
                 address_type: RwLock::new(None),
@@ -189,9 +216,46 @@ impl Peripheral {
     pub fn checked_notifications(
         &self,
     ) -> Pin<Box<dyn Stream<Item = Result<(ValueNotification, Instant)>> + Send>> {
-        crate::common::util::checked_notifications_stream_from_broadcast_receiver(
+        generation_notifications(
             self.shared.notifications_channel.subscribe(),
+            self.shared.connection.clone(),self.notification_generation(),
         )
+    }
+
+    /// Pin a CCCD owner to the existing native connection. This does not open
+    /// a handle, pair, discover, or request different radio parameters.
+    pub fn notification_generation(&self)->u64 {self.shared.connection.generation()}
+
+    pub async fn subscribe_for_generation(&self,characteristic:&Characteristic,generation:u64)->Result<()> {
+        // Serialize the ownership check and native CCCD operation with connect
+        // and disconnect. A stale UUID must never select a replacement object.
+        let _native=self.shared.device.lock().await;
+        self.shared.connection.subscription_owned(generation,true)?;
+        let ble_service=&mut *self.shared.ble_services.get_mut(&characteristic.service_uuid)
+            .ok_or_else(||Error::NotSupported("Service not found for subscribe".into()))?;
+        let ble_characteristic=ble_service.characteristics.get_mut(&characteristic.uuid)
+            .ok_or_else(||Error::NotSupported("Characteristic not found for subscribe".into()))?;
+        let sender=self.shared.notifications_channel.clone();let state=self.shared.connection.clone();
+        let uuid=characteristic.uuid;
+        ble_characteristic.subscribe(Box::new(move |value| {
+            if !state.accepts_notification(generation) {return;}
+            let received_at=Instant::now();
+            // Tag at the callback AND check at dequeue: retirement may race
+            // between the initial check and this bounded channel's send.
+            let _=sender.send(((ValueNotification{uuid,value},received_at),generation));
+        })).await?;
+        if !self.shared.connection.accepts_notification(generation) {return Err(Error::NotConnected);}
+        Ok(())
+    }
+
+    pub async fn unsubscribe_for_generation(&self,characteristic:&Characteristic,generation:u64)->Result<()> {
+        let _native=self.shared.device.lock().await;
+        if !self.shared.connection.subscription_owned(generation,false)? {return Ok(());}
+        let ble_service=&mut *self.shared.ble_services.get_mut(&characteristic.service_uuid)
+            .ok_or_else(||Error::NotSupported("Service not found for unsubscribe".into()))?;
+        let ble_characteristic=ble_service.characteristics.get_mut(&characteristic.uuid)
+            .ok_or_else(||Error::NotSupported("Characteristic not found for unsubscribe".into()))?;
+        ble_characteristic.unsubscribe().await
     }
 
     /// Discover fresh services and characteristics for a caller that only uses
@@ -632,43 +696,13 @@ impl ApiPeripheral for Peripheral {
     /// Enables either notify or indicate (depending on support) for the specified characteristic.
     /// This is a synchronous call.
     async fn subscribe(&self, characteristic: &Characteristic) -> Result<()> {
-        let ble_service = &mut *self
-            .shared
-            .ble_services
-            .get_mut(&characteristic.service_uuid)
-            .ok_or_else(|| Error::NotSupported("Service not found for subscribe".into()))?;
-        let ble_characteristic = ble_service
-            .characteristics
-            .get_mut(&characteristic.uuid)
-            .ok_or_else(|| Error::NotSupported("Characteristic not found for subscribe".into()))?;
-        let notifications_sender = self.shared.notifications_channel.clone();
-        let uuid = characteristic.uuid;
-        ble_characteristic
-            .subscribe(Box::new(move |value| {
-                let received_at = Instant::now();
-                let notification = ValueNotification { uuid, value };
-                // Note: we ignore send errors here which may happen while there are no
-                // receivers...
-                let _ = notifications_sender.send((notification, received_at));
-            }))
-            .await
+        self.subscribe_for_generation(characteristic,self.notification_generation()).await
     }
 
     /// Disables either notify or indicate (depending on support) for the specified characteristic.
     /// This is a synchronous call.
     async fn unsubscribe(&self, characteristic: &Characteristic) -> Result<()> {
-        let ble_service = &mut *self
-            .shared
-            .ble_services
-            .get_mut(&characteristic.service_uuid)
-            .ok_or_else(|| Error::NotSupported("Service not found for unsubscribe".into()))?;
-        let ble_characteristic = ble_service
-            .characteristics
-            .get_mut(&characteristic.uuid)
-            .ok_or_else(|| {
-                Error::NotSupported("Characteristic not found for unsubscribe".into())
-            })?;
-        ble_characteristic.unsubscribe().await
+        self.unsubscribe_for_generation(characteristic,self.notification_generation()).await
     }
 
     async fn read(&self, characteristic: &Characteristic) -> Result<Vec<u8>> {
@@ -685,9 +719,8 @@ impl ApiPeripheral for Peripheral {
     }
 
     async fn notifications(&self) -> Result<Pin<Box<dyn Stream<Item = ValueNotification> + Send>>> {
-        let receiver = self.shared.notifications_channel.subscribe();
-        Ok(Box::pin(notifications_stream_from_broadcast_receiver(receiver)
-            .map(|(notification, _)| notification)))
+        Ok(Box::pin(self.checked_notifications().filter_map(|value|
+            futures::future::ready(value.ok().map(|(notification,_)|notification)))))
     }
 
     async fn write_descriptor(&self, descriptor: &Descriptor, data: &[u8]) -> Result<()> {
@@ -762,5 +795,55 @@ mod connection_generation_tests {
         state.retire(abandoned_generation);assert!(state.connected());
         drop(state.begin());assert!(!state.connected());
         assert!(!state.publish(generation,true),"explicit disconnect invalidates even a queued connected callback");
+    }
+
+    #[test]
+    fn r68_retired_subscription_cannot_write_the_replacement_cccd() {
+        let state=ConnectionState::default();let mut old=state.begin();let old_id=old.generation;
+        state.publish(old_id,true);old.committed=true;drop(old);
+        assert!(state.subscription_owned(old_id,true).unwrap());
+        let mut fresh=state.begin();let fresh_id=fresh.generation;
+        state.publish(fresh_id,true);fresh.committed=true;drop(fresh);
+        assert!(!state.subscription_owned(old_id,false).unwrap(),"old cleanup must make no new native write");
+        assert!(matches!(state.subscription_owned(old_id,true),Err(Error::NotConnected)));
+        assert!(state.subscription_owned(fresh_id,true).unwrap());
+        assert!(state.subscription_owned(fresh_id,false).unwrap());
+        state.publish(fresh_id,false);
+        assert!(!state.accepts_notification(fresh_id));
+        assert!(state.subscription_owned(fresh_id,false).unwrap(),"own closed native object still gets cleanup");
+        assert!(matches!(state.subscription_owned(fresh_id,true),Err(Error::NotConnected)));
+    }
+
+    #[tokio::test]
+    async fn r68_queued_late_callback_never_becomes_new_owner_data_or_changes_timestamp() {
+        let state=Arc::new(ConnectionState::default());let mut old=state.begin();let old_id=old.generation;
+        state.publish(old_id,true);old.committed=true;drop(old);
+        let (sender,receiver)=broadcast::channel(512);
+        let mut old_stream=generation_notifications(receiver,state.clone(),old_id);
+        let mut fresh=state.begin();let fresh_id=fresh.generation;
+        state.publish(fresh_id,true);fresh.committed=true;drop(fresh);
+        let mut fresh_stream=generation_notifications(sender.subscribe(),state.clone(),fresh_id);
+        let time=Instant::now();
+        // Model the callback race AFTER a new receiver exists, not merely a
+        // notification queued before it subscribed to the broadcast channel.
+        sender.send(((1u32,time),old_id)).unwrap();
+        sender.send(((2u32,time+std::time::Duration::from_millis(7)),fresh_id)).unwrap();
+        assert!(matches!(old_stream.next().await.unwrap(),Err(Error::NotConnected)));
+        assert_eq!(fresh_stream.next().await.unwrap().unwrap(),(2,time+std::time::Duration::from_millis(7)));
+        assert!(!state.accepts_notification(old_id));
+        drop(state.begin());
+        sender.send(((3,time),fresh_id)).unwrap();
+        assert!(matches!(fresh_stream.next().await.unwrap(),Err(Error::NotConnected)));
+    }
+
+    #[tokio::test]
+    async fn r68_current_generation_overflow_stays_visible() {
+        let state=Arc::new(ConnectionState::default());let mut owner=state.begin();let id=owner.generation;
+        state.publish(id,true);owner.committed=true;drop(owner);
+        let (sender,receiver)=broadcast::channel(512);
+        let mut stream=generation_notifications(receiver,state,id);
+        for n in 0..513 {sender.send((n,id)).unwrap();}
+        assert!(stream.next().await.unwrap().unwrap_err().to_string().contains("queue overflow"));
+        for n in 1..513 {assert_eq!(stream.next().await.unwrap().unwrap(),n);}
     }
 }

@@ -3,7 +3,9 @@
 
 use std::time::Duration;
 
-use btleplug::{api::{CharPropFlags, Characteristic, Peripheral as _}, platform::Peripheral};
+use btleplug::{api::{CharPropFlags, Characteristic}, platform::Peripheral};
+#[cfg(not(windows))]
+use btleplug::api::Peripheral as _;
 use futures::future::BoxFuture;
 use tokio::time::timeout;
 
@@ -19,17 +21,32 @@ pub(super) trait SubscriptionPort: Clone + Send + Sync + 'static {
 pub(super) struct NativeSubscriptions {
     pub(super) peripheral: Peripheral,
     pub(super) lanes: Vec<Characteristic>,
+    #[cfg(windows)]
+    generation:u64,
+}
+impl NativeSubscriptions {
+    pub(super) fn new(peripheral:Peripheral,lanes:Vec<Characteristic>)->Self {
+        Self { #[cfg(windows)] generation:peripheral.notification_generation(),peripheral,lanes }
+    }
 }
 impl SubscriptionPort for NativeSubscriptions {
     fn subscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
         Box::pin(async move {
-            self.peripheral.subscribe(&self.lanes[lane]).await
+            #[cfg(windows)]
+            let result=self.peripheral.subscribe_for_generation(&self.lanes[lane],self.generation).await;
+            #[cfg(not(windows))]
+            let result=self.peripheral.subscribe(&self.lanes[lane]).await;
+            result
                 .map_err(|e| format!("subscribe recording lane {}: {e}", lane + 1))
         })
     }
     fn unsubscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
         Box::pin(async move {
-            self.peripheral.unsubscribe(&self.lanes[lane]).await
+            #[cfg(windows)]
+            let result=self.peripheral.unsubscribe_for_generation(&self.lanes[lane],self.generation).await;
+            #[cfg(not(windows))]
+            let result=self.peripheral.unsubscribe(&self.lanes[lane]).await;
+            result
                 .map_err(|e| format!("unsubscribe recording lane {}: {e}", lane + 1))
         })
     }
@@ -168,7 +185,7 @@ impl PullSession {
         let mut lanes = vec![chunk.clone()];
         if let Some(second) = second { lanes.push(second); }
         // No CCCD write until this owner is in the caller's session slot.
-        let lease = SubscriptionLease::pending(NativeSubscriptions { peripheral: peripheral.clone(), lanes }, read_timeout);
+        let lease = SubscriptionLease::pending(NativeSubscriptions::new(peripheral.clone(),lanes), read_timeout);
         Ok(Self { chunk, dual_lane, notifications, lease })
     }
 

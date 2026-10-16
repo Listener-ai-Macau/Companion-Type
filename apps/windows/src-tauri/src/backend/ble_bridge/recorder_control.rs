@@ -164,9 +164,8 @@ async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteris
     // The outer link guard can cancel this wait on a real session loss. Keep
     // an owned CCCD lease so that cancellation also releases an in-flight
     // subscription, just as the audio receiver already does.
-    *subscription=Some(SubscriptionLease::pending(NativeSubscriptions {
-        peripheral:device.peripheral.clone(), lanes:vec![status.clone()],
-    },StdDuration::from_secs(8)));
+    *subscription=Some(SubscriptionLease::pending(NativeSubscriptions::new(
+        device.peripheral.clone(),vec![status.clone()]),StdDuration::from_secs(8)));
     subscription.as_mut().expect("owned CMC3 subscription")
         .subscribe_lanes(1,StdDuration::from_secs(8)).await?;
     let result:Result<Observed,String>=async {
