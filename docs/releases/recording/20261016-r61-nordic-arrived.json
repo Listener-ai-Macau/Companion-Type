@@ -1,0 +1,94 @@
+{
+  "createdAtLocal": "2026-10-16T21:02:38+08:00",
+  "result": "OFFICIAL_SNIFFER_PROGRAMMED_RECEIVER_WORKS_TARGET_NOT_POWERED",
+  "board": "PCA10059 compatible; reported by official nrfutil device",
+  "originalSerial": "C06430228A01",
+  "originalUsb": "1915:C00A",
+  "originalProduct": "nRF52 Connectivity",
+  "snifferSerial": "BED88E8FB8AFCB5C",
+  "snifferPort": "COM14",
+  "snifferUsb": "1915:522A",
+  "snifferProduct": "nRF Sniffer for Bluetooth LE",
+  "firmwareVersion": "4.1.1",
+  "firmwareSha256": "a5ec3b26bfe1d5db7bf77c4fb0d4470924778ccf440ea846965b8a2bcb719048",
+  "driver": {
+    "sourcePage": "https://github.com/nordicsemi/pc-nrfconnect-launcher/blob/main/build/drivers/nrf-device-lib-driver-installer.exe",
+    "downloadUrl": "https://raw.githubusercontent.com/nordicsemi/pc-nrfconnect-launcher/main/build/drivers/nrf-device-lib-driver-installer.exe",
+    "gitBlobSha": "2239ebcd3b85fe89f3bbf1ce73625195785e1b60",
+    "bytes": 3083744,
+    "sha256": "c914a1572b2b14ca02ecb895ed7415e3dca40df4ef942aeaf2e645c00788fa2a",
+    "authenticodeStatus": "Valid",
+    "signer": "Nordic Semiconductor ASA",
+    "silentInstallerExit": 0,
+    "officialDeviceMissingDriverWarningCleared": true
+  },
+  "firmwareProgrammingExit": 0,
+  "officialProgramLog": "nrfutil-device.log",
+  "pcapSha256": "91f8f4c65579eaa629ff2664194bbfd0842d1fa6133b718279ea09d94a217574",
+  "radioSetup": {
+    "createdAtLocal": "2026-10-16T21:01:27+08:00",
+    "capture": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ble-air-r61-20261016\\cli-follow.pcap",
+    "captureSha256": "91f8f4c65579eaa629ff2664194bbfd0842d1fa6133b718279ea09d94a217574",
+    "scope": "OFFLINE_RF_TIMELINE_ONLY_NOT_APPLICATION_SPEED_OR_TARGET_QUALIFICATION",
+    "targetAddress": "c8:92:ff:dd:3b:ca",
+    "frames": 4408,
+    "crcOk": 3717,
+    "targetAdvertisements": 1,
+    "pcapWallBacksteps": [
+      {
+        "frame": 1373,
+        "seconds": -23.15765118598938
+      },
+      {
+        "frame": 2928,
+        "seconds": -62.71261286735535
+      },
+      {
+        "frame": 3339,
+        "seconds": -17.475023984909058
+      },
+      {
+        "frame": 4331,
+        "seconds": -18.0265109539032
+      }
+    ],
+    "firmwareClockDiscontinuities": [],
+    "firmwareCounterWraps": 0,
+    "phyCounts": {
+      "0": 3717
+    },
+    "connectionRequests": [],
+    "warnings": [
+      "CRC errors and missing sniffer packets do not prove endpoint loss or retries.",
+      "Global sniffer packet counters include control messages; gaps are not RF loss counts.",
+      "No encrypted GATT decoding, complete-connection or HCI/UART clock alignment is inferred.",
+      "Application speed must use newly saved valid bytes and the host operation wall clock."
+    ],
+    "continuousFirmwareClock": true,
+    "pcapAbsoluteClockQualified": false,
+    "hostClockAligned": false
+  },
+  "targetPowered": false,
+  "targetPowerEvidence": "Owner async reply: 主板暂时未供电／未接好",
+  "companionOperations": 0,
+  "newSpeedMeasurements": 0,
+  "companionFirmwareChanged": false,
+  "companionRadioParametersChanged": false,
+  "ownedHandlesClosed": true,
+  "limits": [
+    "TShark extcap duration capture exits early; retain original files and investigate capture lifecycle before using it for full transfer. Direct nrfutil CLI received 4408 frames.",
+    "4 timestamp backsteps in setup PCAP; host/sniffer time mapping is unqualified; capinfos duration is not performance evidence.",
+    "One CRC-valid Companion advertisement exists in the preliminary capture, but its freshness is not established because the PCAP clock rebased. No target connection captured or new speed. No valid LTK obtained; encrypted content decoding not qualified."
+  ],
+  "next": "After Owner reconnects/powers Companion, verify actual baseline and same 2MiB fixture once; start passive air capture before connect; align shared connection markers with host/HCI/UART and use firmware deltas for RF intervals. Optimize measured longest wait only; no recording or radio changes before baseline.",
+  "offlineAnalyzer": "tools/analyze_companion_ble_air.py",
+  "offlineAnalyzerSha256": "ad8642ba9bb1597023779c3374092f260f53b2a5c71558726dfef167240a7635",
+  "sourceCheckpoint": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "c77ac4c7dfc71960594300e7d43bd7618566aaff",
+    "tag": "companion-r61-air-hardware-clock-20261016-source",
+    "parent": "3c0e73b3be16b52206947455e7488bcc9b198498",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T21:03:04"
+  }
+}

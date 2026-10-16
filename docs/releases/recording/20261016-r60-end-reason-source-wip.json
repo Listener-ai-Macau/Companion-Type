@@ -1,0 +1,32 @@
+{
+  "createdAtLocal": "2026-10-16T20:59:31+08:00",
+  "result": "SOURCE_WIP_SOFTWARE_ONLY_NOT_INSTALLED",
+  "firmwareSource": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "6fccbd09c572a51346ab021ea36a85e8eba7fcfb",
+    "tag": "companion-r60-end-reason-20261016-source-wip",
+    "parent": "e7434c824f335b10cdebea4e397f464718b9dd6e",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T20:51:19"
+  },
+  "typeSource": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "d6a418500820a62fb1d76dd577868d887625a435",
+    "tag": "companion-r60-end-reason-20261016-source-wip",
+    "parent": "49b7275bc95c36116b8b0ff04b8075865c1d2f2c",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T20:51:20"
+  },
+  "changes": [
+    "Persist terminal end cause in existing LAST descriptor bits, propagate to CMS3 and Type durable index/UI; no new audio/metadata allocation.",
+    "Exact consume is allowed only after matching known cause is durable; legacy unknown stays unknown.",
+    "A zero-PCM prepared cancellation stays idle; no false saved recording."
+  ],
+  "softwareEvidence": ".cache/recording-end-r60-20261016/software-result.json",
+  "softwareResult": "Production C model retained low-battery reason across remount and unchanged original SHA; two targeted Rust tests passed. CMS3 ARM/release integration not yet verified.",
+  "armBuild": false,
+  "releaseBuild": false,
+  "installed": false,
+  "interoperabilityNote": "New capability bit 128 requires matching Type; do not install firmware alone or mix this WIP into speed baseline.",
+  "ownerPriority": "Save source WIP then resume speed now that analyzer arrived. Other core gaps remain open."
+}
