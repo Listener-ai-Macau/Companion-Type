@@ -1,0 +1,121 @@
+{
+  "schema": "companion.type.listening.r45.v1",
+  "time": "2026-10-16T12:50:01+08:00",
+  "result": "R45_INSTALLED_NATIVE_LISTENING_AND_QUEUE_CHECKED_POLISH_OPEN",
+  "summary": "正式TypeR45已安装并在真实桌面窗口核对：已有20.62秒实板原音定位10秒/2×后正常退出，另一新进程重开准备同原音，恢复10秒/2×且保持暂停；显式加入该原音和24.80秒原音后开始队列，第一份按其2×播放并自动切至第二份1×，观察实际暂停按钮/推进时间，最后显示队列播放完毕、队列空且播放器停止。",
+  "implementation": "桌面端实际流式核对WAV内容及稳定会议ID，生成不依赖路径/标题的原音身份；本机保存位置/速度，存储失败明确提示；更换同URL原音会清理旧时长/就绪/A-B状态。新增显式队列、单场循环及从头回听；队列逐份重新核对原音，不采纳迟到结果，录音/切换/取消/原音变更停止；原A-B保留。清除全部本机会议同时清除本应用续听偏好。",
+  "limitations": "这次使用已保存原音检查正式桌面回听，不是重新采音/BLE/会议/声学质量或实板整机验收。测试进程仅临时关闭自动恢复/重连；当前实板仍426/UI78，432/UI80离线候选未装，会议和进一步提速等分析器。单场循环/源替换/故障分支为软件模型及本机文件哈希检查；实际删除所有会议未执行。CP27-25保持IN_PROGRESS：同名队列条目缺时长区别、自动续播仍有“点击播放”旧提示，单场删除/恢复的续听偏好联动还要补。",
+  "next": [
+    "下一批Type资料管理一起补队列的时长/来源区分及续播提示，完成单场删除/恢复的续听偏好清理；不为这两个文案单独反复打包。",
+    "继续同树CP27-08分类/标签/收藏/批量整理，随后录音保护/回收站与整库备份恢复；保持原音身份、保存失败和取消保护。",
+    "离线设备重点沿FW432接口及共享文件继续入口交接；有Owner新的连接恢复信息后再集中装最新联合固件及做实板闭环，不重复测速/OTA。"
+  ],
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "98f30aace58a9f731410aee11a93608805d093c0",
+    "tag": "companion-listening-r45-r2-20261016-source",
+    "parent": "aead2fe8a53bddd1235474eefc4b92790909e85a",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T12:39:10"
+  },
+  "parentType": "formal R44 plus C/Type bookmark cross-decoder test checkpoint",
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\listening-r45-20261016\\r2\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10539008,
+    "sha256": "d636ee561d892ba40c106da4ef98403c8f62ac9c5e3225e30b347dafb9a4d327"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "12723d807f4bc0807af6d5cb37e774e6a8ee713203e8f47e76dc012be2cef39f",
+    "payloadMatch": true
+  },
+  "native": {
+    "actualInstalledExe": true,
+    "firstProcess": {
+      "pid": 33464,
+      "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+      "exeSha256": "12723d807f4bc0807af6d5cb37e774e6a8ee713203e8f47e76dc012be2cef39f",
+      "started": "2026-10-16T12:42:24+08:00",
+      "autoRecovery": false,
+      "autoReconnect": false,
+      "usingExistingLibrary": true
+    },
+    "secondProcess": {
+      "pid": 30704,
+      "started": "2026-10-16T12:45:01+08:00",
+      "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+      "exeSha256": "12723d807f4bc0807af6d5cb37e774e6a8ee713203e8f47e76dc012be2cef39f",
+      "autoRecovery": false,
+      "autoReconnect": false,
+      "usingExistingLibrary": true
+    },
+    "bothExited": true,
+    "existingOriginals": [
+      {
+        "sessionId": "v1-real-installed-1792118428825",
+        "durationMs": 20620
+      },
+      {
+        "sessionId": "v1-real-installed-1792116360914",
+        "durationMs": 24800
+      }
+    ],
+    "resume": {
+      "positionSeconds": 10,
+      "speed": 2,
+      "staysPaused": true
+    },
+    "queue": {
+      "explicitStart": true,
+      "orderedAdvance": true,
+      "secondOriginalSpeed": 1,
+      "nativeTimeAdvanced": true,
+      "endedEmpty": true
+    },
+    "evidence": ".cache/listening-r45-20261016/native-gui/second-run.json",
+    "scope": "Computer Use @oai/sky native installed window; no browser/CDP or replacement page. Native play state/timeline, not acoustic quality."
+  },
+  "software": {
+    "rustIdentityTest": {
+      "capturedToolSession": 43519,
+      "passed": 1,
+      "failed": 0,
+      "scope": "real local filesystem content/session hash; arbitrary byte fixture not microphone evidence"
+    },
+    "evidence": [
+      "Companion-Type/.cache/listening-r45-20261016/ui-r7/listening.log",
+      "Companion-Type/.cache/listening-r45-20261016/ui-r6/dashboard_state.log",
+      "Companion-Type/.cache/listening-r45-20261016/ui-r2/audio_player.log"
+    ],
+    "checks": [
+      "exit/reopen and playback speed",
+      "same-URL source replacement resets transient state",
+      "single-original repeat does not start while paused or advance queue",
+      "visible local storage failure and later recovery",
+      "two-source selected meeting follows actual queue item",
+      "stale authorization and ended callbacks cannot change a newer source",
+      "recording stops queue and cancelled preparation cannot later play",
+      "explicit privacy cleanup only removes this playback namespace"
+    ]
+  },
+  "localPersistence": "WebView localStorage preferences only, native content+session fingerprint keys; positions flushed on seek/pause/pagehide/unmount and throttled during playback, with visible failures. No audio stored here. Queue is transient for this application session; single-item deletion/restore cleanup remains OPEN.",
+  "preservedFailures": [
+    {
+      "path": ".cache/listening-r45-20261016/type/msi-build.log",
+      "sourceCommit": "aead2fe8a53bddd1235474eefc4b92790909e85a",
+      "result": "TypeScript rejected invented privacyDeleteAllLocal action before installation; r2 uses existing privacyEraseAll"
+    },
+    {
+      "path": "Companion-Type/.cache/listening-r45-20261016/ui-r2..ui-r5",
+      "result": "test runner JSX/CJS, existing textarea locator and new fixture/mock setup corrected; not product or hardware faults"
+    }
+  ],
+  "actual": {
+    "boardAccessed": false,
+    "firmwareFlashed": false,
+    "installedBoard": "FW426/UI78",
+    "latestFirmwareCandidate": "FW432/UI80 not installed",
+    "cloudServiceChanges": false
+  },
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
