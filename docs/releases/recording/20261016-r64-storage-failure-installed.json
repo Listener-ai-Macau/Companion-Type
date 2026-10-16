@@ -1,0 +1,105 @@
+{
+  "schema": "companion.type.r64.storage-failure.installed.v1",
+  "createdAtLocal": "2026-10-16T22:26:15+08:00",
+  "result": "R64_INSTALLED_LOCAL_STORAGE_ERROR_AND_LOCK_RECOVERY_VERIFIED",
+  "problem": "Actual read-only write failure was flattened to generic cursor-unavailable; worker channel errors could mask the first cause, and failed segmented operation claimed original audio saved.",
+  "changes": "Type R64已正式安装：录音写入/刷新/提交失败的真实系统原因不再被工作队列关闭吞掉；针对磁盘空间不足、目录权限和Windows文件占用，给出对应重试动作。失败的连续同步不再声称原音已保存或误写成仅回收确认失败，已有片段和恢复记录继续保留。",
+  "scope": "真实Windows只读文件句柄复现并修复原通用错误，4,321B耐久前缀和收据保持；安装版普通本机恢复入口在实际共享锁下明确失败且原文件/索引/归属未改，解锁后重建同SHA回听、消费语义不变。磁盘满只核了系统错误分类，未实际填满磁盘。无硬件/蓝牙/麦克风/云/GUI或速度验证，板端最后确认453/UI80不变。",
+  "sourceCommit": "c9ad2d8efeea85f16fd3b024de1c1824c05a098c",
+  "sourceTag": "companion-storage-errors-r64-20261016-source",
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-storage-r64-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10330112,
+    "sha256": "506d9ea79362effaf0a4d665649d88bd709a86f418a5aeb16e14378a915c143b"
+  },
+  "installedExe": {
+    "path": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "sha256": "ac5e82294d7d49c2906b56bf1475f0709cf01c0b4626c8628dc6cb814f76a9af"
+  },
+  "installedDllSha256": "53fe99c5672033296691583b967e339ed390cddcbac612fad468642cf664708d",
+  "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-storage-r64-20261016\\type\\msi\\build-receipt.json",
+  "installReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-storage-r64-20261016\\type\\install\\result.json",
+  "installedLocalResult": {
+    "result": "INSTALLED_WINDOWS_LOCK_FAILURE_AND_UNLOCK_RECOVERY_VERIFIED",
+    "createdAtLocal": "2026-10-16T22:25:31.284153+08:00",
+    "sourceCommit": "c9ad2d8efeea85f16fd3b024de1c1824c05a098c",
+    "installedExeSha256": "ac5e82294d7d49c2906b56bf1475f0709cf01c0b4626c8628dc6cb814f76a9af",
+    "blocked": {
+      "exitCode": 1,
+      "report": {
+        "restored": [],
+        "waitingForSegments": [],
+        "failures": [
+          {
+            "sessionId": "captured-owned-row",
+            "error": "提交保存文件失败：无法写入保存位置，请检查目录权限或解除文件占用。已有文件保留，本次保存未完成；处理后可重试。原因：拒绝访问。 (os error 5)"
+          }
+        ],
+        "deviceCommands": 0,
+        "cloudCalls": 0
+      }
+    },
+    "recovered": {
+      "exitCode": 0,
+      "report": {
+        "restored": [
+          {
+            "sessionId": "captured-owned-row",
+            "audioPath": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-storage-r64-20261016\\locked-manifest\\board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481.wav",
+            "originalBytes": 27,
+            "audioBytes": 1324,
+            "reclaimPending": false
+          }
+        ],
+        "waitingForSegments": [],
+        "failures": [],
+        "deviceCommands": 0,
+        "cloudCalls": 0
+      }
+    },
+    "unchangedOnFailure": {
+      "sessions.json": "d36856b655d2dd629218350a5b00ce83d83962366bdbc66fd72ba6d3dd47530c",
+      "sessions.json.bak": "d36856b655d2dd629218350a5b00ce83d83962366bdbc66fd72ba6d3dd47530c",
+      ".audio-artifacts.json": "b69d62a3c7b5689878ae0771440d707107d13effff874784a9dc4ffabe00645e",
+      ".board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481.json": "17400e5013946e2dac654d95d36731c3fe98147681cd57be355b8559131d7422",
+      "board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481-0000-17-97ee42357b56358d.opus": "937c994669515916d897355a3e4deb5fe570b7b0403e72a1a93ad094f7b18e07"
+    },
+    "originalsUnchanged": {
+      "board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481-0000-17-97ee42357b56358d.opus": "937c994669515916d897355a3e4deb5fe570b7b0403e72a1a93ad094f7b18e07"
+    },
+    "consumeReceiptSemanticsUnchanged": true,
+    "recoveredWavSha256": "bcbc2b9c90e9531ba78a10e34926e52fbda233567da25732e87f962491edb42d",
+    "deviceCommands": 0,
+    "cloudCalls": 0,
+    "hardwareAccess": false,
+    "gui": false,
+    "physicalDiskFullQualified": false,
+    "checkerCorrection": "First actual lock call returned Windows error 5 rather than assumed 32; original output and protected bytes verified, no repeat. Original finally closed its actual handle before this unlocked retry.",
+    "scope": "Actual Windows sharing lock and local managed synthetic recording files only; no board/radio/microphone/cloud/GUI or physical ENOSPC qualification."
+  },
+  "softwareEvidence": {
+    "before": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-storage-r64-20261016\\baseline-failure.log",
+    "worker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-storage-r64-20261016\\worker-fixed.log",
+    "classificationAndOperation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-storage-r64-20261016\\messages-corrected.log"
+  },
+  "implementation": "First worker failure is stored before queue close. Healthy payloads do not take the failure mutex. Existing bounded queue, durable sync/receipt order, codec, wire, ACK gate and BLE parameters are retained.",
+  "qualification": {
+    "installed": true,
+    "actualWindowsWriteDenial": true,
+    "actualWindowsSharingLockAndRetry": true,
+    "physicalDiskFull": false,
+    "storageFullClassificationOnly": true,
+    "hardwareAccess": false,
+    "cloudCalls": 0,
+    "gui": false,
+    "ble": false,
+    "speed": false,
+    "fullProduct": false
+  },
+  "preservedFailure": "First Win32-sharing test disproved treating every occupancy error as PermissionDenied on this runtime. Exact ERROR_SHARING_VIOLATION/ERROR_LOCK_VIOLATION now map occupancy separately; non-Win32 HRESULTs are not truncated into false disk errors.",
+  "references": [
+    "https://doc.rust-lang.org/std/io/enum.ErrorKind.html",
+    "https://learn.microsoft.com/en-us/windows/win32/api/winerror/nf-winerror-hresult_from_win32"
+  ],
+  "next": "继续“压缩原音已收齐但WAV生成失败”时的库状态和本机恢复入口，避免仍提示缺段/不必要补收；实板补收、实际满盘/低电/掉电/电流和联合抓包留待Owner明确硬件修好可继续。"
+}
