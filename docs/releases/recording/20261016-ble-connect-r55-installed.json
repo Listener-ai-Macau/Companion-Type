@@ -1,0 +1,67 @@
+{
+  "schema": "companion.ble.connect.r55.installed.v1",
+  "time": "2026-10-16T17:00:57+08:00",
+  "result": "INSTALLED_EXIT_CLEANUP_PAIR_WINDOW_REJECTED_NOT_QUALIFIED",
+  "summary": "正式TypeR55已安装：补应用退出的有序关闭，停止接收新连接/控制，取消并收尾本进程工作后主动释放自有BLE连接；CLI全部退出入口共用清理，GUI关闭等待当前操作安全结束。",
+  "change": "退出不发送板端STOP、不修改用户同步暂停/自动重连选择、不ACK未落盘内容；旧录音及耐久断点保留。关闭后的迟到连接不能入缓存，后台恢复任务停止；GUI收尾超时保留窗口并明确提示，可稍后重试关闭。",
+  "physical": "R55实板复核尚未到达连接：FW444/UI80正常UART、同UID、mic_run=0；Windows只读配对元数据为未配对，正常PAIR只请求一次即返回REJECTED busy_or_not_ready。未开启窗口、未启动Type连接，随即关闭句柄释放。",
+  "limits": "两个直接相关的软件检查通过，最终源码release/MSI构建及安装载荷匹配；GUI关闭行为未操作，退出后的配对保持/同进程原生对象替换/真实掉线恢复仍未实物资格。R53退出约10秒后BTHUSB10删钥是保留的现场，退出遗漏与删钥因果未证明。",
+  "next": "先分清PAIR拒绝当时的真实音频/电池采样/存储/升级/链路准入条件，再核退出后配对保持；不盲重连、不改变安全门、不重录。",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "3bd0e9e8ae2301a41df06cb3aceeea8084f49a54",
+    "tag": "companion-ble-connect-r55-20261016-source",
+    "parent": "5d39cde5770e9b4af50cc046c288ee1ebb121c25",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T16:43:51"
+  },
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ble-connect-r55-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10297344,
+    "sha256": "76423b303399158783d77cd2f9bec3e6ab1b4d4383fffcccd4625970dc512332"
+  },
+  "installed": {
+    "path": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "sha256": "2dc62aa086eb781d5de999772bb525af45c0c30294a06ff29a90d9e951f3e2a4",
+    "dllSha256": "c867913a9eaa8c537e78b4f12a4c02ff301b51a580323ae42004c784ad8d1786",
+    "payloadMatch": true
+  },
+  "software": {
+    "shutdownCancelsAndRejectsLateWork": "passed",
+    "shutdownPreservesExistingOperationOwner": "passed",
+    "finalReleaseAndMsi": "built",
+    "gui": "not operated"
+  },
+  "actual": {
+    "result": "NOT_COMPLETED",
+    "firmware": "444/UI80",
+    "normalUart": true,
+    "boardMicRunning": false,
+    "pairWindowRequests": 1,
+    "pairReply": "PAIR1 REJECTED busy_or_not_ready",
+    "bleAttempts": 0,
+    "handlesClosed": true
+  },
+  "unresolved": [
+    "pair window rejection reason not measured at decision time",
+    "post-exit pairing persistence unqualified",
+    "native replacement and real abnormal radio loss unqualified",
+    "full capacity/low battery/power cut and low power remain OPEN"
+  ],
+  "evidence": [
+    ".cache/ble-connect-r55-20261016/affected-tests.log",
+    ".cache/ble-connect-r55-20261016/actual-exit-pairing/result.json",
+    ".cache/ble-connect-r55-20261016/actual-exit-pairing/uart.private.log",
+    ".cache/ble-connect-r54-20261016/key-change-since-r53.private.json"
+  ],
+  "official": [
+    "https://doc.rust-lang.org/std/process/fn.exit.html",
+    "https://learn.microsoft.com/en-us/windows/uwp/devices-sensors/gatt-client"
+  ],
+  "listener": "Listener-Type/src-tauri/src/lib.rs exit lifecycle and embedded_ble/windows_ble/mod.rs COM reference release, read-only reference",
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "newRecording": false,
+  "cloud": false,
+  "gui": false,
+  "speed": false
+}
