@@ -227,16 +227,46 @@ pub(crate) fn apply(snapshot:&mut CompanionV1Snapshot,request:&CompanionV1Contro
     snapshot.source="firmware";snapshot.device.device_id=Some(report.device_id.clone());
     snapshot.device.mode="windowsNative".into();
     snapshot.device.mcu_uid=Some(_journal.uid.iter().map(|b|format!("{b:02x}")).collect());
-    snapshot.device.connected=true;snapshot.connected=true;
-    snapshot.device.connection_phase="ready".into();
     if let Some(row)=snapshot.host.sessions.iter_mut().find(|r|r.id==host) {row.recorder_control_uncertain=false;}
-    if let Some(operation)=operation {
-        if !operation.ready && !operation.sync_paused {return Err(format!("设备已结束录音，原会议已保存；收取尚未完成：{}",operation.message));}
-    }
     let message=if _journal.sealed_catalogue_end.is_some() {"原录音的封口目录已核对，原音按同一场恢复；结束原因未确认，没有重开或伪造停止确认。"} else {match report.state {1=>"设备已确认录音中。",3=>"设备已暂停，继续后仍是同一场录音。",
         2=>"设备已结束录音，原音按同一场会议收取。",_=>"设备控制结果已核对。"}};
-    snapshot.last_control=Some(CompanionV1ControlEcho{action:request.action,
-        characteristic_uuid:COMPANION_V1_GATT_BOUNDARY.meeting_control_uuid,
-        payload_hex:String::new(),accepted:true,message:message.into()});
+    finish_original_connection(snapshot,request.action,message,operation.as_ref())?;
     Ok(true)
+}
+
+fn finish_original_connection(snapshot:&mut CompanionV1Snapshot,action:Action,message:&str,
+    operation:Option<&super::super::ble_bridge::CompanionBleOperation>)->Result<(),String> {
+    let error=operation.filter(|op|!op.ready&&!op.sync_paused).map(|op|
+        format!("设备已结束录音，原会议已保存；收取尚未完成：{}",op.message));
+    let connected=error.is_none();let message=error.as_deref().unwrap_or(message);
+    snapshot.connected=connected;snapshot.device.connected=connected;
+    snapshot.device.connection_phase=if connected {"ready"}else{"offline"}.into();
+    snapshot.device.message=message.into();
+    snapshot.last_control=Some(CompanionV1ControlEcho{action,
+        characteristic_uuid:COMPANION_V1_GATT_BOUNDARY.meeting_control_uuid,
+        payload_hex:String::new(),accepted:connected,message:message.into()});
+    if let Some(error)=error {Err(error)}else{Ok(())}
+}
+
+#[cfg(test)]
+mod connection_outcome_tests {
+    use super::*;
+    #[test]
+    fn r52_original_connection_replaces_stale_message_and_failed_sync_cannot_claim_connected() {
+        let mut s=crate::companion_v1::fixture_snapshot();
+        let request=crate::control_request(Action::MeetingStart,Some("original".into()));
+        let mut row=crate::companion_v1::create_host_session(&s,&request,"");
+        row.source="boardDevice".into();row.status="captured".into();row.audio_stored=true;
+        s.host.sessions=vec![row];s.device.message="Not scanned".into();
+        let saved=serde_json::to_vec(&s.host.sessions).unwrap();
+        finish_original_connection(&mut s,Action::DeviceConnect,"原件已暂停",None).unwrap();
+        assert!(s.connected&&s.device.connected);assert_eq!(s.device.message,"原件已暂停");
+        let op=super::super::super::ble_bridge::CompanionBleOperation {provider_id:"windows-ble".into(),
+            mode:"windows-native-sync-segmented".into(),ready:false,sync_paused:false,device_id:None,
+            recording_path:None,recordings:vec![],device_identity:None,message:"native GATT session lost".into()};
+        let error=finish_original_connection(&mut s,Action::MeetingStop,"已停止",Some(&op)).unwrap_err();
+        assert!(!s.connected&&!s.device.connected);assert_eq!(s.device.connection_phase,"offline");
+        assert_eq!(s.device.message,error);assert!(!s.last_control.as_ref().unwrap().accepted);
+        assert_eq!(serde_json::to_vec(&s.host.sessions).unwrap(),saved,"a transport failure must retain the confirmed original and saved data");
+    }
 }

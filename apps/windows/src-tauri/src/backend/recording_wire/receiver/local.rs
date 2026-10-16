@@ -131,6 +131,29 @@ mod tests {
         fs::remove_dir_all(root).unwrap();
     }
     #[test]
+    fn r52_new_local_original_defaults_manual_but_keeps_later_explicit_choice() {
+        use crate::companion_v1::CompanionV1ProcessingPolicy as Policy;
+        let(root,index,d,payload,_)=case();
+        session_store::update_checked(&index,|rows|{rows.clear();Ok(())}).unwrap();
+        let mut receiver=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        let id=receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert_eq!(rows.len(),1);assert_eq!(rows[0].processing_policy,Policy::Manual);
+        assert_eq!(rows[0].recovery.intent,"none");assert!(!rows[0].audio_stored);
+        receiver.accept_segment(&d.encode().unwrap(),&payload).unwrap();receiver.assemble().unwrap();
+        receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert_eq!(rows[0].id,id);assert_eq!(rows[0].processing_policy,Policy::Manual);
+        assert_eq!(rows[0].recovery.intent,"none");assert!(rows[0].audio_stored);
+        assert_eq!(receiver.ack_candidates(&index).unwrap().len(),1,"local saving still authorizes exact consumption without ASR");
+        session_store::update_checked(&index,|rows|{rows[0].processing_policy=Policy::Automatic;Ok(())}).unwrap();
+        receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert_eq!(rows[0].processing_policy,Policy::Automatic);
+        assert_eq!(rows[0].recovery.intent,"processMeeting","a later explicit choice is not overwritten by the manual default");
+        drop(receiver);fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
     fn manual_processing_policy_survives_partial_and_complete_source_publication() {
         use crate::companion_v1::CompanionV1ProcessingPolicy as Policy;
         let (root,index,d,payload,id)=case();

@@ -52,6 +52,28 @@ fn require_discovery_success(
     ).into()))
 }
 
+fn require_root_discovery_success(status: GattCommunicationStatus, protocol_error: Option<u8>) -> Result<()> {
+    if status == GattCommunicationStatus::Success { return Ok(()); }
+    let detail=format!(
+        "Windows BLE root service discovery failed: status={status:?} protocol_error={protocol_error:?}; no cached or empty-success service list"
+    );
+    eprintln!("BLE root_service_discovery {detail}");
+    // Preserve btleplug's public error categories used by existing callers,
+    // while recording the actual phase/status/ATT code instead of hiding it.
+    if status==GattCommunicationStatus::AccessDenied {Err(Error::PermissionDenied)}
+    else if status==GattCommunicationStatus::Unreachable {Err(Error::NotConnected)}
+    else if status==GattCommunicationStatus::ProtocolError {Err(Error::NotSupported(detail))}
+    else {Err(Error::Other(detail.into()))}
+}
+
+fn root_discovery_status(result: &GattDeviceServicesResult) -> Result<()> {
+    let status=result.Status()?;
+    let protocol_error=if status==GattCommunicationStatus::ProtocolError {
+        result.ProtocolError().and_then(|value|value.Value()).ok()
+    } else {None};
+    require_root_discovery_success(status,protocol_error)
+}
+
 fn require_service_access(status: DeviceAccessStatus, service: Uuid) -> Result<()> {
     if status == DeviceAccessStatus::Allowed { return Ok(()); }
     let label = match status {
@@ -159,7 +181,7 @@ impl BLEDevice {
             .device
             .GetGattServicesWithCacheModeAsync(cache_mode)
             .map_err(winrt_error)?;
-        let service_result = async_op.into_future().await.map_err(winrt_error)?;
+        let service_result = await_cancellable_gatt(async_op).await.map_err(winrt_error)?;
         Ok(service_result)
     }
 
@@ -169,8 +191,7 @@ impl BLEDevice {
         }
 
         let service_result = self.get_gatt_services(BluetoothCacheMode::Uncached).await?;
-        let status = service_result.Status().map_err(|_| Error::DeviceNotFound)?;
-        utils::to_error(status)
+        root_discovery_status(&service_result)
     }
 
     async fn is_connected(&self) -> Result<bool> {
@@ -255,8 +276,8 @@ impl BLEDevice {
     pub async fn discover_services(&mut self) -> Result<&[GattDeviceService]> {
         let winrt_error = |e| Error::Other(format!("{:?}", e).into());
         let service_result = self.get_gatt_services(BluetoothCacheMode::Uncached).await?;
-        let status = service_result.Status().map_err(winrt_error)?;
-        if status == GattCommunicationStatus::Success {
+        root_discovery_status(&service_result)?;
+        {
             // We need to convert the IVectorView to a Vec, because IVectorView is not Send and so
             // can't be help past the await point below.
             let services: Vec<_> = service_result
@@ -296,6 +317,26 @@ impl Drop for BLEDevice {
 #[cfg(test)]
 mod discovery_tests {
     use super::*;
+
+    #[test]
+    fn root_service_failure_preserves_native_category_and_cannot_return_stale_success() {
+        assert!(require_root_discovery_success(GattCommunicationStatus::Success,None).is_ok());
+        for(status,protocol)in[(GattCommunicationStatus::Unreachable,None),
+            (GattCommunicationStatus::AccessDenied,None),(GattCommunicationStatus::ProtocolError,Some(5)),
+            (GattCommunicationStatus(77),None)] {
+            let error=require_root_discovery_success(status,protocol).unwrap_err();
+            match status {
+                GattCommunicationStatus::Unreachable=>assert!(matches!(error,Error::NotConnected)),
+                GattCommunicationStatus::AccessDenied=>assert!(matches!(error,Error::PermissionDenied)),
+                _=>{
+                    let error=error.to_string();
+                    assert!(error.contains(&format!("status={status:?}")));
+                    assert!(error.contains(&format!("protocol_error={protocol:?}")));
+                    assert!(error.contains("no cached or empty-success service list"));
+                }
+            }
+        }
+    }
 
     #[test]
     fn required_discovery_never_converts_native_failure_to_empty_success() {

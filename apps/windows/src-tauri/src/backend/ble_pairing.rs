@@ -24,9 +24,9 @@ impl Drop for CancelOnDrop {
 }
 
 struct DeviceHandle(BluetoothLEDevice);
-impl Drop for DeviceHandle {
-    fn drop(&mut self) { let _ = self.0.Close(); }
-}
+// This temporary pairing/metadata reference does not own the GATT link.
+// As in Listener and TransferPreference, release its COM reference normally:
+// Close() can invalidate another live owner's cached WinRT device object.
 
 struct PairingHandler {
     custom: DeviceInformationCustomPairing,
@@ -58,7 +58,7 @@ pub(super) async fn ensure_paired_before_gatt(
     let address = parse_address(address).map_err(pair_error)?;
     let cancel = Arc::new(AtomicBool::new(false));
     // Dropping a connect/reconnect future cancels the native operation too.
-    // The worker removes its handler and closes its temporary device handle.
+    // The worker removes its handler and releases its temporary COM reference.
     let _cancel_on_drop = CancelOnDrop(cancel.clone());
     tokio::task::spawn_blocking(move || {
         let cancel = BleCancel::new(cancel, "cancelled Companion connection");

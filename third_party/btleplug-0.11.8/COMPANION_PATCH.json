@@ -3,16 +3,22 @@
   "upstream_commit": "c227cc1adf885e143217f274758968afc02490fb",
   "modified_upstream_files": [
     "src/common/util.rs",
-    "src/winrtble/peripheral.rs"
+    "src/winrtble/peripheral.rs",
+    "src/winrtble/ble/characteristic.rs",
+    "src/winrtble/ble/device.rs"
   ],
-  "reason": "The original Windows broadcast held 16 notifications and its ordinary stream silently discarded Lagged errors. A stopped recording receiver must not hide missing original payload.",
+  "reason": "The original Windows broadcast held 16 notifications and its ordinary stream silently discarded Lagged errors. A stopped recording receiver must not hide missing original payload. Sealed original receive also paid several seconds enumerating raw descriptors that the application never reads or writes.",
   "changes": [
     "Windows callback queue holds 512 bounded notifications",
     "Windows callback preserves monotonic receive time before queueing",
     "checked_notifications exposes native lag to the recording durable-offset retry",
-    "Existing Peripheral notifications trait stays compatible and no device/subscription/connection is added"
+    "Existing Peripheral notifications trait stays compatible and no device/subscription/connection is added",
+    "Windows sealed-receive extension discovers live services/characteristics without unused raw descriptors; normal discovery trait retains full behavior and WinRT CCCD subscriptions remain unchanged",
+    "Windows CCCD subscription/unsubscription, reads and writes with response request IAsyncOperation::Cancel when an in-flight caller is cancelled; normal completed status and errors are preserved. Bulk write-without-response remains unchanged.",
+    "R52: root service enumeration uses the existing native cancellation guard; root connect/discovery rejects non-Success instead of returning an old/empty service list. Native status/ATT protocol code is logged while existing PermissionDenied/NotConnected categories are retained."
   ],
-  "limits": "The ordinary trait keeps its upstream error semantics for existing callers. Recording uses the checked extension. Queue capacity is finite; overload is a receive failure, never successful consumption.",
-  "validation": "Companion .cache/stopped-upload-20261009/r17/native-queue-harness compiles the exact production util source with three burst/overflow/timestamp checks, avoiding unrelated upstream example dev dependencies. Product pull_receiver tests cover propagation, bounds, timing and cancellation.",
-  "license": "LICENSE.md is copied unchanged; original package file hashes are retained in UPSTREAM.json."
+  "limits": "The ordinary trait keeps its upstream error semantics for existing callers. Recording uses the checked extension. Queue capacity is finite; overload is a receive failure, never successful consumption. Native Cancel is a request, not confirmation that an ATT procedure has retired. Existing unconfirmed release/connection retirement and exact consume gates remain in force. No MTU, PHY, payload size, retry budget or OS timeout change; physical cleanup/tail recovery remains unqualified.",
+  "validation": "Companion .cache/stopped-upload-20261009/r17/native-queue-harness compiles the exact production util source with three burst/overflow/timestamp checks, avoiding unrelated upstream example dev dependencies. Product pull_receiver tests cover propagation, bounds, timing and cancellation. r61 cancellation tests implement the actual WinRT async interfaces: drop before/after first poll cancels once; completed/error/cancelled results are preserved. Vendor tests use its locked Windows0.61.1/windows-future0.2.0 resolution; the production Type lock uses Windows0.61.3/future0.2.1 and has not yet been built for r61.",
+  "license": "LICENSE.md is copied unchanged; original package file hashes are retained in UPSTREAM.json.",
+  "r52_validation": "Targeted root-service native-category test in .cache/ble-connect-r52-20261016/root-discovery-category-tests.log; production Type build and installed link results are tracked by the R52 release receipt. No speed/controller change or full stability qualification."
 }

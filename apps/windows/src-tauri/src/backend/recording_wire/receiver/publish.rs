@@ -189,14 +189,13 @@ impl Receiver {
                     device_id: Some(device.into()),
                     duration_ms: Some(duration),
                 };
-                next.insert(
-                    0,
-                    crate::companion_v1::synced_device_session(
-                        &snapshot,
-                        &request,
-                        "verified-v2-session",
-                    ),
-                );
+                let mut row=crate::companion_v1::synced_device_session(&snapshot,&request,"verified-v2-session");
+                // An unknown device-local original has no host instruction to
+                // run paid meeting processing. Saving/consuming is independent
+                // of ASR. Existing rows keep their explicit processing choice.
+                row.processing_policy=crate::companion_v1::CompanionV1ProcessingPolicy::Manual;
+                row.recovery=Default::default();
+                next.insert(0,row);
             }
             let s = &mut next[binding.unwrap_or(0)];
             published_id = s.id.clone();
