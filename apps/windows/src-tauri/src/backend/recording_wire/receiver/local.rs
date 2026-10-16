@@ -24,12 +24,14 @@ pub(crate) struct LocalRestoredRecording {
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct LocalRestoreFailure { session_id: String, error: String }
+enum RestoreOutcome { Unchanged, Waiting, Restored(LocalRestoredRecording) }
 
 pub(crate) fn restore_local_product() -> Result<LocalRestoreReport,String> {
     restore_local(&crate::backend::audio_storage::recording_root()?,
         &crate::backend::persistence::state_file_path())
 }
 pub(crate) fn restore_local(root: &Path, index: &Path) -> Result<LocalRestoreReport,String> {
+    let root=root.canonicalize().map_err(|e|format!("本机录音目录不可用，未修改恢复记录：{e}"))?;
     let loaded=session_store::load(index);
     if loaded.state.status=="blocked" {
         return Err(loaded.state.message.unwrap_or_else(fail));
@@ -37,16 +39,26 @@ pub(crate) fn restore_local(root: &Path, index: &Path) -> Result<LocalRestoreRep
     let mut report=LocalRestoreReport::default();
     let Some(bytes)=loaded.bytes else {return Ok(report)};
     let rows:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&bytes).map_err(|_|fail())?;
-    for row in rows.iter().filter(|row| row.source=="boardDevice" && row.device_recording_key.is_some() && !row.audio_stored) {
+    for row in rows.iter().filter(|row| row.source=="boardDevice" && row.device_recording_key.is_some() && row.retention.audio_cached) {
         let result=(|| {
             let key=super::super::SessionKey::from_public(row.device_recording_key.as_ref().unwrap())?;
             let device=row.source_device_id.as_deref().filter(|id|
                 crate::backend::device_connection::stable_device_id(id)).ok_or_else(fail)?;
             let stem=format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(&key).map_err(|_|fail())?));
+            if row.audio_stored {
+                // An indexed owned path is required. Privacy-disabled audio is
+                // filtered above; never recreate a deliberately discarded copy.
+                let expected=root.join(format!("{stem}.wav"));
+                if row.audio_path.as_deref()!=expected.to_str() {return Err(fail())};
+                if regular(&expected)? {return Ok(RestoreOutcome::Unchanged)};
+            }
             let receipt=root.join(format!(".{stem}.json"));
             // No manifest means missing device data, not an invitation to create
             // a new receiver intent from a filename or a temporary tail.
-            if !regular(&receipt)? {return Ok(None)};
+            if !regular(&receipt)? {
+                if row.audio_stored {return Err("本机回听文件及原音恢复记录缺失，未生成空录音或修改回收状态。".into())};
+                return Ok(RestoreOutcome::Waiting)
+            };
             let mut bytes=Vec::new();read_locked(&receipt)?.take(MAX_RECEIPT+1)
                 .read_to_end(&mut bytes).map_err(|_|fail())?;
             if bytes.len() as u64>MAX_RECEIPT {return Err(fail())};
@@ -59,22 +71,25 @@ pub(crate) fn restore_local(root: &Path, index: &Path) -> Result<LocalRestoreRep
             }
             // open/plan revalidate exact full original hashes, CRCs, frame/sample
             // axes and the receiver lock. A partial body cannot become playable.
-            let mut receiver=Receiver::open(root,&first.wire)?;
-            if !receiver.plan()?.payloads_complete {return Ok(None)};
+            if saved.device.as_deref().is_some_and(|id|
+                !crate::backend::device_connection::same_device_id(id,device)) {return Err(fail())};
+            let mut receiver=Receiver::open_for_local_repair(&root,&first.wire)?;
+            if !receiver.plan()?.payloads_complete {return Ok(RestoreOutcome::Waiting)};
             let audio=receiver.assemble()?;
             let id=receiver.publish(index,device)?;
             if id!=row.id {return Err(fail())};
             let originals=receiver.descriptors()?.iter().map(|d|u64::from(d.encoded_length)).sum();
             let stored=receiver.receipt.audio.as_ref().ok_or_else(fail)?;
-            Ok(Some(LocalRestoredRecording { session_id:id,audio_path:audio.to_string_lossy().into_owned(),
+            Ok(RestoreOutcome::Restored(LocalRestoredRecording { session_id:id,audio_path:audio.to_string_lossy().into_owned(),
                 original_bytes:originals,audio_bytes:stored.bytes,
                 reclaim_pending:receiver.receipt.segments.iter().any(|segment|!segment.acked) }))
             // Tail replicas remain until normal authenticated sync retires them;
             // no fabricated radio Peer/ACK is used for local recovery.
         })();
         match result {
-            Ok(Some(saved))=>report.restored.push(saved),
-            Ok(None)=>report.waiting_for_segments.push(row.id.clone()),
+            Ok(RestoreOutcome::Restored(saved))=>report.restored.push(saved),
+            Ok(RestoreOutcome::Waiting)=>report.waiting_for_segments.push(row.id.clone()),
+            Ok(RestoreOutcome::Unchanged)=>(),
             Err(error)=>report.failures.push(LocalRestoreFailure {session_id:row.id.clone(),error}),
         }
     }
@@ -103,6 +118,121 @@ mod tests {
             started_at:None,stopped_at:None,duration_ms:60000,bytes:1920000,status:"open".into()}];
         session_store::update_checked(&index,|rows| {rows.push(row);Ok(())}).unwrap();
         (root,index,d,payload,id)
+    }
+    fn saved_case()->(PathBuf,PathBuf,Descriptor,Vec<u8>,String,PathBuf,Vec<u8>,PathBuf) {
+        let(root,index,d,payload,id)=case();
+        session_store::update_checked(&index,|rows|{rows[0].processing_policy=
+            crate::companion_v1::CompanionV1ProcessingPolicy::Manual;Ok(())}).unwrap();
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        r.accept_segment(&d.encode().unwrap(),&payload).unwrap();let audio=r.assemble().unwrap();
+        r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        let wav=fs::read(&audio).unwrap();let receipt=r.receipt_path();drop(r);
+        (root,index,d,payload,id,audio,wav,receipt)
+    }
+    #[test]
+    fn r62_missing_wav_rebuilds_exactly_after_reclaim_without_radio_or_repeat_decode() {
+        let(root,index,d,payload,id,audio,wav,receipt)=saved_case();
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        let acks=r.ack_candidates(&index).unwrap();assert_eq!(acks.len(),1);
+        r.confirm_acked(&acks[0]).unwrap();r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        let original=r.payload_path(&d);drop(r);let before=fs::read(&receipt).unwrap();
+        if let Some(destination)=std::env::var_os("COMPANION_LOCAL_RECOVERY_EVIDENCE_DIR") {
+            // Optional isolated fixture for the installed ordinary CLI. It is
+            // synthetic file-recovery evidence, never a physical recording.
+            let destination=PathBuf::from(destination);fs::create_dir(&destination).unwrap();
+            let destination=destination.canonicalize().unwrap();let old_root=root.canonicalize().unwrap();
+            fn relocate(value:&mut serde_json::Value,old:&str,new:&str) {
+                match value {
+                    serde_json::Value::String(s) if s.starts_with(old)=>*s=format!("{new}{}",&s[old.len()..]),
+                    serde_json::Value::Array(a)=>for v in a {relocate(v,old,new);},
+                    serde_json::Value::Object(m)=>for v in m.values_mut() {relocate(v,old,new);},
+                    _=>(),
+                }
+            }
+            for entry in fs::read_dir(&root).unwrap() {
+                let entry=entry.unwrap();let name=entry.file_name();let path=entry.path();
+                if !path.is_file()||name.to_string_lossy().ends_with(".lock") {continue;}
+                let mut bytes=fs::read(&path).unwrap();
+                if path.extension().is_some_and(|e|e=="json"||e=="bak") {
+                    let mut value:serde_json::Value=serde_json::from_slice(&bytes).unwrap();
+                    relocate(&mut value,&old_root.to_string_lossy(),&destination.to_string_lossy());
+                    bytes=serde_json::to_vec(&value).unwrap();
+                }
+                fs::write(destination.join(name),bytes).unwrap();
+            }
+            fs::write(destination.join("expected-wav.sha256"),format!("{:x}",Sha256::digest(&wav))).unwrap();
+            fs::remove_file(destination.join(audio.file_name().unwrap())).unwrap();
+        }
+        fs::remove_file(&audio).unwrap();
+        assert!(Receiver::open(&root,&d.encode().unwrap()).is_err(),"ordinary verification cannot silently rebuild or authorize consumption");
+        assert!(!audio.exists());
+        let report=restore_local(&root,&index).unwrap();assert!(report.failures.is_empty());
+        assert_eq!(report.restored.len(),1);assert_eq!(report.restored[0].session_id,id);
+        assert!(!report.restored[0].reclaim_pending);assert_eq!(report.device_commands,0);assert_eq!(report.cloud_calls,0);
+        assert_eq!(fs::read(&audio).unwrap(),wav);assert_eq!(fs::read(original).unwrap(),payload);
+        assert_eq!(fs::read(&receipt).unwrap(),before,"same receipt/SHA/timeline/reclaim history");
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert!(rows[0].audio_stored&&rows[0].device_reclaimed);assert_eq!(rows[0].id,id);
+        Receiver::verify_completed_row(&rows[0]).unwrap();
+        let again=restore_local(&root,&index).unwrap();
+        assert!(again.restored.is_empty()&&again.failures.is_empty()&&again.waiting_for_segments.is_empty());
+        fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn r62_missing_wav_with_bad_raw_or_saved_hash_cannot_replace_evidence() {
+        for bad_raw in [true,false] {
+            let(root,index,d,payload,_,audio,_,receipt)=saved_case();
+            let raw={let r=Receiver::open(&root,&d.encode().unwrap()).unwrap();r.payload_path(&d)};
+            fs::remove_file(&audio).unwrap();
+            if bad_raw {let mut corrupted=payload.clone();corrupted[15]^=1;fs::write(&raw,corrupted).unwrap();}
+            else {
+                let mut body:serde_json::Value=serde_json::from_slice(&fs::read(&receipt).unwrap()).unwrap();
+                body["audio"]["sha256"]=serde_json::json!("00".repeat(32));
+                fs::write(&receipt,serde_json::to_vec(&body).unwrap()).unwrap();
+            }
+            let before=fs::read(&receipt).unwrap();let old_index=fs::read(&index).unwrap();let source=fs::read(&raw).unwrap();
+            let report=restore_local(&root,&index).unwrap();
+            assert_eq!(report.failures.len(),1);assert!(report.restored.is_empty());
+            assert_eq!(report.device_commands,0);assert!(!audio.exists());
+            assert_eq!(fs::read(&receipt).unwrap(),before);assert_eq!(fs::read(&index).unwrap(),old_index);
+            assert_eq!(fs::read(&raw).unwrap(),source);fs::remove_dir_all(root).unwrap();
+        }
+    }
+    #[test]
+    fn r62_privacy_disabled_audio_and_foreign_index_path_are_never_recreated() {
+        for privacy in [true,false] {
+            let(root,index,_,_,_,audio,_,receipt)=saved_case();fs::remove_file(&audio).unwrap();
+            session_store::update_checked(&index,|rows| {
+                if privacy {rows[0].retention.audio_cached=false;}
+                else {rows[0].audio_path=Some(root.join("unowned.wav").to_string_lossy().into_owned());}
+                Ok(())
+            }).unwrap();
+            let before=fs::read(&receipt).unwrap();let old_index=fs::read(&index).unwrap();
+            let report=restore_local(&root,&index).unwrap();assert!(report.restored.is_empty());
+            assert_eq!(report.failures.len(),usize::from(!privacy));
+            assert!(!audio.exists()&&!root.join("unowned.wav").exists());
+            assert_eq!(fs::read(&receipt).unwrap(),before);assert_eq!(fs::read(&index).unwrap(),old_index);
+            fs::remove_dir_all(root).unwrap();
+        }
+    }
+    #[cfg(windows)]
+    #[test]
+    fn r62_real_locked_index_keeps_original_and_recovers_after_unlock() {
+        use std::os::windows::fs::OpenOptionsExt;
+        let(root,index,d,payload,id)=case();
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        r.accept_segment(&d.encode().unwrap(),&payload).unwrap();let raw=r.payload_path(&d);let receipt=r.receipt_path();drop(r);
+        let original_index=fs::read(&index).unwrap();
+        let guard=OpenOptions::new().read(true).share_mode(1).open(&index).unwrap();
+        let failed=restore_local(&root,&index).unwrap();assert_eq!(failed.failures.len(),1);assert!(failed.restored.is_empty());
+        assert_eq!(failed.device_commands,0);assert_eq!(fs::read(&index).unwrap(),original_index);
+        let saved:Receipt=serde_json::from_slice(&fs::read(receipt).unwrap()).unwrap();
+        assert!(saved.segments[0].received&&!saved.segments[0].acked);assert_eq!(fs::read(raw).unwrap(),payload);
+        drop(guard);let recovered=restore_local(&root,&index).unwrap();
+        assert!(recovered.failures.is_empty());assert_eq!(recovered.restored.len(),1);
+        assert_eq!(recovered.restored[0].session_id,id);assert!(recovered.restored[0].reclaim_pending);
+        assert_eq!(recovered.device_commands,0);assert_eq!(recovered.cloud_calls,0);
+        fs::remove_dir_all(root).unwrap();
     }
     #[test]
     fn complete_raw_with_unpublished_capture_recovers_without_radio_and_without_ack() {

@@ -114,6 +114,14 @@ impl Receiver {
             super::u32le(&s.wire, 28) == d.segment_index))
     }
     pub(crate) fn open(root: &Path, initial_wire: &[u8]) -> Result<Self, String> {
+        Self::open_inner(root,initial_wire,false)
+    }
+    // Only the indexed local-recovery entry may rebuild a missing derivative.
+    // Ordinary verification/ACK admission remains strict and never writes WAV.
+    fn open_for_local_repair(root: &Path, initial_wire: &[u8]) -> Result<Self,String> {
+        Self::open_inner(root,initial_wire,true)
+    }
+    fn open_inner(root: &Path, initial_wire: &[u8], repair_missing_audio:bool) -> Result<Self,String> {
         let initial = Descriptor::decode(initial_wire)?;
         let root = root.canonicalize().map_err(|_| fail())?;
         let stem = format!(
@@ -187,6 +195,10 @@ impl Receiver {
             this.save()?;
         }
         this.accept_metadata(initial_wire)?;
+        if repair_missing_audio {
+            this.recover_originals()?;
+            this.rebuild_missing_audio()?;
+        }
         this.recover()?;
         Ok(this)
     }
@@ -318,7 +330,7 @@ impl Receiver {
         }
         Ok(())
     }
-    fn recover(&mut self) -> Result<(), String> {
+    fn recover_originals(&mut self) -> Result<(), String> {
         let mut changed = false;
         for (index, d) in self.descriptors()?.iter().enumerate() {
             let path = self.payload_path(d);
@@ -335,6 +347,10 @@ impl Receiver {
         if changed {
             self.save()?;
         }
+        Ok(())
+    }
+    fn recover(&mut self) -> Result<(), String> {
+        self.recover_originals()?;
         if let Some(audio) = &self.receipt.audio {
             self.verify_audio(audio)?;
         }
@@ -354,20 +370,8 @@ impl Receiver {
     }
     fn verify_audio(&self, a: &Audio) -> Result<(), String> {
         let descriptors=self.descriptors()?;
-        let plan = plan_group(&descriptors, &BTreeSet::new())?;
-        let expected = plan
-            .sample_count
-            .checked_sub(320)
-            .and_then(|s| s.checked_mul(2))
-            .and_then(|b| b.checked_add(44))
-            .ok_or_else(fail)?;
-        if !plan.metadata_complete
-            || expected > MAX_PCM_BYTES + 44
-            || a.samples != plan.sample_count - 320
-            || a.bytes != expected
-        {
-            return Err(fail());
-        }
+        self.verify_audio_shape(a,&descriptors)?;
+        let expected=a.bytes;
         let file = read_locked(&self.audio_path())?;
         if file.metadata().map_err(|_| fail())?.len() != expected {
             return Err(fail());
@@ -394,6 +398,33 @@ impl Receiver {
             collect_timeline(&descriptors,&mut files)?
         };
         if a.timeline!=timeline {return Err("暂停时间轴与已保存原音不一致，原件已保留。".into());}
+        Ok(())
+    }
+    fn verify_audio_shape(&self,a:&Audio,descriptors:&[Descriptor])->Result<(),String> {
+        let plan = plan_group(&descriptors, &BTreeSet::new())?;
+        let expected = plan
+            .sample_count
+            .checked_sub(320)
+            .and_then(|s| s.checked_mul(2))
+            .and_then(|b| b.checked_add(44))
+            .ok_or_else(fail)?;
+        if !plan.metadata_complete
+            || expected > MAX_PCM_BYTES + 44
+            || a.samples != plan.sample_count - 320
+            || a.bytes != expected
+        {
+            return Err(fail());
+        }
+        Ok(())
+    }
+    fn rebuild_missing_audio(&mut self)->Result<(),String> {
+        let Some(expected)=self.receipt.audio.clone() else{return Ok(())};
+        if regular(&self.audio_path())? {return Ok(())};
+        let descriptors=self.descriptors()?;
+        self.verify_audio_shape(&expected,&descriptors)?;
+        let mut files=Vec::with_capacity(descriptors.len());
+        for d in &descriptors {files.push(verify_file(read_locked(&self.payload_path(d))?,d)?);}
+        self.assemble_inner(&descriptors,&mut files,expected.samples,false,Some(&expected))?;
         Ok(())
     }
     fn verify_received_timeline(&self) -> Result<(),String> {
@@ -432,9 +463,9 @@ impl Receiver {
         if regular(&path)? {
             // A previous crash may have replaced the WAV before the receipt was
             // committed. Recompute a candidate then compare; never trust a name.
-            return self.assemble_inner(&descriptors, &mut files, samples, true);
+            return self.assemble_inner(&descriptors, &mut files, samples, true,None);
         }
-        self.assemble_inner(&descriptors, &mut files, samples, false)
+        self.assemble_inner(&descriptors, &mut files, samples, false,None)
     }
     fn assemble_inner(
         &mut self,
@@ -442,6 +473,7 @@ impl Receiver {
         files: &mut [File],
         samples: u64,
         existing: bool,
+        expected:Option<&Audio>,
     ) -> Result<PathBuf, String> {
         let output = self.audio_path();
         let temporary = self.root.join(format!(
@@ -456,6 +488,10 @@ impl Receiver {
             || {
                 let timeline=decode(ds, files, &temporary, samples)?;
                 let (bytes, sha256) = digest(read_locked(&temporary)?)?;
+                if expected.is_some_and(|saved| saved.bytes!=bytes || saved.sha256!=sha256 ||
+                    saved.samples!=samples || saved.timeline!=timeline) {
+                    return Err("重建回听与原保存校验不一致；原始分段和恢复记录均已保留，未替换文件。".into());
+                }
                 if existing {
                     audio_artifacts::generated_pinned(
                         self._usage.as_ref(),
@@ -469,6 +505,11 @@ impl Receiver {
                             }
                             Ok(())
                         },
+                    )?;
+                } else if let Some(saved)=expected {
+                    audio_artifacts::restore_missing_recording_pinned(
+                        self._usage.as_ref(),&output,saved.bytes,&saved.sha256,
+                        || export::replace_file(&temporary,&output),
                     )?;
                 } else {
                     audio_artifacts::generated_pinned(
@@ -495,9 +536,9 @@ impl Receiver {
             }
         }
         let audio = result?;
-        self.receipt.audio = Some(audio);
+        let previous=self.receipt.audio.replace(audio);
         if let Err(e) = self.save() {
-            self.receipt.audio = None;
+            self.receipt.audio = previous;
             return Err(e);
         }
         Ok(output)
