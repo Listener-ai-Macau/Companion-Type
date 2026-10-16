@@ -26,7 +26,7 @@ pub(crate) enum Purpose {
     SessionReceipt,
 }
 impl Purpose {
-    pub(crate) fn accepts(self, path: &Path) -> bool {
+    fn accepts(self, path: &Path) -> bool {
         let ext = path
             .extension()
             .and_then(|e| e.to_str())
@@ -496,50 +496,6 @@ pub(crate) fn source_references(path: &Path) -> Result<BTreeSet<String>, String>
             return Ok(keys);
         }
     }
-}
-
-/// Inventory only durable files already claimed by this library's source graph.
-/// Temporary ASR/decode scratch and unrelated files are not library originals.
-pub(crate) fn backup_inventory(root:&Path,sources:&[String])->Result<Vec<(PathBuf,Purpose)>,String>{
-    let _lock=lock(root)?;let data=load(root)?;let keys=reachable(root,&data,sources)?;let mut files=Vec::new();
-    for item in data.files.iter().filter(|a|matches!(a.phase,Phase::Sealed|Phase::Interrupted)&&!a.purpose.temporary()){
-        let path=root.join(&item.file);
-        if !keys.contains(&reference_key(&path)?){continue;}
-        if !path.exists(){files.push((path,item.purpose));continue;}
-        no_link(&path)?;
-        let (bytes,sha256)=super::audio_storage::fingerprint(&path)?;
-        if item.identity.as_ref()!=Some(&Identity{bytes,sha256}){return Err("关联原件与归属校验不一致，请先恢复或同步，再备份。".into());}
-        files.push((path,item.purpose));
-    }Ok(files)
-}
-pub(crate) fn referenced_files(root:&Path,sources:&[String])->Result<Vec<PathBuf>,String>{
-    let _lock=lock(root)?;let data=load(root)?;let keys=reachable(root,&data,sources)?;
-    data.files.iter().filter(|a|a.phase!=Phase::Gone).map(|a|{
-        let path=root.join(&a.file);Ok(keys.contains(&reference_key(&path)?).then_some(path))
-    }).collect::<Result<Vec<_>,String>>().map(|v|v.into_iter().flatten().collect())
-}
-pub(crate) struct RestoredArtifact {
-    pub file:String,pub purpose:Purpose,pub owners:Vec<PathBuf>,pub bytes:u64,pub sha256:String,
-}
-/// Recreate ownership from verified portable assets, never import old absolute
-/// paths or a caller-supplied ownership database.
-pub(crate) fn register_restored(root:&Path,files:&[RestoredArtifact])->Result<(),String>{
-    let _lock=lock(root)?;let mut data=load(root)?;
-    for file in files{
-        if !component(&file.file)||!file.purpose.accepts(Path::new(&file.file))||file.owners.is_empty(){return Err(fail());}
-        let path=root.join(&file.file);no_link(&path)?;
-        let identity=Identity{bytes:file.bytes,sha256:file.sha256.clone()};
-        let actual=super::audio_storage::fingerprint(&path)?;
-        if actual!=(identity.bytes,identity.sha256.clone()){return Err(fail());}
-        let sources=file.owners.iter().map(|p|reference_key(p)).collect::<Result<BTreeSet<_>,_>>()?;
-        if sources.len()>1024{return Err(fail());}
-        if let Some(existing)=data.files.iter_mut().find(|a|a.file.eq_ignore_ascii_case(&file.file)){
-            if existing.identity.as_ref().is_some_and(|v|v!=&identity){return Err(fail());}
-            existing.sources.extend(sources);existing.identity=Some(identity);existing.phase=Phase::Sealed;
-        }else{data.files.push(Artifact{file:file.file.clone(),sources,purpose:file.purpose,phase:Phase::Sealed,identity:Some(identity)});}
-    }
-    if data.files.len()>MAX_FILES||data.files.iter().any(|f|f.sources.len()>1024){return Err(fail());}
-    save(root,&data)
 }
 pub(crate) fn exclusive_sources(paths: &[String]) -> Result<Vec<File>, String> {
     let root = super::audio_storage::recording_root()?;

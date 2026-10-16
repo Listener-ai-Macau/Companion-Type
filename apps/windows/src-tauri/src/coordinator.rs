@@ -71,7 +71,6 @@ fn operation_name(kind: u8) -> &'static str {
         PET_CAPTURE_OPERATION => "pet utterance capture",
         18 => "library organization",
         19 => "library protection/trash",
-        20 => "library backup/restore",
         _ => "unknown device operation",
     }
 }
@@ -333,21 +332,6 @@ impl CompanionCoordinator {
     }
     pub fn save_library_lifecycle(&self,request:crate::backend::library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{
         let _lease=self.begin_device_operation_kind(19)?;self.backend.save_library_lifecycle(request)
-    }
-    fn library_backup_idle(&self)->Result<(),String>{let snapshot=self.backend.snapshot()?;
-        if snapshot_has_active_recording(&snapshot)||snapshot.device.recording{return Err("请先结束并保存录音，再备份或恢复。".into());}Ok(())}
-    pub fn create_library_backup(&self,path:&std::path::Path)->Result<crate::backend::library_backup::BackupReport,String>{
-        let _lease=self.begin_device_operation_kind(20)?;self.library_backup_idle()?;
-        crate::backend::library_backup::create(&crate::backend::persistence::state_file_path(),&crate::backend::audio_storage::recording_root()?,path)
-    }
-    pub fn preview_library_restore(&self,path:&std::path::Path)->Result<crate::backend::library_backup::Preview,String>{
-        let _lease=self.begin_device_operation_kind(20)?;self.library_backup_idle()?;
-        crate::backend::library_backup::preview(&crate::backend::persistence::state_file_path(),&crate::backend::audio_storage::recording_root()?,path)
-    }
-    pub fn restore_library_backup(&self,request:crate::backend::library_backup::RestoreRequest)->Result<crate::backend::library_backup::RestoreReport,String>{
-        let _lease=self.begin_device_operation_kind(20)?;self.library_backup_idle()?;
-        let result=crate::backend::library_backup::restore(&crate::backend::persistence::state_file_path(),&crate::backend::audio_storage::recording_root()?,&request);
-        let refreshed=self.backend.reload_library_index();if result.is_ok(){refreshed?;}result
     }
     pub fn purge_library(&self,request:crate::backend::library_lifecycle::PurgeRequest)->Result<CompanionLibraryPurgeReport,String>{
         use crate::backend::library_lifecycle;

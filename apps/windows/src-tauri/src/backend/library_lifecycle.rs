@@ -31,7 +31,7 @@ pub fn validate_purge(snapshot:&CompanionV1Snapshot,request:&PurgeRequest)->Resu
 pub fn require_available(row:&CompanionV1HostSession)->Result<(),String>{
  if row.organization.trashed_at.is_some(){Err("录音已在回收站；请先恢复，再回听、编辑或处理。".into())}else{Ok(())}
 }
-pub(crate) fn action_lock(path:&Path)->Result<File,String>{
+fn action_lock(path:&Path)->Result<File,String>{
  let mut name=path.as_os_str().to_os_string();name.push(".library-actions.lock");
  if let Some(parent)=path.parent(){std::fs::create_dir_all(parent).map_err(|e|e.to_string())?;}
  let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(std::path::PathBuf::from(name)).map_err(|e|format!("无法取得录音保护锁：{e}"))?;
@@ -57,8 +57,7 @@ fn privacy_guard_current(snapshot:&CompanionV1Snapshot,request:&CompanionV1Contr
  let loaded=super::session_store::load(path);if loaded.state.status!="ready"{return Err("请先恢复会议库，再清理资料。".into());}
  let rows:Vec<CompanionV1HostSession>=serde_json::from_slice(&loaded.bytes.ok_or("找不到已保存资料库；未清理资料。")?).map_err(|e|e.to_string())?;
  let all=request.action==Action::PrivacyEraseAll;
- if rows.len()!=snapshot.host.sessions.len()||rows.iter().any(|r|snapshot.host.sessions.iter().find(|s|s.id==r.id).is_none_or(|s|s.audio_path!=r.audio_path||s.chunks.iter().map(|c|&c.path).ne(r.chunks.iter().map(|c|&c.path)))){
-  return Err("资料库或共有原件引用已在另一进程变化，请刷新后重新确认清理。".into());}
+ if all&&rows.len()!=snapshot.host.sessions.len(){return Err("资料库已在另一进程变化，请刷新后重新确认清理。".into());}
  for current in rows.iter().filter(|r|all||request.session_id.as_deref()==Some(&r.id)){
   if current.organization.protected{return Err("磁盘中的录音已受保护，未删除资料；请刷新后核对。".into());}
   if current.status=="recording"||current.recorder_control_uncertain{return Err("磁盘中的原录音仍在采集或待核对，未清理资料。".into());}
