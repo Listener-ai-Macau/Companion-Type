@@ -1,0 +1,109 @@
+{
+  "schema": "companion.type.r62.local-recovery.installed.v1",
+  "createdAtLocal": "2026-10-16T21:47:34+08:00",
+  "result": "R62_DESKTOP_INSTALLED_AND_LOCAL_RECOVERY_VERIFIED_NO_HARDWARE",
+  "problem": "Installed R57 skipped previously stored sessions when WAV disappeared despite intact sealed compressed originals and exact saved audio receipt.",
+  "changes": [
+    "Private local-repair constructor verifies compressed originals and old WAV identity before atomic reconstruction; ordinary receive/ACK verification stays strict.",
+    "Only indexed matching logical/device identities and retained owned paths qualify. Healthy WAVs are skipped; partial/corrupt sources, foreign paths and privacy-disabled audio are not recreated.",
+    "Managed-storage reconstruction requires original sealed recording provenance under existing writer and manifest locks. Gone/deleting/unknown files are not adopted or resurrected.",
+    "Save/index failure preserves originals and consume state; real Windows locked-index case recovers after handle release."
+  ],
+  "sourceCommit": "f986b12139504e8f4e60a294106b7f55e7dbb92f",
+  "sourceTag": "companion-local-recovery-r62-20261016-source",
+  "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-local-r62-20261016\\type\\msi\\build-receipt.json",
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-local-r62-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10305536,
+    "sha256": "a30209936d314d793cb8abd612fffc4ea0030c13b9d78d014383c2111fea4cba"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "ed1192664a22e6f0086fe08410f865876d2077160aeb323bb370192adb584786",
+    "dllSha256": "c04a2700416f6512eb9ec2a323495552f968342c208a43ac8e3a7bd77c7e0d08",
+    "payloadMatches": true,
+    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-local-r62-20261016\\type\\install\\result.json"
+  },
+  "evidence": {
+    "oldInstalledReproduction": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-local-r62-20261016\\old-r57-result.json",
+    "targetedSoftwareLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-local-r62-20261016\\targeted-final.log",
+    "installedCli": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-local-r62-20261016\\installed-cli-result.json",
+    "installedResult": {
+      "schema": "companion.type.r62.installed-local-recovery.v1",
+      "result": "INSTALLED_LOCAL_FILE_REBUILD_AND_PRIVACY_TOMBSTONE_VERIFIED",
+      "createdAtLocal": "2026-10-16T21:45:49.807959+08:00",
+      "installedExeSha256": "ed1192664a22e6f0086fe08410f865876d2077160aeb323bb370192adb584786",
+      "sourceCommit": "f986b12139504e8f4e60a294106b7f55e7dbb92f",
+      "positive": {
+        "exitCode": 0,
+        "report": {
+          "restored": [
+            {
+              "sessionId": "captured-owned-row",
+              "audioPath": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-local-r62-20261016\\installed-cli-case\\board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481.wav",
+              "originalBytes": 27,
+              "audioBytes": 1324,
+              "reclaimPending": false
+            }
+          ],
+          "waitingForSegments": [],
+          "failures": [],
+          "deviceCommands": 0,
+          "cloudCalls": 0
+        },
+        "wavSha256": "bcbc2b9c90e9531ba78a10e34926e52fbda233567da25732e87f962491edb42d"
+      },
+      "tombstone": {
+        "exitCode": 1,
+        "report": {
+          "restored": [],
+          "waitingForSegments": [],
+          "failures": [
+            {
+              "sessionId": "captured-owned-row",
+              "error": "回听归属记录不允许重建；已清理或身份不符的文件不会自动恢复。"
+            }
+          ],
+          "deviceCommands": 0,
+          "cloudCalls": 0
+        },
+        "wavExists": false
+      },
+      "originalSha256": {
+        "board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481-0000-17-97ee42357b56358d.opus": "937c994669515916d897355a3e4deb5fe570b7b0403e72a1a93ad094f7b18e07"
+      },
+      "consumeReceiptSemanticsUnchanged": true,
+      "deviceReclaimedUnchanged": true,
+      "scope": "Synthetic isolated files via installed ordinary CLI; no board, microphone, radio, cloud, GUI or speed qualification",
+      "hardwareAccess": false,
+      "cloudCalls": 0,
+      "physicalRecordingQualified": false,
+      "harnessCorrections": [
+        "Negative refusal intentionally exits 1; first harness incorrectly required 0. Original output preserved, not rerun.",
+        "Receipt JSON serialized in struct field order; raw SHA changed while every field remained identical. Compared parsed receipt and retained both identities. Positive call not rerun."
+      ],
+      "receiptByteIdentities": {
+        "before": {
+          ".board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481.json": "c22283b01e98a632827620b6bf7804158afc2012288cf0da93624dc404aadce7"
+        },
+        "after": {
+          ".board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481.json": "17400e5013946e2dac654d95d36731c3fe98147681cd57be355b8559131d7422"
+        }
+      }
+    }
+  },
+  "qualification": {
+    "desktopLocalFileRecovery": true,
+    "syntheticLocalFixture": true,
+    "physicalMicrophone": false,
+    "gui": false,
+    "hardwareAccess": false,
+    "bluetooth": false,
+    "speed": false,
+    "cloudCalls": 0,
+    "physicalDiskFull": false,
+    "fullProduct": false
+  },
+  "installedBoardUnchanged": "Last confirmed FW453/UI80. FW455/UI80 is built but uninstalled during hardware repair.",
+  "next": "Continue concrete local save/error recovery and essential recorder state software. Actual board/radio/power/long recording and speed wait for Owner to explicitly release repaired hardware."
+}
