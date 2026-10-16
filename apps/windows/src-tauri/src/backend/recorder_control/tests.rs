@@ -1,6 +1,38 @@
 use super::*;
 
 #[test]
+fn r60_end_reason_waits_for_exact_finalized_original_and_survives_index_restart() {
+    use crate::companion_v1::CompanionV1RecordingEndReason as End;
+    let mut journal=running();let (initial,anchor,duration)=c_status(0);
+    let mut raw=vector(0)[56..136].to_vec();raw[1]=6;raw[71]=4;
+    let crc=crc32fast::hash(&raw[..76]);raw[76..].copy_from_slice(&crc.to_le_bytes());
+    let draining=PauseStatus::decode(&raw).unwrap();
+    assert_eq!(draining.end_reason,Some(End::LowBattery));
+    assert_eq!(journal.observe(&draining,anchor,duration).unwrap(),Observation::Accepted);
+    assert!(!journal.ended());assert_eq!(journal.end_reason,None);
+    let before=journal.clone();let mut wrong=draining.clone();wrong.device_uid[0]^=1;
+    assert!(journal.observe(&wrong,anchor,duration).is_err());assert_eq!(journal,before);
+    raw[1]=2;let crc=crc32fast::hash(&raw[..76]);raw[76..].copy_from_slice(&crc.to_le_bytes());
+    let finalized=PauseStatus::decode(&raw).unwrap();
+    assert_eq!(journal.observe(&finalized,anchor,duration).unwrap(),Observation::Confirmed);
+    assert!(journal.ended());assert_eq!(journal.end_reason,Some(End::LowBattery));
+    let saved=journal.clone();let mut conflict=finalized.clone();conflict.end_reason=Some(End::User);
+    assert!(journal.observe(&conflict,anchor,duration).is_err());assert_eq!(journal,saved);
+    let root=Temp::new();let path=root.0.join("sessions.json");
+    let row=original_row(&running());super::super::session_store::save(&path,&[row]).unwrap();
+    let mut store=Store::open(&path,HOST).unwrap();store.commit_bound(journal.clone()).unwrap();drop(store);
+    let rows=super::super::persistence::load_sessions_from(&path).unwrap();let row=&rows[0];
+    assert_eq!(row.device_recording_end_reason,Some(End::LowBattery));assert_eq!(row.status,"captured");
+    assert!(!row.audio_stored);assert_eq!(row.pending_reason.as_deref(),Some("needs_device_sync"));
+    assert_eq!(row.recorder_control.as_ref().unwrap().end_reason,Some(End::LowBattery));
+    assert_eq!(initial.end_reason,None,"old status must not invent a user STOP");
+    raw[1]=1;let crc=crc32fast::hash(&raw[..76]);raw[76..].copy_from_slice(&crc.to_le_bytes());
+    assert!(PauseStatus::decode(&raw).is_err(),"a running original cannot carry a terminal cause");
+    raw[1]=2;raw[71]=6;let crc=crc32fast::hash(&raw[..76]);raw[76..].copy_from_slice(&crc.to_le_bytes());
+    assert!(PauseStatus::decode(&raw).is_err());
+}
+
+#[test]
 fn explicit_start_retry_is_only_the_original_unconfirmed_initial_request() {
     let mut snapshot=crate::companion_v1::fixture_snapshot();let pending=start();
     assert!(pending.unconfirmed_start_retry());assert!(!running().unconfirmed_start_retry());

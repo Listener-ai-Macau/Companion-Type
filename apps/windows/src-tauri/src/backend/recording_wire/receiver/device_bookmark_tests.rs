@@ -2,6 +2,34 @@
 use super::*;
 use crate::backend::{cop1::tests::{audio,event},recording_bookmarks};
 const DEVICE:&str="C8:92:FF:DD:3B:CA";
+
+#[test]
+fn r60_terminal_cause_is_durable_before_exact_consume_and_legacy_stays_unknown() {
+    use crate::companion_v1::CompanionV1RecordingEndReason as End;
+    let root=root();let index=root.join("sessions.json");let raw=payload(0);
+    let mut d=descriptor(&raw,0,true);d.flags|=4<<3;
+    let wire=d.encode().unwrap();let mut r=Receiver::open(&root,&wire).unwrap();
+    r.accept_segment(&wire,&raw).unwrap();r.assemble().unwrap();r.publish(&index,DEVICE).unwrap();
+    let mut saved=rows(&index);assert_eq!(saved[0].device_recording_end_reason,Some(End::LowBattery));
+    assert!(saved[0].audio_stored && !saved[0].device_reclaimed);
+    assert_eq!(r.ack_candidates(&index).unwrap().len(),1);
+    let original=fs::read(r.payload_path(&d)).unwrap();
+    saved[0].device_recording_end_reason=None;crate::backend::session_store::save(&index,&saved).unwrap();
+    assert!(r.ack_candidates(&index).is_err(),"missing durable end reason must retain device original");
+    drop(r);let mut r=Receiver::open(&root,&wire).unwrap();r.publish(&index,DEVICE).unwrap();
+    assert_eq!(rows(&index)[0].device_recording_end_reason,Some(End::LowBattery));
+    assert_eq!(r.ack_candidates(&index).unwrap().len(),1);assert_eq!(fs::read(r.payload_path(&d)).unwrap(),original);
+    let mut old=d.clone();old.key.session_id+=1;old.flags=3;
+    let mut legacy=Receiver::open(&root,&old.encode().unwrap()).unwrap();
+    legacy.accept_segment(&old.encode().unwrap(),&raw).unwrap();legacy.assemble().unwrap();legacy.publish(&index,DEVICE).unwrap();
+    assert!(rows(&index).iter().find(|row|row.device_recording_key.as_ref()==Some(&old.key.public_key())).unwrap().device_recording_end_reason.is_none());
+    for code in 1..=5 {
+        let mut candidate=d.clone();candidate.flags=3|(code<<3);
+        assert!(Descriptor::decode(&candidate.encode().unwrap()).unwrap().end_reason().is_some());
+        candidate.flags&=!2;candidate.total_segments=0;assert!(candidate.encode().is_err());
+    }
+    let mut unknown=d;unknown.flags=3|(6<<3);assert!(unknown.encode().is_err());
+}
 fn root()->PathBuf {
     let p=std::env::temp_dir().join(format!("companion-device-bookmarks-{}",uuid::Uuid::new_v4()));
     fs::create_dir_all(&p).unwrap();p

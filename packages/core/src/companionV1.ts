@@ -428,6 +428,7 @@ export interface CompanionV1HostSession {
   deviceReclaimed?: boolean;
   /** Interrupted capture: only the verified complete packet prefix survived. */
   captureIncomplete?: boolean;
+  deviceRecordingEndReason?: 'user' | 'storageFull' | 'durationLimit' | 'lowBattery' | 'silence' | null;
   sourceDeviceId?: string | null;
   recorderControl?: {
     hostSession: string;

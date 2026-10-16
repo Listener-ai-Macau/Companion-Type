@@ -97,7 +97,9 @@ impl Descriptor {
             || self.codec != 3
             || self.source_mode > 2
             || self.sync_state > 2
-            || self.flags & !7 != 0
+            || self.flags & !63 != 0
+            || self.flags >> 3 > 5
+            || (self.flags & 56 != 0 && self.flags & LAST == 0)
             || self.flags & SEALED == 0
             || !(15..=MAX_ENCODED).contains(&self.encoded_length)
             || self.sample_count == 0
@@ -148,6 +150,10 @@ impl Descriptor {
         };
         d.validate()?;
         Ok(d)
+    }
+    pub(crate) fn end_reason(&self)->Option<crate::companion_v1::CompanionV1RecordingEndReason> {
+        // Callers validate the descriptor before accepting it into a manifest.
+        crate::companion_v1::CompanionV1RecordingEndReason::from_code(self.flags>>3).ok().flatten()
     }
     pub(crate) fn encode(&self) -> Result<Vec<u8>, String> {
         self.validate()?;
@@ -357,7 +363,7 @@ pub(crate) struct GroupPlan {
     sample_count: u64,
     metadata_complete: bool,
     pub(crate) payloads_complete: bool,
-    capture_incomplete: bool,
+    pub(crate) capture_incomplete: bool,
     capture_complete: bool,
 }
 impl GroupPlan {

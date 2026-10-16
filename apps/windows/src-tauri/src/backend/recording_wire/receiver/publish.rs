@@ -72,6 +72,8 @@ impl Receiver {
         }
         let mut receiver=Receiver::open(root,&first.wire)?;
         let plan=receiver.plan()?;
+        if receiver.descriptors()?.iter().find(|d|d.flags&2!=0).and_then(Descriptor::end_reason)
+            .is_some_and(|reason|row.device_recording_end_reason!=Some(reason)) {return Err(fail());}
         if !plan.payloads_complete || receiver.receipt.audio.is_none() || receiver.audio_path()!=audio
             || receiver.receipt.device.as_deref().zip(row.source_device_id.as_deref())
                 .is_none_or(|(a,b)|!crate::backend::device_connection::same_device_id(a,b))
@@ -104,6 +106,7 @@ impl Receiver {
         }
         let plan = self.plan()?;
         let ds = self.descriptors()?;
+        let end_reason=ds.iter().find(|d|d.flags&2!=0).and_then(Descriptor::end_reason);
         let logical_key = ds.first().ok_or_else(fail)?.key.public_key();
         let device_marks=self.received_device_marks()?;
         let complete_samples=self.complete_captured_samples();
@@ -211,6 +214,10 @@ impl Receiver {
             // original interrupted. Complete payload is not proof of a clean
             // capture; never erase that warning while publishing its audio.
             s.capture_incomplete |= plan.capture_incomplete;
+            if let Some(reason)=end_reason {
+                if s.device_recording_end_reason.is_some_and(|saved|saved!=reason) {return Err(fail());}
+                s.device_recording_end_reason=Some(reason);
+            }
             s.audio_path = Some(audio_path.clone());
             s.audio_stored = complete;
             s.retention.audio_cached = true;
@@ -269,6 +276,8 @@ impl Receiver {
             serde_json::from_slice(&loaded.bytes.ok_or_else(fail)?).map_err(|_| fail())?;
         let key = self.descriptors()?.first().ok_or_else(fail)?.key.public_key();
         let row = &sessions[self.library_binding(&sessions,&key)?.ok_or_else(fail)?];
+        if self.descriptors()?.iter().find(|d|d.flags&2!=0).and_then(Descriptor::end_reason)
+            .is_some_and(|reason|row.device_recording_end_reason!=Some(reason)) {return Err(fail());}
         if row.audio_path.as_deref() != Some(self.audio_path().to_string_lossy().as_ref())
             || !row
                 .source_device_id

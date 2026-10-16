@@ -27,7 +27,7 @@ impl Journal {
         }
         let journal=Self{schema:1,host_session:host.into(),device_id:device.into(),
             uid:status.device_uid,epoch:status.format_epoch,start_request:start,max_seconds:0,local_origin:true,
-            key:Some(key.public_key()),anchor:Some(anchor),pending:None,superseded:None,sealed_catalogue_end:None,
+            key:Some(key.public_key()),anchor:Some(anchor),pending:None,superseded:None,sealed_catalogue_end:None,end_reason:None,
             confirmed:Some(Confirmed{command:status.command,request:status.request,sequence:status.sequence,
                 state:status.state,duration_ms:duration,finished_locally:false,local_control:true})};
         journal.matches(peer,host,device)?;Ok(journal)

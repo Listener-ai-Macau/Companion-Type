@@ -12,7 +12,12 @@ pub(crate) struct SealedCatalogueEnd {
     terminal_sha256: String,
     total_segments: u32,
     pub(crate) duration_ms: u32,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    end_reason: Option<crate::companion_v1::CompanionV1RecordingEndReason>,
+    #[serde(default="legacy_interruption")]
+    pub(crate) capture_incomplete: bool,
 }
+fn legacy_interruption()->bool {true}
 
 impl Journal {
     pub(crate) fn ended(&self) -> bool {
@@ -27,7 +32,8 @@ impl Journal {
             || end.anchor==0 || end.terminal_recording_id==0 || end.total_segments==0
             || end.total_segments>1024 || end.duration_ms==0
             || end.terminal_sha256.len()!=64 || !end.terminal_sha256.bytes().all(|b|b.is_ascii_hexdigit())
-            || end.terminal_sha256.bytes().all(|b|b==b'0') {
+            || end.terminal_sha256.bytes().all(|b|b==b'0')
+            || end.end_reason.is_some_and(|reason|self.end_reason!=Some(reason)) {
             return Err(failure("原封口目录证据与耐久会话不一致"));
         }
         Ok(())
@@ -51,8 +57,10 @@ impl Journal {
         let proof=SealedCatalogueEnd{key:key.public_key(),anchor,
             terminal_recording_id:terminal.recording_id,
             terminal_sha256:terminal.sha256.iter().map(|b|format!("{b:02x}")).collect(),
-            total_segments:terminal.total_segments,duration_ms};
+            total_segments:terminal.total_segments,duration_ms,end_reason:terminal.end_reason(),
+            capture_incomplete:plan.capture_incomplete||terminal.end_reason().is_none()};
         let mut candidate=self.clone();candidate.sealed_catalogue_end=Some(proof);
+        candidate.accept_end_reason(terminal.end_reason())?;
         candidate.validate_sealed_end()?;
         // Preserve the actual confirmed and pending command bytes. There is
         // no fabricated STOP sequence, STOP ACK or precise wall-clock stop.

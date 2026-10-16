@@ -65,6 +65,10 @@ impl Journal {
             }
         }
         self.validate_sealed_end()?;
+        if let Some(reason)=self.end_reason {
+            if row.device_recording_end_reason.is_some_and(|old|old!=reason) {return Err(failure("原音库的停止原因冲突"));}
+            row.device_recording_end_reason=Some(reason);
+        }
         row.recorder_control=Some(self.clone());
         if let Some(end)=self.sealed_catalogue_end.as_ref() {
             row.device_recording_id=self.anchor;row.device_recording_key=self.key.clone();
@@ -74,7 +78,7 @@ impl Journal {
             // A sealed original proves capture ended, not why or exactly when.
             // Preserve the warning and keep automatic cloud work paused after
             // receiving; source audio is still verified independently.
-            row.capture_incomplete=true;
+            row.capture_incomplete|=end.capture_incomplete;
             row.pending_reason=(!row.audio_stored).then(||"needs_device_sync".into());
             if row.audio_stored {super::super::interrupted_capture::hold(row);}
             return Ok(());

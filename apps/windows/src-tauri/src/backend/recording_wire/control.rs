@@ -58,11 +58,13 @@ pub(crate) struct PauseStatus {
     pub(crate) request:u32,pub(crate) sequence:u32,pub(crate) command:u8,pub(crate) timeline:bool,
     /// Present only for a device-local action. This is never a remote ACK.
     pub(crate) local_start:Option<u32>,
+    pub(crate) end_reason:Option<crate::companion_v1::CompanionV1RecordingEndReason>,
 }
 impl PauseStatus {
     pub(crate) fn decode(p:&[u8])->Result<Self,String> {
         if p.len()!=80||p[0]!=1||p[1]>6||&p[28..32]!=b"CMS3"||p[64]>1||p[65]>5||
-            p[66]>1 || p[71..76].iter().any(|b|*b!=0) ||
+            p[66]>1 || p[71]>5 || p[72..76].iter().any(|b|*b!=0) ||
+            (p[71]!=0 && (u64le(p,52)==0 || !matches!(p[1],2|6))) ||
             (p[66]==0 && p[67..71].iter().any(|b|*b!=0)) ||
             crc32fast::hash(&p[..76])!=u32le(p,76) {
             return Err(fail("invalid pause recorder status length/schema/CRC"));
@@ -77,7 +79,8 @@ impl PauseStatus {
             return Err(fail("invalid local recorder origin/start/sequence"));
         }
         Ok(Self{device_uid:uid,format_epoch:epoch,key:(session!=0).then_some(SessionKey{device_uid:uid,format_epoch:epoch,session_id:session}),
-            state:p[1],last_error:p[2],request:u32le(p,8),sequence:u32le(p,60),command:p[65],timeline:p[64]==1,local_start})
+            state:p[1],last_error:p[2],request:u32le(p,8),sequence:u32le(p,60),command:p[65],timeline:p[64]==1,local_start,
+            end_reason:crate::companion_v1::CompanionV1RecordingEndReason::from_code(p[71])?})
     }
     pub(crate) fn confirms(&self,key:&SessionKey,command:u8,request:u32,sequence:u32)->bool {
         let state=match command{1|5=>1,2|3=>2,4=>3,_=>return false};

@@ -3628,6 +3628,8 @@ fn recording_control_request(command: u8, request_id: u32, max_seconds: u16) -> 
 
 fn meeting_control_failure(error: u8, command: u8, request_id: u32) -> String {
     if error == MEETING_ERROR_STORAGE_FULL { STORAGE_FULL_MESSAGE.to_string() }
+    else if error==4 && command==1 { "设备电量低，尚未开始这场录音；已有原音保留，请充电后重试。".into() }
+    else if error==5 && command==1 { "设备暂时无法确认安全录音电量，尚未开录；已有原音保留。".into() }
     else { format!("board rejected V1 meeting command={command} request_id={request_id} error={error}") }
 }
 

@@ -287,6 +287,17 @@ pub struct CompanionV1RecordingKey {
     pub session_id: String,
 }
 
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub enum CompanionV1RecordingEndReason { User, StorageFull, DurationLimit, LowBattery, Silence }
+impl CompanionV1RecordingEndReason {
+    pub(crate) fn from_code(code:u8)->Result<Option<Self>,String> {
+        Ok(match code {0=>None,1=>Some(Self::User),2=>Some(Self::StorageFull),
+            3=>Some(Self::DurationLimit),4=>Some(Self::LowBattery),5=>Some(Self::Silence),
+            _=>return Err("设备录音停止原因不受支持，未声明保存或回收。".into())})
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1HostSession {
@@ -324,6 +335,9 @@ pub struct CompanionV1HostSession {
     pub device_reclaimed: bool,
     #[serde(default)]
     pub capture_incomplete: bool,
+    /// CRC-checked device terminal metadata/live exact original, never a UI guess.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub device_recording_end_reason: Option<CompanionV1RecordingEndReason>,
     /// Exact native Bluetooth address that produced the durable board extent.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_device_id: Option<String>,
@@ -1552,7 +1566,7 @@ pub(crate) fn create_host_session(
         device_recording_key: None,
         device_total_length: None,
         device_sha256: None,
-        device_reclaimed: false, capture_incomplete: false,
+        device_reclaimed: false, capture_incomplete: false, device_recording_end_reason: None,
         source_device_id: request.device_id.clone(),
         recorder_control: None, recorder_control_uncertain: false,
         chunks: vec![audio_chunk(

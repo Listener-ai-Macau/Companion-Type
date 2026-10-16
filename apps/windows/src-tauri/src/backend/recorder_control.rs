@@ -58,6 +58,8 @@ pub struct Journal {
     /// ended after its live CMS3 identity was replaced. This is NOT a STOP ACK.
     #[serde(default, skip_serializing_if="Option::is_none")]
     pub(crate) sealed_catalogue_end: Option<SealedCatalogueEnd>,
+    #[serde(default, skip_serializing_if="Option::is_none")]
+    pub(crate) end_reason: Option<crate::companion_v1::CompanionV1RecordingEndReason>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -96,7 +98,7 @@ impl Journal {
         let wire=peer.request(None,1,request,request,max_seconds,0,true)?.to_vec();
         Ok(Self{schema:1,host_session:host_session.into(),device_id:device_id.into(),uid,epoch,
             start_request:request,max_seconds,local_origin:false,key:None,anchor:None,confirmed:None,
-            pending:Some(Command{command:1,request,sequence:0,wire}),superseded:None,sealed_catalogue_end:None})
+            pending:Some(Command{command:1,request,sequence:0,wire}),superseded:None,sealed_catalogue_end:None,end_reason:None})
     }
 
     pub(crate) fn matches(&self, peer: &PausePeer, host: &str, device: &str) -> Result<(),String> {
@@ -141,6 +143,7 @@ impl Journal {
                 if pending.command==1 {self.max_seconds}else{0},pending.sequence,pending.command==1)?;
             if pending.wire!=expected {return Err(failure("待发字节与耐久会话／序号不一致"));}
         }
+        if self.end_reason.is_some() && !self.ended() {return Err(failure("停止原因没有原件结束证据"));}
         self.validate_sealed_end()?;
         Ok(())
     }
@@ -179,6 +182,19 @@ impl Journal {
 
     pub(crate) fn observe(&mut self, status: &PauseStatus, anchor: u32, duration: u32)
         -> Result<Observation,String> {
+        let mut next=self.clone();
+        let result=next.observe_original(status,anchor,duration)?;
+        if status.state==2 && next.ended() {next.accept_end_reason(status.end_reason)?;}
+        *self=next;Ok(result)
+    }
+    fn accept_end_reason(&mut self,reason:Option<crate::companion_v1::CompanionV1RecordingEndReason>)->Result<(),String> {
+        if let Some(reason)=reason {
+            if self.end_reason.is_some_and(|old|old!=reason) {return Err(failure("停止原因与原件结束证据冲突"));}
+            self.end_reason=Some(reason);
+        }
+        Ok(())
+    }
+    fn observe_original(&mut self, status:&PauseStatus,anchor:u32,duration:u32)->Result<Observation,String> {
         if status.local_start.is_some() {
             return Err(failure("本地操作需要按原设备和原开始请求核对"));
         }
@@ -285,6 +301,13 @@ impl Journal {
     }
     pub(crate) fn observe_with_peer(&mut self, peer:&PausePeer, status:&PauseStatus,
         anchor:u32, duration:u32)->Result<Observation,String> {
+        let mut next=self.clone();
+        let result=next.observe_with_peer_original(peer,status,anchor,duration)?;
+        if status.state==2 && next.ended() {next.accept_end_reason(status.end_reason)?;}
+        *self=next;Ok(result)
+    }
+    fn observe_with_peer_original(&mut self,peer:&PausePeer,status:&PauseStatus,
+        anchor:u32,duration:u32)->Result<Observation,String> {
         if status.local_start.is_none() {return self.observe(status,anchor,duration);}
         self.matches(peer,&self.host_session,&self.device_id)?;
         self.check_local_scope(status,anchor,duration)?;
@@ -310,6 +333,7 @@ impl Journal {
         next.confirmed=Some(Confirmed{command:status.command,request:status.request,
             sequence:status.sequence,state:status.state,duration_ms:duration,
             finished_locally:status.state==2,local_control:true});
+        if status.state==2 {next.accept_end_reason(status.end_reason)?;}
         let stop=displaced.as_ref().filter(|p|matches!(p.command,2|3)).map(|p|p.command);
         let observation=if let Some(stop)=stop.filter(|_|status.state!=2) {
             next.prepare(peer,stop)?;Observation::Previous
