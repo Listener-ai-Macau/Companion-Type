@@ -1,0 +1,98 @@
+{
+  "schema": "companion.type.library.r48.v1",
+  "time": "2026-10-16T13:49:55+08:00",
+  "result": "R48_INSTALLED_NATIVE_BACKGROUND_PROTECTION_TRASH_RESTORE_PURGE_CHECKED",
+  "summary": "正式TypeR48已安装：本机录音保护、批量移入回收站/恢复和明确永久清除接入。受保护录音不能删音频、文字、整场或全库；旧窗口按磁盘最新状态与动作锁拒绝。普通删除只改本机状态，保留原音与资料，不访问或消费设备；回收站不参与回听/导出/编辑/自动会议处理，恢复不自动调云。永久清除复用归属清理，逐场报告成功/失败，保留未完成选择。",
+  "fix": "修新建/重置会议工作区会清空整个历史索引的问题：只重置当前工作区，保留历史和受保护录音；原录音控制/采音恢复保护不放宽。",
+  "actual": "正式安装程序在隔离资料库/配置/缓存和两份已有WBA原音的自有副本上，完成保护及四种清理拒绝、整批保护拒绝、旧版本拒绝、新进程移入/恢复保留WAV全SHA及资料、回收站导出拒绝。真实Windows拒绝删除共享句柄使批量永久清除得到1场完成/1场失败；关闭该自有句柄后仅重试剩余场，成功清空主/备索引。真实用户索引与原音未改动。",
+  "limitations": "仅本机原生后端/文件路径与组件逻辑资格，未操作GUI、不资格桌面视觉；非新实板采音/同步消费、会议内容/功耗或整机验收。保护是本机防误删，不是加密；外部源、另存文件和其它会议共有文件沿归属保留。非破坏裁剪/切分/合并、整库备份恢复、用户导入/DOCX/PDF及其它目标项仍未齐。硬件版本和占用沿共享联合安装回执，本阶段未接板。",
+  "next": [
+    "先接整库备份/恢复，包含同一稳定ID、原音、分类/保护/回收站、重点/笔记/修订与资料，预校验和失败恢复；不把分享导出清单当备份。",
+    "随后非破坏裁剪/切分/合并和普通文件导入、DOCX/PDF等；设备原件控制/离线重点闭环、低电满盘/长录/低功耗继续同树。",
+    "后台操作优先，仅共用文件交接；实板连接先看最新实际释放与正常应用现场，既有OTA不重跑，会议/进一步提速等分析器。"
+  ],
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "84782aafe4871adae179731b1695bfe56b596110",
+    "tag": "companion-library-r48-20261016-source",
+    "parent": "fe6b49ca0b001c197e1de3d2e8094e602c05e3ab",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T13:43:33"
+  },
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\library-r48-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10694656,
+    "sha256": "e245acd22be7c42ad20637297620a33e6a1c3020eb1c5adcc31f5473d1572a26"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "724fdc70d6cc650c545a3e653102df4b4de8492aa137dd66e1ff7bbb241d972d",
+    "payloadMatch": true
+  },
+  "native": {
+    "evidence": ".cache/library-r48-20261016/native-background/result.json",
+    "source": "owned byte-identical copies of two previously saved WBA recordings, isolated index/profile/cache roots; not new capture or sync",
+    "checks": [
+      "classification retained across native protection/trash/restore",
+      "protected batch trash refused without partial mutation",
+      "all four existing privacy controls rejected protected target before erasure",
+      "new workspace preserved complete protected library",
+      "stale revisions refused",
+      "trash retained original WAV SHA, transcript/minutes/bookmarks/notes/duration and stopped recovery intent",
+      "fresh process could not export trash",
+      "restore retained classification and original WAV SHA",
+      "real deny-delete file handle yielded one completed purge and one retained failure with nonzero CLI status",
+      "after releasing only that handle, retry purged only remaining row and sanitized both index copies",
+      "real user index and original WAVs unchanged"
+    ],
+    "partialPurge": {
+      "deleted": [
+        "v1-real-installed-1792118428825"
+      ],
+      "failures": [
+        {
+          "sessionId": "v1-real-installed-1792116360914",
+          "message": "本机资料尚未完全删除（1 项失败）。会议记录和原音位置已保留，请解除文件占用后重试；已删除的文件不会恢复。"
+        }
+      ]
+    },
+    "metrics": {
+      "protectedPrivacyControlsRejected": 4,
+      "protectedBatchPartialMutations": 0,
+      "restoredOriginalHashMismatches": 0,
+      "partialPurgeDeleted": 1,
+      "partialPurgeRetainedFailure": 1,
+      "retryRemainingDeleted": 1,
+      "primaryAndFallbackSanitized": true,
+      "realUserLibraryChanged": false
+    },
+    "fault": "Only a task-owned audio COPY opened with real Windows deny-delete sharing; its handle closed before retry",
+    "guiUsed": false,
+    "hardwareAccess": false,
+    "cloudCalls": 0
+  },
+  "software": {
+    "rustTests": {
+      "passed": 4,
+      "failed": 0,
+      "evidence": "Companion-Type/.cache/library-r48-20261016/lifecycle-rust-r3.log"
+    },
+    "uiEvidence": "Companion-Type/.cache/library-r48-20261016/ui.log",
+    "frontend": "Companion-Type/.cache/library-r48-20261016/frontend-r2.log",
+    "scope": "exact targets/revisions, confirmations, protected batch refusal, hidden trashed workspace, restore continuity, partial purge selection and non-destructive new workspace; no GUI claim"
+  },
+  "scope": {
+    "localProtection": true,
+    "trash": true,
+    "restore": true,
+    "explicitLocalPermanentPurge": true,
+    "bulkTrash": true,
+    "bulkPurgePerItemResults": true,
+    "encryption": false,
+    "physicalDeviceDeletionOnTrash": false,
+    "physicalDeviceDeletionOnLocalPurge": false,
+    "nonDestructiveEdits": false,
+    "fullLibraryBackupRestore": false
+  },
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
