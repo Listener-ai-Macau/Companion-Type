@@ -1,0 +1,106 @@
+{
+  "schema": "companion.r57.native.owner.actual.v1",
+  "time": "2026-10-16T17:57:31+08:00",
+  "result": "R57_CURRENT_SOURCE_NATIVE_REPLACEMENT_AND_OWNER_REOPEN_CHECKED",
+  "sourceCommit": "b6f9b76a7503be80a5675b0a4a38d02e54a2e0a5",
+  "productionSourceChanged": false,
+  "installedType": "R57 unchanged",
+  "summary": "R57当前生产模块的同进程原生连接路径已实板核对：初次受保护连接、同一Peripheral仍持旧对象时替换原生对象、主动释放并退役旧所有者后由新所有者重开，三步均为同UID/FW447/UI80和受保护目录。",
+  "limits": "使用与正式R57相同生产输入编译的显式实板调试组件，非安装EXE GUI操作；没有新生产源码、MSI、安装或新PAIR。正式Type仍R57，普通配对/退出20秒保持结果沿用不重跑。本次不资格真实异常无线断线/历史0x08、录音补传、长时间稳定或整机。原WAV SHA保持，被动UART和组件实际句柄已关闭。",
+  "actual": {
+    "result": "R57_CURRENT_SOURCE_NATIVE_REPLACEMENT_AND_OWNER_REOPEN_CHECKED",
+    "startedAtLocal": "2026-10-16T17:51:46.301+08:00",
+    "sourceCommit": "b6f9b76a7503be80a5675b0a4a38d02e54a2e0a5",
+    "component": {
+      "result": "ACTUAL_TEST_COMPONENT_COMPILED_NOT_RUN",
+      "sourceCommit": "b6f9b76a7503be80a5675b0a4a38d02e54a2e0a5",
+      "exe": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\apps\\windows\\src-tauri\\target\\debug\\deps\\companion_type_lib-bc425e52e30b9244.exe",
+      "sha256": "78cc72413ac9a9ac7ed04a889442ce0d34209e82564d71c0664ab1250936a9cf",
+      "allProductionInputsUnchanged": true,
+      "command": [
+        "cargo",
+        "test",
+        "--lib",
+        "r54_native_cached_replacement_and_owner_reopen_keep_exact_recorder",
+        "--no-run",
+        "--message-format=json"
+      ]
+    },
+    "newRecording": false,
+    "consume": false,
+    "gui": false,
+    "cloud": false,
+    "reset": false,
+    "swd": false,
+    "ownedHandlesClosed": true,
+    "originalWavSha256": "f57ff29885f3de18924e0737f0b6ed5ea8673b5459e763d5e5fb3cf2a1bc49c6",
+    "pairingBefore": {
+      "source": "Windows DeviceInformation association endpoint",
+      "time": "2026-10-16T17:51:46.385+08:00",
+      "nativeId": "BluetoothLE#BluetoothLE68:34:21:92:02:24-c8:92:ff:dd:3b:ca",
+      "paired": true,
+      "canPair": false,
+      "kind": "5",
+      "bluetoothDeviceHandleOpened": false,
+      "gattAccess": false,
+      "pairingRequested": false
+    },
+    "command": [
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\Companion-Type\\apps\\windows\\src-tauri\\target\\debug\\deps\\companion_type_lib-bc425e52e30b9244.exe",
+      "--exact",
+      "backend::ble_bridge::native_owner_reopen_tests::r54_native_cached_replacement_and_owner_reopen_keep_exact_recorder",
+      "--ignored",
+      "--nocapture"
+    ],
+    "componentExit": 0,
+    "seconds": 18.93700000003446,
+    "componentResult": {
+      "Ok": {
+        "abnormalRadioLossQualified": false,
+        "cloud": false,
+        "consume": false,
+        "firmwareWrite": false,
+        "newRecording": false,
+        "reset": false,
+        "result": "R54_SAME_PROCESS_NATIVE_REPLACEMENT_AND_OWNER_REOPEN",
+        "stages": [
+          {
+            "catalogueEntries": 0,
+            "firmwareVersion": 66239,
+            "phase": "initial_owned_connection",
+            "uiGeneration": 80,
+            "uid": "180010000d50335754363720"
+          },
+          {
+            "catalogueEntries": 0,
+            "firmwareVersion": 66239,
+            "phase": "same_peripheral_native_replacement",
+            "uiGeneration": 80,
+            "uid": "180010000d50335754363720"
+          },
+          {
+            "catalogueEntries": 0,
+            "firmwareVersion": 66239,
+            "phase": "fresh_owner_after_explicit_disconnect",
+            "uiGeneration": 80,
+            "uid": "180010000d50335754363720"
+          }
+        ]
+      }
+    },
+    "pairingAfter": {
+      "source": "Windows DeviceInformation association endpoint",
+      "time": "2026-10-16T17:52:05.360+08:00",
+      "nativeId": "BluetoothLE#BluetoothLE68:34:21:92:02:24-c8:92:ff:dd:3b:ca",
+      "paired": true,
+      "canPair": false,
+      "kind": "5",
+      "bluetoothDeviceHandleOpened": false,
+      "gattAccess": false,
+      "pairingRequested": false
+    },
+    "finishedAtLocal": "2026-10-16T17:52:05.364+08:00"
+  },
+  "next": "CP27-19新增源码证据：board_hal.c对电池poll和参考poll均要求!microphone.running；录中没有新电压，power_snapshot在旧值过期后变unknown。仅加低阈值不会实现长录安全收尾。需要先在现有10ms采音预算内调度单个非阻塞ADC/参考步骤，再接合格新样本去抖/滞回、临界STOP与结束原因；未验证分压/参考和显示估算不作为停录依据。当前未修改/启用该路径，也未排查充电硬件。 普通配对/退出重开与同进程原生所有权已具本次实板范围，不重复；真实异常掉线和原件恢复留在最后集中录音链。先补CP27-19录中合格测量/安全收尾及其它满盘/接收失败/掉电核心缺口，再必要状态、低功耗。",
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
