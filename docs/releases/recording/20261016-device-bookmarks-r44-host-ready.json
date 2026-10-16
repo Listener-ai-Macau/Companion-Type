@@ -1,0 +1,87 @@
+{
+  "schema": "companion.type.device-bookmarks.r44.v1",
+  "time": "2026-10-16T12:08:12+08:00",
+  "result": "R44_HOST_READY_INSTALLED_DEVICE_WRITER_AND_ENTRY_OPEN",
+  "summary": "正式TypeR44接收端已构建/安装：支持独立版本schema3离线重点，与原音全SHA/CRC/会话键绑定；重点和接收ID在同一资料库事务中保存，未保存不ACK消费。重复段/重开不重建重点，保留用户改名和删除；完成原音后按整场一次320样本预跳映射回听，暂停配对和原音字节不变。CLP2 flags7只为显式新格式，旧1/3保持。",
+  "limitations": "这是离线重点的Type接收/保存/定位阶段，不是完整功能交付：固件写入、设备按键/菜单入口及实板同步尚未完成，本轮没有启用设备新格式、接板、录音、刷固件、配对、测速或云调用。当前实板沿最近确认426/UI78，屏幕430为另侧联合候选；当前UART0B无新恢复信息，不重复连接。冻结质量门不改，会议/提速等分析器。",
+  "next": [
+    "沿该schema3合同接固件离线重点：单调独立重点序号、真实sample/elapsed、异步页提交与恢复、暂停/STOP和容量预算；不新增永久分区、不丢采音期限。",
+    "通过共用文件让屏幕入口调用同一录音token的重点请求，成功提示必须等耐久完成；保留现有双击开停/HOLD紧急停止。",
+    "连接有明确恢复变化后，再从设备离线标点到Type保存/回听/精确消费做实际闭环；不重复既有OTA/测速。"
+  ],
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "56048b1d7da1e95ab5dc8c9ec9d4576660893d04",
+    "tag": "companion-device-bookmarks-r44-r2-20261016-source",
+    "parent": "26b87f0528c30e7630654cb027b8ae49efab8dea",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T12:03:14"
+  },
+  "parentInstalledType": "R43",
+  "changedInputs": [
+    "apps/windows/src-tauri/src/backend/recording_wire/receiver/probe.rs",
+    "apps/windows/src-tauri/src/backend/audio_storage.rs",
+    "apps/windows/src-tauri/src/backend/cop1.rs",
+    "apps/windows/src-tauri/src/backend/export.rs",
+    "apps/windows/src-tauri/src/backend/minutes.rs",
+    "apps/windows/src-tauri/src/backend/persistence.rs",
+    "apps/windows/src-tauri/src/backend/recording_bookmarks.rs",
+    "apps/windows/src-tauri/src/backend/recording_bookmarks/device.rs",
+    "apps/windows/src-tauri/src/backend/recording_wire/receiver.rs",
+    "apps/windows/src-tauri/src/backend/recording_wire/receiver/publish.rs",
+    "apps/windows/src-tauri/src/backend/recording_wire/receiver/device_bookmark_tests.rs",
+    "apps/windows/src-tauri/src/backend/recording_wire/tail.rs",
+    "apps/windows/src-tauri/src/backend/recording_wire/tail/tests.rs",
+    "apps/windows/src-tauri/src/companion_v1.rs",
+    "packages/core/src/companionV1.ts",
+    "packages/core/src/recordingBookmarks.ts",
+    "tools/test_companion_device_bookmarks.ts",
+    "docs/RECORDING_SESSION_V2.md"
+  ],
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\device-bookmarks-r44-20261016\\r2\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10539008,
+    "sha256": "0ecb1e1a621ca369e930f795a9fa4687f73c93b793399b347bbc7367da792d8f"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "c507ea8fb0f228447dedb3c8427fa7c637d9571b4a5e37f4e2c2873572c4e9fe",
+    "payloadMatch": true
+  },
+  "software": {
+    "tests": {
+      "recording-wire-tests": 38,
+      "cop1-tests": 2,
+      "bookmark-tests": 8
+    },
+    "uiSourceBinding": true,
+    "scope": "Synthetic schema3 framing with retained Opus decoder packet and real local file/index transactions; no physical recording or cloud",
+    "checks": [
+      "cross-segment/pause marks and one preskip",
+      "index failure refuses consume while raw remains",
+      "durable import ledger precedes ACK",
+      "restart/replay preserve rename/deletion",
+      "duplicate sequence or schema mismatch refuses consume",
+      "explicit growing-prefix format cannot change or authorize ACK"
+    ]
+  },
+  "firstFailure": {
+    "sourceCommit": "c8eca8d3f8517838aaa992bc2f11829ed9541b18",
+    "log": ".cache/device-bookmarks-r44-20261016/type/recording-wire-tests.log",
+    "result": "37 passed/1 failed: existing two probe tests changed the same process-wide recording directory concurrently; r2 serializes only these two outer tests, not product storage safety or other receiver tests"
+  },
+  "actual": {
+    "boardAccessed": false,
+    "deviceFormatEnabled": false,
+    "deviceWriterComplete": false,
+    "deviceEntryComplete": false,
+    "hardwareQualified": false,
+    "newCloudCalls": 0
+  },
+  "speedQualified": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "evidence": [
+    ".cache/device-bookmarks-r44-20261016/r2/type/install/result.json",
+    "Companion-Type/docs/RECORDING_SESSION_V2.md"
+  ]
+}
