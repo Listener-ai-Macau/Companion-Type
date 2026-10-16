@@ -1,0 +1,99 @@
+{
+  "schema": "companion.type.r63.original-resync.installed.v1",
+  "createdAtLocal": "2026-10-16T22:03:59+08:00",
+  "result": "R63_DESKTOP_INSTALLED_COMPONENT_RESYNC_AND_LOCAL_ERRORS_ONLY",
+  "problem": "Received=true with missing compressed body previously made ordinary Receiver::open fail before the BLE loop could pull that exact segment again.",
+  "changes": "Type R63已正式安装：正常同步先为意外丢失的已收原音做精确补收；仅接受当前同UID/格式代次/会话目录中内容完全匹配的段，原received/ACK历史不重置，全部核对后才取得可发布/消费的接收器。受管理文件实测覆盖补收后中断恢复、WAV重建、旧ACK和标题保留；删除记录/错误归属及现存损坏文件均拒绝覆盖。",
+  "scope": "安装版普通本机恢复入口已核对未确认/已确认清理的两种缺失提示，原音/索引/回收记录不改。补收正例为真实临时文件与生产接收组件的软件模型，不是实际GATT/麦克风/速度证据。Owner硬件检修继续，UART/BLE/ST-Link/分析器均未操作；板端最后确认FW453/UI80，后续联合候选未新装。",
+  "sourceCommit": "4868abc87a7593d54df8914031925972731731f6",
+  "sourceTag": "companion-original-resync-r63-20261016-source",
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-resync-r63-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10317824,
+    "sha256": "6480ef122ee57967636e5fbc6a1fd7c7e13fa6876276afd13b35d429f2f85629"
+  },
+  "installedExe": {
+    "path": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "sha256": "4dfb2e29d354999f22cfef652624c8fb9d3aa128a4d409baf036e6466cb2546a"
+  },
+  "installedDllSha256": "8ad0aadaaaeaad00b30444c4158728ddeccc806bf34818062b9ea9c682f17e97",
+  "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-resync-r63-20261016\\type\\msi\\build-receipt.json",
+  "installReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-resync-r63-20261016\\type\\install\\result.json",
+  "installedLocalChecks": {
+    "result": "INSTALLED_LOCAL_MISSING_ORIGINAL_MESSAGES_AND_STATE_PRESERVATION_VERIFIED",
+    "sourceCommit": "4868abc87a7593d54df8914031925972731731f6",
+    "installedExeSha256": "4dfb2e29d354999f22cfef652624c8fb9d3aa128a4d409baf036e6466cb2546a",
+    "cases": [
+      {
+        "acked": false,
+        "exitCode": 1,
+        "report": {
+          "restored": [],
+          "waitingForSegments": [],
+          "failures": [
+            {
+              "sessionId": "captured-owned-row",
+              "error": "这份录音的本机原音不完整；请连接原设备补收。尚未确认清理缺失部分，现有文件和恢复记录已保留。"
+            }
+          ],
+          "deviceCommands": 0,
+          "cloudCalls": 0
+        },
+        "protectedFilesUnchanged": {
+          ".board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481.json": "fdd39ad2414ee439cc31baa9cef3f7c42ca32a6b1f82b91afb60cde23b3cb598",
+          "sessions.json": "cfed7329edf2803673c57e3ece0fdb5133a8d09be1f06955adbe4bb6d9aa2dbb",
+          "sessions.json.bak": "cfed7329edf2803673c57e3ece0fdb5133a8d09be1f06955adbe4bb6d9aa2dbb",
+          ".audio-artifacts.json": "ba01eaf3aae8e1fe3b4a2e76cec00fd2b7e912b35986be29a21a2b73f465ae18"
+        }
+      },
+      {
+        "acked": true,
+        "exitCode": 1,
+        "report": {
+          "restored": [],
+          "waitingForSegments": [],
+          "failures": [
+            {
+              "sessionId": "captured-owned-row",
+              "error": "这份录音的本机原音不完整；设备已确认清理，可能无法补回。现有文件和恢复记录已保留。"
+            }
+          ],
+          "deviceCommands": 0,
+          "cloudCalls": 0
+        },
+        "protectedFilesUnchanged": {
+          ".board-session-2278c8042e442e67e13443e9b3cd0a839cfb1687445f32f9002e07664fe68481.json": "c762cfea70c65947f0923f96bc3b86c6430db3d1a7427e0a705ea49c5e70a2b4",
+          "sessions.json": "3f7458a9c6ed61d1a5c1902272f94d7839ee8bf4572ffeaceb9d144105e04b8b",
+          "sessions.json.bak": "3f7458a9c6ed61d1a5c1902272f94d7839ee8bf4572ffeaceb9d144105e04b8b",
+          ".audio-artifacts.json": "1be3f6db4719d968506aa52ca8e585cb3aaab151ccb81a3f6301e767a1326c97"
+        }
+      }
+    ],
+    "createdAtLocal": "2026-10-16T22:03:35.635072+08:00",
+    "hardwareAccess": false,
+    "cloudCalls": 0,
+    "scope": "Synthetic local file-loss messages only; managed component tests cover exact refetch logic. Actual protected BLE resync not run during hardware repair."
+  },
+  "softwareEvidence": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-resync-r63-20261016\\targeted-final.log",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-resync-r63-20261016\\wav-affected.log"
+  ],
+  "qualification": {
+    "installed": true,
+    "managedFileResyncComponents": true,
+    "installedMissingFileMessages": true,
+    "actualBleResync": false,
+    "physicalMicrophone": false,
+    "hardwareAccess": false,
+    "cloudCalls": 0,
+    "gui": false,
+    "speed": false,
+    "physicalDiskFull": false,
+    "fullProduct": false
+  },
+  "preservedFailures": [
+    "Initial compile exposed same_content visibility and test module path mistakes, corrected without changing wire or safety checks.",
+    "First packaging launcher used an incorrectly substituted parent cache path before freezing source; corrected to actual R62 receipt. No product process or installed files changed by this error."
+  ],
+  "next": "继续本机保存失败/磁盘不足和必要录音状态的具体软件缺口；硬件明确修复并可继续后，集中验证真实受保护BLE补收/异常恢复和后续联合固件，再做原2MiB样本联合抓包。"
+}
