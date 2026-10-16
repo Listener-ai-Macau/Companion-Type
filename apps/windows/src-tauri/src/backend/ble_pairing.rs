@@ -187,6 +187,12 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
     let is_paired = pairing.IsPaired().map_err(|error| format!("读取配对状态失败：{error}"))?;
     eprintln!("BLE pairing_trace stage=refreshed_windows_state address={address:012X} address_type={address_type:?} paired={is_paired} information_kind={:?} id_matches={}",
         information.Kind().ok(),information.Id().ok().as_ref()==Some(&id));
+    // Listener returns DeviceInformation after releasing this transient
+    // BluetoothLEDevice reference. Pairing owns the enumeration object, not
+    // a retained pre-pair GATT-device wrapper. Release COM normally (no Close).
+    drop(initial_information);
+    drop(device);
+    eprintln!("BLE pairing_trace stage=temporary_device_released address={address:012X} before_ceremony=1 explicit_close=0");
     if is_paired {
         eprintln!("BLE Windows pairing already_paired before GATT address={address:012X}");
         return Ok(());
@@ -238,14 +244,14 @@ fn pair_before_services(address: u64, address_type: Option<AddressType>, cancel:
     let paired = match wait_async_operation_with_cancel(operation, PAIR_TIMEOUT, "encrypted pairing", cancel) {
         Ok(result)=>result,
         Err(error)=>{
-            eprintln!("BLE pairing_trace stage=encrypted_pair_operation_error address={address:012X} elapsed_us={} requested_events={} accepted_events={} native_connection={:?} error={error}",
-                pair_started.elapsed().as_micros(),requested_events.load(Ordering::Relaxed),accepted_events.load(Ordering::Relaxed),device.0.ConnectionStatus().ok());
+            eprintln!("BLE pairing_trace stage=encrypted_pair_operation_error address={address:012X} elapsed_us={} requested_events={} accepted_events={} temporary_device_reference_held=0 error={error}",
+                pair_started.elapsed().as_micros(),requested_events.load(Ordering::Relaxed),accepted_events.load(Ordering::Relaxed));
             return Err(error);
         }
     };
     let status = paired.Status().map_err(|error| format!("读取配对结果失败：{error}"))?;
-    eprintln!("BLE pairing_trace stage=encrypted_pair_result address={address:012X} elapsed_us={} status={} requested_protection=Encryption reported_protection={:?} requested_events={} accepted_events={} native_connection={:?}",
-        pair_started.elapsed().as_micros(), status.0, paired.ProtectionLevelUsed().ok(),requested_events.load(Ordering::Relaxed),accepted_events.load(Ordering::Relaxed),device.0.ConnectionStatus().ok());
+    eprintln!("BLE pairing_trace stage=encrypted_pair_result address={address:012X} elapsed_us={} status={} requested_protection=Encryption reported_protection={:?} requested_events={} accepted_events={} temporary_device_reference_held=0",
+        pair_started.elapsed().as_micros(), status.0, paired.ProtectionLevelUsed().ok(),requested_events.load(Ordering::Relaxed),accepted_events.load(Ordering::Relaxed));
     verify_pair_result(status)?;
     eprintln!("BLE Windows pairing completed before GATT address={address:012X} status={} requested_protection=Encryption reported_protection={:?}",
         status.0, paired.ProtectionLevelUsed().ok());
