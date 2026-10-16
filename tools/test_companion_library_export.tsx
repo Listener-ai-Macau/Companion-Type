@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import React from 'react';import {act,create} from 'react-test-renderer';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {recordingLocalDay,recordingInDates} from '../packages/ui/src/libraryDates';
+import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
+
+const local=new Date(2026,9,16,23,59,59);const sameDay={startedAt:local.toISOString()};
+assert.equal(recordingLocalDay(sameDay),'2026-10-16');assert.ok(recordingInDates(sameDay,'2026-10-16','2026-10-16'));
+assert.equal(recordingInDates(sameDay,'2026-10-17',''),false);assert.equal(recordingInDates(sameDay,'2026-10-17','2026-10-16'),false);
+assert.ok(recordingInDates({startedAt:undefined}));assert.equal(recordingInDates({startedAt:undefined},'2026-10-01'),false);
+assert.equal(recordingInDates({startedAt:'unknown'},'','2026-10-31'),false);
+let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+const a=structuredClone(snapshot.host.sessions[0]);a.id='dated-a';a.startedAt=sameDay.startedAt;a.organization={revision:7,folder:'',tags:[],favorite:false};
+const b=structuredClone(a);b.id='dated-b';b.startedAt=new Date(2026,9,17,0,0,0).toISOString();
+const c=structuredClone(a);c.id='unknown-date';delete c.startedAt;
+snapshot.host.sessions=[a,b,c];snapshot.host.selectedSessionId=a.id;
+let behavior:'cancel'|'fail'|'success'='cancel';const calls:any[]=[];let tree:any;
+const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},
+ onExportLibrary:async(request:any)=>{calls.push(request);if(behavior==='fail')throw Error('disk full');return behavior==='cancel'?null:{path:'C:/Exports/new',sessions:request.targets.length,files:request.targets.length+1,bytes:20};}});
+const text=(n:any):string=>typeof n==='string'?n:(n.children??[]).map(text).join('');
+const button=(s:string)=>tree.root.findAllByType('button').find((n:any)=>text(n).includes(s));
+const set=(name:string,value:string)=>act(()=>tree.root.findByProps({'aria-label':name}).props.onChange({target:{value}}));
+act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
+assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,3);
+set('筛选录音开始日期','2026-10-16');set('筛选录音结束日期','2026-10-16');
+assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,1);
+act(()=>button('选择当前筛选结果').props.onClick());set('批量导出格式','json');set('批量导出纪要版本','onlineLive');
+await act(async()=>button('导出 1 场录音').props.onClick());assert.match(text(tree.toJSON()),/已取消导出/);
+assert.deepEqual(calls[0],{targets:[{sessionId:a.id,expectedRevision:7}],format:'json',meetingMode:'onlineLive'});
+behavior='fail';await act(async()=>button('导出 1 场录音').props.onClick());assert.match(text(tree.toJSON()),/未完成整批导出，选择仍保留：disk full/);
+behavior='success';await act(async()=>button('导出 1 场录音').props.onClick());assert.match(text(tree.toJSON()),/已导出 1 场录音到 C:\/Exports\/new/);
+set('筛选录音开始日期','2026-10-18');assert.match(text(tree.toJSON()),/开始日期不能晚于结束日期/);
+act(()=>button('清除分类筛选').props.onClick());assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,3);
+snapshot=structuredClone(snapshot);snapshot.device.recording=true;act(()=>tree.update(<CompanionDashboard {...props()}/>));
+assert.equal(button('导出 1 场录音').parent.props.disabled,true);act(()=>tree.unmount());
+console.log('PASS library date/batch export UI: local inclusive dates, unknown times, reset, exact selected IDs/revisions/mode, cancellation and error selection retention, success and recording gate; component only');

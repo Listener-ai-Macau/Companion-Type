@@ -281,6 +281,7 @@ pub fn run() {
             commands::discard_oldest_companion_recording,
             commands::export_companion_meeting,
             commands::export_companion_audio,
+            commands::export_companion_library,
             commands::export_companion_diagnostics,
             commands::prepare_companion_audio_components,
             commands::get_companion_backend_capabilities,
@@ -339,6 +340,8 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-note-request" => Some((i,4)),
         "--meeting-speakers-request" => Some((i,5)),
         "--device-connect-request" => Some((i,6)),
+        "--library-organize-request" => Some((i,7)),
+        "--library-export-request" => Some((i,8)),
         _ => None,
     })?;
     Some((|| {
@@ -350,7 +353,20 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         }
         if operation==6 {let _=backend::product_settings::load_and_apply();}
         let coordinator = CompanionCoordinator::new_fixture();
-        if operation == 0 {
+        if operation == 7 {
+            let request:backend::library_organization::Request=serde_json::from_reader(file).map_err(|_|"录音分类请求格式不正确。")?;
+            let snapshot=coordinator.save_library_organization(request)?;
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&serde_json::json!({
+                "result":"SAVED_LOCAL_LIBRARY_ORGANIZATION","sessions":snapshot.host.sessions,
+                "persistenceStatus":snapshot.host.persistence.status,"deviceAccess":false,"networkAccess":false
+            })).map_err(|e|e.to_string())?)?;
+            println!("library_organization_result=SAVED_LOCAL_LIBRARY_ORGANIZATION");
+        } else if operation == 8 {
+            let request:backend::library_export::Request=serde_json::from_reader(file).map_err(|_|"批量导出请求格式不正确。")?;
+            let _lease=coordinator.begin_audio_export()?;
+            let report=backend::library_export::save(&coordinator.snapshot()?,&request,Path::new(destination))?;
+            println!("library_export_json={}",serde_json::to_string(&report).map_err(|e|e.to_string())?);
+        } else if operation == 0 {
             let request: backend::meeting_workspace::MeetingEditRequest = serde_json::from_reader(file)
                 .map_err(|_| "会议修改请求格式不正确。")?;
             let id = request.session_id.clone();

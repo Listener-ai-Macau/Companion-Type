@@ -20,6 +20,7 @@ import {
   discardOldestDeviceRecording,
   exportCompanionMeeting,
   exportCompanionAudio,
+  exportCompanionLibrary,
   exportCompanionDiagnostics,
   prepareCompanionAudioComponents,
   checkCompanionService,
@@ -229,6 +230,7 @@ export function App() {
       onCheckService={isTauriRuntime() ? (service) => exclusive('refresh', () => checkCompanionService(service)) : undefined}
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}
       onExportAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => exportCompanionAudio(sessionId)) : undefined}
+      onExportLibrary={isTauriRuntime()?(request)=>exclusive('refresh',()=>exportCompanionLibrary(request)):undefined}
       onDiscardOldestRecording={isTauriRuntime() ? (seconds) => exclusive('refresh', async () => {
         const result = await discardOldestDeviceRecording(seconds);
         if (result.status === 'deleted') {

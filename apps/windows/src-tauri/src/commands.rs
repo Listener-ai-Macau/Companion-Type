@@ -407,6 +407,18 @@ pub async fn discard_oldest_companion_recording(
 }
 
 #[tauri::command]
+pub async fn export_companion_library(app:AppHandle,coordinator:CompanionCoordinatorState<'_>,request:crate::backend::library_export::Request)
+    ->Result<Option<crate::backend::library_export::Report>,String> {
+    let lease=coordinator.begin_audio_export()?;
+    crate::backend::library_export::validate(&coordinator.snapshot()?,&request)?;
+    let Some(destination)=app.dialog().file().blocking_pick_folder() else{return Ok(None)};
+    let destination=destination.simplified().into_path().map_err(|e|e.to_string())?;
+    let snapshot=coordinator.snapshot()?;
+    tauri::async_runtime::spawn_blocking(move||{let _lease=lease;crate::backend::library_export::save(&snapshot,&request,&destination)})
+        .await.map_err(|e|format!("批量导出任务未完成：{e}"))?.map(Some)
+}
+
+#[tauri::command]
 pub async fn export_companion_audio(
     app: AppHandle,
     coordinator: CompanionCoordinatorState<'_>,

@@ -43,6 +43,7 @@ pub(crate) mod recording_bookmarks;
 pub(crate) mod recording_pause_view;
 pub(crate) mod meeting_notes;
 pub(crate) mod library_organization;
+pub(crate) mod library_export;
 pub(crate) mod board_meeting;
 mod board_stop;
 mod interrupted_capture;

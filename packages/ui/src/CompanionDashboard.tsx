@@ -5,6 +5,8 @@ import { CompanionBookmarks } from './CompanionBookmarks';
 import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
 import {useListeningQueue} from './useListeningQueue';
 import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
+import {recordingInDates} from './libraryDates';
+import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { seekBookmarkAudio } from './bookmarkAudio';
@@ -179,6 +181,7 @@ export interface CompanionDashboardProps {
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
+  onExportLibrary?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
   /** Host-only resource/firmware package validation (Windows Tauri). */
   onValidateOtaPackage?: (paths: {
     manifestPath: string;
@@ -221,6 +224,7 @@ export function CompanionDashboard({
   onSaveBookmark,
   onSaveNote,
   onSaveLibraryOrganization,
+  onExportLibrary,
   onValidateOtaPackage,
   onTransferOtaPackage,
 }: CompanionDashboardProps) {
@@ -350,7 +354,8 @@ export function CompanionDashboard({
       const org=s.organization;const folder=org?.folder??'';
       return (libraryFilters.folder==='*'||folder===libraryFilters.folder||Boolean(libraryFilters.folder)&&folder.startsWith(libraryFilters.folder+'/'))
         &&(!libraryFilters.tag||org?.tags.some(t=>t.toLocaleLowerCase()===libraryFilters.tag.toLocaleLowerCase()))
-        &&(!libraryFilters.favorites||org?.favorite);
+        &&(!libraryFilters.favorites||org?.favorite)
+        &&recordingInDates(s,libraryFilters.from,libraryFilters.to);
     });
     const query = libraryQuery.trim().toLocaleLowerCase();
     if (!query) return base;
@@ -962,9 +967,9 @@ export function CompanionDashboard({
         </label>
         <CompanionLibraryTools sessions={recordingLibrary} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
           filters={libraryFilters} setFilters={setLibraryFilters} blocked={controlsBusy||oobeBlockedByRecording||storageBlocked}
-          onSave={onSaveLibraryOrganization} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
-        {visibleLibrary.length===0&&(libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites)?<div className="ct-library-empty">
-          <strong>当前筛选没有录音</strong><p>文件夹、标签、收藏与搜索会同时筛选。清除筛选后可查看已有录音。</p>
+          onSave={onSaveLibraryOrganization} onExport={onExportLibrary} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
+        {visibleLibrary.length===0&&(libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to)?<div className="ct-library-empty">
+          <strong>当前筛选没有录音</strong><p>文件夹、标签、收藏、日期与搜索会同时筛选。清除筛选后可查看已有录音。</p>
           <button type="button" className="ct-action" onClick={()=>{setLibraryFilters({folder:'*',tag:'',favorites:false});setLibraryQuery('');setOnlyPendingSessions(false);}}>清除分类筛选</button>
         </div>:visibleLibrary.length === 0 ? (
           <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关会议' : onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的会议' : '把值得记住的事，留在这里'}</strong><p>{libraryQuery ? '搜索会同时检查标题、完整转写和两个模式的纪要。' : onlyPendingSessions && recordingLibrary.length ? '切回全部会议，可以查看已完成的内容。' : '在 Companion 上长按按键开始录音，结束后回到电脑同步。转写与纪要需要已配置的服务。'}</p><button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openWorkflow}>{libraryQuery ? '清除搜索' : onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : '查看录音与同步步骤'}</button></div>
@@ -985,7 +990,7 @@ export function CompanionDashboard({
                       : '已保存');
               return (
                 <div className="ct-library-entry" key={session.id}>
-                {onSaveLibraryOrganization?<input type="checkbox" aria-label={`选择整理 ${meetingTitle(session)} ${formatDuration(session.durationMs)}`}
+                {onSaveLibraryOrganization||onExportLibrary?<input type="checkbox" aria-label={`选择整理 ${meetingTitle(session)} ${formatDuration(session.durationMs)}`}
                   checked={Object.hasOwn(librarySelection,session.id)} disabled={controlsBusy||oobeBlockedByRecording||storageBlocked}
                   onChange={e=>setLibrarySelection(old=>{const next={...old};if(e.target.checked)next[session.id]=session.organization?.revision??0;else delete next[session.id];return next;})}/>:null}
                 <button

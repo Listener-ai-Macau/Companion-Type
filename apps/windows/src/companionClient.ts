@@ -167,6 +167,10 @@ export async function saveCompanionLibraryOrganization(request:import('../../../
   if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中保存真实录音分类。');
   return invoke('save_companion_library_organization',{request});
 }
+export async function exportCompanionLibrary(request:import('../../../packages/core/src/libraryOrganization').CompanionLibraryExportRequest):Promise<import('../../../packages/core/src/libraryOrganization').CompanionLibraryExportResult|null>{
+  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中导出本机录音。');
+  return invoke('export_companion_library',{request});
+}
 
 export async function getProductSettings(): Promise<CompanionProductSettingsPublic> {
   if (isTauriRuntime()) {
