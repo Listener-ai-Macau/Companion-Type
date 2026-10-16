@@ -1301,6 +1301,13 @@ struct NativeDevice {
     connection_session: Option<Arc<super::ble_throughput::ConnectionSession>>,
 }
 
+async fn on_native_link<T>(device: &NativeDevice,
+    work: impl std::future::Future<Output=Result<T,String>>) -> Result<T,String> {
+    #[cfg(windows)]
+    if let Some(session)=device.connection_session.as_ref() { return session.guard(work).await; }
+    work.await
+}
+
 async fn disconnect_native_device(device: &NativeDevice) -> Result<(), String> {
     #[cfg(windows)]
     if let Some(session) = &device.connection_session { session.close(); }
@@ -1340,6 +1347,11 @@ async fn take_prepared_device(requested: Option<&str>) -> Result<Option<NativeDe
     let peer = PREPARED_DEVICE_CONNECTION.lock()
         .map_err(|_| "已连接设备状态锁不可用".to_string())?.take_exact(requested);
     let Some(mut peer) = peer else { return Ok(None) };
+    #[cfg(windows)]
+    if peer.device.connection_session.as_ref().is_some_and(|session| !session.is_open()) {
+        close_native_device(&peer.device).await;
+        return Ok(None);
+    }
     let connected = bounded_ble_result("check prepared device connection", StdDuration::from_secs(3),
         peer.device.peripheral.is_connected()).await.unwrap_or(false);
     if !connected { close_native_device(&peer.device).await; return Ok(None); }
@@ -1437,7 +1449,7 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
             let job = RecordingSyncJob::begin_background(device_id)?;
             // Finish the bounded control exchange/CCCD cleanup before handoff;
             // do not drop a subscription-owning future midway through an ACK.
-            let catalog = segmented::read_catalog(&device, &chars, peer.clone()).await?;
+            let catalog = on_native_link(&device, segmented::read_catalog(&device, &chars, peer.clone())).await?;
             let tail_scope=owned.as_ref().and_then(|lease| lease.logical_key.as_ref());
             if catalog.generation.is_some() && device.follow_generation == catalog.generation
                 && !(peer.growing_tail&&tail_scope.is_some()) {
@@ -1503,6 +1515,8 @@ async fn retained_offline_connection(device_id: Option<&str>, start_token: u32, 
     let Some(lease)=lease else {return Ok(None)};
     let linked=bounded_ble_result("check retained offline recording connection",StdDuration::from_secs(3),
         lease.device.peripheral.is_connected()).await.unwrap_or(false);
+    #[cfg(windows)]
+    let linked=linked && lease.device.connection_session.as_ref().is_none_or(|session|session.is_open());
     if linked {
         return Ok(Some(lease));
     }
@@ -3787,7 +3801,7 @@ async fn record_board_online_live_inner(
          * unavailable network can never delay STOP or exhaust host memory. */
         if enough_new_codec && pending_partials.len() < 2 {
             durable_codec = match pull_recording_bytes(
-                &device.peripheral,
+                &device,
                 &characteristics,
                 &mut live_pull_session,
                 &entry,
@@ -4387,7 +4401,7 @@ async fn sync_native_recordings_with_link_policy(
     let job = RecordingSyncJob::begin(&device.device_id())?;
     let characteristics = device.peripheral.characteristics();
     let started = StdInstant::now();
-    let catalog = match job.receive(read_recording_catalog(&device, &characteristics)).await {
+    let catalog = match job.receive(on_native_link(device, read_recording_catalog(&device, &characteristics))).await {
         Ok(catalog) => catalog,
         Err(error) if error == recording_sync::PAUSED => return Ok(NativeRecordingBatch {
             device_id: device.device_id(), recordings: Vec::new(), failures: Vec::new(), paused: true,
@@ -4529,7 +4543,7 @@ async fn sync_native_recording_entry(
 
     let started = StdInstant::now();
     let payload_bytes = pull_recording_bytes(
-        &device.peripheral,
+        device,
         characteristics,
         pull_session,
         &entry,
@@ -4883,7 +4897,7 @@ where S: futures::Stream<Item = Result<pull_receiver::ReceivedNotification, Stri
 }
 
 async fn pull_recording_bytes(
-    peripheral: &Peripheral,
+    device: &NativeDevice,
     characteristics: &std::collections::BTreeSet<Characteristic>,
     session: &mut Option<PullSession>,
     entry: &RecordingEntry,
@@ -4895,13 +4909,13 @@ async fn pull_recording_bytes(
 ) -> Result<Vec<u8>, String> {
     let sealed_original = entry.sync_state == RECORDING_SYNC_UNSYNCED
         && initial_data.is_none() && !recording_wire_ima_requested(entry.codec);
-    let mut port = RecordingPull { peripheral, characteristics, session, entry,
+    let mut port = RecordingPull { device, characteristics, session, entry,
         device_address, device_address_type, initial_data, job, link_policy };
     pull_recovery::receive(&mut port, sealed_original, entry.recording_id).await
 }
 
 struct RecordingPull<'a> {
-    peripheral: &'a Peripheral,
+    device: &'a NativeDevice,
     characteristics: &'a std::collections::BTreeSet<Characteristic>,
     session: &'a mut Option<PullSession>,
     entry: &'a RecordingEntry,
@@ -4913,9 +4927,15 @@ struct RecordingPull<'a> {
 }
 impl pull_recovery::Attempt for RecordingPull<'_> {
     fn receive(&mut self) -> futures::future::BoxFuture<'_, Result<Vec<u8>, String>> {
-        Box::pin(pull_recording_bytes_once(self.peripheral, self.characteristics,
-            self.session, self.entry, self.device_address, self.device_address_type,
-            self.initial_data.take(), self.job, self.link_policy.as_deref_mut()))
+        Box::pin(async move {
+            let result=on_native_link(self.device, pull_recording_bytes_once(&self.device.peripheral, self.characteristics,
+                self.session, self.entry, self.device_address, self.device_address_type,
+                self.initial_data.take(), self.job, self.link_policy.as_deref_mut())).await;
+            // A session loss can cancel an in-flight receive. Join/drain its
+            // durable cursor first, then retire both owned notification lanes.
+            if result.is_err() { PullSession::close(self.session).await; }
+            result
+        })
     }
 }
 

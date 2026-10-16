@@ -76,7 +76,8 @@ async fn pause_integrity_storage_and_link_errors_are_never_retried_as_queue_over
     for error in [super::super::super::recording_sync::PAUSED,
         "recording packet CRC mismatch at offset=0", "final SHA mismatch",
         "recording byte count mismatch", "录音续传记录不可用",
-        "recording notification stream ended", "write recording_chunk_pull start timed out"] {
+        "recording notification stream ended", "write recording_chunk_pull start timed out",
+        "BLE session disconnected: GattSessionStatus(0); original recording retained"] {
         let mut port = FailedPort { error, attempts: 0 };
         assert_eq!(receive(&mut port, true, 81).await.unwrap_err(), error);
         assert_eq!(port.attempts, 1);
@@ -94,6 +95,7 @@ async fn live_or_lossy_receive_cannot_replay_a_sealed_file_cursor() {
 fn transport_failures_retire_the_connection_but_one_bad_recording_stays_isolated() {
     for error in ["resume write: HRESULT(0x80000013) 该对象已关闭。",
         "resume write: GattCommunicationStatus(1)", "not connected",
+        "BLE session disconnected: GattSessionStatus(0); original recording retained",
         "recording notification stream ended", "recording chunk notify timeout at offset=4",
         "recording transfer stalled after 3 resume requests at offset=4; original recording not consumed",
         NATIVE_OVERRUN, RECEIVER_OVERRUN,

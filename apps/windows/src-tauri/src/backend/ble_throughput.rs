@@ -45,9 +45,11 @@ struct SessionHandles {
     device: BluetoothLEDevice,
     session: Option<GattSession>,
     status_token: Option<EventRegistrationToken>,
+    observation: Arc<SessionObservation>,
 }
 impl Drop for SessionHandles {
     fn drop(&mut self) {
+        self.observation.close_owner();
         if let Some(session) = self.session.take() {
             // Detach first so intentional owner cleanup is not a radio fault.
             if let Some(token) = self.status_token.take() {
@@ -66,21 +68,66 @@ impl Drop for SessionHandles {
 struct SessionObservation {
     started: Instant,
     active_seen: AtomicBool,
-    first_loss: AtomicBool,
+    owner_closed: AtomicBool,
+    // Sticky for this actual session, even if Windows later reconnects its
+    // device object. Old notification/ACK state cannot cross that boundary.
+    terminal: tokio::sync::watch::Sender<Option<String>>,
 }
 impl SessionObservation {
+    fn new() -> Self {
+        let (terminal, _) = tokio::sync::watch::channel(None);
+        Self { started: Instant::now(), active_seen: AtomicBool::new(false),
+            owner_closed: AtomicBool::new(false), terminal }
+    }
+
+    fn error(&self) -> Option<String> { self.terminal.borrow().clone() }
+
+    fn close_owner(&self) {
+        self.owner_closed.store(true, Ordering::SeqCst);
+        self.terminal.send_if_modified(|state| {
+            if state.is_some() { return false; }
+            *state=Some("BLE session disconnected: connection owner released; original recording retained".into());
+            true
+        });
+    }
+
     fn observe(&self, address: u64, status: Option<GattSessionStatus>, error: Option<BluetoothError>) {
-        if status == Some(GattSessionStatus::Active) {
-            if !self.active_seen.swap(true, Ordering::Relaxed) {
+        if self.owner_closed.load(Ordering::SeqCst) { return; }
+        let explicit_error = error.is_some_and(|value| value != BluetoothError::Success);
+        if status == Some(GattSessionStatus::Active) && !explicit_error {
+            if !self.active_seen.swap(true, Ordering::SeqCst) {
                 eprintln!("BLE session_trace address={address:012X} elapsed_us={} stage=first_active status={status:?} error={error:?}", self.started.elapsed().as_micros());
             }
             return;
         }
-        let explicit_error = error.is_some_and(|value| value != BluetoothError::Success);
-        if (self.active_seen.load(Ordering::Relaxed) || explicit_error)
-            && !self.first_loss.swap(true, Ordering::Relaxed) {
-            eprintln!("BLE session_trace address={address:012X} elapsed_us={} stage=first_loss was_active={} status={status:?} error={error:?} owner_cleanup=false",
-                self.started.elapsed().as_micros(), self.active_seen.load(Ordering::Relaxed));
+        // Initial Closed is normal before the first successful connection;
+        // unknown event fields alone do not prove a lost link.
+        if !explicit_error && !(self.active_seen.load(Ordering::SeqCst)
+            && status == Some(GattSessionStatus::Closed)) { return; }
+        self.terminal.send_if_modified(|state| {
+            if state.is_some() { return false; }
+            let detail=format!("BLE session disconnected: address={address:012X} status={status:?} error={error:?}; original recording retained; reconnect with a fresh verified session");
+            eprintln!("BLE session_trace address={address:012X} elapsed_us={} stage=first_loss was_active={} status={status:?} error={error:?} owner_cleanup=false", self.started.elapsed().as_micros(),self.active_seen.load(Ordering::SeqCst));
+            *state=Some(detail);
+            true
+        });
+    }
+
+    async fn guard<T>(&self, work: impl std::future::Future<Output=Result<T,String>>) -> Result<T,String> {
+        let mut terminal=self.terminal.subscribe();
+        // Subscribe before checking, covering a callback before the wait is
+        // polled. Watch retains the first loss without a per-packet timer.
+        if let Some(error)=terminal.borrow().clone() { return Err(error); }
+        tokio::select! {
+            biased;
+            changed=terminal.changed()=> {
+                let error=terminal.borrow().clone().unwrap_or_else(||
+                    format!("BLE session disconnected: state observer ended ({changed:?}); original recording retained"));
+                Err(error)
+            }
+            result=work=> {
+                if let Some(error)=self.error() { Err(error) } else { result }
+            }
         }
     }
 }
@@ -91,10 +138,16 @@ impl SessionObservation {
 /// drops it when no user/recorder owner remains. This requests no fast interval.
 pub(super) struct ConnectionSession {
     handles: Mutex<Option<SessionHandles>>,
+    observation: Arc<SessionObservation>,
 }
 impl ConnectionSession {
     pub(super) fn is_open(&self) -> bool {
-        self.handles.lock().unwrap_or_else(|error| error.into_inner()).is_some()
+        self.observation.error().is_none()
+            && self.handles.lock().unwrap_or_else(|error| error.into_inner()).is_some()
+    }
+
+    pub(super) async fn guard<T>(&self, work: impl std::future::Future<Output=Result<T,String>>) -> Result<T,String> {
+        self.observation.guard(work).await
     }
 
     pub(super) fn close(&self) {
@@ -136,15 +189,13 @@ pub(super) async fn maintain_connection(
     let worker = tokio::task::spawn_blocking(move || {
         let cancel = BleCancel::new(cancel, "cancelled Companion connection session");
         let device = open_device(address, address_type, &cancel)?;
-        let mut handles = SessionHandles { device, session: None, status_token: None };
+        let observation = Arc::new(SessionObservation::new());
+        let mut handles = SessionHandles { device, session: None, status_token: None, observation: observation.clone() };
         let id = handles.device.BluetoothDeviceId().map_err(|e| format!("connection device identity: {e}"))?;
         let operation = GattSession::FromDeviceIdAsync(&id).map_err(|e| format!("create connection session: {e}"))?;
         handles.session = Some(wait_async_operation_with_cancel(
             operation, OPEN_TIMEOUT, "connection session open", &cancel)?);
         let session = handles.session.as_ref().ok_or("connection session missing")?;
-        let observation = Arc::new(SessionObservation {
-            started: Instant::now(), active_seen: AtomicBool::new(false), first_loss: AtomicBool::new(false),
-        });
         let event_observation = observation.clone();
         let handler = TypedEventHandler::<GattSession, GattSessionStatusChangedEventArgs>::new(move |_, args| {
             if let Some(args) = args {
@@ -163,7 +214,7 @@ pub(super) async fn maintain_connection(
         session.SetMaintainConnection(true).map_err(|e| format!("maintain Companion connection: {e}"))?;
         if cancel.requested() { return Err(cancel.cancelled_error("connection session")); }
         eprintln!("BLE connection_session maintain_requested=1 status={:?} owner=normal_user_or_recorder", session.SessionStatus().ok());
-        Ok(Arc::new(ConnectionSession { handles: Mutex::new(Some(handles)) }))
+        Ok(Arc::new(ConnectionSession { handles: Mutex::new(Some(handles)), observation }))
     });
     match tokio::time::timeout(Duration::from_millis(2_500), worker).await {
         Ok(Ok(result)) => result,
@@ -386,4 +437,86 @@ fn open_device(address: u64, address_type: Option<AddressType>, cancel: &BleCanc
         None => BluetoothLEDevice::FromBluetoothAddressAsync(address),
     }.map_err(|e| format!("open throughput device: {e}"))?;
     wait_async_operation_with_cancel(operation, OPEN_TIMEOUT, "connection device open", cancel)
+}
+
+#[cfg(test)]
+mod session_loss_tests {
+    use super::*;
+    use std::sync::atomic::AtomicUsize;
+    use crate::backend::recording_transfer::{Cursor, ReceiveCursor, Source};
+    use sha2::{Digest, Sha256};
+
+    const ADDRESS:u64=0xc892ffdd3bca;
+
+    #[tokio::test]
+    async fn session_loss_initial_closed_is_not_failure_but_active_loss_is_sticky() {
+        let state=SessionObservation::new();
+        state.observe(ADDRESS,Some(GattSessionStatus::Closed),None);
+        state.observe(ADDRESS,None,Some(BluetoothError::Success));
+        assert_eq!(state.guard(async {Ok(7)}).await.unwrap(),7);
+        state.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        state.observe(ADDRESS,None,None);
+        assert!(state.error().is_none(),"unknown fields are not proof of a disconnect");
+        state.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+        let first=state.error().unwrap();
+        // Windows can reconnect its device object; the old CCCD/receive state
+        // must still be retired and a fresh protected session established.
+        state.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        let calls=AtomicUsize::new(0);
+        assert_eq!(state.guard(async {calls.fetch_add(1,Ordering::SeqCst);Ok(8)}).await.unwrap_err(),first);
+        assert_eq!(calls.load(Ordering::SeqCst),0,"do not send another START/resume on a lost session");
+    }
+
+    #[tokio::test]
+    async fn session_loss_interrupts_pending_receive_and_preserves_actual_durable_prefix() {
+        let root=std::env::temp_dir().join(format!("companion-session-loss-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();
+        let body:Vec<u8>=(0..16_384).map(|n|(n%239)as u8).collect();
+        let digest=Sha256::digest(&body);
+        let source=Source{device:"same-sealed-session-loss".into(),recording_id:18,codec:3,
+            source_mode:1,duration_ms:120_000,total_length:body.len()as u32,
+            sha256_prefix:digest[..8].try_into().unwrap(),content_crc32:crc32fast::hash(&body)};
+        let state=Arc::new(SessionObservation::new());
+        state.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        let worker_state=state.clone();let worker_root=root.clone();let worker_source=source.clone();
+        let prefix=body[..8_192].to_vec();
+        let (ready,received)=tokio::sync::oneshot::channel();
+        let task=tokio::spawn(async move {
+            worker_state.guard(async {
+                let(mut cursor,old)=ReceiveCursor::open(&worker_root,worker_source).await?;
+                assert!(old.is_empty());
+                cursor.append(&prefix).await?;
+                cursor.checkpoint().await?;
+                let _=ready.send(());
+                // The actual receive cursor lives in this cancelled future;
+                // its normal drop drains accepted data and releases its lock.
+                std::future::pending::<()>().await;
+                Ok::<_,String>(())
+            }).await
+        });
+        received.await.unwrap();
+        state.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+        let error=tokio::time::timeout(Duration::from_secs(2),task).await.unwrap().unwrap().unwrap_err();
+        assert!(error.starts_with("BLE session disconnected:"));
+        let(cursor,persisted)=Cursor::open(&root,source).unwrap();
+        assert_eq!(persisted,body[..8_192]);
+        assert!(persisted.len()<body.len(),"failure must not promote an incomplete original to saved/consumed");
+        drop(cursor);std::fs::remove_dir_all(root).unwrap();
+    }
+
+    #[tokio::test]
+    async fn session_loss_owner_release_and_old_callbacks_cannot_poison_new_session() {
+        let old=SessionObservation::new();
+        let fresh=SessionObservation::new();
+        old.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        old.close_owner();
+        let released=old.error().unwrap();
+        old.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+        assert_eq!(old.error().as_deref(),Some(released.as_str()));
+        fresh.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        assert_eq!(fresh.guard(async {Ok(9)}).await.unwrap(),9);
+        let failed=SessionObservation::new();
+        failed.observe(ADDRESS,None,Some(BluetoothError::OtherError));
+        assert!(failed.guard(async {Ok(0)}).await.is_err(),"explicit native errors also terminate an unready session");
+    }
 }

@@ -181,7 +181,7 @@ pub(super) async fn follow_tail(device:&NativeDevice,
         codec:3,source_mode:RECORDING_SOURCE_MIC_SAI,sync_state:RECORDING_SYNC_TRANSFER_ACTIVE,
         total_length:tail.encoded_length,sha256_prefix:[0;8],content_crc32:0,segment:None,tail:Some(tail.clone())};
     let mut session=None;
-    let received=pull_recording_bytes(&device.peripheral,chars,&mut session,&e,&device.address,
+    let received=pull_recording_bytes(device,chars,&mut session,&e,&device.address,
         device.address_type,Some(bytes),Some(job),None).await;
     PullSession::close(&mut session).await;
     let received=received?;job.saving();cursor.save(&tail,&received,peer)?;
@@ -294,7 +294,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
                     if !admit_segment(&mut admitted, &key, e.recording_id, limit) { deferred = true; return Ok(()); }
                     link_policy.initialize(device).await;
                     let prefix=if peer.growing_tail { Prefix::sealed(&root,d,&peer)? } else {None};
-                    let bytes = pull_recording_bytes(&device.peripheral, chars, &mut pull_session, e,
+                    let bytes = pull_recording_bytes(device, chars, &mut pull_session, e,
                         &device.address, device.address_type, prefix, Some(job), Some(link_policy)).await?;
                     job.saving();
                     // Full SHA/CRC/frame axis are mandatory even with legacy
