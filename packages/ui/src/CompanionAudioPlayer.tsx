@@ -41,6 +41,8 @@ function SourcePlayer({ src, sourceIdentity, playerRef, onError, pauseTimeline, 
   const [start, setStart] = useState<number | null>(null);
   const [end, setEnd] = useState<number | null>(null);
   const [loop, setLoop] = useState(false);
+  const [repeat,setRepeat]=useState(false);
+  const repeatActive=useRef(repeat);repeatActive.current=repeat;
   const loopActive = useRef(loop);
   loopActive.current = loop;
   const [message, setMessage] = useState('');
@@ -137,6 +139,10 @@ function SourcePlayer({ src, sourceIdentity, playerRef, onError, pauseTimeline, 
       onEnded={() => {
         const player = playerRef.current;
         if (!player) return;
+        if(repeatActive.current){
+          completed.current=false;player.currentTime=0;setPosition(0);
+          void player.play().catch(()=>{setRepeat(false);setMessage('单场循环已暂停，请点击播放继续。');});return;
+        }
         if (!loopActive.current || !validRange || start == null) {
           completed.current = true; remember(player, true); onFinished?.(); return;
         }
@@ -156,6 +162,9 @@ function SourcePlayer({ src, sourceIdentity, playerRef, onError, pauseTimeline, 
           remember(player, true);
         }}>{playbackSpeeds.map((value) => <option key={value} value={value}>{value}×</option>)}</select></label>
       <span>{time(position)} / {time(duration)}</span>
+      <button type="button" className="ct-action" disabled={!ready} aria-pressed={repeat} onClick={()=>{
+        setLoop(false);setRepeat(value=>!value);setMessage('');
+      }}>{repeat?'关闭单场循环':'开启单场循环'}</button>
       <button type="button" className="ct-action" disabled={!ready} onClick={() => {
         const player=playerRef.current; if (!player) return;
         completed.current=false; setLoop(false); player.currentTime=0; setPosition(0); remember(player,true);
@@ -184,7 +193,7 @@ function SourcePlayer({ src, sourceIdentity, playerRef, onError, pauseTimeline, 
           if (!validRange) return;
           if (!loop && start != null && end != null && playerRef.current
             && (playerRef.current.currentTime < start || playerRef.current.currentTime >= end)) playerRef.current.currentTime = start;
-          setLoop((value) => !value); setMessage('');
+          setRepeat(false); setLoop((value) => !value); setMessage('');
         }}>{loop ? '关闭 A–B 循环' : '开启 A–B 循环'}</button>
       <button type="button" className="ct-action" disabled={start == null} onClick={() => {
         setLoop(false); setStart(null); setEnd(null); setMessage('');

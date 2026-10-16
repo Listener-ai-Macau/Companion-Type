@@ -91,7 +91,7 @@ export function App() {
       await exclusive(request.action, async () => {
         try {
           setSnapshot(await applyCompanionControl(request));
-          if(request.action==='privacyDeleteAllLocal'&&!clearPlaybackMemory())
+          if(request.action==='privacyEraseAll'&&!clearPlaybackMemory())
             setError('本机会议已清理，但回听位置尚未清除；请检查本机存储权限后重试清理。');
         } catch (controlError) {
           if (['meetingStart', 'meetingStop', 'meetingFinalize', 'meetingPause', 'meetingResume',
