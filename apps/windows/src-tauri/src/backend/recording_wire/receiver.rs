@@ -683,5 +683,5 @@ mod resync;
 pub(crate) use resync::SyncRepair;
 mod live;
 pub(crate) use live::LiveCursor;
-pub(crate) use local::{LocalRestoreReport, restore_local_product};
+pub(crate) use local::{LocalRestoreReport, restore_local_product,restore_local_session};
 pub(crate) use probe::{phase, verify};

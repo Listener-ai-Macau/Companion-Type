@@ -1,4 +1,14 @@
 use super::*;
+#[test]
+fn r65_late_terminal_observation_keeps_existing_local_audio_wait() {
+    let mut journal=running();let mut row=original_row(&journal);
+    row.status="captured".into();row.pending_reason=Some("needs_local_audio".into());row.recovery.attempt_count=2;
+    let (_,anchor,duration)=c_status(0);let mut raw=vector(0)[56..136].to_vec();raw[1]=2;
+    let crc=crc32fast::hash(&raw[..76]);raw[76..].copy_from_slice(&crc.to_le_bytes());
+    let ended=PauseStatus::decode(&raw).unwrap();journal.observe_with_peer(&peer(),&ended,anchor,duration).unwrap();
+    journal.checkpoint_row(&mut row).unwrap();assert_eq!(row.pending_reason.as_deref(),Some("needs_local_audio"));
+    assert_eq!(row.recovery.attempt_count,2);assert!(!row.audio_stored&&!row.device_reclaimed);
+}
 
 #[test]
 fn r60_actual_c_terminal_cause_and_empty_cancellation_decode_without_fake_stop_ack() {

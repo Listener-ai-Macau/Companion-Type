@@ -36,10 +36,16 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   const finalMinutes = meetingHasFinalMinutes(session);
   const draft = variants.some((item) => item?.markdown.trim()) || Boolean(session.minutes?.markdown.trim());
   const localAudio = session.pendingReason !== 'needs_device_sync'
-    && Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0));
+    && (session.deviceRecordingKey ? Boolean(session.audioStored && session.retention.audioCached && session.audioPath && session.audioBytes > 0)
+      : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
   const stage = finalMinutes ? 3 : finalText ? 2 : localAudio ? 1 : 0;
   if (session.status === 'recording') return { stage: 0, title: '这场会议正在录音', detail: '结束后再整理；当前文字可能仍是未完成片段。', processing: true };
-  if (session.pendingReason === 'needs_device_sync') {
+  if (session.pendingReason === 'needs_local_audio') return {
+    stage: 1, title: '原音已收齐，生成回听文件',
+    detail: '原音已保存在电脑。若此前保存失败，请先释放磁盘空间或解除文件占用，再生成回听文件。',
+    label: '生成回听文件', request: {action:'meetingRestoreAudio',sessionId:session.id},
+  };
+  if (session.pendingReason === 'needs_device_sync' || session.pendingReason === 'needs_segments') {
     const sameDevice = context.connected && Boolean(session.sourceDeviceId)
       && session.sourceDeviceId?.replace(/[:-]/g, '').toLowerCase() === context.deviceId?.replace(/[:-]/g, '').toLowerCase();
     return { stage: 0, title: '先把录音带回电脑', detail: '这场录音还没有收齐，先同步来源设备，再继续转写。',

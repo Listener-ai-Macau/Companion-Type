@@ -50,6 +50,9 @@ fn recovery_audio_is_owned(session: &CompanionV1HostSession) -> bool {
 /// queued, and an arbitrary/legacy WAV never gains recovery intent here.
 pub(crate) fn reconcile_session_recovery(session: &mut CompanionV1HostSession) {
     if session.organization.trashed_at.is_some(){session.recovery=Default::default();return;}
+    // Local delivery state is independent of the existing cloud intent and
+    // retry budget. A missing derivative is not a new ASR failure/attempt.
+    if session.pending_reason.as_deref()==Some("needs_local_audio") && !session.audio_stored {return;}
     if session.recovery.intent != "processMeeting" {
         return;
     }

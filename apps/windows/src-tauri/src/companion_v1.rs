@@ -605,6 +605,7 @@ pub struct CompanionV1ControlEcho {
 #[serde(rename_all = "camelCase")]
 pub enum CompanionV1ControlAction {
     HostRetrySave,
+    MeetingRestoreAudio,
     DeviceScan,
     DeviceConnect,
     DeviceDisconnect,
@@ -769,6 +770,9 @@ pub(crate) fn apply_control_at(
 
     match request.action {
         CompanionV1ControlAction::HostRetrySave => {}
+        CompanionV1ControlAction::MeetingRestoreAudio => {
+            return Err("回听文件恢复需要本机原音与校验记录；演示模式不会生成替代音频。".into());
+        }
         CompanionV1ControlAction::DeviceScan => {
             snapshot.device.scanning = false;
             snapshot.device.connected = false;
@@ -2120,7 +2124,7 @@ fn count_transcript_sessions(snapshot: &CompanionV1Snapshot) -> u32 {
 
 fn characteristic_for_action(action: CompanionV1ControlAction) -> &'static str {
     match action {
-        CompanionV1ControlAction::HostRetrySave => COMPANION_V1_HOST_RECORDING_CHANNEL,
+        CompanionV1ControlAction::HostRetrySave | CompanionV1ControlAction::MeetingRestoreAudio => COMPANION_V1_HOST_RECORDING_CHANNEL,
         CompanionV1ControlAction::DeviceScan
         | CompanionV1ControlAction::DeviceConnect
         | CompanionV1ControlAction::DeviceDisconnect
@@ -2211,6 +2215,7 @@ fn action_command(action: CompanionV1ControlAction) -> u8 {
         CompanionV1ControlAction::MeetingResume => 5,
         CompanionV1ControlAction::MeetingRecoverControl => 0,
         CompanionV1ControlAction::HostRetrySave => 0x8e,
+        CompanionV1ControlAction::MeetingRestoreAudio => 0x8f,
         CompanionV1ControlAction::DeviceScan => 0x10,
         CompanionV1ControlAction::DeviceConnect => 0x11,
         CompanionV1ControlAction::DeviceDisconnect => 0x12,
@@ -2253,6 +2258,7 @@ fn host_only_action(action: CompanionV1ControlAction) -> bool {
     matches!(
         action,
         CompanionV1ControlAction::HostRetrySave
+            | CompanionV1ControlAction::MeetingRestoreAudio
             | CompanionV1ControlAction::DeviceScan
             | CompanionV1ControlAction::DeviceConnect
             | CompanionV1ControlAction::DeviceDisconnect

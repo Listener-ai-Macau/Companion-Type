@@ -79,7 +79,9 @@ impl Journal {
             // Preserve the warning and keep automatic cloud work paused after
             // receiving; source audio is still verified independently.
             row.capture_incomplete|=end.capture_incomplete;
-            row.pending_reason=(!row.audio_stored).then(||"needs_device_sync".into());
+            if row.audio_stored||row.pending_reason.as_deref()!=Some("needs_local_audio") {
+                row.pending_reason=(!row.audio_stored).then(||"needs_device_sync".into());
+            }
             if row.audio_stored {super::super::interrupted_capture::hold(row);}
             return Ok(());
         }
@@ -100,7 +102,9 @@ impl Journal {
                 if row.stopped_at.is_none() && !c.finished_locally {
                     row.stopped_at=Some(super::super::observation_timestamp());
                 }
-                row.pending_reason=(!row.audio_stored).then(||"needs_device_sync".into());
+                if row.audio_stored||row.pending_reason.as_deref()!=Some("needs_local_audio") {
+                    row.pending_reason=(!row.audio_stored).then(||"needs_device_sync".into());
+                }
             } else {row.status="recording".into();row.stopped_at=None;}
         } else {row.status="recording".into();}
         if self.pending.is_some() {row.pending_reason=Some("device_control_pending".into());}

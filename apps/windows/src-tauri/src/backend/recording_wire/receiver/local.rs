@@ -23,7 +23,7 @@ pub(crate) struct LocalRestoredRecording {
 }
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
-pub(crate) struct LocalRestoreFailure { session_id: String, error: String }
+pub(crate) struct LocalRestoreFailure { session_id: String, pub(crate) error: String }
 enum RestoreOutcome { Unchanged, Waiting, Restored(LocalRestoredRecording) }
 
 pub(crate) fn restore_local_product() -> Result<LocalRestoreReport,String> {
@@ -31,15 +31,30 @@ pub(crate) fn restore_local_product() -> Result<LocalRestoreReport,String> {
         &crate::backend::persistence::state_file_path())
 }
 pub(crate) fn restore_local(root: &Path, index: &Path) -> Result<LocalRestoreReport,String> {
+    restore_local_scope(root,index,None)
+}
+pub(crate) fn restore_local_session(id:&str)->Result<LocalRestoreReport,String> {
+    restore_local_scope(&crate::backend::audio_storage::recording_root()?,
+        &crate::backend::persistence::state_file_path(),Some(id))
+}
+fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<LocalRestoreReport,String> {
     let root=root.canonicalize().map_err(|e|format!("本机录音目录不可用，未修改恢复记录：{e}"))?;
     let loaded=session_store::load(index);
     if loaded.state.status=="blocked" {
         return Err(loaded.state.message.unwrap_or_else(fail));
     }
     let mut report=LocalRestoreReport::default();
-    let Some(bytes)=loaded.bytes else {return Ok(report)};
+    let Some(bytes)=loaded.bytes else {
+        if target.is_some(){return Err("本机录音索引暂时不可用，未恢复其它录音。".into());}
+        return Ok(report)
+    };
     let rows:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&bytes).map_err(|_|fail())?;
-    for row in rows.iter().filter(|row| row.source=="boardDevice" && row.device_recording_key.is_some() && row.retention.audio_cached) {
+    if target.is_some_and(|id|id.trim().is_empty() || !rows.iter().any(|r|r.id==id && r.source=="boardDevice"
+        &&r.device_recording_key.is_some()&&r.retention.audio_cached&&r.organization.trashed_at.is_none())) {
+        return Err("这份录音没有可用的本机恢复记录，或已清理/移入回收站；未恢复其它录音。".into());
+    }
+    for row in rows.iter().filter(|row| row.source=="boardDevice" && row.device_recording_key.is_some()
+        && row.retention.audio_cached && row.organization.trashed_at.is_none() && target.is_none_or(|id|row.id==id)) {
         let result=(|| {
             let key=super::super::SessionKey::from_public(row.device_recording_key.as_ref().unwrap())?;
             let device=row.source_device_id.as_deref().filter(|id|
@@ -75,6 +90,12 @@ pub(crate) fn restore_local(root: &Path, index: &Path) -> Result<LocalRestoreRep
                 !crate::backend::device_connection::same_device_id(id,device)) {return Err(fail())};
             let mut receiver=Receiver::open_for_local_repair(&root,&first.wire)?;
             if !receiver.plan()?.payloads_complete {return Ok(RestoreOutcome::Waiting)};
+            // Persist the distinction before a possible disk/decode failure.
+            // Complete encoded originals need local WAV work, not another BLE
+            // pull. A crash here keeps the exact row and raw/consume receipt.
+            if receiver.receipt.audio.is_none() {
+                if receiver.publish(index,device)?!=row.id {return Err(fail());}
+            }
             let audio=receiver.assemble()?;
             let id=receiver.publish(index,device)?;
             if id!=row.id {return Err(fail())};
@@ -99,6 +120,73 @@ pub(crate) fn restore_local(root: &Path, index: &Path) -> Result<LocalRestoreRep
 #[cfg(test)]
 mod tests {
     use super::*;
+    struct Environment(Vec<(&'static str,Option<std::ffi::OsString>)>);
+    impl Environment {
+        fn local(root:&Path,index:&Path)->Self {
+            let values=[("COMPANION_TYPE_RECORDING_DIR",root.as_os_str()),("COMPANION_TYPE_STATE_PATH",index.as_os_str())];
+            Self(values.into_iter().map(|(key,value)|{let old=std::env::var_os(key);std::env::set_var(key,value);(key,old)}).collect())
+        }
+    }
+    impl Drop for Environment {fn drop(&mut self){for(key,old)in &self.0{match old{
+        Some(value)=>std::env::set_var(key,value),None=>std::env::remove_var(key),
+    }}}}
+    #[test]
+    fn r65_raw_complete_failure_has_local_state_and_selected_control_recovers_without_radio() {
+        use crate::companion_v1::{CompanionV1ControlAction as Action,CompanionV1ProcessingPolicy as Policy};
+        let(root,index,d,payload,id)=case();let _environment=Environment::local(&root,&index);
+        session_store::update_checked(&index,|rows|{rows[0].processing_policy=Policy::Manual;rows[0].recovery=Default::default();rows[0].title="Keep my title".into();Ok(())}).unwrap();
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();r.accept_segment(&d.encode().unwrap(),&payload).unwrap();
+        let raw=r.payload_path(&d);let wav=r.audio_path();let receipt=r.receipt_path();r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();drop(r);
+        let before_receipt=fs::read(&receipt).unwrap();fs::create_dir(&wav).unwrap(); // Actual destination conflict, not physical ENOSPC.
+        let failed=restore_local_scope(&root,&index,Some(&id)).unwrap();assert_eq!(failed.failures.len(),1);
+        let pending=crate::backend::persistence::load_sessions_from(&index).unwrap().remove(0);
+        assert_eq!(pending.status,"captured");assert_eq!(pending.pending_reason.as_deref(),Some("needs_local_audio"));
+        assert!(!pending.audio_stored&&!pending.device_reclaimed);assert_eq!(pending.recovery.intent,"none");
+        assert_eq!(fs::read(&receipt).unwrap(),before_receipt);assert_eq!(fs::read(&raw).unwrap(),payload);
+        // An unrelated broken row must not make a selected local action fail,
+        // decode its files, or rewrite its state.
+        let mut other=d.clone();other.key.session_id+=1;other.recording_id+=1;
+        let mut r=Receiver::open(&root,&other.encode().unwrap()).unwrap();r.accept_segment(&other.encode().unwrap(),&payload).unwrap();
+        let other_id=r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();let other_path=r.payload_path(&other);drop(r);
+        fs::write(&other_path,b"preserve unrelated failure").unwrap();
+        let before:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&fs::read(&index).unwrap()).unwrap();
+        let other_before=serde_json::to_value(before.iter().find(|row|row.id==other_id).unwrap()).unwrap();
+        let backend=crate::coordinator::CompanionCoordinator::new_fixture();
+        let request=serde_json::from_value(serde_json::json!({"action":"meetingRestoreAudio","sessionId":id})).unwrap();
+        assert!(backend.apply_control(request).is_err());
+        fs::remove_dir(&wav).unwrap();
+        let request=serde_json::from_value(serde_json::json!({"action":"meetingRestoreAudio","sessionId":id})).unwrap();
+        let result=backend.apply_control(request).unwrap();let row=result.host.sessions.iter().find(|row|row.id==id).unwrap();
+        assert!(row.audio_stored&&row.retention.audio_cached&&!row.device_reclaimed);assert_eq!(row.title,"Keep my title");
+        assert_eq!(row.pending_reason.as_deref(),Some("needs_transcription"));assert_eq!(row.recovery.intent,"none");
+        assert_eq!(result.last_control.as_ref().unwrap().action,Action::MeetingRestoreAudio);assert!(!result.device.connected);
+        assert_eq!(serde_json::to_value(result.host.sessions.iter().find(|row|row.id==other_id).unwrap()).unwrap(),other_before);
+        let after_disk:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&fs::read(&index).unwrap()).unwrap();
+        assert_eq!(serde_json::to_value(after_disk.iter().find(|row|row.id==other_id).unwrap()).unwrap(),other_before);
+        assert_eq!(fs::read(&other_path).unwrap(),b"preserve unrelated failure");assert_eq!(fs::read(&raw).unwrap(),payload);
+        let receipt_after:Receipt=serde_json::from_slice(&fs::read(&receipt).unwrap()).unwrap();assert!(!receipt_after.segments[0].acked);
+        drop(backend);drop(_environment);assert_eq!(root.parent(),Some(std::env::temp_dir().as_path()));fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn r65_raw_pending_preserves_cloud_pause_budget_across_restart_and_trash_is_not_rebuilt() {
+        use crate::companion_v1::CompanionV1ProcessingPolicy as Policy;
+        let(root,index,d,payload,id)=case();
+        session_store::update_checked(&index,|rows|{let row=&mut rows[0];row.processing_policy=Policy::Automatic;
+            row.recovery.intent="processMeeting".into();row.recovery.stage="paused".into();
+            row.recovery.attempt_count=2;row.recovery.last_error=Some("preserve prior service decision".into());Ok(())}).unwrap();
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();r.accept_segment(&d.encode().unwrap(),&payload).unwrap();
+        r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();let wav=r.audio_path();drop(r);
+        let row=crate::backend::persistence::load_sessions_from(&index).unwrap().remove(0);
+        assert_eq!(row.pending_reason.as_deref(),Some("needs_local_audio"));assert_eq!(row.recovery.stage,"paused");assert_eq!(row.recovery.attempt_count,2);
+        assert_eq!(row.recovery.last_error.as_deref(),Some("preserve prior service decision"));
+        crate::backend::library_lifecycle::commit(&index,&crate::backend::library_lifecycle::Request {
+            action:crate::backend::library_lifecycle::Operation::Trash,
+            targets:vec![crate::backend::library_organization::Target{session_id:id.clone(),expected_revision:row.organization.revision}],
+        },"2026-10-16T22:00:00+08:00").unwrap();
+        assert!(restore_local_scope(&root,&index,Some(&id)).is_err());let report=restore_local(&root,&index).unwrap();
+        assert!(report.restored.is_empty()&&report.failures.is_empty()&&!wav.exists());
+        assert_eq!(root.parent(),Some(std::env::temp_dir().as_path()));fs::remove_dir_all(root).unwrap();
+    }
     fn case() -> (PathBuf,PathBuf,Descriptor,Vec<u8>,String) {
         let root=std::env::temp_dir().join(format!("companion-local-original-{}",uuid::Uuid::new_v4()));
         fs::create_dir_all(&root).unwrap();let index=root.join("sessions.json");

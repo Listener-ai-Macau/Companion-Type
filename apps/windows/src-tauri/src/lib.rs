@@ -420,9 +420,9 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         if operation == 11 {
             let mut request:companion_v1::CompanionV1ControlRequest=serde_json::from_reader(file).map_err(|_|"本机资料控制请求格式不正确。")?;
             use companion_v1::CompanionV1ControlAction as A;
-            if !matches!(request.action,A::PrivacyEraseAudio|A::PrivacyEraseTranscript|A::PrivacyDeleteSession|A::PrivacyEraseAll|A::MeetingResetSession){return Err("此后台入口只接受明确的本机隐私清理或新工作区操作。".into());}
+            if !matches!(request.action,A::PrivacyEraseAudio|A::PrivacyEraseTranscript|A::PrivacyDeleteSession|A::PrivacyEraseAll|A::MeetingResetSession|A::MeetingRestoreAudio){return Err("此后台入口只接受明确的本机录音恢复、隐私清理或新工作区操作。".into());}
             request.prompt_id=if request.action==A::PrivacyDeleteSession{Some(backend::library_lifecycle::LOCAL_TRASH_PERMANENT.into())}else{None};
-            if let Some(id)=request.session_id.as_deref(){
+            if let Some(id)=request.session_id.as_deref().filter(|_|request.action!=A::MeetingRestoreAudio){
                 let select=serde_json::from_value(serde_json::json!({"action":"meetingSelectSession","sessionId":id})).map_err(|e|e.to_string())?;
                 coordinator.apply_control(select)?;
             }
@@ -653,6 +653,7 @@ fn next_automatic_recovery(
     for session in &snapshot.host.sessions {
         let recovery = &session.recovery;
         if session.processing_policy == companion_v1::CompanionV1ProcessingPolicy::Manual
+            || session.pending_reason.as_deref()==Some("needs_local_audio")
             || recovery.intent != "processMeeting"
             || recovery.requested_meeting_mode != session.meeting_mode
             || matches!(recovery.stage.as_str(), "idle" | "paused" | "complete")
@@ -2357,6 +2358,21 @@ fn wav_data_chunk_bytes(audio_path: &Path) -> Option<u64> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn r65_local_audio_wait_never_schedules_cloud_work_or_consumes_retry_budget() {
+        use super::*;
+        let mut snapshot=companion_v1::apply_fixture_control(companion_v1::fixture_snapshot(),
+            control_request(companion_v1::CompanionV1ControlAction::MeetingStart,Some("local-only-wait".into()))).unwrap();
+        snapshot.meeting.active=false;snapshot.device.recording=false;snapshot.host.active_session_id=None;
+        let row=&mut snapshot.host.sessions[0];row.status="captured".into();row.audio_stored=false;
+        row.processing_policy=companion_v1::CompanionV1ProcessingPolicy::Automatic;
+        row.recovery=companion_v1::CompanionV1MeetingRecovery::armed("offlineStore");row.pending_reason=Some("needs_local_audio".into());
+        let before=serde_json::to_value(&snapshot.host.sessions[0].recovery).unwrap();
+        assert_eq!(next_automatic_recovery(&snapshot,10),(None,None));
+        assert_eq!(serde_json::to_value(&snapshot.host.sessions[0].recovery).unwrap(),before);
+        snapshot.host.sessions[0].pending_reason=Some("needs_transcription".into());snapshot.host.sessions[0].audio_stored=true;
+        assert_eq!(next_automatic_recovery(&snapshot,10).0,Some(("local-only-wait".into(),AutomaticRecoveryAction::Transcribe)));
+    }
     use super::*;
 
     #[test]

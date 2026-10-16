@@ -1402,8 +1402,19 @@ impl CompanionBackend for FixtureCompanionBackend {
         }
         let _library_privacy_guard=library_lifecycle::privacy_guard(&snapshot,&request,&persistence::state_file_path())?;
         privacy::validate_control(&snapshot, &request, self.live_asr.snapshot().active)?;
-        if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio|CompanionV1ControlAction::MeetingGenerateMinutes){
+        if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio|CompanionV1ControlAction::MeetingGenerateMinutes|CompanionV1ControlAction::MeetingRestoreAudio){
             if let Some(row)=request.session_id.as_deref().and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id)){library_lifecycle::require_available(row)?;}
+        }
+        if action==CompanionV1ControlAction::MeetingTranscribeAudio {
+            if let Some(row)=request.session_id.as_deref().or(snapshot.host.selected_session_id.as_deref())
+                .and_then(|id|snapshot.host.sessions.iter().find(|s|s.id==id)) {
+                if row.pending_reason.as_deref()==Some("needs_local_audio") {
+                    return Err("原音已收齐，请先生成本机回听文件，再进行转写。".into());
+                }
+                if row.pending_reason.as_deref()==Some("needs_segments") {
+                    return Err("原音分段尚未收齐，请先同步来源设备，再进行转写。".into());
+                }
+            }
         }
         if action == CompanionV1ControlAction::HostRetrySave {
             if snapshot.host.persistence.status == "blocked" {
@@ -1443,6 +1454,26 @@ impl CompanionBackend for FixtureCompanionBackend {
                 | CompanionV1ControlAction::SpeakerStop)
         {
             return Err("会议库尚未保存或恢复，请先使用提示中的重试按钮；当前内容仍可查看，录音仍可停止".into());
+        }
+        if action==CompanionV1ControlAction::MeetingRestoreAudio {
+            let id=request.session_id.as_deref().or(snapshot.host.selected_session_id.as_deref())
+                .ok_or("请先选择要生成回听文件的录音。")?.to_owned();
+            let row=snapshot.host.sessions.iter().find(|row|row.id==id).ok_or("这份录音已不存在。")?;
+            library_lifecycle::require_available(row)?;
+            if row.status=="recording" {return Err("请先结束这份录音，再生成回听文件。".into());}
+            let report=recording_wire::receiver::restore_local_session(&id)?;
+            if let Some(failure)=report.failures.first() {return Err(failure.error.clone());}
+            if !report.waiting_for_segments.is_empty() {return Err("本机原音仍有缺段，请连接来源设备补收；未恢复其它录音。".into());}
+            reload_segmented_library(&mut snapshot,&persistence::state_file_path())?;
+            if !snapshot.host.sessions.iter().any(|row|row.id==id&&row.audio_stored&&row.retention.audio_cached) {
+                return Err("本机回听文件尚未生成，现有原音和恢复记录保留。".into());
+            }
+            snapshot.updated_at=observation_timestamp();
+            snapshot.last_control=Some(crate::companion_v1::CompanionV1ControlEcho {
+                action,characteristic_uuid:crate::companion_v1::COMPANION_V1_HOST_RECORDING_CHANNEL,
+                payload_hex:String::new(),accepted:true,message:"回听文件已生成，可直接回听。".into(),
+            });
+            refresh_privacy_counts(&mut snapshot);return Ok(snapshot.clone());
         }
         if action == CompanionV1ControlAction::MeetingResetSession {
             if snapshot.host.sessions.iter().any(|r|r.status=="recording" && r.recorder_control.is_some()) {

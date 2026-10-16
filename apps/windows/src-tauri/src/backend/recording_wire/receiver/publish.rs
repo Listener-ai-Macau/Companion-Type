@@ -129,6 +129,7 @@ impl Receiver {
         }
         let audio_path = self.audio_path().to_string_lossy().into_owned();
         let complete = self.receipt.audio.is_some();
+        let local_audio_pending=plan.payloads_complete && !complete;
         if let Some(audio) = &self.receipt.audio {
             self.verify_audio(audio)?;
             bytes = audio.bytes;
@@ -225,10 +226,12 @@ impl Receiver {
             s.duration_ms = if s.status == "recording" && !complete { s.duration_ms.max(duration) } else { duration };
             s.chunks = chunks.clone();
             if !s.transcript_final {
-                s.status = if complete { "captured" } else if s.status == "recording" { "recording" } else { "pending" }.into();
+                s.status = if complete || local_audio_pending { "captured" } else if s.status == "recording" { "recording" } else { "pending" }.into();
                 s.pending_reason = Some(
                     if complete {
                         "needs_transcription"
+                    } else if local_audio_pending {
+                        "needs_local_audio"
                     } else {
                         "needs_segments"
                     }
@@ -236,7 +239,7 @@ impl Receiver {
                 );
                 if complete {
                     crate::backend::arm_meeting_recovery(s);
-                } else if s.processing_policy != crate::companion_v1::CompanionV1ProcessingPolicy::Manual
+                } else if !local_audio_pending && s.processing_policy != crate::companion_v1::CompanionV1ProcessingPolicy::Manual
                     && s.recovery.intent != crate::backend::pet_chat::CAPTURE_INTENT {
                     s.recovery = Default::default();
                 }

@@ -86,9 +86,10 @@ pub(super) fn observe(
         // Sealed segments may already be durably received during capture.
         // A STOP ACK cannot clear those original files, marks or receipts.
         pending.duration_ms = u64::from(report.duration_ms);
-        pending.status = "captured".into();pending.pending_reason = Some("needs_segments".into());
+        let local_audio_pending=pending.pending_reason.as_deref()==Some("needs_local_audio")&&!pending.audio_stored;
+        pending.status = "captured".into();
+        if !local_audio_pending {pending.pending_reason=Some("needs_segments".into());pending.recovery=Default::default();}
         if pending.stopped_at.is_none() {pending.stopped_at = Some(observed_at.into());}
-        pending.recovery = Default::default();
     } else if !pending.audio_stored {
         // The device ACK confirms capture, not receipt, transcription or reclaim.
         let first_stop = pending.stopped_at.clone().filter(|value|
@@ -124,6 +125,17 @@ mod tests {
     const DEVICE: &str = "C8:92:FF:DD:3B:CA";
     const START: &str = "2026-10-08T07:06:55.130Z";
     const STOP: &str = "2026-10-08T07:11:55.550Z";
+    #[test]
+    fn r65_late_stop_keeps_verified_local_audio_wait_and_cloud_budget() {
+        let(mut snapshot,mut report)=recording();
+        let key=super::super::recording_wire::SessionKey{device_uid:[7;12],format_epoch:11,session_id:13};
+        report.logical_key=Some(key.clone());let row=&mut snapshot.host.sessions[0];
+        row.device_recording_key=Some(key.public_key());row.pending_reason=Some("needs_local_audio".into());
+        row.recovery.attempt_count=2;row.recovery.last_error=Some("preserve previous pause".into());
+        observe(&mut snapshot,"original",&report,STOP).unwrap();let row=&snapshot.host.sessions[0];
+        assert_eq!(row.pending_reason.as_deref(),Some("needs_local_audio"));assert_eq!(row.recovery.attempt_count,2);
+        assert_eq!(row.recovery.last_error.as_deref(),Some("preserve previous pause"));assert!(!row.audio_stored&&!row.device_reclaimed);
+    }
 
     #[test]
     fn completed_retry_actual_coordinator_keeps_saved_original_without_device_or_cloud() {

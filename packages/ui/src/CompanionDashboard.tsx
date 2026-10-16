@@ -456,8 +456,11 @@ export function CompanionDashboard({
   const hasMinutes = Boolean(minutesMarkdown.trim());
   const hasSyncedAudio = Boolean(
     selectedSession
-    && selectedSession.status !== 'recording' && selectedSession.pendingReason !== 'needs_device_sync'
-    && (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0)),
+    && selectedSession.status !== 'recording'
+    && !['needs_device_sync','needs_segments','needs_local_audio'].includes(selectedSession.pendingReason ?? '')
+    && (selectedSession.deviceRecordingKey ? selectedSession.audioStored && selectedSession.retention.audioCached
+      && selectedSession.audioPath && selectedSession.audioBytes > 0
+      : (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0))),
   );
   const canGenerate = finalTranscript && !recoveryView?.isProcessing;
   const hasOriginalAudio = Boolean(hasSyncedAudio && selectedSession?.audioStored && selectedSession.retention.audioCached
@@ -1914,12 +1917,13 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   const wholeReclaimed = Boolean(session.deviceReclaimed && !captureOngoing);
   const savedSegments = session.source === 'boardDevice' && session.deviceRecordingKey
     ? session.chunks.filter((chunk) => chunk.status === 'sealed' && chunk.path && chunk.bytes > 0).length : 0;
+  const rawComplete=session.pendingReason==='needs_local_audio'&&!captureOngoing;
   const localAudio = session.pendingReason !== 'needs_device_sync'
     && !captureOngoing && (session.deviceRecordingKey
       ? Boolean(session.audioStored && session.audioPath && session.audioBytes > 0)
       : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
   const partialAudio = !localAudio && savedSegments > 0;
-  const deviceCopy = Boolean(session.sourceDeviceId && session.deviceRecordingId != null && !wholeReclaimed);
+  const deviceCopy = Boolean(session.sourceDeviceId && (session.deviceRecordingId != null||session.deviceRecordingKey) && !wholeReclaimed);
   const growingDeviceCapture = captureOngoing && deviceCopy;
   const exactDeviceCopy = Boolean(deviceCopy && session.deviceTotalLength
     && /^[0-9a-f]{64}$/i.test(session.deviceSha256 ?? ''));
@@ -1929,19 +1933,19 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
       label: '设备',
       state: growingDeviceCapture ? session.recorderControlUncertain ? '录音状态待核对'
         : session.recorderControl?.confirmed?.state === 3 ? '录音已暂停' : '录音仍在进行'
-        : wholeReclaimed ? '已精确回收' : deviceCopy ? '原录音仍保留' : session.pendingReason === 'needs_device_sync' ? '等待来源设备' : '无设备副本',
+        : wholeReclaimed ? '已精确回收' : deviceCopy ? session.deviceRecordingKey ? '分段回收待确认' : '原录音仍保留' : session.pendingReason === 'needs_device_sync' ? '等待来源设备' : '无设备副本',
       kind: growingDeviceCapture ? 'active' : wholeReclaimed || deviceCopy ? 'done' : 'idle',
     },
     {
       label: '传到电脑',
-      state: localAudio ? session.captureIncomplete ? '已收齐恢复片段' : '音频已收齐'
+      state: rawComplete ? '原音已收齐' : localAudio ? session.captureIncomplete ? '已收齐恢复片段' : '音频已收齐'
         : partialAudio ? captureOngoing ? `已收到${savedSegments}段，继续同步` : '已收到分段，继续收齐'
         : session.pendingReason === 'needs_device_sync' ? '连接后继续同步' : recoveryProcessing ? '正在处理' : '尚未收齐',
-      kind: localAudio ? 'done' : partialAudio || recoveryProcessing ? 'active' : 'idle',
+      kind: localAudio || rawComplete ? 'done' : partialAudio || recoveryProcessing ? 'active' : 'idle',
     },
     {
       label: '本机保存',
-      state: saveFailed ? '保存失败，可重试' : persistence?.status === 'ready' && localAudio ? '已安全保存'
+      state: saveFailed ? '保存失败，可重试' : persistence?.status==='ready' && rawComplete ? '原音已保存，回听待生成' : persistence?.status === 'ready' && localAudio ? '已安全保存'
         : persistence?.status === 'ready' && partialAudio ? `已保存${savedSegments}段`
         : localAudio || partialAudio ? '已有音频，保存状态待确认' : '等待音频',
       kind: saveFailed ? 'error' : persistence?.status === 'ready' && (localAudio || partialAudio) ? 'done' : 'idle',

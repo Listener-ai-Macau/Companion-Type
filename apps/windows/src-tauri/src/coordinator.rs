@@ -434,6 +434,9 @@ impl CompanionCoordinator {
         &self, request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String> {
         use crate::companion_v1::CompanionV1ControlAction as Action;
+        let _local_audio=if request.action==Action::MeetingRestoreAudio {
+            Some(self.begin_device_operation_kind(14)?)
+        }else{None};
         // Only explicit user controls preempt a pet reply. Background probes,
         // diagnostics and ordinary sync do not cancel a conversation.
         let priority_action=matches!(request.action,Action::MeetingStart|Action::MeetingStop|

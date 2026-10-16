@@ -41,6 +41,7 @@ export type CompanionV1SnapshotSource = 'fixture' | 'firmware' | 'lastKnown' | '
 
 export type CompanionV1ControlAction =
   | 'hostRetrySave'
+  | 'meetingRestoreAudio'
   | 'deviceScan'
   | 'deviceConnect'
   | 'deviceDisconnect'
@@ -246,6 +247,8 @@ export type CompanionV1SessionPendingReason =
   | 'needs_network'
   | 'needs_pull'
   | 'needs_device_sync'
+  | 'needs_segments'
+  | 'needs_local_audio'
   | 'device_control_pending'
   | 'recovery_processing'
   | 'recovery_retry_wait'
@@ -767,6 +770,8 @@ export function applyCompanionV1ControlFixture(
       };
       next.connected = false;
       break;
+    case 'meetingRestoreAudio':
+      throw new Error('回听文件恢复需要本机原音与校验记录；演示模式不会生成替代音频。');
     case 'deviceConnect':
       next.device = {
         ...next.device,
@@ -1316,6 +1321,10 @@ export function describeCompanionMeetingRecovery(session: CompanionV1HostSession
   isProcessing: boolean;
 } | null {
   const recovery = session.recovery;
+  if (session.pendingReason === 'needs_local_audio') return {
+    label: '原音已收齐，回听待生成', message: '原音已保存在电脑，生成本机回听文件后即可继续处理。',
+    retryAction: null, isProcessing: false,
+  };
   if (session.captureIncomplete && !recovery?.captureReviewConfirmed && session.audioStored
     && session.status !== 'recording' && recovery?.stage !== 'complete') {
     return { label: '录音中断，片段已保存',
@@ -1419,6 +1428,10 @@ export function describeSessionPendingReason(
       return 'Device has recordings that still need Sync/pull into the host.';
     case 'needs_device_sync':
       return '录音仍在设备端，重新连接 Companion 后会继续同步。';
+    case 'needs_segments':
+      return '原音分段尚未收齐，请连接来源设备继续同步。';
+    case 'needs_local_audio':
+      return '原音已收齐，等待生成本机回听文件，无需再次从设备收取。';
     case 'recovery_processing':
       return '正在自动恢复这场会议的转写或纪要。';
     case 'recovery_retry_wait':
@@ -1463,7 +1476,7 @@ function applyTranscriptToSession(
 }
 
 export function characteristicForCompanionAction(action: CompanionV1ControlAction): string {
-  if (action === 'hostRetrySave') return COMPANION_V1_HOST_RECORDING_CHANNEL;
+  if (action === 'hostRetrySave' || action === 'meetingRestoreAudio') return COMPANION_V1_HOST_RECORDING_CHANNEL;
   if (action === 'deviceScan' || action === 'deviceConnect' || action === 'deviceDisconnect'
     || action === 'deviceEnableAutoReconnect' || action === 'deviceDisableAutoReconnect'
     || action === 'deviceSyncRecordings') {
@@ -1935,6 +1948,7 @@ function countTranscriptSessions(snapshot: CompanionV1Snapshot): number {
 
 function hostOnlyAction(action: CompanionV1ControlAction): boolean {
   return action === 'hostRetrySave'
+    || action === 'meetingRestoreAudio'
     || action === 'deviceScan'
     || action === 'deviceConnect'
     || action === 'deviceDisconnect'
@@ -1969,6 +1983,7 @@ function bytesToHex(bytes: Uint8Array): string {
 function actionCommand(action: CompanionV1ControlAction): number {
   const table: Record<CompanionV1ControlAction, number> = {
     hostRetrySave: 0x8e,
+    meetingRestoreAudio: 0x8f,
     deviceScan: 0x10,
     deviceConnect: 0x11,
     deviceDisconnect: 0x12,

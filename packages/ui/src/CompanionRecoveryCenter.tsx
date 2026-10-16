@@ -8,7 +8,7 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
   onControl: (request: CompanionV1ControlRequest) => void; onSettings: () => void; onWorkflow: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
-  const pending = snapshot.host.sessions.filter(session => session.status !== 'recording'
+  const pending = snapshot.host.sessions.filter(session => !session.organization?.trashedAt && session.status !== 'recording'
     && (!meetingHasFinalMinutes(session) || (session.recovery?.intent === 'processMeeting' && session.recovery.stage !== 'complete')));
   const storage = snapshot.host.persistence;
   const storageBlocked = Boolean(storage && storage.status !== 'ready');
