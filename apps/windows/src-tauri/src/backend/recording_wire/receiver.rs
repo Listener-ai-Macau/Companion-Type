@@ -72,6 +72,7 @@ pub(crate) struct Receiver {
     _usage: Option<audio_artifacts::WriterLease>,
     ready: bool,
 }
+enum OpenMode { Strict, LocalRepair, PrepareSync }
 impl Receiver {
     /// Recover pending physical receipts even if the device directory is now
     /// empty (power loss after removal, before its successful reply). Enumerate
@@ -114,14 +115,14 @@ impl Receiver {
             super::u32le(&s.wire, 28) == d.segment_index))
     }
     pub(crate) fn open(root: &Path, initial_wire: &[u8]) -> Result<Self, String> {
-        Self::open_inner(root,initial_wire,false)
+        Self::open_inner(root,initial_wire,OpenMode::Strict)
     }
     // Only the indexed local-recovery entry may rebuild a missing derivative.
     // Ordinary verification/ACK admission remains strict and never writes WAV.
     fn open_for_local_repair(root: &Path, initial_wire: &[u8]) -> Result<Self,String> {
-        Self::open_inner(root,initial_wire,true)
+        Self::open_inner(root,initial_wire,OpenMode::LocalRepair)
     }
-    fn open_inner(root: &Path, initial_wire: &[u8], repair_missing_audio:bool) -> Result<Self,String> {
+    fn open_inner(root: &Path, initial_wire: &[u8], mode:OpenMode) -> Result<Self,String> {
         let initial = Descriptor::decode(initial_wire)?;
         let root = root.canonicalize().map_err(|_| fail())?;
         let stem = format!(
@@ -195,11 +196,17 @@ impl Receiver {
             this.save()?;
         }
         this.accept_metadata(initial_wire)?;
-        if repair_missing_audio {
-            this.recover_originals()?;
-            this.rebuild_missing_audio()?;
+        match mode {
+            OpenMode::Strict=>this.recover()?,
+            OpenMode::LocalRepair=>{
+                this.recover_originals()?;
+                this.rebuild_missing_audio()?;
+                this.recover()?;
+            },
+            // Only SyncRepair owns this unchecked value. Its public surface
+            // has no publish/consume operations; finish revalidates all files.
+            OpenMode::PrepareSync=>(),
         }
-        this.recover()?;
         Ok(this)
     }
     fn descriptors(&self) -> Result<Vec<Descriptor>, String> {
@@ -301,26 +308,28 @@ impl Receiver {
         let d = Descriptor::decode(wire)?;
         d.verify_payload(payload)?;
         self.accept_metadata(wire)?;
+        let index = self.receipt.segments.iter()
+            .position(|s| super::u32le(&s.wire,28)==d.segment_index).ok_or_else(fail)?;
         let path = self.payload_path(&d);
         if regular(&path)? {
             verify_file(read_locked(&path)?, &d)?;
         } else {
             // Intent (descriptor) is already durable before the body exists.
-            audio_artifacts::generated_pinned(
-                self._usage.as_ref(),
-                &self.audio_path(),
-                &path,
-                audio_artifacts::Purpose::CompressedOriginal,
-                || export::write_atomic(&path, payload).map(|_| ()),
-            )?;
+            if self.receipt.segments[index].received {
+                audio_artifacts::restore_missing_original_pinned(
+                    self._usage.as_ref(),&self.audio_path(),&path,u64::from(d.encoded_length),
+                    &format!("{:x}",Sha256::digest(payload)),
+                    || export::write_atomic(&path,payload).map(|_|()),
+                )?;
+            } else {
+                audio_artifacts::generated_pinned(
+                    self._usage.as_ref(), &self.audio_path(), &path,
+                    audio_artifacts::Purpose::CompressedOriginal,
+                    || export::write_atomic(&path, payload).map(|_| ()),
+                )?;
+            }
             verify_file(read_locked(&path)?, &d)?;
         }
-        let index = self
-            .receipt
-            .segments
-            .iter()
-            .position(|s| super::u32le(&s.wire, 28) == d.segment_index)
-            .ok_or_else(fail)?;
         if !self.receipt.segments[index].received {
             self.receipt.segments[index].received = true;
             if let Err(e) = self.save() {
@@ -341,7 +350,11 @@ impl Receiver {
                     changed = true;
                 }
             } else if self.receipt.segments[index].received || self.receipt.segments[index].acked {
-                return Err(fail());
+                return Err(if self.receipt.segments[index].acked {
+                    "这份录音的本机原音不完整；设备已确认清理，可能无法补回。现有文件和恢复记录已保留。"
+                } else {
+                    "这份录音的本机原音不完整；请连接原设备补收。尚未确认清理缺失部分，现有文件和恢复记录已保留。"
+                }.into());
             }
         }
         if changed {
@@ -666,6 +679,8 @@ mod device_bookmark_tests;
 mod probe;
 mod publish;
 mod local;
+mod resync;
+pub(crate) use resync::SyncRepair;
 mod live;
 pub(crate) use live::LiveCursor;
 pub(crate) use local::{LocalRestoreReport, restore_local_product};

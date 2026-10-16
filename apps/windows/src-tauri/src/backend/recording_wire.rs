@@ -189,7 +189,7 @@ impl Descriptor {
         Ok(p)
     }
     // Sync state may legitimately advance without changing the immutable segment.
-    fn same_content(&self, other: &Self) -> bool {
+    pub(crate) fn same_content(&self, other: &Self) -> bool {
         let mut copy = other.clone();
         copy.sync_state = self.sync_state;
         *self == copy

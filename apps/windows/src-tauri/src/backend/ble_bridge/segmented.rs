@@ -1,7 +1,7 @@
 //! Native product binding for the durable V2 receiver. No seed, new cloud
 //! service or file-name-only consume. V1 keeps its original transfer path.
 use super::*;
-use crate::backend::recording_wire::{Descriptor, SessionKey, receiver::Receiver,
+use crate::backend::recording_wire::{Descriptor, SessionKey, receiver::{Receiver,SyncRepair},
     transport::{Directory, Peer, receipt_matches}};
 use crate::backend::recording_wire::tail::{Tail,Prefix};
 use std::collections::BTreeMap;
@@ -276,7 +276,23 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
         if limit.is_some_and(|limit| admitted.len() >= limit) { deferred = true; break; }
         entries.sort_by_key(|e| e.segment.as_ref().unwrap().segment_index);
         let work = async {
-            let mut receiver = Receiver::open(&root, &initial)?;
+            let available=entries.iter().map(|e|e.segment.as_ref().unwrap().clone()).collect::<Vec<_>>();
+            let mut repair=SyncRepair::begin(&root,&initial,&peer,&device.device_id(),&available)?;
+            // Previously received originals can disappear independently of
+            // their durable receipt. Repair only exact current catalogue
+            // identities before obtaining a publish/consume-capable receiver.
+            for d in repair.missing().to_vec() {
+                if job.is_paused() {return Err(recording_sync::PAUSED.into());}
+                if !admit_segment(&mut admitted,&key,d.recording_id,limit) {deferred=true;return Ok(());}
+                let e=entries.iter().find(|e|e.segment.as_ref().is_some_and(|current|current.same_content(&d)))
+                    .ok_or("缺失原音不在当前设备目录，未消费。")?;
+                job.recording(e.recording_id,e.total_length);link_policy.initialize(device).await;
+                let prefix=if peer.growing_tail {Prefix::sealed(&root,&d,&peer)?}else{None};
+                let bytes=pull_recording_bytes(device,chars,&mut pull_session,e,&device.address,
+                    device.address_type,prefix,Some(job),Some(link_policy)).await?;
+                job.saving();repair.restore(&d.encode()?,&bytes)?;
+            }
+            let mut receiver=repair.finish()?;
             for e in &entries { receiver.accept_metadata(&e.segment.as_ref().unwrap().encode()?)?; }
             // Keep the data CCCDs/receiver across a complete stopped recording.
             // Each raw segment and index still commits before the next pull;

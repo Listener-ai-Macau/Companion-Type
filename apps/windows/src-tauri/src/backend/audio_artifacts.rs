@@ -475,17 +475,26 @@ pub(crate) fn generated_pinned<T>(pinned:Option<&WriterLease>,source:&Path,path:
 /// it must not re-enter the artifact manifest while this lock is held.
 pub(crate) fn restore_missing_recording_pinned<T>(pinned:Option<&WriterLease>,path:&Path,
     bytes:u64,sha256:&str,commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
+    restore_missing_pinned(pinned,path,path,Purpose::Recording,bytes,sha256,commit)
+}
+pub(crate) fn restore_missing_original_pinned<T>(pinned:Option<&WriterLease>,source:&Path,path:&Path,
+    bytes:u64,sha256:&str,commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
+    restore_missing_pinned(pinned,source,path,Purpose::CompressedOriginal,bytes,sha256,commit)
+}
+fn restore_missing_pinned<T>(pinned:Option<&WriterLease>,source:&Path,path:&Path,purpose:Purpose,
+    bytes:u64,sha256:&str,commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
     if fingerprint(path)?.is_some() {return Err(fail())};
     let Some(root)=managed_root(path) else{return commit()};
-    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(path)?;
+    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(source)?;
     if pinned.root!=root||pinned.source!=source {return Err(fail())};
     let leaf=path.file_name().and_then(|n|n.to_str()).filter(|n|component(n)).ok_or_else(fail)?;
+    let _file_lease=if source!=reference_key(path)? {Some(lease(&root,leaf)?)}else{None};
     let _lock=lock(&root)?;let manifest=load(&root)?;
     let item=manifest.files.iter().find(|i|i.file==leaf).ok_or_else(fail)?;
     let expected=Identity{bytes,sha256:sha256.to_owned()};
-    if item.purpose!=Purpose::Recording||item.phase!=Phase::Sealed||
+    if item.purpose!=purpose||item.phase!=Phase::Sealed||
         !item.sources.contains(&source)||item.identity.as_ref()!=Some(&expected)||fingerprint(path)?.is_some() {
-        return Err("回听归属记录不允许重建；已清理或身份不符的文件不会自动恢复。".into());
+        return Err("录音归属记录不允许重建；已清理或身份不符的文件不会自动恢复。".into());
     }
     let result=commit()?;
     if fingerprint(path)?!=Some(expected) {return Err(fail())};
