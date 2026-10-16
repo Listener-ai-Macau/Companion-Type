@@ -1,0 +1,40 @@
+{
+  "schema": "companion.type.r68.notification-owner.installed.v1",
+  "createdAtLocal": "2026-10-16T23:54:51+08:00",
+  "result": "R68_INSTALLED_NOTIFICATION_GENERATION_SOFTWARE_ONLY",
+  "changes": "Type R68已正式安装：原生通知携带连接代次，回调和出队均核对归属，防止旧回调竞态进入新接收流；旧流不能跨新连接继续接收数据。录音/控制/目录/批次租约保存自己的代次，退订与原生对象替换串行，旧退订不再按UUID写入新对象；当前通知的原始时间戳和队列溢出错误保留。",
+  "scope": "已用生产代次/流函数和真实有界广播队列检查旧回调在新接收器创建后迟到、旧订阅/退订隔离、断开后的数据拒绝、时间戳与当前溢出；R67取消/失败清理的软件检查仍有效。Windows正式包已构建安装且载荷一致，未启动GUI或任何设备入口。不是历史无线问题唯一根因、真实重连或长期稳定资格；无硬件、云、录音或新测速。",
+  "bootRecoveryFinding": "CP08-03旧“尚未接入产品挂载”已过期：最新生产platform/stm32wba55_companion_v11/product_app.c调用bind/poll，wba_recording_product.c在BOOT_MOUNT后进入独占BOOT_RECOVER，恢复合格后才移交pipeline/空间扫描；已构建FW455源码cfcd43b9460a69e5654463ded5e63d39924bffac中也有同一绑定与轮询。真实NOR掉电/欠压仍未验证，不重复实现、不新刷固件。",
+  "problem": "UUID-only deferred unsubscribe could select a new native object; the shared notification channel did not distinguish late retired callbacks. Callback-only checks cannot close the retirement/send race.",
+  "sourceCommit": "efa6b1cb59370fdeade4c9936401200f49462210",
+  "sourceTag": "companion-notification-owner-r68-20261016-source",
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-generation-r68-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10321920,
+    "sha256": "95765cefadb95f956c11f85c6cc21be28b6b9f7b1660327e82ad949da89d1426"
+  },
+  "installedExe": {
+    "path": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "sha256": "b93635391ec033e1ea35bd39fd33b30aa5775c5f41b8aee43df3a82f1d372566"
+  },
+  "installedDllSha256": "42e789e16427d7665b0ba55738e3c43c1fba813bea832d984ba66dda8c853d87",
+  "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-generation-r68-20261016\\type\\msi\\build-receipt.json",
+  "installReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-generation-r68-20261016\\type\\install\\result.json",
+  "softwareEvidence": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-generation-r68-20261016\\vendor-generation.log",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-generation-r68-20261016\\owned-subscription.log"
+  ],
+  "qualification": {
+    "installed": true,
+    "softwareGenerationAndQueues": true,
+    "actualGatt": false,
+    "actualReconnect": false,
+    "hardwareAccess": false,
+    "gui": false,
+    "cloudCalls": 0,
+    "microphone": false,
+    "speed": false,
+    "fullProduct": false
+  },
+  "next": "继续录音核心剩余的软件缺口，录音电平/过载/无输入提示仍在CP27-26开放；硬件检修期间不接板。Owner明确恢复后再集中验证真实暂停同步/重连、长录/满盘/掉电、功耗和联合抓包，不重复已过OTA或用软件模型降低质量门。"
+}
