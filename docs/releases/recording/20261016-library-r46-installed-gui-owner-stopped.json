@@ -1,0 +1,108 @@
+{
+  "schema": "companion.type.library.r46.v1",
+  "time": "2026-10-16T13:10:51+08:00",
+  "result": "R46_INSTALLED_SOFTWARE_CHECKED_NATIVE_GUI_OWNER_STOPPED",
+  "summary": "正式TypeR46已构建/安装：原资料库增加虚拟文件夹、标签、收藏及精确ID/版本的批量修改和组合筛选，分类随JSON导出；任一冲突/锁定拒绝整批，保存失败保留选择和输入，旧快照不能覆盖新分类。原音不搬移，会议ID不变。",
+  "polish": "修会议库长标题/状态徽标挤占，队列项加入时长/录音号/时间区分，自动续播去掉“点击播放”旧提示。续听按会话和原音双重绑定，兼容迁移R45位置；单场删除/全清理使旧播放器失效，避免退出回写或旧格式回退复活已清位置。",
+  "limitations": "Owner在Computer Use按实体Esc停止，本轮已立即停止窗口输入，并关闭本任务GUI进程/释放占用；不自行再次打开或激活窗口，GUI需Owner明确继续。R46分类的真实桌面保存/重开/筛选尚未完成，不能因软件或安装通过记为已验收。第一GUI进程启动5秒后exit0，原因未定，不称启动故障或Owner关闭；第二窗口最小化后仅激活，状态读取被Esc停止。实板仍426/UI78，432/UI80候选未装，没有板端连接/刷写/云服务变更。",
+  "next": [
+    "继续离线实现日期筛选、批量导出/删除及录音保护/回收站/备份，不因GUI停止停掉其它可做的功能。",
+    "Owner明确允许继续桌面操作后，再从R46真实分类保存/重开/筛选及续听迁移核对续接；不重新安装或重复已过软件检查。",
+    "设备重点入口/实板闭环仍沿共享文件和UART恢复门，会议/进一步提速等分析器，既有OTA不重复。"
+  ],
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "0dd0fec2ab5dfb1286450edcfad74f8f5d84dc2b",
+    "tag": "companion-library-r46-20261016-source",
+    "parent": "d7a0c085e4d695415cc2ef3898ae5ece081f0f6d",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T13:04:08"
+  },
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\library-r46-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10571776,
+    "sha256": "a2d813f09da6d6e4ca84a95171f467eed06db858d7a8eb52a9bb8906eb603ca8"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "1851ca59aa69b30f10a62db151aa57cc25997084b3691e582530a5b4f086a4fb",
+    "payloadMatch": true
+  },
+  "software": {
+    "libraryRustTests": {
+      "passed": 4,
+      "failed": 0,
+      "capturedToolSession": 91119
+    },
+    "sessionStoreAffectedTests": {
+      "passed": 7,
+      "failed": 0,
+      "capturedToolSession": 44278
+    },
+    "evidence": [
+      "Companion-Type/.cache/library-r46-20261016/ui-r1/library.log",
+      "Companion-Type/.cache/library-r46-20261016/ui-r1/listening.log",
+      "Companion-Type/.cache/library-r46-20261016/ui-r1/dashboard_state.log",
+      "Companion-Type/.cache/library-r46-20261016/ui-r2/library.log"
+    ],
+    "checks": [
+      "old row defaults and durable reload",
+      "stable ID/audio/transcript preserved",
+      "batch prevalidation no partial changes",
+      "stale snapshot and write-lock refusal",
+      "folder descendants/tag/favorite combination and empty-filter recovery",
+      "draft retention and recording edit gate",
+      "R45 preference migration and original identity isolation",
+      "scoped/global cleanup rejects old-player writes and legacy fallback"
+    ]
+  },
+  "native": {
+    "qualified": false,
+    "stop": "Owner physical Escape in computer-use",
+    "firstProcess": {
+      "pid": 39592,
+      "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+      "exeSha256": "1851ca59aa69b30f10a62db151aa57cc25997084b3691e582530a5b4f086a4fb",
+      "started": "2026-10-16T13:08:00+08:00",
+      "autoRecovery": false,
+      "autoReconnect": false,
+      "usingExistingLibrary": true
+    },
+    "firstExit": {
+      "pid": 39592,
+      "exitCode": 0,
+      "ended": "2026-10-16T13:08:05+08:00"
+    },
+    "secondProcess": {
+      "pid": 38020,
+      "started": "2026-10-16T13:08:32+08:00",
+      "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+      "exeSha256": "1851ca59aa69b30f10a62db151aa57cc25997084b3691e582530a5b4f086a4fb",
+      "autoRecovery": false,
+      "autoReconnect": false,
+      "usingExistingLibrary": true
+    },
+    "secondExit": {
+      "pid": 38020,
+      "exitCode": 4294967295,
+      "ended": "2026-10-16T13:09:45+08:00"
+    },
+    "resumedOnlyAfterExplicitOwnerInstruction": true,
+    "organizationEditsPerformed": false,
+    "automaticRecoveryAndReconnectDisabledForTestProcessesOnly": true
+  },
+  "scope": {
+    "virtualFolders": true,
+    "levels": 4,
+    "tagsPerRecording": 16,
+    "batchMax": 1000,
+    "physicalAudioMoves": false,
+    "dateFilter": false,
+    "batchDelete": false,
+    "batchExport": false,
+    "protectedRecordingDeletion": false,
+    "recycleBin": false,
+    "libraryBackupRestore": false
+  },
+  "fullChainAcceptance": "NOT_QUALIFIED"
+}
