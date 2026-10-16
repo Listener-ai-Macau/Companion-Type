@@ -90,6 +90,19 @@ fn owned_offline_recording_link(snapshot: &CompanionV1Snapshot, request: &Compan
     crate::backend::owned_offline_recording_link(snapshot, request).is_some()
 }
 
+fn original_restart_connect(snapshot:&CompanionV1Snapshot, request:&CompanionV1ControlRequest)->bool {
+    use crate::companion_v1::CompanionV1ControlAction as Action;
+    if request.action!=Action::DeviceConnect || request.audio_path.is_some() || request.audio_bytes.is_some() {
+        return false;
+    }
+    let Some(device)=request.device_id.as_deref().or(snapshot.device.device_id.as_deref()) else {return false;};
+    // The same exact durable journal already authorizes automatic original
+    // recovery. Explicit Connect after process exit must reach that protected
+    // QUERY too, even before this process has learned the peer's capabilities.
+    crate::backend::recorder_control::restart_recovery_request(snapshot,device)
+        .is_some_and(|recovery|request.session_id.as_deref().is_none_or(|id|recovery.session_id.as_deref()==Some(id)))
+}
+
 fn device_recording_blocks_control(
     snapshot: &CompanionV1Snapshot,
     action: crate::companion_v1::CompanionV1ControlAction,
@@ -441,7 +454,8 @@ impl CompanionCoordinator {
         let snapshot = self.backend.snapshot()?;
         let original_sync=crate::backend::owned_segmented_recording_sync(&snapshot,&request).is_some();
         let original_start_retry=crate::backend::recorder_control::unconfirmed_start_retry_request(&snapshot,&request);
-        if !original_sync && !original_start_retry && device_recording_blocks_control(&snapshot, request.action) {
+        let original_reconnect=original_restart_connect(&snapshot,&request);
+        if !original_sync && !original_start_retry && !original_reconnect && device_recording_blocks_control(&snapshot, request.action) {
             return Err(
                 "device operation cannot start while the Companion is recording; end the recording on the device, then read device status again"
                     .to_string(),
@@ -450,6 +464,7 @@ impl CompanionCoordinator {
         if needs_device
             && !original_sync
             && !original_start_retry
+            && !original_reconnect
             && !owned_offline_recording_link(&snapshot,&request)
             && !(matches!(request.action,
                 crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings
@@ -575,6 +590,51 @@ impl CompanionCoordinator {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn explicit_original_restart_connect_requires_one_exact_durable_original() {
+        use crate::companion_v1::{fixture_snapshot,create_host_session,CompanionV1ControlAction as A};
+        let device="C8:92:FF:DD:3B:CA";
+        let mut snapshot=fixture_snapshot();
+        let mut start=crate::control_request(A::MeetingStart,Some("local-original".into()));
+        start.device_id=Some(device.into());
+        let mut row=create_host_session(&snapshot,&start,"");
+        row.source="boardDevice".into();row.source_device_id=Some(device.into());row.status="recording".into();
+        row.device_recording_id=Some(28);
+        row.device_recording_key=Some(serde_json::from_value(serde_json::json!({
+            "deviceUid":"010101010101010101010101","formatEpoch":"0000000000000005","sessionId":"0000000000000009"})).unwrap());
+        row.recorder_control=Some(serde_json::from_value(serde_json::json!({
+            "schema":1,"hostSession":"local-original","deviceId":device,"uid":vec![1u8;12],"epoch":5,
+            "startRequest":1,"maxSeconds":0,"localOrigin":true,"key":row.device_recording_key,
+            "anchor":28,"confirmed":{"command":4,"request":2,"sequence":1,"state":3,"durationMs":15820},"pending":null
+        })).unwrap());
+        snapshot.source="lastKnown";snapshot.connected=false;snapshot.device.connected=false;
+        snapshot.device.mode="windowsNative".into();snapshot.device.device_id=Some(device.into());snapshot.device.mcu_uid=None;
+        snapshot.device.recording=false;snapshot.meeting.active=false;snapshot.host.active_session_id=None;
+        snapshot.host.persistence.status="ready".into();snapshot.host.sessions=vec![row];
+        let mut connect=crate::control_request(A::DeviceConnect,None);connect.device_id=Some(device.into());
+        assert!(snapshot_has_active_recording(&snapshot));
+        assert!(!owned_offline_recording_link(&snapshot,&connect),"a new process lacks current firmware/peer proof");
+        assert!(original_restart_connect(&snapshot,&connect),"exact durable intent may reach protected QUERY without a new START");
+        snapshot.host.sessions[0].recorder_control.as_mut().unwrap().confirmed.as_mut().unwrap().state=1;
+        assert!(original_restart_connect(&snapshot,&connect));
+        for invalid in ["foreign_device","foreign_session","two_originals","missing_journal","wrong_key","ended","host_audio","blocked_index","fixture","different_control","external_audio"] {
+            let mut s=snapshot.clone();let mut r=connect.clone();
+            match invalid {
+                "foreign_device"=>r.device_id=Some("AA:BB:CC:DD:EE:FF".into()),
+                "foreign_session"=>r.session_id=Some("other".into()),
+                "two_originals"=>s.host.sessions.push(s.host.sessions[0].clone()),
+                "missing_journal"=>s.host.sessions[0].recorder_control=None,
+                "wrong_key"=>s.host.sessions[0].device_recording_key.as_mut().unwrap().session_id="0000000000000010".into(),
+                "ended"=>s.host.sessions[0].recorder_control.as_mut().unwrap().confirmed.as_mut().unwrap().state=2,
+                "host_audio"=>s.host.sessions[0].source="hostMicrophone".into(),
+                "blocked_index"=>s.host.persistence.status="blocked".into(),
+                "fixture"=>s.source="fixture",
+                "different_control"=>r.action=A::DeviceSyncRecordings,
+                "external_audio"=>r.audio_path=Some("test.wav".into()),_=>unreachable!(),
+            }
+            assert!(!original_restart_connect(&s,&r),"{invalid}");
+        }
+    }
     #[test]
     fn online_capture_rejects_foreign_lease_before_any_backend_control() {
         let owner=CompanionCoordinator::new_fixture();let other=CompanionCoordinator::new_fixture();
