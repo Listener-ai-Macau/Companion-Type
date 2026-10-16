@@ -1,0 +1,169 @@
+{
+  "schema": "companion.type.random-gatt-address-r39.installed.v1",
+  "result": "R39_INSTALLED_TYPED_GATT_AND_OUTSIDE_WINDOW_CONNECTION_CONFIRMED_REPEAT_PAUSE_CAPACITY_OPEN",
+  "createdAtLocal": "2026-10-16T10:20:26+08:00",
+  "summary": "TypeR39已正式安装：配对阶段和GATT打开统一保留实际Random地址类型，并核对SDK返回地址/类型；当前422/UI77实板的多次新进程控制与配对窗口关闭后的正常连接均成功，无额外PAIR。原18号本地RESUME→本地PAUSE→TypeRESUME→STOP后24.80秒原音保存消费。",
+  "limitations": "最后追加的再次PAUSE收到但返回BUSY，完整多次暂停交替仍未通过；HOLD、实际物理键和本地新开录音接入Type控制仍OPEN。已从原音/收据定位当前段控制开销1214B使暂停保守预算254180B超过容量253704B共476B；未改掉安全门或把失败改PASS。窗外连接是独立后续占用，非完整不中断无线时序资格；无新2h/功耗/内容/速度或整机资格。",
+  "type": {
+    "source": {
+      "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+      "commit": "661480478bcf0abf39e7cca48185fbab94ec950c",
+      "tag": "companion-random-address-r39-20261016-source",
+      "parent": "e869b653be643c93d138adf72a43704f14dc6c6a",
+      "normalHeadAndIndexUnchanged": true,
+      "createdAtLocal": "2026-10-16T10:01:03"
+    },
+    "msi": {
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\random-address-r39-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+      "bytes": 10485760,
+      "sha256": "37d26a9dc530d0d07baeb78ca7846c45041db7c5501cf03237212b48cba0b06f"
+    },
+    "exeSha256": "67156e75c94ab0b4d3d6242b4bf2971a4b6b1989f21d0f5ab21d29773d2d2123",
+    "dllSha256": "1a1cf5bc261053a340f52025b92637c25040de2959414fd6443536fde296fbb2",
+    "sourceInputs": 218,
+    "changed": [
+      "third_party/btleplug-0.11.8/src/winrtble/ble/device.rs",
+      "third_party/btleplug-0.11.8/src/winrtble/peripheral.rs"
+    ],
+    "installed": true
+  },
+  "firmware": {
+    "version": "422/UI77",
+    "source": "8cc391f5f03feb1af78296e80092881432843d79",
+    "writtenByThisStage": false
+  },
+  "actual": {
+    "sessionId": "v1-real-installed-1792116360914",
+    "key": {
+      "deviceUid": "180010000d50335754363720",
+      "formatEpoch": "b8b8334898156eb8",
+      "sessionId": "000000000000000a"
+    },
+    "anchor": 18,
+    "startRequest": 3471575138,
+    "localResume": {
+      "command": 5,
+      "durationMs": 13140,
+      "finishedLocally": false,
+      "localControl": true,
+      "request": 2191739744,
+      "sequence": 2,
+      "state": 1
+    },
+    "localPause": {
+      "command": 4,
+      "durationMs": 16540,
+      "finishedLocally": false,
+      "localControl": true,
+      "request": 2191739745,
+      "sequence": 3,
+      "state": 3
+    },
+    "remoteResume": {
+      "command": 5,
+      "durationMs": 16540,
+      "finishedLocally": false,
+      "localControl": false,
+      "request": 964126140,
+      "sequence": 4,
+      "state": 1
+    },
+    "stop": {
+      "command": 2,
+      "request": 2610715796,
+      "sequence": 5,
+      "state": 2,
+      "durationMs": 24820,
+      "finishedLocally": false,
+      "localControl": false
+    },
+    "durationMs": 24800,
+    "rawBytes": 53348,
+    "opusFrames": 1241,
+    "wavSamples": 396800,
+    "wavBytes": 793644,
+    "wavSha256": "828210755d0106f3580c4a174b91cbd34afcb5cc917f15445e66cadcb73fbdda",
+    "events": [
+      {
+        "kind": 1,
+        "sequence": 1,
+        "sampleOffset": 137280,
+        "elapsedMs": 8599
+      },
+      {
+        "kind": 2,
+        "sequence": 2,
+        "sampleOffset": 137280,
+        "elapsedMs": 9492
+      },
+      {
+        "kind": 1,
+        "sequence": 3,
+        "sampleOffset": 264640,
+        "elapsedMs": 17464
+      },
+      {
+        "kind": 2,
+        "sequence": 4,
+        "sampleOffset": 264640,
+        "elapsedMs": 25084
+      }
+    ],
+    "pauseGapsMs": [
+      893,
+      7620
+    ],
+    "audioStored": true,
+    "deviceReclaimed": true,
+    "processingPolicy": "manual",
+    "cloudCallsRequested": 0
+  },
+  "connection": {
+    "outsideFinitePairWindow": true,
+    "pairWindowCommandsDuringContinuation": 0,
+    "additionalRecordingCommands": 0,
+    "normalNativeConnectionQualified": true,
+    "protectedConnectionResult": "NORMAL_DEVICE_CONNECT_CONFIRMED",
+    "windowCloseRawEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\random-address-r39-20261016\\window-closed-continuation\\uart.log",
+    "hostPairedAndTypedGATTTrace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\random-address-r39-20261016\\window-closed-continuation\\stderr.private.log",
+    "uninterruptedRadioRecoveryQualification": false
+  },
+  "repeatPause": {
+    "result": "REPEATED_PAUSE_CAPACITY_REJECTION_EXPLAINED",
+    "physicalCommandReceived": true,
+    "requestResult": 2,
+    "actualEventAndPaddingBytes": 1214,
+    "reservedExtentBytes": 262144,
+    "logicalCapacity": 253704,
+    "policyFrames": 6000,
+    "drainPackets": 5,
+    "futureControlPages": 3,
+    "required": 254180,
+    "excessBytes": 476,
+    "source": "companion_continuous_recording.c:comp_cont_recording_pause",
+    "fixedFutureOffsetContract": "Pipeline pre-reserves successor sample_offset at active.sample_offset+6000*320; a fix must keep future provenance/catalogue, sealing and source continuity coherent.",
+    "rejectedShortcut": "Do not remove the capacity/drain/STOP guard or claim unlimited pauses by merely enlarging one fixed extent. Account for control overhead coherently with dynamic storage and segment boundary.",
+    "r38BurstHypothesis": "Still unconfirmed for the earlier burst failure; this R39 paced repeated PAUSE was actually received and rejected, so do not attribute it to missing UART bytes."
+  },
+  "scope": {
+    "localPauseResumeHardwareBackendConfirmed": true,
+    "repeatedPauseQualified": false,
+    "physicalKeyQualified": false,
+    "holdImplemented": false,
+    "localNewOriginalHostAdoption": false,
+    "newCaptureTimingQualified": false,
+    "speedQualified": false,
+    "fullChainAcceptance": "NOT_QUALIFIED"
+  },
+  "retainedFailure": {
+    "originalResult": "R39_LOCAL_AND_HOST_ORIGINAL_PATH_NOT_COMPLETED",
+    "originalError": "AssertionError()",
+    "reason": "Observer required STOP sequence6 after a second local PAUSE. Device rejected that PAUSE, so actual STOP used5; source has4 control events and normal running STOP, no fabricated END_PAUSED. Failure retained; no repeat recording to replace it."
+  },
+  "softwareValidation": "Cargo check of the exact2 native Windows input changes and guarded formal MSI build; no repeat unrelated test suite.",
+  "officialReferences": [
+    "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.bluetoothledevice.frombluetoothaddressasync",
+    "https://learn.microsoft.com/en-us/windows/apps/develop/devices-sensors/pair-devices"
+  ],
+  "ownedHandlesClosed": true
+}
