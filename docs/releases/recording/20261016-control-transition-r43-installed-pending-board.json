@@ -1,0 +1,56 @@
+{
+  "schema": "companion.type.control-transition.r43.v1",
+  "time": "2026-10-16T11:47:11+08:00",
+  "result": "R43_INSTALLED_PHYSICAL_TRANSITION_WAIT_PENDING_BOARD",
+  "summary": "正式TypeR43已构建/安装：设备本地暂停/继续或原录音收尾中，即使没有电脑待发命令也继续核对同一原件的稳定状态；等待时不重开、不重发本地操作，队列里的旧稳定通知不能提前结束等待。原待STOP经实际本地控制重基后只写一次；已结束原件不被迟到收尾状态复活。",
+  "limitations": "本轮仅软件控制路径和正式包安装；没有接UART/BLE/SWD、录音、刷固件、配对、测速或云调用。实板仍沿最新确认426/UI78，428/429为未装候选；R41本地新原件接管与本次过渡修复都未取得实板闭环。保留上次UART0B，不因Goal或新包重试。HOLD可见入口、离线重点/状态、异常保全/长录、低功耗等继续开放；会议和进一步提速按Owner等分析器。",
+  "next": [
+    "在同一控制闭环中继续补必要缺陷；连接有明确恢复变化后，验证一次本地开录→Type接管→交替控制→保存/精确消费，不重跑已通过OTA或速度。",
+    "HOLD可见入口/解锁沿共享文件由屏幕侧接同一token API；本侧继续设备离线耐久重点与同步定位。",
+    "按同一功能树依次补状态/异常保全、回听整理备份/导入导出和功耗恢复；完成后给Owner完整功能表。"
+  ],
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "67a97c9f8088556d6da1eef63c494f6035e6e3bd",
+    "tag": "companion-control-transition-r43-20261016-source",
+    "parent": "dd137dbc27d5c6ec49937ecc1f6aeb96f4f30020",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T11:41:13"
+  },
+  "parentInstalledType": "R41",
+  "changedInputs": [
+    "apps/windows/src-tauri/src/backend/recorder_control.rs",
+    "apps/windows/src-tauri/src/backend/ble_bridge/recorder_control.rs"
+  ],
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\control-transition-r43-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10522624,
+    "sha256": "b5547135c297a6c41ba1bd3cf8fe61631cb979bf5b50e8fc142e4a255ca43de3"
+  },
+  "installed": {
+    "exe": "C:\\Program Files\\Companion Type\\companion-type.exe",
+    "exeSha256": "33f3c671103c88eea929e867862c3d3064d5c5a830e27e5c359ce9571c832500",
+    "payloadMatch": true
+  },
+  "software": {
+    "recorderControlTests": 31,
+    "fixture": "apps/windows/src-tauri/src/backend/cop1/tests/engine-local-controls.cms3",
+    "scope": "Actual portable C status vectors plus explicit software drain/remote-ACK models; not physical board evidence",
+    "log": ".cache/control-transition-r43-20261016/type/recorder-control-tests.log"
+  },
+  "actual": {
+    "boardAccessed": false,
+    "newRecording": false,
+    "firmwareWritten": false,
+    "newCloudCalls": 0,
+    "hardwareQualified": false
+  },
+  "firmwareVersion": 426,
+  "uiGeneration": 78,
+  "speedQualified": false,
+  "fullChainAcceptance": "NOT_QUALIFIED",
+  "evidence": [
+    ".cache/control-transition-r43-20261016/type/source-inputs.json",
+    ".cache/control-transition-r43-20261016/type/install/result.json"
+  ]
+}
