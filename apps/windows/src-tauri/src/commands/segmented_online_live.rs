@@ -287,7 +287,7 @@ mod tests {
         let pause=PausePeer::from_verified_peer(&peer).unwrap();
         let mut journal=Journal::start(&pause,id,"AA:BB:CC:DD:EE:19",17,60).unwrap();
         journal.key=Some(key.public_key());journal.anchor=Some(19);journal.pending=None;
-        journal.confirmed=Some(Confirmed{command:1,request:17,sequence:0,state:1,duration_ms:1000,finished_locally:false});
+        journal.confirmed=Some(Confirmed{command:1,request:17,sequence:0,state:1,duration_ms:1000,finished_locally:false,local_control:false});
         let mut s=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),request(
             CompanionV1ControlAction::MeetingStart,id,None,"unit",60)).unwrap();
         s.device.connected=true;

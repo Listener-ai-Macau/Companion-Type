@@ -56,21 +56,32 @@ pub(crate) struct PauseStatus {
     pub(crate) device_uid:[u8;12],pub(crate) format_epoch:u64,
     pub(crate) key:Option<SessionKey>,pub(crate) state:u8,pub(crate) last_error:u8,
     pub(crate) request:u32,pub(crate) sequence:u32,pub(crate) command:u8,pub(crate) timeline:bool,
+    /// Present only for a device-local action. This is never a remote ACK.
+    pub(crate) local_start:Option<u32>,
 }
 impl PauseStatus {
     pub(crate) fn decode(p:&[u8])->Result<Self,String> {
         if p.len()!=80||p[0]!=1||p[1]>6||&p[28..32]!=b"CMS3"||p[64]>1||p[65]>5||
-            p[66..76].iter().any(|b|*b!=0)||crc32fast::hash(&p[..76])!=u32le(p,76) {
+            p[66]>1 || p[71..76].iter().any(|b|*b!=0) ||
+            (p[66]==0 && p[67..71].iter().any(|b|*b!=0)) ||
+            crc32fast::hash(&p[..76])!=u32le(p,76) {
             return Err(fail("invalid pause recorder status length/schema/CRC"));
         }
         let uid=p[32..44].try_into().unwrap();let epoch=u64le(p,44);let session=u64le(p,52);
         if uid==[0;12]||uid==[255;12]||epoch==0{return Err(fail("empty pause recorder identity"));}
+        let local_start=(p[66]==1).then(||u32le(p,67));
+        if local_start.is_some_and(|start|start==0 || session==0 || p[64]!=1 ||
+            !matches!(p[65],1|4|5) || u32le(p,8)==0 ||
+            ((u32le(p,60)==0)!=(p[65]==1)) ||
+            (p[65]==1 && u32le(p,8)!=start)) {
+            return Err(fail("invalid local recorder origin/start/sequence"));
+        }
         Ok(Self{device_uid:uid,format_epoch:epoch,key:(session!=0).then_some(SessionKey{device_uid:uid,format_epoch:epoch,session_id:session}),
-            state:p[1],last_error:p[2],request:u32le(p,8),sequence:u32le(p,60),command:p[65],timeline:p[64]==1})
+            state:p[1],last_error:p[2],request:u32le(p,8),sequence:u32le(p,60),command:p[65],timeline:p[64]==1,local_start})
     }
     pub(crate) fn confirms(&self,key:&SessionKey,command:u8,request:u32,sequence:u32)->bool {
         let state=match command{1|5=>1,2|3=>2,4=>3,_=>return false};
-        self.key.as_ref()==Some(key)&&self.last_error==0&&self.command==command&&self.request==request&&
+        self.local_start.is_none()&&self.key.as_ref()==Some(key)&&self.last_error==0&&self.command==command&&self.request==request&&
             self.sequence==sequence&&self.state==state&&(!matches!(command,4|5)||self.timeline)
     }
 }

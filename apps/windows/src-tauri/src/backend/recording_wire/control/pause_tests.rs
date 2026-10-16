@@ -73,3 +73,16 @@ fn pause_requires_explicit_coherent_capability_and_scoped_nonzero_sequence() {
         assert!(peer.request(Some(&wrong),4,110,101,0,1,false).is_err());
     }
 }
+
+#[test]
+fn local_origin_extension_requires_exact_reserved_layout_and_is_never_remote_confirmation() {
+    let mut raw=include_bytes!("../../cop1/tests/engine-pause-control.cpc3")[64..144].to_vec();
+    let start=u32le(&raw,8);raw[66]=1;raw[67..71].copy_from_slice(&start.to_le_bytes());status_crc(&mut raw);
+    let status=PauseStatus::decode(&raw).unwrap();assert_eq!(status.local_start,Some(start));
+    assert!(!status.confirms(status.key.as_ref().unwrap(),1,start,0));
+    for invalid in 0..7 {
+        let mut bad=raw.clone();match invalid {0=>bad[66]=2,1=>bad[67..71].fill(0),
+            2=>bad[71]=1,3=>bad[65]=2,4=>bad[64]=0,5=>bad[60]=1,_=>bad[66]=0};
+        status_crc(&mut bad);assert!(PauseStatus::decode(&bad).is_err(),"bad local origin {invalid}");
+    }
+}

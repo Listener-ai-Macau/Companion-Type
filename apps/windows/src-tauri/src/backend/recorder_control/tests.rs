@@ -114,6 +114,69 @@ fn running()->Journal {
     let mut j=start();let (s,id,ms)=c_status(0);assert_eq!(j.observe(&s,id,ms).unwrap(),Observation::Confirmed);j
 }
 
+fn local_observation(j:&Journal,command:u8,sequence:u32,state:u8)->(PauseStatus,u32,u32) {
+    let mut raw=vector(0)[56..136].to_vec();raw[1]=state;raw[2]=0;
+    raw[8..12].copy_from_slice(&(j.start_request^sequence^0x4c4f4300).max(1).to_le_bytes());
+    raw[60..64].copy_from_slice(&sequence.to_le_bytes());raw[65]=command;raw[66]=1;
+    raw[67..71].copy_from_slice(&j.start_request.to_le_bytes());
+    let crc=crc32fast::hash(&raw[..76]);raw[76..].copy_from_slice(&crc.to_le_bytes());
+    let (_,anchor,ms)=c_status(0);(PauseStatus::decode(&raw).unwrap(),anchor,ms)
+}
+
+#[test]
+fn physical_pause_resume_reconciles_only_original_and_never_fakes_remote_ack() {
+    let peer=peer();let mut j=running();let original=j.clone();
+    let (mut s,anchor,ms)=local_observation(&j,4,1,4);
+    assert_eq!(j.observe_with_peer(&peer,&s,anchor,ms).unwrap(),Observation::Accepted);
+    assert_eq!(j,original,"draining is not durable PAUSED");
+    s.state=3;
+    assert!(!s.confirms(s.key.as_ref().unwrap(),4,s.request,1));
+    assert_eq!(j.observe_with_peer(&peer,&s,anchor,ms).unwrap(),Observation::Confirmed);
+    assert!(j.confirmed.as_ref().unwrap().local_control);
+    let bytes=serde_json::to_vec(&j).unwrap();let reopened:Journal=serde_json::from_slice(&bytes).unwrap();
+    reopened.matches(&peer,HOST,DEVICE).unwrap();assert_eq!(reopened,j);
+    let (s,anchor,ms)=local_observation(&j,5,2,1);
+    assert_eq!(j.observe_with_peer(&peer,&s,anchor,ms).unwrap(),Observation::Confirmed);
+    assert_eq!(j.key,original.key);assert_eq!(j.anchor,original.anchor);
+    assert!(j.prepare(&peer,4).unwrap());assert_eq!(j.pending.as_ref().unwrap().sequence,3);
+    assert_eq!(j.pending.as_ref().unwrap().wire[5],4,"continue the same original, never START");
+    for invalid in 0..6 {
+        let mut bad=s.clone();let mut anchor=anchor;
+        match invalid {0=>bad.local_start=Some(j.start_request+1),1=>bad.device_uid[0]^=1,
+            2=>bad.format_epoch+=1,3=>bad.key.as_mut().unwrap().session_id+=1,
+            4=>anchor+=1,_=>bad.sequence=1};
+        let before=j.clone();assert!(j.observe_with_peer(&peer,&bad,anchor,ms).is_err());assert_eq!(j,before);
+    }
+    let mut pending=start();assert!(pending.observe_with_peer(&peer,&s,anchor,ms).is_err());
+}
+
+#[test]
+fn physical_override_preserves_displaced_bytes_and_rebases_stop_intent_once() {
+    let peer=peer();let mut j=running();j.prepare(&peer,2).unwrap();
+    let old_stop=j.pending.clone().unwrap();let (s,anchor,ms)=local_observation(&j,4,1,3);
+    assert_eq!(j.observe_with_peer(&peer,&s,anchor,ms).unwrap(),Observation::Previous);
+    assert_eq!(j.superseded.as_ref(),Some(&old_stop));let rebased=j.pending.clone().unwrap();
+    assert_eq!((rebased.command,rebased.sequence),(2,2));assert_ne!(old_stop.wire,rebased.wire);
+    assert_eq!(j.observe_with_peer(&peer,&s,anchor,ms).unwrap(),Observation::Previous);
+    assert_eq!(j.pending.as_ref(),Some(&rebased),"same local observation cannot rebase again");
+    j.matches(&peer,HOST,DEVICE).unwrap();
+    let mut finalized=s.clone();finalized.local_start=None;finalized.state=2;
+    finalized.command=2;finalized.sequence=rebased.sequence;finalized.request=rebased.request;
+    assert_eq!(j.observe_with_peer(&peer,&finalized,anchor,ms).unwrap(),Observation::Confirmed);
+    assert!(!j.confirmed.as_ref().unwrap().finished_locally && !j.confirmed.as_ref().unwrap().local_control);
+    assert_eq!(j.superseded.as_ref(),Some(&old_stop));
+
+    let mut j=running();j.prepare(&peer,4).unwrap();let lost_pause=j.pending.clone().unwrap();
+    let (s,anchor,ms)=local_observation(&j,5,2,1);
+    assert_eq!(j.observe_with_peer(&peer,&s,anchor,ms).unwrap(),Observation::Confirmed);
+    assert!(j.pending.is_none());assert_eq!(j.superseded.as_ref(),Some(&lost_pause));
+    j.prepare(&peer,2).unwrap();let stop=j.pending.clone().unwrap();
+    let mut ended=s;ended.state=2;
+    assert_eq!(j.observe_with_peer(&peer,&ended,anchor,ms).unwrap(),Observation::Confirmed);
+    assert!(j.pending.is_none() && j.confirmed.as_ref().unwrap().finished_locally);
+    assert_eq!(j.superseded.as_ref(),Some(&stop));j.matches(&peer,HOST,DEVICE).unwrap();
+}
+
 fn sealed_catalogue(j:&Journal)->Vec<crate::backend::recording_wire::Descriptor> {
     use crate::backend::recording_wire::{Descriptor,SessionKey};
     let key=SessionKey::from_public(j.key.as_ref().unwrap()).unwrap();
@@ -460,4 +523,35 @@ fn control_privacy_closed_receipt_never_retires_pending_foreign_or_unverified_or
     let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.host.sessions.clear();
     assert!(prepare_privacy_retirement(&snapshot,&privacy_request("privacyEraseAll"),&path).is_err(),
         "a non-ended orphan has no row/closed-original proof");assert!(file.exists());
+}
+
+#[test]
+fn actual_c_local_statuses_match_host_origin_sequence_and_same_original() {
+    let bytes=include_bytes!("../cop1/tests/engine-local-controls.cms3");
+    assert_eq!(&bytes[..4],b"CLL3");assert_eq!(bytes.len(),8+16*80);
+    assert_eq!(u32::from_le_bytes(bytes[4..8].try_into().unwrap()),16);
+    let fields=|raw:&[u8]|(PauseStatus::decode(raw).unwrap(),
+        u32::from_le_bytes(raw[12..16].try_into().unwrap()),u32::from_le_bytes(raw[20..24].try_into().unwrap()));
+    let (first,_,_)=fields(&bytes[8..88]);
+    let mut j=Journal::start(&peer(),HOST,DEVICE,first.request,600).unwrap();
+    for (i,raw) in bytes[8..8+8*80].chunks_exact(80).enumerate() {
+        let (status,anchor,ms)=fields(raw);
+        if i==5 {
+            let key=SessionKey::from_public(j.key.as_ref().unwrap()).unwrap();
+            j.pending=Some(Command{command:4,request:130,sequence:3,
+                wire:peer().request(Some(&key),4,130,j.start_request,0,3,false).unwrap().to_vec()});
+        }
+        let result=j.observe_with_peer(&peer(),&status,anchor,ms).unwrap();
+        assert_eq!(result,if matches!(i,1|3){Observation::Accepted}else{Observation::Confirmed},"C transition {i}");
+        if status.local_start.is_some() {assert!(!status.confirms(status.key.as_ref().unwrap(),status.command,status.request,status.sequence));}
+        j.matches(&peer(),HOST,DEVICE).unwrap();
+    }
+    assert!(j.confirmed.as_ref().unwrap().finished_locally && j.confirmed.as_ref().unwrap().local_control);
+    let key=j.key.clone();
+    for (i,raw) in bytes[8+8*80..].chunks_exact(80).enumerate() {
+        let (status,_,_)=fields(raw);assert!(status.key.is_some());
+        assert_ne!(status.key.as_ref().map(SessionKey::public_key),key);
+        if i!=5 {assert!(status.local_start.is_some());}
+        if status.local_start.is_some() {assert!(!status.confirms(status.key.as_ref().unwrap(),status.command,status.request,status.sequence));}
+    }
 }

@@ -87,13 +87,12 @@ async fn archived_original_end(device:&NativeDevice,chars:&BTreeSet<Characterist
 }
 
 async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteristic,
-    store:&mut Store,journal:&mut Journal,initial:Option<Observed>,fresh_start:bool)->Result<Observed,String> {
-    let Some(pending)=journal.pending.clone() else {return initial.ok_or("原确认缺失。".into())};
+    peer:&PausePeer,store:&mut Store,journal:&mut Journal,initial:Option<Observed>,fresh_start:bool)->Result<Observed,String> {
     let disposition=if let Some((s,anchor,duration,_))=initial.as_ref() {
-        journal.observe(s,*anchor,*duration)?
+        journal.observe_with_peer(peer,s,*anchor,*duration)?
     } else {Observation::Previous};
     store.commit_bound(journal.clone())?;
-    if disposition==Observation::Confirmed {return initial.ok_or("实际确认缺失。".into());}
+    let Some(pending)=journal.pending.clone() else {return initial.ok_or("实际确认缺失。".into());};
     if pending.command==1 && disposition==Observation::Previous && !fresh_start {
         return Err("设备尚未确认上次开始；可能已重启，未自动重新开录。原命令与会议保留。".into());
     }
@@ -101,6 +100,7 @@ async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteris
     let mut notifications=bounded_ble_result("CMC3 notifications",StdDuration::from_secs(8),device.peripheral.notifications()).await?;
     bounded_ble_result("subscribe CMC3 status",StdDuration::from_secs(8),device.peripheral.subscribe(status)).await?;
     let result:Result<Observed,String>=async {
+        let mut sent_sequence=pending.sequence;
         if disposition==Observation::Previous {
             bounded_ble_result("write durable CMC3 command",remaining_deadline_budget(deadline,StdDuration::from_secs(8)),
                 device.peripheral.write(control,&pending.wire,WriteType::WithResponse)).await?;
@@ -119,8 +119,16 @@ async fn settle(device:&NativeDevice,control:&Characteristic,status:&Characteris
                 if old.last_error==0 && matches!(old.state,0|2) {continue;}
             }
             let observed=fields(&wire)?;
-            if journal.observe(&observed.0,observed.1,observed.2)?==Observation::Confirmed {
-                store.commit_bound(journal.clone())?;return Ok(observed);
+            let disposition=journal.observe_with_peer(peer,&observed.0,observed.1,observed.2)?;
+            store.commit_bound(journal.clone())?;
+            if journal.pending.is_none() && disposition==Observation::Confirmed {return Ok(observed);}
+            if disposition==Observation::Previous {
+                if let Some(rebased)=journal.pending.as_ref().filter(|p|p.sequence>sent_sequence) {
+                    bounded_ble_result("write rebased original STOP after physical control",
+                        remaining_deadline_budget(deadline,StdDuration::from_secs(8)),
+                        device.peripheral.write(control,&rebased.wire,WriteType::WithResponse)).await?;
+                    sent_sequence=rebased.sequence;
+                }
             }
         }
     }.await;
@@ -180,7 +188,7 @@ pub(super) async fn execute_owned(
             None
         };
         if let Some((s,anchor,duration,_))=observed.as_ref() {
-            match journal.observe(s,*anchor,*duration) {
+            match journal.observe_with_peer(&peer,s,*anchor,*duration) {
                 Ok(Observation::Confirmed)=>store.commit_bound(journal.clone())?,
                 Ok(_)=>{},
                 Err(_) if command==0 && s.last_error==0 && matches!(s.state,0|2) => {
@@ -202,13 +210,13 @@ pub(super) async fn execute_owned(
         // STOP settles the exact lost PAUSE/RESUME/START, then uses the next
         // sequence. Recovery only settles the original pending intent.
         if matches!(command,0|2|3) && journal.pending.is_some() {
-            observed=Some(settle(&device,&control,&status,&mut store,&mut journal,observed,false).await?);
+            observed=Some(settle(&device,&control,&status,&peer,&mut store,&mut journal,observed,false).await?);
         }
         // Only an explicit START retry may resend an unaccepted initial
         // intent. Automatic QUERY/STOP recovery retains its no-restart guard.
         let allow_initial_start=fresh_start || (command==1 && journal.unconfirmed_start_retry());
         if command!=0 && journal.prepare(&peer,command)? {
-            observed=Some(settle(&device,&control,&status,&mut store,&mut journal,observed,allow_initial_start).await?);
+            observed=Some(settle(&device,&control,&status,&peer,&mut store,&mut journal,observed,allow_initial_start).await?);
         }
         let (observed,anchor,duration,sync_state)=observed.ok_or("设备尚未确认原控制。")?;
         if !matches!(observed.state,1|2|3) || observed.last_error!=0 || !observed.timeline {

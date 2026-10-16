@@ -28,6 +28,8 @@ pub(crate) struct Confirmed {
     /// Keep its actual last command; never manufacture a STOP acknowledgement.
     #[serde(default)]
     pub(crate) finished_locally: bool,
+    #[serde(default)]
+    pub(crate) local_control: bool,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -44,6 +46,10 @@ pub struct Journal {
     pub(crate) anchor: Option<u32>,
     pub(crate) confirmed: Option<Confirmed>,
     pub(crate) pending: Option<Command>,
+    /// Most recent outstanding host command displaced by a newer, verified
+    /// physical control. Keep its exact bytes; it was not acknowledged.
+    #[serde(default, skip_serializing_if="Option::is_none")]
+    pub(crate) superseded: Option<Command>,
     /// A later protected, complete sealed catalogue can prove an old capture
     /// ended after its live CMS3 identity was replaced. This is NOT a STOP ACK.
     #[serde(default, skip_serializing_if="Option::is_none")]
@@ -86,7 +92,7 @@ impl Journal {
         let wire=peer.request(None,1,request,request,max_seconds,0,true)?.to_vec();
         Ok(Self{schema:1,host_session:host_session.into(),device_id:device_id.into(),uid,epoch,
             start_request:request,max_seconds,key:None,anchor:None,confirmed:None,
-            pending:Some(Command{command:1,request,sequence:0,wire}),sealed_catalogue_end:None})
+            pending:Some(Command{command:1,request,sequence:0,wire}),superseded:None,sealed_catalogue_end:None})
     }
 
     pub(crate) fn matches(&self, peer: &PausePeer, host: &str, device: &str) -> Result<(),String> {
@@ -106,6 +112,18 @@ impl Journal {
                 || (confirmed.sequence==0)!=(confirmed.command==1)
                 || (confirmed.command==1 && confirmed.request!=self.start_request) {
                 return Err(failure("耐久确认的命令／序号／状态不一致"));
+            }
+            if confirmed.local_control && !matches!(confirmed.command,1|4|5) {
+                return Err(failure("本地操作不能冒充电脑停止确认"));
+            }
+        }
+        if let Some(previous)=self.superseded.as_ref() {
+            let expected=peer.request(key.as_ref(),previous.command,previous.request,self.start_request,
+                0,previous.sequence,false)?;
+            if previous.command==1 || previous.wire!=expected || self.confirmed.as_ref()
+                .is_none_or(|c|previous.sequence>c.sequence && !(c.finished_locally &&
+                    matches!(previous.command,2|3) && c.sequence.checked_add(1)==Some(previous.sequence))) {
+                return Err(failure("被本地操作取代的原命令记录不一致"));
             }
         }
         if let Some(pending)=self.pending.as_ref() {
@@ -154,6 +172,9 @@ impl Journal {
 
     pub(crate) fn observe(&mut self, status: &PauseStatus, anchor: u32, duration: u32)
         -> Result<Observation,String> {
+        if status.local_start.is_some() {
+            return Err(failure("本地操作需要按原设备和原开始请求核对"));
+        }
         if self.sealed_catalogue_end.is_some() {return Err(failure("原录音已封口，不能用后来的实时控制替换目录证据"));}
         if (status.device_uid,status.format_epoch)!=(self.uid,self.epoch) {
             return Err(failure("控制确认的芯片或格式代次不同"));
@@ -175,7 +196,7 @@ impl Journal {
         if local_finish {
             self.key=key.map(SessionKey::public_key);self.anchor=Some(anchor);
             self.confirmed=Some(Confirmed{command:status.command,request:status.request,sequence:status.sequence,
-                state:2,duration_ms:duration,finished_locally:true});
+                state:2,duration_ms:duration,finished_locally:true,local_control:false});
             self.pending=None;return Ok(Observation::Confirmed);
         }
         if let Some(pending)=self.pending.as_ref() {
@@ -197,7 +218,7 @@ impl Journal {
                 let key=key.unwrap();
                 if status.confirms(key,pending.command,pending.request,pending.sequence) {
                     let confirmed=Confirmed{command:pending.command,request:pending.request,sequence:pending.sequence,
-                        state:status.state,duration_ms:duration,finished_locally:false};
+                        state:status.state,duration_ms:duration,finished_locally:false,local_control:false};
                     self.key=Some(key.public_key());self.anchor=Some(anchor);self.confirmed=Some(confirmed);
                     self.pending=None;return Ok(Observation::Confirmed);
                 }
@@ -232,6 +253,52 @@ impl Journal {
             anchor,duration,key_matches,anchor_matches,self.confirmed,
             self.pending.as_ref().map(|p|(p.command,p.request,p.sequence)));
         Err(failure("设备状态既不属于待确认命令，也不属于上次确认"))
+    }
+
+    /// A physical action can race an outstanding host write. Its protected
+    /// origin, original START, full key, anchor and monotonic sequence must all
+    /// match. Preserve a displaced intent; STOP is rebased, never dropped.
+    pub(crate) fn observe_with_peer(&mut self, peer:&PausePeer, status:&PauseStatus,
+        anchor:u32, duration:u32)->Result<Observation,String> {
+        if status.local_start.is_none() {return self.observe(status,anchor,duration);}
+        self.matches(peer,&self.host_session,&self.device_id)?;
+        let previous=self.confirmed.as_ref().ok_or_else(||failure("原开始尚未确认，不能由本地状态替代"))?;
+        if self.sealed_catalogue_end.is_some() || status.local_start!=Some(self.start_request)
+            || (status.device_uid,status.format_epoch)!=(self.uid,self.epoch)
+            || status.key.as_ref().map(SessionKey::public_key).as_ref()!=self.key.as_ref()
+            || self.anchor!=Some(anchor) || anchor==0 || !status.timeline || status.last_error!=0
+            || duration<previous.duration_ms || status.sequence<previous.sequence
+            || (status.sequence==previous.sequence && (!previous.local_control ||
+                previous.command!=status.command || previous.request!=status.request)) {
+            return Err(failure("本地控制不属于同一原录音或序号已过期"));
+        }
+        let stable=stable_state(status.command).ok_or_else(||failure("未知本地操作"))?;
+        let transition=match status.command {4=>4,5=>5,_=>255};
+        if status.state==transition {return Ok(Observation::Accepted);}
+        if status.state!=stable && status.state!=2 {return Err(failure("本地操作尚未到达稳定状态"));}
+        if status.sequence==previous.sequence && status.state==previous.state {
+            self.confirmed.as_mut().unwrap().duration_ms=duration;
+            return Ok(Observation::Previous);
+        }
+        let mut next=self.clone();
+        let displaced=next.pending.take();
+        if let Some(pending)=displaced.as_ref() {
+            if pending.command==1 || (pending.sequence>status.sequence &&
+                !(status.state==2 && matches!(pending.command,2|3) &&
+                  status.sequence.checked_add(1)==Some(pending.sequence))) {
+                return Err(failure("本地状态未覆盖原待确认命令"));
+            }
+            next.superseded=Some(pending.clone());
+        }
+        next.confirmed=Some(Confirmed{command:status.command,request:status.request,
+            sequence:status.sequence,state:status.state,duration_ms:duration,
+            finished_locally:status.state==2,local_control:true});
+        let stop=displaced.as_ref().filter(|p|matches!(p.command,2|3)).map(|p|p.command);
+        let observation=if let Some(stop)=stop.filter(|_|status.state!=2) {
+            next.prepare(peer,stop)?;Observation::Previous
+        } else {Observation::Confirmed};
+        next.matches(peer,&next.host_session,&next.device_id)?;
+        *self=next;Ok(observation)
     }
 }
 
