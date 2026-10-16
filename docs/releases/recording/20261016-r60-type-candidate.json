@@ -1,0 +1,20 @@
+{
+  "result": "R60_MSI_BUILT_NOT_INSTALLED",
+  "source": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "a7d0881aa21a4832ba14f797258b508805caaf41",
+    "tag": "companion-recorder-end-r60-20261016-source",
+    "parent": "7ce8aca184bd68a26bbf9ba4579bb164f64604c4",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-16T21:13:38"
+  },
+  "artifact": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\recording-end-r60-20261016\\type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10305536,
+    "sha256": "9750c9807bfaadefc0131e9cff629d9b1af2f4be12fabeea7e630bc723fe3f12"
+  },
+  "firmwareEvidence": "Companion-Firmware/docs/releases/recording/20261016-r60-fw455-type-candidate.json",
+  "installed": false,
+  "physicalQualified": false,
+  "ownerHardwareRepairHold": true
+}
