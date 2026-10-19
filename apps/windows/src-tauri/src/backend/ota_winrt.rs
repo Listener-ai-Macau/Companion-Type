@@ -314,6 +314,7 @@ pub(crate) fn inspect_system_ota_winrt(device_id:&str)->Result<serde_json::Value
 }
 
 pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
+    let transport_profile=super::ota_flow::SimpleTransportProfile::from_env()?;
     let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
     // Protected capability read establishes encryption before public readiness.
     let bytes=read_simple_protected_status(&target)?;
@@ -322,6 +323,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     check_wba_readiness(&target)?;
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
     let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
+    let pipelined=transport_profile.pipelined(flow)?;
     let identity=open_read_char(&target._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"当前升级版本")?;
     let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"当前升级版本",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
     package.admit(&current)?;drop(identity);
@@ -329,7 +331,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // First CE release uses one acknowledged <=244-byte ATT value. The
     // observed509-byte burst did not advance offset0; throughput work remains
     // deferred, rather than making fragmented WWR a prerequisite for OTA.
-    target.data_write_option=GattWriteOption::WriteWithResponse;
+    target.data_write_option=if pipelined {GattWriteOption::WriteWithoutResponse}
+        else {GattWriteOption::WriteWithResponse};
     if let Some(device)=target._device.as_ref() {
         if let Ok(p)=BluetoothLEPreferredConnectionParameters::Balanced() {
             if let Ok(r)=device.RequestPreferredConnectionParameters(&p) {target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(r));}
@@ -340,12 +343,15 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let payload=240u16.min(flow.payload_bytes).min(mtu.saturating_sub(7));
     if payload==0{return Err("当前ATT MTU不能承载升级数据".into());}
     let mut options=denzic_ota_core::TransferOptions::dual_lane_bulk(payload);
-    // Each DATA remains ATT-acknowledged. Reuse the existing bounded device
-    // checkpoint window, so SYNC+READ are not repeated for every single DATA.
+    // Same <=244-byte ATT value for both cases. The explicit WWR comparison
+    // uses only this peer's authenticated bounded queue; SYNC+READ remains the
+    // durable storage receipt, never a local Windows write completion.
     options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
-    eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0",flow.window_chunks);
-    let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::new(),pending_wwr_b:Vec::new(),
-        status_error_started:None,wba_signed:true,pipeline_depth:1,system_component:None,
+    let pipeline=if pipelined {flow.pipeline_depth()} else {1};
+    eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0 transport_profile={} pipeline_depth={pipeline} data_write={:?} diagnostic={}",
+        flow.window_chunks,transport_profile.name(),target.data_write_option,u8::from(pipelined));
+    let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(pipeline),pending_wwr_b:Vec::new(),
+        status_error_started:None,wba_signed:true,pipeline_depth:pipeline,system_component:None,
         simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?)};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;

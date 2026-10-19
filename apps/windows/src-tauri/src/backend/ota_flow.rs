@@ -9,6 +9,40 @@ pub(super) struct WbaFlow {
     pub pipelined: bool,
 }
 
+/// Explicit diagnostic selection for the already-supported simple-file path.
+/// Keep the delivered acknowledged path as default until real RF/storage
+/// evidence qualifies the bounded WWR path. Do not also change packet size,
+/// connection preference, file format or signature/installation semantics.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244 }
+
+impl SimpleTransportProfile {
+    pub fn parse(value: Option<&str>) -> Result<Self, String> {
+        match value.map(str::trim).unwrap_or("") {
+            "" | "acknowledged" => Ok(Self::Acknowledged),
+            "windowed_244" => Ok(Self::Windowed244),
+            _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
+        }
+    }
+    pub fn from_env() -> Result<Self, String> {
+        match std::env::var("COMPANION_TYPE_SIMPLE_OTA_TRANSPORT") {
+            Ok(value) => Self::parse(Some(&value)),
+            Err(std::env::VarError::NotPresent) => Self::parse(None),
+            Err(_) => Err("最简OTA传输诊断配置不是有效文字；未连接设备".into()),
+        }
+    }
+    pub fn pipelined(self, flow: WbaFlow) -> Result<bool, String> {
+        match self {
+            Self::Acknowledged => Ok(false),
+            Self::Windowed244 if flow.pipelined => Ok(true),
+            Self::Windowed244 => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
+        }
+    }
+    pub fn name(self) -> &'static str {
+        match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244" }
+    }
+}
+
 impl WbaFlow {
     pub fn check_component(status:&[u8],component:u8)->Result<(),String> {
         let s=denzic_ota_core::parse_status(status)?;
@@ -70,6 +104,23 @@ impl WbaFlow {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn simple_transport_comparison_is_explicit_and_requires_device_capacity() {
+        let capable=WbaFlow {payload_bytes:505,window_chunks:16,pipelined:true};
+        let unsupported=WbaFlow {pipelined:false,..capable};
+        for value in [None,Some(""),Some("acknowledged")] {
+            let profile=SimpleTransportProfile::parse(value).unwrap();
+            assert!(!profile.pipelined(capable).unwrap());
+            assert!(!profile.pipelined(unsupported).unwrap());
+        }
+        let profile=SimpleTransportProfile::parse(Some("windowed_244")).unwrap();
+        assert!(profile.pipelined(capable).unwrap());
+        assert!(profile.pipelined(unsupported).is_err());
+        for unknown in ["windowed", "windowed_509", "automatic", "1"] {
+            assert!(SimpleTransportProfile::parse(Some(unknown)).is_err());
+        }
+    }
     fn status(magic: &[u8], window: u16, flags: u16) -> Vec<u8> {
         let mut s = vec![0u8;24]; s[..4].copy_from_slice(b"DOV1");s[4]=1;
         if !magic.is_empty() {
