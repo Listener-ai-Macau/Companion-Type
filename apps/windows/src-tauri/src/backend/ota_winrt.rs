@@ -390,7 +390,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     report.timings.total=started.elapsed();
     let system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
         "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
-        "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis()}));
+        "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
+        "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
+        "filePayloadBytes":payload,"pipelineDepth":pipeline,"pipelined":pipelined}));
     Ok(CompanionOtaBleReport{device_id,transfer:report,payload_metrics,system_bundle})
 }
 
