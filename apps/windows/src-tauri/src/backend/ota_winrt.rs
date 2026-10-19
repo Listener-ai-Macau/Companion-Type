@@ -333,11 +333,22 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // deferred, rather than making fragmented WWR a prerequisite for OTA.
     target.data_write_option=if pipelined {GattWriteOption::WriteWithoutResponse}
         else {GattWriteOption::WriteWithResponse};
+    let connection_preference=if pipelined {"ThroughputOptimized"} else {"Balanced"};
     if let Some(device)=target._device.as_ref() {
-        if let Ok(p)=BluetoothLEPreferredConnectionParameters::Balanced() {
+        if pipelined {
+            // R69's same-size WWR capture: Windows rejected the peripheral's
+            // CI6 request and applied its Balanced CI48 for the whole239s
+            // download. CI6 became effective only after that request was
+            // released. Own a bulk preference for the actual payload phase;
+            // the existing success/drop paths release it on every exit.
+            target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(
+                apply_throughput_optimized(device)
+                    .map_err(|e|format!("增强OTA连接参数请求失败；尚未下载升级包：{e}"))?));
+        } else if let Ok(p)=BluetoothLEPreferredConnectionParameters::Balanced() {
             if let Ok(r)=device.RequestPreferredConnectionParameters(&p) {target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(r));}
         }
     }
+    eprintln!("[companion-ota] simple_connection_preference requested={connection_preference} applied_not_guaranteed=1 release=payload_complete_or_owner_drop");
     // Signature travels inside the file. Only DATA geometry is relevant;
     // do not inherit WB's244 cap or the former separate-manifest147 minimum.
     let payload=240u16.min(flow.payload_bytes).min(mtu.saturating_sub(7));
@@ -392,7 +403,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
-        "filePayloadBytes":payload,"pipelineDepth":pipeline,"pipelined":pipelined}));
+        "filePayloadBytes":payload,"pipelineDepth":pipeline,"pipelined":pipelined,
+        "connectionPreference":connection_preference}));
     Ok(CompanionOtaBleReport{device_id,transfer:report,payload_metrics,system_bundle})
 }
 
