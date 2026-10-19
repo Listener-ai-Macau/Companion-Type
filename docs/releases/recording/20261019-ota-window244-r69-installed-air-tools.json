@@ -1,0 +1,121 @@
+{
+  "schema": "companion.type.ota-window244.r69.installed.v1",
+  "at": "2026-10-19T22:07:19+08:00",
+  "result": "R69_INSTALLED_SAME_SIZE_OTA_WINDOW_COMPARISON_READY_NOT_RF_QUALIFIED",
+  "sourceCommit": "1b98b753c0728dd524feb7a7ab8842603adaedaf",
+  "sourceTag": "companion-simple-ota-windowed244-20261019-final-source",
+  "dependencyCommit": "438e4943c1ea8344203c76839df770b188b4af6f",
+  "msi": {
+    "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ble-rate-20261019\\ota-window244-type\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+    "bytes": 10334208,
+    "sha256": "be44aea19e925e300875d5b4c6e601a82bdb0b1920c4ba163737cd7245685b8f"
+  },
+  "installed": {
+    "result": "TYPE_OTA_WINDOW244_INSTALLED_OFFLINE_PACKAGE_VALIDATED",
+    "at": "2026-10-19T22:05:15.307506+08:00",
+    "sourceCommit": "1b98b753c0728dd524feb7a7ab8842603adaedaf",
+    "msiSha256": "be44aea19e925e300875d5b4c6e601a82bdb0b1920c4ba163737cd7245685b8f",
+    "installedExeSha256": "a8de779f208050b697569cd705e999884c832279ad5d8d836d268d2bc0c3a838",
+    "installedDllSha256": "05706b6f805dbc4e5fdfb8fcc67f0ff71502baeb6cb58eeb298d157c9fe17f32",
+    "validation": {
+      "chunkBytes": 505,
+      "message": "单文件内容已核对；Boot 在覆盖前验证签名。新版本正常启动且临时空间释放后才显示升级成功。",
+      "packageType": "companion-system-ota",
+      "payloadBytes": 1417796,
+      "payloadSha256": "d141366447448dc3a9fc62b60679dc254ed7bb5e5d47f0579dc8f6ffc15b422c",
+      "status": "PASS",
+      "versionNote": "固件＋资源单文件，断开后重新下载"
+    },
+    "defaultTransportChanged": false,
+    "guiOpened": false,
+    "hardwareOperations": 0,
+    "newSpeedMeasurements": 0,
+    "cloudCalls": 0,
+    "originalValidationFailure": "Harness first passed binary CUP where existing CLI requires ota_manifest.json. Original failure logs retained. Correct manifest passed without reinstall or product changes."
+  },
+  "transport": {
+    "default": "acknowledged",
+    "explicitDiagnosticEnvironment": "COMPANION_TYPE_SIMPLE_OTA_TRANSPORT=windowed_244",
+    "maximumFilePayloadBytes": 240,
+    "maximumAttValueBytes": 244,
+    "maximumPendingWrites": "authenticated WOC2 flags5 window, at most16",
+    "connectionPreference": "Balanced unchanged",
+    "deviceDurability": "SYNC and actual bytes_written; no local write completion counted as NOR save",
+    "signatureAndBoot": "unchanged fullfile retained externally; Boot verifies before destinations are modified"
+  },
+  "airTools": {
+    "source": {
+      "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+      "commit": "2a7cfe5463fad570e323b3609f70f8b5af900dd0",
+      "tag": "companion-own-board-rf-mic-20261019-source",
+      "parent": "adc4eff769b3adc63f10c86ec81ecf46f3681213",
+      "normalHeadAndIndexUnchanged": true,
+      "createdAtLocal": "2026-10-19T22:02:29"
+    },
+    "savedOwnNvmBinding": {
+      "schema": "companion.wba.saved_nvm_air_analysis.v1",
+      "deviceUid": "120011000d50335754363720",
+      "deviceAddress": "C8:ED:45:EB:95:B4",
+      "installedFirmware": "000102cf",
+      "sourceCommit": "ae08640f06f8d8fd8f6fb08ed55b983f62d4cb6c",
+      "nvmSha256": "ac4083bd9c49b9145df0b1ecf00de1c675cd33930794d43dbe4b76d13b1b12d1",
+      "banks": [
+        {
+          "index": 0,
+          "erased": true,
+          "valid": false
+        },
+        {
+          "index": 1,
+          "erased": false,
+          "counter": 1,
+          "bufferBytes": [
+            2032,
+            48,
+            0,
+            0
+          ],
+          "crcVerified": true,
+          "valid": true
+        }
+      ],
+      "selectedBank": 1,
+      "hostBufferBytes": 2032,
+      "hostBufferSha256": "12d7b8d174785c549db66b41e8479ef4f3731e503250d987cc46ef6af9db27ec",
+      "sdkCrcQualified": true,
+      "independentlyRfMicQualified": false,
+      "keyMaterialExported": false,
+      "deviceOperations": 0,
+      "scope": "Opaque host buffer from this board only. Actual RF/MIC proof is required before admitting any key or decrypted throughput.",
+      "untrustedCandidateRepresentations": 68
+    },
+    "softwareOnly": {
+      "result": "SYNTHETIC_PARSER_CHECKS_ONLY",
+      "eightUniqueBothDirectionsAccepted": true,
+      "retransmittedTwoFramesRejected": true,
+      "wrongMaterialRejected": true,
+      "actualRadioQualified": false,
+      "hardwareOperations": 0,
+      "productKeysUsed": false
+    },
+    "actualRfMicQualified": false,
+    "keyMaterialExported": false
+  },
+  "qualification": {
+    "releaseBuilt": true,
+    "msiInstalled": true,
+    "offlineWholePackageConsistency": true,
+    "newRadioMeasurements": 0,
+    "actualOtaWindow": false,
+    "actualUploadSpeed": false,
+    "hardwareOperations": 0,
+    "gui": false,
+    "cloudCalls": 0,
+    "fullGoalComplete": false
+  },
+  "retainedFailure": "Initial offline validation passed binary CUP to manifest-based existing CLI. Error expected value at line1 column1 retained. Correct manifest input succeeded without reinstall or production change.",
+  "actualBoard": "FW463/UI83 kept; no new UART/SWD/firmware installation by this stage",
+  "latestMeasuredUpload": "FW458/R68 original2MiB49.0509962s/41.752464958KiB/s. Not a FW463/R69 result.",
+  "receiverHandoff": "Listener owner39044 live observed, idle at that observation; no slot acknowledgment. No capture/status/stop serial calls issued and no COM18 access.",
+  "next": "After file handoff, target rawCONNECT+CRC/MIC+same2MiB nativeRF/HCI/UART. Then separate OTA240ACK/windowedWWR actual device-written bytes and runningnewversion. No blind509/pool/preference changes."
+}
