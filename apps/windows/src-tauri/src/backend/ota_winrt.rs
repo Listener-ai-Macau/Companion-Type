@@ -361,6 +361,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let pipeline=if pipelined {flow.pipeline_depth()} else {1};
     eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0 transport_profile={} pipeline_depth={pipeline} data_write={:?} diagnostic={}",
         flow.window_chunks,transport_profile.name(),target.data_write_option,u8::from(pipelined));
+    eprintln!("[companion-ota] simple_window_barrier={} storage_receipt_required=1",
+        if pipelined { "encrypted_status_after_bounded_queue_drains" } else { "sync_write_then_status" });
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(pipeline),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:pipeline,system_component:None,
         simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?)};
@@ -404,6 +406,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
         "filePayloadBytes":payload,"pipelineDepth":pipeline,"pipelined":pipelined,
+        "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
         "connectionPreference":connection_preference}));
     Ok(CompanionOtaBleReport{device_id,transfer:report,payload_metrics,system_bundle})
 }
@@ -1082,6 +1085,18 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         self.flush_pending_wwr()?;
         let is_sync = packet[4] == denzic_ota_core::OP_SYNC;
         let is_begin = packet[4] == denzic_ota_core::OP_BEGIN;
+        if is_sync && self.wba_signed && self.simple_file_bytes.is_some()
+            && self.target.data_write_option == GattWriteOption::WriteWithoutResponse {
+            // Only the authenticated WOC2/simple-file window reaches here.
+            // Its DATA callback writes NOR synchronously; DOV1 advances the
+            // cursor only after that write succeeds. The GATT adapter publishes
+            // that cursor only after its whole command queue drains. OP_SYNC
+            // itself merely checks RECEIVING and performs no flush/checkpoint.
+            // Keep the engine's exact status/catch-up/offset validation barrier,
+            // but omit the extra ATT write/response before every status READ.
+            // Local WWR completion above remains no storage acknowledgement.
+            return Ok(());
+        }
         // The old WB WWR path needed settling after draining the host queue.
         // WBA signed/acknowledged writes must use their device status instead
         // of inheriting this per-window fixed delay.

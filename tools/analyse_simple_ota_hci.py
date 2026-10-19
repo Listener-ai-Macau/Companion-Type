@@ -44,6 +44,87 @@ def stats(values):
                 p95=values[math.ceil(.95*len(values))-1],max=values[-1])
 
 
+def durable_window_ledger(windows, receipts, links, expected_bytes, wall):
+    """Partition a serialized download through each exact durable receipt.
+
+    An early READ can report a prefix while the bounded device queue drains.
+    Keep every additional READ and the gaps between them; a first READ is not
+    the end of that window. Never borrow a receipt from the next DATA window.
+    These are HCI presentation intervals, not measurements of CPU/RF work.
+    """
+    rows, spans, incomplete = [], [], []
+    for index, window in enumerate(windows):
+        limit = windows[index+1]['dataFirstTime'] if index+1 < len(windows) else float('inf')
+        observations = [r for r in receipts if window['syncTime'] <= r['time'] < limit]
+        matches = [r for r in observations if r['accepted'] == window['endOffset']
+                   and r['expected'] == expected_bytes and r['error'] == 0]
+        if not matches:
+            incomplete.append(dict(window=index+1, endOffset=window['endOffset'],
+                                   reason='No exact error-free receipt before next DATA window'))
+            continue
+        complete = matches[0]
+        observations = [r for r in observations if r['time'] <= complete['time']]
+        reply = window['syncWriteResponseTime']
+        if reply is None or not observations or any(r['readRequestTime'] is None for r in observations):
+            incomplete.append(dict(window=index+1, reason='Missing SYNC reply or status READ request'))
+            continue
+        intervals = [
+            ('dataSpanMs', window['dataFirstTime'], window['lastDataTime']),
+            ('lastDataToSyncMs', window['lastDataTime'], window['syncTime']),
+            ('syncWriteRoundtripMs', window['syncTime'], reply),
+        ]
+        previous = reply
+        for read_index, receipt in enumerate(observations):
+            intervals.extend([
+                ('writeReplyToFirstReadMs' if read_index == 0 else 'betweenCatchupReadsMs',
+                 previous, receipt['readRequestTime']),
+                ('firstStatusReadRoundtripMs' if read_index == 0 else 'catchupStatusReadRoundtripMs',
+                 receipt['readRequestTime'], receipt['time']),
+            ])
+            previous = receipt['time']
+        if index+1 < len(windows):
+            intervals.append(('betweenWindowsMs', previous, limit))
+        if any(end < start for _,start,end in intervals):
+            incomplete.append(dict(window=index+1, reason='Overlapping or unordered serialized HCI operations'))
+            continue
+        phases = {}
+        for phase,start,end in intervals:
+            phases[phase] = phases.get(phase, 0) + (end-start)*1000
+            spans.append((phase,start,end))
+        rows.append(dict(window=index+1, endOffset=window['endOffset'],
+                         exactStatusTime=complete['time'], statusReads=len(observations),
+                         firstStatusBehind=observations[0]['accepted'] != window['endOffset'],
+                         phasesMs=phases))
+    if incomplete or wall is None or not windows:
+        return dict(complete=False, incomplete=incomplete, windows=rows)
+    totals = {}
+    for phase,start,end in spans:
+        totals[phase] = totals.get(phase, 0) + (end-start)*1000
+    residual = wall*1000-sum(totals.values())
+    if abs(residual) > .001:
+        raise ValueError('Durable-window HCI ledger did not balance')
+    # Split every measured interval at applied CI changes, including windows
+    # that cross a change. Host connection-parameter requests are not results.
+    changes = [(x['time'],x['intervalUnits']) for x in links
+               if x['event'] in ('target_connected','target_interval')
+               and 'intervalUnits' in x and x.get('status',0) == 0]
+    by_ci = {}
+    for phase,start,end in spans:
+        cuts = [start]+[t for t,_ in changes if start < t < end]+[end]
+        for left,right in zip(cuts,cuts[1:]):
+            ci = next((value for t,value in reversed(changes) if t <= left), None)
+            row = by_ci.setdefault(str(ci),dict(intervalUnits=ci, wallMs=0, phasesMs={}))
+            duration = (right-left)*1000
+            row['wallMs'] += duration
+            row['phasesMs'][phase] = row['phasesMs'].get(phase,0)+duration
+    if abs(sum(x['wallMs'] for x in by_ci.values())-wall*1000) > .001:
+        raise ValueError('Applied-CI ledger did not balance')
+    return dict(complete=True, windows=rows, phasesMs=totals, wallMs=wall*1000,
+                residualMs=residual, appliedIntervalRegimes=list(by_ci.values()),
+                extraStatusReads=sum(x['statusReads']-1 for x in rows),
+                limits='Non-overlapping HCI presentation intervals through exact durable window receipts. Applied CI attribution measures residence, not RF airtime, Flash service time, caller identity or hypothetical speed.')
+
+
 def analyze(capture,package,address):
     expected=Path(package).read_bytes();peer=bytes.fromhex(address.replace(':',''))[::-1]
     if len(peer)!=6:raise ValueError('Requires explicit six-byte target identity')
@@ -170,6 +251,7 @@ def analyze(capture,package,address):
                 statusReadRoundtripMs=(after['time']-read_request)*1000)
             if abs(sum(subphases.values())-(after['time']-control['time'])*1000)>.001:raise ValueError('SYNC subphase partition did not balance')
         windows.append(dict(dataPackets=len(segment),bytes=sum(w['bytes'] for w in segment),
+            endOffset=window_end,syncWriteResponseTime=write_reply,
             dataFirstTime=segment[0]['first'],lastDataTime=segment[-1]['time'],
             dataSpanMs=(segment[-1]['time']-segment[0]['first'])*1000,
             lastDataToSyncMs=(control['time']-segment[-1]['time'])*1000,
@@ -201,6 +283,7 @@ def analyze(capture,package,address):
         deviceReportedFullFile=accepted is not None,hciFirstDataToFullStatusSeconds=wall,
         hciBoundaryFileKiBPerSecond=None if not wall else len(expected)/1024/wall,
         windows=windows,statusReceipts=receipts,completeHciPartition=partition,
+        durableWindowLedger=durable_window_ledger(windows,receipts,links,len(expected),wall) if complete else None,
         timing=dict(dataSpanMs=stats([w['dataSpanMs'] for w in windows]),
             lastDataToSyncMs=stats([w['lastDataToSyncMs'] for w in windows]),
             syncToFirstStatusMs=stats([w['syncToFirstStatusMs'] for w in windows if w['syncToFirstStatusMs'] is not None]),
