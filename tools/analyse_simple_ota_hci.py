@@ -44,6 +44,52 @@ def stats(values):
                 p95=values[math.ceil(.95*len(values))-1],max=values[-1])
 
 
+def status_only_windows(writes, receipts):
+    """Find R71 windows from actual READ requests following queued DATA.
+
+    No packet/window count is assumed. Catch-up READs without intervening DATA
+    remain observations of the same window, including stale prefix receipts.
+    A missing final READ is retained as an incomplete window, never inferred.
+    """
+    windows, start = [], 0
+    for receipt in receipts:
+        request = receipt['readRequestTime']
+        if request is None or start == len(writes):
+            continue
+        segment = []
+        for write in writes[start:]:
+            if write['time'] > request:
+                break
+            segment.append(write)
+        if not segment:
+            continue
+        start += len(segment)
+        windows.append(dict(dataPackets=len(segment), bytes=sum(w['bytes'] for w in segment),
+            endOffset=max(w['offset']+w['bytes'] for w in segment),
+            dataFirstTime=segment[0]['first'], lastDataTime=segment[-1]['time'],
+            dataSpanMs=(segment[-1]['time']-segment[0]['first'])*1000,
+            barrierKind='status_read_after_local_queue_drain',
+            firstStatusReadRequestTime=request,
+            lastDataToFirstReadMs=(request-segment[-1]['time'])*1000,
+            syncTime=None, syncWriteResponseTime=None, syncStatusSubphases=None,
+            lastDataToSyncMs=None, syncToFirstStatusMs=None,
+            firstStatusAccepted=receipt['accepted'],
+            firstStatusMatchesWindowEnd=receipt['accepted']==segment[-1]['offset']+segment[-1]['bytes'],
+            statusTime=receipt['time']))
+    if start < len(writes):
+        segment=writes[start:]
+        windows.append(dict(dataPackets=len(segment), bytes=sum(w['bytes'] for w in segment),
+            endOffset=max(w['offset']+w['bytes'] for w in segment),
+            dataFirstTime=segment[0]['first'], lastDataTime=segment[-1]['time'],
+            dataSpanMs=(segment[-1]['time']-segment[0]['first'])*1000,
+            barrierKind='status_read_after_local_queue_drain',
+            firstStatusReadRequestTime=None, lastDataToFirstReadMs=None,
+            syncTime=None, syncWriteResponseTime=None, syncStatusSubphases=None,
+            lastDataToSyncMs=None, syncToFirstStatusMs=None,
+            firstStatusAccepted=None, firstStatusMatchesWindowEnd=False, statusTime=None))
+    return windows
+
+
 def durable_window_ledger(windows, receipts, links, expected_bytes, wall):
     """Partition a serialized download through each exact durable receipt.
 
@@ -55,7 +101,12 @@ def durable_window_ledger(windows, receipts, links, expected_bytes, wall):
     rows, spans, incomplete = [], [], []
     for index, window in enumerate(windows):
         limit = windows[index+1]['dataFirstTime'] if index+1 < len(windows) else float('inf')
-        observations = [r for r in receipts if window['syncTime'] <= r['time'] < limit]
+        sync = window['syncTime']
+        barrier = sync if sync is not None else window.get('firstStatusReadRequestTime')
+        if barrier is None:
+            incomplete.append(dict(window=index+1, reason='Missing status READ after DATA'))
+            continue
+        observations = [r for r in receipts if barrier <= r['time'] < limit]
         matches = [r for r in observations if r['accepted'] == window['endOffset']
                    and r['expected'] == expected_bytes and r['error'] == 0]
         if not matches:
@@ -65,15 +116,20 @@ def durable_window_ledger(windows, receipts, links, expected_bytes, wall):
         complete = matches[0]
         observations = [r for r in observations if r['time'] <= complete['time']]
         reply = window['syncWriteResponseTime']
-        if reply is None or not observations or any(r['readRequestTime'] is None for r in observations):
+        if ((sync is not None and reply is None) or not observations
+                or any(r['readRequestTime'] is None for r in observations)):
             incomplete.append(dict(window=index+1, reason='Missing SYNC reply or status READ request'))
             continue
-        intervals = [
-            ('dataSpanMs', window['dataFirstTime'], window['lastDataTime']),
-            ('lastDataToSyncMs', window['lastDataTime'], window['syncTime']),
-            ('syncWriteRoundtripMs', window['syncTime'], reply),
-        ]
-        previous = reply
+        intervals = [('dataSpanMs', window['dataFirstTime'], window['lastDataTime'])]
+        if sync is not None:
+            intervals.extend([
+                ('lastDataToSyncMs', window['lastDataTime'], sync),
+                ('syncWriteRoundtripMs', sync, reply),
+            ])
+            previous = reply
+        else:
+            intervals.append(('lastDataToFirstReadMs', window['lastDataTime'], barrier))
+            previous = barrier
         for read_index, receipt in enumerate(observations):
             intervals.extend([
                 ('writeReplyToFirstReadMs' if read_index == 0 else 'betweenCatchupReadsMs',
@@ -92,6 +148,7 @@ def durable_window_ledger(windows, receipts, links, expected_bytes, wall):
             phases[phase] = phases.get(phase, 0) + (end-start)*1000
             spans.append((phase,start,end))
         rows.append(dict(window=index+1, endOffset=window['endOffset'],
+                         barrierKind=window.get('barrierKind','sync_write_then_status'),
                          exactStatusTime=complete['time'], statusReads=len(observations),
                          firstStatusBehind=observations[0]['accepted'] != window['endOffset'],
                          phasesMs=phases))
@@ -259,11 +316,14 @@ def analyze(capture,package,address):
             firstStatusAccepted=None if after is None else after['accepted'],
             firstStatusMatchesWindowEnd=after is not None and after['accepted']==window_end,
             statusTime=None if after is None else after['time'],syncTime=control['time'],syncStatusSubphases=subphases))
-    accepted=next((r for r in receipts if r['accepted']==len(expected) and r['expected']==len(expected)),None)
+    if not windows and writes:
+        windows=status_only_windows(writes,receipts)
+    accepted=next((r for r in receipts if writes and r['time']>=writes[-1]['time']
+                   and r['accepted']==len(expected) and r['expected']==len(expected) and r['error']==0),None)
     wall=None if not writes or accepted is None else accepted['time']-writes[0]['first']
     gaps=[(b['dataFirstTime']-a['statusTime'])*1000 for a,b in zip(windows,windows[1:]) if a['statusTime'] is not None]
     partition=None
-    if complete and accepted is not None and all(w['firstStatusMatchesWindowEnd'] for w in windows):
+    if complete and accepted is not None and windows and all(w['syncTime'] is not None and w['firstStatusMatchesWindowEnd'] for w in windows):
         phases=dict(dataSpanMs=sum(w['dataSpanMs'] for w in windows),
             lastDataToSyncMs=sum(w['lastDataToSyncMs'] for w in windows),
             syncToStatusMs=sum(w['syncToFirstStatusMs'] for w in windows),
@@ -285,7 +345,8 @@ def analyze(capture,package,address):
         windows=windows,statusReceipts=receipts,completeHciPartition=partition,
         durableWindowLedger=durable_window_ledger(windows,receipts,links,len(expected),wall) if complete else None,
         timing=dict(dataSpanMs=stats([w['dataSpanMs'] for w in windows]),
-            lastDataToSyncMs=stats([w['lastDataToSyncMs'] for w in windows]),
+            lastDataToSyncMs=stats([w['lastDataToSyncMs'] for w in windows if w['lastDataToSyncMs'] is not None]),
+            lastDataToFirstReadMs=stats([w['lastDataToFirstReadMs'] for w in windows if w.get('lastDataToFirstReadMs') is not None]),
             syncToFirstStatusMs=stats([w['syncToFirstStatusMs'] for w in windows if w['syncToFirstStatusMs'] is not None]),
             **{key:stats([w['syncStatusSubphases'][key] for w in windows if w['syncStatusSubphases'] is not None]) for key in ('syncWriteRoundtripMs','writeReplyToReadRequestMs','statusReadRoundtripMs')}),
         limits='HCI presentation and device status, not RF airtime or independent NOR readback. Sum of overlapping phases is not a wall-clock decomposition. Missing bytes are never filled from the package. File includes its176byte package header; this boundary rate does not replace native new-payload qualification or Boot/install confirmation. SMP/key bytes are neither interpreted nor exported.')
