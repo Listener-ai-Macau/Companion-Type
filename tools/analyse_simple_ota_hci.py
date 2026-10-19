@@ -47,7 +47,7 @@ def stats(values):
 def analyze(capture,package,address):
     expected=Path(package).read_bytes();peer=bytes.fromhex(address.replace(':',''))[::-1]
     if len(peer)!=6:raise ValueError('Requires explicit six-byte target identity')
-    handles=set();pending={};writes=[];controls=[];receipts=[];links=[];captured_chunks={};parameter_signals=[];host_updates=[];truncated=0;other=0
+    handles=set();pending={};writes=[];controls=[];receipts=[];links=[];captured_chunks={};parameter_signals=[];host_updates=[];pending_sync=None;pending_read=None;truncated=0;other=0
     for stamp,packet in packets(capture):
         if len(packet)<5:continue
         direction=int.from_bytes(packet[:4],'big');kind=packet[4];raw=packet[5:]
@@ -82,6 +82,7 @@ def analyze(capture,package,address):
                 links.append(dict(time=stamp,event='target_disconnect',reason=v[3],status=v[0]))
                 if v[0]==0:
                     handles.remove(handle)
+                    pending_sync=None;pending_read=None
                     for key in list(pending):
                         if key[0]==handle:del pending[key]
             continue
@@ -117,7 +118,9 @@ def analyze(capture,package,address):
         if direction==0 and opcode in (0x12,0x52) and len(value)>=3:
             attribute=int.from_bytes(value[1:3],'little');data=value[3:]
             if len(data)>=20 and data[:4]==b'DOV1':
-                controls.append(dict(first=first,time=stamp,operation=data[4],attribute=attribute))
+                control=dict(first=first,time=stamp,operation=data[4],attribute=attribute)
+                controls.append(control)
+                if opcode==0x12 and data[4]==2:pending_sync=control
             elif len(data)>4:
                 offset=int.from_bytes(data[:4],'little');payload=data[4:]
                 if offset+len(payload)<=len(expected) and payload==expected[offset:offset+len(payload)]:
@@ -126,11 +129,18 @@ def analyze(capture,package,address):
                     captured_chunks[offset]=bytes(payload)
                     writes.append(dict(first=first,time=stamp,offset=offset,bytes=len(payload),
                         attribute=attribute,attOpcode=opcode,fragments=pieces))
+        elif direction==0 and opcode==0x0a and len(value)==3:
+            pending_read=dict(first=first,time=stamp,attribute=int.from_bytes(value[1:3],'little'))
+        elif direction==1 and opcode==0x13 and pending_sync is not None:
+            pending_sync['attResponseTime']=stamp;pending_sync=None
         elif direction==1 and opcode==0x0b and len(value)>=25 and value[1:5]==b'DOV1':
             data=value[1:]
             receipts.append(dict(time=stamp,state=data[5],error=data[6],flags=data[7],
+                readRequestTime=None if pending_read is None else pending_read['time'],
                 accepted=int.from_bytes(data[8:12],'little'),expected=int.from_bytes(data[12:16],'little'),
                 dataWriteCount=int.from_bytes(data[20:24],'little')))
+            pending_read=None
+        elif direction==1 and opcode in (0x0b,0x01):pending_read=None
     unique={};duplicates=0
     for w in writes:
         if w['offset'] in unique:
@@ -152,6 +162,13 @@ def analyze(capture,package,address):
         if not segment:continue
         after=next((r for r in receipts if r['time']>=control['time']),None)
         window_end=max(w['offset']+w['bytes'] for w in segment)
+        write_reply=control.get('attResponseTime');read_request=None if after is None else after['readRequestTime']
+        subphases=None
+        if write_reply is not None and read_request is not None:
+            subphases=dict(syncWriteRoundtripMs=(write_reply-control['time'])*1000,
+                writeReplyToReadRequestMs=(read_request-write_reply)*1000,
+                statusReadRoundtripMs=(after['time']-read_request)*1000)
+            if abs(sum(subphases.values())-(after['time']-control['time'])*1000)>.001:raise ValueError('SYNC subphase partition did not balance')
         windows.append(dict(dataPackets=len(segment),bytes=sum(w['bytes'] for w in segment),
             dataFirstTime=segment[0]['first'],lastDataTime=segment[-1]['time'],
             dataSpanMs=(segment[-1]['time']-segment[0]['first'])*1000,
@@ -159,7 +176,7 @@ def analyze(capture,package,address):
             syncToFirstStatusMs=None if after is None else (after['time']-control['time'])*1000,
             firstStatusAccepted=None if after is None else after['accepted'],
             firstStatusMatchesWindowEnd=after is not None and after['accepted']==window_end,
-            statusTime=None if after is None else after['time'],syncTime=control['time']))
+            statusTime=None if after is None else after['time'],syncTime=control['time'],syncStatusSubphases=subphases))
     accepted=next((r for r in receipts if r['accepted']==len(expected) and r['expected']==len(expected)),None)
     wall=None if not writes or accepted is None else accepted['time']-writes[0]['first']
     gaps=[(b['dataFirstTime']-a['statusTime'])*1000 for a,b in zip(windows,windows[1:]) if a['statusTime'] is not None]
@@ -186,7 +203,8 @@ def analyze(capture,package,address):
         windows=windows,statusReceipts=receipts,completeHciPartition=partition,
         timing=dict(dataSpanMs=stats([w['dataSpanMs'] for w in windows]),
             lastDataToSyncMs=stats([w['lastDataToSyncMs'] for w in windows]),
-            syncToFirstStatusMs=stats([w['syncToFirstStatusMs'] for w in windows if w['syncToFirstStatusMs'] is not None])),
+            syncToFirstStatusMs=stats([w['syncToFirstStatusMs'] for w in windows if w['syncToFirstStatusMs'] is not None]),
+            **{key:stats([w['syncStatusSubphases'][key] for w in windows if w['syncStatusSubphases'] is not None]) for key in ('syncWriteRoundtripMs','writeReplyToReadRequestMs','statusReadRoundtripMs')}),
         limits='HCI presentation and device status, not RF airtime or independent NOR readback. Sum of overlapping phases is not a wall-clock decomposition. Missing bytes are never filled from the package. File includes its176byte package header; this boundary rate does not replace native new-payload qualification or Boot/install confirmation. SMP/key bytes are neither interpreted nor exported.')
 
 
