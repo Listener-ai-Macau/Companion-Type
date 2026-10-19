@@ -1,0 +1,428 @@
+{
+  "schema": "companion.ota.r71_status_barrier_installed.v1",
+  "at": "2026-10-19T23:27:50+08:00",
+  "installedType": {
+    "result": "TYPE_R71_STATUS_BARRIER_INSTALLED_OFFLINE_PACKAGE_VALIDATED",
+    "at": "2026-10-19T23:22:31.079388+08:00",
+    "sourceCommit": "0c54ee3ba1180cb462cf1e5aae5d49e2a1583022",
+    "msiSha256": "ff77de8eaee9363290653fdcded4f6e691c5ae8ff47a2c05bf6f517daa2401bf",
+    "installedExeSha256": "8f5cc00f0d7f35a7cceedb4c4174856a238473a2735662ee72d8dbc9a4c7ca63",
+    "installedDllSha256": "05706b6f805dbc4e5fdfb8fcc67f0ff71502baeb6cb58eeb298d157c9fe17f32",
+    "validation": {
+      "chunkBytes": 505,
+      "message": "单文件内容已核对；Boot 在覆盖前验证签名。新版本正常启动且临时空间释放后才显示升级成功。",
+      "packageType": "companion-system-ota",
+      "payloadBytes": 1417796,
+      "payloadSha256": "a562eb8d7cd6033d5632e6d47811b9de54f0d6b090658baddc71266c1aa20e32",
+      "status": "PASS",
+      "versionNote": "固件＋资源单文件，断开后重新下载"
+    },
+    "defaultTransportChanged": false,
+    "guiOpened": false,
+    "hardwareOperations": 0,
+    "newSpeedMeasurements": 0,
+    "cloudCalls": 0
+  },
+  "buildProof": {
+    "sourceCommit": "0c54ee3ba1180cb462cf1e5aae5d49e2a1583022",
+    "inputs": 255,
+    "msi": {
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\ble-rate-20261019\\ota-status-barrier-r71-frozen\\msi\\Companion Type_0.1.0_x64_en-US.msi",
+      "bytes": 10330112,
+      "sha256": "ff77de8eaee9363290653fdcded4f6e691c5ae8ff47a2c05bf6f517daa2401bf"
+    },
+    "workspacePreservation": {
+      "at": "2026-10-19T23:21:36.720547+08:00",
+      "concurrentPetChatShaBefore": "c6797d34113cb02565b4dc482483fdc44bf9a7593ce7a2bca828a90f74f38cb9",
+      "concurrentPetChatShaAfter": "c6797d34113cb02565b4dc482483fdc44bf9a7593ce7a2bca828a90f74f38cb9",
+      "concurrentFileUntouched": true,
+      "exportedGitFiles": 206,
+      "sourceCommit": "0c54ee3ba1180cb462cf1e5aae5d49e2a1583022"
+    }
+  },
+  "previousR70Actual": {
+    "firmware": 465,
+    "payloadKiBPerSecond": 13.378661034947116,
+    "hciWallSeconds": 103.47439312934875,
+    "exactWindowCount": 370,
+    "extraStatusReads": 62,
+    "ledgerPhasesMs": {
+      "dataSpanMs": 47149.25122261047,
+      "lastDataToSyncMs": 3553.3411502838135,
+      "syncWriteRoundtripMs": 33425.04787445068,
+      "writeReplyToFirstReadMs": 900.4216194152832,
+      "firstStatusReadRoundtripMs": 16145.219087600708,
+      "betweenWindowsMs": 898.45871925354,
+      "betweenCatchupReadsMs": 660.8688831329346,
+      "catchupStatusReadRoundtripMs": 741.7845726013184
+    },
+    "appliedIntervalRegimes": [
+      {
+        "intervalUnits": 12,
+        "wallMs": 22289.858102798462,
+        "phasesMs": {
+          "dataSpanMs": 11123.750925064087,
+          "lastDataToSyncMs": 1238.8341426849365,
+          "syncWriteRoundtripMs": 6898.642778396606,
+          "writeReplyToFirstReadMs": 187.8073215484619,
+          "firstStatusReadRoundtripMs": 2591.512441635132,
+          "betweenWindowsMs": 219.26331520080566,
+          "betweenCatchupReadsMs": 10.632038116455078,
+          "catchupStatusReadRoundtripMs": 19.41514015197754
+        }
+      },
+      {
+        "intervalUnits": 144,
+        "wallMs": 47161.70406341553,
+        "phasesMs": {
+          "syncWriteRoundtripMs": 15729.467391967773,
+          "writeReplyToFirstReadMs": 174.52168464660645,
+          "firstStatusReadRoundtripMs": 10093.638181686401,
+          "betweenWindowsMs": 150.44713020324707,
+          "dataSpanMs": 19785.93683242798,
+          "lastDataToSyncMs": 1227.6928424835205
+        }
+      },
+      {
+        "intervalUnits": 6,
+        "wallMs": 34022.830963134766,
+        "phasesMs": {
+          "betweenWindowsMs": 528.7482738494873,
+          "dataSpanMs": 16239.563465118408,
+          "lastDataToSyncMs": 1086.8141651153564,
+          "syncWriteRoundtripMs": 10796.937704086304,
+          "writeReplyToFirstReadMs": 538.0926132202148,
+          "firstStatusReadRoundtripMs": 3460.068464279175,
+          "betweenCatchupReadsMs": 650.2368450164795,
+          "catchupStatusReadRoundtripMs": 722.3694324493408
+        }
+      }
+    ],
+    "residualMs": 0,
+    "wholeWindowsWithinAppliedCi": [
+      {
+        "intervalUnits": 12,
+        "completeWindows": 91,
+        "bytes": 349440,
+        "windowWallSeconds": 21.608179569244385,
+        "payloadKiBPerSecond": 15.792630698317227,
+        "scope": "Only wholewindows withinoneappliedCI, no boundarywindoworbetweenwindowgap; notwholefilequalification"
+      },
+      {
+        "intervalUnits": 144,
+        "completeWindows": 27,
+        "bytes": 103680,
+        "windowWallSeconds": 46.11534404754639,
+        "payloadKiBPerSecond": 2.195581581167605,
+        "scope": "Only wholewindows withinoneappliedCI, no boundarywindoworbetweenwindowgap; notwholefilequalification"
+      },
+      {
+        "intervalUnits": 6,
+        "completeWindows": 250,
+        "bytes": 956996,
+        "windowWallSeconds": 33.49408268928528,
+        "payloadKiBPerSecond": 27.902433242304223,
+        "scope": "Only wholewindows withinoneappliedCI, no boundarywindoworbetweenwindowgap; notwholefilequalification"
+      }
+    ]
+  },
+  "hciLedgerSource": ".cache/ble-rate-20261019/ota465/throughput-window-observation/ota-hci-durable-ledger.json",
+  "ledgerNegativeChecks": {
+    "completeActualR69R70Ledgers": true,
+    "r70Windows": 370,
+    "r70ExtraStatusReads": 62,
+    "r70ResidualMs": 0.0,
+    "negativeChecks": {
+      "missing_exact": true,
+      "error_exact": true,
+      "wrong_expected": true,
+      "missing_read_request": true
+    },
+    "speedMeasuredAgain": false
+  },
+  "policyChange": "Only authenticatedWOC2 simple-fileWWR: flushownpendinglocalwrites, omitno-opOP_SYNC, keepengineencryptedREADandexactdurableoffset/error/catch-up/FINISH/Bootconfirmation. Same16x240windowandThroughputOptimized. DefaultACKunchanged.",
+  "firmwareContractCheck": {
+    "result": "ACTUAL_GATT_DOV1_STATUS_BARRIER_HOST_CHECK_PASSED",
+    "hardware": false,
+    "speedMeasured": false,
+    "compilerNote": "MSVC C4295 only: intentional exact4-byte protocol magic excludesNUL; original /WX failure retained. No vendor source edit.",
+    "stdout": "PASS: actual GATT queue+DOV1, two16x240 windows without SYNC; receipt only after storage/queue completion; nested polling, write failure, disconnect, FINISH gating. Hardware/speed NOT_RUN.\r\n",
+    "sourceSha256": {
+      "platform\\stm32wba55_companion_v11\\ble\\wba_ota_gatt.c": "fabec90d6ab37c1a2b0ce739b7176e4409f6b640b5120d56ed8e81987b20067e",
+      "platform\\stm32wba55_companion_v11\\ble\\tests\\test_ota_status_barrier.c": "e87be72ffc0418100a71033ccc87edd32b3eb82b5f7ab3dcca1e682f085899ff",
+      "third_party\\denzic-platform\\ota\\embedded\\c\\src\\denzic_ota_v1.c": "50a1e995aaf8925a2afaa2e07be78b1c2ee62c06804ddcaf63c3702f1793b6f2"
+    }
+  },
+  "contractSource": {
+    "result": "LOCAL_IMMUTABLE_CHECKPOINT_SAVED",
+    "commit": "0a021b6563d7515d0aedfee18b8e605127596d92",
+    "tag": "companion-ota-status-barrier-contract-20261019-source",
+    "parent": "6b681956f79617eca2faf2fb17188799caba2d54",
+    "normalHeadAndIndexUnchanged": true,
+    "createdAtLocal": "2026-10-19T23:18:09"
+  },
+  "speedBenefitConfirmed": false,
+  "oldSyncDurationIsNotPromisedSavings": true,
+  "newRecordingOrOtaMeasurement": false,
+  "firmwareStillInstalled": 465,
+  "resourceStillInstalled": 83,
+  "fw466Candidate": {
+    "result": "VERSION_ONLY_FW466_UI83_SIGNED_OTA_CANDIDATE_READY_NOT_INSTALLED",
+    "sourceCommit": "ae08640f06f8d8fd8f6fb08ed55b983f62d4cb6c",
+    "startedAt": "2026-10-19T23:22:24.449401+08:00",
+    "firmwareVersion": 66258,
+    "resourceVersion": 83,
+    "parameterDelta": {
+      "firmwareVersion": [
+        66255,
+        66258
+      ]
+    },
+    "unchangedProjectInputs": 694,
+    "installed": false,
+    "hardwareOperations": 0,
+    "newSpeedMeasurements": 0,
+    "bootRebuilt": false,
+    "scope": "Same installed runtime/radio/art/source; only compiled version increases to admit a real OTA target.",
+    "stage": "complete",
+    "app466ExitCode": 0,
+    "package466ExitCode": 0,
+    "appBytes": 467348,
+    "appSha256": "3cb88c433426b62378b37d8be5f773553114d99705780e83656a4bf148e1c975",
+    "package": {
+      "schema": "companion.wba.simple-ota.v3",
+      "package_type": "companion-system-ota",
+      "capability": "companion_simple_ota_v3",
+      "mcu": "STM32WBA55CEU6",
+      "hardware_revision": "COMPANION-WBA55CE-V1.1",
+      "file": "companion-update.cup",
+      "bytes": 1417796,
+      "sha256": "024bc894c5b0027d9a0aa43bc0cd137164cf50b2187e601f9a4350ee7c4d4501",
+      "payload_sha256": "4bb5cccdd8e7ed6d8788b2dc578318ca459ae459e5076de698b91e04fa5634c2",
+      "firmware_version": 66258,
+      "resource_version": 83,
+      "firmware_bytes": 467348,
+      "resource_bytes": 950272,
+      "static_bytes": 950272,
+      "key_id": 1145394737,
+      "public_key_sha256": "3cf111a3787d31d4cc597dbff5dd6f200ccebc350a53494d8b5a7053ec920085",
+      "dev_only": true,
+      "download_resume": false,
+      "interrupted_install": "restart_from_retained_full_package",
+      "hardwareAcceptance": "NOT_RUN",
+      "fullChainAcceptance": "NOT_RUN"
+    },
+    "uiBytesUnchanged": true,
+    "installedR71OfflineValidation": {
+      "chunkBytes": 505,
+      "message": "单文件内容已核对；Boot 在覆盖前验证签名。新版本正常启动且临时空间释放后才显示升级成功。",
+      "packageType": "companion-system-ota",
+      "payloadBytes": 1417796,
+      "payloadSha256": "024bc894c5b0027d9a0aa43bc0cd137164cf50b2187e601f9a4350ee7c4d4501",
+      "status": "PASS",
+      "versionNote": "固件＋资源单文件，断开后重新下载"
+    },
+    "memory": {
+      "static_gap_bytes": 8,
+      "sram1_free_bytes": 952,
+      "physical_sram_bytes": 98304,
+      "physical_sram_regions": [
+        [
+          536870912,
+          32768
+        ],
+        [
+          536936448,
+          65536
+        ]
+      ],
+      "stack_reserved_bytes": 24576,
+      "stack_watermark": "boot-painted MSP; idle UART observation; physical values NOT_RUN",
+      "stack_warning_free_bytes": 1024,
+      "static_usage_scope": "per-function compiler estimates, not maximum call-chain/IRQ stack proof"
+    },
+    "sourceCodeDelta": [],
+    "candidateBinding": "Original ae08640f installed source plus exact saved build command firmware_version66258",
+    "finishedAt": "2026-10-19T23:23:53.388755+08:00"
+  },
+  "radioVisibility": {
+    "37": {
+      "job": {
+        "ok": true,
+        "job": "14a6ca0dbed1476b940c11c6b865de09",
+        "output": "E:\\ListenerAnalysisState\\listener-repair-handoff\\work\\sniffer-alternative-butterfly-20261018\\companion-visible-ch37-20261019-232000",
+        "started": true
+      },
+      "status": {
+        "ok": true,
+        "job": "14a6ca0dbed1476b940c11c6b865de09",
+        "done": true,
+        "cancelRequested": false,
+        "result": {
+          "ok": true,
+          "capture": {
+            "startedAt": "2026-10-19T23:20:00.591075+08:00",
+            "productCommands": 0,
+            "receiverCommands": [
+              "discovery.info_query",
+              "discovery.reset_query",
+              "ble.sniff_adv",
+              "ble.start",
+              "ble.stop"
+            ],
+            "messageCounts": {
+              "generic.debug": 3,
+              "discovery.info_resp": 1,
+              "discovery.ready_resp": 1,
+              "generic.cmd_result": 3,
+              "ble.raw_pdu": 854
+            },
+            "ready": true,
+            "initialAdvertisingChannel": 37,
+            "targetAddress": null,
+            "passiveKeyRequested": false,
+            "passiveKeyLoaded": false,
+            "trackingOnly": false,
+            "peerAuthenticationQualified": false,
+            "radioCheckOnly": true,
+            "fullEncryptedOtaFollowingQualified": false,
+            "scope": "Missing-handshake diagnostic only; host arrival timestamps are not exact RF/HCI alignment",
+            "receiverBoot": {
+              "reset": 4,
+              "kind": 0,
+              "id": 0,
+              "pc": 0,
+              "code": 0,
+              "line": 0,
+              "file": 0,
+              "cfsr": 0,
+              "hfsr": 0,
+              "bfar": 0,
+              "sticky": 0,
+              "retained": 0
+            },
+            "heapStats": {
+              "used": 64712,
+              "available": 100688,
+              "denied": 0
+            },
+            "firmware": "1.1.129",
+            "timestampBasis": "PPI END minus BLE airtime; hardware pipeline offset not antenna-calibrated",
+            "relativeTimestampBasis": "Legacy controller anchor clock; do not combine as exact hardware RX phase",
+            "deviceIdFingerprint": "c35374ab4196dc0a54f6dc00700889962848e8277225c208c1e0afd416d81b40",
+            "passiveConfigEnabled": false,
+            "passiveAdvertisingHopping": true,
+            "cancelRequested": false,
+            "stopAcknowledged": true,
+            "framingDiscardedBytes": 0,
+            "completedAt": "2026-10-19T23:20:06.607384+08:00"
+          }
+        }
+      },
+      "output": "E:\\ListenerAnalysisState\\listener-repair-handoff\\work\\sniffer-alternative-butterfly-20261018\\companion-visible-ch37-20261019-232000",
+      "packets": 854,
+      "crcValid": 854,
+      "targetPackets": 0
+    },
+    "39": {
+      "job": {
+        "ok": true,
+        "job": "7801ee1042214b0792a8621515f2f6df",
+        "output": "E:\\ListenerAnalysisState\\listener-repair-handoff\\work\\sniffer-alternative-butterfly-20261018\\companion-visible-ch39-20261019-232007",
+        "started": true
+      },
+      "status": {
+        "ok": true,
+        "job": "7801ee1042214b0792a8621515f2f6df",
+        "done": true,
+        "cancelRequested": false,
+        "result": {
+          "ok": true,
+          "capture": {
+            "startedAt": "2026-10-19T23:20:07.083957+08:00",
+            "productCommands": 0,
+            "receiverCommands": [
+              "discovery.info_query",
+              "discovery.reset_query",
+              "ble.sniff_adv",
+              "ble.start",
+              "ble.stop"
+            ],
+            "messageCounts": {
+              "generic.debug": 3,
+              "discovery.info_resp": 1,
+              "discovery.ready_resp": 1,
+              "ble.raw_pdu": 848,
+              "generic.cmd_result": 3
+            },
+            "ready": true,
+            "initialAdvertisingChannel": 39,
+            "targetAddress": null,
+            "passiveKeyRequested": false,
+            "passiveKeyLoaded": false,
+            "trackingOnly": false,
+            "peerAuthenticationQualified": false,
+            "radioCheckOnly": true,
+            "fullEncryptedOtaFollowingQualified": false,
+            "scope": "Missing-handshake diagnostic only; host arrival timestamps are not exact RF/HCI alignment",
+            "receiverBoot": {
+              "reset": 4,
+              "kind": 0,
+              "id": 0,
+              "pc": 0,
+              "code": 0,
+              "line": 0,
+              "file": 0,
+              "cfsr": 0,
+              "hfsr": 0,
+              "bfar": 0,
+              "sticky": 0,
+              "retained": 0
+            },
+            "heapStats": {
+              "used": 64712,
+              "available": 100688,
+              "denied": 0
+            },
+            "firmware": "1.1.129",
+            "timestampBasis": "PPI END minus BLE airtime; hardware pipeline offset not antenna-calibrated",
+            "relativeTimestampBasis": "Legacy controller anchor clock; do not combine as exact hardware RX phase",
+            "deviceIdFingerprint": "c35374ab4196dc0a54f6dc00700889962848e8277225c208c1e0afd416d81b40",
+            "passiveConfigEnabled": false,
+            "passiveAdvertisingHopping": true,
+            "cancelRequested": false,
+            "stopAcknowledged": true,
+            "framingDiscardedBytes": 0,
+            "completedAt": "2026-10-19T23:20:13.114033+08:00"
+          }
+        }
+      },
+      "output": "E:\\ListenerAnalysisState\\listener-repair-handoff\\work\\sniffer-alternative-butterfly-20261018\\companion-visible-ch39-20261019-232007",
+      "packets": 848,
+      "crcValid": 848,
+      "targetPackets": 0
+    }
+  },
+  "radioVisibilityInterpretation": "37and39each6seconds: environmentframes854/848, target0. Combinedwithprevious38sixseconds1052/target0andnativeundiscovered; notsimultaneousorproofofhardwarefailure. Awaitoneexplicitnormalphysicalkeywake, nofurtherblindconnect/reset.",
+  "queuedHardwareCommands": [
+    ".cache/ble-rate-20261019/run-ota466-status-barrier-air.py",
+    ".cache/ble-rate-20261019/run-installed-upload-air-r71.py"
+  ],
+  "queuedCommandsExecuted": false,
+  "sourceReferences": [
+    {
+      "url": "https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Core-61/out/en/low-energy-controller/link-layer-specification.html",
+      "finding": "Octetandtimelimitsareindependent;effectiveDLEneedsboth. Noattributionofactualgapfromoctetsalone."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/uwp/api/windows.devices.bluetooth.bluetoothledevice.requestpreferredconnectionparameters",
+      "finding": "Throughputrequestisintendedforfirmwareupdatesandreleasedafterwards; actualappliedparameterandcoexistencestillmustbeobserved."
+    }
+  ],
+  "remaining": [
+    "CompletefreshkeyedRFuploadandOTAaftertargetvisible",
+    "MeasureR71actualnewbytes/fullwallandBootconfirmation",
+    "FindoriginofhostCI144requestandDLE340us; keepbthservmediatorseparatefromapplicationcaller",
+    "Reachboth100KiB/swithordinarycoexistence; noinheritedrates"
+  ]
+}
