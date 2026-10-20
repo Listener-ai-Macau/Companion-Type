@@ -184,6 +184,7 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     // This routes an explicit chat utterance, not ambient/acoustic wake evidence.
     // "开始录音" stays reserved and is never interpreted as a chat question.
     let text=question(&transcript);
+    if text.is_empty(){return Err("这次没有听清，轻点开聊后再说一次。".into());}
     if text.starts_with(RECORD_PHRASE){return Err("“开始录音”用于录音；和我聊天请说“聊聊天”。".into());}
     cancelled(job)?;
     let context=with(|s|->Result<Vec<Value>,String>{
@@ -206,9 +207,15 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     }})?;Ok(())
 }
 fn question(transcript:&str)->String {
-    let text=transcript.trim().strip_prefix(CHAT_PHRASE).unwrap_or(transcript.trim())
+    let transcript=transcript.trim();
+    let explicit_chat=transcript.strip_prefix(CHAT_PHRASE);
+    let text=explicit_chat.unwrap_or(transcript)
         .trim_start_matches(|c:char|c.is_whitespace()||"，,。.!！:：".contains(c));
-    if text.is_empty(){"向我打个简短招呼。".to_string()}else{text.to_string()}
+    // Punctuation-only ASR is not a question. Only an explicit chat phrase
+    // without a question asks for a greeting; never invent one from noise.
+    if text.chars().any(char::is_alphanumeric){text.to_string()}
+    else if explicit_chat.is_some(){"向我打个简短招呼。".to_string()}
+    else{String::new()}
 }
 fn reply(text:&str,mut context:Vec<Value>)->Result<String,String> {
     let key=std::env::var("DEEPSEEK_API_KEY").ok().filter(|s|!s.trim().is_empty())
