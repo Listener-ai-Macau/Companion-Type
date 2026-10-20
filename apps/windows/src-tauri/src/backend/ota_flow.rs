@@ -524,6 +524,18 @@ impl DurableStatusMailbox {
     pub fn close(&self) {if let Ok(mut s)=self.state.lock(){s.closed=true;s.frame=None;self.changed.notify_all();}}
 }
 
+/// Reuse an already available full durable receipt. The device coalesces
+/// notifications by progress quantum; a nonfinal window's last short quantum
+/// may never notify until more DATA, which this barrier is currently blocking.
+/// If the newest notice is partial, use the existing uncached READ immediately.
+pub(super) fn current_window_receipt(credits:&mut DeviceQueueCredits,
+    mailbox:&DurableStatusMailbox,cursor:&mut u64)->Result<Option<Vec<u8>>,String> {
+    match mailbox.latest(cursor)? {
+        Some(bytes)=>credits.completed_window_receipt(bytes),
+        None=>Ok(None),
+    }
+}
+
 #[cfg(test)]
 mod notification_credit_tests {
     use super::*;
@@ -614,6 +626,31 @@ mod window_barrier_tests {
     fn owner(total:u32)->DeviceQueueCredits{
         let mut c=DeviceQueueCredits::new(total,215,16).unwrap();c.begin();
         c.observe(&notice(7,0,total)).unwrap();c
+    }
+    #[test]
+    fn window_barrier_nonfinal_short_quantum_reads_without_waiting_for_an_unpromised_notice(){
+        for payload in [215u16,491] {
+            let total=u32::from(payload)*64+17;
+            let mut c=DeviceQueueCredits::new(total,payload,16).unwrap();c.begin();c.observe(&notice(7,0,total)).unwrap();
+            let m=DurableStatusMailbox::default();let mut cursor=m.bind(7,total).unwrap();let mut offset=0u32;
+            // This9,17,...57,64 transcript is reproduced by production C.
+            for n in [9,8,8,8,8,8,8,7] {
+                for _ in 0..n {let p=packet(offset,usize::from(payload));assert!(!c.needs_receipt(&p).unwrap());c.admit(&p).unwrap();offset+=u32::from(payload);}
+                if offset<64*u32::from(payload) {
+                    m.publish(Ok(notice(7,offset,total)));
+                    c.observe(&m.next(&mut cursor,Instant::now()).unwrap().unwrap()).unwrap();
+                }
+            }
+            assert_eq!(c.durable,57*u32::from(payload));assert_eq!(c.ends.len(),7);
+            assert!(current_window_receipt(&mut c,&m,&mut cursor).unwrap().is_none());
+            // The normal uncached receipt, not a local write completion,
+            // proves the final seven packets without admitting any replay.
+            assert!(c.completed_window_receipt(notice(7,offset,total)).unwrap().is_some());
+            assert_eq!(c.durable,64*u32::from(payload));assert!(c.ends.is_empty());
+            m.publish(Ok(notice(7,offset,total)));
+            assert!(current_window_receipt(&mut c,&m,&mut cursor).unwrap().is_some());
+            m.close();assert!(current_window_receipt(&mut c,&m,&mut cursor).is_err());
+        }
     }
     #[test]
     fn window_barrier_reuses_receipt_already_consumed_for_device_credits(){

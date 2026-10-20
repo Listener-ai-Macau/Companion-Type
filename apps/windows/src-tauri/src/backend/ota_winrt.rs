@@ -1305,18 +1305,10 @@ impl CompanionOtaWinrtTransport<'_> {
 }
 
 impl CompanionOtaWinrtTransport<'_> {
-    fn completed_window_notice(&mut self,deadline:Instant)->Result<Option<Vec<u8>>,String> {
+    fn completed_window_notice(&mut self)->Result<Option<Vec<u8>>,String> {
         let receiver=self.device_notifications.as_mut().ok_or("Missing window receipt owner")?;
         let credits=self.device_queue_credits.as_mut().ok_or("Missing window device credits")?;
-        if let Some(bytes)=receiver.mailbox.latest(&mut receiver.cursor)? {
-            if let Some(receipt)=credits.completed_window_receipt(bytes)? {return Ok(Some(receipt));}
-        }
-        loop {
-            if Instant::now()>=deadline {return Ok(None);}
-            let Some(bytes)=receiver.next(deadline)? else {return Ok(None)};
-            self.device_notices_used=self.device_notices_used.saturating_add(1);
-            if let Some(receipt)=credits.completed_window_receipt(bytes)? {return Ok(Some(receipt));}
-        }
+        super::ota_flow::current_window_receipt(credits,&receiver.mailbox,&mut receiver.cursor)
     }
     fn reserve_device_queue_credit(&mut self,packet:&[u8])->Result<(),String> {
         let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
@@ -1576,8 +1568,10 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         }
         if self.window_receipt_pending {
             self.window_receipt_pending=false; // one SYNC only, never BEGIN/FINISH/version checks
-            let deadline=read_started+Duration::from_secs(2).min(timeout);
-            if let Some(bytes)=self.completed_window_notice(deadline)? {
+            // A coalesced device notice may not contain the window's short
+            // final quantum. Reuse a full receipt now or READ it; do not wait
+            // for a notification that requires the next blocked DATA window.
+            if let Some(bytes)=self.completed_window_notice()? {
                 self.window_notice_receipts=self.window_notice_receipts.saturating_add(1);
                 self.status_error_started=None;
                 return Ok(bytes);
