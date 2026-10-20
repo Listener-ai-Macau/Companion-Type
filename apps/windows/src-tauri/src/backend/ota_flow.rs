@@ -7,6 +7,7 @@ pub(super) struct WbaFlow {
     pub payload_bytes: u16,
     pub window_chunks: u16,
     pub queue_chunks: u16,
+    pub notify_credits: bool,
     pub pipelined: bool,
 }
 
@@ -101,27 +102,28 @@ impl WbaFlow {
     }
     fn parse(status: &[u8], supports_wwr: bool, contract:u16) -> Result<Self, String> {
         denzic_ota_core::parse_status(status)?;
-        let mut flow = Self { payload_bytes: 240, window_chunks: 8,queue_chunks:8, pipelined: false };
+        let mut flow = Self { payload_bytes: 240, window_chunks: 8,queue_chunks:8,notify_credits:false, pipelined: false };
         if status.len() == 24 && contract==1 { return Ok(flow); }
         let v1 = status.len() == 32 && &status[24..28] == b"WOC1";
         let v2 = status.len() == 36 && &status[24..28] == b"WOC2";
         let v3 = status.len()==40 && &status[24..28]==b"WOC3";
-        if !v1 && !v2 && !v3 {
+        let v4=status.len()==44 && &status[24..28]==b"WOC4";
+        if !v1 && !v2 && !v3 && !v4 {
             return Err("Invalid WBA OTA capacity; no payload was sent".into());
         }
-        if contract!=1 && !v2 && !v3 {return Err("设备没有整套固件与资源升级能力，尚未发送内容".into());}
+        if contract!=1 && !v2 && !v3 && !v4 {return Err("设备没有整套固件与资源升级能力，尚未发送内容".into());}
         let payload = u16::from_le_bytes(status[28..30].try_into().unwrap());
         let value = u16::from_le_bytes(status[30..32].try_into().unwrap());
         if !(240..=505).contains(&payload) || value != payload + 4 {
             return Err("Unsupported WBA OTA packet geometry".into());
         }
         flow.payload_bytes = payload;
-        if v2 || v3 {
+        if v2 || v3 || v4 {
             let window = u16::from_le_bytes(status[32..34].try_into().unwrap());
             let flags = u16::from_le_bytes(status[34..36].try_into().unwrap());
-            let queue=if v3 {u16::from_le_bytes(status[36..38].try_into().unwrap())} else {window};
-            let valid=if v3 {
-                contract==5 && flags==13 && (1..=128).contains(&window) &&
+            let queue=if v3 || v4 {u16::from_le_bytes(status[36..38].try_into().unwrap())} else {window};
+            let valid=if v3 || v4 {
+                contract==5 && flags==if v4 {21} else {13} && (1..=128).contains(&window) &&
                 (1..=16).contains(&queue) && queue<=window && status[38..40]==[0,0]
             } else {(1..=16).contains(&window) && flags==contract};
             if !valid {
@@ -129,6 +131,7 @@ impl WbaFlow {
             }
             flow.window_chunks = window;
             flow.queue_chunks = queue;
+            flow.notify_credits=v4;
             flow.pipelined = supports_wwr;
         }
         Ok(flow)
@@ -154,7 +157,7 @@ mod tests {
 
     #[test]
     fn simple_transport_comparison_is_explicit_and_requires_device_capacity() {
-        let capable=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,pipelined:true};
+        let capable=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,notify_credits:false,pipelined:true};
         let unsupported=WbaFlow {pipelined:false,..capable};
         for value in [None,Some(""),Some("acknowledged")] {
             let profile=SimpleTransportProfile::parse(value).unwrap();
@@ -171,7 +174,7 @@ mod tests {
     #[test]
     fn peer_handoff_waits_for_one_complete_durable_window_and_stays_explicit() {
         let profile=SimpleTransportProfile::parse(Some("windowed_244_peer_handoff")).unwrap();
-        let capable=WbaFlow {payload_bytes:240,window_chunks:16,queue_chunks:16,pipelined:true};
+        let capable=WbaFlow {payload_bytes:240,window_chunks:16,queue_chunks:16,notify_credits:false,pipelined:true};
         assert!(profile.pipelined(capable).unwrap());
         assert!(profile.pipelined(WbaFlow {pipelined:false,..capable}).is_err());
         for accepted in [0,1,240,3839,1417797] {
@@ -189,7 +192,7 @@ mod tests {
     #[test]
     fn single_ll_comparison_matches_captured_965us_without_changing_legacy_profiles() {
         let p=SimpleTransportProfile::parse(Some("windowed_215_peer_handoff")).unwrap();
-        let flow=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,pipelined:true};
+        let flow=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,notify_credits:false,pipelined:true};
         assert!(p.pipelined(flow).unwrap());
         assert!(p.pipelined(WbaFlow {pipelined:false,..flow}).is_err());
         assert_eq!(p.file_payload_cap(),215);
@@ -330,7 +333,7 @@ mod stream_tests {
 #[derive(Debug)]
 pub(super) struct DeviceQueueCredits {
     expected:u32, payload:u16, capacity:u16, submitted:u32, durable:u32,
-    ends:std::collections::VecDeque<u32>,
+    ends:std::collections::VecDeque<u32>,begun:bool,generation:Option<u32>,
 }
 impl DeviceQueueCredits {
     pub fn new(expected:u32,payload:u16,capacity:u16)->Result<Self,String> {
@@ -338,9 +341,13 @@ impl DeviceQueueCredits {
             return Err("Invalid bounded OTA device credits".into());
         }
         Ok(Self{expected,payload,capacity,submitted:0,durable:0,
-            ends:std::collections::VecDeque::with_capacity(usize::from(capacity))})
+            ends:std::collections::VecDeque::with_capacity(usize::from(capacity)),begun:false,generation:None})
     }
+    pub fn begin(&mut self){self.ends.clear();self.submitted=0;self.durable=0;self.begun=true;self.generation=None;}
+    pub fn abort(&mut self){self.begin();self.begun=false;}
+    pub fn generation(&self)->Option<u32>{self.generation}
     fn packet_end(&self,packet:&[u8])->Result<u32,String> {
+        if !self.begun {return Err("OTA queue owner has no current BEGIN".into());}
         if packet.len()<5 || packet.len()>usize::from(self.payload)+4 {
             return Err("Invalid OTA credit packet size".into());
         }
@@ -362,6 +369,15 @@ impl DeviceQueueCredits {
     }
     pub fn observe(&mut self,bytes:&[u8])->Result<(),String> {
         let s=denzic_ota_core::parse_status(bytes)?;
+        if !self.begun {return Ok(());} // old RECEIVING may precede the queued ABORT
+        if bytes.len()==44 && &bytes[24..28]==b"WOC4" {
+            let generation=u32::from_le_bytes(bytes[40..44].try_into().unwrap());
+            if generation==0 || self.generation.is_some_and(|g|g!=generation) ||
+                (self.generation.is_none() && (self.submitted!=0 || s.bytes_written!=0)) {
+                return Err("Invalid OTA BEGIN generation; old notifications cannot grant credits".into());
+            }
+            self.generation=Some(generation);
+        } else if self.generation.is_some(){return Err("Missing OTA BEGIN generation".into());}
         if s.state!=denzic_ota_core::STATE_RECEIVING || s.last_error!=0 ||
             s.expected_size!=self.expected || s.bytes_written<self.durable ||
             s.bytes_written>self.submitted ||
@@ -384,7 +400,7 @@ mod queue_credit_tests {
     }
     #[test]
     fn immediate_local_completions_cannot_oversubscribe_real_device_slots() {
-        let mut c=DeviceQueueCredits::new(64*215,215,16).unwrap();
+        let mut c=DeviceQueueCredits::new(64*215,215,16).unwrap();c.begin();
         for i in 0..16 {c.admit(&packet(i*215,215)).unwrap();}
         // WinRT may have completed every local operation already. There is
         // intentionally no API that returns credits for that observation.
@@ -396,7 +412,7 @@ mod queue_credit_tests {
     }
     #[test]
     fn partial_malformed_wrong_file_or_regressed_receipts_do_not_create_credits() {
-        let mut c=DeviceQueueCredits::new(2000,100,2).unwrap();c.admit(&packet(0,100)).unwrap();c.admit(&packet(100,100)).unwrap();
+        let mut c=DeviceQueueCredits::new(2000,100,2).unwrap();c.begin();c.admit(&packet(0,100)).unwrap();c.admit(&packet(100,100)).unwrap();
         for b in [receipt(1,2000),receipt(300,2000),receipt(100,2001),vec![0;24],
             {let mut b=receipt(100,2000);b[5]=denzic_ota_core::STATE_ERROR;b},
             {let mut b=receipt(100,2000);b[6]=1;b}] {assert!(c.observe(&b).is_err());assert_eq!(c.ends.len(),2);}
@@ -408,7 +424,7 @@ mod queue_credit_tests {
     #[test]
     fn whole_long_window_and_short_tail_never_exceed_queue_bound() {
         for payload in [215u16,491] {for capacity in [1u16,8,16] {
-            let total=u32::from(payload)*64+17;let mut c=DeviceQueueCredits::new(total,payload,capacity).unwrap();
+            let total=u32::from(payload)*64+17;let mut c=DeviceQueueCredits::new(total,payload,capacity).unwrap();c.begin();
             let mut offset=0;
             while offset<total {
                 let n=(total-offset).min(u32::from(payload)) as usize;let p=packet(offset,n);
@@ -420,5 +436,119 @@ mod queue_credit_tests {
         for (total,payload,cap) in [(0,215,16),(100,0,16),(100,506,16),(100,100,0),(100,100,17)] {
             assert!(DeviceQueueCredits::new(total,payload,cap).is_err());
         }
+    }
+}
+
+/// Bounded latest-value delivery, bound by the UNCACHED post-BEGIN receipt.
+/// Old downloads and reordered callbacks cannot grant new device credits.
+#[derive(Default)]
+pub(super) struct DurableStatusMailbox {
+    state:std::sync::Mutex<DurableNoticeState>,
+    changed:std::sync::Condvar,
+}
+#[derive(Default)]
+struct DurableNoticeState {
+    binding:Option<(u32,u32)>, sequence:u64, frame:Option<Vec<u8>>,
+    fault:Option<String>, closed:bool,
+}
+impl DurableStatusMailbox {
+    pub fn bind(&self,generation:u32,expected:u32)->Result<u64,String> {
+        if generation==0 || expected==0 {return Err("Invalid durable notification binding".into());}
+        let mut s=self.state.lock().map_err(|_|"OTA notification mailbox poisoned")?;
+        if s.closed {return Err("OTA notification owner closed".into());}
+        if let Some(f)=s.fault.as_ref(){return Err(f.clone());}
+        s.binding=Some((generation,expected));s.frame=None;Ok(s.sequence)
+    }
+    pub fn unbind(&self) {
+        if let Ok(mut s)=self.state.lock(){s.binding=None;s.frame=None;}
+    }
+    pub fn fail(&self,error:String) {
+        if let Ok(mut s)=self.state.lock(){if !s.closed {s.fault.get_or_insert(error);self.changed.notify_all();}}
+    }
+    pub fn publish(&self,result:Result<Vec<u8>,String>) {
+        let frame=match result {Ok(b)=>b,Err(e)=>{self.fail(e);return}};
+        let parsed=(|| {
+            let flow=WbaFlow::from_simple_status(&frame,true)?;
+            if !flow.notify_credits {return Err("Invalid durable notification contract".to_string());}
+            let epoch=u32::from_le_bytes(frame[40..44].try_into().unwrap());
+            Ok((denzic_ota_core::parse_status(&frame)?,epoch))
+        })();
+        let (incoming,epoch)=match parsed {Ok(v)=>v,Err(e)=>{self.fail(e);return}};
+        if let Ok(mut s)=self.state.lock(){
+            if s.closed{return;}
+            let Some((generation,expected))=s.binding else {return};
+            if epoch!=generation {return;} // delayed message from another BEGIN
+            if incoming.state==denzic_ota_core::STATE_RECEIVING && incoming.expected_size!=expected {
+                s.fault=Some("Durable notification belongs to a different file".into());self.changed.notify_all();return;
+            }
+            if let Some(old)=s.frame.as_ref().and_then(|b|denzic_ota_core::parse_status(b).ok()) {
+                if old.state==denzic_ota_core::STATE_RECEIVING && incoming.state==old.state &&
+                    incoming.bytes_written<old.bytes_written {return;} // keep newer prefix
+            }
+            s.sequence=s.sequence.saturating_add(1);s.frame=Some(frame);self.changed.notify_all();
+        }
+    }
+    pub fn next(&self,cursor:&mut u64,deadline:std::time::Instant)->Result<Option<Vec<u8>>,String> {
+        let mut s=self.state.lock().map_err(|_|"OTA notification mailbox poisoned")?;
+        loop {
+            if let Some(error)=s.fault.as_ref(){return Err(error.clone());}
+            if s.closed{return Err("OTA notification owner closed".into());}
+            if s.sequence>*cursor {*cursor=s.sequence;return Ok(s.frame.clone());}
+            let now=std::time::Instant::now();if now>=deadline{return Ok(None);}
+            let (next,_)=self.changed.wait_timeout(s,deadline-now).map_err(|_|"OTA notification wait poisoned")?;s=next;
+        }
+    }
+    pub fn close(&self) {if let Ok(mut s)=self.state.lock(){s.closed=true;s.frame=None;self.changed.notify_all();}}
+}
+
+#[cfg(test)]
+mod notification_credit_tests {
+    use super::*;
+    use std::time::{Instant,Duration};
+    fn notice(epoch:u32,offset:u32,total:u32)->Vec<u8>{
+        let mut b=vec![0;44];b[..4].copy_from_slice(b"DOV1");b[4]=1;b[5]=denzic_ota_core::STATE_RECEIVING;
+        b[8..12].copy_from_slice(&offset.to_le_bytes());b[12..16].copy_from_slice(&total.to_le_bytes());
+        b[24..28].copy_from_slice(b"WOC4");b[28..30].copy_from_slice(&505u16.to_le_bytes());b[30..32].copy_from_slice(&509u16.to_le_bytes());
+        b[32]=64;b[34]=21;b[36]=16;b[40..44].copy_from_slice(&epoch.to_le_bytes());b
+    }
+    #[test]
+    fn latest_bounded_mailbox_survives_fast_producer_and_reordered_old_prefixes(){
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(7,100000).unwrap();
+        for i in 1..=10000 {m.publish(Ok(notice(7,i,100000)));}
+        m.publish(Ok(notice(7,2,100000)));m.publish(Ok(notice(6,90000,100000)));
+        let b=m.next(&mut cursor,Instant::now()+Duration::from_millis(10)).unwrap().unwrap();
+        assert_eq!(b.len(),44);assert_eq!(denzic_ota_core::parse_status(&b).unwrap().bytes_written,10000);
+        assert!(m.next(&mut cursor,Instant::now()).unwrap().is_none());
+    }
+    #[test]
+    fn fresh_generation_same_file_ignores_every_old_credit(){
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(1,1000).unwrap();m.publish(Ok(notice(1,500,1000)));
+        assert!(m.next(&mut cursor,Instant::now()).unwrap().is_some());
+        m.unbind();m.publish(Ok(notice(1,900,1000)));cursor=m.bind(2,1000).unwrap();m.publish(Ok(notice(1,1000,1000)));
+        assert!(m.next(&mut cursor,Instant::now()).unwrap().is_none());
+        m.publish(Ok(notice(2,100,1000)));assert_eq!(denzic_ota_core::parse_status(&m.next(&mut cursor,Instant::now()).unwrap().unwrap()).unwrap().bytes_written,100);
+    }
+    #[test]
+    fn malformed_wrong_file_errors_and_close_do_not_silently_grant_credits(){
+        for malformed in [vec![0;44],vec![0;45],{let mut b=notice(1,100,1000);b[39]=1;b}] {
+            let m=DurableStatusMailbox::default();let mut cursor=m.bind(1,1000).unwrap();m.publish(Ok(malformed));assert!(m.next(&mut cursor,Instant::now()).is_err());
+        }
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(1,1000).unwrap();m.publish(Ok(notice(1,100,1001)));assert!(m.next(&mut cursor,Instant::now()).is_err());
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(1,1000).unwrap();m.close();assert!(m.next(&mut cursor,Instant::now()).is_err());
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(1,1000).unwrap();let mut b=notice(1,100,1000);b[5]=denzic_ota_core::STATE_ERROR;b[6]=5;m.publish(Ok(b));assert_eq!(denzic_ota_core::parse_status(&m.next(&mut cursor,Instant::now()).unwrap().unwrap()).unwrap().state,denzic_ota_core::STATE_ERROR);
+    }
+    #[test]
+    fn notification_wakes_a_waiter_without_a_polling_thread(){
+        let m=std::sync::Arc::new(DurableStatusMailbox::default());let mut cursor=m.bind(3,1000).unwrap();let producer=m.clone();
+        let t=std::thread::spawn(move||{std::thread::sleep(Duration::from_millis(5));producer.publish(Ok(notice(3,100,1000)));});
+        assert!(m.next(&mut cursor,Instant::now()+Duration::from_secs(1)).unwrap().is_some());t.join().unwrap();
+    }
+    #[test]
+    fn queue_owner_ignores_old_receiving_during_abort_but_binds_new_begin(){
+        let mut c=DeviceQueueCredits::new(1000,100,16).unwrap();c.observe(&notice(4,900,1000)).unwrap();
+        assert!(c.needs_receipt(&[0,0,0,0,0]).is_err());c.begin();c.observe(&notice(5,0,1000)).unwrap();assert_eq!(c.generation(),Some(5));
+        let mut packet=vec![0;104];c.admit(&packet).unwrap();assert!(c.observe(&notice(4,100,1000)).is_err());
+        c.observe(&notice(5,100,1000)).unwrap();c.abort();c.observe(&notice(5,100,1000)).unwrap();c.begin();c.observe(&notice(6,0,1000)).unwrap();
+        packet[..4].copy_from_slice(&0u32.to_le_bytes());c.admit(&packet).unwrap();
     }
 }

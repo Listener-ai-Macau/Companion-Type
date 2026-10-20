@@ -24,13 +24,14 @@ use windows::core::{GUID, HSTRING};
 use windows::Devices::Bluetooth::GenericAttributeProfile::{
     GattCharacteristic, GattCharacteristicProperties, GattCommunicationStatus, GattDeviceService,
     GattSession, GattSessionStatus, GattWriteOption, GattOpenStatus, GattSharingMode,
+    GattClientCharacteristicConfigurationDescriptorValue,GattValueChangedEventArgs,
 };
 use windows::Devices::Bluetooth::{
     BluetoothAddressType, BluetoothCacheMode, BluetoothLEDevice, BluetoothLEPreferredConnectionParameters,
     BluetoothLEPreferredConnectionParametersRequest,
 };
 use windows::Devices::Enumeration::{DeviceAccessStatus, DeviceInformation};
-use windows::Foundation::IAsyncOperation;
+use windows::Foundation::{IAsyncOperation,EventRegistrationToken,TypedEventHandler};
 
 use super::ble_bridge::CompanionOtaBleReport;
 
@@ -71,6 +72,57 @@ struct OpenOtaTarget {
     data_write_option: GattWriteOption,
 }
 
+
+/// Own exactly our ValueChanged handler; it cannot outlive this OTA transport.
+struct DurableNotificationLease {
+    characteristic:GattCharacteristic,
+    token:Option<EventRegistrationToken>,
+    mailbox:std::sync::Arc<super::ota_flow::DurableStatusMailbox>,
+    cursor:u64,
+    generation:Option<u32>,
+}
+impl DurableNotificationLease {
+    fn subscribe(characteristic:&GattCharacteristic)->Result<Self,String> {
+        if !characteristic.CharacteristicProperties().map_err(|e|e.to_string())?
+            .contains(GattCharacteristicProperties::Notify) {
+            return Err("设备宣告了耐久通知，但状态特征不支持通知；尚未开始下载".into());
+        }
+        let mailbox=std::sync::Arc::new(super::ota_flow::DurableStatusMailbox::default());
+        let receiver=mailbox.clone();
+        let handler=TypedEventHandler::<GattCharacteristic,GattValueChangedEventArgs>::new(move|_,args|{
+            let result=(||->Result<Vec<u8>,String>{
+                let args=args.as_ref().ok_or("Missing durable notification arguments")?;
+                let buffer=args.CharacteristicValue().map_err(|e|e.to_string())?;
+                let reader=windows::Storage::Streams::DataReader::FromBuffer(&buffer).map_err(|e|e.to_string())?;
+                let size=reader.UnconsumedBufferLength().map_err(|e|e.to_string())? as usize;
+                if size!=44 {return Err("Invalid durable notification extent".into());}
+                let mut bytes=vec![0;size];reader.ReadBytes(&mut bytes).map_err(|e|e.to_string())?;Ok(bytes)
+            })();
+            receiver.publish(result);Ok(())
+        });
+        let token=characteristic.ValueChanged(&handler).map_err(|e|format!("OTA notification handler: {e}"))?;
+        let lease=Self{characteristic:characteristic.clone(),token:Some(token),mailbox,cursor:0,generation:None};
+        let operation=characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue::Notify)
+            .map_err(|e|format!("OTA durable notification subscription: {e}"))?;
+        let status=wait_async_operation_with_cancel(operation,STATUS_READ_TIMEOUT,"OTA durable notification subscription",&BleCancel::NONE)?;
+        if status!=GattCommunicationStatus::Success {return Err(format!("OTA durable notification subscription status={status:?}; no BEGIN sent"));}
+        Ok(lease)
+    }
+    fn bind(&mut self,generation:u32,expected:u32)->Result<(),String> {
+        if self.generation==Some(generation){return Ok(());}
+        if self.generation.is_some(){return Err("OTA download generation changed in the same transfer".into());}
+        self.cursor=self.mailbox.bind(generation,expected)?;self.generation=Some(generation);Ok(())
+    }
+    fn unbind(&mut self){self.generation=None;self.mailbox.unbind();}
+    fn next(&mut self,deadline:Instant)->Result<Option<Vec<u8>>,String>{self.mailbox.next(&mut self.cursor,deadline)}
+}
+impl Drop for DurableNotificationLease {
+    fn drop(&mut self){
+        self.mailbox.close();
+        if let Some(token)=self.token.take(){let _=self.characteristic.RemoveValueChanged(token);}
+    }
+}
+
 struct CompanionOtaWinrtTransport<'a> {
     target: &'a OpenOtaTarget,
     pending_wwr: Vec<IAsyncOperation<GattCommunicationStatus>>,
@@ -83,6 +135,8 @@ struct CompanionOtaWinrtTransport<'a> {
     device_queue_credits:Option<super::ota_flow::DeviceQueueCredits>,
     device_credit_reads:u32,
     device_credit_wait:Duration,
+    device_notifications:Option<DurableNotificationLease>,
+    device_notices_used:u32,
 }
 
 impl Drop for CompanionOtaWinrtTransport<'_> {
@@ -233,7 +287,7 @@ pub fn transfer_companion_ota_winrt(
         pipeline_depth: pipeline,
         system_component: None,
         simple_file_bytes: None,
-        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,
+        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,
     };
 
     let progress_started = Instant::now();
@@ -381,7 +435,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?),
         device_queue_credits:if pipelined {Some(super::ota_flow::DeviceQueueCredits::new(
             u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?,payload,flow.queue_chunks)?)} else {None},
-        device_credit_reads:0,device_credit_wait:Duration::ZERO};
+        device_credit_reads:0,device_credit_wait:Duration::ZERO,
+        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
@@ -409,6 +464,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     payload_metrics.exclude_package_header(176);
     let device_credit_reads=transport.device_credit_reads;
     let device_credit_wait=transport.device_credit_wait;
+    let device_notices_used=transport.device_notices_used;
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();let mut connection=Some(target);
     // FINISH only retained the file. Boot verifies the signature before erase,
@@ -436,6 +492,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "filePayloadBytes":payload,"pipelineDepth":pipeline,"physicalQueueChunks":flow.queue_chunks,
         "durableWindowChunks":flow.window_chunks,"pipelined":pipelined,
         "deviceQueueCreditReads":device_credit_reads,
+        "deviceQueueCreditNotifications":device_notices_used,
+        "deviceQueueCreditSource":if !pipelined {"acknowledged_writes"} else if flow.notify_credits {"generation_bound_durable_notifications"} else {"uncached_durable_reads"},
         "deviceQueueCreditWaitUs":device_credit_wait.as_micros(),
         "localWriteCompletionReturnsDeviceCredit":false,
         "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
@@ -1080,12 +1138,20 @@ impl CompanionOtaWinrtTransport<'_> {
         let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
         let wait_needed=credits.needs_receipt(packet)?;
         if wait_needed {
+            self.flush_pending_wwr()?;
             let started=Instant::now();let deadline=started+Duration::from_secs(2);
             loop {
-                // read_status flushes pending local writes, then validates the
-                // returned durable cursor through the same credit owner below.
-                self.device_credit_reads=self.device_credit_reads.saturating_add(1);
-                let bytes=<Self as denzic_ota_core::OtaV1Transport>::read_status(self)?;
+                let notice=if let Some(receiver)=self.device_notifications.as_mut() {
+                    receiver.next(deadline)?
+                } else {None};
+                let bytes=if let Some(bytes)=notice {
+                    self.device_notices_used=self.device_notices_used.saturating_add(1);bytes
+                } else {
+                    // A missing final notification gets one uncached receipt
+                    // at the deadline. No polling flood and no guessed credit.
+                    self.device_credit_reads=self.device_credit_reads.saturating_add(1);
+                    <Self as denzic_ota_core::OtaV1Transport>::read_status(self)?
+                };
                 let credits=self.device_queue_credits.as_mut().unwrap();
                 credits.observe(&bytes)?;
                 if !credits.needs_receipt(packet)? {break;}
@@ -1093,7 +1159,7 @@ impl CompanionOtaWinrtTransport<'_> {
                     self.device_credit_wait+=started.elapsed();
                     return Err("OTA device queue credits stalled; local Windows completion is not a storage receipt".into());
                 }
-                std::thread::sleep(STATUS_POLL_INTERVAL);
+                if self.device_notifications.is_none(){std::thread::sleep(STATUS_POLL_INTERVAL);}
             }
             self.device_credit_wait+=started.elapsed();
         }
@@ -1142,6 +1208,8 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         if let Some(c)=self.system_component {selected[6]=c;selected[7]=0xB2;}
         let packet=&selected;
         if packet[4] == denzic_ota_core::OP_ABORT {
+            if let Some(credits)=self.device_queue_credits.as_mut(){credits.abort();}
+            if let Some(receiver)=self.device_notifications.as_mut(){receiver.unbind();}
             self.cancel_pending_wwr();
             return write_gatt_value_with_timeout(
                 &self.target.control,
@@ -1212,7 +1280,13 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                 )
             };
             match result {
-                Ok(_) => return Ok(()),
+                Ok(_) => {
+                    if is_begin {
+                        if let Some(credits)=self.device_queue_credits.as_mut(){credits.begin();}
+                        if let Some(receiver)=self.device_notifications.as_mut(){receiver.unbind();}
+                    }
+                    return Ok(());
+                },
                 Err(err) if attempt < retries => {
                     let lower = err.to_ascii_lowercase();
                     let retryable = lower.contains("timeout")
@@ -1326,7 +1400,12 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
             Ok(bytes) => {
                 if let Some(credits)=self.device_queue_credits.as_mut() {
                     let status=denzic_ota_core::parse_status(&bytes)?;
-                    if status.state==denzic_ota_core::STATE_RECEIVING {credits.observe(&bytes)?;}
+                    if status.state==denzic_ota_core::STATE_RECEIVING {
+                        credits.observe(&bytes)?;
+                        if let (Some(receiver),Some(generation))=(self.device_notifications.as_mut(),credits.generation()) {
+                            receiver.bind(generation,status.expected_size)?;
+                        }
+                    }
                 }
                 if let Some(component)=self.system_component {super::ota_flow::WbaFlow::check_component(&bytes,component)?;}
                 self.status_error_started = None;
