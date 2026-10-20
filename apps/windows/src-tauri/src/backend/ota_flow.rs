@@ -11,16 +11,17 @@ pub(super) struct WbaFlow {
 
 /// Explicit diagnostic selection for the already-supported simple-file path.
 /// Keep the delivered acknowledged path as default until real RF/storage
-/// evidence qualifies the bounded WWR path. Do not also change packet size,
-/// connection preference, file format or signature/installation semantics.
+/// evidence qualifies the bounded WWR path. The peer-handoff comparison changes only preference ownership after a durable
+/// window; packet size, file format and signature/installation stay identical.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244 }
+pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff }
 
 impl SimpleTransportProfile {
     pub fn parse(value: Option<&str>) -> Result<Self, String> {
         match value.map(str::trim).unwrap_or("") {
             "" | "acknowledged" => Ok(Self::Acknowledged),
             "windowed_244" => Ok(Self::Windowed244),
+            "windowed_244_peer_handoff" => Ok(Self::Windowed244PeerHandoff),
             _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
         }
     }
@@ -34,12 +35,20 @@ impl SimpleTransportProfile {
     pub fn pipelined(self, flow: WbaFlow) -> Result<bool, String> {
         match self {
             Self::Acknowledged => Ok(false),
-            Self::Windowed244 if flow.pipelined => Ok(true),
-            Self::Windowed244 => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
+            Self::Windowed244 | Self::Windowed244PeerHandoff if flow.pipelined => Ok(true),
+            Self::Windowed244 | Self::Windowed244PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
         }
     }
+    /// Called only from the transfer engine's validated durable progress.
+    /// A local WinRT completion, zero prefix or malformed total cannot release
+    /// the bootstrap preference. The owned Option enforces a single release.
+    pub fn handoff_ready(self, accepted:u64, total:u64, first_window:u64)->bool {
+        self==Self::Windowed244PeerHandoff && total>0 && first_window>0 &&
+            accepted>=first_window.min(total) && accepted<=total
+    }
     pub fn name(self) -> &'static str {
-        match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244" }
+        match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
+            Self::Windowed244PeerHandoff => "windowed_244_peer_handoff" }
     }
 }
 
@@ -119,6 +128,24 @@ mod tests {
         assert!(profile.pipelined(unsupported).is_err());
         for unknown in ["windowed", "windowed_509", "automatic", "1"] {
             assert!(SimpleTransportProfile::parse(Some(unknown)).is_err());
+        }
+    }
+    #[test]
+    fn peer_handoff_waits_for_one_complete_durable_window_and_stays_explicit() {
+        let profile=SimpleTransportProfile::parse(Some("windowed_244_peer_handoff")).unwrap();
+        let capable=WbaFlow {payload_bytes:240,window_chunks:16,pipelined:true};
+        assert!(profile.pipelined(capable).unwrap());
+        assert!(profile.pipelined(WbaFlow {pipelined:false,..capable}).is_err());
+        for accepted in [0,1,240,3839,1417797] {
+            assert!(!profile.handoff_ready(accepted,1417796,3840));
+        }
+        assert!(profile.handoff_ready(3840,1417796,3840));
+        assert!(profile.handoff_ready(1417796,1417796,3840));
+        assert!(!profile.handoff_ready(0,0,3840));
+        assert!(!profile.handoff_ready(3840,1417796,0));
+        assert!(profile.handoff_ready(116,116,3840));
+        for original in [SimpleTransportProfile::Acknowledged,SimpleTransportProfile::Windowed244] {
+            assert!(!original.handoff_ready(3840,1417796,3840));
         }
     }
     fn status(magic: &[u8], window: u16, flags: u16) -> Vec<u8> {

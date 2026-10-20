@@ -348,7 +348,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
             if let Ok(r)=device.RequestPreferredConnectionParameters(&p) {target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(r));}
         }
     }
-    eprintln!("[companion-ota] simple_connection_preference requested={connection_preference} applied_not_guaranteed=1 release=payload_complete_or_owner_drop");
+    let peer_handoff=transport_profile==super::ota_flow::SimpleTransportProfile::Windowed244PeerHandoff;
+    let release_scope=if peer_handoff {"first_durable_window_or_owner_drop"}
+        else {"payload_complete_or_owner_drop"};
+    eprintln!("[companion-ota] simple_connection_preference requested={connection_preference} applied_not_guaranteed=1 release={release_scope}");
     // Signature travels inside the file. Only DATA geometry is relevant;
     // do not inherit WB's244 cap or the former separate-manifest147 minimum.
     let payload=240u16.min(flow.payload_bytes).min(mtu.saturating_sub(7));
@@ -363,6 +366,13 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         flow.window_chunks,transport_profile.name(),target.data_write_option,u8::from(pipelined));
     eprintln!("[companion-ota] simple_window_barrier={} storage_receipt_required=1",
         if pipelined { "encrypted_status_after_bounded_queue_drains" } else { "sync_write_then_status" });
+    // Move the selected diagnostic preference into this operation before any
+    // later failure. Early errors still close it; the original profile keeps
+    // its R71 lifetime. No replacement Windows preference is requested.
+    let mut handoff_preference=if peer_handoff {target._conn_pref_request.take()} else {None};
+    let mut handoff_release:Option<Result<(),String>>=None;
+    let mut handoff_offset:Option<u64>=None;
+    let first_window=u64::from(payload)*u64::from(flow.window_chunks);
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(pipeline),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:pipeline,system_component:None,
         simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?)};
@@ -372,6 +382,16 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let mut progress_bucket=usize::MAX;
     let mut report=denzic_ota_core::transfer(&mut transport,&package.file,options,|accepted,total|{
         window.observe(accepted,total,started.elapsed());
+        if transport_profile.handoff_ready(accepted,total,first_window) {
+            if let Some(mut request)=handoff_preference.take() {
+                let result=request.close();
+                let interval=target._device.as_ref().and_then(|d|d.GetConnectionParameters().ok())
+                    .and_then(|p|p.ConnectionInterval().ok());
+                eprintln!("[companion-ota] preference_peer_handoff accepted={accepted} total={total} first_window={first_window} close_ok={} interval_units={interval:?} applied_fast_interval_not_assumed=1 replacement_preference=none at_epoch_us={} error={:?}",
+                    u8::from(result.is_ok()),chrono::Utc::now().timestamp_micros(),result.as_ref().err());
+                handoff_offset=Some(accepted);handoff_release=Some(result);
+            }
+        }
         let bucket=accepted/(64*1024);
         if bucket!=progress_bucket||accepted==total {
             eprintln!("[companion-ota] payload_progress accepted={accepted} total={total}");
@@ -381,7 +401,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     if report.resumed_bytes!=0 {return Err("单文件升级意外返回了非零起点，不能当作本次完整传输".into());}
     let mut payload_metrics=window.finish(&report,true);
     payload_metrics.exclude_package_header(176);
-    drop(transport);drop(target._conn_pref_request.take());
+    drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();let mut connection=Some(target);
     // FINISH only retained the file. Boot verifies the signature before erase,
     // installs both destinations, then normal App reports actual running IDs.
@@ -407,7 +427,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
         "filePayloadBytes":payload,"pipelineDepth":pipeline,"pipelined":pipelined,
         "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
-        "connectionPreference":connection_preference}));
+        "connectionPreference":connection_preference,
+        "connectionPreferenceRelease":release_scope,
+        "connectionPreferenceHandoffOffset":handoff_offset,
+        "connectionPreferenceHandoffCloseSucceeded":handoff_release.as_ref().map(|r|r.is_ok())}));
     Ok(CompanionOtaBleReport{device_id,transfer:report,payload_metrics,system_bundle})
 }
 
