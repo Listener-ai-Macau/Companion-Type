@@ -476,8 +476,17 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // deferred, rather than making fragmented WWR a prerequisite for OTA.
     target.data_write_option=if pipelined {GattWriteOption::WriteWithoutResponse}
         else {GattWriteOption::WriteWithResponse};
-    let connection_preference=if pipelined {"ThroughputOptimized"} else {"Balanced"};
-    if let Some(device)=target._device.as_ref() {
+    // The common diagnostic switch must also govern the WBA single-file
+    // path. Previously only the legacy WB function checked it, so a WBA
+    // "skip" comparison would still request ThroughputOptimized here.
+    let skip_connection_params=std::env::var("COMPANION_TYPE_SKIP_WINRT_CONN_PARAMS")
+        .map(|v|matches!(v.trim().to_ascii_lowercase().as_str(),"1"|"true"|"on"))
+        .unwrap_or(false);
+    let connection_preference=if skip_connection_params {"none"}
+        else if pipelined {"ThroughputOptimized"} else {"Balanced"};
+    if skip_connection_params {
+        eprintln!("[companion-ota] simple_initial_preference_skipped=1 scope=this_operation persisted_settings_changed=0");
+    } else if let Some(device)=target._device.as_ref() {
         if pipelined {
             // R69's same-size WWR capture: Windows rejected the peripheral's
             // CI6 request and applied its Balanced CI48 for the whole239s
@@ -492,7 +501,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         }
     }
     let peer_handoff=transport_profile.releases_after_first_durable_window();
-    let release_scope=if peer_handoff {"first_durable_window_or_owner_drop"}
+    let release_scope=if skip_connection_params {"no_request_owned"}
+        else if peer_handoff {"first_durable_window_or_owner_drop"}
         else {"payload_complete_or_owner_drop"};
     eprintln!("[companion-ota] simple_connection_preference requested={connection_preference} applied_not_guaranteed=1 release={release_scope}");
     // Signature travels inside the file. Only DATA geometry is relevant;
