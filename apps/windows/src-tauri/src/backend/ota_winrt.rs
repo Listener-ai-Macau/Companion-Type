@@ -468,7 +468,11 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     eprintln!("firmware_ota_payload_metrics {}",serde_json::to_string(&payload_metrics).map_err(|e|e.to_string())?);
     let device_notices_used=transport.device_notices_used;
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
-    let device_id=target.device_id.clone();let mut connection=Some(target);
+    let device_id=target.device_id.clone();
+    // FINISH restarts the peripheral. Do not carry the old service/handles
+    // across a signed upgrade that may change its attribute table.
+    drop(target);
+    let mut connection:Option<OpenOtaTarget>=None;
     // FINISH only retained the file. Boot verifies the signature before erase,
     // installs both destinations, then normal App reports actual running IDs.
     let deadline=Instant::now()+Duration::from_secs(180);let mut last_error=String::new();
@@ -715,7 +719,7 @@ fn open_ota_target_for_address(
     let services_result=loop {
         let remaining=DISCOVERY_TIMEOUT.saturating_sub(discovery_started.elapsed());
         if remaining.is_zero() {return Err("OTA initial service discovery exceeded12seconds; no firmware sent".into());}
-        let services_op=device.GetGattServicesForUuidWithCacheModeAsync(OTA_SERVICE_UUID,BluetoothCacheMode::Uncached)
+        let services_op=device.GetGattServicesWithCacheModeAsync(BluetoothCacheMode::Uncached)
             .map_err(|e|format!("OTA GetGattServices failed: {e}"))?;
         let result=wait_async_operation_with_cancel(services_op,remaining,"OTA services",&cancel)?;
         let status=result.Status().map_err(|e|format!("OTA services status: {e}"))?;
@@ -734,10 +738,25 @@ fn open_ota_target_for_address(
     let services = services_result
         .Services()
         .map_err(|e| format!("OTA services list: {e}"))?;
-    if services.Size().unwrap_or(0) == 0 {
-        return Err("OTA service not present on device".to_string());
+    // Microsoft recommends a fresh complete service discovery after a GATT
+    // table change. Keep only the exact OTA UUID on this verified device;
+    // close every other locally obtained service, also on early errors.
+    let mut discovered=Vec::new();
+    for i in 0..services.Size().map_err(|e|format!("OTA service count: {e}"))? {
+        discovered.push(denzic_ble_windows::ScopedBleResource::new(
+            services.GetAt(i).map_err(|e|format!("OTA service[{i}]: {e}"))?));
     }
-    let service = services.GetAt(0).map_err(|e| format!("OTA service: {e}"))?;
+    let mut selected=None;
+    for (i,candidate) in discovered.iter().enumerate() {
+        if candidate.Uuid().map_err(|e|format!("OTA service UUID: {e}"))?==OTA_SERVICE_UUID {
+            if selected.replace(i).is_some() {return Err("Multiple OTA services on the requested device; no firmware sent".into());}
+        }
+    }
+    let index=selected.ok_or("OTA service not present in the fresh device service table")?;
+    let service=discovered.swap_remove(index);
+    eprintln!("[companion-ota] full_service_table count={} selected_handle={} cache=uncached exact_uuid=1 elapsed_ms={}",
+        discovered.len()+1,service.AttributeHandle().map_err(|e|e.to_string())?,discovery_started.elapsed().as_millis());
+    drop(discovered);
     // Drive the existing uncached GATT request before waiting for Active.
     // Keep this exact maintained owner; no reopen, re-pair or adapter reset.
     // No update characteristic or package write is reached before this check.
@@ -755,7 +774,7 @@ fn open_ota_target_for_service_id(
         .map_err(|e| format!("OTA FromIdAsync failed: {e}"))?;
     let service =
         wait_async_operation_with_cancel(op, DISCOVERY_TIMEOUT, "OTA service from id", &cancel)?;
-    open_chars_from_service(service, None, device_id_label, None)
+    open_chars_from_service(denzic_ble_windows::ScopedBleResource::new(service), None, device_id_label, None)
 }
 
 fn require_shared_open(status:GattOpenStatus,mode:GattSharingMode)->Result<(),String> {
@@ -777,7 +796,7 @@ fn ensure_shared_service(service:&GattDeviceService,cancel:&BleCancel)->Result<(
 }
 
 fn open_chars_from_service(
-    service: GattDeviceService,
+    service: denzic_ble_windows::ScopedBleResource<GattDeviceService>,
     device: Option<denzic_ble_windows::ScopedBleResource<BluetoothLEDevice>>,
     device_id_label: &str,
     owned_session: Option<denzic_ble_windows::ScopedBleResource<GattSession>>,
@@ -787,7 +806,6 @@ fn open_chars_from_service(
     // reverse order, while final target fields define their explicit order.
     let device = device.or_else(|| reopen_device_from_service(&service)
         .map(denzic_ble_windows::ScopedBleResource::new));
-    let service = denzic_ble_windows::ScopedBleResource::new(service);
     let cancel = BleCancel::NONE;
     ensure_shared_service(&service,&cancel)?;
     // Prefer an explicit device handle; otherwise reopen from the service DeviceId
