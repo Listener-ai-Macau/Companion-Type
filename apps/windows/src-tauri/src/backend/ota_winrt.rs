@@ -1308,6 +1308,12 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         std::thread::sleep(STATUS_POLL_INTERVAL);
     }
 
+    fn window_drain_timeout(&self) -> Option<Duration> {
+        (self.wba_signed && self.simple_file_bytes.is_some() &&
+         self.target.data_write_option==GattWriteOption::WriteWithoutResponse)
+            .then_some(Duration::from_secs(2))
+    }
+
     fn write_finish(
         &mut self,
         packet: &[u8; denzic_ota_core::CONTROL_BYTES],
