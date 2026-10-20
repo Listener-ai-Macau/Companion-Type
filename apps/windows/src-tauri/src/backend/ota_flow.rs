@@ -369,6 +369,16 @@ impl DeviceQueueCredits {
         if self.ends.len()>=usize::from(self.capacity) {return Err("OTA device queue credits exhausted".into());}
         self.ends.push_back(end);self.submitted=end;Ok(())
     }
+    /// Reuse only a current-generation durable receipt covering ALL submitted
+    /// packets. Local WinRT completion, a partial prefix and an old download
+    /// are never an alternative to the engine's window validation barrier.
+    pub fn completed_window_receipt(&mut self,bytes:Vec<u8>)->Result<Option<Vec<u8>>,String> {
+        if self.generation.is_none(){return Err("OTA window has no validated BEGIN generation".into());}
+        self.observe(&bytes)?;
+        if self.submitted>0 && self.durable==self.submitted && self.ends.is_empty() {
+            Ok(Some(bytes))
+        } else {Ok(None)}
+    }
     pub fn observe(&mut self,bytes:&[u8])->Result<(),String> {
         let s=denzic_ota_core::parse_status(bytes)?;
         if !self.begun {return Ok(());} // old RECEIVING may precede the queued ABORT
@@ -491,6 +501,16 @@ impl DurableStatusMailbox {
             s.sequence=s.sequence.saturating_add(1);s.frame=Some(frame);self.changed.notify_all();
         }
     }
+    /// A SYNC barrier may inspect the latest receipt even if its DATA credit
+    /// owner already consumed that notification. Keep errors/close sticky and
+    /// move the cursor atomically with this exact frame, never past a new one.
+    pub fn latest(&self,cursor:&mut u64)->Result<Option<Vec<u8>>,String> {
+        let s=self.state.lock().map_err(|_|"OTA notification mailbox poisoned")?;
+        if let Some(error)=s.fault.as_ref(){return Err(error.clone());}
+        if s.closed{return Err("OTA notification owner closed".into());}
+        let frame=s.frame.clone();if frame.is_some(){*cursor=s.sequence;}
+        Ok(frame)
+    }
     pub fn next(&self,cursor:&mut u64,deadline:std::time::Instant)->Result<Option<Vec<u8>>,String> {
         let mut s=self.state.lock().map_err(|_|"OTA notification mailbox poisoned")?;
         loop {
@@ -582,5 +602,63 @@ mod notice_read_interleaving_tests {
         let m=DurableStatusMailbox::default();let mut cursor=m.bind(9,2000).unwrap();m.publish(Ok(notice(9,800,2000)));
         let mut error=notice(9,100,2000);error[6]=3;m.publish(Ok(error));
         let b=m.next(&mut cursor,Instant::now()).unwrap().unwrap();assert_eq!(denzic_ota_core::parse_status(&b).unwrap().last_error,3);
+    }
+}
+
+#[cfg(test)]
+mod window_barrier_tests {
+    use super::*;
+    use super::notification_credit_tests::notice;
+    use std::time::Instant;
+    fn packet(offset:u32,n:usize)->Vec<u8>{let mut p=vec![0;n+4];p[..4].copy_from_slice(&offset.to_le_bytes());p}
+    fn owner(total:u32)->DeviceQueueCredits{
+        let mut c=DeviceQueueCredits::new(total,215,16).unwrap();c.begin();
+        c.observe(&notice(7,0,total)).unwrap();c
+    }
+    #[test]
+    fn window_barrier_reuses_receipt_already_consumed_for_device_credits(){
+        let total=215*64+17;let mut c=owner(total);let m=DurableStatusMailbox::default();let mut cursor=m.bind(7,total).unwrap();
+        for i in 0..64u32 {
+            let p=packet(i*215,215);
+            if c.needs_receipt(&p).unwrap(){
+                m.publish(Ok(notice(7,i*215,total)));
+                c.observe(&m.next(&mut cursor,Instant::now()).unwrap().unwrap()).unwrap();
+            }
+            c.admit(&p).unwrap();
+        }
+        m.publish(Ok(notice(7,64*215,total)));
+        c.observe(&m.next(&mut cursor,Instant::now()).unwrap().unwrap()).unwrap();
+        // The next data-credit owner already consumed this event. SYNC still
+        // has its complete authenticated durable prefix without a new READ.
+        let full=c.completed_window_receipt(m.latest(&mut cursor).unwrap().unwrap()).unwrap().unwrap();
+        assert_eq!(denzic_ota_core::parse_status(&full).unwrap().bytes_written,64*215);
+        c.admit(&packet(64*215,17)).unwrap();
+        assert!(c.completed_window_receipt(m.latest(&mut cursor).unwrap().unwrap()).unwrap().is_none());
+        m.publish(Ok(notice(7,total,total)));
+        assert!(c.completed_window_receipt(m.latest(&mut cursor).unwrap().unwrap()).unwrap().is_some());
+    }
+    #[test]
+    fn window_barrier_partial_or_foreign_receipt_never_confirms_remaining_packets(){
+        let total=215*64;let mut c=owner(total);
+        for i in 0..16u32 {c.admit(&packet(i*215,215)).unwrap();}
+        assert!(c.completed_window_receipt(notice(7,8*215,total)).unwrap().is_none());
+        assert_eq!(c.ends.len(),8);
+        for b in [notice(6,16*215,total),notice(7,17*215,total),notice(7,16*215,total+1),
+            {let mut b=notice(7,16*215,total);b[5]=denzic_ota_core::STATE_ERROR;b[6]=5;b}] {
+            assert!(c.completed_window_receipt(b).is_err());assert_eq!(c.ends.len(),8);
+        }
+        assert!(c.completed_window_receipt(notice(7,16*215,total)).unwrap().is_some());
+        c.abort();assert!(c.completed_window_receipt(notice(7,16*215,total)).is_err());
+    }
+    #[test]
+    fn window_barrier_latest_preserves_errors_close_and_next_real_notification(){
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(7,1000).unwrap();
+        assert!(m.latest(&mut cursor).unwrap().is_none());
+        m.publish(Ok(notice(7,215,1000)));assert!(m.latest(&mut cursor).unwrap().is_some());
+        assert!(m.next(&mut cursor,Instant::now()).unwrap().is_none());
+        m.publish(Ok(notice(7,430,1000)));let b=m.next(&mut cursor,Instant::now()).unwrap().unwrap();
+        assert_eq!(denzic_ota_core::parse_status(&b).unwrap().bytes_written,430);
+        m.fail("actual callback failed".into());assert_eq!(m.latest(&mut cursor).unwrap_err(),"actual callback failed");
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(7,1000).unwrap();m.publish(Ok(notice(7,215,1000)));m.close();assert!(m.latest(&mut cursor).is_err());
     }
 }

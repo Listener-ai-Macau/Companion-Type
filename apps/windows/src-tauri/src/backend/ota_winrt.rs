@@ -219,6 +219,9 @@ struct CompanionOtaWinrtTransport<'a> {
     device_credit_wait:Duration,
     device_notifications:Option<DurableNotificationLease>,
     device_notices_used:u32,
+    window_receipt_pending:bool,
+    window_notice_receipts:u32,
+    window_receipt_fallback_reads:u32,
 }
 
 impl Drop for CompanionOtaWinrtTransport<'_> {
@@ -369,7 +372,7 @@ pub fn transfer_companion_ota_winrt(
         pipeline_depth: pipeline,
         system_component: None,
         simple_file_bytes: None,
-        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,
+        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0,
     };
 
     let progress_started = Instant::now();
@@ -518,7 +521,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         device_queue_credits:if pipelined {Some(super::ota_flow::DeviceQueueCredits::new(
             u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?,payload,flow.queue_chunks)?)} else {None},
         device_credit_reads:0,device_credit_wait:Duration::ZERO,
-        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0};
+        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
@@ -549,6 +552,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // Preserve the completed payload measurement even if post-install discovery fails.
     eprintln!("firmware_ota_payload_metrics {}",serde_json::to_string(&payload_metrics).map_err(|e|e.to_string())?);
     let device_notices_used=transport.device_notices_used;
+    let window_notice_receipts=transport.window_notice_receipts;
+    let window_receipt_fallback_reads=transport.window_receipt_fallback_reads;
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();
     // FINISH restarts the peripheral. Do not carry the old service/handles
@@ -601,7 +606,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
         "filePayloadBytes":payload,"pipelineDepth":pipeline,"physicalQueueChunks":flow.queue_chunks,
         "durableWindowChunks":flow.window_chunks,"pipelined":pipelined,
-        "deviceQueueCreditReads":device_credit_reads,
+        "windowNoticeReceipts":window_notice_receipts,"windowReceiptFallbackReads":window_receipt_fallback_reads,"deviceQueueCreditReads":device_credit_reads,
         "deviceQueueCreditNotifications":device_notices_used,
         "deviceQueueCreditSource":if !pipelined {"acknowledged_writes"} else if flow.notify_credits {"generation_bound_durable_notifications"} else {"uncached_durable_reads"},
         "deviceQueueCreditWaitUs":device_credit_wait.as_micros(),
@@ -1300,6 +1305,19 @@ impl CompanionOtaWinrtTransport<'_> {
 }
 
 impl CompanionOtaWinrtTransport<'_> {
+    fn completed_window_notice(&mut self,deadline:Instant)->Result<Option<Vec<u8>>,String> {
+        let receiver=self.device_notifications.as_mut().ok_or("Missing window receipt owner")?;
+        let credits=self.device_queue_credits.as_mut().ok_or("Missing window device credits")?;
+        if let Some(bytes)=receiver.mailbox.latest(&mut receiver.cursor)? {
+            if let Some(receipt)=credits.completed_window_receipt(bytes)? {return Ok(Some(receipt));}
+        }
+        loop {
+            if Instant::now()>=deadline {return Ok(None);}
+            let Some(bytes)=receiver.next(deadline)? else {return Ok(None)};
+            self.device_notices_used=self.device_notices_used.saturating_add(1);
+            if let Some(receipt)=credits.completed_window_receipt(bytes)? {return Ok(Some(receipt));}
+        }
+    }
     fn reserve_device_queue_credit(&mut self,packet:&[u8])->Result<(),String> {
         let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
         let wait_needed=credits.needs_receipt(packet)?;
@@ -1373,6 +1391,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         let mut selected=*packet;
         if let Some(c)=self.system_component {selected[6]=c;selected[7]=0xB2;}
         let packet=&selected;
+        self.window_receipt_pending=false;
         if packet[4] == denzic_ota_core::OP_ABORT {
             if let Some(credits)=self.device_queue_credits.as_mut(){credits.abort();}
             if let Some(receiver)=self.device_notifications.as_mut(){receiver.unbind();}
@@ -1396,9 +1415,11 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
             // cursor only after that write succeeds. The GATT adapter publishes
             // that cursor only after its whole command queue drains. OP_SYNC
             // itself merely checks RECEIVING and performs no flush/checkpoint.
-            // Keep the engine's exact status/catch-up/offset validation barrier,
-            // but omit the extra ATT write/response before every status READ.
-            // Local WWR completion above remains no storage acknowledgement.
+            // The engine still validates the exact status/offset barrier.
+            // WOC4 may satisfy it with the current BEGIN's durable notification;
+            // never repeat an ATT READ merely to obtain an already held receipt.
+            // Older peers and missing notifications retain the uncached READ.
+            self.window_receipt_pending=self.device_notifications.is_some();
             return Ok(());
         }
         // The old WB WWR path needed settling after draining the host queue.
@@ -1538,6 +1559,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
     }
 
     fn read_status(&mut self) -> Result<Vec<u8>, String> {
+        let read_started=Instant::now();
         let timeout = self
             .status_error_started
             .map(|started| {
@@ -1552,6 +1574,20 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                 PROGRESS_TIMEOUT.as_millis()
             ));
         }
+        if self.window_receipt_pending {
+            self.window_receipt_pending=false; // one SYNC only, never BEGIN/FINISH/version checks
+            let deadline=read_started+Duration::from_secs(2).min(timeout);
+            if let Some(bytes)=self.completed_window_notice(deadline)? {
+                self.window_notice_receipts=self.window_notice_receipts.saturating_add(1);
+                self.status_error_started=None;
+                return Ok(bytes);
+            }
+            self.window_receipt_fallback_reads=self.window_receipt_fallback_reads.saturating_add(1);
+        }
+        // Waiting for a notification consumes the original read budget; do not
+        // add another full timeout before the one fallback uncached receipt.
+        let timeout=timeout.saturating_sub(read_started.elapsed());
+        if timeout.is_zero(){return Err("OTA window receipt exhausted its status budget".into());}
         let cancel = BleCancel::NONE;
         let result = self.flush_pending_wwr().and_then(|_| {
             read_characteristic_bytes_with_timeout(
@@ -1612,6 +1648,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         let mut selected=*packet;
         if let Some(c)=self.system_component {selected[6]=c;selected[7]=0xB2;}
         let packet=&selected;
+        self.window_receipt_pending=false;
         self.flush_pending_wwr()?;
         for attempt in 0..5 {
             match write_gatt_value_with_timeout(
