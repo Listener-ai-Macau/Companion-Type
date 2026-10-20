@@ -219,6 +219,8 @@ struct CompanionOtaWinrtTransport<'a> {
     device_credit_wait:Duration,
     device_notifications:Option<DurableNotificationLease>,
     device_notices_used:u32,
+    credit_refills_with_pending_writes:u32,
+    credit_refill_pending_peak:usize,
     window_receipt_pending:bool,
     window_notice_receipts:u32,
     window_receipt_fallback_reads:u32,
@@ -372,7 +374,7 @@ pub fn transfer_companion_ota_winrt(
         pipeline_depth: pipeline,
         system_component: None,
         simple_file_bytes: None,
-        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0,
+        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0,
     };
 
     let progress_started = Instant::now();
@@ -531,7 +533,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         device_queue_credits:if pipelined {Some(super::ota_flow::DeviceQueueCredits::new(
             u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?,payload,flow.queue_chunks)?)} else {None},
         device_credit_reads:0,device_credit_wait:Duration::ZERO,
-        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0};
+        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
@@ -562,6 +564,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // Preserve the completed payload measurement even if post-install discovery fails.
     eprintln!("firmware_ota_payload_metrics {}",serde_json::to_string(&payload_metrics).map_err(|e|e.to_string())?);
     let device_notices_used=transport.device_notices_used;
+    let credit_refills_with_pending_writes=transport.credit_refills_with_pending_writes;
+    let credit_refill_pending_peak=transport.credit_refill_pending_peak;
     let window_notice_receipts=transport.window_notice_receipts;
     let window_receipt_fallback_reads=transport.window_receipt_fallback_reads;
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
@@ -618,6 +622,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "durableWindowChunks":flow.window_chunks,"pipelined":pipelined,
         "windowNoticeReceipts":window_notice_receipts,"windowReceiptFallbackReads":window_receipt_fallback_reads,"deviceQueueCreditReads":device_credit_reads,
         "deviceQueueCreditNotifications":device_notices_used,
+        "creditRefillsWithPendingLocalWrites":credit_refills_with_pending_writes,
+        "creditRefillPendingLocalWritePeak":credit_refill_pending_peak,
+        "deviceQueueCreditWaitScope":"credit_loop_including_ready_operation_checks_and_notice_wait",
+
         "deviceQueueCreditSource":if !pipelined {"acknowledged_writes"} else if flow.notify_credits {"generation_bound_durable_notifications"} else {"uncached_durable_reads"},
         "deviceQueueCreditWaitUs":device_credit_wait.as_micros(),
         "localWriteCompletionReturnsDeviceCredit":false,
@@ -1194,6 +1202,12 @@ impl CompanionOtaWinrtTransport<'_> {
         }
     }
 
+    fn retire_ready_wwr(&mut self)->Result<bool,String> {
+        let a=super::ota_pending::retire_ready(&mut self.pending_wwr,"Companion OTA data pipeline")?;
+        let b=super::ota_pending::retire_ready(&mut self.pending_wwr_b,"Companion OTA data_b pipeline")?;
+        Ok(a||b)
+    }
+
     fn flush_pending_wwr(&mut self) -> Result<(), String> {
         self.drain_pending_wwr_until(0, 0)
     }
@@ -1204,53 +1218,7 @@ impl CompanionOtaWinrtTransport<'_> {
         }
         let deadline = Instant::now() + OTA_WRITE_TIMEOUT;
         while self.pending_wwr.len() > max_a || self.pending_wwr_b.len() > max_b {
-            let mut progressed = false;
-            for (pending, label) in [
-                (&mut self.pending_wwr, "Companion OTA data pipeline"),
-                (&mut self.pending_wwr_b, "Companion OTA data_b pipeline"),
-            ] {
-                let mut index = 0usize;
-                while index < pending.len() {
-                    let operation = &pending[index];
-                    match operation
-                        .Status()
-                        .map_err(|err| format!("BLE {label} async status failed: {err}"))?
-                    {
-                        windows::Foundation::AsyncStatus::Completed => {
-                            let operation = pending.remove(index);
-                            let result = operation.GetResults();
-                            let _ = operation.Close();
-                            let status = result
-                                .map_err(|err| format!("BLE {label} write result failed: {err}"))?;
-                            if status != GattCommunicationStatus::Success {
-                                return Err(format!(
-                                    "BLE {label} write returned status={status:?}"
-                                ));
-                            }
-                            progressed = true;
-                        }
-                        windows::Foundation::AsyncStatus::Error => {
-                            let code = operation.ErrorCode().ok();
-                            let _ = operation.Close();
-                            pending.remove(index);
-                            return Err(format!("BLE {label} write async error: {code:?}"));
-                        }
-                        windows::Foundation::AsyncStatus::Canceled => {
-                            let _ = operation.Close();
-                            pending.remove(index);
-                            return Err(format!("BLE {label} write async canceled"));
-                        }
-                        windows::Foundation::AsyncStatus::Started => {
-                            index += 1;
-                        }
-                        status => {
-                            let _ = operation.Close();
-                            pending.remove(index);
-                            return Err(format!("BLE {label} unknown async status={status:?}"));
-                        }
-                    }
-                }
-            }
+            let progressed=self.retire_ready_wwr()?;
             if self.pending_wwr.len() <= max_a && self.pending_wwr_b.len() <= max_b {
                 break;
             }
@@ -1324,11 +1292,20 @@ impl CompanionOtaWinrtTransport<'_> {
         let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
         let wait_needed=credits.needs_receipt(packet)?;
         if wait_needed {
-            self.flush_pending_wwr()?;
             let started=Instant::now();let deadline=started+Duration::from_secs(2);
+            // WOC4 receipts may already grant real credits while local writes
+            // are Started. Do not drain every operation before looking at them.
+            // Legacy read-only credits retain their ordered local drain.
+            if self.device_notifications.is_none(){self.flush_pending_wwr()?;}
             loop {
+                self.retire_ready_wwr()?; // errors still terminate; Started stays owned
                 let notice=if let Some(receiver)=self.device_notifications.as_mut() {
-                    receiver.next(deadline)?
+                    let slice=(Instant::now()+STATUS_POLL_INTERVAL).min(deadline);
+                    match receiver.next(slice)? {
+                        Some(bytes)=>Some(bytes),
+                        None if Instant::now()<deadline=>continue,
+                        None=>None,
+                    }
                 } else {None};
                 let bytes=if let Some(bytes)=notice {
                     self.device_notices_used=self.device_notices_used.saturating_add(1);bytes
@@ -1340,7 +1317,15 @@ impl CompanionOtaWinrtTransport<'_> {
                 };
                 let credits=self.device_queue_credits.as_mut().unwrap();
                 credits.observe(&bytes)?;
-                if !credits.needs_receipt(packet)? {break;}
+                if !credits.needs_receipt(packet)? {
+                    self.retire_ready_wwr()?;
+                    let pending=self.pending_wwr.len()+self.pending_wwr_b.len();
+                    if pending>0 {
+                        self.credit_refills_with_pending_writes=self.credit_refills_with_pending_writes.saturating_add(1);
+                        self.credit_refill_pending_peak=self.credit_refill_pending_peak.max(pending);
+                    }
+                    break;
+                }
                 if Instant::now()>=deadline {
                     self.device_credit_wait+=started.elapsed();
                     return Err("OTA device queue credits stalled; local Windows completion is not a storage receipt".into());

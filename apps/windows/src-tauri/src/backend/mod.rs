@@ -54,6 +54,8 @@ pub(crate) mod recording_transfer;
 pub(crate) mod recording_sync;
 pub(crate) mod ota_metrics;
 mod ota_flow;
+#[cfg(windows)]
+mod ota_pending;
 mod simple_ota_restart;
 #[cfg(test)]
 #[path = "recording_sync/flow_tests.rs"]

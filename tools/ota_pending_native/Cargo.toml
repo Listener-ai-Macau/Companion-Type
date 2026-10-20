@@ -1,0 +1,8 @@
+[package]
+name = "companion-r91-pending-native"
+version = "0.1.0"
+edition = "2021"
+[dependencies]
+windows = { version = "0.58", features = ["Foundation", "Devices_Bluetooth_GenericAttributeProfile", "implement"] }
+windows-core = "0.58"
+denzic-ota-core = { path = "C:/Users/Billy/Desktop/Denzic/Companion/.cache/ble-rate-20261019/ota-credit-pipeline-r91-frozen/source/third_party/denzic-platform/ota/host/rust" }
