@@ -558,6 +558,12 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // FINISH only retained the file. Boot verifies the signature before erase,
     // installs both destinations, then normal App reports actual running IDs.
     let deadline=Instant::now()+Duration::from_secs(180);let mut last_error=String::new();
+    // Release all maintained GATT owners before the peripheral snapshots NVM
+    // and resets. In particular do not immediately reopen the old application
+    // and hold it connected throughout its planned reboot. This is inside the
+    // existing installation deadline and outside the completed payload timing.
+    eprintln!("[companion-ota] post_finish_reboot_grace_ms=10000 old_gatt_owners_released=1");
+    std::thread::sleep(Duration::from_secs(10));
     loop {
         if Instant::now()>=deadline {return Err(format!("完整包已传入，但尚未看到新程序和资源正常启动；没有判升级成功。最后状态：{last_error}"));}
         if connection.is_none() {
