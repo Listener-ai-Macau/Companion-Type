@@ -354,12 +354,11 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     eprintln!("[companion-ota] simple_connection_preference requested={connection_preference} applied_not_guaranteed=1 release={release_scope}");
     // Signature travels inside the file. Only DATA geometry is relevant;
     // do not inherit WB's244 cap or the former separate-manifest147 minimum.
-    let payload=transport_profile.file_payload_cap().min(flow.payload_bytes).min(mtu.saturating_sub(7));
-    if payload==0{return Err("当前ATT MTU不能承载升级数据".into());}
+    let payload=transport_profile.file_payload(flow,mtu)?;
     let mut options=denzic_ota_core::TransferOptions::dual_lane_bulk(payload);
-    // Same <=244-byte ATT value for both cases. The explicit WWR comparison
-    // uses only this peer's authenticated bounded queue; SYNC+READ remains the
-    // durable storage receipt, never a local Windows write completion.
+    // Logical durable checkpoints can span multiple bounded RAM-ring turns.
+    // WinRT outstanding operations remain limited by the advertised queue;
+    // neither local completion nor RAM admission is a NOR receipt.
     options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
     let pipeline=if pipelined {flow.pipeline_depth()} else {1};
     eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0 transport_profile={} pipeline_depth={pipeline} data_write={:?} diagnostic={}",
@@ -425,7 +424,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
-        "filePayloadBytes":payload,"pipelineDepth":pipeline,"pipelined":pipelined,
+        "filePayloadBytes":payload,"pipelineDepth":pipeline,"physicalQueueChunks":flow.queue_chunks,
+        "durableWindowChunks":flow.window_chunks,"pipelined":pipelined,
         "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
         "connectionPreference":connection_preference,
         "connectionPreferenceRelease":release_scope,

@@ -6,6 +6,7 @@
 pub(super) struct WbaFlow {
     pub payload_bytes: u16,
     pub window_chunks: u16,
+    pub queue_chunks: u16,
     pub pipelined: bool,
 }
 
@@ -14,17 +15,28 @@ pub(super) struct WbaFlow {
 /// evidence qualifies the bounded WWR path. The peer-handoff comparison changes only preference ownership after a durable
 /// window; packet size, file format and signature/installation stay identical.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed215PeerHandoff }
+pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed215PeerHandoff }
 
 impl SimpleTransportProfile {
     pub fn parse(value: Option<&str>) -> Result<Self, String> {
         match value.map(str::trim).unwrap_or("") {
             "" | "acknowledged" => Ok(Self::Acknowledged),
+            "windowed_491_peer_handoff" => Ok(Self::Windowed491PeerHandoff),
             "windowed_244" => Ok(Self::Windowed244),
             "windowed_244_peer_handoff" => Ok(Self::Windowed244PeerHandoff),
             "windowed_215_peer_handoff" => Ok(Self::Windowed215PeerHandoff),
             _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
         }
+    }
+    /// An explicit long-value experiment must have the same packet geometry
+    /// on both ends. Refuse before BEGIN instead of silently testing a fallback.
+    pub fn file_payload(self,flow:WbaFlow,mtu:u16)->Result<u16,String> {
+        if self==Self::Windowed491PeerHandoff &&
+            (flow.payload_bytes<491 || mtu<498 || flow.window_chunks<=flow.queue_chunks) {
+            return Err("设备或MTU未确认WOC3长窗口/491字节包形，未开始升级".into());
+        }
+        let payload=self.file_payload_cap().min(flow.payload_bytes).min(mtu.saturating_sub(7));
+        if payload==0 {Err("当前ATT MTU不能承载升级数据".into())} else {Ok(payload)}
     }
     pub fn from_env() -> Result<Self, String> {
         match std::env::var("COMPANION_TYPE_SIMPLE_OTA_TRANSPORT") {
@@ -36,8 +48,8 @@ impl SimpleTransportProfile {
     pub fn pipelined(self, flow: WbaFlow) -> Result<bool, String> {
         match self {
             Self::Acknowledged => Ok(false),
-            Self::Windowed244 | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff if flow.pipelined => Ok(true),
-            Self::Windowed244 | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff if flow.pipelined => Ok(true),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
         }
     }
     /// Called only from the transfer engine's validated durable progress.
@@ -51,13 +63,14 @@ impl SimpleTransportProfile {
     /// about future peers:215 file +4 offset +3 ATT +4 L2CAP =226octets;
     /// encrypted LE2M airtime(11+226+4)*4=964us. Keep old profiles intact.
     pub fn file_payload_cap(self)->u16 {
-        if self==Self::Windowed215PeerHandoff {215} else {240}
+        if self==Self::Windowed491PeerHandoff {491} else if self==Self::Windowed215PeerHandoff {215} else {240}
     }
     pub fn releases_after_first_durable_window(self)->bool {
-        matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff)
+        matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff)
     }
     pub fn name(self) -> &'static str {
         match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
+            Self::Windowed491PeerHandoff => "windowed_491_peer_handoff",
             Self::Windowed244PeerHandoff => "windowed_244_peer_handoff",
             Self::Windowed215PeerHandoff => "windowed_215_peer_handoff" }
     }
@@ -88,33 +101,40 @@ impl WbaFlow {
     }
     fn parse(status: &[u8], supports_wwr: bool, contract:u16) -> Result<Self, String> {
         denzic_ota_core::parse_status(status)?;
-        let mut flow = Self { payload_bytes: 240, window_chunks: 8, pipelined: false };
+        let mut flow = Self { payload_bytes: 240, window_chunks: 8,queue_chunks:8, pipelined: false };
         if status.len() == 24 && contract==1 { return Ok(flow); }
         let v1 = status.len() == 32 && &status[24..28] == b"WOC1";
         let v2 = status.len() == 36 && &status[24..28] == b"WOC2";
-        if !v1 && !v2 {
+        let v3 = status.len()==40 && &status[24..28]==b"WOC3";
+        if !v1 && !v2 && !v3 {
             return Err("Invalid WBA OTA capacity; no payload was sent".into());
         }
-        if contract!=1 && !v2 {return Err("设备没有整套固件与资源升级能力，尚未发送内容".into());}
+        if contract!=1 && !v2 && !v3 {return Err("设备没有整套固件与资源升级能力，尚未发送内容".into());}
         let payload = u16::from_le_bytes(status[28..30].try_into().unwrap());
         let value = u16::from_le_bytes(status[30..32].try_into().unwrap());
         if !(240..=505).contains(&payload) || value != payload + 4 {
             return Err("Unsupported WBA OTA packet geometry".into());
         }
         flow.payload_bytes = payload;
-        if v2 {
+        if v2 || v3 {
             let window = u16::from_le_bytes(status[32..34].try_into().unwrap());
             let flags = u16::from_le_bytes(status[34..36].try_into().unwrap());
-            if !(1..=16).contains(&window) || flags != contract {
+            let queue=if v3 {u16::from_le_bytes(status[36..38].try_into().unwrap())} else {window};
+            let valid=if v3 {
+                contract==5 && flags==13 && (1..=128).contains(&window) &&
+                (1..=16).contains(&queue) && queue<=window && status[38..40]==[0,0]
+            } else {(1..=16).contains(&window) && flags==contract};
+            if !valid {
                 return Err("Unsupported WBA OTA bounded window".into());
             }
             flow.window_chunks = window;
+            flow.queue_chunks = queue;
             flow.pipelined = supports_wwr;
         }
         Ok(flow)
     }
     pub fn pipeline_depth(self) -> usize {
-        if self.pipelined { usize::from(self.window_chunks) } else { 1 }
+        if self.pipelined { usize::from(self.queue_chunks) } else { 1 }
     }
     /// Signed package metadata uses240, while the generic transport default
     /// uses244. Both can use the explicitly reported larger WBA payload.
@@ -134,7 +154,7 @@ mod tests {
 
     #[test]
     fn simple_transport_comparison_is_explicit_and_requires_device_capacity() {
-        let capable=WbaFlow {payload_bytes:505,window_chunks:16,pipelined:true};
+        let capable=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,pipelined:true};
         let unsupported=WbaFlow {pipelined:false,..capable};
         for value in [None,Some(""),Some("acknowledged")] {
             let profile=SimpleTransportProfile::parse(value).unwrap();
@@ -151,7 +171,7 @@ mod tests {
     #[test]
     fn peer_handoff_waits_for_one_complete_durable_window_and_stays_explicit() {
         let profile=SimpleTransportProfile::parse(Some("windowed_244_peer_handoff")).unwrap();
-        let capable=WbaFlow {payload_bytes:240,window_chunks:16,pipelined:true};
+        let capable=WbaFlow {payload_bytes:240,window_chunks:16,queue_chunks:16,pipelined:true};
         assert!(profile.pipelined(capable).unwrap());
         assert!(profile.pipelined(WbaFlow {pipelined:false,..capable}).is_err());
         for accepted in [0,1,240,3839,1417797] {
@@ -169,7 +189,7 @@ mod tests {
     #[test]
     fn single_ll_comparison_matches_captured_965us_without_changing_legacy_profiles() {
         let p=SimpleTransportProfile::parse(Some("windowed_215_peer_handoff")).unwrap();
-        let flow=WbaFlow {payload_bytes:505,window_chunks:16,pipelined:true};
+        let flow=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,pipelined:true};
         assert!(p.pipelined(flow).unwrap());
         assert!(p.pipelined(WbaFlow {pipelined:false,..flow}).is_err());
         assert_eq!(p.file_payload_cap(),215);
@@ -268,5 +288,38 @@ mod tests {
         assert!(WbaFlow::from_pair_status(&simple,true).is_err());
         assert!(WbaFlow::from_status(&simple,true).is_err());
         assert!(WbaFlow::from_simple_status(&status(b"WOC2",16,3),true).is_err());
+    }
+}
+
+#[cfg(test)]
+mod stream_tests {
+    use super::*;
+    fn stream()->Vec<u8> {
+        let mut b=vec![0;40];b[..4].copy_from_slice(b"DOV1");b[4]=1;
+        b[24..28].copy_from_slice(b"WOC3");b[28..30].copy_from_slice(&505u16.to_le_bytes());
+        b[30..32].copy_from_slice(&509u16.to_le_bytes());b[32]=64;b[34]=13;b[36]=16;b
+    }
+    #[test]
+    fn durable_window_is_not_a_ram_or_winrt_pipeline_allocation() {
+        let b=stream();let f=WbaFlow::from_simple_status(&b,true).unwrap();
+        assert_eq!(f.window_chunks,64);assert_eq!(f.queue_chunks,16);assert_eq!(f.pipeline_depth(),16);
+        assert_eq!(WbaFlow::from_simple_status(&b,false).unwrap().pipeline_depth(),1);
+        assert!(WbaFlow::from_pair_status(&b,true).is_err());assert!(WbaFlow::from_status(&b,true).is_err());
+        for (byte,value) in [(32,0),(32,129),(34,5),(34,15),(36,0),(36,17),(38,1),(39,1)] {
+            let mut bad=b.clone();bad[byte]=value;assert!(WbaFlow::from_simple_status(&bad,true).is_err(),"byte{byte}={value}");
+        }
+        let mut bad=b.clone();bad[32]=8;assert!(WbaFlow::from_simple_status(&bad,true).is_err());
+        for length in [24,32,36,39,41] {let mut bad=b.clone();bad.resize(length,0);assert!(WbaFlow::from_simple_status(&bad,true).is_err());}
+    }
+    #[test]
+    fn explicit491_geometry_is_negotiated_before_begin_not_silently_clamped() {
+        let f=WbaFlow::from_simple_status(&stream(),true).unwrap();
+        let p=SimpleTransportProfile::parse(Some("windowed_491_peer_handoff")).unwrap();
+        assert_eq!(p.file_payload(f,512).unwrap(),491);assert_eq!(p.file_payload(f,498).unwrap(),491);
+        assert!(p.file_payload(f,497).is_err());
+        assert!(p.file_payload(WbaFlow{payload_bytes:490,..f},512).is_err());
+        assert!(p.file_payload(WbaFlow{window_chunks:16,..f},512).is_err());
+        assert!(p.handoff_ready(491*64,1000000,491*64));assert!(!p.handoff_ready(491*63,1000000,491*64));
+        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
     }
 }
