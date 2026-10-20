@@ -14,7 +14,7 @@ pub(super) struct WbaFlow {
 /// evidence qualifies the bounded WWR path. The peer-handoff comparison changes only preference ownership after a durable
 /// window; packet size, file format and signature/installation stay identical.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff }
+pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed215PeerHandoff }
 
 impl SimpleTransportProfile {
     pub fn parse(value: Option<&str>) -> Result<Self, String> {
@@ -22,6 +22,7 @@ impl SimpleTransportProfile {
             "" | "acknowledged" => Ok(Self::Acknowledged),
             "windowed_244" => Ok(Self::Windowed244),
             "windowed_244_peer_handoff" => Ok(Self::Windowed244PeerHandoff),
+            "windowed_215_peer_handoff" => Ok(Self::Windowed215PeerHandoff),
             _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
         }
     }
@@ -35,20 +36,30 @@ impl SimpleTransportProfile {
     pub fn pipelined(self, flow: WbaFlow) -> Result<bool, String> {
         match self {
             Self::Acknowledged => Ok(false),
-            Self::Windowed244 | Self::Windowed244PeerHandoff if flow.pipelined => Ok(true),
-            Self::Windowed244 | Self::Windowed244PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
+            Self::Windowed244 | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff if flow.pipelined => Ok(true),
+            Self::Windowed244 | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
         }
     }
     /// Called only from the transfer engine's validated durable progress.
     /// A local WinRT completion, zero prefix or malformed total cannot release
     /// the bootstrap preference. The owned Option enforces a single release.
     pub fn handoff_ready(self, accepted:usize, total:usize, first_window:usize)->bool {
-        self==Self::Windowed244PeerHandoff && total>0 && first_window>0 &&
+        self.releases_after_first_durable_window() && total>0 && first_window>0 &&
             accepted>=first_window.min(total) && accepted<=total
+    }
+    /// Explicit comparison for captured LE2M/965us, not an assumption
+    /// about future peers:215 file +4 offset +3 ATT +4 L2CAP =226octets;
+    /// encrypted LE2M airtime(11+226+4)*4=964us. Keep old profiles intact.
+    pub fn file_payload_cap(self)->u16 {
+        if self==Self::Windowed215PeerHandoff {215} else {240}
+    }
+    pub fn releases_after_first_durable_window(self)->bool {
+        matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff)
     }
     pub fn name(self) -> &'static str {
         match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
-            Self::Windowed244PeerHandoff => "windowed_244_peer_handoff" }
+            Self::Windowed244PeerHandoff => "windowed_244_peer_handoff",
+            Self::Windowed215PeerHandoff => "windowed_215_peer_handoff" }
     }
 }
 
@@ -147,6 +158,23 @@ mod tests {
         for original in [SimpleTransportProfile::Acknowledged,SimpleTransportProfile::Windowed244] {
             assert!(!original.handoff_ready(3840,1417796,3840));
         }
+    }
+    #[test]
+    fn single_ll_comparison_matches_captured_965us_without_changing_legacy_profiles() {
+        let p=SimpleTransportProfile::parse(Some("windowed_215_peer_handoff")).unwrap();
+        let flow=WbaFlow {payload_bytes:505,window_chunks:16,pipelined:true};
+        assert!(p.pipelined(flow).unwrap());
+        assert!(p.pipelined(WbaFlow {pipelined:false,..flow}).is_err());
+        assert_eq!(p.file_payload_cap(),215);
+        assert_eq!((11+u32::from(p.file_payload_cap())+11+4)*4,964);
+        assert!((11+240+11+4)*4>965);
+        assert!(!p.handoff_ready(3439,1417808,3440));
+        assert!(p.handoff_ready(3440,1417808,3440));
+        for old in [SimpleTransportProfile::Acknowledged,SimpleTransportProfile::Windowed244,
+                    SimpleTransportProfile::Windowed244PeerHandoff] {
+            assert_eq!(old.file_payload_cap(),240);
+        }
+        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
     }
     fn status(magic: &[u8], window: u16, flags: u16) -> Vec<u8> {
         let mut s = vec![0u8;24]; s[..4].copy_from_slice(b"DOV1");s[4]=1;

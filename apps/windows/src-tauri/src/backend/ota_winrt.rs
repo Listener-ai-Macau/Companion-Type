@@ -348,13 +348,13 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
             if let Ok(r)=device.RequestPreferredConnectionParameters(&p) {target._conn_pref_request=Some(denzic_ble_windows::ScopedBleResource::new(r));}
         }
     }
-    let peer_handoff=transport_profile==super::ota_flow::SimpleTransportProfile::Windowed244PeerHandoff;
+    let peer_handoff=transport_profile.releases_after_first_durable_window();
     let release_scope=if peer_handoff {"first_durable_window_or_owner_drop"}
         else {"payload_complete_or_owner_drop"};
     eprintln!("[companion-ota] simple_connection_preference requested={connection_preference} applied_not_guaranteed=1 release={release_scope}");
     // Signature travels inside the file. Only DATA geometry is relevant;
     // do not inherit WB's244 cap or the former separate-manifest147 minimum.
-    let payload=240u16.min(flow.payload_bytes).min(mtu.saturating_sub(7));
+    let payload=transport_profile.file_payload_cap().min(flow.payload_bytes).min(mtu.saturating_sub(7));
     if payload==0{return Err("当前ATT MTU不能承载升级数据".into());}
     let mut options=denzic_ota_core::TransferOptions::dual_lane_bulk(payload);
     // Same <=244-byte ATT value for both cases. The explicit WWR comparison
