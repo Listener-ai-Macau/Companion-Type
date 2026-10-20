@@ -16,7 +16,7 @@ pub(super) struct WbaFlow {
 /// evidence qualifies the bounded WWR path. The peer-handoff comparison changes only preference ownership after a durable
 /// window; packet size, file format and signature/installation stay identical.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed215PeerHandoff }
+pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed215PeerHandoff, Windowed215Hold }
 
 impl SimpleTransportProfile {
     pub fn parse(value: Option<&str>) -> Result<Self, String> {
@@ -26,6 +26,7 @@ impl SimpleTransportProfile {
             "windowed_244" => Ok(Self::Windowed244),
             "windowed_244_peer_handoff" => Ok(Self::Windowed244PeerHandoff),
             "windowed_215_peer_handoff" => Ok(Self::Windowed215PeerHandoff),
+            "windowed_215_hold" => Ok(Self::Windowed215Hold),
             _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
         }
     }
@@ -49,8 +50,8 @@ impl SimpleTransportProfile {
     pub fn pipelined(self, flow: WbaFlow) -> Result<bool, String> {
         match self {
             Self::Acknowledged => Ok(false),
-            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff if flow.pipelined => Ok(true),
-            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold if flow.pipelined => Ok(true),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
         }
     }
     /// Called only from the transfer engine's validated durable progress.
@@ -64,7 +65,7 @@ impl SimpleTransportProfile {
     /// about future peers:215 file +4 offset +3 ATT +4 L2CAP =226octets;
     /// encrypted LE2M airtime(11+226+4)*4=964us. Keep old profiles intact.
     pub fn file_payload_cap(self)->u16 {
-        if self==Self::Windowed491PeerHandoff {491} else if self==Self::Windowed215PeerHandoff {215} else {240}
+        if self==Self::Windowed491PeerHandoff {491} else if matches!(self,Self::Windowed215PeerHandoff|Self::Windowed215Hold) {215} else {240}
     }
     pub fn releases_after_first_durable_window(self)->bool {
         matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff)
@@ -73,7 +74,8 @@ impl SimpleTransportProfile {
         match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
             Self::Windowed491PeerHandoff => "windowed_491_peer_handoff",
             Self::Windowed244PeerHandoff => "windowed_244_peer_handoff",
-            Self::Windowed215PeerHandoff => "windowed_215_peer_handoff" }
+            Self::Windowed215PeerHandoff => "windowed_215_peer_handoff",
+            Self::Windowed215Hold => "windowed_215_hold" }
     }
 }
 
