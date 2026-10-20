@@ -684,7 +684,7 @@ fn open_ota_target_for_address(
     let operation=GattSession::FromDeviceIdAsync(&id).map_err(|e|format!("OTA session open: {e}"))?;
     let session=denzic_ble_windows::ScopedBleResource::new(
         wait_async_operation_with_cancel(operation,DISCOVERY_TIMEOUT,"OTA connection session",&cancel)?);
-    activate_gatt_session(&session)?;
+    request_gatt_session_connection(&session)?;
     // Always label with the radio address from the open handle (not service-id UUID crumbs).
     let label = device
         .BluetoothAddress()
@@ -720,6 +720,11 @@ fn open_ota_target_for_address(
         return Err("OTA service not present on device".to_string());
     }
     let service = services.GetAt(0).map_err(|e| format!("OTA service: {e}"))?;
+    // Drive the existing uncached GATT request before waiting for Active.
+    // Keep this exact maintained owner; no reopen, re-pair or adapter reset.
+    // No update characteristic or package write is reached before this check.
+    wait_gatt_session_active(&session,
+        DISCOVERY_TIMEOUT.saturating_sub(discovery_started.elapsed()).min(GATT_READY_TIMEOUT))?;
     open_chars_from_service(service, Some(device), &label, Some(session))
 }
 
@@ -841,24 +846,35 @@ fn prepare_gatt_session(service: &GattDeviceService) -> Result<Option<denzic_ble
     Ok(Some(session))
 }
 
-fn activate_gatt_session(session: &GattSession) -> Result<(), String> {
+fn request_gatt_session_connection(session: &GattSession) -> Result<(), String> {
     if !session.CanMaintainConnection().map_err(|e|format!("OTA maintain capability: {e}"))? {
         return Err("Windows cannot maintain this OTA connection; no firmware sent".into());
     }
     // Request before waiting. An idle Windows session need not become Active
     // while nobody owns a connection request; the old code waited first.
     session.SetMaintainConnection(true).map_err(|e|format!("OTA maintain connection: {e}"))?;
+    eprintln!("OTA connection_session maintain_requested=1 uncached_discovery_before_active_wait=1 owner=ota");
+    Ok(())
+}
+
+fn activate_gatt_session(session: &GattSession) -> Result<(), String> {
+    request_gatt_session_connection(session)?;
+    wait_gatt_session_active(session,GATT_READY_TIMEOUT)
+}
+
+fn wait_gatt_session_active(session: &GattSession, budget:Duration) -> Result<(), String> {
     let started=Instant::now();
-    eprintln!("OTA connection_session maintain_requested=1 requested_before_wait=1 owner=ota");
-    let deadline = started + GATT_READY_TIMEOUT;
-    while Instant::now() < deadline {
+    let deadline = started + budget;
+    loop {
         if let Ok(status) = session.SessionStatus() {
             if status == GattSessionStatus::Active {
                 eprintln!("OTA connection_session active=1 elapsed_ms={}",started.elapsed().as_millis());
                 return Ok(());
             }
         }
-        std::thread::sleep(Duration::from_millis(100));
+        let remaining=deadline.saturating_duration_since(Instant::now());
+        if remaining.is_zero(){break;}
+        std::thread::sleep(Duration::from_millis(100).min(remaining));
     }
     Err("OTA connection session did not become active within its bounded wait; no firmware sent".into())
 }
