@@ -95,7 +95,7 @@ impl ServiceChangeLease {
         Ok(Self{device:device.clone(),token:Some(token),generation,service:None})
     }
     fn generation(&self)->usize {self.generation.load(std::sync::atomic::Ordering::SeqCst)}
-    fn ensure_remote_subscription(&mut self,deadline:Instant)->Result<(),String> {
+    fn observe_remote_subscription(&mut self,deadline:Instant)->Result<(),String> {
         let cancel=BleCancel::NONE;
         let remaining=||deadline.checked_duration_since(Instant::now())
             .filter(|v|!v.is_zero()).ok_or("OTA service consistency exceeded12seconds; no firmware sent".to_string());
@@ -142,15 +142,11 @@ impl ServiceChangeLease {
             descriptor.AttributeHandle().map_err(|e|e.to_string())?);
         if value==[2u8,0u8]{return Ok(());}
         if value!=[0u8,0u8]{return Err("Unexpected remote Service Changed subscription; no firmware sent".into());}
-        // Only the normal public subscription API, once, when actually off.
-        // Its success alone is insufficient: require a real uncached readback.
-        let status=wait_async_operation_with_cancel(characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(
-            GattClientCharacteristicConfigurationDescriptorValue::Indicate)
-            .map_err(|e|format!("OTA Service Changed subscription: {e}"))?,remaining()?,"OTA restore Service Changed subscription",&cancel)?;
-        if status!=GattCommunicationStatus::Success{return Err(format!("OTA Service Changed subscription status={status:?}"));}
-        let verified=remote()?;
-        eprintln!("[companion-ota] remote_service_changed_subscription_verified={} value={verified:?}",verified==[2u8,0u8]);
-        if verified!=[2u8,0u8]{return Err("Windows accepted subscription but actual remote CCCD is still off; no firmware sent".into());}
+        // On the actual R85 path Windows refused this system-characteristic
+        // subscription with E_ACCESSDENIED before any ATT write. Do not use
+        // another API/handle to force it. Observe and let the OS own Service
+        // Changed; fresh service and signed identity validation remain required.
+        eprintln!("[companion-ota] remote_service_changed_subscription_off=1 repair_attempted=0 owner=windows_os qualification=not_restored");
         Ok(())
     }
 }
@@ -802,7 +798,7 @@ fn open_ota_target_for_address(
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| device_id_label.to_string());
     let discovery_started=Instant::now();
-    service_change.ensure_remote_subscription(discovery_started+DISCOVERY_TIMEOUT)?;
+    service_change.observe_remote_subscription(discovery_started+DISCOVERY_TIMEOUT)?;
     let mut refreshed_generation=0usize;
     let mut discovery_attempt=0u8;
     let services_result=loop {
