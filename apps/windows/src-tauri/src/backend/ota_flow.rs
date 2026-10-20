@@ -42,7 +42,7 @@ impl SimpleTransportProfile {
     /// Called only from the transfer engine's validated durable progress.
     /// A local WinRT completion, zero prefix or malformed total cannot release
     /// the bootstrap preference. The owned Option enforces a single release.
-    pub fn handoff_ready(self, accepted:u64, total:u64, first_window:u64)->bool {
+    pub fn handoff_ready(self, accepted:usize, total:usize, first_window:usize)->bool {
         self==Self::Windowed244PeerHandoff && total>0 && first_window>0 &&
             accepted>=first_window.min(total) && accepted<=total
     }

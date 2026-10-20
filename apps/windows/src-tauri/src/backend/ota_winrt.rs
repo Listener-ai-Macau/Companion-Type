@@ -371,8 +371,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // its R71 lifetime. No replacement Windows preference is requested.
     let mut handoff_preference=if peer_handoff {target._conn_pref_request.take()} else {None};
     let mut handoff_release:Option<Result<(),String>>=None;
-    let mut handoff_offset:Option<u64>=None;
-    let first_window=u64::from(payload)*u64::from(flow.window_chunks);
+    let mut handoff_offset:Option<usize>=None;
+    let first_window=usize::from(payload)*usize::from(flow.window_chunks);
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(pipeline),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:pipeline,system_component:None,
         simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?)};
