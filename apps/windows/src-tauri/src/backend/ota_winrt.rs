@@ -80,6 +80,9 @@ struct CompanionOtaWinrtTransport<'a> {
     pipeline_depth: usize,
     system_component: Option<u8>,
     simple_file_bytes: Option<u32>,
+    device_queue_credits:Option<super::ota_flow::DeviceQueueCredits>,
+    device_credit_reads:u32,
+    device_credit_wait:Duration,
 }
 
 impl Drop for CompanionOtaWinrtTransport<'_> {
@@ -230,6 +233,7 @@ pub fn transfer_companion_ota_winrt(
         pipeline_depth: pipeline,
         system_component: None,
         simple_file_bytes: None,
+        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,
     };
 
     let progress_started = Instant::now();
@@ -374,7 +378,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let first_window=usize::from(payload)*usize::from(flow.window_chunks);
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(pipeline),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:pipeline,system_component:None,
-        simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?)};
+        simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?),
+        device_queue_credits:if pipelined {Some(super::ota_flow::DeviceQueueCredits::new(
+            u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?,payload,flow.queue_chunks)?)} else {None},
+        device_credit_reads:0,device_credit_wait:Duration::ZERO};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
@@ -400,6 +407,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     if report.resumed_bytes!=0 {return Err("单文件升级意外返回了非零起点，不能当作本次完整传输".into());}
     let mut payload_metrics=window.finish(&report,true);
     payload_metrics.exclude_package_header(176);
+    let device_credit_reads=transport.device_credit_reads;
+    let device_credit_wait=transport.device_credit_wait;
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();let mut connection=Some(target);
     // FINISH only retained the file. Boot verifies the signature before erase,
@@ -426,6 +435,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
         "filePayloadBytes":payload,"pipelineDepth":pipeline,"physicalQueueChunks":flow.queue_chunks,
         "durableWindowChunks":flow.window_chunks,"pipelined":pipelined,
+        "deviceQueueCreditReads":device_credit_reads,
+        "deviceQueueCreditWaitUs":device_credit_wait.as_micros(),
+        "localWriteCompletionReturnsDeviceCredit":false,
         "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
         "connectionPreference":connection_preference,
         "connectionPreferenceRelease":release_scope,
@@ -1064,6 +1076,31 @@ impl CompanionOtaWinrtTransport<'_> {
 }
 
 impl CompanionOtaWinrtTransport<'_> {
+    fn reserve_device_queue_credit(&mut self,packet:&[u8])->Result<(),String> {
+        let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
+        let wait_needed=credits.needs_receipt(packet)?;
+        if wait_needed {
+            let started=Instant::now();let deadline=started+Duration::from_secs(2);
+            loop {
+                // read_status flushes pending local writes, then validates the
+                // returned durable cursor through the same credit owner below.
+                self.device_credit_reads=self.device_credit_reads.saturating_add(1);
+                let bytes=<Self as denzic_ota_core::OtaV1Transport>::read_status(self)?;
+                let credits=self.device_queue_credits.as_mut().unwrap();
+                credits.observe(&bytes)?;
+                if !credits.needs_receipt(packet)? {break;}
+                if Instant::now()>=deadline {
+                    self.device_credit_wait+=started.elapsed();
+                    return Err("OTA device queue credits stalled; local Windows completion is not a storage receipt".into());
+                }
+                std::thread::sleep(STATUS_POLL_INTERVAL);
+            }
+            self.device_credit_wait+=started.elapsed();
+        }
+        // Reserve once before submission. Any later WinRT failure closes this
+        // transfer; only a new whole-file attempt can create another owner.
+        self.device_queue_credits.as_mut().unwrap().admit(packet)
+    }
     fn write_simple_acknowledged_data(&mut self,packet:&[u8],file_bytes:u32)->Result<(),String> {
         for attempt in 0..2 {
             let error=match write_gatt_value_with_timeout(&self.target.data,packet,
@@ -1200,6 +1237,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
     }
 
     fn write_data(&mut self, packet: &[u8]) -> Result<(), String> {
+        self.reserve_device_queue_credit(packet)?;
         if self.target.data_write_option == GattWriteOption::WriteWithoutResponse {
             match self.enqueue_wwr_data_write(packet, false) {
                 Ok(()) => return Ok(()),
@@ -1286,6 +1324,10 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         });
         match result {
             Ok(bytes) => {
+                if let Some(credits)=self.device_queue_credits.as_mut() {
+                    let status=denzic_ota_core::parse_status(&bytes)?;
+                    if status.state==denzic_ota_core::STATE_RECEIVING {credits.observe(&bytes)?;}
+                }
                 if let Some(component)=self.system_component {super::ota_flow::WbaFlow::check_component(&bytes,component)?;}
                 self.status_error_started = None;
                 Ok(bytes)

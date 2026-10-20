@@ -323,3 +323,102 @@ mod stream_tests {
         assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
     }
 }
+
+/// Device queue credits are released by exact durable packet boundaries, never
+/// by WinRT/OS completion. The bounded list costs host memory only. It also
+/// prevents a timed-out logical window replaying over still-queued writes.
+#[derive(Debug)]
+pub(super) struct DeviceQueueCredits {
+    expected:u32, payload:u16, capacity:u16, submitted:u32, durable:u32,
+    ends:std::collections::VecDeque<u32>,
+}
+impl DeviceQueueCredits {
+    pub fn new(expected:u32,payload:u16,capacity:u16)->Result<Self,String> {
+        if expected==0 || !(1..=505).contains(&payload) || !(1..=16).contains(&capacity) {
+            return Err("Invalid bounded OTA device credits".into());
+        }
+        Ok(Self{expected,payload,capacity,submitted:0,durable:0,
+            ends:std::collections::VecDeque::with_capacity(usize::from(capacity))})
+    }
+    fn packet_end(&self,packet:&[u8])->Result<u32,String> {
+        if packet.len()<5 || packet.len()>usize::from(self.payload)+4 {
+            return Err("Invalid OTA credit packet size".into());
+        }
+        let offset=u32::from_le_bytes(packet[..4].try_into().unwrap());
+        let end=offset.checked_add((packet.len()-4) as u32).ok_or("OTA credit offset overflow")?;
+        if offset!=self.submitted || end>self.expected ||
+            (packet.len()!=usize::from(self.payload)+4 && end!=self.expected) {
+            return Err("OTA device credits require the exact next file packet; pending writes cannot be replayed".into());
+        }
+        Ok(end)
+    }
+    pub fn needs_receipt(&self,packet:&[u8])->Result<bool,String> {
+        self.packet_end(packet)?;Ok(self.ends.len()==usize::from(self.capacity))
+    }
+    pub fn admit(&mut self,packet:&[u8])->Result<(),String> {
+        let end=self.packet_end(packet)?;
+        if self.ends.len()>=usize::from(self.capacity) {return Err("OTA device queue credits exhausted".into());}
+        self.ends.push_back(end);self.submitted=end;Ok(())
+    }
+    pub fn observe(&mut self,bytes:&[u8])->Result<(),String> {
+        let s=denzic_ota_core::parse_status(bytes)?;
+        if s.state!=denzic_ota_core::STATE_RECEIVING || s.last_error!=0 ||
+            s.expected_size!=self.expected || s.bytes_written<self.durable ||
+            s.bytes_written>self.submitted ||
+            (s.bytes_written!=self.durable && !self.ends.contains(&s.bytes_written)) {
+            return Err("Invalid OTA durable queue credit receipt; no additional DATA admitted".into());
+        }
+        self.durable=s.bytes_written;
+        while self.ends.front().is_some_and(|end|*end<=self.durable) {self.ends.pop_front();}
+        Ok(())
+    }
+}
+
+#[cfg(test)]
+mod queue_credit_tests {
+    use super::*;
+    fn packet(offset:u32,n:usize)->Vec<u8> {let mut p=vec![0;n+4];p[..4].copy_from_slice(&offset.to_le_bytes());p}
+    fn receipt(offset:u32,total:u32)->Vec<u8> {
+        let mut b=vec![0;24];b[..4].copy_from_slice(b"DOV1");b[4]=1;b[5]=denzic_ota_core::STATE_RECEIVING;
+        b[8..12].copy_from_slice(&offset.to_le_bytes());b[12..16].copy_from_slice(&total.to_le_bytes());b
+    }
+    #[test]
+    fn immediate_local_completions_cannot_oversubscribe_real_device_slots() {
+        let mut c=DeviceQueueCredits::new(64*215,215,16).unwrap();
+        for i in 0..16 {c.admit(&packet(i*215,215)).unwrap();}
+        // WinRT may have completed every local operation already. There is
+        // intentionally no API that returns credits for that observation.
+        assert!(c.needs_receipt(&packet(16*215,215)).unwrap());assert!(c.admit(&packet(16*215,215)).is_err());
+        c.observe(&receipt(0,64*215)).unwrap();assert!(c.needs_receipt(&packet(16*215,215)).unwrap());
+        c.observe(&receipt(8*215,64*215)).unwrap();
+        for i in 16..24 {c.admit(&packet(i*215,215)).unwrap();}
+        assert!(c.needs_receipt(&packet(24*215,215)).unwrap());assert_eq!(c.ends.len(),16);
+    }
+    #[test]
+    fn partial_malformed_wrong_file_or_regressed_receipts_do_not_create_credits() {
+        let mut c=DeviceQueueCredits::new(2000,100,2).unwrap();c.admit(&packet(0,100)).unwrap();c.admit(&packet(100,100)).unwrap();
+        for b in [receipt(1,2000),receipt(300,2000),receipt(100,2001),vec![0;24],
+            {let mut b=receipt(100,2000);b[5]=denzic_ota_core::STATE_ERROR;b},
+            {let mut b=receipt(100,2000);b[6]=1;b}] {assert!(c.observe(&b).is_err());assert_eq!(c.ends.len(),2);}
+        c.observe(&receipt(100,2000)).unwrap();assert_eq!(c.ends.len(),1);
+        assert!(c.observe(&receipt(0,2000)).is_err());assert_eq!(c.ends.len(),1);
+        assert!(c.admit(&packet(100,100)).is_err()); // no replay over a queued packet
+        c.observe(&receipt(200,2000)).unwrap();assert!(c.ends.is_empty());
+    }
+    #[test]
+    fn whole_long_window_and_short_tail_never_exceed_queue_bound() {
+        for payload in [215u16,491] {for capacity in [1u16,8,16] {
+            let total=u32::from(payload)*64+17;let mut c=DeviceQueueCredits::new(total,payload,capacity).unwrap();
+            let mut offset=0;
+            while offset<total {
+                let n=(total-offset).min(u32::from(payload)) as usize;let p=packet(offset,n);
+                if c.needs_receipt(&p).unwrap() {c.observe(&receipt(c.submitted,total)).unwrap();}
+                c.admit(&p).unwrap();assert!(c.ends.len()<=usize::from(capacity));offset+=n as u32;
+            }
+            c.observe(&receipt(total,total)).unwrap();assert_eq!(c.durable,total);assert!(c.ends.is_empty());
+        }}
+        for (total,payload,cap) in [(0,215,16),(100,0,16),(100,506,16),(100,100,0),(100,100,17)] {
+            assert!(DeviceQueueCredits::new(total,payload,cap).is_err());
+        }
+    }
+}
