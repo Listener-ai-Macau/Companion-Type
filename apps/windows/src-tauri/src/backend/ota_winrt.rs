@@ -1404,6 +1404,10 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                         credits.observe(&bytes)?;
                         if let (Some(receiver),Some(generation))=(self.device_notifications.as_mut(),credits.generation()) {
                             receiver.bind(generation,status.expected_size)?;
+                            // A validated READ and asynchronous notices must
+                            // share one latest-prefix floor. Do not advance the
+                            // cursor here: a newer concurrent notice stays queued.
+                            receiver.mailbox.publish(Ok(bytes.clone()));
                         }
                     }
                 }

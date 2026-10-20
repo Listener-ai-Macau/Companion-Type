@@ -483,6 +483,7 @@ impl DurableStatusMailbox {
             }
             if let Some(old)=s.frame.as_ref().and_then(|b|denzic_ota_core::parse_status(b).ok()) {
                 if old.state==denzic_ota_core::STATE_RECEIVING && incoming.state==old.state &&
+                    old.last_error==0 && incoming.last_error==0 &&
                     incoming.bytes_written<old.bytes_written {return;} // keep newer prefix
             }
             s.sequence=s.sequence.saturating_add(1);s.frame=Some(frame);self.changed.notify_all();
@@ -505,7 +506,7 @@ impl DurableStatusMailbox {
 mod notification_credit_tests {
     use super::*;
     use std::time::{Instant,Duration};
-    fn notice(epoch:u32,offset:u32,total:u32)->Vec<u8>{
+    pub(super) fn notice(epoch:u32,offset:u32,total:u32)->Vec<u8>{
         let mut b=vec![0;44];b[..4].copy_from_slice(b"DOV1");b[4]=1;b[5]=denzic_ota_core::STATE_RECEIVING;
         b[8..12].copy_from_slice(&offset.to_le_bytes());b[12..16].copy_from_slice(&total.to_le_bytes());
         b[24..28].copy_from_slice(b"WOC4");b[28..30].copy_from_slice(&505u16.to_le_bytes());b[30..32].copy_from_slice(&509u16.to_le_bytes());
@@ -550,5 +551,34 @@ mod notification_credit_tests {
         let mut packet=vec![0;104];c.admit(&packet).unwrap();assert!(c.observe(&notice(4,100,1000)).is_err());
         c.observe(&notice(5,100,1000)).unwrap();c.abort();c.observe(&notice(5,100,1000)).unwrap();c.begin();c.observe(&notice(6,0,1000)).unwrap();
         packet[..4].copy_from_slice(&0u32.to_le_bytes());c.admit(&packet).unwrap();
+    }
+}
+
+#[cfg(test)]
+mod notice_read_interleaving_tests {
+    use super::*;
+    use super::notification_credit_tests::notice;
+    use std::time::Instant;
+    #[test]
+    fn fallback_read_advances_notification_floor_without_dropping_a_newer_notice(){
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(7,2000).unwrap();
+        let mut c=DeviceQueueCredits::new(2000,100,16).unwrap();c.begin();c.observe(&notice(7,0,2000)).unwrap();
+        for i in 0u32..16 {let mut b=vec![0;104];b[..4].copy_from_slice(&(i*100).to_le_bytes());c.admit(&b).unwrap();}
+        m.publish(Ok(notice(7,800,2000)));let b=m.next(&mut cursor,Instant::now()).unwrap().unwrap();c.observe(&b).unwrap();
+        // This is the adapter's validated UNCACHED fallback, then a late
+        // notification. Both observations share a monotonic mailbox floor.
+        let read=notice(7,1600,2000);c.observe(&read).unwrap();m.publish(Ok(read));m.publish(Ok(notice(7,900,2000)));
+        let b=m.next(&mut cursor,Instant::now()).unwrap().unwrap();assert_eq!(denzic_ota_core::parse_status(&b).unwrap().bytes_written,1600);c.observe(&b).unwrap();
+        assert!(m.next(&mut cursor,Instant::now()).unwrap().is_none());
+        // A notification can also be newer than a READ which was already in
+        // flight. Publishing that read cannot overwrite or consume the notice.
+        m.publish(Ok(notice(7,1800,2000)));m.publish(Ok(notice(7,1700,2000)));
+        let b=m.next(&mut cursor,Instant::now()).unwrap().unwrap();assert_eq!(denzic_ota_core::parse_status(&b).unwrap().bytes_written,1800);
+    }
+    #[test]
+    fn receiving_error_at_an_older_prefix_is_not_discarded_as_a_reordered_success(){
+        let m=DurableStatusMailbox::default();let mut cursor=m.bind(9,2000).unwrap();m.publish(Ok(notice(9,800,2000)));
+        let mut error=notice(9,100,2000);error[6]=3;m.publish(Ok(error));
+        let b=m.next(&mut cursor,Instant::now()).unwrap().unwrap();assert_eq!(denzic_ota_core::parse_status(&b).unwrap().last_error,3);
     }
 }
