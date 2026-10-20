@@ -622,17 +622,27 @@ fn open_ota_target_for_address(
         .map(format_ble_address)
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| device_id_label.to_string());
-    let services_op = device
-        .GetGattServicesForUuidWithCacheModeAsync(OTA_SERVICE_UUID, BluetoothCacheMode::Uncached)
-        .map_err(|e| format!("OTA GetGattServices failed: {e}"))?;
-    let services_result =
-        wait_async_operation_with_cancel(services_op, DISCOVERY_TIMEOUT, "OTA services", &cancel)?;
-    let status = services_result
-        .Status()
-        .map_err(|e| format!("OTA services status: {e}"))?;
-    if status != GattCommunicationStatus::Success {
-        return Err(format!("OTA services status={status:?}"));
-    }
+    let discovery_started=Instant::now();
+    let mut discovery_attempt=0u8;
+    let services_result=loop {
+        let remaining=DISCOVERY_TIMEOUT.saturating_sub(discovery_started.elapsed());
+        if remaining.is_zero() {return Err("OTA initial service discovery exceeded12seconds; no firmware sent".into());}
+        let services_op=device.GetGattServicesForUuidWithCacheModeAsync(OTA_SERVICE_UUID,BluetoothCacheMode::Uncached)
+            .map_err(|e|format!("OTA GetGattServices failed: {e}"))?;
+        let result=wait_async_operation_with_cancel(services_op,remaining,"OTA services",&cancel)?;
+        let status=result.Status().map_err(|e|format!("OTA services status: {e}"))?;
+        eprintln!("[companion-ota] initial_services attempt={} status={status:?} connection={:?} elapsed_ms={} same_device_session=1 package_writes=0 at_epoch_us={}",
+            discovery_attempt+1,device.ConnectionStatus().ok(),discovery_started.elapsed().as_millis(),chrono::Utc::now().timestamp_micros());
+        if status==GattCommunicationStatus::Success {break result;}
+        let remaining=DISCOVERY_TIMEOUT.saturating_sub(discovery_started.elapsed());
+        if !super::ota_flow::retry_initial_services(discovery_attempt,status.0,remaining.as_millis()) {
+            return Err(format!("OTA services status={status:?}; attempts={} no firmware sent",discovery_attempt+1));
+        }
+        // Keep this maintained owner, release only the failed read result.
+        // No second pairing, device close/reopen, BEGIN or adapter reset.
+        drop(result);discovery_attempt+=1;
+        std::thread::sleep(Duration::from_millis(500));
+    };
     let services = services_result
         .Services()
         .map_err(|e| format!("OTA services list: {e}"))?;

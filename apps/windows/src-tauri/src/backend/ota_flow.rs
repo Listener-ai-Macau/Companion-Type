@@ -63,6 +63,13 @@ impl SimpleTransportProfile {
     }
 }
 
+/// Before any manifest/BEGIN/DATA, one Unreachable discovery may be
+/// retried under the SAME maintained device/session and12second budget.
+/// Protocol/access errors, exhausted budgets and later attempts are terminal.
+pub(super) fn retry_initial_services(attempt:u8,status:i32,remaining_ms:u128)->bool {
+    attempt==0 && status==1 && remaining_ms>500
+}
+
 impl WbaFlow {
     pub fn check_component(status:&[u8],component:u8)->Result<(),String> {
         let s=denzic_ota_core::parse_status(status)?;
@@ -175,6 +182,18 @@ mod tests {
             assert_eq!(old.file_payload_cap(),240);
         }
         assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
+    }
+    #[test]
+    fn initial_services_retries_only_once_for_unreachable_inside_original_budget() {
+        assert!(retry_initial_services(0,1,501));
+        for remaining in [0,1,499,500] {assert!(!retry_initial_services(0,1,remaining));}
+        for attempt in [1,2,255] {assert!(!retry_initial_services(attempt,1,12000));}
+        for status in [-1,0,2,3,99] {assert!(!retry_initial_services(0,status,12000));}
+        // A first transient then another transient terminates; protected
+        // failures are never repaired by re-pairing or reset in this policy.
+        let outcomes=[1,1];let mut attempt=0;
+        for status in outcomes {if retry_initial_services(attempt,status,8000) {attempt+=1;} else {break;}}
+        assert_eq!(attempt,1);
     }
     fn status(magic: &[u8], window: u16, flags: u16) -> Vec<u8> {
         let mut s = vec![0u8;24]; s[..4].copy_from_slice(b"DOV1");s[4]=1;
