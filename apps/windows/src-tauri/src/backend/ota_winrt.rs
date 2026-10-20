@@ -57,6 +57,7 @@ const STATUS_POLL_INTERVAL: Duration = Duration::from_millis(8);
 const PROGRESS_TIMEOUT: Duration = Duration::from_secs(120);
 
 struct OpenOtaTarget {
+    _service_change: Option<ServiceChangeLease>,
     // Rust drops fields in declaration order. Retire the temporary preference
     // and session ownership before closing our service/device. Characteristics
     // may still have COM references; explicit Close retires this owner anyway.
@@ -70,6 +71,91 @@ struct OpenOtaTarget {
     data_b: Option<GattCharacteristic>,
     status: GattCharacteristic,
     data_write_option: GattWriteOption,
+}
+
+
+/// Keep the OS service-change event tied to the verified, maintained device.
+/// Never clear pairing/cache, fabricate an indication, or close a foreign owner.
+struct ServiceChangeLease {
+    device: BluetoothLEDevice,
+    token: Option<EventRegistrationToken>,
+    generation: std::sync::Arc<std::sync::atomic::AtomicUsize>,
+    service: Option<denzic_ble_windows::ScopedBleResource<GattDeviceService>>,
+}
+impl ServiceChangeLease {
+    fn register(device: &BluetoothLEDevice) -> Result<Self,String> {
+        let generation=std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0));
+        let changed=generation.clone();
+        let handler=TypedEventHandler::<BluetoothLEDevice,windows::core::IInspectable>::new(move|_,_|{
+            let generation=changed.fetch_add(1,std::sync::atomic::Ordering::SeqCst)+1;
+            eprintln!("[companion-ota] gatt_services_changed generation={generation}");
+            Ok(())
+        });
+        let token=device.GattServicesChanged(&handler).map_err(|e|format!("OTA service-change event: {e}"))?;
+        Ok(Self{device:device.clone(),token:Some(token),generation,service:None})
+    }
+    fn generation(&self)->usize {self.generation.load(std::sync::atomic::Ordering::SeqCst)}
+    fn ensure_remote_subscription(&mut self,deadline:Instant)->Result<(),String> {
+        let cancel=BleCancel::NONE;
+        let remaining=||deadline.checked_duration_since(Instant::now())
+            .filter(|v|!v.is_zero()).ok_or("OTA service consistency exceeded12seconds; no firmware sent".to_string());
+        let result=wait_async_operation_with_cancel(self.device.GetGattServicesForUuidWithCacheModeAsync(
+            GUID::from_u128(0x0000180100001000800000805f9b34fb),BluetoothCacheMode::Uncached)
+            .map_err(|e|format!("OTA standard GATT service: {e}"))?,remaining()?,"OTA standard GATT service",&cancel)?;
+        if result.Status().map_err(|e|e.to_string())?!=GattCommunicationStatus::Success {
+            return Err("OTA standard GATT service unreachable; no firmware sent".into());
+        }
+        let values=result.Services().map_err(|e|e.to_string())?;
+        let mut owned=Vec::new();
+        for i in 0..values.Size().map_err(|e|e.to_string())? {
+            owned.push(denzic_ble_windows::ScopedBleResource::new(values.GetAt(i).map_err(|e|e.to_string())?));
+        }
+        if owned.len()!=1{return Err("OTA standard GATT service is not unique; no firmware sent".into());}
+        self.service=owned.pop();
+        let service=self.service.as_ref().ok_or("Missing standard GATT owner")?;
+        let result=wait_async_operation_with_cancel(service.GetCharacteristicsForUuidWithCacheModeAsync(
+            GUID::from_u128(0x00002a0500001000800000805f9b34fb),BluetoothCacheMode::Uncached)
+            .map_err(|e|format!("OTA Service Changed characteristic: {e}"))?,remaining()?,"OTA Service Changed characteristic",&cancel)?;
+        if result.Status().map_err(|e|e.to_string())?!=GattCommunicationStatus::Success {
+            return Err("OTA Service Changed characteristic unavailable; no firmware sent".into());
+        }
+        let chars=result.Characteristics().map_err(|e|e.to_string())?;
+        if chars.Size().map_err(|e|e.to_string())?!=1{return Err("OTA Service Changed characteristic is not unique".into());}
+        let characteristic=chars.GetAt(0).map_err(|e|e.to_string())?;
+        let result=wait_async_operation_with_cancel(characteristic.GetDescriptorsForUuidWithCacheModeAsync(
+            GUID::from_u128(0x0000290200001000800000805f9b34fb),BluetoothCacheMode::Uncached)
+            .map_err(|e|format!("OTA remote Service Changed descriptor: {e}"))?,remaining()?,"OTA remote Service Changed descriptor",&cancel)?;
+        if result.Status().map_err(|e|e.to_string())?!=GattCommunicationStatus::Success {
+            return Err("OTA remote Service Changed descriptor unavailable".into());
+        }
+        let descriptors=result.Descriptors().map_err(|e|e.to_string())?;
+        if descriptors.Size().map_err(|e|e.to_string())?!=1{return Err("OTA remote Service Changed descriptor is not unique".into());}
+        let descriptor=descriptors.GetAt(0).map_err(|e|e.to_string())?;
+        let remote=||->Result<Vec<u8>,String>{
+            let read=wait_async_operation_with_cancel(descriptor.ReadValueWithCacheModeAsync(BluetoothCacheMode::Uncached)
+                .map_err(|e|format!("OTA remote CCCD read: {e}"))?,remaining()?,"OTA actual remote Service Changed subscription",&cancel)?;
+            if read.Status().map_err(|e|e.to_string())?!=GattCommunicationStatus::Success{return Err("OTA remote CCCD read failed".into());}
+            denzic_ble_windows::buffer_to_vec(&read.Value().map_err(|e|e.to_string())?).map_err(|e|e.to_string())
+        };
+        let value=remote()?;
+        eprintln!("[companion-ota] remote_service_changed_cccd handle={} value={value:?} uncached=1",
+            descriptor.AttributeHandle().map_err(|e|e.to_string())?);
+        if value==[2u8,0u8]{return Ok(());}
+        if value!=[0u8,0u8]{return Err("Unexpected remote Service Changed subscription; no firmware sent".into());}
+        // Only the normal public subscription API, once, when actually off.
+        // Its success alone is insufficient: require a real uncached readback.
+        let status=wait_async_operation_with_cancel(characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(
+            GattClientCharacteristicConfigurationDescriptorValue::Indicate)
+            .map_err(|e|format!("OTA Service Changed subscription: {e}"))?,remaining()?,"OTA restore Service Changed subscription",&cancel)?;
+        if status!=GattCommunicationStatus::Success{return Err(format!("OTA Service Changed subscription status={status:?}"));}
+        let verified=remote()?;
+        eprintln!("[companion-ota] remote_service_changed_subscription_verified={} value={verified:?}",verified==[2u8,0u8]);
+        if verified!=[2u8,0u8]{return Err("Windows accepted subscription but actual remote CCCD is still off; no firmware sent".into());}
+        Ok(())
+    }
+}
+impl Drop for ServiceChangeLease {
+    fn drop(&mut self){if let Some(token)=self.token.take(){let _=self.device.RemoveGattServicesChanged(token);}}
 }
 
 
@@ -702,6 +788,7 @@ fn open_ota_target_for_address(
         || device.BluetoothAddressType().map_err(|e|e.to_string())?!=address_type {
         return Err("OTA reopened device identity changed; no firmware sent".into());
     }
+    let mut service_change=ServiceChangeLease::register(&device)?;
     let id=device.BluetoothDeviceId().map_err(|e|format!("OTA session identity: {e}"))?;
     let operation=GattSession::FromDeviceIdAsync(&id).map_err(|e|format!("OTA session open: {e}"))?;
     let session=denzic_ble_windows::ScopedBleResource::new(
@@ -715,17 +802,36 @@ fn open_ota_target_for_address(
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| device_id_label.to_string());
     let discovery_started=Instant::now();
+    service_change.ensure_remote_subscription(discovery_started+DISCOVERY_TIMEOUT)?;
+    let mut refreshed_generation=0usize;
     let mut discovery_attempt=0u8;
     let services_result=loop {
         let remaining=DISCOVERY_TIMEOUT.saturating_sub(discovery_started.elapsed());
         if remaining.is_zero() {return Err("OTA initial service discovery exceeded12seconds; no firmware sent".into());}
-        let services_op=device.GetGattServicesWithCacheModeAsync(BluetoothCacheMode::Uncached)
-            .map_err(|e|format!("OTA GetGattServices failed: {e}"))?;
+        let observed_generation=service_change.generation();
+        // Microsoft's Cached refresh is used only after a real change event.
+        // Without one, query just our exact OTA UUID uncached on this owner.
+        let services_op=if observed_generation>0 {
+            device.GetGattServicesWithCacheModeAsync(BluetoothCacheMode::Cached)
+        } else {
+            device.GetGattServicesForUuidWithCacheModeAsync(OTA_SERVICE_UUID,BluetoothCacheMode::Uncached)
+        }.map_err(|e|format!("OTA GetGattServices failed: {e}"))?;
         let result=wait_async_operation_with_cancel(services_op,remaining,"OTA services",&cancel)?;
         let status=result.Status().map_err(|e|format!("OTA services status: {e}"))?;
         eprintln!("[companion-ota] initial_services attempt={} status={status:?} connection={:?} elapsed_ms={} same_device_session=1 package_writes=0 at_epoch_us={}",
             discovery_attempt+1,device.ConnectionStatus().ok(),discovery_started.elapsed().as_millis(),chrono::Utc::now().timestamp_micros());
-        if status==GattCommunicationStatus::Success {break result;}
+        let after=service_change.generation();
+        if after!=observed_generation {
+            // One real invalidation can replace this result within the same
+            // discovery deadline. Repeated changes fail rather than loop.
+            if refreshed_generation!=0 {return Err("OTA services changed repeatedly; no firmware sent".into());}
+            refreshed_generation=after;
+            if let Ok(values)=result.Services() {
+                if let Ok(size)=values.Size(){for i in 0..size{if let Ok(service)=values.GetAt(i){let _=denzic_ble_windows::ScopedBleResource::new(service);}}}
+            }
+            drop(result);continue;
+        }
+        if status==GattCommunicationStatus::Success {break (result,after);}
         let remaining=DISCOVERY_TIMEOUT.saturating_sub(discovery_started.elapsed());
         if !super::ota_flow::retry_initial_services(discovery_attempt,status.0,remaining.as_millis()) {
             return Err(format!("OTA services status={status:?}; attempts={} no firmware sent",discovery_attempt+1));
@@ -735,12 +841,12 @@ fn open_ota_target_for_address(
         drop(result);discovery_attempt+=1;
         std::thread::sleep(Duration::from_millis(500));
     };
+    let (services_result,qualified_generation)=services_result;
     let services = services_result
         .Services()
         .map_err(|e| format!("OTA services list: {e}"))?;
-    // Microsoft recommends a fresh complete service discovery after a GATT
-    // table change. Keep only the exact OTA UUID on this verified device;
-    // close every other locally obtained service, also on early errors.
+    // Only an actual GattServicesChanged event uses the OS refreshed table.
+    // Keep the unique exact OTA UUID; close other locally owned services.
     let mut discovered=Vec::new();
     for i in 0..services.Size().map_err(|e|format!("OTA service count: {e}"))? {
         discovered.push(denzic_ble_windows::ScopedBleResource::new(
@@ -754,15 +860,20 @@ fn open_ota_target_for_address(
     }
     let index=selected.ok_or("OTA service not present in the fresh device service table")?;
     let service=discovered.swap_remove(index);
-    eprintln!("[companion-ota] full_service_table count={} selected_handle={} cache=uncached exact_uuid=1 elapsed_ms={}",
-        discovered.len()+1,service.AttributeHandle().map_err(|e|e.to_string())?,discovery_started.elapsed().as_millis());
+    eprintln!("[companion-ota] consistent_service_table count={} selected_handle={} changed_generation={} exact_uuid=1 elapsed_ms={}",
+        discovered.len()+1,service.AttributeHandle().map_err(|e|e.to_string())?,qualified_generation,discovery_started.elapsed().as_millis());
     drop(discovered);
     // Drive the existing uncached GATT request before waiting for Active.
     // Keep this exact maintained owner; no reopen, re-pair or adapter reset.
     // No update characteristic or package write is reached before this check.
     wait_gatt_session_active(&session,
         DISCOVERY_TIMEOUT.saturating_sub(discovery_started.elapsed()).min(GATT_READY_TIMEOUT))?;
-    open_chars_from_service(service, Some(device), &label, Some(session))
+    let mut target=open_chars_from_service(service, Some(device), &label, Some(session))?;
+    if service_change.generation()!=qualified_generation {
+        return Err("OTA services changed while opening characteristics; no firmware sent".into());
+    }
+    target._service_change=Some(service_change);
+    Ok(target)
 }
 
 fn open_ota_target_for_service_id(
@@ -840,6 +951,7 @@ fn open_chars_from_service(
         return Err("OTA data characteristic is not writable".to_string());
     };
     Ok(OpenOtaTarget {
+        _service_change: None,
         device_id: resolved_id,
         control,
         data,
