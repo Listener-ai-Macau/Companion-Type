@@ -464,6 +464,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     payload_metrics.exclude_package_header(176);
     let device_credit_reads=transport.device_credit_reads;
     let device_credit_wait=transport.device_credit_wait;
+    // Preserve the completed payload measurement even if post-install discovery fails.
+    eprintln!("firmware_ota_payload_metrics {}",serde_json::to_string(&payload_metrics).map_err(|e|e.to_string())?);
     let device_notices_used=transport.device_notices_used;
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();let mut connection=Some(target);
@@ -473,7 +475,16 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     loop {
         if Instant::now()>=deadline {return Err(format!("完整包已传入，但尚未看到新程序和资源正常启动；没有判升级成功。最后状态：{last_error}"));}
         if connection.is_none() {
-            match open_ota_target(Some(&device_id)) {Ok(t)=>connection=Some(t),Err(e)=>{last_error=e;std::thread::sleep(Duration::from_millis(500));continue;}}
+            match open_ota_target(Some(&device_id)) {
+                Ok(t)=>connection=Some(t),
+                Err(e)=>{
+                    if e.to_ascii_lowercase().contains("0x80070016") {
+                        return Err(format!("完整包已传入；升级后服务发现返回Windows0x80070016，已停止重复请求。新程序与资源的无线确认未通过：{e}"));
+                    }
+                    if e!=last_error {eprintln!("[companion-ota] post_install_discovery_pending error={e}");}
+                    last_error=e;std::thread::sleep(Duration::from_millis(500));continue;
+                }
+            }
         }
         let t=connection.as_ref().unwrap();
         let result=open_read_char(&t._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"升级后实际版本")
@@ -481,7 +492,14 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         match result {
             Ok(r) if package.installed(&r)=>break,
             Ok(_)=>std::thread::sleep(Duration::from_millis(200)),
-            Err(e)=>{last_error=e;drop(connection.take());std::thread::sleep(Duration::from_millis(500));},
+            Err(e)=>{
+                drop(connection.take());
+                if e.to_ascii_lowercase().contains("0x80070016") {
+                    return Err(format!("完整包已传入；升级后版本读取返回Windows0x80070016，已停止重复请求。无线版本确认未通过：{e}"));
+                }
+                if e!=last_error {eprintln!("[companion-ota] post_install_version_pending error={e}");}
+                last_error=e;std::thread::sleep(Duration::from_millis(500));
+            },
         }
     }
     report.timings.total=started.elapsed();
