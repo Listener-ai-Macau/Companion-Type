@@ -1180,7 +1180,10 @@ export function CompanionDashboard({
           </section>
           </div>
           <section className="ct-recording-text" aria-label="录音文字">
-            <h3>文字</h3>
+            <div className="ct-recording-text-heading"><h3>文字</h3>
+              {finalTranscript ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
+                onClick={() => void exportMeeting('txt')}><Download size={15} />保存文字</button> : null}
+            </div>
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“更多”中供核对。</p> : null}
@@ -1217,8 +1220,7 @@ export function CompanionDashboard({
           </nav>
           {detailView === 'transcript' ? <div className="ct-document-actions">
             <span>保存当前转写；完整记录包含原始识别结果</span>
-            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !onExportMeeting || transcriptReviewUnsaved}
-              onClick={() => void exportMeeting('txt')}><Download size={15} />保存文字</button>
+
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !selectedSession.utterances?.length || !onExportMeeting || transcriptReviewUnsaved}
               onClick={() => void exportMeeting('srt')}>保存字幕</button>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !onExportMeeting || transcriptReviewUnsaved}

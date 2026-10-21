@@ -1513,3 +1513,8 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-recovery-history > p { font-size: 12px; color: #6e7b70; }
 .ct-recovery-current > strong { display: block; margin: 4px 0; font-size: 14px; color: #405c47; }
 .ct-return-recording { margin: 0 0 16px; }
+
+/* Completed text and taking it away belong together. */
+.ct-recording-text-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.ct-recording-text-heading h3 { margin: 0; }
+.ct-recording-text-heading .ct-action { flex-shrink: 0; }
