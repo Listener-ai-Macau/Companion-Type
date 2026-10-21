@@ -45,6 +45,14 @@ impl SimpleTransportProfile {
             Self::Windowed466PeerHandoff
         } else {Self::Acknowledged}
     }
+    /// Automatic WBA-only scheduling admission. Explicit diagnostic profiles
+    /// retain their existing checkpoint cadence for controlled comparisons.
+    /// No larger RAM ring, wire window, payload or radio parameter is inferred.
+    pub fn continuous_durable_queue(self,flow:WbaFlow,mtu:u16)->bool {
+        self==Self::Automatic && flow.pipelined && flow.notify_credits &&
+        flow.window_notify_guaranteed && flow.queue_chunks==16 &&
+        flow.window_chunks==64 && flow.payload_bytes>=466 && mtu>=473
+    }
     /// An explicit long-value experiment must have the same packet geometry
     /// on both ends. Refuse before BEGIN instead of silently testing a fallback.
     pub fn file_payload(self,flow:WbaFlow,mtu:u16)->Result<u16,String> {
@@ -425,6 +433,10 @@ impl DeviceQueueCredits {
     pub fn abort(&mut self){self.begin();self.begun=false;}
     pub fn generation(&self)->Option<u32>{self.generation}
     pub fn submitted_prefix(&self)->u32{self.submitted}
+    pub fn verified_durable_prefix(&self)->Result<u32,String>{
+        if !self.begun || self.generation.is_none(){return Err("OTA durable prefix has no current validated BEGIN generation".into());}
+        Ok(self.durable)
+    }
     fn packet_end(&self,packet:&[u8])->Result<u32,String> {
         if !self.begun {return Err("OTA queue owner has no current BEGIN".into());}
         if packet.len()<5 || packet.len()>usize::from(self.payload)+4 {

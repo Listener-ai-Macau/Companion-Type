@@ -561,6 +561,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     package.admit(&current)?;drop(identity);
     let mtu=wait_ota_mtu(&target,false)?;
     let transport_profile=requested_profile.resolve(flow,mtu);
+    let continuous_durable_queue=requested_profile.continuous_durable_queue(flow,mtu);
     let pipelined=transport_profile.pipelined(flow)?;
     eprintln!("[companion-ota] transport_selection requested={} selected={} protected_capacity=1 actual_mtu={mtu} automatic={} speed_not_guaranteed=1",
         requested_profile.name(),transport_profile.name(),u8::from(requested_profile==super::ota_flow::SimpleTransportProfile::Automatic));
@@ -632,7 +633,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
     let mut progress_bucket=usize::MAX;
-    let mut report=denzic_ota_core::transfer(&mut transport,&package.file,options,|accepted,total|{
+    eprintln!("[companion-ota] data_scheduling={} physical_queue={} wire_window={} local_completion_credit=0",
+        if continuous_durable_queue {"continuous_durable_queue"} else {"checkpointed"},flow.queue_chunks,flow.window_chunks);
+    let mut progress=|accepted,total|{
         window.observe(accepted,total,started.elapsed());
         if transport_profile.handoff_ready(accepted,total,first_window) {
             if let Some(mut request)=handoff_preference.take() {
@@ -649,7 +652,11 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
             eprintln!("[companion-ota] payload_progress accepted={accepted} total={total}");
             progress_bucket=bucket;
         }
-    }).map_err(|e|format!("完整升级包传输未完成；断开后请从头重新下载：{e}"))?;
+    };
+    let mut report=if continuous_durable_queue {
+        super::ota_credit_stream::transfer(&mut transport,&package.file,options,&mut progress)
+    } else {denzic_ota_core::transfer(&mut transport,&package.file,options,&mut progress)}
+        .map_err(|e|format!("完整升级包传输未完成；断开后请从头重新下载：{e}"))?;
     if report.resumed_bytes!=0 {return Err("单文件升级意外返回了非零起点，不能当作本次完整传输".into());}
     let mut payload_metrics=window.finish(&report,true);
     payload_metrics.exclude_package_header(176);
@@ -741,6 +748,11 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "connectionPreferenceHandoffOffset":handoff_offset,
         "connectionPreferenceHandoffCloseSucceeded":handoff_release.as_ref().map(|r|r.is_ok())}));
     if let Some(bundle)=system_bundle.as_mut() {
+        bundle["dataScheduling"]=serde_json::Value::from(if continuous_durable_queue {"continuous_durable_queue"} else {"checkpointed"});
+        if continuous_durable_queue {
+            bundle["windowBarrier"]=serde_json::Value::from("final_whole_file_receipt_after_bounded_durable_credits");
+            bundle["windowGuaranteeWaitScope"]=serde_json::Value::from("final_whole_file_receipt; maximum500ms_within_original_status_budget; overlaps_payload_wall");
+        }
         bundle["transportSelection"]=serde_json::json!({
             "requested":requested_profile.name(),"selected":transport_profile.name(),
             "automatic":requested_profile==super::ota_flow::SimpleTransportProfile::Automatic});
@@ -1522,6 +1534,11 @@ impl CompanionOtaWinrtTransport<'_> {
     }
 }
 
+impl super::ota_credit_stream::DurableQueueTransport for CompanionOtaWinrtTransport<'_> {
+    fn verified_durable_prefix(&self)->Result<u32,String>{
+        self.device_queue_credits.as_ref().ok_or("Missing bounded durable queue owner")?.verified_durable_prefix()
+    }
+}
 impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
     fn write_control(
         &mut self,

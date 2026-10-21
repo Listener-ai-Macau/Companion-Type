@@ -57,6 +57,7 @@ pub(crate) mod recording_transfer;
 pub(crate) mod recording_sync;
 pub(crate) mod ota_metrics;
 mod ota_flow;
+mod ota_credit_stream;
 #[cfg(windows)]
 mod ota_pending;
 mod simple_ota_restart;
