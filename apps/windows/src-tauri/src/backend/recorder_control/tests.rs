@@ -369,7 +369,7 @@ fn original_row(j:&Journal)->crate::companion_v1::CompanionV1HostSession {
     use crate::companion_v1::*;
     let snapshot=fixture_snapshot();
     let request=CompanionV1ControlRequest{action:CompanionV1ControlAction::MeetingStart,
-        ble_name:None,session_id:Some(HOST.into()),prompt_id:None,title:Some("保留原会议标题".into()),
+        context_note_revision: None, ble_name:None,session_id:Some(HOST.into()),prompt_id:None,title:Some("保留原会议标题".into()),
         transcript_text:None,meeting_mode:Some("offlineStore".into()),audio_path:None,
         audio_bytes:Some(0),device_id:Some(DEVICE.into()),duration_ms:Some(0)};
     let mut row=create_host_session(&snapshot,&request,"");row.source="boardDevice".into();

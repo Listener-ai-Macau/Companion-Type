@@ -185,7 +185,7 @@ impl Receiver {
                 let snapshot = crate::companion_v1::fixture_snapshot();
                 let request = CompanionV1ControlRequest {
                     action: CompanionV1ControlAction::DeviceSyncRecordings,
-                    ble_name: None,
+                    context_note_revision: None, ble_name: None,
                     session_id: Some(self.stem.clone()),
                     prompt_id: None,
                     title: Some("设备分段录音".into()),
@@ -367,7 +367,7 @@ mod placeholder_tests {
     fn only_the_unstored_verified_capture_reference_can_be_bound_to_real_segments() {
         let snapshot = crate::companion_v1::fixture_snapshot();
         let request = CompanionV1ControlRequest { action: CompanionV1ControlAction::DeviceSyncRecordings,
-            ble_name: None, session_id: Some("owned-capture".into()), prompt_id: None,
+            context_note_revision: None, ble_name: None, session_id: Some("owned-capture".into()), prompt_id: None,
             title: None, transcript_text: None, meeting_mode: Some("offlineStore".into()),
             audio_path: Some("host://companion-type/recordings/owned-capture.wav".into()),
             audio_bytes: Some(0), device_id: Some("C8:92:FF:DD:3B:CA".into()), duration_ms: Some(0) };

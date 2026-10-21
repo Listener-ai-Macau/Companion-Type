@@ -42,7 +42,7 @@ pub(crate) fn restart_recovery_request(snapshot:&CompanionV1Snapshot,device:&str
         || journal.sealed_catalogue_end.is_some()
         || snapshot.device.mcu_uid.as_deref().is_some_and(|uid|!uid.eq_ignore_ascii_case(&key.public_key().device_uid)) {return None;}
     Some(CompanionV1ControlRequest {action:Action::MeetingRecoverControl,session_id:Some(row.id.clone()),
-        device_id:Some(device.into()),ble_name:None,prompt_id:Some("__companion_original_auto_reconnect__".into()),title:None,transcript_text:None,
+        device_id:Some(device.into()),context_note_revision: None, ble_name:None,prompt_id:Some("__companion_original_auto_reconnect__".into()),title:None,transcript_text:None,
         meeting_mode:None,audio_path:None,audio_bytes:None,duration_ms:None})
 }
 

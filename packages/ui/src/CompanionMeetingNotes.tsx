@@ -7,7 +7,7 @@ type Edit = { text:string; anchor:string; originalText:string; originalAnchor:st
 type Draft = { text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,onUnsavedChange,onBusyChange,compact=false}: {
+export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,exportFeedback,onUnsavedChange,onBusyChange,compact=false}: {
   compact?:boolean;
   session:CompanionV1HostSession;
   blocked:boolean;
@@ -16,6 +16,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   onSave?:(request:CompanionMeetingNoteRequest)=>Promise<CompanionV1Snapshot>;
   onSeek:(sessionId:string,bookmarkId:string,positionMs:number)=>Promise<void>;
   onExport?:(format:'txt'|'json')=>Promise<void>;
+  exportFeedback?:{message:string;kind?:'saved'|'cancelled'|'pending'|'error'} | null;
   onUnsavedChange?:(dirty:boolean)=>void;
   onBusyChange?:(busy:boolean)=>void;
 }) {
@@ -125,6 +126,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
           onClick={()=>void onExport('json')}>保存完整数据（JSON）</button>
       </details>
     </div>:null}
+    {exportFeedback?<p className="ct-export-result ct-note-export-feedback" role={exportFeedback.kind==='error'?'alert':'status'}>{exportFeedback.message}</p>:null}
     {!onSave?<small>请在 Companion Type 桌面版保存备注。</small>:null}
   </section>;
 }

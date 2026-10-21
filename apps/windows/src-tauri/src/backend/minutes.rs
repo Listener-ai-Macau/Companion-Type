@@ -34,22 +34,44 @@ impl CompanionMinutesManager {
         minutes
     }
 
+    // Called only after the explicit revision-bound request passes preflight.
+    // Original ASR/review remains untouched; only this provider input carries notes.
+    pub fn generate_with_context(&self, session: &CompanionV1HostSession, generated_at: &str) -> CompanionV1MeetingMinutes {
+        let mut input = super::transcript_review::minutes_input(session);
+        input.meeting_notes = session.meeting_notes.clone();
+        let mut result = self.generate_inner(&input, generated_at);
+        result.source_review_revision = super::transcript_review::active_revision(session);
+        result.source_note_context = Some(super::minutes_context::source(session));
+        result.markdown = format!("{}\n\n{}", super::minutes_context::notice(result.source_note_context.as_ref().unwrap()), result.markdown);
+        result
+    }
+
     fn generate_inner(&self, session: &CompanionV1HostSession, generated_at: &str) -> CompanionV1MeetingMinutes {
         if let Err(reason) = long_meeting::validate_input(session) {
-            return CompanionV1MeetingMinutes { processing: None, source_review_revision: None,
+            return CompanionV1MeetingMinutes { processing: None, source_note_context: None, source_review_revision: None,
                 generated_at: generated_at.into(), source: "rules_l0".into(), quality: "draft".into(),
                 summary: vec![], decisions: vec![], action_items: vec![], questions: vec![], keywords: vec![],
                 markdown: format!("> 纪要尚未生成；完整转写仍保存在本机。\n\n{reason}\n"), llm_note: Some(reason) };
         }
-        let l0 = rules_l0_minutes(session, generated_at);
+        let mut l0 = rules_l0_minutes(session, generated_at);
+        if !session.meeting_notes.is_empty() {
+            // Keep source evidence without treating a fallback as an integrated
+            // plan. Supplementary conditions can supersede the original list.
+            l0.action_items.clear();
+            l0.markdown = render_minutes_markdown(session,&l0);
+        }
         // 1. Explicit external command override (advanced users / CI scripts).
-        if let Some(result) = external_minutes_command(session, &l0) {
+        if let Some(result) = session.meeting_notes.is_empty().then(||external_minutes_command(session, &l0)).flatten() {
             return finalize_minutes(result, l0, session);
         }
         // 2. Native DeepSeek when an API key is configured (default product
         //    path; no python / relative-path dependency, survives packaging).
         if let Some(result) = deepseek_native_minutes(session, &l0) {
-            return finalize_minutes(result, l0, session);
+            let evidence = rules_l0_minutes(session,generated_at);
+            return match result {
+                Ok(minutes)=>finalize_minutes(Ok(minutes),evidence,session),
+                Err(reason)=>{l0.llm_note=Some(reason);l0},
+            };
         }
         // 3. L0 rule draft fallback (no key, no command).
         l0
@@ -67,7 +89,9 @@ pub fn rules_l0_minutes(
     generated_at: &str,
 ) -> CompanionV1MeetingMinutes {
     let segments = split_segments(&session.transcript_text);
-    let summary = select_source_fact_anchors(&segments);
+    let mut summary = select_source_fact_anchors(&segments);
+    // Notes are not ASR facts. Keep explicit source labels even in a local draft.
+    summary.extend(session.meeting_notes.iter().map(|note| format!("用户补充：{}",note.text)));
     let decisions = segments
         .iter()
         .filter(|segment| has_decision_marker(segment))
@@ -92,7 +116,7 @@ pub fn rules_l0_minutes(
 
     let mut minutes = CompanionV1MeetingMinutes {
         processing: None,
-        source_review_revision: None,
+        source_note_context: None, source_review_revision: None,
         generated_at: generated_at.to_string(),
         source: "rules_l0".to_string(),
         quality: "draft".to_string(),
@@ -135,8 +159,8 @@ pub(super) fn finalize_minutes(
                 upgraded.quality = "final".to_string();
             }
             let actions_changed = enforce_source_backed_action_items(&mut upgraded, &l0);
-            let assigned_added = merge_explicit_source_assignments(&mut upgraded, &l0);
-            let memo_actions_restored = short_memo::restore_literal_actions(&mut upgraded, session);
+            let assigned_added = session.meeting_notes.is_empty() && merge_explicit_source_assignments(&mut upgraded, &l0);
+            let memo_actions_restored = session.meeting_notes.is_empty() && short_memo::restore_literal_actions(&mut upgraded, session);
             let fallback_count = merge_missing_source_facts(&mut upgraded, &l0.summary);
             if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored {
                 // The model may return a polished markdown body that omits facts
@@ -215,6 +239,9 @@ pub(super) fn run_deepseek_request(
     long_meeting::validate_input(session)?;
     let user_payload = minutes_user_payload(session, l0);
     if DEEPSEEK_SYSTEM_PROMPT.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES {
+        if !session.meeting_notes.is_empty() {
+            return Err("本次补充与转写超出单次整理范围；原话和补充已保留，未截断或分段冒充完整整理。".into());
+        }
         return long_meeting::run(endpoint, model, api_key, session, &l0.generated_at, client);
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
@@ -228,12 +255,16 @@ fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1Meetin
         .map(|fact| format!("- {fact}"))
         .collect::<Vec<_>>()
         .join("\n");
-    format!(
+    let original = format!(
         "会议标题：{title}\n\n下列转写可能含 ASR 噪声，请在遵守防编造规则下整理纪要。\n确定性提取层保留了以下来源事实锚点；summary 和 markdown 必须逐项覆盖其含义，不得静默遗漏，也不得把锚点扩写成转写未支持的事实：\n{anchors}\n\n转写：\n{transcript}",
         title = session.title,
         anchors = source_fact_anchors,
         transcript = session.transcript_text,
-    )
+    );
+    if session.meeting_notes.is_empty() { return original; }
+    let notes = session.meeting_notes.iter().enumerate().map(|(i,n)|
+        format!("用户补充{}（用户后补，不是录音识别）：\n{}",i+1,n.text)).collect::<Vec<_>>().join("\n\n");
+    format!("{original}\n\n用户明确选择仅在本次整理中参考以下补充；它们不是原始转写，不能写成录音中已经说过的事实。请保留来源区别，不把假设、疑问或条件升级为确定任务。\n{notes}")
 }
 
 fn run_deepseek_prompt(endpoint: &str, model: &str, api_key: &str,
@@ -449,7 +480,7 @@ fn parse_external_minutes_stdout(
                 .unwrap_or_else(|| l0.action_items.clone());
             let mut minutes = CompanionV1MeetingMinutes {
                 processing: None,
-                source_review_revision: None,
+                source_note_context: None, source_review_revision: None,
                 generated_at: l0.generated_at.clone(),
                 source: value
                     .get("source")
@@ -485,7 +516,7 @@ fn parse_external_minutes_stdout(
     // Plain markdown output from command.
     Ok(CompanionV1MeetingMinutes {
         processing: None,
-        source_review_revision: None,
+        source_note_context: None, source_review_revision: None,
         generated_at: l0.generated_at.clone(),
         source: "llm_command".to_string(),
         quality: "final".to_string(),
@@ -1073,7 +1104,7 @@ mod tests {
         let l0 = rules_l0_minutes(&session, "now");
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: "llm_deepseek".into(),
             quality: "final".into(),
@@ -1109,7 +1140,7 @@ mod tests {
         assert!(l0.action_items.is_empty());
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: "llm_deepseek".into(),
             quality: "final".into(),
@@ -1167,7 +1198,7 @@ mod tests {
         assert_eq!(l0.action_items.len(), 1);
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: "llm_deepseek".into(),
             quality: "final".into(),
@@ -1467,7 +1498,7 @@ mod tests {
         let l0 = rules_l0_minutes(&session, "now");
         let upgraded = CompanionV1MeetingMinutes {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             generated_at: l0.generated_at.clone(),
             source: String::new(),
             quality: String::new(),

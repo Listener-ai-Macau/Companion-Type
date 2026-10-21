@@ -1706,7 +1706,7 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
         if device_id.is_none() {
             if let Ok(scan) = coordinator.apply_control(companion_v1::CompanionV1ControlRequest {
                 action: companion_v1::CompanionV1ControlAction::DeviceScan,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: None,
                 title: None,
@@ -1731,7 +1731,7 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
         }
         let snap = coordinator.apply_control(companion_v1::CompanionV1ControlRequest {
             action: companion_v1::CompanionV1ControlAction::DeviceSyncRecordings,
-            ble_name: None,
+            context_note_revision: None, ble_name: None,
             session_id: None,
             prompt_id: None,
             title: None,
@@ -1804,7 +1804,7 @@ fn control_request(
 ) -> companion_v1::CompanionV1ControlRequest {
     companion_v1::CompanionV1ControlRequest {
         action,
-        ble_name: None,
+        context_note_revision: None, ble_name: None,
         session_id,
         prompt_id: None,
         title: None,
@@ -2489,7 +2489,7 @@ mod tests {
         let mut snapshot = companion_v1::fixture_snapshot();
         let request = companion_v1::CompanionV1ControlRequest {
             action: companion_v1::CompanionV1ControlAction::DeviceSyncRecordings,
-            ble_name: None,
+            context_note_revision: None, ble_name: None,
             session_id: Some(id.to_string()),
             prompt_id: None,
             title: Some(id.to_string()),

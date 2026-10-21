@@ -582,7 +582,7 @@ pub(crate) fn start_board_online_live_owned(coordinator:Arc<CompanionCoordinator
     }
     let prepared = coordinator.apply_control(CompanionV1ControlRequest {
         action: CompanionV1ControlAction::MeetingStart,
-        ble_name: None,
+        context_note_revision: None, ble_name: None,
         session_id: Some(session_id.clone()),
         prompt_id: None,
         title: Some(title),
@@ -955,7 +955,7 @@ mod board_online_live_tests {
         let mut recording_session = idle;
         let request = CompanionV1ControlRequest {
             action: CompanionV1ControlAction::DeviceSyncRecordings,
-            ble_name: None,
+            context_note_revision: None, ble_name: None,
             session_id: Some("existing-row".to_string()),
             prompt_id: None,
             title: None,

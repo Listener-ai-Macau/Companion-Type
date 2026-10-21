@@ -50,7 +50,7 @@ fn request(action:CompanionV1ControlAction,session:&str,device:Option<String>,ti
     CompanionV1ControlRequest {action,session_id:Some(session.into()),device_id:device,title:Some(title.into()),
         meeting_mode:Some("onlineLive".into()),
         duration_ms:matches!(action,CompanionV1ControlAction::MeetingStart).then_some(u64::from(seconds)*1000),
-        ble_name:None,prompt_id:None,transcript_text:None,audio_path:None,audio_bytes:None}
+        context_note_revision: None, ble_name:None,prompt_id:None,transcript_text:None,audio_path:None,audio_bytes:None}
 }
 
 fn owned_row<'a>(snapshot:&'a CompanionV1Snapshot,session:&str,key:Option<&SessionKey>)

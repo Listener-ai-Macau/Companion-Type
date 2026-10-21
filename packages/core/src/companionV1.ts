@@ -1,4 +1,6 @@
 import type { CompanionRecordingBookmark } from './recordingBookmarks';
+import type { CompanionMeetingNote } from './meetingNotes';
+import { companionReviewedTranscript } from './transcriptReview';
 import type {CompanionLibraryOrganization} from './libraryOrganization';
 
 export const COMPANION_V1_SCHEMA = 'companion.host.v1' as const;
@@ -318,9 +320,21 @@ export interface CompanionV1ActionItem {
   due: string | null;
 }
 
+export interface CompanionMinutesNoteContext {
+  noteRevision: number;
+  sourceTranscriptText: string;
+  notes: CompanionMeetingNote[];
+}
+export function companionMinutesNotesCurrent(session: CompanionV1HostSession, context?: CompanionMinutesNoteContext | null): boolean {
+  return !context || (context.noteRevision === (session.noteRevision ?? 0)
+    && context.sourceTranscriptText === companionReviewedTranscript(session)
+    && JSON.stringify(context.notes) === JSON.stringify(session.meetingNotes ?? []));
+}
+
 export interface CompanionV1MeetingMinutes {
   processing?: CompanionV1MinutesProcessing | null;
   sourceReviewRevision?: number | null;
+  sourceNoteContext?: CompanionMinutesNoteContext | null;
   generatedAt: string;
   /** rules_l0 = deterministic host extractor; llm later. */
   source: 'rules_l0' | 'fixture';
@@ -368,6 +382,7 @@ function cacheMinutesForMode(
     generatedAt: minutes.generatedAt,
     partialCount,
     sourceReviewRevision: minutes.sourceReviewRevision,
+    sourceNoteContext: minutes.sourceNoteContext,
   };
   if (session.meetingMode === 'onlineLive') next.onlineLive = variant;
   else next.offlineStore = variant;
@@ -474,6 +489,7 @@ export interface CompanionV1HostSession {
 export interface CompanionV1MinutesVariant {
   processing?: CompanionV1MinutesProcessing | null;
   sourceReviewRevision?: number | null;
+  sourceNoteContext?: CompanionMinutesNoteContext | null;
   status: 'minutesReady' | 'retryPending';
   markdown: string;
   source: string;
@@ -523,6 +539,7 @@ export interface CompanionV1ControlEcho {
 }
 
 export interface CompanionV1Snapshot {
+  minutesContextSupported?: boolean;
   schema: typeof COMPANION_V1_SCHEMA;
   source: CompanionV1SnapshotSource;
   deviceId: string | null;
@@ -542,6 +559,7 @@ export interface CompanionV1Snapshot {
 }
 
 export interface CompanionV1ControlRequest {
+  contextNoteRevision?: number;
   action: CompanionV1ControlAction;
   bleName?: string;
   sessionId?: string;
@@ -1035,6 +1053,7 @@ export function applyCompanionV1ControlFixture(
       break;
     }
     case 'meetingGenerateMinutes': {
+      if (request.contextNoteRevision != null) throw new Error('此演示没有接入支持补充来源的原生整理，未假装已完成。');
       const session = requireSelectedSession(next, now, request);
       if (!session.transcriptText.trim()) {
         updateHostSession(next, session.id, {

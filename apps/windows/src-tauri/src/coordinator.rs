@@ -811,7 +811,7 @@ mod tests {
         coordinator
             .apply_control(CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingStart,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: None,
                 title: Some("Coordinator chain".to_string()),
@@ -865,7 +865,7 @@ mod tests {
             &snapshot,
             &CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::DeviceSyncRecordings,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: Some("recording".to_string()),
                 prompt_id: None,
                 title: None,

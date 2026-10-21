@@ -58,6 +58,7 @@ pub const COMPANION_V1_GATT_BOUNDARY: CompanionV1GattBoundary = CompanionV1GattB
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1Snapshot {
+    pub minutes_context_supported: bool,
     pub schema: &'static str,
     pub source: &'static str,
     pub device_id: Option<String>,
@@ -470,6 +471,8 @@ pub struct CompanionV1MinutesVariant {
     pub processing: Option<CompanionV1MinutesProcessing>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_review_revision: Option<u64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_note_context: Option<crate::backend::minutes_context::Source>,
     pub status: String,
     pub markdown: String,
     pub source: String,
@@ -485,7 +488,7 @@ fn cache_fixture_minutes_for_mode(session: &mut CompanionV1HostSession) {
     };
     let variant = CompanionV1MinutesVariant {
         processing: minutes.processing.clone(),
-        source_review_revision: minutes.source_review_revision,
+        source_note_context: minutes.source_note_context.clone(), source_review_revision: minutes.source_review_revision,
         status: "minutesReady".to_string(),
         markdown: minutes.markdown.clone(),
         source: minutes.source.clone(),
@@ -538,6 +541,8 @@ pub struct CompanionV1MeetingMinutes {
     pub processing: Option<CompanionV1MinutesProcessing>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub source_review_revision: Option<u64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_note_context: Option<crate::backend::minutes_context::Source>,
     pub generated_at: String,
     pub source: String,
     pub quality: String,
@@ -651,6 +656,9 @@ pub enum CompanionV1ControlAction {
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1ControlRequest {
     pub action: CompanionV1ControlAction,
+    /// Explicit one-time inclusion of this exact saved note revision; never recovery consent.
+    #[serde(default)]
+    pub context_note_revision: Option<u64>,
     pub ble_name: Option<String>,
     pub session_id: Option<String>,
     pub prompt_id: Option<String>,
@@ -675,6 +683,7 @@ pub fn companion_ble_name_is_valid(name: &str) -> bool {
 
 pub fn fixture_snapshot() -> CompanionV1Snapshot {
     CompanionV1Snapshot {
+        minutes_context_supported: false,
         schema: COMPANION_V1_SCHEMA,
         source: "fixture",
         device_id: Some("fixture-companion-v1".to_string()),
@@ -1199,7 +1208,7 @@ pub(crate) fn apply_control_at(
                 &snapshot,
                 &CompanionV1ControlRequest {
                     action: CompanionV1ControlAction::MeetingStart,
-                    ble_name: None,
+                    context_note_revision: None, ble_name: None,
                     session_id: request.session_id.clone(),
                     prompt_id: None,
                     title: Some(
@@ -1618,7 +1627,7 @@ pub(crate) fn synced_device_session(
         snapshot,
         &CompanionV1ControlRequest {
             action: CompanionV1ControlAction::MeetingStart,
-            ble_name: None,
+            context_note_revision: None, ble_name: None,
             session_id: request.session_id.clone(),
             prompt_id: None,
             title: Some(
@@ -1921,7 +1930,7 @@ fn build_minutes(
 
     let mut minutes = CompanionV1MeetingMinutes {
         processing: None,
-        source_review_revision: None,
+        source_note_context: None, source_review_revision: None,
         generated_at: generated_at.to_string(),
         source: "rules_l0".to_string(),
         quality: "draft".to_string(),
@@ -2310,7 +2319,7 @@ mod tests {
             fixture_snapshot(),
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::StageBleName,
-                ble_name: Some("companion-v1".to_string()),
+                context_note_revision: None, ble_name: Some("companion-v1".to_string()),
                 session_id: None,
                 prompt_id: None,
                 title: None,
@@ -2332,7 +2341,7 @@ mod tests {
             snapshot,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::ApplyBleName,
-                ble_name: Some("Companion Two".to_string()),
+                context_note_revision: None, ble_name: Some("Companion Two".to_string()),
                 session_id: None,
                 prompt_id: None,
                 title: None,
@@ -2358,7 +2367,7 @@ mod tests {
             fixture_snapshot(),
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingFinalize,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: Some("meeting-1".to_string()),
                 prompt_id: None,
                 title: None,
@@ -2399,7 +2408,7 @@ mod tests {
                 fixture_snapshot(),
                 CompanionV1ControlRequest {
                     action,
-                    ble_name: None,
+                    context_note_revision: None, ble_name: None,
                     session_id: None,
                     prompt_id: None,
                     title: None,
@@ -2428,7 +2437,7 @@ mod tests {
             snapshot,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::SpeakerPrompt,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: Some("confirm".to_string()),
                 title: None,
@@ -2453,7 +2462,7 @@ mod tests {
             initial,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingStart,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: None,
                 title: Some("Companion host workflow".to_string()),
@@ -2470,7 +2479,7 @@ mod tests {
             started,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingStop,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: None,
                 title: None,
@@ -2508,7 +2517,7 @@ mod tests {
             stopped,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingImportTranscript,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: None,
                 title: None,
@@ -2525,7 +2534,7 @@ mod tests {
             transcribed,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingGenerateMinutes,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: None,
                 title: None,
@@ -2542,7 +2551,7 @@ mod tests {
             generated,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingExportMarkdown,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: None,
                 prompt_id: None,
                 title: None,
@@ -2568,7 +2577,7 @@ mod tests {
         let mut snapshot = fixture_snapshot();
         let sync_request = CompanionV1ControlRequest {
             action: CompanionV1ControlAction::DeviceSyncRecordings,
-            ble_name: None,
+            context_note_revision: None, ble_name: None,
             session_id: Some("privacy-session".to_string()),
             prompt_id: None,
             title: Some("privacy".to_string()),
@@ -2597,7 +2606,7 @@ mod tests {
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::PrivacyEraseTranscript,
                 session_id: Some("privacy-session".to_string()),
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
@@ -2626,7 +2635,7 @@ mod tests {
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::PrivacyEraseAudio,
                 session_id: Some("privacy-session".to_string()),
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 prompt_id: None,
                 title: None,
                 transcript_text: None,
@@ -2651,7 +2660,7 @@ mod tests {
             fixture_snapshot(),
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingLoadDemo,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: Some("export-existing-only".to_string()),
                 prompt_id: None,
                 title: None,
@@ -2672,7 +2681,7 @@ mod tests {
             missing,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingExportMarkdown,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: Some("export-existing-only".to_string()),
                 prompt_id: None,
                 title: None,
@@ -2690,7 +2699,7 @@ mod tests {
             snapshot,
             CompanionV1ControlRequest {
                 action: CompanionV1ControlAction::MeetingExportSrt,
-                ble_name: None,
+                context_note_revision: None, ble_name: None,
                 session_id: Some("export-existing-only".to_string()),
                 prompt_id: None,
                 title: None,

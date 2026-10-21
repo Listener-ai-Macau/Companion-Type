@@ -122,7 +122,7 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     // including exact original-session STOP, receive, validation and consume.
     use crate::companion_v1::{CompanionV1ControlAction as Action,CompanionV1ControlRequest};
     let session_id=format!("pet-chat-{}-{}",job.id,uuid::Uuid::new_v4());
-    let request=|action|CompanionV1ControlRequest{action,ble_name:None,session_id:Some(session_id.clone()),
+    let request=|action|CompanionV1ControlRequest{action,context_note_revision: None, ble_name:None,session_id:Some(session_id.clone()),
         prompt_id:Some(CAPTURE_PROMPT.into()),title:Some("宠物聊天".into()),transcript_text:None,
         meeting_mode:Some("offlineStore".into()),audio_path:None,audio_bytes:None,
         device_id:Some(job.device.clone()),

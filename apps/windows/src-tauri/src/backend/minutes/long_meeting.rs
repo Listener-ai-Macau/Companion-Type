@@ -310,7 +310,7 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
         strategy: "chunkedSourceBacked".into(), source_bytes: session.transcript_text.len(),
         processed_source_bytes: checkpoint.chapters.iter().flatten().map(|c| c.end - c.start).sum(),
         total_chunks: checkpoint.chapters.len(), completed_chunks: completed, resumed_chunks: resumed, complete,
-    }), source_review_revision: None, generated_at: generated_at.into(), source: "llm_deepseek".into(),
+    }), source_note_context: None, source_review_revision: None, generated_at: generated_at.into(), source: "llm_deepseek".into(),
         quality: if complete { "final" } else { "draft" }.into(), summary: vec![], decisions: vec![], action_items: vec![],
         questions: vec![], keywords: vec![], markdown: String::new(), llm_note: failure.map(|e| format!(
             "长会议已处理{completed}/{}段；这是部分结果。{e} 已有原文保留，重试只提交未完成片段。", checkpoint.chapters.len())) };

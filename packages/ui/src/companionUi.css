@@ -1570,3 +1570,5 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-full-minutes > summary { width: fit-content; padding: 12px 0 4px; color: #5e6d61; cursor: pointer; font-size: 13px; }
 
 .ct-note-takeaway { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-top: 12px; }
+
+.ct-context-choice{display:flex;flex-direction:column;gap:8px;margin:12px 0;padding:12px;border:1px solid var(--ct-border,#d8dfd8);border-radius:10px}.ct-context-choice label{display:flex;align-items:center;gap:8px}.ct-context-choice small{color:var(--ct-muted,#63716a);line-height:1.5}.ct-context-choice button{align-self:flex-start}.ct-note-export-feedback{overflow-wrap:anywhere;margin:8px 0}

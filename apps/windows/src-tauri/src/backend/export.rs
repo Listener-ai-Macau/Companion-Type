@@ -18,9 +18,9 @@ use crate::companion_v1::{
 };
 use super::transcript_review;
 
-fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, body: String) -> String {
-    if !transcript_review::minutes_current(session, revision) {
-        format!("> 转写已变化：此纪要仍基于旧文字，请重新生成或核对后使用。\n\n{body}")
+fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, context: &Option<super::minutes_context::Source>, body: String) -> String {
+    if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session, context) {
+        format!("> 整理来源已变化：以下为之前保留的结果，转写或补充已更新，请重新整理后使用。\n\n{body}")
     } else if revision.is_some() {
         format!("> 基于人工修订的转写生成；原始识别结果另行保留。\n\n{body}")
     } else { body }
@@ -86,7 +86,7 @@ fn saved_minutes_markdown_for_mode(
         if variant.markdown.trim().is_empty() {
             return Err(format!("{meeting_mode} minutes have no saved content"));
         }
-        return Ok(minutes_source_notice(session, variant.source_review_revision, if variant.status == "minutesReady" && variant.quality != "draft"
+        return Ok(minutes_source_notice(session, variant.source_review_revision, &variant.source_note_context, if variant.status == "minutesReady" && variant.quality != "draft"
             && variant.processing.as_ref().is_none_or(|p| p.is_complete()) {
             variant.markdown.clone()
         } else {
@@ -104,7 +104,7 @@ fn saved_minutes_markdown_for_mode(
             .as_ref()
             .filter(|minutes| !minutes.markdown.trim().is_empty())
         {
-            return Ok(minutes_source_notice(session, minutes.source_review_revision, if minutes.llm_note.is_some() || minutes.quality == "draft"
+            return Ok(minutes_source_notice(session, minutes.source_review_revision, &minutes.source_note_context, if minutes.llm_note.is_some() || minutes.quality == "draft"
                 || minutes.processing.as_ref().is_some_and(|p| !p.is_complete()) {
                 format!(
                     "> 草稿：纪要服务尚未完成；以下为已保存在本机的内容。\n\n{}",
@@ -179,7 +179,11 @@ pub fn prepare_meeting_export(
             }
             let revision = minutes_variant_for_mode(session, meeting_mode).map(|v| v.source_review_revision)
                 .or_else(|| session.minutes.as_ref().map(|m| m.source_review_revision)).flatten();
-            if !transcript_review::minutes_current(session, revision) {
+            let context = match minutes_variant_for_mode(session,meeting_mode) {
+                Some(v)=>v.source_note_context.clone(),
+                None=>session.minutes.as_ref().and_then(|m|m.source_note_context.clone()),
+            };
+            if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session,&context) {
                 return Err("转写已经修订，请先重新生成或核对这版纪要，再导出待办，避免使用旧的任务归属。".into());
             }
             let saved = saved_minutes_markdown_for_mode(session, meeting_mode)?;
@@ -295,7 +299,9 @@ fn render_json_for_mode(
         speaker_labels: (0..session.utterances.len()).map(|i| transcript_review::speaker_label(session,i)).collect(),
         review_stale: transcript_review::review_is_stale(session),
         minutes_current: (selected_variant.is_some() || legacy_minutes.is_some()) && transcript_review::minutes_current(session, selected_variant.map(|v| v.source_review_revision)
-            .or_else(|| legacy_minutes.map(|m| m.source_review_revision)).flatten()),
+            .or_else(|| legacy_minutes.map(|m| m.source_review_revision)).flatten())
+            && super::minutes_context::current(session,&selected_variant.and_then(|v|v.source_note_context.clone())
+                .or_else(||legacy_minutes.and_then(|m|m.source_note_context.clone()))),
         minutes: selected_variant,
         legacy_minutes,
     })
@@ -600,7 +606,7 @@ mod tests {
     fn minutes() -> CompanionV1MeetingMinutes {
         CompanionV1MeetingMinutes {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             generated_at: "2026-07-28T10:05:00Z".into(),
             source: "rules_l0".into(),
             quality: "draft".into(),
@@ -735,7 +741,7 @@ mod tests {
         let mut s = session("final transcript", vec![], Some(minutes()));
         s.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             status: "minutesReady".to_string(),
             markdown: "# offline product".to_string(),
             source: "saved".to_string(),
@@ -745,7 +751,7 @@ mod tests {
         });
         s.minutes_by_mode.online_live = Some(CompanionV1MinutesVariant {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             status: "minutesReady".to_string(),
             markdown: "# online product".to_string(),
             source: "saved".to_string(),
@@ -780,13 +786,13 @@ mod tests {
         let mut s = session("final transcript", vec![], Some(minutes()));
         s.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             status: "minutesReady".into(), markdown: "## 行动项\n- [ ] 新任务 (due: 2026-10-09)".into(),
             source: "userEdited".into(), quality: "final".into(), generated_at: None, partial_count: 0,
         });
         s.minutes_by_mode.online_live = Some(CompanionV1MinutesVariant {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             status: "minutesReady".into(), markdown: "## Action Items\n- 第二模式任务".into(),
             source: "saved".into(), quality: "final".into(), generated_at: None, partial_count: 1,
         });
@@ -807,7 +813,7 @@ mod tests {
         let mut s = session("final transcript", vec![], Some(minutes()));
         s.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
             processing: None,
-            source_review_revision: None,
+            source_note_context: None, source_review_revision: None,
             status: "retryPending".to_string(),
             markdown: "# 本机草稿".to_string(),
             source: "rules_l0".to_string(),

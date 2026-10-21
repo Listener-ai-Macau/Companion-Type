@@ -52,7 +52,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
             if session.meeting_mode != mode || session.minutes_by_mode.offline_store.is_some() || session.minutes_by_mode.online_live.is_some() { return None; }
             session.minutes.as_ref().map(|m| CompanionV1MinutesVariant {
                 processing: m.processing.clone(),
-                source_review_revision: m.source_review_revision,
+                source_note_context: m.source_note_context.clone(), source_review_revision: m.source_review_revision,
                 status: session.status.clone(), markdown: m.markdown.clone(), source: m.source.clone(),
                 quality: m.quality.clone(), generated_at: Some(m.generated_at.clone()), partial_count: 0,
             })

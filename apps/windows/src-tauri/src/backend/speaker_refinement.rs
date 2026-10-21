@@ -50,7 +50,7 @@ pub(super) fn apply(row:&mut CompanionV1HostSession,labels:super::transcription:
     #[test] fn local_labels_cannot_rewrite_words_and_keep_both_old_documents() {
         let mut s=crate::companion_v1::fixture_snapshot();
         let mut r=crate::companion_v1::CompanionV1ControlRequest {action:crate::companion_v1::CompanionV1ControlAction::MeetingLoadDemo,
-            session_id:Some("local-speakers".into()),ble_name:None,prompt_id:None,title:None,transcript_text:Some("原句。".into()),meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
+            session_id:Some("local-speakers".into()),context_note_revision: None, ble_name:None,prompt_id:None,title:None,transcript_text:Some("原句。".into()),meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
         s=crate::companion_v1::apply_fixture_control(s,r.clone()).unwrap();
         r.action=crate::companion_v1::CompanionV1ControlAction::MeetingGenerateMinutes;
         r.meeting_mode=Some("onlineLive".into());s=crate::companion_v1::apply_fixture_control(s,r).unwrap();
