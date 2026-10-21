@@ -60,6 +60,7 @@ mod ota_flow;
 mod ota_credit_stream;
 #[cfg(windows)]
 mod ota_pending;
+mod ota_submit_timing;
 mod simple_ota_restart;
 #[cfg(test)]
 #[path = "recording_sync/flow_tests.rs"]

@@ -266,6 +266,7 @@ struct CompanionOtaWinrtTransport<'a> {
     device_queue_credits:Option<super::ota_flow::DeviceQueueCredits>,
     device_credit_reads:u32,
     device_credit_wait:Duration,
+    credit_submit:super::ota_submit_timing::SubmitTrace,
     device_notifications:Option<DurableNotificationLease>,
     device_notices_used:u32,
     credit_refills_with_pending_writes:u32,
@@ -285,6 +286,12 @@ impl Drop for CompanionOtaWinrtTransport<'_> {
         // Failure may leave asynchronous writes owned by either lane. Retire
         // them before the target's session/service close. On normal completion
         // both queues are already empty; this adds no transfer pacing/wait.
+        if self.wba_signed && (!self.credit_submit.rows.is_empty()||self.credit_submit.active.is_some()) {
+            if let Ok(line)=serde_json::to_string(&self.credit_submit) {
+                use std::io::Write;
+                let _=writeln!(std::io::stderr().lock(),"firmware_ota_credit_submit_timing {line}");
+            }
+        }
         self.cancel_pending_wwr();
     }
 }
@@ -428,7 +435,7 @@ pub fn transfer_companion_ota_winrt(
         pipeline_depth: pipeline,
         system_component: None,
         simple_file_bytes: None,
-        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0,window_receipt_guaranteed:false,window_guarantee_waits:0,window_guarantee_timeouts:0,window_guarantee_wait:Duration::ZERO,
+        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,credit_submit:Default::default(),device_notifications:None,device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0,window_receipt_guaranteed:false,window_guarantee_waits:0,window_guarantee_timeouts:0,window_guarantee_wait:Duration::ZERO,
     };
 
     let progress_started = Instant::now();
@@ -627,7 +634,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?),
         device_queue_credits:if pipelined {Some(super::ota_flow::DeviceQueueCredits::new(
             u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?,payload,flow.queue_chunks)?)} else {None},
-        device_credit_reads:0,device_credit_wait:Duration::ZERO,
+        device_credit_reads:0,device_credit_wait:Duration::ZERO,credit_submit:Default::default(),
         device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0,window_receipt_guaranteed:pipelined && flow.window_notify_guaranteed,window_guarantee_waits:0,window_guarantee_timeouts:0,window_guarantee_wait:Duration::ZERO};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
@@ -662,6 +669,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     payload_metrics.exclude_package_header(176);
     let device_credit_reads=transport.device_credit_reads;
     let device_credit_wait=transport.device_credit_wait;
+    let credit_submit_timing=transport.credit_submit.clone();
     // Preserve the completed payload measurement even if post-install discovery fails.
     eprintln!("firmware_ota_payload_metrics {}",serde_json::to_string(&payload_metrics).map_err(|e|e.to_string())?);
     let device_notices_used=transport.device_notices_used;
@@ -748,6 +756,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "connectionPreferenceHandoffOffset":handoff_offset,
         "connectionPreferenceHandoffCloseSucceeded":handoff_release.as_ref().map(|r|r.is_ok())}));
     if let Some(bundle)=system_bundle.as_mut() {
+        bundle["creditSubmitTiming"]=serde_json::to_value(&credit_submit_timing).unwrap_or_default();
+        bundle["creditSubmitTimingScope"]=serde_json::Value::from("bounded512_first_DATA_after_real_credit_refill; helper_API_and_Status_GetResults_Close_elapsed; metadata_only_not_RF; zero_markers_mean_incomplete");
         bundle["dataScheduling"]=serde_json::Value::from(if continuous_durable_queue {"continuous_durable_queue"} else {"checkpointed"});
         if continuous_durable_queue {
             bundle["windowBarrier"]=serde_json::Value::from("final_whole_file_receipt_after_bounded_durable_credits");
@@ -1327,8 +1337,11 @@ impl CompanionOtaWinrtTransport<'_> {
     }
 
     fn retire_ready_wwr(&mut self)->Result<bool,String> {
-        let a=super::ota_pending::retire_ready(&mut self.pending_wwr,"Companion OTA data pipeline")?;
-        let b=super::ota_pending::retire_ready(&mut self.pending_wwr_b,"Companion OTA data_b pipeline")?;
+        let measured=self.wba_signed&&self.device_queue_credits.is_some();
+        let a=if measured {super::ota_pending::retire_ready_observed(&mut self.pending_wwr,"Companion OTA data pipeline",Some(&mut self.credit_submit.costs))?}
+            else {super::ota_pending::retire_ready(&mut self.pending_wwr,"Companion OTA data pipeline")?};
+        let b=if measured {super::ota_pending::retire_ready_observed(&mut self.pending_wwr_b,"Companion OTA data_b pipeline",Some(&mut self.credit_submit.costs))?}
+            else {super::ota_pending::retire_ready(&mut self.pending_wwr_b,"Companion OTA data_b pipeline")?};
         Ok(a||b)
     }
 
@@ -1361,6 +1374,7 @@ impl CompanionOtaWinrtTransport<'_> {
     }
 
     fn enqueue_wwr_data_write(&mut self, packet: &[u8], lane_b: bool) -> Result<(), String> {
+        self.credit_submit.enqueue();
         let dual = !self.wba_signed && self.target.data_b.is_some();
         let depth_per_lane = if dual {
             (self.pipeline_depth + 1) / 2
@@ -1372,20 +1386,24 @@ impl CompanionOtaWinrtTransport<'_> {
             let characteristic = self.target.data_b.as_ref().ok_or_else(|| {
                 "Companion OTA data_b lane requested but characteristic missing".to_string()
             })?;
+            self.credit_submit.api_enter();
             let operation = start_gatt_write_with_option_async(
                 characteristic,
                 packet,
                 GattWriteOption::WriteWithoutResponse,
                 "Companion OTA data_b",
             )?;
+            self.credit_submit.api_returned();
             self.pending_wwr_b.push(operation);
         } else {
+            self.credit_submit.api_enter();
             let operation = start_gatt_write_with_option_async(
                 &self.target.data,
                 packet,
                 GattWriteOption::WriteWithoutResponse,
                 "Companion OTA data",
             )?;
+            self.credit_submit.api_returned();
             self.pending_wwr.push(operation);
         }
 
@@ -1455,6 +1473,10 @@ impl CompanionOtaWinrtTransport<'_> {
     fn reserve_device_queue_credit(&mut self,packet:&[u8])->Result<(),String> {
         let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
         let wait_needed=credits.needs_receipt(packet)?;
+        if wait_needed&&self.wba_signed&&self.device_notifications.is_some() {
+            let offset=packet.get(..4).and_then(|v|v.try_into().ok()).map(u32::from_le_bytes).unwrap_or(0);
+            self.credit_submit.begin(offset,credits.submitted_prefix(),credits.generation().unwrap_or(0));
+        }
         if wait_needed {
             let started=Instant::now();let deadline=started+Duration::from_secs(2);
             // WOC4 receipts may already grant real credits while local writes
@@ -1482,6 +1504,9 @@ impl CompanionOtaWinrtTransport<'_> {
                 let credits=self.device_queue_credits.as_mut().unwrap();
                 credits.observe(&bytes)?;
                 if !credits.needs_receipt(packet)? {
+                    let accepted=credits.verified_durable_prefix().unwrap_or(0);
+                    let generation=credits.generation().unwrap_or(0);
+                    self.credit_submit.granted(accepted,generation);
                     self.retire_ready_wwr()?;
                     let pending=self.pending_wwr.len()+self.pending_wwr_b.len();
                     if pending>0 {
@@ -1500,7 +1525,9 @@ impl CompanionOtaWinrtTransport<'_> {
         }
         // Reserve once before submission. Any later WinRT failure closes this
         // transfer; only a new whole-file attempt can create another owner.
-        self.device_queue_credits.as_mut().unwrap().admit(packet)
+        let result=self.device_queue_credits.as_mut().unwrap().admit(packet);
+        if result.is_ok(){self.credit_submit.admitted();}
+        result
     }
     fn write_simple_acknowledged_data(&mut self,packet:&[u8],file_bytes:u32)->Result<(),String> {
         for attempt in 0..2 {
@@ -1655,6 +1682,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
 
     fn write_data(&mut self, packet: &[u8]) -> Result<(), String> {
         self.reserve_device_queue_credit(packet)?;
+        let result=(|| {
         if self.target.data_write_option == GattWriteOption::WriteWithoutResponse {
             match self.enqueue_wwr_data_write(packet, false) {
                 Ok(()) => return Ok(()),
@@ -1683,6 +1711,9 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
             "Companion OTA data",
         )
         .map(|_| ())
+        })();
+        self.credit_submit.finish(result.is_ok());
+        result
     }
 
     fn write_data_b(&mut self, packet: &[u8]) -> Result<(), String> {
