@@ -1182,7 +1182,7 @@ export function CompanionDashboard({
           <section className="ct-recording-text" aria-label="录音文字">
             <div className="ct-recording-text-heading"><h3>文字</h3>
               {finalTranscript ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
-                onClick={() => void exportMeeting('txt')}><Download size={15} />保存文字</button> : null}
+                onClick={() => void exportMeeting('txt')}><Download size={15} />{exportBusy ? '正在保存…' : '保存文字'}</button> : null}
             </div>
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
@@ -1191,6 +1191,7 @@ export function CompanionDashboard({
               <p className="ct-recording-transcript">{companionReviewedTranscript(selectedSession)}</p>
             </> : <p className="ct-recording-text-empty">{recoveryView?.isProcessing?'正在转成文字，请稍候。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
           </section>
+          {exportResult?.sessionId === selectedSession.id ? <p className="ct-export-result" role="status">{exportResult.message}</p> : null}
           <details className="ct-recording-more" open={recordingToolsOpen} onToggle={event=>setRecordingToolsOpen(event.currentTarget.open)}>
             <summary>更多{titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved?' · 有未保存的修改':''}</summary>
             {savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
@@ -1237,7 +1238,7 @@ export function CompanionDashboard({
               onClick={() => void exportMeeting('ics')}>导出日历待办</button>
           </div>
           )}
-          {exportResult?.sessionId === selectedSession.id ? <p className="ct-export-result" role="status">{exportResult.message}</p> : null}
+
           {saveMeetingResult?.sessionId === selectedSession.id ? <p className={snapshot?.host.persistence?.status && snapshot.host.persistence.status !== 'ready' ? 'ct-step-warn ct-save-result' : 'ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
           {detailView === 'minutes' ? (
             <div className="ct-meeting-document">
