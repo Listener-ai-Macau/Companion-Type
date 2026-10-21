@@ -1567,8 +1567,8 @@ export function CompanionDashboard({
                 onClick={async()=>{
                   if (!selectedSession) return;
                   const sessionId=selectedSession.id;setSaveMeetingBusy(true);setSaveMeetingResult(null);
-                  try {await onRefineSpeakers(sessionId);setSaveMeetingResult({sessionId,message:'已在本机重新区分说话人；原音、文字和时间轴保留，之前的纪要可按需重新生成。'});}
-                  catch (e) {setSaveMeetingResult({sessionId,message:`本地分组未完成：${e instanceof Error?e.message:String(e)}`});}
+                  try {await onRefineSpeakers(sessionId);setSaveMeetingResult({sessionId,kind:'saved',message:'已在本机重新区分说话人；原音、文字和时间轴保留，之前的纪要可按需重新生成。'});}
+                  catch (e) {setSaveMeetingResult({sessionId,kind:'error',message:`本地分组未完成：${e instanceof Error?e.message:String(e)}`});}
                   finally {setSaveMeetingBusy(false);}
                 }}>重新区分说话人（本地）</button>:null}
               <button
