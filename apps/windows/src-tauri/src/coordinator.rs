@@ -321,7 +321,11 @@ impl CompanionCoordinator {
     }
 
     pub(crate) fn begin_pet_find_operation(&self)->Result<CompanionDeviceOperationLease,String> {
-        self.begin_foreground_operation_kind(20)
+        // Finding is optional: never yield capture, captions or synchronization.
+        if self.pet_foreground.load(Ordering::Acquire) {return Err("设备正在交接当前操作，寻找尚未开始。".into());}
+        let lease=claim_device_operation(&self.device_operation,&self.shutdown,20)?;
+        if self.pet_foreground.load(Ordering::Acquire) {return Err("设备正在交接当前操作，寻找尚未开始。".into());}
+        Ok(lease)
     }
 
     pub fn snapshot(&self) -> Result<CompanionV1Snapshot, String> {
