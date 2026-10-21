@@ -210,7 +210,7 @@ impl DurableNotificationLease {
                 let buffer=args.CharacteristicValue().map_err(|e|e.to_string())?;
                 let reader=windows::Storage::Streams::DataReader::FromBuffer(&buffer).map_err(|e|e.to_string())?;
                 let size=reader.UnconsumedBufferLength().map_err(|e|e.to_string())? as usize;
-                if size!=44 {return Err("Invalid durable notification extent".into());}
+                super::ble_link_budget::notification_extent(size)?;
                 let mut bytes=vec![0;size];reader.ReadBytes(&mut bytes).map_err(|e|e.to_string())?;Ok(bytes)
             })();
             if let Ok(mut t)=callback_trace.lock(){

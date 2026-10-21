@@ -33,6 +33,11 @@ impl LinkBudget {
             interval_units:(ci!=0).then_some(ci),att_mtu:(mtu!=0).then_some(mtu)}))
     }
 }
+/// Apply the same bounded WinRT buffer admission to old and new frames
+/// before allocation; content and BEGIN ownership are still checked later.
+pub(super) fn notification_extent(bytes:usize)->Result<(),String> {
+    if matches!(bytes,44|64) {Ok(())} else {Err("Invalid durable notification extent".into())}
+}
 /// One format discriminator owns all durable-notification consumers.
 /// Legacy WOC4 remains exact44B; WOC5 must validate its complete64B shape.
 pub(super) fn generation_status(b:&[u8])->Result<bool,String> {
@@ -56,5 +61,12 @@ pub(super) fn generation_status(b:&[u8])->Result<bool,String> {
         let s=LinkBudget::from_ota_status(&b).unwrap().unwrap();assert_eq!(s.tx_time_us,Some(340));assert_eq!(s.rx_octets,Some(70));assert_eq!(s.rx_phy,Some(1));assert!(generation_status(&b).unwrap());
         for (i,value) in [(48,31),(49,0),(50,4),(51,1),(53,255),(55,255)] {let mut bad=b.clone();bad[i]=value;assert!(LinkBudget::from_ota_status(&bad).is_err());}
         for len in [44,63,65] {let mut bad=b.clone();bad.resize(len,0);assert!(generation_status(&bad).is_err());}
+    }
+}
+
+#[cfg(test)] mod extent_tests {
+    #[test] fn actual_native_callback_admits_only_exact_old_and_new_bounds(){
+        for size in [44,64] {super::notification_extent(size).unwrap();}
+        for size in [0,1,43,45,63,65,512,usize::MAX] {assert!(super::notification_extent(size).is_err());}
     }
 }
