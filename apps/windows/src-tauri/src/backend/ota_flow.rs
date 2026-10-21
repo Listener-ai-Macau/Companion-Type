@@ -12,17 +12,19 @@ pub(super) struct WbaFlow {
     pub pipelined: bool,
 }
 
-/// Explicit diagnostic selection for the already-supported simple-file path.
-/// Keep the delivered acknowledged path as default until real RF/storage
-/// evidence qualifies the bounded WWR path. The peer-handoff comparison changes only preference ownership after a durable
-/// window; packet size, file format and signature/installation stay identical.
+/// Production selection uses only protected, validated device capabilities and
+/// the actual session MTU. Explicit diagnostic profiles retain their exact
+/// geometry and never silently fall back. Real WOC4/WOC5 durable windows and
+/// complete signed-file radio/storage delivery qualify the bounded WWR route;
+/// throughput and coexistence stability remain separately measured.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed466PeerHandoff, Windowed215PeerHandoff, Windowed215Hold }
+pub(super) enum SimpleTransportProfile { Automatic, Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed466PeerHandoff, Windowed215PeerHandoff, Windowed215Hold }
 
 impl SimpleTransportProfile {
     pub fn parse(value: Option<&str>) -> Result<Self, String> {
         match value.map(str::trim).unwrap_or("") {
-            "" | "acknowledged" => Ok(Self::Acknowledged),
+            "" | "automatic" => Ok(Self::Automatic),
+            "acknowledged" => Ok(Self::Acknowledged),
             "windowed_491_peer_handoff" => Ok(Self::Windowed491PeerHandoff),
             "windowed_466_peer_handoff" => Ok(Self::Windowed466PeerHandoff),
             "windowed_244" => Ok(Self::Windowed244),
@@ -32,9 +34,21 @@ impl SimpleTransportProfile {
             _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
         }
     }
+    /// Resolve once, after protected status and the real negotiated MTU, but
+    /// before BEGIN. Do not infer queue/notification durability from 2M/MTU or
+    /// a local successful write. Older or reduced-capacity peers stay usable.
+    pub fn resolve(self, flow:WbaFlow, mtu:u16)->Self {
+        if self!=Self::Automatic {return self;}
+        if flow.pipelined && flow.notify_credits && flow.window_notify_guaranteed &&
+            flow.payload_bytes>=466 && flow.queue_chunks>=2 &&
+            flow.window_chunks>flow.queue_chunks && mtu>=473 {
+            Self::Windowed466PeerHandoff
+        } else {Self::Acknowledged}
+    }
     /// An explicit long-value experiment must have the same packet geometry
     /// on both ends. Refuse before BEGIN instead of silently testing a fallback.
     pub fn file_payload(self,flow:WbaFlow,mtu:u16)->Result<u16,String> {
+        if self==Self::Automatic {return Err("自动升级策略尚未绑定实际设备能力和MTU；未开始升级".into());}
         if self==Self::Windowed491PeerHandoff &&
             (flow.payload_bytes<491 || mtu<498 || flow.window_chunks<=flow.queue_chunks) {
             return Err("设备或MTU未确认WOC3长窗口/491字节包形，未开始升级".into());
@@ -55,6 +69,7 @@ impl SimpleTransportProfile {
     }
     pub fn pipelined(self, flow: WbaFlow) -> Result<bool, String> {
         match self {
+            Self::Automatic => Err("自动升级策略尚未绑定实际设备能力和MTU；未开始升级".into()),
             Self::Acknowledged => Ok(false),
             Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold if flow.pipelined => Ok(true),
             Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
@@ -81,7 +96,7 @@ impl SimpleTransportProfile {
         matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff|Self::Windowed466PeerHandoff)
     }
     pub fn name(self) -> &'static str {
-        match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
+        match self { Self::Automatic => "automatic", Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
             Self::Windowed491PeerHandoff => "windowed_491_peer_handoff",
             Self::Windowed466PeerHandoff => "windowed_466_peer_handoff",
             Self::Windowed244PeerHandoff => "windowed_244_peer_handoff",
@@ -194,7 +209,7 @@ mod tests {
     fn simple_transport_comparison_is_explicit_and_requires_device_capacity() {
         let capable=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,notify_credits:false,window_notify_guaranteed:false,pipelined:true};
         let unsupported=WbaFlow {pipelined:false,..capable};
-        for value in [None,Some(""),Some("acknowledged")] {
+        for value in [Some("acknowledged")] {
             let profile=SimpleTransportProfile::parse(value).unwrap();
             assert!(!profile.pipelined(capable).unwrap());
             assert!(!profile.pipelined(unsupported).unwrap());
@@ -202,9 +217,37 @@ mod tests {
         let profile=SimpleTransportProfile::parse(Some("windowed_244")).unwrap();
         assert!(profile.pipelined(capable).unwrap());
         assert!(profile.pipelined(unsupported).is_err());
-        for unknown in ["windowed", "windowed_509", "automatic", "1"] {
+        for unknown in ["windowed", "windowed_509", "auto", "1"] {
             assert!(SimpleTransportProfile::parse(Some(unknown)).is_err());
         }
+    }
+    #[test]
+    fn production_default_resolves_capability_and_mtu_before_any_transfer() {
+        let default=SimpleTransportProfile::parse(None).unwrap();
+        let current=WbaFlow {payload_bytes:505,window_chunks:64,queue_chunks:16,
+            notify_credits:true,window_notify_guaranteed:true,pipelined:true};
+        assert!(default.pipelined(current).is_err());
+        assert!(default.file_payload(current,512).is_err());
+        let selected=default.resolve(current,512);
+        assert_eq!(selected,SimpleTransportProfile::Windowed466PeerHandoff);
+        assert_eq!(selected.file_payload(current,512).unwrap(),466);
+        assert!(selected.pipelined(current).unwrap());
+        assert!(!selected.handoff_ready(16*466,1419392,64*466));
+        assert!(selected.handoff_ready(64*466,1419392,64*466));
+        let unqualified=[WbaFlow {pipelined:false,..current},
+            WbaFlow {notify_credits:false,..current},WbaFlow {window_notify_guaranteed:false,..current},
+            WbaFlow {queue_chunks:1,..current},WbaFlow {window_chunks:16,..current},
+            WbaFlow {payload_bytes:240,..current}];
+        for old in unqualified {
+            let profile=default.resolve(old,512);
+            assert_eq!(profile,SimpleTransportProfile::Acknowledged);
+            assert!(!profile.pipelined(old).unwrap());
+            assert!(profile.file_payload(old,512).unwrap()<=240);
+        }
+        assert_eq!(default.resolve(current,472),SimpleTransportProfile::Acknowledged);
+        let explicit=SimpleTransportProfile::Windowed466PeerHandoff;
+        assert_eq!(explicit.resolve(current,472),explicit);
+        assert!(explicit.file_payload(current,472).is_err());
     }
     #[test]
     fn peer_handoff_waits_for_one_complete_durable_window_and_stays_explicit() {
@@ -239,7 +282,7 @@ mod tests {
                     SimpleTransportProfile::Windowed244PeerHandoff] {
             assert_eq!(old.file_payload_cap(),240);
         }
-        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
+        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Automatic);
     }
     #[test]
     fn initial_services_retries_only_once_for_unreachable_inside_original_budget() {
@@ -358,7 +401,7 @@ mod stream_tests {
         assert!(p.file_payload(WbaFlow{payload_bytes:490,..f},512).is_err());
         assert!(p.file_payload(WbaFlow{window_chunks:16,..f},512).is_err());
         assert!(p.handoff_ready(491*64,1000000,491*64));assert!(!p.handoff_ready(491*63,1000000,491*64));
-        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
+        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Automatic);
     }
 }
 
@@ -927,7 +970,7 @@ mod packing466_tests {
         let mut short=f;short.payload_bytes=465;assert!(p.file_payload(short,512).is_err());
         short=f;short.window_chunks=16;assert!(p.file_payload(short,512).is_err());
         short=f;short.pipelined=false;assert!(p.pipelined(short).is_err());
-        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
+        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Automatic);
     }
     #[test]
     fn same_durable_handoff_uses_the_selected_packet_size() {

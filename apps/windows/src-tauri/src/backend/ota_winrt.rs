@@ -543,7 +543,7 @@ fn wait_ota_rf_admission(path:&std::path::Path,nonce:&str,device:&str,not_before
 }
 
 pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
-    let transport_profile=super::ota_flow::SimpleTransportProfile::from_env()?;
+    let requested_profile=super::ota_flow::SimpleTransportProfile::from_env()?;
     let rf_request=ota_rf_admission_request()?;
     let rf_not_before=OtaStatusTrace::stamp().0;
     let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
@@ -556,17 +556,20 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     check_wba_readiness(&target)?;
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
     let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
-    let pipelined=transport_profile.pipelined(flow)?;
     let identity=open_read_char(&target._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"当前升级版本")?;
     let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"当前升级版本",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
     package.admit(&current)?;drop(identity);
     let mtu=wait_ota_mtu(&target,false)?;
+    let transport_profile=requested_profile.resolve(flow,mtu);
+    let pipelined=transport_profile.pipelined(flow)?;
+    eprintln!("[companion-ota] transport_selection requested={} selected={} protected_capacity=1 actual_mtu={mtu} automatic={} speed_not_guaranteed=1",
+        requested_profile.name(),transport_profile.name(),u8::from(requested_profile==super::ota_flow::SimpleTransportProfile::Automatic));
     if let Some((path,nonce))=rf_request {
         wait_ota_rf_admission(&path,&nonce,&target.device_id,rf_not_before)?;
     }
-    // First CE release uses one acknowledged <=244-byte ATT value. The
-    // observed509-byte burst did not advance offset0; throughput work remains
-    // deferred, rather than making fragmented WWR a prerequisite for OTA.
+    // The selected production route has explicit device queue credits and
+    // durable window receipts. Older peers remain acknowledged. Local WinRT
+    // completion is never storage acceptance; all integrity and Boot checks stay.
     target.data_write_option=if pipelined {GattWriteOption::WriteWithoutResponse}
         else {GattWriteOption::WriteWithResponse};
     // The common diagnostic switch must also govern the WBA single-file
@@ -608,7 +611,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     options.window_chunks=flow.window_chunks;options.inactive_link_window_chunks=Some(flow.window_chunks);options.prefer_dual_lane=false;
     let pipeline=if pipelined {flow.pipeline_depth()} else {1};
     eprintln!("[companion-ota] simple_file att_mtu={mtu} file_payload={payload} acknowledged_window={} download_resume=0 transport_profile={} pipeline_depth={pipeline} data_write={:?} diagnostic={}",
-        flow.window_chunks,transport_profile.name(),target.data_write_option,u8::from(pipelined));
+        flow.window_chunks,transport_profile.name(),target.data_write_option,u8::from(requested_profile!=super::ota_flow::SimpleTransportProfile::Automatic));
     eprintln!("[companion-ota] simple_window_barrier={} storage_receipt_required=1",
         if pipelined { "encrypted_status_after_bounded_queue_drains" } else { "sync_write_then_status" });
     // Move the selected diagnostic preference into this operation before any
@@ -733,6 +736,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "localWriteCompletionReturnsDeviceCredit":false,
         "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
         "deviceLinkBudgetBeforeBegin":device_link_budget,
+        "requestedTransportProfile":requested_profile.name(),
+        "selectedTransportProfile":transport_profile.name(),
+        "automaticTransport":requested_profile==super::ota_flow::SimpleTransportProfile::Automatic,
         "connectionPreference":connection_preference,
         "connectionPreferenceRelease":release_scope,
         "connectionPreferenceHandoffOffset":handoff_offset,
