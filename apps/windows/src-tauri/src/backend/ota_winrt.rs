@@ -598,6 +598,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     package.admit(&current)?;drop(identity);
     let mtu=wait_ota_mtu(&target,false)?;
     let transport_profile=requested_profile.resolve(flow,mtu);
+    transport_profile.require_link(device_link_budget)?;
     let continuous_durable_queue=requested_profile.continuous_durable_queue(flow,mtu);
     let pipelined=transport_profile.pipelined(flow)?;
     eprintln!("[companion-ota] transport_selection requested={} selected={} protected_capacity=1 actual_mtu={mtu} automatic={} speed_not_guaranteed=1",
@@ -658,7 +659,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let mut handoff_preference=if peer_handoff {target._conn_pref_request.take()} else {None};
     let mut handoff_release:Option<Result<(),String>>=None;
     let mut handoff_offset:Option<usize>=None;
-    let first_window=usize::from(payload)*usize::from(flow.window_chunks);
+    let first_window=transport_profile.preference_handoff_bytes(payload,flow.window_chunks);
     let mut transport=CompanionOtaWinrtTransport{target:&target,pending_wwr:Vec::with_capacity(pipeline),pending_wwr_b:Vec::new(),
         status_error_started:None,wba_signed:true,pipeline_depth:pipeline,system_component:None,
         simple_file_bytes:Some(u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?),
