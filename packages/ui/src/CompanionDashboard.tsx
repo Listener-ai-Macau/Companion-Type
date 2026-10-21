@@ -2429,7 +2429,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
             disabled={blocked} aria-label={`核对第${source.index + 1}段原文`}
             onClick={() => onOpenSource(source)}>核对原文 · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
         </span> : null;
-        if(block.action&&actionChecklist){const action=block.action;return <div key={index} className="ct-minutes-item">
+        if(block.action&&actionChecklist){const action=block.action;return <div key={index} className="ct-minutes-item ct-minutes-action-item">
           <label className={`ct-saved-action${action.completed?' completed':''}`}><input type="checkbox" checked={action.completed}
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${action.text}`}
             onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>{action.text}</span></label>{links}</div>;}

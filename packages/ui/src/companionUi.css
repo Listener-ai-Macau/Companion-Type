@@ -1580,3 +1580,8 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-saved-action input{width:18px;height:18px;flex:0 0 18px;margin:3px 0 0;accent-color:#365c4a;}
 .ct-saved-action.completed>span{text-decoration:line-through;color:#6e786f;}
 .ct-saved-action:has(input:disabled){cursor:default;}
+
+/* A complete checkbox label must not occupy the old 22px bullet column. */
+.ct-minutes-action-item{grid-template-columns:minmax(0,1fr);}
+.ct-saved-action{min-width:0;width:100%;}
+.ct-saved-action>span{flex:1;min-width:0;overflow-wrap:anywhere;}

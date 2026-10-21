@@ -28,7 +28,11 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   }
   if (!sections.get('summary') || !sections.has('actions')) return null;
   const emptySection = (text: string) => !text || /^(?:- )?(?:None captured|无(?:[（(][^\r\n]*[）)])?)[。. ]*$/i.test(text);
-  // Do not fold actual decisions/questions merely because the recording is short.
-  if (['decisions', 'questions'].some(key => !emptySection(sections.get(key) ?? ''))) return null;
-  return `## 重点\n\n${sections.get('summary')}\n\n## 待办\n\n${sections.get('actions') || '本次没有提取到待办。'}`;
+  // Keep every actual decision/question visible in the short reading too.
+  // An actual question must not bring back the full provenance/template dump.
+  const reading=[`## 重点\n\n${sections.get('summary')}`];
+  if(!emptySection(sections.get('decisions')??''))reading.push(`## 已明确的决定\n\n${sections.get('decisions')}`);
+  reading.push(`## 待办\n\n${emptySection(sections.get('actions')??'')?'本次没有提取到待办。':sections.get('actions')}`);
+  if(!emptySection(sections.get('questions')??''))reading.push(`## 需确认\n\n${sections.get('questions')}`);
+  return reading.join('\n\n');
 }
