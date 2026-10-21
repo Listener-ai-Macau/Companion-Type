@@ -348,6 +348,7 @@ impl DeviceQueueCredits {
     pub fn begin(&mut self){self.ends.clear();self.submitted=0;self.durable=0;self.begun=true;self.generation=None;}
     pub fn abort(&mut self){self.begin();self.begun=false;}
     pub fn generation(&self)->Option<u32>{self.generation}
+    pub fn submitted_prefix(&self)->u32{self.submitted}
     fn packet_end(&self,packet:&[u8])->Result<u32,String> {
         if !self.begun {return Err("OTA queue owner has no current BEGIN".into());}
         if packet.len()<5 || packet.len()>usize::from(self.payload)+4 {
@@ -375,9 +376,13 @@ impl DeviceQueueCredits {
     pub fn completed_window_receipt(&mut self,bytes:Vec<u8>)->Result<Option<Vec<u8>>,String> {
         if self.generation.is_none(){return Err("OTA window has no validated BEGIN generation".into());}
         self.observe(&bytes)?;
-        if self.submitted>0 && self.durable==self.submitted && self.ends.is_empty() {
+        if self.window_complete() {
             Ok(Some(bytes))
         } else {Ok(None)}
+    }
+    fn window_complete(&self)->bool {
+        self.generation.is_some() && self.submitted>0 &&
+            self.durable==self.submitted && self.ends.is_empty()
     }
     pub fn observe(&mut self,bytes:&[u8])->Result<(),String> {
         let s=denzic_ota_core::parse_status(bytes)?;
@@ -533,6 +538,35 @@ pub(super) fn current_window_receipt(credits:&mut DeviceQueueCredits,
     match mailbox.latest(cursor)? {
         Some(bytes)=>credits.completed_window_receipt(bytes),
         None=>Ok(None),
+    }
+}
+
+/// A partial uncached READ does not finish the logical DATA window. Recheck
+/// notices on each existing retry without waiting for an unpromised notice.
+#[derive(Default)]
+pub(super) struct WindowReceiptBarrier { active:bool, fallback_started:bool }
+pub(super) enum WindowReceiptDecision {
+    Inactive,
+    Read { first:bool },
+    Complete { bytes:Vec<u8>, after_read:bool },
+}
+impl WindowReceiptBarrier {
+    pub fn reset(&mut self){self.active=false;self.fallback_started=false;}
+    pub fn arm(&mut self){self.active=true;self.fallback_started=false;}
+    pub fn active(&self)->bool{self.active}
+    pub fn before_read(&mut self,credits:&mut DeviceQueueCredits,
+        mailbox:&DurableStatusMailbox,cursor:&mut u64)->Result<WindowReceiptDecision,String> {
+        if !self.active{return Ok(WindowReceiptDecision::Inactive);}
+        if let Some(bytes)=current_window_receipt(credits,mailbox,cursor)? {
+            let after_read=self.fallback_started;self.reset();
+            return Ok(WindowReceiptDecision::Complete{bytes,after_read});
+        }
+        let first=!self.fallback_started;self.fallback_started=true;
+        Ok(WindowReceiptDecision::Read{first})
+    }
+    /// Called only after the adapter validates a real current-generation READ.
+    pub fn observed_read(&mut self,credits:&DeviceQueueCredits){
+        if self.active && credits.window_complete(){self.reset();}
     }
 }
 
@@ -697,5 +731,53 @@ mod window_barrier_tests {
         assert_eq!(denzic_ota_core::parse_status(&b).unwrap().bytes_written,430);
         m.fail("actual callback failed".into());assert_eq!(m.latest(&mut cursor).unwrap_err(),"actual callback failed");
         let m=DurableStatusMailbox::default();let mut cursor=m.bind(7,1000).unwrap();m.publish(Ok(notice(7,215,1000)));m.close();assert!(m.latest(&mut cursor).is_err());
+    }
+}
+
+#[cfg(test)]
+mod window_retry_notice_tests {
+    use super::*;
+    use super::notification_credit_tests::notice;
+    fn window()->(DeviceQueueCredits,DurableStatusMailbox,u64,WindowReceiptBarrier){
+        let mut c=DeviceQueueCredits::new(1700,100,16).unwrap();c.begin();c.observe(&notice(7,0,1700)).unwrap();
+        for i in 0u32..16{let mut b=vec![0;104];b[..4].copy_from_slice(&(i*100).to_le_bytes());c.admit(&b).unwrap();}
+        let m=DurableStatusMailbox::default();let cursor=m.bind(7,1700).unwrap();
+        let mut barrier=WindowReceiptBarrier::default();barrier.arm();(c,m,cursor,barrier)
+    }
+    #[test]
+    fn late_exact_notice_ends_window_after_a_partial_uncached_read(){
+        let(mut c,m,mut cursor,mut barrier)=window();
+        assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:true}));
+        let partial=notice(7,800,1700);c.observe(&partial).unwrap();m.publish(Ok(partial));barrier.observed_read(&c);
+        m.publish(Ok(notice(7,1600,1700)));
+        match barrier.before_read(&mut c,&m,&mut cursor).unwrap(){
+            WindowReceiptDecision::Complete{bytes,after_read:true}=>assert_eq!(denzic_ota_core::parse_status(&bytes).unwrap().bytes_written,1600),
+            _=>panic!("exact late notice must replace the next READ"),
+        }
+        assert!(!barrier.active());assert!(c.ends.is_empty());
+    }
+    #[test]
+    fn an_unpromised_or_partial_notice_keeps_each_existing_read_immediate(){
+        let(mut c,m,mut cursor,mut barrier)=window();
+        assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:true}));
+        m.publish(Ok(notice(7,800,1700)));
+        assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:false}));
+        assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:false}));
+        assert!(barrier.active());assert_eq!(c.ends.len(),8);
+    }
+    #[test]
+    fn exact_uncached_read_disarms_before_later_control_or_version_checks(){
+        let(mut c,m,mut cursor,mut barrier)=window();
+        assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:true}));
+        c.observe(&notice(7,1600,1700)).unwrap();barrier.observed_read(&c);m.close();
+        assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Inactive));
+        barrier.arm();barrier.reset();assert!(!barrier.active());
+    }
+    #[test]
+    fn retry_still_rejects_old_generation_and_closed_subscription(){
+        let(mut c,m,mut cursor,mut barrier)=window();
+        m.publish(Ok(notice(6,1600,1700)));
+        assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:true}));
+        assert_eq!(c.ends.len(),16);m.close();assert!(barrier.before_read(&mut c,&m,&mut cursor).is_err());
     }
 }

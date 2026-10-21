@@ -155,13 +155,43 @@ impl Drop for ServiceChangeLease {
 }
 
 
-/// Own exactly our ValueChanged handler; it cannot outlive this OTA transport.
+/// Bounded metadata only; no payload, key bytes, per-callback I/O or worker.
+#[derive(Clone,serde::Serialize)]
+struct OtaStatusObservation {
+    stage:&'static str,host_unix_us:u64,elapsed_us:u64,
+    generation:u32,accepted:u32,expected:u32,state:u8,
+    submitted_prefix:u32,after_fallback:bool,
+}
+#[derive(Clone,serde::Serialize)]
+struct OtaStatusTrace { rows:Vec<OtaStatusObservation>,dropped:u32,#[serde(skip)] origin:Instant }
+impl OtaStatusTrace {
+    fn new()->Self{Self{rows:Vec::with_capacity(1024),dropped:0,origin:Instant::now()}}
+    fn stamp()->(u64,Instant){
+        let mono=Instant::now();
+        let unix=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH)
+            .map(|d|d.as_micros().min(u64::MAX as u128) as u64).unwrap_or(0);
+        (unix,mono)
+    }
+    fn record(&mut self,stage:&'static str,stamp:(u64,Instant),bytes:Option<&[u8]>,submitted:u32,after:bool){
+        if self.rows.len()==1024{self.dropped=self.dropped.saturating_add(1);return;}
+        let mut row=OtaStatusObservation{stage,host_unix_us:stamp.0,
+            elapsed_us:stamp.1.saturating_duration_since(self.origin).as_micros().min(u64::MAX as u128) as u64,
+            generation:0,accepted:0,expected:0,state:0,submitted_prefix:submitted,after_fallback:after};
+        if let Some(b)=bytes.filter(|b|b.len()==44 && &b[..4]==b"DOV1" && &b[24..28]==b"WOC4") {
+            row.generation=u32::from_le_bytes(b[40..44].try_into().unwrap());row.state=b[5];
+            row.accepted=u32::from_le_bytes(b[8..12].try_into().unwrap());
+            row.expected=u32::from_le_bytes(b[12..16].try_into().unwrap());
+        }
+        self.rows.push(row);
+    }
+}
 struct DurableNotificationLease {
     characteristic:GattCharacteristic,
     token:Option<EventRegistrationToken>,
     mailbox:std::sync::Arc<super::ota_flow::DurableStatusMailbox>,
     cursor:u64,
     generation:Option<u32>,
+    trace:std::sync::Arc<std::sync::Mutex<OtaStatusTrace>>,
 }
 impl DurableNotificationLease {
     fn subscribe(characteristic:&GattCharacteristic)->Result<Self,String> {
@@ -171,7 +201,10 @@ impl DurableNotificationLease {
         }
         let mailbox=std::sync::Arc::new(super::ota_flow::DurableStatusMailbox::default());
         let receiver=mailbox.clone();
+        let trace=std::sync::Arc::new(std::sync::Mutex::new(OtaStatusTrace::new()));
+        let callback_trace=trace.clone();
         let handler=TypedEventHandler::<GattCharacteristic,GattValueChangedEventArgs>::new(move|_,args|{
+            let stamp=OtaStatusTrace::stamp(); // callback entry, before WinRT buffer decoding
             let result=(||->Result<Vec<u8>,String>{
                 let args=args.as_ref().ok_or("Missing durable notification arguments")?;
                 let buffer=args.CharacteristicValue().map_err(|e|e.to_string())?;
@@ -180,10 +213,14 @@ impl DurableNotificationLease {
                 if size!=44 {return Err("Invalid durable notification extent".into());}
                 let mut bytes=vec![0;size];reader.ReadBytes(&mut bytes).map_err(|e|e.to_string())?;Ok(bytes)
             })();
+            if let Ok(mut t)=callback_trace.lock(){
+                t.record(if result.is_ok(){"callback_enter"}else{"callback_error"},stamp,
+                    result.as_ref().ok().map(Vec::as_slice),0,false);
+            }
             receiver.publish(result);Ok(())
         });
         let token=characteristic.ValueChanged(&handler).map_err(|e|format!("OTA notification handler: {e}"))?;
-        let lease=Self{characteristic:characteristic.clone(),token:Some(token),mailbox,cursor:0,generation:None};
+        let lease=Self{characteristic:characteristic.clone(),token:Some(token),mailbox,cursor:0,generation:None,trace};
         let operation=characteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue::Notify)
             .map_err(|e|format!("OTA durable notification subscription: {e}"))?;
         let status=wait_async_operation_with_cancel(operation,STATUS_READ_TIMEOUT,"OTA durable notification subscription",&BleCancel::NONE)?;
@@ -221,7 +258,8 @@ struct CompanionOtaWinrtTransport<'a> {
     device_notices_used:u32,
     credit_refills_with_pending_writes:u32,
     credit_refill_pending_peak:usize,
-    window_receipt_pending:bool,
+    window_receipt_barrier:super::ota_flow::WindowReceiptBarrier,
+    window_retry_notice_receipts:u32,
     window_notice_receipts:u32,
     window_receipt_fallback_reads:u32,
 }
@@ -374,7 +412,7 @@ pub fn transfer_companion_ota_winrt(
         pipeline_depth: pipeline,
         system_component: None,
         simple_file_bytes: None,
-        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0,
+        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0,
     };
 
     let progress_started = Instant::now();
@@ -533,7 +571,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         device_queue_credits:if pipelined {Some(super::ota_flow::DeviceQueueCredits::new(
             u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?,payload,flow.queue_chunks)?)} else {None},
         device_credit_reads:0,device_credit_wait:Duration::ZERO,
-        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_pending:false,window_notice_receipts:0,window_receipt_fallback_reads:0};
+        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
@@ -567,7 +605,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let credit_refills_with_pending_writes=transport.credit_refills_with_pending_writes;
     let credit_refill_pending_peak=transport.credit_refill_pending_peak;
     let window_notice_receipts=transport.window_notice_receipts;
+    let window_retry_notice_receipts=transport.window_retry_notice_receipts;
     let window_receipt_fallback_reads=transport.window_receipt_fallback_reads;
+    let durable_status_timing=transport.device_notifications.as_ref().and_then(|r|r.trace.lock().ok().map(|t|t.clone()));
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();
     // FINISH restarts the peripheral. Do not carry the old service/handles
@@ -620,7 +660,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
         "filePayloadBytes":payload,"pipelineDepth":pipeline,"physicalQueueChunks":flow.queue_chunks,
         "durableWindowChunks":flow.window_chunks,"pipelined":pipelined,
-        "windowNoticeReceipts":window_notice_receipts,"windowReceiptFallbackReads":window_receipt_fallback_reads,"deviceQueueCreditReads":device_credit_reads,
+        "durableStatusTiming":durable_status_timing,
+        "durableStatusTimingScope":"bounded1024_metadata_only_callback_entry_and_host_window_or_uncached_read; unix_microseconds_plus_monotonic; missing_rows_marked_dropped; not_RF_time",
+        "windowNoticeReceipts":window_notice_receipts,"windowRetryNoticeReceipts":window_retry_notice_receipts,"windowReceiptFallbackReads":window_receipt_fallback_reads,"deviceQueueCreditReads":device_credit_reads,
         "deviceQueueCreditNotifications":device_notices_used,
         "creditRefillsWithPendingLocalWrites":credit_refills_with_pending_writes,
         "creditRefillPendingLocalWritePeak":credit_refill_pending_peak,
@@ -1283,10 +1325,18 @@ impl CompanionOtaWinrtTransport<'_> {
 }
 
 impl CompanionOtaWinrtTransport<'_> {
-    fn completed_window_notice(&mut self)->Result<Option<Vec<u8>>,String> {
+    fn trace_status(&self,stage:&'static str,bytes:Option<&[u8]>,after:bool){
+        if let Some(receiver)=self.device_notifications.as_ref(){
+            let stamp=OtaStatusTrace::stamp();
+            let submitted=self.device_queue_credits.as_ref().map(|c|c.submitted_prefix()).unwrap_or(0);
+            if let Ok(mut t)=receiver.trace.lock(){t.record(stage,stamp,bytes,submitted,after);}
+        }
+    }
+    fn window_receipt_decision(&mut self)->Result<super::ota_flow::WindowReceiptDecision,String> {
+        if !self.window_receipt_barrier.active(){return Ok(super::ota_flow::WindowReceiptDecision::Inactive);}
         let receiver=self.device_notifications.as_mut().ok_or("Missing window receipt owner")?;
         let credits=self.device_queue_credits.as_mut().ok_or("Missing window device credits")?;
-        super::ota_flow::current_window_receipt(credits,&receiver.mailbox,&mut receiver.cursor)
+        self.window_receipt_barrier.before_read(credits,&receiver.mailbox,&mut receiver.cursor)
     }
     fn reserve_device_queue_credit(&mut self,packet:&[u8])->Result<(),String> {
         let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
@@ -1378,7 +1428,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         let mut selected=*packet;
         if let Some(c)=self.system_component {selected[6]=c;selected[7]=0xB2;}
         let packet=&selected;
-        self.window_receipt_pending=false;
+        self.window_receipt_barrier.reset();
         if packet[4] == denzic_ota_core::OP_ABORT {
             if let Some(credits)=self.device_queue_credits.as_mut(){credits.abort();}
             if let Some(receiver)=self.device_notifications.as_mut(){receiver.unbind();}
@@ -1406,7 +1456,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
             // WOC4 may satisfy it with the current BEGIN's durable notification;
             // never repeat an ATT READ merely to obtain an already held receipt.
             // Older peers and missing notifications retain the uncached READ.
-            self.window_receipt_pending=self.device_notifications.is_some();
+            if self.device_notifications.is_some(){self.window_receipt_barrier.arm();}
             return Ok(());
         }
         // The old WB WWR path needed settling after draining the host queue.
@@ -1561,24 +1611,29 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                 PROGRESS_TIMEOUT.as_millis()
             ));
         }
-        if self.window_receipt_pending {
-            self.window_receipt_pending=false; // one SYNC only, never BEGIN/FINISH/version checks
-            // A coalesced device notice may not contain the window's short
-            // final quantum. Reuse a full receipt now or READ it; do not wait
-            // for a notification that requires the next blocked DATA window.
-            if let Some(bytes)=self.completed_window_notice()? {
+        match self.window_receipt_decision()? {
+            super::ota_flow::WindowReceiptDecision::Complete{bytes,after_read}=>{
+                self.trace_status("window_notice_reuse",Some(&bytes),after_read);
                 self.window_notice_receipts=self.window_notice_receipts.saturating_add(1);
+                if after_read{self.window_retry_notice_receipts=self.window_retry_notice_receipts.saturating_add(1);}
                 self.status_error_started=None;
                 return Ok(bytes);
-            }
-            self.window_receipt_fallback_reads=self.window_receipt_fallback_reads.saturating_add(1);
+            },
+            super::ota_flow::WindowReceiptDecision::Read{first}=>{
+                // Preserve the old metric: windows entering the READ fallback,
+                // not the number of subsequent catch-up READ operations.
+                if first{self.window_receipt_fallback_reads=self.window_receipt_fallback_reads.saturating_add(1);}
+                self.trace_status("window_read_fallback",None,!first);
+            },
+            _=>{},
         }
-        // Waiting for a notification consumes the original read budget; do not
-        // add another full timeout before the one fallback uncached receipt.
+        // Checking already-delivered notices consumes the original read budget;
+        // missing notices immediately retain the uncached READ fallback.
         let timeout=timeout.saturating_sub(read_started.elapsed());
         if timeout.is_zero(){return Err("OTA window receipt exhausted its status budget".into());}
         let cancel = BleCancel::NONE;
         let result = self.flush_pending_wwr().and_then(|_| {
+            self.trace_status("uncached_read_begin",None,false);
             read_characteristic_bytes_with_timeout(
                 &self.target.status,
                 BluetoothCacheMode::Uncached,
@@ -1587,12 +1642,15 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                 &cancel,
             )
         });
+        self.trace_status(if result.is_ok(){"uncached_read_end"}else{"uncached_read_error"},
+            result.as_ref().ok().map(Vec::as_slice),false);
         match result {
             Ok(bytes) => {
                 if let Some(credits)=self.device_queue_credits.as_mut() {
                     let status=denzic_ota_core::parse_status(&bytes)?;
                     if status.state==denzic_ota_core::STATE_RECEIVING {
                         credits.observe(&bytes)?;
+                        self.window_receipt_barrier.observed_read(credits);
                         if let (Some(receiver),Some(generation))=(self.device_notifications.as_mut(),credits.generation()) {
                             receiver.bind(generation,status.expected_size)?;
                             // A validated READ and asynchronous notices must
@@ -1637,7 +1695,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
         let mut selected=*packet;
         if let Some(c)=self.system_component {selected[6]=c;selected[7]=0xB2;}
         let packet=&selected;
-        self.window_receipt_pending=false;
+        self.window_receipt_barrier.reset();
         self.flush_pending_wwr()?;
         for attempt in 0..5 {
             match write_gatt_value_with_timeout(
