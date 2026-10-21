@@ -512,8 +512,39 @@ pub(crate) fn inspect_system_ota_winrt(device_id:&str)->Result<serde_json::Value
         "sharingMode":sharing.0,"controlWrites":0,"firmwareBytesSent":0,"downloadStarted":false,"fullChainAcceptance":"NOT_QUALIFIED"}))
 }
 
+fn ota_rf_admission_request()->Result<Option<(std::path::PathBuf,String)>,String>{
+    let path=std::env::var_os("COMPANION_TYPE_OTA_RF_ADMISSION");
+    let nonce=std::env::var("COMPANION_TYPE_OTA_RF_NONCE").ok();
+    match (path,nonce){
+        (None,None)=>Ok(None),
+        (Some(path),Some(nonce)) if std::path::Path::new(&path).is_absolute() && nonce.len()==32 && nonce.bytes().all(|c|c.is_ascii_hexdigit())=>Ok(Some((path.into(),nonce))),
+        _=>Err("抓包诊断配置不完整；尚未连接设备或开始下载".into()),
+    }
+}
+fn wait_ota_rf_admission(path:&std::path::Path,nonce:&str,device:&str,not_before:u64)->Result<(),String>{
+    let started=Instant::now();let deadline=started+Duration::from_secs(8);
+    eprintln!("[companion-ota] rf_admission_wait nonce={nonce} device={device} not_before_unix_us={not_before} timeout_ms=8000 control_writes=0 data_bytes=0");
+    loop {
+        match std::fs::metadata(path){
+            Ok(meta)=>{
+                if !meta.is_file() || meta.len()>16384{return Err("抓包诊断收据无效；未发送升级内容".into());}
+                let bytes=std::fs::read(path).map_err(|e|format!("读取抓包诊断收据失败：{e}"))?;
+                super::ota_flow::check_rf_admission(&bytes,nonce,device,not_before,OtaStatusTrace::stamp().0)?;
+                eprintln!("[companion-ota] rf_admission_pass elapsed_ms={} current_connect_and_independent_mic=1 full_capture_assumed=0",started.elapsed().as_millis());
+                return Ok(());
+            },
+            Err(e) if e.kind()==std::io::ErrorKind::NotFound=>{},
+            Err(e)=>return Err(format!("抓包诊断收据不可读；未发送升级内容：{e}")),
+        }
+        if Instant::now()>=deadline{return Err("抓包器未在8秒内证明本次连接，诊断已停止；未发送BEGIN/ABORT/DATA/FINISH，不重连或重配".into());}
+        std::thread::sleep(Duration::from_millis(20));
+    }
+}
+
 pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package:&super::system_ota::Package)->Result<CompanionOtaBleReport,String> {
     let transport_profile=super::ota_flow::SimpleTransportProfile::from_env()?;
+    let rf_request=ota_rf_admission_request()?;
+    let rf_not_before=OtaStatusTrace::stamp().0;
     let started=Instant::now();let mut target=open_ota_target(requested_device_id)?;
     // Protected capability read establishes encryption before public readiness.
     let bytes=read_simple_protected_status(&target)?;
@@ -527,6 +558,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"当前升级版本",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
     package.admit(&current)?;drop(identity);
     let mtu=wait_ota_mtu(&target,false)?;
+    if let Some((path,nonce))=rf_request {
+        wait_ota_rf_admission(&path,&nonce,&target.device_id,rf_not_before)?;
+    }
     // First CE release uses one acknowledged <=244-byte ATT value. The
     // observed509-byte burst did not advance offset0; throughput work remains
     // deferred, rather than making fragmented WWR a prerequisite for OTA.

@@ -87,6 +87,25 @@ pub(super) fn retry_initial_services(attempt:u8,status:i32,remaining_ms:u128)->b
     attempt==0 && status==1 && remaining_ms>500
 }
 
+/// Explicit diagnostic admission only; no radio/pairing commands and no OTA
+/// authorization is derived from it. The signed package checks still own that.
+pub(super) fn check_rf_admission(bytes:&[u8],nonce:&str,device:&str,not_before_us:u64,now_us:u64)->Result<(),String>{
+    let bad=||"当前抓包尚未证明本次连接的CONNECT与独立MIC；未发送升级控制或数据".to_string();
+    if bytes.len()>16384{return Err(bad());}
+    let v:serde_json::Value=serde_json::from_slice(bytes).map_err(|_|bad())?;
+    if v["schema"].as_str()!=Some("companion.rf.admission.v1") || v["nonce"].as_str()!=Some(nonce) ||
+        !v["deviceId"].as_str().is_some_and(|s|s.eq_ignore_ascii_case(device)) ||
+        v["admitted"].as_bool()!=Some(true) || v["sustainedReady"].as_bool()!=Some(true) ||
+        v["peerConnect"].as_bool()!=Some(true) || v["handshakeComplete"].as_bool()!=Some(true) ||
+        v["micVerified"].as_u64().unwrap_or(0)<2 {return Err(bad());}
+    let connect=v["connectUnixUs"].as_u64().ok_or_else(bad)?;
+    let observed=v["observedUnixUs"].as_u64().ok_or_else(bad)?;
+    let tail=v["lastFrameUnixUs"].as_u64().ok_or_else(bad)?;
+    if connect<not_before_us || connect>tail || tail>observed || observed>now_us ||
+        now_us-observed>1_500_000 || observed-tail>500_000 {return Err(bad());}
+    Ok(())
+}
+
 impl WbaFlow {
     pub fn check_component(status:&[u8],component:u8)->Result<(),String> {
         let s=denzic_ota_core::parse_status(status)?;
@@ -853,5 +872,30 @@ mod window_guarantee_tests {
             assert!(b.before_read_until(&mut c,&m,&mut cursor,Some(Instant::now()+Duration::from_secs(1))).is_err());
             t.join().unwrap();assert_eq!(c.ends.len(),16);
         }
+    }
+}
+
+#[cfg(test)]
+mod rf_admission_tests {
+    use super::*;
+    const NONCE:&str="0123456789abcdef0123456789abcdef";
+    fn receipt()->serde_json::Value{serde_json::json!({"schema":"companion.rf.admission.v1","nonce":NONCE,"deviceId":"C8:ED:45:EB:95:B4","admitted":true,"sustainedReady":true,"peerConnect":true,"handshakeComplete":true,"micVerified":2,"connectUnixUs":10000000u64,"lastFrameUnixUs":10900000u64,"observedUnixUs":11000000u64})}
+    fn check(v:serde_json::Value)->Result<(),String>{check_rf_admission(&serde_json::to_vec(&v).unwrap(),NONCE,"C8:ED:45:EB:95:B4",10000000,11050000)}
+    #[test]
+    fn fresh_bound_connect_and_independent_mic_pass(){assert!(check(receipt()).is_ok());}
+    #[test]
+    fn wrong_capture_or_peer_and_incomplete_crypto_never_admit_ota(){
+        for (key,value) in [("nonce",serde_json::json!("old")),("deviceId",serde_json::json!("00:11:22:33:44:55")),("schema",serde_json::json!("old")),("admitted",serde_json::json!(false)),("sustainedReady",serde_json::json!(false)),("peerConnect",serde_json::json!(false)),("handshakeComplete",serde_json::json!(false)),("micVerified",serde_json::json!(1))] {
+            let mut v=receipt();v[key]=value;assert!(check(v).is_err(),"{key}");
+        }
+        assert!(check_rf_admission(b"not json",NONCE,"C8:ED:45:EB:95:B4",0,11050000).is_err());
+    }
+    #[test]
+    fn old_connect_stale_frame_future_receipt_and_oversize_fail_closed(){
+        for (key,value) in [("connectUnixUs",9999999u64),("lastFrameUnixUs",10499999),("observedUnixUs",11050001)] {
+            let mut v=receipt();v[key]=serde_json::json!(value);assert!(check(v).is_err(),"{key}");
+        }
+        let bytes=serde_json::to_vec(&receipt()).unwrap();assert!(check_rf_admission(&bytes,NONCE,"C8:ED:45:EB:95:B4",10000000,12500001).is_err());
+        assert!(check_rf_admission(&vec![b' ';16385],NONCE,"C8:ED:45:EB:95:B4",0,1).is_err());
     }
 }

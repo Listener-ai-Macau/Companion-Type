@@ -1,0 +1,7 @@
+[package]
+name="companion-r94-rf-admission-native"
+version="0.1.0"
+edition="2021"
+[dependencies]
+serde_json="1"
+denzic-ota-core={path="C:/Users/Billy/Desktop/Denzic/Companion/.cache/ble-rate-20261019/ota-rf-admission-r94-frozen/source/third_party/denzic-platform/ota/host/rust"}
