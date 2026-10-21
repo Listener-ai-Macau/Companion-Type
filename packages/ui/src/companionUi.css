@@ -1505,3 +1505,11 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
   .ct-recording-text { padding: 4px 19px 20px; }
   .ct-recording-notice { margin: 12px 19px; }
 }
+
+/* Historical processing belongs behind a disclosure. Current data warnings stay visible. */
+.ct-recovery-compact { padding: 12px 16px; border-radius: 12px; background: #f8faf7; margin-bottom: 16px; }
+.ct-recovery-history > summary { padding: 5px 0; cursor: pointer; color: #627166; font-size: 13px; }
+.ct-recovery-history > summary span { margin-left: 5px; padding: 1px 6px; border-radius: 8px; background: #e9eee6; font-size: 12px; }
+.ct-recovery-history > p { font-size: 12px; color: #6e7b70; }
+.ct-recovery-current > strong { display: block; margin: 4px 0; font-size: 14px; color: #405c47; }
+.ct-return-recording { margin: 0 0 16px; }

@@ -631,6 +631,10 @@ export function CompanionDashboard({
     setShowAdvanced(true);
     window.setTimeout(() => document.getElementById('ct-service-settings')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0);
   };
+  const returnToRecording = () => {
+    setPageView('library');
+    if (selectedSession) setOpenSavedRecordingId(selectedSession.id);
+  };
   const openWorkflow = () => {
     setPageView('device');
     setShowWorkflow(true);
@@ -998,6 +1002,7 @@ export function CompanionDashboard({
       {snapshot ? <CompanionRecoveryCenter snapshot={snapshot} blocked={controlsBusy || oobeBlockedByRecording}
         savingBusy={controlsBusy} asrReady={asrConfigured}
         minutesReady={Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet)}
+        onSelectSession={sessionId=>{setOpenSavedRecordingId(sessionId);onControl({action:'meetingSelectSession',sessionId});}}
         onControl={onControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
       <section className="ct-library" aria-label="录音历史">
         <div className="ct-library-head">
@@ -1841,6 +1846,7 @@ export function CompanionDashboard({
           </section>
 
           <section className="ct-panel" id="ct-service-settings">
+            <button type="button" className="ct-text-button ct-return-recording" onClick={returnToRecording}>← 返回录音</button>
             <div className="ct-panel-title">
               <Shield size={18} />
               <span>转写与纪要服务</span>
