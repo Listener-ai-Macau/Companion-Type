@@ -66,7 +66,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
     return {...d,pending:undefined,edits};
   });
   const composer=<>
-    <p>{compact?'补充单独保存，原话不改。':'补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写。'}</p>
+    <p>{compact?'补充单独保存，不改原话，也不自动加入整理。':'补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写，也不自动加入整理。'}</p>
     <textarea aria-label="新录音备注" maxLength={4000} rows={3} placeholder="记下背景，或需要回头核对的事情…"
       value={draft.text??''} disabled={busy} onChange={(event)=>{message(session.id,'');change(session.id,(d)=>({...d,text:event.target.value,pending:undefined}));}}/>
     <div className="ct-notes-controls">

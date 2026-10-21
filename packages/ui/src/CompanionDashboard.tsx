@@ -11,6 +11,7 @@ import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '.
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
+import { briefMinutes } from './briefMinutes';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
 import { CompanionRecoveryCenter } from './CompanionRecoveryCenter';
@@ -1302,7 +1303,7 @@ export function CompanionDashboard({
               <div className="ct-button-row">
                 {finalTranscript ? <button type="button" className="ct-text-button"
                   disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || (!hasMinutes && !canGenerate)}
-                  title={hasMinutes ? '查看已有整理结果' : '按已保存的转写生成草稿，完成后请核对'}
+                  title={hasMinutes ? '查看已有整理结果' : '根据已保存的录音文字整理，补充备注单独保留'}
                   onClick={() => {
                     if (hasMinutes) openRecordingResult();
                     else runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id });
@@ -1320,6 +1321,9 @@ export function CompanionDashboard({
           <CompanionMeetingNotes compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onSeek={seekBookmark} onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
+          {finalTranscript && selectedSession.meetingNotes?.length ? <p className="ct-step-meta">
+            整理依据录音文字，补充内容单独保留，不会自动加入整理。
+          </p> : null}
           </section>
           {exportResult?.sessionId === selectedSession.id ? <p className={exportResult.kind === 'error' ? 'ct-export-result ct-step-warn' : 'ct-export-result'}
             role={exportResult.kind === 'error' ? 'alert' : 'status'}>{exportResult.message}</p> : null}
@@ -1342,7 +1346,7 @@ export function CompanionDashboard({
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写已修订，此版纪要仍基于旧文字。内容已保留，请重新生成或核对后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>依据修订重新生成当前纪要</button>
-              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '手动整理' : selectedMinutesVariant.quality === 'final' ? '已精修' : selectedMinutesVariant.source === 'rules_l0' ? '本机基础草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
+              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '手动整理' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '本机基础草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
               <div className="ct-inline-edit-actions">
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
                   title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />编辑整理内容</button> : null}
@@ -1361,11 +1365,13 @@ export function CompanionDashboard({
                   label={`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
 
                 {offlineMinutes && onlineMinutes ? <p className="ct-step-meta">只修改当前版本，另一份整理结果保持不变。</p> : null}
-              </div> : hasMinutes ? <MarkdownMinutes markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
+              </div> : hasMinutes ? <MinutesReadingView markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
+                transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
+                compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 blocked={controlsBusy} onOpenSource={openTranscriptSource} />
                 : <p className="ct-step-meta" role="status">{busyAction === 'meetingGenerateMinutes' || recoveryView?.isProcessing
-                  ? '正在整理已保存的文字…' : '点“整理重点”生成草稿，原话和补充都会保留。'}</p>}
+                  ? '正在整理已保存的文字…' : '点“整理重点”整理录音文字，原话保留。'}</p>}
               {!editingMinutes && saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part === 'minutes' ?
                 <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn ct-editor-save-result' : 'ct-step-ok ct-editor-save-result'}
                   role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
@@ -2295,6 +2301,21 @@ function meetingSource(session: CompanionV1HostSession): string {
   if (session.source === 'hostMicrophone') return '本机麦克风';
   if (session.source === 'importedTranscript') return '导入文字';
   return '演示记录';
+}
+
+function MinutesReadingView({ markdown, transcript, durationMs, compactAllowed, ...sourceProps }: {
+  markdown: string; transcript: string; durationMs: number; compactAllowed: boolean;
+  sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
+  onOpenSource?: (source: CompanionTranscriptSource) => void;
+}) {
+  const brief = compactAllowed ? briefMinutes(markdown, transcript, durationMs) : null;
+  if (!brief) return <MarkdownMinutes markdown={markdown} {...sourceProps} />;
+  return <div className="ct-brief-minutes">
+    <MarkdownMinutes markdown={brief} {...sourceProps} />
+    <details className="ct-full-minutes"><summary>查看完整整理</summary>
+      <MarkdownMinutes markdown={markdown} {...sourceProps} />
+    </details>
+  </div>;
 }
 
 function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource }: { markdown: string;
