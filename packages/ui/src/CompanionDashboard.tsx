@@ -337,6 +337,7 @@ export function CompanionDashboard({
   const [libraryUnsaved,setLibraryUnsaved]=useState(false);
   const [openSavedRecordingId, setOpenSavedRecordingId] = useState<string | null>(null);
   const savedRecordingWorkspace = useRef<HTMLElement | null>(null);
+  const [detailSessionId,setDetailSessionId]=useState<string|null>(null);
   const [recordingResultOpen, setRecordingResultOpen] = useState(false);
   const [recordingToolsOpen, setRecordingToolsOpen] = useState(false);
   const [libraryToolsOpen, setLibraryToolsOpen] = useState(false);
@@ -421,6 +422,7 @@ export function CompanionDashboard({
     () => {const row=snapshot?selectedCompanionHostSession(snapshot):null;return row&&!row.organization?.trashedAt&&!libraryFilters.trash?row:null;},
     [snapshot,libraryFilters.trash],
   );
+  const savedDetailOpen=Boolean(selectedSession&&detailSessionId===selectedSession.id);
   const device = snapshot?.device;
   const controlledRecorder = snapshot?.host.sessions.find((row) => row.recorderControl
     && (row.status === 'recording' || row.recorderControlUncertain)) ?? null;
@@ -484,9 +486,11 @@ export function CompanionDashboard({
 
   useEffect(() => {
     if (!openSavedRecordingId || selectedSession?.id !== openSavedRecordingId) return;
-    savedRecordingWorkspace.current?.scrollIntoView({ block: 'start' });
+    setDetailSessionId(selectedSession.id);
     setOpenSavedRecordingId(null);
   }, [openSavedRecordingId, selectedSession?.id]);
+
+  useEffect(()=>{if(savedDetailOpen)savedRecordingWorkspace.current?.scrollIntoView({block:'start'});},[savedDetailOpen,selectedSession?.id]);
 
   const openRecentSavedRecording = () => {
     if (!recentSavedRecording || controlsBusy) return;
@@ -1065,7 +1069,7 @@ export function CompanionDashboard({
       <header className="ct-topbar">
         <div>
           <p className="ct-kicker">Companion Type</p>
-          <h1>{pageView === 'library' ? '我的录音' : pageView === 'device' ? '设备与同步' : '设置与工具'}</h1>
+          <h1>{pageView === 'library' ? savedDetailOpen?'录音详情':'我的录音' : pageView === 'device' ? '设备与同步' : '设置与工具'}</h1>
         </div>
         <button
           className="ct-icon-button"
@@ -1081,7 +1085,7 @@ export function CompanionDashboard({
 
       <nav className="ct-page-navigation" aria-label="主要功能">
         <button type="button" aria-current={pageView === 'library' ? 'page' : undefined}
-          onClick={() => setPageView('library')}><Headphones size={16} />我的录音</button>
+          onClick={() => {setPageView('library');setDetailSessionId(null);}}><Headphones size={16} />我的录音</button>
         <button type="button" aria-current={pageView === 'device' ? 'page' : undefined}
           onClick={() => setPageView('device')}><Bluetooth size={16} />设备与同步</button>
         <button type="button" aria-current={pageView === 'settings' ? 'page' : undefined}
@@ -1099,7 +1103,7 @@ export function CompanionDashboard({
       </section>
 
       <div className="ct-page-panel" hidden={pageView !== 'library'}>
-      {recentSavedRecording && !oobeBlockedByRecording ? <section className="ct-recent-recording" aria-label="最近保存的录音">
+      {recentSavedRecording && !oobeBlockedByRecording && !savedDetailOpen ? <section className="ct-recent-recording" aria-label="最近保存的录音">
         <div>
           <span className="ct-section-eyebrow">最近保存的录音</span>
           <strong><time dateTime={recentSavedRecording.startedAt ?? undefined}>{recordingTimeLabel(recentSavedRecording.startedAt)}</time>
@@ -1153,7 +1157,7 @@ export function CompanionDashboard({
         minutesReady={Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet)}
         onSelectSession={sessionId=>{setOpenSavedRecordingId(sessionId);onControl({action:'meetingSelectSession',sessionId});}}
         onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
-      <section className="ct-library" aria-label="录音历史">
+      <section className="ct-library" aria-label="录音历史" hidden={savedDetailOpen}>
         <div className="ct-library-head">
           <div>
             <p className="ct-section-eyebrow">RECORDING LIBRARY</p>
@@ -1247,7 +1251,7 @@ export function CompanionDashboard({
         )}
       </section>
 
-      {surface==='windows'&&onPrepareAudio ? <details className="ct-library-more ct-listening-more">
+      {surface==='windows'&&onPrepareAudio ? <details className="ct-library-more ct-listening-more" hidden={savedDetailOpen&&!listeningQueue.active}>
         <summary>连续回听{listeningQueue.active?' · 正在播放':''}</summary>
         <section className="ct-audio-card" aria-label="原音播放队列">
         <strong>原音播放队列</strong>
@@ -1267,7 +1271,9 @@ export function CompanionDashboard({
         {listeningQueue.message?<p role="status">{listeningQueue.message}</p>:null}
       </section></details>:null}
       {selectedSession ? (
-        <section ref={savedRecordingWorkspace} className="ct-meeting-workspace" aria-label="当前录音">
+        <section ref={savedRecordingWorkspace} className="ct-meeting-workspace" aria-label="当前录音" hidden={!savedDetailOpen}>
+          <button type="button" className="ct-text-button ct-recording-back" disabled={controlsBusy}
+            onClick={()=>{setDetailSessionId(null);window.scrollTo({top:0});}}>← 返回录音库</button>
           <header className="ct-meeting-hero">
             <div>
               <p className="ct-section-eyebrow">录音内容</p>
@@ -1350,7 +1356,7 @@ export function CompanionDashboard({
                     else runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id});
                   }}>{hasMinutes?'重新整理':'整理重点'}</button> : null}
                 {finalTranscript ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
-                  onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在保存…' : selectedSession.meetingNotes?.length ? '保存文字和补充' : '保存文字'}</button> : null}
+                  onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
             </div>
             {organizationChoiceId===selectedSession.id?<div id="ct-organization-source-choice" className="ct-organization-choice" role="group" aria-label="本次整理内容">
@@ -1437,21 +1443,25 @@ export function CompanionDashboard({
                   role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
               <textarea className="ct-minutes-output ct-machine-minutes" value={minutesMarkdown} readOnly aria-hidden="true" tabIndex={-1} />
             </div>
+            {hasMinutes&&savedActions(minutesMarkdown).length>0?<div className="ct-document-actions">
+              <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
+                onClick={()=>void exportMeeting('todo')}><Download size={15}/>导出清单</button>
+            </div>:null}
+          {exportResult?.sessionId === selectedSession.id && exportResult.origin==='document' ?
+            <p className={exportResult.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok'}
+              role={exportResult.kind === 'error' ? 'alert' : 'status'}>{exportResult.message}</p> : null}
             <details className="ct-result-tools">
-              <summary>导出文件与更多选项</summary>
+              <summary>其它导出选项</summary>
           <div className="ct-document-actions">
             <span>保存正在查看的整理结果</span>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting}
               title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
-              onClick={() => void exportMeeting('markdown')}><Download size={15} />{exportBusy ? '正在保存…' : '保存纪要'}</button>
-            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
-              onClick={() => void exportMeeting('todo')}>保存待办文件</button>
+              onClick={() => void exportMeeting('markdown')}><Download size={15} />{exportBusy ? '正在导出…' : '导出完整整理'}</button>
+
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
               title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics')}>导出日历待办</button>
           </div>
-          {exportResult?.sessionId === selectedSession.id && exportResult.origin==='document' ?
-            <p className={exportResult.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok'}
-              role={exportResult.kind === 'error' ? 'alert' : 'status'}>{exportResult.message}</p> : null}
+
           {journey?.optional ? <CompanionJourney journey={journey} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
             onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
             </details>
