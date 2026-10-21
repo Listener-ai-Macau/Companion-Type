@@ -4,8 +4,15 @@ use crate::companion_v1::{CompanionV1ActionItem, CompanionV1HostSession};
 use std::{borrow::Cow, sync::LazyLock};
 
 pub(super) fn actions(session: &CompanionV1HostSession) -> Option<Vec<CompanionV1ActionItem>> {
-    let text = session.transcript_text.trim();
-    if text.is_empty() || text.chars().count() > 280 || session.duration_ms > 120_000 {
+    plan_clauses(&session.transcript_text,session.duration_ms,true).map(|clauses|clauses.into_iter()
+        .map(|(text,_)|CompanionV1ActionItem{text,owner:None,due:None}).collect())
+}
+
+// The key is only the literal positive verb/object after an explicit source
+// time/connector. It is used for exact duplicates, never semantic/date guesses.
+fn plan_clauses(source:&str,duration_ms:u64,require_intent:bool)->Option<Vec<(String,String)>> {
+    let text = source.trim();
+    if text.is_empty() || text.chars().count() > 280 || duration_ms > 120_000 {
         return None;
     }
     // A short discussion, question, cancelled plan or report is not a task list.
@@ -28,22 +35,37 @@ pub(super) fn actions(session: &CompanionV1HostSession) -> Option<Vec<CompanionV
     const VERBS: &[&str] = &["打电话", "发邮件", "发消息", "发送", "回复", "联系", "预约", "预订", "购买",
         "领取", "归还", "寄出", "提交", "交付", "检查", "确认", "核对", "完成", "整理", "补交",
         "缴纳", "支付", "带上", "送到", "打印", "备份", "买", "取", "寄", "还", "带", "拿", "订", "缴", "付", "送", "查", "修"];
+    let text=if !require_intent {
+        text.split_once(['：',':']).filter(|(label,_)|label.chars().count()<=12
+            && (label.ends_with("补充")||matches!(*label,"备注"|"说明"|"准备事项"|"待办")))
+            .map_or(text,|(_,body)|body.trim())
+    } else {text};
+    static CONTEXT_CONNECTOR:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"^(?:然后|顺路|顺便|接着|并且|同时|再|先|并|出门前|出门|回家前|上班前|开会前)\s*"
+    ).expect("constant context connector"));
     let clauses = text.split(['，', ',', '；', ';', '。', '.', '！', '!', '\n'])
         .map(str::trim).filter(|clause| !clause.is_empty()).collect::<Vec<_>>();
     if clauses.is_empty() || clauses.len() > 8 { return None; }
     let mut items = Vec::new();
     for (index, clause) in clauses.iter().enumerate() {
         if clause.chars().count() > 100 || clause.ends_with('了') { return None; }
-        let connected = if index == 0 { Cow::Borrowed(*clause) } else { CONNECTOR.replace(clause, "") };
+        let connected = if !require_intent {
+            let mut value=(*clause).to_string();
+            for _ in 0..3 {
+                let next=CONTEXT_CONNECTOR.replace(&value,"").into_owned();
+                if next==value {break;} value=next;
+            }
+            Cow::Owned(value)
+        } else if index == 0 { Cow::Borrowed(*clause) } else { CONNECTOR.replace(clause, "") };
         let prefix = PREFIX.find(&connected)?;
         // The first clause must state an intention or time. Later literal
         // clauses may share the list context, never owner/deadline metadata.
-        if index == 0 && prefix.end() == 0 { return None; }
+        if require_intent && index == 0 && prefix.end() == 0 { return None; }
         let action = connected[prefix.end()..].trim();
         if !VERBS.iter().any(|verb| action.strip_prefix(verb).is_some_and(|object| !object.trim().is_empty())) {
             return None;
         }
-        items.push(CompanionV1ActionItem { text: (*clause).into(), owner: None, due: None });
+        items.push(((*clause).into(),action.to_string()));
     }
     Some(items)
 }
@@ -59,4 +81,37 @@ pub(super) fn restore_literal_actions(minutes: &mut super::CompanionV1MeetingMin
     // The deterministic source clauses are authoritative for this narrow path.
     minutes.action_items = actions;
     true
+}
+
+// Only a fully explicit, positive short source list plus fully explicit,
+// positive supplements qualifies. Unknown/cancelled/conditional input retains
+// the existing conservative provider path instead of reviving cancelled tasks.
+pub(super) fn context_actions(session:&CompanionV1HostSession)->Option<Vec<CompanionV1ActionItem>> {
+    if session.meeting_notes.is_empty(){return None;}
+    let original=plan_clauses(&session.transcript_text,session.duration_ms,true)?;
+    let mut notes=Vec::new();
+    for note in &session.meeting_notes { notes.extend(plan_clauses(&note.text,0,false)?); }
+    if notes.is_empty()||notes.len()+original.len()>12{return None;}
+    let explicit_order=notes.iter().any(|(text,_)|text.starts_with("先")||text.starts_with("出门"));
+    let mut result=Vec::new();let mut seen=std::collections::HashSet::new();
+    if explicit_order {
+        for (text,key) in &notes {
+            if seen.insert(key.clone()){result.push(CompanionV1ActionItem{text:format!("用户补充：{text}"),owner:None,due:None});}
+        }
+        for (text,key) in original {
+            if seen.insert(key){result.push(CompanionV1ActionItem{text,owner:None,due:None});}
+        }
+    } else {
+        for (text,key) in original {
+            if seen.insert(key.clone()) {
+                let text=notes.iter().find(|(_,candidate)|candidate==&key)
+                    .map_or(text,|(text,_)|format!("用户补充：{text}"));
+                result.push(CompanionV1ActionItem{text,owner:None,due:None});
+            }
+        }
+        for (text,key) in notes {
+            if seen.insert(key){result.push(CompanionV1ActionItem{text:format!("用户补充：{text}"),owner:None,due:None});}
+        }
+    }
+    Some(result)
 }

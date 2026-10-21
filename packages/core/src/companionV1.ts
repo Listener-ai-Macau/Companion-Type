@@ -328,7 +328,13 @@ export interface CompanionMinutesNoteContext {
 export function companionMinutesNotesCurrent(session: CompanionV1HostSession, context?: CompanionMinutesNoteContext | null): boolean {
   return !context || (context.noteRevision === (session.noteRevision ?? 0)
     && context.sourceTranscriptText === companionReviewedTranscript(session)
-    && JSON.stringify(context.notes) === JSON.stringify(session.meetingNotes ?? []));
+    && context.notes.length === (session.meetingNotes??[]).length
+    && context.notes.every((note,index)=>{
+      const current=session.meetingNotes?.[index];
+      return current && note.id===current.id && note.text===current.text
+        && (note.bookmarkId??null)===(current.bookmarkId??null)
+        && note.createdAt===current.createdAt && note.updatedAt===current.updatedAt;
+    }));
 }
 
 export interface CompanionV1MeetingMinutes {

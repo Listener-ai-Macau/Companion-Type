@@ -788,9 +788,15 @@ export function CompanionDashboard({
     setRecordingResultOpen(true);
     window.setTimeout(() => document.getElementById('ct-recording-result')?.scrollIntoView({ block: 'start' }), 0);
   };
-  const runOrganizationControl = (request: CompanionV1ControlRequest) => {
+  const runOrganizationControl = (request: CompanionV1ControlRequest, explicitSource?:'original') => {
     const targetId = request.sessionId ?? selectedSession?.id;
     if (request.action === 'meetingGenerateMinutes' && targetId === selectedSession?.id) {
+      if(snapshot?.minutesContextSupported && selectedSession?.meetingNotes?.length
+          && request.contextNoteRevision==null && explicitSource!=='original') {
+        setOrganizationChoiceId(selectedSession.id);
+        window.requestAnimationFrame(()=>document.getElementById('ct-organization-source-choice')?.scrollIntoView({block:'nearest'}));
+        return;
+      }
       if (unimportedTranscriptDraft && targetId) {
         setSaveMeetingResult({ sessionId: targetId, kind: 'error',
           message: '尚有未导入的文字。请先在录音与同步中导入，或还原为已保存的转写；本次没有开始整理。' });
@@ -1326,12 +1332,12 @@ export function CompanionDashboard({
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在保存…' : selectedSession.meetingNotes?.length ? '保存文字和补充' : '保存文字'}</button> : null}
               </div>
             </div>
-            {organizationChoiceId===selectedSession.id?<div className="ct-organization-choice" role="group" aria-label="本次整理内容">
+            {organizationChoiceId===selectedSession.id?<div id="ct-organization-source-choice" className="ct-organization-choice" role="group" aria-label="本次整理内容">
               <strong>这次整理用哪些内容？</strong>
               <p>原话和补充仍分开保留。选择补充时，只将当前已保存的内容用于这次整理；暂支持两分钟内的短备忘。</p>
               <div className="ct-button-row">
                 <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved}
-                  onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode});}}>仅原话</button>
+                  onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode},'original');}}>仅原话</button>
                 <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved||!selectedSession.meetingNotes?.length}
                   onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,
                     contextNoteRevision:selectedSession.noteRevision??0});}}>原话＋已保存补充</button>
@@ -1374,7 +1380,7 @@ export function CompanionDashboard({
               </div> : null}
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写或本次使用的补充已变化。这版结果已保留，请重新整理后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
-                  onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>依据修订重新生成当前纪要</button>
+                  onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>重新选择内容并整理</button>
               </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '手动整理' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '本机基础草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
               <div className="ct-inline-edit-actions">
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}

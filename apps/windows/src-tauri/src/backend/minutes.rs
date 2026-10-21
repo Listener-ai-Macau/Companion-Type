@@ -160,8 +160,11 @@ pub(super) fn finalize_minutes(
             let actions_changed = enforce_source_backed_action_items(&mut upgraded, &l0);
             let assigned_added = session.meeting_notes.is_empty() && merge_explicit_source_assignments(&mut upgraded, &l0);
             let memo_actions_restored = session.meeting_notes.is_empty() && short_memo::restore_literal_actions(&mut upgraded, session);
+            let context_actions_restored=if let Some(actions)=short_memo::context_actions(session) {
+                upgraded.action_items=actions; true
+            } else {false};
             let fallback_count = merge_missing_source_facts(&mut upgraded, &l0.summary);
-            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored {
+            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || context_actions_restored {
                 // The model may return a polished markdown body that omits facts
                 // already retained by deterministic extraction. Once a fallback
                 // is needed, render from the merged structured fields so the UI,
