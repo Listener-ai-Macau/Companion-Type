@@ -1254,9 +1254,29 @@ struct SealedLinkPolicy {
     preference: Option<super::ble_throughput::TransferPreference>,
     #[cfg(windows)]
     initialized: bool,
+    budget_observed: bool,
 }
 impl SealedLinkPolicy {
     async fn initialize(&mut self, device: &NativeDevice) {
+        if !self.budget_observed {
+            self.budget_observed=true;
+            let chars=device.peripheral.characteristics();
+            let uuid=Uuid::from_u128(0xe571544a7c414650b0d6ccebfe1db489);
+            if let Some(characteristic)=chars.iter().find(|c|c.uuid==uuid) {
+                // btleplug0.11.8 WinRT read explicitly uses Uncached. Keep
+                // the existing device/session and its disconnect guard.
+                let read=on_native_link(device,async {
+                    tokio::time::timeout(StdDuration::from_secs(3),device.peripheral.read(characteristic)).await
+                        .map_err(|_|"link-budget read timed out".to_string())?
+                        .map_err(|e|format!("link-budget read: {e}"))
+                }).await;
+                match read.and_then(|b|super::ble_link_budget::LinkBudget::from_ota_status(&b)) {
+                    Ok(budget)=>eprintln!("ble_device_link_budget scope=sealed_before_batch actual={}",
+                        serde_json::to_string(&budget).unwrap_or_else(|_|"null".into())),
+                    Err(error)=>eprintln!("ble_device_link_budget scope=sealed_before_batch actual=null error={error}; existing_recording_guards_retained=1"),
+                }
+            }
+        }
         #[cfg(windows)]
         if !self.initialized {
             self.initialized = true;
@@ -4273,6 +4293,7 @@ async fn sync_native_recordings_scoped(requested_device_id: Option<&str>,known_r
     let mut link_policy = SealedLinkPolicy {
         #[cfg(windows)] preference: setup_preference,
         #[cfg(windows)] initialized: true,
+        budget_observed:false,
     };
     eprintln!("recording_sync_stage stage=connection elapsed_ms={}", started.elapsed().as_millis());
     let result = sync_native_recordings_with_link_policy(&device, known_recording_ids, recording_id, &mut link_policy, logical_key).await;

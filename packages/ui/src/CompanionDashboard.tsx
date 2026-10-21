@@ -211,7 +211,7 @@ export interface CompanionDashboardProps {
 // Present the existing local rule draft without its generated diagnostic metadata.
 // Stored/exported text stays intact; empty extraction is explicit, never a task invented by the UI.
 function localDraftForDisplay(markdown: string, source: string | undefined): string {
-  if (source !== 'rules_l0' || !markdown.includes('## Summary')) return markdown;
+  if ((source !== 'rules_l0' && !(source === 'userEdited' && basicMinutesFields(markdown))) || !markdown.includes('## Summary')) return markdown;
   const parts = markdown.split(/^## /m);
   const intro = (parts.shift() ?? '').split('\n')
     .filter(line => !/^(Generated:|Duration:|Source:|Minutes engine:)/.test(line)).join('\n').trim();
@@ -225,6 +225,50 @@ function localDraftForDisplay(markdown: string, source: string | undefined): str
     return [`## ${labels[heading] ?? heading}\n\n${body}`];
   });
   return [intro, ...sections].filter(Boolean).join('\n\n');
+}
+
+// Only the exact legacy local-draft template has a safe field projection.
+// Keep the stored header and every other section byte-for-byte while changing
+// one field. Arbitrary/manual/cloud Markdown keeps its existing text editor.
+function basicMinutesFields(markdown: string): Array<{ key: string; label: string; value: string; start: number; end: number }> | null {
+  const labels: Record<string, string> = { Summary: '摘要', Decisions: '决定', 'Action Items': '待办', Questions: '待确认', Keywords: '关键词' };
+  const headings = [...markdown.matchAll(/^## (Summary|Decisions|Action Items|Questions|Keywords)\r?$/gm)];
+  if (headings.map(match => match[1]).join('|') !== Object.keys(labels).join('|')) return null;
+  const prefix = markdown.slice(0, headings[0].index);
+  if (!/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: rules_l0 \(draft\)\r?\n\r?\n$/.test(prefix)) return null;
+  return headings.map((match, index) => {
+    const start = match.index! + match[0].length;
+    const end = headings[index + 1]?.index ?? markdown.length;
+    const lines = markdown.slice(start, end).trim().split(/\r?\n/);
+    const body = lines.length === 1 && /^(?:- )?None captured$/.test(lines[0]) ? ''
+      : lines.map(line => line.replace(/^- /, '')).join('\n');
+    return { key: match[1], label: labels[match[1]], value: body, start, end };
+  });
+}
+
+function MinutesContentEditor({ markdown, onChange, disabled, label }: {
+  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string;
+}) {
+  const fields = basicMinutesFields(markdown);
+  if (!fields) return <textarea value={markdown} onChange={event => onChange(event.target.value)}
+    aria-label={label} spellCheck={false} disabled={disabled} />;
+  const field = (item: typeof fields[number]) => <label key={item.key} className="ct-basic-minutes-field">
+    <span>{item.label}</span><textarea aria-label={`编辑${item.label}`} value={item.value} spellCheck={false}
+      disabled={disabled} placeholder={item.key === 'Action Items' ? '一行一件事，填写你确认的待办' : '暂无内容，可自行补充'}
+      onChange={event => {
+        const newline = markdown.includes('\r\n') ? '\r\n' : '\n';
+        const lines = event.target.value.split(/\r?\n/);
+        const body = lines.map(line => item.key === 'Keywords' || !line.trim() ? line : `- ${line}`).join(newline);
+        onChange(markdown.slice(0, item.start) + newline + body + newline + newline + markdown.slice(item.end));
+      }} />
+  </label>;
+  return <div className="ct-basic-minutes-editor">
+    {fields.filter(item => item.key === 'Summary' || item.key === 'Action Items').map(field)}
+    <details><summary>决定、待确认与关键词</summary>
+      {fields.filter(item => item.key !== 'Summary' && item.key !== 'Action Items').map(field)}
+    </details>
+    <p className="ct-step-meta">只修改整理结果，原录音文字和补充备注仍分别保留。</p>
+  </div>;
 }
 
 export function CompanionDashboard({
@@ -308,7 +352,7 @@ export function CompanionDashboard({
   const [resourceBusy, setResourceBusy] = useState(false);
   const [exportBusy, setExportBusy] = useState(false);
   const exportActive = useRef(false);
-  const [exportResult, setExportResult] = useState<{ sessionId: string; message: string } | null>(null);
+  const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error' } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
     minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string }>>;
@@ -319,7 +363,7 @@ export function CompanionDashboard({
   const [bookmarkUnsaved,setBookmarkUnsaved]=useState(false);
   const [noteBusy,setNoteBusy]=useState(false);
   const [noteUnsaved,setNoteUnsaved]=useState(false);
-  const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; message: string; kind: 'saved' | 'error' } | null>(null);
+  const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; part?: 'title' | 'minutes'; message: string; kind: 'saved' | 'error' } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
   const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>>({});
   const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
@@ -733,14 +777,6 @@ export function CompanionDashboard({
     setRecordingToolsOpen(true);
     window.setTimeout(() => document.getElementById('ct-recording-result')?.scrollIntoView({ block: 'start' }), 0);
   };
-  const openRecordingNote = () => {
-    setRecordingToolsOpen(true);
-    window.setTimeout(() => {
-      const section = document.getElementById('ct-recording-notes');
-      section?.scrollIntoView({ block: 'center' });
-      section?.querySelector<HTMLTextAreaElement>('textarea')?.focus({ preventScroll: true });
-    }, 0);
-  };
   const runOrganizationControl = (request: CompanionV1ControlRequest) => {
     const targetId = request.sessionId ?? selectedSession?.id;
     if (request.action === 'meetingGenerateMinutes' && targetId === selectedSession?.id) {
@@ -760,12 +796,12 @@ export function CompanionDashboard({
     const sessionId = selectedSession.id;
     exportActive.current = true;
     setExportBusy(true);
-    setExportResult(null);
+    setExportResult({ sessionId, format, kind: 'pending', message: '正在保存文件…' });
     try {
       const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format });
-      setExportResult({ sessionId, message: result ? `已保存：${result.path}${result.warning ? `（${result.warning}）` : ''}` : '已取消保存，会议内容保持不变。' });
+      setExportResult({ sessionId, format, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${result.path}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' ? '。请导入日历后核对日期与提醒；导出文件不会自动创建提醒。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
-      setExportResult({ sessionId, message: `保存未完成：${error instanceof Error ? error.message : String(error)}` });
+      setExportResult({ sessionId, format, kind: 'error', message: `保存未完成：${error instanceof Error ? error.message : String(error)}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
   const exportAudio = async () => {
@@ -835,6 +871,7 @@ export function CompanionDashboard({
     const mode = minutesViewMode;
     const title = selectedDraft?.title;
     const minutes = selectedDraft?.minutes?.[mode];
+    const resultPart = minutes ? 'minutes' : 'title';
     const submittedTitle = title ? title.value.trim() : undefined;
     const submittedMinutes = minutes ? minutes.value.trim() : undefined;
     setSaveMeetingBusy(true);
@@ -863,7 +900,7 @@ export function CompanionDashboard({
           }
           return { ...current, [sessionId]: nextSession };
         });
-        setSaveMeetingResult({ sessionId, kind: 'error', message: next.host.persistence?.message ?? '修改尚未安全保存，草稿已保留，请重试。' });
+        setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: next.host.persistence?.message ?? '修改尚未安全保存，草稿已保留，请重试。' });
         return;
       }
       setMeetingDrafts((current) => {
@@ -879,9 +916,9 @@ export function CompanionDashboard({
         } };
       });
       setEditingMinutes(false);
-      setSaveMeetingResult({ sessionId, kind: 'saved', message: '修改已保存。' });
+      setSaveMeetingResult({ sessionId, part: resultPart, kind: 'saved', message: '修改已保存。' });
     } catch (saveError) {
-      setSaveMeetingResult({ sessionId, kind: 'error', message: `未保存，草稿仍在：${saveError instanceof Error ? saveError.message : String(saveError)}` });
+      setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: `未保存，草稿仍在：${saveError instanceof Error ? saveError.message : String(saveError)}` });
     } finally {
       setSaveMeetingBusy(false);
     }
@@ -1256,8 +1293,6 @@ export function CompanionDashboard({
                     if (hasMinutes) openRecordingResult();
                     else runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id });
                   }}>{hasMinutes ? '查看整理' : '整理重点'}</button> : null}
-                <button type="button" className="ct-text-button" disabled={controlsBusy || storageBlocked || !onSaveNote}
-                  onClick={openRecordingNote}>补充一句</button>
                 {finalTranscript ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
                   onClick={() => void exportMeeting('txt')}><Download size={15} />{exportBusy ? '正在保存…' : '保存文字'}</button> : null}
               </div>
@@ -1268,8 +1303,12 @@ export function CompanionDashboard({
               {transcriptReviewUnsaved ? <p className="ct-step-warn">有尚未保存的文字修订，请在“更多”中继续编辑。</p> : null}
               <p className="ct-recording-transcript">{companionReviewedTranscript(selectedSession)}</p>
             </> : <p className="ct-recording-text-empty">{recoveryView?.isProcessing?'正在转成文字，请稍候。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
+          <CompanionMeetingNotes compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
+            persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
+            onSeek={seekBookmark} onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
           </section>
-          {exportResult?.sessionId === selectedSession.id ? <p className="ct-export-result" role="status">{exportResult.message}</p> : null}
+          {exportResult?.sessionId === selectedSession.id ? <p className={exportResult.kind === 'error' ? 'ct-export-result ct-step-warn' : 'ct-export-result'}
+            role={exportResult.kind === 'error' ? 'alert' : 'status'}>{exportResult.message}</p> : null}
           <details className="ct-recording-more" open={recordingToolsOpen} onToggle={event=>setRecordingToolsOpen(event.currentTarget.open)}>
             <summary>更多{titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved?' · 有未保存的修改':''}</summary>
             {savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
@@ -1284,9 +1323,6 @@ export function CompanionDashboard({
               ? Math.round(audioElement.current.currentTime*1000):null}
             onSeek={seekBookmark} onShowOriginal={()=>{setDetailView('transcript');setRecordingToolsOpen(true);}}
             onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
-          <CompanionMeetingNotes session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
-            persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
-            onSeek={seekBookmark} onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
           {journey?.optional ? <CompanionJourney journey={journey} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
             onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
           {selectedSession.recovery?.lastError ? <details className="ct-recovery-detail">
@@ -1313,10 +1349,13 @@ export function CompanionDashboard({
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
               onClick={() => void exportMeeting('todo')}>保存待办</button>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
-              onClick={() => void exportMeeting('ics')}>导出日历待办</button>
+              title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics')}>导出日历待办</button>
           </div>
           )}
 
+          {exportResult?.sessionId === selectedSession.id && exportResult.format && exportResult.format !== 'txt' ?
+            <p className={exportResult.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok'}
+              role={exportResult.kind === 'error' ? 'alert' : 'status'}>{exportResult.message}</p> : null}
           {detailView === 'minutes' ? (
             <div className="ct-meeting-document">
               <div className="ct-minutes-mode-tabs" role="tablist" aria-label="双模式纪要">
@@ -1334,14 +1373,14 @@ export function CompanionDashboard({
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写已修订，此版纪要仍基于旧文字。内容已保留，请重新生成或核对后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>依据修订重新生成当前纪要</button>
-              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.quality === 'final' ? '已精修' : selectedMinutesVariant.source === 'rules_l0' ? '本机基础草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
+              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '手动整理' : selectedMinutesVariant.quality === 'final' ? '已精修' : selectedMinutesVariant.source === 'rules_l0' ? '本机基础草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
               <div className="ct-inline-edit-actions">
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
-                  title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />编辑当前纪要</button> : null}
+                  title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />编辑整理内容</button> : null}
               </div>
               {editingMinutes ? <div className="ct-minutes-editor">
-                <textarea value={minutesDraft} onChange={(event) => updateMinutesDraft(event.target.value)}
-                  aria-label={`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} spellCheck={false} disabled={saveMeetingBusy} />
+                <MinutesContentEditor markdown={minutesDraft} onChange={updateMinutesDraft}
+                  label={`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
                 <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary"
                   disabled={!minutesDirty || saveMeetingBusy || !minutesDraft.trim()} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : '保存修改'}</button>
                   <button type="button" className="ct-action" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('minutes')}>取消</button></div>
@@ -1349,6 +1388,9 @@ export function CompanionDashboard({
               </div> : <MarkdownMinutes markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 blocked={controlsBusy} onOpenSource={openTranscriptSource} />}
+              {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part === 'minutes' ?
+                <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn ct-editor-save-result' : 'ct-step-ok ct-editor-save-result'}
+                  role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
               <textarea className="ct-minutes-output ct-machine-minutes" value={minutesMarkdown} readOnly aria-hidden="true" tabIndex={-1} />
             </div>
           ) : null}
@@ -2125,7 +2167,7 @@ export function CompanionDashboard({
       </section>
 
       <div className="ct-page-panel" hidden={pageView !== 'settings'}>{settingsFooter}</div>
-      <footer className="ct-footer">{footer}</footer>
+      <footer className="ct-footer">{titleDirty || minutesDirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved || libraryUnsaved ? '有尚未保存的修改。' : footer}</footer>
     </main>
   );
 }

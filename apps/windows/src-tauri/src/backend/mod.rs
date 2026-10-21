@@ -11,6 +11,7 @@ pub(crate) mod speaker_refinement;
 pub(crate) use ble_bridge::benchmark_recording_upload;
 pub(crate) use ble_bridge::known_segmented_peer;
 mod ble_mtu;
+mod ble_link_budget;
 use ble_bridge::CompanionBleOperation;
 #[cfg(windows)]
 mod ble_pairing;

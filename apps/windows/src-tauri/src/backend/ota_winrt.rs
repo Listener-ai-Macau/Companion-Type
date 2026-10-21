@@ -177,7 +177,7 @@ impl OtaStatusTrace {
         let mut row=OtaStatusObservation{stage,host_unix_us:stamp.0,
             elapsed_us:stamp.1.saturating_duration_since(self.origin).as_micros().min(u64::MAX as u128) as u64,
             generation:0,accepted:0,expected:0,state:0,submitted_prefix:submitted,after_fallback:after};
-        if let Some(b)=bytes.filter(|b|b.len()==44 && &b[..4]==b"DOV1" && &b[24..28]==b"WOC4") {
+        if let Some(b)=bytes.filter(|b|b.starts_with(b"DOV1") && super::ble_link_budget::generation_status(b).unwrap_or(false)) {
             row.generation=u32::from_le_bytes(b[40..44].try_into().unwrap());row.state=b[5];
             row.accepted=u32::from_le_bytes(b[8..12].try_into().unwrap());
             row.expected=u32::from_le_bytes(b[12..16].try_into().unwrap());
@@ -505,10 +505,11 @@ pub(crate) fn inspect_system_ota_winrt(device_id:&str)->Result<serde_json::Value
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
     let flow=super::ota_flow::WbaFlow::from_simple_status(&bytes,props.contains(GattCharacteristicProperties::WriteWithoutResponse))?;
     let readiness=read_wba_readiness(&target)?;
+    let link_budget=super::ble_link_budget::LinkBudget::from_ota_status(&bytes)?;
     let sharing=target._service.SharingMode().map_err(|e|e.to_string())?;
     Ok(serde_json::json!({"result":"OTA_PROTECTED_READ_ONLY_INSPECTION_COMPLETE","deviceId":target.device_id,
         "state":status.state,"lastError":status.last_error,"bytesWritten":status.bytes_written,"expectedBytes":status.expected_size,
-        "readinessBlockers":readiness.blockers,"payloadCapacity":flow.payload_bytes,"windowChunks":flow.window_chunks,
+        "readinessBlockers":readiness.blockers,"payloadCapacity":flow.payload_bytes,"windowChunks":flow.window_chunks,"linkBudget":link_budget,
         "sharingMode":sharing.0,"controlWrites":0,"firmwareBytesSent":0,"downloadStarted":false,"fullChainAcceptance":"NOT_QUALIFIED"}))
 }
 
@@ -549,6 +550,8 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     // Protected capability read establishes encryption before public readiness.
     let bytes=read_simple_protected_status(&target)?;
     let preflight=denzic_ota_core::parse_status(&bytes)?;
+    let device_link_budget=super::ble_link_budget::LinkBudget::from_ota_status(&bytes)?;
+    eprintln!("ble_device_link_budget scope=ota_preflight actual={}",serde_json::to_string(&device_link_budget).unwrap_or_else(|_|"null".into()));
     eprintln!("[companion-ota] preflight_receive state={} accepted={} expected={} error={}",preflight.state,preflight.bytes_written,preflight.expected_size,preflight.last_error);
     check_wba_readiness(&target)?;
     let props=target.data.CharacteristicProperties().map_err(|e|e.to_string())?;
@@ -729,6 +732,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "deviceQueueCreditWaitUs":device_credit_wait.as_micros(),
         "localWriteCompletionReturnsDeviceCredit":false,
         "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
+        "deviceLinkBudgetBeforeBegin":device_link_budget,
         "connectionPreference":connection_preference,
         "connectionPreferenceRelease":release_scope,
         "connectionPreferenceHandoffOffset":handoff_offset,

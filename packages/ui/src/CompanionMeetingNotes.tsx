@@ -7,7 +7,8 @@ type Edit = { text:string; anchor:string; originalText:string; originalAnchor:st
 type Draft = { text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,onUnsavedChange,onBusyChange}: {
+export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,onUnsavedChange,onBusyChange,compact=false}: {
+  compact?:boolean;
   session:CompanionV1HostSession;
   blocked:boolean;
   persistenceReady:boolean;
@@ -21,6 +22,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   const [drafts,setDrafts]=useState<Record<string,Draft>>({});
   const [messages,setMessages]=useState<Record<string,string>>({});
   const [busy,setBusy]=useState(false);
+  const [composers,setComposers]=useState<Record<string,boolean>>({});
   const active=useRef(false);
   const draft=drafts[session.id]??{};
   const disabled=blocked||busy||!onSave||!persistenceReady;
@@ -34,7 +36,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   const message=(id:string,value:string)=>setMessages((all)=>({...all,[id]:value}));
   const save=async(request:CompanionMeetingNoteRequest)=>{
     if(active.current||disabled||!onSave)return;
-    active.current=true;setBusy(true);onBusyChange?.(true);
+    active.current=true;setBusy(true);onBusyChange?.(true);message(request.sessionId,'');
     change(request.sessionId,(d)=>({...d,pending:request}));
     try {
       const saved=await onSave(request);
@@ -49,6 +51,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         return {...d,pending:undefined,edits,text:request.action==='add'?'':d.text,anchor:request.action==='add'?'':d.anchor};
       });
       message(request.sessionId,request.action==='delete'?'备注已删除，原始录音和转写保留。':'备注已保存到本机。');
+      if(compact&&request.action==='add')setComposers(all=>({...all,[request.sessionId]:false}));
     } catch(error) {message(request.sessionId,error instanceof Error?error.message:String(error));}
     finally {active.current=false;setBusy(false);onBusyChange?.(false);}
   };
@@ -62,19 +65,26 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
     const edits=Object.fromEntries(Object.entries(d.edits??{}).map(([id,edit])=>[id,{...edit,revision:session.noteRevision??0}]));
     return {...d,pending:undefined,edits};
   });
-  return <section id="ct-recording-notes" className="ct-meeting-notes" aria-label="录音备注">
-    <div className="ct-notes-heading"><h4><StickyNote size={16}/>录音备注</h4><span>用户补充 · {notes.length} 条</span></div>
-    <p>补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写。</p>
+  const composer=<>
+    <p>{compact?'补充单独保存，原话不改。':'补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写。'}</p>
     <textarea aria-label="新录音备注" maxLength={4000} rows={3} placeholder="记下背景，或需要回头核对的事情…"
-      value={draft.text??''} disabled={busy} onChange={(event)=>change(session.id,(d)=>({...d,text:event.target.value,pending:undefined}))}/>
+      value={draft.text??''} disabled={busy} onChange={(event)=>{message(session.id,'');change(session.id,(d)=>({...d,text:event.target.value,pending:undefined}));}}/>
     <div className="ct-notes-controls">
-      {selectAnchor(draft.anchor??'',(anchor)=>change(session.id,(d)=>({...d,anchor,pending:undefined})),'新备注关联重点')}
+      {!compact||points.length>0||draft.anchor?selectAnchor(draft.anchor??'',(anchor)=>change(session.id,(d)=>({...d,anchor,pending:undefined})),'新备注关联重点'):null}
       <button type="button" className="ct-action" disabled={disabled||(!draft.pending&&!draft.text?.trim())} onClick={()=>void save(draft.pending??{
         sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,action:'add',
         text:draft.text??'',bookmarkId:draft.anchor||null,
       })}>{busy?'正在保存…':draft.pending?'重试保存备注':'保存备注'}</button>
       {draft.pending?<button type="button" className="ct-action" disabled={busy} onClick={recheck}>保留输入，重新核对</button>:null}
     </div>
+  </>;
+  return <section id="ct-recording-notes" className={compact?"ct-meeting-notes ct-notes-inline":"ct-meeting-notes"} aria-label="录音备注">
+    {!compact||notes.length>0?<div className="ct-notes-heading"><h4><StickyNote size={16}/>{compact?'补充':'录音备注'}</h4><span>用户补充 · {notes.length} 条</span></div>:null}
+    {compact?<details className="ct-note-composer" open={Boolean(composers[session.id])} onToggle={event=>{
+      const open=event.currentTarget.open;
+      setComposers(all=>all[session.id]===open?all:{...all,[session.id]:open});
+      if(open)event.currentTarget.querySelector<HTMLTextAreaElement>('textarea')?.focus({preventScroll:true});
+    }}><summary>补充一句{draft.text?.trim()||draft.pending?' · 未保存':''}</summary>{composer}</details>:composer}
     {messages[session.id]?<p role="status" className="ct-notes-message">{messages[session.id]}</p>:null}
     {notes.length?<ol className="ct-notes-list">{notes.map((note)=>{
       const edit=draft.edits?.[note.id];
@@ -95,7 +105,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
           </div>
         </div>:<p className="ct-note-body">{note.text}</p>}
         <div className="ct-notes-controls">
-          <small>{point?`关联重点 · ${time(position??point.positionMs)} ${point.label}`:note.bookmarkId?'关联的重点已删除；备注仍保留。':'整条录音的补充内容'}</small>
+          {!compact||note.bookmarkId?<small>{point?`关联重点 · ${time(position??point.positionMs)} ${point.label}`:note.bookmarkId?'关联的重点已删除；备注仍保留。':'整条录音的补充内容'}</small>:null}
           {point?<button type="button" className="ct-action" disabled={blocked||busy||anyRecording||position==null} onClick={()=>void onSeek(session.id,point.id,position!)
             .catch((error)=>message(session.id,error instanceof Error?error.message:String(error)))}>定位原音</button>:null}
           {!edit?<button type="button" className="ct-action" aria-label={`编辑备注 ${note.id}`} disabled={disabled} onClick={()=>change(session.id,(d)=>({...d,edits:{...d.edits,[note.id]:{
@@ -107,7 +117,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         </div>
       </li>;
     })}</ol>:null}
-    {notes.length&&onExport?<button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady} onClick={()=>void onExport()}>保存备注与完整记录</button>:null}
+    {notes.length&&onExport?<details className="ct-note-export"><summary>导出补充</summary><button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady} onClick={()=>void onExport()}>保存备注与完整记录</button></details>:null}
     {!onSave?<small>请在 Companion Type 桌面版保存备注。</small>:null}
   </section>;
 }

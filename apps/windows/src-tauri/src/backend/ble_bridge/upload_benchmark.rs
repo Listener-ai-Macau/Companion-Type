@@ -149,6 +149,7 @@ pub(crate) fn receive_fixture(device_id: &str, manifest: &Path, output: &Path,
         let mut policy = SealedLinkPolicy {
             #[cfg(windows)] preference,
             #[cfg(windows)] initialized: true,
+            budget_observed:false,
         };
         let result = async {
             let chars = device.peripheral.characteristics();

@@ -1524,3 +1524,16 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 /* Recognize a recording by its saved words without renaming it or inventing dates. */
 .ct-library-text-preview { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin-top: 7px; color: #354f40; font-size: 12px; font-weight: 400; line-height: 1.5; overflow-wrap: anywhere; }
 .ct-library-text-partial { color: #876a35; }
+
+.ct-basic-minutes-editor, .ct-basic-minutes-field { display: grid; gap: 8px; }
+.ct-basic-minutes-editor { gap: 16px; }
+.ct-basic-minutes-field > span { font-size: 14px; font-weight: 600; color: #33483c; }
+.ct-minutes-editor .ct-basic-minutes-editor textarea { min-height: 84px; }
+.ct-basic-minutes-editor details > summary { color: #5f7466; cursor: pointer; font-size: 13px; }
+.ct-basic-minutes-editor details[open] > .ct-basic-minutes-field { margin-top: 14px; }
+
+.ct-meeting-notes.ct-notes-inline { margin: 14px 0 0; padding: 12px 0 0; border: 0; border-top: 1px solid #e2e8e1; border-radius: 0; background: transparent; }
+.ct-note-composer > summary { width: fit-content; cursor: pointer; color: #3e6650; font-size: 14px; }
+.ct-note-composer > p { margin: 10px 0 0; font-size: 12px; color: #62736a; }
+.ct-note-export > summary { width: fit-content; cursor: pointer; font-size: 12px; color: #62736a; }
+.ct-note-export .ct-action { margin-top: 8px; }

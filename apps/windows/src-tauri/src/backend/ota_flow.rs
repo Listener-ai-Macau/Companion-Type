@@ -139,7 +139,7 @@ impl WbaFlow {
         let v1 = status.len() == 32 && &status[24..28] == b"WOC1";
         let v2 = status.len() == 36 && &status[24..28] == b"WOC2";
         let v3 = status.len()==40 && &status[24..28]==b"WOC3";
-        let v4=status.len()==44 && &status[24..28]==b"WOC4";
+        let v4=super::ble_link_budget::generation_status(status)?;
         if !v1 && !v2 && !v3 && !v4 {
             return Err("Invalid WBA OTA capacity; no payload was sent".into());
         }
@@ -420,7 +420,7 @@ impl DeviceQueueCredits {
     pub fn observe(&mut self,bytes:&[u8])->Result<(),String> {
         let s=denzic_ota_core::parse_status(bytes)?;
         if !self.begun {return Ok(());} // old RECEIVING may precede the queued ABORT
-        if bytes.len()==44 && &bytes[24..28]==b"WOC4" {
+        if super::ble_link_budget::generation_status(bytes)? {
             let generation=u32::from_le_bytes(bytes[40..44].try_into().unwrap());
             if generation==0 || self.generation.is_some_and(|g|g!=generation) ||
                 (self.generation.is_none() && (self.submitted!=0 || s.bytes_written!=0)) {
