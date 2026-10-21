@@ -95,16 +95,42 @@ impl ServiceChangeLease {
         Ok(Self{device:device.clone(),token:Some(token),generation,service:None})
     }
     fn generation(&self)->usize {self.generation.load(std::sync::atomic::Ordering::SeqCst)}
-    fn observe_remote_subscription(&mut self,deadline:Instant)->Result<(),String> {
+    fn observe_remote_subscription(&mut self,session:&GattSession,deadline:Instant)->Result<(),String> {
         let cancel=BleCancel::NONE;
         let remaining=||deadline.checked_duration_since(Instant::now())
             .filter(|v|!v.is_zero()).ok_or("OTA service consistency exceeded12seconds; no firmware sent".to_string());
-        let result=wait_async_operation_with_cancel(self.device.GetGattServicesForUuidWithCacheModeAsync(
-            GUID::from_u128(0x0000180100001000800000805f9b34fb),BluetoothCacheMode::Uncached)
-            .map_err(|e|format!("OTA standard GATT service: {e}"))?,remaining()?,"OTA standard GATT service",&cancel)?;
-        if result.Status().map_err(|e|e.to_string())?!=GattCommunicationStatus::Success {
-            return Err("OTA standard GATT service unreachable; no firmware sent".into());
-        }
+        let started=Instant::now();
+        let mut attempt=0u8;
+        let result=loop {
+            let budget=remaining()?;
+            eprintln!("[companion-ota] standard_services stage=request attempt={} connection={:?} session={:?} remaining_ms={} package_writes=0 at_epoch_us={}",
+                attempt+1,self.device.ConnectionStatus().ok(),session.SessionStatus().ok(),budget.as_millis(),chrono::Utc::now().timestamp_micros());
+            // Preserve this device, maintained session and original deadline.
+            // Like the OTA-UUID query below, only the first explicit Unreachable
+            // result may be re-read once. API errors and protected statuses
+            // stay terminal; no pairing/cache writes or package replay.
+            let operation=self.device.GetGattServicesForUuidWithCacheModeAsync(
+                GUID::from_u128(0x0000180100001000800000805f9b34fb),BluetoothCacheMode::Uncached)
+                .map_err(|e|format!("OTA standard GATT service: {e}"))?;
+            let result=match wait_async_operation_with_cancel(operation,budget,"OTA standard GATT service",&cancel) {
+                Ok(value)=>value,
+                Err(error)=>{
+                    eprintln!("[companion-ota] standard_services stage=api_error attempt={} connection={:?} session={:?} elapsed_ms={} package_writes=0 at_epoch_us={}",
+                        attempt+1,self.device.ConnectionStatus().ok(),session.SessionStatus().ok(),started.elapsed().as_millis(),chrono::Utc::now().timestamp_micros());
+                    return Err(error);
+                }
+            };
+            let status=result.Status().map_err(|e|e.to_string())?;
+            eprintln!("[companion-ota] standard_services stage=returned attempt={} status={status:?} connection={:?} session={:?} elapsed_ms={} package_writes=0 at_epoch_us={}",
+                attempt+1,self.device.ConnectionStatus().ok(),session.SessionStatus().ok(),started.elapsed().as_millis(),chrono::Utc::now().timestamp_micros());
+            if status==GattCommunicationStatus::Success {break result;}
+            let budget=deadline.saturating_duration_since(Instant::now());
+            if !super::ota_flow::retry_initial_services(attempt,status.0,budget.as_millis()) {
+                return Err(format!("OTA standard GATT service status={status:?}; attempts={} no firmware sent",attempt+1));
+            }
+            drop(result);attempt+=1;
+            std::thread::sleep(Duration::from_millis(500));
+        };
         let values=result.Services().map_err(|e|e.to_string())?;
         let mut owned=Vec::new();
         for i in 0..values.Size().map_err(|e|e.to_string())? {
@@ -151,7 +177,11 @@ impl ServiceChangeLease {
     }
 }
 impl Drop for ServiceChangeLease {
-    fn drop(&mut self){if let Some(token)=self.token.take(){let _=self.device.RemoveGattServicesChanged(token);}}
+    fn drop(&mut self){
+        eprintln!("[companion-ota] service_change_owner_release connection={:?} generation={} at_epoch_us={}",
+            self.device.ConnectionStatus().ok(),self.generation(),chrono::Utc::now().timestamp_micros());
+        if let Some(token)=self.token.take(){let _=self.device.RemoveGattServicesChanged(token);}
+    }
 }
 
 
@@ -960,7 +990,7 @@ fn open_ota_target_for_address(
         .filter(|s| !s.is_empty())
         .unwrap_or_else(|| device_id_label.to_string());
     let discovery_started=Instant::now();
-    service_change.observe_remote_subscription(discovery_started+DISCOVERY_TIMEOUT)?;
+    service_change.observe_remote_subscription(&session,discovery_started+DISCOVERY_TIMEOUT)?;
     let mut refreshed_generation=0usize;
     let mut discovery_attempt=0u8;
     let services_result=loop {
