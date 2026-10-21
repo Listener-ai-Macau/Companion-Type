@@ -1585,6 +1585,8 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-minutes-action-item{grid-template-columns:minmax(0,1fr);}
 .ct-saved-action{min-width:0;width:100%;}
 .ct-saved-action>span{flex:1;min-width:0;overflow-wrap:anywhere;}
+.ct-action-source-mark{margin-left:4px;font-size:10px;color:#607265;vertical-align:super;}
+.ct-minutes-article .ct-action-source-legend{margin-top:10px;font-size:12px;line-height:1.5;color:#66756b;}
 
 /* Keep library and selected recording as separate visible views, while mounted
    drafts and playback state remain intact when returning to the list. */

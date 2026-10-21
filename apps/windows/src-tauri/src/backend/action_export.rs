@@ -2,6 +2,21 @@
 //! RFC 5545: https://www.rfc-editor.org/rfc/rfc5545.html (3.1, 3.6.2, 3.8.2.3).
 use chrono::{DateTime, NaiveDate, Utc};
 use sha2::{Digest, Sha256};
+use std::sync::LazyLock;
+
+// Aligned with UI savedActions::emptyActionNotice. Exclude only anchored
+// no-task statements, never a task merely containing a negative quotation.
+fn empty_action_notice(text:&str)->bool {
+    let value=text.trim().trim_end_matches(['.','。']);
+    if matches!(value.to_lowercase().as_str(),"none captured"|"none"|"无"|"暂无"|"无行动项"|"暂无行动项"|"待确认") { return true; }
+    static NOTICE:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"^(?:(?:转写|原文|录音|本次|当前|会议|文中|内容)(?:中|里)?[，,：:\s]*)?(?:未(?:明确)?(?:给出|提及|记录|识别|提取)(?:明确的?|具体的?)?|没有(?:明确的?|具体的?)?|暂无|无)(?:行动项|待办(?:事项)?|跟进任务|可执行任务|任务)(?:[、，,。；;：:\s].*)?$"
+    ).expect("constant empty action notice"));
+    static ENGLISH:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"(?i)^no (?:action items?|tasks?|to-dos?)(?:\s+(?:were |was |are |is )?(?:identified|captured|recorded|found|specified|available|mentioned).*)?$"
+    ).expect("constant English empty action notice"));
+    NOTICE.is_match(value)||ENGLISH.is_match(value)
+}
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Action {
@@ -44,8 +59,7 @@ pub fn parse_saved_actions(markdown: &str) -> Vec<Action> {
         let completed = body.starts_with("[x] ") || body.starts_with("[X] ");
         let text = body.strip_prefix("[ ] ").or_else(|| body.strip_prefix("[x] "))
             .or_else(|| body.strip_prefix("[X] ")).unwrap_or(body).trim();
-        if text.is_empty() || matches!(text.trim_end_matches(['.', '。']).to_lowercase().as_str(),
-            "none captured" | "none" | "无" | "暂无" | "无行动项" | "暂无行动项" | "待确认") { continue; }
+        if text.is_empty() || empty_action_notice(text) { continue; }
         // A named metadata field is required. Never infer a deadline from an
         // arbitrary date in the task sentence, or resolve "Friday" by guessing.
         let due = ["due:", "due：", "截止日期：", "截止日期:", "截止：", "截止:"]
@@ -62,7 +76,14 @@ pub fn parse_saved_actions(markdown: &str) -> Vec<Action> {
 pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
     let mut out = format!("# {} — 待办事项\n\n", title.replace(['\r', '\n'], " "));
     if draft { out.push_str("> 草稿：请核对负责人、任务和截止日期。\n\n"); }
-    for item in actions { out.push_str(&format!("- [{}] {}\n", if item.completed { "x" } else { " " }, item.text)); }
+    let mut has_supplements=false;
+    for item in actions {
+        let supplement=item.text.strip_prefix("用户补充：");
+        has_supplements|=supplement.is_some();
+        out.push_str(&format!("- [{}] {}{}\n",if item.completed {"x"}else{" "},
+            supplement.unwrap_or(&item.text),if supplement.is_some(){" ＊"}else{""}));
+    }
+    if has_supplements {out.push_str("\n> ＊ 来自用户补充；原话与补充仍分别保留。\n");}
     out
 }
 

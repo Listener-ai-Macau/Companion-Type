@@ -1,5 +1,6 @@
 // A reading projection only. Saved text, extraction, editing and exports keep
 // the complete original document; this never derives tasks from a transcript.
+import {emptyActionNotice} from './savedActions';
 export function briefMinutes(markdown: string, transcript: string, durationMs: number): string | null {
   if (!transcript.trim() || [...transcript.trim()].length > 280 || !Number.isFinite(durationMs)
       || durationMs < 0 || durationMs > 120_000
@@ -32,7 +33,9 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   // An actual question must not bring back the full provenance/template dump.
   const reading=[`## 重点\n\n${sections.get('summary')}`];
   if(!emptySection(sections.get('decisions')??''))reading.push(`## 已明确的决定\n\n${sections.get('decisions')}`);
-  reading.push(`## 待办\n\n${emptySection(sections.get('actions')??'')?'本次没有提取到待办。':sections.get('actions')}`);
+  const actions=sections.get('actions')??'';
+  const noActions=emptySection(actions)||actions.split(/\r?\n/).every(line=>!line.trim()||emptyActionNotice(line.replace(/^[-*+] (?:\[[ xX]\] )?/, '')));
+  reading.push(`## 待办\n\n${noActions?'本次没有提取到待办。':actions}`);
   if(!emptySection(sections.get('questions')??''))reading.push(`## 需确认\n\n${sections.get('questions')}`);
   return reading.join('\n\n');
 }

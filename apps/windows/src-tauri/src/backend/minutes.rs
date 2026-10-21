@@ -8,6 +8,7 @@ use denzic_host_audio_v1_core::http_policy;
 
 pub(super) mod long_meeting;
 mod short_memo;
+mod context_plan;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -157,14 +158,25 @@ pub(super) fn finalize_minutes(
             if upgraded.quality.trim().is_empty() {
                 upgraded.quality = "final".to_string();
             }
-            let actions_changed = enforce_source_backed_action_items(&mut upgraded, &l0);
+            // For explicit supplementary context, evidence must come from the
+            // current merged source, not just an older original-only L0 list.
+            // A cancelled/conditional supplement must not revive the old plan.
+            // This native short-context result already passed exact complete
+            // source-unit validation. Intent is judged across all selected
+            // material by the existing provider, rather than a verb whitelist.
+            let validated_context=upgraded.source=="llm_deepseek" && context_plan::eligible(session);
+            let context_actions=(!validated_context && !session.meeting_notes.is_empty() && short_memo::actions(session).is_some())
+                .then(||short_memo::context_actions(session));
+            let mut evidence=l0.clone();
+            if let Some(actions)=&context_actions { evidence.action_items=actions.clone().unwrap_or_default(); }
+            let actions_changed = !validated_context && enforce_source_backed_action_items(&mut upgraded, &evidence);
             let assigned_added = session.meeting_notes.is_empty() && merge_explicit_source_assignments(&mut upgraded, &l0);
             let memo_actions_restored = session.meeting_notes.is_empty() && short_memo::restore_literal_actions(&mut upgraded, session);
-            let context_actions_restored=if let Some(actions)=short_memo::context_actions(session) {
+            let context_actions_restored=if let Some(Some(actions))=context_actions {
                 upgraded.action_items=actions; true
             } else {false};
             let fallback_count = merge_missing_source_facts(&mut upgraded, &l0.summary);
-            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || context_actions_restored {
+            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() {
                 // The model may return a polished markdown body that omits facts
                 // already retained by deterministic extraction. Once a fallback
                 // is needed, render from the merged structured fields so the UI,
@@ -247,7 +259,12 @@ pub(super) fn run_deepseek_request(
         return long_meeting::run(endpoint, model, api_key, session, &l0.generated_at, client);
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
-        DEEPSEEK_SYSTEM_PROMPT, client).map(|(minutes, _)| minutes)
+        DEEPSEEK_SYSTEM_PROMPT, client).and_then(|(mut minutes, object)| {
+            if context_plan::eligible(session) {
+                minutes.action_items=context_plan::validate(&object,session)?;
+            }
+            Ok(minutes)
+        })
 }
 
 fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1MeetingMinutes) -> String {
@@ -266,7 +283,7 @@ fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1Meetin
     if session.meeting_notes.is_empty() { return original; }
     let notes = session.meeting_notes.iter().enumerate().map(|(i,n)|
         format!("用户补充{}（用户后补，不是录音识别）：\n{}",i+1,n.text)).collect::<Vec<_>>().join("\n\n");
-    format!("{original}\n\n用户明确选择仅在本次整理中参考以下补充；它们不是原始转写，不能写成录音中已经说过的事实。请保留来源区别，不把假设、疑问或条件升级为确定任务。\n{notes}")
+    format!("{original}\n\n用户明确选择仅在本次整理中参考以下补充；它们不是原始转写，不能写成录音中已经说过的事实。请保留来源区别，不把假设、疑问或条件升级为确定任务。\n{notes}{}",context_plan::instruction(session))
 }
 
 fn run_deepseek_prompt(endpoint: &str, model: &str, api_key: &str,

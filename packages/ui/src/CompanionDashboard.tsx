@@ -232,15 +232,28 @@ function localDraftForDisplay(markdown: string, source: string | undefined): str
   return [intro, ...sections].filter(Boolean).join('\n\n');
 }
 
-// Only the exact legacy local-draft template has a safe field projection.
+function minutesSourceEnvelope(context: CompanionMinutesNoteContext): string {
+  let prefix = `> 本次依据录音文字＋用户明确选择的补充整理（补充版本${context.noteRevision}）。补充不是原始录音识别，原话单独保留。\n\n## 本次使用的用户补充\n`;
+  context.notes.forEach((note, index) => {
+    prefix += `\n补充${index + 1}：\n`;
+    note.text.split('\n').forEach(line => { prefix += `> ${line}\n`; });
+  });
+  return prefix + '\n\n';
+}
+
+// Only exact native canonical templates have a safe field projection.
 // Keep the stored header and every other section byte-for-byte while changing
-// one field. Arbitrary/manual/cloud Markdown keeps its existing text editor.
-function basicMinutesFields(markdown: string): Array<{ key: string; label: string; value: string; start: number; end: number }> | null {
+// one field. Unknown Markdown keeps its existing text editor.
+function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNoteContext | null): Array<{ key: string; label: string; value: string; start: number; end: number }> | null {
   const labels: Record<string, string> = { Summary: '摘要', Decisions: '决定', 'Action Items': '待办', Questions: '待确认', Keywords: '关键词' };
   const headings = [...markdown.matchAll(/^## (Summary|Decisions|Action Items|Questions|Keywords)\r?$/gm)];
   if (headings.map(match => match[1]).join('|') !== Object.keys(labels).join('|')) return null;
-  const prefix = markdown.slice(0, headings[0].index);
-  if (!/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: rules_l0 \(draft\)\r?\n\r?\n$/.test(prefix)) return null;
+  const envelope = noteContext ? minutesSourceEnvelope(noteContext) : '';
+  if (!markdown.startsWith(envelope)) return null;
+  const prefix = markdown.slice(envelope.length, headings[0].index);
+  if (!/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
+  // Unexpected sections must stay visible in the full-text editor.
+  if ([...markdown.slice(envelope.length).matchAll(/^## /gm)].length !== headings.length) return null;
   return headings.map((match, index) => {
     const start = match.index! + match[0].length;
     const end = headings[index + 1]?.index ?? markdown.length;
@@ -251,10 +264,10 @@ function basicMinutesFields(markdown: string): Array<{ key: string; label: strin
   });
 }
 
-function MinutesContentEditor({ markdown, onChange, disabled, label }: {
-  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string;
+function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext }: {
+  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null;
 }) {
-  const fields = basicMinutesFields(markdown);
+  const fields = basicMinutesFields(markdown, noteContext);
   if (!fields) return <textarea value={markdown} onChange={event => onChange(event.target.value)}
     aria-label={label} spellCheck={false} disabled={disabled} />;
   const field = (item: typeof fields[number]) => <label key={item.key} className="ct-basic-minutes-field">
@@ -1423,7 +1436,7 @@ export function CompanionDashboard({
                     <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn' : 'ct-step-ok'}
                       role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
                 </div>
-                <MinutesContentEditor markdown={minutesDraft} onChange={updateMinutesDraft}
+                <MinutesContentEditor markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext}
                   label={`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
 
                 {offlineMinutes && onlineMinutes ? <p className="ct-step-meta">只修改当前版本，另一份整理结果保持不变。</p> : null}
@@ -2383,16 +2396,17 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   // typed source snapshot. Complete saved output remains available below.
   let reading=markdown;
   if(noteContext){
-    let prefix=`> 本次依据录音文字＋用户明确选择的补充整理（补充版本${noteContext.noteRevision}）。补充不是原始录音识别，原话单独保留。\n\n## 本次使用的用户补充\n`;
-    noteContext.notes.forEach((note,i)=>{
-      prefix+=`\n补充${i+1}：\n`;
-      note.text.split('\n').forEach(line=>{prefix+=`> ${line}\n`;});
-    });
-    if(markdown.startsWith(prefix+'\n\n'))reading=markdown.slice(prefix.length+2);
+    const envelope = minutesSourceEnvelope(noteContext);
+    if(markdown.startsWith(envelope))reading=markdown.slice(envelope.length);
   }
-  const actionChecklist=onToggleAction?{items:savedActions(savedMarkdown),onToggle:onToggleAction,blocked:actionsBlocked}:undefined;
+  const actionChecklist=onToggleAction?{items:savedActions(savedMarkdown),onToggle:onToggleAction,blocked:actionsBlocked,compactSources:!!noteContext}:undefined;
   const brief = compactAllowed ? briefMinutes(reading, transcript, durationMs) : null;
-  if (!brief) return <MarkdownMinutes markdown={markdown} actionChecklist={actionChecklist} {...sourceProps} />;
+  if (!brief) return <div className="ct-brief-minutes">
+    <MarkdownMinutes markdown={reading} actionChecklist={actionChecklist} {...sourceProps} />
+    {reading!==markdown?<details className="ct-full-minutes"><summary>查看本次补充来源与完整整理</summary>
+      <MarkdownMinutes markdown={markdown} actionChecklist={actionChecklist} {...sourceProps}/>
+    </details>:null}
+  </div>;
   return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={brief} actionChecklist={actionChecklist} {...sourceProps} />
     <details className="ct-full-minutes"><summary>查看完整整理</summary>
@@ -2402,7 +2416,7 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
 }
 
 function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, actionChecklist }: { markdown: string;
-  actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean};
+  actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void }) {
   if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
@@ -2439,13 +2453,16 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
             disabled={blocked} aria-label={`核对第${source.index + 1}段原文`}
             onClick={() => onOpenSource(source)}>核对原文 · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
         </span> : null;
-        if(block.action&&actionChecklist){const action=block.action;return <div key={index} className="ct-minutes-item ct-minutes-action-item">
+        if(block.action&&actionChecklist){const action=block.action;const supplementary=actionChecklist.compactSources&&action.text.startsWith('用户补充：');return <div key={index} className="ct-minutes-item ct-minutes-action-item">
           <label className={`ct-saved-action${action.completed?' completed':''}`}><input type="checkbox" checked={action.completed}
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${action.text}`}
-            onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>{action.text}</span></label>{links}</div>;}
+            onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>{supplementary?action.text.slice('用户补充：'.length):action.text}
+              {supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span></label>{links}</div>;}
         if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}{links}</span></div>;
         return <p key={index}>{block.text}{links}</p>;
       })}
+      {actionChecklist?.compactSources&&visibleBlocks.some(block=>block.action?.text.startsWith('用户补充：'))?
+        <p className="ct-action-source-legend">＊ 来自本次补充；原话与补充仍分别保留。</p>:null}
     </article>
   );
 }
