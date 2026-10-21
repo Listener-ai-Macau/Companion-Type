@@ -804,7 +804,7 @@ export function CompanionDashboard({
     const sessionId = selectedSession.id;
     const unsavedForExport = titleDirty || transcriptReviewUnsaved
       || (format !== 'txt' && format !== 'srt' && minutesDirty)
-      || (format === 'json' && (noteUnsaved || bookmarkUnsaved));
+      || ((format === 'json' || format === 'txt' || format === 'markdown') && (noteUnsaved || bookmarkUnsaved));
     if (unsavedForExport) {
       setExportResult({ sessionId, format, kind: 'error', message: '还有未保存的修改。请先保存或取消修改，再导出；本次没有生成文件。' });
       return;
@@ -1309,7 +1309,7 @@ export function CompanionDashboard({
                     else runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id });
                   }}>{hasMinutes ? '查看整理' : '整理重点'}</button> : null}
                 {finalTranscript ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
-                  onClick={() => void exportMeeting('txt')}><Download size={15} />{exportBusy ? '正在保存…' : '保存文字'}</button> : null}
+                  onClick={() => void exportMeeting('txt')}><Download size={15} />{exportBusy ? '正在保存…' : selectedSession.meetingNotes?.length ? '保存文字和补充' : '保存文字'}</button> : null}
               </div>
             </div>
             {companionReviewedTranscript(selectedSession).trim() ? <>
@@ -1320,7 +1320,7 @@ export function CompanionDashboard({
             </> : <p className="ct-recording-text-empty">{recoveryView?.isProcessing?'正在转成文字，请稍候。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
           <CompanionMeetingNotes compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
-            onSeek={seekBookmark} onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
+            onSeek={seekBookmark} onExport={onExportMeeting?(format)=>exportMeeting(format):undefined}/>
           {finalTranscript && selectedSession.meetingNotes?.length ? <p className="ct-step-meta">
             整理依据录音文字，补充内容单独保留，不会自动加入整理。
           </p> : null}

@@ -15,7 +15,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   anyRecording:boolean;
   onSave?:(request:CompanionMeetingNoteRequest)=>Promise<CompanionV1Snapshot>;
   onSeek:(sessionId:string,bookmarkId:string,positionMs:number)=>Promise<void>;
-  onExport?:()=>Promise<void>;
+  onExport?:(format:'txt'|'json')=>Promise<void>;
   onUnsavedChange?:(dirty:boolean)=>void;
   onBusyChange?:(busy:boolean)=>void;
 }) {
@@ -117,7 +117,14 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         </div>
       </li>;
     })}</ol>:null}
-    {notes.length&&onExport?<details className="ct-note-export"><summary>导出补充</summary><button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady} onClick={()=>void onExport()}>保存备注与完整记录</button></details>:null}
+    {notes.length&&onExport?<div className="ct-note-takeaway">
+      <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady}
+        onClick={()=>void onExport('txt')}>保存文字和补充</button>
+      <details className="ct-note-export"><summary>其他格式</summary>
+        <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady}
+          onClick={()=>void onExport('json')}>保存完整数据（JSON）</button>
+      </details>
+    </div>:null}
     {!onSave?<small>请在 Companion Type 桌面版保存备注。</small>:null}
   </section>;
 }

@@ -1568,3 +1568,5 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-brief-minutes > .ct-minutes-article h4:first-child { margin-top: 8px; padding-top: 0; }
 .ct-full-minutes { margin-top: 16px; border-top: 1px solid #edf1ee; }
 .ct-full-minutes > summary { width: fit-content; padding: 12px 0 4px; color: #5e6d61; cursor: pointer; font-size: 13px; }
+
+.ct-note-takeaway { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-top: 12px; }
