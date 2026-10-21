@@ -87,6 +87,14 @@ export type CompanionProductSettingsPublic = {
 const listeningIdentity = (session:CompanionV1HostSession) => JSON.stringify([session.id,session.audioPath??'',
   session.audioBytes,session.deviceSha256??'',session.deviceRecordingKey??'',session.audioStored,session.retention.audioCached]);
 
+function recordingTimeLabel(value?: string | null) {
+  const date = value ? new Date(value) : null;
+  return date && Number.isFinite(date.getTime())
+    ? new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false }).format(date)
+    : '时间未记录';
+}
+
 export type CompanionProductSettingsPatch = {
   defaultMeetingMode: string;
   asrProvider: string;
@@ -249,6 +257,8 @@ export function CompanionDashboard({
   const [libraryBusy,setLibraryBusy]=useState(false);
   const [libraryCurrentMessage,setLibraryCurrentMessage]=useState('');
   const [libraryUnsaved,setLibraryUnsaved]=useState(false);
+  const [openSavedRecordingId, setOpenSavedRecordingId] = useState<string | null>(null);
+  const savedRecordingWorkspace = useRef<HTMLElement | null>(null);
   const [detailView, setDetailView] = useState<'minutes' | 'transcript'>('minutes');
   const [meetingMode, setMeetingMode] = useState<CompanionV1MeetingMode>('offlineStore');
   const [minutesSelection, setMinutesSelection] = useState<{ sessionId: string; mode: CompanionV1MeetingMode } | null>(null);
@@ -343,6 +353,17 @@ export function CompanionDashboard({
     ? originalSyncRecorder : null;
   const privacy = snapshot?.privacy;
   const allLibrarySessions = snapshot?.host.sessions ?? [];
+  const recentSavedRecording = useMemo(() => allLibrarySessions
+    .filter(session => !session.organization?.trashedAt && session.status !== 'recording'
+      && session.audioStored && session.retention.audioCached && session.audioPath && session.audioBytes > 0
+      && !/^(host|device|board):\/\//i.test(session.audioPath)
+      && !['needs_local_audio', 'needs_device_sync', 'needs_segments'].includes(session.pendingReason ?? ''))
+    .reduce<CompanionV1HostSession | null>((latest, session) => {
+      if (!latest) return session;
+      const time = Date.parse(session.startedAt ?? '');
+      const previous = Date.parse(latest.startedAt ?? '');
+      return Number.isFinite(time) && (!Number.isFinite(previous) || time > previous) ? session : latest;
+    }, null), [allLibrarySessions]);
   const recordingLibrary = allLibrarySessions.filter(s=>Boolean(s.organization?.trashedAt)===Boolean(libraryFilters.trash));
   const readableLibrary = useMemo(
     () => recordingLibrary.filter((session) => (
@@ -376,6 +397,21 @@ export function CompanionDashboard({
     if (selectedSession) return;
     onControl({ action: 'meetingSelectSession', sessionId: readableLibrary[0].id });
   }, [selectedSession?.id, readableLibrary[0]?.id,libraryFilters.trash]);
+
+  useEffect(() => {
+    if (!openSavedRecordingId || selectedSession?.id !== openSavedRecordingId) return;
+    savedRecordingWorkspace.current?.scrollIntoView({ block: 'start' });
+    setOpenSavedRecordingId(null);
+  }, [openSavedRecordingId, selectedSession?.id]);
+
+  const openRecentSavedRecording = () => {
+    if (!recentSavedRecording || controlsBusy) return;
+    setLibraryFilters({ folder: '*', tag: '', favorites: false });
+    setLibraryQuery('');
+    setOnlyPendingSessions(false);
+    setOpenSavedRecordingId(recentSavedRecording.id);
+    onControl({ action: 'meetingSelectSession', sessionId: recentSavedRecording.id });
+  };
 
   useEffect(() => {
     if (snapshot) setDraftName(snapshot.bleName.stagedName);
@@ -840,7 +876,7 @@ export function CompanionDashboard({
   const simpleStatus = boardLiveActive ? 'Companion 正在记录这场会议' : selectedMinutesStale ? '转写已修订，纪要需要更新' : recoveryView?.label ?? (hasMinutes
     ? (selectedMinutesVariant?.quality ?? selectedSession?.minutes?.quality) === 'final' ? '纪要已生成' : '纪要草稿已保存'
     : finalTranscript ? '完整转写已保存，可以继续整理'
-      : hasSyncedAudio ? '录音已保存，可以继续转写'
+      : hasSyncedAudio ? '录音已保存在本机'
         : !connected ? '连接 Companion，开始一场记录'
           : '设备已识别，可以开始录音');
 
@@ -883,6 +919,17 @@ export function CompanionDashboard({
             : '已有会议仍可查看'}
         </span>
       </section>
+
+      {recentSavedRecording && !oobeBlockedByRecording ? <section className="ct-recent-recording" aria-label="最近保存的录音">
+        <div>
+          <span className="ct-section-eyebrow">最近保存的录音</span>
+          <strong><time dateTime={recentSavedRecording.startedAt ?? undefined}>{recordingTimeLabel(recentSavedRecording.startedAt)}</time>
+            {' · '}{formatDuration(recentSavedRecording.durationMs)}</strong>
+          <p>{recentSavedRecording.captureIncomplete ? '已保存的录音片段可回听，完整录音仍待核对。' : '原音已在本机，不用连接设备或先转写。'}</p>
+        </div>
+        <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy}
+          onClick={openRecentSavedRecording}><Headphones size={16} />打开这条录音</button>
+      </section> : null}
 
       {error ? (
         <section className="ct-pending-banner" role="alert">{error}</section>
@@ -973,7 +1020,7 @@ export function CompanionDashboard({
         <div className="ct-library-head">
           <div>
             <p className="ct-section-eyebrow">MEETING LIBRARY</p>
-            <strong>{libraryFilters.trash?'回收站':'会议库'}</strong>
+            <strong>{libraryFilters.trash?'回收站':'录音库'}</strong>
             <p>{recordingLibrary.length} 场{libraryFilters.trash?'可恢复录音 · 仍占本机空间':`会议 · ${pendingLibrary.length} 场待整理`}</p>
           </div>
           <button type="button" className="ct-library-filter" aria-pressed={onlyPendingSessions}
@@ -1027,6 +1074,7 @@ export function CompanionDashboard({
                   <span className="ct-library-icon"><FileText size={17} /></span>
                   <span className="ct-library-card-main">
                     <strong>{meetingTitle(session)}</strong>
+                    <small><time dateTime={session.startedAt ?? undefined}>{recordingTimeLabel(session.startedAt)}</time></small>
                     {session.organization?.protected?<small>已保护</small>:null}
                     {session.organization?.trashedAt?<small>移入时间：{session.organization.trashedAt}</small>:null}
                     {session.organization&&(session.organization.favorite||session.organization.folder||session.organization.tags.length)?<small>
@@ -1066,7 +1114,7 @@ export function CompanionDashboard({
         {listeningQueue.message?<p role="status">{listeningQueue.message}</p>:null}
       </section>:null}
       {selectedSession ? (
-        <section className="ct-meeting-workspace" aria-label="当前会议">
+        <section ref={savedRecordingWorkspace} className="ct-meeting-workspace" aria-label="当前会议">
           <header className="ct-meeting-hero">
             <div>
               <p className="ct-section-eyebrow">CURRENT MEETING</p>

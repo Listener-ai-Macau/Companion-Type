@@ -599,6 +599,30 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
   font-size: 12px;
 }
 
+.ct-pet-chat-disclosure {
+  margin: 12px auto 0;
+  width: min(1120px, calc(100% - 40px));
+  color: #324b3a;
+  font-size: 14px;
+}
+.ct-pet-chat-disclosure > summary { cursor: pointer; padding: 10px 4px; }
+.ct-recent-recording {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+  padding: 18px 20px;
+  border: 1px solid #cbdccf;
+  border-radius: 16px;
+  background: #f5faf5;
+}
+.ct-recent-recording strong { display: block; margin-top: 5px; color: #203e2a; font-size: 18px; }
+.ct-recent-recording p { margin: 6px 0 0; color: #5c6c61; font-size: 13px; }
+.ct-recent-recording .ct-action { flex-shrink: 0; }
+@media (max-width: 560px) {
+  .ct-recent-recording { align-items: flex-start; flex-direction: column; }
+}
 .ct-library-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%,260px), 1fr));

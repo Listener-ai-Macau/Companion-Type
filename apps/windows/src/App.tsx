@@ -211,7 +211,10 @@ export function App() {
 
   return (
     <div className="ct-window-shell">
-    {isTauriRuntime()?<PetChat disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>:null}
+    {isTauriRuntime()?<details className="ct-pet-chat-disclosure">
+      <summary>和宠物聊聊</summary>
+      <PetChat disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>
+    </details>:null}
     <CompanionDashboard
       onUnsavedChange={setUnsavedEdits}
       snapshot={snapshot}
