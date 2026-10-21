@@ -362,6 +362,7 @@ export function CompanionDashboard({
   const [resourceBusy, setResourceBusy] = useState(false);
   const [exportBusy, setExportBusy] = useState(false);
   const exportActive = useRef(false);
+  const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; origin?:'text'|'notes'|'document' } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
@@ -1316,15 +1317,27 @@ export function CompanionDashboard({
               <div className="ct-button-row">
                 {finalTranscript ? <button type="button" className="ct-text-button"
                   disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || (!hasMinutes && !canGenerate)}
-                  title={hasMinutes ? '查看已有整理结果' : '根据已保存的录音文字整理，补充备注单独保留'}
+                  title={hasMinutes?'重新整理，已有结果在下方保留':'整理已保存的文字'}
                   onClick={() => {
-                    if (hasMinutes) openRecordingResult();
-                    else runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id });
-                  }}>{hasMinutes ? '查看整理' : '整理重点'}</button> : null}
+                    if(snapshot?.minutesContextSupported && selectedSession.meetingNotes?.length)setOrganizationChoiceId(selectedSession.id);
+                    else runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id});
+                  }}>{hasMinutes?'重新整理':'整理重点'}</button> : null}
                 {finalTranscript ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在保存…' : selectedSession.meetingNotes?.length ? '保存文字和补充' : '保存文字'}</button> : null}
               </div>
             </div>
+            {organizationChoiceId===selectedSession.id?<div className="ct-organization-choice" role="group" aria-label="本次整理内容">
+              <strong>这次整理用哪些内容？</strong>
+              <p>原话和补充仍分开保留。选择补充时，只将当前已保存的内容用于这次整理；暂支持两分钟内的短备忘。</p>
+              <div className="ct-button-row">
+                <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved}
+                  onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode});}}>仅原话</button>
+                <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved||!selectedSession.meetingNotes?.length}
+                  onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,
+                    contextNoteRevision:selectedSession.noteRevision??0});}}>原话＋已保存补充</button>
+                <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={()=>setOrganizationChoiceId(null)}>取消</button>
+              </div>
+            </div>:null}
             {exportResult?.sessionId===selectedSession.id&&exportResult.origin==='text'?<p className="ct-export-result" role={exportResult.kind==='error'?'alert':'status'}>{exportResult.message}</p>:null}
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
@@ -1336,14 +1349,8 @@ export function CompanionDashboard({
             persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onSeek={seekBookmark} onExport={onExportMeeting?(format)=>exportMeeting(format,'notes'):undefined}
             exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>
-          {finalTranscript && selectedSession.meetingNotes?.length && snapshot?.minutesContextSupported ? <div className="ct-context-choice">
-            <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved}
-              onClick={()=>runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,
-                contextNoteRevision:selectedSession.noteRevision??0})}>参考补充整理</button>
-            <small>仅这次把已保存的补充交给现有整理服务，原话不改。暂用于两分钟内的短备忘；不需要时仍可只整理原话。</small>
-          </div>:null}
           {finalTranscript && selectedSession.meetingNotes?.length ? <p className="ct-step-meta">
-            {snapshot?.minutesContextSupported?'补充单独保存；点“参考补充整理”才用于这次整理。':'补充已单独保存；当前整理程序仅使用原话。'}
+            {snapshot?.minutesContextSupported?'补充单独保存；整理时可选择仅用原话，或一起参考已保存补充。':'补充已单独保存；当前整理程序仅使用原话。'}
           </p> : null}
           </section>
           {exportResult?.sessionId === selectedSession.id && !exportResult.origin ? <p className={exportResult.kind === 'error' ? 'ct-export-result ct-step-warn' : 'ct-export-result'}
@@ -2366,9 +2373,12 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource }: { ma
     else if (/^\d+[.)]\s+/.test(line)) blocks.push({ type: 'item', text: line.replace(/^\d+[.)]\s+/, '') });
     else if (!/^None captured$/i.test(line)) blocks.push({ type: 'text', text: line });
   });
-  const visibleBlocks = blocks.filter((block, index) => {
+  // A known empty template marker is not content to show a customer. This is
+  // display only; saved results, editing, provenance and exports remain intact.
+  const contentBlocks=blocks.filter(block=>!['item','text'].includes(block.type)||!/^None captured[.。]?$/i.test(block.text));
+  const visibleBlocks = contentBlocks.filter((block, index) => {
     if (block.type !== 'heading') return true;
-    const next = blocks[index + 1];
+    const next = contentBlocks[index + 1];
     return next && next.type !== 'heading' && next.type !== 'title';
   });
   return (
