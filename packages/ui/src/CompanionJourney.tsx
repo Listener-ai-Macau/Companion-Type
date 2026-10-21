@@ -16,6 +16,7 @@ export type MeetingJourney = {
   request?: CompanionV1ControlRequest;
   destination?: 'settings' | 'workflow';
   processing?: boolean;
+  optional?: boolean;
 };
 
 export function meetingHasFinalMinutes(session: CompanionV1HostSession): boolean {
@@ -76,6 +77,14 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
       label: context.minutesReady ? recovery ? '继续生成纪要' : '生成智能纪要' : '生成基础草稿',
       request: { action: 'meetingGenerateMinutes', sessionId: session.id } };
   }
+  if (localAudio && session.processingPolicy === 'manual' && !recovery) return {
+    stage: 1, optional: true,
+    title: context.asrReady ? '需要文字时，可以手动转写' : '需要文字时，再配置转写服务',
+    detail: '原音已保存，可以直接回听或导出。转写与纪要按需手动启动，使用你配置的服务。',
+    label: context.asrReady ? '转写这条录音' : '配置转写服务',
+    request: context.asrReady ? { action: 'meetingTranscribeAudio', sessionId: session.id } : undefined,
+    destination: context.asrReady ? undefined : 'settings',
+  };
   if (localAudio) return context.asrReady
     ? { stage: 1, title: '录音已在电脑，开始转写', detail: '转写会将这场录音发送到你配置的服务。设备离线也可以继续处理。', label: recovery ? '继续转写' : '转写这场录音', request: { action: 'meetingTranscribeAudio', sessionId: session.id } }
     : { stage: 1, title: '录音已保存，先准备转写服务', detail: '不用重新录音。配置服务后，回来继续处理这场会议。', label: '配置转写服务', destination: 'settings' };
@@ -88,13 +97,13 @@ export function CompanionJourney({ journey, blocked, onControl, onSettings, onWo
   onSettings: () => void; onWorkflow: () => void;
 }) {
   return <section className="ct-journey" aria-label="这场会议的下一步">
-    <ol className="ct-journey-progress" aria-label="会议处理进度">
+    {journey.optional ? <p className="ct-optional-processing">可选 · 转写与纪要</p> : <ol className="ct-journey-progress" aria-label="会议处理进度">
       {['内容已保存', '完整转写', '智能纪要'].map((label, index) => <li key={label}
         className={index < journey.stage ? 'done' : index === journey.stage ? 'current' : ''}
         aria-current={index === journey.stage ? 'step' : undefined}>
         <span>{index < journey.stage ? <Check size={12} /> : index + 1}</span>{label}
       </li>)}
-    </ol>
+    </ol>}
     <div className="ct-journey-body">
       <div><h3>{journey.processing ? <LoaderCircle size={18} /> : <FileText size={18} />}{journey.title}</h3><p>{journey.detail}</p></div>
       {journey.label ? <button type="button" className="ct-action ct-action-primary"

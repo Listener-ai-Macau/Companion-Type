@@ -619,7 +619,7 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 }
 .ct-recent-recording strong { display: block; margin-top: 5px; color: #203e2a; font-size: 18px; }
 .ct-recent-recording p { margin: 6px 0 0; color: #5c6c61; font-size: 13px; }
-.ct-recent-recording .ct-action { flex-shrink: 0; }
+.ct-recent-recording .ct-action { flex: 0 0 auto; min-height: 40px; }
 @media (max-width: 560px) {
   .ct-recent-recording { align-items: flex-start; flex-direction: column; }
 }
@@ -1473,4 +1473,13 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-page-panel > .ct-advanced-toggle { margin-top: 0; }
 @media (max-width: 560px) {
   .ct-page-navigation button { gap: 5px; padding: 9px 6px; font-size: 12px; }
+}
+
+.ct-saved-details { margin: 14px 24px; color: #41614a; font-size: 13px; }
+.ct-saved-details > summary { padding: 7px 0; cursor: pointer; }
+.ct-saved-details .ct-safety-card { margin: 8px 0; }
+.ct-optional-processing { margin: 0 0 10px; color: #5f7164; font-size: 12px; }
+.ct-audio-card > .ct-action { flex: 0 0 auto; min-height: 40px; }
+@media (max-width: 820px) {
+  .ct-audio-card > div { flex: 0 1 auto; width: 100%; }
 }

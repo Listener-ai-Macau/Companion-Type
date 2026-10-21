@@ -505,6 +505,8 @@ export function CompanionDashboard({
   const canGenerate = finalTranscript && !recoveryView?.isProcessing;
   const hasOriginalAudio = Boolean(hasSyncedAudio && selectedSession?.audioStored && selectedSession.retention.audioCached
     && selectedSession.audioPath && !/^(host|device|board):\/\//i.test(selectedSession.audioPath));
+  const savedOriginalReady = Boolean(hasOriginalAudio && snapshot?.host.persistence?.status === 'ready'
+    && !selectedSession?.captureIncomplete && !selectedSession?.recorderControlUncertain);
   const canTranscribe = Boolean(
     selectedSession
     && selectedSession.status !== 'recording'
@@ -1103,12 +1105,16 @@ export function CompanionDashboard({
             </div>
             <div className="ct-meeting-badges">
               {finalTranscript ? <span className="ct-pill ct-pill-good">转写完成</span>
-                : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写' : '等待转写'}</span>}
+                : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写'
+                  : selectedSession.processingPolicy === 'manual' && savedOriginalReady ? '原音已保存' : '尚未转写'}</span>}
               {offlineMinutes ? <span className="ct-pill">{offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
               {onlineMinutes ? <span className="ct-pill">{onlineReady ? '在线纪要' : '在线草稿'}</span> : null}
             </div>
           </header>
-          <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} />
+          {savedOriginalReady ? <details className="ct-saved-details">
+            <summary>原音已保存在本机 · 查看同步详情</summary>
+            <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} />
+          </details> : <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} />}
           <section className="ct-audio-card" aria-label="本机原音回听">
             <div><strong><Headphones size={16} />本机原音</strong><p>{audioBlockedReason ?? '由桌面端为当前会议临时授权，只能回听这场会议。'}</p></div>
             {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}

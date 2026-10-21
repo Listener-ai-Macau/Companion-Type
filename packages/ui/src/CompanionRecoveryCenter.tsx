@@ -1,7 +1,18 @@
 import { useState } from 'react';
 import { ArrowRight, ChevronDown, RefreshCw } from 'lucide-react';
-import { type CompanionV1ControlRequest, type CompanionV1Snapshot } from '@companion-type/core';
+import { type CompanionV1ControlRequest, type CompanionV1HostSession, type CompanionV1Snapshot } from '@companion-type/core';
 import { meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
+
+/** A complete capture-only recording does not require transcription/minutes. */
+export function manualRecordingIsSaved(session: CompanionV1HostSession): boolean {
+  return session.processingPolicy === 'manual' && session.status !== 'recording'
+    && session.audioStored && session.retention.audioCached && session.audioBytes > 0
+    && Boolean(session.audioPath && !/^(board|device|host):\/\//i.test(session.audioPath))
+    && !session.captureIncomplete && !session.recorderControlUncertain
+    && (!session.pendingReason || session.pendingReason === 'needs_transcription')
+    && !session.recovery?.lastError
+    && (!session.recovery || session.recovery.intent === 'none' || session.recovery.stage === 'complete');
+}
 
 export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrReady, minutesReady, onControl, onSettings, onWorkflow }: {
   snapshot: CompanionV1Snapshot; blocked: boolean; savingBusy: boolean; asrReady: boolean; minutesReady: boolean;
@@ -9,6 +20,7 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
 }) {
   const [expanded, setExpanded] = useState(false);
   const pending = snapshot.host.sessions.filter(session => !session.organization?.trashedAt && session.status !== 'recording'
+    && !manualRecordingIsSaved(session)
     && (!meetingHasFinalMinutes(session) || (session.recovery?.intent === 'processMeeting' && session.recovery.stage !== 'complete')));
   const storage = snapshot.host.persistence;
   const storageBlocked = Boolean(storage && storage.status !== 'ready');
