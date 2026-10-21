@@ -17,13 +17,14 @@ pub(super) struct WbaFlow {
 /// evidence qualifies the bounded WWR path. The peer-handoff comparison changes only preference ownership after a durable
 /// window; packet size, file format and signature/installation stay identical.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed215PeerHandoff, Windowed215Hold }
+pub(super) enum SimpleTransportProfile { Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed466PeerHandoff, Windowed215PeerHandoff, Windowed215Hold }
 
 impl SimpleTransportProfile {
     pub fn parse(value: Option<&str>) -> Result<Self, String> {
         match value.map(str::trim).unwrap_or("") {
             "" | "acknowledged" => Ok(Self::Acknowledged),
             "windowed_491_peer_handoff" => Ok(Self::Windowed491PeerHandoff),
+            "windowed_466_peer_handoff" => Ok(Self::Windowed466PeerHandoff),
             "windowed_244" => Ok(Self::Windowed244),
             "windowed_244_peer_handoff" => Ok(Self::Windowed244PeerHandoff),
             "windowed_215_peer_handoff" => Ok(Self::Windowed215PeerHandoff),
@@ -38,6 +39,10 @@ impl SimpleTransportProfile {
             (flow.payload_bytes<491 || mtu<498 || flow.window_chunks<=flow.queue_chunks) {
             return Err("设备或MTU未确认WOC3长窗口/491字节包形，未开始升级".into());
         }
+        if self==Self::Windowed466PeerHandoff &&
+            (flow.payload_bytes<466 || mtu<473 || flow.window_chunks<=flow.queue_chunks) {
+            return Err("设备或MTU未确认WOC3长窗口/466字节包形，未开始升级".into());
+        }
         let payload=self.file_payload_cap().min(flow.payload_bytes).min(mtu.saturating_sub(7));
         if payload==0 {Err("当前ATT MTU不能承载升级数据".into())} else {Ok(payload)}
     }
@@ -51,8 +56,8 @@ impl SimpleTransportProfile {
     pub fn pipelined(self, flow: WbaFlow) -> Result<bool, String> {
         match self {
             Self::Acknowledged => Ok(false),
-            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold if flow.pipelined => Ok(true),
-            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold if flow.pipelined => Ok(true),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
         }
     }
     /// Called only from the transfer engine's validated durable progress.
@@ -65,15 +70,20 @@ impl SimpleTransportProfile {
     /// Explicit comparison for captured LE2M/965us, not an assumption
     /// about future peers:215 file +4 offset +3 ATT +4 L2CAP =226octets;
     /// encrypted LE2M airtime(11+226+4)*4=964us. Keep old profiles intact.
+    /// Observed central2M/965us caps plaintext LL payload at226, but
+    /// Windows submits nominal251-byte HCI fragments.466 file +11 protocol
+    /// octets =251+226; the model removes one25-byte tail versus491.
+    /// Explicit comparison only: no speed or actual radio shape promised.
     pub fn file_payload_cap(self)->u16 {
-        if self==Self::Windowed491PeerHandoff {491} else if matches!(self,Self::Windowed215PeerHandoff|Self::Windowed215Hold) {215} else {240}
+        if self==Self::Windowed491PeerHandoff {491} else if self==Self::Windowed466PeerHandoff {466} else if matches!(self,Self::Windowed215PeerHandoff|Self::Windowed215Hold) {215} else {240}
     }
     pub fn releases_after_first_durable_window(self)->bool {
-        matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff)
+        matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff|Self::Windowed466PeerHandoff)
     }
     pub fn name(self) -> &'static str {
         match self { Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
             Self::Windowed491PeerHandoff => "windowed_491_peer_handoff",
+            Self::Windowed466PeerHandoff => "windowed_466_peer_handoff",
             Self::Windowed244PeerHandoff => "windowed_244_peer_handoff",
             Self::Windowed215PeerHandoff => "windowed_215_peer_handoff",
             Self::Windowed215Hold => "windowed_215_hold" }
@@ -897,5 +907,35 @@ mod rf_admission_tests {
         }
         let bytes=serde_json::to_vec(&receipt()).unwrap();assert!(check_rf_admission(&bytes,NONCE,"C8:ED:45:EB:95:B4",10000000,12500001).is_err());
         assert!(check_rf_admission(&vec![b' ';16385],NONCE,"C8:ED:45:EB:95:B4",0,1).is_err());
+    }
+}
+
+#[cfg(test)]
+mod packing466_tests {
+    use super::*;
+    fn flow()->WbaFlow {
+        let mut b=vec![0u8;44];b[..4].copy_from_slice(b"DOV1");b[4]=1;
+        b[24..28].copy_from_slice(b"WOC4");b[28..30].copy_from_slice(&505u16.to_le_bytes());
+        b[30..32].copy_from_slice(&509u16.to_le_bytes());b[32]=64;b[34]=53;b[36]=16;b[40]=7;
+        WbaFlow::from_simple_status(&b,true).unwrap()
+    }
+    #[test]
+    fn exact_diagnostic_geometry_rejects_small_mtu_capacity_or_short_window() {
+        let p=SimpleTransportProfile::parse(Some("windowed_466_peer_handoff")).unwrap();
+        let f=flow();assert_eq!(p.file_payload(f,512).unwrap(),466);
+        assert_eq!(p.file_payload(f,473).unwrap(),466);assert!(p.file_payload(f,472).is_err());
+        let mut short=f;short.payload_bytes=465;assert!(p.file_payload(short,512).is_err());
+        short=f;short.window_chunks=16;assert!(p.file_payload(short,512).is_err());
+        short=f;short.pipelined=false;assert!(p.pipelined(short).is_err());
+        assert_eq!(SimpleTransportProfile::parse(None).unwrap(),SimpleTransportProfile::Acknowledged);
+    }
+    #[test]
+    fn same_durable_handoff_uses_the_selected_packet_size() {
+        let p=SimpleTransportProfile::parse(Some("windowed_466_peer_handoff")).unwrap();
+        let f=flow();assert_eq!(f.pipeline_depth(),16);assert!(f.window_notify_guaranteed);
+        let window=usize::from(p.file_payload(f,512).unwrap())*usize::from(f.window_chunks);
+        assert!(!p.handoff_ready(window-1,window+100,window));
+        assert!(p.handoff_ready(window,window+100,window));
+        assert_eq!(SimpleTransportProfile::parse(Some("windowed_491_peer_handoff")).unwrap().file_payload(f,512).unwrap(),491);
     }
 }
