@@ -1518,3 +1518,7 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-recording-text-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .ct-recording-text-heading h3 { margin: 0; }
 .ct-recording-text-heading .ct-action { flex-shrink: 0; }
+
+/* Recognize a recording by its saved words without renaming it or inventing dates. */
+.ct-library-text-preview { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin-top: 7px; color: #354f40; font-size: 12px; font-weight: 400; line-height: 1.5; overflow-wrap: anywhere; }
+.ct-library-text-partial { color: #876a35; }

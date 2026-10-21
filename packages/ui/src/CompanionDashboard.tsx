@@ -1039,6 +1039,9 @@ export function CompanionDashboard({
             {visibleLibrary.map((session) => {
               const selected = session.id === snapshot?.host.selectedSessionId;
               const boardId = session.deviceRecordingId;
+              // Preview only saved text. Bound work per row and preserve the full original.
+              const previewChars = Array.from(companionReviewedTranscript(session).slice(0, 400).replace(/\s+/g, ' ').trim());
+              const textPreview = previewChars.slice(0, 96).join('') + (previewChars.length > 96 ? '…' : '');
               const statusLabel = session.organization?.trashedAt?'回收站':describeCompanionMeetingRecovery(session)?.label ?? (meetingHasFinalMinutes(session)
                 ? '纪要完成'
                 : session.minutes?.markdown || session.minutesByMode?.offlineStore || session.minutesByMode?.onlineLive ? '纪要草稿'
@@ -1067,6 +1070,9 @@ export function CompanionDashboard({
                   <span className="ct-library-card-main">
                     <strong>{meetingTitle(session)}</strong>
                     <small><time dateTime={session.startedAt ?? undefined}>{recordingTimeLabel(session.startedAt)}</time></small>
+                    {textPreview ? <span className="ct-library-text-preview">
+                      {!companionSessionHasFinalTranscript(session) ? <span className="ct-library-text-partial">片段 · </span> : null}{textPreview}
+                    </span> : null}
                     {session.organization?.protected?<small>已保护</small>:null}
                     {session.organization?.trashedAt?<small>移入时间：{session.organization.trashedAt}</small>:null}
                     {session.organization&&(session.organization.favorite||session.organization.folder||session.organization.tags.length)?<small>
