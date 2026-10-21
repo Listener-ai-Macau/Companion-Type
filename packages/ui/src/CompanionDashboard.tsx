@@ -300,7 +300,7 @@ export function CompanionDashboard({
   const [bookmarkUnsaved,setBookmarkUnsaved]=useState(false);
   const [noteBusy,setNoteBusy]=useState(false);
   const [noteUnsaved,setNoteUnsaved]=useState(false);
-  const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; message: string } | null>(null);
+  const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; message: string; kind: 'saved' | 'error' } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
   const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>>({});
   const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
@@ -734,6 +734,7 @@ export function CompanionDashboard({
     finally{exportActive.current=false;setLibraryBusy(false);}
   };
   const updateTitleDraft = (value: string) => {
+    setSaveMeetingResult(null);
     if (!selectedSession) return;
     const sessionId = selectedSession.id;
     setMeetingDrafts((current) => ({
@@ -745,6 +746,7 @@ export function CompanionDashboard({
     }));
   };
   const updateMinutesDraft = (value: string) => {
+    setSaveMeetingResult(null);
     if (!selectedSession) return;
     const sessionId = selectedSession.id;
     const mode = minutesViewMode;
@@ -807,7 +809,7 @@ export function CompanionDashboard({
           }
           return { ...current, [sessionId]: nextSession };
         });
-        setSaveMeetingResult({ sessionId, message: next.host.persistence?.message ?? '修改尚未安全保存，草稿已保留，请重试。' });
+        setSaveMeetingResult({ sessionId, kind: 'error', message: next.host.persistence?.message ?? '修改尚未安全保存，草稿已保留，请重试。' });
         return;
       }
       setMeetingDrafts((current) => {
@@ -823,9 +825,9 @@ export function CompanionDashboard({
         } };
       });
       setEditingMinutes(false);
-      setSaveMeetingResult({ sessionId, message: '修改已保存。' });
+      setSaveMeetingResult({ sessionId, kind: 'saved', message: '修改已保存。' });
     } catch (saveError) {
-      setSaveMeetingResult({ sessionId, message: `未保存，草稿仍在：${saveError instanceof Error ? saveError.message : String(saveError)}` });
+      setSaveMeetingResult({ sessionId, kind: 'error', message: `未保存，草稿仍在：${saveError instanceof Error ? saveError.message : String(saveError)}` });
     } finally {
       setSaveMeetingBusy(false);
     }
@@ -1124,7 +1126,7 @@ export function CompanionDashboard({
                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
               <p>{recordingTimeLabel(selectedSession.startedAt)} · {formatDuration(selectedSession.durationMs)}</p>
               {titleDirty ? <div className="ct-inline-edit-actions">
-                <button type="button" className="ct-text-button" disabled={saveMeetingBusy || !titleDraft.trim()} onClick={() => void saveMeetingDraft()}>保存标题</button>
+                <button type="button" className="ct-text-button" disabled={saveMeetingBusy || !titleDraft.trim()} onClick={() => void saveMeetingDraft()} aria-busy={saveMeetingBusy}>{saveMeetingBusy ? '正在保存…' : '保存标题'}</button>
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
               </div> : null}
             </div>
@@ -1136,6 +1138,7 @@ export function CompanionDashboard({
               {onlineMinutes ? <span className="ct-pill">{onlineReady ? '在线纪要' : '在线草稿'}</span> : null}
             </div>
           </header>
+          {saveMeetingResult?.sessionId === selectedSession.id ? <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn ct-save-result' : 'ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
           {!savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
           <div className="ct-recording-primary-actions">
             {!finalTranscript ? <button type="button" className="ct-action ct-action-primary"
@@ -1245,7 +1248,6 @@ export function CompanionDashboard({
           </div>
           )}
 
-          {saveMeetingResult?.sessionId === selectedSession.id ? <p className={snapshot?.host.persistence?.status && snapshot.host.persistence.status !== 'ready' ? 'ct-step-warn ct-save-result' : 'ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
           {detailView === 'minutes' ? (
             <div className="ct-meeting-document">
               <div className="ct-minutes-mode-tabs" role="tablist" aria-label="双模式纪要">
