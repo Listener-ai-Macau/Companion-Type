@@ -15,7 +15,7 @@
 use std::time::{Duration, Instant};
 
 use denzic_ble_windows::{
-    open_ble_device_with_timeout, read_characteristic_bytes_with_timeout,
+    open_ble_device_with_timeout, read_characteristic_bytes_with_timeout, buffer_to_vec,
     start_gatt_write_with_option_async, wait_async_operation_with_cancel,
     write_gatt_value_status_with_timeout, write_gatt_value_with_timeout, BleCancel,
     ASYNC_POLL_INTERVAL_MS,
@@ -239,6 +239,18 @@ impl Drop for DurableNotificationLease {
     fn drop(&mut self){
         self.mailbox.close();
         if let Some(token)=self.token.take(){let _=self.characteristic.RemoveValueChanged(token);}
+        // Seal once even when transfer/installation returns early. Metadata is
+        // bounded in RAM; no packet logging or disk writes on the callback.
+        if let Ok(trace)=self.trace.lock(){
+            if let Ok(line)=serde_json::to_string(&serde_json::json!({
+                "schema":"companion.ota.durable_status_timing.v1",
+                "scope":"owner_drop_after_handler_detach; bounded1024_metadata_only; not_RF_time",
+                "trace":&*trace
+            })) {
+                use std::io::Write;
+                let _=writeln!(std::io::stderr().lock(),"firmware_ota_durable_status_timing {line}");
+            }
+        }
     }
 }
 
@@ -262,6 +274,10 @@ struct CompanionOtaWinrtTransport<'a> {
     window_retry_notice_receipts:u32,
     window_notice_receipts:u32,
     window_receipt_fallback_reads:u32,
+    window_receipt_guaranteed:bool,
+    window_guarantee_waits:u32,
+    window_guarantee_timeouts:u32,
+    window_guarantee_wait:Duration,
 }
 
 impl Drop for CompanionOtaWinrtTransport<'_> {
@@ -412,7 +428,7 @@ pub fn transfer_companion_ota_winrt(
         pipeline_depth: pipeline,
         system_component: None,
         simple_file_bytes: None,
-        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0,
+        device_queue_credits:None,device_credit_reads:0,device_credit_wait:Duration::ZERO,device_notifications:None,device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0,window_receipt_guaranteed:false,window_guarantee_waits:0,window_guarantee_timeouts:0,window_guarantee_wait:Duration::ZERO,
     };
 
     let progress_started = Instant::now();
@@ -571,7 +587,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         device_queue_credits:if pipelined {Some(super::ota_flow::DeviceQueueCredits::new(
             u32::try_from(package.file.len()).map_err(|_|"完整升级文件过大")?,payload,flow.queue_chunks)?)} else {None},
         device_credit_reads:0,device_credit_wait:Duration::ZERO,
-        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0};
+        device_notifications:if pipelined && flow.notify_credits {Some(DurableNotificationLease::subscribe(&target.status)?)} else {None},device_notices_used:0,credit_refills_with_pending_writes:0,credit_refill_pending_peak:0,window_receipt_barrier:Default::default(),window_retry_notice_receipts:0,window_notice_receipts:0,window_receipt_fallback_reads:0,window_receipt_guaranteed:pipelined && flow.window_notify_guaranteed,window_guarantee_waits:0,window_guarantee_timeouts:0,window_guarantee_wait:Duration::ZERO};
     super::simple_ota_restart::prepare_fresh_download(&mut transport,&bytes,
         ||read_wba_readiness(&target).map(|r|r.blockers))?;
     let mut window=super::ota_metrics::PayloadWindow::default();
@@ -607,6 +623,9 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let window_notice_receipts=transport.window_notice_receipts;
     let window_retry_notice_receipts=transport.window_retry_notice_receipts;
     let window_receipt_fallback_reads=transport.window_receipt_fallback_reads;
+    let window_guarantee_waits=transport.window_guarantee_waits;
+    let window_guarantee_timeouts=transport.window_guarantee_timeouts;
+    let window_guarantee_wait=transport.window_guarantee_wait;
     let durable_status_timing=transport.device_notifications.as_ref().and_then(|r|r.trace.lock().ok().map(|t|t.clone()));
     drop(transport);drop(handoff_preference);drop(target._conn_pref_request.take());
     let device_id=target.device_id.clone();
@@ -663,6 +682,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "durableStatusTiming":durable_status_timing,
         "durableStatusTimingScope":"bounded1024_metadata_only_callback_entry_and_host_window_or_uncached_read; unix_microseconds_plus_monotonic; missing_rows_marked_dropped; not_RF_time",
         "windowNoticeReceipts":window_notice_receipts,"windowRetryNoticeReceipts":window_retry_notice_receipts,"windowReceiptFallbackReads":window_receipt_fallback_reads,"deviceQueueCreditReads":device_credit_reads,
+        "windowNotifyGuaranteed":flow.window_notify_guaranteed,
+        "windowGuaranteeWaits":window_guarantee_waits,"windowGuaranteeTimeouts":window_guarantee_timeouts,
+        "windowGuaranteeWaitUs":window_guarantee_wait.as_micros(),
+        "windowGuaranteeWaitScope":"once_per_logical_window; maximum500ms_within_original_status_budget; overlaps_payload_wall",
         "deviceQueueCreditNotifications":device_notices_used,
         "creditRefillsWithPendingLocalWrites":credit_refills_with_pending_writes,
         "creditRefillPendingLocalWritePeak":credit_refill_pending_peak,
@@ -1332,11 +1355,43 @@ impl CompanionOtaWinrtTransport<'_> {
             if let Ok(mut t)=receiver.trace.lock(){t.record(stage,stamp,bytes,submitted,after);}
         }
     }
-    fn window_receipt_decision(&mut self)->Result<super::ota_flow::WindowReceiptDecision,String> {
+    fn window_receipt_decision(&mut self,budget:Duration)->Result<super::ota_flow::WindowReceiptDecision,String> {
         if !self.window_receipt_barrier.active(){return Ok(super::ota_flow::WindowReceiptDecision::Inactive);}
+        let wait=self.window_receipt_barrier.can_wait(self.window_receipt_guaranteed);
+        let started=Instant::now();
+        if wait{self.trace_status("window_guarantee_wait_begin",None,false);}
         let receiver=self.device_notifications.as_mut().ok_or("Missing window receipt owner")?;
         let credits=self.device_queue_credits.as_mut().ok_or("Missing window device credits")?;
-        self.window_receipt_barrier.before_read(credits,&receiver.mailbox,&mut receiver.cursor)
+        let result=if wait {
+            self.window_receipt_barrier.before_read_until(credits,&receiver.mailbox,&mut receiver.cursor,
+                Some(started+budget.min(Duration::from_millis(500))))
+        } else {self.window_receipt_barrier.before_read(credits,&receiver.mailbox,&mut receiver.cursor)};
+        if wait {
+            self.window_guarantee_waits=self.window_guarantee_waits.saturating_add(1);
+            self.window_guarantee_wait+=started.elapsed();
+            let fallback=matches!(&result,Ok(super::ota_flow::WindowReceiptDecision::Read{..}));
+            if fallback{self.window_guarantee_timeouts=self.window_guarantee_timeouts.saturating_add(1);}
+            self.trace_status(if fallback{"window_guarantee_wait_timeout"}else if result.is_ok(){"window_guarantee_wait_end"}else{"window_guarantee_wait_error"},None,false);
+        }
+        result
+    }
+    /// Same public WinRT read/status/buffer path as the platform helper, with
+    /// call entry/operation-return/completion boundaries for this OTA owner.
+    fn read_traced_status(&self,timeout:Duration)->Result<Vec<u8>,String>{
+        let started=Instant::now();
+        self.trace_status("uncached_read_api_enter",None,false);
+        let operation=self.target.status.ReadValueWithCacheModeAsync(BluetoothCacheMode::Uncached)
+            .map_err(|e|format!("BLE Companion OTA status read failed: {e}"))?;
+        self.trace_status("uncached_read_operation_returned",None,false);
+        let remaining=timeout.saturating_sub(started.elapsed());
+        if remaining.is_zero(){let _=operation.Cancel();let _=operation.Close();return Err("OTA status API call exhausted read budget".into());}
+        let result=wait_async_operation_with_cancel(operation,remaining,"Companion OTA status read",&BleCancel::NONE)
+            .map_err(|e|format!("BLE Companion OTA status read wait failed: {e}"))?;
+        self.trace_status("uncached_read_operation_complete",None,false);
+        let status=result.Status().map_err(|e|format!("BLE Companion OTA status read status failed: {e}"))?;
+        if status!=GattCommunicationStatus::Success{return Err(format!("BLE Companion OTA status read returned status={status:?}"));}
+        buffer_to_vec(&result.Value().map_err(|e|format!("BLE Companion OTA status read value failed: {e}"))?)
+            .map_err(|e|format!("BLE Companion OTA status read buffer failed: {e}"))
     }
     fn reserve_device_queue_credit(&mut self,packet:&[u8])->Result<(),String> {
         let Some(credits)=self.device_queue_credits.as_ref() else {return Ok(())};
@@ -1611,7 +1666,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                 PROGRESS_TIMEOUT.as_millis()
             ));
         }
-        match self.window_receipt_decision()? {
+        match self.window_receipt_decision(timeout)? {
             super::ota_flow::WindowReceiptDecision::Complete{bytes,after_read}=>{
                 self.trace_status("window_notice_reuse",Some(&bytes),after_read);
                 self.window_notice_receipts=self.window_notice_receipts.saturating_add(1);
@@ -1627,20 +1682,14 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
             },
             _=>{},
         }
-        // Checking already-delivered notices consumes the original read budget;
-        // missing notices immediately retain the uncached READ fallback.
-        let timeout=timeout.saturating_sub(read_started.elapsed());
-        if timeout.is_zero(){return Err("OTA window receipt exhausted its status budget".into());}
-        let cancel = BleCancel::NONE;
+        // Guaranteed-notice wait and local drain share the original read
+        // budget. Legacy peers retain immediate uncached READ fallback.
+        if timeout.saturating_sub(read_started.elapsed()).is_zero(){return Err("OTA window receipt exhausted its status budget".into());}
         let result = self.flush_pending_wwr().and_then(|_| {
+            let timeout=timeout.saturating_sub(read_started.elapsed());
+            if timeout.is_zero(){return Err("OTA window drain exhausted its status budget".into());}
             self.trace_status("uncached_read_begin",None,false);
-            read_characteristic_bytes_with_timeout(
-                &self.target.status,
-                BluetoothCacheMode::Uncached,
-                "Companion OTA status",
-                timeout,
-                &cancel,
-            )
+            self.read_traced_status(timeout)
         });
         self.trace_status(if result.is_ok(){"uncached_read_end"}else{"uncached_read_error"},
             result.as_ref().ok().map(Vec::as_slice),false);

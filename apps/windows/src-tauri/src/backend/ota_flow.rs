@@ -8,6 +8,7 @@ pub(super) struct WbaFlow {
     pub window_chunks: u16,
     pub queue_chunks: u16,
     pub notify_credits: bool,
+    pub window_notify_guaranteed: bool,
     pub pipelined: bool,
 }
 
@@ -104,7 +105,7 @@ impl WbaFlow {
     }
     fn parse(status: &[u8], supports_wwr: bool, contract:u16) -> Result<Self, String> {
         denzic_ota_core::parse_status(status)?;
-        let mut flow = Self { payload_bytes: 240, window_chunks: 8,queue_chunks:8,notify_credits:false, pipelined: false };
+        let mut flow = Self { payload_bytes: 240, window_chunks: 8,queue_chunks:8,notify_credits:false,window_notify_guaranteed:false, pipelined: false };
         if status.len() == 24 && contract==1 { return Ok(flow); }
         let v1 = status.len() == 32 && &status[24..28] == b"WOC1";
         let v2 = status.len() == 36 && &status[24..28] == b"WOC2";
@@ -125,7 +126,7 @@ impl WbaFlow {
             let flags = u16::from_le_bytes(status[34..36].try_into().unwrap());
             let queue=if v3 || v4 {u16::from_le_bytes(status[36..38].try_into().unwrap())} else {window};
             let valid=if v3 || v4 {
-                contract==5 && flags==if v4 {21} else {13} && (1..=128).contains(&window) &&
+                contract==5 && (if v4 {flags==21 || (flags==53 && window==64)} else {flags==13}) && (1..=128).contains(&window) &&
                 (1..=16).contains(&queue) && queue<=window && status[38..40]==[0,0]
             } else {(1..=16).contains(&window) && flags==contract};
             if !valid {
@@ -134,6 +135,9 @@ impl WbaFlow {
             flow.window_chunks = window;
             flow.queue_chunks = queue;
             flow.notify_credits=v4;
+            // Bit32 is an explicit peer promise, not inferred from WOC4 or
+            // historical notification cadence. Unknown extensions fail closed.
+            flow.window_notify_guaranteed=v4 && flags==53;
             flow.pipelined = supports_wwr;
         }
         Ok(flow)
@@ -159,7 +163,7 @@ mod tests {
 
     #[test]
     fn simple_transport_comparison_is_explicit_and_requires_device_capacity() {
-        let capable=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,notify_credits:false,pipelined:true};
+        let capable=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,notify_credits:false,window_notify_guaranteed:false,pipelined:true};
         let unsupported=WbaFlow {pipelined:false,..capable};
         for value in [None,Some(""),Some("acknowledged")] {
             let profile=SimpleTransportProfile::parse(value).unwrap();
@@ -176,7 +180,7 @@ mod tests {
     #[test]
     fn peer_handoff_waits_for_one_complete_durable_window_and_stays_explicit() {
         let profile=SimpleTransportProfile::parse(Some("windowed_244_peer_handoff")).unwrap();
-        let capable=WbaFlow {payload_bytes:240,window_chunks:16,queue_chunks:16,notify_credits:false,pipelined:true};
+        let capable=WbaFlow {payload_bytes:240,window_chunks:16,queue_chunks:16,notify_credits:false,window_notify_guaranteed:false,pipelined:true};
         assert!(profile.pipelined(capable).unwrap());
         assert!(profile.pipelined(WbaFlow {pipelined:false,..capable}).is_err());
         for accepted in [0,1,240,3839,1417797] {
@@ -194,7 +198,7 @@ mod tests {
     #[test]
     fn single_ll_comparison_matches_captured_965us_without_changing_legacy_profiles() {
         let p=SimpleTransportProfile::parse(Some("windowed_215_peer_handoff")).unwrap();
-        let flow=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,notify_credits:false,pipelined:true};
+        let flow=WbaFlow {payload_bytes:505,window_chunks:16,queue_chunks:16,notify_credits:false,window_notify_guaranteed:false,pipelined:true};
         assert!(p.pipelined(flow).unwrap());
         assert!(p.pipelined(WbaFlow {pipelined:false,..flow}).is_err());
         assert_eq!(p.file_payload_cap(),215);
@@ -554,13 +558,28 @@ impl WindowReceiptBarrier {
     pub fn reset(&mut self){self.active=false;self.fallback_started=false;}
     pub fn arm(&mut self){self.active=true;self.fallback_started=false;}
     pub fn active(&self)->bool{self.active}
+    pub fn can_wait(&self,guaranteed:bool)->bool{self.active && guaranteed && !self.fallback_started}
     pub fn before_read(&mut self,credits:&mut DeviceQueueCredits,
         mailbox:&DurableStatusMailbox,cursor:&mut u64)->Result<WindowReceiptDecision,String> {
+        self.before_read_until(credits,mailbox,cursor,None)
+    }
+    /// Wait only for an explicit peer guarantee, once within this window's
+    /// original status budget. A lost notification then uses the same READ
+    /// fallback; partial notices never fabricate completion or extend time.
+    pub fn before_read_until(&mut self,credits:&mut DeviceQueueCredits,
+        mailbox:&DurableStatusMailbox,cursor:&mut u64,deadline:Option<std::time::Instant>)->Result<WindowReceiptDecision,String> {
         if !self.active{return Ok(WindowReceiptDecision::Inactive);}
         if let Some(bytes)=current_window_receipt(credits,mailbox,cursor)? {
             let after_read=self.fallback_started;self.reset();
             return Ok(WindowReceiptDecision::Complete{bytes,after_read});
         }
+        if !self.fallback_started {if let Some(deadline)=deadline {
+            while let Some(bytes)=mailbox.next(cursor,deadline)? {
+                if let Some(bytes)=credits.completed_window_receipt(bytes)? {
+                    self.reset();return Ok(WindowReceiptDecision::Complete{bytes,after_read:false});
+                }
+            }
+        }}
         let first=!self.fallback_started;self.fallback_started=true;
         Ok(WindowReceiptDecision::Read{first})
     }
@@ -779,5 +798,60 @@ mod window_retry_notice_tests {
         m.publish(Ok(notice(6,1600,1700)));
         assert!(matches!(barrier.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:true}));
         assert_eq!(c.ends.len(),16);m.close();assert!(barrier.before_read(&mut c,&m,&mut cursor).is_err());
+    }
+}
+
+#[cfg(test)]
+mod window_guarantee_tests {
+    use super::*;
+    use super::notification_credit_tests::notice;
+    use std::sync::Arc;
+    use std::time::{Instant,Duration};
+    fn window()->(DeviceQueueCredits,Arc<DurableStatusMailbox>,u64,WindowReceiptBarrier){
+        let mut c=DeviceQueueCredits::new(1700,100,16).unwrap();c.begin();c.observe(&notice(7,0,1700)).unwrap();
+        for i in 0u32..16 {let mut b=vec![0;104];b[..4].copy_from_slice(&(i*100).to_le_bytes());c.admit(&b).unwrap();}
+        let m=Arc::new(DurableStatusMailbox::default());let cursor=m.bind(7,1700).unwrap();
+        let mut b=WindowReceiptBarrier::default();b.arm();(c,m,cursor,b)
+    }
+    #[test]
+    fn only_explicit_woc4_53_with_exact_64_window_guarantees_end_notification(){
+        let legacy=notice(7,0,1700);let mut promised=legacy.clone();promised[34]=53;
+        assert!(!WbaFlow::from_simple_status(&legacy,true).unwrap().window_notify_guaranteed);
+        assert!(WbaFlow::from_simple_status(&promised,true).unwrap().window_notify_guaranteed);
+        for (flags,window) in [(53,8),(53,63),(53,65),(85,64),(255,64)] {
+            let mut b=promised.clone();b[34]=flags;b[32]=window;
+            assert!(WbaFlow::from_simple_status(&b,true).is_err());
+        }
+        let mut b=promised;b[24..28].copy_from_slice(b"WOC3");b.truncate(40);
+        assert!(WbaFlow::from_simple_status(&b,true).is_err());
+        let (_,_,_,b)=window();assert!(!b.can_wait(false));assert!(b.can_wait(true));
+    }
+    #[test]
+    fn guaranteed_exact_notice_wakes_without_issuing_read_or_granting_early_credit(){
+        let(mut c,m,mut cursor,mut b)=window();let producer=m.clone();
+        let t=std::thread::spawn(move||{producer.publish(Ok(notice(7,800,1700)));std::thread::sleep(Duration::from_millis(5));producer.publish(Ok(notice(7,1600,1700)));});
+        match b.before_read_until(&mut c,&m,&mut cursor,Some(Instant::now()+Duration::from_secs(1))).unwrap(){
+            WindowReceiptDecision::Complete{bytes,after_read:false}=>assert_eq!(denzic_ota_core::parse_status(&bytes).unwrap().bytes_written,1600),
+            _=>panic!("exact guarantee must finish without READ"),
+        }
+        t.join().unwrap();assert!(!b.active());assert!(c.ends.is_empty());
+    }
+    #[test]
+    fn missing_or_only_partial_notice_times_out_once_then_immediate_original_read(){
+        let(mut c,m,mut cursor,mut b)=window();m.publish(Ok(notice(7,800,1700)));
+        assert!(matches!(b.before_read_until(&mut c,&m,&mut cursor,Some(Instant::now()+Duration::from_millis(5))).unwrap(),WindowReceiptDecision::Read{first:true}));
+        assert!(!b.can_wait(true));assert_eq!(c.ends.len(),8);
+        assert!(matches!(b.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Read{first:false}));
+        m.publish(Ok(notice(7,1600,1700)));
+        assert!(matches!(b.before_read(&mut c,&m,&mut cursor).unwrap(),WindowReceiptDecision::Complete{after_read:true,..}));
+    }
+    #[test]
+    fn old_generation_does_not_complete_wait_and_owner_failure_or_close_is_terminal(){
+        for fail in [false,true] {
+            let(mut c,m,mut cursor,mut b)=window();let producer=m.clone();
+            let t=std::thread::spawn(move||{producer.publish(Ok(notice(6,1600,1700)));if fail{producer.fail("callback failed".into())}else{producer.close()}});
+            assert!(b.before_read_until(&mut c,&m,&mut cursor,Some(Instant::now()+Duration::from_secs(1))).is_err());
+            t.join().unwrap();assert_eq!(c.ends.len(),16);
+        }
     }
 }

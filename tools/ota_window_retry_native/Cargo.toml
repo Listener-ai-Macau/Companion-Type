@@ -1,6 +1,6 @@
 [package]
-name = "companion-r92-window-recheck-native"
-version = "0.1.0"
-edition = "2021"
+name="companion-r93-window-guarantee-native"
+version="0.1.0"
+edition="2021"
 [dependencies]
-denzic-ota-core = { path = "C:/Users/Billy/Desktop/Denzic/Companion/.cache/ble-rate-20261019/ota-window-recheck-r92-frozen/source/third_party/denzic-platform/ota/host/rust" }
+denzic-ota-core={path="C:/Users/Billy/Desktop/Denzic/Companion/.cache/ble-rate-20261019/ota-window-guarantee-r93-frozen/source/third_party/denzic-platform/ota/host/rust"}
