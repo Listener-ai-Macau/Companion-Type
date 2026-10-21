@@ -1574,3 +1574,9 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-context-choice{display:flex;flex-direction:column;gap:8px;margin:12px 0;padding:12px;border:1px solid var(--ct-border,#d8dfd8);border-radius:10px}.ct-context-choice label{display:flex;align-items:center;gap:8px}.ct-context-choice small{color:var(--ct-muted,#63716a);line-height:1.5}.ct-context-choice button{align-self:flex-start}.ct-note-export-feedback{overflow-wrap:anywhere;margin:8px 0}
 
 .ct-organization-choice{margin:12px 0;padding:14px;border:1px solid var(--ct-border,#d8dfd8);border-radius:10px;background:#f7faf7}.ct-organization-choice p{margin:8px 0 12px;font-size:13px;line-height:1.5;color:var(--ct-muted,#63716a)}
+
+/* Saved action completion uses the existing durable document edit. */
+.ct-saved-action{display:flex;align-items:flex-start;gap:10px;line-height:1.55;cursor:pointer;}
+.ct-saved-action input{width:18px;height:18px;flex:0 0 18px;margin:3px 0 0;accent-color:#365c4a;}
+.ct-saved-action.completed>span{text-decoration:line-through;color:#6e786f;}
+.ct-saved-action:has(input:disabled){cursor:default;}

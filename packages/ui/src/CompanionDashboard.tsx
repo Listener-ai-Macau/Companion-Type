@@ -13,6 +13,7 @@ import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOr
 import { companionMinutesNotesCurrent, type CompanionMinutesNoteContext } from '@companion-type/core';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { briefMinutes } from './briefMinutes';
+import {savedActions,markSavedAction,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
 import { CompanionRecoveryCenter } from './CompanionRecoveryCenter';
@@ -370,6 +371,7 @@ export function CompanionDashboard({
   }>>({});
   const [editingMinutes, setEditingMinutes] = useState(false);
   const [saveMeetingBusy, setSaveMeetingBusy] = useState(false);
+  const actionSaveActive=useRef(false);
   const [bookmarkBusy,setBookmarkBusy]=useState(false);
   const [bookmarkUnsaved,setBookmarkUnsaved]=useState(false);
   const [noteBusy,setNoteBusy]=useState(false);
@@ -958,6 +960,25 @@ export function CompanionDashboard({
       setSaveMeetingBusy(false);
     }
   };
+  const markAction = async (lineIndex:number,completed:boolean) => {
+    if(!selectedSession||!onSaveMeeting||actionSaveActive.current||controlsBusy||oobeBlockedByRecording
+      ||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))||editingMinutes||minutesDirty||titleDirty
+      ||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft)return;
+    const original=minutesMarkdown;
+    const updated=markSavedAction(original,lineIndex,completed);
+    if(updated===null)return;
+    const sessionId=selectedSession.id;const mode=minutesViewMode;
+    actionSaveActive.current=true;setSaveMeetingBusy(true);setSaveMeetingResult(null);
+    try {
+      const next=await onSaveMeeting({sessionId,meetingMode:mode,markdown:updated,expectedMarkdown:original});
+      const row=next.host.sessions.find(item=>item.id===sessionId);
+      if(next.host.persistence?.status!=='ready'||!row||meetingMinutesMarkdown(row,mode)!==updated.trim())
+        throw new Error(next.host.persistence?.message??'尚未确认清单已安全保存，请先核对本机保存状态。');
+      setSaveMeetingResult({sessionId,part:'minutes',kind:'saved',message:completed?'已完成并保存。':'已恢复为待办并保存。'});
+    } catch(error) {
+      setSaveMeetingResult({sessionId,part:'minutes',kind:'error',message:`未确认保存：${error instanceof Error?error.message:String(error)}`});
+    } finally {actionSaveActive.current=false;setSaveMeetingBusy(false);}
+  };
   const prepareAudio = async () => {
     if (!selectedSession || !onPrepareAudio || audioBusy || audioBlockedReason) return;
     if(listeningQueue.active)listeningQueue.stop();
@@ -1403,7 +1424,10 @@ export function CompanionDashboard({
               </div> : hasMinutes ? <MinutesReadingView markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
                 compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
-                noteContext={(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext}
+                savedMarkdown={minutesMarkdown} noteContext={(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext}
+                onToggleAction={onSaveMeeting?(lineIndex,completed)=>void markAction(lineIndex,completed):undefined}
+                actionsBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
+                  ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 blocked={controlsBusy} onOpenSource={openTranscriptSource} />
                 : <p className="ct-step-meta" role="status">{busyAction === 'meetingGenerateMinutes' || recoveryView?.isProcessing
@@ -1421,7 +1445,7 @@ export function CompanionDashboard({
               title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
               onClick={() => void exportMeeting('markdown')}><Download size={15} />{exportBusy ? '正在保存…' : '保存纪要'}</button>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
-              onClick={() => void exportMeeting('todo')}>保存待办</button>
+              onClick={() => void exportMeeting('todo')}>保存待办文件</button>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
               title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics')}>导出日历待办</button>
           </div>
@@ -2339,8 +2363,9 @@ function meetingSource(session: CompanionV1HostSession): string {
   return '演示记录';
 }
 
-function MinutesReadingView({ markdown, transcript, durationMs, compactAllowed, noteContext, ...sourceProps }: {
+function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, durationMs, compactAllowed, noteContext, onToggleAction, actionsBlocked, ...sourceProps }: {
   markdown: string; transcript: string; durationMs: number; compactAllowed: boolean; noteContext?:CompanionMinutesNoteContext|null;
+  onToggleAction?:(lineIndex:number,completed:boolean)=>void;actionsBlocked?:boolean;savedMarkdown?:string;
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
 }) {
@@ -2355,28 +2380,34 @@ function MinutesReadingView({ markdown, transcript, durationMs, compactAllowed, 
     });
     if(markdown.startsWith(prefix+'\n\n'))reading=markdown.slice(prefix.length+2);
   }
+  const actionChecklist=onToggleAction?{items:savedActions(savedMarkdown),onToggle:onToggleAction,blocked:actionsBlocked}:undefined;
   const brief = compactAllowed ? briefMinutes(reading, transcript, durationMs) : null;
-  if (!brief) return <MarkdownMinutes markdown={markdown} {...sourceProps} />;
+  if (!brief) return <MarkdownMinutes markdown={markdown} actionChecklist={actionChecklist} {...sourceProps} />;
   return <div className="ct-brief-minutes">
-    <MarkdownMinutes markdown={brief} {...sourceProps} />
+    <MarkdownMinutes markdown={brief} actionChecklist={actionChecklist} {...sourceProps} />
     <details className="ct-full-minutes"><summary>查看完整整理</summary>
-      <MarkdownMinutes markdown={markdown} {...sourceProps} />
+      <MarkdownMinutes markdown={markdown} actionChecklist={actionChecklist} {...sourceProps} />
     </details>
   </div>;
 }
 
-function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource }: { markdown: string;
+function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, actionChecklist }: { markdown: string;
+  actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void }) {
   if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
-  const blocks: Array<{ type: 'title' | 'heading' | 'item' | 'text'; text: string }> = [];
-  markdown.split(/\r?\n/).forEach((raw) => {
+  const actionRows=new Map(savedActions(markdown).flatMap((row,index)=>{
+    const saved=actionChecklist?.items[index];
+    return saved&&saved.text===row.text&&saved.completed===row.completed?[[row.lineIndex,saved] as const]:[];
+  }));
+  const blocks: Array<{ type: 'title' | 'heading' | 'item' | 'text'; text: string;action?:SavedAction }> = [];
+  markdown.split(/\r?\n/).forEach((raw,lineIndex) => {
     const line = raw.trim();
     if (!line || /^Generated:|^Duration:|^Source:|^Minutes engine:/i.test(line)) return;
     if (line.startsWith('# ')) blocks.push({ type: 'title', text: line.slice(2) });
     else if (/^#{2,3} /.test(line)) blocks.push({ type: 'heading', text: line.replace(/^#{2,3} /, '') });
-    else if (/^[-*]\s+/.test(line)) blocks.push({ type: 'item', text: line.replace(/^[-*]\s+/, '') });
-    else if (/^\d+[.)]\s+/.test(line)) blocks.push({ type: 'item', text: line.replace(/^\d+[.)]\s+/, '') });
+    else if (/^[-*+]\s+/.test(line)) blocks.push({ type: 'item', text: line.replace(/^[-*+]\s+/, ''),action:actionRows.get(lineIndex) });
+    else if (/^\d+[.)]\s+/.test(line)) blocks.push({ type: 'item', text: line.replace(/^\d+[.)]\s+/, ''),action:actionRows.get(lineIndex) });
     else if (!/^None captured$/i.test(line)) blocks.push({ type: 'text', text: line });
   });
   // A known empty template marker is not content to show a customer. This is
@@ -2398,6 +2429,10 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource }: { ma
             disabled={blocked} aria-label={`核对第${source.index + 1}段原文`}
             onClick={() => onOpenSource(source)}>核对原文 · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
         </span> : null;
+        if(block.action&&actionChecklist){const action=block.action;return <div key={index} className="ct-minutes-item">
+          <label className={`ct-saved-action${action.completed?' completed':''}`}><input type="checkbox" checked={action.completed}
+            disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${action.text}`}
+            onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>{action.text}</span></label>{links}</div>;}
         if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}{links}</span></div>;
         return <p key={index}>{block.text}{links}</p>;
       })}
