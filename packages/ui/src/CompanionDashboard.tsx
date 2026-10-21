@@ -629,7 +629,7 @@ export function CompanionDashboard({
   const openSettings = () => {
     setPageView('settings');
     setShowAdvanced(true);
-    window.setTimeout(() => document.getElementById('ct-service-settings')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0);
+    window.setTimeout(() => document.getElementById('ct-service-settings')?.scrollIntoView({ block: 'start', behavior: 'instant' }), 0);
   };
   const returnToRecording = () => {
     setPageView('library');
