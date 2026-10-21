@@ -10,7 +10,7 @@ import {recordingInDates} from './libraryDates';
 import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
-import { companionMinutesNotesCurrent } from '@companion-type/core';
+import { companionMinutesNotesCurrent, type CompanionMinutesNoteContext } from '@companion-type/core';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { briefMinutes } from './briefMinutes';
 import { seekBookmarkAudio } from './bookmarkAudio';
@@ -362,7 +362,6 @@ export function CompanionDashboard({
   const [resourceBusy, setResourceBusy] = useState(false);
   const [exportBusy, setExportBusy] = useState(false);
   const exportActive = useRef(false);
-  const [contextSelection,setContextSelection]=useState<Record<string,boolean>>({});
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; origin?:'text'|'notes'|'document' } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
@@ -805,10 +804,11 @@ export function CompanionDashboard({
         setSaveMeetingResult({sessionId:selectedSession.id,kind:'error',message:'还有未保存的修改，请先保存或取消，再整理。本次未提交。'});
         return;
       }
-      const include=Boolean(snapshot?.minutesContextSupported && contextSelection[selectedSession.id] && selectedSession.meetingNotes?.length);
-      request={...request,meetingMode:request.meetingMode??minutesViewMode,
-        contextNoteRevision:include?(selectedSession.noteRevision??0):undefined};
-      setContextSelection(all=>({...all,[selectedSession.id]:false}));
+      if(request.contextNoteRevision!=null && !snapshot?.minutesContextSupported) {
+        setSaveMeetingResult({sessionId:selectedSession.id,kind:'error',message:'当前整理程序尚未支持补充来源，请更新桌面 Type 后再试。本次未提交。'});
+        return;
+      }
+      request={...request,meetingMode:request.meetingMode??minutesViewMode};
     }
     onControl(request);
   };
@@ -1320,7 +1320,7 @@ export function CompanionDashboard({
                   onClick={() => {
                     if (hasMinutes) openRecordingResult();
                     else runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id });
-                  }}>{hasMinutes ? '查看整理' : contextSelection[selectedSession.id]?'参考补充整理':'整理重点'}</button> : null}
+                  }}>{hasMinutes ? '查看整理' : '整理重点'}</button> : null}
                 {finalTranscript ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在保存…' : selectedSession.meetingNotes?.length ? '保存文字和补充' : '保存文字'}</button> : null}
               </div>
@@ -1337,17 +1337,13 @@ export function CompanionDashboard({
             onSeek={seekBookmark} onExport={onExportMeeting?(format)=>exportMeeting(format,'notes'):undefined}
             exportFeedback={exportResult?.sessionId===selectedSession.id&&exportResult.origin==='notes'?exportResult:null}/>
           {finalTranscript && selectedSession.meetingNotes?.length && snapshot?.minutesContextSupported ? <div className="ct-context-choice">
-            <label><input type="checkbox" checked={Boolean(contextSelection[selectedSession.id])}
-              disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved}
-              onChange={event=>setContextSelection(all=>({...all,[selectedSession.id]:event.target.checked}))}/>
-              本次整理参考已保存的补充</label>
-            <small>两分钟内的短备忘可选；仅这次把已保存的补充交给现有整理服务，原话不改，结果保留来源。未勾选只整理原话。</small>
-            {hasMinutes?<button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved}
-              onClick={()=>runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode})}>
-              {contextSelection[selectedSession.id]?'参考补充重新整理':'仅按原话重新整理'}</button>:null}
+            <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved}
+              onClick={()=>runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,
+                contextNoteRevision:selectedSession.noteRevision??0})}>参考补充整理</button>
+            <small>仅这次把已保存的补充交给现有整理服务，原话不改。暂用于两分钟内的短备忘；不需要时仍可只整理原话。</small>
           </div>:null}
           {finalTranscript && selectedSession.meetingNotes?.length ? <p className="ct-step-meta">
-            补充单独保存；是否用于本次整理，由你在上方选择。
+            {snapshot?.minutesContextSupported?'补充单独保存；点“参考补充整理”才用于这次整理。':'补充已单独保存；当前整理程序仅使用原话。'}
           </p> : null}
           </section>
           {exportResult?.sessionId === selectedSession.id && !exportResult.origin ? <p className={exportResult.kind === 'error' ? 'ct-export-result ct-step-warn' : 'ct-export-result'}
@@ -1393,7 +1389,8 @@ export function CompanionDashboard({
                 {offlineMinutes && onlineMinutes ? <p className="ct-step-meta">只修改当前版本，另一份整理结果保持不变。</p> : null}
               </div> : hasMinutes ? <MinutesReadingView markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
-                compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing && !(selectedMinutesVariant ?? legacyMinutes)?.sourceNoteContext}
+                compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
+                noteContext={(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 blocked={controlsBusy} onOpenSource={openTranscriptSource} />
                 : <p className="ct-step-meta" role="status">{busyAction === 'meetingGenerateMinutes' || recoveryView?.isProcessing
@@ -2329,12 +2326,23 @@ function meetingSource(session: CompanionV1HostSession): string {
   return '演示记录';
 }
 
-function MinutesReadingView({ markdown, transcript, durationMs, compactAllowed, ...sourceProps }: {
-  markdown: string; transcript: string; durationMs: number; compactAllowed: boolean;
+function MinutesReadingView({ markdown, transcript, durationMs, compactAllowed, noteContext, ...sourceProps }: {
+  markdown: string; transcript: string; durationMs: number; compactAllowed: boolean; noteContext?:CompanionMinutesNoteContext|null;
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
 }) {
-  const brief = compactAllowed ? briefMinutes(markdown, transcript, durationMs) : null;
+  // Only fold the exact native provenance envelope represented by the saved
+  // typed source snapshot. Complete saved output remains available below.
+  let reading=markdown;
+  if(noteContext){
+    let prefix=`> 本次依据录音文字＋用户明确选择的补充整理（补充版本${noteContext.noteRevision}）。补充不是原始录音识别，原话单独保留。\n\n## 本次使用的用户补充\n`;
+    noteContext.notes.forEach((note,i)=>{
+      prefix+=`\n补充${i+1}：\n`;
+      note.text.split('\n').forEach(line=>{prefix+=`> ${line}\n`;});
+    });
+    if(markdown.startsWith(prefix+'\n\n'))reading=markdown.slice(prefix.length+2);
+  }
+  const brief = compactAllowed ? briefMinutes(reading, transcript, durationMs) : null;
   if (!brief) return <MarkdownMinutes markdown={markdown} {...sourceProps} />;
   return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={brief} {...sourceProps} />

@@ -67,6 +67,7 @@ impl CompanionMinutesManager {
         // 2. Native DeepSeek when an API key is configured (default product
         //    path; no python / relative-path dependency, survives packaging).
         if let Some(result) = deepseek_native_minutes(session, &l0) {
+            if session.meeting_notes.is_empty() { return finalize_minutes(result,l0,session); }
             let evidence = rules_l0_minutes(session,generated_at);
             return match result {
                 Ok(minutes)=>finalize_minutes(Ok(minutes),evidence,session),
@@ -89,9 +90,7 @@ pub fn rules_l0_minutes(
     generated_at: &str,
 ) -> CompanionV1MeetingMinutes {
     let segments = split_segments(&session.transcript_text);
-    let mut summary = select_source_fact_anchors(&segments);
-    // Notes are not ASR facts. Keep explicit source labels even in a local draft.
-    summary.extend(session.meeting_notes.iter().map(|note| format!("用户补充：{}",note.text)));
+    let summary = select_source_fact_anchors(&segments);
     let decisions = segments
         .iter()
         .filter(|segment| has_decision_marker(segment))
