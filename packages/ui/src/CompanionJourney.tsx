@@ -71,10 +71,10 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   }
   if (finalMinutes && !recovery) return { stage: 3, optional: true, title: '整理好了', detail: '文字和纪要已保存在本机。可以继续查看、核对并导出。' };
   if (finalText) {
-    if (draft && !context.minutesReady) return { stage: 2, optional: !recovery, title: '文字已保存，草稿可查看', detail: '当前为基础草稿。配置智能纪要服务后，可以继续整理。', label: '配置智能纪要', destination: 'settings' };
+    if (draft && !context.minutesReady) return { stage: 2, optional: !recovery, title: '基础草稿已生成', detail: '这是按原文提取的本机基础草稿，请核对后使用。录音和完整文字仍保留。' };
     // Once text is complete, organizing it is optional. Requested recovery stays visible.
-    return { stage: 2, optional: !recovery, title: recovery ? '继续整理这场会议' : '文字齐了，整理重点',
-      detail: context.minutesReady ? '使用已保存的完整转写生成纪要，无需再次连接设备或重新上传录音。' : '尚未启用智能纪要，可先生成本机基础草稿；之后再配置服务精修。',
+    return { stage: 2, optional: !recovery, title: recovery ? '继续整理这条录音' : '文字齐了，整理重点',
+      detail: context.minutesReady ? '使用已保存的完整转写生成纪要，无需再次连接设备或重新上传录音。' : '在本机按原文提取摘要和待办，生成后可直接查看。草稿需要你核对。',
       label: context.minutesReady ? recovery ? '继续生成纪要' : '生成智能纪要' : '生成基础草稿',
       request: { action: 'meetingGenerateMinutes', sessionId: session.id } };
   }
@@ -97,8 +97,8 @@ export function CompanionJourney({ journey, blocked, onControl, onSettings, onWo
   onControl: (request: CompanionV1ControlRequest) => void;
   onSettings: () => void; onWorkflow: () => void;
 }) {
-  return <section className="ct-journey" aria-label="这场会议的下一步">
-    {journey.optional ? <p className="ct-optional-processing">可选 · 转写与纪要</p> : <ol className="ct-journey-progress" aria-label="会议处理进度">
+  return <section className="ct-journey" aria-label="这条录音的下一步">
+    {journey.optional ? <p className="ct-optional-processing">可选 · 转写与纪要</p> : <ol className="ct-journey-progress" aria-label="录音处理进度">
       {['内容已保存', '完整转写', '智能纪要'].map((label, index) => <li key={label}
         className={index < journey.stage ? 'done' : index === journey.stage ? 'current' : ''}
         aria-current={index === journey.stage ? 'step' : undefined}>

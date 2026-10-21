@@ -54,7 +54,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   };
   const selectAnchor=(value:string,onChange:(value:string)=>void,label:string)=><select aria-label={label} disabled={busy}
     value={value} onChange={(event)=>onChange(event.target.value)}>
-    <option value="">整场会议，不关联时间点</option>
+    <option value="">整条录音，不关联时间点</option>
     {value&&!points.some((p)=>p.id===value)?<option value={value}>关联的重点已删除，请重新选择</option>:null}
     {points.map((point)=><option key={point.id} value={point.id}>{time(point.audioPositionMs??point.positionMs)} · {point.label}</option>)}
   </select>;
@@ -62,10 +62,10 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
     const edits=Object.fromEntries(Object.entries(d.edits??{}).map(([id,edit])=>[id,{...edit,revision:session.noteRevision??0}]));
     return {...d,pending:undefined,edits};
   });
-  return <section className="ct-meeting-notes" aria-label="会议备注">
-    <div className="ct-notes-heading"><h4><StickyNote size={16}/>会议备注</h4><span>用户补充 · {notes.length} 条</span></div>
-    <p>补充议程、背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写。</p>
-    <textarea aria-label="新会议备注" maxLength={4000} rows={3} placeholder="记下会议背景，或需要回头核对的事情…"
+  return <section id="ct-recording-notes" className="ct-meeting-notes" aria-label="录音备注">
+    <div className="ct-notes-heading"><h4><StickyNote size={16}/>录音备注</h4><span>用户补充 · {notes.length} 条</span></div>
+    <p>补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写。</p>
+    <textarea aria-label="新录音备注" maxLength={4000} rows={3} placeholder="记下背景，或需要回头核对的事情…"
       value={draft.text??''} disabled={busy} onChange={(event)=>change(session.id,(d)=>({...d,text:event.target.value,pending:undefined}))}/>
     <div className="ct-notes-controls">
       {selectAnchor(draft.anchor??'',(anchor)=>change(session.id,(d)=>({...d,anchor,pending:undefined})),'新备注关联重点')}
@@ -95,7 +95,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
           </div>
         </div>:<p className="ct-note-body">{note.text}</p>}
         <div className="ct-notes-controls">
-          <small>{point?`关联重点 · ${time(position??point.positionMs)} ${point.label}`:note.bookmarkId?'关联的重点已删除；备注仍保留。':'整场会议的补充内容'}</small>
+          <small>{point?`关联重点 · ${time(position??point.positionMs)} ${point.label}`:note.bookmarkId?'关联的重点已删除；备注仍保留。':'整条录音的补充内容'}</small>
           {point?<button type="button" className="ct-action" disabled={blocked||busy||anyRecording||position==null} onClick={()=>void onSeek(session.id,point.id,position!)
             .catch((error)=>message(session.id,error instanceof Error?error.message:String(error)))}>定位原音</button>:null}
           {!edit?<button type="button" className="ct-action" aria-label={`编辑备注 ${note.id}`} disabled={disabled} onClick={()=>change(session.id,(d)=>({...d,edits:{...d.edits,[note.id]:{

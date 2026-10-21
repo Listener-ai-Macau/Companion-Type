@@ -235,6 +235,7 @@ pub(super) struct TransferPreference {
     request: Option<BluetoothLEPreferredConnectionParametersRequest>,
     scope: &'static str,
     parameter_token: Option<EventRegistrationToken>,
+    phy_token: Option<EventRegistrationToken>,
     parameter_observation: Arc<ParameterObservation>,
     sealed_bootstrap: bool,
     payload_release_attempted: bool,
@@ -269,6 +270,7 @@ impl TransferPreference {
         if !self.sealed_bootstrap || self.payload_release_attempted { return; }
         self.payload_release_attempted = true;
         let Some(request) = self.request.take() else { return; };
+        trace_native_link(&self.device,self.scope,"before_peer_handoff",Some(&request));
         let result = request.Close();
         let (interval, latency, supervision) = observed_parameters(&self.device);
         eprintln!("recording_link_timeline scope={} stage={stage} bootstrap_released={} interval_units={interval:?} latency={latency:?} supervision_units={supervision:?} elapsed_us={} host_unix_us={} release_error={:?} replacement_preference=none",
@@ -281,6 +283,7 @@ impl TransferPreference {
 struct ParameterObservation {
     started: Instant,
     changes: std::sync::atomic::AtomicU64,
+    phy_changes: std::sync::atomic::AtomicU64,
 }
 
 fn observed_parameters(device: &BluetoothLEDevice) -> (Option<u16>, Option<u16>, Option<u16>) {
@@ -292,9 +295,39 @@ fn observed_parameters(device: &BluetoothLEDevice) -> (Option<u16>, Option<u16>,
     )
 }
 
+// Read-only WinRT state at the same phase boundary for recording and OTA.
+// Success means the OS accepted the preference, not that its values were applied.
+// These getters do not perform ATT reads and cannot set controller DLE/PHY.
+pub(super) fn trace_native_link(
+    device: &BluetoothLEDevice, scope: &str, stage: &str,
+    request: Option<&BluetoothLEPreferredConnectionParametersRequest>,
+) {
+    let connected = device.ConnectionStatus().ok().map(|s|
+        s == windows::Devices::Bluetooth::BluetoothConnectionStatus::Connected);
+    let accepted = request.and_then(|r| r.Status().ok()).map(|s|
+        s == windows::Devices::Bluetooth::BluetoothLEPreferredConnectionParametersRequestStatus::Success);
+    let (interval, latency, supervision) = if connected == Some(true) {
+        observed_parameters(device)
+    } else { (None, None, None) };
+    let phy = if connected == Some(true) { device.GetConnectionPhy().ok() } else { None };
+    let decode = |info: windows::Devices::Bluetooth::BluetoothLEConnectionPhyInfo| {
+        if info.IsUncoded2MPhy().ok() == Some(true) { Some(2u8) }
+        else if info.IsUncoded1MPhy().ok() == Some(true) { Some(1u8) }
+        else if info.IsCodedPhy().ok() == Some(true) { Some(3u8) } else { None }
+    };
+    let tx_phy = phy.as_ref().and_then(|p| p.TransmitInfo().ok()).and_then(decode);
+    let rx_phy = phy.as_ref().and_then(|p| p.ReceiveInfo().ok()).and_then(decode);
+    eprintln!("ble_link_observed schema=1 scope={scope} stage={stage} connected={connected:?} preference_accepted={accepted:?} applied_not_guaranteed=1 actual_interval_units={interval:?} actual_latency={latency:?} actual_supervision_units={supervision:?} actual_tx_phy={tx_phy:?} actual_rx_phy={rx_phy:?} no_extra_att_reads=1 host_unix_us={}",
+        chrono::Utc::now().timestamp_micros());
+}
+
 impl Drop for TransferPreference {
     fn drop(&mut self) {
         let observer_registered = self.parameter_token.is_some();
+        if let Some(token) = self.phy_token.take() {
+            let _ = self.device.RemoveConnectionPhyChanged(token);
+        }
+        trace_native_link(&self.device,self.scope,"owner_end",self.request.as_ref());
         if let Some(token) = self.parameter_token.take() {
             let _ = self.device.RemoveConnectionParametersChanged(token);
         }
@@ -398,15 +431,17 @@ fn open_preference(address: u64, address_type: Option<AddressType>, scope: &'sta
     let device = open_device(address, address_type, cancel)?;
     let observation = Arc::new(ParameterObservation {
         started: Instant::now(), changes: std::sync::atomic::AtomicU64::new(0),
+        phy_changes: std::sync::atomic::AtomicU64::new(0),
     });
     let mut preference = TransferPreference {
-        device, request: None, scope, parameter_token: None, parameter_observation: observation.clone(),
+        device, request: None, scope, parameter_token: None, phy_token: None, parameter_observation: observation.clone(),
         sealed_bootstrap, payload_release_attempted: false,
     };
     let handler = TypedEventHandler::<BluetoothLEDevice, windows::core::IInspectable>::new(move |sender, _| {
         let change = observation.changes.fetch_add(1, Ordering::Relaxed) + 1;
         if change <= 32 {
             if let Some(device) = sender {
+                trace_native_link(device,scope,"parameters_changed",None);
                 let (interval, latency, supervision) = observed_parameters(device);
                 eprintln!("recording_link_timeline scope={scope} stage=parameters_changed elapsed_us={} event={} interval_units={interval:?} latency={latency:?} supervision_units={supervision:?} no_extra_att_reads=1 host_unix_us={}",
                     observation.started.elapsed().as_micros(), change, chrono::Utc::now().timestamp_micros());
@@ -418,6 +453,18 @@ fn open_preference(address: u64, address_type: Option<AddressType>, scope: &'sta
         Ok(token) => preference.parameter_token = Some(token),
         Err(error) => eprintln!("recording_link_timeline scope={scope} stage=observer_unavailable cause={error}; normal_preference_retained=1"),
     }
+    let phy_observation = preference.parameter_observation.clone();
+    let phy_handler = TypedEventHandler::<BluetoothLEDevice,windows::core::IInspectable>::new(move |sender,_| {
+        let change=phy_observation.phy_changes.fetch_add(1,Ordering::Relaxed)+1;
+        if change<=32 {
+            if let Some(device)=sender { trace_native_link(device,scope,"phy_changed",None); }
+        }
+        Ok(())
+    });
+    match preference.device.ConnectionPhyChanged(&phy_handler) {
+        Ok(token)=>preference.phy_token=Some(token),
+        Err(error)=>eprintln!("ble_link_observed scope={scope} stage=phy_observer_unavailable cause={error}; normal_connection_retained=1"),
+    }
     let (interval, latency, supervision) = observed_parameters(&preference.device);
     eprintln!("recording_link_timeline scope={scope} stage=start elapsed_us={} interval_units={interval:?} latency={latency:?} supervision_units={supervision:?} no_extra_att_reads=1 host_unix_us={}",
         preference.parameter_observation.started.elapsed().as_micros(), chrono::Utc::now().timestamp_micros());
@@ -425,6 +472,7 @@ fn open_preference(address: u64, address_type: Option<AddressType>, scope: &'sta
     preference.request = Some(preference.device.RequestPreferredConnectionParameters(&parameters)
         .map_err(|e| format!("request throughput preference: {e}"))?);
     if cancel.requested() { return Err(cancel.cancelled_error("throughput preference")); }
+    trace_native_link(&preference.device,scope,"preference_requested",preference.request.as_ref());
     let status = preference.request.as_ref().and_then(|r| r.Status().ok());
     let interval = preference.device.GetConnectionParameters().ok()
         .and_then(|p| p.ConnectionInterval().ok());

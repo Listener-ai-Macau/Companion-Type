@@ -1104,9 +1104,10 @@ fn apply_throughput_optimized(
 ) -> Result<BluetoothLEPreferredConnectionParametersRequest, String> {
     let preferred = BluetoothLEPreferredConnectionParameters::ThroughputOptimized()
         .map_err(|e| format!("ThroughputOptimized factory: {e}"))?;
-    device
-        .RequestPreferredConnectionParameters(&preferred)
-        .map_err(|e| format!("RequestPreferredConnectionParameters: {e}"))
+    let request = device.RequestPreferredConnectionParameters(&preferred)
+        .map_err(|e| format!("RequestPreferredConnectionParameters: {e}"))?;
+    super::ble_throughput::trace_native_link(device,"ota","preference_requested",Some(&request));
+    Ok(request)
 }
 
 fn prepare_gatt_session(service: &GattDeviceService) -> Result<Option<denzic_ble_windows::ScopedBleResource<GattSession>>, String> {

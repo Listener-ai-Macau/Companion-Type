@@ -46,16 +46,16 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
     </li>;
   };
   return <section className="ct-recovery-center ct-recovery-compact" aria-label="恢复中心">
-    {storageBlocked && storage ? <div className="ct-recovery-storage" role="alert" aria-label="会议保存状态">
-      <strong>{storage.status === 'blocked' ? '会议库需要恢复' : '当前修改尚未安全保存'}</strong>
+    {storageBlocked && storage ? <div className="ct-recovery-storage" role="alert" aria-label="录音保存状态">
+      <strong>{storage.status === 'blocked' ? '录音库需要恢复' : '当前修改尚未安全保存'}</strong>
       <p>{storage.message ?? '自动处理已暂停，请保留当前窗口并重试。'}</p>
       <button type="button" className="ct-action" disabled={savingBusy} onClick={() => onControl({action:'hostRetrySave'})}>
         {storage.status === 'blocked' ? '重试恢复' : '重试保存'}</button>
     </div> : null}
     {selected ? <div className="ct-recovery-current"><strong>当前录音需要处理</strong><ul>{recording(selected)}</ul></div> : null}
     {other.length ? <details className="ct-recovery-history">
-      <summary>其他待处理录音 <span>{other.length}</span></summary>
-      <p>已有内容仍在原来的录音里，按需继续处理。</p>
+      <summary>其他录音的整理状态 <span>{other.length}</span></summary>
+      <p>已有内容仍在录音库里，按需查看；中断或保存失败会单独说明。</p>
       <ul>{visible.map(recording)}</ul>
       {other.length > 3 ? <button type="button" className="ct-text-button" aria-expanded={expanded}
         onClick={() => setExpanded(value => !value)}>{expanded ? '收起' : `查看全部 ${other.length} 条`}<ChevronDown size={14} /></button> : null}
