@@ -73,15 +73,31 @@ pub fn parse_saved_actions(markdown: &str) -> Vec<Action> {
     actions
 }
 
+// Same literal fold as UI commonActionSupplement; no interpretation, removal
+// of conditions or changes to independently exported calendar tasks.
+fn common_supplement(actions: &[Action]) -> Option<(&str,&str)> {
+    if actions.len()<2 {return None;}
+    let text=&actions.first()?.text;
+    let start=text.rfind("（补充：")?;
+    if start==0 || !text.ends_with('）') {return None;}
+    let suffix=&text[start..];
+    let words=suffix.strip_prefix("（补充：")?.strip_suffix('）')?;
+    if words.trim().is_empty() || words.contains(['\r','\n']) {return None;}
+    actions.iter().all(|item|item.text.ends_with(suffix) && item.text.len()>suffix.len()).then_some((suffix,words))
+}
+
 pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
     let mut out = format!("# {} — 待办事项\n\n", title.replace(['\r', '\n'], " "));
     if draft { out.push_str("> 草稿：请核对负责人、任务和截止日期。\n\n"); }
+    let common=common_supplement(actions);
+    if let Some((_,words))=common {out.push_str(&format!("> 以下事项的共同补充：{words}\n\n"));}
     let mut has_supplements=false;
     for item in actions {
-        let supplement=item.text.strip_prefix("用户补充：");
+        let text=common.map_or(item.text.as_str(),|(suffix,_)|&item.text[..item.text.len()-suffix.len()]);
+        let supplement=text.strip_prefix("用户补充：");
         has_supplements|=supplement.is_some();
         out.push_str(&format!("- [{}] {}{}\n",if item.completed {"x"}else{" "},
-            supplement.unwrap_or(&item.text),if supplement.is_some(){" ＊"}else{""}));
+            supplement.unwrap_or(text),if supplement.is_some(){" ＊"}else{""}));
     }
     if has_supplements {out.push_str("\n> ＊ 来自用户补充；原话与补充仍分别保留。\n");}
     out

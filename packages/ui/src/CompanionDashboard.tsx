@@ -13,7 +13,7 @@ import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOr
 import { companionMinutesNotesCurrent, type CompanionMinutesNoteContext } from '@companion-type/core';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { briefMinutes } from './briefMinutes';
-import {savedActions,markSavedAction,type SavedAction} from './savedActions';
+import {savedActions,markSavedAction,commonActionSupplement,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
 import { CompanionRecoveryCenter } from './CompanionRecoveryCenter';
@@ -2442,6 +2442,10 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
     const next = contentBlocks[index + 1];
     return next && next.type !== 'heading' && next.type !== 'title';
   });
+  const visibleActions = visibleBlocks.flatMap(block => block.action ? [block.action] : []);
+  const commonSupplement = actionChecklist?.compactSources && visibleActions.length === actionChecklist.items.length
+    ? commonActionSupplement(visibleActions) : null;
+  const firstActionIndex = visibleBlocks.findIndex(block => block.action);
   return (
     <article className="ct-minutes-article">
       {visibleBlocks.map((block, index) => {
@@ -2453,11 +2457,15 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
             disabled={blocked} aria-label={`核对第${source.index + 1}段原文`}
             onClick={() => onOpenSource(source)}>核对原文 · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
         </span> : null;
-        if(block.action&&actionChecklist){const action=block.action;const supplementary=actionChecklist.compactSources&&action.text.startsWith('用户补充：');return <div key={index} className="ct-minutes-item ct-minutes-action-item">
+        if(block.action&&actionChecklist){const action=block.action;
+          const shownText=commonSupplement?action.text.slice(0,-commonSupplement.suffix.length):action.text;
+          const supplementary=actionChecklist.compactSources&&shownText.startsWith('用户补充：');return <div key={index}>
+          {commonSupplement&&index===firstActionIndex?<p className="ct-action-source-legend">以下事项的共同补充：{commonSupplement.text}</p>:null}
+          <div className="ct-minutes-item ct-minutes-action-item">
           <label className={`ct-saved-action${action.completed?' completed':''}`}><input type="checkbox" checked={action.completed}
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${action.text}`}
-            onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>{supplementary?action.text.slice('用户补充：'.length):action.text}
-              {supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span></label>{links}</div>;}
+            onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>{supplementary?shownText.slice('用户补充：'.length):shownText}
+              {supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span></label>{links}</div></div>;}
         if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}{links}</span></div>;
         return <p key={index}>{block.text}{links}</p>;
       })}

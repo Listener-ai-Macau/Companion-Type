@@ -6,6 +6,20 @@ export interface SavedAction {
   completed: boolean;
 }
 
+// Fold only a literal, identical supplement attached to every saved task.
+// The original action text/line index remain the persistence authority.
+export function commonActionSupplement(actions: readonly SavedAction[]): { suffix: string; text: string } | null {
+  if (actions.length < 2) return null;
+  const first = actions[0].text;
+  const start = first.lastIndexOf('（补充：');
+  if (start <= 0 || !first.endsWith('）')) return null;
+  const suffix = first.slice(start);
+  const text = suffix.slice('（补充：'.length, -1);
+  if (!text.trim() || /[\r\n]/.test(text)) return null;
+  return actions.every(action => action.text.endsWith(suffix) && action.text.length > suffix.length)
+    ? { suffix, text } : null;
+}
+
 // Aligned with native action_export::empty_action_notice. These are anchored
 // absence statements, not a search for negative words inside a real task.
 // Keep the original prose visible; it simply isn't a completable/exported task.
