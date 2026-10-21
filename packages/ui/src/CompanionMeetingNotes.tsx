@@ -120,7 +120,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
     })}</ol>:null}
     {notes.length&&onExport?<div className="ct-note-takeaway">
       <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady}
-        onClick={()=>void onExport('txt')}>保存文字和补充</button>
+        onClick={()=>void onExport('txt')}>导出文字与补充</button>
       <details className="ct-note-export"><summary>其他格式</summary>
         <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady}
           onClick={()=>void onExport('json')}>保存完整数据（JSON）</button>

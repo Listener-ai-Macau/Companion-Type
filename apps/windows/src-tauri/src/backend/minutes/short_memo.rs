@@ -46,7 +46,7 @@ fn plan_clauses(source:&str,duration_ms:u64,require_intent:bool)->Option<Vec<(St
     let clauses = text.split(['，', ',', '；', ';', '。', '.', '！', '!', '\n'])
         .map(str::trim).filter(|clause| !clause.is_empty()).collect::<Vec<_>>();
     if clauses.is_empty() || clauses.len() > 8 { return None; }
-    let mut items = Vec::new();
+    let mut items: Vec<(String,String)> = Vec::new();
     for (index, clause) in clauses.iter().enumerate() {
         if clause.chars().count() > 100 || clause.ends_with('了') { return None; }
         let connected = if !require_intent {
@@ -62,7 +62,25 @@ fn plan_clauses(source:&str,duration_ms:u64,require_intent:bool)->Option<Vec<(St
         // clauses may share the list context, never owner/deadline metadata.
         if require_intent && index == 0 && prefix.end() == 0 { return None; }
         let action = connected[prefix.end()..].trim();
-        if !VERBS.iter().any(|verb| action.strip_prefix(verb).is_some_and(|object| !object.trim().is_empty())) {
+        // A purpose explains the preceding literal preparation; it is not a
+        // new task or a cancellation. Preserve its wording with that entry.
+        if !require_intent && action.strip_prefix("避免").is_some_and(|purpose|!purpose.trim().is_empty()) {
+            items.last_mut()?.0.push_str(&format!("，{clause}"));
+            continue;
+        }
+        let starts_with_verb=|value:&str,verbs:&[&str]|verbs.iter()
+            .any(|verb|value.strip_prefix(verb).is_some_and(|object|!object.trim().is_empty()));
+        const PREPARATION_VERBS:&[&str]=&["找好","找齐","找到","看看","看一下","查看","询问","问一下","准备","备好","找","看","问"];
+        let contextual_positive=!require_intent && (
+            starts_with_verb(action,PREPARATION_VERBS)
+            || action.strip_prefix("把").is_some_and(|body|
+                ["找好","找齐","准备好","带好","带上","放好","整理好","收好","保存好","核对好","检查好","确认好"]
+                    .iter().any(|ending|body.strip_suffix(ending).is_some_and(|object|
+                        !object.trim().is_empty()&&object.chars().count()<=48)))
+            || action.split_once(['先','再']).is_some_and(|(topic,verb)|
+                !topic.trim().is_empty()&&topic.chars().count()<=24
+                    &&(starts_with_verb(verb,VERBS)||starts_with_verb(verb,PREPARATION_VERBS))));
+        if !starts_with_verb(action,VERBS) && !contextual_positive {
             return None;
         }
         items.push(((*clause).into(),action.to_string()));
