@@ -8,6 +8,7 @@ mod commands;
 mod companion_v1;
 mod coordinator;
 mod pet_chat_commands;
+mod pet_find_commands;
 mod recorder_sync_exercise;
 
 use std::fs;
@@ -272,6 +273,7 @@ pub fn run() {
         .manage(Arc::clone(&coordinator))
         .manage(board_online_live)
         .invoke_handler(tauri::generate_handler![
+            pet_find_commands::control_companion_pet_find,
             pet_chat_commands::get_companion_pet_chat,
             pet_chat_commands::clear_companion_pet_chat,
             pet_chat_commands::start_companion_pet_chat,

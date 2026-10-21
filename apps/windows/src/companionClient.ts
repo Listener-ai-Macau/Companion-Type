@@ -1,4 +1,6 @@
 import { invoke, convertFileSrc } from '@tauri-apps/api/core';
+import type {PetFindRequest,PetFindReport} from '../../../packages/ui/src/CompanionPetFind';
+export const controlCompanionPetFind=(request:PetFindRequest)=>invoke<PetFindReport>('control_companion_pet_find',{request});
 import { listen } from '@tauri-apps/api/event';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 export const getRecordingSyncStatus = () => invoke<RecordingSyncStatus>('get_companion_recording_sync_status');

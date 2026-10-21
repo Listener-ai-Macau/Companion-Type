@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
+import {CompanionPetFind,type PetFindRequest,type PetFindReport} from './CompanionPetFind';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
 import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
@@ -154,6 +155,7 @@ export type CompanionMeetingSaveRequest = {
 
 export interface CompanionDashboardProps {
   settingsFooter?: ReactNode;
+  onFindPet?: (request:PetFindRequest)=>Promise<PetFindReport>;
   recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
   pauseSyncBusy?: boolean;
   onPauseSync?: (jobId: string) => void;
@@ -278,6 +280,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label }: {
 
 export function CompanionDashboard({
   settingsFooter,
+  onFindPet,
   recordingSync = null,
   pauseSyncBusy = false,
   onPauseSync,
@@ -1427,6 +1430,10 @@ export function CompanionDashboard({
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
         recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
         onSettings={openSettings} onWorkflow={openWorkflow} />
+      {onFindPet && connected && device?.deviceId ? <CompanionPetFind
+        deviceId={device.deviceId} supported={snapshot?.source==='firmware' && snapshot.speaker.findSupported===true}
+        blocked={controlsBusy||oobeBlockedByRecording} muted={snapshot?.speaker.muted!==false||snapshot.speaker.volume===0}
+        onFind={onFindPet} /> : null}
 
       {connected ? <section className="ct-pending-banner" aria-label="设备录音容量">
         <strong>设备录音空间 · 上次读取</strong><p>{capacityHint}</p>

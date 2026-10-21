@@ -109,6 +109,7 @@ pub struct CompanionV1Vector3 {
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1SpeakerState {
     pub supported: bool,
+    pub find_supported: bool,
     pub online: bool,
     pub muted: bool,
     pub volume: u8,
@@ -706,6 +707,7 @@ pub fn fixture_snapshot() -> CompanionV1Snapshot {
         },
         speaker: CompanionV1SpeakerState {
             supported: false,
+            find_supported: false,
             online: false,
             muted: true,
             volume: 0,

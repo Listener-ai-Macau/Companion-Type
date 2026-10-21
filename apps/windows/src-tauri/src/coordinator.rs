@@ -82,6 +82,7 @@ fn operation_name(kind: u8) -> &'static str {
         PET_CAPTURE_OPERATION => "pet utterance capture",
         18 => "library organization",
         19 => "library protection/trash",
+        20 => "pet finding",
         _ => "unknown device operation",
     }
 }
@@ -317,6 +318,10 @@ impl CompanionCoordinator {
         }
         crate::backend::product_settings::merge_patch_and_save(patch)?;
         Ok(crate::backend::product_settings::public_report())
+    }
+
+    pub(crate) fn begin_pet_find_operation(&self)->Result<CompanionDeviceOperationLease,String> {
+        self.begin_foreground_operation_kind(20)
     }
 
     pub fn snapshot(&self) -> Result<CompanionV1Snapshot, String> {

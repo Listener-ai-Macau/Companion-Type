@@ -7,7 +7,7 @@ import {
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
 import {clearPlaybackMemory,clearSessionPlaybackMemory} from '../../../packages/ui/src/playbackMemory';
-import { refineCompanionMeetingSpeakers } from './companionClient';
+import { refineCompanionMeetingSpeakers,controlCompanionPetFind } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
@@ -216,6 +216,7 @@ export function App() {
       <PetChat disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>
     </details>:null}
     <CompanionDashboard
+      onFindPet={isTauriRuntime()?(request)=>exclusive('refresh',()=>controlCompanionPetFind(request)):undefined}
       settingsFooter={isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active
         || snapshot?.host.sessions.some(session=>session.status==='recording') || (snapshot?.host.persistence && snapshot.host.persistence.status!=='ready'))}
         unsaved={unsavedEdits} onStatus={getDesktopUpdateStatus} onCheck={checkDesktopUpdate}

@@ -117,6 +117,8 @@ export interface CompanionV1ImuState {
 
 export interface CompanionV1SpeakerState {
   supported: boolean;
+  /** Negotiated from the actual SPEAKER_STATUS; old/fixture snapshots omit it. */
+  findSupported?: boolean;
   /**
    * Electronic-pet “mouth”: short calls / mood sounds, not long meeting playback.
    * Enabled only after a valid SPEAKER_STATUS read reports populated hardware.

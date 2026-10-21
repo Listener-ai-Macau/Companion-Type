@@ -5,6 +5,7 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+pub(crate) use ble_bridge::pet_find;
 pub(crate) mod lifecycle;
 pub(crate) use ble_bridge::release_process_device_links;
 pub(crate) mod speaker_refinement;
@@ -759,6 +760,7 @@ fn apply_device_identity(snapshot: &mut CompanionV1Snapshot, identity: &Companio
     snapshot.imu.online = identity.imu_online.unwrap_or(false);
     snapshot.imu.sample_hz = identity.imu_sample_hz.unwrap_or(0);
     snapshot.speaker.supported = identity.speaker_supported.unwrap_or(false);
+    snapshot.speaker.find_supported = identity.speaker_find_supported.unwrap_or(false);
     snapshot.speaker.online = identity.speaker_online.unwrap_or(false);
     snapshot.speaker.volume = identity.speaker_volume.unwrap_or(0).min(100);
     snapshot.speaker.muted = snapshot.speaker.volume == 0;
@@ -4700,6 +4702,7 @@ mod tests {
                 speaker_supported: Some(false),
                 speaker_online: Some(false),
                 speaker_volume: Some(0),
+                speaker_find_supported: Some(false),
             },
             device_status_read: true,
             imu_status_read: true,
@@ -5327,6 +5330,7 @@ mod tests {
             speaker_supported: Some(true),
             speaker_online: Some(true),
             speaker_volume: Some(65),
+            speaker_find_supported: None,
         };
         apply_device_identity(&mut snapshot, &measured);
         assert_eq!(snapshot.device.firmware_version, Some(0x0001_0101));
@@ -5355,6 +5359,7 @@ mod tests {
             speaker_supported: None,
             speaker_online: None,
             speaker_volume: None,
+            speaker_find_supported: None,
         };
         apply_device_identity(&mut snapshot, &unknown);
         assert!(!snapshot.imu.supported && !snapshot.imu.online);

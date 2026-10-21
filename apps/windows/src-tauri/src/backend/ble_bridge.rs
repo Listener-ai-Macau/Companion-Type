@@ -39,6 +39,7 @@ mod segmented;
 mod batch_interval;
 mod recorder_control;
 pub(crate) mod pet_caption;
+pub(crate) mod pet_find;
 mod upload_benchmark;
 pub(crate) use upload_benchmark::receive_fixture as benchmark_recording_upload;
 use pull_session::PullSession;
@@ -196,6 +197,7 @@ pub(crate) struct CompanionDeviceIdentity {
     pub speaker_supported: Option<bool>,
     pub speaker_online: Option<bool>,
     pub speaker_volume: Option<u8>,
+    pub speaker_find_supported: Option<bool>,
 }
 
 #[derive(Clone, Debug)]
@@ -3083,6 +3085,7 @@ fn parse_device_identity(
         speaker_supported: speaker_state.map(|state| state != 1),
         speaker_online: speaker_state.map(|state| matches!(state, 2..=4)),
         speaker_volume: speaker_state.and_then(|_| speaker.map(|value| value[3])),
+        speaker_find_supported: speaker_state.and_then(|_| speaker.map(|value| value[9]&1!=0)),
     }
 }
 
