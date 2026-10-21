@@ -2808,6 +2808,15 @@ impl CompanionBackend for FixtureCompanionBackend {
                                 self.minutes.generate_with_context(input,&generated_at)
                             } else { self.minutes.generate(input,&generated_at) }))?;
                     snapshot=fresh;
+                    // Context inclusion belongs only to this explicit request.
+                    // Do not let generic automatic recovery replace a failed
+                    // combined result with an original-only result silently.
+                    if request.context_note_revision.is_some() && failure.is_some() {
+                        session.recovery.stage="paused".into();
+                        session.recovery.next_retry_at_unix_ms=None;
+                        session.recovery.last_error=Some("本次参考补充的整理未完成；原话和补充保留。请主动点“参考补充整理”重试，不会自动改成仅按原话整理。".into());
+                        session.pending_reason=Some("recovery_paused".into());
+                    }
                     original_selected_session_id=snapshot.host.selected_session_id.clone();
                     next=apply_control_at(snapshot.clone(),request.clone(),&observation_timestamp())?;
                     next.meeting.status = session.status.clone();
