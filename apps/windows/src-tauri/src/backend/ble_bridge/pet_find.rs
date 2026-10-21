@@ -1,6 +1,6 @@
 //! Request-owned, finite finding. No generic speaker stop or volume override.
 use super::*;
-use std::sync::Mutex;
+use std::{collections::HashMap,sync::{LazyLock,Mutex}};
 use crate::coordinator::CompanionCoordinator;
 
 #[derive(Clone, serde::Deserialize)]
@@ -25,11 +25,13 @@ pub(crate) struct Report {
 struct Owner {
     device: String,
     uid: String,
-    token: String,
     request_id: u32,
-    phase: &'static str,
+    terminal: bool,
+    superseded: bool,
 }
-static OWNER: Mutex<Option<Owner>> = Mutex::new(None);
+// Keep issued tokens for this process so reconnects do not orphan a request,
+// and a delayed retry of an older action cannot create a new sound.
+static OWNERS: LazyLock<Mutex<HashMap<String,Owner>>> = LazyLock::new(||Mutex::new(HashMap::new()));
 
 pub(crate) fn control(coordinator:&CompanionCoordinator, request:Request)->Result<Report,String> {
     if !native_ble_available() {return Err("请在 Windows Type 中连接 Companion，浏览器演示不会发声。".into());}
@@ -49,22 +51,27 @@ pub(crate) fn control(coordinator:&CompanionCoordinator, request:Request)->Resul
         }
         if snapshot.speaker.muted || snapshot.speaker.volume==0 {return Err("宠物当前静音；寻找会保留原音量，请先在设备上调整。".into());}
     }
-    let mut owner=OWNER.lock().map_err(|_|"寻找状态暂不可用。")?;
-    let same=owner.as_ref().is_some_and(|o|o.token==request.token && o.device==request.device_id && o.uid.eq_ignore_ascii_case(uid));
-    if !same {
+    let mut owners=OWNERS.lock().map_err(|_|"寻找状态暂不可用。")?;
+    if let Some(owner)=owners.get(&request.token) {
+        if owner.device!=request.device_id || !owner.uid.eq_ignore_ascii_case(uid) {
+            return Err("寻找请求与原设备不一致，未发送声音或停止。".into());
+        }
+    } else {
         if request.action!=Action::Start {return Err("这不是本次寻找请求，未停止其它声音。".into());}
-        if owner.as_ref().is_some_and(|o|!matches!(o.phase,"ended"|"stopped"|"rejected")) {
-            return Err("上次寻找的状态尚未核对，请先停止或查看上次状态。".into());
+        for owner in owners.values_mut().filter(|owner|owner.uid.eq_ignore_ascii_case(uid)) {
+            owner.superseded=true;
         }
         let random=Uuid::new_v4();
         let id=u32::from_le_bytes(random.as_bytes()[..4].try_into().unwrap()).max(1);
-        *owner=Some(Owner {device:request.device_id.clone(),uid:uid.to_owned(),token:request.token.clone(),request_id:id,phase:"unknown"});
+        owners.insert(request.token.clone(),Owner {device:request.device_id.clone(),uid:uid.to_owned(),request_id:id,terminal:false,superseded:false});
     }
-    let current=owner.as_mut().unwrap();
-    let result=run_native_blocking(execute(&request,current.request_id,&current.uid));
+    let current=owners.get_mut(&request.token).unwrap();
+    let mut effective=request.clone();
+    if effective.action==Action::Start && (current.terminal||current.superseded) {effective.action=Action::Status;}
+    let result=run_native_blocking(execute(&effective,current.request_id,&current.uid));
     match result {
-        Ok(report)=>{current.phase=report.phase;Ok(report)},
-        Err(error)=>{current.phase="unknown";Err(error)},
+        Ok(report)=>{current.terminal|=matches!(report.phase,"ended"|"stopped"|"rejected"|"other");Ok(report)},
+        Err(error)=>Err(error),
     }
 }
 
