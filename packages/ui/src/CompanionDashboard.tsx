@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
@@ -152,6 +152,7 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
+  settingsFooter?: ReactNode;
   recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
   pauseSyncBusy?: boolean;
   onPauseSync?: (jobId: string) => void;
@@ -207,6 +208,7 @@ export interface CompanionDashboardProps {
 }
 
 export function CompanionDashboard({
+  settingsFooter,
   recordingSync = null,
   pauseSyncBusy = false,
   onPauseSync,
@@ -250,6 +252,7 @@ export function CompanionDashboard({
   const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string } | null>(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showWorkflow, setShowWorkflow] = useState(false);
+  const [pageView, setPageView] = useState<'library' | 'device' | 'settings'>('library');
   const [onlyPendingSessions, setOnlyPendingSessions] = useState(false);
   const [libraryQuery, setLibraryQuery] = useState('');
   const [libraryFilters,setLibraryFilters]=useState<LibraryFilters>({folder:'*',tag:'',favorites:false});
@@ -406,6 +409,7 @@ export function CompanionDashboard({
 
   const openRecentSavedRecording = () => {
     if (!recentSavedRecording || controlsBusy) return;
+    setPageView('library');
     setLibraryFilters({ folder: '*', tag: '', favorites: false });
     setLibraryQuery('');
     setOnlyPendingSessions(false);
@@ -615,10 +619,12 @@ export function CompanionDashboard({
     </div>;
   };
   const openSettings = () => {
+    setPageView('settings');
     setShowAdvanced(true);
     window.setTimeout(() => document.getElementById('ct-service-settings')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0);
   };
   const openWorkflow = () => {
+    setPageView('device');
     setShowWorkflow(true);
     window.setTimeout(() => document.getElementById('ct-workflow')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0);
   };
@@ -896,7 +902,7 @@ export function CompanionDashboard({
       <header className="ct-topbar">
         <div>
           <p className="ct-kicker">Companion Type</p>
-          <h1>留住每次好想法</h1>
+          <h1>{pageView === 'library' ? '我的录音' : pageView === 'device' ? '设备与同步' : '设置与工具'}</h1>
         </div>
         <button
           className="ct-icon-button"
@@ -910,6 +916,15 @@ export function CompanionDashboard({
         </button>
       </header>
 
+      <nav className="ct-page-navigation" aria-label="主要功能">
+        <button type="button" aria-current={pageView === 'library' ? 'page' : undefined}
+          onClick={() => setPageView('library')}><Headphones size={16} />我的录音</button>
+        <button type="button" aria-current={pageView === 'device' ? 'page' : undefined}
+          onClick={() => setPageView('device')}><Bluetooth size={16} />设备与同步</button>
+        <button type="button" aria-current={pageView === 'settings' ? 'page' : undefined}
+          onClick={() => { setPageView('settings'); setShowAdvanced(true); }}><ChevronDown size={16} />设置与工具</button>
+      </nav>
+
       <section className="ct-simple-status" aria-live="polite">
         <span className={`ct-simple-dot ${connected ? 'ok' : 'idle'}`} />
         <strong>{simpleStatus}</strong>
@@ -920,6 +935,7 @@ export function CompanionDashboard({
         </span>
       </section>
 
+      <div className="ct-page-panel" hidden={pageView !== 'library'}>
       {recentSavedRecording && !oobeBlockedByRecording ? <section className="ct-recent-recording" aria-label="最近保存的录音">
         <div>
           <span className="ct-section-eyebrow">最近保存的录音</span>
@@ -931,31 +947,14 @@ export function CompanionDashboard({
           onClick={openRecentSavedRecording}><Headphones size={16} />打开这条录音</button>
       </section> : null}
 
+      </div>
+
       {error ? (
         <section className="ct-pending-banner" role="alert">{error}</section>
       ) : null}
       {!error && snapshot?.lastControl?.accepted === false ? (
         <section className="ct-pending-banner" role="alert">{snapshot.lastControl.message}</section>
       ) : null}
-
-      {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="开始设备录音">
-        <div><strong>用 Companion 录音</strong>
-          <p>{connected
-            ? `只保存原音，转写与纪要稍后手动启动。无需网络或转写配置。当前最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整。`
-            : '连接后可从这里开始，也可以直接用设备按键离线录音。'}</p>
-          {!durationValid ? <p role="alert">请输入有效的录音时长。</p> : null}
-        </div>
-        <div className="ct-button-row">
-          <button type="button" className="ct-action ct-action-primary"
-            disabled={controlsBusy || storageBlocked || !connected || !device?.deviceId || !durationValid}
-            onClick={() => onControl({ action: 'meetingStart', meetingMode: 'offlineStore',
-              promptId: COMPANION_CAPTURE_ONLY_PROMPT,
-              deviceId: device?.deviceId ?? undefined, title: newMeetingTitle.trim() || 'Companion 录音', durationMs: requestedDurationMs })}>
-            <Mic size={16} /><span>开始录音</span>
-          </button>
-          <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
-        </div>
-      </section> : null}
 
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
         resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync}
@@ -985,33 +984,7 @@ export function CompanionDashboard({
             onClick={() => onControl({ action: 'deviceConnect', deviceId: device?.deviceId ?? undefined })}><RefreshCw size={15} />读取设备状态</button>}
       </section> : null}
 
-      <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
-        recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
-        onSettings={openSettings} onWorkflow={openWorkflow} />
-
-      {connected ? <section className="ct-pending-banner" aria-label="设备录音容量">
-        <strong>设备录音空间 · 上次读取</strong><p>{capacityHint}</p>
-        {capacity ? <p>未同步 {capacity.unsyncedEntries} 段，未封口 {capacity.writingEntries} 段，共占用 {formatBytes(capacity.protectedBytes)}；待回收（已同步或已确认删除）{capacity.consumedEntries} 段，{formatBytes(capacity.consumedBytes)}。
-          设备独立开录：{capacity.localLimitSeconds ? `${capacity.localLimitSeconds / 60} 分钟` : '无时间上限，空间仍有限'}。</p> : null}
-        {capacity && capacity.writingEntries>0 && !oobeBlockedByRecording ? <p role="alert">
-          设备仍保留未封口录音；校验不足的内容不会自动覆盖。请先同步可恢复的片段，剩余占用需要设备诊断后处理。
-        </p> : null}
-        <p>{capacity ? '电脑开录使用下方填写的时长，开始前重新核对完整空间。空间不足会拒绝开录；不会自动覆盖未同步录音。'
-          : '旧固件或未读到容量时，无法承诺完整时长；请重新读取，或升级到配套固件。'}</p>
-        <button type="button" className="ct-text-button" disabled={controlsBusy || oobeBlockedByRecording}
-          onClick={() => onControl({action:'oobeRunChecks'})}>重新读取设备容量</button>
-        {onDiscardOldestRecording && capacity?.confirmedDiscardSupported && capacityInsufficient ? <>
-          <p>优先同步保存录音。也可查看最旧未同步录音的具体时间、大小和风险，再决定是否删除这一条。</p>
-          <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || capacity.busy || !capacity.unsyncedEntries}
-            onClick={() => void inspectRecordingLoss()}>{discardBusy ? '正在核对确认与回收…' : '查看可释放的最旧录音'}</button>
-        </> : null}
-        {discardMessage ? <p role="status">{discardMessage}</p> : null}
-      </section> : null}
-      {!oobeBlockedByRecording ? <div className="ct-capture-entry">
-        <div><strong>开会时，让它帮你记住</strong><p>随身先录，回来同步；或连接电脑，边录边看文字。</p></div>
-        <button type="button" className="ct-action" onClick={openWorkflow}><Mic size={16} />录音与同步</button>
-      </div> : null}
-
+      <div className="ct-page-panel" hidden={pageView !== 'library'}>
       {snapshot ? <CompanionRecoveryCenter snapshot={snapshot} blocked={controlsBusy || oobeBlockedByRecording}
         savingBusy={controlsBusy} asrReady={asrConfigured}
         minutesReady={Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet)}
@@ -1246,8 +1219,52 @@ export function CompanionDashboard({
         </section>
       ) : null}
 
+      </div>
+
+      <section className="ct-page-panel" hidden={pageView !== 'device'} aria-label="设备与同步内容">
+      <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
+        recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
+        onSettings={openSettings} onWorkflow={openWorkflow} />
+
+      {connected ? <section className="ct-pending-banner" aria-label="设备录音容量">
+        <strong>设备录音空间 · 上次读取</strong><p>{capacityHint}</p>
+        {capacity ? <p>未同步 {capacity.unsyncedEntries} 段，未封口 {capacity.writingEntries} 段，共占用 {formatBytes(capacity.protectedBytes)}；待回收（已同步或已确认删除）{capacity.consumedEntries} 段，{formatBytes(capacity.consumedBytes)}。
+          设备独立开录：{capacity.localLimitSeconds ? `${capacity.localLimitSeconds / 60} 分钟` : '无时间上限，空间仍有限'}。</p> : null}
+        {capacity && capacity.writingEntries>0 && !oobeBlockedByRecording ? <p role="alert">
+          设备仍保留未封口录音；校验不足的内容不会自动覆盖。请先同步可恢复的片段，剩余占用需要设备诊断后处理。
+        </p> : null}
+        <p>{capacity ? '电脑开录使用下方填写的时长，开始前重新核对完整空间。空间不足会拒绝开录；不会自动覆盖未同步录音。'
+          : '旧固件或未读到容量时，无法承诺完整时长；请重新读取，或升级到配套固件。'}</p>
+        <button type="button" className="ct-text-button" disabled={controlsBusy || oobeBlockedByRecording}
+          onClick={() => onControl({action:'oobeRunChecks'})}>重新读取设备容量</button>
+        {onDiscardOldestRecording && capacity?.confirmedDiscardSupported && capacityInsufficient ? <>
+          <p>优先同步保存录音。也可查看最旧未同步录音的具体时间、大小和风险，再决定是否删除这一条。</p>
+          <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || capacity.busy || !capacity.unsyncedEntries}
+            onClick={() => void inspectRecordingLoss()}>{discardBusy ? '正在核对确认与回收…' : '查看可释放的最旧录音'}</button>
+        </> : null}
+        {discardMessage ? <p role="status">{discardMessage}</p> : null}
+      </section> : null}
+      {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="开始设备录音">
+        <div><strong>用 Companion 录音</strong>
+          <p>{connected
+            ? `只保存原音，转写与纪要稍后手动启动。无需网络或转写配置。当前最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整。`
+            : '连接后可从这里开始，也可以直接用设备按键离线录音。'}</p>
+          {!durationValid ? <p role="alert">请输入有效的录音时长。</p> : null}
+        </div>
+        <div className="ct-button-row">
+          <button type="button" className="ct-action ct-action-primary"
+            disabled={controlsBusy || storageBlocked || !connected || !device?.deviceId || !durationValid}
+            onClick={() => onControl({ action: 'meetingStart', meetingMode: 'offlineStore',
+              promptId: COMPANION_CAPTURE_ONLY_PROMPT,
+              deviceId: device?.deviceId ?? undefined, title: newMeetingTitle.trim() || 'Companion 录音', durationMs: requestedDurationMs })}>
+            <Mic size={16} /><span>开始录音</span>
+          </button>
+          <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
+        </div>
+      </section> : null}
+
       <button type="button" className="ct-workflow-toggle" onClick={() => setShowWorkflow((value) => !value)}>
-        <span><HardDrive size={16} />采集与处理</span><span>{showWorkflow ? '收起' : '录音 · 同步 · 整理'}</span>
+        <span><HardDrive size={16} />更多录音与处理操作</span><span>{showWorkflow ? '收起' : '录音 · 同步 · 整理'}</span>
       </button>
 
       {showWorkflow ? <section className="ct-steps" id="ct-workflow" aria-label="主路径步骤">
@@ -1529,6 +1546,9 @@ export function CompanionDashboard({
         </div>
       </section> : null}
 
+      </section>
+
+      <section className="ct-page-panel" hidden={pageView !== 'settings'} aria-label="设置与工具内容">
       <button
         type="button"
         className="ct-advanced-toggle"
@@ -1951,6 +1971,9 @@ export function CompanionDashboard({
         </div>
       ) : null}
 
+      </section>
+
+      <div className="ct-page-panel" hidden={pageView !== 'settings'}>{settingsFooter}</div>
       <footer className="ct-footer">{footer}</footer>
     </main>
   );

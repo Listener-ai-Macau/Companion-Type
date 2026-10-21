@@ -1431,3 +1431,46 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-minutes-source-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
 .ct-reviewed-utterance[data-source-selected="true"] { background: #edf3f7; border-radius: 8px; box-shadow: inset 3px 0 #52748d; }
 .ct-reviewed-utterance[data-source-selected="true"]:focus { outline: 2px solid #a4c3e9; outline-offset: 3px; }
+
+
+/* The library is the landing page. Device work and settings retain their state
+   in separate panels; a hidden panel must never leak into the visible layout. */
+.ct-page-panel[hidden] { display: none !important; }
+.ct-page-navigation {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 5px;
+  margin: 0 0 18px;
+  border: 1px solid #dce5dd;
+  border-radius: 13px;
+  background: #f2f5ef;
+}
+.ct-page-navigation button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex: 1;
+  min-height: 42px;
+  padding: 9px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #536458;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.ct-page-navigation button[aria-current="page"] {
+  background: white;
+  border-color: #d0ddd1;
+  color: #213e29;
+  box-shadow: 0 1px 3px #253b2410;
+  font-weight: 650;
+}
+.ct-page-navigation button:focus-visible { outline: 2px solid #547b5b; outline-offset: 2px; }
+.ct-page-panel > .ct-advanced-toggle { margin-top: 0; }
+@media (max-width: 560px) {
+  .ct-page-navigation button { gap: 5px; padding: 9px 6px; font-size: 12px; }
+}

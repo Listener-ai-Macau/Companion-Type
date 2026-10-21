@@ -216,6 +216,11 @@ export function App() {
       <PetChat disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>
     </details>:null}
     <CompanionDashboard
+      settingsFooter={isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active
+        || snapshot?.host.sessions.some(session=>session.status==='recording') || (snapshot?.host.persistence && snapshot.host.persistence.status!=='ready'))}
+        unsaved={unsavedEdits} onStatus={getDesktopUpdateStatus} onCheck={checkDesktopUpdate}
+        onDownload={() => exclusive('refresh', downloadDesktopUpdate)} onCancel={cancelDesktopUpdate}
+        onInstall={() => exclusive('refresh', installDesktopUpdate)} /> : null}
       onUnsavedChange={setUnsavedEdits}
       snapshot={snapshot}
       busyAction={busyAction}
@@ -320,11 +325,6 @@ export function App() {
         }))
       }
     />
-    {isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active
-      || snapshot?.host.sessions.some(session=>session.status==='recording') || (snapshot?.host.persistence && snapshot.host.persistence.status!=='ready'))}
-      unsaved={unsavedEdits} onStatus={getDesktopUpdateStatus} onCheck={checkDesktopUpdate}
-      onDownload={() => exclusive('refresh', downloadDesktopUpdate)} onCancel={cancelDesktopUpdate}
-      onInstall={() => exclusive('refresh', installDesktopUpdate)} /> : null}
     </div>
   );
 }
