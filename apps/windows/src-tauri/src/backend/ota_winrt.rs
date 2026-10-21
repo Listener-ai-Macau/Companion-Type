@@ -713,7 +713,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         }
     }
     report.timings.total=started.elapsed();
-    let system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
+    let mut system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
         "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
@@ -736,13 +736,15 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "localWriteCompletionReturnsDeviceCredit":false,
         "windowBarrier":if pipelined {"encrypted_status_after_bounded_queue_drains"} else {"sync_write_then_status"},
         "deviceLinkBudgetBeforeBegin":device_link_budget,
-        "requestedTransportProfile":requested_profile.name(),
-        "selectedTransportProfile":transport_profile.name(),
-        "automaticTransport":requested_profile==super::ota_flow::SimpleTransportProfile::Automatic,
         "connectionPreference":connection_preference,
         "connectionPreferenceRelease":release_scope,
         "connectionPreferenceHandoffOffset":handoff_offset,
         "connectionPreferenceHandoffCloseSucceeded":handoff_release.as_ref().map(|r|r.is_ok())}));
+    if let Some(bundle)=system_bundle.as_mut() {
+        bundle["transportSelection"]=serde_json::json!({
+            "requested":requested_profile.name(),"selected":transport_profile.name(),
+            "automatic":requested_profile==super::ota_flow::SimpleTransportProfile::Automatic});
+    }
     Ok(CompanionOtaBleReport{device_id,transfer:report,payload_metrics,system_bundle})
 }
 
