@@ -651,7 +651,11 @@ export function CompanionDashboard({
     || recordingLibrary.some((session) => session.status === 'recording')
     || boardLiveActive,
   );
-  const controlsBusy = busyAction !== null || Boolean(recordingSync?.jobId) || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy ||libraryBusy;
+  // Native recording controls yield background synchronization at a safe boundary.
+  // Keep foreground requests exclusive, but do not strand the current recording
+  // behind a background job. New recordings and unrelated actions stay blocked.
+  const recordingControlBusy = busyAction !== null || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy || libraryBusy;
+  const controlsBusy = recordingControlBusy || Boolean(recordingSync?.jobId);
   const lossBudgetSeconds = Math.ceil(boardMaxDurationSeconds + (meetingMode === 'onlineLive' ? 120 : 0));
   const lossBudgetValid = durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
   const captureBudgetBytes = capacity && lossBudgetValid
@@ -1154,7 +1158,7 @@ export function CompanionDashboard({
         onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle,
           ...(pausedSyncRecorder ? { sessionId: pausedSyncRecorder.id } : {}) })} />
 
-      {!boardLiveActive ? <CompanionRecorderControl session={controlledRecorder} busy={controlsBusy} onControl={onControl} /> : null}
+      {!boardLiveActive ? <CompanionRecorderControl session={controlledRecorder} busy={recordingControlBusy} onControl={onControl} /> : null}
 
       {boardLiveActive && boardOnlineLive ? <section className="ct-recording-activity" aria-label="当前录音" aria-live="polite">
         <div><strong>{boardOnlineLive.state === 'starting' ? '正在准备录音'
@@ -1164,14 +1168,14 @@ export function CompanionDashboard({
             : '请保持设备在附近，当前录音还在处理中。'}
             {boardOnlineLive.durationMs > 0 ? ` · ${formatDuration(boardOnlineLive.durationMs)}` : ''}
             {nearRecordingLimit ? ` · 距本次设定结束约 ${formatDuration(recordingRemainingMs)}` : ''}</p></div>
-        <button type="button" className="ct-action" disabled={controlsBusy || boardOnlineLive.state !== 'recording' || !onStopBoardOnlineLive}
+        <button type="button" className="ct-action" disabled={recordingControlBusy || boardOnlineLive.state !== 'recording' || !onStopBoardOnlineLive}
           onClick={() => onStopBoardOnlineLive?.()}><Square size={15} />结束录音并整理</button>
       </section> : null}
 
       {!boardLiveActive && !controlledRecorder && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前录音">
         <div><strong>{device?.recording ? '设备录音中 · 上次读取' : '正在录音'}</strong>
           <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p></div>
-        {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={controlsBusy}
+        {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={recordingControlBusy}
           onClick={() => onControl({ action: 'meetingStop', sessionId: snapshot.host.activeSessionId ?? undefined })}><Square size={15} />结束录音</button>
           : <button type="button" className="ct-action" disabled={controlsBusy}
             onClick={() => onControl({ action: 'deviceConnect', deviceId: device?.deviceId ?? undefined })}><RefreshCw size={15} />读取设备状态</button>}
@@ -1691,7 +1695,7 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action"
-                disabled={controlsBusy || boardOnlineLive?.state !== 'recording' || !onStopBoardOnlineLive}
+                disabled={recordingControlBusy || boardOnlineLive?.state !== 'recording' || !onStopBoardOnlineLive}
                 onClick={() => onStopBoardOnlineLive?.()}
               >
                 <Square size={16} />
