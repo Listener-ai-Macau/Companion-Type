@@ -14,7 +14,7 @@ import { companionMinutesNotesCurrent, type CompanionMinutesNoteContext } from '
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { CompanionExportFeedback, exportFileName } from './CompanionExportFeedback';
 import { briefMinutes } from './briefMinutes';
-import {savedActions,markSavedAction,commonActionSupplement,splitActionSupplement,type SavedAction} from './savedActions';
+import {savedActions,markSavedAction,commonActionSupplement,splitActionSupplement,compactActionSource,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
 import { CompanionRecoveryCenter } from './CompanionRecoveryCenter';
@@ -772,7 +772,7 @@ export function CompanionDashboard({
   const preparedAudio = selectedSession && audioSources[selectedSession.id]?.identity === audioIdentity && !audioBlockedReason
     ? audioSources[selectedSession.id] : null;
   const listeningQueue=useListeningQueue({
-    rows:allLibrarySessions.filter(row=>!row.organization?.trashedAt).map(row=>({id:row.id,title:`${meetingTitle(row)} · ${formatDuration(row.durationMs)} · ${row.deviceRecordingId!=null?`#${row.deviceRecordingId}`:'录音'} · ${row.startedAt??row.id.slice(-8)}`,identity:listeningIdentity(row),
+    rows:allLibrarySessions.filter(row=>!row.organization?.trashedAt).map(row=>({id:row.id,title:`${meetingTitle(row)} · ${isTextOnlyImport(row)?'导入文字':formatDuration(row.durationMs)} · ${row.deviceRecordingId!=null?`#${row.deviceRecordingId}`:isTextOnlyImport(row)?'文字':'录音'} · ${row.startedAt??row.id.slice(-8)}`,identity:listeningIdentity(row),
       ready:row.status!=='recording'&&row.pendingReason!=='needs_device_sync'&&row.audioStored&&row.retention.audioCached
         &&Boolean(row.audioPath)&&!describeCompanionMeetingRecovery(row)?.isProcessing})),
     selectedId:selectedSession?.id??'',
@@ -1245,7 +1245,7 @@ export function CompanionDashboard({
                     : '已保存');
               return (
                 <div className="ct-library-entry" key={session.id}>
-                {libraryToolsOpen&&(onSaveLibraryOrganization||onExportLibrary||onSaveLibraryLifecycle)?<input type="checkbox" aria-label={`选择整理 ${meetingTitle(session)} ${formatDuration(session.durationMs)}`}
+                {libraryToolsOpen&&(onSaveLibraryOrganization||onExportLibrary||onSaveLibraryLifecycle)?<input type="checkbox" aria-label={`选择整理 ${meetingTitle(session)} ${isTextOnlyImport(session)?'导入文字':formatDuration(session.durationMs)}`}
                   checked={Object.hasOwn(librarySelection,session.id)} disabled={controlsBusy||oobeBlockedByRecording||storageBlocked}
                   onChange={e=>setLibrarySelection(old=>{const next={...old};if(e.target.checked)next[session.id]=session.organization?.revision??0;else delete next[session.id];return next;})}/>:null}
                 <button
@@ -1271,8 +1271,7 @@ export function CompanionDashboard({
                     </small>:null}
                     <small>
                       {meetingSource(session)}{boardId != null ? ` #${boardId}` : ''}
-                      {' · '}{formatDuration(session.durationMs)}
-                      {' · '}{formatBytes(session.audioBytes)}
+                      {!isTextOnlyImport(session) ? <> · {formatDuration(session.durationMs)} · {formatBytes(session.audioBytes)}</> : null}
                       {session.sourceDeviceId ? ` · 设备 ${session.sourceDeviceId.replace(/[:-]/g, '').slice(-4).toUpperCase()}` : ''}
                     </small>
                   </span>
@@ -1315,7 +1314,7 @@ export function CompanionDashboard({
                 <input value={titleDraft} maxLength={120} aria-label="录音标题"
                   readOnly={!onSaveMeeting || saveMeetingBusy} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
-              <p>{recordingTimeLabel(selectedSession.startedAt)} · {formatDuration(selectedSession.durationMs)}</p>
+              <p>{recordingTimeLabel(selectedSession.startedAt)}{!textOnlyImport ? ` · ${formatDuration(selectedSession.durationMs)}` : ''}</p>
               {titleDirty ? <div className="ct-inline-edit-actions">
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy || !titleDraft.trim()} onClick={() => void saveMeetingDraft()} aria-busy={saveMeetingBusy}>{saveMeetingBusy ? '正在保存…' : '保存标题'}</button>
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
@@ -2541,24 +2540,23 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;
-          const supplementary=actionChecklist.compactSources&&shownText.startsWith('用户补充：');
-          const displayText=supplementary?shownText.slice('用户补充：'.length):shownText;
-          const parts=actionChecklist.compactSources?splitActionSupplement(displayText):null;
-          const shownTitle=parts?.title??displayText;
-          const conditional=actionChecklist.compactSources&&shownTitle.startsWith('有条件：');
+          const presentation=actionChecklist.compactSources?compactActionSource(shownText)
+            :{title:shownText,conditional:false,supplementary:false};
+          const parts=actionChecklist.compactSources?splitActionSupplement(presentation.title):null;
+          const shownTitle=parts?.title??presentation.title;
           return <div key={index}>
           {commonSupplement&&index===firstActionIndex?<p className="ct-action-source-legend">{commonSupplement.text.startsWith('共同适用规则：')?'共同适用规则：':'以下事项的共同补充：'}{commonSupplement.text.startsWith('共同适用规则：')?commonSupplement.text.slice('共同适用规则：'.length):commonSupplement.text}</p>:null}
           <div className="ct-minutes-item ct-minutes-action-item">
           <label className={`ct-saved-action${action.completed?' completed':''}`}><input type="checkbox" checked={action.completed}
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${action.text}`}
             onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>
-              <span>{conditional?shownTitle.slice('有条件：'.length):shownTitle}{conditional?<small className="ct-action-condition-mark">按补充安排</small>:null}{supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span>
+              <span>{presentation.conditional?<small className="ct-action-condition-mark">有条件</small>:null}{shownTitle}{presentation.supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span>
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div></div>;}
         if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}{links}</span></div>;
         return <p key={index}>{block.text}{links}</p>;
       })}
-      {actionChecklist?.compactSources&&visibleBlocks.some(block=>block.action?.text.startsWith('用户补充：'))?
+      {actionChecklist?.compactSources&&visibleBlocks.some(block=>block.action&&compactActionSource(block.action.text).supplementary)?
         <p className="ct-action-source-legend">＊ 来自本次补充；原话与补充仍分别保留。</p>:null}
     </article>
   );

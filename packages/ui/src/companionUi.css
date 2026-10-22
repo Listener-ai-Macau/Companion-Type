@@ -1613,4 +1613,4 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-library-overview .ct-recent-recording .ct-section-eyebrow { font-size:10px!important; }
 .ct-library-overview .ct-recent-recording small { display:inline; font-size:11px; margin-top:3px; }
 .ct-library-overview .ct-recent-recording p.ct-recent-preview { -webkit-line-clamp:1; margin-top:3px; font-size:13px; line-height:1.45; }
-.ct-action-condition-mark { display:inline-block; margin-left:8px; font-size:11px; font-weight:400; color:#627365; }
+.ct-action-condition-mark { display:inline-block; margin-right:8px; padding:1px 6px; border:1px solid #dbe3dc; border-radius:4px; font-size:11px; font-weight:400; color:#526657; vertical-align:baseline; }

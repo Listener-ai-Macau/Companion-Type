@@ -6,6 +6,18 @@ export interface SavedAction {
   completed: boolean;
 }
 
+// Display the exact native source/condition prefixes once. The saved action,
+// its line index, checkbox identity and exports always keep the original text.
+// Do not infer conditions or split/reorder clauses from arbitrary prose.
+export function compactActionSource(text: string): { title: string; conditional: boolean; supplementary: boolean } {
+  const conditional = text.startsWith('有条件：');
+  const body = conditional ? text.slice('有条件：'.length) : text;
+  const supplementary = body.startsWith('用户补充：');
+  const title = supplementary ? body.slice('用户补充：'.length) : body;
+  return title.trim() ? { title, conditional, supplementary }
+    : { title: text, conditional: false, supplementary: false };
+}
+
 // Fold only a literal, identical supplement attached to every saved task.
 // The original action text/line index remain the persistence authority.
 export function commonActionSupplement(actions: readonly SavedAction[]): { suffix: string; text: string; displayTexts: string[] } | null {
