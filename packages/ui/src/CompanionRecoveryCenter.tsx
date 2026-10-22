@@ -36,7 +36,7 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
         {session.captureIncomplete ? <p role="alert">录制曾中断，只恢复了已保存的片段，末尾可能缺失。</p> : null}</div>
       <div className="ct-recovery-actions">
         <button type="button" className="ct-text-button" disabled={savingBusy}
-          onClick={() => onSelectSession ? onSelectSession(session.id) : onControl({action:'meetingSelectSession', sessionId:session.id})}>查看录音</button>
+          onClick={() => onSelectSession ? onSelectSession(session.id) : onControl({action:'meetingSelectSession', sessionId:session.id})}>查看内容</button>
         {next.label ? <button type="button" className="ct-action" disabled={Boolean(next.request) && (blocked || storageBlocked)} onClick={() => {
           if (next.request) onControl(next.request);
           else if (next.destination === 'settings') onSettings();
@@ -52,9 +52,9 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
       <button type="button" className="ct-action" disabled={savingBusy} onClick={() => onControl({action:'hostRetrySave'})}>
         {storage.status === 'blocked' ? '重试恢复' : '重试保存'}</button>
     </div> : null}
-    {selected ? <div className="ct-recovery-current"><strong>当前录音需要处理</strong><ul>{recording(selected)}</ul></div> : null}
+    {selected ? <div className="ct-recovery-current"><strong>{meetingJourney(selected, {connected: snapshot.device.connected, deviceId: snapshot.device.deviceId, asrReady, minutesReady}).optional ? '可按需整理，原内容保留' : '这条内容需要处理'}</strong><ul>{recording(selected)}</ul></div> : null}
     {other.length ? <details className="ct-recovery-history">
-      <summary>其他录音的整理状态 <span>{other.length}</span></summary>
+      <summary>其他内容的整理状态 <span>{other.length}</span></summary>
       <p>已有内容仍在录音库里，按需查看；中断或保存失败会单独说明。</p>
       <ul>{visible.map(recording)}</ul>
       {other.length > 3 ? <button type="button" className="ct-text-button" aria-expanded={expanded}

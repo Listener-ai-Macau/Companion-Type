@@ -70,15 +70,18 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
     return {...d,pending:undefined,edits};
   });
   const composer=<>
+    <div className="ct-notes-controls">
+      <button type="button" className="ct-action" disabled={disabled||(!draft.pending&&!draft.text?.trim())} onClick={()=>void save(draft.pending??{
+        sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,action:'add',
+        text:draft.text??'',bookmarkId:draft.anchor||null,
+      })}>{busy?'正在保存…':draft.pending?'重试保存备注':'保存备注'}</button>
+    </div>
     <p>{compact?'补充单独保存，不改原话，也不自动加入整理。':'补充背景或待确认事项，可关联已标记的位置。备注单独保存，不会改写原始转写，也不自动加入整理。'}</p>
     <textarea aria-label="新录音备注" maxLength={4000} rows={3} placeholder="记下背景，或需要回头核对的事情…"
       value={draft.text??''} disabled={busy} onChange={(event)=>{message(session.id,'');change(session.id,(d)=>({...d,text:event.target.value,pending:undefined}));}}/>
     <div className="ct-notes-controls">
       {!compact||points.length>0||draft.anchor?selectAnchor(draft.anchor??'',(anchor)=>change(session.id,(d)=>({...d,anchor,pending:undefined})),'新备注关联重点'):null}
-      <button type="button" className="ct-action" disabled={disabled||(!draft.pending&&!draft.text?.trim())} onClick={()=>void save(draft.pending??{
-        sessionId:session.id,noteId:crypto.randomUUID(),expectedRevision:session.noteRevision??0,action:'add',
-        text:draft.text??'',bookmarkId:draft.anchor||null,
-      })}>{busy?'正在保存…':draft.pending?'重试保存备注':'保存备注'}</button>
+
       {draft.pending?<button type="button" className="ct-action" disabled={busy} onClick={recheck}>保留输入，重新核对</button>:null}
     </div>
   </>;
