@@ -611,6 +611,7 @@ export function CompanionDashboard({
   const canGenerate = finalTranscript && !recoveryView?.isProcessing && !unimportedTranscriptDraft;
   const hasOriginalAudio = Boolean(hasSyncedAudio && selectedSession?.audioStored && selectedSession.retention.audioCached
     && selectedSession.audioPath && !/^(host|device|board):\/\//i.test(selectedSession.audioPath));
+  const textOnlyImport = Boolean(selectedSession && isTextOnlyImport(selectedSession));
   const savedOriginalReady = Boolean(hasOriginalAudio && snapshot?.host.persistence?.status === 'ready'
     && !selectedSession?.captureIncomplete && !selectedSession?.recorderControlUncertain);
   const canTranscribe = Boolean(
@@ -1307,7 +1308,7 @@ export function CompanionDashboard({
             onClick={()=>{setDetailSessionId(null);window.scrollTo({top:0});}}>← 返回录音库</button>
           <header className="ct-meeting-hero">
             <div>
-              <p className="ct-section-eyebrow">录音内容</p>
+              <p className="ct-section-eyebrow">{textOnlyImport ? '导入文字' : '录音内容'}</p>
               <label className="ct-title-editor"><span className="ct-sr-only">录音标题</span><Pencil size={15} />
                 <input value={titleDraft} maxLength={120} aria-label="录音标题"
                   readOnly={!onSaveMeeting || saveMeetingBusy} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
@@ -1319,7 +1320,7 @@ export function CompanionDashboard({
               </div> : null}
             </div>
             <div className="ct-meeting-badges">
-              {finalTranscript ? <span className="ct-pill ct-pill-good">转写完成</span>
+              {finalTranscript ? <span className="ct-pill ct-pill-good">{selectedSession.source === 'importedTranscript' ? '已导入文字' : '转写完成'}</span>
                 : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写'
                   : selectedSession.processingPolicy === 'manual' && savedOriginalReady ? '原音已保存' : '尚未转写'}</span>}
               {offlineMinutes ? <span className="ct-pill">{offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
@@ -1337,12 +1338,12 @@ export function CompanionDashboard({
                 setTranscribePromptSession(null);
                 onControl({action:'meetingTranscribeAudio',sessionId:selectedSession.id});
               }}><FileText size={16}/>{recoveryView?.isProcessing?'正在处理…':selectedSession.captureIncomplete?'片段转文字':'转文字'}</button> : null}
-            <button type="button" className="ct-action" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
+            {!textOnlyImport ? <button type="button" className="ct-action" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
               disabled={Boolean(audioBlockedReason) || audioBusy} title={audioBlockedReason ?? undefined}
               onClick={() => {
                 if (playbackOpen) {audioElement.current?.pause(); setPlaybackOpen(false); return;}
                 setPlaybackOpen(true); if (!preparedAudio) void prepareAudio();
-              }}><Headphones size={16}/>{audioBusy?'正在准备…':playbackOpen?'收起回听':'回听'}</button>
+              }}><Headphones size={16}/>{audioBusy?'正在准备…':playbackOpen?'收起回听':'回听'}</button> : null}
           </div>
           {transcribePromptSession===selectedSession.id && !asrConfigured ? <p className="ct-recording-notice" role="status">
             转文字需要先配置转写服务，原音已保留。<button type="button" className="ct-text-button" onClick={openSettings}>去配置</button>
@@ -2315,11 +2316,38 @@ export function CompanionDashboard({
   );
 }
 
+// Source alone is insufficient: imported text can accompany a real recording.
+// Preserve all capture/sync/audio warnings whenever such evidence remains.
+function isTextOnlyImport(session: CompanionV1HostSession): boolean {
+  return session.source === 'importedTranscript'
+    && companionSessionHasFinalTranscript(session) && Boolean(session.transcriptText.trim())
+    && session.status !== 'recording' && !session.captureIncomplete
+    && !session.recorderControlUncertain && !session.recorderControl
+    && session.deviceRecordingId == null && !session.deviceRecordingKey
+    && !session.sourceDeviceId && !session.deviceTotalLength && !session.deviceSha256
+    && !session.audioStored && !session.retention.audioCached
+    && !session.audioPath && session.audioBytes === 0
+    && !session.chunks.some(chunk => Boolean(chunk.path) || chunk.bytes > 0)
+    && !['needs_pull', 'needs_device_sync', 'needs_segments', 'needs_local_audio',
+      'device_control_pending', 'capture_interrupted'].includes(session.pendingReason ?? '');
+}
+
 function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   session: CompanionV1HostSession;
   persistence: CompanionV1Snapshot['host']['persistence'];
   recoveryProcessing: boolean;
 }) {
+  if (isTextOnlyImport(session)) {
+    const saved = persistence?.status === 'ready';
+    const failed = persistence?.status === 'blocked' || persistence?.status === 'unsaved';
+    return <section className="ct-safety-card" aria-label="文字保存状态">
+      <header><strong>文字保存状态</strong><span>{saved ? '文字已保存在本机'
+        : failed ? '文字保存失败' : '保存状态待确认'}</span></header>
+      <p>这条记录来自导入文字，没有原录音。可直接补充、整理或导出。</p>
+      {!saved ? <p role="alert">{persistence?.message
+        ?? '本机保存尚未确认，请先在保存提示中重试。'}</p> : null}
+    </section>;
+  }
   const captureOngoing = session.status === 'recording';
   const wholeReclaimed = Boolean(session.deviceReclaimed && !captureOngoing);
   const savedSegments = session.source === 'boardDevice' && session.deviceRecordingKey
