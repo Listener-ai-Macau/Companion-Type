@@ -453,6 +453,7 @@ export function CompanionDashboard({
     ? originalSyncRecorder : null;
   const privacy = snapshot?.privacy;
   const allLibrarySessions = snapshot?.host.sessions ?? [];
+  const localSaveConfirmed = snapshot?.host.persistence?.status === 'ready';
   const recentSavedRecording = useMemo(() => allLibrarySessions
     .filter(session => !session.organization?.trashedAt && session.status !== 'recording'
       && session.audioStored && session.retention.audioCached && session.audioPath && session.audioBytes > 0
@@ -1120,15 +1121,16 @@ export function CompanionDashboard({
       </section>
 
       <div className="ct-page-panel" hidden={pageView !== 'library'}>
-      {recentSavedRecording && !oobeBlockedByRecording && !savedDetailOpen ? <section className="ct-recent-recording" aria-label="最近保存的录音">
+      {recentSavedRecording && !oobeBlockedByRecording && !savedDetailOpen ? <section className="ct-recent-recording" aria-label={localSaveConfirmed ? '最近保存的录音' : '最近录音，保存状态待确认'}>
         <div>
-          <span className="ct-section-eyebrow">最近保存的录音</span>
+          <span className="ct-section-eyebrow">{localSaveConfirmed ? '最近保存的录音' : '最近录音 · 保存待确认'}</span>
           <strong>{meetingTitle(recentSavedRecording)}</strong>
           {companionReviewedTranscript(recentSavedRecording).trim() ? <p className="ct-recent-preview">
             {!companionSessionHasFinalTranscript(recentSavedRecording)?<span className="ct-library-text-partial">片段 · </span>:null}
             {companionReviewedTranscript(recentSavedRecording).trim()}</p> : null}
           <small><time dateTime={recentSavedRecording.startedAt ?? undefined}>{recordingTimeLabel(recentSavedRecording.startedAt)}</time>
             {' · '}{formatDuration(recentSavedRecording.durationMs)}</small>
+          {!localSaveConfirmed ? <p className="ct-step-warn" role="alert">本机保存尚未确认，请打开这条录音查看保存状态。</p> : null}
           {recentSavedRecording.captureIncomplete ? <p>已保存的录音片段可回听，完整录音仍待核对。</p> : null}
         </div>
         <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy}
@@ -1210,7 +1212,7 @@ export function CompanionDashboard({
           <button type="button" className="ct-action" onClick={()=>{setLibraryFilters({folder:'*',tag:'',favorites:false,trash:libraryFilters.trash});setLibraryQuery('');setOnlyPendingSessions(false);}}>清除分类筛选</button>
         </div>:visibleLibrary.length === 0 ? (
           <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关录音或补充' : libraryFilters.trash?'回收站为空':onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的录音' : '把值得记住的事，留在这里'}</strong>
-            <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : '双击 Companion 屏幕左下角开始或停止录音，结束后回到电脑同步。转写与纪要需要已配置的服务。'}</p>
+            <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : '在 Companion 上长按实体键约 1 秒开始或停止录音，睡着时先短按唤醒。结束后连接电脑同步；转写与纪要按需使用已配置的服务。'}</p>
             <button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openWorkflow}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到录音库':onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : '查看录音与同步步骤'}</button></div>
         ) : (
           <div className="ct-library-list">
@@ -1225,16 +1227,19 @@ export function CompanionDashboard({
               const previewStart = Math.max(0, matchPosition - 24);
               const previewChars = Array.from(previewText.slice(previewStart, previewStart + 400));
               const textPreview = (previewStart ? '…' : '') + previewChars.slice(0, 96).join('') + (previewChars.length > 96 ? '…' : '');
-              const statusLabel = session.organization?.trashedAt?'回收站':describeCompanionMeetingRecovery(session)?.label ?? (meetingHasFinalMinutes(session)
+              const statusLabel = session.organization?.trashedAt ? '回收站'
+                : session.status === 'recording' ? '录制中'
+                : session.pendingReason === 'needs_device_sync' ? '待同步'
+                : session.pendingReason === 'needs_segments' ? '同步未完成'
+                : !localSaveConfirmed ? '保存待确认'
+                : describeCompanionMeetingRecovery(session)?.label ?? (meetingHasFinalMinutes(session)
                 ? '纪要完成'
                 : session.minutes?.markdown || session.minutesByMode?.offlineStore || session.minutesByMode?.onlineLive ? '纪要草稿'
                 : session.status === 'transcribed'
                   ? '已转写'
                   : session.pendingReason === 'needs_transcription'
                     ? '待转写'
-                    : session.status === 'recording'
-                      ? '录制中'
-                      : '已保存');
+                    : '已保存');
               return (
                 <div className="ct-library-entry" key={session.id}>
                 {libraryToolsOpen&&(onSaveLibraryOrganization||onExportLibrary||onSaveLibraryLifecycle)?<input type="checkbox" aria-label={`选择整理 ${meetingTitle(session)} ${formatDuration(session.durationMs)}`}
@@ -1542,7 +1547,7 @@ export function CompanionDashboard({
       <section id="ct-device-recording-page" className="ct-page-panel" hidden={pageView !== 'device'} aria-label="设备与同步内容">
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
         recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
-        onSettings={openSettings} onWorkflow={openWorkflow} />
+        onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setPageView('library');setDetailSessionId(null);}} />
       {onFindPet && connected && device?.deviceId ? <CompanionPetFind
         deviceId={device.deviceId} supported={snapshot?.source==='firmware' && snapshot.speaker.findSupported===true}
         blocked={controlsBusy||oobeBlockedByRecording} muted={snapshot?.speaker.muted!==false||snapshot.speaker.volume===0}
@@ -1570,7 +1575,7 @@ export function CompanionDashboard({
         <div><strong>用 Companion 录音</strong>
           <p>{connected
             ? `只保存原音，转写与纪要稍后手动启动。无需网络或转写配置。当前最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整。`
-            : '连接后可从这里开始，也可以直接用设备按键离线录音。'}</p>
+            : '设备离线也能录：长按实体键约 1 秒开始，再长按约 1 秒停止；睡着时先短按唤醒。'}</p>
           {!durationValid ? <p role="alert">请输入有效的录音时长。</p> : null}
         </div>
         <div className="ct-button-row">

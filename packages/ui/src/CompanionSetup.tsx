@@ -4,7 +4,7 @@ import type { CompanionV1ControlRequest, CompanionV1Snapshot } from '@companion-
 import { companionCanChangeOfflineRecordingLink } from '@companion-type/core';
 import type { CompanionProductSettingsPublic } from './CompanionDashboard';
 
-export function CompanionSetup({ snapshot, settings, busy, recording, checking, onControl, onSettings, onWorkflow }: {
+export function CompanionSetup({ snapshot, settings, busy, recording, checking, onControl, onSettings, onWorkflow, onLibrary }: {
   snapshot: CompanionV1Snapshot | null;
   settings: CompanionProductSettingsPublic | null;
   busy: boolean;
@@ -13,6 +13,7 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
   onControl: (request: CompanionV1ControlRequest) => void;
   onSettings: () => void;
   onWorkflow: () => void;
+  onLibrary?: () => void;
 }) {
   const device = snapshot?.device;
   const known = Boolean(snapshot?.connected || device?.connected);
@@ -84,8 +85,8 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
         {guide.open ? <ol className="ct-first-run-list">
           <li className={guideConnectionDone ? 'done' : ''}><span>{guideConnectionDone ? <Check size={13} /> : '1'}</span><div><strong>连接真实 Companion</strong><p>{preview ? '浏览器演示不能完成这一步。' : known ? '已识别真实设备。' : guideComplete ? '设备暂不在线；这台设备的引导记录已保留。' : '点击上方“连接 Companion”。'}</p></div></li>
           <li className={guide.heardReply ? 'done' : ''}><span>{guide.heardReply ? <Check size={13} /> : '2'}</span><div><strong>听一声宠物回应</strong><p>先点“听一声回应”；只有你实际听到后再确认。</p><div className="ct-button-row"><button type="button" className="ct-text-button" disabled={blocked || !known || !speaker?.supported || !speaker.online || speaker.muted} onClick={() => onControl({ action: 'speakerPrompt' })}><Volume2 size={14} />播放宠物音</button><button type="button" className="ct-text-button" disabled={!known || !guideDeviceId || preview || recording} onClick={() => updateGuide({ heardReply: true })}>我已听到</button></div></div></li>
-          <li className={guide.recordedSample ? 'done' : ''}><span>{guide.recordedSample ? <Check size={13} /> : '3'}</span><div><strong>用设备按键录一段约 10 秒的声音</strong><p>在 Companion 上用物理按键开始和停止，至少录 10 秒；这里不会自动开始录音或代替你的确认。</p><div className="ct-button-row"><button type="button" className="ct-text-button" disabled={!known || preview || busy} onClick={onWorkflow}><Mic size={14} />查看同步步骤</button><button type="button" className="ct-text-button" disabled={!known || !guideDeviceId || preview || recording} onClick={() => updateGuide({ recordedSample: true })}>我已完成试录</button></div></div></li>
-          <li className={guide.sawRecording ? 'done' : ''}><span>{guide.sawRecording ? <Check size={13} /> : '4'}</span><div><strong>在会议库看到记录</strong><p>{hasVisibleRecording ? '会议库已有记录；请核对标题或时长后确认。' : '同步完成后，记录会出现在下方会议库。'}</p><button type="button" className="ct-text-button" disabled={!hasVisibleRecording || !guide.recordedSample || preview} onClick={() => updateGuide({ sawRecording: true, open: false })}>我已看到记录</button></div></li>
+          <li className={guide.recordedSample ? 'done' : ''}><span>{guide.recordedSample ? <Check size={13} /> : '3'}</span><div><strong>长按实体键，录一段约 10 秒的声音</strong><p>若已睡着，先短按唤醒。长按实体键约 1 秒开始，录约 10 秒后，再长按约 1 秒停止。</p><div className="ct-button-row"><button type="button" className="ct-text-button" disabled={!known || preview || busy} onClick={onWorkflow}><Mic size={14} />查看同步步骤</button><button type="button" className="ct-text-button" disabled={!known || !guideDeviceId || preview || recording} onClick={() => updateGuide({ recordedSample: true })}>我已完成试录</button></div></div></li>
+          <li className={guide.sawRecording ? 'done' : ''}><span>{guide.sawRecording ? <Check size={13} /> : '4'}</span><div><strong>在“我的录音”找到刚才的记录</strong><p>{hasVisibleRecording ? '“我的录音”已有记录，请按录制时间或时长核对。' : '同步完成后，记录会出现在“我的录音”。'}</p><div className="ct-button-row">{onLibrary ? <button type="button" className="ct-text-button" onClick={onLibrary}>打开我的录音</button> : null}<button type="button" className="ct-text-button" disabled={!hasVisibleRecording || !guide.recordedSample || preview} onClick={() => updateGuide({ sawRecording: true, open: false })}>我已看到记录</button></div></div></li>
           <li className="ct-first-run-note">这些勾选只记录你的引导进度，不代表硬件验收结果；更换 Companion 后会使用独立进度。</li>
         </ol> : null}
       </section>
