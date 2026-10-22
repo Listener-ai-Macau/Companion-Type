@@ -54,7 +54,7 @@ pub(super) fn instruction(session:&CompanionV1HostSession)->String {
         "clauses":clauses(&unit.text).iter().enumerate().map(|(index,text)|serde_json::json!({"id":index+1,"text":text})).collect::<Vec<_>>(),
         "source":if unit.supplemental{"用户明确选择的后补，不是录音事实"}else{"原话里明确的原先计划，变更直接引用sourceId与原句clauseIds"}
     })).collect::<Vec<_>>();
-    format!("这是短个人备忘。请判断完整材料的意思，再用原句编号表达关系。本地构造清单，不改写原句、不推算时间或负责人。返回标准JSON，并另给sourceRoles、originalReviews、newPlans、updates、attachments、orderings六个数组，无内容用[]。\n\n引用统一为{{sourceId,clauseIds:[整数]}}，只用下面给出的完整原句，不截断否定或条件。已有事项的目标地址已在originalPlanTargets给出；updates/attachments/orderings涉及已有事项时，复制对应targetRefs，不用补充里再次提到该事项的条件或准备原句代替目标地址。涉及新增事项时，目标必须引用本次newPlans已经声明的同一主体原句。basisRefs/whenRefs/refs才引用说明变更、条件、准备的补充原句；同一句提到猫粮等主体，不代表它自动成为新事项。sourceRoles每来源恰好一项：sourceId、contentClauseIds、instructionClauseIds、uncertainClauseIds。每句恰好归一组；生活的安排、准备、规格、背景、疑问、条件、取消均是content，只有指向整理工具的用途/格式要求是instruction，拿不准用uncertain。\n\n先分清已有目的、完成该目的的准备，以及真正新增的独立目的。original来源是原话中曾确定的原计划，本地保留主体，但当前是否仍决定执行必须结合后补逐项重新判断，不再写入newPlans。originalReviews每个original来源恰好一项：sourceId、intent(planned/tentative/cancelled)、basisRefs。它描述该事项现在的意愿，不是抄原先状态：planned为已决定做，tentative为现在仍要了解情况后才决定做不做，cancelled为已明确取消。没有后补改变意愿才保留planned且basisRefs可为空；tentative/cancelled必须引用本次后补中完整的未决定或取消依据。先确认情况、再决定做不做时，不得仅把它粘在确定事项的细节里；该事项应是tentative。已经决定做而只是有条件执行仍是planned，条件交给whenRefs/updates；不要把具体时间未定当成是否做未定。每项分别判断，不把一项待定覆盖整份清单。无条件defer/confirm/cancel若还写进updates，必须与同一原事项的originalReviews意愿一致；不要依赖缺省状态。为完成某原计划做的准备、查信息或规格，直接用attachments归到它下面，不要同时列成新增事项。只有独立的新结果才进入newPlans：sourceId、clauseIds、intent(planned或tentative)、basisRefs、supplementRefs、whenRefs。\nplanned表示已经决定；tentative仅表示原文明确尚未决定或只是留个想法。做事先后、未来安排、具体几点未定，不等于是否去做未决定。每个tentative必须用basisRefs引用表达未决定的原句（可以是事项主体同一句）；多个新想法共同受一句未决定影响时，各自引用它。不要根据整段标签覆盖每一项。supplementRefs为相关规格/准备，whenRefs为执行条件，无则[]。有条件的已定安排与尚未决定的想法分开。\n\nupdates只提取补充对安排的真实变更：kind、targetRefs、basisRefs、whenRefs。targetRefs引用事项主体，basisRefs引用补充中的变更原句；whenRefs引用该变更生效的完整条件，无条件填[]。kind为only/cancel/defer/require/confirm。only另有scopeRefs：整个安排受限用字符串all，局部用事项主体引用数组。注意同一条件下后句“只做”的范围也须保留。原本已确定且在只做名单里的事项仍照常做；范围内其它事项才受该条件限制，本地会计算。require的basisRefs必须引用完整前置要求原句；要求始终适用时whenRefs可为空，这些前置准备仍归到所列事项，不另立任务。只有要求本身在某条件下才生效时，whenRefs再引用该条件。无条件cancel才彻底取消，有条件取消是执行限制；defer表示明确尚未决定，confirm表示明确重新确定。不要用变更重复描述普通做事顺序。\n\norderings表达两个独立事项之间原文明确的先后：每项beforeRefs、afterRefs、basisRefs、whenRefs。beforeRefs引用先做事项主体，afterRefs引用后做事项主体，沿用同一sourceId/clauseIds引用，不另造ID。basisRefs须引用补充里完整的先后原句（含先与后两端）；没有明确先后就不填此关系。不因原清单排列顺序覆盖补充明确的先后。规格、准备或查看某物仍附属于其事项，不为排序另造任务。whenRefs只在该先后关系有生效条件时引用完整条件，无条件填[]；条件性先后不能冒充全局固定顺序。待定/取消事项的状态仍由已有字段保留，排序不代表已决定或恢复。\n\nattachments每项targetRefs和refs，前者引用原计划或新增事项主体，后者引用完整补充细节；同一细节不再重复作为独立新事项。未使用的生活原句由本地另留背景，来源快照完整保留。原文事实与后补来源必须分清；不需要在summary/markdown重复全文。\n\n完整来源：\n{}",serde_json::to_string(&serde_json::json!({"sources":units,"originalPlanTargets":original_plan_targets})).expect("source units serialize"))
+    format!("这是短个人备忘。请判断完整材料的意思，再用原句编号表达关系。本地构造清单，不改写原句、不推算时间或负责人。返回标准JSON，并另给sourceRoles、originalReviews、newPlans、updates、attachments、orderings六个数组，无内容用[]。\n\n引用统一为{{sourceId,clauseIds:[整数]}}，只用下面给出的完整原句，不截断否定或条件。已有事项的目标地址已在originalPlanTargets给出；updates/attachments/orderings涉及已有事项时，复制对应targetRefs，不用补充里再次提到该事项的条件或准备原句代替目标地址。涉及新增事项时，目标必须引用本次newPlans已经声明的同一主体原句。basisRefs/whenRefs/refs才引用说明变更、条件、准备的补充原句；同一句提到猫粮等主体，不代表它自动成为新事项。sourceRoles每来源恰好一项：sourceId、contentClauseIds、instructionClauseIds、uncertainClauseIds。每句恰好归一组；生活的安排、准备、规格、背景、疑问、条件、取消均是content，只有指向整理工具的用途/格式要求是instruction，拿不准用uncertain。\n\n先分清已有目的、完成该目的的准备，以及真正新增的独立目的。original来源是原话中曾确定的原计划，本地保留主体，但当前是否仍决定执行必须结合后补逐项重新判断，不再写入newPlans。originalReviews每个original来源恰好一项：sourceId、intent(planned/tentative/cancelled)、basisRefs。它描述该事项现在的意愿，不是抄原先状态：planned为已决定做，tentative为现在仍要了解情况后才决定做不做，cancelled为已明确取消。没有后补改变意愿才保留planned且basisRefs可为空；tentative/cancelled必须引用本次后补中完整的未决定或取消依据。先确认情况、再决定做不做时，不得仅把它粘在确定事项的细节里；该事项应是tentative。已经决定做而只是有条件执行仍是planned，条件交给whenRefs/updates；不要把具体时间未定当成是否做未定。每项分别判断，不把一项待定覆盖整份清单。无条件defer/confirm/cancel若还写进updates，必须与同一原事项的originalReviews意愿一致；不要依赖缺省状态。为完成某原计划做的准备、查信息或规格，直接用attachments归到它下面，不要同时列成新增事项。只有独立的新结果才进入newPlans：sourceId、clauseIds、intent(planned或tentative)、basisRefs、supplementRefs、whenRefs。\nplanned表示已经决定；tentative仅表示原文明确尚未决定或只是留个想法。做事先后、未来安排、具体几点未定，不等于是否去做未决定。每个tentative必须用basisRefs引用表达未决定的原句（可以是事项主体同一句）；多个新想法共同受一句未决定影响时，各自引用它。不要根据整段标签覆盖每一项。supplementRefs为相关规格/准备，whenRefs为执行条件，无则[]。有条件的已定安排与尚未决定的想法分开。\n\nupdates只提取补充对安排的真实变更：kind、targetRefs、basisRefs、whenRefs。targetRefs引用事项主体，basisRefs引用补充中的变更原句；whenRefs引用该变更生效的完整条件，无条件填[]。kind为only/cancel/defer/require/confirm/revise。only另有scopeRefs：整个安排受限用字符串all，局部用事项主体引用数组。注意同一条件下后句“只做”的范围也须保留。原本已确定且在只做名单里的事项仍照常做；范围内其它事项才受该条件限制，本地会计算。require的basisRefs必须引用完整前置要求原句；要求始终适用时whenRefs可为空，这些前置准备仍归到所列事项，不另立任务。只有要求本身在某条件下才生效时，whenRefs再引用该条件。无条件cancel才彻底取消，有条件取消是执行限制；defer只表示尚未决定是否做，不能表示延期或改时间；confirm表示明确重新确定是否做。revise表示仍执行同一个原事项，只把时间、地点或规格等安排修订为补充中的完整当前原句。targetRefs仍引用原事项，basisRefs只引用一条包含事项和新安排的完整补充原句，不能只引用孤立时间片段；同一事项最多一个revise。revise不改变originalReviews的当前意愿，仍决定执行时保持planned，不要把它标为cancel/defer。当前只支持单一原事项的无条件revise；whenRefs非空、事项已取消或多个不同修订时不要强行覆盖，保留原话及完整条件/修订依据。不要用变更重复描述普通做事顺序。\n\norderings表达两个独立事项之间原文明确的先后：每项beforeRefs、afterRefs、basisRefs、whenRefs。beforeRefs引用先做事项主体，afterRefs引用后做事项主体，沿用同一sourceId/clauseIds引用，不另造ID。basisRefs须引用补充里完整的先后原句（含先与后两端）；没有明确先后就不填此关系。不因原清单排列顺序覆盖补充明确的先后。规格、准备或查看某物仍附属于其事项，不为排序另造任务。whenRefs只在该先后关系有生效条件时引用完整条件，无条件填[]；条件性先后不能冒充全局固定顺序。待定/取消事项的状态仍由已有字段保留，排序不代表已决定或恢复。\n\nattachments每项targetRefs和refs，前者引用原计划或新增事项主体，后者引用完整补充细节；同一细节不再重复作为独立新事项。未使用的生活原句由本地另留背景，来源快照完整保留。原文事实与后补来源必须分清；不需要在summary/markdown重复全文。\n\n完整来源：\n{}",serde_json::to_string(&serde_json::json!({"sources":units,"originalPlanTargets":original_plan_targets})).expect("source units serialize"))
 }
 
 // A paused result already persists its llm_note and the existing diagnostics
@@ -149,7 +149,7 @@ fn references(item:&Value,key:&str,units:&[SourceUnit],content:&std::collections
 
 struct Plan {
     source_id:String,main_ids:Vec<usize>,text:String,supplemental:bool,
-    tentative:bool,conditional:bool,cancelled:bool,basis:Vec<Quote>,details:Vec<Quote>,
+    tentative:bool,conditional:bool,cancelled:bool,basis:Vec<Quote>,details:Vec<Quote>,revision:Option<Quote>,
 }
 
 // Resolve only already declared subjects. A source-valid non-subject is a
@@ -320,7 +320,7 @@ pub(super) fn validate(object:&Value,session:&CompanionV1HostSession)->Result<Va
             return Err(source_failure("ORIGINAL_REVIEW_BASIS","改变原事项意愿须引用完整后补依据"));
         }
         plans.push(Plan{source_id:unit.id.clone(),main_ids:(1..=parts.len()).collect(),
-            text:unit.text.clone(),supplemental:false,tentative:intent=="tentative",conditional:false,cancelled:intent=="cancelled",basis,details:Vec::new()});
+            text:unit.text.clone(),supplemental:false,tentative:intent=="tentative",conditional:false,cancelled:intent=="cancelled",basis,details:Vec::new(),revision:None});
     }
     let new_items=object.get("newPlans").and_then(Value::as_array).filter(|items|items.len()<=64)
         .ok_or_else(||source_failure("NEW_PLANS_STRUCTURE","新增计划结构尚未完整"))?;
@@ -343,18 +343,32 @@ pub(super) fn validate(object:&Value,session:&CompanionV1HostSession)->Result<Va
         basis.extend(when.iter().map(|q|Quote{source_id:q.source_id.clone(),ids:q.ids.clone(),text:q.text.clone(),supplemental:q.supplemental}));
         plans.push(Plan{source_id:id.to_string(),text:ids.iter().map(|id|parts[*id-1]).collect::<Vec<_>>().join("；"),main_ids:ids,
             supplemental:true,tentative:intent=="tentative",conditional:!when.is_empty(),cancelled:false,
-            basis,details:references(item,"supplementRefs",&units,&content)?});
+            basis,details:references(item,"supplementRefs",&units,&content)?,revision:None});
     }
     let mut shared_rule_sources:std::collections::HashMap<String,std::collections::HashSet<usize>>=std::collections::HashMap::new();
     let updates=object.get("updates").and_then(Value::as_array).filter(|items|items.len()<=64)
         .ok_or_else(||source_failure("EFFECTS_STRUCTURE","计划变更结构尚未完整"))?;
     for item in updates {
-        let kind=item.get("kind").and_then(Value::as_str).filter(|kind|matches!(*kind,"only"|"cancel"|"defer"|"require"|"confirm"))
+        let kind=item.get("kind").and_then(Value::as_str).filter(|kind|matches!(*kind,"only"|"cancel"|"defer"|"require"|"confirm"|"revise"))
             .ok_or_else(||source_failure("EFFECT_KIND","计划变更类型无效"))?;
         let targets=plan_targets(item,"targetRefs",&plans,&units,&content)?;
         let mut basis=references(item,"basisRefs",&units,&content)?;
         if !basis.iter().any(|q|q.supplemental){return Err(source_failure("EFFECT_BASIS","计划变更未引用补充原句"));}
         let when=references(item,"whenRefs",&units,&content)?;let conditional=!when.is_empty();
+        if kind=="revise" {
+            // Current commitment and the wording of its arrangement are separate.
+            // Retain the original target identity for ordering/provenance, and
+            // accept only one whole supplemental clause as the current wording.
+            if conditional || targets.len()!=1 || basis.len()!=1 || !basis[0].supplemental || basis[0].ids.len()!=1 {
+                return Err(source_failure("REVISION_SCOPE","事项修订须有单一原事项和一条无条件的完整后补依据"));
+            }
+            let plan=&mut plans[targets[0]];
+            if plan.supplemental || plan.cancelled || plan.revision.is_some() {
+                return Err(source_failure("REVISION_TARGET","已取消、新增或重复修订的事项不能被静默覆盖"));
+            }
+            plan.revision=Some(basis.remove(0));
+            continue;
+        }
         basis.extend(when);
         if kind=="require" && !conditional {
             // An always-applicable prerequisite is not missing a weather/time
@@ -437,7 +451,12 @@ pub(super) fn validate(object:&Value,session:&CompanionV1HostSession)->Result<Va
     for (index,plan) in ordered {
         if subordinate.contains(&index){continue;}
         used.entry(plan.source_id.clone()).or_default().extend(plan.main_ids.iter().copied());
-        let mut text=plan.text;let mut extra=Vec::new();
+        let revision=plan.revision;
+        if let Some(quote)=&revision {
+            used.entry(quote.source_id.clone()).or_default().extend(quote.ids.iter().copied());
+        }
+        let mut text=revision.as_ref().map(|quote|format!("用户变更：{}",quote.text)).unwrap_or(plan.text);
+        let mut extra=Vec::new();
         let mut attached:std::collections::HashMap<String,std::collections::HashSet<usize>>=std::collections::HashMap::new();
         for quote in plan.basis.iter().chain(&plan.details) {
             used.entry(quote.source_id.clone()).or_default().extend(quote.ids.iter().copied());
@@ -445,7 +464,8 @@ pub(super) fn validate(object:&Value,session:&CompanionV1HostSession)->Result<Va
             // each complete source clause once, in its original order, so
             // preparation is not moved behind an overlapping condition quote.
             attached.entry(quote.source_id.clone()).or_default().extend(quote.ids.iter().copied()
-                .filter(|id|quote.source_id!=plan.source_id || !plan.main_ids.contains(id)));
+                .filter(|id|(quote.source_id!=plan.source_id || !plan.main_ids.contains(id))
+                    && !revision.as_ref().is_some_and(|current|current.source_id==quote.source_id && current.ids.contains(id))));
         }
         for unit in &units {
             let Some(ids)=attached.get(&unit.id) else {continue;};let parts=clauses(&unit.text);
