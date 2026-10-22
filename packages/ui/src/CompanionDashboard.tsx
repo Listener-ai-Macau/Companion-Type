@@ -14,6 +14,8 @@ import { companionMinutesNotesCurrent, type CompanionMinutesNoteContext } from '
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { CompanionExportFeedback, exportFileName } from './CompanionExportFeedback';
 import { briefMinutes } from './briefMinutes';
+
+type MeetingExportOrigin = 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
 import {savedActions,markSavedAction,commonActionSupplement,splitActionSupplement,compactActionSource,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
@@ -385,7 +387,7 @@ export function CompanionDashboard({
   const [exportBusy, setExportBusy] = useState(false);
   const exportActive = useRef(false);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
-  const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; origin?:'text'|'notes'|'document' } | null>(null);
+  const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
     minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string }>>;
@@ -854,7 +856,23 @@ export function CompanionDashboard({
     }
     onControl(request);
   };
-  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin:'text'|'notes'|'document'='document') => {
+  const announcedExport = useRef(exportResult);
+  useEffect(() => {
+    // Only reveal a newly completed operation. Returning to an old recording,
+    // reopening tools, or a background snapshot must not move the viewport.
+    if (announcedExport.current === exportResult) return;
+    announcedExport.current = exportResult;
+    if (!exportResult || exportResult.kind === 'pending' || exportResult.sessionId !== selectedSession?.id) return;
+    const frame = window.requestAnimationFrame(() => {
+      const element = document.querySelector<HTMLElement>(`[data-ct-export-feedback="${exportResult.origin}"]`);
+      if (element?.getClientRects().length) element.scrollIntoView({ block: 'nearest' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [exportResult, selectedSession?.id]);
+  const renderExportFeedback = (origin: MeetingExportOrigin, className?: string) =>
+    exportResult?.sessionId === selectedSession?.id && exportResult.origin === origin
+      ? <div data-ct-export-feedback={origin}><CompanionExportFeedback feedback={exportResult} className={className}/></div> : null;
+  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document') => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id;
     const unsavedForExport = titleDirty || transcriptReviewUnsaved
@@ -877,12 +895,13 @@ export function CompanionDashboard({
   const exportAudio = async () => {
     if (!selectedSession || !onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id;
-    exportActive.current = true; setExportBusy(true); setExportResult(null);
+    exportActive.current = true; setExportBusy(true);
+    setExportResult({ sessionId, origin: 'audio', kind: 'pending', message: '正在保存原音…' });
     try {
       const result = await onExportAudio(sessionId);
-      setExportResult({ sessionId, message: result ? `原音已保存：${result.path}` : '已取消保存，原音保持不变。' });
+      setExportResult({ sessionId, origin: 'audio', path: result?.path, kind: result ? 'saved' : 'cancelled', message: result ? `原音已保存：${exportFileName(result.path)}` : '已取消保存，原音保持不变。' });
     } catch (error) {
-      setExportResult({ sessionId, message: `原音保存未完成：${error instanceof Error ? error.message : String(error)}` });
+      setExportResult({ sessionId, origin: 'audio', kind: 'error', message: `原音保存未完成：${error instanceof Error ? error.message : String(error)}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
   const changeCurrentLibraryState=async(action:'protect'|'unprotect'|'trash')=>{
@@ -1429,8 +1448,7 @@ export function CompanionDashboard({
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
                   title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />编辑整理内容</button> : null}
               </div>
-              {exportResult?.sessionId === selectedSession.id && exportResult.origin==='document' ?
-                <CompanionExportFeedback feedback={exportResult} className={exportResult.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok'}/> : null}
+              {renderExportFeedback('document', exportResult?.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok')}
               {editingMinutes ? <div className="ct-minutes-editor">
                 <div className="ct-minutes-savebar" aria-label="整理内容保存">
                   <span>{minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
@@ -1467,15 +1485,16 @@ export function CompanionDashboard({
             <span>导出其它内容</span>
             {savedActions(minutesMarkdown).length>0?<button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
               title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
-              onClick={() => void exportMeeting('markdown')}><Download size={15} />{exportBusy ? '正在导出…' : '导出整理全文'}</button>:null}
+              onClick={() => void exportMeeting('markdown','documentTools')}><Download size={15} />{exportBusy ? '正在导出…' : '导出整理全文'}</button>:null}
 
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
-              title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics')}>导出日历待办</button>
+              title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics','documentTools')}>导出日历待办</button>
             <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
-              onClick={()=>void exportMeeting('txt')}>{selectedSession.meetingNotes?.length?'导出原话与补充':'导出原话'}</button>
+              onClick={()=>void exportMeeting('txt','documentTools')}>{selectedSession.meetingNotes?.length?'导出原话与补充':'导出原话'}</button>
             <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
-              onClick={()=>void exportMeeting('json')}>保存完整数据（JSON）</button>
+              onClick={()=>void exportMeeting('json','documentTools')}>保存完整数据（JSON）</button>
           </div>
+          {renderExportFeedback('documentTools')}
 
           {journey?.optional ? <CompanionJourney journey={journey} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
             onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
@@ -1510,7 +1529,7 @@ export function CompanionDashboard({
                 <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={()=>setOrganizationChoiceId(null)}>取消</button>
               </div>
             </div>:null}
-            {exportResult?.sessionId===selectedSession.id&&exportResult.origin==='text'?<CompanionExportFeedback feedback={exportResult}/>:null}
+            {renderExportFeedback('text')}
             {transcriptDraftSessions.map(sessionId=>{
               const draftSession=readableLibrary.find(session=>session.id===sessionId);
               const current=sessionId===selectedSession.id;
@@ -1546,14 +1565,13 @@ export function CompanionDashboard({
             {snapshot?.minutesContextSupported?'补充单独保存；整理时可选择仅用原话，或一起参考已保存补充。':'补充已单独保存；当前整理程序仅使用原话。'}
           </p> : null}
           </section>
-          {exportResult?.sessionId === selectedSession.id && !exportResult.origin ? <CompanionExportFeedback feedback={exportResult}
-            className={exportResult.kind === 'error' ? 'ct-export-result ct-step-warn' : 'ct-export-result'}/> : null}
           <details className="ct-recording-more" open={recordingToolsOpen} onToggle={event=>setRecordingToolsOpen(event.currentTarget.open)}>
             <summary>更多{titleDirty||minutesDirty||bookmarkUnsaved||noteUnsaved?' · 有未保存的修改':''}</summary>
             {savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
             <div className="ct-recording-audio-export">
             <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
               onClick={() => void exportAudio()}><Download size={15} />保存原音</button>
+            {renderExportFeedback('audio')}
             <p>保存一份原始 WAV 到你选择的位置，可单独备份或使用其他播放器打开。此副本由你自行保管，删除录音不会删除它。</p>
             </div>
           <CompanionBookmarks session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
@@ -1561,7 +1579,8 @@ export function CompanionDashboard({
             playbackPosition={()=>audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
               ? Math.round(audioElement.current.currentTime*1000):null}
             onSeek={seekBookmark} onShowOriginal={()=>setRecordingToolsOpen(true)}
-            onExport={onExportMeeting?()=>exportMeeting('json'):undefined}/>
+            onExport={onExportMeeting?()=>exportMeeting('json','bookmarks'):undefined}/>
+          {renderExportFeedback('bookmarks')}
           {selectedSession.recovery?.lastError ? <details className="ct-recovery-detail">
             <summary>查看处理失败的详情</summary><p>{selectedSession.recovery.lastError}</p>
             <small>已尝试 {selectedSession.recovery.attemptCount} / {selectedSession.recovery.maxAttempts} 次；已有内容仍保留在本机。</small>
@@ -1569,10 +1588,11 @@ export function CompanionDashboard({
           <div className="ct-document-actions">
             <span>保存当前转写；完整记录包含原始识别结果</span>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !selectedSession.utterances?.length || !onExportMeeting || transcriptReviewUnsaved}
-              onClick={() => void exportMeeting('srt')}>保存字幕</button>
+              onClick={() => void exportMeeting('srt','recordingTools')}>保存字幕</button>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !onExportMeeting || transcriptReviewUnsaved}
-              onClick={() => void exportMeeting('json')}>保存完整记录</button>
+              onClick={() => void exportMeeting('json','recordingTools')}>保存完整记录</button>
           </div>
+          {renderExportFeedback('recordingTools')}
 
           </details>
         </section>
@@ -1906,12 +1926,13 @@ export function CompanionDashboard({
                 type="button"
                 className="ct-action"
                 disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting}
-                onClick={() => void exportMeeting('markdown')}
+                onClick={() => void exportMeeting('markdown','workflow')}
               >
                 <Download size={16} />
                 <span>导出 Markdown</span>
               </button>
             </div>
+            {renderExportFeedback('workflow')}
             {recordingMinutesUserEdited ? <p className="ct-step-warn">录制模式（{recordingModeLabel}）纪要含人工修改。再次生成会替换这一版，建议先导出保存。</p> : null}
           </div>
         </div>
@@ -2278,8 +2299,9 @@ export function CompanionDashboard({
             <div className="ct-button-row">
               {(['markdown', 'txt', 'json', 'srt', 'todo', 'ics'] as const).map((format) => <button key={format} type="button" className="ct-action"
                 disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || (['markdown', 'todo', 'ics'].includes(format) ? !hasMinutes : !finalTranscript)}
-                onClick={() => void exportMeeting(format)}>{format === 'markdown' ? 'Markdown' : format === 'todo' ? '待办清单' : format === 'ics' ? '日历待办 (.ics)' : format.toUpperCase()}</button>)}
+                onClick={() => void exportMeeting(format,'settings')}>{format === 'markdown' ? 'Markdown' : format === 'todo' ? '待办清单' : format === 'ics' ? '日历待办 (.ics)' : format.toUpperCase()}</button>)}
             </div>
+            {renderExportFeedback('settings')}
             <p className="ct-step-meta">选择保存位置；导出只使用已保存的内容，不会重新调用转写或纪要服务。SRT 需要真实时间戳。</p>
             <p className="ct-step-meta">待办取自当前纪要的“行动项 / Action Items”列表；修改后请先保存。日历文件使用 VTODO，需支持待办的日历应用；仅明确的日期或带时区时间设为截止时间，“周五”等保留原文供核对，不自动猜日期。</p>
           </section>
