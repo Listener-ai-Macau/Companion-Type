@@ -2393,7 +2393,8 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
     {
       label: '设备空间',
       state: wholeReclaimed ? '设备副本已回收' : growingDeviceCapture
-        ? partialAudio ? '已保存分段可回收，尾段保留' : '录音尾段保留'
+        ? savedSegments > 0 && saveConfirmed ? '已保存分段可回收，尾段保留'
+        : partialAudio ? '已收到片段，回收待确认' : '录音尾段保留'
         : canReclaim ? '可在删除会议时精确回收' : deviceCopy ? '暂不回收' : '无需回收',
       kind: wholeReclaimed ? 'done' : growingDeviceCapture || canReclaim ? 'active' : 'idle',
     },
