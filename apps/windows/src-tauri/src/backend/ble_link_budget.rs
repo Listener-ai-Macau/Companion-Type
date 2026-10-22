@@ -70,3 +70,55 @@ pub(super) fn generation_status(b:&[u8])->Result<bool,String> {
         for size in [0,1,43,45,63,65,512,usize::MAX] {assert!(super::notification_extent(size).is_err());}
     }
 }
+
+
+/// Observed receipt metadata, not the instant at which a radio change applied.
+/// Existing WOC5 frames only: no ATT reads, preference requests or wire changes.
+#[derive(Clone,Debug,serde::Serialize)]
+#[serde(rename_all="camelCase")]
+pub(super) struct BudgetObservation {
+    stage:&'static str, host_unix_us:u64, elapsed_us:u64,
+    generation:u32, accepted:u32, expected:u32, state:u8, budget:LinkBudget,
+}
+#[derive(Clone,Debug,serde::Serialize)]
+#[serde(rename_all="camelCase")]
+pub(super) struct BudgetHistory {
+    frames:u64, known:u64, unknown:u64, invalid:u64, changes:u64, dropped_changes:u64,
+    last_frame_kind:&'static str, last_frame_elapsed_us:u64,
+    first_known:Option<BudgetObservation>, last_known:Option<BudgetObservation>,
+    change_rows:Vec<BudgetObservation>,
+}
+impl Default for BudgetHistory {
+    fn default()->Self {Self{frames:0,known:0,unknown:0,invalid:0,changes:0,dropped_changes:0,
+        last_frame_kind:"none",last_frame_elapsed_us:0,first_known:None,last_known:None,
+        change_rows:Vec::with_capacity(32)}}
+}
+impl BudgetHistory {
+    pub(super) fn observe(&mut self,stage:&'static str,host_unix_us:u64,elapsed_us:u64,bytes:Option<&[u8]>) {
+        let Some(bytes)=bytes else{return;};
+        self.frames=self.frames.saturating_add(1);self.last_frame_elapsed_us=elapsed_us;
+        // Recording a frame never validates its durable receipt/owner. Keep
+        // malformed and old unknown frames visible without changing transport.
+        let decoded=if bytes.len()<24 || &bytes[..4]!=b"DOV1" || bytes[4]!=1 {
+            Err("invalid status header".to_string())
+        } else {LinkBudget::from_ota_status(bytes)};
+        let budget=match decoded {
+            Ok(Some(value))=>value,
+            Ok(None)=>{self.unknown=self.unknown.saturating_add(1);self.last_frame_kind="unknown";return;},
+            Err(_)=>{self.invalid=self.invalid.saturating_add(1);self.last_frame_kind="invalid";return;},
+        };
+        self.known=self.known.saturating_add(1);self.last_frame_kind="known";
+        let word=|at|u32::from_le_bytes(bytes[at..at+4].try_into().unwrap());
+        let row=BudgetObservation{stage,host_unix_us,elapsed_us,generation:word(40),accepted:word(8),
+            expected:word(12),state:bytes[5],budget};
+        if self.last_known.as_ref().map(|previous|previous.budget)!=Some(budget) {
+            self.changes=self.changes.saturating_add(1);
+            if self.change_rows.len()<32 {self.change_rows.push(row.clone());}
+            else {self.dropped_changes=self.dropped_changes.saturating_add(1);}
+        }
+        if self.first_known.is_none(){self.first_known=Some(row.clone());}
+        // Still update the last observed value after either bounded log fills.
+        // It is a LAST KNOWN observation, never assumed current across a gap.
+        self.last_known=Some(row);
+    }
+}

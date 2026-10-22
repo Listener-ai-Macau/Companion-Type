@@ -193,9 +193,9 @@ struct OtaStatusObservation {
     submitted_prefix:u32,after_fallback:bool,
 }
 #[derive(Clone,serde::Serialize)]
-struct OtaStatusTrace { rows:Vec<OtaStatusObservation>,dropped:u32,#[serde(skip)] origin:Instant }
+struct OtaStatusTrace { rows:Vec<OtaStatusObservation>,dropped:u32,link_budgets:super::ble_link_budget::BudgetHistory,#[serde(skip)] origin:Instant }
 impl OtaStatusTrace {
-    fn new()->Self{Self{rows:Vec::with_capacity(1024),dropped:0,origin:Instant::now()}}
+    fn new()->Self{Self{rows:Vec::with_capacity(1024),dropped:0,link_budgets:Default::default(),origin:Instant::now()}}
     fn stamp()->(u64,Instant){
         let mono=Instant::now();
         let unix=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH)
@@ -203,6 +203,8 @@ impl OtaStatusTrace {
         (unix,mono)
     }
     fn record(&mut self,stage:&'static str,stamp:(u64,Instant),bytes:Option<&[u8]>,submitted:u32,after:bool){
+        let elapsed=stamp.1.saturating_duration_since(self.origin).as_micros().min(u64::MAX as u128) as u64;
+        self.link_budgets.observe(stage,stamp.0,elapsed,bytes);
         if self.rows.len()==1024{self.dropped=self.dropped.saturating_add(1);return;}
         let mut row=OtaStatusObservation{stage,host_unix_us:stamp.0,
             elapsed_us:stamp.1.saturating_duration_since(self.origin).as_micros().min(u64::MAX as u128) as u64,
