@@ -1,0 +1,21 @@
+{
+  "atLocal": "2026-10-22T10:49:32+08:00",
+  "stage": "P412",
+  "sourceParent": "246ca312ec05c5566a3de590005808f5cf224e5c",
+  "changedFiles": [
+    "packages/ui/src/CompanionTranscriptReview.tsx",
+    "packages/ui/src/CompanionDashboard.tsx"
+  ],
+  "purpose": "Explicit original-text links align source paragraph at start; repeating same link locates again; passive snapshots keep reader position.",
+  "knownFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\pet-goal-20261013\\type-source-jump-p412-20261022\\before.json",
+  "affectedResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\.cache\\pet-goal-20261013\\type-source-jump-p412-20261022\\after.json",
+  "sourceSha256": {
+    "packages/ui/src/CompanionTranscriptReview.tsx": "34957353d87b15594a2a106ceee3a2704cdd78fdecccb9bfa601bdbd789c920b",
+    "packages/ui/src/CompanionDashboard.tsx": "d1b2752fb73266af8d2d7b80915bdfb1c4f00ad7e6c5244f0c1d96520cd93ba8"
+  },
+  "nativeOrProviderChanged": false,
+  "frontendBuilt": false,
+  "installed": false,
+  "normalWorktreeNotOverwritten": true,
+  "preserveFutureFunctionalR107": true
+}

@@ -1,7 +1,7 @@
 // A reading projection only. Saved text, extraction, editing and exports keep
 // the complete original document; this never derives tasks from a transcript.
 import {emptyActionNotice} from './savedActions';
-export function briefMinutes(markdown: string, transcript: string, durationMs: number): string | null {
+export function briefMinutes(markdown: string, transcript: string, durationMs: number, actionsFirst=false): string | null {
   if (!transcript.trim() || [...transcript.trim()].length > 280 || !Number.isFinite(durationMs)
       || durationMs < 0 || durationMs > 120_000
       || markdown.includes('```') || markdown.includes('~~~')) return null;
@@ -27,15 +27,28 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
     sections.set(key, markdown.slice(heading.index! + heading[0].length,
       headings[i + 1]?.index ?? markdown.length).trim());
   }
-  if (!sections.get('summary') || !sections.has('actions')) return null;
+  // A known empty summary is valid when the saved document has tasks or questions.
+  // Keep missing/unknown structure on the full reading path.
+  if (!sections.has('summary') || !sections.has('actions')) return null;
   const emptySection = (text: string) => !text || /^(?:- )?(?:None captured|无(?:[（(][^\r\n]*[）)])?)[。. ]*$/i.test(text);
   // Keep every actual decision/question visible in the short reading too.
   // An actual question must not bring back the full provenance/template dump.
-  const reading=[`## 重点\n\n${sections.get('summary')}`];
-  if(!emptySection(sections.get('decisions')??''))reading.push(`## 已明确的决定\n\n${sections.get('decisions')}`);
   const actions=sections.get('actions')??'';
   const noActions=emptySection(actions)||actions.split(/\r?\n/).every(line=>!line.trim()||emptyActionNotice(line.replace(/^[-*+] (?:\[[ xX]\] )?/, '')));
-  reading.push(`## 待办\n\n${noActions?'本次没有提取到待办。':actions}`);
+  const actionSection=`## 待办\n\n${noActions?'本次没有提取到待办。':actions}`;
+  // A short memo can already be readable in its original form. When the
+  // entire summary is literally that same text, show the usable saved tasks
+  // first without asking the reader to scan the same sentence again. Remove
+  // only list formatting/CRLF for comparison, never punctuation or meaning.
+  // The original text and complete saved document remain independently open.
+  const summaryText=(sections.get('summary')??'').split(/\r?\n/)
+    .map(line=>line.replace(/^[-*+] /,'')).join('\n').trim();
+  const duplicateOriginal=!noActions&&summaryText===transcript.trim().replace(/\r\n/g,'\n');
+  const preferActions=actionsFirst||duplicateOriginal;
+  const reading=preferActions&&!noActions?[actionSection]:[];
+  if(!duplicateOriginal && sections.get('summary')?.trim())reading.push(`## 重点\n\n${sections.get('summary')}`);
+  if(!emptySection(sections.get('decisions')??''))reading.push(`## 已明确的决定\n\n${sections.get('decisions')}`);
+  if(!preferActions||noActions)reading.push(actionSection);
   if(!emptySection(sections.get('questions')??''))reading.push(`## 需确认\n\n${sections.get('questions')}`);
   return reading.join('\n\n');
 }

@@ -2816,7 +2816,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                     if request.context_note_revision.is_some() && failure.is_some() {
                         session.recovery.stage="paused".into();
                         session.recovery.next_retry_at_unix_ms=None;
-                        session.recovery.last_error=Some("本次参考补充的整理未完成；原话和补充保留。请主动点“参考补充整理”重试，不会自动改成仅按原话整理。".into());
+                        session.recovery.last_error=Some("本次整理未完成，原话和补充仍保留。请点“重试整理”；内容未变化时会继续参考上次选择的原话与补充，内容变化时请重新选择。".into());
                         session.pending_reason=Some("recovery_paused".into());
                     }
                     original_selected_session_id=snapshot.host.selected_session_id.clone();

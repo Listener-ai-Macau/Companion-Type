@@ -38,12 +38,14 @@ impl CompanionMinutesManager {
     // Called only after the explicit revision-bound request passes preflight.
     // Original ASR/review remains untouched; only this provider input carries notes.
     pub fn generate_with_context(&self, session: &CompanionV1HostSession, generated_at: &str) -> CompanionV1MeetingMinutes {
+        let span = super::diagnostics::Span::start(super::diagnostics::Operation::Minutes);
         let mut input = super::transcript_review::minutes_input(session);
         input.meeting_notes = session.meeting_notes.clone();
         let mut result = self.generate_inner(&input, generated_at);
         result.source_review_revision = super::transcript_review::active_revision(session);
         result.source_note_context = Some(super::minutes_context::source(session));
         result.markdown = format!("{}\n\n{}", super::minutes_context::notice(result.source_note_context.as_ref().unwrap()), result.markdown);
+        span.finish(result.llm_note.as_deref().or_else(|| (result.quality != "final").then_some("provider did not produce final context minutes")));
         result
     }
 
@@ -175,7 +177,11 @@ pub(super) fn finalize_minutes(
             let context_actions_restored=if let Some(Some(actions))=context_actions {
                 upgraded.action_items=actions; true
             } else {false};
-            let fallback_count = merge_missing_source_facts(&mut upgraded, &l0.summary);
+            // The narrow plan contract accounts for every original plan and
+            // preserves all unused content as literal background. Reapplying
+            // original-only anchors here could revive a cancelled/conditional
+            // plan as an unqualified current fact.
+            let fallback_count = if validated_context {0}else{merge_missing_source_facts(&mut upgraded, &l0.summary)};
             if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() {
                 // The model may return a polished markdown body that omits facts
                 // already retained by deterministic extraction. Once a fallback
@@ -261,7 +267,12 @@ pub(super) fn run_deepseek_request(
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         DEEPSEEK_SYSTEM_PROMPT, client).and_then(|(mut minutes, object)| {
             if context_plan::eligible(session) {
-                minutes.action_items=context_plan::validate(&object,session)?;
+                let plan=context_plan::validate(&object,session)?;
+                minutes.action_items=plan.action_items;
+                minutes.questions=plan.pending;
+                minutes.decisions=plan.cancelled;
+                minutes.summary=plan.background;
+                minutes.markdown.clear();
             }
             Ok(minutes)
         })
@@ -274,12 +285,14 @@ fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1Meetin
         .map(|fact| format!("- {fact}"))
         .collect::<Vec<_>>()
         .join("\n");
-    let original = format!(
+    let original = if context_plan::eligible(session) {
+        format!("短个人备忘标题：{}\n原话中的原先计划（其当前状态必须结合后补核对，不是默认仍有效的事实锚点）：\n{}",session.title,session.transcript_text)
+    }else{format!(
         "会议标题：{title}\n\n下列转写可能含 ASR 噪声，请在遵守防编造规则下整理纪要。\n确定性提取层保留了以下来源事实锚点；summary 和 markdown 必须逐项覆盖其含义，不得静默遗漏，也不得把锚点扩写成转写未支持的事实：\n{anchors}\n\n转写：\n{transcript}",
         title = session.title,
         anchors = source_fact_anchors,
         transcript = session.transcript_text,
-    );
+    )};
     if session.meeting_notes.is_empty() { return original; }
     let notes = session.meeting_notes.iter().enumerate().map(|(i,n)|
         format!("用户补充{}（用户后补，不是录音识别）：\n{}",i+1,n.text)).collect::<Vec<_>>().join("\n\n");

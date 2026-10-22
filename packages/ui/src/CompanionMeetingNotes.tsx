@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Pencil, StickyNote, Trash2 } from 'lucide-react';
+import { CompanionExportFeedback, type CompanionExportFeedbackValue } from './CompanionExportFeedback';
 import { type CompanionMeetingNoteRequest, type CompanionV1HostSession, type CompanionV1Snapshot,
   companionBookmarkAudioPosition, normalizeCompanionNoteText } from '@companion-type/core';
 
@@ -7,7 +8,7 @@ type Edit = { text:string; anchor:string; originalText:string; originalAnchor:st
 type Draft = { text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,exportFeedback,onUnsavedChange,onBusyChange,compact=false}: {
+export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onUnsavedChange,onBusyChange,compact=false}: {
   compact?:boolean;
   session:CompanionV1HostSession;
   blocked:boolean;
@@ -16,7 +17,9 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
   onSave?:(request:CompanionMeetingNoteRequest)=>Promise<CompanionV1Snapshot>;
   onSeek:(sessionId:string,bookmarkId:string,positionMs:number)=>Promise<void>;
   onExport?:(format:'txt'|'json')=>Promise<void>;
-  exportFeedback?:{message:string;kind?:'saved'|'cancelled'|'pending'|'error'} | null;
+  onOrganizeSaved?:()=>void;
+  organizeSavedBlocked?:boolean;
+  exportFeedback?:CompanionExportFeedbackValue | null;
   onUnsavedChange?:(dirty:boolean)=>void;
   onBusyChange?:(busy:boolean)=>void;
 }) {
@@ -87,6 +90,10 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
       if(open)event.currentTarget.querySelector<HTMLTextAreaElement>('textarea')?.focus({preventScroll:true});
     }}><summary>补充一句{draft.text?.trim()||draft.pending?' · 未保存':''}</summary>{composer}</details>:composer}
     {messages[session.id]?<p role="status" className="ct-notes-message">{messages[session.id]}</p>:null}
+    {onOrganizeSaved && notes.length>0 && messages[session.id]==='备注已保存到本机。' ? <div className="ct-notes-controls">
+      <button type="button" className="ct-action" disabled={disabled||anyRecording||dirty||organizeSavedBlocked}
+        onClick={onOrganizeSaved}>用原话＋补充整理</button>
+    </div> : null}
     {notes.length?<ol className="ct-notes-list">{notes.map((note)=>{
       const edit=draft.edits?.[note.id];
       const point=points.find((p)=>p.id===note.bookmarkId);
@@ -118,15 +125,15 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         </div>
       </li>;
     })}</ol>:null}
+    {exportFeedback?<CompanionExportFeedback feedback={exportFeedback} className="ct-export-result ct-note-export-feedback"/>:null}
     {notes.length&&onExport?<div className="ct-note-takeaway">
-      <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady}
-        onClick={()=>void onExport('txt')}>导出文字与补充</button>
+      <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady||exportFeedback?.kind==='pending'}
+        onClick={()=>void onExport('txt')}>{exportFeedback?.kind==='pending'?'正在导出…':'导出文字与补充'}</button>
       <details className="ct-note-export"><summary>其他格式</summary>
-        <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady}
+        <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||!persistenceReady||exportFeedback?.kind==='pending'}
           onClick={()=>void onExport('json')}>保存完整数据（JSON）</button>
       </details>
     </div>:null}
-    {exportFeedback?<p className="ct-export-result ct-note-export-feedback" role={exportFeedback.kind==='error'?'alert':'status'}>{exportFeedback.message}</p>:null}
     {!onSave?<small>请在 Companion Type 桌面版保存备注。</small>:null}
   </section>;
 }

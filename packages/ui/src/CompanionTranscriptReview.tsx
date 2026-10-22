@@ -55,11 +55,14 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
     ? sourceSelection : null;
   useEffect(() => {
     if (visible && !draft && selection) {
-      selectedElement.current?.scrollIntoView?.({ block: 'nearest' });
+      // An explicit source link should open a readable paragraph, rather than
+      // merely expose its bottom edge below unrelated tools.
+      selectedElement.current?.scrollIntoView?.({ block: 'start' });
       selectedElement.current?.focus?.({ preventScroll: true });
     }
-  }, [visible, Boolean(draft), selection?.sessionId, selection?.index, selection?.text,
-    selection?.startMs, selection?.endMs]);
+  // Selection identity changes only on an explicit link click. Repeating the
+  // same link should locate again; background snapshots must not scroll.
+  }, [visible, Boolean(draft), selection]);
 
   async function seek(source: CompanionTranscriptSource) {
     if (!onSeekSource || blocked || audioSeekBlocked || seekInFlight.current) return;

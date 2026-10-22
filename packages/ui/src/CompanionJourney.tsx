@@ -2,6 +2,7 @@ import { ArrowRight, Check, FileText, LoaderCircle } from 'lucide-react';
 import {
   companionSessionHasFinalTranscript,
   companionMinutesMatchTranscript,
+  companionMinutesNotesCurrent,
   companionMinutesProcessingComplete,
   describeCompanionMeetingRecovery,
   type CompanionV1ControlRequest,
@@ -17,6 +18,7 @@ export type MeetingJourney = {
   destination?: 'settings' | 'workflow';
   processing?: boolean;
   optional?: boolean;
+  handlesFailure?: boolean;
 };
 
 export function meetingHasFinalMinutes(session: CompanionV1HostSession): boolean {
@@ -61,6 +63,23 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
       request: finalText ? { action:'meetingGenerateMinutes',sessionId:session.id }
         : context.asrReady ? { action:'meetingTranscribeAudio',sessionId:session.id } : undefined,
       destination: !finalText && !context.asrReady ? 'settings' : undefined };
+  }
+  // A failed explicit context request is paused by the native host. Offer
+  // one explicit retry with that same still-current consent, never silently
+  // substitute original-only processing. Changed material needs a new choice.
+  const failedMode=session.recovery?.requestedMeetingMode==='onlineLive'?'onlineLive':'offlineStore';
+  const failedProduct=session.minutesByMode?.[failedMode]
+    ?? (session.meetingMode===failedMode?session.minutes:undefined);
+  const noteContext=failedProduct?.sourceNoteContext;
+  if (finalText && noteContext && failedProduct?.quality!=='final'
+      && session.recovery?.stage==='paused') {
+    const current=companionMinutesNotesCurrent(session,noteContext)
+      && companionMinutesMatchTranscript(session,failedProduct.sourceReviewRevision);
+    return {stage:2,title:'整理未完成',handlesFailure:true,
+      detail:current?'原话和补充仍保存在本机。重试会参考上次明确选择的原话与补充。'
+        :'原话或补充已变化，已有内容仍保留。重试时请重新选择这次要整理的内容。',
+      label:'重试整理',request:{action:'meetingGenerateMinutes',sessionId:session.id,meetingMode:failedMode,
+        ...(current?{contextNoteRevision:noteContext.noteRevision}:{})}};
   }
   if (recovery && !recovery.retryAction) return { stage, title: recovery.label, detail: recovery.message, processing: recovery.isProcessing };
   if (session.pendingReason === 'no_speech_detected' && localAudio && recovery) {

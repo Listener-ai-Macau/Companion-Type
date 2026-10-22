@@ -8,6 +8,25 @@ use std::sync::LazyLock;
 // no-task statements, never a task merely containing a negative quotation.
 fn empty_action_notice(text:&str)->bool {
     let value=text.trim().trim_end_matches(['.','。']);
+    // Same matched, whole absence wrapper as UI emptyActionNotice. Only a
+    // complete already supported absence explanation is excluded; original
+    // saved prose is never changed and negative words in a real task stay.
+    static WRAPPED:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"(?i)^(?:无|暂无|none(?: captured)?)\s*(?:（([^（）()\r\n]+)）|\(([^（）()\r\n]+)\))$"
+    ).expect("constant wrapped empty action notice"));
+    if let Some(captures)=WRAPPED.captures(value) {
+        let explanation=captures.get(1).or_else(||captures.get(2)).unwrap().as_str().trim().trim_end_matches(['.','。']);
+        // Do not reuse top-level free explanatory tails inside a new wrapper:
+        // they could contain another real instruction. Preserve unknown text.
+        static ATOMIC_CHINESE:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+            r"^(?:(?:转写|原文|录音|本次|当前|会议|文中|内容)(?:中|里)?[，,：:\s]*)?(?:未(?:明确)?(?:给出|提及|记录|识别|提取)(?:明确的?|具体的?)?|没有(?:明确的?|具体的?)?|暂无|无)(?:行动项|待办(?:事项)?|跟进任务|可执行任务|任务)(?:[、或和及](?:负责人|责任人|截止时间|截止日期|截止日|日期|时间))*$"
+        ).expect("constant atomic Chinese absence explanation"));
+        static ATOMIC_ENGLISH:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+            r"(?i)^no (?:action items?|tasks?|to-dos?)(?:\s+(?:were |was |are |is )?(?:identified|captured|recorded|found|specified|available|mentioned))?$"
+        ).expect("constant atomic English absence explanation"));
+        if matches!(explanation.to_lowercase().as_str(),"none captured"|"none"|"无"|"暂无"|"无行动项"|"暂无行动项"|"待确认")
+            || ATOMIC_CHINESE.is_match(explanation) || ATOMIC_ENGLISH.is_match(explanation) { return true; }
+    }
     if matches!(value.to_lowercase().as_str(),"none captured"|"none"|"无"|"暂无"|"无行动项"|"暂无行动项"|"待确认") { return true; }
     static NOTICE:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
         r"^(?:(?:转写|原文|录音|本次|当前|会议|文中|内容)(?:中|里)?[，,：:\s]*)?(?:未(?:明确)?(?:给出|提及|记录|识别|提取)(?:明确的?|具体的?)?|没有(?:明确的?|具体的?)?|暂无|无)(?:行动项|待办(?:事项)?|跟进任务|可执行任务|任务)(?:[、，,。；;：:\s].*)?$"
@@ -75,7 +94,8 @@ pub fn parse_saved_actions(markdown: &str) -> Vec<Action> {
 
 // Same literal fold as UI commonActionSupplement; no interpretation, removal
 // of conditions or changes to independently exported calendar tasks.
-fn common_supplement(actions: &[Action]) -> Option<(&str,&str)> {
+struct CommonSupplement { text:String, display_texts:Vec<String> }
+fn common_supplement(actions: &[Action]) -> Option<CommonSupplement> {
     if actions.len()<2 {return None;}
     let text=&actions.first()?.text;
     let start=text.rfind("（补充：")?;
@@ -83,17 +103,46 @@ fn common_supplement(actions: &[Action]) -> Option<(&str,&str)> {
     let suffix=&text[start..];
     let words=suffix.strip_prefix("（补充：")?.strip_suffix('）')?;
     if words.trim().is_empty() || words.contains(['\r','\n']) {return None;}
-    actions.iter().all(|item|item.text.ends_with(suffix) && item.text.len()>suffix.len()).then_some((suffix,words))
+    if actions.iter().all(|item|item.text.ends_with(suffix) && item.text.len()>suffix.len()) {
+        return Some(CommonSupplement{text:words.into(),display_texts:actions.iter().map(|item|item.text[..item.text.len()-suffix.len()].into()).collect()});
+    }
+    // Same conservative whole-clause fold as UI. Unknown/quoted/nested
+    // wrappers remain intact; saved actions/calendar identities do not change.
+    let parts:Option<Vec<(&str,Vec<&str>)>>=actions.iter().map(|item|{
+        let start=item.text.find("（补充：")?;
+        if start==0 || !item.text.ends_with('）') || item.text[start+"（补充：".len()..].contains("（补充："){return None;}
+        let context=&item.text[start+"（补充：".len()..item.text.len()-'）'.len_utf8()];
+        if context.contains(['\r','\n','（','）','(',')','“','”','‘','’','「','」','『','』','"','\'']){return None;}
+        let clauses:Vec<_>=context.split('；').collect();
+        if clauses.iter().any(|part|part.trim().is_empty()){return None;}
+        Some((&item.text[..start],clauses))
+    }).collect();
+    let parts=parts?;
+    if parts.iter().any(|(_,clauses)|clauses.iter().collect::<std::collections::HashSet<_>>().len()!=clauses.len()){return None;}
+    let common=parts[0].1.iter().copied().filter(|clause|parts.iter().all(|(_,clauses)|clauses.contains(clause))).collect::<Vec<_>>();
+    if common.is_empty(){return None;}
+    let shared_set=common.iter().copied().collect::<std::collections::HashSet<_>>();
+    if parts.iter().any(|(_,clauses)|clauses.iter().copied().filter(|clause|shared_set.contains(clause)).collect::<Vec<_>>()!=common){return None;}
+    let shared=common.join("；");
+    let display_texts=parts.iter().map(|(title,clauses)|{
+        let remaining=clauses.iter().copied().filter(|clause|!shared_set.contains(clause)).collect::<Vec<_>>().join("；");
+        if remaining.is_empty(){(*title).into()}else{format!("{title}（补充：{remaining}）")}
+    }).collect();
+    Some(CommonSupplement{text:shared,display_texts})
 }
 
 pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
     let mut out = format!("# {} — 待办事项\n\n", title.replace(['\r', '\n'], " "));
     if draft { out.push_str("> 草稿：请核对负责人、任务和截止日期。\n\n"); }
     let common=common_supplement(actions);
-    if let Some((_,words))=common {out.push_str(&format!("> 以下事项的共同补充：{words}\n\n"));}
+    if let Some(shared)=&common {
+        let words=&shared.text;
+        if words.starts_with("共同适用规则："){out.push_str(&format!("> {words}\n\n"));}
+        else{out.push_str(&format!("> 以下事项的共同补充：{words}\n\n"));}
+    }
     let mut has_supplements=false;
-    for item in actions {
-        let text=common.map_or(item.text.as_str(),|(suffix,_)|&item.text[..item.text.len()-suffix.len()]);
+    for (index,item) in actions.iter().enumerate() {
+        let text=common.as_ref().map_or(item.text.as_str(),|shared|shared.display_texts[index].as_str());
         let supplement=text.strip_prefix("用户补充：");
         has_supplements|=supplement.is_some();
         out.push_str(&format!("- [{}] {}{}\n",if item.completed {"x"}else{" "},

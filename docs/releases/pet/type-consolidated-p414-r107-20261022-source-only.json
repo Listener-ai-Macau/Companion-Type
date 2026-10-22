@@ -1,0 +1,32 @@
+{
+  "atLocal": "2026-10-22T11:19:43+08:00",
+  "stage": "P414",
+  "functionalParent": "d1f8d9020f8fe917c825724e5e5d963f3c203f2e",
+  "upperParent": "37e837c201c53751697d2031d133f1789d90c1a2",
+  "commonBase": "525b61814ea3571ba54528ab3dc951ac6100268f",
+  "upperDeltaFiles": [
+    "apps/windows/src-tauri/src/backend/action_export.rs",
+    "apps/windows/src-tauri/src/backend/export.rs",
+    "apps/windows/src-tauri/src/backend/minutes.rs",
+    "apps/windows/src-tauri/src/backend/minutes/context_plan.rs",
+    "apps/windows/src-tauri/src/backend/mod.rs",
+    "docs/releases/pet/type-source-jump-p412-20261022-source-only.json",
+    "packages/ui/src/CompanionDashboard.tsx",
+    "packages/ui/src/CompanionExportFeedback.tsx",
+    "packages/ui/src/CompanionJourney.tsx",
+    "packages/ui/src/CompanionMeetingNotes.tsx",
+    "packages/ui/src/CompanionTranscriptReview.tsx",
+    "packages/ui/src/briefMinutes.ts",
+    "packages/ui/src/companionUi.css",
+    "packages/ui/src/savedActions.ts"
+  ],
+  "functionalDeltaFiles": [
+    "apps/windows/src-tauri/src/backend/ota_flow.rs",
+    "apps/windows/src-tauri/src/backend/ota_submit_timing.rs",
+    "apps/windows/src-tauri/src/backend/ota_winrt.rs"
+  ],
+  "overlap": [],
+  "purpose": "Consolidate already qualified P404 upper UI/native fixes and P412 source navigation with latest R107 native OTA delta. No new feature, no whole old-tree replacement.",
+  "installed": false,
+  "hardwareOrProviderCalls": 0
+}

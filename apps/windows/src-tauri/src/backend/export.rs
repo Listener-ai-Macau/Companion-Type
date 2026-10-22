@@ -227,11 +227,22 @@ pub fn prepare_meeting_export(
         }
     };
     let file_stem = safe_file_stem(&session.title, &session.id);
+    let purpose = match format {
+        MeetingExportFormat::Markdown => "整理结果",
+        MeetingExportFormat::Txt => "文字与补充",
+        MeetingExportFormat::Json => "完整资料",
+        MeetingExportFormat::Srt => "字幕",
+        MeetingExportFormat::Todo => "待办清单",
+        MeetingExportFormat::Ics => "待办日历",
+    };
+    let both_modes = session.minutes_by_mode.offline_store.is_some() && session.minutes_by_mode.online_live.is_some();
+    let mode_label = if both_modes && !matches!(format, MeetingExportFormat::Txt | MeetingExportFormat::Srt) {
+        if meeting_mode == "onlineLive" { "在线速记-" } else { "先录后整理-" }
+    } else { "" };
     Ok(PreparedMeetingExport {
         bytes: content.into_bytes(),
         suggested_name: format!(
-            "{file_stem}-{meeting_mode}{}.{}",
-            if matches!(format, MeetingExportFormat::Todo | MeetingExportFormat::Ics) { "-actions" } else { "" },
+            "{file_stem}-{mode_label}{purpose}.{}",
             format.extension()
         ),
         format,
@@ -799,7 +810,7 @@ mod tests {
         let todo = prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::Todo).unwrap();
         let content = String::from_utf8(todo.bytes).unwrap();
         assert!(content.contains("新任务")); assert!(!content.contains("陈明"));
-        assert!(todo.suggested_name.ends_with("-actions.md"));
+        assert!(todo.suggested_name.ends_with("-待办清单.md"));
         let ics = String::from_utf8(prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::Ics).unwrap().bytes).unwrap();
         assert!(ics.contains("DUE;VALUE=DATE:20261009"));
         let online = String::from_utf8(prepare_meeting_export(&s, "onlineLive", MeetingExportFormat::Todo).unwrap().bytes).unwrap();
