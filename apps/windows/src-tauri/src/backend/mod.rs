@@ -633,6 +633,7 @@ pub struct CompanionServiceBoundary {
 }
 
 pub trait CompanionBackend: Send + Sync {
+    fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String>;
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
     fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport, String>;
@@ -1161,6 +1162,23 @@ impl FixtureCompanionBackend {
         }
     }
 
+    fn retire_recovery_after_optout(&self,target:&str)->Result<Option<CompanionV1Snapshot>,String> {
+        let mut snapshot=self.snapshot.lock().map_err(|_|"Companion backend state lock failed")?;
+        let preference=self.connection_preference.lock().map_err(|_|"device connection preference lock failed")?;
+        if preference.can_automatically_reconnect() && preference.remembered_device_id.as_deref()
+            .is_some_and(|id|device_connection::same_device_id(id,target)) {return Ok(None);}
+        // The recovery QUERY may have retained the original recorder while
+        // the user requested Disconnect. Close only its exact connection,
+        // without STOP/consume or retiring the original recording journal.
+        ble_bridge::disconnect_retained_recording(Some(target))?;
+        if snapshot.device.device_id.as_deref().is_none_or(|id|device_connection::same_device_id(id,target)) {
+            snapshot.connected=false;snapshot.device.connected=false;
+            snapshot.device.connection_phase=if preference.manual_disconnect {"manualDisconnected"} else {"offline"}.into();
+            apply_connection_preference(&mut snapshot,&preference);
+        }
+        Ok(Some(snapshot.clone()))
+    }
+
     fn merge_live_asr_into_session(
         session: &mut CompanionV1HostSession,
         live: &live_asr::LiveAsrSnapshot,
@@ -1187,7 +1205,78 @@ impl Default for FixtureCompanionBackend {
     }
 }
 
+#[cfg(test)]
+mod manual_disconnect_tests {
+    use super::*;
+    const PEER:&str="C8:ED:45:EB:95:B4";
+
+    #[test]
+    fn manual_intent_does_not_wait_for_inflight_snapshot_and_restarts_suppressed() {
+        let backend=std::sync::Arc::new(FixtureCompanionBackend::new());
+        backend.connection_preference.lock().unwrap().remember_native_success(PEER,"before".into());
+        let snapshot=backend.snapshot.lock().unwrap();
+        let worker=std::sync::Arc::clone(&backend);let (tx,rx)=std::sync::mpsc::channel();
+        let thread=std::thread::spawn(move||tx.send(worker.request_manual_disconnect(Some(PEER))).unwrap());
+        let result=rx.recv_timeout(std::time::Duration::from_secs(2));
+        drop(snapshot);thread.join().unwrap();result.unwrap().unwrap();
+        let preference=backend.connection_preference.lock().unwrap().clone();
+        assert!(preference.manual_disconnect && !preference.can_automatically_reconnect());
+        let path=std::env::temp_dir().join(format!("companion-disconnect-intent-{}.json",uuid::Uuid::new_v4()));
+        device_connection::save_to(&path,&preference).unwrap();
+        let restarted=device_connection::load_from(&path).unwrap();
+        assert_eq!(restarted,preference);assert!(!restarted.can_automatically_reconnect());
+        std::fs::remove_file(path).unwrap();
+    }
+
+    #[test]
+    fn foreign_manual_intent_cannot_change_the_remembered_peer() {
+        let backend=FixtureCompanionBackend::new();
+        backend.connection_preference.lock().unwrap().remember_native_success(PEER,"before".into());
+        let before=backend.connection_preference.lock().unwrap().clone();
+        for target in ["AA:BB:CC:DD:EE:FF","Companion",""] {
+            assert!(backend.request_manual_disconnect(Some(target)).is_err());
+            assert_eq!(*backend.connection_preference.lock().unwrap(),before);
+        }
+        backend.request_manual_disconnect(Some("c8-ed-45-eb-95-b4")).unwrap();
+        assert!(backend.connection_preference.lock().unwrap().manual_disconnect);
+    }
+
+    #[test]
+    fn late_original_recovery_after_manual_intent_releases_link_without_ending_recording() {
+        let backend=FixtureCompanionBackend::new();
+        backend.connection_preference.lock().unwrap().remember_native_success(PEER,"before".into());
+        let original={
+            let mut s=backend.snapshot.lock().unwrap();s.source="firmware";s.connected=true;
+            s.device.connected=true;s.device.device_id=Some(PEER.into());s.device.mode="windowsNative".into();
+            s.device.recording=true;s.meeting.active=true;
+            let mut row=crate::companion_v1::synced_device_session(&s,
+                &crate::control_request(CompanionV1ControlAction::DeviceSyncRecordings,Some("original".into())),"before");
+            row.status="recording".into();row.source="boardDevice".into();row.source_device_id=Some(PEER.into());
+            s.host.sessions=vec![row];s.host.active_session_id=Some(s.host.sessions[0].id.clone());
+            serde_json::to_value(&s.host).unwrap()
+        };
+        assert!(backend.retire_recovery_after_optout(PEER).unwrap().is_none());
+        backend.request_manual_disconnect(Some(PEER)).unwrap();
+        let s=backend.retire_recovery_after_optout(PEER).unwrap().unwrap();
+        assert!(!s.connected && !s.device.connected);assert!(s.device.recording && s.meeting.active);
+        assert_eq!(s.device.connection_phase,"manualDisconnected");
+        assert_eq!(serde_json::to_value(&s.host).unwrap(),original);
+        assert!(!backend.connection_preference.lock().unwrap().can_automatically_reconnect());
+    }
+}
+
 impl CompanionBackend for FixtureCompanionBackend {
+    fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String> {
+        let mut preference=self.connection_preference.lock().map_err(|_|"device connection preference lock failed")?;
+        if target.is_some_and(|id| !device_connection::stable_device_id(id) ||
+            preference.remembered_device_id.as_deref().is_some_and(|known|!device_connection::same_device_id(id,known))) {
+            return Err("断开请求与当前记住的设备不一致，未修改自动连接选择。".into());
+        }
+        let mut next=preference.clone();next.mark_manual_disconnect();
+        device_connection::save(&next)?;
+        *preference=next;
+        Ok(())
+    }
     fn save_library_lifecycle(&self,request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{
         let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
         if snapshot.host.persistence.status!="ready"{return Err("请先恢复或保存会议库，未改变保护或回收站状态。".into());}
@@ -3114,7 +3203,9 @@ impl CompanionBackend for FixtureCompanionBackend {
             drop(preference);
             if !current {return self.snapshot();}
             eprintln!("[device-reconnect] recovering confirmed durable original={} no_new_start=1",request.session_id.as_deref().unwrap_or(""));
-            return self.apply_control(request);
+            let result=self.apply_control(request);
+            if let Some(snapshot)=self.retire_recovery_after_optout(&remembered_device_id)? {return Ok(snapshot);}
+            return result;
         }
 
         let operation = self.ble_bridge.probe_remembered(&remembered_device_id);
@@ -3137,7 +3228,7 @@ impl CompanionBackend for FixtureCompanionBackend {
             // The physical probe ran outside this state lock. A manual
             // disconnect must also retire its late idle connection, without
             // touching a newly owned active recording.
-            ble_bridge::disconnect_prepared_device(Some(&remembered_device_id))?;
+            ble_bridge::disconnect_retained_recording(Some(&remembered_device_id))?;
             snapshot.connected = false;
             snapshot.device.connected = false;
             snapshot.device.connection_phase = if preference.manual_disconnect {

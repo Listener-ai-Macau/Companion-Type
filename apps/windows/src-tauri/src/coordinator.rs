@@ -191,18 +191,33 @@ impl CompanionCoordinator {
     }
 
     fn begin_foreground_operation_kind(&self,kind:u8)->Result<CompanionDeviceOperationLease,String> {
+        self.begin_foreground_operation(kind,false,None)
+    }
+
+    fn begin_foreground_operation(&self,kind:u8,manual_disconnect:bool,target:Option<&str>)
+        ->Result<CompanionDeviceOperationLease,String> {
         // Block new pet owners while the old owner performs its real cleanup.
         // Never exchange an in-use radio/recording lease for an idle marker.
         self.pet_foreground.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire)
             .map_err(|_|"正在交接当前操作，请稍后再试。".to_string())?;
         let _guard=PetForegroundGuard(Arc::clone(&self.pet_foreground));
+        // Save the exact user's intent without waiting for snapshot/native
+        // probe locks. The existing background owner retains its real lease
+        // and performs its own late-result cleanup. OTA/capture owners remain
+        // non-preemptible and do not get a new preference as a side effect.
+        if manual_disconnect && self.device_operation.load(Ordering::Acquire)==4 {
+            self.backend.request_manual_disconnect(target)?;
+        }
         let request=crate::backend::pet_chat::yield_for_foreground()?;
         let started=std::time::Instant::now();
         let until=started+std::time::Duration::from_secs(15);
         loop {
-            if matches!(self.device_operation.load(Ordering::Acquire),PET_CAPTION_OPERATION|PET_CAPTURE_OPERATION) {
+            if self.is_shutting_down(){return Err(crate::backend::lifecycle::CLOSING.into());}
+            let active=self.device_operation.load(Ordering::Acquire);
+            if matches!(active,PET_CAPTION_OPERATION|PET_CAPTURE_OPERATION) || (manual_disconnect && active==4) {
                 if std::time::Instant::now()>=until {
-                    return Err("宠物聊天还在安全收尾，这次操作尚未开始，请稍后重试。".into());
+                    return Err(if active==4 {"已保存断开请求，当前连接仍在安全收尾；尚未确认断开。"}
+                        else {"宠物聊天还在安全收尾，这次操作尚未开始，请稍后重试。"}.into());
                 }
                 std::thread::sleep(std::time::Duration::from_millis(5));continue;
             }
@@ -479,7 +494,9 @@ impl CompanionCoordinator {
             _ => false,
         };
         let priority_operation=if needs_device && priority_action {
-            Some(self.begin_foreground_operation_kind(1)?)
+            Some(if request.action==Action::DeviceDisconnect {
+                self.begin_foreground_operation(1,true,request.device_id.as_deref())?
+            } else {self.begin_foreground_operation_kind(1)?})
         } else {None};
         let snapshot = self.backend.snapshot()?;
         let original_sync=crate::backend::owned_segmented_recording_sync(&snapshot,&request).is_some();
@@ -522,7 +539,9 @@ impl CompanionCoordinator {
     }
 
     pub fn automatic_reconnect_once(&self) -> Result<CompanionV1Snapshot, String> {
+        if self.pet_foreground.load(Ordering::Acquire) {return Err("device is busy with foreground control; automatic reconnect deferred".into());}
         let _operation = self.begin_device_operation_kind(4)?;
+        if self.pet_foreground.load(Ordering::Acquire) {return Err("device is busy with foreground control; automatic reconnect deferred".into());}
         // No-op background probes must not grow the log every polling tick.
         self.backend.automatic_reconnect_once()
     }
@@ -800,6 +819,28 @@ mod tests {
             let r=serde_json::from_value(serde_json::json!({"action":action})).unwrap();
             assert!(!owned_offline_recording_link(&snapshot,&r),"{action}");
         }
+    }
+
+
+    #[test]
+    fn manual_disconnect_waits_for_background_reconnect_without_stealing_its_lease() {
+        let coordinator=std::sync::Arc::new(CompanionCoordinator::new_fixture());
+        let reconnect=coordinator.begin_device_operation_kind(4).unwrap();
+        let worker=std::sync::Arc::clone(&coordinator);
+        let (tx,rx)=std::sync::mpsc::channel();
+        let thread=std::thread::spawn(move|| {
+            let request=serde_json::from_value(serde_json::json!({"action":"deviceDisconnect"})).unwrap();
+            tx.send(worker.apply_control(request)).unwrap();
+        });
+        let early=rx.recv_timeout(std::time::Duration::from_millis(100));
+        let still_owned=coordinator.device_operation.load(Ordering::Acquire);
+        drop(reconnect);
+        thread.join().unwrap();
+        assert!(early.is_err(),"manual disconnect was rejected before background cleanup: {early:?}");
+        assert_eq!(still_owned,4,"foreground must not fake release of the background owner");
+        let result=rx.recv_timeout(std::time::Duration::from_secs(2)).unwrap().unwrap();
+        assert!(!result.device.connected);
+        assert_eq!(coordinator.device_operation.load(Ordering::Acquire),0);
     }
 
     #[test]
