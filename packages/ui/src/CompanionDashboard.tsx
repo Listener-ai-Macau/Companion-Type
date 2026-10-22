@@ -1237,7 +1237,7 @@ export function CompanionDashboard({
                 ? '纪要完成'
                 : session.minutes?.markdown || session.minutesByMode?.offlineStore || session.minutesByMode?.onlineLive ? '纪要草稿'
                 : session.status === 'transcribed'
-                  ? '已转写'
+                  ? session.source === 'importedTranscript' ? '已导入' : '已转写'
                   : session.pendingReason === 'needs_transcription'
                     ? '待转写'
                     : '已保存');
@@ -2343,7 +2343,7 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
     return <section className="ct-safety-card" aria-label="文字保存状态">
       <header><strong>文字保存状态</strong><span>{saved ? '文字已保存在本机'
         : failed ? '文字保存失败' : '保存状态待确认'}</span></header>
-      <p>这条记录来自导入文字，没有原录音。可直接补充、整理或导出。</p>
+      <p>这条记录来自导入文字，没有原录音；无需等待设备同步或转写。</p>
       {!saved ? <p role="alert">{persistence?.message
         ?? '本机保存尚未确认，请先在保存提示中重试。'}</p> : null}
     </section>;
