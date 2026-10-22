@@ -433,6 +433,7 @@ export function CompanionDashboard({
     productSettings?.defaultMeetingMode, Boolean(productSettings?.storageSaveBlocked)]);
 
   const [transcriptReviewUnsaved, setTranscriptReviewUnsaved] = useState(false);
+  const [transcriptDraftSessions, setTranscriptDraftSessions] = useState<string[]>([]);
   const selectedSession = useMemo(
     () => {const row=snapshot?selectedCompanionHostSession(snapshot):null;return row&&!row.organization?.trashedAt&&!libraryFilters.trash?row:null;},
     [snapshot,libraryFilters.trash],
@@ -1038,6 +1039,15 @@ export function CompanionDashboard({
       () => externalAudioSeek.current?.());
     setAudioResult({sessionId,message:'已定位到重点。点击原音播放器的播放按钮即可回听。'});
   };
+  const resumeTranscriptDraft = (sessionId: string) => {
+    if (controlsBusy || !readableLibrary.some(session=>session.id===sessionId)) return;
+    setSourceSelection(null);
+    setTranscriptReviewOpen(true);
+    if (sessionId !== selectedSession?.id) {
+      setOpenSavedRecordingId(sessionId);
+      onControl({ action: 'meetingSelectSession', sessionId });
+    }
+  };
   const openTranscriptSource = (source: CompanionTranscriptSource) => {
     if (!selectedSession || selectedMinutesStale || transcriptReviewUnsaved || controlsBusy
       || !companionTranscriptSourceIsCurrent(selectedSession, source)) return;
@@ -1496,10 +1506,18 @@ export function CompanionDashboard({
               </div>
             </div>:null}
             {exportResult?.sessionId===selectedSession.id&&exportResult.origin==='text'?<CompanionExportFeedback feedback={exportResult}/>:null}
+            {transcriptDraftSessions.map(sessionId=>{
+              const draftSession=readableLibrary.find(session=>session.id===sessionId);
+              const current=sessionId===selectedSession.id;
+              return <p className="ct-step-warn" role="status" key={sessionId}>
+                {current?'有尚未保存的文字修订。':`“${draftSession?meetingTitle(draftSession):'另一条录音'}”有尚未保存的文字修订。`}
+                {(!current||!transcriptReviewOpen)&&draftSession?<button type="button" className="ct-text-button" disabled={controlsBusy}
+                  onClick={()=>resumeTranscriptDraft(sessionId)}>继续修正</button>:null}
+              </p>;
+            })}
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}
-              {transcriptReviewUnsaved ? <p className="ct-step-warn">有尚未保存的文字修订。{!transcriptReviewOpen ? <button type="button" className="ct-text-button" onClick={()=>setTranscriptReviewOpen(true)}>继续修正</button> : null}</p> : null}
               <p className="ct-recording-transcript" hidden={transcriptReviewOpen}>{companionReviewedTranscript(selectedSession)}</p>
             </> : <p className="ct-recording-text-empty">{recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
           <div id="ct-recording-text-review" hidden={!transcriptReviewOpen}>
@@ -1507,7 +1525,7 @@ export function CompanionDashboard({
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
             sourceSelection={sourceSelection} onSeekSource={seekTranscriptSource}
             audioSeekBlocked={Boolean(audioBlockedReason) || audioBusy}
-            onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} />
+            onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
           <CompanionMeetingNotes compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}

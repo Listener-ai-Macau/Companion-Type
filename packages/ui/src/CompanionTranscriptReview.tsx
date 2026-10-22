@@ -29,11 +29,12 @@ function stamp(ms: number) {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 }
 
-export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange,
+export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange, onDraftSessionsChange,
   sourceSelection, onSeekSource, audioSeekBlocked = false }: {
   session: CompanionV1HostSession; visible: boolean; blocked: boolean;
   onSave?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onUnsavedChange: (unsaved: boolean) => void;
+  onDraftSessionsChange?: (sessionIds: string[]) => void;
   sourceSelection?: CompanionTranscriptSource | null;
   onSeekSource?: (source: CompanionTranscriptSource) => Promise<void>;
   audioSeekBlocked?: boolean;
@@ -77,7 +78,11 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
     || draft.revision !== (session.transcriptReview?.revision ?? 0));
   const canEdit = Boolean(onSave && companionSessionHasFinalTranscript(session) && !blocked && !saving
     && !['transcribing','generatingMinutes'].includes(session.recovery?.stage ?? ''));
-  useEffect(() => { onUnsavedChange(Object.keys(drafts).length > 0); }, [drafts, onUnsavedChange]);
+  useEffect(() => {
+    const ids = Object.keys(drafts);
+    onUnsavedChange(ids.length > 0);
+    onDraftSessionsChange?.(ids);
+  }, [drafts, onUnsavedChange, onDraftSessionsChange]);
 
   function start() {
     setDrafts((previous) => ({ ...previous, [session.id]: draftFrom(session) })); setResult(null);
