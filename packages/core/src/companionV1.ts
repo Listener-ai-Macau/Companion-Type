@@ -1361,7 +1361,9 @@ export function describeCompanionMeetingRecovery(session: CompanionV1HostSession
   }
   if (session.processingPolicy === 'manual' && recovery?.lastError && recovery.stage === 'paused') {
     return { label: session.pendingReason === 'no_speech_detected' ? '未识别到人声' : '处理未完成',
-      message: `${recovery.lastError} 原音已保留，选择转写或生成纪要可手动重试。`,
+      message: session.pendingReason === 'no_speech_detected'
+        ? describeSessionPendingReason('no_speech_detected')!
+        : `${recovery.lastError} 原音已保留，选择转写或生成纪要可手动重试。`,
       retryAction: companionSessionHasFinalTranscript(session) ? 'meetingGenerateMinutes' : 'meetingTranscribeAudio',
       isProcessing: false };
   }
