@@ -34,7 +34,7 @@ export function CompanionPetFind({deviceId,supported,blocked,muted,onFind}: {
     finally {active.current=false;setBusy(false);}
   };
   return <section className="ct-pet-find" aria-label="找宠物">
-    <div><strong>找宠物</strong><p>在附近发出几声短音，约 6 秒自动结束，保留设备原音量。</p></div>
+    <div><strong>找宠物</strong><p>在附近发出几声短音，约 6 秒自动结束，保留设备原音量。安静模式、安静时段和录音期间不会发声。</p></div>
     {!supported?<p className="ct-step-meta">连接支持寻找的联合固件后可用。</p>:<>
       {!pending?<button type="button" className="ct-action" disabled={busy||blocked||muted} onClick={()=>void send('start',true)}>{busy?'正在发送…':'让宠物响一下'}</button>:<div className="ct-action-row">
         {report?.phase!=='other'?<button type="button" className="ct-action" disabled={busy} onClick={()=>void send('stop')}>停止寻找</button>:null}

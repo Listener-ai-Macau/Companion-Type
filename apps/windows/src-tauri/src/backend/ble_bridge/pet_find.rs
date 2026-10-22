@@ -92,7 +92,7 @@ fn finding_status_report(action:Action, request_id:u32, value:&[u8])->Result<(&'
         "other"=>"设备正在完成其它声音请求，本次没有停止它。".into(),
         "unconfirmed"=>if action==Action::Stop {"设备没有返回本次寻找的确认状态；这次未发送停止指令。可重新发起寻找。".into()}
             else {"设备没有返回本次寻找的确认状态，无法确认它是否已结束。可重新发起寻找。".into()},
-        _=>"设备未开始这次寻找；可能正在录音、静音或处理其它声音。".into(),
+        _=>"设备未开始这次寻找；可能处于安静模式／安静时段、正在录音、静音或处理其它声音。".into(),
     };
     Ok((phase,parsed.2,message))
 }
