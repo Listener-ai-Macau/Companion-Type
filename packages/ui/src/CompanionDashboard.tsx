@@ -2353,16 +2353,21 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   const savedSegments = session.source === 'boardDevice' && session.deviceRecordingKey
     ? session.chunks.filter((chunk) => chunk.status === 'sealed' && chunk.path && chunk.bytes > 0).length : 0;
   const rawComplete=session.pendingReason==='needs_local_audio'&&!captureOngoing;
-  const localAudio = session.pendingReason !== 'needs_device_sync'
+  const transferPending = ['needs_device_sync', 'needs_segments', 'needs_pull'].includes(session.pendingReason ?? '');
+  const cachedAudio = Boolean(session.audioStored && session.audioPath && session.audioBytes > 0);
+  const localAudio = !transferPending
     && !captureOngoing && (session.deviceRecordingKey
       ? Boolean(session.audioStored && session.audioPath && session.audioBytes > 0)
       : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
-  const partialAudio = !localAudio && savedSegments > 0;
+  const partialAudio = !localAudio && (savedSegments > 0 || cachedAudio);
   const deviceCopy = Boolean(session.sourceDeviceId && (session.deviceRecordingId != null||session.deviceRecordingKey) && !wholeReclaimed);
   const growingDeviceCapture = captureOngoing && deviceCopy;
   const exactDeviceCopy = Boolean(deviceCopy && session.deviceTotalLength
     && /^[0-9a-f]{64}$/i.test(session.deviceSha256 ?? ''));
-  const saveFailed = Boolean(persistence?.status && persistence.status !== 'ready');
+  const saveConfirmed = persistence?.status === 'ready';
+  const saveFailed = persistence?.status === 'blocked' || persistence?.status === 'unsaved';
+  const canReclaim = exactDeviceCopy && localAudio && saveConfirmed
+    && !session.captureIncomplete && !session.recorderControlUncertain;
   const steps = [
     {
       label: '设备',
@@ -2374,31 +2379,34 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
     {
       label: '传到电脑',
       state: rawComplete ? '原音已收齐' : localAudio ? session.captureIncomplete ? '已收齐恢复片段' : '音频已收齐'
-        : partialAudio ? captureOngoing ? `已收到${savedSegments}段，继续同步` : '已收到分段，继续收齐'
+        : partialAudio ? captureOngoing ? savedSegments > 0 ? `已收到${savedSegments}段，继续同步` : '已收到片段，录音仍在进行' : '已收到片段，整条尚未收齐'
         : session.pendingReason === 'needs_device_sync' ? '连接后继续同步' : recoveryProcessing ? '正在处理' : '尚未收齐',
       kind: localAudio || rawComplete ? 'done' : partialAudio || recoveryProcessing ? 'active' : 'idle',
     },
     {
       label: '本机保存',
-      state: saveFailed ? '保存失败，可重试' : persistence?.status==='ready' && rawComplete ? '原音已保存，回听待生成' : persistence?.status === 'ready' && localAudio ? '已安全保存'
-        : persistence?.status === 'ready' && partialAudio ? `已保存${savedSegments}段`
-        : localAudio || partialAudio ? '已有音频，保存状态待确认' : '等待音频',
-      kind: saveFailed ? 'error' : persistence?.status === 'ready' && (localAudio || partialAudio) ? 'done' : 'idle',
+      state: saveFailed ? '保存失败，可重试' : saveConfirmed && rawComplete ? '原音已保存，回听待生成' : saveConfirmed && localAudio ? '已安全保存'
+        : saveConfirmed && partialAudio ? savedSegments > 0 ? `已保存${savedSegments}段，整条尚未收齐` : '已有片段已保存，整条尚未收齐'
+        : localAudio || partialAudio || rawComplete ? '已有音频，保存状态待确认' : '等待音频',
+      kind: saveFailed ? 'error' : saveConfirmed && (localAudio || partialAudio || rawComplete) ? 'done' : 'idle',
     },
     {
       label: '设备空间',
       state: wholeReclaimed ? '设备副本已回收' : growingDeviceCapture
         ? partialAudio ? '已保存分段可回收，尾段保留' : '录音尾段保留'
-        : exactDeviceCopy && localAudio && !saveFailed ? '可在删除会议时精确回收' : deviceCopy ? '暂不回收' : '无需回收',
-      kind: wholeReclaimed ? 'done' : growingDeviceCapture || (exactDeviceCopy && localAudio && !saveFailed) ? 'active' : 'idle',
+        : canReclaim ? '可在删除会议时精确回收' : deviceCopy ? '暂不回收' : '无需回收',
+      kind: wholeReclaimed ? 'done' : growingDeviceCapture || canReclaim ? 'active' : 'idle',
     },
   ];
   return <section className="ct-safety-card" aria-label="录音安全状态">
-    <header><strong>录音安全状态</strong><span>{saveFailed ? '需要处理' : localAudio ? '电脑已有副本' : partialAudio ? '本机已保存分段' : '内容仍在流转'}</span></header>
+    <header><strong>录音安全状态</strong><span>{saveFailed ? '需要处理'
+      : !saveConfirmed && (localAudio || partialAudio || rawComplete) ? '保存状态待确认'
+      : localAudio ? '电脑已有副本' : partialAudio ? '本机已有片段，仍待收齐' : '内容仍在流转'}</span></header>
     {session.processingPolicy === 'manual' ? <p>这是一份普通录音。转写和纪要由你手动启动，同步原音后不会自动提交云端处理。</p> : null}
     <ol>{steps.map((step) => <li key={step.label} className={`ct-safety-${step.kind}`}><span aria-hidden="true" />
       <div><strong>{step.label}</strong><small>{step.state}</small></div></li>)}</ol>
     {session.pendingReason === 'needs_device_sync' ? <p>录音仍在来源设备；重连同一台 Companion 后会从断点继续。</p> : null}
+    {session.pendingReason === 'needs_segments' ? <p>这场录音尚未收齐。已有片段会保留，连接同一台 Companion 后继续同步。</p> : null}
     {session.deviceRecordingEndReason ? <p>{({user: '你已停止设备录音。', storageFull: '设备存储空间不足，录音已安全结束。', durationLimit: '已达到设定时长，设备录音已结束。', lowBattery: '设备因电量低结束了录音。', silence: '已达到设定的静音时长，设备录音已结束。'} as const)[session.deviceRecordingEndReason]} 原音同步和本机保存进度见上方。</p> : null}
     {session.captureIncomplete ? <p role="alert">这场录音曾意外中断，实际保存 {formatDuration(session.durationMs)}，结尾可能缺失。可以回听或导出原音；转写与纪要只覆盖已保存的片段。{!session.recovery?.captureReviewConfirmed ? '选择整理片段后才会继续处理。' : ''}</p> : null}
     {saveFailed ? <p>{persistence?.message ?? '本机索引尚未安全保存，当前不会回收设备副本。'}</p> : null}
