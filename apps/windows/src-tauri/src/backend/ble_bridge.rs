@@ -2061,7 +2061,7 @@ impl MeetingControlIdentity {
 
 async fn scan_native_device(requested_device_id: Option<&str>) -> Result<NativeDevice, String> {
     #[cfg(windows)]
-    if let Some(device) = connected_windows_device(requested_device_id).await {
+    if let Some(device) = paired_windows_device(requested_device_id).await {
         return Ok(device);
     }
     let timeout_ms = std::env::var("COMPANION_TYPE_BLE_SCAN_TIMEOUT_MS")
@@ -2156,16 +2156,18 @@ async fn scan_native_device(requested_device_id: Option<&str>) -> Result<NativeD
 }
 
 #[cfg(windows)]
-async fn connected_windows_device(requested_device_id: Option<&str>) -> Option<NativeDevice> {
+async fn paired_windows_device(requested_device_id: Option<&str>) -> Option<NativeDevice> {
     let requested = requested_device_id?;
-    // Only an explicit exact MAC may use the Windows paired-device lookup.
-    // Name/default selection still scans and chooses among advertised devices.
+    // An explicit exact MAC may resolve an already-paired Windows peer,
+    // including a disconnected one. This is metadata acquisition only; the
+    // existing owned connect/security/GATT/UID path still establishes readiness.
+    // Name/default and unpaired selection still use advertisement discovery.
     if !scan_exact_address_match(Some(requested), requested) { return None; }
     let compact = requested.trim().replace([':', '-'], "");
     let address: btleplug::api::BDAddr = u64::from_str_radix(&compact, 16).ok()?.try_into().ok()?;
     let started = StdInstant::now();
     let peripheral = match timeout(StdDuration::from_secs(2),
-        Peripheral::from_connected_paired_address(address)).await {
+        Peripheral::from_paired_address(address)).await {
         Ok(Ok(peripheral)) => peripheral,
         result => {
             eprintln!("BLE known_device lookup_unavailable elapsed_ms={} cause={result:?} advertisement_fallback=1", started.elapsed().as_millis());
@@ -2174,7 +2176,7 @@ async fn connected_windows_device(requested_device_id: Option<&str>) -> Option<N
     };
     let device = scan_candidate(peripheral).await.ok()??;
     if !scan_exact_address_match(Some(requested), &device.address) { return None; }
-    eprintln!("BLE known_device exact_paired_connected=1 elapsed_ms={} advertisement_wait=0 protected_setup_required=1", started.elapsed().as_millis());
+    eprintln!("BLE known_device exact_paired=1 metadata_only=1 elapsed_ms={} advertisement_wait=0 protected_setup_required=1", started.elapsed().as_millis());
     Some(device)
 }
 

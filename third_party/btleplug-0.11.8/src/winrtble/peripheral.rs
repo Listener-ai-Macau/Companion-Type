@@ -155,6 +155,19 @@ impl Peripheral {
     /// GATT operation or connection request. The normal connect/discovery path
     /// still owns its handles and validates the protected services afterwards.
     pub async fn from_connected_paired_address(address: BDAddr) -> Result<Self> {
+        Self::paired_address_metadata(address, true).await
+    }
+
+    /// Resolve an explicitly selected paired peer without requiring its next
+    /// advertisement or an existing physical connection. Windows metadata is
+    /// not a connection result: normal owned GATT setup must still connect,
+    /// verify protected services and confirm the product identity afterwards.
+    /// No pairing, scan, GATT request or MaintainConnection is issued here.
+    pub async fn from_paired_address(address: BDAddr) -> Result<Self> {
+        Self::paired_address_metadata(address, false).await
+    }
+
+    async fn paired_address_metadata(address: BDAddr, require_connected: bool) -> Result<Self> {
         let device = BluetoothLEDevice::FromBluetoothAddressAsync(address.into())
             .map_err(|error| Error::Other(Box::new(error)))?
             .into_future().await.map_err(|error| Error::Other(Box::new(error)))?;
@@ -162,7 +175,7 @@ impl Peripheral {
             != u64::from(address) {
             return Err(Error::DeviceNotFound);
         }
-        if device.ConnectionStatus().map_err(|error| Error::Other(Box::new(error)))?
+        if require_connected && device.ConnectionStatus().map_err(|error| Error::Other(Box::new(error)))?
             != BluetoothConnectionStatus::Connected {
             return Err(Error::NotConnected);
         }
