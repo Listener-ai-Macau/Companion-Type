@@ -1069,7 +1069,7 @@ export function CompanionDashboard({
   // recording's processing result belongs to its own detail panel.
   const simpleStatus = boardLiveActive ? 'Companion 正在录音'
     : oobeBlockedByRecording ? '录音进行中'
-      : pageView === 'library' ? recordingLibrary.length ? '已有录音可直接查看' : '从 Companion 录下第一条想法'
+      : pageView === 'library' ? recordingLibrary.length ? '已有内容可直接查看' : '从 Companion 录下第一条想法'
         : !connected ? '连接 Companion 后可录制新内容' : '设备已识别，可以开始录音';
 
   const footer = useMemo(() => {
@@ -1079,9 +1079,11 @@ export function CompanionDashboard({
     if (selectedMinutesStale) return '原始文字和修订已保留。请重新生成或核对当前纪要，再导出待办。';
     if (hasMinutes) return (selectedMinutesVariant?.quality ?? selectedSession?.minutes?.quality) === 'final'
       ? '纪要已保存，可以核对并导出。' : '纪要草稿已保存，可以查看或继续整理。';
-    if (!connected) return '已有录音保存在本机，设备不在身边也可以继续查看和整理。';
+    if (!connected) return recordingLibrary.length
+      ? '可先查看录音库里的内容；连接设备后可继续同步。'
+      : '连接 Companion，同步录音后在这里查看。';
     return '在 Companion 上录音，回到电脑同步并整理。';
-  }, [error, nameError, connected, hasMinutes, selectedMinutesStale, recoveryView?.message, selectedMinutesVariant?.quality, selectedSession?.minutes?.quality]);
+  }, [error, nameError, connected, recordingLibrary.length, hasMinutes, selectedMinutesStale, recoveryView?.message, selectedMinutesVariant?.quality, selectedSession?.minutes?.quality]);
 
   return (
     <main className={`ct-shell ct-simple ct-${surface}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}`}>
