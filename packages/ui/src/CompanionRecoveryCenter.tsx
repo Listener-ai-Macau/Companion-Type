@@ -20,17 +20,26 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
   onControl: (request: CompanionV1ControlRequest) => void; onSettings: () => void; onWorkflow: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [optionalExpanded, setOptionalExpanded] = useState(false);
   const pending = snapshot.host.sessions.filter(session => !session.organization?.trashedAt && session.status !== 'recording'
     && !manualRecordingIsSaved(session)
     && (!meetingHasFinalMinutes(session) || (session.recovery?.intent === 'processMeeting' && session.recovery.stage !== 'complete')));
   const storage = snapshot.host.persistence;
   const storageBlocked = Boolean(storage && storage.status !== 'ready');
   if (!pending.length && !storageBlocked) return null;
-  const selected = pending.find(session => session.id === snapshot.host.selectedSessionId);
-  const other = pending.filter(session => session.id !== selected?.id);
+  const journey = (session: CompanionV1HostSession) => meetingJourney(session, {
+    connected: snapshot.device.connected, deviceId: snapshot.device.deviceId, asrReady, minutesReady,
+  });
+  // Complete text can be useful without a summary. Keep its optional action
+  // available, without presenting ordinary saved content as failed recovery.
+  // Existing recovery/persistence states remain visible and keep their requests.
+  const attention = pending.filter(session => !journey(session).optional);
+  const optional = pending.filter(session => journey(session).optional);
+  const selected = attention.find(session => session.id === snapshot.host.selectedSessionId);
+  const other = attention.filter(session => session.id !== selected?.id);
   const visible = expanded ? other : other.slice(0, 3);
   const recording = (session: CompanionV1HostSession) => {
-    const next = meetingJourney(session, {connected: snapshot.device.connected, deviceId: snapshot.device.deviceId, asrReady, minutesReady});
+    const next = journey(session);
     return <li key={session.id} data-session-id={session.id}>
       <div><strong>{session.title.trim() || '未命名录音'}</strong><span>{next.title}</span><p>{next.detail}</p>
         {session.captureIncomplete ? <p role="alert">录制曾中断，只恢复了已保存的片段，末尾可能缺失。</p> : null}</div>
@@ -45,20 +54,27 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
       </div>
     </li>;
   };
-  return <section className="ct-recovery-center ct-recovery-compact" aria-label="恢复中心">
+  return <section className="ct-recovery-center ct-recovery-compact" aria-label="内容处理状态">
     {storageBlocked && storage ? <div className="ct-recovery-storage" role="alert" aria-label="录音保存状态">
       <strong>{storage.status === 'blocked' ? '录音库需要恢复' : '当前修改尚未安全保存'}</strong>
       <p>{storage.message ?? '自动处理已暂停，请保留当前窗口并重试。'}</p>
       <button type="button" className="ct-action" disabled={savingBusy} onClick={() => onControl({action:'hostRetrySave'})}>
         {storage.status === 'blocked' ? '重试恢复' : '重试保存'}</button>
     </div> : null}
-    {selected ? <div className="ct-recovery-current"><strong>{meetingJourney(selected, {connected: snapshot.device.connected, deviceId: snapshot.device.deviceId, asrReady, minutesReady}).optional ? '可按需整理，原内容保留' : '这条内容需要处理'}</strong><ul>{recording(selected)}</ul></div> : null}
+    {selected ? <div className="ct-recovery-current"><strong>这条内容需要处理</strong><ul>{recording(selected)}</ul></div> : null}
     {other.length ? <details className="ct-recovery-history">
-      <summary>其他内容的整理状态 <span>{other.length}</span></summary>
+      <summary>其他需要处理的内容 <span>{other.length}</span></summary>
       <p>已有内容仍在录音库里，按需查看；中断或保存失败会单独说明。</p>
       <ul>{visible.map(recording)}</ul>
       {other.length > 3 ? <button type="button" className="ct-text-button" aria-expanded={expanded}
         onClick={() => setExpanded(value => !value)}>{expanded ? '收起' : `查看全部 ${other.length} 条`}<ChevronDown size={14} /></button> : null}
+    </details> : null}
+    {optional.length ? <details className="ct-recovery-history ct-recovery-optional">
+      <summary>可按需整理的内容 <span>{optional.length}</span></summary>
+      <p>原内容保留，可先查看。需要重点或待办时再整理。</p>
+      <ul>{(optionalExpanded ? optional : optional.slice(0, 3)).map(recording)}</ul>
+      {optional.length > 3 ? <button type="button" className="ct-text-button" aria-expanded={optionalExpanded}
+        onClick={() => setOptionalExpanded(value => !value)}>{optionalExpanded ? '收起' : `查看全部 ${optional.length} 条`}<ChevronDown size={14} /></button> : null}
     </details> : null}
   </section>;
 }
