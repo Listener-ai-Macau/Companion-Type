@@ -70,9 +70,31 @@ pub(crate) fn control(coordinator:&CompanionCoordinator, request:Request)->Resul
     if effective.action==Action::Start && (current.terminal||current.superseded) {effective.action=Action::Status;}
     let result=run_native_blocking(execute(&effective,current.request_id,&current.uid));
     match result {
-        Ok(report)=>{current.terminal|=matches!(report.phase,"ended"|"stopped"|"rejected"|"other");Ok(report)},
+        Ok(report)=>{current.terminal|=matches!(report.phase,"ended"|"stopped"|"rejected"|"other"|"unconfirmed");Ok(report)},
         Err(error)=>Err(error),
     }
+}
+
+// A status for another request is not confirmation that ours stopped or
+// ended. Retire the uncertain token so only an explicit fresh action can
+// begin another finite search; delayed retries remain read-only.
+fn finding_status_report(action:Action, request_id:u32, value:&[u8])->Result<(&'static str,u8,String),String> {
+    let parsed=parse_speaker_status(value)?;
+    let ours=parsed.3==request_id;
+    let phase=if ours && parsed.1!=0 {"rejected"}
+        else if value[10]&1!=0 {if ours {"active"}else{"other"}}
+        else if !ours {"unconfirmed"}
+        else if action==Action::Stop {"stopped"}else{"ended"};
+    let message=match phase {
+        "active"=>format!("设备已接收寻找，沿当前 {}% 音量发出短音，约 6 秒自动结束。",parsed.2),
+        "stopped"=>"设备已确认本次寻找停止。".into(),
+        "ended"=>"设备报告寻找已结束。".into(),
+        "other"=>"设备正在完成其它声音请求，本次没有停止它。".into(),
+        "unconfirmed"=>if action==Action::Stop {"设备没有返回本次寻找的确认状态；这次未发送停止指令。可重新发起寻找。".into()}
+            else {"设备没有返回本次寻找的确认状态，无法确认它是否已结束。可重新发起寻找。".into()},
+        _=>"设备未开始这次寻找；可能正在录音、静音或处理其它声音。".into(),
+    };
+    Ok((phase,parsed.2,message))
 }
 
 async fn execute(request:&Request, request_id:u32, expected_uid:&str)->Result<Report,String> {
@@ -118,19 +140,8 @@ async fn execute(request:&Request, request_id:u32, expected_uid:&str)->Result<Re
                 sleep(StdDuration::from_millis(80)).await;
             }
         }
-        let parsed=parse_speaker_status(&value)?;
-        let ours=parsed.3==request_id;
-        let phase=if ours && parsed.1!=0 {"rejected"}
-            else if value[10]&1!=0 {if ours {"active"}else{"other"}}
-            else if request.action==Action::Stop {"stopped"}else{"ended"};
-        let message=match phase {
-            "active"=>format!("设备已接收寻找，沿当前 {}% 音量发出短音，约 6 秒自动结束。",parsed.2),
-            "stopped"=>"设备已确认本次寻找停止。".into(),
-            "ended"=>"设备报告寻找已结束。".into(),
-            "other"=>"设备正在完成其它声音请求，本次没有停止它。".into(),
-            _=>"设备未开始这次寻找；可能正在录音、静音或处理其它声音。".into(),
-        };
-        Ok(Report {device_id:device.device_id(),token:request.token.clone(),phase,volume_percent:parsed.2,message})
+        let (phase,volume_percent,message)=finding_status_report(request.action,request_id,&value)?;
+        Ok(Report {device_id:device.device_id(),token:request.token.clone(),phase,volume_percent,message})
     }).await;
     let cleanup=finish_native_device_operation(device,result.is_ok()).await;
     combine_operation_and_cleanup(result,cleanup)

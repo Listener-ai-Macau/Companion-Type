@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 
 export type PetFindRequest={action:'start'|'stop'|'status';deviceId:string;token:string};
-export type PetFindReport={deviceId:string;token:string;phase:'active'|'ended'|'stopped'|'rejected'|'other';volumePercent:number;message:string};
+export type PetFindReport={deviceId:string;token:string;phase:'active'|'ended'|'stopped'|'rejected'|'other'|'unconfirmed';volumePercent:number;message:string};
 export function CompanionPetFind({deviceId,supported,blocked,muted,onFind}: {
   deviceId:string|null;supported:boolean;blocked:boolean;muted:boolean;
   onFind:(request:PetFindRequest)=>Promise<PetFindReport>;
@@ -36,7 +36,7 @@ export function CompanionPetFind({deviceId,supported,blocked,muted,onFind}: {
     <div><strong>找宠物</strong><p>在附近发出几声短音，约 6 秒自动结束，保留设备原音量。</p></div>
     {!supported?<p className="ct-step-meta">连接支持寻找的联合固件后可用。</p>:<>
       {!pending?<button type="button" className="ct-action" disabled={busy||blocked||muted} onClick={()=>void send('start',true)}>{busy?'正在发送…':'让宠物响一下'}</button>:<div className="ct-action-row">
-        <button type="button" className="ct-action" disabled={busy} onClick={()=>void send('stop')}>停止寻找</button>
+        {report?.phase!=='other'?<button type="button" className="ct-action" disabled={busy} onClick={()=>void send('stop')}>停止寻找</button>:null}
         <button type="button" className="ct-action secondary" disabled={busy||blocked} onClick={()=>void send('status')}>查看状态</button>
         {error?<button type="button" className="ct-action secondary" disabled={busy||blocked||muted} onClick={()=>void send('start')}>重试本次寻找</button>:null}
       </div>}
