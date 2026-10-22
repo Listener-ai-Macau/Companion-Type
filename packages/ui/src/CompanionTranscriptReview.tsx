@@ -111,7 +111,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
       } else {
         cancel(id);
         setResult({ id, message: restoreOriginal ? '已恢复原始识别结果。已有纪要会继续提示是否需要更新。'
-          : '修订已保存在本机，原始识别结果仍保留。请在纪要页重新整理需要更新的版本。' });
+          : '修订已保存在本机，原始识别结果仍保留。相关整理结果会标记为待更新，可按需重新整理。' });
       }
     } catch (error) {
       setResult({ id, message: `${String(error)} 草稿仍保留。` });
@@ -119,7 +119,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   }
 
   return <section className="ct-transcript-document" hidden={!visible} aria-label="转写核对">
-    <div className="ct-document-head"><strong>逐字稿</strong><span>{companionReviewedTranscript(session).length} 字{revision !== null ? ' · 已人工修订' : ''}</span></div>
+    <div className="ct-document-head"><strong>核对文字</strong><span>{companionReviewedTranscript(session).length} 字{revision !== null ? ' · 已人工修订' : ''}</span></div>
     <p className="ct-step-meta">可对照原音修正文字和说话人。回听位置与原始识别结果会保留。</p>
     {stale ? <div className="ct-step-warn" role="status">原始转写已更新，旧修订已保留供核对，没有套用到新的时间轴。请重新核对，或恢复原始转写。
       <details><summary>查看之前的修订</summary>
@@ -156,7 +156,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
       </div>
     </div> : <>
       <div className="ct-inline-edit-actions"><button type="button" className="ct-text-button" disabled={!canEdit}
-        title={!onSave ? '请在桌面版修订转写' : undefined} onClick={start}><Pencil size={14} />修订转写与说话人</button>
+        title={!onSave ? '请在桌面版修订转写' : undefined} onClick={start}><Pencil size={14} />修正文字</button>
         {revision !== null || stale ? <button type="button" className="ct-text-button" disabled={!canEdit} onClick={() => void save(true)}><RotateCcw size={14} />恢复原始转写</button> : null}
       </div>
       <div className="ct-transcript-lines">
@@ -175,7 +175,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
     </>}
     {result?.id === session.id ? <p className="ct-step-meta" role="status">{result.message}</p> : null}
     {session.transcriptReview ? <details className="ct-original-transcript"><summary>查看原始识别结果</summary>
-      <p className="ct-step-meta">原音和原始文字未被修订覆盖。人工修订不代表自动识别准确率已通过。</p>
+      <p className="ct-step-meta">原音和原始识别文字仍保留，可随时查看。</p>
       <div className="ct-transcript-lines">{session.transcriptText.split('\n').map((line,i) => <p key={i}>{line}</p>)}</div>
     </details> : null}
   </section>;
