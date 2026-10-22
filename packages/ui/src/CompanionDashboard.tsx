@@ -242,26 +242,28 @@ function minutesSourceEnvelope(context: CompanionMinutesNoteContext): string {
   return prefix + '\n\n';
 }
 
-// Only exact native canonical templates have a safe field projection.
-// Keep the stored header and every other section byte-for-byte while changing
-// one field. Unknown Markdown keeps its existing text editor.
-function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNoteContext | null): Array<{ key: string; label: string; value: string; start: number; end: number }> | null {
+// Project only the exact native diagnostic header. Every body section,
+// including unknown provider sections, remains editable without exposing the
+// generated transport metadata. Preserve all other sections/header bytes.
+function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNoteContext | null): Array<{ key: string; label: string; value: string; start: number; end: number; plain: boolean }> | null {
   const labels: Record<string, string> = { Summary: '摘要', Decisions: '决定', 'Action Items': '待办', Questions: '待确认', Keywords: '关键词' };
-  const headings = [...markdown.matchAll(/^## (Summary|Decisions|Action Items|Questions|Keywords)\r?$/gm)];
-  if (headings.map(match => match[1]).join('|') !== Object.keys(labels).join('|')) return null;
   const envelope = noteContext ? minutesSourceEnvelope(noteContext) : '';
   if (!markdown.startsWith(envelope)) return null;
+  const headings = [...markdown.slice(envelope.length).matchAll(/^## ([^\r\n]+)\r?$/gm)].map(match=>({
+    key:match[1], index:envelope.length+match.index!, contentStart:envelope.length+match.index!+match[0].length,
+  }));
+  if (!headings.length) return null;
   const prefix = markdown.slice(envelope.length, headings[0].index);
   if (!/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
-  // Unexpected sections must stay visible in the full-text editor.
-  if ([...markdown.slice(envelope.length).matchAll(/^## /gm)].length !== headings.length) return null;
   return headings.map((match, index) => {
-    const start = match.index! + match[0].length;
+    const start = match.contentStart;
     const end = headings[index + 1]?.index ?? markdown.length;
-    const lines = markdown.slice(start, end).trim().split(/\r?\n/);
-    const body = lines.length === 1 && /^(?:- )?None captured$/.test(lines[0]) ? ''
-      : lines.map(line => line.replace(/^- /, '')).join('\n');
-    return { key: match[1], label: labels[match[1]], value: body, start, end };
+    const raw = markdown.slice(start, end).trim();
+    const known = Object.hasOwn(labels,match.key);
+    const plain = !known || match.key === 'Keywords';
+    const value = known && /^(?:- )?None captured$/.test(raw) ? ''
+      : plain ? raw : raw.split(/\r?\n/).map(line=>line.replace(/^- /,'')).join('\n');
+    return { key:match.key, label:labels[match.key]??match.key, value, start, end, plain };
   });
 }
 
@@ -271,7 +273,10 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
   const fields = basicMinutesFields(markdown, noteContext);
   if (!fields) return <textarea value={markdown} onChange={event => onChange(event.target.value)}
     aria-label={label} spellCheck={false} disabled={disabled} />;
-  const field = (item: typeof fields[number]) => <label key={item.key} className="ct-basic-minutes-field">
+  const primary = fields.some(item=>item.key==='Summary'||item.key==='Action Items')
+    ? fields.filter(item=>item.key==='Summary'||item.key==='Action Items') : fields.slice(0,1);
+  const secondary = fields.filter(item=>!primary.includes(item));
+  const field = (item: typeof fields[number]) => <label key={`${item.key}-${fields.indexOf(item)}`} className="ct-basic-minutes-field">
     <span>{item.label}{item.key === 'Action Items' ? '（每行一项）' : ''}</span>
     <textarea aria-label={`编辑${item.label}`} aria-describedby={item.key === 'Action Items' ? 'ct-minutes-action-help' : undefined}
       value={item.value} spellCheck={false}
@@ -279,7 +284,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
       onChange={event => {
         const newline = markdown.includes('\r\n') ? '\r\n' : '\n';
         const lines = event.target.value.split(/\r?\n/);
-        const body = lines.map(line => item.key === 'Keywords' || !line.trim() ? line : `- ${line}`).join(newline);
+        const body = item.plain ? event.target.value : lines.map(line => !line.trim() ? line : `- ${line}`).join(newline);
         onChange(markdown.slice(0, item.start) + newline + body + newline + newline + markdown.slice(item.end));
       }} />
     {item.key === 'Action Items' ? <small id="ct-minutes-action-help" className="ct-action-item-help">
@@ -287,10 +292,10 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
     </small> : null}
   </label>;
   return <div className="ct-basic-minutes-editor">
-    {fields.filter(item => item.key === 'Summary' || item.key === 'Action Items').map(field)}
-    <details><summary>更多整理内容</summary>
-      {fields.filter(item => item.key !== 'Summary' && item.key !== 'Action Items').map(field)}
-    </details>
+    {primary.map(field)}
+    {secondary.length?<details><summary>更多整理内容</summary>
+      {secondary.map(field)}
+    </details>:null}
     <p className="ct-step-meta">只修改整理结果，原录音文字和补充备注仍分别保留。</p>
   </div>;
 }
@@ -1459,10 +1464,10 @@ export function CompanionDashboard({
             <details className="ct-result-tools">
               <summary>其它导出选项</summary>
           <div className="ct-document-actions">
-            <span>保存正在查看的整理结果</span>
-            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting}
+            <span>导出其它内容</span>
+            {savedActions(minutesMarkdown).length>0?<button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
               title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
-              onClick={() => void exportMeeting('markdown')}><Download size={15} />{exportBusy ? '正在导出…' : '导出完整整理'}</button>
+              onClick={() => void exportMeeting('markdown')}><Download size={15} />{exportBusy ? '正在导出…' : '导出整理全文'}</button>:null}
 
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
               title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics')}>导出日历待办</button>
