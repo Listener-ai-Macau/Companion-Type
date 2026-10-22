@@ -9,17 +9,18 @@ export function CompanionPetFind({deviceId,supported,blocked,muted,onFind}: {
   const [request,setRequest]=useState<{deviceId:string;token:string}|null>(null);
   const [report,setReport]=useState<PetFindReport|null>(null);
   const [error,setError]=useState('');
+  const [failedAction,setFailedAction]=useState<PetFindRequest['action']|null>(null);
   const [busy,setBusy]=useState(false);
   const active=useRef(false);
   const epoch=useRef(0);
-  useEffect(()=>{epoch.current++;setRequest(null);setReport(null);setError('');},[deviceId]);
+  useEffect(()=>{epoch.current++;setRequest(null);setReport(null);setError('');setFailedAction(null);},[deviceId]);
   useEffect(()=>()=>{epoch.current++;},[]);
   const pending=Boolean(request && (!report || report.phase==='active'||report.phase==='other'));
   const send=async(action:PetFindRequest['action'],fresh=false)=>{
     if(active.current || !deviceId)return;
     const bound=(!fresh&&request)?request:{deviceId,token:crypto.randomUUID()};
     if(bound.deviceId!==deviceId)return;
-    active.current=true;setBusy(true);setError('');
+    active.current=true;setBusy(true);setError('');setFailedAction(null);
     const generation=epoch.current;
     // Preserve the same token after an uncertain send. Retrying cannot extend it.
     if(action==='start')setRequest(bound);
@@ -29,7 +30,7 @@ export function CompanionPetFind({deviceId,supported,blocked,muted,onFind}: {
       if(generation!==epoch.current)return;
       if(next.deviceId!==deviceId || next.token!==bound.token)throw new Error('寻找结果与当前设备不一致，请重新读取设备状态。');
       setReport(next);
-    } catch(e) {if(generation===epoch.current)setError(e instanceof Error?e.message:String(e));}
+    } catch(e) {if(generation===epoch.current){setError(e instanceof Error?e.message:String(e));setFailedAction(action);}}
     finally {active.current=false;setBusy(false);}
   };
   return <section className="ct-pet-find" aria-label="找宠物">
@@ -38,7 +39,7 @@ export function CompanionPetFind({deviceId,supported,blocked,muted,onFind}: {
       {!pending?<button type="button" className="ct-action" disabled={busy||blocked||muted} onClick={()=>void send('start',true)}>{busy?'正在发送…':'让宠物响一下'}</button>:<div className="ct-action-row">
         {report?.phase!=='other'?<button type="button" className="ct-action" disabled={busy} onClick={()=>void send('stop')}>停止寻找</button>:null}
         <button type="button" className="ct-action secondary" disabled={busy||blocked} onClick={()=>void send('status')}>查看状态</button>
-        {error?<button type="button" className="ct-action secondary" disabled={busy||blocked||muted} onClick={()=>void send('start')}>重试本次寻找</button>:null}
+        {error&&failedAction?<button type="button" className="ct-action secondary" disabled={busy||(failedAction!=='stop'&&(blocked||(failedAction==='start'&&muted)))} onClick={()=>{if(failedAction)void send(failedAction);}}>{failedAction==='stop'?'重试停止':failedAction==='status'?'重试查询':'重试本次寻找'}</button>:null}
       </div>}
       {muted&&!pending?<p className="ct-step-meta">宠物当前静音，请先在设备上调整音量。</p>:null}
       {blocked&&!pending?<p className="ct-step-meta">请先结束当前录音或设备操作。</p>:null}
