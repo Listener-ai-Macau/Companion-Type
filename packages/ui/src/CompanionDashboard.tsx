@@ -870,7 +870,7 @@ export function CompanionDashboard({
     return () => window.cancelAnimationFrame(frame);
   }, [exportResult, selectedSession?.id]);
   const renderExportFeedback = (origin: MeetingExportOrigin, className?: string) =>
-    exportResult?.sessionId === selectedSession?.id && exportResult.origin === origin
+    exportResult && exportResult.sessionId === selectedSession?.id && exportResult.origin === origin
       ? <div data-ct-export-feedback={origin}><CompanionExportFeedback feedback={exportResult} className={className}/></div> : null;
   const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document') => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
