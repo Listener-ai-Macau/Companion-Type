@@ -83,7 +83,7 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   }
   if (recovery && !recovery.retryAction) return { stage, title: recovery.label, detail: recovery.message, processing: recovery.isProcessing };
   if (session.pendingReason === 'no_speech_detected' && localAudio && recovery) {
-    return { stage: 1, title: recovery.label, detail: recovery.message,
+    return { stage: 1, title: recovery.label, detail: recovery.message, handlesFailure: true,
       label: context.asrReady ? '检查后重试转写' : '配置转写服务',
       request: context.asrReady ? { action: 'meetingTranscribeAudio', sessionId: session.id } : undefined,
       destination: context.asrReady ? undefined : 'settings' };

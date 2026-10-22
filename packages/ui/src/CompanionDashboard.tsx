@@ -1335,7 +1335,7 @@ export function CompanionDashboard({
           {saveMeetingResult?.sessionId === selectedSession.id ? <p className={saveMeetingResult.kind === 'error' ? 'ct-recording-notice ct-step-warn ct-save-result' : 'ct-recording-notice ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
           {!savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
           <div className="ct-recording-primary-actions">
-            {!finalTranscript ? <button type="button" className="ct-action ct-action-primary"
+            {!finalTranscript && !journey?.handlesFailure ? <button type="button" className="ct-action ct-action-primary"
               disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe || transcriptReviewUnsaved || minutesDirty || transcriptEditor.current.dirty}
               onClick={() => {
                 if (!canTranscribe || controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || minutesDirty || transcriptEditor.current.dirty) return;
@@ -1497,7 +1497,7 @@ export function CompanionDashboard({
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“更多”中供核对。</p> : null}
               {transcriptReviewUnsaved ? <p className="ct-step-warn">有尚未保存的文字修订，请在“更多”中继续编辑。</p> : null}
               <p className="ct-recording-transcript">{companionReviewedTranscript(selectedSession)}</p>
-            </> : <p className="ct-recording-text-empty">{recoveryView?.isProcessing?'正在转成文字，请稍候。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
+            </> : <p className="ct-recording-text-empty">{recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
           <CompanionMeetingNotes compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)
