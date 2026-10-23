@@ -100,7 +100,8 @@ pub fn rules_l0_minutes(
         .take(5)
         .cloned()
         .collect::<Vec<_>>();
-    let action_items = short_memo::actions(session).unwrap_or_else(|| source_action_items(&segments));
+    let mut action_items = short_memo::actions(session).unwrap_or_else(|| source_action_items(&segments));
+    short_memo::merge_independent_actions(&mut action_items, session);
     let questions = segments
         .iter()
         .filter(|segment| {
@@ -174,6 +175,7 @@ pub(super) fn finalize_minutes(
             let actions_changed = !validated_context && enforce_source_backed_action_items(&mut upgraded, &evidence);
             let assigned_added = session.meeting_notes.is_empty() && merge_explicit_source_assignments(&mut upgraded, &l0);
             let memo_actions_restored = session.meeting_notes.is_empty() && short_memo::restore_literal_actions(&mut upgraded, session);
+            let independent_actions_restored = short_memo::merge_independent_actions(&mut upgraded.action_items, session);
             let context_actions_restored=if let Some(Some(actions))=context_actions {
                 upgraded.action_items=actions; true
             } else {false};
@@ -182,7 +184,7 @@ pub(super) fn finalize_minutes(
             // original-only anchors here could revive a cancelled/conditional
             // plan as an unqualified current fact.
             let fallback_count = if validated_context {0}else{merge_missing_source_facts(&mut upgraded, &l0.summary)};
-            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() {
+            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() {
                 // The model may return a polished markdown body that omits facts
                 // already retained by deterministic extraction. Once a fallback
                 // is needed, render from the merged structured fields so the UI,
@@ -286,10 +288,9 @@ fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1Meetin
         .collect::<Vec<_>>()
         .join("\n");
     let original = if context_plan::eligible(session) {
-        format!("短个人备忘标题：{}\n原话中的原先计划（其当前状态必须结合后补核对，不是默认仍有效的事实锚点）：\n{}",session.title,session.transcript_text)
+        format!("短个人备忘。\n原话中的原先计划（其当前状态必须结合后补核对，不是默认仍有效的事实锚点）：\n{}",session.transcript_text)
     }else{format!(
-        "会议标题：{title}\n\n下列转写可能含 ASR 噪声，请在遵守防编造规则下整理纪要。\n确定性提取层保留了以下来源事实锚点；summary 和 markdown 必须逐项覆盖其含义，不得静默遗漏，也不得把锚点扩写成转写未支持的事实：\n{anchors}\n\n转写：\n{transcript}",
-        title = session.title,
+        "请整理下面的录音转写。来源事实仅限转写和本次明确选择的补充；文件标题、文件名和录音方式不构成录音中谈到的事实。\n下列转写可能含 ASR 噪声，请在遵守防编造规则下整理纪要。\n确定性提取层保留了以下来源事实锚点；summary 和 markdown 必须逐项覆盖其含义，不得静默遗漏，也不得把锚点扩写成转写未支持的事实：\n{anchors}\n\n转写：\n{transcript}",
         anchors = source_fact_anchors,
         transcript = session.transcript_text,
     )};

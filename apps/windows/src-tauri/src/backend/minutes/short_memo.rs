@@ -8,6 +8,54 @@ pub(super) fn actions(session: &CompanionV1HostSession) -> Option<Vec<CompanionV
         .map(|(text,_)|CompanionV1ActionItem{text,owner:None,due:None}).collect())
 }
 
+// A recognisable sentence in a short personal memo remains useful when another
+// sentence was not understood. Keep the strict whole-plan parser for selected
+// supplements; a partial list must never qualify that context-changing path.
+// Known diarization labels are structural, not verbs, owners or factual text.
+fn independent_actions(session: &CompanionV1HostSession) -> Vec<CompanionV1ActionItem> {
+    let text=session.transcript_text.trim();
+    if !session.meeting_notes.is_empty() || actions(session).is_some()
+        || text.is_empty() || text.chars().count()>280 || session.duration_ms>120_000
+        || ["改成","改为","暂缓","推迟","别再","别带","不必"].iter().any(|word|text.contains(word)) {
+        return vec![];
+    }
+    static SPEAKER:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"(?i)^(?:说话人|speaker)\s*([0-9]+|[?？])\s*[:：]\s*"
+    ).expect("constant transcript speaker label"));
+    let mut speakers=std::collections::BTreeSet::new();
+    let mut sentences=Vec::new();
+    for line in text.lines().map(str::trim).filter(|line|!line.is_empty()) {
+        let body=if let Some(label)=SPEAKER.captures(line) {
+            let speaker=label.get(1).unwrap().as_str();
+            if !matches!(speaker,"?"|"？") {speakers.insert(speaker);}
+            &line[label.get(0).unwrap().end()..]
+        } else {line};
+        sentences.extend(body.split(['。','！','!']).map(str::trim).filter(|part|!part.is_empty()));
+    }
+    if speakers.len()>1 || sentences.len()>8 || unsafe_context(&sentences.join("。")) {return vec![];}
+    let mut result=Vec::new();
+    for sentence in sentences {
+        // Each independent sentence must carry its own explicit intention/time.
+        // Unclassified tails are preserved in the transcript, never completed
+        // from a recording title, another sentence or an independent reference.
+        if let Some(clauses)=plan_clauses(sentence,session.duration_ms,true) {
+            result.extend(clauses.into_iter().map(|(text,_)|CompanionV1ActionItem{text,owner:None,due:None}));
+        }
+    }
+    if result.len()>8 {return vec![];} result
+}
+
+pub(super) fn merge_independent_actions(items:&mut Vec<CompanionV1ActionItem>,
+    session:&CompanionV1HostSession)->bool {
+    let mut changed=false;
+    for item in independent_actions(session) {
+        if items.iter().any(|existing|super::source_fact_covered(&item.text,&existing.text)) {continue;}
+        if items.len()>=8 {break;}
+        items.push(item);changed=true;
+    }
+    changed
+}
+
 // The key is only the literal positive verb/object after an explicit source
 // time/connector. It is used for exact duplicates, never semantic/date guesses.
 fn plan_clauses(source:&str,duration_ms:u64,require_intent:bool)->Option<Vec<(String,String)>> {
