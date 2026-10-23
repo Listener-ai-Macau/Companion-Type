@@ -772,7 +772,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     };
     report.timings.total=started.elapsed();
     let mut system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
-        "receipt":running_receipt,"packageLayout":package.layout_metadata(),"firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
+        "receipt":running_receipt,"firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
         "postFinishVerificationElapsedMs":installation_started.elapsed().as_millis(),
         "postFinishAvailability":{"freshAdvertisement":restart_observation.fresh_advertisement,
@@ -803,6 +803,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         "connectionPreferenceHandoffOffset":handoff_offset,
         "connectionPreferenceHandoffCloseSucceeded":handoff_release.as_ref().map(|r|r.is_ok())}));
     if let Some(bundle)=system_bundle.as_mut() {
+        bundle["packageLayout"]=package.layout_metadata();
         bundle["creditSubmitTiming"]=serde_json::to_value(&credit_submit_timing).unwrap_or_default();
         bundle["creditSubmitTimingScope"]=serde_json::Value::from("bounded512_first_DATA_after_real_credit_refill; helper_API_and_Status_GetResults_Close_elapsed; metadata_only_not_RF; zero_markers_mean_incomplete");
         bundle["dataScheduling"]=serde_json::Value::from(if continuous_durable_queue {"continuous_durable_queue"} else {"checkpointed"});
