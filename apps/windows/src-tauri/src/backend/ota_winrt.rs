@@ -35,6 +35,9 @@ use windows::Foundation::{IAsyncOperation,EventRegistrationToken,TypedEventHandl
 
 use super::ble_bridge::CompanionOtaBleReport;
 
+#[path = "ota_reboot_wait.rs"]
+mod reboot_wait;
+
 const OTA_SERVICE_UUID: GUID = GUID::from_u128(denzic_ota_core::GATT_SERVICE_UUID_U128);
 const OTA_CONTROL_UUID: GUID = GUID::from_u128(denzic_ota_core::GATT_CONTROL_UUID_U128);
 const OTA_DATA_UUID: GUID = GUID::from_u128(denzic_ota_core::GATT_DATA_UUID_U128);
@@ -723,13 +726,20 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let mut connection:Option<OpenOtaTarget>=None;
     // FINISH only retained the file. Boot verifies the signature before erase,
     // installs both destinations, then normal App reports actual running IDs.
-    let deadline=Instant::now()+Duration::from_secs(180);let mut last_error=String::new();
+    let installation_started=Instant::now();
+    let deadline=installation_started+Duration::from_secs(180);let mut last_error=String::new();
     // Release all maintained GATT owners before the peripheral snapshots NVM
     // and resets. In particular do not immediately reopen the old application
     // and hold it connected throughout its planned reboot. This is inside the
     // existing installation deadline and outside the completed payload timing.
     eprintln!("[companion-ota] post_finish_reboot_grace_ms=10000 old_gatt_owners_released=1");
     std::thread::sleep(Duration::from_secs(10));
+    let restart_address=parse_bluetooth_address_from_device_id(&device_id)
+        .ok_or("完整包已传入，但无法绑定升级前设备的蓝牙身份；未判升级成功")?;
+    let restart_observation=reboot_wait::wait(restart_address,deadline)
+        .map_err(|e|format!("完整包已传入，但升级后观察未能正常结束；未判升级成功：{e}"))?;
+    eprintln!("[companion-ota] post_install_availability fresh_advertisement={} elapsed_ms={} fallback={:?} version_receipt_still_required=1",
+        restart_observation.fresh_advertisement,restart_observation.elapsed_ms,restart_observation.fallback_reason);
     loop {
         if Instant::now()>=deadline {return Err(format!("完整包已传入，但尚未看到新程序和资源正常启动；没有判升级成功。最后状态：{last_error}"));}
         if connection.is_none() {
@@ -764,6 +774,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let mut system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
         "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
+        "postFinishVerificationElapsedMs":installation_started.elapsed().as_millis(),
+        "postFinishAvailability":{"freshAdvertisement":restart_observation.fresh_advertisement,
+            "elapsedMs":restart_observation.elapsed_ms,"fallbackReason":restart_observation.fallback_reason,
+            "installedVersionProvenByAdvertisement":false},
         "transportProfile":transport_profile.name(),"actualAttMtu":mtu,
         "filePayloadBytes":payload,"pipelineDepth":pipeline,"physicalQueueChunks":flow.queue_chunks,
         "durableWindowChunks":flow.window_chunks,"pipelined":pipelined,
