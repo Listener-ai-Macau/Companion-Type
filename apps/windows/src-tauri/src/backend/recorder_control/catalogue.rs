@@ -16,6 +16,11 @@ pub(crate) struct SealedCatalogueEnd {
     end_reason: Option<crate::companion_v1::CompanionV1RecordingEndReason>,
     #[serde(default="legacy_interruption")]
     pub(crate) capture_incomplete: bool,
+    /// Only a protected, complete catalogue with a real RECOVERED descriptor
+    /// can prove that fewer source samples survived than CMS3 had accepted.
+    /// Unknown legacy end reasons alone must not permit duration regression.
+    #[serde(default,skip_serializing_if="std::ops::Not::not")]
+    recovered_prefix: bool,
 }
 fn legacy_interruption()->bool {true}
 
@@ -28,7 +33,9 @@ impl Journal {
     pub(crate) fn validate_sealed_end(&self) -> Result<(),String> {
         let Some(end)=self.sealed_catalogue_end.as_ref() else {return Ok(())};
         if self.key.as_ref()!=Some(&end.key) || self.anchor!=Some(end.anchor)
-            || self.confirmed.as_ref().is_none_or(|c|end.duration_ms<c.duration_ms)
+            || self.confirmed.as_ref().is_none_or(|c|
+                end.duration_ms<c.duration_ms && !end.recovered_prefix)
+            || (end.recovered_prefix && !end.capture_incomplete)
             || end.anchor==0 || end.terminal_recording_id==0 || end.total_segments==0
             || end.total_segments>1024 || end.duration_ms==0
             || end.terminal_sha256.len()!=64 || !end.terminal_sha256.bytes().all(|b|b.is_ascii_hexdigit())
@@ -58,7 +65,8 @@ impl Journal {
             terminal_recording_id:terminal.recording_id,
             terminal_sha256:terminal.sha256.iter().map(|b|format!("{b:02x}")).collect(),
             total_segments:terminal.total_segments,duration_ms,end_reason:terminal.end_reason(),
-            capture_incomplete:plan.capture_incomplete||terminal.end_reason().is_none()};
+            capture_incomplete:plan.capture_incomplete||terminal.end_reason().is_none(),
+            recovered_prefix:plan.capture_incomplete};
         let mut candidate=self.clone();candidate.sealed_catalogue_end=Some(proof);
         candidate.accept_end_reason(terminal.end_reason())?;
         candidate.validate_sealed_end()?;

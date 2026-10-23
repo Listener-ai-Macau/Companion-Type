@@ -620,3 +620,27 @@ fn actual_c_local_statuses_match_host_origin_sequence_and_same_original() {
         if status.local_start.is_some() {assert!(!status.confirms(status.key.as_ref().unwrap(),status.command,status.request,status.sequence));}
     }
 }
+
+
+#[test]
+fn recovered_original_can_end_below_observed_capture_without_weakening_ordinary_end() {
+    let mut j=running();j.confirmed.as_mut().unwrap().duration_ms=9000;
+    j.prepare(&peer(),2).unwrap();let confirmed=j.confirmed.clone();let pending=j.pending.clone();
+    let items=sealed_catalogue(&j);j.end_from_sealed_catalogue(&items).unwrap();
+    j.matches(&peer(),HOST,DEVICE).unwrap();
+    assert_eq!(j.confirmed,confirmed);assert_eq!(j.pending,pending);
+    let value=serde_json::to_value(&j).unwrap();
+    assert_eq!(value["sealedCatalogueEnd"]["durationMs"],8000);
+    assert_eq!(value["sealedCatalogueEnd"]["captureIncomplete"],true);
+    assert_eq!(value["sealedCatalogueEnd"]["recoveredPrefix"],true);
+    for variant in 0..2 {
+        let mut value=value.clone();
+        if variant==0 {value["sealedCatalogueEnd"].as_object_mut().unwrap().remove("recoveredPrefix");}
+        else {value["sealedCatalogueEnd"]["captureIncomplete"]=false.into();}
+        let invalid:Journal=serde_json::from_value(value).unwrap();
+        assert!(invalid.matches(&peer(),HOST,DEVICE).is_err());
+    }
+    let mut ordinary=running();ordinary.confirmed.as_mut().unwrap().duration_ms=9000;
+    let before=ordinary.clone();let mut items=sealed_catalogue(&ordinary);items[1].flags=3;
+    assert!(ordinary.end_from_sealed_catalogue(&items).is_err());assert_eq!(ordinary,before);
+}
