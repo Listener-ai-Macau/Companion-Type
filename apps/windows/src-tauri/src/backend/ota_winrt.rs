@@ -13,6 +13,7 @@
 #![cfg(windows)]
 
 use std::time::{Duration, Instant};
+#[path="ota_finish_receipt.rs"] mod finish_receipt;
 
 use denzic_ble_windows::{
     open_ble_device_with_timeout, read_characteristic_bytes_with_timeout, buffer_to_vec,
@@ -1897,7 +1898,39 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                 OTA_FINISH_WRITE_TIMEOUT,
                 "Companion OTA finish",
             ) {
-                Ok(_) => return Ok(()),
+                Ok(_) => {
+                    if let Some(file_bytes)=self.simple_file_bytes {
+                        // The GATT worker only queued FINISH. Keep this exact
+                        // owner until the device finishes CRC/pending-record
+                        // readback, or physically disconnects for its reboot.
+                        let deadline=Instant::now()+Duration::from_secs(45);
+                        let started=Instant::now();let mut reads=0u32;
+                        eprintln!("[companion-ota] finish_retention_wait schema=1 expected_bytes={} att_write_only=1 owner_retained=1",file_bytes);
+                        loop {
+                            if Instant::now()>=deadline {return Err("FINISH was acknowledged by ATT but device retention was not confirmed; no replacement FINISH sent".into());}
+                            let read=read_simple_protected_status(self.target);
+                            reads+=1;
+                            match read {
+                                Ok(bytes)=>{
+                                    let s=denzic_ota_core::parse_status(&bytes)?;
+                                    match finish_receipt::retained(s.state,s.last_error,s.bytes_written,s.expected_size,file_bytes as u32) {
+                                        Ok(true)=>{eprintln!("[companion-ota] finish_retention_wait schema=1 retained=1 reads={} elapsed_ms={} owner_handoff_allowed=1",reads,started.elapsed().as_millis());return Ok(());},
+                                        Ok(false)=>{},
+                                        Err(e)=>return Err(format!("{e}; state={} error={} written={} expected={}; no replacement FINISH sent",s.state,s.last_error,s.bytes_written,s.expected_size)),
+                                    }
+                                },
+                                Err(e)=>{
+                                    if self.target._device.as_ref().and_then(|d|d.ConnectionStatus().ok())==Some(BluetoothConnectionStatus::Disconnected) {
+                                        eprintln!("[companion-ota] finish_retention_wait schema=1 peripheral_disconnected=1 retained_receipt_observed=0 running_version_still_required=1 reads={} elapsed_ms={}",reads,started.elapsed().as_millis());return Ok(());
+                                    }
+                                    return Err(format!("FINISH retained-file status unavailable while still connected: {e}; no replacement FINISH sent"));
+                                }
+                            }
+                            std::thread::sleep(Duration::from_millis(50));
+                        }
+                    }
+                    return Ok(());
+                },
                 Err(err) => {
                     let lower = err.to_ascii_lowercase();
                     // Device may reboot on FINISH before ATT completes.
