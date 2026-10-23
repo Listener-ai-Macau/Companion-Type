@@ -9,6 +9,7 @@ use denzic_host_audio_v1_core::http_policy;
 pub(super) mod long_meeting;
 mod short_memo;
 mod context_plan;
+mod question_sources;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -261,21 +262,34 @@ pub(super) fn run_deepseek_request(
     client: &reqwest::blocking::Client,
 ) -> Result<CompanionV1MeetingMinutes, String> {
     long_meeting::validate_input(session)?;
-    let user_payload = minutes_user_payload(session, l0);
-    if DEEPSEEK_SYSTEM_PROMPT.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES {
+    let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
+    let mut user_payload = minutes_user_payload(session, l0);
+    let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
+    if let Some(contract) = &question_sources {
+        user_payload.push_str(&contract.instruction());
+        system.push_str(question_sources::SYSTEM_CONTRACT);
+    }
+    if system.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES
+        || question_sources.as_ref().is_some_and(|contract| !contract.fits_single_request()) {
         if !session.meeting_notes.is_empty() {
             return Err("本次补充与转写超出单次整理范围；原话和补充已保留，未截断或分段冒充完整整理。".into());
         }
         return long_meeting::run(endpoint, model, api_key, session, &l0.generated_at, client);
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
-        DEEPSEEK_SYSTEM_PROMPT, client).and_then(|(mut minutes, object)| {
+        &system, client).and_then(|(mut minutes, object)| {
             if context_plan::eligible(session) {
                 let plan=context_plan::validate(&object,session)?;
                 minutes.action_items=plan.action_items;
                 minutes.questions=plan.pending;
                 minutes.decisions=plan.cancelled;
                 minutes.summary=plan.background;
+                minutes.markdown.clear();
+            } else if let Some(contract) = &question_sources {
+                // The provider classifies fixed source units. Only the local
+                // projection can create visible questions/review notices;
+                // free-form suggested interpretations are not source content.
+                minutes.questions = contract.project(&object)?;
                 minutes.markdown.clear();
             }
             Ok(minutes)
