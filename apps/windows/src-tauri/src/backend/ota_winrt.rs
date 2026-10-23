@@ -740,7 +740,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         .map_err(|e|format!("完整包已传入，但升级后观察未能正常结束；未判升级成功：{e}"))?;
     eprintln!("[companion-ota] post_install_availability fresh_advertisement={} elapsed_ms={} fallback={:?} version_receipt_still_required=1",
         restart_observation.fresh_advertisement,restart_observation.elapsed_ms,restart_observation.fallback_reason);
-    loop {
+    let running_receipt=loop {
         if Instant::now()>=deadline {return Err(format!("完整包已传入，但尚未看到新程序和资源正常启动；没有判升级成功。最后状态：{last_error}"));}
         if connection.is_none() {
             match open_ota_target(Some(&device_id)) {
@@ -758,7 +758,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
         let result=open_read_char(&t._service,GUID::from_u128(super::firmware_ota::WBA_MANIFEST_UUID_U128),"升级后实际版本")
             .and_then(|c|read_characteristic_bytes_with_timeout(&c,BluetoothCacheMode::Uncached,"升级后实际版本",STATUS_READ_TIMEOUT,&BleCancel::NONE));
         match result {
-            Ok(r) if package.installed(&r)=>break,
+            Ok(r) if package.installed(&r)=>break if &r[..4]==b"WSI4" {"WSI4-running-layout-version-and-signed-payload-sha"} else {"WSI3-running-version-and-signed-payload-sha"},
             Ok(_)=>std::thread::sleep(Duration::from_millis(200)),
             Err(e)=>{
                 drop(connection.take());
@@ -769,10 +769,10 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
                 last_error=e;std::thread::sleep(Duration::from_millis(500));
             },
         }
-    }
+    };
     report.timings.total=started.elapsed();
     let mut system_bundle=Some(serde_json::json!({"bundleId":package.id,"jointConfirmed":true,"temporarySpaceReleased":true,
-        "receipt":"WSI3-running-version-and-signed-payload-sha","firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
+        "receipt":running_receipt,"packageLayout":package.layout_metadata(),"firmwareBytes":package.firmware_bytes,"resourceBytes":package.resource_bytes,
         "downloadResume":false,"installationElapsedMs":started.elapsed().as_millis(),
         "postFinishVerificationElapsedMs":installation_started.elapsed().as_millis(),
         "postFinishAvailability":{"freshAdvertisement":restart_observation.fresh_advertisement,
