@@ -314,6 +314,13 @@ impl<T> Lease<T> {
                 || (status.state==3 && status.pause_status.as_ref().is_some_and(|s|s.timeline && s.command==4)))
             || identity.recording != Some(status.state == super::MEETING_STATE_RECORDING)
         {
+            eprintln!("recording_original_guard schema=1 uid_present={} uid_match={} device_match={} observation_match={} logical_match={} last_error={} state={} identity_recording={:?} status_recording={} current_request={} status_request={} status_meeting={} start_token={}",
+                expected_uid.is_some_and(|u|!u.is_empty()), identity.mcu_uid.as_deref()==expected_uid,
+                super::normalize_device_id(actual_device_id)==super::normalize_device_id(&self.device_id),
+                self.accepts_status(status.meeting_id,status.request_id,current_request),
+                self.logical_key.as_ref().is_none_or(|key|status.logical_key.as_ref()==Some(key)),
+                status.last_error,status.state,identity.recording,status.state==super::MEETING_STATE_RECORDING,
+                current_request,status.request_id,status.meeting_id,self.start_token);
             return Err("原录音连接的芯片或录音身份未核对，未发送开停命令或消费原音。".into());
         }
         Ok(())

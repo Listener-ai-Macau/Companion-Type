@@ -1920,7 +1920,7 @@ impl denzic_ota_core::OtaV1Transport for CompanionOtaWinrtTransport<'_> {
                                     }
                                 },
                                 Err(e)=>{
-                                    if self.target._device.as_ref().and_then(|d|d.ConnectionStatus().ok())==Some(BluetoothConnectionStatus::Disconnected) {
+                                    if self.target._device.as_ref().and_then(|d|d.ConnectionStatus().ok())==Some(windows::Devices::Bluetooth::BluetoothConnectionStatus::Disconnected) {
                                         eprintln!("[companion-ota] finish_retention_wait schema=1 peripheral_disconnected=1 retained_receipt_observed=0 running_version_still_required=1 reads={} elapsed_ms={}",reads,started.elapsed().as_millis());return Ok(());
                                     }
                                     return Err(format!("FINISH retained-file status unavailable while still connected: {e}; no replacement FINISH sent"));
