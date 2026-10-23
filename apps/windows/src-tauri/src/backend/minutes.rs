@@ -105,12 +105,14 @@ pub fn rules_l0_minutes(
     let questions = segments
         .iter()
         .filter(|segment| {
-            let lower = segment.to_ascii_lowercase();
-            segment.contains('?')
-                || segment.contains('\u{ff1f}')
+            // A diarization placeholder is metadata, not a spoken question.
+            let spoken = speaker_line(segment, &[]).map_or(segment.as_str(), |part| part.text);
+            let lower = spoken.to_ascii_lowercase();
+            spoken.contains('?')
+                || spoken.contains('\u{ff1f}')
                 || lower.contains("question")
-                || segment.contains("问题")
-                || segment.contains("吗")
+                || spoken.contains("问题")
+                || spoken.contains("吗")
         })
         .take(5)
         .cloned()
@@ -184,7 +186,7 @@ pub(super) fn finalize_minutes(
             // original-only anchors here could revive a cancelled/conditional
             // plan as an unqualified current fact.
             let fallback_count = if validated_context {0}else{merge_missing_source_facts(&mut upgraded, &l0.summary)};
-            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() {
+            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() || has_unresolved_speaker(session) {
                 // The model may return a polished markdown body that omits facts
                 // already retained by deterministic extraction. Once a fallback
                 // is needed, render from the merged structured fields so the UI,
@@ -294,6 +296,9 @@ fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1Meetin
         anchors = source_fact_anchors,
         transcript = session.transcript_text,
     )};
+    let original = if has_unresolved_speaker(session) {
+        format!("来源归属说明：转写中的“说话人?”或“说话人？”只是系统未能确定该片段归属的占位标签，不是另一位发言者的身份。未知片段可能属于已编号发言者，也可能属于未编号者，不能据此推断人数、另一个人或与前文是否同一人。涉及该片段只整理原话内容，归属写未确认，不猜接收人或负责人。\n\n{original}")
+    } else { original };
     if session.meeting_notes.is_empty() { return original; }
     let notes = session.meeting_notes.iter().enumerate().map(|(i,n)|
         format!("用户补充{}（用户后补，不是录音识别）：\n{}",i+1,n.text)).collect::<Vec<_>>().join("\n\n");
@@ -407,7 +412,7 @@ fn clean_noise_tokens(markdown: &str) -> String {
     md
 }
 
-const DEEPSEEK_SYSTEM_PROMPT: &str = "你是 Companion 会议纪要助手。根据会议转写输出严格 JSON（不要 markdown 代码围栏），字段：summary(string[]), decisions(string[]), actionItems({text,owner?,due?}[]), questions(string[]), keywords(string[]), unsupportedClaims(string[] 转写不足以支持、你刻意未写入的推测), markdown(string 完整中文纪要 Markdown)。source 固定 llm_deepseek，quality固定 final。markdown 需含：标题、摘要、决定、行动项、问题、关键词。\n硬性规则（防编造）：\n1) 只使用转写中出现的事实；不要发明负责人、日期、产品名、缩写。\n2) 只有转写明确给出行动项、待办、负责人或跟进任务时才输出 actionItems；不得把决定、风险或验收原则自行改写成任务。owner / due 仅当转写明确出现时才填。\n3) 专有名词、数字、单位和否定关系以转写为准，不用预设产品词或固定样例纠改原话。不确定的术语标为待核对；不得把风险、未完成或未验收改成已完成。\n4) 同一任务不要重复派给多人；无法确认归属时写「负责人：待确认」。\n5) 不确定的内容放入 unsupportedClaims，不要写进 decisions/actionItems。\n6) 用户消息中的来源事实锚点来自确定性转写提取；summary 与 markdown 必须覆盖每一项的原意。可去重和压缩措辞，但不得遗漏或改变数值、主体、先后关系与风险。";
+const DEEPSEEK_SYSTEM_PROMPT: &str = "你是 Companion 会议纪要助手。根据会议转写输出严格 JSON（不要 markdown 代码围栏），字段：summary(string[]), decisions(string[]), actionItems({text,owner?,due?}[]), questions(string[]), keywords(string[]), unsupportedClaims(string[] 转写不足以支持、你刻意未写入的推测), markdown(string 完整中文纪要 Markdown)。source 固定 llm_deepseek，quality固定 final。markdown 需含：标题、摘要、决定、行动项、问题、关键词。\n硬性规则（防编造）：\n1) 只使用转写中出现的事实；不要发明负责人、日期、产品名、缩写。\n2) 只有转写明确给出行动项、待办、负责人或跟进任务时才输出 actionItems；不得把决定、风险或验收原则自行改写成任务。owner / due 仅当转写明确出现时才填。\n3) 专有名词、数字、单位和否定关系以转写为准，不用预设产品词或固定样例纠改原话。不确定的术语标为待核对；不得把风险、未完成或未验收改成已完成。\n4) 同一任务不要重复派给多人；无法确认归属时写「负责人：待确认」。\n5) 不确定的内容放入 unsupportedClaims，不要写进 decisions/actionItems。\n6) 用户消息中的来源事实锚点来自确定性转写提取；summary 与 markdown 必须覆盖每一项的原意。可去重和压缩措辞，但不得遗漏或改变数值、主体、先后关系与风险。\n7) 转写的说话人编号是来源标签，不是已核实身份。“说话人?”/“说话人？”表示片段归属未知，不能据此推断另一位发言者、人数、同一人或负责人；保留其内容与未知归属，只有原话或明确人工核对才可确认身份。";
 
 fn external_minutes_command(
     session: &CompanionV1HostSession,
@@ -582,7 +587,10 @@ fn split_segments(text: &str) -> Vec<String> {
             && index + 1 < chars.len()
             && chars[index - 1].is_ascii_digit()
             && chars[index + 1].is_ascii_digit();
-        if !decimal_point && matches!(ch, '\n' | '.' | '!' | '?' | ';' | '。' | '！' | '？') {
+        let unknown_speaker_marker = matches!(ch, '?' | '？')
+            && current.trim() == "说话人"
+            && chars.get(index + 1).is_some_and(|next| matches!(*next, ':' | '：'));
+        if !decimal_point && !unknown_speaker_marker && matches!(ch, '\n' | '.' | '!' | '?' | ';' | '。' | '！' | '？') {
             let segment = current.trim();
             if !segment.is_empty() {
                 segments.push(segment.to_string());
@@ -884,10 +892,45 @@ fn extract_keywords(text: &str) -> Vec<String> {
     tokens
 }
 
-/// When the transcript carries speaker attribution ("说话人N: ..." lines, set
-/// by the diarization-aware transcription path), regroup all utterances by
-/// speaker for a "who said what" section. Returns None when the transcript has
-/// no speaker tags (single-speaker / diarization unavailable).
+struct SpeakerLine<'a> {
+    label: &'a str,
+    text: &'a str,
+    unresolved: bool,
+}
+
+fn reviewed_speaker_names(session: &CompanionV1HostSession) -> Vec<String> {
+    // minutes_input has already selected the active review. Explicit human
+    // names take precedence, even if a chosen name resembles a system label.
+    session.transcript_review.as_ref().map(|r| {
+        r.speaker_names.iter().map(|n| n.name.clone())
+            .chain(r.utterance_edits.iter().filter_map(|e| e.speaker_name.clone())).collect()
+    }).unwrap_or_default()
+}
+
+fn speaker_line<'a>(line: &'a str, names: &[String]) -> Option<SpeakerLine<'a>> {
+    let line = line.trim();
+    let named = names.iter().filter(|name| {
+        line.strip_prefix(name.as_str()).is_some_and(|rest| rest.starts_with(':') || rest.starts_with('：'))
+    }).max_by_key(|name| name.len());
+    if let Some(name) = named {
+        let rest = &line[name.len()..];
+        return Some(SpeakerLine { label: &line[..name.len()], text: rest[rest.chars().next()?.len_utf8()..].trim(), unresolved: false });
+    }
+    let (label, text) = line.split_once([':', '：'])?;
+    let label = label.trim();
+    let id = label.strip_prefix("说话人")?;
+    let unresolved = matches!(id, "?" | "？");
+    if !unresolved && (id.is_empty() || !id.chars().all(|ch| ch.is_ascii_digit())) { return None; }
+    Some(SpeakerLine { label, text: text.trim(), unresolved })
+}
+
+fn has_unresolved_speaker(session: &CompanionV1HostSession) -> bool {
+    let names = reviewed_speaker_names(session);
+    session.transcript_text.lines().any(|line| speaker_line(line, &names).is_some_and(|part| part.unresolved))
+}
+
+/// Regroup attributed utterances, while retaining each unattributed source
+/// fragment separately. Repeated unknown tags never establish one person.
 fn render_speaker_section(transcript_text: &str) -> Option<String> {
     render_speaker_section_named(transcript_text, &[])
 }
@@ -896,31 +939,34 @@ fn render_speaker_section_named(transcript_text: &str, names: &[String]) -> Opti
     let mut order: Vec<String> = Vec::new();
     let mut groups: std::collections::HashMap<String, Vec<String>> =
         std::collections::HashMap::new();
+    let mut unresolved = Vec::new();
     for line in transcript_text.lines() {
-        let trimmed = line.trim();
-        let named = names.iter().filter(|name| trimmed.starts_with(&format!("{name}:"))).max_by_key(|name| name.len());
-        let parsed = named.map(|name| (name.as_str(), &trimmed[name.len()+1..])).or_else(|| trimmed.split_once(':'));
-        let Some((label, text)) = parsed else { continue; };
-        let numbered = label.strip_prefix("说话人").is_some_and(|id| !id.is_empty() && id.chars().all(|c| c.is_ascii_digit()));
-        if !numbered && !names.iter().any(|name| name == label) {
-            continue;
-        }
-        let label = label.to_string();
+        let Some(part) = speaker_line(line, names) else { continue; };
+        if part.text.is_empty() { continue; }
+        if part.unresolved { unresolved.push(part.text); continue; }
+        let label = part.label.to_string();
         groups
             .entry(label.clone())
             .or_default()
-            .push(text.trim().to_string());
+            .push(part.text.to_string());
         if !order.contains(&label) {
             order.push(label);
         }
     }
-    if order.is_empty() {
+    if order.is_empty() && unresolved.is_empty() {
         return None;
     }
-    let mut out = vec!["## 讨论纪要(按说话人)".to_string()];
+    let mut out = Vec::new();
+    if !order.is_empty() { out.push("## 讨论纪要(按说话人)".to_string()); }
     for label in &order {
         let joined = groups.get(label).map(|v| v.join(" ")).unwrap_or_default();
         out.push(format!("- **{}**: {}", label, joined));
+    }
+    if !unresolved.is_empty() {
+        out.push(String::new());
+        out.push("## 发言归属未确认的原话".to_string());
+        out.push("以下是独立来源片段；不能据此确定人数，或判断是否属于同一人。".to_string());
+        out.extend(unresolved.into_iter().map(|text| format!("- {text}")));
     }
     Some(out.join("\n"))
 }
@@ -987,9 +1033,7 @@ fn render_minutes_markdown(
     } else {
         minutes.keywords.join(", ")
     });
-    let reviewed_names = session.transcript_review.as_ref().map(|r| {
-        r.speaker_names.iter().map(|n| n.name.clone()).chain(r.utterance_edits.iter().filter_map(|e| e.speaker_name.clone())).collect::<Vec<_>>()
-    }).unwrap_or_default();
+    let reviewed_names = reviewed_speaker_names(session);
     if let Some(section) = render_speaker_section_named(&session.transcript_text, &reviewed_names) {
         lines.push(String::new());
         lines.push(section);
