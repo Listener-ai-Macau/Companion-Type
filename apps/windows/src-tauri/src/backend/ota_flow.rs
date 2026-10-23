@@ -12,8 +12,8 @@ pub(super) struct WbaFlow {
     pub pipelined: bool,
 }
 
-/// Production selection uses only protected, validated device capabilities and
-/// the actual session MTU. Explicit diagnostic profiles retain their exact
+/// Production selection uses only protected, validated device capabilities,
+/// actual receive-time budget and the actual session MTU. Explicit diagnostic profiles retain their exact
 /// geometry and never silently fall back. Real WOC4/WOC5 durable windows and
 /// complete signed-file radio/storage delivery qualify the bounded WWR route;
 /// throughput and coexistence stability remain separately measured.
@@ -35,15 +35,21 @@ impl SimpleTransportProfile {
             _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
         }
     }
-    /// Resolve once, after protected status and the real negotiated MTU, but
+    /// Resolve once, after protected status/link budget and the real MTU, but
     /// before BEGIN. Do not infer queue/notification durability from 2M/MTU or
     /// a local successful write. Older or reduced-capacity peers stay usable.
-    pub fn resolve(self, flow:WbaFlow, mtu:u16)->Self {
+    pub fn resolve(self, flow:WbaFlow, mtu:u16, link:Option<super::ble_link_budget::LinkBudget>)->Self {
         if self!=Self::Automatic {return self;}
         if flow.pipelined && flow.notify_credits && flow.window_notify_guaranteed &&
             flow.payload_bytes>=466 && flow.queue_chunks>=2 &&
             flow.window_chunks>flow.queue_chunks && mtu>=473 {
-            Self::Windowed466PeerHandoff
+            // The same MTU can have a different encrypted receive-time limit.
+            // The signed572 capture qualified215 under2M/965us; preserve the
+            // existing16-slot/64-durable contract and byte handoff threshold.
+            // Unknown/other budgets retain the previously delivered466 route.
+            if self.continuous_durable_queue(flow,mtu) && short_2m_receive_budget(link) {
+                Self::Continuous215PeerHandoff
+            } else {Self::Windowed466PeerHandoff}
         } else {Self::Acknowledged}
     }
     /// Automatic WBA-only scheduling admission. Explicit diagnostic profiles
@@ -107,13 +113,13 @@ impl SimpleTransportProfile {
     pub fn releases_after_first_durable_window(self)->bool {
         matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff|Self::Windowed466PeerHandoff|Self::Continuous215PeerHandoff)
     }
-    /// Explicit geometry experiment only. Device RX is Windows OTA TX.
+    /// Device RX is Windows OTA TX. Automatic selection and explicit215 use
+    /// the same actual protected-budget predicate.
     /// A short budget must be an actual protected BLK1 observation, not an
     /// OS preference acceptance, guessed radio capability or missing field.
     pub fn require_link(self,link:Option<super::ble_link_budget::LinkBudget>)->Result<(),String> {
         if self!=Self::Continuous215PeerHandoff{return Ok(());}
-        if link.is_some_and(|b|b.connected&&b.encrypted&&b.rx_phy==Some(2)&&
-            b.rx_time_us==Some(965)&&matches!(b.rx_octets,Some(226)|Some(251))) {Ok(())}
+        if short_2m_receive_budget(link) {Ok(())}
         else {Err("连续215对照未观察到本次设备RX/电脑TX的2M/965us预算；未开始升级".into())}
     }
     /// Keep the SAME durable-byte preference bootstrap as default466 rather
@@ -131,6 +137,13 @@ impl SimpleTransportProfile {
             Self::Windowed215Hold => "windowed_215_hold",
             Self::Continuous215PeerHandoff => "continuous_215_peer_handoff" }
     }
+}
+
+/// Protected device receive metadata only; a TX observation or requested
+/// connection preference cannot authorize the single-PDU215 geometry.
+fn short_2m_receive_budget(link:Option<super::ble_link_budget::LinkBudget>)->bool {
+    link.is_some_and(|b|b.connected&&b.encrypted&&b.rx_phy==Some(2)&&
+        b.rx_time_us==Some(965)&&matches!(b.rx_octets,Some(226)|Some(251)))
 }
 
 /// Before any manifest/BEGIN/DATA, one Unreachable discovery may be
@@ -234,6 +247,53 @@ mod tests {
     use super::*;
 
     #[test]
+    fn automatic_ota_follows_actual_receive_budget_without_changing_credit_contract() {
+        use super::super::ble_link_budget::LinkBudget;
+        let current=WbaFlow {payload_bytes:505,window_chunks:64,queue_chunks:16,
+            notify_credits:true,window_notify_guaranteed:true,pipelined:true};
+        let budget=LinkBudget {connected:true,encrypted:true,tx_phy:Some(2),rx_phy:Some(2),
+            tx_octets:Some(251),tx_time_us:Some(1590),rx_octets:Some(251),rx_time_us:Some(965),
+            interval_units:Some(48),att_mtu:Some(512)};
+        let automatic=SimpleTransportProfile::Automatic;
+        for octets in [226,251] {
+            let link=Some(LinkBudget {rx_octets:Some(octets),..budget});
+            let selected=automatic.resolve(current,512,link);
+            assert_eq!(selected,SimpleTransportProfile::Continuous215PeerHandoff);
+            selected.require_link(link).unwrap();
+            assert_eq!(selected.file_payload(current,512).unwrap(),215);
+            assert!(automatic.continuous_durable_queue(current,512));
+            assert_eq!(current.pipeline_depth(),16);
+            assert_eq!(selected.preference_handoff_bytes(215,64),466*64);
+            assert!(!selected.handoff_ready(215*64,1425432,466*64));
+            assert!(selected.handoff_ready(215*139,1425432,466*64));
+        }
+        // Same MTU, different/unknown RX budget: retain the delivered path.
+        // TX=965 alone must never be mistaken for the host->device direction.
+        for link in [None,Some(LinkBudget {rx_time_us:Some(1590),tx_time_us:Some(965),..budget}),
+            Some(LinkBudget {rx_time_us:None,..budget}),Some(LinkBudget {rx_octets:None,..budget}),
+            Some(LinkBudget {rx_octets:Some(225),..budget}),Some(LinkBudget {rx_phy:Some(1),..budget}),
+            Some(LinkBudget {encrypted:false,..budget}),Some(LinkBudget {connected:false,..budget})] {
+            let selected=automatic.resolve(current,512,link);
+            assert_eq!(selected,SimpleTransportProfile::Windowed466PeerHandoff);
+            assert_eq!(selected.file_payload(current,512).unwrap(),466);
+        }
+        // A known short budget cannot invent the peer's queue or durable promise.
+        let smaller_queue=WbaFlow {queue_chunks:8,..current};
+        assert_eq!(automatic.resolve(smaller_queue,512,Some(budget)),SimpleTransportProfile::Windowed466PeerHandoff);
+        for flow in [WbaFlow {pipelined:false,..current},WbaFlow {notify_credits:false,..current},
+            WbaFlow {window_notify_guaranteed:false,..current},WbaFlow {window_chunks:16,..current}] {
+            assert_eq!(automatic.resolve(flow,512,Some(budget)),SimpleTransportProfile::Acknowledged);
+        }
+        assert_eq!(automatic.resolve(current,472,Some(budget)),SimpleTransportProfile::Acknowledged);
+        // Explicit diagnostics remain exact, even when their admission will fail.
+        for explicit in [SimpleTransportProfile::Acknowledged,SimpleTransportProfile::Windowed466PeerHandoff,
+            SimpleTransportProfile::Windowed491PeerHandoff,SimpleTransportProfile::Continuous215PeerHandoff] {
+            assert_eq!(explicit.resolve(current,512,Some(budget)),explicit);
+            assert_eq!(explicit.resolve(current,472,None),explicit);
+        }
+    }
+
+    #[test]
     fn continuous_215_keeps_real_credit_contract_and_default_geometry() {
         let f=WbaFlow {payload_bytes:505,window_chunks:64,queue_chunks:16,notify_credits:true,window_notify_guaranteed:true,pipelined:true};
         let p=SimpleTransportProfile::parse(Some("continuous_215_peer_handoff")).unwrap();
@@ -245,8 +305,8 @@ mod tests {
             assert!(p.file_payload(b,512).is_err());assert!(!p.continuous_durable_queue(b,512));
         }
         assert!(p.file_payload(f,472).is_err());
-        let old=SimpleTransportProfile::parse(None).unwrap();assert_eq!(old.resolve(f,512),SimpleTransportProfile::Windowed466PeerHandoff);
-        assert_eq!(old.resolve(f,512).file_payload(f,512).unwrap(),466);
+        let old=SimpleTransportProfile::parse(None).unwrap();assert_eq!(old.resolve(f,512,None),SimpleTransportProfile::Windowed466PeerHandoff);
+        assert_eq!(old.resolve(f,512,None).file_payload(f,512).unwrap(),466);
         assert!(!SimpleTransportProfile::Windowed215PeerHandoff.continuous_durable_queue(f,512));
     }
     #[test]
@@ -281,7 +341,7 @@ mod tests {
             notify_credits:true,window_notify_guaranteed:true,pipelined:true};
         assert!(default.pipelined(current).is_err());
         assert!(default.file_payload(current,512).is_err());
-        let selected=default.resolve(current,512);
+        let selected=default.resolve(current,512,None);
         assert_eq!(selected,SimpleTransportProfile::Windowed466PeerHandoff);
         assert_eq!(selected.file_payload(current,512).unwrap(),466);
         assert!(selected.pipelined(current).unwrap());
@@ -292,14 +352,14 @@ mod tests {
             WbaFlow {queue_chunks:1,..current},WbaFlow {window_chunks:16,..current},
             WbaFlow {payload_bytes:240,..current}];
         for old in unqualified {
-            let profile=default.resolve(old,512);
+            let profile=default.resolve(old,512,None);
             assert_eq!(profile,SimpleTransportProfile::Acknowledged);
             assert!(!profile.pipelined(old).unwrap());
             assert!(profile.file_payload(old,512).unwrap()<=240);
         }
-        assert_eq!(default.resolve(current,472),SimpleTransportProfile::Acknowledged);
+        assert_eq!(default.resolve(current,472,None),SimpleTransportProfile::Acknowledged);
         let explicit=SimpleTransportProfile::Windowed466PeerHandoff;
-        assert_eq!(explicit.resolve(current,472),explicit);
+        assert_eq!(explicit.resolve(current,472,None),explicit);
         assert!(explicit.file_payload(current,472).is_err());
     }
     #[test]

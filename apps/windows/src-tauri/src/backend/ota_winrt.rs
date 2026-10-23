@@ -602,7 +602,7 @@ pub(super) fn transfer_system_ota_winrt(requested_device_id:Option<&str>,package
     let current=read_characteristic_bytes_with_timeout(&identity,BluetoothCacheMode::Uncached,"当前升级版本",STATUS_READ_TIMEOUT,&BleCancel::NONE)?;
     package.admit(&current)?;drop(identity);
     let mtu=wait_ota_mtu(&target,false)?;
-    let transport_profile=requested_profile.resolve(flow,mtu);
+    let transport_profile=requested_profile.resolve(flow,mtu,device_link_budget);
     transport_profile.require_link(device_link_budget)?;
     let continuous_durable_queue=requested_profile.continuous_durable_queue(flow,mtu);
     let pipelined=transport_profile.pipelined(flow)?;
