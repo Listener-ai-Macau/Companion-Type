@@ -24,6 +24,7 @@ use std::fmt::{self, Debug, Formatter};
 use std::pin::Pin;
 use std::sync::{Arc, Mutex};
 use windows::{
+    core::Ref,
     Devices::Radios::{Radio, RadioState},
     Foundation::TypedEventHandler,
 };
@@ -34,6 +35,22 @@ pub struct Adapter {
     watcher: Arc<Mutex<BLEWatcher>>,
     manager: Arc<AdapterManager<Peripheral>>,
     radio: Radio,
+    // Clones share one registration; dropping a temporary Adapter must not
+    // unsubscribe another live owner.
+    _radio_state_subscription: Option<Arc<RadioStateSubscription>>,
+}
+
+struct RadioStateSubscription {
+    radio: Radio,
+    token: i64,
+}
+
+impl Drop for RadioStateSubscription {
+    fn drop(&mut self) {
+        if let Err(err) = self.radio.RemoveStateChanged(self.token) {
+            log::warn!("radio state subscription cleanup failed: {}", err);
+        }
+    }
 }
 
 // https://github.com/microsoft/windows-rs/blob/master/crates/libs/windows/src/Windows/Devices/Radios/mod.rs
@@ -51,21 +68,32 @@ impl Adapter {
         let watcher = Arc::new(Mutex::new(BLEWatcher::new()?));
         let manager = Arc::new(AdapterManager::default());
 
-        let radio_clone = radio.clone();
-        let manager_clone = manager.clone();
-        let handler = TypedEventHandler::new(move |_sender, _args| {
-            let state = get_central_state(&radio_clone);
-            manager_clone.emit(CentralEvent::StateUpdate(state.into()));
+        // The event source owns this callback. Capturing the Radio itself would
+        // create a COM reference cycle and keep its manager alive after cancel.
+        let manager_weak = Arc::downgrade(&manager);
+        let handler = TypedEventHandler::new(move |sender: Ref<Radio>, _args| {
+            if let (Some(manager), Ok(radio)) = (manager_weak.upgrade(), sender.ok()) {
+                let state = get_central_state(radio);
+                manager.emit(CentralEvent::StateUpdate(state.into()));
+            }
             Ok(())
         });
-        if let Err(err) = radio.StateChanged(&handler) {
-            eprintln!("radio.StateChanged error: {}", err);
-        }
+        let subscription = match radio.StateChanged(&handler) {
+            Ok(token) => Some(Arc::new(RadioStateSubscription {
+                radio: radio.clone(),
+                token,
+            })),
+            Err(err) => {
+                eprintln!("radio.StateChanged error: {}", err);
+                None
+            }
+        };
 
         Ok(Adapter {
             watcher,
             manager,
             radio,
+            _radio_state_subscription: subscription,
         })
     }
 }
@@ -87,7 +115,7 @@ impl Central for Adapter {
     }
 
     async fn start_scan(&self, filter: ScanFilter) -> Result<()> {
-        let watcher = self.watcher.lock().map_err(Into::<Error>::into)?;
+        let mut watcher = self.watcher.lock().map_err(Into::<Error>::into)?;
         let manager = self.manager.clone();
         watcher.start(
             filter,
@@ -109,7 +137,7 @@ impl Central for Adapter {
     }
 
     async fn stop_scan(&self) -> Result<()> {
-        let watcher = self.watcher.lock().map_err(Into::<Error>::into)?;
+        let mut watcher = self.watcher.lock().map_err(Into::<Error>::into)?;
         watcher.stop()?;
         Ok(())
     }
