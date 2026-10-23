@@ -2539,10 +2539,13 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   const contextStart = noteContext && brief.startsWith('## 待办\n\n') ? brief.indexOf('\n\n## 重点\n\n') : -1;
   const checklistOnly = contextStart > 0 && savedActions(brief).length > 0;
   const hasQuestions = checklistOnly && brief.includes('\n\n## 需确认\n\n');
+  const attributionNotice = brief.match(/(?:^|\n\n)## 归属未确认\n\n[\s\S]*$/)?.[0].trim();
+  const hasSourceAttribution = /^## (?:讨论纪要\(按说话人\)|发言归属未确认的原话)\r?$/m.test(reading);
   return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={checklistOnly ? brief.slice(0, contextStart) : brief} actionChecklist={actionChecklist} {...sourceProps} />
     {hasQuestions ? <p className="ct-step-meta">还有待确认事项，可展开查看。</p> : null}
-    <details className="ct-full-minutes"><summary>{checklistOnly ? hasQuestions ? '查看重点与待确认' : '查看重点和完整整理' : '查看完整整理'}</summary>
+    {checklistOnly&&attributionNotice?<MarkdownMinutes markdown={attributionNotice}/>:null}
+    <details className="ct-full-minutes"><summary>{hasSourceAttribution ? '查看完整整理与发言归属' : checklistOnly ? hasQuestions ? '查看重点与待确认' : '查看重点和完整整理' : '查看完整整理'}</summary>
       <MarkdownMinutes markdown={reading} actionChecklist={actionChecklist} {...sourceProps} />
       {noteContext&&reading!==markdown?<details className="ct-full-minutes"><summary>核对本次补充来源</summary>
         <MarkdownMinutes markdown={minutesSourceEnvelope(noteContext)} {...sourceProps}/>
@@ -2609,13 +2612,21 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
               <span>{presentation.conditional?<small className="ct-action-condition-mark">有条件</small>:null}{shownTitle}{presentation.supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span>
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div></div>;}
-        if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{block.text}{links}</span></div>;
-        return <p key={index}>{block.text}{links}</p>;
+        if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>;
+        return <p key={index}>{minutesInlineText(block.text)}{links}</p>;
       })}
       {actionChecklist?.compactSources&&visibleBlocks.some(block=>block.action&&compactActionSource(block.action.text).supplementary)?
         <p className="ct-action-source-legend">＊ 来自本次补充；原话与补充仍分别保留。</p>:null}
     </article>
   );
+}
+
+function minutesInlineText(value: string) {
+  // Render paired strong markers as React text nodes, never raw HTML/links.
+  // All source matching and saved/exported text still use the untouched value.
+  return value.split(/(\*\*[^*\r\n]+\*\*)/g).map((part,index)=>
+    /^\*\*[^*\r\n]+\*\*$/.test(part)
+      ? <strong key={index}>{part.slice(2,-2)}</strong> : part);
 }
 
 function translateMinutesHeading(value: string): string {

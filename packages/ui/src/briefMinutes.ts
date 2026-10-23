@@ -5,12 +5,13 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   if (!transcript.trim() || [...transcript.trim()].length > 280 || !Number.isFinite(durationMs)
       || durationMs < 0 || durationMs > 120_000
       || markdown.includes('```') || markdown.includes('~~~')) return null;
-  const labels: Record<string, 'summary' | 'actions' | 'decisions' | 'questions' | 'keywords'> = {
+  const labels: Record<string, 'summary' | 'actions' | 'decisions' | 'questions' | 'keywords' | 'speakers' | 'unattributed'> = {
     Summary: 'summary', 摘要: 'summary',
     'Action Items': 'actions', 行动项: 'actions', 待办: 'actions',
     Decisions: 'decisions', 决定: 'decisions', 已明确的决定: 'decisions', 关键决定: 'decisions',
     Questions: 'questions', 问题: 'questions', 待确认: 'questions', 待确认问题: 'questions',
     Keywords: 'keywords', 关键词: 'keywords',
+    '讨论纪要(按说话人)': 'speakers', '发言归属未确认的原话': 'unattributed',
   };
   const headings = [...markdown.matchAll(/^## ([^\r\n]+)\r?$/gm)];
   if (!headings.length) return null;
@@ -44,11 +45,15 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   const summaryText=(sections.get('summary')??'').split(/\r?\n/)
     .map(line=>line.replace(/^[-*+] /,'')).join('\n').trim();
   const duplicateOriginal=!noActions&&summaryText===transcript.trim().replace(/\r\n/g,'\n');
-  const preferActions=actionsFirst||duplicateOriginal;
+  // Native source sections are retained in the complete document below. They
+  // should not force a short note back to the repeated full report template.
+  const attributedSource=sections.has('speakers')||sections.has('unattributed');
+  const preferActions=actionsFirst||duplicateOriginal||attributedSource;
   const reading=preferActions&&!noActions?[actionSection]:[];
   if(!duplicateOriginal && sections.get('summary')?.trim())reading.push(`## 重点\n\n${sections.get('summary')}`);
   if(!emptySection(sections.get('decisions')??''))reading.push(`## 已明确的决定\n\n${sections.get('decisions')}`);
   if(!preferActions||noActions)reading.push(actionSection);
   if(!emptySection(sections.get('questions')??''))reading.push(`## 需确认\n\n${sections.get('questions')}`);
+  if(sections.get('unattributed')?.trim())reading.push('## 归属未确认\n\n部分原话的发言者未确认；可展开完整整理逐句核对。');
   return reading.join('\n\n');
 }
