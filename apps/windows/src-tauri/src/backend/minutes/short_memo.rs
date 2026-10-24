@@ -32,17 +32,43 @@ fn independent_actions(session: &CompanionV1HostSession) -> Vec<CompanionV1Actio
         } else {line};
         sentences.extend(body.split(['。','！','!']).map(str::trim).filter(|part|!part.is_empty()));
     }
-    if speakers.len()>1 || sentences.len()>8 || unsafe_context(&sentences.join("。")) {return vec![];}
+    if speakers.len()>1 || sentences.len()>8 {return vec![];}
+    let clauses=sentences.iter().flat_map(|sentence|sentence.split(['，',',','；',';']))
+        .map(str::trim).filter(|clause|!clause.is_empty()).collect::<Vec<_>>();
+    if clauses.len()>12 {return vec![];}
+    // A recognised event prefix is a literal schedule, not unsafe narrative
+    // "的时候". Only a validated positive event action may omit its prefix
+    // from this safety check; every other word, cancellation and doubt stays.
+    let safety_context=clauses.iter().map(|clause|scheduled_event_body(clause).unwrap_or(clause))
+        .collect::<Vec<_>>().join("。");
+    if unsafe_context(&safety_context) {return vec![];}
     let mut result=Vec::new();
-    for sentence in sentences {
-        // Each independent sentence must carry its own explicit intention/time.
-        // Unclassified tails are preserved in the transcript, never completed
-        // from a recording title, another sentence or an independent reference.
-        if let Some(clauses)=plan_clauses(sentence,session.duration_ms,true) {
-            result.extend(clauses.into_iter().map(|(text,_)|CompanionV1ActionItem{text,owner:None,due:None}));
+    for clause in clauses {
+        // Each clause must carry its own explicit intention/time or a recognised
+        // event trigger. An unclassified comma tail cannot erase an earlier
+        // dated action, and cannot borrow its intention or deadline either.
+        if let Some(actions)=plan_clauses(clause,session.duration_ms,true) {
+            result.extend(actions.into_iter().map(|(text,_)|CompanionV1ActionItem{text,owner:None,due:None}));
+        } else if scheduled_event_body(clause).is_some() {
+            result.push(CompanionV1ActionItem{text:clause.into(),owner:None,due:None});
         }
     }
     if result.len()>8 {return vec![];} result
+}
+
+// A small, literal imperative grammar. Keep the complete trigger in the task
+// text: no unconditional task, inferred actor, resolved date or guessed order.
+fn scheduled_event_body(clause:&str)->Option<&str> {
+    if clause.chars().count()>100 || clause.ends_with('了') {return None;}
+    static EVENT:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"^(?:(?:出门|回家|到家|上班|下班|开会|出发|收货|付款)(?:的时候|之前|之后|前|后|时)|(?:检查|核对|测试|审核|会议|任务)(?:完成|结束)(?:以后|之后|后))\s*"
+    ).expect("constant explicit event schedule"));
+    let matched=EVENT.find(clause)?;let body=clause[matched.end()..].trim();
+    if body.is_empty() || unsafe_context(body) || body.contains(['不','没','未','别']) {return None;}
+    static TRANSFER:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"^把[^。，,；;！？?!]{1,32}(?:发给|发送给|交给|提交给|带给)[^。，,；;！？?!]{1,24}$"
+    ).expect("constant explicit transfer action"));
+    (plan_clauses(body,0,false).is_some() || TRANSFER.is_match(body)).then_some(body)
 }
 
 pub(super) fn merge_independent_actions(items:&mut Vec<CompanionV1ActionItem>,

@@ -1655,4 +1655,49 @@ mod tests {
         let _ = std::fs::write(dir.join("sample-minutes.md"), &out);
         println!("===NATIVE_DEEPSEEK_MINUTES===\n{out}");
     }
+
+    #[test]
+    fn p536_actual_board_memo_keeps_dated_and_literal_event_actions() {
+        let session=session_with_text("这是一条样品备忘。明天下午3点检查新样品，出门的时候带上充电线。检查完成后把结果发给同事。");
+        let l0=rules_l0_minutes(&session,"now");
+        let expected=vec!["明天下午3点检查新样品","出门的时候带上充电线","检查完成后把结果发给同事"];
+        assert_eq!(l0.action_items.iter().map(|a|a.text.as_str()).collect::<Vec<_>>(),expected);
+        let mut provider=l0.clone();provider.source="llm_deepseek".into();provider.quality="final".into();
+        provider.action_items.clear();provider.markdown="# No action items".into();
+        let result=finalize_minutes(Ok(provider),l0,&session);
+        assert_eq!(result.action_items.iter().map(|a|a.text.as_str()).collect::<Vec<_>>(),expected);
+        assert!(result.action_items.iter().all(|a|a.owner.is_none()&&a.due.is_none()));
+        for original_clause in expected {assert!(result.markdown.contains(original_clause));}
+        assert!(result.summary.iter().any(|s|s.contains("样品备忘")));
+    }
+
+    #[test]
+    fn p536_explicit_clause_survives_background_without_borrowing_intent() {
+        let session=session_with_text("周四上午核对清单，背景备注。下班之前带上门禁卡。会议结束后把纪要发给小陈。");
+        let result=rules_l0_minutes(&session,"now");
+        assert_eq!(result.action_items.iter().map(|a|a.text.as_str()).collect::<Vec<_>>(),
+            vec!["周四上午核对清单","下班之前带上门禁卡","会议结束后把纪要发给小陈"]);
+        assert!(result.action_items.iter().all(|a|a.owner.is_none()&&a.due.is_none()));
+        let unrelated=session_with_text("明天核对清单，购买方案很好看。天气说明。");
+        let result=rules_l0_minutes(&unrelated,"now");
+        assert_eq!(result.action_items.len(),1);assert_eq!(result.action_items[0].text,"明天核对清单");
+    }
+
+    #[test]
+    fn p536_event_words_do_not_erase_negative_uncertain_or_reported_context() {
+        for text in [
+            "如果明天检查样品，出门的时候带上充电线。",
+            "明天检查样品。出门的时候不要带上充电线。",
+            "明天检查样品。检查完成后把结果别发给同事。",
+            "已经检查样品。出门的时候带上充电线。",
+            "明天检查样品。考虑出门的时候带上充电线。",
+            "明天检查样品。要不要出门的时候带上充电线？",
+            "明天检查样品。取消这个安排。",
+            "听说明天检查样品。出门的时候带上充电线。",
+            "说话人1：明天检查样品。\n说话人2：出门的时候带上充电线。",
+        ] {
+            let session=session_with_text(text);let result=rules_l0_minutes(&session,"now");
+            assert!(result.action_items.is_empty(),"must not promote uncertain/narrative source: {text}");
+        }
+    }
 }
