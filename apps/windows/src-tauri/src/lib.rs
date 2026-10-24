@@ -1013,7 +1013,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             .and_then(|position| args.get(position + 1))
             .and_then(|value| value.parse::<u64>().ok())
             .unwrap_or(6)
-            .clamp(2, 7_200);
+            .clamp(2, 86_400);
         // Exercise the ordinary application's recovery with the same live
         // coordinator: let the actual board limit seal its original recording
         // and reconnect. No synthetic STOP acknowledgement or new process.
