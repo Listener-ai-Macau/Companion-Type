@@ -16,7 +16,7 @@ fn independent_actions(session: &CompanionV1HostSession) -> Vec<CompanionV1Actio
     let text=session.transcript_text.trim();
     if !session.meeting_notes.is_empty() || actions(session).is_some()
         || text.is_empty() || text.chars().count()>280 || session.duration_ms>120_000
-        || ["改成","改为","暂缓","推迟","别再","别带","不必"].iter().any(|word|text.contains(word)) {
+        || ["改成","改为","暂缓","推迟","别再","别带","别发","别给","别交","不必"].iter().any(|word|text.contains(word)) {
         return vec![];
     }
     static SPEAKER:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
