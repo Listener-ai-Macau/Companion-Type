@@ -1375,6 +1375,11 @@ export function describeCompanionMeetingRecovery(session: CompanionV1HostSession
   if (session.pendingReason === 'needs_device_sync') {
     return { label: '等待设备同步', message: '录音仍在设备端。连接 Companion 后同步录音，再继续处理。', retryAction: null, isProcessing: false };
   }
+  if (recovery.stage === 'pendingMinutes' && companionSessionHasFinalTranscript(session)) {
+    return { label: '文字已保存，整理待开始',
+      message: '原音和文字可以先看。需要重点或待办时，可继续整理，也可以稍后再做。',
+      retryAction: 'meetingGenerateMinutes', isProcessing: false };
+  }
   const isProcessing = recovery.stage === 'transcribing' || recovery.stage === 'generatingMinutes';
   const label = session.pendingReason === 'no_speech_detected' ? '未识别到人声'
     : recovery.stage === 'paused' ? '恢复暂停'
@@ -1450,11 +1455,11 @@ export function describeSessionPendingReason(
 ): string | null {
   switch (reason) {
     case 'needs_transcription':
-      return 'Audio captured. Configure ASR or import a transcript, then generate minutes.';
+      return '原音已保存。需要文字时，可点“转文字”；整理重点可稍后再做。';
     case 'needs_network':
-      return 'Cloud ASR/minutes need network (or switch to local-only ASR).';
+      return '转文字或整理需要网络。原音仍保留，联网后可继续。';
     case 'needs_pull':
-      return 'Device has recordings that still need Sync/pull into the host.';
+      return '录音还在设备上。连接来源设备并同步到电脑后，可以继续查看文字。';
     case 'needs_device_sync':
       return '录音仍在设备端，重新连接 Companion 后会继续同步。';
     case 'needs_segments':

@@ -90,10 +90,10 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   }
   if (finalMinutes && !recovery) return { stage: 3, optional: true, title: '整理好了', detail: '文字和纪要已保存在本机。可以继续查看、核对并导出。' };
   if (finalText) {
-    if (draft && !context.minutesReady) return { stage: 2, optional: !recovery, title: '基础草稿已生成', detail: '这是按原文提取的本机基础草稿，请核对后使用。录音和完整文字仍保留。' };
+    if (draft && !context.minutesReady) return { stage: 2, optional: !recovery, title: '原句摘录已生成', detail: '已从文字中摘录原句，供你核对、补充。原音和文字仍保留。' };
     // Once text is complete, organizing it is optional. Requested recovery stays visible.
     return { stage: 2, optional: !recovery, title: recovery ? '继续整理这条内容' : '文字已保存，可按需整理',
-      detail: context.minutesReady ? '按已保存的文字提取重点与待办，原文保留。无需再次连接设备。' : '在本机按原文提取摘要和待办，生成后可直接查看。草稿需要你核对。',
+      detail: context.minutesReady ? '按已保存的文字提取重点与待办，原文保留。无需再次连接设备。' : '从文字中摘录原句作为草稿，供你核对、补充。原音和文字仍保留。',
       label: context.minutesReady ? recovery ? '继续整理' : '整理重点' : '生成基础草稿',
       request: { action: 'meetingGenerateMinutes', sessionId: session.id } };
   }
@@ -118,7 +118,7 @@ export function CompanionJourney({ journey, blocked, onControl, onSettings, onWo
 }) {
   return <section className="ct-journey" aria-label="这条录音的下一步">
     {journey.optional ? <p className="ct-optional-processing">可选 · 转写与纪要</p> : <ol className="ct-journey-progress" aria-label="录音处理进度">
-      {['内容已保存', '完整转写', '智能纪要'].map((label, index) => <li key={label}
+      {['原音已保存', '转成文字', '整理重点'].map((label, index) => <li key={label}
         className={index < journey.stage ? 'done' : index === journey.stage ? 'current' : ''}
         aria-current={index === journey.stage ? 'step' : undefined}>
         <span>{index < journey.stage ? <Check size={12} /> : index + 1}</span>{label}
