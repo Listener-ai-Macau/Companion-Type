@@ -716,6 +716,7 @@ export function CompanionDashboard({
     } finally { serviceActive.current = false; setServiceBusy(null); }
   };
   const storageBlocked = Boolean(snapshot?.host.persistence && snapshot.host.persistence.status !== 'ready');
+  const transcriptionRunning = busyAction === 'meetingTranscribeAudio';
   const asrConfigured = productSettings?.asrProvider === 'volcengine'
     ? Boolean(productSettings.volcAppKeySet && productSettings.volcAccessKeySet)
     : Boolean(productSettings?.openaiAsrApiKeySet);
@@ -1375,7 +1376,7 @@ export function CompanionDashboard({
               </div> : null}
             </div>
             <div className="ct-meeting-badges">
-              {finalTranscript ? <span className="ct-pill ct-pill-good">{selectedSession.source === 'importedTranscript' ? '已导入文字' : '转写完成'}</span>
+              {finalTranscript ? <span className="ct-pill ct-pill-good">{selectedSession.source === 'importedTranscript' ? '已导入文字' : '文字已生成'}</span>
                 : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写'
                   : selectedSession.processingPolicy === 'manual' && savedOriginalReady ? '原音已保存' : '尚未转写'}</span>}
               {offlineMinutes ? <span className="ct-pill">{offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
@@ -1392,7 +1393,7 @@ export function CompanionDashboard({
                 if (!asrConfigured) {setTranscribePromptSession(selectedSession.id); return;}
                 setTranscribePromptSession(null);
                 onControl({action:'meetingTranscribeAudio',sessionId:selectedSession.id});
-              }}><FileText size={16}/>{recoveryView?.isProcessing?'正在处理…':selectedSession.captureIncomplete?'片段转文字':'转文字'}</button> : null}
+              }}><FileText size={16}/>{transcriptionRunning?'正在转文字…':recoveryView?.isProcessing?'正在处理…':selectedSession.captureIncomplete?'片段转文字':'转文字'}</button> : null}
             {!textOnlyImport ? <button type="button" className="ct-action" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
               disabled={Boolean(audioBlockedReason) || audioBusy} title={audioBlockedReason ?? undefined}
               onClick={() => {
@@ -1403,7 +1404,7 @@ export function CompanionDashboard({
           {transcribePromptSession===selectedSession.id && !asrConfigured ? <p className="ct-recording-notice" role="status">
             转文字需要先配置转写服务，原音已保留。<button type="button" className="ct-text-button" onClick={openSettings}>去配置</button>
           </p> : null}
-          {recoveryView?.isProcessing ? <p className="ct-recording-notice" role="status">{recoveryView.label}，完成后文字会显示在这里。</p> : null}
+          {transcriptionRunning ? <p className="ct-recording-notice" role="status">正在转文字，完成后会显示在这里。原音会保留。</p> : recoveryView?.isProcessing ? <p className="ct-recording-notice" role="status">{recoveryView.label}，完成后文字会显示在这里。</p> : null}
           {journey && !journey.optional && !recoveryView?.isProcessing ? <CompanionJourney journey={journey}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked} onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow}/> : null}
           {selectedSession.recovery?.lastError && !journey?.handlesFailure ? <p className="ct-recording-notice ct-step-warn" role="status">处理未完成：{selectedSession.recovery.lastError}</p> : null}
@@ -1558,7 +1559,7 @@ export function CompanionDashboard({
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}
               <p className="ct-recording-transcript" hidden={transcriptReviewOpen}>{companionReviewedTranscript(selectedSession)}</p>
-            </> : <p className="ct-recording-text-empty">{recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
+            </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
           <div id="ct-recording-text-review" hidden={!transcriptReviewOpen}>
           <CompanionTranscriptReview session={selectedSession} visible={transcriptReviewOpen}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
