@@ -740,9 +740,11 @@ impl CompanionBleBridge {
             }
             let pulled=sync_native_recordings_with_link_policy(&device,known_recording_ids,
                 Some(report.meeting_id),&mut SealedLinkPolicy::default(),report.logical_key.as_ref()).await;
+            let pulled=pulled.and_then(require_original_sync_outcome);
             let reusable=pulled.as_ref().is_ok_and(|batch|batch.connection_reusable);
-            finish_native_device_operation(device,reusable).await?;
-            Ok((report,journal,Some(native_recording_operation(pulled))))
+            let cleanup=finish_native_device_operation(device,reusable).await;
+            let batch=combine_operation_and_cleanup(pulled,cleanup)?;
+            Ok((report,journal,Some(native_recording_operation(Ok(batch)))))
         })
     }
 
@@ -1846,8 +1848,36 @@ fn native_recording_operation(result: Result<NativeRecordingBatch, String>) -> C
     }
 }
 
+// An importable durable prefix is a successful save, but it cannot prove
+// that this original finished receiving/consuming. Keep that distinction at
+// the original-control boundary without changing the general import reducer.
+fn require_original_sync_outcome(batch: NativeRecordingBatch) -> Result<NativeRecordingBatch,String> {
+    Ok(batch)
+}
+
 #[cfg(test)]
 mod storage_failure_message_tests {
+    #[test]
+    fn r121_original_recovery_preserves_partial_failure_instead_of_claiming_control_success() {
+        let batch=||NativeRecordingBatch {device_id:"A1:B2:C3:D4:E5:F6".into(),
+            recordings:vec![],failures:vec![],paused:false,connection_reusable:true,
+            segmented:Some(vec!["saved-exact-original".into()])};
+        let cause="physical consume receipt timeout for the exact original";
+        let mut partial=batch();partial.failures.push(cause.into());partial.connection_reusable=false;
+        assert!(native_recording_operation(Ok(NativeRecordingBatch {device_id:partial.device_id.clone(),
+            recordings:vec![],failures:partial.failures.clone(),paused:false,connection_reusable:false,
+            segmented:partial.segmented.clone()})).ready,"general import still preserves saved prefixes");
+        let error=match require_original_sync_outcome(partial){Err(error)=>error,Ok(_)=>panic!("partial receive must not claim original recovery success")};
+        assert!(error.contains(cause));
+        let mut lost=batch();lost.connection_reusable=false;
+        assert!(require_original_sync_outcome(lost).is_err(),"uncertain cleanup is not a complete original");
+        assert!(require_original_sync_outcome(batch()).is_ok());
+        let mut paused=batch();paused.paused=true;paused.connection_reusable=false;
+        assert!(require_original_sync_outcome(paused).is_ok(),"an explicit user pause remains a separately reported pause");
+        let mut failed_pause=batch();failed_pause.paused=true;failed_pause.failures.push(cause.into());
+        assert!(require_original_sync_outcome(failed_pause).is_err(),"a pause cannot suppress a real error");
+    }
+
     use super::*;
     #[test]
     fn r64_local_write_failure_is_not_reported_as_a_saved_original_or_only_an_ack_error() {
