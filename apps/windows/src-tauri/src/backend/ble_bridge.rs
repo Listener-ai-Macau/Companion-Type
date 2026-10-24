@@ -1852,6 +1852,15 @@ fn native_recording_operation(result: Result<NativeRecordingBatch, String>) -> C
 // that this original finished receiving/consuming. Keep that distinction at
 // the original-control boundary without changing the general import reducer.
 fn require_original_sync_outcome(batch: NativeRecordingBatch) -> Result<NativeRecordingBatch,String> {
+    if !batch.failures.is_empty() {
+        let cause=batch.failures.join("；");
+        eprintln!("recording_original_sync incomplete=1 saved_sessions={} paused={} connection_reusable={} cause={cause}",
+            batch.segmented.as_ref().map_or(0,Vec::len),batch.paused,batch.connection_reusable);
+        return Err(format!("原录音收取/消费尚未完成，已保存的原件和回执保留：{cause}"));
+    }
+    if !batch.connection_reusable && !batch.paused {
+        return Err("原录音连接收尾尚未确认，已保存的原件和精确回执保留。".into());
+    }
     Ok(batch)
 }
 
