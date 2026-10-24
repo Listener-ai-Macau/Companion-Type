@@ -43,7 +43,12 @@ impl Timeline {
         source.saturating_sub(self.source_origin_samples()).min(self.playback_samples())
     }
     pub(crate) fn apply_boundary(&mut self,b:SampleBoundarySummary) {
-        self.captured_samples=b.valid_source_samples.unwrap_or(b.written_samples);
+        // Before END/drain completion, each ordinary encoded packet proves
+        // that source PCM was accepted, including the small codec-latency
+        // tail not yet decodable. Retain that known source prefix for marks;
+        // playback_samples() separately exposes only actual decoded audio.
+        // A missing END never invents the total capture or normal STOP.
+        self.captured_samples=b.valid_source_samples.unwrap_or(self.captured_samples);
         self.sample_boundary=Some(b);
     }
     pub(crate) fn push(&mut self, event: Event) -> Result<(),String> {

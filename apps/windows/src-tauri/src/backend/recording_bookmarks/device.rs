@@ -34,10 +34,10 @@ impl DeviceMark {
 /// overwrites a user label or creates a deleted bookmark a second time.
 pub(crate) fn merge(row:&mut CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
     captured_samples:Option<u64>)->Result<bool,String> {
-    merge_with_origin(row,marks,key,captured_samples,320)
+    merge_with_origin(row,marks,key,captured_samples,320,captured_samples.and_then(|n|n.checked_sub(320)))
 }
 pub(crate) fn merge_with_origin(row:&mut CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
-    captured_samples:Option<u64>,origin:u64)->Result<bool,String> {
+    captured_samples:Option<u64>,origin:u64,playback_samples:Option<u64>)->Result<bool,String> {
     if ![0,320].contains(&origin){return Err("设备重点的源样本起点无效。".into());}
     if marks.is_empty() {return Ok(false);}
     if row.source!="boardDevice" || row.device_recording_key.as_ref()!=Some(&key.public_key())
@@ -59,7 +59,9 @@ pub(crate) fn merge_with_origin(row:&mut CompanionV1HostSession,marks:&[DeviceMa
         let id=mark.id();let position_ms=mark.event.sample_offset/16;
         let audio_position_ms=if let Some(samples)=captured_samples {
             if mark.event.sample_offset>samples || samples<origin {return Err("设备重点超过已保存原音范围。".into());}
-            Some(mark.event.sample_offset.saturating_sub(origin)/16)
+            let available=playback_samples.ok_or("设备重点缺少已验证的回听范围。")?;
+            if available>samples.saturating_sub(origin){return Err("设备重点的回听范围超过原音。".into());}
+            Some(mark.event.sample_offset.saturating_sub(origin).min(available)/16)
         } else {None};
         let hash=mark.descriptor.sha256.iter().map(|v|format!("{v:02x}")).collect::<String>();
         let existing=points.iter_mut().filter(|p|p.id==id).collect::<Vec<_>>();
@@ -97,12 +99,12 @@ pub(crate) fn merge_with_origin(row:&mut CompanionV1HostSession,marks:&[DeviceMa
 
 pub(crate) fn require_saved(row:&CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
     captured_samples:Option<u64>)->Result<(),String> {
-    require_saved_with_origin(row,marks,key,captured_samples,320)
+    require_saved_with_origin(row,marks,key,captured_samples,320,captured_samples.and_then(|n|n.checked_sub(320)))
 }
 pub(crate) fn require_saved_with_origin(row:&CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
-    captured_samples:Option<u64>,origin:u64)->Result<(),String> {
+    captured_samples:Option<u64>,origin:u64,playback_samples:Option<u64>)->Result<(),String> {
     let mut copy=row.clone();
-    if merge_with_origin(&mut copy,marks,key,captured_samples,origin)? {
+    if merge_with_origin(&mut copy,marks,key,captured_samples,origin,playback_samples)? {
         return Err("设备重点尚未耐久保存，原音未确认回收。".into());
     }
     Ok(())

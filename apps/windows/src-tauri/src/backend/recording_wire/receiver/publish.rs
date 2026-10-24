@@ -117,6 +117,7 @@ impl Receiver {
         let device_marks=self.received_device_marks()?;
         let complete_samples=self.complete_captured_samples();
         let source_origin=self.source_origin_samples();
+        let playback_samples=self.receipt.audio.as_ref().map(|a|a.samples);
         let mut chunks = Vec::new();
         let mut bytes = 0u64;
         for (segment, d) in self.receipt.segments.iter().zip(&ds) {
@@ -252,9 +253,9 @@ impl Receiver {
                 }
             }
             crate::backend::recording_bookmarks::device::merge_with_origin(s,&device_marks,
-                &SessionKey::from_public(&logical_key)?,complete_samples,source_origin)?;
+                &SessionKey::from_public(&logical_key)?,complete_samples,source_origin,playback_samples)?;
             crate::backend::recording_bookmarks::logical::bind_with_origin(s,
-                &SessionKey::from_public(&logical_key)?,complete_samples,source_origin)?;
+                &SessionKey::from_public(&logical_key)?,complete_samples,source_origin,playback_samples)?;
             *sessions = next;
             Ok(())
         })?;
@@ -300,9 +301,9 @@ impl Receiver {
             return Err(fail());
         }
         crate::backend::recording_bookmarks::device::require_saved_with_origin(row,&self.received_device_marks()?,
-            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples())?;
+            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples(),self.receipt.audio.as_ref().map(|a|a.samples))?;
         crate::backend::recording_bookmarks::logical::require_saved_with_origin(row,
-            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples())?;
+            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples(),self.receipt.audio.as_ref().map(|a|a.samples))?;
         let mut acks = Vec::new();
         for (s, d) in self.receipt.segments.iter().zip(self.descriptors()?) {
             if !s.received || s.acked {

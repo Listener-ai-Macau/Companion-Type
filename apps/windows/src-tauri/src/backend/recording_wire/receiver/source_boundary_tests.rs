@@ -108,6 +108,16 @@ fn parse_fixture(raw:&[u8])->Vec<(Descriptor,Vec<u8>)> {
  let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();let row=&rows[0];
  assert!(row.capture_incomplete&&row.audio_stored&&!row.device_reclaimed);assert_eq!(row.pending_reason.as_deref(),Some("capture_interrupted"));
  assert_eq!(row.bookmarks.len(),17);assert!(row.bookmarks.iter().all(|b|b.audio_position_ms.is_some_and(|p|p<=row.duration_ms)));
+ let last_mark=row.bookmarks.last().unwrap();assert!(last_mark.position_ms>last_mark.audio_position_ms.unwrap());
+ let timeline=r.receipt.audio.as_ref().unwrap().timeline.as_ref().unwrap();assert!(!timeline.sample_boundary.unwrap().boundary_complete);
+ assert_eq!(timeline.captured_samples-timeline.playback_samples(),40);
  assert_eq!(r.ack_candidates(&index).unwrap().len(),count);assert_eq!(fs::read(&output).unwrap(),before);
- drop(r);fs::remove_dir_all(root).unwrap();
+ let saved_marks=row.bookmarks.clone();drop(r);
+ let mut restored=Receiver::open(&root,&parts[0].0.encode().unwrap()).unwrap();restored.assemble().unwrap();
+ restored.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
+ let reopened=crate::backend::persistence::load_sessions_from(&index).unwrap();
+ assert_eq!(reopened[0].bookmarks,saved_marks);assert!(reopened[0].capture_incomplete);
+ assert_eq!(reopened[0].pending_reason.as_deref(),Some("capture_interrupted"));
+ assert_eq!(restored.ack_candidates(&index).unwrap().len(),count);assert_eq!(fs::read(&output).unwrap(),before);
+ drop(restored);fs::remove_dir_all(root).unwrap();
 }
