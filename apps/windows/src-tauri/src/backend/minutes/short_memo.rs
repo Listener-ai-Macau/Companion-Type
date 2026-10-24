@@ -16,7 +16,7 @@ fn independent_actions(session: &CompanionV1HostSession) -> Vec<CompanionV1Actio
     let text=session.transcript_text.trim();
     if !session.meeting_notes.is_empty() || actions(session).is_some()
         || text.is_empty() || text.chars().count()>280 || session.duration_ms>120_000
-        || ["改成","改为","暂缓","推迟","别再","别带","别发","别给","别交","不必"].iter().any(|word|text.contains(word)) {
+        || ["改成","改为","暂缓","推迟","别再","别带","不必"].iter().any(|word|text.contains(word)) {
         return vec![];
     }
     static SPEAKER:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
@@ -209,7 +209,7 @@ fn metadata_clause(text:&str)->bool {
 // list merely because a provider omitted or contradicted the new conditions.
 fn unsafe_context(text:&str)->bool {
     ["?","？","吗","呢","是否","要不要","会不会","能不能","如果","假如","假设",
-     "可能","也许","或许","建议","希望","考虑","取消","不要","不再","不用","无需",
+     "可能","也许","或许","建议","希望","考虑","取消","不要","别发","别给","别交","不再","不用","无需",
      "没有","尚未","未完成","不是","不打算","但是","不过","昨天","前天","上周","上星期",
      "已经","刚才","刚刚","曾经","当时","做完","完成了","买过","取过","碰到","遇到",
      "的时候","的人","很贵","很便宜","很难","真好","取决于","取得","说过","听说",
