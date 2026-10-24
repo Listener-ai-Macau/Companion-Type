@@ -91,3 +91,23 @@ fn parse_fixture(raw:&[u8])->Vec<(Descriptor,Vec<u8>)> {
     assert_eq!(row.duration_ms,t.playback_samples()/16);assert_eq!(r.ack_candidates(&index).unwrap().len(),count);
     assert!(r.receipt.segments.iter().all(|s|!s.acked));drop(r);fs::remove_dir_all(root).unwrap();
 }
+
+#[test] fn interrupted_drain_keeps_saved_audio_and_last_source_mark_publishable() {
+ let raw=include_bytes!("fixtures/engine-source-boundary-marks642.cmb4");
+ let count=u32::from_le_bytes(raw[4..8].try_into().unwrap())as usize;let mut at=8usize;let mut parts=Vec::new();
+ for _ in 0..count {let n=u32::from_le_bytes(raw[at..at+4].try_into().unwrap())as usize;at+=4;
+  let d=Descriptor::decode(&raw[at..at+112]).unwrap();at+=112;let p=raw[at..at+n].to_vec();at+=n;parts.push((d,p));}
+ let (last,p)=parts.last_mut().unwrap();assert!(last.sample_count>320);assert_eq!(&p[p.len()-42..p.len()-40],&40u16.to_le_bytes());
+ p.truncate(p.len()-42);last.sample_count-=320;last.encoded_length=p.len()as u32;last.flags|=4;
+ last.content_crc32=crc32fast::hash(p);last.sha256=Sha256::digest(p).into();
+ let root=std::env::temp_dir().join(format!("companion-interrupted-source-mark-{}",uuid::Uuid::new_v4()));fs::create_dir_all(&root).unwrap();
+ let index=root.join("sessions.json");let mut r=Receiver::open(&root,&parts[0].0.encode().unwrap()).unwrap();
+ for(d,p)in&parts{r.accept_segment(&d.encode().unwrap(),p).unwrap();}
+ r.assemble().unwrap();let output=r.audio_path();let before=fs::read(&output).unwrap();
+ r.publish(&index,"C8:ED:45:EB:95:B4").expect("a missing drain must not block saved audio behind a valid final source mark");
+ let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();let row=&rows[0];
+ assert!(row.capture_incomplete&&row.audio_stored&&!row.device_reclaimed);assert_eq!(row.pending_reason.as_deref(),Some("capture_interrupted"));
+ assert_eq!(row.bookmarks.len(),17);assert!(row.bookmarks.iter().all(|b|b.audio_position_ms.is_some_and(|p|p<=row.duration_ms)));
+ assert_eq!(r.ack_candidates(&index).unwrap().len(),count);assert_eq!(fs::read(&output).unwrap(),before);
+ drop(r);fs::remove_dir_all(root).unwrap();
+}
