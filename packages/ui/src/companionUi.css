@@ -1614,3 +1614,19 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-library-overview .ct-recent-recording small { display:inline; font-size:11px; margin-top:3px; }
 .ct-library-overview .ct-recent-recording p.ct-recent-preview { -webkit-line-clamp:1; margin-top:3px; font-size:13px; line-height:1.45; }
 .ct-action-condition-mark { display:inline-block; margin-right:8px; padding:1px 6px; border:1px solid #dbe3dc; border-radius:4px; font-size:11px; font-weight:400; color:#526657; vertical-align:baseline; }
+
+/* Contextual help stays closed by default and never covers live controls. */
+.ct-topbar .ct-topbar-actions {display:flex;align-items:center;gap:8px;flex-wrap:nowrap;}
+.ct-use-help {margin:0 0 20px;padding:20px;border:1px solid #cbd8cf;border-radius:18px;background:#fbfdf9;color:#25352d;}
+.ct-use-help:focus {outline:2px solid #789682;outline-offset:3px;}
+.ct-use-help-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.ct-use-help h2 {margin:0;font-size:22px;line-height:1.3;}
+.ct-use-help p {margin:8px 0;line-height:1.6;}
+.ct-use-help-steps {margin:16px 0;padding-left:24px;}
+.ct-use-help-steps li {padding:4px 0;}
+.ct-use-help-key {padding:12px;border-radius:10px;background:#eef4ef;font-weight:600;}
+.ct-use-help details {border-top:1px solid #dce5de;padding:10px 0;}
+.ct-use-help summary {cursor:pointer;font-weight:600;line-height:1.5;}
+.ct-use-help details p,.ct-use-help details ul {font-size:14px;}
+.ct-use-help-links {margin-top:14px;}
+@media(max-width:620px){.ct-use-help{padding:16px;}.ct-topbar .ct-topbar-actions .ct-action{padding:8px;font-size:13px;}}

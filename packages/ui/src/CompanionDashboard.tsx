@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
+import { CompanionHelp } from './CompanionHelp';
 import {CompanionPetFind,type PetFindRequest,type PetFindReport} from './CompanionPetFind';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
@@ -349,6 +350,10 @@ export function CompanionDashboard({
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showWorkflow, setShowWorkflow] = useState(false);
   const [pageView, setPageView] = useState<'library' | 'device' | 'settings'>('library');
+  const [helpOpen,setHelpOpen]=useState(false);
+  const helpTrigger=useRef<HTMLButtonElement>(null);
+  const openQuickGuide=()=>{setHelpOpen(true);window.setTimeout(()=>document.getElementById('ct-use-help')?.scrollIntoView({block:'start'}),0);};
+  const closeQuickGuide=()=>{setHelpOpen(false);window.setTimeout(()=>helpTrigger.current?.focus({preventScroll:true}),0);};
   const [onlyPendingSessions, setOnlyPendingSessions] = useState(false);
   const [libraryQuery, setLibraryQuery] = useState('');
   const [libraryFilters,setLibraryFilters]=useState<LibraryFilters>({folder:'*',tag:'',favorites:false});
@@ -1131,6 +1136,10 @@ export function CompanionDashboard({
           <p className="ct-kicker">Companion Type</p>
           <h1>{pageView === 'library' ? savedDetailOpen?'录音详情':'我的录音' : pageView === 'device' ? '设备与同步' : '设置与工具'}</h1>
         </div>
+        <div className="ct-topbar-actions">
+        <button ref={helpTrigger} type="button" className="ct-action" aria-expanded={helpOpen}
+          aria-controls="ct-use-help" onClick={()=>helpOpen?closeQuickGuide():openQuickGuide()}>
+          <FileText size={16} />使用帮助</button>
         <button
           className="ct-icon-button"
           type="button"
@@ -1141,15 +1150,21 @@ export function CompanionDashboard({
         >
           <RefreshCw size={18} />
         </button>
+        </div>
       </header>
+      {helpOpen ? <CompanionHelp onClose={closeQuickGuide}
+        onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
+        onLibrary={()=>{setHelpOpen(false);setPageView('library');setDetailSessionId(null);}}
+        onDiagnostics={()=>{setHelpOpen(false);setPageView('settings');setShowAdvanced(true);
+          window.setTimeout(()=>document.getElementById('ct-log-support')?.scrollIntoView({block:'start'}),0);}} /> : null}
 
       <nav className="ct-page-navigation" aria-label="主要功能">
         <button type="button" aria-current={pageView === 'library' ? 'page' : undefined}
-          onClick={() => {setPageView('library');setDetailSessionId(null);}}><Headphones size={16} />我的录音</button>
+          onClick={() => {setHelpOpen(false);setPageView('library');setDetailSessionId(null);}}><Headphones size={16} />我的录音</button>
         <button type="button" aria-current={pageView === 'device' ? 'page' : undefined}
-          onClick={() => setPageView('device')}><Bluetooth size={16} />设备与同步</button>
+          onClick={() => {setHelpOpen(false);setPageView('device');}}><Bluetooth size={16} />设备与同步</button>
         <button type="button" aria-current={pageView === 'settings' ? 'page' : undefined}
-          onClick={() => { setPageView('settings'); setShowAdvanced(true); }}><ChevronDown size={16} />设置与工具</button>
+          onClick={() => { setHelpOpen(false); setPageView('settings'); setShowAdvanced(true); }}><ChevronDown size={16} />设置与工具</button>
       </nav>
 
       <section className="ct-simple-status" aria-live="polite">
@@ -1254,8 +1269,8 @@ export function CompanionDashboard({
           <button type="button" className="ct-action" onClick={()=>{setLibraryFilters({folder:'*',tag:'',favorites:false,trash:libraryFilters.trash});setLibraryQuery('');setOnlyPendingSessions(false);}}>清除分类筛选</button>
         </div>:visibleLibrary.length === 0 ? (
           <div className="ct-library-empty"><FileText size={26} /><strong>{libraryQuery ? '没有找到相关录音或补充' : libraryFilters.trash?'回收站为空':onlyPendingSessions && recordingLibrary.length ? '暂时没有待整理的录音' : '把值得记住的事，留在这里'}</strong>
-            <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : '在 Companion 上长按实体键约 1 秒开始或停止录音，睡着时先短按唤醒。结束后连接电脑同步；转写与纪要按需使用已配置的服务。'}</p>
-            <button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openWorkflow}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到录音库':onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : '查看录音与同步步骤'}</button></div>
+            <p>{libraryQuery ? '搜索会检查标题、完整转写、已保存的补充和整理结果。' : libraryFilters.trash?'移入回收站的录音会保留原音和资料，直到你恢复或明确永久清除。':onlyPendingSessions && recordingLibrary.length ? '切回全部录音，可以查看已完成的内容。' : '在宠物上录下一句话，等设备保存后连接电脑同步。双击、实体键和菜单都能操作同一台设备；具体步骤见使用帮助。'}</p>
+            <button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openQuickGuide}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到录音库':onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : '查看录音与同步步骤'}</button></div>
         ) : (
           <div className="ct-library-list">
             {visibleLibrary.map((session) => {
@@ -1707,7 +1722,7 @@ export function CompanionDashboard({
         <div className={`ct-step ${step >= 2 ? 'active' : ''} ${hasSyncedAudio ? 'done' : ''}`}>
           <span className="ct-step-n">2</span>
           <div className="ct-step-body">
-            <strong>板端采集 / 同步录音库</strong>
+            <strong>录音与同步</strong>
             <p>
               使用 Companion 录音，电脑同步显示转写。停止后自动收齐录音并整理纪要；也可以先在设备上录好，再同步到电脑。
             </p>
@@ -1719,7 +1734,7 @@ export function CompanionDashboard({
                 inputMode="numeric" disabled={oobeBlockedByRecording || controlsBusy}
                 onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))} /></label>
             </div>
-            <p className="ct-step-meta">在线转写单次最多 43 分钟，另预留 2 分钟收尾空间；纯录音按设备空间和设定时长保存。支持连续物理分段的设备仍保留为同一场录音，完整收齐后才确认回收。</p>
+            <p className="ct-step-meta">在线转写单次最多 43 分钟，另预留 2 分钟收尾空间；纯录音按设备空间和设定时长保存。支持分段的设备会把片段放在同一条录音里；电脑保存并核对完整后，设备才复用这些已同步的空间。</p>
             {captureBudgetBytes !== null ? <p className="ct-step-meta" role={capacityInsufficient ? 'alert' : undefined}>
               本次需预留约 {formatBytes(captureBudgetBytes)}{meetingMode === 'onlineLive' ? '（含收尾空间）' : ''}；
               设备上次报告连续可录约 {formatDuration(capacitySeconds * 1000)}。
@@ -2150,7 +2165,7 @@ export function CompanionDashboard({
             {resourceMsg ? (
               <p className="ct-step-meta" role="status">{resourceMsg}</p>
             ) : null}
-            <div className="ct-section-title"><FileText size={18} /><span>日志与诊断</span></div>
+            <div className="ct-section-title" id="ct-log-support"><FileText size={18} /><span>日志与诊断</span></div>
             <p className="ct-meeting-hint">保存连接、升级和音频处理的阶段记录，方便排查问题。不包含密钥、会议正文或原始录音。设备日志只保留最近的运行事件，重启会清空；本机日志按大小轮换。</p>
             <div className="ct-button-row">
               {[false, true].map((includeDevice) => <button key={String(includeDevice)} type="button" className="ct-action"
