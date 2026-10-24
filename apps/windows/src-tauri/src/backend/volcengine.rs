@@ -82,40 +82,9 @@ fn safe_provider_error(code: Option<u32>) -> String {
 /// Cap hotwords sent per request (Volcengine supports thousands; keep small for latency).
 const HOTWORD_CAP: usize = 64;
 
-/// Companion meeting product lexicon — bias ASR at request time.
-/// Extra words: `COMPANION_TYPE_ASR_HOTWORDS` comma-separated env override/append.
-const DEFAULT_MEETING_HOTWORDS: &[&str] = &[
-    "Opus",
-    "Opus 16",
-    "IMA",
-    "半率",
-    "半率 IMA",
-    "fail closed",
-    "codec",
-    "offlineStore",
-    "onlineLive",
-    "开录即压",
-    "十四兆",
-    "14兆",
-    "BLE",
-    "ASR",
-    "DeepSeek",
-    "ffmpeg",
-    "ffplay",
-    "taskkill",
-    "PID",
-    "陈明",
-    "Billy",
-    "单声道",
-    "十六千赫兹",
-    "16kHz",
-    "录音区",
-    "资源区",
-    "机械闭环",
-    "空中路径",
-    "文件直喂",
-    "真机扬声器",
-];
+/// Ordinary customer recordings have no assumed meeting topic or people.
+/// Domain terms can still be supplied explicitly via COMPANION_TYPE_ASR_HOTWORDS.
+const DEFAULT_MEETING_HOTWORDS: &[&str] = &[];
 
 // ===========================================================================
 // Binary frame codec — verbatim port of Listener asr/frame.rs.
@@ -1558,19 +1527,18 @@ mod tests {
     }
 
     #[test]
-    fn hotword_context_includes_meeting_lexicon() {
-        let words = companion_meeting_hotwords();
-        assert!(words.iter().any(|w| w == "Opus 16"));
-        assert!(words.iter().any(|w| w == "fail closed"));
-        let ctx = hotword_context(&words).expect("context");
+    fn hotword_context_keeps_domain_lexicon_explicit() {
+        // The default must not bias ordinary customer recordings toward the
+        // engineering meetings used during development.
+        assert!(DEFAULT_MEETING_HOTWORDS.is_empty());
+        let defaults: Vec<String> = DEFAULT_MEETING_HOTWORDS.iter().map(|s|s.to_string()).collect();
+        assert!(hotword_context(&defaults).is_none());
+        // Explicit user/domain vocabulary retains its original wire format.
+        let words = vec!["Opus 16".to_string(), "fail closed".to_string()];
+        let ctx = hotword_context(&words).expect("explicit context");
         assert!(ctx.contains("\"hotwords\""));
         assert!(ctx.contains("Opus 16"));
         assert!(ctx.contains("fail closed"));
-        let payload = build_first_frame_payload("test-uid", true);
-        let context = payload["request"]["context"]
-            .as_str()
-            .expect("request.context string");
-        assert!(context.contains("Opus"));
     }
 
     #[test]
