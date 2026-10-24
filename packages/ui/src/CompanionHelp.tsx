@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 
 /** Reading help never starts capture, reconnects, clears data or exports logs. */
-export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics }: {
+export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onRecording }: {
+  onRecording?: () => void;
   onClose: () => void; onDevice: () => void; onLibrary: () => void; onDiagnostics: () => void;
 }) {
   const panel = useRef<HTMLElement>(null);
@@ -21,6 +22,11 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics }: {
     </ol>
     <p className="ct-use-help-key">设备“已保存”与电脑“已收齐”是两步。文字还没生成，不等于原音没有保存。</p>
 
+    <details><summary>文字不对，或有一句话看不懂，怎么办？</summary>
+      <p>文字由语音识别生成，显示“文字已生成”不代表每句话都正确。先回到这条录音，点“回听”核对原音；需要改字时，点“核对文字”，修改后保存修订。</p>
+      <p>原始识别文字和原音会保留。听不清的地方先保留待核对，不替录音猜出意思；确认文字后再整理重点。没有识别出文字时，也先查看原音，再决定是否重试。</p>
+      {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前录音</button> : null}
+    </details>
     <details><summary>双击、实体键和菜单录音，是同一件事吗？</summary>
       <p>都是开始或停止同一台 Companion 的设备录音，选一种顺手的方式即可，不需要依次操作三个入口。</p>
       <ul><li>触摸快捷：宠物首页默认双击左下角开录，录音画面双击停录。也可在设备菜单中改为左下角向右拉开录。</li>

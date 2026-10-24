@@ -1157,7 +1157,7 @@ export function CompanionDashboard({
         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
         onLibrary={()=>{setHelpOpen(false);setPageView('library');setDetailSessionId(null);}}
         onDiagnostics={()=>{setHelpOpen(false);setPageView('settings');setShowAdvanced(true);
-          window.setTimeout(()=>document.getElementById('ct-log-support')?.scrollIntoView({block:'start'}),0);}} /> : null}
+          window.setTimeout(()=>document.getElementById('ct-log-support')?.scrollIntoView({block:'start'}),0);}} onRecording={savedDetailOpen?()=>{setHelpOpen(false);setPageView('library');window.setTimeout(()=>savedRecordingWorkspace.current?.scrollIntoView({block:'start'}),0);}:undefined} /> : null}
 
       <nav className="ct-page-navigation" aria-label="主要功能">
         <button type="button" aria-current={pageView === 'library' ? 'page' : undefined}
