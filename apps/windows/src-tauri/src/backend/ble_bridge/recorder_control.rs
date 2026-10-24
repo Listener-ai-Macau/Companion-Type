@@ -107,8 +107,19 @@ async fn archived_original_end(device:&NativeDevice,chars:&BTreeSet<Characterist
         return Err("原封口目录芯片或存储代次不同；原录音保留。".into());
     }
     let key=journal.key.as_ref().map(SessionKey::from_public).transpose()?.ok_or("原会话尚未确认。")?;
-    let originals:Vec<_>=catalog.entries.iter().filter_map(|e|e.segment.as_ref())
+    let mut originals:Vec<_>=catalog.entries.iter().filter_map(|e|e.segment.as_ref())
         .filter(|d|d.key==key).cloned().collect();
+    let device_count=originals.len();
+    let local=crate::backend::recording_wire::receiver::Receiver::verified_received_catalogue(
+        &native_recording_root()?,&key,&device.device_id())?;
+    let local_count=local.len();
+    for d in local {
+        if let Some(current)=originals.iter().find(|current|current.segment_index==d.segment_index) {
+            if !current.same_content(&d) {return Err("原会话本机与设备封口身份不同；未声明结束。".into());}
+        } else {originals.push(d);}
+    }
+    originals.sort_by_key(|d|d.segment_index);
+    eprintln!("recorder_control archived_catalogue_sources device_segments={device_count} verified_local_segments={local_count} combined_segments={} terminal_required=1 command_writes=0",originals.len());
     let after=bounded_ble_result("recheck sealed original catalogue status",StdDuration::from_secs(8),device.peripheral.read(status)).await?;
     // Equality also preserves the original format/CRC/identity validation;
     // a new capture, changing duration or status cannot close the old row.

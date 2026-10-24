@@ -106,6 +106,26 @@ impl Receiver {
         pending.sort_by_key(|p| super::u64le(p, 20));
         Ok(pending)
     }
+    /// Reuse only durable, revalidated sealed originals after the device has
+    /// consumed their directory entries. Never promote a growing prefix or
+    /// infer a terminal segment from host state. The caller still needs the
+    /// actual immutable terminal descriptor and a stable protected status.
+    pub(crate) fn verified_received_catalogue(root:&Path,key:&SessionKey,device:&str)
+        ->Result<Vec<Descriptor>,String> {
+        let stem=format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(key).map_err(|_|fail())?));
+        let path=root.join(format!(".{stem}.json"));
+        if !regular(&path)? {return Ok(Vec::new());}
+        let mut body=Vec::new();read_locked(&path)?.take(MAX_RECEIPT+1).read_to_end(&mut body).map_err(|_|fail())?;
+        if body.len() as u64>MAX_RECEIPT {return Err(fail());}
+        let receipt:Receipt=serde_json::from_slice(&body).map_err(|_|fail())?;
+        let first=receipt.segments.first().ok_or_else(fail)?;
+        if Descriptor::decode(&first.wire)?.key!=*key {return Err(fail());}
+        let receiver=Self::open(root,&first.wire)?;
+        if receiver.receipt.device.as_deref().is_none_or(|old|
+            !crate::backend::device_connection::same_device_id(old,device)) {return Err(fail());}
+        Ok(receiver.receipt.segments.iter().zip(receiver.descriptors()?)
+            .filter_map(|(saved,d)|saved.received.then_some(d)).collect())
+    }
     pub(crate) fn session_id(&self) -> &str { &self.stem }
     pub(crate) fn has_segment(&mut self, wire: &[u8]) -> Result<bool, String> {
         let d = Descriptor::decode(wire)?;

@@ -394,4 +394,22 @@ mod tests {
         assert_eq!(receiver.ack_candidates(&index).unwrap().len(),1,"manual processing still allows exact local sync/consume");
         drop(receiver);fs::remove_dir_all(root).unwrap();
     }
+    #[test]
+    fn r117_recovered_catalogue_requires_exact_verified_saved_originals() {
+        let(root,index,d,payload,id)=case();let device="C8:92:FF:DD:3B:CA";
+        assert!(Receiver::verified_received_catalogue(&root,&d.key,device).unwrap().is_empty());
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        r.accept_segment(&d.encode().unwrap(),&payload).unwrap();r.publish(&index,device).unwrap();
+        let raw=r.payload_path(&d);let receipt=r.receipt_path();drop(r);
+        let before=fs::read(&receipt).unwrap();
+        assert_eq!(Receiver::verified_received_catalogue(&root,&d.key,device).unwrap(),vec![d.clone()]);
+        assert!(Receiver::verified_received_catalogue(&root,&d.key,"C8:92:FF:DD:3B:CB").is_err());
+        let mut other=d.key.clone();other.session_id+=1;
+        assert!(Receiver::verified_received_catalogue(&root,&other,device).unwrap().is_empty());
+        fs::write(&raw,b"corrupt saved original").unwrap();
+        assert!(Receiver::verified_received_catalogue(&root,&d.key,device).is_err());
+        assert_eq!(fs::read(&receipt).unwrap(),before);assert_eq!(session_store::load(&index).state.status,"ready");
+        let _=id;fs::remove_dir_all(root).unwrap();
+    }
+
 }
