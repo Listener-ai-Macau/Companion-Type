@@ -408,6 +408,9 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--library-state-request" => Some((i,9)),
         "--library-purge-request" => Some((i,10)),
         "--library-control-request" => Some((i,11)),
+        "--meeting-transcribe-request" => Some((i,12)),
+        "--local-recording-snapshot" => Some((i,13)),
+        "--local-recording-select" => Some((i,14)),
         _ => None,
     })?;
     Some((|| {
@@ -417,9 +420,39 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         if file.metadata().map_err(|_| "无法读取请求文件大小。")?.len() > 4*1024*1024 {
             return Err("会议请求文件不能超过 4 MB。".into());
         }
-        if operation==6 {let _=backend::product_settings::load_and_apply();}
+        if matches!(operation,6|12|13|14) {let _=backend::product_settings::load_and_apply();}
         let coordinator = CompanionCoordinator::new_fixture();
-        if operation == 11 {
+        if matches!(operation,12|13|14) {
+            #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
+            struct LocalRecordingRequest { session_id: Option<String> }
+            let request:LocalRecordingRequest=serde_json::from_reader(file)
+                .map_err(|_|"本机录音请求只接受已有录音身份。")?;
+            let outcome=if operation==13 {
+                if request.session_id.is_some(){return Err("读取本机录音库不接受修改请求。".into());}
+                Ok(coordinator.snapshot()?)
+            } else {
+                let id=request.session_id.filter(|id|!id.is_empty()).ok_or("缺少已有录音身份。")?;
+                let snapshot=coordinator.snapshot()?;
+                let row=snapshot.host.sessions.iter().find(|row|row.id==id).ok_or("找不到这条本机录音。")?;
+                if operation==12 && (!row.audio_stored || !row.retention.audio_cached
+                    || row.status=="recording" || row.recorder_control_uncertain
+                    || matches!(row.pending_reason.as_deref(),Some("needs_device_sync"|"needs_segments"|"needs_pull"))
+                    || !row.audio_path.as_deref().is_some_and(|path|Path::new(path).is_file())) {
+                    return Err("本机原音尚未就绪；这次没有连接设备或提交转写。".into());
+                }
+                let action=if operation==12 {companion_v1::CompanionV1ControlAction::MeetingTranscribeAudio}
+                    else {companion_v1::CompanionV1ControlAction::MeetingSelectSession};
+                coordinator.apply_control(control_request(action,Some(id)))
+            };
+            let error=outcome.as_ref().err().cloned();
+            let snapshot=match outcome {Ok(snapshot)=>snapshot,Err(_)=>coordinator.snapshot()?};
+            backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&serde_json::json!({
+                "snapshot":snapshot,"settings":backend::product_settings::public_report(),"operationError":error,
+                "deviceAccess":false,"transcriptionRequested":operation==12
+            })).map_err(|_|"无法生成本机录音结果。")?)?;
+            if let Some(error)=error {return Err(error);}
+            println!("local_recording_result=SAVED_NATIVE_RESULT");
+        } else if operation == 11 {
             let mut request:companion_v1::CompanionV1ControlRequest=serde_json::from_reader(file).map_err(|_|"本机资料控制请求格式不正确。")?;
             use companion_v1::CompanionV1ControlAction as A;
             if !matches!(request.action,A::PrivacyEraseAudio|A::PrivacyEraseTranscript|A::PrivacyDeleteSession|A::PrivacyEraseAll|A::MeetingResetSession|A::MeetingRestoreAudio){return Err("此后台入口只接受明确的本机录音恢复、隐私清理或新工作区操作。".into());}
