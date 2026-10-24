@@ -17,26 +17,31 @@ fn decode_inner(input:&Path, output:&Path, live_prefix:bool)->Result<u64,String>
     let mut reader=super::cop1::Reader::new(bytes.as_slice(),0,live_prefix)?;
     let frame_ms=reader.frame_ms;
     let rate=reader.source_rate;
+    let mut window=super::cop1::SampleWindow::new(reader.schema,frame_ms*16)?;
     let mut decoder=MonoDecoder::new(16000)?;
     let temporary=output.with_file_name(format!(".companion-decode-{}.wav",uuid::Uuid::new_v4().simple()));
     let result=super::audio_artifacts::generated(output,&temporary,super::audio_artifacts::Purpose::DecodeTemporary,|| {
         let mut wav=WavWriter::create(&temporary).map_err(|e|format!("create decoded WAV: {e}"))?;
-        let mut frames=0;
         while let Some(record)=reader.next()? {
-            let super::cop1::Record::Audio(packet)=record else {continue;};
+            let packet=match record {
+                super::cop1::Record::Audio(p)=>p,
+                super::cop1::Record::Boundary(b)=>{window.observe(b)?;continue;},
+                super::cop1::Record::Event(_)=>{if !window.event_allowed(){return Err("COP1 event after source end".into());}continue;},
+            };
             let mut samples=decoder.decode(&packet)?;
             if samples.len()!=frame_ms*16 { return Err("COP1 declared duration does not match Opus packet".into()); }
-            frames+=1;
-            // Same first-frame pre-skip and output ceiling as the prior Ogg
-            // adapter. Existing 8 kHz microphone gain remains x48; 16 kHz x1.
-            if frames==1 { continue; }
+            let range=window.packet(samples.len())?;
+            let samples=&mut samples[range];
+            // Historical originals retain their established mapping. New
+            // source boundaries remove only the codec's measured latency.
             let gain=if rate==8000 {48} else {1};
-            for value in &mut samples { *value=(*value as i32*gain).clamp(-29900,29900) as i16; }
+            for value in samples.iter_mut() { *value=(*value as i32*gain).clamp(-29900,29900) as i16; }
             let pcm=samples.iter().flat_map(|s|s.to_le_bytes()).collect::<Vec<_>>();
             if wav.data_bytes() as u64+pcm.len() as u64>1024*1024*1024 { return Err("decoded recording exceeds supported duration".into()); }
             wav.append_bytes(&pcm).map_err(|e|format!("write decoded audio: {e}"))?;
         }
         reader.finish(live_prefix)?;
+        window.finish(live_prefix)?;
         if wav.data_bytes()==0 { return Err("COP1 has no complete audio after decoder pre-skip".into()); }
         let size=wav.finalize().map_err(|e|format!("finalize decoded WAV: {e}"))?;
         drop(wav);

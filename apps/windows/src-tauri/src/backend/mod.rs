@@ -144,8 +144,12 @@ fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
     // This explicit short capture belongs to the pet reply worker. Its raw
     // audio keeps the normal durable library/consume contract, without an
     // additional automatic meeting ASR/minutes job after STOP or restart.
-    if session.organization.trashed_at.is_some() || session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
-        || session.recovery.intent == pet_chat::CAPTURE_INTENT { return; }
+    if session.organization.trashed_at.is_some() || session.recovery.intent == pet_chat::CAPTURE_INTENT { return; }
+    // An incomplete original is a recording warning even when the user has
+    // selected manual processing. That policy prevents automatic paid work;
+    // it must not hide the interruption or present it as a complete meeting.
+    if interrupted_capture::hold(session) {return;}
+    if session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual {return;}
     if session.recovery.intent != "processMeeting" {
         session.recovery = CompanionV1MeetingRecovery::armed(&session.meeting_mode);
     }

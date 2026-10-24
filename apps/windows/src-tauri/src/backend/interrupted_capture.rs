@@ -52,6 +52,17 @@ pub(super) fn confirm(session: &mut CompanionV1HostSession) -> Result<(), String
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test] fn manual_processing_keeps_interruption_warning_without_auto_submitting_normal_audio() {
+        let mut s=original();s.processing_policy=crate::companion_v1::CompanionV1ProcessingPolicy::Manual;
+        s.recovery=Default::default();super::super::arm_meeting_recovery(&mut s);
+        assert_eq!(s.recovery.stage,"paused");assert_eq!(s.pending_reason.as_deref(),Some("capture_interrupted"));
+        assert!(s.recovery.next_retry_at_unix_ms.is_none());assert!(s.capture_incomplete);
+        let mut normal=original();normal.capture_incomplete=false;normal.processing_policy=s.processing_policy;
+        normal.recovery=Default::default();super::super::arm_meeting_recovery(&mut normal);
+        assert_eq!(normal.recovery.stage,"idle");assert_ne!(normal.recovery.intent,"processMeeting");
+        let mut pet=s;pet.recovery.intent=super::super::pet_chat::CAPTURE_INTENT.into();
+        super::super::arm_meeting_recovery(&mut pet);assert_eq!(pet.recovery.intent,super::super::pet_chat::CAPTURE_INTENT);
+    }
     fn original() -> CompanionV1HostSession {
         let mut snapshot=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
             crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("interrupted".into()))).unwrap();

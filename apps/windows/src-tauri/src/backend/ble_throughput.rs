@@ -146,6 +146,17 @@ pub(super) struct ConnectionSession {
     observation: Arc<SessionObservation>,
 }
 impl ConnectionSession {
+    /// Preserve the error that made this owner unusable before intentional
+    /// cleanup signals its watchers. Otherwise the outer guard can cancel
+    /// its own cleanup and replace the real failure with "owner released".
+    pub(super) fn retire_with_cause(&self, cause: &str) {
+        self.observation.terminal.send_if_modified(|state| {
+            if state.is_some() {return false;}
+            *state=Some(cause.to_owned());true
+        });
+        self.close();
+    }
+
     pub(super) fn is_open(&self) -> bool {
         self.observation.error().is_none()
             && self.handles.lock().unwrap_or_else(|error| error.into_inner()).is_some()
@@ -607,6 +618,25 @@ mod session_loss_tests {
         drop(cursor);std::fs::remove_dir_all(root).unwrap();
     }
 
+    #[tokio::test]
+    async fn retiring_failed_owner_keeps_primary_cleanup_cause_and_first_native_loss() {
+        let observed=Arc::new(SessionObservation::new());
+        observed.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        let owner=Arc::new(ConnectionSession{handles:Mutex::new(None),observation:observed.clone()});
+        let work_owner=owner.clone();
+        let cause="sealed stream release failed before reclaim: cannot unsubscribe lane B";
+        let result=observed.guard(async move {
+            work_owner.retire_with_cause(cause);
+            std::future::pending::<()>().await;Ok::<_,String>(())
+        }).await.unwrap_err();
+        assert_eq!(result,cause);observed.close_owner();assert_eq!(observed.error().as_deref(),Some(cause));
+        let radio=Arc::new(SessionObservation::new());
+        radio.observe(ADDRESS,Some(GattSessionStatus::Active),None);
+        radio.observe(ADDRESS,Some(GattSessionStatus::Closed),Some(BluetoothError::Success));
+        let first=radio.error().unwrap();
+        ConnectionSession{handles:Mutex::new(None),observation:radio.clone()}.retire_with_cause("later cleanup failure");
+        assert_eq!(radio.error().as_deref(),Some(first.as_str()));
+    }
     #[tokio::test]
     async fn session_loss_owner_release_and_old_callbacks_cannot_poison_new_session() {
         let old=SessionObservation::new();

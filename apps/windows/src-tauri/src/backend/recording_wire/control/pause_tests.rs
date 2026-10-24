@@ -56,7 +56,9 @@ fn actual_c_controls_match_type_and_only_stable_exact_reply_confirms() {
 fn pause_requires_explicit_coherent_capability_and_scoped_nonzero_sequence() {
     assert!(PausePeer::from_status(&[0;84]).unwrap().is_none());
     assert!(PausePeer::from_status(&capability(63)).unwrap().is_none());
-    for flags in [71,79,87,255] {assert!(PausePeer::from_status(&capability(flags)).is_err());}
+    for flags in [71,79,87,263,319,1023] {assert!(PausePeer::from_status(&capability(flags)).is_err());}
+    assert!(PausePeer::from_status(&capability(255)).unwrap().is_some(),"current bookmark capability is a valid superset");
+    assert!(PausePeer::from_status(&capability(511)).unwrap().is_some(),"explicit source boundaries require the matching reader");
     let peer=PausePeer::from_status(&capability(127)).unwrap().unwrap();
     let key=SessionKey{device_uid:peer.peer.uid,format_epoch:7,session_id:0x100000003};
     assert!(peer.request(Some(&key),4,110,101,0,1,false).is_ok());

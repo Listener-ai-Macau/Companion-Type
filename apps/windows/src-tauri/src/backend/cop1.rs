@@ -2,6 +2,9 @@
 //! pause events separately; it never inserts silence or resets the decoder.
 use std::io::{BufReader, Read};
 use serde::{Deserialize, Serialize};
+#[path="cop1_boundary.rs"]
+mod boundary;
+pub(crate) use boundary::{CodecBoundary,SampleBoundarySummary,SampleWindow};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize, Serialize)]
 #[serde(rename_all="camelCase", deny_unknown_fields)]
@@ -26,8 +29,23 @@ pub(crate) struct Timeline {
     pub padding_bytes: u64,
     pub pause_open_at_end: bool,
     pub ended_paused: bool,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub sample_boundary: Option<SampleBoundarySummary>,
 }
 impl Timeline {
+    pub(crate) fn source_origin_samples(&self)->u64 {
+        self.sample_boundary.map_or(320,|b|b.source_origin_samples)
+    }
+    pub(crate) fn playback_samples(&self)->u64 {
+        self.sample_boundary.map_or_else(||self.captured_samples.saturating_sub(320),|b|b.written_samples)
+    }
+    pub(crate) fn playback_position(&self,source:u64)->u64 {
+        source.saturating_sub(self.source_origin_samples()).min(self.playback_samples())
+    }
+    pub(crate) fn apply_boundary(&mut self,b:SampleBoundarySummary) {
+        self.captured_samples=b.valid_source_samples.unwrap_or(b.written_samples);
+        self.sample_boundary=Some(b);
+    }
     pub(crate) fn push(&mut self, event: Event) -> Result<(),String> {
         if self.ended_paused || event.sequence==0 || event.sample_offset%320!=0
             || self.events.last().into_iter().chain(self.bookmarks.last()).any(|last|
@@ -72,7 +90,7 @@ impl Timeline {
     }
 }
 
-pub(crate) enum Record { Audio(Vec<u8>), Event(Event) }
+pub(crate) enum Record { Audio(Vec<u8>), Event(Event), Boundary(CodecBoundary) }
 #[derive(Clone, Copy, Debug, Default)]
 pub(crate) struct Summary {
     pub frames: u64,
@@ -83,6 +101,8 @@ pub(crate) struct Summary {
     pub pause_open: bool,
     pub ended_paused: bool,
     pub partial: bool,
+    pub codec_config: Option<CodecBoundary>,
+    pub codec_end: Option<CodecBoundary>,
 }
 pub(crate) struct Reader<R: Read> {
     input: BufReader<R>,
@@ -98,12 +118,13 @@ pub(crate) struct Reader<R: Read> {
     last_bookmark_sequence:u32,
 }
 impl<R: Read> Reader<R> {
+    pub(crate) fn position(&self)->u64 {self.summary.encoded_bytes}
     pub(crate) fn new(input: R, source_offset: u64, live_prefix: bool) -> Result<Self,String> {
         let mut input=BufReader::new(input);let mut header=[0;12];
         input.read_exact(&mut header).map_err(|_|"truncated COP1 header")?;
         let rate=u32::from_le_bytes(header[8..12].try_into().unwrap());
         if &header[..4]!=b"COP1" || header[5]!=1 ||
-            !matches!((header[4],header[7]),(1,0)|(2,1)|(3,3)) ||
+            !matches!((header[4],header[7]),(1,0)|(2,1)|(3,3)|(4,7)) ||
             !matches!(header[6],10|20|40|60) ||
             !matches!(rate,8000|12000|16000|24000|48000) ||
             (header[4]>=2 && (header[6]!=20 || rate!=16000 || source_offset%320!=0)) {
@@ -138,8 +159,28 @@ impl<R: Read> Reader<R> {
             if self.schema>=2 && count==0 {
                 let mut wire=[0;32];
                 if !self.exact(&mut wire[2..])? {return Ok(None);}
+                if self.schema==4 && &wire[2..6]==b"CDB1" {
+                    let boundary=CodecBoundary::decode(&wire)?;
+                    let current=self.source_offset.checked_add(self.summary.frames.checked_mul(320)
+                        .ok_or("COP1 source sample overflow")?).ok_or("COP1 source sample overflow")?;
+                    match boundary.kind {
+                        1 if begin==12 && self.summary.codec_config.is_none() &&
+                            boundary.encoded_samples==self.source_offset => self.summary.codec_config=Some(boundary),
+                        2 if begin%248==0 && self.summary.codec_end.is_none() &&
+                            self.summary.codec_config.is_some_and(|config|config.delay_samples==boundary.delay_samples) &&
+                            boundary.encoded_samples==current.checked_add(320).ok_or("COP1 source sample overflow")? &&
+                            (boundary.valid_source_samples==current ||
+                             boundary.valid_source_samples==current.checked_add(160).ok_or("COP1 source sample overflow")?) =>
+                                self.summary.codec_end=Some(boundary),
+                        _=>return Err("COP1 codec boundary order/sample mismatch".into()),
+                    }
+                    self.summary.event_bytes+=32;
+                    return Ok(Some(Record::Boundary(boundary)));
+                }
                 if begin%248!=0 || &wire[2..6]!=b"CPG1" || wire[7]!=0 ||
-                    !(matches!(wire[6],1..=3) || (self.schema==3 && wire[6]==4)) || crc32fast::hash(&wire[..28])!=u32::from_le_bytes(wire[28..].try_into().unwrap()) {
+                    !(matches!(wire[6],1..=3) || (self.schema>=3 && wire[6]==4)) ||
+                    (self.schema==4 && (self.summary.codec_config.is_none() || self.summary.codec_end.is_some())) ||
+                    crc32fast::hash(&wire[..28])!=u32::from_le_bytes(wire[28..].try_into().unwrap()) {
                     return Err("invalid COP1 pause event alignment/schema/CRC".into());
                 }
                 let event=Event{kind:wire[6],sequence:u32::from_le_bytes(wire[8..12].try_into().unwrap()),
@@ -162,8 +203,17 @@ impl<R: Read> Reader<R> {
                 self.last_event=Some(event);self.summary.event_bytes+=32;
                 return Ok(Some(Record::Event(event)));
             }
-            if count==0 || count>1275 || (self.schema>=2 && (count!=40 || self.summary.pause_open || self.summary.ended_paused)) {
+            let drain=self.schema==4 && self.summary.codec_end.is_some();
+            if count==0 || count>1275 ||
+                (self.schema==4 && self.summary.codec_config.is_none()) ||
+                (self.schema>=2 && (count!=40 || ((self.summary.pause_open || self.summary.ended_paused) && !drain))) {
                 return Err("invalid COP1 audio record or audio inside paused interval".into());
+            }
+            if let Some(end)=self.summary.codec_end {
+                let after=self.source_offset.checked_add(self.summary.frames.checked_add(1)
+                    .and_then(|frames|frames.checked_mul(320)).ok_or("COP1 source sample overflow")?)
+                    .ok_or("COP1 source sample overflow")?;
+                if after>end.encoded_samples {return Err("COP1 audio exceeds declared encoded end".into());}
             }
             let mut packet=vec![0;count];if !self.exact(&mut packet)? {return Ok(None);}
             self.summary.frames+=1;self.summary.audio_packet_bytes+=count as u64+2;
@@ -171,7 +221,8 @@ impl<R: Read> Reader<R> {
         }
     }
     pub(crate) fn finish(&self, allow_open_pause:bool) -> Result<Summary,String> {
-        if !self.done || (self.summary.pause_open && !allow_open_pause) {
+        if !self.done || (self.summary.pause_open && !allow_open_pause) ||
+            (self.schema==4 && self.summary.codec_config.is_none() && !self.live_prefix) {
             return Err("COP1 finalized timeline has an unresolved pause".into());
         }
         Ok(self.summary)
@@ -195,6 +246,49 @@ pub(crate) mod tests {
     pub(crate) fn fixture(base:u64) -> Vec<u8> {
         let mut p=b"COP1\x02\x01\x14\x01\x80\x3e\x00\x00".to_vec();audio(&mut p,2);
         event(&mut p,1,1,base+640,40);event(&mut p,2,2,base+640,5040);audio(&mut p,2);p
+    }
+    fn codec_record(p:&mut Vec<u8>,kind:u8,encoded:u64,valid:u64) {
+        if kind==2 {while p.len()%248!=0 {p.push(255);}}
+        let mut w=[0u8;32];w[2..6].copy_from_slice(b"CDB1");w[6]=kind;
+        w[8..12].copy_from_slice(&40u32.to_le_bytes());w[12..20].copy_from_slice(&encoded.to_le_bytes());
+        w[20..28].copy_from_slice(&valid.to_le_bytes());let crc=crc32fast::hash(&w[..28]);
+        w[28..].copy_from_slice(&crc.to_le_bytes());p.extend_from_slice(&w);
+    }
+    fn explicit(base:u64)->Vec<u8> {
+        let mut p=b"COP1\x04\x01\x14\x07\x80\x3e\x00\x00".to_vec();
+        codec_record(&mut p,1,base,u64::MAX);p
+    }
+    fn observe_explicit(p:&[u8],base:u64,window:&mut SampleWindow)->Result<Summary,String> {
+        let mut reader=Reader::new(p,base,false)?;
+        while let Some(record)=reader.next()? {match record {
+            Record::Boundary(boundary)=>window.observe(boundary)?,
+            Record::Audio(_)=>{window.packet(320)?;},
+            Record::Event(_)=>{if !window.event_allowed(){return Err("event after close".into());}},
+        }}
+        reader.finish(false)
+    }
+    #[test] fn explicit_end_before_drain_has_separate_source_and_encoded_counts() {
+        let mut p=explicit(0);audio(&mut p,2);codec_record(&mut p,2,960,640);audio(&mut p,1);
+        let mut window=SampleWindow::new(4,320).unwrap();let summary=observe_explicit(&p,0,&mut window).unwrap();
+        assert_eq!(summary.frames,3);assert_eq!(summary.codec_end.unwrap().valid_source_samples,640);
+        assert_eq!(window.finish(false).unwrap().written_samples,640);
+        audio(&mut p,1);assert!(observe_explicit(&p,0,&mut SampleWindow::new(4,320).unwrap()).is_err());
+        let mut no_config=b"COP1\x04\x01\x14\x07\x80\x3e\x00\x00".to_vec();audio(&mut no_config,1);
+        assert!(observe_explicit(&no_config,0,&mut SampleWindow::new(4,320).unwrap()).is_err());
+    }
+    #[test] fn declared_close_can_finish_in_successor_without_repeating_codec_delay() {
+        let mut first=explicit(0);audio(&mut first,2);codec_record(&mut first,2,960,640);
+        let mut window=SampleWindow::new(4,320).unwrap();observe_explicit(&first,0,&mut window).unwrap();
+        assert!(window.finish(false).is_err());assert_eq!(window.finish(true).unwrap().valid_source_samples,None);
+        let mut next=explicit(640);audio(&mut next,1);observe_explicit(&next,640,&mut window).unwrap();
+        assert_eq!(window.finish(false).unwrap().written_samples,640);
+    }
+    #[test] fn stopped_pause_allows_only_declared_drain_and_no_new_control_or_source_audio() {
+        let mut p=explicit(0);audio(&mut p,2);event(&mut p,1,1,640,40);event(&mut p,3,2,640,5040);
+        codec_record(&mut p,2,960,640);audio(&mut p,1);
+        let mut window=SampleWindow::new(4,320).unwrap();let summary=observe_explicit(&p,0,&mut window).unwrap();
+        assert!(summary.ended_paused);assert_eq!(window.finish(false).unwrap().written_samples,640);
+        event(&mut p,4,1,960,5060);assert!(observe_explicit(&p,0,&mut SampleWindow::new(4,320).unwrap()).is_err());
     }
     fn parse(p:&[u8],base:u64,open:bool)->Result<Timeline,String> {
         let mut reader=Reader::new(p,base,false)?;let mut timeline=Timeline::default();

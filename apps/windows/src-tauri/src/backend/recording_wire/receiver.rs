@@ -435,16 +435,19 @@ impl Receiver {
     }
     fn verify_audio_shape(&self,a:&Audio,descriptors:&[Descriptor])->Result<(),String> {
         let plan = plan_group(&descriptors, &BTreeSet::new())?;
-        let expected = plan
-            .sample_count
-            .checked_sub(320)
-            .and_then(|s| s.checked_mul(2))
+        let mut files=Vec::with_capacity(descriptors.len());
+        for d in descriptors {files.push(verify_file(read_locked(&self.payload_path(d))?,d)?);}
+        let timeline=collect_timeline(descriptors,&mut files)?;
+        let samples=timeline.as_ref().map_or_else(||plan.sample_count.checked_sub(320).ok_or_else(fail),
+            |t|Ok(t.playback_samples()))?;
+        let expected = samples.checked_mul(2)
             .and_then(|b| b.checked_add(44))
             .ok_or_else(fail)?;
         if !plan.metadata_complete
             || expected > MAX_PCM_BYTES + 44
-            || a.samples != plan.sample_count - 320
+            || a.samples != samples
             || a.bytes != expected
+            || a.timeline != timeline
         {
             return Err(fail());
         }
@@ -481,16 +484,18 @@ impl Receiver {
             self.verify_audio(a)?;
             return Ok(self.audio_path());
         }
-        let samples = plan.sample_count.checked_sub(320).ok_or_else(fail)?;
-        if samples == 0 || samples > MAX_PCM_BYTES / 2 {
-            return Err("录音超过当前WAV时长上限，原始分段已保留。".into());
-        }
         let descriptors = self.descriptors()?;
         // Lock the exact handles before verification and keep them through
         // decode: another process cannot substitute a body after its hash check.
         let mut files = Vec::with_capacity(descriptors.len());
         for d in &descriptors {
             files.push(verify_file(read_locked(&self.payload_path(d))?, d)?);
+        }
+        let source_timeline=collect_timeline(&descriptors,&mut files)?;
+        let samples=source_timeline.as_ref().map_or_else(||plan.sample_count.checked_sub(320).ok_or_else(fail),
+            |t|Ok(t.playback_samples()))?;
+        if samples == 0 || samples > MAX_PCM_BYTES / 2 {
+            return Err("录音超过当前WAV时长上限，原始分段已保留。".into());
         }
         let path = self.audio_path();
         if regular(&path)? {
@@ -609,9 +614,9 @@ fn verify_file(mut file: File, d: &Descriptor) -> Result<File, String> {
     while let Some(record)=reader.next()? {
         if let cop1::Record::Audio(packet)=record {if packet.len()>400 {return Err(fail());}}
     }
-    let summary=reader.finish(d.flags&4!=0)?;drop(reader);
+    let schema=reader.schema;let summary=reader.finish(d.flags&4!=0)?;drop(reader);
     if summary.frames * 320 != d.sample_count || summary.encoded_bytes!=u64::from(d.encoded_length)
-        || (summary.ended_paused && d.flags&2==0)
+        || (summary.ended_paused && d.flags&2==0 && !(schema==4&&summary.codec_end.is_some()))
         || hashed.bytes!=u64::from(d.encoded_length)
         || hashed.crc.finalize() != d.content_crc32
         || hashed.sha.finalize().as_slice() != d.sha256
@@ -630,27 +635,27 @@ fn decode(
     use denzic_host_audio_v1_core::{opus_decoder::MonoDecoder, wav::WavWriter};
     let mut decoder = MonoDecoder::new(16000)?;
     let mut wav = WavWriter::create(output).map_err(|e|export::local_write_error("创建录音回听文件",&e))?;
-    let mut frames = 0u64;
+    let mut window=None;
     let mut schema=None;let mut timeline=None;
     for (d, file) in ds.iter().zip(files) {
         file.seek(SeekFrom::Start(0)).map_err(|_| fail())?;
         let mut reader=cop1::Reader::new(file,d.sample_offset,false)?;
         select_schema(&mut schema,&mut timeline,reader.schema)?;
+        if window.is_none(){window=Some(cop1::SampleWindow::new(reader.schema,320)?);}
         while let Some(record)=reader.next()? {
             let packet=match record {
                 cop1::Record::Audio(packet)=>packet,
-                cop1::Record::Event(event)=>{timeline.as_mut().ok_or_else(fail)?.push(event)?;continue;},
+                cop1::Record::Event(event)=>{if !window.as_ref().ok_or_else(fail)?.event_allowed(){return Err(fail());}
+                    timeline.as_mut().ok_or_else(fail)?.push(event)?;continue;},
+                cop1::Record::Boundary(b)=>{window.as_mut().ok_or_else(fail)?.observe(b)?;continue;},
             };
             let pcm = decoder.decode(&packet)?;
             if pcm.len() != 320 {
                 return Err(fail());
             }
-            frames += 1;
-            if frames == 1 {
-                continue;
-            } // One established pre-skip for the whole session.
-            let pcm = pcm
-                .into_iter()
+            let range=window.as_mut().ok_or_else(fail)?.packet(pcm.len())?;
+            let pcm = pcm[range]
+                .iter().copied()
                 .flat_map(|v| v.clamp(-29900, 29900).to_le_bytes())
                 .collect::<Vec<_>>();
             wav.append_bytes(&pcm).map_err(|e|export::local_write_error("写入录音回听文件",&e))?;
@@ -658,7 +663,9 @@ fn decode(
         let summary=reader.finish(d.flags&4!=0)?;
         if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
     }
-    if (frames - 1) * 320 != expected {
+    let boundary=window.as_ref().ok_or_else(fail)?.finish(allow_incomplete_source_end(ds))?;
+    if schema==Some(4){timeline.as_mut().ok_or_else(fail)?.apply_boundary(boundary);}
+    if boundary.written_samples != expected {
         return Err(fail());
     }
     wav.finalize().map_err(|e|export::local_write_error("完成录音回听文件",&e))?;
@@ -673,28 +680,41 @@ fn decode(
 
 fn select_schema(schema:&mut Option<u8>,timeline:&mut Option<cop1::Timeline>,current:u8)->Result<(),String> {
     if schema.is_some_and(|old|old!=current) {return Err("同一录音的原音格式发生变化，原件已保留。".into());}
-    if schema.is_none() {if matches!(current,2|3) {*timeline=Some(cop1::Timeline::default());}*schema=Some(current);}
+    if schema.is_none() {if matches!(current,2..=4) {*timeline=Some(cop1::Timeline::default());}*schema=Some(current);}
     Ok(())
 }
 fn collect_timeline(ds:&[Descriptor],files:&mut [File])->Result<Option<cop1::Timeline>,String> {
-    let mut schema=None;let mut timeline=None;
+    let mut schema=None;let mut timeline=None;let mut window=None;
     for (d,file) in ds.iter().zip(files) {
         file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;
         let mut reader=cop1::Reader::new(file,d.sample_offset,false)?;
         select_schema(&mut schema,&mut timeline,reader.schema)?;
+        if window.is_none(){window=Some(cop1::SampleWindow::new(reader.schema,320)?);}
         while let Some(record)=reader.next()? {
-            if let cop1::Record::Event(event)=record {timeline.as_mut().ok_or_else(fail)?.push(event)?;}
+            match record {
+                cop1::Record::Audio(_)=>{window.as_mut().ok_or_else(fail)?.packet(320)?;},
+                cop1::Record::Boundary(b)=>window.as_mut().ok_or_else(fail)?.observe(b)?,
+                cop1::Record::Event(event)=>{if !window.as_ref().ok_or_else(fail)?.event_allowed(){return Err(fail());}
+                    timeline.as_mut().ok_or_else(fail)?.push(event)?;},
+            }
         }
         let summary=reader.finish(d.flags&4!=0)?;
         if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
     }
+    if let Some(window)=window {let b=window.finish(allow_incomplete_source_end(ds))?;
+        if schema==Some(4){timeline.as_mut().ok_or_else(fail)?.apply_boundary(b);}}
     Ok(timeline)
+}
+fn allow_incomplete_source_end(ds:&[Descriptor])->bool {
+    ds.last().is_none_or(|last|last.flags&2==0||last.flags&4!=0)
 }
 
 #[cfg(test)]
 mod pause_tests;
 #[cfg(test)]
 mod device_bookmark_tests;
+#[cfg(test)]
+mod source_boundary_tests;
 
 mod probe;
 mod publish;

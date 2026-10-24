@@ -211,9 +211,9 @@ impl Descriptor {
                 if packet.len()>400 {return Err(fail("invalid complete COP1 packet"));}
             }
         }
-        let summary=reader.finish(self.flags & RECOVERED!=0)?;
+        let schema=reader.schema;let summary=reader.finish(self.flags & RECOVERED!=0)?;
         if summary.frames * 320 != self.sample_count || summary.encoded_bytes!=u64::from(self.encoded_length)
-            || (summary.ended_paused && self.flags & LAST==0) {
+            || (summary.ended_paused && self.flags & LAST==0 && !(schema==4&&summary.codec_end.is_some())) {
             return Err(fail("segment frame count disagrees with sample count"));
         }
         Ok(())

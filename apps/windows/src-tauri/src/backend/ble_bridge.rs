@@ -1363,6 +1363,13 @@ async fn close_native_device(device: &NativeDevice) {
     let _ = disconnect_native_device(device).await;
 }
 
+async fn retire_native_device(device: &NativeDevice, cause: &str) {
+    eprintln!("BLE owner_retired cause={cause} original_recording_retained=true");
+    #[cfg(windows)]
+    if let Some(session)=&device.connection_session {session.retire_with_cause(cause);}
+    close_native_device(device).await;
+}
+
 async fn remember_prepared_device(device: NativeDevice) -> Result<(), String> {
     if super::lifecycle::PROCESS.requested() {
         close_native_device(&device).await;return Err(super::lifecycle::CLOSING.into());
@@ -5109,7 +5116,9 @@ impl pull_recovery::Attempt for RecordingPull<'_> {
             if result.is_err() {
                 let cleanup=PullSession::quiesce_for_control(self.session).await;
                 if cleanup.is_err() || result.as_ref().err().is_some_and(|e|e.contains(pull_session::RETIRED_CLEANUP)) {
-                    close_native_device(self.device).await;
+                    let cause=pull_session::finish_receive::<Vec<u8>>(result,cleanup).unwrap_err();
+                    retire_native_device(self.device,&cause).await;
+                    return Err(cause);
                 }
                 return pull_session::finish_receive(result,cleanup);
             }

@@ -268,10 +268,11 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     let library: Vec<crate::companion_v1::CompanionV1HostSession> =
         serde_json::from_slice(&fs::read(&index).map_err(|_| fail())?).map_err(|_| fail())?;
     check!(
-        "complete-library-arms-real-product-recovery",
+        "complete-library-keeps-manual-processing-policy",
         library.len() == 1
             && library[0].audio_stored
-            && library[0].recovery.intent == "processMeeting"
+            && library[0].processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
+            && library[0].recovery.intent != "processMeeting"
             && library[0].chunks.len() == 4
     );
     check!(

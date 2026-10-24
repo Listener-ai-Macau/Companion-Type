@@ -24,11 +24,11 @@ pub fn prepare(snapshot:&CompanionV1Snapshot,id:&str)->Result<Option<PauseTimeli
  Ok(timeline.as_ref().map(view))
 }
 fn view(timeline:&super::cop1::Timeline)->PauseTimeline {
- let captured_duration_ms=timeline.captured_samples.saturating_sub(320)/16;
+ let captured_duration_ms=timeline.playback_samples()/16;
  let mut gaps=Vec::new();
  for (i,pause) in timeline.events.iter().enumerate().filter(|(_,e)|e.kind==1) {
   let end=timeline.events.get(i+1).filter(|e|matches!(e.kind,2|3));
-  gaps.push(PauseGap{audio_position_ms:(pause.sample_offset.saturating_sub(320)/16).min(captured_duration_ms),
+  gaps.push(PauseGap{audio_position_ms:timeline.playback_position(pause.sample_offset)/16,
    paused_at_ms:pause.elapsed_ms,resumed_at_ms:end.filter(|e|e.kind==2).map(|e|e.elapsed_ms),
    duration_ms:end.map(|e|e.elapsed_ms-pause.elapsed_ms),ended_during_pause:end.is_some_and(|e|e.kind==3)});
  }

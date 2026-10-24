@@ -184,7 +184,11 @@ pub(super) async fn follow_tail(device:&NativeDevice,
     let received=pull_recording_bytes(device,chars,&mut session,&e,&device.address,
         device.address_type,Some(bytes),Some(job),None).await;
     let cleanup=PullSession::quiesce_for_control(&mut session).await;
-    if cleanup.is_err() {close_native_device(device).await;}
+    if cleanup.is_err() {
+        let cause=super::pull_session::finish_receive::<Vec<u8>>(received,cleanup).unwrap_err();
+        retire_native_device(device,&cause).await;
+        return Err(cause);
+    }
     let received=super::pull_session::finish_receive(received,cleanup)?;
     job.saving();cursor.save(&tail,&received,peer)?;
     if let Some(live)=live {live.tail(&tail,&received);}

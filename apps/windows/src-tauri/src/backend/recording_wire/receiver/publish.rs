@@ -10,7 +10,7 @@ impl Receiver {
             if !segment.received {continue;}
             let mut file=read_locked(&self.payload_path(&d))?;let mut head=[0;12];
             file.read_exact(&mut head).map_err(|_|fail())?;
-            if head[4]!=3 {continue;} // Existing schema1/2 recordings are unchanged.
+            if !matches!(head[4],3|4) {continue;} // Existing schema1/2 recordings are unchanged.
             file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;
             file=verify_file(file,&d)?;file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;
             let mut reader=cop1::Reader::new(file,d.sample_offset,false)?;
@@ -31,6 +31,9 @@ impl Receiver {
             // Schema1 has no pause events; verify_audio/decode still prove the
             // exact frame/sample count and one 320-sample logical pre-skip.
             .or_else(||a.samples.checked_add(320)))
+    }
+    fn source_origin_samples(&self)->u64 {
+        self.receipt.audio.as_ref().and_then(|a|a.timeline.as_ref()).map_or(320,|t|t.source_origin_samples())
     }
     /// An idempotent user STOP can return the existing completed result only
     /// after reopening the exact receipt and rechecking original segments/WAV.
@@ -113,6 +116,7 @@ impl Receiver {
         let logical_key = ds.first().ok_or_else(fail)?.key.public_key();
         let device_marks=self.received_device_marks()?;
         let complete_samples=self.complete_captured_samples();
+        let source_origin=self.source_origin_samples();
         let mut chunks = Vec::new();
         let mut bytes = 0u64;
         for (segment, d) in self.receipt.segments.iter().zip(&ds) {
@@ -247,10 +251,10 @@ impl Receiver {
                     s.recovery = Default::default();
                 }
             }
-            crate::backend::recording_bookmarks::device::merge(s,&device_marks,
-                &SessionKey::from_public(&logical_key)?,complete_samples)?;
-            crate::backend::recording_bookmarks::logical::bind(s,
-                &SessionKey::from_public(&logical_key)?,complete_samples)?;
+            crate::backend::recording_bookmarks::device::merge_with_origin(s,&device_marks,
+                &SessionKey::from_public(&logical_key)?,complete_samples,source_origin)?;
+            crate::backend::recording_bookmarks::logical::bind_with_origin(s,
+                &SessionKey::from_public(&logical_key)?,complete_samples,source_origin)?;
             *sessions = next;
             Ok(())
         })?;
@@ -295,10 +299,10 @@ impl Receiver {
         {
             return Err(fail());
         }
-        crate::backend::recording_bookmarks::device::require_saved(row,&self.received_device_marks()?,
-            &SessionKey::from_public(&key)?,self.complete_captured_samples())?;
-        crate::backend::recording_bookmarks::logical::require_saved(row,
-            &SessionKey::from_public(&key)?,self.complete_captured_samples())?;
+        crate::backend::recording_bookmarks::device::require_saved_with_origin(row,&self.received_device_marks()?,
+            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples())?;
+        crate::backend::recording_bookmarks::logical::require_saved_with_origin(row,
+            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples())?;
         let mut acks = Vec::new();
         for (s, d) in self.receipt.segments.iter().zip(self.descriptors()?) {
             if !s.received || s.acked {
