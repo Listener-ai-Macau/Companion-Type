@@ -6,6 +6,7 @@ import { CompanionSetup } from './CompanionSetup';
 import { CompanionHelp } from './CompanionHelp';
 import { MinutesModeTabs } from './MinutesModeTabs';
 import { DeleteConfirmation } from './DeleteConfirmation';
+import {CompanionDiagnosticsPreview} from './CompanionDiagnosticsPreview';
 import {CompanionPetFind,type PetFindRequest,type PetFindReport} from './CompanionPetFind';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
@@ -192,6 +193,7 @@ export interface CompanionDashboardProps {
   onStopBoardOnlineLive?: () => void | Promise<void>;
   onSaveProductSettings?: (patch: CompanionProductSettingsPatch) => void | Promise<void>;
   onExportMeeting?: (request: CompanionMeetingExportRequest) => Promise<{ path: string; bytes: number; warning?: string | null } | null>;
+  onPreviewDiagnostics?:()=>Promise<unknown>;
   onExportDiagnostics?: (includeDevice: boolean) => Promise<{path:string;bytes:number;warning?:string|null}|null>;
   onPrepareAudioComponents?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
@@ -335,6 +337,7 @@ export function CompanionDashboard({
   onSaveProductSettings,
   onExportMeeting,
   onExportDiagnostics,
+  onPreviewDiagnostics,
   onPrepareAudioComponents,
   onCheckService,
   onPrepareAudio,
@@ -2271,7 +2274,8 @@ export function CompanionDashboard({
               <p className="ct-step-meta" role="status">{resourceMsg}</p>
             ) : null}
             <div className="ct-section-title" id="ct-log-support" tabIndex={-1} role="region" aria-label="日志与诊断"><FileText size={18} /><span>日志与诊断</span></div>
-            <p className="ct-meeting-hint">保存连接、升级和音频处理的阶段记录，方便排查问题。不包含密钥、会议正文或原始录音。设备日志只保留最近的运行事件，重启会清空；本机日志按大小轮换。</p>
+            <CompanionDiagnosticsPreview blocked={controlsBusy||oobeBlockedByRecording} onPreview={onPreviewDiagnostics}/>
+            <p className="ct-meeting-hint">保存连接、升级和音频处理的阶段、电脑时间、程序指纹及本机录音关联标识，方便排查问题。不包含密钥、会议正文或原始录音。设备日志只保留最近的运行事件，重启会清空；本机日志按大小轮换。</p>
             <div className="ct-button-row">
               {[false, true].map((includeDevice) => <button key={String(includeDevice)} type="button" className="ct-action"
                 disabled={controlsBusy || oobeBlockedByRecording || !onExportDiagnostics || (includeDevice && !connected)}

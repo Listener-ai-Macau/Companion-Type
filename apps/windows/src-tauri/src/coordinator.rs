@@ -1,8 +1,7 @@
 //! Companion coordinator.
 //!
-//! Single owner of the Companion host workflow. The current backend is a
-//! deterministic fixture, but the public methods are the same surface the real
-//! BLE/audio/ASR backend will implement.
+//! Single owner of the Companion host workflow over the selected native or
+//! explicitly isolated fixture backend.
 
 use std::sync::{
     atomic::{AtomicBool, AtomicU8, Ordering},
@@ -448,6 +447,7 @@ impl CompanionCoordinator {
             crate::backend::recording_sync::yield_background();
         }
         let operation = if request.action == crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings { Operation::RecordingSync } else { Operation::DeviceControl };
+        let _diagnostic_scope=crate::backend::diagnostics::RecordingScope::enter_optional(request.session_id.as_deref());
         let span = Span::start(operation);
         let result = self.apply_control_inner(request);
         let error = match &result {

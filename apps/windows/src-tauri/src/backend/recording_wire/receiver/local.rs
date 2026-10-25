@@ -108,7 +108,7 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
             // no fabricated radio Peer/ACK is used for local recovery.
         })();
         match result {
-            Ok(RestoreOutcome::Restored(saved))=>report.restored.push(saved),
+            Ok(RestoreOutcome::Restored(saved))=>{crate::backend::diagnostics::recording_restored(&saved.session_id);report.restored.push(saved);},
             Ok(RestoreOutcome::Waiting)=>report.waiting_for_segments.push(row.id.clone()),
             Ok(RestoreOutcome::Unchanged)=>(),
             Err(error)=>report.failures.push(LocalRestoreFailure {session_id:row.id.clone(),error}),
@@ -410,6 +410,31 @@ mod tests {
         assert!(Receiver::verified_received_catalogue(&root,&d.key,device).is_err());
         assert_eq!(fs::read(&receipt).unwrap(),before);assert_eq!(session_store::load(&index).state.status,"ready");
         let _=id;fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn diagnostic_link_follows_saved_restored_and_failed_processing_without_content_or_repeated_checkpoint(){
+        let ((root,index,d,_payload,id,audio,wav,_receipt),events)=crate::backend::diagnostics::capture_with_test_trace(saved_case);
+        let saved:Vec<_>=events.iter().filter(|event|matches!(event.operation,crate::backend::diagnostics::Operation::RecordingSaved)).collect();
+        assert_eq!(saved.len(),2);let trace=saved[0].recording_trace.unwrap();
+        let (_,repeat)=crate::backend::diagnostics::capture_with_test_trace(||{
+            let mut receiver=Receiver::open(&root,&d.encode().unwrap()).unwrap();receiver.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
+        });assert!(!repeat.iter().any(|e|matches!(e.operation,crate::backend::diagnostics::Operation::RecordingSaved)));
+        fs::remove_file(&audio).unwrap();
+        let (_,chain)=crate::backend::diagnostics::capture_with_test_trace(||{
+            let restored=restore_local(&root,&index).unwrap();assert_eq!(restored.restored.len(),1);assert_eq!(restored.restored[0].session_id,id);
+            let missing=root.join("missing-for-preflight.wav").to_string_lossy().into_owned();
+            assert!(crate::backend::transcription::CompanionTranscriptionManager::new().transcribe_session_owned(&id,None,&[missing]).is_err());
+            let mut row=crate::backend::persistence::load_sessions_from(&index).unwrap().remove(0);
+            row.transcript_text.clear();row.transcript_final=false;row.transcript_review=None;row.utterances.clear();row.transcript_segments=0;
+            let minutes=crate::backend::minutes::CompanionMinutesManager::new().generate(&row,"diagnostic-model");assert_ne!(minutes.quality,"final");
+        });
+        for operation in [crate::backend::diagnostics::Operation::RecordingRestored,crate::backend::diagnostics::Operation::Transcription,crate::backend::diagnostics::Operation::Minutes]{
+            let matching:Vec<_>=chain.iter().filter(|event|std::mem::discriminant(&event.operation)==std::mem::discriminant(&operation)).collect();
+            assert_eq!(matching.len(),2);assert!(matching.iter().all(|event|event.recording_trace==Some(trace)));
+        }
+        let json=serde_json::to_string(&chain).unwrap();assert!(!json.contains(&id)&&!json.contains("missing-for-preflight")&&!json.contains("C8:92"));
+        assert_eq!(fs::read(&audio).unwrap(),wav);fs::remove_dir_all(root).unwrap();
     }
 
 }

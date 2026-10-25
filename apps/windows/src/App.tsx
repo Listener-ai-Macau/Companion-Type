@@ -25,6 +25,7 @@ import {
   saveCompanionLibraryState,
   purgeCompanionLibrary,
   exportCompanionDiagnostics,
+  previewCompanionDiagnostics,
   prepareCompanionAudioComponents,
   checkCompanionService,
   prepareCompanionAudio,
@@ -240,6 +241,7 @@ export function App() {
       onControl={(request) => void runControl(request)}
       onExportMeeting={(request) => exclusive('refresh', () => exportCompanionMeeting(request))}
       onExportDiagnostics={isTauriRuntime() ? (includeDevice) => exclusive('refresh', () => exportCompanionDiagnostics(includeDevice)) : undefined}
+      onPreviewDiagnostics={isTauriRuntime() ? () => exclusive('refresh',previewCompanionDiagnostics) : undefined}
       onPrepareAudioComponents={isTauriRuntime() ? () => exclusive('refresh', prepareCompanionAudioComponents) : undefined}
       onCheckService={isTauriRuntime() ? (service) => exclusive('refresh', () => checkCompanionService(service)) : undefined}
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}

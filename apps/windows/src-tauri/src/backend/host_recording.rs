@@ -72,6 +72,7 @@ impl HostRecordingManager {
     pub fn start(&self, session_id: &str, title: &str) -> Result<HostRecordingStart, String> {
         let requested_mode = std::env::var("COMPANION_TYPE_HOST_RECORDING_MODE")
             .unwrap_or_else(|_| if cfg!(test) { "synthetic" } else { "real" }.to_string());
+        let _diagnostic_scope=super::diagnostics::RecordingScope::enter(session_id);
         super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStart).result(self.start_with_mode(session_id, title, &requested_mode, RealRecording::start))
     }
 
@@ -123,8 +124,10 @@ impl HostRecordingManager {
         &self,
         requested_session_id: Option<&str>,
     ) -> Result<Option<HostRecordingStop>, String> {
-        let span = super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStop);
+        let _diagnostic_scope=super::diagnostics::RecordingScope::enter_optional(requested_session_id);
+        let mut span = super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStop);
         let result = self.stop_inner(requested_session_id);
+        if let Ok(Some(report))=&result{span.bind_recording(&report.session_id);}
         let error = match &result { Err(error) => Some(error.as_str()), Ok(Some(report)) => report.capture_error.as_deref(), _ => None };
         span.finish(error);
         result

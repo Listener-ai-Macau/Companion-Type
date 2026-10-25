@@ -28,6 +28,7 @@ impl CompanionMinutesManager {
         session: &CompanionV1HostSession,
         generated_at: &str,
     ) -> CompanionV1MeetingMinutes {
+        let _diagnostic_scope=super::diagnostics::RecordingScope::enter(&session.id);
         let span = super::diagnostics::Span::start(super::diagnostics::Operation::Minutes);
         let input = super::transcript_review::minutes_input(session);
         let mut minutes = self.generate_inner(&input, generated_at);
@@ -39,6 +40,7 @@ impl CompanionMinutesManager {
     // Called only after the explicit revision-bound request passes preflight.
     // Original ASR/review remains untouched; only this provider input carries notes.
     pub fn generate_with_context(&self, session: &CompanionV1HostSession, generated_at: &str) -> CompanionV1MeetingMinutes {
+        let _diagnostic_scope=super::diagnostics::RecordingScope::enter(&session.id);
         let span = super::diagnostics::Span::start(super::diagnostics::Operation::Minutes);
         let mut input = super::transcript_review::minutes_input(session);
         input.meeting_notes = session.meeting_notes.clone();

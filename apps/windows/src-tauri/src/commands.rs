@@ -88,6 +88,15 @@ pub async fn prepare_companion_audio_components(coordinator: CompanionCoordinato
 }
 
 #[tauri::command]
+pub async fn preview_companion_diagnostics(coordinator:CompanionCoordinatorState<'_>)->Result<serde_json::Value,String>{
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||{
+        let snapshot=coordinator.snapshot()?;
+        Ok(crate::backend::diagnostics::preview(&snapshot))
+    }).await.map_err(|_|"无法读取本机日志预览".to_string())?
+}
+
+#[tauri::command]
 pub async fn export_companion_diagnostics(
     app: AppHandle, coordinator: CompanionCoordinatorState<'_>, include_device: bool,
 ) -> Result<Option<CompanionMeetingExportResult>, String> {

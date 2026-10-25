@@ -308,6 +308,7 @@ pub fn run() {
             commands::save_companion_library_lifecycle,
             commands::purge_companion_library,
             commands::export_companion_diagnostics,
+            commands::preview_companion_diagnostics,
             commands::prepare_companion_audio_components,
             commands::get_companion_backend_capabilities,
             commands::get_companion_ble_bridge_status,

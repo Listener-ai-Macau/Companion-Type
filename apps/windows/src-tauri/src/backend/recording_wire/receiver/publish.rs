@@ -163,9 +163,11 @@ impl Receiver {
         let reclaimed = plan.metadata_complete && !self.receipt.segments.is_empty()
             && self.receipt.segments.iter().all(|s| s.received && s.acked);
         let mut published_id = self.stem.clone();
+        let mut saved_checkpoint=None;
         session_store::update_checked(index, |sessions| {
             let mut next = sessions.clone();
             let binding = self.library_binding(&next, &logical_key)?;
+            let previous_saved=binding.map(|i|(next[i].audio_stored,next[i].capture_incomplete));
             if let Some(old) = binding.map(|i| &next[i]) {
                 if old.source != "boardDevice"
                     || (old.audio_path.as_deref().is_some_and(|p| p != audio_path)
@@ -256,11 +258,13 @@ impl Receiver {
                 &SessionKey::from_public(&logical_key)?,complete_samples,source_origin,playback_samples)?;
             crate::backend::recording_bookmarks::logical::bind_with_origin(s,
                 &SessionKey::from_public(&logical_key)?,complete_samples,source_origin,playback_samples)?;
+            if complete && previous_saved!=Some((true,s.capture_incomplete)){saved_checkpoint=Some(s.capture_incomplete);}
             *sessions = next;
             Ok(())
         })?;
         self.receipt.device = Some(device.into());
         self.save()?;
+        if let Some(fragment)=saved_checkpoint{crate::backend::diagnostics::recording_saved(&published_id,fragment);}
         Ok(published_id)
     }
     fn library_binding(&self, rows: &[crate::companion_v1::CompanionV1HostSession],

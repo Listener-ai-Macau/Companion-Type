@@ -93,6 +93,7 @@ impl CompanionTranscriptionManager {
     }
 
     pub fn transcribe_session_owned(&self, session: &str, primary: Option<&str>, chunks: &[String]) -> Result<CompanionTranscript, String> {
+        let _diagnostic_scope=super::diagnostics::RecordingScope::enter(session);
         let result = self.transcribe_session(primary, chunks);
         let paths: Vec<String> = primary.iter().map(|p| p.to_string()).chain(chunks.iter().cloned()).collect();
         // Bind successful chunks even when a later request failed. Recovery and

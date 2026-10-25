@@ -126,6 +126,7 @@ export async function prepareCompanionAudio(sessionId: string): Promise<{session
   return { sessionId, url: convertFileSrc(prepared.path), sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline };
 }
 
+export async function previewCompanionDiagnostics():Promise<unknown>{return invoke('preview_companion_diagnostics');}
 export async function exportCompanionDiagnostics(includeDevice: boolean): Promise<{path:string;bytes:number;warning?:string|null}|null> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中导出真实诊断日志；浏览器演示不生成设备证据。');
   return invoke('export_companion_diagnostics', { includeDevice });
