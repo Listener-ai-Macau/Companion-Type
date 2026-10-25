@@ -1,4 +1,4 @@
-import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion/core';
+import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionHelp } from './CompanionHelp';
