@@ -689,8 +689,9 @@ export function CompanionDashboard({
     && !recoveryView?.isProcessing
     && hasSyncedAudio,
   );
-  const canEraseAudio = !selectedSession?.organization?.protected&&Boolean(selectedSession?.audioPath || selectedSession?.audioBytes);
-  const canEraseTranscript = !selectedSession?.organization?.protected&&Boolean(selectedSession?.transcriptText || selectedSession?.minutes || offlineMinutes || onlineMinutes || selectedSession?.meetingNotes?.length);
+  const privacySelectionConfirmed = Boolean(selectedSession && snapshot?.host.selectedSessionId === selectedSession.id);
+  const canEraseAudio = privacySelectionConfirmed&&!selectedSession?.organization?.protected&&Boolean(selectedSession?.audioPath || selectedSession?.audioBytes);
+  const canEraseTranscript = privacySelectionConfirmed&&!selectedSession?.organization?.protected&&Boolean(selectedSession?.transcriptText || selectedSession?.minutes || offlineMinutes || onlineMinutes || selectedSession?.meetingNotes?.length);
   const hasVerifiedBoardCopy = Boolean(selectedSession?.deviceRecordingId != null
     && selectedSession.sourceDeviceId && selectedSession.deviceTotalLength
     && /^[0-9a-f]{64}$/i.test(selectedSession.deviceSha256 ?? '') && !selectedSession.deviceReclaimed);
@@ -1172,6 +1173,7 @@ export function CompanionDashboard({
   }, [pendingDelete, deleteContextValid]);
   const requestErase = (action: CompanionV1ControlAction, title: string, detail: string) => {
     if (controlsBusy || oobeBlockedByRecording) return;
+    if (action !== 'privacyEraseAll' && !privacySelectionConfirmed) return;
     deleteSubmitted.current = false;
     setPendingDelete({
       request: { action, sessionId: selectedSession?.id, deviceId: device?.deviceId ?? undefined },
@@ -2460,9 +2462,10 @@ export function CompanionDashboard({
               <p className="ct-step-meta">会议与原音保存在本机，直到你主动删除。另存的原音和导出文件由你自行保管，不会随会议删除。</p>
               <p className="ct-step-meta">本机清理不清除设备录音、宠物档案与记忆、其它电脑或远端服务资料。共享文件和无法确认归属的旧缓存会保留；完整历史资料擦除仍未提供。</p>
               <CompanionPrivacyCleanup result={privacy?.lastCleanup} />
+              {!privacySelectionConfirmed && allLibrarySessions.length ? <p className="ct-step-meta">逐条清理前，请先在“我的录音”打开要处理的那条。<button type="button" className="ct-text-button" onClick={()=>navigatePage('library')}>选择一条录音</button></p> : null}
               <p className="ct-step-meta">{selectedSession?.organization?.protected?'当前录音已受保护，解除前不能删除音频、文字或整场。':'普通删除先进入本机回收站，可恢复；永久清除在回收站单独确认。保护防误删，不是加密。'}</p>
               <div className="ct-button-row">
-                <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!selectedSession||!onSaveLibraryLifecycle||libraryUnsaved} onClick={()=>void changeCurrentLibraryState(selectedSession?.organization?.protected?'unprotect':'protect')}>{selectedSession?.organization?.protected?'解除当前录音保护':'保护当前录音'}</button>
+                <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!privacySelectionConfirmed||!onSaveLibraryLifecycle||libraryUnsaved} onClick={()=>void changeCurrentLibraryState(selectedSession?.organization?.protected?'unprotect':'protect')}>{selectedSession?.organization?.protected?'解除当前录音保护':'保护当前录音'}</button>
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !canEraseAudio} onClick={() => requestErase('privacyEraseAudio', '清理这场会议的本机音频？', '保留已有文字和纪要，取消尚未完成的自动处理。仅删除可确认归属的受管文件；共享或外部另存的文件会保留。设备原录音不受影响。')}>
                   <Eraser size={16} /><span>删音频</span>
                 </button>
@@ -2472,7 +2475,7 @@ export function CompanionDashboard({
                 <button
                   type="button"
                   className="ct-action ct-action-danger"
-                  disabled={controlsBusy || oobeBlockedByRecording || !selectedSession||!onSaveLibraryLifecycle||Boolean(selectedSession?.organization?.protected)||libraryUnsaved}
+                  disabled={controlsBusy || oobeBlockedByRecording || !privacySelectionConfirmed||!onSaveLibraryLifecycle||Boolean(selectedSession?.organization?.protected)||libraryUnsaved}
                   onClick={() => void changeCurrentLibraryState('trash')}
                   title="移入本机回收站，可恢复；不删除或确认消费设备录音"
                 >
