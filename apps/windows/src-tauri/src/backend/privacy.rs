@@ -127,7 +127,7 @@ impl PrivacyManager {
         let sources: Vec<String> = snapshot.host.sessions.iter().filter(|s| &s.id == selected_id)
             .flat_map(|s| s.audio_path.iter().chain(s.chunks.iter().filter_map(|c| c.path.as_ref()))).cloned().collect();
         if !self.erase_cache(snapshot, false, &sources, &retained_paths, &mut report) { return report; }
-        if !self.erase_generated(&sources, &retained_paths, &mut seen, &mut report) { return report; }
+        let Some(handled) = self.erase_generated(&sources, &retained_paths, &mut seen, &mut report) else { return report; };
         let protected: HashSet<_> = snapshot
             .host
             .sessions
@@ -151,6 +151,7 @@ impl PrivacyManager {
                 session.audio_path.as_deref(),
                 &mut seen,
                 &protected,
+                &handled,
                 &mut report,
             );
             for chunk in &session.chunks {
@@ -158,6 +159,7 @@ impl PrivacyManager {
                     chunk.path.as_deref(),
                     &mut seen,
                     &protected,
+                    &handled,
                     &mut report,
                 );
             }
@@ -172,12 +174,13 @@ impl PrivacyManager {
         let sources: Vec<String> = snapshot.host.sessions.iter()
             .flat_map(|s| s.audio_path.iter().chain(s.chunks.iter().filter_map(|c| c.path.as_ref()))).cloned().collect();
         if !self.erase_cache(snapshot, true, &sources, &[], &mut report) { return report; }
-        if !self.erase_generated(&sources, &[], &mut seen, &mut report) { return report; }
+        let Some(handled) = self.erase_generated(&sources, &[], &mut seen, &mut report) else { return report; };
         for session in &snapshot.host.sessions {
             self.erase_session_audio_once(
                 session.audio_path.as_deref(),
                 &mut seen,
                 &protected,
+                &handled,
                 &mut report,
             );
             for chunk in &session.chunks {
@@ -185,6 +188,7 @@ impl PrivacyManager {
                     chunk.path.as_deref(),
                     &mut seen,
                     &protected,
+                    &handled,
                     &mut report,
                 );
             }
@@ -221,16 +225,16 @@ impl PrivacyManager {
         }
     }
 
-    fn erase_generated(&self, sources: &[String], retained: &[String], seen: &mut HashSet<String>, report: &mut PrivacyEraseReport) -> bool {
-        let Some(root) = self.recording_root.as_ref() else { report.failed_files += 1; return false; };
+    fn erase_generated(&self, sources: &[String], retained: &[String], seen: &mut HashSet<String>, report: &mut PrivacyEraseReport) -> Option<HashSet<String>> {
+        let Some(root) = self.recording_root.as_ref() else { report.failed_files += 1; return None; };
         match super::audio_artifacts::erase(root, sources, retained) {
             Ok(generated) => {
                 report.deleted_files += generated.deleted; report.shared_files += generated.shared;
                 // A shared generated primary must also be protected from the
                 // conservative legacy/index-only fallback below.
                 seen.extend(generated.retained_paths.iter().map(|p| path_key(&p.to_string_lossy())));
-                true
-            }, Err(_) => { report.failed_files += 1; false },
+                Some(generated.handled_paths.iter().map(|p| path_key(&p.to_string_lossy())).collect())
+            }, Err(_) => { report.failed_files += 1; None },
         }
     }
 
@@ -239,6 +243,7 @@ impl PrivacyManager {
         path: Option<&str>,
         seen: &mut HashSet<String>,
         protected: &HashSet<String>,
+        handled: &HashSet<String>,
         report: &mut PrivacyEraseReport,
     ) {
         let Some(path) = path else {
@@ -252,13 +257,14 @@ impl PrivacyManager {
             report.shared_files += 1;
             return;
         }
-        self.erase_session_audio(Some(path), protected, report);
+        self.erase_session_audio(Some(path), protected, handled, report);
     }
 
     fn erase_session_audio(
         &self,
         path: Option<&str>,
         protected: &HashSet<String>,
+        handled: &HashSet<String>,
         report: &mut PrivacyEraseReport,
     ) {
         let Some(path) = path else {
@@ -294,7 +300,15 @@ impl PrivacyManager {
         let current = targets.last().cloned();
         let mut complete = true;
         for target in targets {
-            if protected.contains(&path_key(&target.to_string_lossy())) {
+            let target_key = path_key(&target.to_string_lossy());
+            if handled.contains(&target_key) {
+                // Generated cleanup has already handled this original. A new
+                // file at its pathname is not the user's requested recording.
+                // Keep legacy copies below eligible by their exact ledger SHA.
+                if target.exists() { report.skipped_files += 1; }
+                continue;
+            }
+            if protected.contains(&target_key) {
                 report.shared_files += 1;
                 continue;
             }

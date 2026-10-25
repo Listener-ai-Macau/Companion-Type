@@ -200,6 +200,15 @@ fn save(root: &Path, data: &Manifest) -> Result<(), String> {
         .filter(|(_, i)| i.phase != Phase::Gone)
         .map(|(n, _)| n)
         .collect::<BTreeSet<_>>();
+    // An explicit recording deletion can finish before its session index is
+    // checkpointed. Its path authority must outlive scratch-history pruning,
+    // or the legacy fallback could later mistake a replacement for old audio.
+    for (n, item) in bounded.files.iter().enumerate() {
+        if item.phase == Phase::Gone && !item.purpose.temporary()
+            && item.sources.contains(&reference_key(&root.join(&item.file))?) {
+            keep.insert(n);
+        }
+    }
     keep.extend(
         bounded
             .files
@@ -641,6 +650,10 @@ pub(crate) struct Erase {
     pub deleted: usize,
     pub shared: usize,
     pub retained_paths: Vec<PathBuf>,
+    /// The graph owns cleanup of these exact pathnames, including Gone entries.
+    /// Legacy/index fallback may still clean verified old migration copies,
+    /// but must never grant deletion authority to a replacement at this path.
+    pub handled_paths: Vec<PathBuf>,
 }
 pub(crate) fn erase(
     root: &Path,
@@ -667,14 +680,18 @@ fn erase_inner(
         .iter()
         .filter_map(|p| reference_key(Path::new(p)).ok())
         .collect::<BTreeSet<_>>();
-    for (index, item) in data.files.iter().enumerate() {
+    let requested_roots = lease_keys.clone();
+    let mut root_marker_changed = false;
+    for (index, item) in data.files.iter_mut().enumerate() {
         let key = reference_key(&root.join(&item.file))?;
-        if item.phase == Phase::Gone
-            || !selected.contains(&key)
-            || temporary_only && !item.purpose.temporary()
-        {
+        if !selected.contains(&key) || temporary_only && !item.purpose.temporary() {
             continue;
         }
+        report.handled_paths.push(root.join(&item.file));
+        if requested_roots.contains(&key) && !item.purpose.temporary() {
+            root_marker_changed |= item.sources.insert(key.clone());
+        }
+        if item.phase == Phase::Gone { continue; }
         if retained.contains(&key) {
             report.shared += 1;
             report.retained_paths.push(root.join(&item.file));
@@ -684,6 +701,7 @@ fn erase_inner(
         candidates.push(index);
     }
     if candidates.is_empty() {
+        if root_marker_changed { save(&root, &data)?; }
         return Ok(report);
     }
     for key in lease_keys {

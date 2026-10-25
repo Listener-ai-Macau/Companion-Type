@@ -68,6 +68,11 @@ fn snapshot(sessions: Vec<CompanionV1HostSession>, id: &str) -> CompanionV1Snaps
     s.meeting.active = false;
     s
 }
+fn install_snapshot(backend: &FixtureCompanionBackend, snapshot: CompanionV1Snapshot) -> Result<(),String> {
+    super::super::session_store::save(&super::super::persistence::state_file_path(), &snapshot.host.sessions)?;
+    *backend.snapshot.lock().map_err(|_|fail())? = snapshot;
+    Ok(())
+}
 fn put(source: &Path, path: &Path, purpose: Purpose, bytes: &[u8]) -> Result<(), String> {
     generated(source, path, purpose, || {
         super::super::export::write_atomic(path, bytes).map(|_| ())
@@ -322,7 +327,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     )?;
     let backend = FixtureCompanionBackend::new();
     let seeded = snapshot(vec![session("first", &primary)], "first");
-    *backend.snapshot.lock().map_err(|_| fail())? = seeded.clone();
+    install_snapshot(&backend, seeded.clone())?;
     let held = usage(&live)?.ok_or_else(fail)?;
     check(
         "active_audio_usage_blocks_entire_cleanup_preflight",
@@ -417,14 +422,13 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     put(&second, &second, Purpose::Recording, &wav(&[1; 3200]))?;
     put(&first, &shared, Purpose::LivePrefix, b"shared")?;
     attach_group(&shared, &second)?;
-    *backend.snapshot.lock().map_err(|_| fail())? =
-        snapshot(vec![session("a", &first), session("b", &second)], "a");
+    install_snapshot(&backend, snapshot(vec![session("a", &first), session("b", &second)], "a"))?;
     let a = backend.apply_control(request(Action::PrivacyDeleteSession, Some("a")))?;
     check(
         "selected_delete_preserves_other_owner_shared_artifact",
         !first.exists() && shared.is_file() && second.is_file() && a.host.sessions.len() == 1,
     )?;
-    *backend.snapshot.lock().map_err(|_| fail())? = snapshot(vec![session("b", &second)], "b");
+    install_snapshot(&backend, snapshot(vec![session("b", &second)], "b"))?;
     backend.apply_control(request(Action::PrivacyDeleteSession, Some("b")))?;
     check(
         "last_owner_delete_consumes_shared_artifact",
@@ -434,8 +438,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     put(&corrupt, &corrupt, Purpose::Recording, &wav(&[0; 3200]))?;
     let safe = fs::read(&intent).map_err(|_| fail())?;
     let bytes = fs::read(&corrupt).map_err(|_| fail())?;
-    *backend.snapshot.lock().map_err(|_| fail())? =
-        snapshot(vec![session("guarded", &corrupt)], "guarded");
+    install_snapshot(&backend, snapshot(vec![session("guarded", &corrupt)], "guarded"))?;
     fs::write(&intent, b"{broken").map_err(|_| fail())?;
     check(
         "damaged_manifest_fails_closed_without_deleting_audio",
@@ -592,9 +595,9 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
         compacted
             .files
             .iter()
-            .filter(|i| i.phase == Phase::Gone)
+            .filter(|i| i.phase == Phase::Gone && i.purpose.temporary())
             .count()
-            == 257,
+            == 256,
     )?;
     check(
         "compaction_retains_bridge_to_live_descendant",
@@ -618,10 +621,8 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     put(&all_a, &all_a, Purpose::Recording, &wav(&[0; 3200]))?;
     put(&all_b, &all_b, Purpose::Recording, &wav(&[1; 3200]))?;
     put(&all_a, &all_raw, Purpose::CompressedOriginal, b"all-raw")?;
-    *backend.snapshot.lock().map_err(|_| fail())? = snapshot(
-        vec![session("all-a", &all_a), session("all-b", &all_b)],
-        "all-a",
-    );
+    install_snapshot(&backend, snapshot(
+        vec![session("all-a", &all_a), session("all-b", &all_b)], "all-a"))?;
     backend.apply_control(request(Action::PrivacyEraseAll, None))?;
     check(
         "erase_all_consumes_generated_raw_and_recordings",
@@ -671,6 +672,7 @@ mod tests {
         assert!(!source.exists());
         fs::write(&source,b"different user replacement").unwrap();
         let before=fs::read(&source).unwrap();
+        fs::write(&state,serde_json::to_vec(&original.host.sessions).unwrap()).unwrap();
         let backend=FixtureCompanionBackend::new();
         *backend.snapshot.lock().unwrap()=original;
         let result=backend.apply_control(request(Action::PrivacyEraseAudio,Some("original"))).unwrap();
@@ -715,6 +717,34 @@ mod tests {
         assert_eq!(report.skipped_files,1);
         fs::remove_dir_all(root).unwrap();
     }
+    #[test]
+    fn privacy_retry_keeps_owned_root_after_scratch_compaction() {
+        let root=std::env::temp_dir().join(format!("companion-privacy-compacted-handoff-{}",uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let state=root.join("sessions.json");
+        let _env=Environment::set(&[("COMPANION_TYPE_RECORDING_DIR",root.as_os_str()),("COMPANION_TYPE_STATE_PATH",state.as_os_str())]);
+        let source=root.join("former-live-prefix.cop1");
+        let parent=root.join("parent.wav");
+        put(&parent,&source,Purpose::LivePrefix,b"old prefix").unwrap();
+        let old=snapshot(vec![session("prefix",&source)],"prefix");
+        erase(&root,&[source.to_string_lossy().into_owned()],&[]).unwrap();
+        let mut data=load(&root).unwrap();
+        for n in 0..600 {
+            let file=format!("retired-scratch-{n}.wav");
+            data.files.push(Artifact {sources:BTreeSet::from([reference_key(&root.join(&file)).unwrap()]),file,purpose:Purpose::AsrTemporary,phase:Phase::Gone,identity:None});
+        }
+        save(&root,&data).unwrap();
+        let compacted=load(&root).unwrap();
+        assert!(compacted.files.iter().any(|i|i.file=="former-live-prefix.cop1"&&i.phase==Phase::Gone));
+        assert_eq!(compacted.files.iter().filter(|i|i.purpose==Purpose::AsrTemporary).count(),256);
+        fs::write(&source,b"a new unrelated prefix-shaped file").unwrap();
+        let manager=crate::backend::privacy::PrivacyManager::for_handoff_test(root.clone(),root.join("absent-legacy"));
+        let result=manager.erase_selected_audio(&old);
+        assert_eq!(result.failed_files,0);assert_eq!(result.skipped_files,1);
+        assert_eq!(fs::read(&source).ok().as_deref(),Some(b"a new unrelated prefix-shaped file".as_slice()));
+        fs::remove_dir_all(root).unwrap();
+    }
+
     #[test]
     fn native_audio_artifacts_guard_generated_files_ownership_and_cleanup_retry() {
         let output =
