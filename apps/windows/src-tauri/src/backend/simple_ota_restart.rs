@@ -29,6 +29,23 @@ pub(super) fn acknowledged_write_receipt(packet:&[u8],file_bytes:u32,bytes:&[u8]
     Err("设备接收位置不属于本次单包，未猜测写入完成。".into())
 }
 
+// WOC4/5 append a live BEGIN generation and (WOC5) live BLK1 link
+// metadata. Only immutable geometry/flags belong to the capacity invariant.
+// Validate every complete extension before excluding those live fields;
+// current-BEGIN durable credit validation remains in DeviceQueueCredits.
+fn fixed_capacity(bytes:&[u8])->Result<&[u8],String> {
+    if bytes.len()==24 {return Ok(&bytes[24..]);} // existing base-only peer
+    super::ota_flow::WbaFlow::from_simple_status(bytes,false)?;
+    let end=if super::ble_link_budget::generation_status(bytes)? {40} else {bytes.len()};
+    Ok(&bytes[24..end])
+}
+fn same_capacity(initial:&[u8],current:&[u8])->Result<(),String> {
+    if fixed_capacity(initial)?!=fixed_capacity(current)? {
+        return Err("设备升级能力在重新开始时改变，未发送新文件。".into());
+    }
+    Ok(())
+}
+
 pub(super) fn prepare_fresh_download<T:OtaV1Transport>(transport:&mut T,initial:&[u8],
     mut readiness:impl FnMut()->Result<u16,String>)->Result<(),String> {
     let status=parse_status(initial)?;
@@ -40,7 +57,7 @@ pub(super) fn prepare_fresh_download<T:OtaV1Transport>(transport:&mut T,initial:
     let deadline=Instant::now()+Duration::from_secs(15);
     loop {
         let bytes=transport.read_status()?;let status=parse_status(&bytes)?;
-        if bytes[24..]!=initial[24..] {return Err("设备升级能力在重新开始时改变，未发送新文件。".into());}
+        same_capacity(initial,&bytes)?;
         if status.state==STATE_COMPLETE {
             return Err("设备已经保留完整升级包，未继续重新下载。".into());
         }
@@ -121,4 +138,50 @@ mod tests {
         }
         assert!(acknowledged_write_receipt(&packet,13,&receipt(14,100,2,0)).is_err());
     }
+    fn actual_live_pair()->(Vec<u8>,Vec<u8>) {
+        let decode=|s:&str|(0..s.len()).step_by(2).map(|i|u8::from_str_radix(&s[i..i+2],16).unwrap()).collect::<Vec<_>>();
+        // Exact WOC5 values from existing571 physical HCI. Only the idle
+        // base state below is modeled; no actual ABORT result is claimed.
+        (decode("444f5631010000800000000000000000f901400000000000574f4335f901fd01400035001000000000000000424c4b3107000000fb00c503e200c50330000002"),decode("444f5631010000800000000000000000f901400000000000574f4335f901fd01400035001000000000000000424c4b310f020200fb00c503e200c50330000002"))
+    }
+    #[test]
+    fn live_budget_change_does_not_turn_fresh_idle_into_changed_capacity() {
+        let (mut partial,mut idle)=actual_live_pair();
+        assert_eq!(partial[24..40],idle[24..40]);assert_ne!(partial[24..],idle[24..]);
+        partial[5]=denzic_ota_core::STATE_RECEIVING;partial[6]=0;
+        partial[8..12].copy_from_slice(&10u32.to_le_bytes());partial[12..16].copy_from_slice(&100u32.to_le_bytes());
+        idle[5]=STATE_IDLE;idle[6]=0;idle[8..16].fill(0);
+        let mut peer=Peer{reads:VecDeque::from([idle]),controls:vec![]};
+        prepare_fresh_download(&mut peer,&partial,||Ok(0)).unwrap();
+        assert_eq!(peer.controls,[control_packet(Operation::Abort,0,0,0,0)]);
+        assert!(peer.reads.is_empty()); // never BEGIN or DATA during this gate
+    }
+    #[test]
+    fn live_fields_may_change_but_all_current_capabilities_and_shapes_stay_protected() {
+        let (initial,mut live)=actual_live_pair();same_capacity(&initial,&live).unwrap();
+        let generation=u32::from_le_bytes(live[40..44].try_into().unwrap());
+        live[40..44].copy_from_slice(&generation.wrapping_add(1).to_le_bytes());
+        same_capacity(&initial,&live).unwrap(); // not a current-BEGIN credit grant
+        for (at,value) in [(28,504u16),(36,15)] {
+            let mut changed=live.clone();changed[at..at+2].copy_from_slice(&value.to_le_bytes());
+            if at==28 {changed[30..32].copy_from_slice(&(value+4).to_le_bytes());}
+            assert!(same_capacity(&initial,&changed).is_err());
+        }
+        let mut revised=live[..44].to_vec();revised[24..28].copy_from_slice(b"WOC4");
+        assert!(same_capacity(&initial,&revised).is_err());
+        for (at,value) in [(44,b'X'),(48,31),(51,1),(49,4)] {
+            let mut bad=live.clone();bad[at]=value;
+            assert!(same_capacity(&initial,&bad).is_err());
+        }
+        for len in [0,23,43,63,65] {let mut bad=live.clone();bad.resize(len,0);assert!(same_capacity(&initial,&bad).is_err());}
+    }
+    #[test]
+    fn bad_live_extension_cannot_be_ignored_during_actual_release_loop() {
+        let (mut partial,mut idle)=actual_live_pair();partial[5]=denzic_ota_core::STATE_RECEIVING;partial[6]=0;
+        idle[5]=STATE_IDLE;idle[6]=0;idle[8..16].fill(0);idle[44]=b'X';
+        let mut peer=Peer{reads:VecDeque::from([idle]),controls:vec![]};
+        assert!(prepare_fresh_download(&mut peer,&partial,||panic!("bad extension cannot reach readiness")).is_err());
+        assert_eq!(peer.controls,[control_packet(Operation::Abort,0,0,0,0)]);
+    }
+
 }
