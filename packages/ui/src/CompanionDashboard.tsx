@@ -1515,7 +1515,11 @@ export function CompanionDashboard({
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 blocked={controlsBusy} onOpenSource={openTranscriptSource}
-                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?()=>resumeTranscriptDraft(selectedSession.id):undefined} />
+                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?()=>{
+                  resumeTranscriptDraft(selectedSession.id);
+                  window.requestAnimationFrame(()=>{const region=document.getElementById('ct-recording-text-review');
+                    if(region&&!region.hidden){region.scrollIntoView({block:'start'});region.focus({preventScroll:true});}});
+                }:undefined} />
                 : <p className="ct-step-meta" role="status">{busyAction === 'meetingGenerateMinutes' || recoveryView?.isProcessing
                   ? '正在整理已保存的文字…' : '点“整理重点”整理录音文字，原话保留。'}</p>}
               {!editingMinutes && saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part === 'minutes' ?
@@ -1595,7 +1599,7 @@ export function CompanionDashboard({
             <button type="button" className="ct-text-button" disabled={Boolean(audioBlockedReason) || audioBusy || controlsBusy || storageBlocked}
               onClick={() => { setPlaybackOpen(true); if (!preparedAudio) void prepareAudio(); }}>核对原音</button>
           </div> : null}
-          <div id="ct-recording-text-review" hidden={!transcriptReviewOpen}>
+          <div id="ct-recording-text-review" tabIndex={-1} hidden={!transcriptReviewOpen}>
           <CompanionTranscriptReview session={selectedSession} visible={transcriptReviewOpen}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
             sourceSelection={sourceSelection} onSeekSource={seekTranscriptSource}
