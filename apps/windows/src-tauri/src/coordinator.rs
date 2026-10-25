@@ -83,6 +83,7 @@ fn operation_name(kind: u8) -> &'static str {
         18 => "library organization",
         19 => "library protection/trash",
         20 => "pet finding",
+        21 => "pet personality and memory",
         _ => "unknown device operation",
     }
 }
@@ -251,7 +252,7 @@ impl CompanionCoordinator {
         self.begin_pet_operation_kind(PET_CAPTION_OPERATION)
     }
     pub(crate) fn begin_pet_profile_operation(&self)->Result<CompanionDeviceOperationLease,String> {
-        self.begin_foreground_operation_kind(20)
+        self.begin_foreground_operation_kind(21)
     }
 
     /// Pet capture already owns the recorder lease across START, the short

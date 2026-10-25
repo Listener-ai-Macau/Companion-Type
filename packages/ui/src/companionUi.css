@@ -608,6 +608,30 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
   font-size: 14px;
 }
 .ct-pet-chat-disclosure > summary { cursor: pointer; padding: 10px 4px; }
+.ct-pet-chat-disclosure {
+  font-family: "Segoe UI", "Microsoft YaHei UI", system-ui, sans-serif;
+  line-height: 1.6;
+}
+.ct-pet-chat-disclosure button,
+.ct-pet-chat-disclosure input,
+.ct-pet-chat-disclosure select,
+.ct-pet-chat-disclosure textarea { font: inherit; }
+.ct-pet-chat-disclosure button {
+  min-height: 36px; padding: 7px 13px; border: 1px solid #cdd8cf;
+  border-radius: 8px; background: #fff; color: #2e4736; cursor: pointer;
+}
+.ct-pet-chat-disclosure button:hover:not(:disabled) { background: #edf4ed; border-color: #809d86; }
+.ct-pet-chat-disclosure button:disabled { opacity: .48; cursor: default; }
+.ct-pet-chat-disclosure input:not([type="checkbox"]),
+.ct-pet-chat-disclosure select,
+.ct-pet-chat-disclosure textarea {
+  min-height: 38px; padding: 7px 10px; border: 1px solid #ccd6ce;
+  border-radius: 8px; background: #fff; color: #172c20; max-width: 100%;
+}
+.ct-pet-chat-disclosure input[type="checkbox"] { width: 16px; height: 16px; vertical-align: middle; accent-color: #4c7055; }
+.ct-pet-chat-disclosure :is(button,input,select,textarea,summary):focus-visible { outline: 2px solid #658c6e; outline-offset: 3px; }
+.ct-pet-chat-disclosure [role="status"] { color: #315f3d; }
+.ct-pet-chat-disclosure [role="alert"] { color: #9b3f30; }
 .ct-recent-recording {
   display: flex;
   align-items: center;
