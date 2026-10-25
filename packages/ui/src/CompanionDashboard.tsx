@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionHelp } from './CompanionHelp';
 import { MinutesModeTabs } from './MinutesModeTabs';
+import { DeleteConfirmation } from './DeleteConfirmation';
 import {CompanionPetFind,type PetFindRequest,type PetFindReport} from './CompanionPetFind';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
@@ -356,7 +357,8 @@ export function CompanionDashboard({
   const [draftMinutes, setDraftMinutes] = useState('30');
   const [transcriptDraft, setTranscriptDraft] = useState('');
   const transcriptEditor = useRef<{ sessionId?: string; dirty: boolean }>({ dirty: false });
-  const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string } | null>(null);
+  const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string; targetTitle: string; selectedId: string | null; libraryKey: string } | null>(null);
+  const deleteSubmitted = useRef(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showWorkflow, setShowWorkflow] = useState(false);
   const [pageView, setPageView] = useState<'library' | 'device' | 'settings'>('library');
@@ -1131,11 +1133,30 @@ export function CompanionDashboard({
         && audioContext.current.identity === identity && !audioContext.current.blocked, () => externalAudioSeek.current?.());
     setAudioResult({ sessionId: source.sessionId, message: '已定位到这段原音。点击播放器的播放按钮即可回听。' });
   };
+  const deleteLibraryKey = allLibrarySessions.map(row => [row.id, Boolean(row.organization?.protected)]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))).map(row=>JSON.stringify(row)).join('|');
+  const deleteContextValid = Boolean(pendingDelete && pageView === 'settings'
+    && pendingDelete.selectedId === (selectedSession?.id ?? null)
+    && (pendingDelete.request.action === 'privacyEraseAll'
+      ? pendingDelete.libraryKey === deleteLibraryKey && !allLibrarySessions.some(row=>row.organization?.protected)
+      : pendingDelete.request.action === 'privacyEraseAudio' ? canEraseAudio : canEraseTranscript));
+  useEffect(() => {
+    if (pendingDelete && !deleteContextValid) setPendingDelete(null);
+  }, [pendingDelete, deleteContextValid]);
   const requestErase = (action: CompanionV1ControlAction, title: string, detail: string) => {
+    if (controlsBusy || oobeBlockedByRecording) return;
+    deleteSubmitted.current = false;
     setPendingDelete({
       request: { action, sessionId: selectedSession?.id, deviceId: device?.deviceId ?? undefined },
-      title, detail,
+      title, detail, targetTitle: selectedSession?.title ?? '', selectedId: selectedSession?.id ?? null,
+      libraryKey: deleteLibraryKey,
     });
+  };
+  const confirmPendingDelete = () => {
+    if (!pendingDelete || !deleteContextValid || deleteSubmitted.current || controlsBusy || oobeBlockedByRecording) return;
+    deleteSubmitted.current = true;
+    const request = pendingDelete.request;
+    setPendingDelete(null);
+    onControl(request);
   };
 
   // Product path: board required for primary minutes flow.
@@ -1262,8 +1283,8 @@ export function CompanionDashboard({
 
       {!boardLiveActive ? <CompanionRecorderControl session={controlledRecorder} busy={recordingControlBusy} onControl={onControl} /> : null}
 
-      {boardLiveActive && boardOnlineLive ? <section className="ct-recording-activity" aria-label="当前录音" aria-live="polite">
-        <div><strong>{boardOnlineLive.state === 'starting' ? '正在准备录音'
+      {boardLiveActive && boardOnlineLive ? <section className="ct-recording-activity" aria-label="当前录音">
+        <div><strong role="status">{boardOnlineLive.state === 'starting' ? '正在准备录音'
           : boardOnlineLive.state === 'recording' ? '正在录音'
             : boardOnlineLive.state === 'stopping' ? '正在收齐录音' : '录音已结束，正在整理'}</strong>
           <p>{boardOnlineLive.state === 'recording' ? '声音正在由 Companion 采集，结束后继续转写与整理。'
@@ -1840,8 +1861,8 @@ export function CompanionDashboard({
             </div>
             {!asrConfigured ? <p className="ct-step-meta">在线转写需要服务配置。你也可以先在设备上录音，稍后同步。<button type="button" className="ct-text-button" onClick={openSettings}>配置转写服务</button></p> : null}
             {boardOnlineLive && boardOnlineLive.state !== 'idle' ? (
-              <div className="ct-live-box" aria-live="polite" aria-label="板端在线会议状态">
-                <strong>
+              <div className="ct-live-box" aria-label="板端在线会议状态">
+                <strong role="status">
                   {boardOnlineLive.state === 'starting' ? '正在连接并启动板端录音'
                     : boardOnlineLive.state === 'recording' ? 'Companion 正在录音 / 在线转写'
                       : boardOnlineLive.state === 'stopping' ? '正在停止并拉齐板端录音'
@@ -2423,19 +2444,9 @@ export function CompanionDashboard({
                   <Trash2 size={17} />清除全部本机会议
                 </button>
               </div>
-              {pendingDelete ? <div className="ct-delete-confirm" role="alertdialog" aria-label={pendingDelete.title} aria-describedby="ct-delete-description">
-                <strong>{pendingDelete.title}</strong>
-                {pendingDelete.request.action !== 'privacyEraseAll' ? <p>当前录音：{selectedSession?.title}</p> : null}
-                <p id="ct-delete-description">{pendingDelete.detail}</p>
-                <div className="ct-button-row">
-                  <button type="button" className="ct-action" autoFocus onClick={() => setPendingDelete(null)}>保留内容</button>
-                  <button type="button" className="ct-action ct-action-danger" disabled={controlsBusy || oobeBlockedByRecording} onClick={() => {
-                    const request = pendingDelete.request;
-                    setPendingDelete(null);
-                    onControl(request);
-                  }}>确认删除</button>
-                </div>
-              </div> : null}
+              {pendingDelete && deleteContextValid ? <DeleteConfirmation title={pendingDelete.title} detail={pendingDelete.detail}
+                targetTitle={pendingDelete.request.action === 'privacyEraseAll' ? undefined : pendingDelete.targetTitle}
+                blocked={controlsBusy || oobeBlockedByRecording} onCancel={()=>setPendingDelete(null)} onConfirm={confirmPendingDelete} /> : null}
             </section>
           </section>
 
