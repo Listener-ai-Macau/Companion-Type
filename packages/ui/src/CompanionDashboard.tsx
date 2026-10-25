@@ -1114,11 +1114,30 @@ export function CompanionDashboard({
 
   // Global status describes the device/library. A previously selected
   // recording's processing result belongs to its own detail panel.
-  const simpleStatus = boardLiveActive ? 'Companion 正在录音'
-    : oobeBlockedByRecording ? '录音进行中'
-      : pageView === 'library' ? recordingLibrary.length ? '已有内容可直接查看' : '从 Companion 录下第一条想法'
-        : !connected ? '连接 Companion 后可录制新内容' : '设备已识别，可以开始录音';
-
+  // Readiness describes the last report, not a promise of battery life or
+  // current free space. START still performs the existing authoritative check.
+  const capacityUnavailable = Boolean(capacity && !capacity.busy
+    && (capacity.usedEntries >= capacity.maxEntries || capacitySeconds <= 0));
+  const recordingRoomLabel = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60);
+    return hours ? `${hours}小时${minutes ? `${minutes}分` : ''}`
+      : minutes ? `${minutes}分钟` : `${Math.floor(seconds)}秒`;
+  };
+  const simpleStatus = boardLiveActive ? 'Companion 正在录音'
+    : oobeBlockedByRecording ? '录音进行中'
+      : storageBlocked ? '本机保存暂不可用，请先处理存储问题'
+        : pageView === 'library' ? recordingLibrary.length ? '已有内容可直接查看' : '从 Companion 录下第一条想法'
+          : !connected ? '连接 Companion 后可录制新内容'
+            : capacityUnavailable ? '上次读取的录音空间不足，请先同步'
+              : '设备已连接，开始前会重新检查空间';
+  const configuredTranscription = asrConfigured ? '转文字已配置' : '转文字尚未配置';
+  const simpleReadiness = boardLiveActive || oobeBlockedByRecording
+    ? '结束后可在“我的录音”查看'
+    : storageBlocked ? '先恢复本机保存；已有录音不会因此删除'
+      : !connected ? '设备不在身边也能查看本机内容'
+        : !capacity || capacity.busy ? `剩余可录时长待读取 · ${configuredTranscription}`
+          : capacityUnavailable ? `同步并确认保存后，设备才会复用空间 · ${configuredTranscription}`
+            : `本地空间约可录 ${recordingRoomLabel(capacitySeconds)}（上次读取）${capacity.localLimitSeconds ? ` · 按键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''} · ${configuredTranscription}`;
   const footer = useMemo(() => {
     if (error) return error;
     if (nameError) return nameError;
@@ -1173,11 +1192,7 @@ export function CompanionDashboard({
       <section className="ct-simple-status" aria-live="polite">
         <span className={`ct-simple-dot ${connected ? 'ok' : 'idle'}`} />
         <strong>{simpleStatus}</strong>
-        <span className="ct-simple-sub">
-          {connected
-            ? '设备已识别 · 使用时连接'
-            : '设备不在身边也能查看本机内容'}
-        </span>
+        <span className="ct-simple-sub">{simpleReadiness}</span>
       </section>
 
       <div className="ct-page-panel" hidden={pageView !== 'library'}>
