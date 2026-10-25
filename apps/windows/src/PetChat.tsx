@@ -30,7 +30,7 @@ function raster(text:string):number[]{
   }
   return result;
 }
-export function PetChat({disabled,deviceUid}:{disabled:boolean;deviceUid?:string|null}){
+export function PetChat({disabled,deviceUid,onUnsavedChange}:{disabled:boolean;deviceUid?:string|null;onUnsavedChange?:(unsaved:boolean)=>void}){
   const [state,setState]=useState<ChatStatus|null>(null),[error,setError]=useState<string|null>(null);
   const [busy,setBusy]=useState(false);
   const action=useRef(false),sent=useRef(0),cancelling=useRef(false),cancelledRequest=useRef(0);
@@ -85,6 +85,6 @@ export function PetChat({disabled,deviceUid}:{disabled:boolean;deviceUid?:string
       {active||state?.phase==='displayFailed'?<button onClick={()=>void cancel(state!)}>取消</button>:null}
       {!active&&state?.phase!=='displayFailed'?<button disabled={busy||(!!state&&!state.canStart)} onClick={()=>void control('clear_companion_pet_chat')}>清空本次对话</button>:null}
     </div>
-    <PetProfile disabled={disabled||busy||active||!!state&&!state.canStart} deviceUid={deviceUid} transcript={state?.transcript}/>
+    <PetProfile disabled={disabled||busy||active||!!state&&!state.canStart} deviceUid={deviceUid} transcript={state?.transcript} onUnsavedChange={onUnsavedChange}/>
   </section>;
 }

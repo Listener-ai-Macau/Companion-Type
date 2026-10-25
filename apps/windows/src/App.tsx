@@ -50,6 +50,8 @@ import {
 
 export function App() {
   const [unsavedEdits, setUnsavedEdits] = useState(false);
+  const [petUnsavedEdits,setPetUnsavedEdits]=useState(false);
+  const hasUnsavedEdits=unsavedEdits||petUnsavedEdits;
   const [snapshot, setSnapshot] = useState<CompanionV1Snapshot | null>(null);
   const [busyAction, setBusyAction] = useState<CompanionV1ControlAction | 'refresh' | null>('refresh');
   const [error, setError] = useState<string | null>(null);
@@ -216,17 +218,17 @@ export function App() {
 
   return (
     <div className="ct-window-shell">
-    {isTauriRuntime()?<CloseReview unsaved={unsavedEdits} client={nativeCloseReview}/>:null}
+    {isTauriRuntime()?<CloseReview unsaved={hasUnsavedEdits} client={nativeCloseReview}/>:null}
     {isTauriRuntime()?<details className="ct-pet-chat-disclosure">
       <summary>我的宠物</summary>
-      <PetChat deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
+      <PetChat onUnsavedChange={setPetUnsavedEdits} deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
         disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>
     </details>:null}
     <CompanionDashboard
       onFindPet={isTauriRuntime()?(request)=>exclusive('refresh',()=>controlCompanionPetFind(request)):undefined}
       settingsFooter={isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active
         || snapshot?.host.sessions.some(session=>session.status==='recording') || (snapshot?.host.persistence && snapshot.host.persistence.status!=='ready'))}
-        unsaved={unsavedEdits} onStatus={getDesktopUpdateStatus} onCheck={checkDesktopUpdate}
+        unsaved={hasUnsavedEdits} onStatus={getDesktopUpdateStatus} onCheck={checkDesktopUpdate}
         onDownload={() => exclusive('refresh', downloadDesktopUpdate)} onCancel={cancelDesktopUpdate}
         onInstall={() => exclusive('refresh', installDesktopUpdate)} /> : null}
       onUnsavedChange={setUnsavedEdits}

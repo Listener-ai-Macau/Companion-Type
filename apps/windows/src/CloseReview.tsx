@@ -76,7 +76,7 @@ export function CloseReview({unsaved,client}:{unsaved:boolean;client:CloseClient
     };
   },[client]);
   return <>
-    {closing?<ClosingIndicator/>:pending?<DeleteConfirmation title={unsaved?'还有未保存的修改':'关闭尚未确认'} detail={error??(unsaved?'标题、清单、备注或设置中仍有未保存的修改。继续编辑可以保留它们；退出会丢弃这些修改，已保存的录音和文字会保留。':'修改已保存或还原。可以继续使用，或关闭窗口。')} blocked={false}
+    {closing?<ClosingIndicator/>:pending?<DeleteConfirmation title={unsaved?'还有未保存的修改':'关闭尚未确认'} detail={error??(unsaved?'标题、清单、备注、宠物档案或设置中仍有未保存或未确认的修改。继续编辑可以保留它们；退出会丢弃本机尚未保存的编辑，不会撤回已提交的写入。已保存的内容会保留。':'修改已保存或还原。可以继续使用，或关闭窗口。')} blocked={false}
       cancelLabel="继续编辑" confirmLabel={unsaved?'放弃修改并退出':'退出'} onCancel={()=>void answer.current(pending,false)} onConfirm={()=>void answer.current(pending,true)}/>:null}
     {error&&!pending&&!closing?<p className="ct-step-warn" role="status">{error}</p>:null}
   </>;
