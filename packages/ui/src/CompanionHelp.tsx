@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { CompanionLicenses } from './CompanionLicenses';
 
 /** Reading help never starts capture, reconnects, clears data or exports logs. */
-export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onRecording, onReadLicenses }: {
+export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onRecording, onReadLicenses, onPrivacy }: {
+  onPrivacy?: () => void;
   onReadLicenses?: () => Promise<string>;
   onRecording?: () => void;
   onClose: () => void; onDevice: () => void; onLibrary: () => void; onDiagnostics: () => void;
@@ -72,6 +73,17 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <button type="button" className="ct-action" onClick={onLibrary}>前往我的录音</button>
       <button type="button" className="ct-text-button" onClick={onDiagnostics}>日志与诊断在哪里</button>
     </div>
+    <details><summary>换电脑或转交宠物前，哪些资料需要分别处理？</summary>
+      <ul>
+        <li><strong>断开与配对：</strong>“断开”只结束连接，不会移除蓝牙配对，也不会删除资料。移除配对与清理资料是两件事。</li>
+        <li><strong>恢复名称或设置：</strong>“恢复默认名称”只改蓝牙显示名称；设备“恢复默认”恢复设置。这些操作都不是录音、宠物档案与记忆的清空。</li>
+        <li><strong>本机会议：</strong>Type 的本机清理处理本机会议及能确认归属的受管文件。共享文件或无法确认归属的旧缓存会保留，清理结果会列出保留项；另存、导出及其它电脑的副本要单独处理。</li>
+        <li><strong>设备和宠物记忆：</strong>设备录音与“名字、性格与记忆”中的内容分别管理，不会随 Type 本机会议清理一起删除。不要把重命名、断连或恢复设置当成换主完成。</li>
+        <li><strong>远端资料：</strong>本机清理不会撤回已发送给服务商的内容，也不会清除其它账户或备份。</li>
+      </ul>
+      <p>当前没有一键完成的换主清除。转交前需分别核对上述资料；完整历史资料擦除仍未提供。</p>
+      {onPrivacy ? <button type="button" className="ct-action" onClick={onPrivacy}>查看本机隐私与清理</button> : null}
+    </details>
     {onReadLicenses ? <CompanionLicenses readText={onReadLicenses} /> : null}
     <p className="ct-step-meta">打开帮助不会录音或更改设置。日志由你手动导出和决定是否分享，不会自动发送原音或转写。</p>
   </section>;

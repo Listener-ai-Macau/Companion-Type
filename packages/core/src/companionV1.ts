@@ -230,6 +230,18 @@ export interface CompanionV1PrivacyState {
   minutesBytes: number;
   lastEraseAt: string | null;
   policyLabel: string;
+  /** Host-only latest explicit cleanup; absent in older clients and browser fixtures. */
+  lastCleanup?: CompanionV1PrivacyCleanup;
+}
+
+export interface CompanionV1PrivacyCleanup {
+  operation: 'audio' | 'text' | 'session' | 'allMeetings';
+  completedAt: string;
+  deletedFiles: number;
+  skippedFiles: number;
+  sharedFiles: number;
+  unverifiedCacheFiles: number;
+  indexSaved: boolean;
 }
 
 export type CompanionV1HostSessionSource =

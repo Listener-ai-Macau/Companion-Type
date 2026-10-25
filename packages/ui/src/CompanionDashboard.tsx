@@ -4,6 +4,7 @@ import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, reco
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionHelp } from './CompanionHelp';
+import { CompanionPrivacyCleanup } from './CompanionPrivacyCleanup';
 import { MinutesModeTabs } from './MinutesModeTabs';
 import { DeleteConfirmation } from './DeleteConfirmation';
 import {CompanionDiagnosticsPreview} from './CompanionDiagnosticsPreview';
@@ -1255,7 +1256,7 @@ export function CompanionDashboard({
         </button>
         </div>
       </header>
-      {helpOpen ? <CompanionHelp onReadLicenses={onReadLicenses} onClose={closeQuickGuide}
+      {helpOpen ? <CompanionHelp onReadLicenses={onReadLicenses} onPrivacy={()=>{setShowAdvanced(true);navigatePage('settings','ct-privacy');}} onClose={closeQuickGuide}
         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
         onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}}
         onDiagnostics={()=>{setShowAdvanced(true);navigatePage('settings','ct-log-support');}} onRecording={savedDetailOpen?returnToRecording:undefined} /> : null}
@@ -2449,7 +2450,7 @@ export function CompanionDashboard({
           </section>
 
           <section className="ct-ops-grid">
-            <section className="ct-panel">
+            <section className="ct-panel" id="ct-privacy">
               <div className="ct-panel-title"><Shield size={18} /><span>隐私</span></div>
               <div className="ct-metric-grid">
                 <InfoMetric label="音频" value={privacy ? formatBytes(privacy.audioCacheBytes) : '0'} />
@@ -2457,10 +2458,12 @@ export function CompanionDashboard({
                 <InfoMetric label="自动删除" value="未启用" />
               </div>
               <p className="ct-step-meta">会议与原音保存在本机，直到你主动删除。另存的原音和导出文件由你自行保管，不会随会议删除。</p>
+              <p className="ct-step-meta">本机清理不清除设备录音、宠物档案与记忆、其它电脑或远端服务资料。共享文件和无法确认归属的旧缓存会保留；完整历史资料擦除仍未提供。</p>
+              <CompanionPrivacyCleanup result={privacy?.lastCleanup} />
               <p className="ct-step-meta">{selectedSession?.organization?.protected?'当前录音已受保护，解除前不能删除音频、文字或整场。':'普通删除先进入本机回收站，可恢复；永久清除在回收站单独确认。保护防误删，不是加密。'}</p>
               <div className="ct-button-row">
                 <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!selectedSession||!onSaveLibraryLifecycle||libraryUnsaved} onClick={()=>void changeCurrentLibraryState(selectedSession?.organization?.protected?'unprotect':'protect')}>{selectedSession?.organization?.protected?'解除当前录音保护':'保护当前录音'}</button>
-                <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !canEraseAudio} onClick={() => requestErase('privacyEraseAudio', '删除这场会议的本机音频？', '保留已有文字和纪要，取消尚未完成的自动处理。设备上的原始录音不受影响。')}>
+                <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !canEraseAudio} onClick={() => requestErase('privacyEraseAudio', '清理这场会议的本机音频？', '保留已有文字和纪要，取消尚未完成的自动处理。仅删除可确认归属的受管文件；共享或外部另存的文件会保留。设备原录音不受影响。')}>
                   <Eraser size={16} /><span>删音频</span>
                 </button>
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !canEraseTranscript} onClick={() => requestErase('privacyEraseTranscript', '删除这场会议的文字、纪要和备注？', '保留录音，取消尚未完成的自动处理。用户备注也会删除，重新转写不会恢复这些备注；请先保存需要的内容。')}>
@@ -2475,7 +2478,7 @@ export function CompanionDashboard({
                 >
                   <Trash2 size={16} /><span>移入回收站</span>
                 </button>
-                <button type="button" className="ct-action ct-action-danger" disabled={controlsBusy || oobeBlockedByRecording || allLibrarySessions.length === 0||allLibrarySessions.some(s=>s.organization?.protected)} onClick={() => requestErase('privacyEraseAll', '永久清除全部本机会议与回收站？', `将永久清除 ${allLibrarySessions.length} 场会议（含回收站）的本机音频、文字和纪要，并取消自动处理，不能恢复。设备上的录音需在设备菜单中另行清除。`)}>
+                <button type="button" className="ct-action ct-action-danger" disabled={controlsBusy || oobeBlockedByRecording || allLibrarySessions.length === 0||allLibrarySessions.some(s=>s.organization?.protected)} onClick={() => requestErase('privacyEraseAll', '永久清除全部本机会议与回收站？', `将清除 ${allLibrarySessions.length} 场本机会议记录（含回收站的文字、纪要、备注与重点）及可确认归属的受管文件，并取消自动处理，不能恢复。共享文件、无法确认归属的旧缓存及另存副本会保留。设备录音、宠物档案与记忆、其它电脑和远端资料不受影响。`)}>
                   <Trash2 size={17} />清除全部本机会议
                 </button>
               </div>

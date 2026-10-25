@@ -2738,6 +2738,8 @@ impl CompanionBackend for FixtureCompanionBackend {
             }
         }
 
+        let cleanup_summary = privacy_report.as_ref().and_then(|report|
+            privacy::cleanup_summary(action, report, next.updated_at.clone()));
         match action {
             CompanionV1ControlAction::DeviceScan
             | CompanionV1ControlAction::DeviceConnect
@@ -3119,6 +3121,10 @@ impl CompanionBackend for FixtureCompanionBackend {
         // action. A stop must retain its real state even if saving fails.
         if next.host.persistence.status == "ready" || action == CompanionV1ControlAction::MeetingStop {
             let _ = persistence::save_snapshot(&mut next);
+        }
+        if let Some(mut result) = cleanup_summary {
+            result.index_saved = next.host.persistence.status == "ready";
+            next.privacy.last_cleanup = Some(result);
         }
         *snapshot = next.clone();
         Ok(next)

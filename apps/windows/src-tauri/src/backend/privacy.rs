@@ -79,6 +79,40 @@ pub struct PrivacyEraseReport {
     pub unverified_cache_files: usize,
 }
 
+/// Publish structured counts, never infer cleanup success from the legacy message.
+pub(super) fn cleanup_summary(action: CompanionV1ControlAction, report: &PrivacyEraseReport,
+    completed_at: String) -> Option<crate::companion_v1::CompanionV1PrivacyCleanup> {
+    if report.failed_files != 0 { return None; }
+    let operation = match action {
+        CompanionV1ControlAction::PrivacyEraseAudio => "audio",
+        CompanionV1ControlAction::PrivacyEraseTranscript => "text",
+        CompanionV1ControlAction::PrivacyDeleteSession => "session",
+        CompanionV1ControlAction::PrivacyEraseAll => "allMeetings",
+        _ => return None,
+    };
+    Some(crate::companion_v1::CompanionV1PrivacyCleanup {
+        operation, completed_at, deleted_files: report.deleted_files,
+        skipped_files: report.skipped_files, shared_files: report.shared_files,
+        unverified_cache_files: report.unverified_cache_files, index_saved: false,
+    })
+}
+
+#[cfg(test)]
+mod summary_tests {
+    use super::*;
+    #[test]
+    fn structured_cleanup_preserves_retained_counts_and_requires_actual_privacy_action() {
+        let r = PrivacyEraseReport { deleted_files: 2, skipped_files: 3,
+            shared_files: 4, failed_files: 0, unverified_cache_files: 5 };
+        let s = cleanup_summary(CompanionV1ControlAction::PrivacyEraseAll, &r, "time".into()).unwrap();
+        assert_eq!((s.deleted_files,s.skipped_files,s.shared_files,s.unverified_cache_files),(2,3,4,5));
+        assert_eq!(s.operation,"allMeetings");assert!(!s.index_saved);
+        assert!(cleanup_summary(CompanionV1ControlAction::DeviceDisconnect,&r,"time".into()).is_none());
+        let failed=PrivacyEraseReport { failed_files: 1, ..r };
+        assert!(cleanup_summary(CompanionV1ControlAction::PrivacyEraseAll,&failed,"time".into()).is_none());
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct PrivacyManager {
     recording_root: Option<PathBuf>,

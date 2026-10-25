@@ -231,6 +231,22 @@ pub struct CompanionV1PrivacyState {
     pub minutes_bytes: u64,
     pub last_erase_at: Option<String>,
     pub policy_label: String,
+    /// Host-only result of the latest explicit cleanup in this app session.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub last_cleanup: Option<CompanionV1PrivacyCleanup>,
+}
+
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1PrivacyCleanup {
+    pub operation: &'static str,
+    pub completed_at: String,
+    pub deleted_files: usize,
+    pub skipped_files: usize,
+    pub shared_files: usize,
+    pub unverified_cache_files: usize,
+    /// File effects can precede an index-save failure; never imply both succeeded.
+    pub index_saved: bool,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -1508,6 +1524,7 @@ fn default_privacy_state() -> CompanionV1PrivacyState {
         minutes_bytes: 0,
         last_erase_at: None,
         policy_label: "Local cache".to_string(),
+        last_cleanup: None,
     }
 }
 
