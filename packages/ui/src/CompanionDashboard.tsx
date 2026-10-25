@@ -1,3 +1,4 @@
+import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
@@ -1513,7 +1514,8 @@ export function CompanionDashboard({
                 actionsBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
-                blocked={controlsBusy} onOpenSource={openTranscriptSource} />
+                blocked={controlsBusy} onOpenSource={openTranscriptSource}
+                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?()=>resumeTranscriptDraft(selectedSession.id):undefined} />
                 : <p className="ct-step-meta" role="status">{busyAction === 'meetingGenerateMinutes' || recoveryView?.isProcessing
                   ? '正在整理已保存的文字…' : '点“整理重点”整理录音文字，原话保留。'}</p>}
               {!editingMinutes && saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part === 'minutes' ?
@@ -2571,6 +2573,7 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   onToggleAction?:(lineIndex:number,completed:boolean)=>void;actionsBlocked?:boolean;savedMarkdown?:string;
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
+  onShowTranscript?: () => void;
 }) {
   // Only fold the exact native provenance envelope represented by the saved
   // typed source snapshot. Complete saved output remains available below.
@@ -2614,10 +2617,10 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   </div>;
 }
 
-function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
+function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
   actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean;recordingTime?:string};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
-  onOpenSource?: (source: CompanionTranscriptSource) => void }) {
+  onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:()=>void }) {
   if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
   const actionRows=new Map(savedActions(markdown).flatMap((row,index)=>{
     const saved=actionChecklist?.items[index];
@@ -2650,19 +2653,23 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
       {visibleBlocks.map((block, index) => {
         if (block.type === 'title') return hideDocumentTitle&&index===0?null:<h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
         if (block.type === 'heading') return <h4 key={index}>{translateMinutesHeading(block.text)}</h4>;
-        const references = companionMinutesReferencedSources(sources, block.text);
+        const sourceParts=block.action?nativeActionParts(block.action.text):null;
+        const references = companionMinutesReferencedSources(sources, sourceParts?.body??block.text)
+          .filter(source=>!sourceParts||sourceParts.metadata.every(field=>source.text.includes(field.value.trim())));
         const links = onOpenSource && references.length ? <span className="ct-minutes-source-links">
           {references.map((source) => <button type="button" className="ct-text-button" key={source.index}
             disabled={blocked} aria-label={`核对第${source.index + 1}段原文`}
             onClick={() => onOpenSource(source)}>核对原文 · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
-        </span> : null;
+        </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
+          onClick={onShowTranscript}>查看原话（未匹配到准确定位）</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;
           const presentation=actionChecklist.compactSources?compactActionSource(shownText)
             :{title:shownText,conditional:false,supplementary:false};
           const parts=actionChecklist.compactSources?splitActionSupplement(presentation.title):null;
-          const shownTitle=actionMetadataText(parts?.title??presentation.title);
+          const shown=actionReadingParts(parts?.title??presentation.title);
+          const shownTitle=shown.title;
           return <div key={index}>
           {index===firstActionIndex?<p className="ct-action-source-legend">这里只保存事项清单，不会定时通知。
             {actionChecklist.recordingTime?<><br/>本条记录：{actionChecklist.recordingTime}。相对时间请核对原始来源的日期。</>:<>相对时间请核对原始来源的日期。</>}
@@ -2673,6 +2680,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${actionMetadataText(action.text)}`}
             onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>
               <span>{presentation.conditional?<small className="ct-action-condition-mark">有条件</small>:null}{shownTitle}{presentation.supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span>
+              {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?'注明时间':'负责人'}</span>{field.value}</span>)}
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div></div>;}
         if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>;
@@ -2685,19 +2693,8 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, action
 }
 
 function actionMetadataText(value: string): string {
-  // Readable projection only. Identity, toggles, provenance, edits and exports
-  // keep the original line, including any explicitly supplied time/owner.
-  const match=value.match(/\s+\(([^()\r\n]+)\)$/);
-  if(!match || match.index==null)return value;
-  const fields=match[1].split(/,\s*(?=(?:owner|due):\s*)/);
-  if(!fields.every(field=>/^(?:owner|due):\s*\S/.test(field)))return value;
-  const body=value.slice(0,match.index);
-  const labels=fields.flatMap(field=>{
-    const parsed=field.match(/^(owner|due):\s*(.+)$/);if(!parsed)return [field];
-    const content=parsed[2].trim();
-    return body.includes(content)?[]:[`${parsed[1]==='due'?'注明时间':'负责人'}：${content}`];
-  });
-  return labels.length?`${body}（${labels.join('；')}）`:body;
+  const shown=actionReadingParts(value);
+  return [shown.title,...shown.metadata.map(field=>`${field.key==='due'?'注明时间':'负责人'}：${field.value}`)].join('；');
 }
 
 function minutesInlineText(value: string) {

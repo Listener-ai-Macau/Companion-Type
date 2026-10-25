@@ -1,22 +1,15 @@
 import {useEffect,useRef,useState} from 'react';
+import {nativeActionParts,actionTaskBody,type ActionMetadata} from './actionMetadata';
 
-type Metadata={key:'owner'|'due';value:string};
+type Metadata=ActionMetadata;
 type Row={id:number;raw:string;text:string;prefix:string;metadata:Metadata[];changed:boolean};
 
 // Only the existing, complete native suffix is structured. Unknown brackets or
 // duplicate/unknown fields remain ordinary editable text; no dates are inferred.
 function readRow(raw:string,id:number):Row{
   const prefix=raw.match(/^\[[ xX]\]\s+/)?.[0]??'';
-  const value=raw.slice(prefix.length),suffix=value.match(/\s+\(([^()\r\n]+)\)$/);
-  if(suffix&&suffix.index!=null){
-    const fields=suffix[1].split(/,\s*(?=[A-Za-z_][A-Za-z_ -]*:\s*)/);
-    const parsed=fields.map(field=>field.match(/^(owner|due):\s*(\S[\s\S]*)$/));
-    if(parsed.every(Boolean)&&new Set(parsed.map(field=>field![1])).size===fields.length){
-      return {id,raw,prefix,text:value.slice(0,suffix.index),
-        metadata:parsed.map(field=>({key:field![1] as Metadata['key'],value:field![2]})),changed:false};
-    }
-  }
-  return {id,raw,prefix,text:value,metadata:[],changed:false};
+  const {body,metadata}=nativeActionParts(raw.slice(prefix.length));
+  return {id,raw,prefix,text:actionTaskBody(body,metadata),metadata,changed:false};
 }
 function writeRow(row:Row):string{
   if(!row.changed)return row.raw;
@@ -45,6 +38,7 @@ export function ActionListEditor({value,onChange,disabled}:{value:string;onChang
     change(row.id,{metadata:fields});
   };
   return <div className="ct-action-list-editor">
+    <p className="ct-step-meta">内容写要做的事，时间单独填写；不会自动设置提醒。</p>
     {rows.map((row,index)=><div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
       <div style={{display:'flex',gap:8,alignItems:'start'}}>
         <label style={{flex:1}}><span className="ct-step-meta">待办 {index+1}</span>
