@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import { useEffect, useRef, useState } from 'react';
 import { Pencil, RotateCcw } from 'lucide-react';
 import {
@@ -69,7 +70,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
     if (!onSeekSource || blocked || audioSeekBlocked || seekInFlight.current) return;
     seekInFlight.current = true; setSeeking(true);
     try { await onSeekSource(source); }
-    catch (error) { setResult({ id: source.sessionId, message: error instanceof Error ? error.message : String(error) }); }
+    catch (error) { setResult({ id: source.sessionId, message: operationErrorText(error,'playback') }); }
     finally { seekInFlight.current = false; setSeeking(false); }
   }
   const speakers = [...new Set(rows.flatMap((u) => u.speaker == null ? [] : [u.speaker]))].sort((a,b) => a-b);
@@ -119,7 +120,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
           : '修订已保存在本机，原始识别结果仍保留。相关整理结果会标记为待更新，可按需重新整理。' });
       }
     } catch (error) {
-      setResult({ id, message: `${String(error)} 草稿仍保留。` });
+      setResult({ id, message: `${operationErrorText(error,'save')} 草稿仍保留。` });
     } finally { setSaving(null); }
   }
 

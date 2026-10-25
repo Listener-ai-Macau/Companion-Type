@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import { useState } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { type CompanionV1ControlRequest, type CompanionV1HostSession, type CompanionV1Snapshot } from '@companion-type/core';
@@ -57,7 +58,7 @@ export function CompanionRecoveryCenter({ snapshot, blocked, savingBusy, asrRead
   return <section className="ct-recovery-center ct-recovery-compact" aria-label="内容处理状态">
     {storageBlocked && storage ? <div className="ct-recovery-storage" role="alert" aria-label="录音保存状态">
       <strong>{storage.status === 'blocked' ? '录音库需要恢复' : '当前修改尚未安全保存'}</strong>
-      <p>{storage.message ?? '自动处理已暂停，请保留当前窗口并重试。'}</p>
+      <p>{storage.message ? operationErrorText(storage.message,'save') : '自动处理已暂停，请保留当前窗口并重试。'}</p>
       <button type="button" className="ct-action" disabled={savingBusy} onClick={() => onControl({action:'hostRetrySave'})}>
         {storage.status === 'blocked' ? '重试恢复' : '重试保存'}</button>
     </div> : null}

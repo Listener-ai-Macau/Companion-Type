@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import { useEffect, useRef, useState } from 'react';
 import { Pencil, StickyNote, Trash2 } from 'lucide-react';
 import { CompanionExportFeedback, type CompanionExportFeedbackValue } from './CompanionExportFeedback';
@@ -57,7 +58,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
       });
       message(request.sessionId,request.action==='delete'?'备注已删除，原始录音和转写保留。':'备注已保存到本机。');
       if(compact&&request.action==='add')setComposers(all=>({...all,[request.sessionId]:false}));
-    } catch(error) {message(request.sessionId,error instanceof Error?error.message:String(error));}
+    } catch(error) {message(request.sessionId,operationErrorText(error,'save'));}
     finally {active.current=false;setBusy(false);onBusyChange?.(false);}
   };
   const selectAnchor=(value:string,onChange:(value:string)=>void,label:string)=><select aria-label={label} disabled={busy}
@@ -121,7 +122,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         <div className="ct-notes-controls">
           {!compact||note.bookmarkId?<small>{point?`关联重点 · ${time(position??point.positionMs)} ${point.label}`:note.bookmarkId?'关联的重点已删除；备注仍保留。':'整条录音的补充内容'}</small>:null}
           {point?<button type="button" className="ct-action" disabled={blocked||busy||anyRecording||position==null} onClick={()=>void onSeek(session.id,point.id,position!)
-            .catch((error)=>message(session.id,error instanceof Error?error.message:String(error)))}>定位原音</button>:null}
+            .catch((error)=>message(session.id,operationErrorText(error,'playback')))}>定位原音</button>:null}
           {!edit?<button type="button" className="ct-action" aria-label={`编辑备注 ${note.id}`} disabled={disabled} onClick={()=>change(session.id,(d)=>({...d,edits:{...d.edits,[note.id]:{
             text:note.text,anchor:note.bookmarkId??'',originalText:note.text,originalAnchor:note.bookmarkId??'',revision:session.noteRevision??0,
           }}}))}><Pencil size={13}/>编辑</button>:null}

@@ -1,3 +1,4 @@
+import {operationErrorText} from '../../../packages/ui/src/operationFailure';
 import {useEffect,useRef,useState} from 'react';
 import {invoke} from '@tauri-apps/api/core';
 
@@ -41,7 +42,7 @@ export function PetProfile({disabled,deviceUid,transcript}:{disabled:boolean;dev
       setNotice(write?(next.cleanupPending?'新内容已保存，旧副本清理尚未完成。':'已保存在这只宠物中。'):
         (next.persisted?'已读取这只宠物保存的档案。':'这是这只宠物的初始性格，保存后可继续调整。'));
       return true;
-    }catch(e){if(started===epoch.current){setError(String(e));if(write)setUncertain(true);}return false;}
+    }catch(e){if(started===epoch.current){setError(operationErrorText(e,'profile'));if(write)setUncertain(true);}return false;}
     finally{if(started===epoch.current){working.current=false;setBusy(false);}}
   };
   const read=()=>void action('get_companion_pet_profile');

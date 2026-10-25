@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -694,7 +695,7 @@ export function CompanionDashboard({
       if (currentDiscardDevice.current === expectedDevice) setDiscardMessage(result.message);
     }
     catch (err) {
-      if (currentDiscardDevice.current === expectedDevice) setDiscardMessage(err instanceof Error ? err.message : '操作未完成，请重新读取设备状态。');
+      if (currentDiscardDevice.current === expectedDevice) setDiscardMessage(operationErrorText(err,'device'));
     }
     finally { discardActive.current = false; setDiscardBusy(false); }
   };
@@ -903,7 +904,7 @@ export function CompanionDashboard({
       const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format });
       setExportResult({ sessionId, format, origin, path: result?.path, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' ? '。请导入日历后核对日期与提醒；导出文件不会自动创建提醒。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
-      setExportResult({ sessionId, format, origin, kind: 'error', message: `保存未完成：${error instanceof Error ? error.message : String(error)}` });
+      setExportResult({ sessionId, format, origin, kind: 'error', message: `保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
   const exportAudio = async () => {
@@ -915,7 +916,7 @@ export function CompanionDashboard({
       const result = await onExportAudio(sessionId);
       setExportResult({ sessionId, origin: 'audio', path: result?.path, kind: result ? 'saved' : 'cancelled', message: result ? `原音已保存：${exportFileName(result.path)}` : '已取消保存，原音保持不变。' });
     } catch (error) {
-      setExportResult({ sessionId, origin: 'audio', kind: 'error', message: `原音保存未完成：${error instanceof Error ? error.message : String(error)}` });
+      setExportResult({ sessionId, origin: 'audio', kind: 'error', message: `原音保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
   const changeCurrentLibraryState=async(action:'protect'|'unprotect'|'trash')=>{
@@ -923,7 +924,7 @@ export function CompanionDashboard({
     exportActive.current=true;setLibraryBusy(true);setLibraryCurrentMessage('');
     try{await onSaveLibraryLifecycle({targets:[{sessionId:selectedSession.id,expectedRevision:selectedSession.organization?.revision??0}],action});
       setLibraryCurrentMessage(action==='trash'?'当前录音已移入本机回收站，可恢复；原音与设备数据保留。':action==='protect'?'当前录音已受保护，解除前不能删除音频、文字或整场。':'已解除当前录音保护。');
-    }catch(e){setLibraryCurrentMessage(`未完成：${e instanceof Error?e.message:String(e)}`);}
+    }catch(e){setLibraryCurrentMessage(`未完成：${operationErrorText(e,'save')}`);}
     finally{exportActive.current=false;setLibraryBusy(false);}
   };
   const updateTitleDraft = (value: string) => {
@@ -1003,7 +1004,7 @@ export function CompanionDashboard({
           }
           return { ...current, [sessionId]: nextSession };
         });
-        setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: next.host.persistence?.message ?? '修改尚未安全保存，草稿已保留，请重试。' });
+        setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: next.host.persistence?.message ? operationErrorText(next.host.persistence.message,'save') : '修改尚未安全保存，草稿已保留，请重试。' });
         return;
       }
       setMeetingDrafts((current) => {
@@ -1021,7 +1022,7 @@ export function CompanionDashboard({
       setEditingMinutes(false);
       setSaveMeetingResult({ sessionId, part: resultPart, kind: 'saved', message: '修改已保存。' });
     } catch (saveError) {
-      setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: `未保存，草稿仍在：${saveError instanceof Error ? saveError.message : String(saveError)}` });
+      setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: `未保存，草稿仍在：${operationErrorText(saveError,'save')}` });
     } finally {
       setSaveMeetingBusy(false);
     }
@@ -1042,7 +1043,7 @@ export function CompanionDashboard({
         throw new Error(next.host.persistence?.message??'尚未确认清单已安全保存，请先核对本机保存状态。');
       setSaveMeetingResult({sessionId,part:'minutes',kind:'saved',message:completed?'已完成并保存。':'已恢复为待办并保存。'});
     } catch(error) {
-      setSaveMeetingResult({sessionId,part:'minutes',kind:'error',message:`未确认保存：${error instanceof Error?error.message:String(error)}`});
+      setSaveMeetingResult({sessionId,part:'minutes',kind:'error',message:`未确认保存：${operationErrorText(error,'save')}`});
     } finally {actionSaveActive.current=false;setSaveMeetingBusy(false);}
   };
   const prepareAudio = async () => {
@@ -1061,7 +1062,7 @@ export function CompanionDashboard({
         || current.identity !== requestedIdentity || current.blocked) return;
       setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline } }));
     } catch (prepareError) {
-      setAudioResult({ sessionId, message: `无法回听：${prepareError instanceof Error ? prepareError.message : String(prepareError)}` });
+      setAudioResult({ sessionId, message: `无法回听：${operationErrorText(prepareError,'playback')}` });
     } finally {
       setAudioBusy(false);
     }
@@ -1222,10 +1223,10 @@ export function CompanionDashboard({
       </div>
 
       {error ? (
-        <section className="ct-pending-banner" role="alert">{error}</section>
+        <section className="ct-pending-banner" role="alert">{error} <button type="button" className="ct-text-button" onClick={openQuickGuide}>查看恢复方法</button></section>
       ) : null}
       {!error && snapshot?.lastControl?.accepted === false ? (
-        <section className="ct-pending-banner" role="alert">{snapshot.lastControl.message}</section>
+        <section className="ct-pending-banner" role="alert">{operationErrorText(snapshot.lastControl.message,'device')} <button type="button" className="ct-text-button" onClick={openQuickGuide}>查看恢复方法</button></section>
       ) : null}
 
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
@@ -1432,7 +1433,7 @@ export function CompanionDashboard({
           {transcriptionRunning ? <p className="ct-recording-notice" role="status">正在转文字，完成后会显示在这里。原音会保留。</p> : recoveryView?.isProcessing ? <p className="ct-recording-notice" role="status">{recoveryView.label}，完成后文字会显示在这里。</p> : null}
           {journey && !journey.optional && !recoveryView?.isProcessing ? <CompanionJourney journey={journey}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked} onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow}/> : null}
-          {selectedSession.recovery?.lastError && !journey?.handlesFailure ? <p className="ct-recording-notice ct-step-warn" role="status">处理未完成：{selectedSession.recovery.lastError}</p> : null}
+          {selectedSession.recovery?.lastError && !journey?.handlesFailure ? <p className="ct-recording-notice ct-step-warn" role="status">处理未完成：{operationErrorText(selectedSession.recovery.lastError)}</p> : null}
           {audioResult?.sessionId===selectedSession.id ? <p className="ct-recording-notice ct-step-warn" role="status">{audioResult.message}</p> : null}
           <div id="ct-recording-playback" hidden={!playbackOpen}>
           <section className="ct-audio-card" aria-label="本机原音回听">
@@ -1637,7 +1638,7 @@ export function CompanionDashboard({
             onExport={onExportMeeting?()=>exportMeeting('json','bookmarks'):undefined}/>
           {renderExportFeedback('bookmarks')}
           {selectedSession.recovery?.lastError ? <details className="ct-recovery-detail">
-            <summary>查看处理失败的详情</summary><p>{selectedSession.recovery.lastError}</p>
+            <summary>查看处理失败的说明</summary><p>{operationErrorText(selectedSession.recovery.lastError)}</p>
             <small>已尝试 {selectedSession.recovery.attemptCount} / {selectedSession.recovery.maxAttempts} 次；已有内容仍保留在本机。</small>
           </details> : null}
           <div className="ct-document-actions">
@@ -1831,7 +1832,7 @@ export function CompanionDashboard({
                   {boardOnlineLive.durationMs > 0 ? ` · ${formatDuration(boardOnlineLive.durationMs)}` : ''}
                   {nearRecordingLimit ? ` · 距上限约 ${formatDuration(recordingRemainingMs)}` : ''}
                   {boardOnlineLive.disconnectResume ? ' · 已从断线处继续同步' : ''}
-                  {boardOnlineLive.error ? ` · ${boardOnlineLive.error}` : ''}
+                  {boardOnlineLive.error ? ` · ${operationErrorText(boardOnlineLive.error,'recording')}` : ''}
                 </div>
               </div>
             ) : null}
@@ -1939,7 +1940,7 @@ export function CompanionDashboard({
                   if (!selectedSession) return;
                   const sessionId=selectedSession.id;setSaveMeetingBusy(true);setSaveMeetingResult(null);
                   try {await onRefineSpeakers(sessionId);setSaveMeetingResult({sessionId,kind:'saved',message:'已在本机重新区分说话人；原音、文字和时间轴保留，之前的纪要可按需重新生成。'});}
-                  catch (e) {setSaveMeetingResult({sessionId,kind:'error',message:`本地分组未完成：${e instanceof Error?e.message:String(e)}`});}
+                  catch (e) {setSaveMeetingResult({sessionId,kind:'error',message:`本地分组未完成：${operationErrorText(e,'save')}`});}
                   finally {setSaveMeetingBusy(false);}
                 }}>重新区分说话人（本地）</button>:null}
               <button
@@ -2161,7 +2162,7 @@ export function CompanionDashboard({
                       );
                     })
                     .catch((err: unknown) => {
-                      setResourceMsg(err instanceof Error ? err.message : String(err));
+                      setResourceMsg(operationErrorText(err,'update'));
                     })
                     .finally(() => setResourceBusy(false));
                 }}
@@ -2199,7 +2200,7 @@ export function CompanionDashboard({
                       );
                     })
                     .catch((err: unknown) => {
-                      setResourceMsg(err instanceof Error ? err.message : String(err));
+                      setResourceMsg(operationErrorText(err,'update'));
                     })
                     .finally(() => setResourceBusy(false));
                 }}
@@ -2221,7 +2222,7 @@ export function CompanionDashboard({
                   diagnosticActive.current=true; setDiagnosticBusy(true); setDiagnosticMsg(null);
                   void onExportDiagnostics(includeDevice).then((result) => {
                     setDiagnosticMsg(result ? `已保存：${result.path}${result.warning ? `。${result.warning}` : ''}` : '已取消，未导出日志。');
-                  }).catch((error) => setDiagnosticMsg(String(error))).finally(() => { diagnosticActive.current=false; setDiagnosticBusy(false); });
+                  }).catch((error) => setDiagnosticMsg(operationErrorText(error,'diagnostics'))).finally(() => { diagnosticActive.current=false; setDiagnosticBusy(false); });
                 }}><Download size={15}/>{includeDevice ? '读取设备并导出日志' : '导出本机日志'}</button>)}
             </div>
             {!onExportDiagnostics ? <p className="ct-step-meta">真实日志导出仅在 Windows 应用中提供。</p> : null}
@@ -2232,7 +2233,7 @@ export function CompanionDashboard({
                 if (diagnosticActive.current || !onPrepareAudioComponents) return;
                 diagnosticActive.current=true; setDiagnosticBusy(true); setDiagnosticMsg('正在准备音频组件，请稍候…');
                 void onPrepareAudioComponents().then(() => setDiagnosticMsg('音频组件已校验并成功加载；后续会议可以使用本地说话人区分。'))
-                  .catch((error) => setDiagnosticMsg(String(error))).finally(() => {diagnosticActive.current=false;setDiagnosticBusy(false);});
+                  .catch((error) => setDiagnosticMsg(operationErrorText(error,'diagnostics'))).finally(() => {diagnosticActive.current=false;setDiagnosticBusy(false);});
               }}>准备说话人区分组件</button>
           </section>
 
@@ -2243,7 +2244,7 @@ export function CompanionDashboard({
               <span>转写与纪要服务</span>
             </div>
             {productSettings?.storageWarning ? <p className="ct-step-warn" role="alert">
-              {productSettings.storageWarning}
+              {operationErrorText(productSettings.storageWarning,'settings')}
             </p> : null}
             <p className="ct-secret-hint">
               正式桌面版使用系统凭据管理器保存密钥。转写会把录音发送到所选 ASR 服务，智能纪要会把转写文字发送到 DeepSeek；空密钥保存不会覆盖已有值。
@@ -2333,7 +2334,7 @@ export function CompanionDashboard({
                     setFormOpenAiKey('');
                     setFormDeepseekKey('');
                   }).catch((err: unknown) => {
-                    setSettingsMsg(err instanceof Error ? err.message : String(err));
+                    setSettingsMsg(operationErrorText(err,'settings'));
                   }).finally(() => { settingsActive.current = false; setSettingsBusy(false); });
                 }}
               >
@@ -2463,7 +2464,7 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
         : failed ? '文字保存失败' : '保存状态待确认'}</span></header>
       <p>这条记录来自导入文字，没有原录音；无需等待设备同步或转写。</p>
       {!saved ? <p role="alert">{persistence?.message
-        ?? '本机保存尚未确认，请先在保存提示中重试。'}</p> : null}
+        ? operationErrorText(persistence.message,'save') : '本机保存尚未确认，请先在保存提示中重试。'}</p> : null}
     </section>;
   }
   const captureOngoing = session.status === 'recording';
@@ -2528,7 +2529,7 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
     {session.pendingReason === 'needs_segments' ? <p>这场录音尚未收齐。已有片段会保留，连接同一台 Companion 后继续同步。</p> : null}
     {session.deviceRecordingEndReason ? <p>{({user: '你已停止设备录音。', storageFull: '设备存储空间不足，录音已安全结束。', durationLimit: '已达到设定时长，设备录音已结束。', lowBattery: '设备因电量低结束了录音。', silence: '已达到设定的静音时长，设备录音已结束。'} as const)[session.deviceRecordingEndReason]} 原音同步和本机保存进度见上方。</p> : null}
     {session.captureIncomplete ? <p role="alert">这场录音曾意外中断，实际保存 {formatDuration(session.durationMs)}，结尾可能缺失。可以回听或导出原音；转写与纪要只覆盖已保存的片段。{!session.recovery?.captureReviewConfirmed ? '选择整理片段后才会继续处理。' : ''}</p> : null}
-    {saveFailed ? <p>{persistence?.message ?? '本机索引尚未安全保存，当前不会回收设备副本。'}</p> : null}
+    {saveFailed ? <p>{persistence?.message ? operationErrorText(persistence.message,'save') : '本机索引尚未安全保存，当前不会回收设备副本。'}</p> : null}
   </section>;
 }
 

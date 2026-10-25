@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import {useEffect,useRef,useState} from 'react';
 import type {CompanionV1HostSession,CompanionV1Snapshot} from '../../core/src/companionV1';
 import {emptyLibraryOrganization,type CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
@@ -32,7 +33,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   if(favorite!=='keep')request.favorite=favorite==='yes';
   active.current=true;setBusy(true);onBusyChange?.(true);setMessage('');
   try {await onSave(request);setSelection({});setApplyFolder(false);setTagAction('keep');setFavorite('keep');setMessage(`已保存 ${ids.length} 场录音的分类，原音文件保持原位置。`);}
-  catch(e){setMessage(`未完成保存，选择和输入仍保留：${e instanceof Error?e.message:String(e)}`);}
+  catch(e){setMessage(`未完成保存，选择和输入仍保留：${operationErrorText(e,'save')}`);}
   finally {active.current=false;setBusy(false);onBusyChange?.(false);}
  };
  const exportSelection=async()=>{
@@ -41,7 +42,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   try {
    const result=await onExport({targets:ids.map(sessionId=>({sessionId,expectedRevision:selection[sessionId]})),format:exportFormat,meetingMode:exportMode});
    setMessage(result?`已导出 ${result.sessions} 场录音到 ${result.path}。含文件清单；这是分享导出，不用于整库恢复。`:'已取消导出，所选录音仍保留。');
-  } catch(e){setMessage(`未完成整批导出，选择仍保留：${e instanceof Error?e.message:String(e)}`);}
+  } catch(e){setMessage(`未完成整批导出，选择仍保留：${operationErrorText(e,'export')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
  return <section className="ct-library-tools" aria-label="录音分类与批量整理">

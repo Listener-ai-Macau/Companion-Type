@@ -1,3 +1,4 @@
+import {operationErrorText} from '../../../packages/ui/src/operationFailure';
 import {useEffect,useRef,useState} from 'react';
 import {invoke} from '@tauri-apps/api/core';
 import {PetProfile} from './PetProfile';
@@ -9,7 +10,7 @@ const labels:Record<string,string>={idle:'点一下，和宠物聊一句',prepar
   replied:'已显示在宠物屏幕',displayFailed:'回复保留，暂未上屏',failed:'这次没聊成',cancelled:'已取消'};
 function readableError(raw:string){
   return raw.includes('Volcengine ASR completed without recognized speech')
-    ?'这次没听清楚。原录音已保存，可以稍后重试。':raw;
+    ?'这次没听清楚。原录音已保存，可以稍后重试。':operationErrorText(raw,'chat');
 }
 function raster(text:string):number[]{
   const canvas=document.createElement('canvas');canvas.width=200;canvas.height=13;
@@ -47,7 +48,7 @@ export function PetChat({disabled,deviceUid}:{disabled:boolean;deviceUid?:string
     if(action.current)return;action.current=true;setBusy(true);setError(null);
     try{const next=await invoke<ChatStatus>('display_companion_pet_chat',{requestId:current.requestId,pixels:raster(current.reply)});
       if(cancelledRequest.current!==current.requestId)setState(next);}
-    catch(e){if(cancelledRequest.current!==current.requestId)setError(String(e));}
+    catch(e){if(cancelledRequest.current!==current.requestId)setError(operationErrorText(e,'chat'));}
     finally{action.current=false;setBusy(false);}
   };
   useEffect(()=>{
@@ -57,13 +58,13 @@ export function PetChat({disabled,deviceUid}:{disabled:boolean;deviceUid?:string
   },[state,busy]);
   const control=async(command:string,args?:Record<string,unknown>)=>{
     if(action.current)return;action.current=true;setBusy(true);setError(null);
-    try{setState(await invoke<ChatStatus>(command,args));}catch(e){setError(String(e));}finally{action.current=false;setBusy(false);}
+    try{setState(await invoke<ChatStatus>(command,args));}catch(e){setError(operationErrorText(e,'chat'));}finally{action.current=false;setBusy(false);}
   };
   const cancel=async(current:ChatStatus)=>{
     // Cancellation must not queue behind a seven-second native display wait.
     if(cancelling.current)return;cancelling.current=true;cancelledRequest.current=current.requestId;setError(null);
     try{setState(await invoke<ChatStatus>('finish_companion_pet_chat',{requestId:current.requestId,cancel:true}));}
-    catch(e){cancelledRequest.current=0;setError(String(e));}finally{cancelling.current=false;}
+    catch(e){cancelledRequest.current=0;setError(operationErrorText(e,'chat'));}finally{cancelling.current=false;}
   };
   return <section aria-label="宠物聊天" style={{maxWidth:920,margin:'12px auto',padding:'16px 20px',border:'1px solid #d8ded8',borderRadius:12}}>
     <h2 style={{fontSize:16,margin:'0 0 8px'}}>和宠物聊聊</h2>

@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import {useEffect,useRef,useState} from 'react';
 import type {CompanionV1HostSession,CompanionV1Snapshot} from '../../core/src/companionV1';
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
@@ -15,15 +16,15 @@ export function CompanionLibraryLifeActions({sessions,selection,setSelection,tra
  const save=async(action:CompanionLibraryStateRequest['action'])=>{
   if(!ready||active.current||!onSave)return;active.current=true;setBusy(true);onBusyChange?.(true);setMessage('');setPending(null);
   try{await onSave({targets,action});setSelection({});setMessage(action==='trash'?`已将 ${targets.length} 场移入本机回收站，原音和设备数据保留，可恢复。`:action==='restore'?`已恢复 ${targets.length} 场录音；不会自动重新转写或生成纪要。`:action==='protect'?`已保护 ${targets.length} 场录音；解除前不能删除音频、文字或整场。`:`已解除 ${targets.length} 场录音的保护。`);}
-  catch(e){setMessage(`未完成，选择仍保留：${e instanceof Error?e.message:String(e)}`);}
+  catch(e){setMessage(`未完成，选择仍保留：${operationErrorText(e,'save')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
  const purge=async()=>{
   if(!ready||active.current||!onPurge)return;active.current=true;setBusy(true);onBusyChange?.(true);setPending(null);setMessage('');
   try{const result=await onPurge({targets});
    setSelection(Object.fromEntries(targets.filter(t=>!result.deleted.includes(t.sessionId)).map(t=>[t.sessionId,t.expectedRevision])));
-   setMessage(`已永久清除 ${result.deleted.length} 场本机录音。${result.failures.length?` ${result.failures.length} 场未完成，仍需核对：${result.failures.map(f=>f.message).join('；')}`:'设备上的录音未访问。'}${result.warning??''}`);
-  }catch(e){setMessage(`永久清除未完成，选择仍保留：${e instanceof Error?e.message:String(e)}`);}
+   setMessage(`已永久清除 ${result.deleted.length} 场本机录音。${result.failures.length?` ${result.failures.length} 场未完成，仍需核对：${result.failures.map(f=>operationErrorText(f.message,'save')).join('；')}`:'设备上的录音未访问。'}${result.warning??''}`);
+  }catch(e){setMessage(`永久清除未完成，选择仍保留：${operationErrorText(e,'save')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
  return <section aria-label="录音保护与回收站">

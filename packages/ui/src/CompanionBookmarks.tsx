@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import { useEffect, useRef, useState } from 'react';
 import { Bookmark, Pencil, Trash2 } from 'lucide-react';
 import { type CompanionBookmarkRequest, type CompanionV1HostSession, type CompanionV1Snapshot,
@@ -51,7 +52,7 @@ export function CompanionBookmarks({ session, blocked, anyRecording, persistence
       });
       setMessages((all)=>({...all,[request.sessionId]:'重点已保存到本机。'}));
     } catch (error) {
-      setMessages((all)=>({...all,[request.sessionId]:error instanceof Error ? error.message : String(error)}));
+      setMessages((all)=>({...all,[request.sessionId]:operationErrorText(error,'save')}));
     } finally {active.current=false; setBusy(false); onBusyChange?.(false);}
   };
   const request=(action:CompanionBookmarkRequest['action'],id:string,label?:string,positionMs?:number):CompanionBookmarkRequest=>({
@@ -98,7 +99,7 @@ export function CompanionBookmarks({ session, blocked, anyRecording, persistence
           })}>取消</button></div> : <strong>{point.label}</strong>}
           <div className="ct-bookmark-actions">
             <button type="button" className="ct-action" disabled={blocked||busy||anyRecording||position==null}
-              onClick={()=>void onSeek(session.id,point.id,position!).catch((error)=>setMessages((all)=>({...all,[session.id]:String(error)})))}>定位原音</button>
+              onClick={()=>void onSeek(session.id,point.id,position!).catch((error)=>setMessages((all)=>({...all,[session.id]:operationErrorText(error,'playback')})))}>定位原音</button>
             <button type="button" className="ct-action" disabled={blocked||busy} onClick={()=>{
               setSelected((all)=>({...all,[session.id]:point.id})); onShowOriginal();
             }}>查看对应原文</button>

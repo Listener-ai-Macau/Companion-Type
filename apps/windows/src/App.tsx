@@ -1,3 +1,4 @@
+import {operationErrorText} from '../../../packages/ui/src/operationFailure';
 import { useEffect, useRef, useState } from 'react';
 
 import {
@@ -84,7 +85,7 @@ export function App() {
         if (boardLive) setBoardOnlineLive(boardLive);
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(operationErrorText(err,'general'));
     }
   };
 
@@ -114,7 +115,7 @@ export function App() {
         }
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(operationErrorText(err,'general'));
     }
   };
 
@@ -152,7 +153,7 @@ export function App() {
       if (accepted) setRecordingSync((current) => current?.jobId === jobId
         ? { ...current, pauseRequested: true } : current);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(operationErrorText(err,'general'));
     } finally { pauseSyncActive.current = false; setPauseSyncBusy(false); }
   };
 
@@ -196,7 +197,7 @@ export function App() {
             if (snap.status === 'fulfilled') setSnapshot(snap.value);
             if (live.status === 'fulfilled' && live.value) {
               setBoardOnlineLive(live.value);
-              if (live.value.state === 'failed' && live.value.error) setError(live.value.error);
+              if (live.value.state === 'failed' && live.value.error) setError(operationErrorText(live.value.error,'recording'));
             }
           }
         }
@@ -291,7 +292,7 @@ export function App() {
             setSnapshot(await getCompanionSnapshot());
           });
         } catch (err) {
-          setError(err instanceof Error ? err.message : String(err));
+          setError(operationErrorText(err,'general'));
         } finally {
           setBoardOnlineBusy(false);
         }
@@ -303,7 +304,7 @@ export function App() {
         try {
           await exclusive('meetingStop', async () => setBoardOnlineLive(await stopBoardOnlineLive()));
         } catch (err) {
-          setError(err instanceof Error ? err.message : String(err));
+          setError(operationErrorText(err,'general'));
         } finally {
           setBoardOnlineBusy(false);
         }

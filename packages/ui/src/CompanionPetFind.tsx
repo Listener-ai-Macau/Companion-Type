@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import {useEffect,useRef,useState} from 'react';
 
 export type PetFindRequest={action:'start'|'stop'|'status';deviceId:string;token:string};
@@ -30,7 +31,7 @@ export function CompanionPetFind({deviceId,supported,blocked,muted,onFind}: {
       if(generation!==epoch.current)return;
       if(next.deviceId!==deviceId || next.token!==bound.token)throw new Error('寻找结果与当前设备不一致，请重新读取设备状态。');
       setReport(next);
-    } catch(e) {if(generation===epoch.current){setError(e instanceof Error?e.message:String(e));setFailedAction(action);}}
+    } catch(e) {if(generation===epoch.current){setError(operationErrorText(e,'device'));setFailedAction(action);}}
     finally {active.current=false;setBusy(false);}
   };
   return <section className="ct-pet-find" aria-label="找宠物">

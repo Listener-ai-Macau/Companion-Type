@@ -1,3 +1,4 @@
+import {operationErrorText} from './operationFailure';
 import { useEffect, useRef, useState } from 'react';
 export type CompanionDesktopUpdateStatus = { phase:string;message:string;currentVersion:string;availableVersion?:string|null;downloadedBytes:number;totalBytes?:number|null };
 export function CompanionDesktopUpdate({ blocked, unsaved, onStatus, onCheck, onDownload, onCancel, onInstall }: {
@@ -19,12 +20,12 @@ export function CompanionDesktopUpdate({ blocked, unsaved, onStatus, onCheck, on
   },[busy,progressing,onStatus]);
   const run=async(work:()=>Promise<CompanionDesktopUpdateStatus|void>)=>{
     if(active.current)return;active.current=true;setBusy(true);setError(null);setConfirmed(false);
-    try{const result=await work();if(result)setStatus(result);}catch(error){setError(error instanceof Error?error.message:String(error));try{setStatus(await onStatus());}catch{}}
+    try{const result=await work();if(result)setStatus(result);}catch(error){setError(operationErrorText(error,'update'));try{setStatus(await onStatus());}catch{}}
     finally{active.current=false;setBusy(false);}
   };
   const percent=status?.totalBytes?Math.min(100,Math.floor(status.downloadedBytes/status.totalBytes*100)):null;
   return <section className="ct-desktop-update" aria-label="Companion Type 软件更新">
-    <div><strong>Companion Type 更新</strong><p>{status?.message??'可手动检查正式软件更新。'}{status?.currentVersion?` 当前版本 ${status.currentVersion}。`:''}</p>
+    <div><strong>Companion Type 更新</strong><p>{status?.phase==='failed'||status?.phase==='error'?operationErrorText(status.message,'update'):status?.message??'可手动检查正式软件更新。'}{status?.currentVersion?` 当前版本 ${status.currentVersion}。`:''}</p>
       {status?.availableVersion?<p>可用版本 {status.availableVersion}</p>:null}
       {progressing?<p role="status">{status?.phase==='downloading'?`正在下载${percent!==null?` ${percent}%`:''}`:'正在检查发布'}</p>:null}
       {error?<p role="alert">{error}</p>:null}
