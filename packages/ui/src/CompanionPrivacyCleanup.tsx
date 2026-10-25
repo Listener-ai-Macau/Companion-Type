@@ -11,9 +11,13 @@ export function CompanionPrivacyCleanup({ result }: { result?: CompanionV1Privac
     <p role={result.indexSaved ? 'status' : 'alert'}>
       {result.indexSaved ? `已处理${scope}，删除 ${result.deletedFiles} 个受管文件。`
         : '文件处理结果已返回，会议索引尚未确认保存。请先保留当前状态，处理页面上的保存提示后再核对。'}
-      {Number.isFinite(time.getTime()) ? <> <time dateTime={result.completedAt}>{time.toLocaleString()}</time></> : null}
+      {kept ? ' 有保留项待核对。' : ''}
     </p>
-    {kept ? <p>保留项：共享文件 {result.sharedFiles} 项，未纳入本次清理 {result.skippedFiles} 项，无法确认归属的旧缓存 {result.unverifiedCacheFiles} 项。保留项尚未删除，请核对后单独处理。</p> : null}
-    <p>这是本次打开软件后最近一次返回的本机结果，不代表设备或远端资料已清除。另存副本、其它电脑与服务商资料需分别处理；完整历史资料擦除仍未提供。</p>
+    <details>
+      <summary>查看本次清理明细{kept ? ' · 有保留项' : ''}</summary>
+      {kept ? <p>保留项：共享文件 {result.sharedFiles} 项，未纳入本次清理 {result.skippedFiles} 项，无法确认归属的旧缓存 {result.unverifiedCacheFiles} 项。保留项尚未删除，请核对后单独处理。</p> : null}
+      {Number.isFinite(time.getTime()) ? <p>本次打开软件内的操作时间：<time dateTime={result.completedAt}>{time.toLocaleString()}</time></p> : null}
+      <p>这里只记录最近一次返回的本机结果；设备、其它副本和远端资料需分别核对。</p>
+    </details>
   </section>;
 }

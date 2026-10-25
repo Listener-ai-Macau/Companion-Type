@@ -1109,6 +1109,8 @@ impl FixtureCompanionBackend {
             "unavailable"
         };
         apply_connection_preference(&mut snapshot,&connection_preference);
+        // A restored library is readable before any control/selection action.
+        refresh_privacy_counts(&mut snapshot);
         Self {
             snapshot: Mutex::new(snapshot),
             meeting_processing: Mutex::new(()),

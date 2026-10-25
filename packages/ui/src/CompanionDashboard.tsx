@@ -2451,19 +2451,23 @@ export function CompanionDashboard({
             <p className="ct-step-meta">待办取自当前纪要的“行动项 / Action Items”列表；修改后请先保存。日历文件使用 VTODO，需支持待办的日历应用；仅明确的日期或带时区时间设为截止时间，“周五”等保留原文供核对，不自动猜日期。</p>
           </section>
 
-          <section className="ct-ops-grid">
+          <section className="ct-ops-grid" style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
             <section className="ct-panel" id="ct-privacy">
               <div className="ct-panel-title"><Shield size={18} /><span>隐私</span></div>
               <div className="ct-metric-grid">
-                <InfoMetric label="音频" value={privacy ? formatBytes(privacy.audioCacheBytes) : '0'} />
-                <InfoMetric label="文本" value={privacy ? formatBytes(privacy.transcriptBytes + privacy.minutesBytes) : '0'} />
+                <InfoMetric label="音频（按记录）" value={privacy && !storageBlocked ? formatBytes(privacy.audioCacheBytes) : '未确认'} />
+                <InfoMetric label="文本（按记录）" value={privacy && !storageBlocked ? formatBytes(privacy.transcriptBytes + privacy.minutesBytes) : '未确认'} />
                 <InfoMetric label="自动删除" value="未启用" />
               </div>
-              <p className="ct-step-meta">会议与原音保存在本机，直到你主动删除。另存的原音和导出文件由你自行保管，不会随会议删除。</p>
-              <p className="ct-step-meta">本机清理不清除设备录音、宠物档案与记忆、其它电脑或远端服务资料。共享文件和无法确认归属的旧缓存会保留；完整历史资料擦除仍未提供。</p>
+              <p className="ct-step-meta">这里处理本机会议资料；设备、另存副本和远端资料分别管理。</p>
               <CompanionPrivacyCleanup result={privacy?.lastCleanup} />
               {!privacySelectionConfirmed && allLibrarySessions.length ? <p className="ct-step-meta">逐条清理前，请先在“我的录音”打开要处理的那条。<button type="button" className="ct-text-button" onClick={()=>navigatePage('library')}>选择一条录音</button></p> : null}
-              <p className="ct-step-meta">{selectedSession?.organization?.protected?'当前录音已受保护，解除前不能删除音频、文字或整场。':'普通删除先进入本机回收站，可恢复；永久清除在回收站单独确认。保护防误删，不是加密。'}</p>
+              <details className="ct-step-meta"><summary>清理范围与统计说明</summary>
+                <p>数值按本机会议记录中的字节信息累计；共享原音可能重复计入，不含所有缓存或另存副本，不等于磁盘占用。</p>
+                <p>本机清理不清除设备录音、宠物档案与记忆、其它电脑或远端资料。共享文件和无法确认归属的旧缓存会保留；完整历史资料擦除仍未提供。</p>
+                <p>普通删除先移入本机回收站，可恢复；永久清除需单独确认。保护防误删，不是加密。</p>
+              </details>
+              {selectedSession?.organization?.protected ? <p className="ct-step-meta">当前录音已受保护，解除后才可清理。</p> : null}
               <div className="ct-button-row">
                 <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!privacySelectionConfirmed||!onSaveLibraryLifecycle||libraryUnsaved} onClick={()=>void changeCurrentLibraryState(selectedSession?.organization?.protected?'unprotect':'protect')}>{selectedSession?.organization?.protected?'解除当前录音保护':'保护当前录音'}</button>
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !canEraseAudio} onClick={() => requestErase('privacyEraseAudio', '清理这场会议的本机音频？', '保留已有文字和纪要，取消尚未完成的自动处理。仅删除可确认归属的受管文件；共享或外部另存的文件会保留。设备原录音不受影响。')}>
