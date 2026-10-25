@@ -362,6 +362,8 @@ export function CompanionDashboard({
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showWorkflow, setShowWorkflow] = useState(false);
   const [pageView, setPageView] = useState<'library' | 'device' | 'settings'>('library');
+  const pageHeading = useRef<HTMLHeadingElement>(null);
+  const navigationEpoch = useRef(0);
   const [helpOpen,setHelpOpen]=useState(false);
   const helpTrigger=useRef<HTMLButtonElement>(null);
   const helpReturnFocus=useRef<HTMLElement|null>(null);
@@ -540,10 +542,10 @@ export function CompanionDashboard({
   }, [openSavedRecordingId, selectedSession?.id]);
 
   useEffect(()=>{
-    if (!savedDetailOpen) return;
+    if (!savedDetailOpen || pageView !== 'library') return;
     savedRecordingWorkspace.current?.focus({preventScroll:true});
     savedRecordingWorkspace.current?.scrollIntoView({block:'start'});
-  },[savedDetailOpen,selectedSession?.id]);
+  },[savedDetailOpen,selectedSession?.id,pageView]);
   const rememberRecordingOpener = () => {
     recordingOpener.current = document.activeElement instanceof HTMLButtonElement ? document.activeElement : null;
   };
@@ -683,7 +685,7 @@ export function CompanionDashboard({
     && requestedDurationMs > 0 && (!connected || boardMaxDurationSeconds <= 65535);
   const onlineDurationValid = durationValid && boardMaxDurationSeconds >= 12 && boardMaxDurationSeconds <= 2580;
   const durationError = !durationValid ? '请输入有效的录音时长，实际可录时间以设备空间为准。'
-    : !onlineDurationValid ? '在线转写单次最多 43 分钟，请修改时长；不会自动截短。' : null;
+    : connected && meetingMode === 'onlineLive' && !onlineDurationValid ? '在线转写单次最多 43 分钟，请修改时长；不会自动截短。' : null;
   const capacity = connected ? device?.recordingCapacity : null;
   currentDiscardDevice.current = connected ? device?.deviceId ?? null : null;
   useEffect(() => { setDiscardMessage(null); }, [device?.deviceId, connected]);
@@ -783,24 +785,36 @@ export function CompanionDashboard({
         }}>{pending ? '撤销清空' : '清空密钥'}</button>
     </div>;
   };
+  // Only explicit navigation requests focus; polling never calls this helper.
+  const navigatePage = (page: 'library' | 'device' | 'settings', destination?: string) => {
+    const epoch = ++navigationEpoch.current;
+    setHelpOpen(false);
+    setPageView(page);
+    window.requestAnimationFrame(() => {
+      if (epoch !== navigationEpoch.current) return;
+      const root = pageHeading.current?.closest('main');
+      const section = destination ? root?.querySelector<HTMLElement>(`#${destination}`) : pageHeading.current;
+      const target = section?.getClientRects().length ? section : pageHeading.current;
+      const focus = target?.tagName === 'DETAILS' ? target.querySelector<HTMLElement>('summary') : target;
+      focus?.focus({preventScroll:true});
+      target?.scrollIntoView({block:'start',behavior:'auto'});
+    });
+  };
   const openSettings = () => {
-    setPageView('settings');
     setShowAdvanced(true);
-    window.setTimeout(() => document.getElementById('ct-service-settings')?.scrollIntoView({ block: 'start', behavior: 'instant' }), 0);
+    navigatePage('settings', 'ct-service-settings');
   };
   const returnToRecording = () => {
-    setPageView('library');
+    navigatePage('library', selectedSession ? 'ct-saved-recording-workspace' : undefined);
     if (selectedSession) setOpenSavedRecordingId(selectedSession.id);
   };
   const openDeviceRecording = () => {
-    setPageView('device');
     setShowWorkflow(false);
-    window.setTimeout(() => document.getElementById('ct-device-recording-page')?.scrollIntoView({ block: 'start' }), 0);
+    navigatePage('device', 'ct-device-recording-page');
   };
   const openWorkflow = () => {
-    setPageView('device');
     setShowWorkflow(true);
-    window.setTimeout(() => document.getElementById('ct-workflow')?.scrollIntoView({ block: 'start', behavior: 'smooth' }), 0);
+    navigatePage('device', 'ct-workflow');
   };
   const journey = selectedSession ? meetingJourney(selectedSession, {
     connected, deviceId: device?.deviceId, asrReady: asrConfigured,
@@ -864,9 +878,8 @@ export function CompanionDashboard({
     };
   }, [preparedAudio?.url, audioIdentity]);
   const openRecordingResult = () => {
-    setPageView('library');
     setRecordingResultOpen(true);
-    window.setTimeout(() => document.getElementById('ct-recording-result')?.scrollIntoView({ block: 'start' }), 0);
+    navigatePage('library', 'ct-recording-result');
   };
   const runOrganizationControl = (request: CompanionV1ControlRequest, explicitSource?:'original') => {
     const targetId = request.sessionId ?? selectedSession?.id;
@@ -880,7 +893,7 @@ export function CompanionDashboard({
       if (unimportedTranscriptDraft && targetId) {
         setSaveMeetingResult({ sessionId: targetId, kind: 'error',
           message: '尚有未导入的文字。请先在录音与同步中导入，或还原为已保存的转写；本次没有开始整理。' });
-        setPageView('library');
+        navigatePage('library');
         setOpenSavedRecordingId(targetId);
         return;
       }
@@ -1210,7 +1223,7 @@ export function CompanionDashboard({
       <header className="ct-topbar">
         <div>
           <p className="ct-kicker">Companion Type</p>
-          <h1>{pageView === 'library' ? savedDetailOpen?'录音详情':'我的录音' : pageView === 'device' ? '设备与同步' : '设置与工具'}</h1>
+          <h1 ref={pageHeading} tabIndex={-1}>{pageView === 'library' ? savedDetailOpen?'录音详情':'我的录音' : pageView === 'device' ? '设备与同步' : '设置与工具'}</h1>
         </div>
         <div className="ct-topbar-actions">
         <button ref={helpTrigger} type="button" className="ct-action" aria-expanded={helpOpen}
@@ -1230,17 +1243,16 @@ export function CompanionDashboard({
       </header>
       {helpOpen ? <CompanionHelp onClose={closeQuickGuide}
         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
-        onLibrary={()=>{setHelpOpen(false);setPageView('library');setDetailSessionId(null);}}
-        onDiagnostics={()=>{setHelpOpen(false);setPageView('settings');setShowAdvanced(true);
-          window.setTimeout(()=>document.getElementById('ct-log-support')?.scrollIntoView({block:'start'}),0);}} onRecording={savedDetailOpen?()=>{setHelpOpen(false);setPageView('library');window.setTimeout(()=>savedRecordingWorkspace.current?.scrollIntoView({block:'start'}),0);}:undefined} /> : null}
+        onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}}
+        onDiagnostics={()=>{setShowAdvanced(true);navigatePage('settings','ct-log-support');}} onRecording={savedDetailOpen?returnToRecording:undefined} /> : null}
 
       <nav className="ct-page-navigation" aria-label="主要功能">
         <button type="button" aria-current={pageView === 'library' ? 'page' : undefined}
-          onClick={() => {setHelpOpen(false);setPageView('library');setDetailSessionId(null);}}><Headphones size={16} />我的录音</button>
+          onClick={() => {setDetailSessionId(null);navigatePage('library');}}><Headphones size={16} />我的录音</button>
         <button type="button" aria-current={pageView === 'device' ? 'page' : undefined}
-          onClick={() => {setHelpOpen(false);setPageView('device');}}><Bluetooth size={16} />设备与同步</button>
+          onClick={() => navigatePage('device')}><Bluetooth size={16} />设备与同步</button>
         <button type="button" aria-current={pageView === 'settings' ? 'page' : undefined}
-          onClick={() => { setHelpOpen(false); setPageView('settings'); setShowAdvanced(true); }}><ChevronDown size={16} />设置与工具</button>
+          onClick={() => {setShowAdvanced(true);navigatePage('settings');}}><ChevronDown size={16} />设置与工具</button>
       </nav>
 
       <section className="ct-simple-status" aria-live="polite">
@@ -1432,16 +1444,17 @@ export function CompanionDashboard({
         {listeningQueue.message?<p role="status">{listeningQueue.message}</p>:null}
       </section></details>:null}
       {selectedSession ? (
-        <section ref={savedRecordingWorkspace} className="ct-meeting-workspace" aria-label="当前录音" tabIndex={-1} hidden={!savedDetailOpen}>
+        <section ref={savedRecordingWorkspace} id="ct-saved-recording-workspace" className="ct-meeting-workspace" aria-label="当前录音" tabIndex={-1} hidden={!savedDetailOpen}>
           <button type="button" className="ct-text-button ct-recording-back" disabled={controlsBusy}
             onClick={returnToRecordingLibrary}>← 返回录音库</button>
           <header className="ct-meeting-hero">
             <div>
               <p className="ct-section-eyebrow">{textOnlyImport ? '导入文字' : '录音内容'}</p>
               <label className="ct-title-editor"><span className="ct-sr-only">录音标题</span><Pencil size={15} />
-                <input value={titleDraft} maxLength={120} aria-label="录音标题"
+                <input value={titleDraft} maxLength={120} aria-label="录音标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
                   readOnly={!onSaveMeeting || saveMeetingBusy} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
+              {!titleDraft.trim() ? <p id="ct-title-error" className="ct-step-warn" role="alert">标题不能为空，请填写后保存。</p> : null}
               <p>{recordingTimeLabel(selectedSession.startedAt)}{!textOnlyImport ? ` · ${formatDuration(selectedSession.durationMs)}` : ''}</p>
               {titleDirty ? <div className="ct-inline-edit-actions">
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy || !titleDraft.trim()} onClick={() => void saveMeetingDraft()} aria-busy={saveMeetingBusy}>{saveMeetingBusy ? '正在保存…' : '保存标题'}</button>
@@ -1701,10 +1714,10 @@ export function CompanionDashboard({
 
       </div>
 
-      <section id="ct-device-recording-page" className="ct-page-panel" hidden={pageView !== 'device'} aria-label="设备与同步内容">
+      <section id="ct-device-recording-page" tabIndex={-1} className="ct-page-panel" hidden={pageView !== 'device'} aria-label="设备与同步内容">
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
         recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
-        onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setPageView('library');setDetailSessionId(null);}} />
+        onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setDetailSessionId(null);navigatePage('library');}} />
       {onFindPet && connected && device?.deviceId ? <CompanionPetFind
         deviceId={device.deviceId} supported={snapshot?.source==='firmware' && snapshot.speaker.findSupported===true}
         blocked={controlsBusy||oobeBlockedByRecording} muted={snapshot?.speaker.muted!==false||snapshot.speaker.volume===0}
@@ -1751,7 +1764,7 @@ export function CompanionDashboard({
         <span><HardDrive size={16} />更多录音与处理操作</span><span>{showWorkflow ? '收起' : '录音 · 同步 · 整理'}</span>
       </button>
 
-      {showWorkflow ? <section className="ct-steps" id="ct-workflow" aria-label="主路径步骤">
+      {showWorkflow ? <section className="ct-steps" id="ct-workflow" tabIndex={-1} aria-label="主路径步骤">
         <div className={`ct-step ${step >= 1 ? 'active' : ''} ${connected ? 'done' : ''}`}>
           <span className="ct-step-n">1</span>
           <div className="ct-step-body">
@@ -1817,7 +1830,7 @@ export function CompanionDashboard({
                 placeholder="例如：周会、一次灵感" maxLength={120} disabled={oobeBlockedByRecording || controlsBusy}
                 onChange={(event) => setNewMeetingTitle(event.target.value)} /></label>
               <label className="ct-field ct-duration-field"><span>最长录制时间（分钟）</span><input value={draftMinutes}
-                inputMode="numeric" disabled={oobeBlockedByRecording || controlsBusy}
+                inputMode="numeric" disabled={oobeBlockedByRecording || controlsBusy} aria-invalid={Boolean(durationError)} aria-describedby={durationError ? "ct-workflow-duration-error" : undefined}
                 onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))} /></label>
             </div>
             <p className="ct-step-meta">在线转写单次最多 43 分钟，另预留 2 分钟收尾空间；纯录音按设备空间和设定时长保存。支持分段的设备会把片段放在同一条录音里；电脑保存并核对完整后，设备才复用这些已同步的空间。</p>
@@ -1832,7 +1845,7 @@ export function CompanionDashboard({
                 {capacityInsufficient ? '当前容量不足，请先同步已有录音或缩短时长；不会自动缩短或覆盖录音。' : '开始前会重新核对容量。'}
               </>}
             </p> : null}
-            {durationError ? <p className="ct-step-meta" role="alert">{durationError}</p> : null}
+            {durationError ? <p id="ct-workflow-duration-error" className="ct-step-meta" role="alert">{durationError}</p> : null}
             <div className="ct-button-row">
               <button
                 type="button"
@@ -2096,7 +2109,7 @@ export function CompanionDashboard({
               <label className="ct-field ct-duration-field">
                 <span>{connected ? '最长录音(分)' : '预计时长(分)'}</span>
                 <input
-                  value={draftMinutes}
+                  value={draftMinutes} aria-invalid={Boolean(durationError)} aria-describedby={durationError ? "ct-advanced-duration-error" : undefined}
                   onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))}
                   inputMode="numeric"
                 />
@@ -2149,7 +2162,7 @@ export function CompanionDashboard({
               ? `${meetingMode === 'onlineLive' ? `实时转写单次最多 43 分钟，另预留 2 分钟收尾空间。${nearRecordingLimit ? ` 距本次设定结束约 ${formatDuration(recordingRemainingMs)}。` : ''}` : '先录后整理按填写时长检查完整空间，不会自动截短。'} 当前不支持无缝连续分段。在线模式需要配置转写服务。`
               : '本机录音需要手动停止，保存后按实际音频长度显示时长。'}</p>
             {!durationValid || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
-              ? <p className="ct-step-meta" role="alert">{durationError}</p> : null}
+              ? <p id="ct-advanced-duration-error" className="ct-step-meta" role="alert">{durationError}</p> : null}
             {(selectedSession?.status === 'recording' || selectedSession?.liveTranscriptText) ? (
               <div className="ct-live-box" aria-live="polite">
                 <strong>
@@ -2257,7 +2270,7 @@ export function CompanionDashboard({
             {resourceMsg ? (
               <p className="ct-step-meta" role="status">{resourceMsg}</p>
             ) : null}
-            <div className="ct-section-title" id="ct-log-support"><FileText size={18} /><span>日志与诊断</span></div>
+            <div className="ct-section-title" id="ct-log-support" tabIndex={-1} role="region" aria-label="日志与诊断"><FileText size={18} /><span>日志与诊断</span></div>
             <p className="ct-meeting-hint">保存连接、升级和音频处理的阶段记录，方便排查问题。不包含密钥、会议正文或原始录音。设备日志只保留最近的运行事件，重启会清空；本机日志按大小轮换。</p>
             <div className="ct-button-row">
               {[false, true].map((includeDevice) => <button key={String(includeDevice)} type="button" className="ct-action"
@@ -2282,7 +2295,7 @@ export function CompanionDashboard({
               }}>准备说话人区分组件</button>
           </section>
 
-          <section className="ct-panel" id="ct-service-settings">
+          <section className="ct-panel" id="ct-service-settings" tabIndex={-1} aria-label="转写与纪要服务">
             <button type="button" className="ct-text-button ct-return-recording" onClick={returnToRecording}>← 返回录音</button>
             <div className="ct-panel-title">
               <Shield size={18} />
@@ -2453,11 +2466,11 @@ export function CompanionDashboard({
           <section className="ct-panel">
             <div className="ct-panel-title"><Bluetooth size={18} /><span>设备名称</span></div>
             <div className="ct-name-row">
-              <input aria-label="Companion 设备名称" value={draftName} onChange={(event) => setDraftName(event.target.value)} spellCheck={false} />
+              <input aria-label="Companion 设备名称" aria-invalid={!draftName.trim() || Boolean(nameError)} aria-describedby="ct-ble-name-help" value={draftName} onChange={(event) => setDraftName(event.target.value)} spellCheck={false} />
               <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !connected || !draftName.trim() || Boolean(nameError)} onClick={() => onControl({ action: 'applyBleName', bleName: draftName })}>保存到设备</button>
               <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !connected} onClick={() => onControl({ action: 'resetBleName' })}>恢复默认名称</button>
             </div>
-            <p className="ct-step-meta">{nameError ? '名称不符合设备要求，请缩短名称，并避免中文、引号、分号等字符。' : `当前名称：${snapshot?.bleName.activeName ?? '尚未读取'}。保存后会读取设备确认结果。`}</p>
+            <p id="ct-ble-name-help" className="ct-step-meta">{!draftName.trim() ? '请填写设备名称后保存。' : nameError ? '名称不符合设备要求，请缩短名称，并避免中文、引号、分号等字符。' : `当前名称：${snapshot?.bleName.activeName ?? '尚未读取'}。保存后会读取设备确认结果。`}</p>
           </section>
         </div>
       ) : null}
