@@ -3,7 +3,7 @@
 *{box-sizing:border-box}body{margin:0;padding:28px 18px}main{max-width:920px;margin:auto;background:#fff;padding:32px 40px;border:1px solid #dce3dc;border-radius:16px;overflow-wrap:anywhere}
 h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-height:1.4;margin:36px 0 14px;padding-top:10px;border-top:1px solid #e3e9e3}h3{font-size:1.1rem;margin-top:26px}p,ul,ol{margin:14px 0}li{padding-left:3px;margin:8px 0}a{color:#265d4b;text-underline-offset:3px}a:hover{color:#173c30}strong{font-weight:650}img{max-width:100%;height:auto;border-radius:6px}picture img{display:block}table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.95rem}th,td{text-align:left;vertical-align:top;padding:10px 12px;border:1px solid #dce3dc}th{background:#eff4ee}td:first-child{min-width:95px}blockquote{margin:20px 0;padding:4px 16px;border-left:3px solid #a3b9a3;background:#f3f6f1}pre{max-width:100%;overflow:auto;background:#f3f5f1;padding:14px}code{font-size:.92em;white-space:break-spaces}summary{cursor:pointer;font-weight:600}details{margin:20px 0}.contents{padding:12px 16px;border:1px solid #dce3dc;background:#f7f8f4;border-radius:8px}.contents a{display:inline-block;margin:3px 15px 3px 0;font-size:.92rem}.contents-label{display:block;font-size:.9rem;font-weight:600;margin-bottom:5px}footer{max-width:920px;margin:14px auto;color:#647269;font-size:.85rem}
 @media(max-width:600px){body{padding:10px}main{padding:22px 16px;border-radius:10px}h1{font-size:1.55rem}h2{font-size:1.2rem}th,td{padding:8px 7px;font-size:.9rem}td:first-child{min-width:0}ul,ol{padding-left:23px}}@media print{body{padding:0;background:#fff}main{border:0;padding:0;max-width:none}.contents{display:none}h2{break-after:avoid}img{max-height:90vh;object-fit:contain}tr{break-inside:avoid}}</style></head><body><main><h1 id="readiness-and-experience-boundaries">Readiness and Experience Boundaries</h1>
-<p>Updated 25 October 2026. The current local development delivery is <strong>FW662 / UI84 / Boot575 with the Windows Type P575 joint release</strong>, including the current recording-protocol handshake fixes. This is not a public release or whole-product acceptance claim. Later versions follow their actual delivery packages.</p>
+<p>Updated 25 October 2026. This page was checked against <strong>FW662 / UI84 / Boot575 with the Windows Type P577 joint release</strong>, including the current recording-protocol and OTA recovery fixes. This is not a public release or whole-product acceptance claim. Later versions follow their actual delivery packages.</p>
 <p><a href="USER_GUIDE.html">User guide</a> · <a href="../README.html">Product introduction</a> · <a href="STATUS.zh-CN.html">简体中文</a></p>
 <table>
 <thead>
@@ -40,6 +40,11 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 <td>Other real faults, every platform and screen-reader behavior are not inferred from this single recovery route.</td>
 </tr>
 <tr>
+<td>Keyboard and reduced motion</td>
+<td>Opening a recording moves keyboard focus into its detail; returning restores the recording card. Dual-mode minutes support arrow keys, and system reduced-motion preference stops the looping mode-preview animation.</td>
+<td>The affected software paths were checked; the complete keyboard journey and actual screen-reader behavior need their own qualification.</td>
+</tr>
+<tr>
 <td>Updates</td>
 <td>Windows software updates and complete matching pet packages are separate. Transfer completion and successful new application startup are distinct.</td>
 <td>Release channels, physical recovery, performance and power conditions follow their deliveries.</td>
@@ -53,7 +58,7 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 </table>
 <p>The speaker provides ordinary short prompts, not spoken chat replies. Closed eyes do not establish a qualified lowest-power state. A browser uses source-matched upper software and original resources with simulated peripherals; it cannot verify physical display, touch, motion, capture or power.</p>
 <p>Capture, reception and local playback do not require cloud configuration first. Cloud transcription, organization and chat use the selected content with existing services. Formal accounts, fees, quotas, public downloads and support follow the actual release notice.</p>
-<p>The local Windows software checkpoint is <code>a850d0fad2140e0e3b07a53989745aa5753792e5</code>. Screenshots show its retained P575 interface. Earlier notes below are historical, not current limits.</p>
+<p>The Windows software checkpoint checked here is <code>0c8138bba67521b541daae552696827747ed8f7f</code>. Guide screenshots come from the actual P575 interface; its existing content and entries remain in subsequent joint releases. Screenshots do not establish physical quality or acceptance of every use. Earlier notes below are historical, not current limits.</p>
 <details>
 <summary>Earlier candidate records</summary>
 <h1 id="readiness-and-experience-boundaries-1">Readiness and experience boundaries</h1>

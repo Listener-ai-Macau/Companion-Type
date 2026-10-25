@@ -1,6 +1,6 @@
 # Readiness and Experience Boundaries
 
-Updated 25 October 2026. The current local development delivery is **FW662 / UI84 / Boot575 with the Windows Type P575 joint release**, including the current recording-protocol handshake fixes. This is not a public release or whole-product acceptance claim. Later versions follow their actual delivery packages.
+Updated 25 October 2026. This page was checked against **FW662 / UI84 / Boot575 with the Windows Type P577 joint release**, including the current recording-protocol and OTA recovery fixes. This is not a public release or whole-product acceptance claim. Later versions follow their actual delivery packages.
 
 [User guide](USER_GUIDE.md) · [Product introduction](../README.md) · [简体中文](STATUS.zh-CN.md)
 
@@ -11,6 +11,7 @@ Updated 25 October 2026. The current local development delivery is **FW662 / UI8
 | Recording and sync | Device audio capture, Type reception/local save, grouped segments, integrity checks and protected reclaim; real recordings and daily-use audio material exist. | Actual capacity, long recordings, concurrency, reconnect recovery and content quality follow their own qualifications. Fragments are not a complete session. |
 | Find and use content | My recordings offers direct text reading, optional playback, title/text/action edits, separate notes, search and multiple export formats. | Recognition and organization can be wrong; check important facts. A checklist does not send timed notifications. |
 | Continue after a save failure | Actionable public error messages retain specific guards. A real occupied-file case retained input and allowed explicit retry after opening/closing help. | Other real faults, every platform and screen-reader behavior are not inferred from this single recovery route. |
+| Keyboard and reduced motion | Opening a recording moves keyboard focus into its detail; returning restores the recording card. Dual-mode minutes support arrow keys, and system reduced-motion preference stops the looping mode-preview animation. | The affected software paths were checked; the complete keyboard journey and actual screen-reader behavior need their own qualification. |
 | Updates | Windows software updates and complete matching pet packages are separate. Transfer completion and successful new application startup are distinct. | Release channels, physical recovery, performance and power conditions follow their deliveries. |
 | Battery and other platforms | Battery level is an estimate; Windows is the current desktop usage path. | No verified battery-life duration is promised. Native macOS, iOS, Android and Linux products and formal account entitlements are separate; a phone diagnostic app is not a phone product. |
 
@@ -18,7 +19,7 @@ The speaker provides ordinary short prompts, not spoken chat replies. Closed eye
 
 Capture, reception and local playback do not require cloud configuration first. Cloud transcription, organization and chat use the selected content with existing services. Formal accounts, fees, quotas, public downloads and support follow the actual release notice.
 
-The local Windows software checkpoint is `a850d0fad2140e0e3b07a53989745aa5753792e5`. Screenshots show its retained P575 interface. Earlier notes below are historical, not current limits.
+The Windows software checkpoint checked here is `0c8138bba67521b541daae552696827747ed8f7f`. Guide screenshots come from the actual P575 interface; its existing content and entries remain in subsequent joint releases. Screenshots do not establish physical quality or acceptance of every use. Earlier notes below are historical, not current limits.
 
 <details>
 <summary>Earlier candidate records</summary>
