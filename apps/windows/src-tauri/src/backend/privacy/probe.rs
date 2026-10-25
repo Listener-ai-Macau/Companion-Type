@@ -77,6 +77,13 @@ fn snapshot(sessions: Vec<CompanionV1HostSession>, selected: Option<&str>) -> Co
     value.meeting.active = false;
     value
 }
+fn install_snapshot(backend: &FixtureCompanionBackend, snapshot: CompanionV1Snapshot) -> Result<(),String> {
+    // The real coordinator validates the durable library before deleting.
+    // Prepare both authorities; a cache-only row can fail for the wrong reason.
+    super::super::session_store::save(&persistence::state_file_path(), &snapshot.host.sessions)?;
+    *backend.snapshot.lock().map_err(|_|"Cannot seed controlled cache")? = snapshot;
+    Ok(())
+}
 fn write_wav(path: &Path) -> Result<(), String> {
     let mut bytes = vec![0u8; 46];
     bytes[0..4].copy_from_slice(b"RIFF");
@@ -161,10 +168,8 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     ] {
         for action in single {
             let before = snapshot(sessions.clone(), selected);
-            *backend
-                .snapshot
-                .lock()
-                .map_err(|_| "Cannot seed controlled snapshot")? = before.clone();
+            install_snapshot(&backend, before.clone())?;
+            let index_before=fs::read(&index).map_err(|_|"Cannot inspect seeded index")?;
             let result = backend.apply_control(request(action, requested)?);
             check(
                 &format!("{case}_{action:?}_no_side_effects"),
@@ -172,7 +177,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
                     && equal(&before, &backend.snapshot()?)
                     && fs::read(&first).ok().as_ref() == Some(&first_bytes)
                     && second.is_file()
-                    && !index.exists(),
+                    && fs::read(&index).ok().as_ref()==Some(&index_before),
             )?;
         }
     }
@@ -184,17 +189,15 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
                 "device_recording" => before.device.recording = true,
                 _ => before.meeting.active = true,
             }
-            *backend
-                .snapshot
-                .lock()
-                .map_err(|_| "Cannot seed recording guard")? = before.clone();
+            install_snapshot(&backend, before.clone())?;
+            let index_before=fs::read(&index).map_err(|_|"Cannot inspect seeded index")?;
             let result = backend.apply_control(request(action, Some("first"))?);
             check(
                 &format!("{state_name}_{action:?}_no_side_effects"),
                 result.is_err()
                     && equal(&before, &backend.snapshot()?)
                     && first.is_file()
-                    && !index.exists(),
+                    && fs::read(&index).ok().as_ref()==Some(&index_before),
             )?;
         }
     }
@@ -219,6 +222,29 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
             && second.is_file(),
     )?;
 
+    let transcript_audio=recordings.join("transcript-kept.wav");
+    write_wav(&transcript_audio)?;
+    let audio_before=fs::read(&transcript_audio).map_err(|_|"Cannot inspect transcript-case audio")?;
+    let mut transcript_session=session("transcript-only",&transcript_audio)?;
+    transcript_session.note_revision=1;
+    transcript_session.meeting_notes.push(super::super::meeting_notes::Note {
+        id:uuid::Uuid::new_v4().to_string(),text:"Controlled user note".into(),bookmark_id:None,
+        created_at:"controlled".into(),updated_at:"controlled".into(),
+    });
+    install_snapshot(&backend, snapshot(vec![transcript_session],Some("transcript-only")))?;
+    let text_erased=backend.apply_control(request(Action::PrivacyEraseTranscript,Some("transcript-only"))?)?;
+    check("transcript_delete_keeps_exact_audio_bytes",
+        fs::read(&transcript_audio).ok().as_ref()==Some(&audio_before)
+            && text_erased.host.sessions[0].audio_stored
+            && text_erased.host.sessions[0].audio_path.as_deref()==Some(transcript_audio.to_string_lossy().as_ref()))?;
+    check("transcript_delete_clears_text_and_user_notes",
+        text_erased.host.sessions[0].transcript_text.is_empty()
+            && !text_erased.host.sessions[0].transcript_final
+            && text_erased.host.sessions[0].meeting_notes.is_empty())?;
+    let (text_reload,_)=persistence::load_sessions_with_status();
+    check("transcript_delete_checkpoint_survives_reload",
+        text_reload.as_ref().is_some_and(|rows|rows.len()==1&&equal(&rows[0],&text_erased.host.sessions[0])))?;
+
     let shared = recordings.join("shared.wav");
     write_wav(&shared)?;
     let unknown = recordings.join("unknown.opus");
@@ -241,11 +267,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     chunk.status = "sealed".into();
     shared_sessions[1].chunks = vec![chunk];
     let retained = shared_sessions[1].clone();
-    *backend
-        .snapshot
-        .lock()
-        .map_err(|_| "Cannot seed shared-reference case")? =
-        snapshot(shared_sessions, Some("first"));
+    install_snapshot(&backend, snapshot(shared_sessions, Some("first")))?;
     let cleared = backend.apply_control(request(Action::PrivacyDeleteSession, Some("first"))?)?;
     check(
         "delete_one_meeting_preserves_anothers_chunk_audio",
@@ -278,10 +300,8 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
             Action::PrivacyEraseAll,
         ] {
             let before = snapshot(vec![session("first", &first)?], Some("first"));
-            *backend
-                .snapshot
-                .lock()
-                .map_err(|_| "Cannot seed occupied-file case")? = before.clone();
+            install_snapshot(&backend, before.clone())?;
+            let index_before=fs::read(&index).map_err(|_|"Cannot inspect seeded index")?;
             let held = fs::OpenOptions::new()
                 .read(true)
                 .share_mode(0)
@@ -290,45 +310,33 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
             let failed = backend.apply_control(request(action, Some("first"))?);
             check(
                 &format!("occupied_original_{action:?}_preserves_retry"),
-                failed.is_err() && equal(&before, &backend.snapshot()?) && first.is_file(),
+                failed.is_err() && equal(&before, &backend.snapshot()?) && first.is_file()
+                    && fs::read(&index).ok().as_ref()==Some(&index_before),
             )?;
             drop(held);
         }
     }
-    *backend
-        .snapshot
-        .lock()
-        .map_err(|_| "Cannot seed released-file retry")? =
-        snapshot(vec![session("first", &first)?], Some("first"));
+    let released_before=snapshot(vec![session("first", &first)?], Some("first"));
+    install_snapshot(&backend, released_before.clone())?;
     let retried = backend.apply_control(request(Action::PrivacyEraseAudio, Some("first"))?)?;
     check(
         "released_original_retry_clears_pointer_only_after_delete",
         !first.exists()
             && !retried.host.sessions[0].audio_stored
             && !retried.host.sessions[0].retention.audio_cached
-            && retried.host.sessions[0].audio_path.is_none(),
+            && retried.host.sessions[0].audio_path.is_none()
+            && retried.host.sessions[0].transcript_text==released_before.host.sessions[0].transcript_text
+            && retried.host.sessions[0].transcript_final,
     )?;
-    *backend
-        .snapshot
-        .lock()
-        .map_err(|_| "Cannot seed external-reference case")? =
-        snapshot(vec![session("outside", &outside)?], Some("outside"));
+    install_snapshot(&backend, snapshot(vec![session("outside", &outside)?], Some("outside")))?;
     let external = backend.apply_control(request(Action::PrivacyEraseAudio, Some("outside"))?)?;
     check(
         "user_owned_export_not_deleted",
         outside.is_file() && external.host.sessions[0].audio_path.is_none(),
     )?;
-    *backend
-        .snapshot
-        .lock()
-        .map_err(|_| "Cannot seed delete-all case")? = snapshot(
-        vec![
-            session("shared-1", &shared)?,
-            session("shared-2", &shared)?,
-            session("second", &second)?,
-        ],
-        Some("second"),
-    );
+    install_snapshot(&backend, snapshot(
+        vec![session("shared-1", &shared)?,session("shared-2", &shared)?,session("second", &second)?],
+        Some("second")))?;
     let all = backend.apply_control(request(Action::PrivacyEraseAll, None)?)?;
     check(
         "delete_all_removes_shared_indexed_files",
