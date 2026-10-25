@@ -4,6 +4,7 @@ import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, reco
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionHelp } from './CompanionHelp';
+import { MinutesModeTabs } from './MinutesModeTabs';
 import {CompanionPetFind,type PetFindRequest,type PetFindReport} from './CompanionPetFind';
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
@@ -378,6 +379,8 @@ export function CompanionDashboard({
   const [libraryUnsaved,setLibraryUnsaved]=useState(false);
   const [openSavedRecordingId, setOpenSavedRecordingId] = useState<string | null>(null);
   const savedRecordingWorkspace = useRef<HTMLElement | null>(null);
+  const recordingOpener = useRef<HTMLButtonElement | null>(null);
+  const recordingLibraryRegion = useRef<HTMLElement | null>(null);
   const [detailSessionId,setDetailSessionId]=useState<string|null>(null);
   const [recordingResultOpen, setRecordingResultOpen] = useState(false);
   const [recordingToolsOpen, setRecordingToolsOpen] = useState(false);
@@ -534,10 +537,27 @@ export function CompanionDashboard({
     setOpenSavedRecordingId(null);
   }, [openSavedRecordingId, selectedSession?.id]);
 
-  useEffect(()=>{if(savedDetailOpen)savedRecordingWorkspace.current?.scrollIntoView({block:'start'});},[savedDetailOpen,selectedSession?.id]);
+  useEffect(()=>{
+    if (!savedDetailOpen) return;
+    savedRecordingWorkspace.current?.focus({preventScroll:true});
+    savedRecordingWorkspace.current?.scrollIntoView({block:'start'});
+  },[savedDetailOpen,selectedSession?.id]);
+  const rememberRecordingOpener = () => {
+    recordingOpener.current = document.activeElement instanceof HTMLButtonElement ? document.activeElement : null;
+  };
+  const returnToRecordingLibrary = () => {
+    setDetailSessionId(null);
+    window.requestAnimationFrame(() => {
+      const opener = recordingOpener.current;
+      const target = opener?.isConnected && opener.getClientRects().length ? opener : recordingLibraryRegion.current;
+      target?.focus({preventScroll:true});
+      target?.scrollIntoView({block:'nearest'});
+    });
+  };
 
   const openRecentSavedRecording = () => {
     if (!recentSavedRecording || controlsBusy) return;
+    rememberRecordingOpener();
     setPageView('library');
     setLibraryFilters({ folder: '*', tag: '', favorites: false });
     setLibraryQuery('');
@@ -1269,7 +1289,7 @@ export function CompanionDashboard({
         minutesReady={Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet)}
         onSelectSession={sessionId=>{setOpenSavedRecordingId(sessionId);onControl({action:'meetingSelectSession',sessionId});}}
         onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
-      <section className="ct-library" aria-label="录音历史" hidden={savedDetailOpen}>
+      <section ref={recordingLibraryRegion} className="ct-library" aria-label="录音历史" tabIndex={-1} hidden={savedDetailOpen}>
         <div className="ct-library-head">
           <div>
             <p className="ct-section-eyebrow">RECORDING LIBRARY</p>
@@ -1338,7 +1358,7 @@ export function CompanionDashboard({
                   type="button"
                   key={session.id}
                   className={`ct-library-card ${selected ? 'selected' : ''}`}
-                  onClick={() => {setOpenSavedRecordingId(session.id); onControl({ action: 'meetingSelectSession', sessionId: session.id });}}
+                  onClick={() => {rememberRecordingOpener();setOpenSavedRecordingId(session.id); onControl({ action: 'meetingSelectSession', sessionId: session.id });}}
                   disabled={busyAction !== null||Boolean(libraryFilters.trash)}
                   aria-pressed={selected}
                   title={session.sourceDeviceId ? `来源设备：${session.sourceDeviceId}` : undefined}
@@ -1391,9 +1411,9 @@ export function CompanionDashboard({
         {listeningQueue.message?<p role="status">{listeningQueue.message}</p>:null}
       </section></details>:null}
       {selectedSession ? (
-        <section ref={savedRecordingWorkspace} className="ct-meeting-workspace" aria-label="当前录音" hidden={!savedDetailOpen}>
+        <section ref={savedRecordingWorkspace} className="ct-meeting-workspace" aria-label="当前录音" tabIndex={-1} hidden={!savedDetailOpen}>
           <button type="button" className="ct-text-button ct-recording-back" disabled={controlsBusy}
-            onClick={()=>{setDetailSessionId(null);window.scrollTo({top:0});}}>← 返回录音库</button>
+            onClick={returnToRecordingLibrary}>← 返回录音库</button>
           <header className="ct-meeting-hero">
             <div>
               <p className="ct-section-eyebrow">{textOnlyImport ? '导入文字' : '录音内容'}</p>
@@ -1468,11 +1488,9 @@ export function CompanionDashboard({
           {hasMinutes || busyAction === 'meetingGenerateMinutes' ? <details id="ct-recording-result" className="ct-recording-result"
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
             <summary>整理结果{minutesDirty ? ' · 有未保存的修改' : ''}</summary>
-            <div className="ct-meeting-document">
-              {offlineMinutes && onlineMinutes ? <div className="ct-minutes-mode-tabs" role="tablist" aria-label="双模式纪要">
-                <button type="button" role="tab" aria-label={`先录后整理纪要 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`} aria-selected={minutesViewMode === 'offlineStore'} className={`ct-mode-chip ${minutesViewMode === 'offlineStore' ? 'active' : ''}`} disabled={!offlineMinutes} onClick={() => setMinutesViewMode('offlineStore')}>先录后整理 {offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}</button>
-                <button type="button" role="tab" aria-label={`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`} aria-selected={minutesViewMode === 'onlineLive'} className={`ct-mode-chip ${minutesViewMode === 'onlineLive' ? 'active' : ''}`} disabled={!onlineMinutes} onClick={() => setMinutesViewMode('onlineLive')}>在线速记 {onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}</button>
-              </div> : null}
+            <MinutesModeTabs value={minutesViewMode} onChange={setMinutesViewMode} dualMode={Boolean(offlineMinutes && onlineMinutes)}
+              labels={{offlineStore:{visible:`先录后整理 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}`,accessible:`先录后整理纪要 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`},
+                onlineLive:{visible:`在线速记 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}`,accessible:`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`}}}>
               {(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext?<p className="ct-minutes-mode-meta">{(selectedMinutesVariant??legacyMinutes)?.source==='rules_l0'&&(selectedMinutesVariant??legacyMinutes)?.quality==='draft'
                 ? '整理未完成。下方是基础草稿，尚未应用本次补充；原话和补充均已保存。'
                 : '本次依据原话＋你选择的补充整理；补充不是录音识别。'}</p>:null}
@@ -1533,7 +1551,7 @@ export function CompanionDashboard({
                 <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn ct-editor-save-result' : 'ct-step-ok ct-editor-save-result'}
                   role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
               <textarea className="ct-minutes-output ct-machine-minutes" value={minutesMarkdown} readOnly aria-hidden="true" tabIndex={-1} />
-            </div>
+            </MinutesModeTabs>
             <details className="ct-result-tools">
               <summary>其它导出选项</summary>
           <div className="ct-document-actions">

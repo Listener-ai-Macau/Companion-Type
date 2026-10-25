@@ -1654,3 +1654,10 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-use-help details p,.ct-use-help details ul {font-size:14px;}
 .ct-use-help-links {margin-top:14px;}
 @media(max-width:620px){.ct-use-help{padding:16px;}.ct-topbar .ct-topbar-actions .ct-action{padding:8px;font-size:13px;}}
+
+/* Keyboard destinations follow explicit recording navigation, never polling. */
+.ct-meeting-workspace:focus-visible, .ct-library:focus-visible, .ct-minutes-panel:focus-visible { outline: 2px solid #547c60; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .ct-behavior-stage .ct-behavior-face { animation: none; transform: none; opacity: 1; }
+  .ct-library-card { transition: none; }
+}

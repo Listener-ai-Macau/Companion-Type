@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data: file:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'none'"><title>Using Companion and Type</title><style>:root{color-scheme:light;font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif;color:#20312b;background:#f5f4ef;line-height:1.75}
+*{box-sizing:border-box}body{margin:0;padding:28px 18px}main{max-width:920px;margin:auto;background:#fff;padding:32px 40px;border:1px solid #dce3dc;border-radius:16px;overflow-wrap:anywhere}
+h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-height:1.4;margin:36px 0 14px;padding-top:10px;border-top:1px solid #e3e9e3}h3{font-size:1.1rem;margin-top:26px}p,ul,ol{margin:14px 0}li{padding-left:3px;margin:8px 0}a{color:#265d4b;text-underline-offset:3px}a:hover{color:#173c30}strong{font-weight:650}img{max-width:100%;height:auto;border-radius:6px}picture img{display:block}table{width:100%;border-collapse:collapse;margin:18px 0;font-size:.95rem}th,td{text-align:left;vertical-align:top;padding:10px 12px;border:1px solid #dce3dc}th{background:#eff4ee}td:first-child{min-width:95px}blockquote{margin:20px 0;padding:4px 16px;border-left:3px solid #a3b9a3;background:#f3f6f1}pre{max-width:100%;overflow:auto;background:#f3f5f1;padding:14px}code{font-size:.92em;white-space:break-spaces}summary{cursor:pointer;font-weight:600}details{margin:20px 0}.contents{padding:12px 16px;border:1px solid #dce3dc;background:#f7f8f4;border-radius:8px}.contents a{display:inline-block;margin:3px 15px 3px 0;font-size:.92rem}.contents-label{display:block;font-size:.9rem;font-weight:600;margin-bottom:5px}footer{max-width:920px;margin:14px auto;color:#647269;font-size:.85rem}
+@media(max-width:600px){body{padding:10px}main{padding:22px 16px;border-radius:10px}h1{font-size:1.55rem}h2{font-size:1.2rem}th,td{padding:8px 7px;font-size:.9rem}td:first-child{min-width:0}ul,ol{padding-left:23px}}@media print{body{padding:0;background:#fff}main{border:0;padding:0;max-width:none}.contents{display:none}h2{break-after:avoid}img{max-height:90vh;object-fit:contain}tr{break-inside:avoid}}</style></head><body><main><h1 id="using-companion-and-type">Using Companion and Type</h1>
+<p>Record on Companion, then use Type on Windows to find the audio, read its transcript and organize actions. Content already saved on your computer remains readable when the device is away.</p>
+<p>This is a development release. Use the matching Windows installer supplied with your delivery. Public downloads, account entitlements and support contacts follow the actual release notice. Native clients for other systems are delivered separately.</p>
+<p><a href="USER_GUIDE.zh-CN.html">简体中文</a> · <a href="STATUS.html">Current readiness</a></p>
+<nav class="contents" aria-label="Jump to a section"><span class="contents-label">Jump to a section</span><a href="#your-first-voice-memo">Your first voice memo</a><a href="#where-to-go">Where to go</a><a href="#recording-away-from-the-computer">Recording away from the computer</a><a href="#transcript-actions-and-notes">Transcript Actions and Notes</a><a href="#export-and-keep-your-content">Export and Keep Your Content</a><a href="#recording-space-and-duration">Recording Space and Duration</a><a href="#delete-and-restore">Delete and Restore</a><a href="#spend-time-with-your-pet">Spend Time With Your Pet</a><a href="#recover-from-a-failure">Recover From a Failure</a><a href="#updates-and-data-destinations">Updates and Data Destinations</a></nav><h2 id="your-first-voice-memo">Your first voice memo</h2>
+<ol>
+<li>Install the supplied Windows MSI and open <strong>Companion Type</strong>. Routine data communication uses Bluetooth; USB-C supplies power.</li>
+<li>Open <strong>设备与同步</strong> (Device and sync). Enable pairing in the pet's menu, then choose <strong>扫描设备</strong> (Scan devices) and <strong>连接 Companion</strong> (Connect Companion). Confirm the system pairing prompt. <strong>检查设备</strong> (Check device) reads status and synchronizes device time; it does not start recording.</li>
+<li>In that page's <strong>用 Companion 录音</strong> area, select <strong>开始录音</strong> (Start recording), speak briefly, then select <strong>停止并保存</strong> (Stop and save). This route saves original device audio before optional processing; a transcription service is not required to capture it. Use the duration and capacity shown for this attempt.</li>
+<li>Wait for the original audio to arrive and be saved locally. Open <strong>我的录音</strong> (My recordings). The latest item has <strong>打开这条录音</strong> (Open this recording); you can also search by title, date, duration or a remembered phrase.</li>
+<li>Read existing text immediately. An audio-only item offers <strong>转文字</strong> (Transcribe); use <strong>整理重点</strong> (Organize key points) when needed. <strong>回听</strong> (Playback) is optional, not a prerequisite to reading text.</li>
+</ol>
+<p><strong>Device saved and computer received are separate steps.</strong> A device save notice does not mean the computer has the complete file. Retain device audio while transfer is incomplete.</p>
+<p><img src="assets/usage/windows-library.png" alt="My recordings with an example memo" /></p>
+<p>Screenshots contain example material, not your recordings or live device readings. Bold Chinese labels identify controls in the current Windows interface.</p>
+<h2 id="where-to-go">Where to go</h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it is for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>我的录音</strong></td>
+<td>Find recordings, read or play them, rename, edit results and notes, export and manage local content.</td>
+</tr>
+<tr>
+<td><strong>设备与同步</strong></td>
+<td>Connect and pair, read device capacity and status, control device recording and receive audio.</td>
+</tr>
+<tr>
+<td><strong>设置与工具</strong></td>
+<td>Existing service configuration, additional device settings, updates and diagnostics. You do not need this page simply to find a recording.</td>
+</tr>
+</tbody>
+</table>
+<p>If an item is missing, clear search and check the pending-only or other filters in My recordings. If audio is on the device but not the computer, check transfer progress in Device and sync.</p>
+<h2 id="recording-away-from-the-computer">Recording away from the computer</h2>
+<p>The following entries control the same Companion recording. Choose one convenient method.</p>
+<table>
+<thead>
+<tr>
+<th>Entry</th>
+<th>Start and stop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Physical button</td>
+<td>While awake, hold for about one second to start; hold again to stop. The first complete press from sleep only wakes the pet.</td>
+</tr>
+<tr>
+<td>Touch shortcut</td>
+<td>By default, double-tap the bottom-left of the pet home screen to start, and double-tap the recording screen to stop. Follow the saved gesture if changed; a bottom-left rightward pull is another selectable start gesture.</td>
+</tr>
+<tr>
+<td>Device menu</td>
+<td>Hold still on the home screen for about three seconds. Release after the four blocks complete, then choose <strong>录音 → 开始录音</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>A short physical press during recording pauses or resumes it; a long press stops it. Check the actual state rather than repeatedly submitting an uncertain action.</p>
+<p>The current development firmware also retains screen-debug assignments: <strong>a short press on the awake, idle pet home screen requests a fast full refresh; a double press requests a flashing cleaning refresh</strong>. Neither starts recording. A faulty panel may still fail to complete the request. The first press from sleep only wakes; recording, menu and update states have different button behavior.</p>
+<p>Browse menus vertically and use the displayed navigation to return. Physical touch, orientation and sound depend on the matching hardware; a browser preview cannot verify those interactions.</p>
+<h2 id="transcript-actions-and-notes">Transcript Actions and Notes</h2>
+<p>Speech recognition and organized results are different layers. Check important names, numbers and dates.</p>
+<table>
+<thead>
+<tr>
+<th>What to change</th>
+<th>Entry</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A recognition error or speaker label</td>
+<td>Expand <strong>原话与补充</strong>, select <strong>核对文字</strong> and <strong>修正文字</strong>, then save the revision. Original recognition and audio remain.</td>
+</tr>
+<tr>
+<td>An organized action or statement</td>
+<td>Select <strong>编辑清单</strong> or <strong>编辑整理内容</strong> in the result, then <strong>保存修改</strong>.</td>
+</tr>
+<tr>
+<td>Background not spoken in the recording</td>
+<td>Open <strong>补充一句（背景备注）</strong>, write it and select <strong>保存备注</strong>. It is stored separately, not presented as original speech or silently added to existing results.</td>
+</tr>
+</tbody>
+</table>
+<p>When regenerating, explicitly choose <strong>原话＋已保存补充</strong> to include saved notes, or <strong>仅原话</strong> to use only the transcript. Regeneration can replace manual edits in the selected result; export important edits first.</p>
+<p>Write the action in its content field and time or owner separately. <strong>The checklist does not send scheduled notifications.</strong> “Tomorrow” and “next week” retain the recording's context; compare them with its date.</p>
+<p>Exactly matched items offer <strong>核对原文</strong> with a time. Rewritten items that cannot be matched offer <strong>查看原话</strong> without inventing a timestamp.</p>
+<p><img src="assets/usage/recording-detail.png" alt="Example recording detail with actions and original-text links" /></p>
+<p>Wait for a saved confirmation. If the page says unsaved or unconfirmed, retain the input and keep the application open.</p>
+<h2 id="export-and-keep-your-content">Export and Keep Your Content</h2>
+<p>Recording details offer optional playback and checklist export. Expand <strong>其它导出选项</strong> for other formats; additional tools appear under <strong>更多</strong> or Settings and tools.</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Use and conditions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TXT, Markdown and JSON</td>
+<td>Existing text or organized results; export does not invoke transcription or regenerate them.</td>
+</tr>
+<tr>
+<td>SRT</td>
+<td>Requires genuine aligned timing. A whole-document rewrite cannot automatically recover alignment.</td>
+</tr>
+<tr>
+<td>Action list</td>
+<td>Uses the current saved actions. Save edits before exporting.</td>
+</tr>
+<tr>
+<td>Calendar tasks <code>.ics</code></td>
+<td>Uses VTODO, requiring a task-compatible application. Explicit dates can become due dates; ambiguous phrases are not guessed. Export does not itself configure a notification in your calendar.</td>
+</tr>
+<tr>
+<td>Original audio</td>
+<td>Choose a local destination for a separate copy; do not overwrite the original in the library.</td>
+</tr>
+</tbody>
+</table>
+<p>You manage exported copies. Device sync is not cross-computer cloud backup. Once device segments are reclaimed, keep the computer's originals safe; export audio and text when you need another copy.</p>
+<p>Sealed recording segments may be received separately and grouped into one item. Received fragments do not prove a complete session. An interruption or missing-segment notice limits transcription and results to the content actually saved. Pausing sync pauses reception, not an ongoing device recording.</p>
+<h2 id="recording-space-and-duration">Recording Space and Duration</h2>
+<p>Read device recording capacity in <strong>设备与同步</strong>, using <strong>重新读取设备容量</strong> when needed. Computer-started capture uses the requested duration; standalone capture uses the saved device limit. Insufficient space rejects a start rather than automatically overwriting unsynced recordings.</p>
+<p>Sync first when space is needed. Type confirms reclaim only after safely saving and checking sealed segments; the growing tail is not deleted early. If <strong>查看可释放的最旧录音</strong> is offered, read its specific contents and loss scope before confirming. That confirmation discards the unsynced content it lists; it is not a recoverable computer recycle-bin action.</p>
+<h2 id="delete-and-restore">Delete and Restore</h2>
+<p>Use <strong>筛选与整理</strong> to view the recycle bin. Ordinary removal moves local recordings there and allows restoration. Permanent deletion has a separate confirmation and cannot be undone. Protected recordings must be unprotected before deletion.</p>
+<p>Deleting audio, deleting text and deleting an entire item have different scopes. Read the confirmation. Local deletion does not mean deletion from the device, and separately exported copies remain. Protection prevents accidental deletion; it is not encryption.</p>
+<h2 id="spend-time-with-your-pet">Spend Time With Your Pet</h2>
+<p>Adjust mode, volume or quiet hours in the pet menu, save, then check device state. Standard, Lively and Quiet control interruptions. A silent illustrative preview does not apply a setting. Quiet hours require correct time; use <strong>检查设备</strong> in Type's device page and check the computer's time and timezone if needed. Ordinary short sounds are suppressed during recording.</p>
+<p>With working matching touch and motion hardware, gently stroke the home screen, slowly move a finger, or pick up, tilt or lightly shake the pet. Responses merge motion around completed display updates; each contact is not guaranteed an immediate frame. Repeated manual full refreshes are not the interaction method.</p>
+<p>Wake a sleeping pet with a short physical press. Closed eyes do not establish the chip's lowest-power mode. Battery level is an estimate; this release does not provide a verified number of days of battery life.</p>
+<p>After connecting, expand <strong>我的宠物</strong> at the top of Type:</p>
+<ul>
+<li><strong>开聊</strong>: speak into the pet microphone and choose <strong>说完了</strong>. Each turn is up to twelve seconds; a short text reply appears at the bottom of the pet screen. The current implementation needs a connected computer and the configured existing services, and does not listen continuously in the background. <strong>取消</strong> ends the current request.</li>
+<li><strong>名字、性格与记忆</strong>: change names or choose one of sixteen creative personalities, then select <strong>保存性格与称呼</strong>. These are character settings, not a psychological assessment.</li>
+<li><strong>记住一句</strong>: save only a fact you explicitly confirm. Enable memory use when you want chat to reference it; you can edit, pause use or delete it. Clearing memory and clearing the current conversation are separate actions.</li>
+</ul>
+<p>Enter chat with the button. “开始录音” and “聊聊天” remain reserved wake-phrase plans; <strong>a usable wake-word engine is not delivered</strong>. The speaker provides short prompts rather than reading chat replies aloud.</p>
+<h2 id="recover-from-a-failure">Recover From a Failure</h2>
+<table>
+<thead>
+<tr>
+<th>Current notice</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save unconfirmed, file occupied or permission denied</td>
+<td>Retain input and keep the window open. Release the file or check local permissions, then retry through the same save entry. Internal notes do not have a separate destination picker.</td>
+</tr>
+<tr>
+<td>Local disk full</td>
+<td>Free space on the destination disk and retry. Do not clear recordings merely to retry.</td>
+</tr>
+<tr>
+<td>Export destination not writable</td>
+<td>Release the target file, check directory permissions or choose another local export location.</td>
+</tr>
+<tr>
+<td>Service configuration, authorization or network failure</td>
+<td>Check current settings and service state. If original audio remains, you do not need to record again. Do not include keys in feedback.</td>
+</tr>
+<tr>
+<td>Device operation unconfirmed</td>
+<td>Read current state in Device and sync before repeating start, stop or profile writes. Do not clear pairing or reset the device first.</td>
+</tr>
+<tr>
+<td>Screen stays still</td>
+<td>An e-paper screen retains its previous image. It alone does not establish whether recording continues. Retain content and notices, then check device connection and state.</td>
+</tr>
+</tbody>
+</table>
+<p>Where offered, <strong>查看恢复方法</strong> opens recovery help. Closing help returns to its trigger without clearing your input.</p>
+<p>If assistance is needed, note the time, previous action and current notice. <strong>设置与工具 → 日志与诊断</strong> offers a manual local-log export. Review before sharing; omit service keys and audio or transcripts you do not intend to share.</p>
+<p><img src="assets/usage/notes-save-recovery.png" alt="Example of input retained after a file-sharing violation" /></p>
+<h2 id="updates-and-data-destinations">Updates and Data Destinations</h2>
+<p>Type updates and pet firmware updates are separate. Type update controls are in Settings and tools. Pet firmware uses a complete matching package supplied with your delivery. End recording and relevant operations, save edits, then follow the interface.</p>
+<p>A completed transfer does not establish a successful pet update; wait for confirmation that the new application started. Retain a failed package and notice. Do not mix program and resource files or bypass compatibility and integrity checks.</p>
+<p>Original audio and the library are local. Cloud transcription sends the relevant audio; cloud organization sends selected text and explicitly chosen notes. Chat uses the current utterance and memory you allow. Existing services require working configuration and connectivity; fees and quotas follow actual delivery terms. Record-first is not fully local recognition.</p>
+<p>Updated 25 October 2026. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.</p>
+</main><footer>Companion Type · Windows development documentation · 2026-10-25</footer></body></html>

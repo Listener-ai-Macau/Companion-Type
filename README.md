@@ -1,107 +1,79 @@
+<picture>
+  <source media="(prefers-color-scheme: dark) and (max-width: 600px)" srcset="docs/assets/companion/hero-en-mobile-dark.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/companion/hero-en-dark.svg">
+  <source media="(max-width: 600px)" srcset="docs/assets/companion/hero-en-mobile.svg">
+  <img src="docs/assets/companion/hero-en.svg" alt="Companion: a little company, a place for your ideas. Screen preview, not a product photograph." width="1440">
+</picture>
+
+**English** · [简体中文](README.zh-CN.md)
+
 # Companion Type
 
-Companion Type is the standalone host app for Companion hardware.
+**A little companion to keep close, and a place for the words and ideas you want to keep.**
 
-It keeps Companion-specific controls out of Listener Type and shares one V1 protocol model across:
+[Meet Companion](#three-everyday-moments) · [Get the Windows app](#get-the-windows-app) · [User guide](docs/USER_GUIDE.md) · [Readiness](docs/STATUS.md) · [Device firmware](https://github.com/Listener-ai-Macau/Companion-Firmware)
 
-- `apps/windows`: Tauri Windows desktop shell.
-- `apps/mobile`: reserved mobile shell. Native mobile framework is intentionally deferred until the team-provided framework lands.
-- `packages/core`: Companion V1 GATT boundary, fixture state, control payloads, and tests.
-- `packages/ui`: reusable Companion dashboard UI.
+> **Development release · Windows is the current usage path.** Local installation and some real-device use have been recorded; whole-product acceptance remains open. Software, physical experience and public release are confirmed separately.
 
-## Host Recording Flow
+## Three everyday moments
 
-Companion Type now owns the user-facing meeting flow:
+| Keep it close | Capture the moment | Come back to it |
+| --- | --- | --- |
+| Expressions, blinking and small pet sounds give your desk or bag a familiar companion. | Start a recording on the device and follow its capture and saving states. | Sync to Type, read text in My recordings, search and rename; play audio or organize actions when needed. |
 
-- scan/connect/sync Companion device state through the Companion-Type device boundary;
-- start/stop a meeting session from the host UI;
-- keep STM32 flash as a short raw-audio cache, currently modeled as a 60 second device cache;
-- treat one hour meetings as host-owned recordings, not firmware-owned raw flash storage;
-- model long meetings as 5 minute host WAV chunks, with a one hour raw PCM estimate of 115.2 MB;
-- transcribe captured audio through Companion-Type owned providers;
-- keep manual transcript import as an override path;
-- generate summary, decisions, action items, questions, keywords, and Markdown;
-- export the generated Markdown from the app state;
-- erase selected audio, selected transcript/minutes, or all local meeting state.
+<p align="center"><img src="docs/assets/companion/calm.png" alt="Everyday expression screen preview" width="200"> <img src="docs/assets/companion/curious.png" alt="Curious expression screen preview" width="200"> <img src="docs/assets/companion/recording.png" alt="Example recording-state screen" width="200"></p>
 
-The browser/mobile shells use deterministic fixture state. The Windows Tauri shell uses the same `CompanionV1Snapshot` and `CompanionV1ControlRequest` contract, with real host WAV recording, Companion-Type owned transcription providers, conservative local audio deletion, and a Companion-Type device boundary.
+Existing screen previews, not hardware photographs or live readings. The original expressions and accessories remain. With a connected computer you can explicitly start short-turn chat; replies appear as text at the bottom of the pet screen. The speaker provides short prompts, not spoken replies. Wake-word entry is not delivered.
 
-## Backend Shape
+## Get the Windows app
 
-The Windows Tauri backend uses a Type-style separation pattern:
+**Type is the companion Windows application for Companion.** It connects to the device, receives recordings, saves them on your computer, and plays them back. This is what “View on PC” on the device refers to. Receiving, saving and playing the original audio does not require transcription or minutes services to be configured first.
 
-- `apps/windows/src-tauri/src/lib.rs`: app assembly only.
-- `apps/windows/src-tauri/src/commands.rs`: IPC command surface for React.
-- `apps/windows/src-tauri/src/coordinator.rs`: single owner of Companion host workflow state.
-- `apps/windows/src-tauri/src/backend/mod.rs`: replaceable backend boundary.
-- `apps/windows/src-tauri/src/companion_v1.rs`: Companion V1 contract and fixture state transitions.
+This is still a development candidate; **a public installer download has not been published**. If you have received the MSI in your current delivery, install it and open Companion Type. Otherwise, obtain the Windows installer from the person providing that delivery; this page cannot yet supply a public download. A native phone installer has not been delivered.
 
-The active backend is still `FixtureCompanionBackend`, but it now exposes separate service boundaries for device control, host recording, Companion-Type transcription, minutes generation, and Markdown export. The device-control bridge now has a Windows-native BLE path behind the same UI contract, while the deterministic state reducer keeps browser/mobile validation repeatable.
+## Start with a short recording
 
-The backend now has three real host-side boundaries:
+1. Install and open Companion Type, enable pairing on the device, connect to Companion in Type and sync its time. Routine communication uses Bluetooth; USB-C supplies power.
+2. In **设备与同步 → 用 Companion 录音**, select **开始录音**, speak briefly, then select **停止并保存**. This route saves device audio without requiring a transcription service first.
+3. Away from the computer, hold the physical button for about one second while awake to start; hold again to stop. The first complete press from sleep only wakes. The guide explains touch shortcuts and the current development firmware's short-press screen-debug assignments.
+4. After sync, find the item in **我的录音**. Read existing text directly and play the audio only when needed. Give it a useful name.
+5. An audio-only item offers **转文字**; choose **整理重点** when you want organized actions. Review before editing or exporting.
 
-- `backend/host_recording.rs`: starts host microphone capture on `meetingStart`, writes 16 kHz mono WAV, and writes the WAV path back to the selected session on `meetingStop`/`meetingFinalize`. Automated tests force synthetic WAV mode so validation does not require microphone permissions.
-- `backend/transcription.rs`: owns the `meetingTranscribeAudio` path. It can read `COMPANION_TYPE_TRANSCRIPT_TEXT`, use a sibling `*.transcript.txt` sidecar for deterministic validation, call an OpenAI-compatible multipart ASR endpoint with `COMPANION_TYPE_ASR_ENDPOINT` plus `COMPANION_TYPE_ASR_API_KEY`/`OPENAI_API_KEY`, or run a generic `COMPANION_TYPE_ASR_COMMAND`. It rejects `listener-type` commands so Companion Type does not depend on `listener-type.exe`.
-- `backend/ble_bridge.rs`: exposes the Companion-Type device boundary for scan/connect/sync. On Windows it uses the native BLE stack through `btleplug` to scan for Companion, connect/discover GATT, read `recording_list`, pull `recording_chunk_pull` packets by byte offset, verify CRC32 and final SHA-256, and export 16 kHz mono WAV into the Companion-Type recording cache. Companion-Firmware BLE helper tools (`companion_ble_real_bench.py`, `companion_flash_recording_chain.py`, `companion_button_recording_chain.py`) remain validation inventory, not the app runtime dependency.
-- `backend/privacy.rs`: deletes only Companion-Type owned local recording files under `COMPANION_TYPE_RECORDING_DIR` and leaves arbitrary imported paths untouched.
+**“Saved” on the device is followed by a separate computer sync.** In Type, wait until the recording's original audio is saved locally before playing it from the library. The device's saved notice does not mean that the computer has received the complete file. If Type is disconnected or still receiving, retain the device recording and reconnect later to continue syncing.
 
-## ASR Provider
+The first-use guide remembers progress per device. A browser demo cannot complete the real-device checks. USB-C supplies power only; routine device communication uses Bluetooth.
 
-For real cloud ASR, set:
+## Keep the audio. Make the content useful.
 
-```powershell
-$env:COMPANION_TYPE_ASR_PROVIDER = 'openai-compatible'
-$env:COMPANION_TYPE_ASR_ENDPOINT = 'https://api.openai.com/v1/audio/transcriptions'
-$env:COMPANION_TYPE_ASR_API_KEY = '<key>'
-$env:COMPANION_TYPE_ASR_MODEL = 'gpt-4o-transcribe'
-```
+| Your task | In the Type candidate |
+| --- | --- |
+| Listen now, organize later | Record first; sync, transcribe and generate minutes afterward |
+| Read along at your computer | Online notes with a configured streaming transcription service |
+| Find a thought again | Search titles, full transcripts and both minutes variants; play retained local audio |
+| Make the notes your own | Edit titles and minutes with manual-source labels, mode isolation and save-conflict checks |
+| Take the result elsewhere | Markdown / TXT / JSON and original audio; SRT with aligned timing; saved action-list and calendar-task `.ics` exports without automatic notification setup |
+| Know what is saved | Separate device copy, transfer, local-save and reclaim status; explicit save retry |
 
-Validation uses a local HTTP mock for the OpenAI-compatible multipart request, so CI and offline development do not need a real key. `COMPANION_TYPE_ASR_MAX_UPLOAD_BYTES` defaults to 25 MiB; one hour raw PCM is larger than that, so long meetings should be chunked before ASR.
+Background recovery does not overwrite manual edits. Explicit regeneration replaces the original recording mode's minutes; viewing another mode does not change that target. Editing clears stale structured action items. Ordinary offline recordings generate minutes for their capture mode; the completed online workflow can generate both mode variants.
 
-## Commands
+## Company at your pace
 
-```powershell
-npm install
-npm run test
-npm run verify:user-chain
-npm run verify:backend-shape
-npm run verify:host-recording
-npm run verify:real-microphone
-npm run verify:real-microphone-soak
-npm run verify:real-microphone-soak:popup
-npm run verify:independent-asr
-npm run verify:long-meeting
-npm run verify:product-chain
-npm run verify:dirty-audit
-npm run verify:joint-acceptance
-npm run verify:msi-install-smoke
-npm run verify:installed-ui-sync
-npm run verify:final-human-signoff
-npm run verify:browser-ui
-npm run build
-npm run build:windows
-npm run build:mobile
-npm run tauri:windows
-cargo test --manifest-path apps/windows/src-tauri/Cargo.toml --lib
-cargo build --manifest-path apps/windows/src-tauri/Cargo.toml
-```
+Standard, Lively and Quiet have clear explanations and a stoppable ten-second silent illustrative preview in Type. Previewing does not apply device settings. Quiet hours need valid device time. Routine pet sounds are suppressed during recording; saving and errors remain visible in status.
 
-For the real board recording-sync gate, run the popup-guided tool under a workflow hardware lock:
+## Services and your content
 
-```powershell
-pwsh -NoProfile -File ..\..\ai-collaboration-workflow\scripts\aiw.ps1 with-lock -Resource Companion-WB55,BLE-Companion,COM13 -Purpose "Companion-Type popup native BLE sync" -Run pwsh -NoProfile -File tools\run_companion_type_ble_sync_popup.ps1
-```
+Original audio and the library are local. Cloud transcription sends relevant audio; cloud organization sends selected text and explicitly chosen notes. Chat may use the current utterance and memory you allow. This development version uses existing service configuration; formal accounts, fees and quotas follow actual delivery terms. Record-first is not fully local recognition, and a configured credential is not proof of a successful call.
 
-The Windows Tauri shell keeps state behind a Type-style commands/coordinator/backend split, so Setup -> Scan -> Connect -> Sync -> Start -> Stop -> Transcribe -> Minutes -> Markdown -> Erase behaves like the real user chain while each backend service remains replaceable. `npm run verify:joint-acceptance` writes `docs/validation/companion-type-joint-acceptance.json`, which maps the current 1-7 acceptance status, evidence, and remaining human/external gates. The current native BLE evidence is `docs/validation/companion-type-native-ble-smoke.json`, covering real Windows scan/connect/discover through the app backend boundary; `docs/validation/companion-type-native-ble-sync-popup.json` records the popup-guided SW3 recording-sync attempt. Final human acceptance still needs a successful popup-guided recording sync or installed app sync path, and real ASR requires a configured key.
+Computer-started recording uses the requested duration and a fresh capacity check; standalone capture uses the saved device limit. Sealed segments can be synced into one recording. An interruption, missing segments or a fault does not establish a complete session. Follow the item's status and the [user guide](docs/USER_GUIDE.md).
 
-`npm run verify:long-meeting` writes `docs/validation/companion-type-long-meeting-chain.json` for the one hour meeting-recorder path: 12 five-minute chunks, transcript import, minutes, Markdown export, and local audio erase. This is a deterministic simulation, not a real one hour microphone soak.
+## One product, three parts
 
-`npm run verify:real-microphone-soak` records through the real host microphone and writes `docs/validation/companion-type-real-microphone-soak.json`. By default it requests 3600 seconds and only that produces `PASS_ONE_HOUR_REAL_MIC_SOAK`; for a shorter smoke use `$env:COMPANION_TYPE_REAL_MIC_SOAK_SECONDS = '2'` before running it, which produces `PASS_SHORT_REAL_MIC_SOAK_SMOKE`. `npm run verify:real-microphone-soak:popup` is the same validation behind a Chinese popup start/end prompt, with no Notepad handoff.
+| Repository | Responsibility |
+| --- | --- |
+| Companion Type (here) | Connection, sync, library, transcription, minutes, editing and export |
+| [Companion Firmware](https://github.com/Listener-ai-Macau/Companion-Firmware) | Expressions, interaction, capture, storage, Bluetooth transfer, sounds and recovery |
+| [Companion Hardware](https://github.com/Listener-ai-Macau/Companion-Hardware) | Electronics, enclosure, manufacturing data and board validation |
 
-`npm run verify:dirty-audit` writes `docs/validation/companion-type-dirty-audit.json`. It is read-only: it records the current dirty worktree, categories, git status outputs, and evidence files without staging, committing, stashing, resetting, deleting, or touching Listener-Type.
+Windows is the current desktop product path. Browser and mobile directories are development/demo shells, not a delivered native phone app. No purchase or production-download availability is implied.
 
-`npm run verify:msi-install-smoke` installs the latest Tauri MSI, launches the installed Companion Type executable, then writes `docs/validation/companion-type-msi-install-smoke.json`. If Windows asks for UAC or installer confirmation, the script uses a Chinese popup prompt; it does not open Notepad.
-
-`npm run verify:installed-ui-sync` launches the installed app, clicks the visible Scan -> Sync chain, and captures screenshots under `docs/validation/companion-type-installed-ui-sync-*.png`. The summary JSON is `docs/validation/companion-type-installed-ui-sync.json`; final PASS for item 2 still requires visual review of the after-Sync screenshot.
-
-`npm run verify:final-human-signoff` opens a Chinese popup for the final local human gate. It writes `docs/validation/companion-type-final-human-signoff.json`; only an explicit "确认通过" with all checklist items checked can clear the item 1/2 human confirmation gate.
+[Development and original engineering notes](docs/DEVELOPMENT.md) · [简体中文](README.zh-CN.md)
