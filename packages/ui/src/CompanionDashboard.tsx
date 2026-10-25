@@ -763,7 +763,7 @@ export function CompanionDashboard({
     ? Boolean(productSettings.volcAppKeySet && productSettings.volcAccessKeySet)
     : Boolean(productSettings?.openaiAsrApiKeySet);
   useEffect(() => {
-    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.keys(meetingDrafts).length > 0 || transcriptEditor.current.dirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved);
+    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(Boolean)) || transcriptEditor.current.dirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved);
   }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
