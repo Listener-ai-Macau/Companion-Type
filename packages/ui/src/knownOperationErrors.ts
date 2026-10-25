@@ -1,5 +1,22 @@
 // Exact, existing authored error contracts; dynamic OS/service details are not trusted.
 export const knownOperationErrors:readonly string[]=[
+  // Exact public contracts from product_settings/storage.rs. Startup recovery
+  // is not a failed save; retain the safe cause and recovery instruction.
+  "设置文件缺失，正在使用上次保存的备份。再次保存会恢复设置文件。",
+  "设置文件损坏，正在使用上次保存的备份。保存时会保留损坏原件。",
+  "设置文件损坏且没有有效备份；原文件已保留，请先恢复或修复设置。",
+  "设置来自更新版本，当前软件不能覆盖它。",
+  "设置对应的安全凭据不可用；不能用旧凭据替代。",
+  "设置缺少安全凭据身份；原文件已保留。",
+  "这份设置需要原系统的安全凭据；不能覆盖。",
+  "设置格式与凭据身份不一致。",
+  "清空密钥后的设置不可用；不能恢复旧凭据。",
+  "密钥已停止使用，但旧凭据清理尚未完成；请再次保存设置重试。",
+  "无法读取设置文件；原文件已保留。",
+  "无法完整读取设置文件；原文件已保留。",
+  "设置文件过大；原文件已保留。",
+  "正在保存设置，请稍后重试。",
+  "无法安全读取设置，请稍后重试。",
   "宠物身份尚未核实。",
   "宠物身份格式不正确。",
   "宠物身份不可用。",
