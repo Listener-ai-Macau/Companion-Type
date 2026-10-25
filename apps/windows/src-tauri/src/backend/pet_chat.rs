@@ -38,10 +38,21 @@ pub(crate) fn clear()->Result<Status,String> {
         s.status=Status::default();Ok(())
     })??;status()
 }
-pub(crate) fn profile_changed()->Result<(),String> {with(|s|{
+fn invalidate_profile_context(s:&mut Store) {
     let _=cancel_current(s);s.history.clear();s.history_device.clear();s.last_turn=None;
     s.history_profile=None;s.reply_profile=None;s.status.reply.clear();s.status.transcript.clear();
-})}
+}
+pub(crate) fn profile_changed()->Result<(),String> {with(invalidate_profile_context)}
+fn invalidate_profile_if_owned(s:&mut Store,request:u32)->bool {
+    // A cancelled worker can finish its profile read after another utterance
+    // starts or completes. Only its own current request may be retired here;
+    // explicit owner profile mutations still invalidate the whole context.
+    if !s.job.as_ref().is_some_and(|job|job.id==request){return false;}
+    invalidate_profile_context(s);true
+}
+fn worker_profile_changed(request:u32)->Result<(),String> {
+    with(|s|{invalidate_profile_if_owned(s,request);})
+}
 fn update(job:&Job,phase:&str,error:Option<String>)->Result<(),String> {
     with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id){s.status.phase=phase.into();s.status.error=error;}})
 }
@@ -214,7 +225,7 @@ fn run(coordinator:&CompanionCoordinator,job:&Arc<Job>)->Result<(),String> {
     let reply=reply?;cancelled(job)?;
     let fresh=super::pet_profile::current_for_chat(&job.device,&uid)?;
     if fresh.context_key(super::pet_profile::now_utc()?)?!=binding.1 {
-        profile_changed()?;return Err("宠物档案已更新，旧回复已撤回，请重新开聊。".into());
+        worker_profile_changed(job.id)?;return Err("宠物档案已更新，旧回复已撤回，请重新开聊。".into());
     }
     with(|s|{if s.job.as_ref().is_some_and(|j|j.id==job.id) && !job.cancel.load(Ordering::Acquire){
         // A prepared answer may still be cancelled or refused by the screen.
@@ -278,7 +289,7 @@ pub(crate) fn display(coordinator:&CompanionCoordinator,request:u32,pixels:Vec<u
         if uid!=binding.0{return Err("宠物身份已改变，旧回复未上屏。".into());}
         let profile=super::pet_profile::current_for_chat(&job.device,&uid)?;
         if profile.context_key(super::pet_profile::now_utc()?)?!=binding.1 {
-            profile_changed()?;return Err("宠物档案已更新，旧回复已撤回，请重新开聊。".into());
+            worker_profile_changed(job.id)?;return Err("宠物档案已更新，旧回复已撤回，请重新开聊。".into());
         }
         super::ble_bridge::pet_caption::show(&job.device,job.id,&pixels,&job.cancel)
     })();
@@ -301,4 +312,50 @@ pub(crate) fn display(coordinator:&CompanionCoordinator,request:u32,pixels:Vec<u
             s.status.phase="replied".into();s.status.screen_visible=true;s.status.error=None;s.job=None;
         }
     }})?;status()
+}
+
+#[cfg(test)]
+mod profile_owner_tests {
+    use super::*;
+    fn job(id:u32)->Arc<Job> {Arc::new(Job{id,device:"sample-device".into(),stop:Arc::new(AtomicBool::new(false)),
+        cancel:AtomicBool::new(false),running:AtomicBool::new(true)})}
+    fn store(current:Option<Arc<Job>>)->Store {
+        Store {job:current,status:Status{request_id:22,phase:"thinking".into(),transcript:"new question".into(),reply:"new reply".into(),..Default::default()},
+            history:vec![json!({"role":"user","content":"new context"})],history_device:"sample-device".into(),
+            last_turn:Some(Instant::now()),history_profile:Some(("new uid".into(),7)),reply_profile:Some(("new uid".into(),7))}
+    }
+    #[test]
+    fn p565_old_profile_completion_must_not_cancel_a_new_question() {
+        let old=job(11);let next=job(22);let mut state=store(Some(next.clone()));
+        old.stop.store(true,Ordering::Release);old.cancel.store(true,Ordering::Release);
+        // Ordered real race: old worker passed its cancellation check, owner
+        // cancelled old and began22, then old profile read found an expired key.
+        assert!(!invalidate_profile_if_owned(&mut state,old.id));
+        assert!(!next.cancel.load(Ordering::Acquire));assert!(!next.stop.load(Ordering::Acquire));
+        assert_eq!(state.status.phase,"thinking");assert_eq!(state.status.reply,"new reply");
+        assert_eq!(state.history.len(),1);assert_eq!(state.history_profile,Some(("new uid".into(),7)));
+    }
+    #[test]
+    fn p565_old_profile_completion_must_not_clear_newer_finished_history() {
+        let mut state=store(None);state.status.phase="replied".into();state.status.screen_visible=true;
+        assert!(!invalidate_profile_if_owned(&mut state,11));
+        assert_eq!(state.history.len(),1);assert_eq!(state.status.reply,"new reply");
+        assert_eq!(state.status.phase,"replied");assert!(state.status.screen_visible);
+    }
+    #[test]
+    fn p565_current_profile_mismatch_still_cancels_and_retires_its_context() {
+        let current=job(22);let mut state=store(Some(current.clone()));
+        assert!(invalidate_profile_if_owned(&mut state,current.id));
+        assert!(current.cancel.load(Ordering::Acquire));assert!(current.stop.load(Ordering::Acquire));
+        assert_eq!(state.status.phase,"cancelled");assert!(state.status.reply.is_empty());
+        assert!(state.history.is_empty());assert!(state.history_profile.is_none());assert!(state.reply_profile.is_none());
+    }
+    #[test]
+    fn p565_explicit_owner_profile_change_still_retires_current_context() {
+        let current=job(22);let mut state=store(Some(current.clone()));
+        invalidate_profile_context(&mut state);
+        assert!(current.cancel.load(Ordering::Acquire));assert!(state.history.is_empty());
+        assert!(state.status.reply.is_empty());assert!(state.status.transcript.is_empty());
+        assert!(state.reply_profile.is_none());
+    }
 }
