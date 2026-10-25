@@ -1475,6 +1475,12 @@ impl CompanionBackend for FixtureCompanionBackend {
         &self,
         mut request: CompanionV1ControlRequest,
     ) -> Result<CompanionV1Snapshot, String> {
+        // This backend owns the real persisted library despite its legacy
+        // Fixture name. Synthetic samples belong only to the isolated pure
+        // fixture reducer; renderer input must never fabricate a saved capture.
+        if request.action == CompanionV1ControlAction::MeetingLoadDemo {
+            return Err("演示只在隔离预览中可用，不会添加到本机录音库。".into());
+        }
         const AUTO_RECOVERY_PROMPT_ID: &str = "__companion_auto_recovery__";
         let automatic_recovery = request.prompt_id.as_deref() == Some(AUTO_RECOVERY_PROMPT_ID);
 
@@ -4130,6 +4136,25 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn p582_persisted_control_refuses_demo_before_touching_existing_rows_or_recording_state() {
+        let backend=FixtureCompanionBackend::new();
+        {let mut snapshot=backend.snapshot.lock().unwrap();snapshot.host.persistence.status="blocked".into();snapshot.meeting.active=true;snapshot.device.recording=true;}
+        let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
+        for source in ["fixture","hostMicrophone","boardDevice"] {
+            let request=serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo","sessionId":"existing-record-must-not-be-replaced","title":source,"transcriptText":"fabricated","audioPath":"C:/not-opened.wav","audioBytes":4096,"durationMs":15000})).unwrap();
+            assert_eq!(backend.apply_control(request).unwrap_err(),"演示只在隔离预览中可用，不会添加到本机录音库。");
+            assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
+        }
+    }
+    #[test]
+    fn p582_pure_isolated_demo_reducer_and_ordinary_selection_remain_available() {
+        let snapshot=apply_fixture_control(fixture_snapshot(),serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo","sessionId":"isolated-only","title":"Isolated example","transcriptText":"明确虚构示例内容"})).unwrap()).unwrap();
+        assert_eq!(snapshot.host.sessions[0].id,"isolated-only");
+        let selected=apply_fixture_control(snapshot,serde_json::from_value(serde_json::json!({"action":"meetingSelectSession","sessionId":"isolated-only"})).unwrap()).unwrap();
+        assert_eq!(selected.host.selected_session_id.as_deref(),Some("isolated-only"));
+    }
     #[test]
     fn connect_transport_failure_reloads_durable_partials_without_stopping_original_or_rewriting_index() {
         let root=std::env::temp_dir().join(format!("companion-connect-result-{}",uuid::Uuid::new_v4()));

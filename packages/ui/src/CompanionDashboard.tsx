@@ -2157,9 +2157,9 @@ export function CompanionDashboard({
               >
                 <Square size={16} /><span>停止</span>
               </button>
-              <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording} onClick={() => onControl({ action: 'meetingLoadDemo', title: '调试演示纪要' })}>
+              {snapshot?.source === 'fixture' && snapshot.device.mode === 'fixture' ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording} onClick={() => onControl({ action: 'meetingLoadDemo', title: '调试演示纪要' })}>
                 <FileText size={16} /><span>调试：无板演示</span>
-              </button>
+              </button> : null}
             </div>
             <p className="ct-step-meta">{connected
               ? `${meetingMode === 'onlineLive' ? `实时转写单次最多 43 分钟，另预留 2 分钟收尾空间。${nearRecordingLimit ? ` 距本次设定结束约 ${formatDuration(recordingRemainingMs)}。` : ''}` : '先录后整理按填写时长检查完整空间，不会自动截短。'} 当前不支持无缝连续分段。在线模式需要配置转写服务。`
