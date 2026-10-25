@@ -3,7 +3,7 @@ use super::*;
 use super::super::pet_profile_model::{self as model,Profile,DeviceReply};
 
 #[derive(Clone,Debug)]
-pub(crate) struct Loaded {pub profile:Profile,pub persisted:bool,pub cleanup_pending:bool}
+pub(crate) struct Loaded {pub profile:Profile,pub persisted:bool,pub cleanup_pending:bool,pub locale:u8}
 struct Session<'a> {peer:&'a NativeDevice,characteristic:Characteristic,uid:String,token:u32,generation:u32,chunk:usize}
 impl Session<'_> {
     async fn exchange(&mut self,op:u8,argument:u16,payload:&[u8])->Result<DeviceReply,String> {
@@ -57,7 +57,7 @@ impl Session<'_> {
             if model::crc32(&body)!=info.crc{return Err("宠物档案校验未通过，原件保留。".into());}
             model::decode(&self.uid,info.generation,&body)?
         };
-        Ok(Loaded{profile,persisted,cleanup_pending})
+        Ok(Loaded{profile,persisted,cleanup_pending,locale:u8::MAX})
     }
     async fn save(&mut self,current:&Loaded,profile:&Profile)->Result<Loaded,String> {
         if profile.uid!=current.profile.uid || profile.generation!=current.profile.generation ||
@@ -80,7 +80,7 @@ impl Session<'_> {
         if (commit.status==6)!=verified.cleanup_pending{return Err("旧副本清理状态尚未核实，请重新读取。".into());}
         Ok(verified)
     }
-    async fn leave(&mut self)->Result<(),String> {
+    async fn leave(&mut self)->Result<u8,String> {
         // Restore the ordinary SETTINGS value without rewriting its clock,
         // locale or mute. Old clients must never receive PMP1 as settings.
         let end=model::packet(7,self.token,self.generation,0,&[])?;
@@ -92,7 +92,7 @@ impl Session<'_> {
             if left.is_zero(){return Err("设置读取尚未恢复，连接将正常关闭。".into());}
             let legacy=bounded_ble_result("confirm ordinary settings restored",left,
                 self.peer.peripheral.read(&self.characteristic)).await?;
-            if legacy.len()==13 && legacy[0]==1{return Ok(());}
+            if legacy.len()==13 && legacy[0]==1{return Ok(legacy[1]);}
             tokio::time::sleep(StdDuration::from_millis(25)).await;
         }
     }
@@ -133,7 +133,7 @@ fn operate(device:&str,uid:&str,save:Option<&Profile>,cleanup:bool)->Result<Load
                     if ack.status!=0{return Err(model::status_error(ack.status));}session.load().await}
                 else{Ok(current)};
             let close=session.leave().await;
-            match(work,close){(Ok(value),Ok(()))=>Ok(value),(Err(error),_)=>Err(error),(_,Err(error))=>Err(error)}
+            match(work,close){(Ok(mut value),Ok(locale))=>{value.locale=locale;Ok(value)},(Err(error),_)=>Err(error),(_,Err(error))=>Err(error)}
         }.await;
         let cleanup=finish_native_device_operation(peer,result.is_ok()).await;
         combine_operation_and_cleanup(result,cleanup)

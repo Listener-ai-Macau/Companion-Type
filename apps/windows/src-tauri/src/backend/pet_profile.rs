@@ -75,9 +75,17 @@ pub(crate) fn reset(coordinator:&CompanionCoordinator,expected_uid:String,genera
     let mut initial=model::Profile::initial(&uid)?;initial.generation=generation;
     let result=ble_bridge::pet_profile::save(&device,&uid,&initial);super::pet_chat::profile_changed()?;result.map(view)
 }
-pub(crate) fn current_for_chat(device:&str,uid:&str)->Result<model::Profile,String> {
+pub(crate) type ChatBinding=(String,u32,super::pet_chat_language::ReplyLanguage);
+pub(crate) struct ChatProfile {pub profile:model::Profile,pub language:super::pet_chat_language::ReplyLanguage}
+impl ChatProfile {
+    pub(crate) fn binding(&self,now:u32)->Result<ChatBinding,String> {
+        Ok((self.profile.uid.clone(),self.profile.context_key(now)?,self.language))
+    }
+}
+pub(crate) fn current_for_chat(device:&str,uid:&str)->Result<ChatProfile,String> {
     // Caller already owns the pet capture/caption lease; do not take a second.
-    ble_bridge::pet_profile::read(device,uid).map(|loaded|loaded.profile)
+    ble_bridge::pet_profile::read(device,uid).and_then(|loaded|Ok(ChatProfile{
+        language:super::pet_chat_language::ReplyLanguage::from_code(loaded.locale)?,profile:loaded.profile}))
 }
 pub(crate) fn now_utc()->Result<u32,String> {
     let seconds=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH)
@@ -96,4 +104,21 @@ pub(crate) fn context(profile:&model::Profile,now:u32)->serde_json::Value {
         "ownerConfirmedMemories":profile.active_memories(now).map(|m|serde_json::json!({
             "text":m.text,"kind":m.kind,"confirmedAtUtc":stamp(m.created_utc),"expiresAtUtc":
             if m.expires_utc==0{None}else{stamp(m.expires_utc)}})).collect::<Vec<_>>()})
+}
+
+#[cfg(test)]
+mod reply_language_tests {
+    use super::*;
+    #[test]
+    fn p566_language_switch_changes_reply_and_history_binding_without_profile_rewrite() {
+        use super::super::pet_chat_language::ReplyLanguage;
+        let profile=model::Profile::initial("120011000d50335754363720").unwrap();
+        let body=model::encode(&profile).unwrap();
+        let simplified=ChatProfile{profile:profile.clone(),language:ReplyLanguage::SimplifiedChinese};
+        let traditional=ChatProfile{profile:profile.clone(),language:ReplyLanguage::TraditionalChinese};
+        let english=ChatProfile{profile:profile.clone(),language:ReplyLanguage::English};
+        let old=simplified.binding(1).unwrap();
+        assert_ne!(old,traditional.binding(1).unwrap());assert_ne!(old,english.binding(1).unwrap());
+        assert_eq!(old,simplified.binding(1).unwrap());assert_eq!(body,model::encode(&traditional.profile).unwrap());
+    }
 }

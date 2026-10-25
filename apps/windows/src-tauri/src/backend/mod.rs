@@ -112,6 +112,7 @@ mod transcription;
 #[cfg(test)]
 mod meeting_processing_tests;
 pub(crate) mod pet_chat;
+mod pet_chat_language;
 pub(crate) mod pet_profile;
 pub(crate) mod pet_profile_model;
 pub(crate) use transcription::verify_asr_cache;
