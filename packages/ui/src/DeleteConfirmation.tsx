@@ -1,8 +1,8 @@
 import { useEffect, useId, useRef } from 'react';
 
 /** Native modal behavior keeps background controls inert; Escape only cancels. */
-export function DeleteConfirmation({ title, detail, targetTitle, blocked, onCancel, onConfirm }: {
-  title: string; detail: string; targetTitle?: string;
+export function DeleteConfirmation({ title, detail, targetTitle, blocked, onCancel, onConfirm, cancelLabel = '保留内容', confirmLabel = '确认删除' }: {
+  title: string; detail: string; targetTitle?: string; cancelLabel?: string; confirmLabel?: string;
   blocked: boolean; onCancel: () => void; onConfirm: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -32,8 +32,8 @@ export function DeleteConfirmation({ title, detail, targetTitle, blocked, onCanc
     {targetTitle ? <p>当前录音：{targetTitle}</p> : null}
     <p id={`${prefix}-detail`}>{detail}</p>
     <div className="ct-button-row">
-      <button ref={keep} type="button" className="ct-action" onClick={onCancel}>保留内容</button>
-      <button type="button" className="ct-action ct-action-danger" disabled={blocked} onClick={onConfirm}>确认删除</button>
+      <button ref={keep} type="button" className="ct-action" onClick={onCancel}>{cancelLabel}</button>
+      <button type="button" className="ct-action ct-action-danger" disabled={blocked} onClick={onConfirm}>{confirmLabel}</button>
     </div>
   </dialog>;
 }

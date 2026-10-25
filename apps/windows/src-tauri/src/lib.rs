@@ -5,6 +5,7 @@
 
 mod backend;
 mod commands;
+mod close_review;
 mod companion_v1;
 mod coordinator;
 mod pet_chat_commands;
@@ -266,6 +267,7 @@ pub fn run() {
         spawn_continuous_recording_sync(local_recovery);
     });
     let board_online_live = Arc::new(commands::CompanionBoardOnlineLiveManager::new());
+    let close_review=Arc::new(close_review::CloseReview::default());
 
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
@@ -273,7 +275,11 @@ pub fn run() {
         .manage(backend::desktop_update::Manager::default())
         .manage(Arc::clone(&coordinator))
         .manage(board_online_live)
+        .manage(Arc::clone(&close_review))
         .invoke_handler(tauri::generate_handler![
+            close_review::register_companion_close_review,
+            close_review::unregister_companion_close_review,
+            close_review::respond_companion_close_review,
             pet_find_commands::control_companion_pet_find,
             pet_chat_commands::get_companion_pet_chat,
             pet_chat_commands::clear_companion_pet_chat,
@@ -364,10 +370,11 @@ pub fn run() {
                         if label=="main" && !completed.load(Ordering::Acquire)=>{
                         // Keep the last window until cleanup succeeds; an
                         // incomplete cleanup must leave a way to retry Close.
-                        api.prevent_close();app.exit(0);
+                        api.prevent_close();close_review::request(app,&close_review,None);
                     },
                     tauri::RunEvent::ExitRequested{code,api,..} if !completed.load(Ordering::Acquire)=>{
                         api.prevent_exit();
+                        if !close_review.approved(){close_review::request(app,&close_review,code);return;}
                         if worker.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire).is_ok() {
                             if let Some(window)=app.get_webview_window("main") {let _=window.set_title("Companion Type · 正在退出，请稍候");}
                             coordinator.request_shutdown();

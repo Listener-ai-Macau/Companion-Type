@@ -11,6 +11,8 @@ import {clearPlaybackMemory,clearSessionPlaybackMemory} from '../../../packages/
 import { refineCompanionMeetingSpeakers,controlCompanionPetFind } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
+import {CloseReview} from './CloseReview';
+import {nativeCloseReview} from './closeReviewClient';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 import '../../../packages/ui/src/companionUi.css';
 
@@ -214,6 +216,7 @@ export function App() {
 
   return (
     <div className="ct-window-shell">
+    {isTauriRuntime()?<CloseReview unsaved={unsavedEdits} client={nativeCloseReview}/>:null}
     {isTauriRuntime()?<details className="ct-pet-chat-disclosure">
       <summary>我的宠物</summary>
       <PetChat deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
