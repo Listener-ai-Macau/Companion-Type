@@ -11,7 +11,7 @@ pub(super) fn parse(payload: &[u8]) -> Option<CompanionV1RecordingCapacity> {
     let (frames,extent)=if segmented {
         let frames=word(68);let extent=word(72);
         if frames==0 || frames>6400 || extent<4096 || extent%4096!=0 || extent>word(48)
-            || 12+(u64::from(frames)+5)*42 > (u64::from(extent)/256-1)*248 {return None;}
+            || 12+528+(u64::from(frames)+5)*42 > (u64::from(extent)/256-1)*248 {return None;}
         (Some(frames),Some(extent))
     } else {(None,None)};
     let c=CompanionV1RecordingCapacity {
@@ -129,9 +129,9 @@ mod segmented_capacity_tests {
     fn real_c_status()->Vec<u8>{include_bytes!("recording_capacity/fixtures/ccq2-current-arena.bin").to_vec()}
     #[test]fn actual_c_geometry_and64_directory_allow_two_hours_without_raw_byte_estimate(){
         let c=parse(&real_c_status()).unwrap();assert_eq!(c.max_entries,64);
-        assert_eq!((c.segment_frames,c.segment_extent_bytes),(Some(6224),Some(270336)));
-        assert_eq!(available_seconds(&c),7219);assert!(check(&c,7200).is_ok());
-        assert!(check(&c,7219).is_ok());assert!(check(&c,7220).is_err());
+        assert_eq!((c.segment_frames,c.segment_extent_bytes),(Some(6211),Some(270336)));
+        assert_eq!(available_seconds(&c),7204);assert!(check(&c,7200).is_ok());
+        assert!(check(&c,7204).is_ok());assert!(check(&c,7205).is_err());
     }
     #[test]fn slot_and_fragment_limits_cannot_be_overridden_by_large_total_free_bytes(){
         let mut p=real_c_status();p[42]=63;p[80]=63;
