@@ -1882,18 +1882,31 @@ fn require_ota_sync_outcome(batch:NativeRecordingBatch)->Result<NativeRecordingB
     Ok(batch)
 }
 
-async fn require_idle_recorder_for_ota(device:&NativeDevice)->Result<(),String> {
+fn require_ota_idle_identity(cached_uid:Option<&str>,identity:&CompanionDeviceIdentity,
+    peer:&super::recording_wire::transport::Peer)->Result<(),String> {
+    let actual=hex_lower(&peer.uid);
+    if identity.recording!=Some(false) {
+        return Err("设备正在录音或录音状态未知；请先结束录音，再同步升级。".into());
+    }
+    if identity.mcu_uid.as_deref()!=Some(actual.as_str()) || cached_uid.is_some_and(|uid|uid!=actual) {
+        return Err("升级前设备身份或连续录音能力改变，未收取或消费其它设备。".into());
+    }
+    Ok(())
+}
+
+async fn require_idle_recorder_for_ota(device:&NativeDevice)->Result<super::recording_wire::transport::Peer,String> {
     let chars=device.peripheral.characteristics();
     let wire=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
         .ok_or("无法核对设备当前录音状态，未开始升级。")?;
     let identity=parse_device_identity(Some(&wire),None,None);
-    if identity.recording!=Some(false) {
-        return Err("设备正在录音或录音状态未知；请先结束录音，再同步升级。".into());
-    }
-    if device.verified_uid.is_none()||device.verified_uid.as_deref()!=identity.mcu_uid.as_deref()||device.recording_peer.is_none() {
-        return Err("升级前设备身份或连续录音能力改变，未收取或消费其它设备。".into());
-    }
-    Ok(())
+    // SealedSync intentionally starts without the optional prepared-user cache.
+    // Bind this operation to freshly parsed capabilities on its exact protected
+    // connection; an absent cache is not a changed identity.
+    let peer=super::recording_wire::transport::Peer::from_status(&wire)?
+        .ok_or("设备连续录音能力不可核对，未开始升级。")?;
+    require_ota_idle_identity(device.verified_uid.as_deref(),&identity,&peer)?;
+    require_same_recorder(device.recording_peer.as_ref(),Some(&peer))?;
+    Ok(peer)
 }
 
 fn require_original_sync_outcome(batch: NativeRecordingBatch) -> Result<NativeRecordingBatch,String> {
@@ -4393,14 +4406,14 @@ async fn sync_native_recordings_scoped(requested_device_id: Option<&str>,known_r
     };
     eprintln!("recording_sync_stage stage=connection elapsed_ms={}", started.elapsed().as_millis());
     let result=async {
-        if ota_barrier { require_idle_recorder_for_ota(&device).await?; }
+        let initial_peer=if ota_barrier {Some(require_idle_recorder_for_ota(&device).await?)}else{None};
         let batch=sync_native_recordings_with_link_policy(&device,known_recording_ids,recording_id,&mut link_policy,logical_key).await?;
         if !ota_barrier { return Ok(batch); }
         let batch=require_ota_sync_outcome(batch)?;
         // A last fresh protected catalogue is mandatory. A generic saved-prefix
         // success cannot prove every device segment has its durable consume ACK.
-        require_idle_recorder_for_ota(&device).await?;
-        let peer=device.recording_peer.clone().ok_or("设备连续录音能力不可核对，未开始升级。")?;
+        let peer=require_idle_recorder_for_ota(&device).await?;
+        require_same_recorder(initial_peer.as_ref(),Some(&peer))?;
         let catalog=segmented::read_catalog(&device,&device.peripheral.characteristics(),peer).await?;
         let remaining=catalog.entries.iter().filter(|e|e.source_mode==RECORDING_SOURCE_MIC_SAI).count();
         if remaining!=0 { return Err(format!("设备仍有{remaining}段录音未完成同步消费，未开始升级。")); }
@@ -7124,6 +7137,15 @@ mod tests {
 mod ota_recording_drain_tests {
     use super::*;
     fn batch()->NativeRecordingBatch { NativeRecordingBatch {device_id:"A1:B2:C3:D4:E5:F6".into(),recordings:vec![],failures:vec![],paused:false,connection_reusable:true,segmented:Some(vec![])} }
+    #[test] fn fresh_sealed_connection_binds_actual_identity_without_prepared_user_cache() {
+        let peer=super::super::recording_wire::transport::Peer {uid:[7;12],epoch:9,capacity:64,max_value_bytes:509,logical_control:true,growing_tail:true,batch_interval:true,pause_control:true};
+        let mut wire=[0u8;36];wire[0]=1;wire[20..32].copy_from_slice(&peer.uid);
+        let mut identity=parse_device_identity(Some(&wire),None,None);
+        assert!(require_ota_idle_identity(None,&identity,&peer).is_ok(),"fresh exact peer is required; prepared cache is optional");
+        assert!(require_ota_idle_identity(Some("different"),&identity,&peer).is_err());
+        identity.recording=Some(true);assert!(require_ota_idle_identity(None,&identity,&peer).is_err());
+        identity.recording=Some(false);identity.mcu_uid=None;assert!(require_ota_idle_identity(None,&identity,&peer).is_err());
+    }
     #[test] fn partial_library_success_is_not_permission_to_start_ota() {
         let mut partial=batch();partial.failures.push("exact consume receipt missing".into());partial.segmented=Some(vec!["durable-original".into()]);
         assert!(native_recording_operation(Ok(NativeRecordingBatch {device_id:partial.device_id.clone(),recordings:vec![],failures:partial.failures.clone(),paused:false,connection_reusable:true,segmented:partial.segmented.clone()})).ready);
