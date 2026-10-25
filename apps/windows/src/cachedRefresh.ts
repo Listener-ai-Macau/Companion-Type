@@ -27,7 +27,12 @@ export function createCachedRefresh<T>(options: {
             && readRevision === revision) options.apply(value);
         } catch { /* Keep the last readable state; the next signal/tick can retry. */ }
       }
-    }).finally(() => { flight = null; });
+    }).finally(() => {
+      flight = null;
+      // A notification can arrive after drain's last check but before this
+      // promise's completion microtask. Preserve that final pending read.
+      if (!disposed && dirty && !options.busy()) void resume();
+    });
     return flight;
   };
   return {
