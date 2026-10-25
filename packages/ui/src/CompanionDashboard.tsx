@@ -753,8 +753,8 @@ export function CompanionDashboard({
       const result = await onCheckService(service);
       if (currentServiceConfig.current === config) setServiceResults(previous => ({...previous,
         [service]: `${result.message}（${Math.max(0, result.elapsedMs / 1000).toFixed(1)} 秒）`}));
-    } catch {
-      if (currentServiceConfig.current === config) setServiceResults(previous => ({...previous, [service]: '测试未完成，请确认录音已结束后重试。'}));
+    } catch (error) {
+      if (currentServiceConfig.current === config) setServiceResults(previous => ({...previous, [service]: operationErrorText(error,'serviceCheck')}));
     } finally { serviceActive.current = false; setServiceBusy(null); }
   };
   const storageBlocked = Boolean(snapshot?.host.persistence && snapshot.host.persistence.status !== 'ready');
@@ -2295,7 +2295,7 @@ export function CompanionDashboard({
                 if (diagnosticActive.current || !onPrepareAudioComponents) return;
                 diagnosticActive.current=true; setDiagnosticBusy(true); setDiagnosticMsg('正在准备音频组件，请稍候…');
                 void onPrepareAudioComponents().then(() => setDiagnosticMsg('音频组件已校验并成功加载；后续会议可以使用本地说话人区分。'))
-                  .catch((error) => setDiagnosticMsg(operationErrorText(error,'diagnostics'))).finally(() => {diagnosticActive.current=false;setDiagnosticBusy(false);});
+                  .catch((error) => setDiagnosticMsg(operationErrorText(error,'components'))).finally(() => {diagnosticActive.current=false;setDiagnosticBusy(false);});
               }}>准备说话人区分组件</button>
           </section>
 
@@ -2408,7 +2408,7 @@ export function CompanionDashboard({
             {settingsMsg ? <p className="ct-step-meta">{settingsMsg}</p> : null}
             <div className="ct-button-row">
               {(['asr', 'minutes'] as const).map(service => <button key={service} type="button" className="ct-action"
-                disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && !formDeepseekEnabled)}
+                disabled={controlsBusy || settingsBusy || serviceBusy !== null || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && !formDeepseekEnabled)}
                 onClick={() => void checkService(service)}>{serviceBusy === service ? '正在测试…' : service === 'asr' ? '测试转写服务' : '测试纪要服务'}</button>)}
             </div>
             <p className="ct-step-meta">按已保存配置发送一秒静音或固定测试文字，不读取会议或麦克风，服务商可能计费。测试通过不代表识别或纪要准确率通过。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>

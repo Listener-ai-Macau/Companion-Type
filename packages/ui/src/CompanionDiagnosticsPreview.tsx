@@ -25,7 +25,7 @@ export function CompanionDiagnosticsPreview({blocked,onPreview}:{blocked:boolean
   const load=async()=>{
     if(blocked||active.current)return;active.current=true;const token=++epoch.current;setOpen(true);setBusy(true);setValue(null);setError(null);
     try{const raw=await onPreview();if(token===epoch.current)setValue(safeDiagnosticsPreview(raw));}
-    catch(e){if(token===epoch.current)setError(operationErrorText(e,'diagnostics'));}
+    catch(e){if(token===epoch.current)setError(operationErrorText(e,'diagnosticsRead'));}
     finally{if(token===epoch.current){active.current=false;setBusy(false);}}
   };
   return <section className="ct-diagnostics-preview" aria-label="本机日志预览">

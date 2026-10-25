@@ -1,6 +1,6 @@
 import {knownOperationErrors} from './knownOperationErrors';
 
-export type OperationScope='general'|'device'|'recording'|'save'|'export'|'playback'|'settings'|'update'|'diagnostics'|'chat'|'profile';
+export type OperationScope='general'|'device'|'recording'|'save'|'export'|'playback'|'settings'|'update'|'diagnostics'|'diagnosticsRead'|'serviceCheck'|'components'|'chat'|'profile';
 export type OperationFailureKind='permission'|'storage'|'rateLimit'|'network'|'device'|'configuration'|'busy'|'conflict'|'integrity'|'cancelled'|'unknown';
 export type OperationFailure={kind:OperationFailureKind;message:string};
 
@@ -26,6 +26,9 @@ const fallback:Record<OperationScope,string>={
   settings:'设置尚未确认保存。请保留当前填写内容，检查本机存储或服务配置后再试。',
   update:'升级操作尚未确认。请保留当前软件包，查看升级状态和恢复说明，不要强行覆盖正在使用的程序。',
   diagnostics:'诊断日志未能导出。请检查保存位置；已有录音和文字不需要清理。',
+  diagnosticsRead:'本机日志暂未能读取。可以收起预览，稍后再查看；已有录音和文字不需要清理。',
+  components:'说话人区分组件尚未准备完成。请检查下载连接和本机存储后再试；已有录音会保留，不需要重新录音。',
+  serviceCheck:'服务测试未完成。请检查已保存的服务配置和当前连接；本次测试不处理已有录音，不需要重新录音。',
   chat:'这次聊天操作尚未确认。请先查看当前聊天和设备状态，再决定结束或重新开始，不要重复开聊。',
   profile:'宠物档案操作尚未确认。请先重新读取当前宠物档案，核对结果后再修改，避免重复写入。',
 };
@@ -34,6 +37,7 @@ const permissionAdvice:Partial<Record<OperationScope,string>>={
   save:'本机录音库保存被权限或文件占用阻止。请先保留当前输入，解除文件占用、检查本机存储权限，再用原来的保存入口重试。不要关闭应用或清空录音。',
   settings:'设置保存被权限或文件占用阻止。请先保留填写内容，检查本机存储权限或解除文件占用，再重试保存设置。',
   export:'无法写入导出位置。请解除目标文件占用、检查目录权限，或另选可写的本机位置；不要覆盖原音。',
+  diagnosticsRead:'读取本机日志被权限或文件占用阻止。请检查本机状态目录的读取权限或解除占用，再明确重试；不要清空录音或文字。',
   playback:'读取原音被权限或文件占用阻止。请检查原音是否仍在本机，并解除文件占用后再回听；不要删除原音。',
   device:'设备访问被权限或占用阻止。请先到“设备与同步”核对当前连接和状态，不要连续重复设备操作。',
   profile:'档案操作所需的访问未获确认。请核对当前连接和本机权限，先重新读取宠物档案，不要连续重复写入。',
@@ -55,7 +59,7 @@ function classify(text:string,scope:OperationScope):OperationFailureKind{
   if(/(?:请先结束|正在录音|上一项操作|上一句聊天|\b(?:device_busy|operation_busy)\b)/i.test(text))return 'busy';
   if(/(?:设备未连接|尚未连接|没有连接|请先正常连接|宠物身份|device (?:not connected|disconnected)|BLE.{0,15}(?:disconnect|unavailable))/i.test(text))return 'device';
   if(/(?:\b(?:ECONNREFUSED|ECONNRESET|ENOTFOUND|EAI_AGAIN)\b|failed to (?:fetch|connect)|network (?:error|unreachable)|DNS|没连上.{0,8}服务)/i.test(text))return 'network';
-  if(/(?:timed? ?out|timeout|超时)/i.test(text))return ['chat','settings'].includes(scope)?'network':['device','recording','profile'].includes(scope)?'device':'unknown';
+  if(/(?:timed? ?out|timeout|超时)/i.test(text))return ['chat','settings','serviceCheck'].includes(scope)?'network':['device','recording','profile'].includes(scope)?'device':'unknown';
   if(/^(?:操作已取消。?|聊天已取消。?|cancelled|canceled)$/i.test(text))return 'cancelled';
   return 'unknown';
 }
