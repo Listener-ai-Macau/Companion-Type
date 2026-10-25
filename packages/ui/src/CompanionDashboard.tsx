@@ -381,6 +381,7 @@ export function CompanionDashboard({
   };
   const [onlyPendingSessions, setOnlyPendingSessions] = useState(false);
   const [libraryQuery, setLibraryQuery] = useState('');
+  const [libraryWindow, setLibraryWindow] = useState({ scope: '', count: 50 });
   const [libraryFilters,setLibraryFilters]=useState<LibraryFilters>({folder:'*',tag:'',favorites:false});
   const [librarySelection,setLibrarySelection]=useState<Record<string,number>>({});
   const [libraryBusy,setLibraryBusy]=useState(false);
@@ -506,7 +507,7 @@ export function CompanionDashboard({
       const previous = Date.parse(latest.startedAt ?? '');
       return Number.isFinite(time) && (!Number.isFinite(previous) || time > previous) ? session : latest;
     }, null), [allLibrarySessions]);
-  const recordingLibrary = allLibrarySessions.filter(s=>Boolean(s.organization?.trashedAt)===Boolean(libraryFilters.trash));
+  const recordingLibrary = useMemo(() => allLibrarySessions.filter(s=>Boolean(s.organization?.trashedAt)===Boolean(libraryFilters.trash)), [allLibrarySessions, libraryFilters.trash]);
   const readableLibrary = useMemo(
     () => recordingLibrary.filter((session) => (
       session.status === 'minutesReady'
@@ -517,8 +518,8 @@ export function CompanionDashboard({
     )),
     [recordingLibrary],
   );
-  const pendingLibrary = recordingLibrary.filter((session) => !meetingHasFinalMinutes(session)
-    || Boolean(describeCompanionMeetingRecovery(session)));
+  const pendingLibrary = useMemo(() => recordingLibrary.filter((session) => !meetingHasFinalMinutes(session)
+    || Boolean(describeCompanionMeetingRecovery(session))), [recordingLibrary]);
   const visibleLibrary = useMemo(() => {
     const base = (onlyPendingSessions ? pendingLibrary : recordingLibrary).filter(s=>{
       const org=s.organization;const folder=org?.folder??'';
@@ -531,6 +532,14 @@ export function CompanionDashboard({
     if (!query) return base;
     return base.filter((session) => (meetingSearchText(session)+' '+(session.organization?.folder??'')+' '+(session.organization?.tags.join(' ')??'')).toLocaleLowerCase().includes(query));
   }, [onlyPendingSessions, pendingLibrary, recordingLibrary, libraryQuery,libraryFilters]);
+  // Search and bulk tools retain every matching recording; only card rendering is bounded.
+  // A different query/filter starts at 50 immediately, while cache refresh retains this view.
+  const libraryWindowScope = JSON.stringify([onlyPendingSessions, libraryQuery.trim().toLocaleLowerCase(), libraryFilters]);
+  if (libraryWindow.scope !== libraryWindowScope) {
+    setLibraryWindow({ scope: libraryWindowScope, count: 50 });
+  }
+  const libraryVisibleCount = libraryWindow.scope === libraryWindowScope ? libraryWindow.count : 50;
+  const renderedLibrary = visibleLibrary.slice(0, libraryVisibleCount);
   const connected = Boolean(snapshot?.connected || device?.connected);
 
   useEffect(() => {
@@ -1363,7 +1372,7 @@ export function CompanionDashboard({
             <button type="button" className="ct-action" onClick={libraryQuery ? () => setLibraryQuery('') : libraryFilters.trash?()=>setLibraryFilters({folder:'*',tag:'',favorites:false}):onlyPendingSessions && recordingLibrary.length ? () => setOnlyPendingSessions(false) : openQuickGuide}>{libraryQuery ? '清除搜索' : libraryFilters.trash?'回到录音库':onlyPendingSessions && recordingLibrary.length ? '查看全部会议' : '查看录音与同步步骤'}</button></div>
         ) : (
           <div className="ct-library-list">
-            {visibleLibrary.map((session) => {
+            {renderedLibrary.map((session) => {
               const selected = session.id === snapshot?.host.selectedSessionId;
               const boardId = session.deviceRecordingId;
               // Preview only saved text. Bound work per row and preserve the full original.
@@ -1425,6 +1434,13 @@ export function CompanionDashboard({
                 </div>
               );
             })}
+            {visibleLibrary.length > 50 ? <div className="ct-library-window">
+              <p role="status">已显示 {renderedLibrary.length} / {visibleLibrary.length} 条</p>
+              {renderedLibrary.length < visibleLibrary.length ? <button type="button" className="ct-action"
+                onClick={() => setLibraryWindow({ scope: libraryWindowScope, count: libraryVisibleCount + 50 })}>
+                再显示 {Math.min(50, visibleLibrary.length - renderedLibrary.length)} 条
+              </button> : null}
+            </div> : null}
           </div>
         )}
       </section>
