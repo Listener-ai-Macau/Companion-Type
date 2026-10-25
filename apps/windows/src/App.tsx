@@ -1,5 +1,6 @@
 import {operationErrorText} from '../../../packages/ui/src/operationFailure';
 import { useEffect, useRef, useState } from 'react';
+import {createCachedRefresh} from './cachedRefresh';
 
 import {
   type CompanionV1ControlAction,
@@ -19,7 +20,7 @@ import '../../../packages/ui/src/companionUi.css';
 import {
   getDesktopUpdateStatus, checkDesktopUpdate, downloadDesktopUpdate, cancelDesktopUpdate, installDesktopUpdate,
   applyCompanionControl,
-  getRecordingSyncStatus, pauseRecordingSync, watchRecordingSync,
+  getRecordingSyncStatus, pauseRecordingSync, watchRecordingSync, watchCompanionSnapshotUpdates,
   discardOldestDeviceRecording,
   exportCompanionMeeting,
   exportCompanionAudio,
@@ -63,6 +64,8 @@ export function App() {
   const pauseSyncActive = useRef(false);
   const operationActive = useRef(false);
   const snapshotEpoch = useRef(0);
+  const cachedReader = useRef<ReturnType<typeof createCachedRefresh> | null>(null);
+  const readBoardCache = useRef(false);
 
   // Event handlers can run twice before React has rendered disabled buttons.
   // The epoch also prevents an older background read from undoing a new action.
@@ -72,7 +75,7 @@ export function App() {
     snapshotEpoch.current += 1;
     setBusyAction(action);
     try { return await work(); }
-    finally { operationActive.current = false; setBusyAction(null); }
+    finally { operationActive.current = false; setBusyAction(null); void cachedReader.current?.resume(); }
   };
 
   const refresh = async () => {
@@ -125,7 +128,40 @@ export function App() {
   };
 
   useEffect(() => {
-    void refresh();
+    let stopped = false;
+    let unlisten: (() => void) | undefined;
+    const reader = createCachedRefresh({
+      busy: () => operationActive.current,
+      epoch: () => snapshotEpoch.current,
+      read: () => Promise.allSettled([
+        getCompanionSnapshot(),
+        readBoardCache.current ? getBoardOnlineLiveStatus() : Promise.resolve(null),
+      ]),
+      apply: ([snap, live]) => {
+        if (snap.status === 'fulfilled') setSnapshot(snap.value);
+        if (live.status === 'fulfilled' && live.value) {
+          setBoardOnlineLive(live.value);
+          if (live.value.state === 'failed' && live.value.error)
+            setError(operationErrorText(live.value.error, 'recording'));
+        }
+      },
+    });
+    cachedReader.current = reader;
+    void (async () => {
+      if (isTauriRuntime()) {
+        try {
+          const release = await watchCompanionSnapshotUpdates(() => { void reader.request(); });
+          if (stopped) { release(); return; }
+          unlisten = release;
+        } catch { /* Initial/manual reads and active polling still work. */ }
+      }
+      // Subscribe before reading: a startup restore cannot fall between them.
+      if (!stopped) await refresh();
+    })();
+    return () => {
+      stopped = true; unlisten?.(); reader.dispose();
+      if (cachedReader.current === reader) cachedReader.current = null;
+    };
   }, []);
 
   useEffect(() => {
@@ -179,41 +215,17 @@ export function App() {
   const observingConnectedDevice=Boolean(snapshot?.connected||snapshot?.device.connected);
   const boardActive = Boolean(boardOnlineLive
     && ['starting', 'recording', 'stopping', 'finalizing'].includes(boardOnlineLive.state));
-  // Refresh live text and background recovery without requiring a click.
-  // Schedule after each response: an ASR call can hold the backend lock, so a
-  // fixed interval would accumulate concurrent snapshot requests behind it.
+  readBoardCache.current = liveMeeting || boardActive;
+  // Active text/timing still ticks. Notifications and ticks share one reader;
+  // slow native cache responses never accumulate an IPC queue.
   useEffect(() => {
-    if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) {
-      return undefined;
-    }
+    if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) return;
     let cancelled = false;
     let timer: ReturnType<typeof window.setTimeout>;
     const delay = liveMeeting || controlledMeeting || boardActive ? 500 : recoveringMeeting ? 1000 : 3000;
     const poll = async () => {
-      const epoch = snapshotEpoch.current;
-      try {
-        if (!operationActive.current) {
-          const [snap, live] = await Promise.allSettled([
-            getCompanionSnapshot(),
-            // The initial manager read can fail while the persisted snapshot
-            // already contains a live recording. Keep recovering the board
-            // status so its dedicated stop control can become available.
-            liveMeeting || boardActive ? getBoardOnlineLiveStatus() : Promise.resolve(null),
-          ]);
-          if (!cancelled && !operationActive.current && epoch === snapshotEpoch.current) {
-            // One failed IPC read must not discard the other valid update.
-            if (snap.status === 'fulfilled') setSnapshot(snap.value);
-            if (live.status === 'fulfilled' && live.value) {
-              setBoardOnlineLive(live.value);
-              if (live.value.state === 'failed' && live.value.error) setError(operationErrorText(live.value.error,'recording'));
-            }
-          }
-        }
-      } catch {
-        // A transient IPC failure leaves the last readable state in place.
-      } finally {
-        if (!cancelled) timer = window.setTimeout(() => void poll(), delay);
-      }
+      try { if (!operationActive.current) await cachedReader.current?.request(); }
+      finally { if (!cancelled) timer = window.setTimeout(() => void poll(), delay); }
     };
     timer = window.setTimeout(() => void poll(), delay);
     return () => { cancelled = true; window.clearTimeout(timer); };

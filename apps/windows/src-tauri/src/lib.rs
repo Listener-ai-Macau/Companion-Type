@@ -6,6 +6,7 @@
 mod backend;
 mod commands;
 mod close_review;
+mod cache_updates;
 mod companion_v1;
 mod coordinator;
 mod pet_chat_commands;
@@ -256,7 +257,7 @@ pub fn run() {
     std::thread::spawn(move || {
         // One startup recovery, not a periodic scan. File decode stays off the
         // window thread; the operation/receiver leases serialize mutation.
-        match local_recovery.restore_local_recordings() {
+        match cache_updates::after(|| local_recovery.restore_local_recordings()) {
             Ok(report) if !report.restored.is_empty() || !report.failures.is_empty()=>
                 eprintln!("local_recording_restore_json={}",serde_json::to_string(&report).unwrap()),
             Err(error)=>eprintln!("local_recording_restore_error={error}"),
@@ -328,6 +329,7 @@ pub fn run() {
         ])
         .setup(|app| {
             backend::recording_sync::bind_app(app.handle().clone());
+            cache_updates::bind_app(app.handle().clone());
             // The main window is built here (not in tauri.conf.json) so we can inject
             // WebView2 browser args for acceptance-test automation (e.g. CDP). The window
             // matches the previous config: "Companion Type", 980x720, min 420x560.
@@ -792,6 +794,7 @@ fn spawn_automatic_meeting_recovery(coordinator: Arc<CompanionCoordinator>) {
             };
             let mut request = control_request(control, Some(session_id.clone()));
             request.prompt_id = Some("__companion_auto_recovery__".to_string());
+            cache_updates::after(|| {
             if let Err(error) = coordinator.apply_control(request) {
                 eprintln!("[meeting-recovery] {action:?} {session_id} failed: {error}");
                 let retry_stage = match action {
@@ -808,6 +811,7 @@ fn spawn_automatic_meeting_recovery(coordinator: Arc<CompanionCoordinator>) {
                     );
                 }
             }
+            });
         }
     });
 }
@@ -839,6 +843,10 @@ fn spawn_continuous_recording_sync(coordinator: Arc<CompanionCoordinator>) {
                     coordinator.automatic_reconnect_once().map(|_| true)
                 } else { coordinator.follow_recording_once() }
             });
+            // A no-op or occupied lease has not published a new library.
+            if matches!(&work, Ok(true)) || work.as_ref().is_err_and(|e| !e.contains("device is busy with")) {
+                cache_updates::changed();
+            }
             let wait = match work {
                 Ok(active) => { failures = 0; if active { 2 } else { 10 } },
                 Err(error) if error.contains("device is busy with") => 2,
@@ -880,7 +888,7 @@ fn spawn_automatic_device_reconnect(coordinator: Arc<CompanionCoordinator>) {
                 std::thread::sleep(std::time::Duration::from_secs(5));
                 continue;
             }
-            match coordinator.automatic_reconnect_once() {
+            match cache_updates::after(|| coordinator.automatic_reconnect_once()) {
                 Ok(_) => {
                     failed_attempts = 0;
                     std::thread::sleep(std::time::Duration::from_secs(60));

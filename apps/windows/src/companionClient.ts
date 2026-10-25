@@ -2,6 +2,8 @@ import { invoke, convertFileSrc } from '@tauri-apps/api/core';
 import type {PetFindRequest,PetFindReport} from '../../../packages/ui/src/CompanionPetFind';
 export const controlCompanionPetFind=(request:PetFindRequest)=>invoke<PetFindReport>('control_companion_pet_find',{request});
 import { listen } from '@tauri-apps/api/event';
+export const watchCompanionSnapshotUpdates = (changed: () => void) =>
+  listen<null>('companion-cache-updated', () => changed());
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 export const getRecordingSyncStatus = () => invoke<RecordingSyncStatus>('get_companion_recording_sync_status');
 export const pauseRecordingSync = (jobId: string) => invoke<boolean>('pause_companion_recording_sync', { jobId });
