@@ -48,7 +48,7 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   // Native source sections are retained in the complete document below. They
   // should not force a short note back to the repeated full report template.
   const attributedSource=sections.has('speakers')||sections.has('unattributed');
-  const preferActions=actionsFirst||duplicateOriginal||attributedSource;
+  const preferActions=!noActions||actionsFirst||duplicateOriginal||attributedSource;
   const reading=preferActions&&!noActions?[actionSection]:[];
   if(!duplicateOriginal && sections.get('summary')?.trim())reading.push(`## 重点\n\n${sections.get('summary')}`);
   if(!emptySection(sections.get('decisions')??''))reading.push(`## 已明确的决定\n\n${sections.get('decisions')}`);
