@@ -7,7 +7,7 @@
     "dev:windows": "vite --config apps/windows/vite.config.ts",
     "dev:mobile": "vite --config apps/mobile/vite.config.ts",
     "build": "npm run build:windows && npm run build:mobile",
-    "build:windows": "tsc -p apps/windows/tsconfig.json && vite build --config apps/windows/vite.config.ts",
+    "build:windows": "node tools/verify_third_party_notices.mjs && tsc -p apps/windows/tsconfig.json && vite build --config apps/windows/vite.config.ts",
     "build:mobile": "tsc -p apps/mobile/tsconfig.json && vite build --config apps/mobile/vite.config.ts",
     "test": "npm run test:core",
     "test:core": "node --experimental-strip-types packages/core/src/companionV1.test.ts",

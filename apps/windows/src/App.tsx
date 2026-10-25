@@ -240,6 +240,7 @@ export function App() {
         disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>
     </details>:null}
     <CompanionDashboard
+      onReadLicenses={() => import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw').then(module => module.default)}
       onFindPet={isTauriRuntime()?(request)=>exclusive('refresh',()=>controlCompanionPetFind(request)):undefined}
       settingsFooter={isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active
         || snapshot?.host.sessions.some(session=>session.status==='recording') || (snapshot?.host.persistence && snapshot.host.persistence.status!=='ready'))}

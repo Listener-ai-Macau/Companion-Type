@@ -169,6 +169,7 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
+  onReadLicenses?: () => Promise<string>;
   settingsFooter?: ReactNode;
   onFindPet?: (request:PetFindRequest)=>Promise<PetFindReport>;
   recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
@@ -317,6 +318,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
 }
 
 export function CompanionDashboard({
+  onReadLicenses,
   settingsFooter,
   onFindPet,
   recordingSync = null,
@@ -1244,7 +1246,7 @@ export function CompanionDashboard({
         </button>
         </div>
       </header>
-      {helpOpen ? <CompanionHelp onClose={closeQuickGuide}
+      {helpOpen ? <CompanionHelp onReadLicenses={onReadLicenses} onClose={closeQuickGuide}
         onDevice={()=>{setHelpOpen(false);openDeviceRecording();}}
         onLibrary={()=>{setDetailSessionId(null);navigatePage('library');}}
         onDiagnostics={()=>{setShowAdvanced(true);navigatePage('settings','ct-log-support');}} onRecording={savedDetailOpen?returnToRecording:undefined} /> : null}

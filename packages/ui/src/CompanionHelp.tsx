@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { CompanionLicenses } from './CompanionLicenses';
 
 /** Reading help never starts capture, reconnects, clears data or exports logs. */
-export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onRecording }: {
+export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onRecording, onReadLicenses }: {
+  onReadLicenses?: () => Promise<string>;
   onRecording?: () => void;
   onClose: () => void; onDevice: () => void; onLibrary: () => void; onDiagnostics: () => void;
 }) {
@@ -70,6 +72,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <button type="button" className="ct-action" onClick={onLibrary}>前往我的录音</button>
       <button type="button" className="ct-text-button" onClick={onDiagnostics}>日志与诊断在哪里</button>
     </div>
+    {onReadLicenses ? <CompanionLicenses readText={onReadLicenses} /> : null}
     <p className="ct-step-meta">打开帮助不会录音或更改设置。日志由你手动导出和决定是否分享，不会自动发送原音或转写。</p>
   </section>;
 }
