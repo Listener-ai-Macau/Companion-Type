@@ -1068,7 +1068,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
             companion_v1::CompanionV1ControlAction::MeetingStart,
             Some(session_id.clone()),
         );
-        start.title = Some("Companion 实板录音控制与收取".to_string());
+        start.title = Some("设备录音".to_string());
         start.prompt_id = Some(companion_v1::CAPTURE_ONLY_PROMPT.into());
         start.meeting_mode = Some("offlineStore".to_string());
         start.device_id = Some(device_id.clone());

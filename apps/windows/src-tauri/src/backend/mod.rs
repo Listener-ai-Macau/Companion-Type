@@ -3347,15 +3347,39 @@ impl CompanionBackend for FixtureCompanionBackend {
 
     fn transfer_firmware_ota(
         &self,
-        request: CompanionFirmwareOtaRequest,
+        mut request: CompanionFirmwareOtaRequest,
     ) -> Result<CompanionFirmwareOtaReport, String> {
-        if self.snapshot()?.device.recording {
-            return Err(
-                "设备正在录音；请先在设备上结束录音，再读取设备状态后执行固件升级"
-                    .to_string(),
-            );
+        let snapshot=self.snapshot()?;
+        if snapshot.device.recording {
+            return Err("设备正在录音；请先结束录音，再同步升级。".into());
         }
-        firmware_ota::transfer(&self.ble_bridge, request)
+        if !system_ota::is_bundle(std::path::Path::new(&request.manifest_path))? {
+            return firmware_ota::transfer(&self.ble_bridge,request);
+        }
+        let whole_started=std::time::Instant::now();
+        let validation=firmware_ota::validate_ota_package(&request)?;
+        if !validation.ok { return Err("升级包校验未通过，未开始录音同步或升级。".into()); }
+        let device_id=effective_device_target(request.device_id.as_deref(),snapshot.device.device_id.as_deref())
+            .or(snapshot.device.remembered_device_id).ok_or("请先选择要升级的设备。")?;
+        request.device_id=Some(device_id.clone());
+        eprintln!("[companion-ota] recording_drain_begin device={device_id} ota_begin_allowed=0");
+        let drain_started=std::time::Instant::now();
+        let operation=self.ble_bridge.sync_recordings_before_ota(&device_id)?;
+        {
+            let mut snapshot=self.snapshot.lock().map_err(|_|"录音库状态暂时不可用，未开始升级。")?;
+            observe_segmented_library(&mut snapshot,&operation,&persistence::state_file_path(),CompanionV1ControlAction::DeviceSyncRecordings)?;
+            persistence::save_snapshot(&mut snapshot)?;
+        }
+        let drain_ms=drain_started.elapsed().as_millis();
+        eprintln!("[companion-ota] recording_drain_library_saved device={device_id} elapsed_ms={drain_ms} ota_begin_allowed=1");
+        let mut report=firmware_ota::transfer(&self.ble_bridge,request)?;
+        report.elapsed_ms=whole_started.elapsed().as_millis();
+        if let Some(bundle)=report.system_bundle.as_mut().and_then(serde_json::Value::as_object_mut) {
+            bundle.insert("recordingDrain".into(),serde_json::json!({"complete":true,"deviceId":device_id,
+                "elapsedMs":drain_ms,"remainingMicrophoneSegments":0,"localLibrarySaved":true,
+                "cloudProcessingRequired":false,"userPauseOverridden":false}));
+        }
+        Ok(report)
     }
 
     fn validate_ota_package(

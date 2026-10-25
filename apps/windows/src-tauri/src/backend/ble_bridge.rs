@@ -941,6 +941,26 @@ impl CompanionBleBridge {
         )
     }
 
+    /// A firmware update is an explicit user operation, not background sync.
+    /// Never clear the user's sync pause or treat a partial host save as drain.
+    pub(crate) fn sync_recordings_before_ota(&self, device_id: &str) -> Result<CompanionBleOperation,String> {
+        if !super::device_connection::stable_device_id(device_id) {
+            return Err("请先选择并连接要升级的设备，未收取其它设备录音。".into());
+        }
+        if !recording_sync::owned_follow_allowed(device_id) {
+            return Err("录音同步已暂停或本地同步状态不可用；请先恢复同步，再升级。".into());
+        }
+        if !native_ble_available() {
+            return Err("升级前录音同步需要正常原生蓝牙连接。".into());
+        }
+        let batch=run_native_blocking(sync_native_recordings_scoped(Some(device_id),&[],None,None,true))?;
+        let operation=native_recording_operation(Ok(batch));
+        if !operation.ready||operation.sync_paused {
+            return Err("升级前录音同步尚未完成，未开始升级。".into());
+        }
+        Ok(operation)
+    }
+
     pub(crate) fn transfer_firmware_ota(
         &self,
         requested_device_id: Option<&str>,
@@ -1851,6 +1871,31 @@ fn native_recording_operation(result: Result<NativeRecordingBatch, String>) -> C
 // An importable durable prefix is a successful save, but it cannot prove
 // that this original finished receiving/consuming. Keep that distinction at
 // the original-control boundary without changing the general import reducer.
+fn require_ota_sync_outcome(batch:NativeRecordingBatch)->Result<NativeRecordingBatch,String> {
+    if batch.paused { return Err("录音同步已暂停，已保存部分保留，未开始升级。".into()); }
+    if !batch.failures.is_empty() {
+        return Err(format!("升级前录音同步/消费未完成，已保存部分和断点保留：{}",batch.failures.join("；")));
+    }
+    if !batch.connection_reusable {
+        return Err("升级前录音连接状态尚未确认，原件与回执保留，未开始升级。".into());
+    }
+    Ok(batch)
+}
+
+async fn require_idle_recorder_for_ota(device:&NativeDevice)->Result<(),String> {
+    let chars=device.peripheral.characteristics();
+    let wire=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
+        .ok_or("无法核对设备当前录音状态，未开始升级。")?;
+    let identity=parse_device_identity(Some(&wire),None,None);
+    if identity.recording!=Some(false) {
+        return Err("设备正在录音或录音状态未知；请先结束录音，再同步升级。".into());
+    }
+    if device.verified_uid.is_none()||device.verified_uid.as_deref()!=identity.mcu_uid.as_deref()||device.recording_peer.is_none() {
+        return Err("升级前设备身份或连续录音能力改变，未收取或消费其它设备。".into());
+    }
+    Ok(())
+}
+
 fn require_original_sync_outcome(batch: NativeRecordingBatch) -> Result<NativeRecordingBatch,String> {
     if !batch.failures.is_empty() {
         let cause=batch.failures.join("；");
@@ -4321,16 +4366,16 @@ async fn sync_native_recordings_selected(
     known_recording_ids: &[u32],
     recording_id: Option<u32>,
 ) -> Result<NativeRecordingBatch, String> {
-    sync_native_recordings_scoped(requested_device_id,known_recording_ids,recording_id,None).await
+    sync_native_recordings_scoped(requested_device_id,known_recording_ids,recording_id,None,false).await
 }
 
 async fn sync_native_recordings_original(original: &OwnedRecorder) -> Result<NativeRecordingBatch,String> {
     let key=original.logical_key.as_ref().ok_or("原录音缺少逻辑身份，未收取其它录音。")?;
-    sync_native_recordings_scoped(Some(&original.device_id),&[],Some(original.recording_id),Some(key)).await
+    sync_native_recordings_scoped(Some(&original.device_id),&[],Some(original.recording_id),Some(key),false).await
 }
 
 async fn sync_native_recordings_scoped(requested_device_id: Option<&str>,known_recording_ids: &[u32],
-    recording_id: Option<u32>,logical_key: Option<&super::recording_wire::SessionKey>) -> Result<NativeRecordingBatch,String> {
+    recording_id: Option<u32>,logical_key: Option<&super::recording_wire::SessionKey>,ota_barrier:bool) -> Result<NativeRecordingBatch,String> {
     // Downloading sealed recordings cannot change their capture timestamps.
     // Acquire the protected connection without a best-effort settings-clock
     // read/write in front of the download. Normal connect/START still sync UTC.
@@ -4347,13 +4392,27 @@ async fn sync_native_recordings_scoped(requested_device_id: Option<&str>,known_r
         budget_observed:false,
     };
     eprintln!("recording_sync_stage stage=connection elapsed_ms={}", started.elapsed().as_millis());
-    let result = sync_native_recordings_with_link_policy(&device, known_recording_ids, recording_id, &mut link_policy, logical_key).await;
-    // Release before returning a reusable idle connection or closing its
-    // owner. Errors/cancel also drop this local guard, never retain fast idle.
+    let result=async {
+        if ota_barrier { require_idle_recorder_for_ota(&device).await?; }
+        let batch=sync_native_recordings_with_link_policy(&device,known_recording_ids,recording_id,&mut link_policy,logical_key).await?;
+        if !ota_barrier { return Ok(batch); }
+        let batch=require_ota_sync_outcome(batch)?;
+        // A last fresh protected catalogue is mandatory. A generic saved-prefix
+        // success cannot prove every device segment has its durable consume ACK.
+        require_idle_recorder_for_ota(&device).await?;
+        let peer=device.recording_peer.clone().ok_or("设备连续录音能力不可核对，未开始升级。")?;
+        let catalog=segmented::read_catalog(&device,&device.peripheral.characteristics(),peer).await?;
+        let remaining=catalog.entries.iter().filter(|e|e.source_mode==RECORDING_SOURCE_MIC_SAI).count();
+        if remaining!=0 { return Err(format!("设备仍有{remaining}段录音未完成同步消费，未开始升级。")); }
+        eprintln!("[companion-ota] recording_drain_complete device={} remaining_microphone_segments=0 saved_and_consumed=1 cloud_required=0",device.device_id());
+        Ok(batch)
+    }.await;
+    // OTA leaves no recording provider handle for its separate WinRT owner.
     drop(link_policy);
-    let reusable = result.as_ref().is_ok_and(|batch| batch.connection_reusable);
-    finish_native_device_operation(device, reusable).await?;
-    result
+    let reusable=!ota_barrier&&result.as_ref().is_ok_and(|batch|batch.connection_reusable);
+    let cleanup=finish_native_device_operation(device,reusable).await;
+    if ota_barrier { combine_operation_and_cleanup(result,cleanup) }
+    else { cleanup?;result }
 }
 
 async fn delete_privacy_native(
@@ -7058,5 +7117,21 @@ mod tests {
         assert!(bulk.window_chunks >= 400);
         assert!(bulk.prefer_dual_lane);
         assert_eq!(bulk.chunk_payload_bytes, 244);
+    }
+}
+
+#[cfg(test)]
+mod ota_recording_drain_tests {
+    use super::*;
+    fn batch()->NativeRecordingBatch { NativeRecordingBatch {device_id:"A1:B2:C3:D4:E5:F6".into(),recordings:vec![],failures:vec![],paused:false,connection_reusable:true,segmented:Some(vec![])} }
+    #[test] fn partial_library_success_is_not_permission_to_start_ota() {
+        let mut partial=batch();partial.failures.push("exact consume receipt missing".into());partial.segmented=Some(vec!["durable-original".into()]);
+        assert!(native_recording_operation(Ok(NativeRecordingBatch {device_id:partial.device_id.clone(),recordings:vec![],failures:partial.failures.clone(),paused:false,connection_reusable:true,segmented:partial.segmented.clone()})).ready);
+        assert!(require_ota_sync_outcome(partial).err().unwrap().contains("exact consume receipt missing"));
+    }
+    #[test] fn paused_or_uncertain_sync_never_allows_ota_even_with_no_device_entries() {
+        let mut paused=batch();paused.paused=true;assert!(require_ota_sync_outcome(paused).is_err());
+        let mut uncertain=batch();uncertain.connection_reusable=false;assert!(require_ota_sync_outcome(uncertain).is_err());
+        assert!(require_ota_sync_outcome(batch()).is_ok(),"fresh empty catalogue is valid after complete sync");
     }
 }
