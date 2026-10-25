@@ -8,6 +8,7 @@ mod commands;
 mod companion_v1;
 mod coordinator;
 mod pet_chat_commands;
+mod pet_profile_commands;
 mod pet_find_commands;
 mod recorder_sync_exercise;
 
@@ -279,6 +280,10 @@ pub fn run() {
             pet_chat_commands::start_companion_pet_chat,
             pet_chat_commands::finish_companion_pet_chat,
             pet_chat_commands::display_companion_pet_chat,
+            pet_profile_commands::get_companion_pet_profile,
+            pet_profile_commands::save_companion_pet_profile,
+            pet_profile_commands::cleanup_companion_pet_profile,
+            pet_profile_commands::reset_companion_pet_profile,
             backend::desktop_update::get_companion_type_update,
             backend::desktop_update::check_companion_type_update,
             backend::desktop_update::download_companion_type_update,

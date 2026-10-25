@@ -250,6 +250,9 @@ impl CompanionCoordinator {
     pub(crate) fn begin_pet_caption_operation(&self)->Result<CompanionDeviceOperationLease,String> {
         self.begin_pet_operation_kind(PET_CAPTION_OPERATION)
     }
+    pub(crate) fn begin_pet_profile_operation(&self)->Result<CompanionDeviceOperationLease,String> {
+        self.begin_foreground_operation_kind(20)
+    }
 
     /// Pet capture already owns the recorder lease across START, the short
     /// utterance and durable STOP/receive. Re-enter the same product backend

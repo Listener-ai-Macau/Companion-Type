@@ -1,5 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {invoke} from '@tauri-apps/api/core';
+import {PetProfile} from './PetProfile';
 
 type ChatStatus={requestId:number;phase:string;transcript:string;reply:string;error?:string|null;
   screenVisible:boolean;canStart:boolean;wakeSupported:boolean;recordPhrase:string;chatPhrase:string};
@@ -24,7 +25,7 @@ function raster(text:string):number[]{
   }
   return result;
 }
-export function PetChat({disabled}:{disabled:boolean}){
+export function PetChat({disabled,deviceUid}:{disabled:boolean;deviceUid?:string|null}){
   const [state,setState]=useState<ChatStatus|null>(null),[error,setError]=useState<string|null>(null);
   const [busy,setBusy]=useState(false);
   const action=useRef(false),sent=useRef(0),cancelling=useRef(false),cancelledRequest=useRef(0);
@@ -75,5 +76,6 @@ export function PetChat({disabled}:{disabled:boolean}){
       {active||state?.phase==='displayFailed'?<button onClick={()=>void cancel(state!)}>取消</button>:null}
       {!active&&state?.phase!=='displayFailed'?<button disabled={busy||(!!state&&!state.canStart)} onClick={()=>void control('clear_companion_pet_chat')}>清空本次对话</button>:null}
     </div>
+    <PetProfile disabled={disabled||busy||active||!!state&&!state.canStart} deviceUid={deviceUid} transcript={state?.transcript}/>
   </section>;
 }

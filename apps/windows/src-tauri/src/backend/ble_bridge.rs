@@ -39,6 +39,7 @@ mod segmented;
 mod batch_interval;
 mod recorder_control;
 pub(crate) mod pet_caption;
+pub(crate) mod pet_profile;
 pub(crate) mod pet_find;
 mod upload_benchmark;
 pub(crate) use upload_benchmark::receive_fixture as benchmark_recording_upload;

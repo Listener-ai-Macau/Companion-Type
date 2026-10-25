@@ -112,6 +112,8 @@ mod transcription;
 #[cfg(test)]
 mod meeting_processing_tests;
 pub(crate) mod pet_chat;
+pub(crate) mod pet_profile;
+pub(crate) mod pet_profile_model;
 pub(crate) use transcription::verify_asr_cache;
 pub(crate) use transcription::verify_cache_privacy;
 mod volcengine;
