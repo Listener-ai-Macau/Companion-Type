@@ -654,6 +654,67 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
 }
 #[cfg(all(test, windows))]
 mod tests {
+    use super::*;
+
+    #[test]
+    fn privacy_retry_preserves_same_path_replacement_after_owned_file_is_gone() {
+        let root=std::env::temp_dir().join(format!("companion-privacy-gone-retry-{}",uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let state=root.join("sessions.json");
+        let _env=Environment::set(&[("COMPANION_TYPE_RECORDING_DIR",root.as_os_str()),("COMPANION_TYPE_STATE_PATH",state.as_os_str())]);
+        let source=root.join("owned.wav");
+        put(&source,&source,Purpose::Recording,b"original owned audio").unwrap();
+        let original=snapshot(vec![session("original",&source)],"original");
+        // The previous attempt completed generated-file deletion, but the
+        // library checkpoint/legacy cleanup still needs an ordinary retry.
+        erase(&root,&[source.to_string_lossy().into_owned()],&[]).unwrap();
+        assert!(!source.exists());
+        fs::write(&source,b"different user replacement").unwrap();
+        let before=fs::read(&source).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        *backend.snapshot.lock().unwrap()=original;
+        let result=backend.apply_control(request(Action::PrivacyEraseAudio,Some("original"))).unwrap();
+        assert_eq!(fs::read(&source).ok(),Some(before),"legacy fallback must not delete a new file at a completed managed path");
+        assert!(!result.host.sessions[0].audio_stored);
+        assert!(result.last_control.unwrap().message.contains("1 skipped"));
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn privacy_legacy_copy_still_cleans_after_generated_primary_already_deleted() {
+        let root=std::env::temp_dir().join(format!("companion-privacy-legacy-handoff-{}",uuid::Uuid::new_v4()));
+        let old=root.join("legacy");let current=root.join("current");
+        fs::create_dir_all(&old).unwrap();fs::create_dir_all(&current).unwrap();
+        let state=root.join("sessions.json");
+        let _env=Environment::set(&[("COMPANION_TYPE_RECORDING_DIR",current.as_os_str()),("COMPANION_TYPE_STATE_PATH",state.as_os_str())]);
+        let original=old.join("old.wav");
+        fs::write(&original,wav(&[0,0,1,0])).unwrap();
+        let mut seeded=session("legacy",&original);
+        seeded.source="hostMicrophone".into();
+        seeded.audio_bytes=fs::metadata(&original).unwrap().len();
+        seeded.chunks=vec![crate::companion_v1::CompanionV1AudioChunk {
+            id:"legacy-sealed".into(),path:Some(original.to_string_lossy().into_owned()),
+            started_at:None,stopped_at:None,duration_ms:1,bytes:seeded.audio_bytes,status:"sealed".into(),
+        }];
+        let (migrated,_)=super::super::super::audio_storage::migrate_legacy_sessions(&[seeded],&current,&old).unwrap();
+        let source=PathBuf::from(migrated[0].audio_path.as_ref().unwrap());
+        assert_eq!(source.parent().unwrap(),current.canonicalize().unwrap());
+        // Adopt only this exact migrated primary in the test's existing ledger.
+        let identity=fingerprint(&source).unwrap().unwrap();
+        let mut data=load(&current).unwrap();
+        data.files.push(Artifact{file:source.file_name().unwrap().to_string_lossy().into_owned(),sources:BTreeSet::from([reference_key(&source).unwrap()]),purpose:Purpose::Recording,phase:Phase::Sealed,identity:Some(identity)});
+        save(&current,&data).unwrap();
+        erase(&current,&[source.to_string_lossy().into_owned()],&[]).unwrap();
+        assert!(!source.exists()&&original.exists());
+        fs::write(&source,b"new unrelated current file").unwrap();
+        let manager=super::super::super::privacy::PrivacyManager::for_handoff_test(current.clone(),old.clone());
+        let report=manager.erase_selected_audio(&snapshot(migrated,"legacy"));
+        assert_eq!(report.failed_files,0);
+        assert!(!original.exists(),"the exact fingerprinted legacy copy still must be cleaned");
+        assert_eq!(fs::read(&source).ok().as_deref(),Some(b"new unrelated current file".as_slice()));
+        assert_eq!(report.skipped_files,1);
+        fs::remove_dir_all(root).unwrap();
+    }
     #[test]
     fn native_audio_artifacts_guard_generated_files_ownership_and_cleanup_retry() {
         let output =

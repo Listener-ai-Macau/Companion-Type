@@ -91,6 +91,11 @@ pub struct PrivacyManager {
 
 impl PrivacyManager {
     #[cfg(test)]
+    pub(in crate::backend) fn for_handoff_test(root: PathBuf, legacy: PathBuf) -> Self {
+        Self { recording_root: Some(root), legacy_root_override: Some(legacy), cache_root: None, minutes_cache_root: None }
+    }
+
+    #[cfg(test)]
     pub(in crate::backend) fn with_minutes_cache(root: PathBuf) -> Self {
         Self { recording_root: None, legacy_root_override: None, cache_root: None, minutes_cache_root: Some(root) }
     }
