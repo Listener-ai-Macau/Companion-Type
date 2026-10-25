@@ -262,13 +262,21 @@ impl Peripheral {
     }
 
     pub async fn unsubscribe_for_generation(&self,characteristic:&Characteristic,generation:u64)->Result<()> {
-        let _native=self.shared.device.lock().await;
-        if !self.shared.connection.subscription_owned(generation,false)? {return Ok(());}
-        let ble_service=&mut *self.shared.ble_services.get_mut(&characteristic.service_uuid)
-            .ok_or_else(||Error::NotSupported("Service not found for unsubscribe".into()))?;
-        let ble_characteristic=ble_service.characteristics.get_mut(&characteristic.uuid)
-            .ok_or_else(||Error::NotSupported("Characteristic not found for unsubscribe".into()))?;
-        ble_characteristic.unsubscribe().await
+        let timing=super::cccd_release_trace::ReleaseTrace::begin(generation,characteristic.uuid);
+        let result=async {
+            let _native=self.shared.device.lock().await;
+            if let Some(t)=timing.as_ref(){t.event(2);}
+            if !self.shared.connection.subscription_owned(generation,false)? {return Ok(());}
+            if let Some(t)=timing.as_ref(){t.event(3);}
+            let ble_service=&mut *self.shared.ble_services.get_mut(&characteristic.service_uuid)
+                .ok_or_else(||Error::NotSupported("Service not found for unsubscribe".into()))?;
+            let ble_characteristic=ble_service.characteristics.get_mut(&characteristic.uuid)
+                .ok_or_else(||Error::NotSupported("Characteristic not found for unsubscribe".into()))?;
+            if let Some(t)=timing.as_ref(){t.event(4);}
+            ble_characteristic.unsubscribe_with_release_trace(timing.as_ref()).await
+        }.await;
+        if let Some(t)=timing.as_ref(){t.finish(result.is_ok());}
+        result
     }
 
     /// Discover fresh services and characteristics for a caller that only uses

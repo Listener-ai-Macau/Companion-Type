@@ -6,3 +6,5 @@ export * from './meetingNotes';
 export * from './offlineRecordingLink';
 export * from './minutesSources';
 export * from './transcriptCoverage';
+
+export * from './recordingCapacity';

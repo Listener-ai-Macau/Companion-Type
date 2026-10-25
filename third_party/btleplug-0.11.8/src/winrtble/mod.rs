@@ -13,6 +13,7 @@
 
 pub mod adapter;
 mod ble;
+pub(crate) mod cccd_release_trace;
 pub mod manager;
 pub mod peripheral;
 mod utils;

@@ -115,6 +115,7 @@ mod tests {
             data_bytes: 57344, free_bytes: 53248, largest_free_extent: 53248,
             protected_bytes: 4096, consumed_bytes: 0, bytes_per_second: 2100,
             reserve_headroom: 4096, local_limit_seconds: 1800,
+            segment_frames: None, segment_extent_bytes: None,
             unsynced_entries: 1, writing_entries: 0, consumed_entries: 0,
         };
         let request = preview_request(731, 60);

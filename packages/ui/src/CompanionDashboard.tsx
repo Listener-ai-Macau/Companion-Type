@@ -1,3 +1,4 @@
+import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion/core';
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionHelp } from './CompanionHelp';
@@ -652,7 +653,7 @@ export function CompanionDashboard({
   currentDiscardDevice.current = connected ? device?.deviceId ?? null : null;
   useEffect(() => { setDiscardMessage(null); }, [device?.deviceId, connected]);
   const capacitySeconds = capacity && capacity.usedEntries < capacity.maxEntries
-    ? Math.max(0, Math.floor((capacity.largestFreeExtent - capacity.reserveHeadroom) / capacity.bytesPerSecond)) : 0;
+    ? recordingCapacityAvailableSeconds(capacity) : 0;
   const capacityHint = !capacity ? '尚未取得设备容量，无法预估剩余时长；开始时由设备检查空间。'
     : capacity.busy ? '设备上次报告正在录音、回收或升级；开始前会重新检查。'
       : capacity.usedEntries >= capacity.maxEntries ? '设备录音目录已满，请同步并回收录音。'
@@ -675,9 +676,8 @@ export function CompanionDashboard({
   const lossBudgetSeconds = Math.ceil(boardMaxDurationSeconds + (meetingMode === 'onlineLive' ? 120 : 0));
   const lossBudgetValid = durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
   const captureBudgetBytes = capacity && lossBudgetValid
-    ? Math.ceil((lossBudgetSeconds * capacity.bytesPerSecond + capacity.reserveHeadroom) / 4096) * 4096 : null;
-  const capacityInsufficient = Boolean(capacity && lossBudgetValid && (capacity.usedEntries >= capacity.maxEntries
-    || (captureBudgetBytes ?? 0) > capacity.largestFreeExtent));
+    ? recordingCapacityRequiredBytes(capacity, lossBudgetSeconds) : null;
+  const capacityInsufficient = Boolean(capacity && lossBudgetValid && !recordingCapacityCanFit(capacity, lossBudgetSeconds, captureBudgetBytes ?? Infinity));
   const inspectRecordingLoss = async () => {
     if (!onDiscardOldestRecording || !capacity?.confirmedDiscardSupported || !capacityInsufficient
       || capacity.busy || !capacity.unsyncedEntries || controlsBusy || settingsBusy || oobeBlockedByRecording || discardActive.current) return;

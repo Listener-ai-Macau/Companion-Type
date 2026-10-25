@@ -198,6 +198,8 @@ export interface CompanionV1RecordingCapacity {
   consumedBytes: number;
   bytesPerSecond: number;
   reserveHeadroom: number;
+  segmentFrames?: number | null;
+  segmentExtentBytes?: number | null;
   localLimitSeconds: number;
   unsyncedEntries: number;
   writingEntries: number;

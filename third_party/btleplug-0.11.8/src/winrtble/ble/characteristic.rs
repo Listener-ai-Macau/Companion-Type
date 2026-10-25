@@ -184,15 +184,24 @@ impl BLECharacteristic {
     }
 
     pub async fn unsubscribe(&mut self) -> Result<()> {
+        self.unsubscribe_with_release_trace(None).await
+    }
+    pub(crate) async fn unsubscribe_with_release_trace(&mut self,
+        timing: Option<&crate::winrtble::cccd_release_trace::ReleaseTrace>) -> Result<()> {
+        if let Some(t)=timing{t.event(5);}
         if let Some(token) = &self.notify_token {
             self.characteristic.RemoveValueChanged(*token)?;
         }
         self.notify_token = None;
+        if let Some(t)=timing{t.event(6);}
         let config = GattClientCharacteristicConfigurationDescriptorValue::None;
+        if let Some(t)=timing{t.event(7);}
         let operation = self
             .characteristic
             .WriteClientCharacteristicConfigurationDescriptorAsync(config)?;
+        if let Some(t)=timing{t.event(8);t.event(9);}
         let status = await_cancellable_gatt(operation).await?;
+        if let Some(t)=timing{t.event(10);}
         trace!("unsubscribe {:?}", status);
         if status == GattCommunicationStatus::Success {
             Ok(())

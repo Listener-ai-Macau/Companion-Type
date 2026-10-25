@@ -193,6 +193,10 @@ pub struct CompanionV1RecordingCapacity {
     pub consumed_bytes: u32,
     pub bytes_per_second: u32,
     pub reserve_headroom: u32,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub segment_frames: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub segment_extent_bytes: Option<u32>,
     pub local_limit_seconds: u32,
     pub unsynced_entries: u8,
     pub writing_entries: u8,
