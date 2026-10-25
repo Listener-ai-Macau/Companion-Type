@@ -174,13 +174,16 @@ export function App() {
   )));
   const watchingDevice = Boolean(snapshot?.device.rememberedDeviceId
     && snapshot.device.autoReconnectEnabled && !snapshot.device.manualDisconnect);
+  // Reading the host cache is separate from permission to reconnect. An
+  // already connected device can change state even with auto-connect off.
+  const observingConnectedDevice=Boolean(snapshot?.connected||snapshot?.device.connected);
   const boardActive = Boolean(boardOnlineLive
     && ['starting', 'recording', 'stopping', 'finalizing'].includes(boardOnlineLive.state));
   // Refresh live text and background recovery without requiring a click.
   // Schedule after each response: an ASR call can hold the backend lock, so a
   // fixed interval would accumulate concurrent snapshot requests behind it.
   useEffect(() => {
-    if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !boardActive) {
+    if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) {
       return undefined;
     }
     let cancelled = false;
@@ -214,7 +217,7 @@ export function App() {
     };
     timer = window.setTimeout(() => void poll(), delay);
     return () => { cancelled = true; window.clearTimeout(timer); };
-  }, [liveMeeting, controlledMeeting, recoveringMeeting, watchingDevice, boardActive]);
+  }, [liveMeeting, controlledMeeting, recoveringMeeting, watchingDevice, observingConnectedDevice, boardActive]);
 
   return (
     <div className="ct-window-shell">
