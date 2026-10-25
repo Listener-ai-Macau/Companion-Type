@@ -163,7 +163,26 @@ pub(crate) fn receipt_matches(expected: &[u8], payload: &[u8], peer: &Peer) -> R
 /// the existing probe budget. A base identity is not a negative capability:
 /// WBA may publish it before its CRV2 suffix after encryption. Transport
 /// failures, corrupt complete values and identity changes are terminal.
-pub(crate) async fn read_published_status<F, Fut>(mut read: F) -> Result<Vec<u8>, String>
+pub(crate) async fn read_published_status<F, Fut>(read: F) -> Result<Vec<u8>, String>
+where
+    F: FnMut() -> Fut,
+    Fut: std::future::Future<Output = Result<Vec<u8>, String>>,
+{
+    read_status_publication(read, false).await
+}
+
+/// Protocol selection must not interpret an incomplete WBA publication as V1.
+/// Non-WBA legacy status keeps its existing schema1/20B path; once a WBA UID
+/// was observed in this read sequence, even that fallback is forbidden.
+pub(crate) async fn read_protocol_status<F, Fut>(read: F) -> Result<Vec<u8>, String>
+where
+    F: FnMut() -> Fut,
+    Fut: std::future::Future<Output = Result<Vec<u8>, String>>,
+{
+    read_status_publication(read, true).await
+}
+
+async fn read_status_publication<F, Fut>(mut read: F, allow_legacy: bool) -> Result<Vec<u8>, String>
 where
     F: FnMut() -> Fut,
     Fut: std::future::Future<Output = Result<Vec<u8>, String>>,
@@ -174,6 +193,14 @@ where
             let status = read().await?;
             if status.first().is_some_and(|schema| *schema != 0 && *schema != 1) {
                 return Err(fail("unsupported recording status schema"));
+            }
+            if allow_legacy && status.first() == Some(&1) && status.len() >= 20
+                && u32le(&status, 12) != 0x5742_4155
+            {
+                if uid.is_some() {
+                    return Err(fail("recorder board changed during capability publication"));
+                }
+                return Ok(status);
             }
             if status.first() == Some(&1) && status.len() >= 36 {
                 if u32le(&status, 12) != 0x5742_4155 {

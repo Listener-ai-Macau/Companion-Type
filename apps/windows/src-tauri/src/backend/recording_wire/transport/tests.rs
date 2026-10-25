@@ -335,3 +335,36 @@ async fn published_recording_identity_pending_and_stalled_reads_share_finite_bud
     assert!(read_published_status(|| {let guard=Dropped(flag.clone());async move {let _guard=guard;std::future::pending::<Result<Vec<u8>,String>>().await}}).await.is_err());
     assert!(dropped.load(std::sync::atomic::Ordering::SeqCst));assert!(begin.elapsed()<std::time::Duration::from_secs(4));
 }
+
+
+#[tokio::test]
+async fn published_protocol_keeps_wba_prefix_out_of_legacy_directory() {
+    let (peer, _, _) = fixture();let full=status(&peer);
+    assert!(Peer::from_status(&full[..20]).unwrap().is_none());
+    let mut stages=std::collections::VecDeque::from(vec![full[..20].to_vec(),full[..84].to_vec(),full.clone()]);let mut reads=0;
+    let got=read_protocol_status(||{reads+=1;std::future::ready(Ok(stages.pop_front().unwrap()))}).await.unwrap();
+    assert_eq!(got,full);assert_eq!(reads,3);assert!(Peer::from_status(&got).unwrap().is_some());
+}
+
+#[tokio::test]
+async fn published_protocol_preserves_non_wba_legacy_without_extra_read() {
+    let mut legacy=vec![0;20];legacy[0]=1;legacy[12..16].copy_from_slice(&0x5742_3535u32.to_le_bytes());let mut reads=0;
+    let got=read_protocol_status(||{reads+=1;std::future::ready(Ok(legacy.clone()))}).await.unwrap();
+    assert_eq!(got,legacy);assert_eq!(reads,1);assert!(Peer::from_status(&got).unwrap().is_none());
+}
+
+#[tokio::test]
+async fn published_protocol_cannot_switch_wba_identity_into_legacy() {
+    let (peer,_,_)=fixture();let mut legacy=vec![0;20];legacy[0]=1;legacy[12..16].copy_from_slice(&0x5742_3535u32.to_le_bytes());
+    let mut stages=std::collections::VecDeque::from(vec![status(&peer)[..36].to_vec(),legacy]);let mut reads=0;
+    let error=read_protocol_status(||{reads+=1;std::future::ready(Ok(stages.pop_front().unwrap()))}).await.unwrap_err();
+    assert!(error.contains("board changed"));assert_eq!(reads,2);
+}
+
+#[tokio::test]
+async fn published_protocol_rejects_complete_wba_corruption_without_fallback() {
+    let (peer,_,_)=fixture();let good=status(&peer);let mut magic=good.clone();magic[84]=0;let mut crc=good.clone();crc[112]^=1;
+    for bad in [magic,crc] {let mut reads=0;
+        assert!(read_protocol_status(||{reads+=1;std::future::ready(Ok(bad.clone()))}).await.is_err());assert_eq!(reads,1);
+    }
+}

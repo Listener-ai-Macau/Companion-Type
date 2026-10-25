@@ -1897,8 +1897,8 @@ fn require_ota_idle_identity(cached_uid:Option<&str>,identity:&CompanionDeviceId
 
 async fn require_idle_recorder_for_ota(device:&NativeDevice)->Result<super::recording_wire::transport::Peer,String> {
     let chars=device.peripheral.characteristics();
-    let wire=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
-        .ok_or("无法核对设备当前录音状态，未开始升级。")?;
+    let wire=read_recorder_control_identity(&device.peripheral,&chars).await
+        .map_err(|error| format!("升级前设备状态未就绪：{error}"))?;
     let identity=parse_device_identity(Some(&wire),None,None);
     // SealedSync intentionally starts without the optional prepared-user cache.
     // Bind this operation to freshly parsed capabilities on its exact protected
@@ -2768,9 +2768,9 @@ async fn connect_native_probe(
     let link = NativeLinkGuard::capture(&device);
     let result = link.run(async {
     let characteristics = device.peripheral.characteristics();
-    let device_status = Some(read_optional_status(
-        &device.peripheral, &characteristics, DEVICE_STATUS_UUID, 20,
-    ).await.ok_or_else(|| "未读到设备身份，未把设备标为已连接。".to_string())?);
+    let device_status = Some(read_recording_protocol_identity(
+        &device.peripheral, &characteristics,
+    ).await?);
     let imu_status =
         read_optional_status(&device.peripheral, &characteristics, IMU_STATUS_UUID, 26).await;
     let speaker_status = read_optional_status(
@@ -3155,6 +3155,20 @@ async fn read_recorder_control_identity(
     super::recording_wire::transport::read_published_status(|| async {
         peripheral.read(&characteristic).await
             .map_err(|_| "设备身份读取失败；未发送录音控制。".to_string())
+    }).await
+}
+
+async fn read_recording_protocol_identity(
+    peripheral: &Peripheral,
+    characteristics: &std::collections::BTreeSet<Characteristic>,
+) -> Result<Vec<u8>, String> {
+    let characteristic = find_characteristic(characteristics, DEVICE_STATUS_UUID)?;
+    if !characteristic.properties.contains(CharPropFlags::READ) {
+        return Err("设备状态不可读；本次操作未执行。".into());
+    }
+    super::recording_wire::transport::read_protocol_status(|| async {
+        peripheral.read(&characteristic).await
+            .map_err(|_| "设备状态读取失败；本次操作未执行。".to_string())
     }).await
 }
 
@@ -3593,7 +3607,7 @@ async fn meeting_control_native_owned(
     let characteristics = device.peripheral.characteristics();
     let control = find_characteristic(&characteristics, MEETING_CONTROL_UUID)?;
     let status = find_characteristic(&characteristics, MEETING_STATUS_UUID)?;
-    let identity_wire = read_optional_status(&device.peripheral,&characteristics,DEVICE_STATUS_UUID,36).await;
+    let identity_wire = Some(read_recording_protocol_identity(&device.peripheral,&characteristics).await?);
     let peer = identity_wire.as_deref().map(super::recording_wire::transport::Peer::from_status).transpose()?.flatten();
     if expected_identity.as_ref().is_some_and(|id| id.logical_key.is_some())
         && peer.as_ref().is_none_or(|p| !p.logical_control) {
@@ -5070,10 +5084,9 @@ async fn read_recording_catalog(
     // Decide protocol from the actual status capability before touching a
     // cached directory. An advertised V2 peer can never enter ID-only V1 just
     // because a stale ATT value happens to start with 1.
-    if let Some(status) = read_optional_status(peripheral, characteristics, DEVICE_STATUS_UUID, 20).await {
-        if let Some(peer) = super::recording_wire::transport::Peer::from_status(&status)? {
-            return segmented::read_catalog(device, characteristics, peer).await;
-        }
+    let status=read_recording_protocol_identity(peripheral,characteristics).await?;
+    if let Some(peer) = super::recording_wire::transport::Peer::from_status(&status)? {
+        return segmented::read_catalog(device, characteristics, peer).await;
     }
     let char_recording_list = find_characteristic(characteristics, RECORDING_LIST_UUID)?;
     if !char_recording_list.properties.contains(CharPropFlags::READ) {

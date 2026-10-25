@@ -154,8 +154,7 @@ pub(crate) fn receive_fixture(device_id: &str, manifest: &Path, output: &Path,
         let result = async {
             let chars = device.peripheral.characteristics();
             let explicit_peer = if profiles.is_some() {
-                let status = read_optional_status(&device.peripheral, &chars, DEVICE_STATUS_UUID, 20)
-                    .await.ok_or("same-link benchmark requires current authenticated V2 status")?;
+                let status = read_recorder_control_identity(&device.peripheral, &chars).await?;
                 Some(crate::backend::recording_wire::transport::Peer::from_status(&status)?
                     .ok_or("same-link benchmark cannot fall back to legacy protocol")?)
             } else { None };
