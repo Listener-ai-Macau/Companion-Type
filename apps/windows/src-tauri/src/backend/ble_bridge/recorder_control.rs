@@ -289,7 +289,8 @@ pub(super) async fn execute_owned(
         }
         if journal.confirmed.is_none() && journal.pending.as_ref().is_some_and(|p|p.command==1) {
             if let Some(capacity)=crate::backend::recording_capacity::parse(&identity) {
-                if !capacity.busy {crate::backend::recording_capacity::check(&capacity,journal.max_seconds)?;}
+                if !capacity.busy {crate::backend::recording_capacity::check_start(&capacity,journal.max_seconds,
+                    recording_sync::owned_follow_allowed(&device.device_id()))?;}
             }
         }
         // STOP settles the exact lost PAUSE/RESUME/START, then uses the next

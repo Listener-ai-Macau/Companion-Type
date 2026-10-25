@@ -1749,10 +1749,16 @@ export function CompanionDashboard({
                 onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))} /></label>
             </div>
             <p className="ct-step-meta">在线转写单次最多 43 分钟，另预留 2 分钟收尾空间；纯录音按设备空间和设定时长保存。支持分段的设备会把片段放在同一条录音里；电脑保存并核对完整后，设备才复用这些已同步的空间。</p>
-            {captureBudgetBytes !== null ? <p className="ct-step-meta" role={capacityInsufficient ? 'alert' : undefined}>
-              本次需预留约 {formatBytes(captureBudgetBytes)}{meetingMode === 'onlineLive' ? '（含收尾空间）' : ''}；
-              设备上次报告连续可录约 {formatDuration(capacitySeconds * 1000)}。
-              {capacityInsufficient ? '当前容量不足，请先同步已有录音或缩短时长；不会自动缩短或覆盖录音。' : '开始前会重新核对容量。'}
+            {captureBudgetBytes !== null ? <p className="ct-step-meta" role={capacityInsufficient && (!capacity?.segmentFrames || capacitySeconds <= 0) ? 'alert' : undefined}>
+              {capacity?.segmentFrames && capacity.segmentExtentBytes ? <>
+                设备上次报告本地可录约 {formatDuration(capacitySeconds * 1000)}，本次计划 {formatDuration(requestedDurationMs)}。
+                保持连接并开启同步可边录边上传；断开或暂停同步后使用本地空间，满时安全停录。
+                开始前会按当前同步状态重新核对空间，不会覆盖未上传录音。
+              </> : <>
+                本次需预留约 {formatBytes(captureBudgetBytes)}{meetingMode === 'onlineLive' ? '（含收尾空间）' : ''}；
+                设备上次报告连续可录约 {formatDuration(capacitySeconds * 1000)}。
+                {capacityInsufficient ? '当前容量不足，请先同步已有录音或缩短时长；不会自动缩短或覆盖录音。' : '开始前会重新核对容量。'}
+              </>}
             </p> : null}
             {durationError ? <p className="ct-step-meta" role="alert">{durationError}</p> : null}
             <div className="ct-button-row">

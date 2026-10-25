@@ -37,11 +37,26 @@ pub(super) fn parse(payload: &[u8]) -> Option<CompanionV1RecordingCapacity> {
 }
 
 pub(super) fn check(c:&CompanionV1RecordingCapacity,seconds:u16)->Result<(),String> {
+    check_budget(c,seconds,false)
+}
+
+/// max_seconds remains the original board safety deadline. A connected owned
+/// continuous sync needs only its bounded current+prepared-successor working
+/// set at START, not space for its entire future duration. User-paused/blocked
+/// sync and the legacy non-segmented contract retain the full offline budget.
+pub(super) fn check_start(c:&CompanionV1RecordingCapacity,seconds:u16,
+    owned_sync_allowed:bool)->Result<(),String> {
+    check_budget(c,seconds,owned_sync_allowed)
+}
+
+fn check_budget(c:&CompanionV1RecordingCapacity,seconds:u16,
+    owned_sync_allowed:bool)->Result<(),String> {
     if c.busy {return Err("recording preflight: 设备正在录音、回收或升级，请等待结束后重试".into());}
     if c.used_entries>=c.max_entries {return Err("recording preflight: 设备录音目录已满，请先同步并回收录音".into());}
     let wanted=match(c.segment_frames,c.segment_extent_bytes) {
         (Some(frames),Some(extent)) if frames>0 && extent>0 => {
             let slots=(u64::from(seconds)*50).div_ceil(u64::from(frames));
+            let slots=if owned_sync_allowed{slots.min(2)}else{slots};
             if slots>u64::from(c.max_entries-c.used_entries) {
                 return Err(format!("recording preflight: 目录剩余槽位不足以录制完整的 {seconds} 秒；约可录 {} 秒，请先同步录音。",available_seconds(c)));
             }
@@ -51,6 +66,9 @@ pub(super) fn check(c:&CompanionV1RecordingCapacity,seconds:u16)->Result<(),Stri
         _=>return Err("recording preflight: 容量几何不可核对，未开始录音".into()),
     };
     if wanted>u64::from(c.largest_free_extent) {
+        if owned_sync_allowed && c.segment_frames.is_some() && c.segment_extent_bytes.is_some() {
+            return Err("recording preflight: 设备当前没有足够的连续空间准备录音段，请先同步已有录音；未开始，也未覆盖旧录音。".into());
+        }
         return Err(format!("recording preflight: 设备连续可用空间不足以录制完整的 {seconds} 秒；约可录 {} 秒，请先同步录音或缩短时长。未开始录音，也未覆盖旧录音",available_seconds(c)));
     }
     Ok(())
@@ -147,5 +165,37 @@ mod segmented_capacity_tests {
         let mut p=real_c_status();p[43]=7;assert!(parse(&p).is_none());
         let mut p=real_c_status();p[40]=1;assert!(parse(&p).is_none());
         let mut p=real_c_status();p[36..40].copy_from_slice(b"CCP1");assert!(parse(&p).is_none(),"old64 report is not a seven-slot byte contract");
+    }
+}
+
+#[cfg(test)]
+mod rolling_start_tests {
+    use super::*;
+    fn segmented()->CompanionV1RecordingCapacity {
+        parse(include_bytes!("recording_capacity/fixtures/ccq2-current-arena.bin")).unwrap()
+    }
+    #[test]
+    fn three_hour_start_uses_bounded_working_set_only_when_owned_sync_allowed() {
+        let c=segmented();assert_eq!(available_seconds(&c),7204);
+        assert!(check(&c,10800).is_err(),"full offline duration remains impossible");
+        assert!(check_start(&c,10800,false).is_err(),"paused/blocked sync retains offline budget");
+        assert!(check_start(&c,10800,true).is_ok(),"a rolling recording may outlive its local arena");
+        assert!(check_start(&c,u16::MAX,true).is_ok());
+    }
+    #[test]
+    fn long_start_requires_current_and_prepared_successor_not_just_one_slot() {
+        let mut c=segmented();let extent=c.segment_extent_bytes.unwrap();
+        c.used_entries=62;c.largest_free_extent=2*extent;
+        assert!(check_start(&c,10800,true).is_ok());
+        c.used_entries=63;assert!(check_start(&c,10800,true).is_err());
+        assert!(check_start(&c,60,true).is_ok(),"short recording needs one reserved segment");
+        c.used_entries=62;c.largest_free_extent=extent;assert!(check_start(&c,10800,true).is_err());
+        c.largest_free_extent=2*extent;c.busy=true;assert!(check_start(&c,10800,true).is_err());
+    }
+    #[test]
+    fn legacy_and_malformed_geometry_never_gain_a_rolling_budget() {
+        let mut c=segmented();c.segment_frames=None;c.segment_extent_bytes=None;
+        assert!(check_start(&c,10800,true).is_err());
+        c.segment_frames=Some(6211);assert!(check_start(&c,60,true).is_err());
     }
 }
