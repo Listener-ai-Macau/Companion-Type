@@ -3144,6 +3144,20 @@ async fn read_optional_status(
     .ok()?
 }
 
+async fn read_recorder_control_identity(
+    peripheral: &Peripheral,
+    characteristics: &std::collections::BTreeSet<Characteristic>,
+) -> Result<Vec<u8>, String> {
+    let characteristic = find_characteristic(characteristics, DEVICE_STATUS_UUID)?;
+    if !characteristic.properties.contains(CharPropFlags::READ) {
+        return Err("设备身份状态不可读；未发送录音控制。".into());
+    }
+    super::recording_wire::transport::read_published_status(|| async {
+        peripheral.read(&characteristic).await
+            .map_err(|_| "设备身份读取失败；未发送录音控制。".to_string())
+    }).await
+}
+
 fn status_needs_publish_retry(payload: &[u8], minimum_length: usize) -> bool {
     payload.len() < minimum_length || payload.first().copied().unwrap_or(0) == 0
 }

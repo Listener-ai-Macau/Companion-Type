@@ -246,8 +246,7 @@ pub(super) async fn execute_owned(
     let link=NativeLinkGuard::capture(&device);
     let result=link.run(async {
         let (chars,control,status)=require_recorder_channel(&device).await?;
-        let identity=read_optional_status(&device.peripheral,&chars,DEVICE_STATUS_UUID,36).await
-            .ok_or("设备身份读取失败，未发录音控制。")?;
+        let identity=read_recorder_control_identity(&device.peripheral,&chars).await?;
         let peer=PausePeer::from_status(&identity)?.ok_or("当前固件没有明确支持暂停；未停止重开。")?;
         journal.matches(&peer,host_session,&device.device_id())?;
         let actual_peer=crate::backend::recording_wire::transport::Peer::from_status(&identity)?.ok_or("逻辑录音能力缺失。")?;

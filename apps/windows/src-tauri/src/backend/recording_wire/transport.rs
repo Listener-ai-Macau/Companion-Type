@@ -159,5 +159,48 @@ pub(crate) fn receipt_matches(expected: &[u8], payload: &[u8], peer: &Peer) -> R
     Ok(false)
 }
 
+/// Await one complete protected WBA recording capability publication inside
+/// the existing probe budget. A base identity is not a negative capability:
+/// WBA may publish it before its CRV2 suffix after encryption. Transport
+/// failures, corrupt complete values and identity changes are terminal.
+pub(crate) async fn read_published_status<F, Fut>(mut read: F) -> Result<Vec<u8>, String>
+where
+    F: FnMut() -> Fut,
+    Fut: std::future::Future<Output = Result<Vec<u8>, String>>,
+{
+    tokio::time::timeout(std::time::Duration::from_millis(2500), async {
+        let mut uid = None;
+        loop {
+            let status = read().await?;
+            if status.first().is_some_and(|schema| *schema != 0 && *schema != 1) {
+                return Err(fail("unsupported recording status schema"));
+            }
+            if status.first() == Some(&1) && status.len() >= 36 {
+                if u32le(&status, 12) != 0x5742_4155 {
+                    return Err(fail("recording control requires WBA capability status"));
+                }
+                let observed: [u8; 12] = status[20..32].try_into().unwrap();
+                if observed == [0; 12] || observed == [255; 12] {
+                    return Err(fail("invalid recording status UID"));
+                }
+                if uid.is_some_and(|prior| prior != observed) {
+                    return Err(fail("recorder UID changed during capability publication"));
+                }
+                uid = Some(observed);
+                if status.len() >= STATUS_PREFIX + CAP_BYTES {
+                    Peer::from_status(&status)?
+                        .ok_or_else(|| fail("complete recording status lacks V2 capability"))?;
+                    return Ok(status);
+                }
+            }
+            // Only incomplete publications are retried, on this same peer.
+            // No reconnect, clock write, START or capability synthesis.
+            tokio::time::sleep(std::time::Duration::from_millis(120)).await;
+        }
+    })
+    .await
+    .map_err(|_| "设备录音能力尚未完整发布；未发送录音控制，请稍后重连。".to_string())?
+}
+
 #[cfg(test)]
 mod tests;

@@ -285,3 +285,53 @@ fn recording_large_packet_profiles_negotiate_actual_mtu_and_keep_old_peer() {
     let crc=crc32fast::hash(&s[84..112]);s[112..116].copy_from_slice(&crc.to_le_bytes());
     assert_eq!(Peer::from_status(&s).unwrap(),Some(peer));
 }
+
+
+#[tokio::test]
+async fn published_recording_identity_waits_for_whole_crc_valid_capability() {
+    let (peer, _, _) = fixture(); let full=status(&peer);
+    let mut stages=std::collections::VecDeque::from(vec![vec![],full[..36].to_vec(),full[..84].to_vec(),full[..88].to_vec(),full[..115].to_vec(),full.clone()]);
+    let mut reads=0;
+    let got=read_published_status(|| {reads+=1;std::future::ready(Ok(stages.pop_front().expect("unexpected additional read")))}).await.unwrap();
+    assert_eq!(got,full);assert_eq!(reads,6);
+    assert_eq!(Peer::from_status(&got).unwrap(),Some(peer));
+}
+
+#[tokio::test]
+async fn published_recording_identity_never_retries_corrupt_complete_capability() {
+    let (peer, _, _) = fixture(); let full=status(&peer); let mut corrupt=full.clone();corrupt[112]^=1;
+    let mut stages=std::collections::VecDeque::from(vec![full[..36].to_vec(),corrupt,full]);let mut reads=0;
+    let error=read_published_status(|| {reads+=1;std::future::ready(Ok(stages.pop_front().unwrap()))}).await.unwrap_err();
+    assert!(error.contains("corrupt"));assert_eq!(reads,2,"a later valid value must not hide corruption");
+}
+
+#[tokio::test]
+async fn published_recording_identity_refuses_changed_uid_and_wrong_board() {
+    let (peer, _, _) = fixture();let full=status(&peer);let mut other=full.clone();other[20]^=1;
+    let mut stages=std::collections::VecDeque::from(vec![full[..36].to_vec(),other]);
+    assert!(read_published_status(||std::future::ready(Ok(stages.pop_front().unwrap()))).await.unwrap_err().contains("UID changed"));
+    let mut wrong=full;wrong[12]^=1;let mut reads=0;
+    assert!(read_published_status(||{reads+=1;std::future::ready(Ok(wrong.clone()))}).await.is_err());assert_eq!(reads,1);
+}
+
+#[tokio::test]
+async fn published_recording_identity_preserves_missing_pause_and_read_failure() {
+    let (peer, _, _) = fixture();let full=status(&peer);let mut reads=0;
+    let got=read_published_status(|| {reads+=1;std::future::ready(Ok(full.clone()))}).await.unwrap();
+    assert_eq!(reads,1);assert!(!Peer::from_status(&got).unwrap().unwrap().pause_control,"do not invent a capability while waiting");
+    let mut failed_reads=0;
+    assert_eq!(read_published_status(|| {failed_reads+=1;std::future::ready(Err("link closed".into()))}).await.unwrap_err(),"link closed");assert_eq!(failed_reads,1);
+}
+
+#[tokio::test]
+async fn published_recording_identity_pending_and_stalled_reads_share_finite_budget() {
+    let (peer, _, _) = fixture();let prefix=status(&peer)[..36].to_vec();let begin=std::time::Instant::now();let mut reads=0;
+    let error=read_published_status(||{reads+=1;std::future::ready(Ok(prefix.clone()))}).await.unwrap_err();
+    assert!(error.contains("尚未完整发布"));assert!(reads>1);assert!(begin.elapsed()<std::time::Duration::from_secs(4));
+    struct Dropped(std::sync::Arc<std::sync::atomic::AtomicBool>);
+    impl Drop for Dropped {fn drop(&mut self){self.0.store(true,std::sync::atomic::Ordering::SeqCst);}}
+    let dropped=std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    let begin=std::time::Instant::now();let flag=dropped.clone();
+    assert!(read_published_status(|| {let guard=Dropped(flag.clone());async move {let _guard=guard;std::future::pending::<Result<Vec<u8>,String>>().await}}).await.is_err());
+    assert!(dropped.load(std::sync::atomic::Ordering::SeqCst));assert!(begin.elapsed()<std::time::Duration::from_secs(4));
+}
