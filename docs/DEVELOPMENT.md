@@ -1,3 +1,9 @@
+# Current build entry / 当前固定版本构建入口
+
+当前 Windows 交付的固定源码、平台 pin、干净导出、构建命令与按影响检查，统一从 [Companion Type 构建交接](../../docs/TYPE_BUILD_HANDOFF.md) 进入。普通工作目录 HEAD 不等于当前安装源；不要直接照历史命令运行整套测试或接板。下方说明保留用于追溯，不替代当前项目规则与实际交付收据。
+
+---
+
 # Engineering notes retained from the previous homepage
 
 These notes preserve the earlier development context. WB55 bring-up and fixture reports are historical; they do not establish current WBA acceptance. Use the [current readiness page](STATUS.md) for product scope. Some commands and linked files require the local engineering workspace and are not published in this documentation-only update.
