@@ -3,6 +3,29 @@ import { AlertTriangle, Bluetooth, Check, ChevronDown, ChevronUp, CircleDashed, 
 import type { CompanionV1ControlRequest, CompanionV1Snapshot } from '@companion-type/core';
 import { companionCanChangeOfflineRecordingLink } from '@companion-type/core';
 import type { CompanionProductSettingsPublic } from './CompanionDashboard';
+import {operationErrorText} from './operationFailure';
+
+function deviceStatus(snapshot:CompanionV1Snapshot|null):string{
+  const device=snapshot?.device;
+  if(!device)return '设备状态尚未读取。';
+  if(device.connectionPhase==='pairingRequired')return 'Windows 配对未完成，已暂停自动重试。请检查设备配对入口后主动连接；原录音保留。';
+  if(device.connectionPhase==='checking')return '正在核对设备连接，请稍候。';
+  if(device.connectionPhase==='reconnecting')return '正在寻找已记住的设备；已有录音保留。';
+  if(device.connected||snapshot?.connected)return '已识别设备连接；模块状态以最近一次检查结果为准。';
+  if(device.connectionPhase==='manualDisconnected')return '已主动断开；需要时可重新连接，已有录音保留。';
+  if(snapshot?.lastControl?.accepted===false)return operationErrorText(device.message,'device');
+  if(snapshot?.oobe.lastRunAt)return '检查已结束，当前设备未连接；最近一次结果保留在下方。';
+  return '设备尚未连接；已有本机录音仍可查看。';
+}
+
+function checkMessage(check:{status:string;message:string}):string{
+  if(check.status!=='fail')return check.message;
+  // Keep these exact authored results distinct from arbitrary native errors.
+  if(['未检查：设备连接失败','DEVICE_STATUS 已读取，但身份字段不完整',
+    'DEVICE_STATUS 未读到；设备可能未配对、未授权或固件协议不匹配',
+    '录音/会议核心 GATT 不完整，未启动实录','未取得校时写后读回证据','已装配，但未在线'].includes(check.message))return check.message;
+  return operationErrorText(check.message,'device');
+}
 
 export function CompanionSetup({ snapshot, settings, busy, recording, checking, onControl, onSettings, onWorkflow, onLibrary }: {
   snapshot: CompanionV1Snapshot | null;
@@ -107,11 +130,11 @@ export function CompanionSetup({ snapshot, settings, busy, recording, checking, 
       <details className="ct-setup-details" open={checked && issueCount > 0}>
         <summary>设备与检查详情{checked ? ` · ${issueCount ? `${issueCount} 项需处理` : '查看各项结果'}` : ' · 尚未检查'}</summary>
         <p className="ct-step-meta">{device?.hardwareRevision ?? '型号未读取'}{device?.firmwareVersion != null ? ` · 固件 ${formatFirmware(device.firmwareVersion)}` : ''}{device?.deviceId ? ` · ${device.deviceId}` : ''}</p>
-        {device?.message ? <p className="ct-step-meta">{device.message}</p> : null}
+        {device?.message ? <p className="ct-step-meta">{deviceStatus(snapshot)}</p> : null}
         <div className="ct-check-list">{checks.map((check) => (
           <div key={check.id} className={`ct-check ct-check-${check.status}`}>
             {check.status === 'pass' ? <Check size={15} /> : check.status === 'warn' ? <AlertTriangle size={15} /> : check.status === 'fail' ? <XCircle size={15} /> : <CircleDashed size={15} />}
-            <span className="ct-check-copy"><strong>{check.label}</strong><small>{check.message}</small></span>
+            <span className="ct-check-copy"><strong>{check.label}</strong><small>{checkMessage(check)}</small></span>
           </div>
         ))}</div>
         <p className="ct-step-meta">这里只显示最近一次读取结果。屏幕观感、触摸手感和实际录音效果仍需在设备上检查。</p>
