@@ -6,7 +6,7 @@ export type OperationFailure={kind:OperationFailureKind;message:string};
 
 const known=new Set(knownOperationErrors);
 const advice={
-  permission:'无法访问所需文件或功能。请检查当前用户的权限、解除文件占用，或换一个可写的保存位置；不要清空已有录音。',
+  permission:'无法访问所需文件或功能。请检查当前用户的权限，或解除其它程序对相关文件和功能的占用；不要清空已有录音。',
   storage:'本机磁盘空间不足。请释放保存位置所在磁盘的空间，再重试；尚未确认保存的修改请先保留。',
   rateLimit:'服务暂时限制请求。请稍后再试，或核对当前服务额度；不要连续重复提交。',
   network:'服务连接未完成。请检查网络和服务状态后再试；原有内容请保留，不需要重新录音。',
@@ -30,7 +30,15 @@ const fallback:Record<OperationScope,string>={
   profile:'宠物档案操作尚未确认。请先重新读取当前宠物档案，核对结果后再修改，避免重复写入。',
 };
 
-for(const message of [...Object.values(advice),...Object.values(fallback)])known.add(message);
+const permissionAdvice:Partial<Record<OperationScope,string>>={
+  save:'本机录音库保存被权限或文件占用阻止。请先保留当前输入，解除文件占用、检查本机存储权限，再用原来的保存入口重试。不要关闭应用或清空录音。',
+  settings:'设置保存被权限或文件占用阻止。请先保留填写内容，检查本机存储权限或解除文件占用，再重试保存设置。',
+  export:'无法写入导出位置。请解除目标文件占用、检查目录权限，或另选可写的本机位置；不要覆盖原音。',
+  playback:'读取原音被权限或文件占用阻止。请检查原音是否仍在本机，并解除文件占用后再回听；不要删除原音。',
+  device:'设备访问被权限或占用阻止。请先到“设备与同步”核对当前连接和状态，不要连续重复设备操作。',
+  profile:'档案操作所需的访问未获确认。请核对当前连接和本机权限，先重新读取宠物档案，不要连续重复写入。',
+};
+for(const message of [...Object.values(advice),...Object.values(fallback),...Object.values(permissionAdvice)])known.add(message);
 
 function messageOf(error:unknown):string{
   // Never stringify arbitrary objects or expose stacks, server JSON or paths.
@@ -58,7 +66,7 @@ function classify(text:string,scope:OperationScope):OperationFailureKind{
 export function describeOperationFailure(error:unknown,scope:OperationScope='general'):OperationFailure{
   const text=messageOf(error).replace(/^Error:\s*/,''),kind=classify(text,scope);
   if(known.has(text))return {kind,message:text};
-  return {kind,message:kind==='unknown'?fallback[scope]:advice[kind]};
+  return {kind,message:kind==='unknown'?fallback[scope]:kind==='permission'?(permissionAdvice[scope]??advice.permission):advice[kind]};
 }
 export function operationErrorText(error:unknown,scope:OperationScope='general'):string{
   return describeOperationFailure(error,scope).message;

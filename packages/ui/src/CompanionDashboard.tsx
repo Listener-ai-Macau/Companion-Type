@@ -361,8 +361,14 @@ export function CompanionDashboard({
   const [pageView, setPageView] = useState<'library' | 'device' | 'settings'>('library');
   const [helpOpen,setHelpOpen]=useState(false);
   const helpTrigger=useRef<HTMLButtonElement>(null);
-  const openQuickGuide=()=>{setHelpOpen(true);window.setTimeout(()=>document.getElementById('ct-use-help')?.scrollIntoView({block:'start'}),0);};
-  const closeQuickGuide=()=>{setHelpOpen(false);window.setTimeout(()=>helpTrigger.current?.focus({preventScroll:true}),0);};
+  const helpReturnFocus=useRef<HTMLElement|null>(null);
+  const openQuickGuide=(event?:{currentTarget:HTMLElement})=>{
+    helpReturnFocus.current=event?.currentTarget??(document.activeElement instanceof HTMLElement?document.activeElement:null);
+    setHelpOpen(true);window.setTimeout(()=>document.getElementById('ct-use-help')?.scrollIntoView({block:'start'}),0);
+  };
+  const closeQuickGuide=()=>{setHelpOpen(false);const target=helpReturnFocus.current?.isConnected?helpReturnFocus.current:helpTrigger.current;
+    window.requestAnimationFrame(()=>{if(target?.isConnected){target.scrollIntoView({block:'center'});target.focus({preventScroll:true});}});
+  };
   const [onlyPendingSessions, setOnlyPendingSessions] = useState(false);
   const [libraryQuery, setLibraryQuery] = useState('');
   const [libraryFilters,setLibraryFilters]=useState<LibraryFilters>({folder:'*',tag:'',favorites:false});
@@ -1607,7 +1613,7 @@ export function CompanionDashboard({
             audioSeekBlocked={Boolean(audioBlockedReason) || audioBusy}
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
-          <CompanionMeetingNotes resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
+          <CompanionMeetingNotes resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)
               && selectedSession.durationMs>=0 && selectedSession.durationMs<=120000 ? ()=>runOrganizationControl({

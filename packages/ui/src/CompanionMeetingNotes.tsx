@@ -9,9 +9,10 @@ type Edit = { text:string; anchor:string; originalText:string; originalAnchor:st
 type Draft = { text?:string; anchor?:string; pending?:CompanionMeetingNoteRequest; edits?:Record<string,Edit> };
 const time = (ms:number) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${(Math.floor(ms/1000)%60).toString().padStart(2,'0')}`;
 
-export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onUnsavedChange,onBusyChange,compact=false,resultEditLabel}: {
+export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecording,onSave,onSeek,onExport,exportFeedback,onOrganizeSaved,organizeSavedBlocked=false,onHelp,onUnsavedChange,onBusyChange,compact=false,resultEditLabel}: {
   compact?:boolean;
   resultEditLabel?:string;
+  onHelp?:()=>void;
   session:CompanionV1HostSession;
   blocked:boolean;
   persistenceReady:boolean;
@@ -96,7 +97,7 @@ export function CompanionMeetingNotes({session,blocked,persistenceReady,anyRecor
         field?.scrollIntoView({block:'center'});
       }
     }}><summary>补充一句（背景备注）{draft.text?.trim()||draft.pending?' · 未保存':''}</summary>{composer}</details>:composer}
-    {messages[session.id]?<p role="status" className="ct-notes-message">{messages[session.id]}</p>:null}
+    {messages[session.id]?<p role="status" className="ct-notes-message">{messages[session.id]}{draft.pending&&onHelp?<button type="button" className="ct-text-button" onClick={onHelp}>查看恢复方法</button>:null}</p>:null}
     {onOrganizeSaved && notes.length>0 && messages[session.id]==='备注已保存到本机。' ? <div className="ct-notes-controls">
       <button type="button" className="ct-action" disabled={disabled||anyRecording||dirty||organizeSavedBlocked}
         onClick={onOrganizeSaved}>用原话＋补充整理</button>
