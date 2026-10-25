@@ -7,6 +7,10 @@ type ChatStatus={requestId:number;phase:string;transcript:string;reply:string;er
 const labels:Record<string,string>={idle:'点一下，和宠物聊一句',preparing:'正在准备',listening:'对着宠物说吧',
   transcribing:'正在听懂这句话',thinking:'想一想',replyReady:'回复已准备好',displaying:'正在送到屏幕',
   replied:'已显示在宠物屏幕',displayFailed:'回复保留，暂未上屏',failed:'这次没聊成',cancelled:'已取消'};
+function readableError(raw:string){
+  return raw.includes('Volcengine ASR completed without recognized speech')
+    ?'这次没听清楚。原录音已保存，可以稍后重试。':raw;
+}
 function raster(text:string):number[]{
   const canvas=document.createElement('canvas');canvas.width=200;canvas.height=13;
   const ctx=canvas.getContext('2d');if(!ctx)throw new Error('字幕绘制暂时不可用。');
@@ -64,11 +68,15 @@ export function PetChat({disabled,deviceUid}:{disabled:boolean;deviceUid?:string
   return <section aria-label="宠物聊天" style={{maxWidth:920,margin:'12px auto',padding:'16px 20px',border:'1px solid #d8ded8',borderRadius:12}}>
     <h2 style={{fontSize:16,margin:'0 0 8px'}}>和宠物聊聊</h2>
     <p style={{margin:'4px 0 10px'}} aria-live="polite">{state?.phase==='cancelled'&&!state.canStart?'正在结束这句聊天':labels[state?.phase??'idle']??'宠物聊天'}</p>
-    <p style={{fontSize:12,opacity:.7}}>第一版连接电脑使用；每句最长12秒，可提前说完。只用宠物麦克风，短回复显示在屏幕底部。</p>
-    {!state?.wakeSupported?<p style={{fontSize:12,opacity:.7}}>语音唤醒尚未接入。预留“开始录音”录音、“聊聊天”聊天；目前轻点开聊。</p>:null}
+    <p style={{fontSize:13}}>连接宠物后，点“开聊”，对它说一句话。说完点“说完了”，短回复会出现在宠物屏幕底部。</p>
+    <details style={{fontSize:12,margin:'8px 0'}}><summary>聊天怎么用？</summary>
+      <p>先在“设备与同步”连接你的宠物。目前需要连接电脑，每句最多12秒；只用宠物麦克风，不会在后台持续收音。</p>
+      {!state?.wakeSupported?<p>目前从这里点“开聊”，还不支持语音唤醒。</p>:null}
+      <p>下面可改宠物的名字和性格，也可明确告诉它一件想记住的事。记忆由你确认、修改或删除。</p>
+    </details>
     {state?.transcript?<p>你：{state.transcript}</p>:null}
     {state?.reply?<p>宠物：{state.reply}</p>:null}
-    {error||state?.error?<p role="alert">{error??state?.error}</p>:null}
+    {error||state?.error?<p role="alert">{readableError(error??state?.error??'')}</p>:null}
     <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
       <button disabled={disabled||busy||active||(!!state&&!state.canStart)||state?.phase==='displayFailed'} onClick={()=>void control('start_companion_pet_chat')}>开聊</button>
       {state?.phase==='listening'?<button disabled={busy} onClick={()=>void control('finish_companion_pet_chat',{requestId:state.requestId,cancel:false})}>说完了</button>:null}

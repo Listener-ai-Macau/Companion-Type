@@ -213,7 +213,7 @@ export function App() {
   return (
     <div className="ct-window-shell">
     {isTauriRuntime()?<details className="ct-pet-chat-disclosure">
-      <summary>我的宠物 · 聊天、性格与记忆</summary>
+      <summary>我的宠物</summary>
       <PetChat deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
         disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>
     </details>:null}
