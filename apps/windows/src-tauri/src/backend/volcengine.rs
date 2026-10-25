@@ -749,6 +749,7 @@ async fn run_receive_loop<S>(
 where S: futures::Stream<Item = Result<Message, tokio_tungstenite::tungstenite::Error>> + Unpin,
 {
     let mut empty_final_after_audio = false;
+    let mut premature_text_final = false;
     while let Some(msg) = read.next().await {
         match msg {
             Ok(Message::Binary(data)) => {
@@ -781,6 +782,13 @@ where S: futures::Stream<Item = Result<Message, tokio_tungstenite::tungstenite::
                             json.get("audio_info").is_some_and(Value::is_object),
                         );
                     }
+                    // A transcript cannot complete before all owned audio was
+                    // submitted. Ignore premature finals; a later post-EOS final
+                    // may replace them, otherwise report incomplete recognition.
+                    if parsed.is_final() && !audio_ended.load(Ordering::Acquire) {
+                        premature_text_final |= response_has_content;
+                        continue;
+                    }
                     // Seed v2 can emit empty control frames carrying a final
                     // flag while the audio stream is still active. Treating
                     // those as the session result races long inputs and
@@ -810,6 +818,7 @@ where S: futures::Stream<Item = Result<Message, tokio_tungstenite::tungstenite::
             Err(error) => return Err(safe_ws_error(error).to_string()),
         }
     }
+    if premature_text_final { return Err("Volcengine final arrived before complete audio input".into()); }
     if empty_final_after_audio { return Err(NO_SPEECH_ERROR.into()); }
     Err(if allow_silent_probe { "connection test closed without a valid final response" }
         else { "Volcengine connection closed without a final result" }.into())
@@ -826,6 +835,7 @@ where
     S: futures::Stream<Item = Result<Message, tokio_tungstenite::tungstenite::Error>> + Unpin,
 {
     let mut empty_final_after_audio = false;
+    let mut premature_text_final = false;
     while let Some(msg) = read.next().await {
         match msg {
             Ok(Message::Binary(data)) => {
@@ -841,6 +851,10 @@ where
                         .map_err(|_| "Volcengine response protocol invalid")?;
                     if json.get("error").is_some() { return Err(safe_provider_error(None)); }
                     let text = extract_text(&json);
+                    if parsed.is_final() && !audio_ended.load(Ordering::Acquire) {
+                        premature_text_final |= text.as_ref().is_some_and(|text| !text.trim().is_empty());
+                        continue; // An early terminal is not a live hypothesis.
+                    }
                     if let Some(text) = text.as_ref().filter(|text| !text.trim().is_empty()) {
                         on_text(&text);
                         if parsed.is_final() { return Ok(()); }
@@ -861,6 +875,7 @@ where
             Err(error) => return Err(safe_ws_error(error).to_string()),
         }
     }
+    if premature_text_final { return Err("Volcengine final arrived before complete audio input".into()); }
     if empty_final_after_audio { return Err(NO_SPEECH_ERROR.into()); }
     Err("Volcengine connection closed without a final result".into())
 }
@@ -1210,8 +1225,52 @@ fn classify_connect_error(err: tokio_tungstenite::tungstenite::Error) -> String 
 mod tests {
     use super::*;
 
+
     #[test]
-    fn empty_terminal_requires_audio_end_and_valid_result_in_batch_and_live() {
+    fn eos_boundary_early_text_then_close_is_incomplete_not_no_speech() {
+        let rt=tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
+        let frame=|text:&str|Ok(Message::Binary(frame_build(MessageType::FullServerResponse,
+            Flags::LastPacket,Serialization::Json,serde_json::to_vec(&json!({"result":{"text":text}})).unwrap().as_slice(),None)));
+        rt.block_on(async {
+            for late_empty in [false,true] { for live in [false,true] {
+                let ended=Arc::new(AtomicBool::new(false));let flag=Arc::clone(&ended);
+                let mut rows=vec![(false,frame("premature answer"))];
+                if late_empty {rows.push((true,frame("")));}
+                rows.push((late_empty,Ok(Message::Close(None))));
+                let mut messages=futures::stream::iter(rows).map(move |(complete,msg)|{flag.store(complete,Ordering::Release);msg});
+                let mut seen=Vec::new();
+                let error=if live {run_receive_loop_live(&mut messages,|x|seen.push(x.to_string()),ended).await.unwrap_err()}
+                    else {run_receive_loop(&mut messages,false,ended).await.unwrap_err()};
+                assert!(seen.is_empty());assert!(!is_no_speech_error(&error));
+                assert!(error.contains("before complete audio input"));
+            }}
+        });
+    }
+
+    #[test]
+    fn eos_boundary_premature_text_final_cannot_complete_a_still_sending_input() {
+        let rt=tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
+        let frame=|text:&str|Ok(Message::Binary(frame_build(MessageType::FullServerResponse,
+            Flags::LastPacket,Serialization::Json,serde_json::to_vec(&json!({"result":{"text":text}})).unwrap().as_slice(),None)));
+        rt.block_on(async {
+            for live in [false,true] {
+                let ended=Arc::new(AtomicBool::new(false));let flag=Arc::clone(&ended);
+                let mut messages=futures::stream::iter(vec![(false,frame("premature answer")),(true,frame("complete answer"))])
+                    .map(move |(complete,msg)|{flag.store(complete,Ordering::Release);msg});
+                if live {
+                    let mut seen=Vec::new();run_receive_loop_live(&mut messages,|x|seen.push(x.to_string()),ended).await.unwrap();
+                    assert_eq!(seen,["complete answer"],"early final text cannot be presented as a completed result");
+                } else {
+                    assert_eq!(run_receive_loop(&mut messages,false,ended).await.unwrap().0,"complete answer",
+                        "early final cannot hide later complete text");
+                }
+            }
+        });
+    }
+
+
+    #[test]
+    fn eos_boundary_empty_terminal_requires_audio_end_and_valid_result_in_batch_and_live() {
         let runtime = tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
         let response = |payload: &[u8]| Ok(Message::Binary(frame_build(
             MessageType::FullServerResponse, Flags::LastPacket, Serialization::Json, payload, None)));
@@ -1221,15 +1280,17 @@ mod tests {
             // Empty control finals before or after EOS cannot hide the real
             // final response. Only an explicit empty final + normal close is
             // a no-speech result.
-            for ended in [false, true] {
-            let mut messages = futures::stream::iter(vec![response(empty), response(final_text)]);
-            let result = run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(ended))).await.unwrap();
-            assert_eq!(result.0, "actual final text");
-            let mut messages = futures::stream::iter(vec![response(empty), response(final_text)]);
-            let mut received = Vec::new();
-            run_receive_loop_live(&mut messages, |text| received.push(text.to_string()),
-                Arc::new(AtomicBool::new(ended))).await.unwrap();
-            assert_eq!(received, ["actual final text"]);
+            for initial_ended in [false, true] {
+                for live in [false, true] {
+                    let ended=Arc::new(AtomicBool::new(initial_ended));let flag=Arc::clone(&ended);
+                    let mut messages=futures::stream::iter(vec![response(empty),response(final_text)])
+                        .enumerate().map(move |(i,msg)|{if i==1 {flag.store(true,Ordering::Release);}msg});
+                    if live {
+                        let mut received=Vec::new();
+                        run_receive_loop_live(&mut messages,|text|received.push(text.to_string()),ended).await.unwrap();
+                        assert_eq!(received,["actual final text"]);
+                    } else {assert_eq!(run_receive_loop(&mut messages,false,ended).await.unwrap().0,"actual final text");}
+                }
             }
 
             let mut messages = futures::stream::iter(vec![response(empty)]);
