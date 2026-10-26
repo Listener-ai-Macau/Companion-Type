@@ -107,12 +107,18 @@ export type CompanionProductSettingsPublic = {
 const listeningIdentity = (session:CompanionV1HostSession) => JSON.stringify([session.id,session.audioPath??'',
   session.audioBytes,session.deviceSha256??'',session.deviceRecordingKey??'',session.audioStored,session.retention.audioCached]);
 
-function recordingTimeLabel(value?: string | null) {
-  const date = value ? new Date(value) : null;
+function recordingTimeLabel(value?: string | number | null) {
+  const date = value !== undefined && value !== null && value !== '' ? new Date(value) : null;
   return date && Number.isFinite(date.getTime())
     ? new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit',
       hour: '2-digit', minute: '2-digit', hour12: false }).format(date)
     : '时间未记录';
+}
+
+// Native lifecycle timestamps use Unix milliseconds; older imported rows may use ISO dates.
+// Interpret only for display; keep the original organization value untouched.
+function trashTimeLabel(value: string) {
+  return recordingTimeLabel(/^\d+$/.test(value) ? Number(value) : value);
 }
 
 export type CompanionProductSettingsPatch = {
@@ -1452,7 +1458,7 @@ export function CompanionDashboard({
                       {preview.label ? <span className="ct-library-text-partial">{preview.label} · </span> : null}{preview.text}
                     </span> : null}
                     {session.organization?.protected?<small>已保护</small>:null}
-                    {session.organization?.trashedAt?<small>移入时间：{session.organization.trashedAt}</small>:null}
+                    {session.organization?.trashedAt?<small>移入时间：{trashTimeLabel(session.organization.trashedAt)}</small>:null}
                     {session.organization&&(session.organization.favorite||session.organization.folder||session.organization.tags.length)?<small>
                       {session.organization.favorite?'★ 收藏 · ':''}{session.organization.folder||'未分类'}{session.organization.tags.length?' · '+session.organization.tags.join(' · '):''}
                     </small>:null}
