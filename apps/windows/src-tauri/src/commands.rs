@@ -513,6 +513,10 @@ pub async fn export_companion_meeting(
             )
         });
 
+    let warning=match (prepared.warning,warning) {
+        (Some(calendar),Some(record))=>Some(format!("{calendar} {record}")),
+        (calendar,record)=>calendar.or(record),
+    };
     Ok(Some(CompanionMeetingExportResult {
         path: destination.to_string_lossy().to_string(),
         bytes: written,

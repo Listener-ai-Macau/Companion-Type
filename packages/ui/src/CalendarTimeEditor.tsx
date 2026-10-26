@@ -1,0 +1,45 @@
+import {useEffect,useRef,useState} from 'react';
+import {confirmedCalendarTime,seedCalendarTime,type CalendarTimeDraft} from './calendarTime';
+
+export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending}:{
+  value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;
+}){
+  const[draft,setDraft]=useState<CalendarTimeDraft|null>(null),dialog=useRef<HTMLDialogElement|null>(null),activePending=useRef<typeof onPending>(undefined);
+  const open=!!draft;
+  const finishPending=()=>{const callback=activePending.current;activePending.current=undefined;callback?.(-1);};
+  useEffect(()=>()=>finishPending(),[]);
+  useEffect(()=>{if(open&&!dialog.current?.open)dialog.current?.showModal();},[open]);
+  const close=()=>{dialog.current?.close();setDraft(null);finishPending();};
+  const result=draft?confirmedCalendarTime(draft):null,stale=!!draft&&draft.expected!==value;
+  const zoneName=Intl.DateTimeFormat().resolvedOptions().timeZone||'本机时区';
+  const patch=(change:Partial<CalendarTimeDraft>)=>setDraft(current=>current?{...current,...change}:current);
+  return <>
+    <button type="button" className="ct-text-button" disabled={disabled} aria-label={`${label} 确认日历时间`}
+      onClick={()=>{activePending.current=onPending;onPending?.(1);setDraft(seedCalendarTime(value));}}>确认日历时间</button>
+    {draft?<dialog ref={dialog} aria-label={`${label} 日历时间`} onCancel={event=>{event.preventDefault();close();}} onClose={()=>{setDraft(null);finishPending();}}
+      style={{width:'min(92vw,28rem)',maxHeight:'85vh',overflow:'auto',boxSizing:'border-box',padding:24,border:'1px solid #c7d3c9',borderRadius:16}}>
+      <h3>确认日历时间</h3>
+      {draft.expected?<p className="ct-step-meta" style={{overflowWrap:'anywhere'}}>原时间说明：{draft.expected}</p>:null}
+      <p className="ct-step-meta">这会更新本项清单的时间，原话仍保留。导入日历后需核对截止时间与提醒。</p>
+      <label style={{display:'block',marginBottom:12}}>日期<input aria-label={`${label} 日历日期`} type="date" min="0001-01-01" max="9999-12-31" value={draft.date} disabled={disabled}
+        style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({date:event.target.value})}/></label>
+      <label style={{display:'block',marginBottom:12}}><input type="checkbox" aria-label={`${label} 指定时刻`} checked={draft.timed} disabled={disabled} onChange={event=>patch({timed:event.target.checked})}/> 指定时刻</label>
+      {draft.timed?<>
+        <label style={{display:'block',marginBottom:12}}>时间（按分钟）<input type="time" aria-label={`${label} 日历时刻`} value={draft.time} disabled={disabled}
+          style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({time:event.target.value})}/></label>
+        <label style={{display:'block',marginBottom:12}}>时区<select aria-label={`${label} 日历时区`} value={draft.zone} disabled={disabled}
+          style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({zone:event.target.value as 'local'|'offset'})}>
+          <option value="local">本机时区：{zoneName}</option><option value="offset">明确的 UTC 偏移</option>
+        </select></label>
+        {draft.zone==='offset'?<label style={{display:'block',marginBottom:12}}>UTC 偏移<input aria-label={`${label} UTC 偏移`} value={draft.offset} disabled={disabled} placeholder="+08:00"
+          style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({offset:event.target.value})}/></label>:null}
+      </>:null}
+      {stale?<p className="ct-step-warn" role="alert">这项时间已变化，请取消后重新确认；旧输入未被覆盖。</p>
+        :result?.ok?<p role="status">日历截止：{result.label}</p>:<p className="ct-step-meta" role="status">{result&&!result.ok?result.error:''}</p>}
+      <p className="ct-step-meta">这里只确认导出用的截止时间，不会自动创建日历或提醒。</p>
+      <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary" disabled={disabled||stale||!result?.ok}
+        onClick={()=>{if(result?.ok&&!stale){onConfirm(result.value);close();}}}>使用此日历时间</button>
+        <button type="button" className="ct-action" onClick={close}>取消</button></div>
+    </dialog>:null}
+  </>;
+}

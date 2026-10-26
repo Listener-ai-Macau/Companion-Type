@@ -162,6 +162,12 @@ fn due_property(value: &str) -> Option<String> {
     Some(format!("DUE:{}\r\n", timestamp.with_timezone(&Utc).format("%Y%m%dT%H%M%SZ")))
 }
 
+/// The actual native calendar parser is authoritative for this notice.
+pub(crate) fn calendar_time_notice(actions: &[Action]) -> Option<String> {
+    let count=actions.iter().filter(|action| action.due.as_deref().is_some_and(|value|due_property(value).is_none())).count();
+    (count>0).then(||format!("有{count}项时间只保留为文字，没有日历截止时间。请在编辑清单中确认日历时间后重新导出；其它内容已保留。"))
+}
+
 pub(crate) fn property(name: &str, value: &str) -> String {
     let escaped = value.replace('\\', "\\\\").replace(';', "\\;").replace(',', "\\,")
         .replace("\r\n", "\n").replace('\r', "\n").replace('\n', "\\n")
@@ -217,4 +223,19 @@ mod tests {
         assert!(!result.contains("DUE:")); assert!(result.contains("DTSTAMP:20261004T010203Z"));
         assert_ne!(result, calendar("会议1", "onlineLive", "Title", &tasks, false, "20261004T010203Z"));
     }
+    #[test]
+    fn p612_calendar_notice_uses_native_acceptance_without_guessing_relative_times() {
+        let tasks=|due:&str|vec![Action{text:format!("核对 (due: {due})"),completed:false,due:Some(due.into())}];
+        for value in ["2026-10-26 15:00", "明天下午三点", "2026-02-29", "2026-10-26T15:00:00"] {
+            let items=tasks(value);let notice=calendar_time_notice(&items).unwrap();
+            assert!(notice.contains("1项时间只保留为文字"));assert!(!notice.contains(value));
+            let ics=calendar("s","offlineStore","备忘",&items,false,"20261026T010000Z");
+            assert!(!ics.contains("\r\nDUE"));assert!(ics.contains(value));
+        }
+        for value in ["2028-02-29","2026-10-26T15:00:00+08:00","2026-10-26T07:00:00Z"] {
+            assert!(calendar_time_notice(&tasks(value)).is_none());
+        }
+        assert!(calendar_time_notice(&[Action{text:"未注明时间".into(),completed:false,due:None}]).is_none());
+    }
+
 }

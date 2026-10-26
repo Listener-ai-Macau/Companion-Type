@@ -1,4 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
+import {CalendarTimeEditor} from './CalendarTimeEditor';
 import {nativeActionParts,actionTaskBody,type ActionMetadata} from './actionMetadata';
 
 type Metadata=ActionMetadata;
@@ -17,7 +18,7 @@ function writeRow(row:Row):string{
   return row.prefix+row.text+(fields.length?' ('+fields.map(field=>`${field.key}: ${field.value}`).join(', ')+')':'');
 }
 
-export function ActionListEditor({value,onChange,disabled}:{value:string;onChange:(value:string)=>void;disabled:boolean}){
+export function ActionListEditor({value,onChange,disabled,onCalendarPending}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void}){
   const nextId=useRef(0),sent=useRef(value);
   const parse=(text:string)=>text?text.split(/\r?\n/).map(raw=>readRow(raw,nextId.current++)):[readRow('',nextId.current++)];
   const [rows,setRows]=useState<Row[]>(()=>parse(value));
@@ -52,6 +53,8 @@ export function ActionListEditor({value,onChange,disabled}:{value:string;onChang
         <label><span className="ct-step-meta">注明时间，不会自动提醒</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 时间`} value={row.metadata.find(field=>field.key==='due')?.value??''}
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>
+        <CalendarTimeEditor label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
+          disabled={disabled} onConfirm={value=>metadata(row,'due',value)} onPending={onCalendarPending}/>
         <label><span className="ct-step-meta">负责人</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 负责人`} value={row.metadata.find(field=>field.key==='owner')?.value??''}
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'owner',event.target.value)}/></label>

@@ -648,7 +648,7 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             let session: companion_v1::CompanionV1HostSession = serde_json::from_slice(&raw).map_err(|e|e.to_string())?;
             let prepared = backend::export::prepare_meeting_export(&session,mode,format)?;
             let bytes = backend::export::write_atomic(Path::new(output),&prepared.bytes)?;
-            println!("meeting_export_json={}",serde_json::json!({"status":"EXPORTED_SAVED_DOCUMENT","bytes":bytes,"networkAccess":false,"deviceAccess":false,"fullChainAcceptance":"NOT_RUN"}));
+            println!("meeting_export_json={}",serde_json::json!({"status":"EXPORTED_SAVED_DOCUMENT","bytes":bytes,"warning":prepared.warning,"networkAccess":false,"deviceAccess":false,"fullChainAcceptance":"NOT_RUN"}));
             Ok(())
         })());
     }

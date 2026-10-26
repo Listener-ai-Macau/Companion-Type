@@ -67,6 +67,7 @@ pub struct PreparedMeetingExport {
     pub bytes: Vec<u8>,
     pub suggested_name: String,
     pub format: MeetingExportFormat,
+    pub warning: Option<String>,
 }
 
 fn minutes_variant_for_mode<'a>(
@@ -170,6 +171,7 @@ pub fn prepare_meeting_export(
         ));
     }
 
+    let mut warning=None;
     let content = match format {
         MeetingExportFormat::Todo | MeetingExportFormat::Ics => {
             let processing = minutes_variant_for_mode(session, meeting_mode).and_then(|v| v.processing.as_ref())
@@ -197,6 +199,7 @@ pub fn prepare_meeting_export(
             if actions.is_empty() {
                 return Err("这版已保存纪要中没有可导出的待办。请在“行动项”或“Action Items”标题下用列表填写任务并保存。".into());
             }
+            if format==MeetingExportFormat::Ics { warning=super::action_export::calendar_time_notice(&actions); }
             let draft = saved.lines().any(|line| line.starts_with("> 草稿："));
             if format == MeetingExportFormat::Todo {
                 super::action_export::todo(&session.title, &actions, draft)
@@ -248,6 +251,7 @@ pub fn prepare_meeting_export(
             format.extension()
         ),
         format,
+        warning,
     })
 }
 
@@ -922,4 +926,29 @@ mod tests {
         let other=windows_commit_error(Error::from_hresult(HRESULT(0x80040070u32 as i32)));
         assert!(!other.contains("磁盘空间不足"),"another facility is not Windows disk-full error 112");
     }
+    #[test]
+    fn p612_calendar_handoff_follows_saved_mode_and_preserves_unparsed_time_as_text() {
+        let mut s=session("原话：明天下午三点检查样品",vec![],None);
+        let variant=|due:&str|CompanionV1MinutesVariant {
+            processing:None,source_note_context:None,source_review_revision:None,
+            status:"minutesReady".into(),quality:"final".into(),source:"userEdited".into(),
+            markdown:format!("## Action Items\n- [ ] 检查样品 (due: {due})"),
+            generated_at:None,partial_count:0,
+        };
+        s.minutes_by_mode.offline_store=Some(variant("2026-10-26 15:00"));
+        s.minutes_by_mode.online_live=Some(variant("2026-10-26T15:00:00+08:00"));
+        let before=serde_json::to_value(&s).unwrap();
+        let unconfirmed=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Ics).unwrap();
+        assert!(unconfirmed.warning.unwrap().contains("1项时间"));
+        let plain=String::from_utf8(unconfirmed.bytes).unwrap();
+        assert!(!plain.contains("\r\nDUE"));assert!(plain.contains("2026-10-26 15:00"));
+        let confirmed=prepare_meeting_export(&s,"onlineLive",MeetingExportFormat::Ics).unwrap();
+        assert!(confirmed.warning.is_none());assert!(String::from_utf8(confirmed.bytes).unwrap().contains("DUE:20261026T070000Z\r\n"));
+        assert!(prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Todo).unwrap().warning.is_none());
+        assert_eq!(serde_json::to_value(&s).unwrap(),before,"export must not rewrite speech, notes, saved time or another mode");
+        s.minutes_by_mode.offline_store=Some(variant("2028-02-29"));
+        let date=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Ics).unwrap();
+        assert!(date.warning.is_none());assert!(String::from_utf8(date.bytes).unwrap().contains("DUE;VALUE=DATE:20280229\r\n"));
+    }
+
 }
