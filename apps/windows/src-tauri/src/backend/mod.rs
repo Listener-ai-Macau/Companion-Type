@@ -1674,8 +1674,8 @@ impl CompanionBackend for FixtureCompanionBackend {
                 let variant = if mode == "onlineLive" {
                     session.minutes_by_mode.online_live.as_ref()
                 } else { session.minutes_by_mode.offline_store.as_ref() };
-                let manually_edited = variant.is_some_and(|v| v.source == "userEdited")
-                    || session.minutes.as_ref().is_some_and(|m| m.source == "userEdited");
+                let manually_edited = variant.is_some_and(|v| matches!(v.source.as_str(), "userEdited" | "userAuthored"))
+                    || session.minutes.as_ref().is_some_and(|m| matches!(m.source.as_str(), "userEdited" | "userAuthored"));
                 let requested_ready = if request.meeting_mode.is_some() {
                     variant.is_some_and(|v| v.status == "minutesReady" && v.quality == "final"
                         && v.processing.as_ref().is_none_or(|p| p.is_complete())
@@ -4564,6 +4564,7 @@ mod tests {
         std::fs::remove_file(&backup).unwrap();
         std::fs::create_dir(&backup).unwrap();
         let renamed = backend.save_meeting_edit(meeting_workspace::MeetingEditRequest {
+            create_manual: None,
             transcript_review: None,
             session_id: id.clone(), title: Some("待保存的人工命名".into()),
             expected_title: Some(restarted.host.sessions[0].title.clone()),
@@ -4694,6 +4695,7 @@ mod tests {
         session.minutes_by_mode.online_live = Some(live.clone());
         let original = session.minutes_by_mode.offline_store.as_ref().unwrap().markdown.clone();
         meeting_workspace::edit_session(session, &meeting_workspace::MeetingEditRequest {
+            create_manual: None,
             transcript_review: None,
             session_id: id.clone(), title: None, expected_title: None, meeting_mode: Some("offlineStore".into()),
             markdown: Some("# 人工校订，后台不得覆盖".into()), expected_markdown: Some(original),
@@ -4749,6 +4751,7 @@ mod tests {
         let peer = serde_json::to_value(&session.minutes_by_mode.online_live).unwrap();
         let raw = session.transcript_text.clone(); let utterances = session.utterances.clone();
         let edit = meeting_workspace::MeetingEditRequest {
+            create_manual: None,
             session_id:id.clone(),title:None,expected_title:None,meeting_mode:None,markdown:None,expected_markdown:None,
             transcript_review:Some(transcript_review::TranscriptReviewEdit {
                 expected_transcript_text:raw.clone(),expected_utterances:utterances.clone(),expected_revision:0,

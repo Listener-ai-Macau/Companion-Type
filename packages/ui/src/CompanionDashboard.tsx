@@ -166,6 +166,11 @@ export type CompanionMeetingSaveRequest = {
   meetingMode?: CompanionV1MeetingMode;
   markdown?: string;
   expectedMarkdown?: string;
+  createManual?: {
+    expectedTranscriptText: string;
+    expectedReviewRevision: number | null;
+    expectedNoteRevision: number;
+  };
   transcriptReview?: CompanionTranscriptReviewEdit;
 };
 
@@ -259,7 +264,7 @@ function minutesSourceEnvelope(context: CompanionMinutesNoteContext): string {
 // Project only the exact native diagnostic header. Every body section,
 // including unknown provider sections, remains editable without exposing the
 // generated transport metadata. Preserve all other sections/header bytes.
-function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNoteContext | null): Array<{ key: string; label: string; value: string; start: number; end: number; plain: boolean }> | null {
+function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNoteContext | null, manual=false): Array<{ key: string; label: string; value: string; start: number; end: number; plain: boolean }> | null {
   const labels: Record<string, string> = { Summary: '摘要', Decisions: '决定', 'Action Items': '待办', Questions: '待确认', Keywords: '关键词' };
   const envelope = noteContext ? minutesSourceEnvelope(noteContext) : '';
   if (!markdown.startsWith(envelope)) return null;
@@ -268,7 +273,7 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   }));
   if (!headings.length) return null;
   const prefix = markdown.slice(envelope.length, headings[0].index);
-  if (!/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
+  if (!(manual && prefix==='' && headings.length===1 && headings[0].key==='Action Items') && !/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
   return headings.map((match, index) => {
     const start = match.contentStart;
     const end = headings[index + 1]?.index ?? markdown.length;
@@ -281,10 +286,10 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   });
 }
 
-function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext }: {
-  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null;
+function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext, manual=false }: {
+  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;
 }) {
-  const fields = basicMinutesFields(markdown, noteContext);
+  const fields = basicMinutesFields(markdown, noteContext, manual);
   if (!fields) return <textarea value={markdown} onChange={event => onChange(event.target.value)}
     aria-label={label} spellCheck={false} disabled={disabled} />;
   const primary = fields.some(item=>item.key==='Summary'||item.key==='Action Items')
@@ -424,7 +429,7 @@ export function CompanionDashboard({
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
-    minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string }>>;
+    minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string; createManual?: CompanionMeetingSaveRequest['createManual'] }>>;
   }>>({});
   const [editingMinutes, setEditingMinutes] = useState(false);
   const [saveMeetingBusy, setSaveMeetingBusy] = useState(false);
@@ -653,11 +658,12 @@ export function CompanionDashboard({
       || !companionMinutesNotesCurrent(selectedSession,(selectedMinutesVariant || legacyMinutes)?.sourceNoteContext)));
   const minutesMarkdown = selectedMinutesVariant?.markdown || legacyMinutes?.markdown || '';
   const minutesProcessing = (selectedMinutesVariant || legacyMinutes)?.processing;
+  const manualMinutes = (selectedMinutesVariant || legacyMinutes)?.source === 'userAuthored';
+  const minutesDisplayContext = manualMinutes ? undefined : (selectedMinutesVariant || legacyMinutes)?.sourceNoteContext;
   const recordingMode = selectedSession?.meetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
   const recordingModeMinutes = recordingMode === 'onlineLive' ? onlineMinutes : offlineMinutes;
   const legacyRecordingMinutes = !offlineMinutes && !onlineMinutes ? selectedSession?.minutes : null;
-  const recordingMinutesUserEdited = recordingModeMinutes?.source === 'userEdited'
-    || String(legacyRecordingMinutes?.source ?? '') === 'userEdited';
+  const recordingMinutesUserEdited = ['userEdited','userAuthored'].includes(String(recordingModeMinutes?.source??legacyRecordingMinutes?.source??''));
   const recordingModeLabel = recordingMode === 'onlineLive' ? '在线速记' : '先录后整理';
   const selectedDraft = selectedSession ? meetingDrafts[selectedSession.id] : undefined;
   const titleDraft = selectedSession
@@ -1007,10 +1013,21 @@ export function CompanionDashboard({
         ...current[sessionId],
         minutes: {
           ...current[sessionId]?.minutes,
-          [mode]: { value, expected: current[sessionId]?.minutes?.[mode]?.expected ?? minutesMarkdown },
+          [mode]: { ...current[sessionId]?.minutes?.[mode], value, expected: current[sessionId]?.minutes?.[mode]?.expected ?? minutesMarkdown },
         },
       },
     }));
+  };
+  const startManualChecklist = () => {
+    if (!selectedSession || !onSaveMeeting || !finalTranscript || hasMinutes || controlsBusy || oobeBlockedByRecording || storageBlocked
+      || selectedSession.captureIncomplete || selectedSession.recorderControlUncertain || transcriptReviewUnsaved || noteUnsaved || unimportedTranscriptDraft) return;
+    const sessionId=selectedSession.id, mode=minutesViewMode;
+    setMeetingDrafts(current=>({...current,[sessionId]:{...current[sessionId],minutes:{...current[sessionId]?.minutes,
+      [mode]:current[sessionId]?.minutes?.[mode]??{value:'## Action Items\n\n',expected:'',createManual:{
+        expectedTranscriptText:companionReviewedTranscript(selectedSession),
+        expectedReviewRevision:companionTranscriptReviewRevision(selectedSession),expectedNoteRevision:selectedSession.noteRevision??0,
+      }}}}}));
+    setSaveMeetingResult(null);setOrganizationChoiceId(null);setRecordingResultOpen(true);setEditingMinutes(true);
   };
   const cancelMeetingDraft = (part: 'title' | 'minutes') => {
     if (!selectedSession) return;
@@ -1041,7 +1058,7 @@ export function CompanionDashboard({
       const next = await onSaveMeeting({
         sessionId,
         ...(title ? { title: submittedTitle, expectedTitle: title.expected } : {}),
-        ...(minutes ? { meetingMode: mode, markdown: submittedMinutes, expectedMarkdown: minutes.expected } : {}),
+        ...(minutes ? { meetingMode: mode, markdown: submittedMinutes, expectedMarkdown: minutes.expected, ...(minutes.createManual?{createManual:minutes.createManual}:{}) } : {}),
       });
       const savedSession = next.host.sessions.find((item) => item.id === sessionId);
       if (next.host.persistence?.status !== 'ready') {
@@ -1057,7 +1074,7 @@ export function CompanionDashboard({
           const currentMinutes = currentSession.minutes?.[mode];
           if (minutes && currentMinutes?.value === minutes.value && currentMinutes.expected === minutes.expected
             && savedSession && meetingMinutesMarkdown(savedSession, mode) === submittedMinutes) {
-            nextSession.minutes = { ...currentSession.minutes, [mode]: { ...currentMinutes, expected: submittedMinutes ?? '' } };
+            nextSession.minutes = { ...currentSession.minutes, [mode]: { ...currentMinutes, expected: submittedMinutes ?? '', createManual: undefined } };
           }
           return { ...current, [sessionId]: nextSession };
         });
@@ -1543,13 +1560,13 @@ export function CompanionDashboard({
                 title={audioBlockedReason ?? undefined} onClick={() => void prepareAudio()}>{audioBusy ? '正在准备…' : '重试回听'}</button>}
           </section>
           </div>
-          {hasMinutes || busyAction === 'meetingGenerateMinutes' ? <details id="ct-recording-result" className="ct-recording-result"
+          {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details id="ct-recording-result" className="ct-recording-result"
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
             <summary>整理结果{minutesDirty ? ' · 有未保存的修改' : ''}</summary>
             <MinutesModeTabs value={minutesViewMode} onChange={setMinutesViewMode} dualMode={Boolean(offlineMinutes && onlineMinutes)}
               labels={{offlineStore:{visible:`先录后整理 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}`,accessible:`先录后整理纪要 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`},
                 onlineLive:{visible:`在线速记 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}`,accessible:`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`}}}>
-              {(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext?<p className="ct-minutes-mode-meta">{(selectedMinutesVariant??legacyMinutes)?.source==='rules_l0'&&(selectedMinutesVariant??legacyMinutes)?.quality==='draft'
+              {minutesDisplayContext?<p className="ct-minutes-mode-meta">{(selectedMinutesVariant??legacyMinutes)?.source==='rules_l0'&&(selectedMinutesVariant??legacyMinutes)?.quality==='draft'
                 ? '整理未完成。下方是基础草稿，尚未应用本次补充；原话和补充均已保存。'
                 : '本次依据原话＋你选择的补充整理；补充不是录音识别。'}</p>:null}
               {minutesProcessing ? <div className={companionMinutesProcessingComplete(minutesProcessing) ? 'ct-minutes-mode-meta' : 'ct-step-warn'} role="status">
@@ -1563,7 +1580,7 @@ export function CompanionDashboard({
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写或本次使用的补充已变化。这版结果已保留，请重新整理后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>重新选择内容并整理</button>
-              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
+              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{manualMinutes ? '手写清单已保存 · 仅本机保存，不是自动整理' : selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
               {selectedMinutesVariant?.source === 'rules_l0' ? <p className="ct-step-meta">仅摘录已有原句，需你核对并补充；原音和文字已保留。</p> : null}
               <div className="ct-inline-edit-actions">
                 {!editingMinutes && hasMinutes ? <button type="button" className="ct-action"
@@ -1580,24 +1597,25 @@ export function CompanionDashboard({
               {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">需要提醒时，可导出到支持待办的日历；导入后请核对日期和提醒，不会自动设置。</p> : null}
               {renderExportFeedback('document', exportResult?.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok')}
               {editingMinutes ? <div className="ct-minutes-editor">
+                {selectedDraft?.minutes?.[minutesViewMode]?.createManual?<p className="ct-step-meta">对照下方原话与补充填写；不会自动提取内容，也不会调用整理服务。写在“行动项”下的列表可保存、勾选和导出；不会自动提醒。</p>:null}
                 <div className="ct-minutes-savebar" aria-label="整理内容保存">
-                  <span>{minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
+                  <span>{selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单 · 尚未保存':minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
                 <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary"
-                  disabled={!minutesDirty || saveMeetingBusy || !minutesDraft.trim()} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : '保存修改'}</button>
+                  disabled={!minutesDirty || saveMeetingBusy || !minutesDraft.trim() || (!!selectedDraft?.minutes?.[minutesViewMode]?.createManual && !savedActions(minutesDraft).length)} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : selectedDraft?.minutes?.[minutesViewMode]?.createManual?'保存清单':'保存修改'}</button>
                   <button type="button" className="ct-action" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('minutes')}>取消</button></div>
                   {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part === 'minutes' ?
                     <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn' : 'ct-step-ok'}
                       role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
                 </div>
-                <MinutesContentEditor markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext}
-                  label={`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
+                <MinutesContentEditor manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={minutesDisplayContext}
+                  label={selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单':`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
 
                 {offlineMinutes && onlineMinutes ? <p className="ct-step-meta">只修改当前版本，另一份整理结果保持不变。</p> : null}
               </div> : hasMinutes ? <MinutesReadingView markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
                 recordingTitle={meetingTitle(selectedSession)} recordingTime={recordingTimeLabel(selectedSession.startedAt)}
                 compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
-                savedMarkdown={minutesMarkdown} noteContext={(selectedMinutesVariant??legacyMinutes)?.sourceNoteContext}
+                savedMarkdown={minutesMarkdown} noteContext={minutesDisplayContext}
                 onToggleAction={onSaveMeeting?(lineIndex,completed)=>void markAction(lineIndex,completed):undefined}
                 actionsBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
@@ -1649,6 +1667,9 @@ export function CompanionDashboard({
                     if(snapshot?.minutesContextSupported && selectedSession.meetingNotes?.length)setOrganizationChoiceId(selectedSession.id);
                     else runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id});
                   }}>{hasMinutes?'重新整理':'整理重点'}</button> : null}
+                {finalTranscript && !hasMinutes && onSaveMeeting ? <button type="button" className="ct-text-button"
+                  disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!!selectedSession.captureIncomplete||!!selectedSession.recorderControlUncertain||transcriptReviewUnsaved||noteUnsaved||unimportedTranscriptDraft}
+                  onClick={startManualChecklist}><Pencil size={14}/>自己写清单</button> : null}
                 {finalTranscript && !hasMinutes ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
@@ -2756,7 +2777,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
           {shownReferences.map((source) => <button type="button" className="ct-text-button" key={source.index}
             disabled={blocked} aria-label={`${comparisonOnly?'对照第':'核对第'}${source.index + 1}段${comparisonOnly?'事项原文':'原文'}`}
             onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
-          {comparisonOnly?<small>注明{unverifiedNames}未在对应原文中，请另行核对。</small>:null}
+          {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
           onClick={onShowTranscript}>查看原话（未匹配到准确定位）</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;

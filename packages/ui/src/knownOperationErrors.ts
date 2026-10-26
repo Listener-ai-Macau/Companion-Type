@@ -1,5 +1,13 @@
 // Exact, existing authored error contracts; dynamic OS/service details are not trusted.
 export const knownOperationErrors:readonly string[]=[
+  // Exact local manual-document contracts; preserve conflicts as conflicts,
+  // never turn them into a generic disk/service failure.
+  "手写清单请求缺少内容，未保存。",
+  "这版已有整理内容。你的手写草稿仍保留，请重新载入后核对，避免覆盖。",
+  "请先确认完整文字和录音状态，再创建清单；原内容已保留。",
+  "原话或补充已变化。手写草稿仍保留，请核对当前内容后重新创建。",
+  "请填写至少一项待办，再保存手写清单。",
+  "这个版本还没有纪要，请先生成内容或创建手写清单。",
   // Exact public contracts from product_settings/storage.rs. Startup recovery
   // is not a failed save; retain the safe cause and recovery instruction.
   "设置文件缺失，正在使用上次保存的备份。再次保存会恢复设置文件。",

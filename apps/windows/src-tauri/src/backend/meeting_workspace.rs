@@ -15,7 +15,18 @@ pub struct MeetingEditRequest {
     pub meeting_mode: Option<String>,
     pub markdown: Option<String>,
     pub expected_markdown: Option<String>,
+    pub create_manual: Option<ManualMinutesCreate>,
     pub transcript_review: Option<super::transcript_review::TranscriptReviewEdit>,
+}
+
+/// Explicit first document creation, bound to the material visible when the
+/// user opened the draft. Absence is checked separately from editing a result.
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ManualMinutesCreate {
+    pub expected_transcript_text: String,
+    pub expected_review_revision: Option<u64>,
+    pub expected_note_revision: u64,
 }
 
 pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditRequest, now: &str) -> Result<(), String> {
@@ -32,6 +43,9 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
         if request.expected_title.as_deref() != Some(&session.title) {
             return Err("会议名称已在后台变化。你的草稿仍保留，请重新载入后核对。".into());
         }
+    }
+    if request.create_manual.is_some() && request.markdown.is_none() {
+        return Err("手写清单请求缺少内容，未保存。".into());
     }
     // Validate every changed field before applying any part of the edit.
     let updated_review = request.transcript_review.as_ref()
@@ -56,13 +70,38 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
                 status: session.status.clone(), markdown: m.markdown.clone(), source: m.source.clone(),
                 quality: m.quality.clone(), generated_at: Some(m.generated_at.clone()), partial_count: 0,
             })
-        }).ok_or("这个版本还没有纪要，请先生成内容。")?;
+        });
+        let variant = if let Some(create) = &request.create_manual {
+            if variant.is_some() || request.expected_markdown.as_deref() != Some("") {
+                return Err("这版已有整理内容。你的手写草稿仍保留，请重新载入后核对，避免覆盖。".into());
+            }
+            if !super::transcript_review::final_transcript_available(session) || session.capture_incomplete
+                || session.recorder_control_uncertain || session.recorder_control.is_some()
+                || matches!(session.pending_reason.as_deref(), Some("needs_device_sync" | "needs_segments" | "needs_local_audio" | "device_control_pending" | "capture_interrupted")) {
+                return Err("请先确认完整文字和录音状态，再创建清单；原内容已保留。".into());
+            }
+            if super::transcript_review::review_is_stale(session)
+                || create.expected_transcript_text != super::transcript_review::effective_text(session)
+                || create.expected_review_revision != super::transcript_review::active_revision(session)
+                || create.expected_note_revision != session.note_revision {
+                return Err("原话或补充已变化。手写草稿仍保留，请核对当前内容后重新创建。".into());
+            }
+            if super::action_export::parse_saved_actions(markdown).is_empty() {
+                return Err("请填写至少一项待办，再保存手写清单。".into());
+            }
+            CompanionV1MinutesVariant {
+                processing: None, source_review_revision: super::transcript_review::active_revision(session),
+                source_note_context: Some(super::minutes_context::source(session)),
+                status: "minutesReady".into(), markdown: String::new(), source: "userAuthored".into(),
+                quality: "final".into(), generated_at: Some(now.into()), partial_count: 0,
+            }
+        } else { variant.ok_or("这个版本还没有纪要，请先生成内容或创建手写清单。")? };
         if request.expected_markdown.as_deref() != Some(variant.markdown.as_str()) {
             return Err("纪要已在后台变化。你的草稿仍保留，请重新载入后核对，避免覆盖新内容。".into());
         }
         let mut updated = variant;
         updated.markdown = markdown.trim().to_string();
-        updated.source = "userEdited".into();
+        if updated.source != "userAuthored" { updated.source = "userEdited".into(); }
         updated.source_review_revision = super::transcript_review::active_revision(session);
         updated.generated_at = Some(now.into());
         Some((mode.to_string(), updated))
@@ -82,8 +121,18 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
     if let Some((mode, variant)) = updated_variant {
         if mode == session.meeting_mode {
             session.export_markdown = variant.markdown.clone();
+            if session.minutes.is_none() && variant.source == "userAuthored" {
+                // Keep the current-mode document envelope coherent with existing
+                // library/export/recovery consumers, without inventing extracted facts.
+                session.minutes = Some(crate::companion_v1::CompanionV1MeetingMinutes {
+                    processing:None, source_review_revision:variant.source_review_revision,
+                    source_note_context:variant.source_note_context.clone(), generated_at:now.into(),
+                    source:variant.source.clone(), quality:variant.quality.clone(), markdown:variant.markdown.clone(),
+                    summary:vec![],decisions:vec![],action_items:vec![],questions:vec![],keywords:vec![],llm_note:None,
+                });
+            }
             if let Some(minutes) = &mut session.minutes {
-                minutes.markdown = variant.markdown.clone(); minutes.source = "userEdited".into();
+                minutes.markdown = variant.markdown.clone(); minutes.source = variant.source.clone();
                 minutes.generated_at = now.into();
                 minutes.source_review_revision = variant.source_review_revision;
                 // A freely edited document no longer proves the old structured
@@ -169,7 +218,7 @@ mod tests {
     }
     fn edit(session: &CompanionV1HostSession) -> MeetingEditRequest {
         MeetingEditRequest {
-            transcript_review: None,
+            create_manual: None, transcript_review: None,
             session_id: session.id.clone(), title: Some("我的会议".into()), expected_title: Some(session.title.clone()),
             meeting_mode: Some("offlineStore".into()), markdown: Some("# 人工核对\n\n周五交付。".into()),
             expected_markdown: Some(session.minutes_by_mode.offline_store.as_ref().unwrap().markdown.clone()),
@@ -261,7 +310,7 @@ mod tests {
         assert_eq!(session.recovery.intent,"none");
         assert_eq!(session.pending_reason.as_deref(),Some("minutes_source_changed"));
         let md = prepare_meeting_export(&session,"offlineStore",MeetingExportFormat::Markdown).unwrap();
-        assert!(String::from_utf8(md.bytes).unwrap().starts_with("> 转写已变化"));
+        assert!(String::from_utf8(md.bytes).unwrap().starts_with("> 整理来源已变化"));
         assert!(prepare_meeting_export(&session,"offlineStore",MeetingExportFormat::Todo).is_err());
         let reviewed_body = session.minutes_by_mode.offline_store.as_ref().unwrap().markdown.clone();
         request.transcript_review = None; request.title = None;
@@ -316,6 +365,79 @@ mod tests {
         }
         std::fs::remove_dir_all(directory).unwrap();
     }
+    fn without_minutes() -> CompanionV1HostSession {
+        let mut s = sample(); s.minutes = None; s.minutes_by_mode = Default::default();
+        s.status = "transcribed".into(); s.transcript_final = true; s.export_markdown.clear(); s
+    }
+    fn create(s: &CompanionV1HostSession) -> MeetingEditRequest {
+        MeetingEditRequest {
+            session_id:s.id.clone(), title:None,expected_title:None, meeting_mode:Some("offlineStore".into()),
+            markdown:Some("## Action Items\n\n- [ ] 带上充电线\n- [ ] 确认车次 (due: 2026-10-29)".into()),
+            expected_markdown:Some(String::new()),transcript_review:None,
+            create_manual:Some(ManualMinutesCreate {
+                expected_transcript_text:super::super::transcript_review::effective_text(s),
+                expected_review_revision:super::super::transcript_review::active_revision(s),expected_note_revision:s.note_revision,
+            }),
+        }
+    }
+    #[test]
+    fn manual_first_checklist_roundtrip_and_exports_keep_authored_origin_and_originals() {
+        let mut s=without_minutes();
+        s.meeting_notes.push(super::super::meeting_notes::Note {id:uuid::Uuid::new_v4().to_string(),text:"回程还未确认".into(),bookmark_id:None,created_at:"1".into(),updated_at:"1".into()});
+        s.note_revision=1;
+        let before=s.clone();let request=create(&s);
+        edit_session(&mut s,&request,"1234").unwrap();
+        let manual=s.minutes_by_mode.offline_store.as_ref().unwrap();
+        assert_eq!(manual.source,"userAuthored");assert!(manual.processing.is_none());
+        assert!(super::super::session_has_final_minutes_product(&s));
+        assert_eq!(s.minutes.as_ref().unwrap().source,"userAuthored");
+        assert_eq!(s.transcript_text,before.transcript_text);assert_eq!(s.transcript_final,before.transcript_final);
+        assert_eq!(serde_json::to_value(&s.transcript_review).unwrap(),serde_json::to_value(&before.transcript_review).unwrap());
+        assert_eq!(serde_json::to_value(&s.meeting_notes).unwrap(),serde_json::to_value(&before.meeting_notes).unwrap());
+        assert_eq!(s.audio_path,before.audio_path);assert_eq!(s.capture_incomplete,before.capture_incomplete);
+        let md=String::from_utf8(prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Markdown).unwrap().bytes).unwrap();
+        assert!(md.starts_with("> 用户手写清单"));assert!(!md.contains("基于人工修订的转写生成"));
+        let todo=String::from_utf8(prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Todo).unwrap().bytes).unwrap();assert!(todo.contains("带上充电线"));
+        let ics=String::from_utf8(prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Ics).unwrap().bytes).unwrap();assert!(ics.contains("20261029"));
+        let dir=std::env::temp_dir().join(format!("companion-manual-{}",uuid::Uuid::new_v4()));let file=dir.join("sessions.json");
+        persistence::save_sessions_to(&file,&[s.clone()]).unwrap();let mut loaded=persistence::load_sessions_from(&file).unwrap().remove(0);
+        assert_eq!(loaded.minutes_by_mode.offline_store.as_ref().unwrap().source,"userAuthored");
+        let mut update=create(&loaded);update.create_manual=None;update.expected_markdown=Some(loaded.minutes_by_mode.offline_store.as_ref().unwrap().markdown.clone());
+        update.markdown=Some(update.expected_markdown.as_ref().unwrap().replace("[ ] 带上","[x] 带上"));
+        edit_session(&mut loaded,&update,"1235").unwrap();assert_eq!(loaded.minutes_by_mode.offline_store.as_ref().unwrap().source,"userAuthored");
+        assert!(prepare_meeting_export(&loaded,"offlineStore",MeetingExportFormat::Todo).is_ok());
+        loaded.note_revision+=1;assert!(prepare_meeting_export(&loaded,"offlineStore",MeetingExportFormat::Todo).is_err());
+        std::fs::remove_dir_all(dir).unwrap();
+    }
+    #[test]
+    fn manual_create_conflicts_never_overwrite_documents_or_partially_rename() {
+        for case in ["existing","legacy","newTranscript","newReview","newNote","incomplete","uncertain","pendingAudio","liveRecording","processing","missingText","emptyActions","missingAbsence","missingIntent"] {
+            let mut s=without_minutes();let mut request=create(&s);
+            request.title=Some("must not leak".into());request.expected_title=Some(s.title.clone());
+            match case {
+                "existing"=>s.minutes_by_mode.offline_store=sample().minutes_by_mode.offline_store,
+                "legacy"=>s.minutes=sample().minutes,
+                "newTranscript"=>s.transcript_text.push_str("已更新"),
+                "newReview"=>request.create_manual.as_mut().unwrap().expected_review_revision=Some(99),
+                "newNote"=>s.note_revision+=1,
+                "incomplete"=>s.capture_incomplete=true,
+                "uncertain"=>s.recorder_control_uncertain=true,
+                "pendingAudio"=>s.pending_reason=Some("needs_device_sync".into()),
+                "liveRecording"=>s.status="recording".into(),
+                "processing"=>s.recovery.stage="generatingMinutes".into(),
+                "missingText"=>{s.transcript_text.clear();s.transcript_final=false;},
+                "emptyActions"=>request.markdown=Some("## Action Items\n".into()),
+                "missingAbsence"=>request.expected_markdown=None,
+                "missingIntent"=>request.create_manual=None,
+                _=>unreachable!(),
+            }
+            let original=serde_json::to_value(&s).unwrap();assert!(edit_session(&mut s,&request,"now").is_err(),"{case}");
+            assert_eq!(serde_json::to_value(&s).unwrap(),original,"{case}");
+        }
+        let mut s=without_minutes();let request=create(&s);edit_session(&mut s,&request,"1").unwrap();
+        let saved=serde_json::to_value(&s).unwrap();assert!(edit_session(&mut s,&request,"2").is_err());assert_eq!(serde_json::to_value(&s).unwrap(),saved);
+    }
+
 }
 
 pub(super) fn validate_wav(path: &std::path::Path) -> Result<(), String> {
@@ -365,4 +487,5 @@ pub(crate) fn wav_duration_ms(path: &std::path::Path) -> Result<u64, String> {
     if result.unwrap_or(false) {
         duration_ms.ok_or_else(|| "未取得原音的实际时长。".into())
     } else { Err("录音文件不完整或格式暂不支持，无法回听；已有文字和纪要仍可查看。".into()) }
+
 }

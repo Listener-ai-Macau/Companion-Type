@@ -18,9 +18,11 @@ use crate::companion_v1::{
 };
 use super::transcript_review;
 
-fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, context: &Option<super::minutes_context::Source>, body: String) -> String {
+fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, context: &Option<super::minutes_context::Source>, manual: bool, body: String) -> String {
     if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session, context) {
         format!("> 整理来源已变化：以下为之前保留的结果，转写或补充已更新，请重新整理后使用。\n\n{body}")
+    } else if manual {
+        format!("> 用户手写清单，仅本机保存；不是自动整理或录音识别。\n\n{body}")
     } else if revision.is_some() {
         format!("> 基于人工修订的转写生成；原始识别结果另行保留。\n\n{body}")
     } else { body }
@@ -86,7 +88,7 @@ fn saved_minutes_markdown_for_mode(
         if variant.markdown.trim().is_empty() {
             return Err(format!("{meeting_mode} minutes have no saved content"));
         }
-        return Ok(minutes_source_notice(session, variant.source_review_revision, &variant.source_note_context, if variant.status == "minutesReady" && variant.quality != "draft"
+        return Ok(minutes_source_notice(session, variant.source_review_revision, &variant.source_note_context, variant.source == "userAuthored", if variant.status == "minutesReady" && variant.quality != "draft"
             && variant.processing.as_ref().is_none_or(|p| p.is_complete()) {
             variant.markdown.clone()
         } else {
@@ -104,7 +106,7 @@ fn saved_minutes_markdown_for_mode(
             .as_ref()
             .filter(|minutes| !minutes.markdown.trim().is_empty())
         {
-            return Ok(minutes_source_notice(session, minutes.source_review_revision, &minutes.source_note_context, if minutes.llm_note.is_some() || minutes.quality == "draft"
+            return Ok(minutes_source_notice(session, minutes.source_review_revision, &minutes.source_note_context, minutes.source == "userAuthored", if minutes.llm_note.is_some() || minutes.quality == "draft"
                 || minutes.processing.as_ref().is_some_and(|p| !p.is_complete()) {
                 format!(
                     "> 草稿：纪要服务尚未完成；以下为已保存在本机的内容。\n\n{}",
