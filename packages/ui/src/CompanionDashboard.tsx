@@ -1721,7 +1721,7 @@ export function CompanionDashboard({
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}
               <p className="ct-recording-transcript" hidden={transcriptReviewOpen}>{companionReviewedTranscript(selectedSession)}</p>
-            </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
+            </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.status==='recording'?'正在录音，结束并保存后可以转成文字。':selectedSession.pendingReason==='needs_local_audio'?'原音已收齐。先生成回听文件，再回听或转文字。':['needs_device_sync','needs_segments','needs_pull'].includes(selectedSession.pendingReason??'')?'录音尚未收齐，先从来源设备同步，再回听或转文字。':!hasSyncedAudio?'还没有可回听的本机录音，请先确认录音已保存。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
           {transcriptUnmappedEdges.length > 0 ? <div className="ct-step-warn" role="status" aria-label="原音与文字的时间对应">
             {transcriptUnmappedEdges.map(edge => <p key={edge.edge}>
               {edge.edge === 'start' ? '开头' : '结尾'}约 {Math.ceil(edge.durationMs / 1000)} 秒原音没有对应的识别时间标记，可能也有停顿。原音已保留，可回听核对。
@@ -2648,7 +2648,7 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   return <section className="ct-safety-card" aria-label="录音安全状态">
     <header><strong>录音安全状态</strong><span>{saveFailed ? '需要处理'
       : !saveConfirmed && (localAudio || partialAudio || rawComplete) ? '保存状态待确认'
-      : localAudio ? '电脑已有副本' : partialAudio ? '本机已有片段，仍待收齐' : '内容仍在流转'}</span></header>
+      : rawComplete ? '原音已收齐，回听待生成' : localAudio ? '电脑已有副本' : partialAudio ? '本机已有片段，仍待收齐' : '内容仍在流转'}</span></header>
     {session.processingPolicy === 'manual' ? <p>这是一份普通录音。转写和纪要由你手动启动，同步原音后不会自动提交云端处理。</p> : null}
     <ol>{steps.map((step) => <li key={step.label} className={`ct-safety-${step.kind}`}><span aria-hidden="true" />
       <div><strong>{step.label}</strong><small>{step.state}</small></div></li>)}</ol>
