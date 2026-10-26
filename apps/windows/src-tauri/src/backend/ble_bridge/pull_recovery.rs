@@ -31,6 +31,18 @@ pub(super) fn transport_lost(error: &str) -> bool {
         || lower.starts_with("recording transfer stalled after 3 resume requests")
 }
 
+/// A terminal transport must stop requesting reconnect before lane cleanup.
+/// Queue overflow recovery, pause and an isolated bad file keep their policy.
+/// The owned notification cleanup is still awaited, including its error.
+pub(super) async fn quiesce_failed_attempt(
+    error: &str,
+    retire_maintenance: impl FnOnce(&str),
+    cleanup: impl std::future::Future<Output = Result<(), String>>,
+) -> Result<(), String> {
+    if transport_lost(error) { retire_maintenance(error); }
+    cleanup.await
+}
+
 pub(super) fn retire_connection(error: &str) -> bool {
     receiver_overrun(error) || transport_lost(error)
         || error.contains(super::pull_session::RETIRED_CLEANUP)

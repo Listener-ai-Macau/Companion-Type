@@ -5253,8 +5253,20 @@ impl pull_recovery::Attempt for RecordingPull<'_> {
                 self.initial_data.take(), self.job, self.link_policy.as_deref_mut())).await;
             // A session loss can cancel an in-flight receive. Join/drain its
             // durable cursor first, then retire both owned notification lanes.
-            if result.is_err() {
-                let cleanup=PullSession::quiesce_for_control(self.session).await;
+            if let Err(error) = &result {
+                let device=self.device;
+                let cleanup=pull_recovery::quiesce_failed_attempt(error, |cause| {
+                    // A terminal transport cannot reuse this owner. Release
+                    // maintenance before CCCD cleanup can wait on a lost link.
+                    // Its notification/storage retirement still runs below.
+                    #[cfg(windows)]
+                    if let Some(session)=&device.connection_session {
+                        session.retire_with_cause(cause);
+                        eprintln!("recording connection maintenance retired_before_lane_cleanup=1 original_recording_retained=1");
+                    }
+                    #[cfg(not(windows))]
+                    let _=(device,cause);
+                }, PullSession::quiesce_for_control(self.session)).await;
                 if cleanup.is_err() || result.as_ref().err().is_some_and(|e|e.contains(pull_session::RETIRED_CLEANUP)) {
                     let cause=pull_session::finish_receive::<Vec<u8>>(result,cleanup).unwrap_err();
                     retire_native_device(self.device,&cause).await;

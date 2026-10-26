@@ -108,3 +108,49 @@ fn transport_failures_retire_the_connection_but_one_bad_recording_stays_isolated
         assert!(!retire_connection(error), "{error}");
     }
 }
+
+#[tokio::test]
+async fn lost_transport_releases_maintenance_before_blocked_native_cleanup() {
+    use std::sync::{Arc, atomic::{AtomicBool, Ordering}};
+    let maintained=Arc::new(AtomicBool::new(true));
+    let retire=maintained.clone();let during_cleanup=maintained.clone();
+    let (entered,ready)=tokio::sync::oneshot::channel();
+    let (release,wait)=tokio::sync::oneshot::channel();
+    let original="recording transfer stalled after 3 resume requests at offset=1695577; original recording not consumed";
+    let task=tokio::spawn(async move {
+        quiesce_failed_attempt(original,move |cause| {
+            assert_eq!(cause,original);retire.store(false,Ordering::SeqCst);
+        },async move {
+            assert!(!during_cleanup.load(Ordering::SeqCst));
+            entered.send(()).unwrap();wait.await.unwrap();
+            Err("sealed stream release failed before reclaim: native lane timed out".into())
+        }).await
+    });
+    ready.await.unwrap();assert!(!maintained.load(Ordering::SeqCst));
+    assert!(!task.is_finished(),"owned cleanup must still be awaited");
+    release.send(()).unwrap();let cleanup=task.await.unwrap();
+    let error=super::super::pull_session::finish_receive::<Vec<u8>>(Err(original.into()),cleanup).unwrap_err();
+    assert!(error.starts_with(original));assert!(error.contains(super::super::pull_session::RETIRED_CLEANUP));
+}
+
+#[tokio::test]
+async fn same_link_recovery_pause_and_bad_file_keep_maintenance() {
+    for error in [NATIVE_OVERRUN,RECEIVER_OVERRUN,
+        super::super::super::recording_sync::PAUSED,"recording packet CRC mismatch","final SHA mismatch"] {
+        let mut retired=false;let mut cleaned=false;
+        quiesce_failed_attempt(error,|_|retired=true,async {cleaned=true;Ok(())}).await.unwrap();
+        assert!(!retired,"{error}");assert!(cleaned);
+    }
+}
+
+#[tokio::test]
+async fn explicit_native_loss_also_releases_before_cleanup() {
+    for error in ["BLE session disconnected: GattSessionStatus(0); original recording retained",
+        "recording chunk notify timeout at offset=4","resume write timed out"] {
+        use std::cell::Cell;
+        let retired=Cell::new(false);
+        quiesce_failed_attempt(error,|cause|{assert_eq!(cause,error);retired.set(true)},async {
+            assert!(retired.get());Ok(())
+        }).await.unwrap();
+    }
+}
