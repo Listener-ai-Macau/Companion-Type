@@ -17,6 +17,16 @@ function excerpt(text:string,query=''):string {
     offset=raw;
   }
   if(offset<0){const chars=Array.from(compact(text));return chars.slice(0,96).join('')+(chars.length>96?'…':'');}
+  if(text.includes('\n')){
+    const start=text.lastIndexOf('\n',offset-1)+1,end=text.indexOf('\n',offset);
+    const line=text.slice(start,end<0?text.length:end).trim();
+    if(line.toLocaleLowerCase().includes(query)){
+      const plain=line.replace(/^(?:[-*+]\s+(?:\[[ xX]\]\s+)?|#{1,6}\s+)/,'');
+      // Prefer the matching line itself over unrelated adjacent tasks. Keep
+      // literal formatting when it is what the user searched for.
+      return excerpt(plain.toLocaleLowerCase().includes(query)?plain:line,query);
+    }
+  }
   const chars=Array.from(text),position=Array.from(text.slice(0,offset)).length,start=Math.max(0,position-24);
   return(start?'…':'')+compact(chars.slice(start,start+96).join(''))+(start+96<chars.length?'…':'');
 }
