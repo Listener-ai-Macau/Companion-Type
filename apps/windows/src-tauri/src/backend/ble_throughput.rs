@@ -57,9 +57,16 @@ impl Drop for SessionHandles {
                 let _ = session.RemoveSessionStatusChanged(token);
             }
             if self.maintain_requested {
-                let _ = session.SetMaintainConnection(false);
+                let release_started = Instant::now();
+                let released = session.SetMaintainConnection(false);
                 self.maintain_requested=false;
-                eprintln!("BLE connection_session maintain_requested=0 released=1");
+                // A local owner retirement is distinct from Windows accepting
+                // its property write, and neither proves radio disconnection.
+                // Retain the native HRESULT instead of reporting false success.
+                match released {
+                    Ok(()) => eprintln!("BLE connection_session maintain_requested=0 release_attempted=1 release_confirmed=1 release_call_us={} physical_disconnect=unconfirmed", release_started.elapsed().as_micros()),
+                    Err(error) => eprintln!("BLE connection_session maintain_requested=unknown release_attempted=1 release_confirmed=0 release_call_us={} release_error={error:?} physical_disconnect=unconfirmed", release_started.elapsed().as_micros()),
+                }
             }
             // Release this wrapper's COM reference after detaching its event.
             // The peripheral owns a separate device/service reference.

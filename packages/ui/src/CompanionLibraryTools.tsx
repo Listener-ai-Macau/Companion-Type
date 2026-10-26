@@ -59,14 +59,14 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
    <label>结束日期 <input type="date" aria-label="筛选录音结束日期" value={filters.to??''} onChange={e=>setFilters({...filters,to:e.target.value})}/></label>
   </div>
   {filters.from||filters.to?<p role="status">{filters.from&&filters.to&&filters.from>filters.to?'开始日期不能晚于结束日期，请调整日期范围。':'按录音开始的本地日期筛选，包含首尾两天；时间未知的录音在清除日期后可见。'}</p>:null}
-  <details><summary>整理所选录音 · 已选 {ids.length} 场</summary>
-   <p>文件夹是本机资料分类，不移动原音文件。支持四层路径，如“工作/项目”；标签用逗号分隔。批量保存只改已选录音。</p>
+  <details><summary>{filters.trash?'恢复或清除所选录音':'整理所选录音'} · 已选 {ids.length} 场</summary>
+   <p>{filters.trash?'勾选要找回的录音，再点恢复；永久清除需要另外确认。':'文件夹是本机资料分类，不移动原音文件。支持四层路径，如“工作/项目”；标签用逗号分隔。批量保存只改已选录音。'}</p>
    <div className="ct-audio-tools">
     <button type="button" className="ct-action" disabled={blocked||(!onSave&&!onExport&&!onSaveLifecycle)||!visible.length||visible.length>1000} onClick={()=>setSelection(Object.fromEntries(visible.map(s=>[s.id,(s.organization??emptyLibraryOrganization()).revision])))}>选择当前筛选结果（{visible.length} 场）</button>
     <button type="button" className="ct-action" disabled={busy||!ids.length} onClick={()=>setSelection({})}>清除整理选择</button>
     <span>其中 {ids.filter(id=>!visible.some(s=>s.id===id)).length} 场不在当前筛选中</span>
    </div>
-   <fieldset disabled={blocked||busy||!onSave||filters.trash}>
+   {!filters.trash?<fieldset disabled={blocked||busy||!onSave}>
     <label><input type="checkbox" aria-label="修改文件夹" checked={applyFolder} onChange={e=>setApplyFolder(e.target.checked)}/>修改文件夹</label>
     <input aria-label="目标录音文件夹" maxLength={120} value={folder} disabled={!applyFolder} onChange={e=>setFolder(e.target.value)} placeholder="留空表示移到未分类"/>
     <label>标签操作 <select aria-label="批量标签操作" value={tagAction} onChange={e=>setTagAction(e.target.value)}>
@@ -77,7 +77,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
      <option value="keep">保持收藏状态</option><option value="yes">设为收藏</option><option value="no">取消收藏</option>
     </select></label>
     <button type="button" className="ct-action" disabled={!ids.length||!draft} onClick={()=>void save()}>{busy?'正在保存分类…':`保存 ${ids.length} 场分类`}</button>
-   </fieldset>
+   </fieldset>:null}
    {onExport&&!filters.trash?<fieldset disabled={blocked||busy}>
     <legend>导出所选录音</legend>
     <label>内容 <select aria-label="批量导出格式" value={exportFormat} onChange={e=>setExportFormat(e.target.value as CompanionLibraryExportRequest['format'])}>
