@@ -1570,9 +1570,14 @@ export function CompanionDashboard({
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
                   onClick={()=>void exportMeeting(savedActions(minutesMarkdown).length>0?'todo':'markdown')}><Download size={15}/>
                   {savedActions(minutesMarkdown).length>0?'导出清单':'导出整理'}</button> : null}
+                {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-action"
+                  disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
+                  title="导出待办文件；导入支持待办的日历后，仍需核对日期和提醒"
+                  onClick={()=>void exportMeeting('ics')}>导出日历待办</button> : null}
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
                   title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />{savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'}</button> : null}
               </div>
+              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">需要提醒时，可导出到支持待办的日历；导入后请核对日期和提醒，不会自动设置。</p> : null}
               {renderExportFeedback('document', exportResult?.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok')}
               {editingMinutes ? <div className="ct-minutes-editor">
                 <div className="ct-minutes-savebar" aria-label="整理内容保存">
@@ -1618,8 +1623,8 @@ export function CompanionDashboard({
               title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
               onClick={() => void exportMeeting('markdown','documentTools')}><Download size={15} />{exportBusy ? '正在导出…' : '导出整理全文'}</button>:null}
 
-            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
-              title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics','documentTools')}>导出日历待办</button>
+            {savedActions(minutesMarkdown).length===0?<button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
+              title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics','documentTools')}>导出日历待办</button>:null}
             <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
               onClick={()=>void exportMeeting('txt','documentTools')}>{selectedSession.meetingNotes?.length?'导出原话与补充':'导出原话'}</button>
             <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
@@ -2739,12 +2744,17 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
         if (block.type === 'title') return hideDocumentTitle&&index===0?null:<h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
         if (block.type === 'heading') return <h4 key={index}>{translateMinutesHeading(block.text)}</h4>;
         const sourceParts=block.action?nativeActionParts(block.action.text):null;
-        const references = companionMinutesReferencedSources(sources, sourceParts?.body??block.text)
-          .filter(source=>!sourceParts||sourceParts.metadata.every(field=>source.text.includes(field.value.trim())));
-        const links = onOpenSource && references.length ? <span className="ct-minutes-source-links">
-          {references.map((source) => <button type="button" className="ct-text-button" key={source.index}
-            disabled={blocked} aria-label={`核对第${source.index + 1}段原文`}
-            onClick={() => onOpenSource(source)}>核对原文 · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
+        const bodyReferences = companionMinutesReferencedSources(sources, sourceParts?.body??block.text);
+        const references = bodyReferences.filter(source=>!sourceParts||sourceParts.metadata.every(field=>source.text.includes(field.value.trim())));
+        // An edited date/owner must not erase an exact, unique body anchor.
+        // Keep it explicitly as a comparison, never attribute new metadata to speech.
+        const comparisonOnly = references.length===0 && !!sourceParts?.metadata.length && bodyReferences.length>0;
+        const shownReferences = comparisonOnly ? bodyReferences : references;
+        const links = onOpenSource && shownReferences.length ? <span className="ct-minutes-source-links">
+          {shownReferences.map((source) => <button type="button" className="ct-text-button" key={source.index}
+            disabled={blocked} aria-label={`${comparisonOnly?'对照第':'核对第'}${source.index + 1}段${comparisonOnly?'事项原文':'原文'}`}
+            onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
+          {comparisonOnly?<small>注明时间或负责人未在对应原文中，请另行核对。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
           onClick={onShowTranscript}>查看原话（未匹配到准确定位）</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;
