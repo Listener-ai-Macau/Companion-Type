@@ -15,6 +15,7 @@ import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAu
 import {useListeningQueue} from './useListeningQueue';
 import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
 import {recordingInDates} from './libraryDates';
+import {libraryPreview} from './libraryPreview';
 import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
@@ -1396,13 +1397,7 @@ export function CompanionDashboard({
               const selected = session.id === snapshot?.host.selectedSessionId;
               const boardId = session.deviceRecordingId;
               // Preview only saved text. Bound work per row and preserve the full original.
-              const query = libraryQuery.trim().toLocaleLowerCase();
-              const matchedNote = query ? session.meetingNotes?.find(note => note.text.toLocaleLowerCase().includes(query)) : undefined;
-              const previewText = (matchedNote?.text ?? companionReviewedTranscript(session)).replace(/\s+/g, ' ').trim();
-              const matchPosition = matchedNote ? previewText.toLocaleLowerCase().indexOf(query) : -1;
-              const previewStart = Math.max(0, matchPosition - 24);
-              const previewChars = Array.from(previewText.slice(previewStart, previewStart + 400));
-              const textPreview = (previewStart ? '…' : '') + previewChars.slice(0, 96).join('') + (previewChars.length > 96 ? '…' : '');
+              const preview = libraryPreview(session,libraryQuery);
               const statusLabel = session.organization?.trashedAt ? '回收站'
                 : session.status === 'recording' ? '录制中'
                 : session.pendingReason === 'needs_device_sync' ? '待同步'
@@ -1434,8 +1429,8 @@ export function CompanionDashboard({
                   <span className="ct-library-card-main">
                     <strong>{meetingTitle(session)}</strong>
                     <small><time dateTime={session.startedAt ?? undefined}>{recordingTimeLabel(session.startedAt)}</time></small>
-                    {textPreview ? <span className="ct-library-text-preview">
-                      {matchedNote ? <span className="ct-library-text-partial">补充 · </span> : !companionSessionHasFinalTranscript(session) ? <span className="ct-library-text-partial">片段 · </span> : null}{textPreview}
+                    {preview.text ? <span className="ct-library-text-preview">
+                      {preview.label ? <span className="ct-library-text-partial">{preview.label} · </span> : null}{preview.text}
                     </span> : null}
                     {session.organization?.protected?<small>已保护</small>:null}
                     {session.organization?.trashedAt?<small>移入时间：{session.organization.trashedAt}</small>:null}
@@ -1615,6 +1610,7 @@ export function CompanionDashboard({
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
                 recordingTitle={meetingTitle(selectedSession)} recordingTime={recordingTimeLabel(selectedSession.startedAt)}
                 compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
+                sourceFallbackLabel={manualMinutes?(selectedSession.meetingNotes?.length?'查看原话与补充':'查看原话'):undefined}
                 savedMarkdown={minutesMarkdown} noteContext={minutesDisplayContext}
                 onToggleAction={onSaveMeeting?(lineIndex,completed)=>void markAction(lineIndex,completed):undefined}
                 actionsBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
@@ -2682,7 +2678,7 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   markdown: string; transcript: string; durationMs: number; compactAllowed: boolean; noteContext?:CompanionMinutesNoteContext|null;
   recordingTitle?:string;recordingTime?:string;
   onToggleAction?:(lineIndex:number,completed:boolean)=>void;actionsBlocked?:boolean;savedMarkdown?:string;
-  sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
+  sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;sourceFallbackLabel?:string;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
   onShowTranscript?: () => void;
 }) {
@@ -2728,10 +2724,10 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   </div>;
 }
 
-function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
+function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查看原话（未匹配到准确定位）", actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
   actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean;recordingTime?:string};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
-  onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:()=>void }) {
+  onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:()=>void;sourceFallbackLabel?:string }) {
   if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
   const actionRows=new Map(savedActions(markdown).flatMap((row,index)=>{
     const saved=actionChecklist?.items[index];
@@ -2779,7 +2775,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
             onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
           {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
-          onClick={onShowTranscript}>查看原话（未匹配到准确定位）</button></span>:null;
+          onClick={onShowTranscript}>{sourceFallbackLabel}</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;
