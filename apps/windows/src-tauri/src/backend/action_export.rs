@@ -1,6 +1,6 @@
 //! Export only action items explicitly present in the selected saved document.
 //! RFC 5545: https://www.rfc-editor.org/rfc/rfc5545.html (3.1, 3.6.2, 3.8.2.3).
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{DateTime, NaiveDate, Timelike, Utc};
 use sha2::{Digest, Sha256};
 use std::sync::LazyLock;
 
@@ -131,6 +131,49 @@ fn common_supplement(actions: &[Action]) -> Option<CommonSupplement> {
     Some(CommonSupplement{text:shared,display_texts})
 }
 
+// Presentation only. Saved markdown, provenance, calendar identity and the
+// conservative DUE parser remain based on the original values.
+fn readable_time(value: &str) -> String {
+    static DATE:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$").unwrap());
+    static STAMP:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-5][0-9](?:\.[0-9]+)?(?:[Zz]|[+-][0-9]{2}:[0-9]{2})$").unwrap());
+    if value.starts_with("0000"){return value.into()}
+    if DATE.is_match(value) {
+        if let Ok(date)=NaiveDate::parse_from_str(value,"%Y-%m-%d") {
+            return date.format("%Y年%-m月%-d日").to_string();
+        }
+    }
+    if STAMP.is_match(value)&&!value.ends_with("-00:00") {
+        if let Ok(time)=DateTime::parse_from_rfc3339(value) {
+            if time.nanosecond()<1_000_000_000 {
+                let clock=if time.second()==0&&time.nanosecond()==0 {time.format("%H:%M").to_string()}else{time.format("%H:%M:%S%.f").to_string()};
+                return format!("{} {clock}（UTC{}）",time.format("%Y年%-m月%-d日"),time.format("%:z"));
+            }
+        }
+    }
+    value.into()
+}
+
+fn readable_action(text: &str) -> String {
+    // Same complete, known suffix contract as UI nativeActionParts. Unknown,
+    // duplicate or empty fields stay literal, including all task conditions.
+    static SUFFIX:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r"\s+\(([^()\r\n]+)\)$").unwrap());
+    static SEPARATOR:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r",\s*[A-Za-z_][A-Za-z_ -]*:\s*").unwrap());
+    static FIELD:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r"^(owner|due):\s*(\S[\s\S]*)$").unwrap());
+    let Some(suffix)=SUFFIX.captures(text) else{return text.into()};
+    let inner=suffix.get(1).unwrap().as_str();
+    let mut starts=vec![0];
+    starts.extend(SEPARATOR.find_iter(inner).map(|separator|separator.start()+1));
+    let mut seen=std::collections::HashSet::new();let mut labels=Vec::new();
+    for (index,start) in starts.iter().copied().enumerate() {
+        let end=starts.get(index+1).map_or(inner.len(),|next|next-1);
+        let Some(field)=FIELD.captures(inner[start..end].trim_start()) else{return text.into()};
+        let key=field.get(1).unwrap().as_str();let value=field.get(2).unwrap().as_str();
+        if !seen.insert(key){return text.into()}
+        labels.push(if key=="due" {format!("注明时间：{}",readable_time(value))}else{format!("负责人：{value}")});
+    }
+    format!("{}（{}）",&text[..suffix.get(0).unwrap().start()],labels.join("；"))
+}
+
 pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
     let mut out = format!("# {} — 待办事项\n\n", title.replace(['\r', '\n'], " "));
     if draft { out.push_str("> 草稿：请核对负责人、任务和截止日期。\n\n"); }
@@ -146,7 +189,7 @@ pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
         let supplement=text.strip_prefix("用户补充：");
         has_supplements|=supplement.is_some();
         out.push_str(&format!("- [{}] {}{}\n",if item.completed {"x"}else{" "},
-            supplement.unwrap_or(text),if supplement.is_some(){" ＊"}else{""}));
+            readable_action(supplement.unwrap_or(text)),if supplement.is_some(){" ＊"}else{""}));
     }
     if has_supplements {out.push_str("\n> ＊ 来自用户补充；原话与补充仍分别保留。\n");}
     out
@@ -191,8 +234,10 @@ pub fn calendar(session_id: &str, mode: &str, title: &str, actions: &[Action], d
         out.push_str("BEGIN:VTODO\r\n");
         out.push_str(&property("UID", &format!("{}@companion-type", &id[..40])));
         out.push_str(&property("DTSTAMP", stamp));
-        out.push_str(&property("SUMMARY", &item.text));
-        let description = format!("会议：{title}\n模式：{mode}{}\n原始任务：{}", if draft { "\n草稿：请先核对" } else { "" }, item.text);
+        let readable=readable_action(&item.text);
+        out.push_str(&property("SUMMARY", &readable));
+        let mode_label=match mode {"offlineStore"=>"先录后整理","onlineLive"=>"在线速记",other=>other};
+        let description = format!("记录：{title}\n整理方式：{mode_label}{}\n事项：{readable}", if draft { "\n草稿：请先核对" } else { "" });
         out.push_str(&property("DESCRIPTION", &description));
         if let Some(due) = item.due.as_deref().and_then(due_property) { out.push_str(&due); }
         out.push_str(if item.completed { "STATUS:COMPLETED\r\n" } else { "STATUS:NEEDS-ACTION\r\n" });
@@ -206,6 +251,37 @@ pub fn stamp_now() -> String { Utc::now().format("%Y%m%dT%H%M%SZ").to_string() }
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn p613_readable_exports_preserve_calendar_identity_and_saved_values() {
+        let text="核对结果 (owner: 小林, due: 2026-10-26T15:00:00+08:00)";
+        let actions=parse_saved_actions(&format!("## 行动项\n- [ ] {text}"));
+        let markdown=todo("备忘",&actions,false);
+        assert!(markdown.contains("核对结果（负责人：小林；注明时间：2026年10月26日 15:00（UTC+08:00））"));
+        assert!(!markdown.contains("owner:")&&!markdown.contains("due:"));
+        let ics=calendar("p613","offlineStore","备忘",&actions,false,"20261026T010000Z");
+        let unfolded=ics.replace("\r\n ","");
+        assert!(unfolded.contains("UID:2d9e5c77cc6901851e74cda50745d65ae0a256ec@companion-type\r\n"));
+        assert!(unfolded.contains("DUE:20261026T070000Z\r\n"));
+        assert!(unfolded.contains("整理方式：先录后整理"));
+        assert!(!unfolded.contains("offlineStore")&&!unfolded.contains("due:")&&!unfolded.contains("owner:"));
+        assert_eq!(actions[0].text,text);assert_eq!(actions[0].due.as_deref(),Some("2026-10-26T15:00:00+08:00"));
+        assert!(ics.lines().all(|line|line.len()<=75));
+    }
+    #[test]
+    fn p613_export_reading_never_guesses_or_drops_unknown_task_prose() {
+        for text in ["核对 (due: 周五, note: 尚未确认)","核对 (due: 周五, due: 周六)","核对 (due: )","核对 (owner: 小林 (代班), due: 周五)","先讨论 due: 周五 的含义"] {
+            assert_eq!(readable_action(text),text);
+        }
+        assert_eq!(readable_action("周五前核对 (due: 周五)"),"周五前核对（注明时间：周五）");
+        assert_eq!(readable_action("核对 (owner: A,B, due: 未定)"),"核对（负责人：A,B；注明时间：未定）");
+        for value in ["明天下午3点","2026-02-29","0000-01-01","2026-10-26 15:00","2026-10-26T15:00:00-00:00"] {assert_eq!(readable_time(value),value);}
+        assert_eq!(readable_time("2028-02-29"),"2028年2月29日");
+        assert_eq!(readable_time("2026-10-26T07:00:12.125Z"),"2026年10月26日 07:00:12.125（UTC+00:00）");
+        let tasks=parse_saved_actions("## 行动项\n- [x] 周五前核对 (due: 周五)");
+        let ics=calendar("relative","onlineLive","备忘",&tasks,false,"20261026T010000Z").replace("\r\n ","");
+        assert!(ics.contains("周五前核对")&&ics.contains("注明时间：周五")&&ics.contains("整理方式：在线速记"));
+        assert!(!ics.contains("\r\nDUE"));assert!(ics.contains("STATUS:COMPLETED"));assert!(calendar_time_notice(&tasks).is_some());
+    }
     #[test]
     fn saved_actions_ignore_decisions_code_and_empty_placeholders() {
         let actions = parse_saved_actions("## 决定\n- 发版\n## 行动项\n- [ ] 核对 (due: 周五)\n- [x] 完成测试\n```\n- 假任务\n```\n## 问题\n- 待解决");

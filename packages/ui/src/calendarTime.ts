@@ -8,6 +8,17 @@ export function validCalendarDate(value:string):boolean {
   const days=[31,y%4===0&&(y%100!==0||y%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];
   return y>=1&&month>=1&&month<=12&&day>=1&&day<=days[month-1];
 }
+/** Reading only: keep the recorded wall clock and explicit UTC offset. Never
+ * resolve prose or silently convert a saved arrangement to this computer's zone. */
+export function readableCalendarTime(value:string):string {
+  if(validCalendarDate(value))return `${value.slice(0,4)}年${Number(value.slice(5,7))}月${Number(value.slice(8,10))}日`;
+  const m=value.match(/^(\d{4}-\d{2}-\d{2})[Tt](\d{2}):(\d{2}):(\d{2})(\.\d+)?([Zz]|[+-]\d{2}:\d{2})$/);
+  if(!m||!validCalendarDate(m[1])||Number(m[2])>23||Number(m[3])>59||Number(m[4])>59)return value;
+  const zone=/^[Zz]$/.test(m[6])?'+00:00':m[6];
+  if(zone==='-00:00'||Number(zone.slice(1,3))>23||Number(zone.slice(4))>59)return value;
+  const seconds=Number(m[4])||Number(m[5]??0)?`:${m[4]}${m[5]??''}`:'';
+  return `${readableCalendarTime(m[1])} ${m[2]}:${m[3]}${seconds}（UTC${zone}）`;
+}
 export function seedCalendarTime(value:string):CalendarTimeDraft {
   const m=value.match(/^(\d{4}-\d{2}-\d{2})(?:[Tt ](\d{2}:\d{2}))?/);
   const offset=value.match(/(?:[Zz]|[+-]\d{2}:\d{2})$/)?.[0];

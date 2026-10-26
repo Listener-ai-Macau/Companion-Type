@@ -1,5 +1,6 @@
 import {operationErrorText} from './operationFailure';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
+import {readableCalendarTime} from './calendarTime';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
@@ -2812,7 +2813,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${actionMetadataText(action.text)}`}
             onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>
               <span>{presentation.conditional?<small className="ct-action-condition-mark">有条件</small>:null}{shownTitle}{presentation.supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span>
-              {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?'注明时间':'负责人'}</span>{field.value}</span>)}
+              {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?'注明时间':'负责人'}</span>{field.key==='due'?readableCalendarTime(field.value):field.value}</span>)}
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div></div>;}
         if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>;
@@ -2826,7 +2827,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
 
 function actionMetadataText(value: string): string {
   const shown=actionReadingParts(value);
-  return [shown.title,...shown.metadata.map(field=>`${field.key==='due'?'注明时间':'负责人'}：${field.value}`)].join('；');
+  return [shown.title,...shown.metadata.map(field=>`${field.key==='due'?'注明时间':'负责人'}：${field.key==='due'?readableCalendarTime(field.value):field.value}`)].join('；');
 }
 
 function minutesInlineText(value: string) {
