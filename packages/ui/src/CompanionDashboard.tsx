@@ -2750,11 +2750,13 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
         // Keep it explicitly as a comparison, never attribute new metadata to speech.
         const comparisonOnly = references.length===0 && !!sourceParts?.metadata.length && bodyReferences.length>0;
         const shownReferences = comparisonOnly ? bodyReferences : references;
+        const unverifiedMetadata = sourceParts?.metadata.filter(field=>shownReferences.some(source=>!source.text.includes(field.value.trim())))??[];
+        const unverifiedNames = [...new Set(unverifiedMetadata.map(field=>field.key==='due'?'时间':'负责人'))].join('、');
         const links = onOpenSource && shownReferences.length ? <span className="ct-minutes-source-links">
           {shownReferences.map((source) => <button type="button" className="ct-text-button" key={source.index}
             disabled={blocked} aria-label={`${comparisonOnly?'对照第':'核对第'}${source.index + 1}段${comparisonOnly?'事项原文':'原文'}`}
             onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
-          {comparisonOnly?<small>注明时间或负责人未在对应原文中，请另行核对。</small>:null}
+          {comparisonOnly?<small>注明{unverifiedNames}未在对应原文中，请另行核对。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
           onClick={onShowTranscript}>查看原话（未匹配到准确定位）</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;
