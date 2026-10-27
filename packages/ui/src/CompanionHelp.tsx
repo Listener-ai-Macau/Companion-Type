@@ -22,19 +22,19 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
     <details open><summary>怎样和宠物聊天、起名字或记住一件事？</summary>      <p>先在“设备与同步”连接宠物，再展开页面最上方的“我的宠物”。目前聊天需要连接电脑，只用宠物麦克风。</p>      <p>点“开聊”后说一句话，说完点“说完了”；每句最多12秒，短回复显示在宠物屏幕底部。不会在后台持续收音。</p>      <p>在“名字、性格与记忆”查看这只宠物。“改名字与性格”可调整称呼和相处方式；“记住一句”只保存你确认的小事。需要聊天使用时再开启记忆开关，随时可以暂停、修改或删除。</p>    </details>    <h3>录音与找回</h3>    <ol className="ct-use-help-steps">
       <li><strong>在宠物上开始</strong><p>回到宠物首页，默认双击左下角开始录音。睡着时先短按实体键唤醒；改过录音手势时，按已选手势操作。</p></li>
       <li><strong>停止，等设备保存</strong><p>录音时再次双击屏幕停止，等待设备显示“已保存”。保存中或异常时，先保留设备上的内容。</p></li>
-      <li><strong>回到 Type 找到它</strong><p>在“设备与同步”连接并同步，等本机原音保存完成，再到“我的录音”按标题、日期或内容查找。需要时回听或转文字。</p></li>
+      <li><strong>回到 Type 找到它</strong><p>在“设备与同步”连接并同步，等本机原音保存完成，再到“我的记录”按标题、日期或内容查找。需要时回听或转文字。</p></li>
     </ol>
     <p className="ct-use-help-key">设备“已保存”与电脑“已收齐”是两步。文字还没生成，不等于原音没有保存。</p>
 
     <details><summary>文字不对，或有一句话看不懂，怎么办？</summary>
       <p>文字由语音识别生成，显示“文字已生成”不代表每句话都正确。先回到这条录音，点“回听”核对原音；需要改字时，点“核对文字”，修改后保存修订。</p>
       <p>原始识别文字和原音会保留。听不清的地方先保留待核对，不替录音猜出意思；确认文字后再整理重点。没有识别出文字时，也先查看原音，再决定是否重试。</p>
-      {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前录音</button> : null}
+      {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前记录</button> : null}
     </details>
     <details><summary>待办会提醒吗，“明天”是哪一天？</summary>
       <p>这里保存的是事项清单，不会在到期时自动通知。事项里注明时间，不代表已经设置提醒。</p>
       <p>原话里的“明天”“下周”等是录音当时的说法，请对照录音日期；Type 保留原话，不会把它们自动改成今天的相对时间。补充里的时间请对照补充时的语境，需要时可编辑成明确日期。</p>
-      {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前录音</button> : null}
+      {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前记录</button> : null}
     </details>
     <CompanionChecklistHandoff format="todo" onReturn={onRecording}/>
     <details><summary>双击、实体键和菜单录音，是同一件事吗？</summary>
@@ -45,7 +45,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <p>临时想法可以先按当前模式录下原音，不需要先开始在线会议或配置转写服务。</p>
     </details>
     <details><summary>设备说已保存，为什么电脑里还没有？</summary>
-      <p>设备先保存录音，Type 连接并同步后才有电脑副本。先看“设备与同步”的状态，再在“我的录音”查找；有搜索或筛选时，也试着清除筛选。</p>
+      <p>设备先保存录音，Type 连接并同步后才有电脑副本。先看“设备与同步”的状态，再在“我的记录”查找；有搜索或筛选时，也试着清除筛选。</p>
       <p>如果提示只恢复了片段，先保留已有内容，不把它当成完整录音。没有文字时可先查看原音状态；转文字和整理是后续处理。</p>
     </details>
     <details><summary>连不上，或画面一直不动怎么办？</summary>
@@ -77,7 +77,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
     </details>
     <div className="ct-button-row ct-use-help-links">
       <button type="button" className="ct-action" onClick={onDevice}>前往设备与同步</button>
-      <button type="button" className="ct-action" onClick={onLibrary}>前往我的录音</button>
+      <button type="button" className="ct-action" onClick={onLibrary}>前往我的记录</button>
       <button type="button" className="ct-text-button" onClick={onDiagnostics}>日志与诊断在哪里</button>
     </div>
     <details><summary>换电脑或转交宠物前，哪些资料需要分别处理？</summary>

@@ -12,6 +12,6 @@ export function CompanionChecklistHandoff({format,onReturn}:{format:'todo'|'todo
     <p>.ics 里的待办采用 VTODO 格式；Outlook 会忽略这类内容。如果所用应用不支持，保留清单，使用手机手动设提醒即可。</p>
     <p>例如，Infomaniak 官方公布的路径是“日历 → 高级操作 → 导入”，导入的待办位于“任务”区。Type 尚未完成该应用的实际兼容验证；查看清单不需要另开服务账号。</p>
     </details>
-    {onReturn?<button type="button" className="ct-action" onClick={onReturn}>返回当前录音</button>:null}
+    {onReturn?<button type="button" className="ct-action" onClick={onReturn}>返回当前记录</button>:null}
   </details>;
 }
