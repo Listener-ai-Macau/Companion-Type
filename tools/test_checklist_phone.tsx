@@ -41,10 +41,10 @@ const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>tex
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
 assert.equal(requests.length,0,'Opening a record does not prepare or disclose a QR automatically');
 await act(async()=>{button('带到手机').props.onClick();for(let i=0;i<50&&!tree.root.findAllByProps({alt:'当前已保存清单的文字二维码'}).length;i++)await new Promise(resolve=>setTimeout(resolve,10));});
-assert.deepEqual(requests[0],{sessionId:row.id,meetingMode:'offlineStore',format:'todo'});
+assert.deepEqual(requests[0],{sessionId:row.id,meetingMode:'offlineStore',format:'todotxt'});
 assert.equal(tree.root.findByProps({alt:'当前已保存清单的文字二维码'}).props.src,encoded.dataUrl);
 assert.match(text(tree.toJSON()),/没有上传或自动发送/);
-assert.match(text(tree.toJSON()),/不会自动设置提醒/);
+assert.match(text(tree.toJSON()),/不会同步勾选或自动提醒/);
 await act(async()=>button('收起').props.onClick());
 assert.equal(tree.root.findAllByProps({alt:'当前已保存清单的文字二维码'}).length,0);
 

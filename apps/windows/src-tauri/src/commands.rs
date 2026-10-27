@@ -484,9 +484,12 @@ pub fn preview_companion_meeting_export(
     let snapshot=coordinator.snapshot()?;
     let session=snapshot.host.sessions.iter().find(|row|row.id==request.session_id)
         .ok_or("找不到要导出的记录，请刷新后重试。")?;
+    let plain_checklist=matches!(&request.format,CompanionMeetingExportFormat::TodoText);
     let copyable=matches!(&request.format,CompanionMeetingExportFormat::Todo);
     let prepared=crate::backend::export::prepare_meeting_export(session,&request.meeting_mode,request.format.into())?;
-    let text_content=if copyable{Some(crate::backend::export::checklist_copy_text(&prepared)?)}else{None};
+    let text_content=if plain_checklist {
+        Some(std::str::from_utf8(&prepared.bytes).map_err(|_|"清单文字无法读取，请保留已保存内容。")?.to_owned())
+    } else if copyable {Some(crate::backend::export::checklist_copy_text(&prepared)?)} else {None};
     Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning,text_content})
 }
 

@@ -15,11 +15,12 @@ export function CompanionChecklistPhone({ result, onClose }: {
       : result.kind === 'error' ? <p role="alert">{result.message}</p>
       : result.kind === 'tooLong' ? <p role="status">清单较长，二维码无法在这里清楚地完整展示。请用“复制清单”或“导出清单”带走；内容没有截短。</p>
       : <>
-        <p>用支持文字二维码的手机扫码工具打开，再保存到备忘录。若相机没有显示文字，可用“复制清单”或“导出清单”。</p>
+        <p>用支持文字二维码的扫码工具打开，保存到手机备忘录。</p>
         <img src={result.dataUrl} width={result.pixels} height={result.pixels} alt="当前已保存清单的文字二维码"
           style={{ display: 'block', maxWidth: '100%', height: 'auto', imageRendering: 'pixelated', background: '#fff' }} />
         <details><summary>查看二维码里的完整文字</summary><pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>{result.text}</pre></details>
-        <p className="ct-step-meta">二维码在本机生成，内含清单文字；没有上传或自动发送。手机保存后才能离开电脑查看，不会自动设置提醒。</p>
+        <p className="ct-step-meta">手机里保存的是独立副本，不会同步勾选或自动提醒。</p>
+        <details><summary>扫码或保存遇到问题</summary><p>若相机不显示文字，可用“复制清单”或“导出清单”。二维码仅在本机生成，没有上传或自动发送；请在手机保存后再离开电脑。</p></details>
       </>}
   </section>;
 }

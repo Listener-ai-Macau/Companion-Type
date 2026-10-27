@@ -1069,7 +1069,7 @@ export function CompanionDashboard({
     exportActive.current=true;setPhoneBusy(true);setPhoneResult({sessionId,sourceKey,kind:'pending'});
     window.requestAnimationFrame(()=>document.getElementById('ct-phone-checklist')?.scrollIntoView({block:'nearest'}));
     try{
-      const preview=await readExportPreview({sessionId,meetingMode:minutesViewMode,format:'todo'});
+      const preview=await readExportPreview({sessionId,meetingMode:minutesViewMode,format:'todotxt'});
       if(!current())return;
       if(!/^[a-f0-9]{64}$/.test(preview.contentHash)||typeof preview.textContent!=='string'||!preview.textContent.trim())throw Error('没有可带走的已保存清单。');
       const code=await checklistPhoneCode(preview.textContent);
