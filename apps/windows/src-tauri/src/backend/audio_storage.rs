@@ -418,6 +418,7 @@ mod tests {
             transcript_text: String::new(), transcript_final: false, live_transcript_text: String::new(),
             transcript_preview: String::new(), transcript_segments: 0, utterances: vec![], minutes: None,
             minutes_by_mode: Default::default(), recovery: Default::default(), export_markdown: String::new(),
+            calendar_copy_revision: 0, calendar_copy_epoch: 0, calendar_copies: Vec::new(),
             exported_at: None, retention: CompanionV1SessionRetention { audio_cached: true,
                 transcript_cached: false, minutes_cached: false, consent_required: true,
                 retention_label: "local".into(), expires_at: None },

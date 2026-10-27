@@ -304,6 +304,22 @@ pub fn calendar_events_with_reminder(session_id:&str,mode:&str,title:&str,action
     calendar_events_with_reminder_lead(session_id,mode,title,actions,draft,stamp,if remind_at_time{Some(0)}else{None})
 }
 
+fn calendar_event_uid(session_id:&str,mode:&str,index:usize,text:&str)->String {
+    let mut hash=Sha256::new();
+    for field in ["calendar-deadline-event",session_id,mode,&index.to_string(),text] {hash.update(field.as_bytes());hash.update([0]);}
+    format!("{}@companion-type",&format!("{:x}",hash.finalize())[..40])
+}
+
+pub(crate) fn calendar_copy_entries(session_id:&str,mode:&str,actions:&[Action],lead:Option<u16>)->Vec<super::calendar_copy::Entry> {
+    actions.iter().enumerate().filter_map(|(index,item)|{
+        if item.completed{return None;}
+        let start=item.due.as_deref().and_then(event_start)?;
+        Some(super::calendar_copy::Entry{uid:calendar_event_uid(session_id,mode,index,&item.text),
+            title:readable_action(&item.text),deadline:item.due.clone()?,
+            reminder_minutes:lead.filter(|_|start.starts_with("DTSTART:"))})
+    }).collect()
+}
+
 pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>)->Result<String,String> {
     if lead_minutes.is_some_and(|m|!matches!(m,0|30|60)){return Err("不支持的提前提醒时间；请重新选择，截止时间保持不变。".into());}
     let mut out="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Companion Type//Checklist Calendar Events//ZH\r\nCALSCALE:GREGORIAN\r\n".to_string();
@@ -312,15 +328,11 @@ pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title
     for(index,item)in actions.iter().enumerate() {
         if item.completed {continue;}
         let Some(start)=item.due.as_deref().and_then(event_start)else{continue;};
-        let mut hash=Sha256::new();
-        for field in ["calendar-deadline-event",session_id,mode,&index.to_string(),&item.text] {
-            hash.update(field.as_bytes());hash.update([0]);
-        }
-        let id=format!("{:x}",hash.finalize());
+        let id=calendar_event_uid(session_id,mode,index,&item.text);
         let readable=readable_action(&item.text);
         let mode_label=match mode {"offlineStore"=>"先录后整理","onlineLive"=>"在线速记",other=>other};
         out.push_str("BEGIN:VEVENT\r\n");
-        out.push_str(&property("UID",&format!("{}@companion-type",&id[..40])));
+        out.push_str(&property("UID",&id));
         out.push_str(&property("DTSTAMP",stamp));out.push_str(&start);
         out.push_str(&property("SUMMARY",&readable));
         out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n整理方式：{mode_label}{}\n事项：{readable}\n清单时间点；导入后请核对日期、时区和提醒。",if draft{"\n草稿：请先核对"}else{""})));

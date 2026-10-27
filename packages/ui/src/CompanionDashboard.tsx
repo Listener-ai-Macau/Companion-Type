@@ -1,3 +1,4 @@
+import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {operationErrorText,calendarExportNeedsTime} from './operationFailure';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
@@ -1801,6 +1802,7 @@ export function CompanionDashboard({
               {phoneResult?.sessionId===selectedSession.id&&phoneResult.sourceKey===copySourceKey&&!editingMinutes
                 ? <CompanionChecklistPhone result={phoneResult} onClose={closePhoneChecklist}/> : null}
               {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '日历文件会带上未完成事项和已确认时间，导入后核对提醒即可。'}</p> : null}
+              {!editingMinutes ? <CompanionCalendarCopies key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`} session={selectedSession} mode={minutesViewMode} markdown={minutesMarkdown}/> : null}
               {calendarExportReview?.sessionId===selectedSession.id&&calendarExportReview.mode===minutesViewMode&&calendarExportReview.sourceKey===copySourceKey&&!editingMinutes?<div className="ct-calendar-export-review" role="status">
                 <p>{calendarExportReview.format==='calendar'?(calendarExportReview.warning||'把已确认的日期和时间带到常用日历；后续修改不会自动同步。'):'还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。'}</p>
                 {calendarExportReview.format==='calendar'?<>

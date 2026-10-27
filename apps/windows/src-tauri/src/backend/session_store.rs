@@ -96,6 +96,7 @@ fn removes_private_data(old: &[CompanionV1HostSession], new: &[CompanionV1HostSe
             || (before.minutes_by_mode.online_live.is_some() && after.minutes_by_mode.online_live.is_none())
             || (before.retention.audio_cached && !after.retention.audio_cached)
             || (before.retention.transcript_cached && !after.retention.transcript_cached)
+            || (!before.calendar_copies.is_empty() && after.calendar_copies.is_empty())
             || (before.retention.minutes_cached && !after.retention.minutes_cached)
     })
 }
@@ -175,6 +176,12 @@ fn save_locked(
         .is_some_and(|before| removes_private_data(before, sessions));
     if let Some(before) = previous.map(decode).transpose()? {
         for row in &before {
+            if sessions.iter().find(|s|s.id==row.id).is_some_and(|next|
+                next.calendar_copy_epoch<row.calendar_copy_epoch ||
+                next.calendar_copy_revision<row.calendar_copy_revision ||
+                next.calendar_copy_revision==row.calendar_copy_revision&&next.calendar_copies!=row.calendar_copies){
+                return Err("磁盘中的日历副本说明已变化；拒绝用旧窗口覆盖，请重新载入后核对。".into());
+            }
             if row.organization.protected && !sessions.iter().any(|s|s.id==row.id){
                 return Err("磁盘中的受保护录音不能从资料库移除；请先明确解除保护。".into());
             }

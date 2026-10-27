@@ -502,8 +502,24 @@ export interface CompanionV1HostSession {
   /** Durable per-session authorization and retry checkpoint for automatic recovery. */
   recovery?: CompanionV1MeetingRecovery;
   exportMarkdown: string;
+  calendarCopyRevision?: number;
+  calendarCopyEpoch?: number;
+  calendarCopies?: CompanionCalendarCopy[];
   exportedAt: string | null;
   retention: CompanionV1SessionRetention;
+}
+
+export interface CompanionCalendarCopy {
+  schema: 1;
+  privacyEpoch: number;
+  meetingMode: CompanionV1MeetingMode;
+  savedAt: string;
+  fileName: string;
+  fileSha256: string;
+  contentHash: string;
+  sourceTitle: string;
+  sourceMarkdown: string;
+  entries: { uid: string; title: string; deadline: string; reminderMinutes: 0 | 30 | 60 | null }[];
 }
 
 export interface CompanionV1MinutesVariant {
@@ -1267,6 +1283,9 @@ export function applyCompanionV1ControlFixture(
         minutes: null,
         minutesByMode: { offlineStore: null, onlineLive: null },
         exportMarkdown: '',
+        calendarCopies: [],
+        calendarCopyEpoch: (session.calendarCopyEpoch ?? 0) + 1,
+        calendarCopyRevision: (session.calendarCopyRevision ?? 0) + 1,
         exportedAt: null,
         retention: {
           ...session.retention,

@@ -261,7 +261,15 @@ export function App() {
       onPauseSync={isTauriRuntime() ? (jobId) => void pauseSync(jobId) : undefined}
       onRefresh={() => void refresh()}
       onControl={(request) => void runControl(request)}
-      onExportMeeting={(request) => exclusive('refresh', () => exportCompanionMeeting(request))}
+      onExportMeeting={(request) => exclusive('refresh', async () => {
+        const result=await exportCompanionMeeting(request);
+        if(result && request.format.startsWith('calendar')) {
+          // Cached host snapshot only: never probe the board to show a local receipt.
+          try {setSnapshot(await getCompanionSnapshot());}
+          catch {result.warning=[result.warning,'文件已保存；请重新打开记录核对本机副本说明。'].filter(Boolean).join(' ');}
+        }
+        return result;
+      })}
       onPreviewMeetingExport={(request)=>previewCompanionMeetingExport(request)}
       onExportDiagnostics={isTauriRuntime() ? (includeDevice) => exclusive('refresh', () => exportCompanionDiagnostics(includeDevice)) : undefined}
       onPreviewDiagnostics={isTauriRuntime() ? () => exclusive('refresh',previewCompanionDiagnostics) : undefined}

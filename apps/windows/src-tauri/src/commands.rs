@@ -546,6 +546,8 @@ pub async fn export_companion_meeting(
         let latest=crate::backend::export::prepare_meeting_export(session,&request.meeting_mode,format)?;
         crate::backend::export::require_unchanged(&latest,Some(expected))?;
     }
+    // A draft receipt is never committed on cancellation or failed file I/O.
+    let calendar_copy=crate::backend::calendar_copy::prepare(&session,&request.meeting_mode,&prepared,&destination);
     let bytes = prepared.bytes;
     let write_path = destination.clone();
     let written = tauri::async_runtime::spawn_blocking(move || {
@@ -554,8 +556,8 @@ pub async fn export_companion_meeting(
     .await
     .map_err(|error| format!("meeting export task failed: {error}"))??;
 
-    let warning = coordinator
-        .mark_meeting_exported(&request.session_id, &request.meeting_mode)
+    let warning = calendar_copy.and_then(|copy|coordinator
+        .mark_meeting_exported(&request.session_id, &request.meeting_mode, copy))
         .err()
         .map(|error| {
             format!(

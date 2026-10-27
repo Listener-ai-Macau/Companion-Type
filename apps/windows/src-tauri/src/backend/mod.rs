@@ -48,6 +48,7 @@ pub(crate) mod recording_pause_view;
 pub(crate) mod meeting_notes;
 pub(crate) mod minutes_context;
 pub(crate) mod library_organization;
+pub(crate) mod calendar_copy;
 pub(crate) mod library_export;
 pub(crate) mod library_lifecycle;
 pub(crate) mod board_meeting;
@@ -666,6 +667,7 @@ pub trait CompanionBackend: Send + Sync {
         &self,
         session_id: &str,
         meeting_mode: &str,
+        calendar_copy: Option<calendar_copy::Copy>,
     ) -> Result<(), String>;
     fn automatic_reconnect_once(&self) -> Result<CompanionV1Snapshot, String>;
     fn follow_recording_once(&self, original_session: Option<&str>,
@@ -3335,16 +3337,25 @@ impl CompanionBackend for FixtureCompanionBackend {
         &self,
         session_id: &str,
         meeting_mode: &str,
+        calendar_copy: Option<calendar_copy::Copy>,
     ) -> Result<(), String> {
         let mut snapshot = self
             .snapshot
             .lock()
             .map_err(|_| "Companion backend state lock failed".to_string())?;
-        let session = snapshot
-            .host
-            .sessions
-            .iter_mut()
-            .find(|session| session.id == session_id)
+        if let Some(copy)=calendar_copy {
+            if snapshot.host.persistence.status!="ready" {return Err("资料库尚未就绪，未记录新的日历副本。".into());}
+            if copy.meeting_mode!=meeting_mode {return Err("日历副本与整理方式不一致。".into());}
+            if cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none(){
+                calendar_copy::apply(&mut snapshot.host.sessions,session_id,copy)?;
+            }else{
+                let (revision,copies,exported_at)=calendar_copy::commit(&persistence::state_file_path(),session_id,copy)?;
+                let row=snapshot.host.sessions.iter_mut().find(|r|r.id==session_id).ok_or("原记录已移除；未恢复原记录。")?;
+                row.calendar_copy_revision=revision;row.calendar_copies=copies;row.exported_at=exported_at;
+            }
+            snapshot.updated_at=observation_timestamp();return Ok(());
+        }
+        let session = snapshot.host.sessions.iter_mut().find(|session| session.id == session_id)
             .ok_or_else(|| format!("meeting export target {session_id} is missing"))?;
         let mode_exists = match meeting_mode {
             "offlineStore" => session.minutes_by_mode.offline_store.is_some(),

@@ -574,9 +574,10 @@ impl CompanionCoordinator {
         &self,
         session_id: &str,
         meeting_mode: &str,
+        calendar_copy: Option<crate::backend::calendar_copy::Copy>,
     ) -> Result<(), String> {
         self.backend
-            .mark_meeting_exported(session_id, meeting_mode)
+            .mark_meeting_exported(session_id, meeting_mode, calendar_copy)
     }
 
     pub fn backend_capabilities(&self) -> CompanionBackendCapabilities {

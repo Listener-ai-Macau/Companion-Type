@@ -410,6 +410,12 @@ pub struct CompanionV1HostSession {
     #[serde(default)]
     pub recovery: CompanionV1MeetingRecovery,
     pub export_markdown: String,
+    #[serde(default)]
+    pub calendar_copy_revision: u64,
+    #[serde(default)]
+    pub calendar_copy_epoch: u64,
+    #[serde(default, skip_serializing_if="Vec::is_empty")]
+    pub calendar_copies: Vec<crate::backend::calendar_copy::Copy>,
     pub exported_at: Option<String>,
     pub retention: CompanionV1SessionRetention,
 }
@@ -1358,6 +1364,9 @@ pub(crate) fn apply_control_at(
             snapshot.host.sessions[index].minutes = None;
             snapshot.host.sessions[index].minutes_by_mode = Default::default();
             snapshot.host.sessions[index].export_markdown.clear();
+            snapshot.host.sessions[index].calendar_copy_epoch = snapshot.host.sessions[index].calendar_copy_epoch.saturating_add(1);
+            snapshot.host.sessions[index].calendar_copies.clear();
+            snapshot.host.sessions[index].calendar_copy_revision = snapshot.host.sessions[index].calendar_copy_revision.saturating_add(1);
             snapshot.host.sessions[index].exported_at = None;
             snapshot.host.sessions[index].retention.transcript_cached = false;
             snapshot.host.sessions[index].retention.minutes_cached = false;
@@ -1624,6 +1633,7 @@ pub(crate) fn create_host_session(
         minutes_by_mode: Default::default(),
         recovery: Default::default(),
         export_markdown: String::new(),
+        calendar_copy_revision: 0, calendar_copy_epoch: 0, calendar_copies: Vec::new(),
         exported_at: None,
         retention: session_retention(true, false, false),
     }
