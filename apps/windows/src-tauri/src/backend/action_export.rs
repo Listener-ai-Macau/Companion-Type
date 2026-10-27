@@ -414,7 +414,7 @@ mod p636_calendar_events_tests {
     fn p636_calendar_events_escape_author_content_and_fold_complete_utf8() {
         let task=Action{text:format!("核对资料,不可删除;{}\nBEGIN:VEVENT", "保留条件".repeat(70)),completed:false,due:Some("2026-11-05".into())};
         let body=calendar_events("s","offlineStore","标题\nBEGIN:VALARM",&[task],true,"20261027T010000Z").unwrap();
-        assert_eq!(body.matches("BEGIN:VEVENT\r\n").count(),1);assert!(!body.contains("\r\nBEGIN:VALARM"));
+        assert_eq!(body.lines().filter(|line|*line=="BEGIN:VEVENT").count(),1);assert!(!body.contains("\r\nBEGIN:VALARM"));
         assert!(body.lines().all(|line|line.len()<=75));assert!(body.contains("\\,不可删除\\;"));
         assert!(body.replace("\r\n ","").contains("草稿：请先核对"));
     }
