@@ -115,3 +115,17 @@ const nativeBefore=JSON.stringify([oldIso,nativeSaved]);assert.equal(latestSaved
 assert.equal(latestSavedResult([oldIso,nativeSaved])?.at,new Date(1793084105555).toISOString());
 assert.equal(JSON.stringify([oldIso,nativeSaved]),nativeBefore);
 console.log('PASS real native manual timestamp: epoch-ms save beats older ISO provider result before any export, no stored date rewrite');
+
+// Merely showing metadata must not open a form or dirty the saved list. Editing
+// another task must retain the exact original timestamp, owner and checkbox.
+const layered='[x] 带身份证 (due: 2026-10-28T20:00:00+08:00, owner: 我)\n[ ] 确认返程 (due: 未确认, owner: 小王)';
+const layeredChanges:string[]=[];
+act(()=>{tree=create(<ActionListEditor value={layered} disabled={false} onChange={v=>layeredChanges.push(v)}/>);});
+assert.deepEqual(layeredChanges,[]);
+const summary=tree.root.findByProps({'aria-label':'待办 1 时间与负责人'});
+assert.match(text(summary),/2026年10月28日 20:00/);assert.match(text(summary),/负责人：我/);
+assert.ok(tree.root.findAllByType('details').every((n:any)=>!n.props.open));
+act(()=>tree.root.findByProps({'aria-label':'待办 2 内容'}).props.onChange({target:{value:'确认回程后再订票'}}));
+assert.equal(layeredChanges.at(-1),'[x] 带身份证 (due: 2026-10-28T20:00:00+08:00, owner: 我)\n[ ] 确认回程后再订票 (due: 未确认, owner: 小王)');
+act(()=>tree.unmount());
+console.log('PASS checklist hierarchy: visible date/owner summary, no automatic form expansion or draft rewrite, other-task edit retains exact completed timestamp and owner');

@@ -332,7 +332,8 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
     {secondary.length?<details><summary>更多整理内容</summary>
       {secondary.map(field)}
     </details>:null}
-    <p className="ct-step-meta">只修改整理结果，原录音文字和补充备注仍分别保留。</p>
+    {manual?<details className="ct-manual-save-help"><summary>保存与提醒说明</summary><p className="ct-step-meta">自己填写的清单仅保存在本机，原话和补充仍保留；不会自动提取或创建提醒。</p></details>
+      :<p className="ct-step-meta">只修改整理结果，原录音文字和补充备注仍分别保留。</p>}
   </div>;
 }
 
@@ -1784,7 +1785,7 @@ export function CompanionDashboard({
               </div>:null}
               {renderExportFeedback('document', exportResult?.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok')}
               {editingMinutes ? <div id="ct-active-minutes-editor" className="ct-minutes-editor">
-                {selectedDraft?.minutes?.[minutesViewMode]?.createManual?<p className="ct-step-meta">自己填写；原话保留，不会自动提取或创建提醒。</p>:null}
+
                 <div className="ct-minutes-savebar" aria-label="整理内容保存">
                   <span>{selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单 · 尚未保存':minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
                 <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary"

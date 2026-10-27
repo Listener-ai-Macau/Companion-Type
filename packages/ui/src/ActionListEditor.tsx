@@ -49,8 +49,13 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending}:{va
         <button type="button" className="ct-text-button" disabled={disabled} aria-label={`删除待办 ${index+1}`}
           onClick={()=>update(rows.filter(item=>item.id!==row.id))}>删除</button>
       </div>
-      <details open={row.metadata.some(field=>field.value.trim())||undefined}>
-        <summary className="ct-step-meta">时间与负责人</summary>
+      <details>
+        <summary className="ct-step-meta" aria-label={`待办 ${index+1} 时间与负责人`}>
+          时间与负责人
+          {row.metadata.filter(field=>field.value.trim()).map(field=><span key={field.key} style={{marginLeft:10,overflowWrap:'anywhere'}}>
+            {field.key==='due'?'时间：':'负责人：'}{field.key==='due'?readableCalendarTime(field.value):field.value}
+          </span>)}
+        </summary>
         {row.metadata.some(field=>field.key==='due'&&readableCalendarTime(field.value)!==field.value)?<div>
           <span className="ct-step-meta">日历时间</span>
           <p>{readableCalendarTime(row.metadata.find(field=>field.key==='due')!.value)}</p>
