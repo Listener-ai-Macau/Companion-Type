@@ -45,7 +45,7 @@ impl SimpleTransportProfile {
             flow.window_chunks>flow.queue_chunks && mtu>=473 {
             // The same MTU can have a different encrypted receive-time limit.
             // The signed572 capture qualified215 under2M/965us; preserve the
-            // existing16-slot/64-durable contract and byte handoff threshold.
+            // existing64-durable contract with bounded generation-owned slots and byte handoff threshold.
             // Unknown/other budgets retain the previously delivered466 route.
             if self.continuous_durable_queue(flow,mtu) && short_2m_receive_budget(link) {
                 Self::Continuous215PeerHandoff
@@ -57,7 +57,7 @@ impl SimpleTransportProfile {
     /// No larger RAM ring, wire window, payload or radio parameter is inferred.
     pub fn continuous_durable_queue(self,flow:WbaFlow,mtu:u16)->bool {
         matches!(self,Self::Automatic|Self::Continuous215PeerHandoff) && flow.pipelined && flow.notify_credits &&
-        flow.window_notify_guaranteed && flow.queue_chunks==16 &&
+        flow.window_notify_guaranteed && (16..64).contains(&flow.queue_chunks) &&
         flow.window_chunks==64 && flow.payload_bytes>=466 && mtu>=473
     }
     /// An explicit long-value experiment must have the same packet geometry
@@ -73,7 +73,7 @@ impl SimpleTransportProfile {
             return Err("设备或MTU未确认WOC3长窗口/466字节包形，未开始升级".into());
         }
         if self==Self::Continuous215PeerHandoff && !self.continuous_durable_queue(flow,mtu) {
-            return Err("连续215对照需要实际16槽/64窗口/耐久通知及同一大MTU能力；未开始升级".into());
+            return Err("连续215对照需要实际有界队列/64窗口/耐久通知及同一大MTU能力；未开始升级".into());
         }
         let payload=self.file_payload_cap().min(flow.payload_bytes).min(mtu.saturating_sub(7));
         if payload==0 {Err("当前ATT MTU不能承载升级数据".into())} else {Ok(payload)}
@@ -212,7 +212,8 @@ impl WbaFlow {
             let queue=if v3 || v4 {u16::from_le_bytes(status[36..38].try_into().unwrap())} else {window};
             let valid=if v3 || v4 {
                 contract==5 && (if v4 {flags==21 || (flags==53 && window==64)} else {flags==13}) && (1..=128).contains(&window) &&
-                (1..=16).contains(&queue) && queue<=window && status[38..40]==[0,0]
+                (1..=if v4 && &status[24..28]==b"WOC5" && flags==53 {64} else {16}).contains(&queue) &&
+                queue<=window && status[38..40]==[0,0]
             } else {(1..=16).contains(&window) && flags==contract};
             if !valid {
                 return Err("Unsupported WBA OTA bounded window".into());
@@ -228,7 +229,9 @@ impl WbaFlow {
         Ok(flow)
     }
     pub fn pipeline_depth(self) -> usize {
-        if self.pipelined { usize::from(self.queue_chunks) } else { 1 }
+        // Physical durable capacity can be larger for short packets, but the
+        // number of concurrently owned WinRT operations retains its bound.
+        if self.pipelined { usize::from(self.queue_chunks.min(16)) } else { 1 }
     }
     /// Signed package metadata uses240, while the generic transport default
     /// uses244. Both can use the explicitly reported larger WBA payload.
@@ -528,13 +531,15 @@ pub(super) struct DeviceQueueCredits {
 }
 impl DeviceQueueCredits {
     pub fn new(expected:u32,payload:u16,capacity:u16)->Result<Self,String> {
-        if expected==0 || !(1..=505).contains(&payload) || !(1..=16).contains(&capacity) {
+        if expected==0 || !(1..=505).contains(&payload) || !(1..=64).contains(&capacity) {
             return Err("Invalid bounded OTA device credits".into());
         }
-        Ok(Self{expected,payload,capacity,submitted:0,durable:0,
+        // A previous generation's advertised capacity grants no extra slots.
+        // Only the validated fresh BEGIN below can expand this default.
+        Ok(Self{expected,payload,capacity:capacity.min(16),submitted:0,durable:0,
             ends:std::collections::VecDeque::with_capacity(usize::from(capacity)),begun:false,generation:None})
     }
-    pub fn begin(&mut self){self.ends.clear();self.submitted=0;self.durable=0;self.begun=true;self.generation=None;}
+    pub fn begin(&mut self){self.ends.clear();self.submitted=0;self.durable=0;self.begun=true;self.generation=None;self.capacity=self.capacity.min(16);}
     pub fn abort(&mut self){self.begin();self.begun=false;}
     pub fn generation(&self)->Option<u32>{self.generation}
     pub fn submitted_prefix(&self)->u32{self.submitted}
@@ -580,20 +585,33 @@ impl DeviceQueueCredits {
     pub fn observe(&mut self,bytes:&[u8])->Result<(),String> {
         let s=denzic_ota_core::parse_status(bytes)?;
         if !self.begun {return Ok(());} // old RECEIVING may precede the queued ABORT
-        if super::ble_link_budget::generation_status(bytes)? {
-            let generation=u32::from_le_bytes(bytes[40..44].try_into().unwrap());
-            if generation==0 || self.generation.is_some_and(|g|g!=generation) ||
-                (self.generation.is_none() && (self.submitted!=0 || s.bytes_written!=0)) {
-                return Err("Invalid OTA BEGIN generation; old notifications cannot grant credits".into());
-            }
-            self.generation=Some(generation);
-        } else if self.generation.is_some(){return Err("Missing OTA BEGIN generation".into());}
+        // Validate the entire receipt before changing owner, capacity or
+        // durable prefix. Rejected frames cannot poison a later valid BEGIN.
         if s.state!=denzic_ota_core::STATE_RECEIVING || s.last_error!=0 ||
             s.expected_size!=self.expected || s.bytes_written<self.durable ||
             s.bytes_written>self.submitted ||
             (s.bytes_written!=self.durable && !self.ends.contains(&s.bytes_written)) {
             return Err("Invalid OTA durable queue credit receipt; no additional DATA admitted".into());
         }
+        let mut next_generation=self.generation;
+        let mut next_capacity=self.capacity;
+        if super::ble_link_budget::generation_status(bytes)? {
+            let generation=u32::from_le_bytes(bytes[40..44].try_into().unwrap());
+            if generation==0 || self.generation.is_some_and(|g|g!=generation) ||
+                (self.generation.is_none() && (self.submitted!=0 || s.bytes_written!=0)) {
+                return Err("Invalid OTA BEGIN generation; old notifications cannot grant credits".into());
+            }
+            let flow=WbaFlow::from_simple_status(bytes,true)?;
+            if &bytes[24..28]==b"WOC5" &&
+                (s.chunk_payload_bytes!=self.payload || s.window_chunks!=flow.window_chunks) {
+                return Err("OTA queue capacity does not match the accepted BEGIN geometry".into());
+            }
+            if self.generation.is_some() && flow.queue_chunks!=self.capacity {
+                return Err("OTA physical queue changed inside an active BEGIN generation".into());
+            }
+            next_generation=Some(generation);next_capacity=flow.queue_chunks;
+        } else if self.generation.is_some(){return Err("Missing OTA BEGIN generation".into());}
+        self.generation=next_generation;self.capacity=next_capacity;
         self.durable=s.bytes_written;
         while self.ends.front().is_some_and(|end|*end<=self.durable) {self.ends.pop_front();}
         Ok(())
@@ -643,7 +661,7 @@ mod queue_credit_tests {
             }
             c.observe(&receipt(total,total)).unwrap();assert_eq!(c.durable,total);assert!(c.ends.is_empty());
         }}
-        for (total,payload,cap) in [(0,215,16),(100,0,16),(100,506,16),(100,100,0),(100,100,17)] {
+        for (total,payload,cap) in [(0,215,16),(100,0,16),(100,506,16),(100,100,0),(100,100,65)] {
             assert!(DeviceQueueCredits::new(total,payload,cap).is_err());
         }
     }
