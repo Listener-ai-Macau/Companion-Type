@@ -667,6 +667,7 @@ export function CompanionDashboard({
       || !companionMinutesNotesCurrent(selectedSession,(selectedMinutesVariant || legacyMinutes)?.sourceNoteContext)));
   const minutesMarkdown = selectedMinutesVariant?.markdown || legacyMinutes?.markdown || '';
   const minutesProcessing = (selectedMinutesVariant || legacyMinutes)?.processing;
+  const minutesIncomplete = Boolean(minutesProcessing && !companionMinutesProcessingComplete(minutesProcessing));
   const manualMinutes = (selectedMinutesVariant || legacyMinutes)?.source === 'userAuthored';
   const minutesDisplayContext = manualMinutes ? undefined : (selectedMinutesVariant || legacyMinutes)?.sourceNoteContext;
   const recordingMode = selectedSession?.meetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
@@ -1602,19 +1603,19 @@ export function CompanionDashboard({
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>重新选择内容并整理</button>
               </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{manualMinutes ? '手写清单已保存 · 仅本机保存，不是自动整理' : selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
               {selectedMinutesVariant?.source === 'rules_l0' ? <p className="ct-step-meta">仅摘录已有原句，需你核对并补充；原音和文字已保留。</p> : null}
-              <div className="ct-inline-edit-actions">
+              <div className="ct-inline-edit-actions ct-minutes-export-actions">
                 {!editingMinutes && hasMinutes ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
-                  onClick={()=>void exportMeeting(savedActions(minutesMarkdown).length>0?'todo':'markdown')}><Download size={15}/>
-                  {savedActions(minutesMarkdown).length>0?'导出清单':'导出整理'}</button> : null}
+                  onClick={()=>void exportMeeting(!minutesIncomplete && savedActions(minutesMarkdown).length>0?'todo':'markdown')}><Download size={15}/>
+                  {minutesIncomplete?'保存部分纪要':savedActions(minutesMarkdown).length>0?'导出清单':'导出整理'}</button> : null}
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-action"
-                  disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
-                  title="导出待办文件；导入支持待办的日历后，仍需核对日期和提醒"
+                  disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale||minutesIncomplete}
+                  title={minutesIncomplete ? '整理完成后才能导出整场待办' : '导出待办文件；导入支持待办的日历后，仍需核对日期和提醒'}
                   onClick={()=>void exportMeeting('ics')}>导出日历待办</button> : null}
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
                   title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />{savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'}</button> : null}
               </div>
-              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">需要提醒时，可导出到支持待办的日历；导入后请核对日期和提醒，不会自动设置。</p> : null}
+              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '需要提醒时，可导出到支持待办的日历；导入后请核对日期和提醒，不会自动设置。'}</p> : null}
               {renderExportFeedback('document', exportResult?.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok')}
               {editingMinutes ? <div className="ct-minutes-editor">
                 {selectedDraft?.minutes?.[minutesViewMode]?.createManual?<p className="ct-step-meta">对照下方原话与补充填写；不会自动提取内容，也不会调用整理服务。写在“行动项”下的列表可保存、勾选和导出；不会自动提醒。</p>:null}
@@ -1662,7 +1663,7 @@ export function CompanionDashboard({
               title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
               onClick={() => void exportMeeting('markdown','documentTools')}><Download size={15} />{exportBusy ? '正在导出…' : '导出整理全文'}</button>:null}
 
-            {savedActions(minutesMarkdown).length===0?<button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale}
+            {savedActions(minutesMarkdown).length===0?<button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale || minutesIncomplete}
               title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics','documentTools')}>导出日历待办</button>:null}
             <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
               onClick={()=>void exportMeeting('txt','documentTools')}>{selectedSession.meetingNotes?.length?'导出原话与补充':'导出原话'}</button>
