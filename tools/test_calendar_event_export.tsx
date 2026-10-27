@@ -14,7 +14,7 @@ let warn=true,tree:any,releasePreview:any;
 const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},
  onSaveMeeting:async()=>snapshot,
  onExportMeeting:async(request:any)=>{exports.push(request);return null;},
- onPreviewMeetingExport:async(request:any)=>{previews.push(request);if(releasePreview)return new Promise<any>(resolve=>{releasePreview=resolve;});return{contentHash:hash,warning:warn?'Unconfirmed saved time':null};}});
+ onPreviewMeetingExport:async(request:any)=>{previews.push(request);if(releasePreview&&request.format==='calendar')return new Promise<any>(resolve=>{releasePreview=resolve;});return{contentHash:hash,warning:warn?'Unconfirmed saved time':null};}});
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
 const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
@@ -29,16 +29,18 @@ assert.ok(tree.root.findAllByProps({className:'ct-minutes-editor'}).length);asse
 act(()=>tree.unmount());
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
 await act(async()=>button('导出到日历').props.onClick());
-await act(async()=>button('只导出已确认的事项').props.onClick());
+await act(async()=>button('导出日程').props.onClick());
 assert.deepEqual(exports[0],{sessionId:row.id,meetingMode:'offlineStore',format:'calendar',expectedContentHash:hash});
 assert.match(text(tree.toJSON()),/已取消保存/);
-warn=false;await act(async()=>button('导出到日历').props.onClick());assert.equal(exports.length,2);
+warn=false;await act(async()=>button('导出到日历').props.onClick());assert.equal(exports.length,1);
+await act(async()=>button('导出日程').props.onClick());assert.equal(exports.length,2);
 assert.equal(exports[1].expectedContentHash,hash,'a fully confirmed result also binds the reviewed native content');
 releasePreview=true;
 await act(async()=>{button('导出到日历').props.onClick();button('导出到日历').props.onClick();});
 const count=previews.length;assert.equal(exports.length,2);
 await act(async()=>releasePreview({contentHash:hash,warning:null}));
-assert.equal(previews.length,count);assert.equal(exports.length,3,'double-click does not issue a second preview/save operation');
+assert.equal(previews.length,count+1);assert.equal(exports.length,2,'double-click cannot save before the reviewed choice');
+await act(async()=>button('导出日程').props.onClick());assert.equal(exports.length,3);
 releasePreview=true;
 await act(async()=>{button('导出到日历').props.onClick();});
 assert.ok(button('取消等待'));

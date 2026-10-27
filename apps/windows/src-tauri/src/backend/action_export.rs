@@ -281,8 +281,23 @@ pub(crate) fn calendar_event_notice(actions:&[Action])->Option<String> {
 }
 
 pub fn calendar_events(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str)->Result<String,String> {
+    calendar_events_with_reminder(session_id,mode,title,actions,draft,stamp,false)
+}
+
+pub(crate) fn calendar_event_reminder_notice(actions:&[Action])->Option<String> {
+    let mut notes=Vec::new();
+    if let Some(base)=calendar_event_notice(actions){notes.push(base);}
+    let days=actions.iter().filter(|a|!a.completed && a.due.as_deref().and_then(event_start).is_some_and(|s|s.starts_with("DTSTART;VALUE=DATE:"))).count();
+    if days>0{notes.push(format!("{days}项只有日期，会保留为全天日程，不添加提醒；确认具体时刻后才能提醒。"));}
+    if notes.is_empty(){None}else{Some(notes.join(" "))}
+}
+
+/// Explicit DISPLAY alarm only. No date-only midnight, guessed duration,
+/// recipient/invitation, online calendar mutation or automatic synchronization.
+pub fn calendar_events_with_reminder(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,remind_at_time:bool)->Result<String,String> {
     let mut out="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Companion Type//Checklist Calendar Events//ZH\r\nCALSCALE:GREGORIAN\r\n".to_string();
     let mut count=0;
+    let mut reminder_count=0;
     for(index,item)in actions.iter().enumerate() {
         if item.completed {continue;}
         let Some(start)=item.due.as_deref().and_then(event_start)else{continue;};
@@ -300,13 +315,22 @@ pub fn calendar_events(session_id:&str,mode:&str,title:&str,actions:&[Action],dr
         out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n整理方式：{mode_label}{}\n事项：{readable}\n清单时间点；导入后请核对日期、时区和提醒。",if draft{"\n草稿：请先核对"}else{""})));
         // RFC5545: a date without DTEND is one day; a timed event without
         // DTEND ends at DTSTART. A deadline does not reserve invented work time.
-        out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\nEND:VEVENT\r\n");count+=1;
+        out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\n");
+        if remind_at_time && start.starts_with("DTSTART:") {
+            out.push_str("BEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER;RELATED=START:PT0S\r\n");
+            out.push_str(&property("DESCRIPTION",&format!("清单提醒：{readable}")));
+            out.push_str("END:VALARM\r\n");reminder_count+=1;
+        }
+        out.push_str("END:VEVENT\r\n");count+=1;
     }
     if count==0 {
         if actions.iter().all(|item|item.completed) {
             return Err("CALENDAR_NO_PENDING_ACTIONS:清单事项均已完成，没有需要放入日历的未完成事项；原清单保持不变。".into());
         }
         return Err("CALENDAR_TIME_REQUIRED:没有可导出的日历日程。请在编辑清单中确认未完成事项的日期或时刻，再导出；原清单保持不变。".into());
+    }
+    if remind_at_time && reminder_count==0 {
+        return Err("CALENDAR_TIME_REQUIRED:提醒需要具体时刻。请确认未完成事项的时刻；只有日期的事项仍可作为全天日程导出，原清单保持不变。".into());
     }
     out.push_str("END:VCALENDAR\r\n");Ok(out)
 }
@@ -316,6 +340,38 @@ pub fn stamp_now() -> String { Utc::now().format("%Y%m%dT%H%M%SZ").to_string() }
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn calendar_reminder_is_explicit_preserves_conditions_and_never_guesses_midnight() {
+        let markdown="## 行动项\n- [ ] 咖啡豆不要深烘，确认灯座后买灯泡 (due: 2026-10-31T09:00:00+08:00)\n- [ ] 只确定星期六 (due: 2026-10-31)\n- [x] 已完成 (due: 2026-10-31T08:00:00+08:00)\n- [ ] 尚待商量 (due: 周末)";
+        let actions=parse_saved_actions(markdown);
+        let plain=calendar_events("same","offlineStore","采购",&actions,false,"20261028T010000Z").unwrap();
+        let alarm=calendar_events_with_reminder("same","offlineStore","采购",&actions,false,"20261028T010000Z",true).unwrap();
+        assert!(!plain.contains("VALARM"));
+        assert_eq!(alarm.matches("BEGIN:VEVENT").count(),2);
+        assert_eq!(alarm.matches("BEGIN:VALARM").count(),1);
+        assert!(alarm.contains("DTSTART:20261031T010000Z\r\n"));
+        assert!(alarm.contains("DTSTART;VALUE=DATE:20261031\r\n"));
+        assert!(alarm.contains("ACTION:DISPLAY\r\nTRIGGER;RELATED=START:PT0S\r\nDESCRIPTION:"));
+        assert!(alarm.contains("不要深烘"));assert!(alarm.replace("\r\n ","").contains("确认灯座后买灯泡"));
+        assert!(!alarm.contains("ATTENDEE:"));assert!(!alarm.contains("DTEND:"));
+        assert!(!alarm.contains("T000000Z"));
+        assert!(calendar_event_reminder_notice(&actions).unwrap().contains("1项只有日期"));
+        assert_eq!(actions,parse_saved_actions(markdown));
+    }
+
+    #[test]
+    fn calendar_reminder_requires_confirmed_instant_and_escapes_alarm_description() {
+        for due in ["2026-10-31","周末","2026-10-31T09:00:00-00:00","2026-10-31T09:00:00.001Z"] {
+            let actions=parse_saved_actions(&format!("## 行动项\n- [ ] 确认后再买 (due: {due})"));
+            assert!(calendar_events_with_reminder("id","offlineStore","记录",&actions,false,"20261028T010000Z",true).unwrap_err().starts_with("CALENDAR_TIME_REQUIRED:"));
+        }
+        let actions=[Action{text:"要保留,条件;以及\nEND:VALARM\nBEGIN:VEVENT".into(),completed:false,due:Some("2026-10-31T09:00:00Z".into())}];
+        let value=calendar_events_with_reminder("id","onlineLive","原记录",&actions,true,"20261028T010000Z",true).unwrap();
+        assert_eq!(value.lines().filter(|line|*line=="BEGIN:VEVENT").count(),1);
+        assert_eq!(value.lines().filter(|line|*line=="END:VALARM").count(),1);
+        assert!(value.replace("\r\n ","").contains("\\nEND:VALARM\\nBEGIN:VEVENT"));
+    }
+
     #[test]
     fn p613_readable_exports_preserve_calendar_identity_and_saved_values() {
         let text="核对结果 (owner: 小林, due: 2026-10-26T15:00:00+08:00)";
