@@ -739,7 +739,7 @@ mod tests {
         assert!(out.contains("BEGIN:VTODO\r\n"));
         assert!(out.contains("SUMMARY:陈明周五前验证"));
         assert!(!out.contains("DUE:"));
-        assert!(out.contains("due: 周五"));
+        assert!(out.contains("注明时间：周五"));
         assert!(out.contains("STATUS:NEEDS-ACTION\r\n"));
         assert!(out.ends_with("END:VCALENDAR\r\n"));
     }

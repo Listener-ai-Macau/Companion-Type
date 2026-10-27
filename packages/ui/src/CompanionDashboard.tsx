@@ -402,6 +402,7 @@ export function CompanionDashboard({
   const [libraryCurrentMessage,setLibraryCurrentMessage]=useState('');
   const [libraryUnsaved,setLibraryUnsaved]=useState(false);
   const [openSavedRecordingId, setOpenSavedRecordingId] = useState<string | null>(null);
+  const [openSavedRecordingSource, setOpenSavedRecordingSource] = useState(false);
   const savedRecordingWorkspace = useRef<HTMLElement | null>(null);
   const recordingOpener = useRef<HTMLButtonElement | null>(null);
   const recordingLibraryRegion = useRef<HTMLElement | null>(null);
@@ -595,6 +596,7 @@ export function CompanionDashboard({
     setLibraryFilters({ folder: '*', tag: '', favorites: false });
     setLibraryQuery('');
     setOnlyPendingSessions(false);
+    setOpenSavedRecordingSource(false);
     setOpenSavedRecordingId(recentSavedRecording.id);
     onControl({ action: 'meetingSelectSession', sessionId: recentSavedRecording.id });
   };
@@ -626,6 +628,13 @@ export function CompanionDashboard({
     setPlaybackOpen(false);
     setTranscribePromptSession(null);
   }, [selectedSession?.id]);
+
+  useEffect(()=>{
+    if(!openSavedRecordingId || selectedSession?.id!==openSavedRecordingId || !openSavedRecordingSource)return;
+    // A source-text or note search hit opens its actual reading section.
+    // Selection and background refresh keep their existing behavior otherwise.
+    setRecordingResultOpen(false);setTranscriptReviewOpen(true);setSourceSelection(null);
+  },[openSavedRecordingId,selectedSession?.id,openSavedRecordingSource]);
 
   const nameError = draftName.length > 0 && !companionBleNameIsValid(draftName)
     ? 'BLE 名称不合法'
@@ -1430,7 +1439,7 @@ export function CompanionDashboard({
                 : session.pendingReason === 'needs_segments' ? '同步未完成'
                 : !localSaveConfirmed ? '保存待确认'
                 : describeCompanionMeetingRecovery(session)?.label ?? (meetingHasFinalMinutes(session)
-                ? '纪要完成'
+                ? ((session.minutesByMode?.[session.meetingMode ?? 'offlineStore'] ?? session.minutes)?.source === 'userAuthored' ? '手写清单已保存' : '纪要完成')
                 : session.minutes?.markdown || session.minutesByMode?.offlineStore || session.minutesByMode?.onlineLive ? '纪要草稿'
                 : session.status === 'transcribed'
                   ? session.source === 'importedTranscript' ? '已导入' : '已转写'
@@ -1446,7 +1455,7 @@ export function CompanionDashboard({
                   type="button"
                   key={session.id}
                   className={`ct-library-card ${selected ? 'selected' : ''}`}
-                  onClick={() => {rememberRecordingOpener();setOpenSavedRecordingId(session.id); onControl({ action: 'meetingSelectSession', sessionId: session.id });}}
+                  onClick={() => {rememberRecordingOpener();setOpenSavedRecordingSource(preview.target==='source');setOpenSavedRecordingId(session.id); onControl({ action: 'meetingSelectSession', sessionId: session.id });}}
                   disabled={busyAction !== null||Boolean(libraryFilters.trash)}
                   aria-pressed={selected}
                   title={session.sourceDeviceId ? `来源设备：${session.sourceDeviceId}` : undefined}
@@ -1527,7 +1536,7 @@ export function CompanionDashboard({
               {finalTranscript ? <span className="ct-pill ct-pill-good">{selectedSession.source === 'importedTranscript' ? '已导入文字' : '文字已生成'}</span>
                 : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写'
                   : selectedSession.processingPolicy === 'manual' && savedOriginalReady ? '原音已保存' : '尚未转写'}</span>}
-              {offlineMinutes ? <span className="ct-pill">{offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
+              {offlineMinutes ? <span className="ct-pill">{offlineMinutes.source === 'userAuthored' ? '手写清单' : isTextOnlyImport(selectedSession) ? (offlineReady ? '文字整理' : '整理草稿') : offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
               {onlineMinutes ? <span className="ct-pill">{onlineReady ? '在线纪要' : '在线草稿'}</span> : null}
             </div>
           </header>
@@ -1585,7 +1594,7 @@ export function CompanionDashboard({
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
             <summary>整理结果{minutesDirty ? ' · 有未保存的修改' : ''}</summary>
             <MinutesModeTabs value={minutesViewMode} onChange={setMinutesViewMode} dualMode={Boolean(offlineMinutes && onlineMinutes)}
-              labels={{offlineStore:{visible:`先录后整理 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}`,accessible:`先录后整理纪要 ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`},
+              labels={{offlineStore:{visible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}`,accessible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理纪要'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`},
                 onlineLive:{visible:`在线速记 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}`,accessible:`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`}}}>
               {minutesDisplayContext?<p className="ct-minutes-mode-meta">{(selectedMinutesVariant??legacyMinutes)?.source==='rules_l0'&&(selectedMinutesVariant??legacyMinutes)?.quality==='draft'
                 ? '整理未完成。下方是基础草稿，尚未应用本次补充；原话和补充均已保存。'

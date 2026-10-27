@@ -10,7 +10,7 @@
     "build:windows": "node tools/verify_third_party_notices.mjs && tsc -p apps/windows/tsconfig.json && vite build --config apps/windows/vite.config.ts",
     "build:mobile": "tsc -p apps/mobile/tsconfig.json && vite build --config apps/mobile/vite.config.ts",
     "test": "npm run test:core",
-    "test:core": "node --experimental-strip-types packages/core/src/companionV1.test.ts",
+    "test:core": "node tools/test_software_contracts.mjs core",
     "test:ui": "node tools/test_companion_setup_render.mjs",
     "test:core:write-docs": "node --experimental-strip-types packages/core/src/companionV1.test.ts --write-docs",
     "verify:user-chain": "node --experimental-strip-types tools/verify_companion_type_user_chain.ts",
@@ -40,7 +40,8 @@
     "verify:installed-capability-truth": "playwright test tools/verify_companion_type_installed_capability_truth.spec.cjs --reporter=line",
     "verify:installed-user-journey": "playwright test tools/verify_companion_type_installed_user_journey.spec.cjs --reporter=line",
     "tauri:windows": "tauri build --config apps/windows/src-tauri/tauri.conf.json",
-    "tauri:windows:dev": "tauri dev --config apps/windows/src-tauri/tauri.conf.json"
+    "tauri:windows:dev": "tauri dev --config apps/windows/src-tauri/tauri.conf.json",
+    "test:customer-reading": "node tools/test_software_contracts.mjs customer"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.11.0",

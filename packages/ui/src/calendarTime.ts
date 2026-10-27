@@ -22,7 +22,7 @@ export function readableCalendarTime(value:string):string {
 export function seedCalendarTime(value:string):CalendarTimeDraft {
   const m=value.match(/^(\d{4}-\d{2}-\d{2})(?:[Tt ](\d{2}:\d{2}))?/);
   const offset=value.match(/(?:[Zz]|[+-]\d{2}:\d{2})$/)?.[0];
-  return{expected:value,date:m&&validCalendarDate(m[1])?m[1]:'',time:m?.[2]??'09:00',timed:!/^\d{4}-\d{2}-\d{2}$/.test(value),zone:offset?'offset':'local',offset:offset?(/[Zz]/.test(offset)?'+00:00':offset):'+00:00'};
+  return{expected:value,date:m&&validCalendarDate(m[1])?m[1]:'',time:m?.[2]??'',timed:!/^\d{4}-\d{2}-\d{2}$/.test(value),zone:offset?'offset':'local',offset:offset?(/[Zz]/.test(offset)?'+00:00':offset):'+00:00'};
 }
 const pad=(n:number)=>String(n).padStart(2,'0');
 function sameLocal(date:Date,y:number,m:number,d:number,h:number,min:number):boolean {

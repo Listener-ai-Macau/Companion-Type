@@ -27,7 +27,7 @@ const button = (label: string) => {
 };
 const click = (label: string) => act(() => button(label).props.onClick());
 const editor = () => renderer.root.findAllByType('textarea').find((n: any) => n.props.className?.includes('ct-step-textarea'));
-click('采集与处理');
+click('更多录音与处理操作');
 assert.equal(editor().props.value, 'A 的转写');
 act(() => editor().props.onChange({ target: { value: 'A 的手动修改，尚未导入' } }));
 snapshot = structuredClone(snapshot); snapshot.host.sessions[0].transcriptText = '后台更新';
@@ -229,7 +229,7 @@ async function testProductPolish() {
       removeAttribute(name: string) { if (name === 'src') this.removed = true; }, load() { this.loaded += 1; } };
     audioNodes.push(node); return node;
   } }); });
-  click('采集与处理');
+  click('更多录音与处理操作');
   assert.match(text(renderer.toJSON()), /录制模式（先录后整理）纪要含人工修改。再次生成会替换这一版，建议先导出保存/);
   const titleInput = () => renderer.root.findByProps({ 'aria-label': '会议标题' });
   act(() => titleInput().props.onChange({ target: { value: '  用户标题草稿  ' } }));

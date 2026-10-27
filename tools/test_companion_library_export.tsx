@@ -27,7 +27,7 @@ assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,1);
 act(()=>button('选择当前筛选结果').props.onClick());set('批量导出格式','json');set('批量导出纪要版本','onlineLive');
 await act(async()=>button('导出 1 场录音').props.onClick());assert.match(text(tree.toJSON()),/已取消导出/);
 assert.deepEqual(calls[0],{targets:[{sessionId:a.id,expectedRevision:7}],format:'json',meetingMode:'onlineLive'});
-behavior='fail';await act(async()=>button('导出 1 场录音').props.onClick());assert.match(text(tree.toJSON()),/未完成整批导出，选择仍保留：disk full/);
+behavior='fail';await act(async()=>button('导出 1 场录音').props.onClick());assert.match(text(tree.toJSON()),/未完成整批导出，选择仍保留：本机磁盘空间不足/);
 behavior='success';await act(async()=>button('导出 1 场录音').props.onClick());assert.match(text(tree.toJSON()),/已导出 1 场录音到 C:\/Exports\/new/);
 set('筛选录音开始日期','2026-10-18');assert.match(text(tree.toJSON()),/开始日期不能晚于结束日期/);
 act(()=>button('清除分类筛选').props.onClick());assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,3);

@@ -1,5 +1,10 @@
 // Exact, existing authored error contracts; dynamic OS/service details are not trusted.
 export const knownOperationErrors:readonly string[]=[
+  "所选内容含受保护录音，整批未移入回收站；请先解除保护。",
+  "这场录音已受保护，未删除任何音频、文字或设备数据；请先解除保护。",
+  "资料库含受保护录音；请先明确解除保护，再清除全部资料。",
+  "所选录音已变化、已恢复或受保护；未开始永久清除，请刷新核对。",
+  "磁盘中的录音已受保护，未删除资料；请刷新后核对。",
   // Exact local manual-document contracts; preserve conflicts as conflicts,
   // never turn them into a generic disk/service failure.
   "手写清单请求缺少内容，未保存。",

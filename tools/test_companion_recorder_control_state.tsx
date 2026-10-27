@@ -42,7 +42,7 @@ const entryProps=()=>({snapshot,surface:'windows' as const,busyAction:null,error
 act(()=>{renderer=create(<CompanionDashboard {...entryProps()} />);});
 assert.equal(button('开始录音').props.disabled,false,'missing ASR settings cannot block local audio capture');
 act(()=>button('开始录音').props.onClick());
-assert.deepEqual(calls.pop(),{action:'meetingStart',meetingMode:'offlineStore',deviceId:snapshot.device.deviceId,
+assert.deepEqual(calls.pop(),{action:'meetingStart',meetingMode:'offlineStore',promptId:'__companion_capture_only__',deviceId:snapshot.device.deviceId,
   title:'Companion 录音',durationMs:1800000});
 snapshot=structuredClone(snapshot);snapshot.connected=false;snapshot.device.connected=false;
 act(()=>renderer.update(<CompanionDashboard {...entryProps()} />));

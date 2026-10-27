@@ -14,6 +14,7 @@ export const pauseRecordingSync = async (jobId: string) => api().pauseSync ? api
 export const exportCompanionMeeting = async () => null;
 export const exportCompanionAudio = async () => null;
 export const exportCompanionDiagnostics = async () => null;
+export const previewCompanionDiagnostics = (...args:unknown[])=>required('previewDiagnostics',...args);
 export const prepareCompanionAudioComponents = async () => {};
 export const checkCompanionService = async (service: string) => ({ service, status: 'available', message: 'test only', elapsedMs: 1, checkedAtUnixMs: 1 });
 export const prepareCompanionAudio = async (sessionId: string) => ({ sessionId, url: 'asset://test-only/recording.wav' });
@@ -41,3 +42,12 @@ export const discardOldestDeviceRecording = async (requiredSeconds: number) => {
 };
 export const transferCompanionFirmwareOta = async () => ({});
 export const validateCompanionOtaPackage = async () => ({});
+
+export const watchCompanionSnapshotUpdates = async (listener: unknown) => api().watchUpdates ? api().watchUpdates(listener) : (()=>{});
+const required = (name:string,...args:unknown[]) => {if(typeof api()[name] !== 'function')throw new Error(`Unexpected unconfigured test operation: ${name}`);return api()[name](...args);};
+export const controlCompanionPetFind = (...args:unknown[])=>required('petFind',...args);
+export const exportCompanionLibrary = (...args:unknown[])=>required('exportLibrary',...args);
+export const saveCompanionLibraryState = (...args:unknown[])=>required('saveLibraryState',...args);
+export const purgeCompanionLibrary = (...args:unknown[])=>required('purgeLibrary',...args);
+export const saveCompanionLibraryOrganization = (...args:unknown[])=>required('saveLibraryOrganization',...args);
+export const saveCompanionLibraryLifecycle = (...args:unknown[])=>required('saveLibraryLifecycle',...args);

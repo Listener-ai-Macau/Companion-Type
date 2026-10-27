@@ -50,7 +50,7 @@ function messageOf(error:unknown):string{
   catch{return '';}
 }
 function classify(text:string,scope:OperationScope):OperationFailureKind{
-  if(/(?:\b(?:ENOSPC|StorageFull)\b|no space left on device|os error 112\b|磁盘空间不足)/i.test(text))return 'storage';
+  if(/(?:\b(?:ENOSPC|StorageFull)\b|no space left on device|\bdisk (?:is )?full\b|os error 112\b|磁盘空间不足)/i.test(text))return 'storage';
   if(/(?:(?:^(?:HTTP\s*)?(?:401|403)\b|\bHTTP(?: status)?[:= ]+(?:401|403)\b|\b(?:Unauthorized|Forbidden)\b)|服务.{0,8}(?:密钥|授权|配置)|未配置|not configured|missing (?:api|access)[ _-]?key)/i.test(text))return 'configuration';
   if(/(?:\bHTTP(?: status)?[:= ]+(?:402|429)\b|^429\b|quota exceeded|rate limit)/i.test(text))return 'rateLimit';
   if(/(?:\b(?:EACCES|EPERM|EROFS|PermissionDenied|ReadOnlyFilesystem)\b|access (?:is )?denied|permission denied|os error (?:5|32|33)\b|sharing violation|lock violation|文件正在使用中|只读文件系统|目录权限|拒绝访问)/i.test(text))return 'permission';

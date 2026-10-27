@@ -38,7 +38,7 @@ for(const failure of ['host','missing_key','another_device','multiple','differen
 }
 snapshot=baseline;pausedDevice=row.sourceDeviceId;busyAction=null;boardOnlineLive=null;
 act(()=>renderer.update(<CompanionDashboard {...props()} />));
-act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n).includes('采集与处理')).props.onClick());
+act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n).includes('更多录音与处理操作')).props.onClick());
 assert.equal(button('同步原录音').props.disabled,false,'restored original has a usable entry before a cached native connection exists');
 act(()=>button('同步原录音').props.onClick());
 assert.equal(calls.at(-1).action,'deviceSyncRecordings');assert.equal(calls.at(-1).sessionId,'original-long');

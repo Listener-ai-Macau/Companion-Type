@@ -8,7 +8,7 @@ const b=structuredClone(a);b.id='life-b';b.title='另一场录音';snapshot.host
 let tree:any;const calls:any[]=[];const purges:any[]=[];
 const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},
  onSaveLibraryLifecycle:async(request:any)=>{
-  calls.push(request);if(request.action==='trash'&&request.targets.some((t:any)=>snapshot.host.sessions.find(s=>s.id===t.sessionId)?.organization?.protected))throw Error('含受保护录音，整批未修改');
+  calls.push(request);if(request.action==='trash'&&request.targets.some((t:any)=>snapshot.host.sessions.find(s=>s.id===t.sessionId)?.organization?.protected))throw Error('所选内容含受保护录音，整批未移入回收站；请先解除保护。');
   snapshot=structuredClone(snapshot);for(const target of request.targets){const row=snapshot.host.sessions.find(s=>s.id===target.sessionId)!;assert.equal(row.organization?.revision,target.expectedRevision);
    row.organization!.revision++;if(request.action==='protect')row.organization!.protected=true;if(request.action==='unprotect')row.organization!.protected=false;
    if(request.action==='trash')row.organization!.trashedAt='2026-10-16T14:00:00+08:00';if(request.action==='restore')delete row.organization!.trashedAt;}
@@ -22,7 +22,7 @@ const select=()=>act(()=>tree.root.findAllByType('button').find((n:any)=>text(n)
 const click=async(s:string)=>{await act(async()=>button(s).props.onClick());};
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});select();await click('保护所选录音');
 assert.deepEqual(calls[0],{targets:[{sessionId:a.id,expectedRevision:0},{sessionId:b.id,expectedRevision:0}],action:'protect'});
-select();await click('移入回收站');assert.equal(calls.length,1,'trash needs explicit in-app confirmation');await click('确认移入回收站');assert.match(text(tree.toJSON()),/整批未修改/);
+select();await click('移入回收站');assert.equal(calls.length,1,'trash needs explicit in-app confirmation');await click('确认移入回收站');assert.match(text(tree.toJSON()),/整批未移入回收站；请先解除保护/);
 assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,2);await click('解除所选保护');
 select();await click('移入回收站');await click('确认移入回收站');assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,0);
 await click('回收站（2）');assert.equal(tree.root.findAllByProps({className:'ct-library-entry'}).length,2);assert.equal(tree.root.findAllByProps({'aria-label':'当前会议'}).length,0,'trash cannot expose stale active workspace/audio');

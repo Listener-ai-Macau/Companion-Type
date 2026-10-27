@@ -1,7 +1,17 @@
+import {nativeActionParts} from './actionMetadata';
+import {readableCalendarTime} from './calendarTime';
 import {companionReviewedTranscript,companionSessionHasFinalTranscript} from '@companion-type/core';
 import type {CompanionV1HostSession} from '../../core/src/companionV1';
 
-type Preview={text:string;label?:string};
+type Preview={text:string;label?:string;target?:'source'};
+
+function readablePreview(text:string):string {
+  return text.split(/\r?\n/).map(line=>{
+    const parts=nativeActionParts(line);
+    if(!parts.metadata.length)return line;
+    return parts.body+"（"+parts.metadata.map(field=>`${field.key==='due'?'注明时间':'负责人'}：${field.key==='due'?readableCalendarTime(field.value):field.value}`).join("；")+"）";
+  }).join("\n");
+}
 type Candidate={text:string;label?:string};
 
 function excerpt(text:string,query=''):string {
@@ -43,6 +53,7 @@ export function libraryPreview(session:CompanionV1HostSession,rawQuery:string):P
     {text:reviewed,label:originalLabel},
     ...(session.transcriptText!==reviewed?[{text:session.transcriptText,label:'原始转写'}]:[]),
   ];
+  const sourceCandidates=[...candidates];
   const modes=session.meetingMode==='onlineLive'?['onlineLive','offlineStore']as const:['offlineStore','onlineLive']as const;
   for(const mode of modes){
     const result=session.minutesByMode?.[mode];
@@ -56,5 +67,7 @@ export function libraryPreview(session:CompanionV1HostSession,rawQuery:string):P
   const match=candidates.find(candidate=>candidate.text.toLocaleLowerCase().includes(query));
   // A title match already appears in the card heading. Other unusual matches
   // spanning indexed fields retain the ordinary transcript preview.
-  return match?{text:excerpt(match.text,query),label:match.label}:{text:excerpt(reviewed),label:originalLabel};
+  const shown=match&&/^(?:手写清单|整理草稿|在线整理|整理)$/.test(match.label??'')?readablePreview(match.text):match?.text;
+  // Keep literal matches discoverable when the query itself names stored syntax.
+  return match?{text:excerpt(shown?.toLocaleLowerCase().includes(query)?shown:match.text,query),label:match.label,target:sourceCandidates.includes(match)?'source':undefined}:{text:excerpt(reviewed),label:originalLabel};
 }

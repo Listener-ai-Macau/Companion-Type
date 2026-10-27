@@ -25,7 +25,7 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending}:{
         style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({date:event.target.value})}/></label>
       <label style={{display:'block',marginBottom:12}}><input type="checkbox" aria-label={`${label} 指定时刻`} checked={draft.timed} disabled={disabled} onChange={event=>patch({timed:event.target.checked})}/> 指定时刻</label>
       {draft.timed?<>
-        <label style={{display:'block',marginBottom:12}}>时间（按分钟）<input type="time" aria-label={`${label} 日历时刻`} value={draft.time} disabled={disabled}
+        <label style={{display:'block',marginBottom:12}}>时间（请明确选择）<input type="time" aria-label={`${label} 日历时刻`} value={draft.time} disabled={disabled}
           style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({time:event.target.value})}/></label>
         <label style={{display:'block',marginBottom:12}}>时区<select aria-label={`${label} 日历时区`} value={draft.zone} disabled={disabled}
           style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({zone:event.target.value as 'local'|'offset'})}>

@@ -150,7 +150,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
         }
     };
     let native_content = json!({"summary":["Keep the controlled source fact."],"decisions":["Keep the controlled source fact."],
-        "actionItems":[], "questions":[],"keywords":[],"markdown":"# Controlled minutes\nKeep the controlled source fact."}).to_string();
+        "actionItems":[], "questions":[],"questionClassification":[{"sourceId":1,"kind":"statement"}],"keywords":[],"markdown":"# Controlled minutes\nKeep the controlled source fact."}).to_string();
     for minutes in [false, true] {
         let prefix = if minutes { "minutes" } else { "asr" };
         let body = if minutes {
@@ -173,7 +173,8 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
             result.is_ok_and(|value| {
                 value.quality == "final"
                     && value.source == "llm_deepseek"
-                    && value.markdown.contains("controlled source fact")
+                    && value.summary.iter().any(|text|text.contains("controlled source fact"))
+                    && value.questions.is_empty()
             })
         } else {
             let mut config = OpenAiAsrConfig::new(&endpoint, PRIVATE);
