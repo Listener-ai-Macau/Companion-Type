@@ -185,6 +185,8 @@ pub enum CompanionMeetingExportFormat {
     Ics,
     Calendar,
     CalendarReminder,
+    CalendarReminder30,
+    CalendarReminder60,
 }
 
 impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExportFormat {
@@ -199,6 +201,8 @@ impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExpor
             CompanionMeetingExportFormat::Ics => Self::Ics,
             CompanionMeetingExportFormat::Calendar => Self::Calendar,
             CompanionMeetingExportFormat::CalendarReminder => Self::CalendarReminder,
+            CompanionMeetingExportFormat::CalendarReminder30 => Self::CalendarReminder30,
+            CompanionMeetingExportFormat::CalendarReminder60 => Self::CalendarReminder60,
         }
     }
 }

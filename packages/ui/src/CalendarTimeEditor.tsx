@@ -36,6 +36,7 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,ope
         {draft.zone==='offset'?<label style={{display:'block',marginBottom:12}}>UTC 偏移<input aria-label={`${label} UTC 偏移`} value={draft.offset} disabled={disabled} placeholder="+08:00"
           style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({offset:event.target.value})}/></label>:null}
       </>:null}
+      <label style={{display:'block',marginBottom:12}}><input type="checkbox" aria-label={`${label} 在此时间之前完成`} checked={!!draft.before} disabled={disabled} onChange={event=>patch({before:event.target.checked})}/> 在此时间之前完成</label>
       {stale?<p className="ct-step-warn" role="alert">这项时间已变化，请取消后重新确认；旧输入未被覆盖。</p>
         :result?.ok?<p role="status">日历截止：{result.label}</p>:<p className="ct-step-meta" role="status">{result&&!result.ok?result.error:''}</p>}
       <p className="ct-step-meta">这里只确认导出用的截止时间，不会自动创建日历或提醒。</p>

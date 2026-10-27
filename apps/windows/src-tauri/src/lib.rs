@@ -642,6 +642,8 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
                 Some("ics") => backend::export::MeetingExportFormat::Ics,
                 Some("calendar") => backend::export::MeetingExportFormat::Calendar,
                 Some("calendarreminder") => backend::export::MeetingExportFormat::CalendarReminder,
+                Some("calendarreminder30") => backend::export::MeetingExportFormat::CalendarReminder30,
+                Some("calendarreminder60") => backend::export::MeetingExportFormat::CalendarReminder60,
                 _ => return Err("export format must be todo or ics".into()),
             };
             let output = args.get(index+4).ok_or("requires output path")?;

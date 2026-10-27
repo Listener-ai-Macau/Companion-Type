@@ -39,7 +39,7 @@ releasePreview=true;
 await act(async()=>{button('导出到日历').props.onClick();button('导出到日历').props.onClick();});
 const count=previews.length;assert.equal(exports.length,2);
 await act(async()=>releasePreview({contentHash:hash,warning:null}));
-assert.equal(previews.length,count+1);assert.equal(exports.length,2,'double-click cannot save before the reviewed choice');
+assert.deepEqual(previews.slice(count).map(x=>x.format),['calendarreminder','calendarreminder30','calendarreminder60']);assert.equal(exports.length,2,'double-click cannot save before the reviewed choice');
 await act(async()=>button('导出日程').props.onClick());assert.equal(exports.length,3);
 releasePreview=true;
 await act(async()=>{button('导出到日历').props.onClick();});

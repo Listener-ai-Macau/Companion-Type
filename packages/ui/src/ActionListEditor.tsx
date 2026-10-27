@@ -54,7 +54,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
         <summary className="ct-step-meta" aria-label={`待办 ${index+1} 时间与负责人`}>
           时间与负责人
           {row.metadata.filter(field=>field.value.trim()).map(field=><span key={field.key} style={{marginLeft:10,overflowWrap:'anywhere'}}>
-            {field.key==='due'?'时间：':'负责人：'}{field.key==='due'?readableCalendarTime(field.value):field.value}
+            {field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止：':'时间：'):'负责人：'}{field.key==='due'?readableCalendarTime(field.value):field.value}
           </span>)}
         </summary>
         {row.metadata.some(field=>field.key==='due'&&readableCalendarTime(field.value)!==field.value)?<div>

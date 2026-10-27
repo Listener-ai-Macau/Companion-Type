@@ -39,6 +39,8 @@ pub enum MeetingExportFormat {
     Ics,
     Calendar,
     CalendarReminder,
+    CalendarReminder30,
+    CalendarReminder60,
 }
 
 impl MeetingExportFormat {
@@ -50,7 +52,7 @@ impl MeetingExportFormat {
             Self::Srt => "srt",
             Self::Todo => "md",
             Self::TodoText => "txt",
-            Self::Ics | Self::Calendar | Self::CalendarReminder => "ics",
+            Self::Ics | Self::Calendar | Self::CalendarReminder | Self::CalendarReminder30 | Self::CalendarReminder60 => "ics",
         }
     }
 
@@ -64,7 +66,7 @@ impl MeetingExportFormat {
             Self::TodoText => "待办清单普通文本",
             Self::Ics => "iCalendar 待办事项",
             Self::Calendar => "日历日程 (.ics)",
-            Self::CalendarReminder => "日历日程与提醒 (.ics)",
+            Self::CalendarReminder | Self::CalendarReminder30 | Self::CalendarReminder60 => "日历日程与提醒 (.ics)",
         }
     }
 }
@@ -90,7 +92,7 @@ pub fn content_hash(prepared: &PreparedMeetingExport) -> String {
     use sha2::Digest;
     let mut hash=sha2::Sha256::new();
     hash.update(prepared.suggested_name.as_bytes());hash.update([0]);
-    if matches!(prepared.format,MeetingExportFormat::Ics|MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder) {
+    if matches!(prepared.format,MeetingExportFormat::Ics|MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60) {
         // The generated DTSTAMP is the export instant, not saved content.
         // Every other byte (including UID, title, mode, literal time and DUE)
         // remains bound to the user's reviewed saved result.
@@ -212,7 +214,7 @@ pub fn prepare_meeting_export(
 
     let mut warning=None;
     let content = match format {
-        MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics | MeetingExportFormat::Calendar | MeetingExportFormat::CalendarReminder => {
+        MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics | MeetingExportFormat::Calendar | MeetingExportFormat::CalendarReminder | MeetingExportFormat::CalendarReminder30 | MeetingExportFormat::CalendarReminder60 => {
             let processing = minutes_variant_for_mode(session, meeting_mode).and_then(|v| v.processing.as_ref())
                 .or_else(|| if minutes_variant_for_mode(session, meeting_mode).is_none() {
                     session.minutes.as_ref().and_then(|m| m.processing.as_ref())
@@ -240,7 +242,7 @@ pub fn prepare_meeting_export(
             }
             if format==MeetingExportFormat::Ics { warning=super::action_export::calendar_time_notice(&actions); }
             if format==MeetingExportFormat::Calendar { warning=super::action_export::calendar_event_notice(&actions); }
-            if format==MeetingExportFormat::CalendarReminder { warning=super::action_export::calendar_event_reminder_notice(&actions); }
+            if matches!(format,MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60) { warning=super::action_export::calendar_event_reminder_notice(&actions); }
             let draft = saved.lines().any(|line| line.starts_with("> 草稿："));
             if matches!(format, MeetingExportFormat::Todo | MeetingExportFormat::TodoText) {
                 let body=super::action_export::todo(&session.title, &actions, draft);
@@ -249,8 +251,8 @@ pub fn prepare_meeting_export(
                 if format==MeetingExportFormat::TodoText {
                     body.strip_prefix("# ").unwrap_or(&body).to_owned()
                 }else{body}
-            } else if matches!(format,MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder) {
-                super::action_export::calendar_events_with_reminder(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now(),format==MeetingExportFormat::CalendarReminder)?
+            } else if matches!(format,MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60) {
+                super::action_export::calendar_events_with_reminder_lead(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now(),match format{MeetingExportFormat::CalendarReminder=>Some(0),MeetingExportFormat::CalendarReminder30=>Some(30),MeetingExportFormat::CalendarReminder60=>Some(60),_=>None})?
             } else {
                 super::action_export::calendar(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now())
             }
@@ -289,7 +291,7 @@ pub fn prepare_meeting_export(
         MeetingExportFormat::TodoText => "待办清单",
         MeetingExportFormat::Ics => "待办日历",
         MeetingExportFormat::Calendar => "日历日程",
-        MeetingExportFormat::CalendarReminder => "日历提醒",
+        MeetingExportFormat::CalendarReminder | MeetingExportFormat::CalendarReminder30 | MeetingExportFormat::CalendarReminder60 => "日历提醒",
     };
     let both_modes = session.minutes_by_mode.offline_store.is_some() && session.minutes_by_mode.online_live.is_some();
     let mode_label = if both_modes && !matches!(format, MeetingExportFormat::Txt | MeetingExportFormat::Srt) {
@@ -1101,6 +1103,21 @@ mod tests {
         let copied=checklist_copy_text(&prepared).unwrap();
         assert_eq!(copied,"- [ ] 带身份证（注明时间：明天上午）\n- [x] 已确认回程");
         assert!(String::from_utf8(prepared.bytes).unwrap().starts_with("# 出差准备"));
+    }
+
+    #[test]
+    fn calendar_advance_reminder_hashes_bind_each_choice_without_moving_deadline() {
+        let mut s=session("原话",vec![],Some(minutes()));
+        s.minutes.as_mut().unwrap().markdown="## 行动项\n- [ ] 未测完不要写通过 (due: 2026-11-06T15:00:00+08:00前)".into();
+        let plain=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Calendar).unwrap();
+        let at=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::CalendarReminder).unwrap();
+        let half=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::CalendarReminder30).unwrap();
+        let hour=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::CalendarReminder60).unwrap();
+        let hashes=[content_hash(&plain),content_hash(&at),content_hash(&half),content_hash(&hour)];
+        assert_eq!(hashes.iter().collect::<std::collections::HashSet<_>>().len(),4);
+        assert!(require_unchanged(&hour,Some(&hashes[2])).is_err());
+        assert!(require_unchanged(&half,Some(&hashes[2])).is_ok());
+        for value in [&plain,&at,&half,&hour] {assert!(String::from_utf8_lossy(&value.bytes).contains("DTSTART:20261106T070000Z\r\n"));}
     }
 
 }

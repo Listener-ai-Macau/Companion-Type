@@ -134,6 +134,10 @@ fn common_supplement(actions: &[Action]) -> Option<CommonSupplement> {
 // Presentation only. Saved markdown, provenance, calendar identity and the
 // conservative DUE parser remain based on the original values.
 fn readable_time(value: &str) -> String {
+    if let Some(base)=value.strip_suffix('前') {
+        let readable=readable_time(base);
+        return if readable!=base {if readable.contains("（UTC"){readable.replacen("（UTC","前（UTC",1)}else{format!("{readable}前")}}else{value.into()};
+    }
     static DATE:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$").unwrap());
     static STAMP:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-5][0-9](?:\.[0-9]+)?(?:[Zz]|[+-][0-9]{2}:[0-9]{2})$").unwrap());
     if value.starts_with("0000"){return value.into()}
@@ -169,7 +173,7 @@ fn readable_action(text: &str) -> String {
         let Some(field)=FIELD.captures(inner[start..end].trim_start()) else{return text.into()};
         let key=field.get(1).unwrap().as_str();let value=field.get(2).unwrap().as_str();
         if !seen.insert(key){return text.into()}
-        labels.push(if key=="due" {format!("注明时间：{}",readable_time(value))}else{format!("负责人：{value}")});
+        labels.push(if key=="due" {format!("{}：{}",if value.ends_with('前')||readable_time(value)!=value{"截止"}else{"注明时间"},readable_time(value))}else{format!("负责人：{value}")});
     }
     format!("{}（{}）",&text[..suffix.get(0).unwrap().start()],labels.join("；"))
 }
@@ -196,6 +200,7 @@ pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
 }
 
 fn due_property(value: &str) -> Option<String> {
+    let value=value.strip_suffix('前').unwrap_or(value);
     if value.len() == 10 && value.as_bytes().get(4) == Some(&b'-') && value.as_bytes().get(7) == Some(&b'-') {
         let date = NaiveDate::parse_from_str(value, "%Y-%m-%d").ok()?;
         return Some(format!("DUE;VALUE=DATE:{}\r\n", date.format("%Y%m%d")));
@@ -252,6 +257,7 @@ pub fn calendar(session_id: &str, mode: &str, title: &str, actions: &[Action], d
 // action with a confirmed absolute date or timestamp. No relative-date guess,
 // invitation, invented duration or automatic account/calendar write.
 fn event_start(value: &str) -> Option<String> {
+    let value=value.strip_suffix('前').unwrap_or(value);
     if value.len()==10 && value.as_bytes().get(4)==Some(&b'-') && value.as_bytes().get(7)==Some(&b'-') {
         let date=NaiveDate::parse_from_str(value,"%Y-%m-%d").ok()?;
         if !(1..=9999).contains(&date.year()) || date.format("%Y-%m-%d").to_string()!=value {return None;}
@@ -295,6 +301,11 @@ pub(crate) fn calendar_event_reminder_notice(actions:&[Action])->Option<String> 
 /// Explicit DISPLAY alarm only. No date-only midnight, guessed duration,
 /// recipient/invitation, online calendar mutation or automatic synchronization.
 pub fn calendar_events_with_reminder(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,remind_at_time:bool)->Result<String,String> {
+    calendar_events_with_reminder_lead(session_id,mode,title,actions,draft,stamp,if remind_at_time{Some(0)}else{None})
+}
+
+pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>)->Result<String,String> {
+    if lead_minutes.is_some_and(|m|!matches!(m,0|30|60)){return Err("不支持的提前提醒时间；请重新选择，截止时间保持不变。".into());}
     let mut out="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Companion Type//Checklist Calendar Events//ZH\r\nCALSCALE:GREGORIAN\r\n".to_string();
     let mut count=0;
     let mut reminder_count=0;
@@ -316,8 +327,9 @@ pub fn calendar_events_with_reminder(session_id:&str,mode:&str,title:&str,action
         // RFC5545: a date without DTEND is one day; a timed event without
         // DTEND ends at DTSTART. A deadline does not reserve invented work time.
         out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\n");
-        if remind_at_time && start.starts_with("DTSTART:") {
-            out.push_str("BEGIN:VALARM\r\nACTION:DISPLAY\r\nTRIGGER;RELATED=START:PT0S\r\n");
+        if let Some(lead)=lead_minutes.filter(|_|start.starts_with("DTSTART:")) {
+            out.push_str("BEGIN:VALARM\r\nACTION:DISPLAY\r\n");
+            out.push_str(&format!("TRIGGER;RELATED=START:{}\r\n",if lead==0{"PT0S".into()}else{format!("-PT{lead}M")}));
             out.push_str(&property("DESCRIPTION",&format!("清单提醒：{readable}")));
             out.push_str("END:VALARM\r\n");reminder_count+=1;
         }
@@ -329,7 +341,7 @@ pub fn calendar_events_with_reminder(session_id:&str,mode:&str,title:&str,action
         }
         return Err("CALENDAR_TIME_REQUIRED:没有可导出的日历日程。请在编辑清单中确认未完成事项的日期或时刻，再导出；原清单保持不变。".into());
     }
-    if remind_at_time && reminder_count==0 {
+    if lead_minutes.is_some() && reminder_count==0 {
         return Err("CALENDAR_TIME_REQUIRED:提醒需要具体时刻。请确认未完成事项的时刻；只有日期的事项仍可作为全天日程导出，原清单保持不变。".into());
     }
     out.push_str("END:VCALENDAR\r\n");Ok(out)
@@ -377,7 +389,7 @@ mod tests {
         let text="核对结果 (owner: 小林, due: 2026-10-26T15:00:00+08:00)";
         let actions=parse_saved_actions(&format!("## 行动项\n- [ ] {text}"));
         let markdown=todo("备忘",&actions,false);
-        assert!(markdown.contains("核对结果（负责人：小林；注明时间：2026年10月26日 15:00（UTC+08:00））"));
+        assert!(markdown.contains("核对结果（负责人：小林；截止：2026年10月26日 15:00（UTC+08:00））"));
         assert!(!markdown.contains("owner:")&&!markdown.contains("due:"));
         let ics=calendar("p613","offlineStore","备忘",&actions,false,"20261026T010000Z");
         let unfolded=ics.replace("\r\n ","");
@@ -498,4 +510,26 @@ mod p637_calendar_capability_tests {
         let body=calendar_events("s","offlineStore","采购",&[confirmed],false,"20261027T010000Z").unwrap();
         assert!(body.contains("DTSTART:20261031T010000Z"));
     }
+    #[test]
+    fn calendar_deadline_leads_preserve_the_deadline_and_all_conditions() {
+        let raw="## 行动项\n- [ ] 把样品结果发给小林；未测完不要写通过 (due: 2026-11-06T15:00:00+08:00前)\n- [ ] 只有日期 (due: 2026-11-07)";
+        let actions=parse_saved_actions(raw);let original=actions.clone();
+        let text=todo("样品",&actions,false);
+        assert!(text.contains("截止：2026年11月6日 15:00前（UTC+08:00）"));
+        for(lead,trigger)in[(0,"PT0S"),(30,"-PT30M"),(60,"-PT60M")] {
+            let value=calendar_events_with_reminder_lead("sample","offlineStore","样品",&actions,false,"20261028T010000Z",Some(lead)).unwrap();
+            assert!(value.contains("DTSTART:20261106T070000Z\r\n"));
+            assert!(value.contains(&format!("TRIGGER;RELATED=START:{trigger}\r\n")));
+            assert_eq!(value.matches("BEGIN:VALARM").count(),1,"date-only never guesses midnight");
+            assert!(value.contains("未测完不要写通过")&&value.contains("15:00前"));
+        }
+        assert_eq!(actions,original);
+        assert!(calendar_events_with_reminder_lead("s","offlineStore","样品",&actions,false,"20261028T010000Z",Some(15)).is_err());
+        let plain=calendar_events("s","offlineStore","样品",&actions,false,"20261028T010000Z").unwrap();
+        assert!(!plain.contains("VALARM"));
+        let legacy=calendar("s","offlineStore","样品",&actions,false,"20261028T010000Z");
+        assert!(legacy.contains("DUE:20261106T070000Z"));
+        assert!(event_start("2026年11月6日15:00前").is_none(),"unconfirmed prose is not silently converted");
+    }
+
 }

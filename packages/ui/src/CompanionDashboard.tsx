@@ -167,7 +167,7 @@ export type CompanionBoardOnlineLiveUiStatus = {
 export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
-  format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder';
+  format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   expectedContentHash?:string;
 };
 
@@ -445,7 +445,7 @@ export function CompanionDashboard({
   const previewTask=useRef<{cancel:()=>void}|null>(null);
   const [previewWaiting,setPreviewWaiting]=useState(false);
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
-  const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderContentHash?:string;remindAtTime?:boolean}|null>(null);
+  const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
@@ -1098,7 +1098,7 @@ export function CompanionDashboard({
     setExportResult({ sessionId, format, origin, kind: 'pending', message: '正在保存文件…' });
     try {
       let contentHash=confirmedHash;
-      if((format==='ics'||format==='calendar'||format==='calendarreminder')&&onPreviewMeetingExport&&!contentHash){
+      if((format==='ics'||format==='calendar'||format.startsWith('calendarreminder'))&&onPreviewMeetingExport&&!contentHash){
         setExportResult({sessionId,format,origin,kind:'pending',message:'正在核对日历时间…'});
         const preview=await readExportPreview({sessionId,meetingMode:minutesViewMode,format});
         if(!/^[a-f0-9]{64}$/.test(preview.contentHash))throw Error('Invalid export preview');
@@ -1106,15 +1106,21 @@ export function CompanionDashboard({
         if(copySourceRef.current!==exportSourceKey)return;
         if(format==='calendar'){
           let reminderContentHash:string|undefined,warning=preview.warning??'';
-          try{
-            const reminder=await readExportPreview({sessionId,meetingMode:minutesViewMode,format:'calendarreminder'});
-            if(!/^[a-f0-9]{64}$/.test(reminder.contentHash))throw Error('Invalid reminder preview');
-            reminderContentHash=reminder.contentHash;warning=reminder.warning??warning;
-          }catch(error){
-            if(!calendarExportNeedsTime(error))throw error;
+          const reminderHashes:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>={};
+          for(const reminderFormat of ['calendarreminder','calendarreminder30','calendarreminder60']as const){
+            try{
+              const reminder=await readExportPreview({sessionId,meetingMode:minutesViewMode,format:reminderFormat});
+              if(!/^[a-f0-9]{64}$/.test(reminder.contentHash))throw Error('Invalid reminder preview');
+              if(copySourceRef.current!==exportSourceKey)return;
+              reminderHashes[reminderFormat]=reminder.contentHash;warning=reminder.warning??warning;
+            }catch(error){
+              if(!calendarExportNeedsTime(error))throw error;
+              break; // Date-only has no alarm for any lead; never guess midnight.
+            }
           }
+          reminderContentHash=reminderHashes.calendarreminder;
           if(copySourceRef.current!==exportSourceKey)return;
-          setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,reminderContentHash,remindAtTime:false});
+          setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,reminderContentHash,reminderHashes,reminderFormat:'calendarreminder30',remindAtTime:false});
           setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);setExportResult(null);return;
         }
         if(format==='ics'&&preview.warning){
@@ -1125,9 +1131,9 @@ export function CompanionDashboard({
       setCalendarExportReview(null);
       setExportResult({sessionId,format,origin,kind:'pending',message:'请选择文件保存位置；也可在保存窗口取消。'});
       const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}) });
-      setExportResult({ sessionId, format, origin, path: result?.path, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' || format === 'calendar' || format === 'calendarreminder' ? '。文件尚未导入日历，请导入后核对日期与提醒。' : ''}` : '已取消保存，录音内容保持不变。' });
+      setExportResult({ sessionId, format, origin, path: result?.path, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder') ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
-      if((format==='calendar'||format==='calendarreminder')&&calendarExportNeedsTime(error)&&onSaveMeeting&&copySourceRef.current===exportSourceKey&&basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)){
+      if((format==='calendar'||format.startsWith('calendarreminder'))&&calendarExportNeedsTime(error)&&onSaveMeeting&&copySourceRef.current===exportSourceKey&&basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)){
         // Read-only native preflight refused a calendar with no confirmed
         // pending time. Continue the user's intent at that exact saved record,
         // not a fictitious storage failure or a file chooser with empty data.
@@ -1800,14 +1806,21 @@ export function CompanionDashboard({
                 {calendarExportReview.format==='calendar'?<>
                   <label className="ct-step-meta"><input type="checkbox" checked={!!calendarExportReview.remindAtTime}
                     disabled={controlsBusy||oobeBlockedByRecording||!calendarExportReview.reminderContentHash}
-                    onChange={event=>{const checked=event.currentTarget.checked;setCalendarExportReview(current=>current?{...current,remindAtTime:checked}:null);}}/> 在已确认的时刻提醒我</label>
-                  <p className="ct-step-meta">{calendarExportReview.reminderContentHash?'导入后由接收日历执行提醒，请核对它的提醒设置。':'提醒需要具体时刻；可先导出全天日程，或核对时间。'}</p>
+                    onChange={event=>{const checked=event.currentTarget.checked;setCalendarExportReview(current=>current?{...current,remindAtTime:checked}:null);}}/> 提醒我</label>
+                  {calendarExportReview.remindAtTime?<label className="ct-step-meta" style={{display:'block',marginTop:8}}>提醒时间
+                    <select aria-label="日历提醒时间" value={calendarExportReview.reminderFormat??'calendarreminder30'} disabled={controlsBusy||oobeBlockedByRecording}
+                      onChange={event=>{const selected=event.currentTarget.value;if(!['calendarreminder','calendarreminder30','calendarreminder60'].includes(selected))return;
+                        setCalendarExportReview(current=>current?{...current,reminderFormat:selected as 'calendarreminder'|'calendarreminder30'|'calendarreminder60'}:null);}}>
+                      <option value="calendarreminder30">提前30分钟</option><option value="calendarreminder60">提前1小时</option><option value="calendarreminder">在已确认的时刻</option>
+                    </select>
+                  </label>:null}
+                  <p className="ct-step-meta">{calendarExportReview.reminderContentHash?'提醒时间与截止时间分开；导入后由接收日历提醒，请核对其设置。':'提醒需要具体时刻；可先导出全天日程，或核对时间。'}</p>
                 </>:null}
                 <div className="ct-button-row">
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale}
                     onClick={()=>{setCalendarExportReview(null);setRecordingResultOpen(true);setEditingMinutes(true);}}>先核对时间</button>
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete}
-                    onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?'calendarreminder':calendarExportReview.format,calendarExportReview.origin,calendarExportReview.remindAtTime?calendarExportReview.reminderContentHash:calendarExportReview.contentHash)}>{calendarExportReview.format==='calendar'?(calendarExportReview.remindAtTime?'导出并设置提醒':'导出日程'):'按文字说明导出'}</button>
+                    onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash)}>{calendarExportReview.format==='calendar'?(calendarExportReview.remindAtTime?'导出并设置提醒':'导出日程'):'按文字说明导出'}</button>
                   <button type="button" className="ct-text-button" disabled={exportBusy} onClick={()=>setCalendarExportReview(null)}>取消导出</button>
                 </div>
               </div>:null}
@@ -3007,7 +3020,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
             disabled={blocked||actionChecklist.blocked} aria-label={`${action.completed?'恢复为待办':'标记完成'}：${actionMetadataText(action.text)}`}
             onChange={event=>actionChecklist.onToggle(action.lineIndex,event.target.checked)}/><span>
               <span>{presentation.conditional?<small className="ct-action-condition-mark">有条件</small>:null}{shownTitle}{presentation.supplementary?<sup className="ct-action-source-mark" title="来自本次补充" aria-label="来自本次补充">＊</sup>:null}</span>
-              {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?'注明时间':'负责人'}</span>{field.key==='due'?readableCalendarTime(field.value):field.value}</span>)}
+              {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止':'注明时间'):'负责人'}</span>{field.key==='due'?readableCalendarTime(field.value):field.value}</span>)}
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div></div>;}
         if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>;
@@ -3021,7 +3034,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
 
 function actionMetadataText(value: string): string {
   const shown=actionReadingParts(value);
-  return [shown.title,...shown.metadata.map(field=>`${field.key==='due'?'注明时间':'负责人'}：${field.key==='due'?readableCalendarTime(field.value):field.value}`)].join('；');
+  return [shown.title,...shown.metadata.map(field=>`${field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止':'注明时间'):'负责人'}：${field.key==='due'?readableCalendarTime(field.value):field.value}`)].join('；');
 }
 
 function minutesInlineText(value: string) {

@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import React from 'react';import {act,create} from 'react-test-renderer';
+import {seedCalendarTime,confirmedCalendarTime,readableCalendarTime} from '../packages/ui/src/calendarTime';
+import {ActionListEditor} from '../packages/ui/src/ActionListEditor';
+const authored='2026年11月6日15:00前',draft=seedCalendarTime(authored);
+assert.deepEqual([draft.date,draft.time,draft.before],['2026-11-06','15:00',true]);
+const confirmed=confirmedCalendarTime({...draft,zone:'offset',offset:'+08:00'});
+assert.equal(confirmed.ok,true);if(!confirmed.ok)throw Error(confirmed.error);
+assert.equal(confirmed.value,'2026-11-06T15:00:00+08:00前');
+assert.match(readableCalendarTime(confirmed.value),/15:00前（UTC\+08:00）/);
+assert.equal(seedCalendarTime(confirmed.value).before,true);
+for(const raw of ['周五前','2026年11月6日15:00前或次日','2026-11-06或2026-11-07','如果通过则2026年11月6日15:00前','2026年2月30日15:00前']){
+ assert.equal(seedCalendarTime(raw).date,'','Do not seed alternatives, conditions, relative or invalid dates');
+}
+const original='[ ] 把样品检查结果发给小林；未测完不要写通过 (due: '+authored+')';
+let value=original,changes:string[]=[],pending:number[]=[],tree:any;
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
+act(()=>{tree=create(<ActionListEditor value={value} disabled={false} onChange={next=>{value=next;changes.push(next);}} onCalendarPending={n=>pending.push(n)}/>);});
+act(()=>button('确认日历时间').props.onClick());
+assert.equal(tree.root.findByProps({'aria-label':'待办 1 日历日期'}).props.value,'2026-11-06');
+assert.equal(tree.root.findByProps({'aria-label':'待办 1 日历时刻'}).props.value,'15:00');
+assert.equal(tree.root.findByProps({'aria-label':'待办 1 在此时间之前完成'}).props.checked,true);
+assert.equal(changes.length,0,'A seeded confirmation is not an authored save');
+act(()=>button('取消').props.onClick());assert.equal(value,original);assert.deepEqual(pending,[1,-1]);
+act(()=>button('确认日历时间').props.onClick());
+act(()=>tree.root.findByProps({'aria-label':'待办 1 日历时区'}).props.onChange({target:{value:'offset'}}));
+act(()=>tree.root.findByProps({'aria-label':'待办 1 UTC 偏移'}).props.onChange({target:{value:'+08:00'}}));
+act(()=>button('使用此日历时间').props.onClick());
+assert.equal(value,'[ ] 把样品检查结果发给小林；未测完不要写通过 (due: 2026-11-06T15:00:00+08:00前)');
+assert.deepEqual(pending,[1,-1,1,-1]);assert.equal(changes.length,1);
+act(()=>tree.unmount());
+console.log('PASS authored complete deadline seeds without reentry, qualifier survives actual editor confirmation, conditions/cancel and no ambiguous date guessing');
