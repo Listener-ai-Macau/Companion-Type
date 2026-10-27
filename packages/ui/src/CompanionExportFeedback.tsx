@@ -1,5 +1,8 @@
+import { CompanionChecklistHandoff } from './CompanionChecklistHandoff';
+
 export interface CompanionExportFeedbackValue {
   message: string;
+  format?: string;
   hasWarning?: boolean;
   kind?: 'saved' | 'cancelled' | 'pending' | 'error';
   path?: string;
@@ -19,6 +22,8 @@ export function CompanionExportFeedback({ feedback, className='ct-export-result'
   }
   return <div className={[...classes].join(' ')} role={feedback.kind === 'error' ? 'alert' : 'status'}>
     <span>{feedback.message}</span>
+    {feedback.kind === 'saved' && feedback.path && (feedback.format === 'todo' || feedback.format === 'ics')
+      ? <CompanionChecklistHandoff format={feedback.format}/> : null}
     {feedback.kind === 'saved' && feedback.path ? <details>
       <summary>查看保存位置</summary>
       <p style={{ overflowWrap: 'anywhere' }}>{feedback.path}</p>

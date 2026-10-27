@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { CompanionLicenses } from './CompanionLicenses';
+import { CompanionChecklistHandoff } from './CompanionChecklistHandoff';
 
 /** Reading help never starts capture, reconnects, clears data or exports logs. */
 export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onRecording, onReadLicenses, onPrivacy }: {
@@ -35,6 +36,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <p>原话里的“明天”“下周”等是录音当时的说法，请对照录音日期；Type 保留原话，不会把它们自动改成今天的相对时间。补充里的时间请对照补充时的语境，需要时可编辑成明确日期。</p>
       {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前录音</button> : null}
     </details>
+    <CompanionChecklistHandoff format="todo" onReturn={onRecording}/>
     <details><summary>双击、实体键和菜单录音，是同一件事吗？</summary>
       <p>都是开始或停止同一台 Companion 的设备录音，选一种顺手的方式即可，不需要依次操作三个入口。</p>
       <ul><li>触摸快捷：宠物首页默认双击左下角开录，录音画面双击停录。也可在设备菜单中改为左下角向右拉开录。</li>
@@ -50,8 +52,13 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <p>日常连接使用蓝牙，USB-C 用于供电。到“设备与同步”查看连接和报错；首次配对可在宠物菜单的“连接”中开启配对。</p>
       <p>睡着的宠物可先短按实体键唤醒。墨水屏会保留旧画面，单凭画面不能确认录音或保存状态。仍无响应时，保留当时提示和日志，不先清空录音或恢复默认。</p>
     </details>
-    <details><summary>没有短音，或想让宠物安静一点</summary>
-      <p>先看设备音量、静音、安静模式和安静时段。安静模式会减少打扰并抑制短提示音；录音时普通提示音也会受到限制。安静时段需要设备时间正确。</p>
+    <details><summary>怎样安静陪着？静音、安静互动和安静时段有什么不同？</summary>
+      <ul>
+        <li><strong>静音：</strong>关闭提示音，仍保留表情和轻触回应。宠物首页右上往下拉可进入快捷调节，也可在“设备 → 音量与静音”设置。</li>
+        <li><strong>安静互动：</strong>到“宠物 → 互动程度”选择“安静·无声轻回应”。它会减少主动变化、抑制短音，轻摸时仍会回应，适合想让它安静陪着的时候。</li>
+        <li><strong>安静时段：</strong>到“设备 → 时间与安静”设置夜间抑制短音的时段，需要设备时间正确。目前可选 23:00—07:00、22:00—08:00 或关闭，尚不支持在这里自定白天工作时间。</li>
+      </ul>
+      <p>这三项分别控制声音、互动程度和夜间时段；其中任一项要求无声时，短音都会受限。录音时普通提示音也会受到限制。</p>
     </details>
     <details><summary>保存、连接或服务报错后，怎样继续？</summary>
       <ul>
