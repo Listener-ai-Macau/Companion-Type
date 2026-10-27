@@ -39,7 +39,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending}:{va
     change(row.id,{metadata:fields});
   };
   return <div className="ct-action-list-editor">
-    <p className="ct-step-meta">内容写要做的事，时间单独填写；不会自动设置提醒。</p>
+    <p className="ct-step-meta">时间说明先按文字保存；需要导入日历时，再确认日期与时刻。</p>
     {rows.map((row,index)=><div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
       <div style={{display:'flex',gap:8,alignItems:'start'}}>
         <label style={{flex:1}}><span className="ct-step-meta">待办 {index+1}</span>
@@ -50,7 +50,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending}:{va
       </div>
       <details open={row.metadata.some(field=>field.value.trim())||undefined}>
         <summary className="ct-step-meta">时间与负责人</summary>
-        <label><span className="ct-step-meta">注明时间，不会自动提醒</span>
+        <label><span className="ct-step-meta">时间说明（文字）</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 时间`} value={row.metadata.find(field=>field.key==='due')?.value??''}
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>
         <CalendarTimeEditor label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}

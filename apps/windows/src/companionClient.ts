@@ -112,7 +112,7 @@ export async function discardOldestDeviceRecording(requiredSeconds: number): Pro
   return invoke('discard_oldest_companion_recording', { requiredSeconds });
 }
 
-export async function previewCompanionMeetingExport(request: import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest): Promise<{contentHash:string;warning?:string|null}> {
+export async function previewCompanionMeetingExport(request: import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest): Promise<{contentHash:string;warning?:string|null;textContent?:string|null}> {
   if(!isTauriRuntime())throw Error('请在 Windows Companion Type 中核对日历导出。');
   return invoke('preview_companion_meeting_export',{request});
 }

@@ -70,6 +70,15 @@ pub struct PreparedMeetingExport {
     pub warning: Option<String>,
 }
 
+/// Plain checklist body from the same validated native TODO renderer. No file,
+/// exported marker, inferred date, clipboard or provider operation occurs here.
+pub fn checklist_copy_text(prepared: &PreparedMeetingExport) -> Result<String,String> {
+    let text=std::str::from_utf8(&prepared.bytes).map_err(|_|"清单文字无法读取，请保留已保存内容。")?;
+    let body=text.split_once('\n').map(|(_,body)|body.trim()).unwrap_or("");
+    if body.is_empty(){return Err("没有可复制的已保存清单。".into());}
+    Ok(body.to_owned())
+}
+
 pub fn content_hash(prepared: &PreparedMeetingExport) -> String {
     use sha2::Digest;
     let mut hash=sha2::Sha256::new();
@@ -991,6 +1000,19 @@ mod tests {
         assert!(require_unchanged(&a,Some("wrong")).is_err());
         assert!(require_unchanged(&a,None).is_ok());
         assert_eq!(s.transcript_text,"原话保留");
+    }
+
+    #[test]
+    fn copy_checklist_keeps_checks_unicode_and_literal_time_without_title_task() {
+        let prepared=PreparedMeetingExport{
+            suggested_name:"清单.md".into(),
+            format:MeetingExportFormat::Todo,
+            bytes:"# 出差准备 — 待办事项\n- [ ] 带身份证（注明时间：明天上午）\n- [x] 已确认回程\n".as_bytes().to_vec(),
+            warning:None,
+        };
+        let copied=checklist_copy_text(&prepared).unwrap();
+        assert_eq!(copied,"- [ ] 带身份证（注明时间：明天上午）\n- [x] 已确认回程");
+        assert!(String::from_utf8(prepared.bytes).unwrap().starts_with("# 出差准备"));
     }
 
 }

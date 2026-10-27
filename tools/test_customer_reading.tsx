@@ -53,3 +53,31 @@ act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.inclu
 assert.equal(tree.root.findByProps({id:'ct-recording-text-review'}).props.hidden,false,'note result opens the source reading area');
 act(()=>tree.unmount());assert.equal(JSON.stringify(snapshot),before,'reading does not rewrite durable source');
 console.log('PASS customer reading: imported text identity, native-audio identity, authored checklist label, note-hit navigation, localized preview, literal search, explicit calendar time and unchanged durable input');
+
+// A direct checklist copy uses saved native-prepared text, not another export
+// dialog or a provider. Clipboard here is an isolated test endpoint.
+const payload='- [ ] 随身包放充电线（注明时间：2026-10-28 晚上）';
+let copied:string[]=[];
+Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async(value:string)=>{copied.push(value);}}}});
+const openCopy=async(preview:()=>Promise<any>)=>{
+  act(()=>{tree=create(<CompanionDashboard {...props()} onPreviewMeetingExport={preview} onExportMeeting={async()=>{throw Error('Copy must not open a file dialog');}}/>);});
+  act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
+};
+await openCopy(async()=>({contentHash:'a'.repeat(64),textContent:payload}));
+await act(async()=>{await button('复制清单').props.onClick();});
+assert.deepEqual(copied,[payload]);assert.match(text(tree.toJSON()),/清单已复制/);act(()=>tree.unmount());
+(navigator as any).clipboard.writeText=async()=>{throw Error('Clipboard unavailable');};copied=[];
+await openCopy(async()=>({contentHash:'a'.repeat(64),textContent:payload}));
+await act(async()=>{await button('复制清单').props.onClick();});
+assert.match(text(tree.toJSON()),/自动复制未完成/);assert.doesNotMatch(text(tree.toJSON()),/清单已复制/);
+assert.equal(tree.root.findByProps({'aria-label':'已保存的清单文字'}).props.value,payload);act(()=>tree.unmount());
+(navigator as any).clipboard.writeText=async(value:string)=>{copied.push(value);};
+let finishPreview:(value:any)=>void=()=>{};
+await openCopy(()=>new Promise(resolve=>{finishPreview=resolve;}));
+act(()=>{button('复制清单').props.onClick();});
+const updated=structuredClone(snapshot);updated.host.sessions[0].minutes!.markdown+='\n- [ ] 另一项';updated.host.sessions[0].minutesByMode.offlineStore!.markdown+='\n- [ ] 另一项';
+act(()=>tree.update(<CompanionDashboard {...props()} snapshot={updated} onPreviewMeetingExport={async()=>({contentHash:'b'.repeat(64),textContent:'new'})}/>));
+await act(async()=>{finishPreview({contentHash:'a'.repeat(64),textContent:payload});await Promise.resolve();});
+assert.deepEqual(copied,[],'a changed source cannot write the previously prepared payload');act(()=>tree.unmount());
+assert.equal(JSON.stringify(snapshot),before,'copy and fallback do not rewrite durable source');
+console.log('PASS direct copy: native text/no file dialog, explicit unavailable fallback, changed-source exclusion and unchanged original');

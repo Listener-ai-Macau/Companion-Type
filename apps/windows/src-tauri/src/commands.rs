@@ -467,6 +467,8 @@ pub async fn export_companion_audio(
 pub struct CompanionMeetingExportPreview {
     pub content_hash: String,
     pub warning: Option<String>,
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub text_content: Option<String>,
 }
 
 /// Same saved-source checks and calendar parser as export; no file dialog,
@@ -479,8 +481,10 @@ pub fn preview_companion_meeting_export(
     let snapshot=coordinator.snapshot()?;
     let session=snapshot.host.sessions.iter().find(|row|row.id==request.session_id)
         .ok_or("找不到要导出的记录，请刷新后重试。")?;
+    let copyable=matches!(&request.format,CompanionMeetingExportFormat::Todo);
     let prepared=crate::backend::export::prepare_meeting_export(session,&request.meeting_mode,request.format.into())?;
-    Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning})
+    let text_content=if copyable{Some(crate::backend::export::checklist_copy_text(&prepared)?)}else{None};
+    Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning,text_content})
 }
 
 #[tauri::command]
