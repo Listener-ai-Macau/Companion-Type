@@ -89,8 +89,8 @@ fn qm11_uses_new_payload_instead_of_wire_bytes_and_versioned_targets() {
     assert!(lines[1].contains("actual_received_kib_s=60.00 rate_basis=new_transport_payload_bytes"));
     let target = lines.last().unwrap();
     assert!(target.contains(super::targets::VERSION));
-    assert!(target.contains("effective_kib_s=60.00 delivery_kib_s=100 stretch_kib_s=100 explore_kib_s=120"));
-    assert!(target.contains("qm11_payload=not_met qm11_payload_stretch=not_met"));
+    assert!(target.contains("effective_kib_s=60.00 delivery_kib_s=100 stretch_kib_s=disabled explore_kib_s=disabled"));
+    assert!(target.contains("qm11_payload=not_met qm11_payload_stretch=not_applicable qm11_payload_explore=not_applicable"));
     assert!(target.contains("scope=payload_rate_only full_chain_acceptance=false"));
 
     let mut pull = actual_board_22();

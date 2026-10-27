@@ -85,12 +85,14 @@ pub(super) fn diagnostics(pull: CompletedPull) -> Vec<String> {
         else if (strict && payload_rate > threshold) || (!strict && payload_rate >= threshold) { "met" }
         else { "not_met" }
     };
+    let optional_label = |value: Option<f64>| value.map(|v| v.to_string()).unwrap_or_else(|| "disabled".into());
+    let optional_evaluation = |value: Option<f64>| value.map(|v| evaluation(v, false)).unwrap_or("not_applicable");
     lines.push(format!(
         "recording_pull_target version=\"{}\" sample={} effective_kib_s={:.2} delivery_kib_s={} stretch_kib_s={} explore_kib_s={} qm11_payload={} qm11_payload_stretch={} qm11_payload_explore={} scope=payload_rate_only full_chain_acceptance=false",
         targets::VERSION, if qualified { "sustained" } else { "insufficient_or_inapplicable" }, payload_rate,
-        targets::PAYLOAD_DELIVERY_KIB_S, targets::PAYLOAD_STRETCH_KIB_S, targets::PAYLOAD_EXPLORE_KIB_S,
-        evaluation(targets::PAYLOAD_DELIVERY_KIB_S, targets::PAYLOAD_DELIVERY_STRICT), evaluation(targets::PAYLOAD_STRETCH_KIB_S, false),
-        evaluation(targets::PAYLOAD_EXPLORE_KIB_S, false),
+        targets::PAYLOAD_DELIVERY_KIB_S, optional_label(targets::PAYLOAD_STRETCH_KIB_S), optional_label(targets::PAYLOAD_EXPLORE_KIB_S),
+        evaluation(targets::PAYLOAD_DELIVERY_KIB_S, targets::PAYLOAD_DELIVERY_STRICT), optional_evaluation(targets::PAYLOAD_STRETCH_KIB_S),
+        optional_evaluation(targets::PAYLOAD_EXPLORE_KIB_S),
     ));
     lines
 }
