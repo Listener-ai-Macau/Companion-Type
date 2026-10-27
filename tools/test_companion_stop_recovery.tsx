@@ -53,7 +53,7 @@ const submitted: any[] = [];
   },
 };
 await act(async () => { renderer = create(<App />); });
-assert.equal(timers.size, 0, 'offline failure must recover without background polling');
+assert.equal(timers.size, 1, 'a connected device retains one cache-status poll, even with auto-connect off');
 const originalStop = stopButton();
 assert.ok(originalStop);
 await act(async () => { originalStop.props.onClick(); originalStop.props.onClick(); });
@@ -66,9 +66,10 @@ await act(async () => { originalStop.props.onClick(); });
 assert.equal(controls, 1, 'a pending refresh cannot replay STOP or START');
 await act(async () => { finishRead!(structuredClone(stopped)); });
 assert.equal(Boolean(stopButton()), false, 'a real STOP ACK must remove the obsolete recording control');
-assert.match(text(renderer.toJSON()), /STOP confirmed; recording upload interrupted/, 'retain the original transfer error');
+assert.match(text(renderer.toJSON()), /操作未完成或结果尚未确认/, 'retain the original transfer error');
 assert.match(text(renderer.toJSON()), /连接后继续同步|等待来源设备|来源设备/, 'surface the original pending recording');
-assert.equal(timers.size, 0, 'do not restart background recovery to hide the failed transfer');
+assert.equal(timers.size, 1, 'connected cache observation remains available; it does not replay STOP or recovery controls');
+assert.equal(controls,1,'status polling does not automatically retry the failed device command');
 await act(async () => { renderer.unmount(); });
 
 for (const unreadable of [false, true]) {
@@ -85,7 +86,7 @@ for (const unreadable of [false, true]) {
   assert.equal(failedReads, 2);
   assert.ok(stopButton(), 'without a confirmed STOP, retain the last real recording state');
   assert.equal(stopButton().props.disabled, false);
-  assert.match(text(renderer.toJSON()), /no STOP acknowledgement/);
+  assert.match(text(renderer.toJSON()), /操作未完成或结果尚未确认/);
   assert.doesNotMatch(text(renderer.toJSON()), /checkpoint read unavailable/, 'do not replace the actionable original error');
   await act(async () => { renderer.unmount(); });
 }
@@ -118,7 +119,7 @@ assert.equal(retries[0].action, 'deviceSyncRecordings');
 assert.equal(retries[0].deviceId, original.sourceDeviceId);
 assert.match(text(renderer.toJSON()), /音频已收齐/);
 assert.match(text(renderer.toJSON()), /原录音仍保留/, 'a host receipt is not a device consume ACK');
-assert.match(text(renderer.toJSON()), /next backlog item unavailable/);
+assert.match(text(renderer.toJSON()), /操作未完成或结果尚未确认/);
 assert.equal(Boolean(stopButton()), false);
 await act(async () => { renderer.unmount(); });
 assert.equal(timers.size, 0);

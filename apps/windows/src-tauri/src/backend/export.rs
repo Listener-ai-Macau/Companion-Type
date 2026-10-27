@@ -70,6 +70,29 @@ pub struct PreparedMeetingExport {
     pub warning: Option<String>,
 }
 
+pub fn content_hash(prepared: &PreparedMeetingExport) -> String {
+    use sha2::Digest;
+    let mut hash=sha2::Sha256::new();
+    hash.update(prepared.suggested_name.as_bytes());hash.update([0]);
+    if prepared.format==MeetingExportFormat::Ics {
+        // The generated DTSTAMP is the export instant, not saved content.
+        // Every other byte (including UID, title, mode, literal time and DUE)
+        // remains bound to the user's reviewed saved result.
+        let text=String::from_utf8_lossy(&prepared.bytes);
+        for line in text.split_inclusive("\r\n") {
+            if !line.starts_with("DTSTAMP:"){hash.update(line.as_bytes());}
+        }
+    } else {hash.update(&prepared.bytes);}
+    format!("{:x}",hash.finalize())
+}
+
+pub fn require_unchanged(prepared: &PreparedMeetingExport, expected: Option<&str>) -> Result<(),String> {
+    if expected.is_some_and(|value|value!=content_hash(prepared)) {
+        return Err("导出内容已变化，请重新查看当前记录后再导出；本次未写入文件。".into());
+    }
+    Ok(())
+}
+
 fn minutes_variant_for_mode<'a>(
     session: &'a CompanionV1HostSession,
     meeting_mode: &str,
@@ -949,6 +972,25 @@ mod tests {
         s.minutes_by_mode.offline_store=Some(variant("2028-02-29"));
         let date=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Ics).unwrap();
         assert!(date.warning.is_none());assert!(String::from_utf8(date.bytes).unwrap().contains("DUE;VALUE=DATE:20280229\r\n"));
+    }
+
+    #[test]
+    fn p622_preview_binds_saved_content_not_export_clock() {
+        let s=session("原话保留",vec![],None);
+        let prepared=|stamp:&str,title:&str,due:&str|PreparedMeetingExport{
+            bytes:format!("BEGIN:VCALENDAR\r\nDTSTAMP:{stamp}\r\nSUMMARY:{title}\r\nDUE:{due}\r\nEND:VCALENDAR\r\n").into_bytes(),
+            suggested_name:"测试.ics".into(),format:MeetingExportFormat::Ics,warning:None};
+        let a=prepared("20261027T010000Z","带身份证","20261028T120000Z");
+        let later=prepared("20261027T020000Z","带身份证","20261028T120000Z");
+        let digest=content_hash(&a);assert_eq!(digest,content_hash(&later));
+        assert!(require_unchanged(&later,Some(&digest)).is_ok());
+        for changed in [prepared("20261027T020000Z","带充电线","20261028T120000Z"),
+            prepared("20261027T020000Z","带身份证","20261029T120000Z")] {
+            assert!(require_unchanged(&changed,Some(&digest)).unwrap_err().contains("未写入文件"));
+        }
+        assert!(require_unchanged(&a,Some("wrong")).is_err());
+        assert!(require_unchanged(&a,None).is_ok());
+        assert_eq!(s.transcript_text,"原话保留");
     }
 
 }

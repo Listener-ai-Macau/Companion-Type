@@ -9,7 +9,10 @@ let timerId = 0;
 (globalThis as any).window = {
   setTimeout: (fn: () => void) => { timers.set(++timerId, fn); return timerId; },
   clearTimeout: (id: number) => timers.delete(id),
+  requestAnimationFrame: (fn:()=>void) => {fn();return 0;},
 };
+(globalThis as any).HTMLButtonElement=class {};
+(globalThis as any).document={activeElement:null};
 const initial = createCompanionV1Fixture();
 initial.connected = true;
 initial.device.rememberedDeviceId = 'AABBCCDDEEFF';
@@ -117,8 +120,9 @@ let submitted: any;
   control: async () => review,
 };
 await act(async () => { renderer = create(<App />); });
+await act(async()=>renderer.root.findAllByType('button').find((node:any)=>node.props.className?.includes('ct-library-card')).props.onClick());
 await tickOnce();
-await act(async () => renderer.root.findByProps({ 'aria-label': '会议标题' }).props.onChange({ target: { value: '核对后保存的标题' } }));
+await act(async () => renderer.root.findByProps({ 'aria-label': '录音标题' }).props.onChange({ target: { value: '核对后保存的标题' } }));
 const saveTitle = () => renderer.root.findAllByType('button').find((node: any) => text(node) === '保存标题');
 await act(async () => { saveTitle().props.onClick(); });
 assert.equal(reviewSaves, 1);
@@ -128,7 +132,7 @@ const savedReview = structuredClone(review);
 savedReview.host.sessions[0].title = submitted.title;
 await act(async () => { finishSave!(savedReview); });
 await act(async () => { oldRead!(review); });
-assert.equal(renderer.root.findByProps({ 'aria-label': '会议标题' }).props.value, '核对后保存的标题');
+assert.equal(renderer.root.findByProps({ 'aria-label': '录音标题' }).props.value, '核对后保存的标题');
 assert.equal(Boolean(saveTitle()), false, 'persisted edit clears only its submitted draft');
 await act(async () => renderer.unmount());
 assert.equal(timers.size, 0);

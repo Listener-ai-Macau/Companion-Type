@@ -310,6 +310,7 @@ pub fn run() {
             commands::pause_companion_recording_sync,
             commands::discard_oldest_companion_recording,
             commands::export_companion_meeting,
+            commands::preview_companion_meeting_export,
             commands::export_companion_audio,
             commands::export_companion_library,
             commands::save_companion_library_lifecycle,

@@ -165,6 +165,7 @@ export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
   format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'ics';
+  expectedContentHash?:string;
 };
 
 export type CompanionMeetingSaveRequest = {
@@ -208,6 +209,7 @@ export interface CompanionDashboardProps {
   onStopBoardOnlineLive?: () => void | Promise<void>;
   onSaveProductSettings?: (patch: CompanionProductSettingsPatch) => void | Promise<void>;
   onExportMeeting?: (request: CompanionMeetingExportRequest) => Promise<{ path: string; bytes: number; warning?: string | null } | null>;
+  onPreviewMeetingExport?:(request:CompanionMeetingExportRequest)=>Promise<{contentHash:string;warning?:string|null}>;
   onPreviewDiagnostics?:()=>Promise<unknown>;
   onExportDiagnostics?: (includeDevice: boolean) => Promise<{path:string;bytes:number;warning?:string|null}|null>;
   onPrepareAudioComponents?: () => Promise<void>;
@@ -352,6 +354,7 @@ export function CompanionDashboard({
   onStopBoardOnlineLive,
   onSaveProductSettings,
   onExportMeeting,
+  onPreviewMeetingExport,
   onExportDiagnostics,
   onPreviewDiagnostics,
   onPrepareAudioComponents,
@@ -434,6 +437,7 @@ export function CompanionDashboard({
   const [resourceBusy, setResourceBusy] = useState(false);
   const [exportBusy, setExportBusy] = useState(false);
   const exportActive = useRef(false);
+  const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin}|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
@@ -970,7 +974,7 @@ export function CompanionDashboard({
   const renderExportFeedback = (origin: MeetingExportOrigin, className?: string) =>
     exportResult && exportResult.sessionId === selectedSession?.id && exportResult.origin === origin
       ? <div data-ct-export-feedback={origin}><CompanionExportFeedback feedback={exportResult} className={className}/></div> : null;
-  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document') => {
+  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string) => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id;
     const unsavedForExport = titleDirty || transcriptReviewUnsaved || calendarPendingCount>0
@@ -984,7 +988,19 @@ export function CompanionDashboard({
     setExportBusy(true);
     setExportResult({ sessionId, format, origin, kind: 'pending', message: '正在保存文件…' });
     try {
-      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format });
+      let contentHash=confirmedHash;
+      if(format==='ics'&&onPreviewMeetingExport&&!contentHash){
+        setExportResult({sessionId,format,origin,kind:'pending',message:'正在核对日历时间…'});
+        const preview=await onPreviewMeetingExport({sessionId,meetingMode:minutesViewMode,format});
+        if(!/^[a-f0-9]{64}$/.test(preview.contentHash))throw Error('Invalid export preview');
+        contentHash=preview.contentHash;
+        if(preview.warning){
+          setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin});
+          setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);setExportResult(null);return;
+        }
+      }
+      setCalendarExportReview(null);
+      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}) });
       setExportResult({ sessionId, format, origin, path: result?.path, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' ? '。请导入日历后核对日期与提醒；导出文件不会自动创建提醒。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
       setExportResult({ sessionId, format, origin, kind: 'error', message: `保存未完成：${operationErrorText(error,'export')}` });
@@ -1625,6 +1641,16 @@ export function CompanionDashboard({
                   title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />{savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'}</button> : null}
               </div>
               {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '需要提醒时，可导出到支持待办的日历；导入后请核对日期和提醒，不会自动设置。'}</p> : null}
+              {calendarExportReview?.sessionId===selectedSession.id&&calendarExportReview.mode===minutesViewMode&&!editingMinutes?<div className="ct-calendar-export-review" role="status">
+                <p>还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。</p>
+                <div className="ct-button-row">
+                  <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale}
+                    onClick={()=>{setCalendarExportReview(null);setRecordingResultOpen(true);setEditingMinutes(true);}}>先核对时间</button>
+                  <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete}
+                    onClick={()=>void exportMeeting('ics',calendarExportReview.origin,calendarExportReview.contentHash)}>按文字说明导出</button>
+                  <button type="button" className="ct-text-button" disabled={exportBusy} onClick={()=>setCalendarExportReview(null)}>取消导出</button>
+                </div>
+              </div>:null}
               {renderExportFeedback('document', exportResult?.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok')}
               {editingMinutes ? <div className="ct-minutes-editor">
                 {selectedDraft?.minutes?.[minutesViewMode]?.createManual?<p className="ct-step-meta">对照下方原话与补充填写；不会自动提取内容，也不会调用整理服务。写在“行动项”下的列表可保存、勾选和导出；不会自动提醒。</p>:null}

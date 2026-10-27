@@ -1,5 +1,8 @@
 // Exact, existing authored error contracts; dynamic OS/service details are not trusted.
 export const knownOperationErrors:readonly string[]=[
+  "导出内容已变化，请重新查看当前记录后再导出；本次未写入文件。",
+  "找不到要导出的记录，请刷新后重试。",
+  "录音同步设置暂时不可读取，自动同步已暂停；设备原录音保留。请恢复本机设置文件后重试。",
   "所选内容含受保护录音，整批未移入回收站；请先解除保护。",
   "这场录音已受保护，未删除任何音频、文字或设备数据；请先解除保护。",
   "资料库含受保护录音；请先明确解除保护，再清除全部资料。",

@@ -202,6 +202,8 @@ pub struct CompanionMeetingExportRequest {
     pub session_id: String,
     pub meeting_mode: String,
     pub format: CompanionMeetingExportFormat,
+    #[serde(default)]
+    pub expected_content_hash: Option<String>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -460,6 +462,27 @@ pub async fn export_companion_audio(
     Ok(Some(CompanionMeetingExportResult { path: destination.to_string_lossy().into(), bytes, warning: None }))
 }
 
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionMeetingExportPreview {
+    pub content_hash: String,
+    pub warning: Option<String>,
+}
+
+/// Same saved-source checks and calendar parser as export; no file dialog,
+/// disk write, exported marker, device access or provider request.
+#[tauri::command]
+pub fn preview_companion_meeting_export(
+    coordinator: CompanionCoordinatorState<'_>,
+    request: CompanionMeetingExportRequest,
+) -> Result<CompanionMeetingExportPreview,String> {
+    let snapshot=coordinator.snapshot()?;
+    let session=snapshot.host.sessions.iter().find(|row|row.id==request.session_id)
+        .ok_or("找不到要导出的记录，请刷新后重试。")?;
+    let prepared=crate::backend::export::prepare_meeting_export(session,&request.meeting_mode,request.format.into())?;
+    Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning})
+}
+
 #[tauri::command]
 pub async fn export_companion_meeting(
     app: AppHandle,
@@ -481,6 +504,8 @@ pub async fn export_companion_meeting(
         format,
     )?;
 
+    crate::backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
+
     // The snapshot/session clone above deliberately releases backend state
     // before opening the native dialog or performing disk I/O.
     let destination = app
@@ -496,6 +521,13 @@ pub async fn export_companion_meeting(
         .simplified()
         .into_path()
         .map_err(|error| format!("selected export destination is not a local file: {error}"))?;
+    if let Some(expected)=request.expected_content_hash.as_deref() {
+        let current=coordinator.snapshot()?;
+        let session=current.host.sessions.iter().find(|row|row.id==request.session_id)
+            .ok_or("找不到要导出的记录，请刷新后重试。")?;
+        let latest=crate::backend::export::prepare_meeting_export(session,&request.meeting_mode,format)?;
+        crate::backend::export::require_unchanged(&latest,Some(expected))?;
+    }
     let bytes = prepared.bytes;
     let write_path = destination.clone();
     let written = tauri::async_runtime::spawn_blocking(move || {

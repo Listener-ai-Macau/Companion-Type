@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import React from 'react';import {act,create} from 'react-test-renderer';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
+(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;},cancelAnimationFrame:()=>{}};
+let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+snapshot.host.persistence={status:'ready'};
+const row=snapshot.host.sessions[0];row.minutesByMode.offlineStore!.markdown='## 行动项\n- [ ] 带身份证 (due: 2026-10-28 晚上)';
+row.minutesByMode.offlineStore!.quality='final';row.minutesByMode.offlineStore!.status='minutesReady';
+row.minutes=row.minutes?{...row.minutes,markdown:row.minutesByMode.offlineStore!.markdown}:row.minutes;
+const original=JSON.stringify(snapshot),hash='a'.repeat(64),exports:any[]=[],previews:any[]=[];
+let warn=true,tree:any,releasePreview:any;
+const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},
+ onSaveMeeting:async()=>snapshot,
+ onExportMeeting:async(request:any)=>{exports.push(request);return null;},
+ onPreviewMeetingExport:async(request:any)=>{previews.push(request);if(releasePreview)return new Promise<any>(resolve=>{releasePreview=resolve;});return{contentHash:hash,warning:warn?'Unconfirmed saved time':null};}});
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
+act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
+await act(async()=>button('导出日历待办').props.onClick());
+assert.equal(exports.length,0,'unconfirmed native calendar time is disclosed before opening a save dialog');
+assert.equal(previews[0].sessionId,row.id);assert.equal(previews[0].meetingMode,'offlineStore');
+assert.match(text(tree.toJSON()),/还有时间说明未确认为日历截止时间/);
+await act(async()=>button('取消导出').props.onClick());assert.equal(exports.length,0);
+await act(async()=>button('导出日历待办').props.onClick());
+await act(async()=>button('先核对时间').props.onClick());
+assert.ok(tree.root.findAllByProps({className:'ct-minutes-editor'}).length);assert.equal(exports.length,0);
+act(()=>tree.unmount());
+act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
+await act(async()=>button('导出日历待办').props.onClick());
+await act(async()=>button('按文字说明导出').props.onClick());
+assert.deepEqual(exports[0],{sessionId:row.id,meetingMode:'offlineStore',format:'ics',expectedContentHash:hash});
+assert.match(text(tree.toJSON()),/已取消保存/);
+warn=false;await act(async()=>button('导出日历待办').props.onClick());assert.equal(exports.length,2);
+assert.equal(exports[1].expectedContentHash,hash,'a fully confirmed result also binds the reviewed native content');
+releasePreview=true;
+await act(async()=>{button('导出日历待办').props.onClick();button('导出日历待办').props.onClick();});
+const count=previews.length;assert.equal(exports.length,2);
+await act(async()=>releasePreview({contentHash:hash,warning:null}));
+assert.equal(previews.length,count);assert.equal(exports.length,3,'double-click does not issue a second preview/save operation');
+act(()=>tree.unmount());assert.equal(JSON.stringify(snapshot),original);
+console.log('PASS calendar pre-save review: native parser response, cancellation, edit route, explicit text-only export, fingerprint binding, duplicate exclusion and unchanged original');

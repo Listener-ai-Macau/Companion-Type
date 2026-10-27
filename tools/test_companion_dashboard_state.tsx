@@ -37,7 +37,7 @@ assert.equal(editor().props.value, 'A 的手动修改，尚未导入', 'backgrou
 snapshot = structuredClone(snapshot); snapshot.host.selectedSessionId = second.id;
 act(() => renderer.update(<CompanionDashboard {...props()} />));
 assert.equal(editor().props.value, '', 'switching to untranscribed meeting must clear unrelated text');
-assert.equal(button('导入文本').props.disabled, true);
+assert.equal(button('导入到这条录音').props.disabled, true);
 assert.equal(calls.some((call) => call.action === 'meetingSelectSession'), false, 'must not auto-select a different readable meeting');
 assert.ok(button('会议 B'), 'explicitly selected unprocessed meeting stays visible');
 
@@ -69,7 +69,7 @@ assert.equal(calls.length, callsBeforePreview, 'silent behavior preview must not
 
 snapshot = structuredClone(snapshot); snapshot.meeting.active = true;
 act(() => renderer.update(<CompanionDashboard {...props()} />));
-for (const label of ['扫描设备', '检查设备', '删当前录音', '清除全部本机会议', '导入文本', '保存到设备', '恢复默认名称', '开始 10 秒预览']) {
+for (const label of ['扫描设备', '检查设备', '删当前录音', '清除全部本机会议', '导入到这条录音', '保存到设备', '恢复默认名称', '开始 10 秒预览']) {
   assert.equal(button(label).props.disabled, true, `${label} must not interrupt recording`);
 }
 act(() => renderer.unmount());

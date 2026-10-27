@@ -23,6 +23,7 @@ import {
   getRecordingSyncStatus, pauseRecordingSync, watchRecordingSync, watchCompanionSnapshotUpdates,
   discardOldestDeviceRecording,
   exportCompanionMeeting,
+  previewCompanionMeetingExport,
   exportCompanionAudio,
   exportCompanionLibrary,
   saveCompanionLibraryState,
@@ -261,6 +262,7 @@ export function App() {
       onRefresh={() => void refresh()}
       onControl={(request) => void runControl(request)}
       onExportMeeting={(request) => exclusive('refresh', () => exportCompanionMeeting(request))}
+      onPreviewMeetingExport={(request)=>previewCompanionMeetingExport(request)}
       onExportDiagnostics={isTauriRuntime() ? (includeDevice) => exclusive('refresh', () => exportCompanionDiagnostics(includeDevice)) : undefined}
       onPreviewDiagnostics={isTauriRuntime() ? () => exclusive('refresh',previewCompanionDiagnostics) : undefined}
       onPrepareAudioComponents={isTauriRuntime() ? () => exclusive('refresh', prepareCompanionAudioComponents) : undefined}

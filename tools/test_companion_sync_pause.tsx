@@ -63,7 +63,7 @@ assert.equal(button('正在暂停…').props.disabled, true);
 assert.match(text(renderer.toJSON()), /保存和回收完成后/);
 await act(async () => { listener!({ ...active, jobId: null, phase: 'paused' }); });
 assert.match(text(renderer.toJSON()), /重开软件仍保持暂停/);
-await act(async () => { listener!({ ...active, jobId: null, phase: 'blocked', error: '录音同步设置暂时不可读取，自动同步已暂停；设备原录音保留。' }); });
+await act(async () => { listener!({ ...active, jobId: null, phase: 'blocked', error: '录音同步设置暂时不可读取，自动同步已暂停；设备原录音保留。请恢复本机设置文件后重试。' }); });
 assert.match(text(renderer.toJSON()), /设置暂时不可读取/);
 assert.equal(button('继续同步'), undefined, 'unreadable settings cannot offer a false resume');
 assert.equal(button('暂停同步'), undefined);
