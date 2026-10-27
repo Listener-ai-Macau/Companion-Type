@@ -11,7 +11,7 @@ row.calendarCopies=[copy,{...copy,fileName:'旧样品无提醒.ics',fileSha256:'
 const original=JSON.stringify(row);
 act(()=>{tree=create(<CompanionCalendarCopies session={row} mode="offlineStore" markdown="edited-date"/>);});
 assert.match(text(tree.toJSON()),/清单已修改，接收日历不会自动更新/);assert.match(text(tree.toJSON()),/旧日程的完整原名称/);assert.match(text(tree.toJSON()),/也可能新增/);assert.doesNotMatch(text(tree.toJSON()),/another-mode|已同步|尚未导入/);
-assert.equal(tree.root.findAllByType('section').length,2);assert.match(calendarCopySearchText(copy),/提前60分钟/);assert.match(calendarCopySearchText(copy),/不要深色/);
+assert.equal(tree.root.findAllByType('section').length,2);assert.equal(tree.root.findAllByType('time')[0].props.dateTime,copy.savedAt);assert.doesNotMatch(text(tree.toJSON()),/2026-10-28T06:30:00/);assert.match(calendarCopySearchText(copy),/提前1小时/);assert.match(calendarCopySearchText(copy),/不要深色/);
 Object.defineProperty(globalThis,'navigator',{value:{clipboard:{writeText:async()=>{throw Error('denied');}}},configurable:true});
 await act(async()=>tree.root.findAllByType('button')[1].props.onClick());
 assert.match(tree.root.findByProps({'aria-label':'日历副本查找文字'}).props.value,/旧日程的完整原名称/);assert.match(tree.root.findByProps({'aria-label':'日历副本查找文字'}).props.value,/未附提醒/);

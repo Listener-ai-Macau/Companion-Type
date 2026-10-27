@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
+import { readableCalendarTime } from './calendarTime';
 import type { CompanionCalendarCopy, CompanionV1HostSession, CompanionV1MeetingMode } from '@companion-type/core';
+
+const reminderLabel = (minutes: number | null) => minutes === null ? '未附提醒' : minutes === 0 ? '在已确认的时刻' : minutes === 60 ? '提前1小时' : `提前${minutes}分钟`;
+function savedTime(value: string): string {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? '保存时间待核对' : date.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+}
 
 export function calendarCopySearchText(copy: CompanionCalendarCopy): string {
   return [`日历文件：${copy.fileName}`, ...copy.entries.map(entry =>
-    `${entry.title}\n时间：${entry.deadline}\n提醒：${entry.reminderMinutes === null ? '未附提醒' : entry.reminderMinutes === 0 ? '在已确认的时刻' : `提前${entry.reminderMinutes}分钟`}`),
+    `${entry.title}\n时间：${readableCalendarTime(entry.deadline)}\n提醒：${reminderLabel(entry.reminderMinutes)}`),
     '这是本机保存文件时的内容；请在接收日历搜索并核对是否已导入。'].join('\n\n');
 }
 
@@ -30,11 +37,10 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
     <details>
       <summary>查看已保存的日历副本</summary>
       <p className="ct-step-meta">这里只记录本机成功保存的文件，无法确认是否已导入日历。若已导入旧文件，重新导入是否替换取决于接收日历，也可能新增；可按下面的原名称找到日程后修改。</p>
-      {copies.map((copy, index) => <section key={`${copy.fileSha256}:${copy.savedAt}`} aria-label={index === 0 ? '最近保存的日历文件' : '上次不同内容的日历文件'}>
-        <p><strong>{index === 0 ? '最近保存' : '上次不同内容'}</strong>：{copy.fileName}<br />{copy.savedAt}</p>
+      {copies.map((copy, index) => <section key={`${copy.fileSha256}:${copy.savedAt}`} aria-label={index === 0 ? '最近保存的日历文件' : '上一份日历文件'}>
+        <p><strong>{index === 0 ? '最近保存' : '上一份副本'}</strong>：{copy.fileName}<br /><time dateTime={copy.savedAt}>{savedTime(copy.savedAt)}</time></p>
         <ul>{copy.entries.map((entry, n) => <li key={`${entry.uid}:${n}`}>
-          <strong>{entry.title}</strong><br />时间：{entry.deadline}<br />
-          提醒：{entry.reminderMinutes === null ? '未附提醒' : entry.reminderMinutes === 0 ? '在已确认的时刻' : `提前${entry.reminderMinutes}分钟`}
+          <strong>{entry.title}</strong><br />提醒：{reminderLabel(entry.reminderMinutes)}
         </li>)}</ul>
         <button type="button" className="ct-action" onClick={() => void copySearch(copy, index)}>复制{index === 0 ? '这份' : '旧日程'}查找文字</button>
         {copyState?.index === index ? <div role="status"><p>{copyState.message}</p>{copyState.text ?
