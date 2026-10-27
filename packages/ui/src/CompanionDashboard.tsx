@@ -322,7 +322,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
         onChange(markdown.slice(0, item.start) + newline + body + newline + newline + markdown.slice(item.end));
       }} />}
     {item.key === 'Action Items' ? <small id="ct-minutes-action-help" className="ct-action-item-help">
-      当前 {item.value.split(/\r?\n/).filter(line => line.trim()).length} 项。修改内容时，已注明的时间和负责人会单独保留。
+      已填写 {item.value.split(/\r?\n/).filter(line => line.trim()).length} 项。修改内容时，已注明的时间和负责人会单独保留。
     </small> : null}
   </div>;
   return <div className="ct-basic-minutes-editor">
@@ -646,6 +646,16 @@ export function CompanionDashboard({
     setPlaybackOpen(false);
     setTranscribePromptSession(null);
   }, [selectedSession?.id]);
+
+  useEffect(()=>{
+    if(!editingMinutes)return;
+    const request=window.requestAnimationFrame(()=>{
+      const editor=document.getElementById('ct-active-minutes-editor');
+      editor?.scrollIntoView({block:'start'});
+      editor?.querySelector<HTMLInputElement>('input[aria-label^="待办 "]')?.focus({preventScroll:true});
+    });
+    return()=>window.cancelAnimationFrame?.(request);
+  },[editingMinutes,selectedSession?.id]);
 
   useEffect(()=>{
     if(!openSavedRecordingId || selectedSession?.id!==openSavedRecordingId)return;
@@ -1459,7 +1469,7 @@ export function CompanionDashboard({
 
       {!boardLiveActive ? <CompanionRecorderControl session={controlledRecorder} busy={recordingControlBusy} onControl={onControl} /> : null}
 
-      {boardLiveActive && boardOnlineLive ? <section className="ct-recording-activity" aria-label="当前录音">
+      {boardLiveActive && boardOnlineLive ? <section className="ct-recording-activity" aria-label="当前记录">
         <div><strong role="status">{boardOnlineLive.state === 'starting' ? '正在准备录音'
           : boardOnlineLive.state === 'recording' ? '正在录音'
             : boardOnlineLive.state === 'stopping' ? '正在收齐录音' : '录音已结束，正在整理'}</strong>
@@ -1471,7 +1481,7 @@ export function CompanionDashboard({
           onClick={() => onStopBoardOnlineLive?.()}><Square size={15} />结束录音并整理</button>
       </section> : null}
 
-      {!boardLiveActive && !controlledRecorder && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前录音">
+      {!boardLiveActive && !controlledRecorder && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前记录">
         <div><strong>{device?.recording ? '设备录音中 · 上次读取' : '正在录音'}</strong>
           <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p></div>
         {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={recordingControlBusy}
@@ -1609,14 +1619,14 @@ export function CompanionDashboard({
         {listeningQueue.message?<p role="status">{listeningQueue.message}</p>:null}
       </section></details>:null}
       {selectedSession ? (
-        <section ref={savedRecordingWorkspace} id="ct-saved-recording-workspace" className="ct-meeting-workspace" aria-label="当前录音" tabIndex={-1} hidden={!savedDetailOpen}>
+        <section ref={savedRecordingWorkspace} id="ct-saved-recording-workspace" className="ct-meeting-workspace" aria-label="当前记录" tabIndex={-1} hidden={!savedDetailOpen}>
           <button type="button" className="ct-text-button ct-recording-back" disabled={controlsBusy}
             onClick={returnToRecordingLibrary}>← 返回记录库</button>
           <header className="ct-meeting-hero">
             <div>
               <p className="ct-section-eyebrow">{textOnlyImport ? '导入文字' : '录音内容'}</p>
-              <label className="ct-title-editor"><span className="ct-sr-only">录音标题</span><Pencil size={15} />
-                <input value={titleDraft} maxLength={120} aria-label="录音标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
+              <label className="ct-title-editor"><span className="ct-sr-only">记录标题</span><Pencil size={15} />
+                <input value={titleDraft} maxLength={120} aria-label="记录标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
                   readOnly={!onSaveMeeting || saveMeetingBusy} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
               {!titleDraft.trim() ? <p id="ct-title-error" className="ct-step-warn" role="alert">标题不能为空，请填写后保存。</p> : null}
@@ -1739,8 +1749,8 @@ export function CompanionDashboard({
                 {copyResult.text?<details open={copyResult.kind==='ready'||undefined}><summary>查看清单文字</summary><textarea aria-label="已保存的清单文字" readOnly value={copyResult.text} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:90,boxSizing:'border-box'}}/></details>:null}
               </div>:null}
               {renderExportFeedback('document', exportResult?.kind === 'error' ? 'ct-document-export-result ct-step-warn' : 'ct-document-export-result ct-step-ok')}
-              {editingMinutes ? <div className="ct-minutes-editor">
-                {selectedDraft?.minutes?.[minutesViewMode]?.createManual?<p className="ct-step-meta">对照下方原话与补充填写；不会自动提取内容，也不会调用整理服务。写在“行动项”下的列表可保存、勾选和导出；不会自动提醒。</p>:null}
+              {editingMinutes ? <div id="ct-active-minutes-editor" className="ct-minutes-editor">
+                {selectedDraft?.minutes?.[minutesViewMode]?.createManual?<p className="ct-step-meta">自己填写；原话保留，不会自动提取或创建提醒。</p>:null}
                 <div className="ct-minutes-savebar" aria-label="整理内容保存">
                   <span>{selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单 · 尚未保存':minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
                 <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary"
@@ -1750,6 +1760,9 @@ export function CompanionDashboard({
                     <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn' : 'ct-step-ok'}
                       role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
                 </div>
+                {manualMinutes||selectedDraft?.minutes?.[minutesViewMode]?.createManual?<details className="ct-checklist-source" open>
+                  <summary>对照原话</summary><p className="ct-step-meta" style={{maxHeight:100,overflow:'auto',whiteSpace:'pre-wrap'}}>{companionReviewedTranscript(selectedSession)}</p>
+                </details>:null}
                 <MinutesContentEditor onCalendarPending={changeCalendarPending} manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={calendarPendingCount>0 && minutesEntry && 'calendarContext'in minutesEntry?minutesEntry.calendarContext:minutesDisplayContext}
                   label={selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单':`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
 

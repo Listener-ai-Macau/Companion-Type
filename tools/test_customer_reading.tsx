@@ -103,7 +103,15 @@ shopping.minutesByMode.offlineStore={...shopping.minutesByMode.offlineStore!,sou
 shopping.minutes={...shopping.minutes!,source:'userAuthored',markdown:shopping.minutesByMode.offlineStore.markdown,generatedAt:'2026-10-27T06:00:00Z'};
 const stored=JSON.stringify(shopping);assert.equal(libraryPreview(shopping,'咖啡').target,'result');
 assert.equal(latestSavedResult([shopping])?.session.id,shopping.id);
-assert.equal(latestSavedResult([shopping])?.at,'2026-10-27T06:00:00Z');
+assert.equal(Date.parse(latestSavedResult([shopping])?.at??''),Date.parse('2026-10-27T06:00:00Z'));
 assert.equal(latestSavedResult([{...shopping,organization:{...shopping.organization!,trashedAt:'2026-10-27T07:00:00Z'}}]),null);
 assert.equal(JSON.stringify(shopping),stored);
 console.log('PASS saved-list return: authored result wins shared source word, true saved timestamp, trash excluded, durable data unchanged');
+
+const nativeSaved=structuredClone(shopping);nativeSaved.id='native-manual-ms';nativeSaved.exportedAt=null;
+nativeSaved.minutesByMode.offlineStore!.generatedAt='1793084105555';nativeSaved.minutes!.generatedAt='1793084105555';
+const oldIso=structuredClone(row);oldIso.id='older-cloud-iso';oldIso.exportedAt='2026-10-25T00:09:55.944Z';oldIso.minutesByMode.offlineStore!.generatedAt='2026-10-25T00:09:55.944Z';oldIso.minutes!.generatedAt='2026-10-25T00:09:55.944Z';
+const nativeBefore=JSON.stringify([oldIso,nativeSaved]);assert.equal(latestSavedResult([oldIso,nativeSaved])?.session.id,'native-manual-ms');
+assert.equal(latestSavedResult([oldIso,nativeSaved])?.at,new Date(1793084105555).toISOString());
+assert.equal(JSON.stringify([oldIso,nativeSaved]),nativeBefore);
+console.log('PASS real native manual timestamp: epoch-ms save beats older ISO provider result before any export, no stored date rewrite');

@@ -83,7 +83,14 @@ export function latestSavedResult(sessions:CompanionV1HostSession[]) {
     const mode=session.meetingMode;
     const result=session.minutesByMode?.[mode]??session.minutes;
     if(!result?.markdown.trim())continue;
-    const dates=[result.generatedAt,session.exportedAt].filter((at):at is string=>!!at&&Number.isFinite(Date.parse(at)));
+    // Native manual saves use epoch-millisecond strings; provider results and
+    // exportedAt use ISO. Decode both existing representations, without
+    // rewriting stored data or inventing a new edit timestamp.
+    const dates=[result.generatedAt,session.exportedAt].flatMap(value=>{
+      if(!value)return[];
+      const ms=/^\d+$/.test(value)?Number(value):Date.parse(value);
+      return Number.isFinite(ms)&&Number.isFinite(new Date(ms).getTime())?[new Date(ms).toISOString()]:[];
+    });
     const at=dates.sort((a,b)=>Date.parse(b)-Date.parse(a))[0];
     if(at&&(!latest||Date.parse(at)>Date.parse(latest.at)))latest={session,at,manual:String(result.source)==='userAuthored'};
   }

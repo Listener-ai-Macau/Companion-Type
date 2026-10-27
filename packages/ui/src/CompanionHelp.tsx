@@ -36,7 +36,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <p>原话里的“明天”“下周”等是录音当时的说法，请对照录音日期；Type 保留原话，不会把它们自动改成今天的相对时间。补充里的时间请对照补充时的语境，需要时可编辑成明确日期。</p>
       {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前记录</button> : null}
     </details>
-    <CompanionChecklistHandoff format="todo" onReturn={onRecording}/>
+    <CompanionChecklistHandoff format="todotxt" onReturn={onRecording}/>
     <details><summary>双击、实体键和菜单录音，是同一件事吗？</summary>
       <p>都是开始或停止同一台 Companion 的设备录音，选一种顺手的方式即可，不需要依次操作三个入口。</p>
       <ul><li>触摸快捷：宠物首页默认双击左下角开录，录音画面双击停录。也可在设备菜单中改为左下角向右拉开录。</li>
