@@ -127,8 +127,8 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   }
 
   return <section className="ct-transcript-document" hidden={!visible} aria-label="转写核对">
-    <div className="ct-document-head"><strong>核对文字</strong><span>{companionReviewedTranscript(session).length} 字{revision !== null ? ' · 已人工修订' : ''}</span></div>
-    <p className="ct-step-meta">{importedText ? '可以修正导入文字，导入原文会保留。这条记录没有原录音。' : '可对照原音修正文字和说话人。回听位置与原始识别结果会保留。'}</p>
+    <div className="ct-document-head"><strong>{draft ? '修正文字' : !stale && revision !== null ? '修订后的文字' : originalLabel}</strong><span>{companionReviewedTranscript(session).length} 字{!stale && revision !== null ? ' · 已人工修订' : ''}</span></div>
+    <p className="ct-step-meta">{draft ? importedText ? '导入原文会保留。这条记录没有原录音。' : '可对照原音修正文字和说话人。回听位置与原始识别结果会保留。' : importedText ? '只读查看。这条记录来自导入文字，没有原录音。' : '只读查看识别文字，可对照原音核对。'}</p>
     {stale ? <div className="ct-step-warn" role="status">原始转写已更新，旧修订已保留供核对，没有套用到新的时间轴。请重新核对，或恢复原始转写。
       <details><summary>查看之前的修订</summary>
         {session.transcriptReview?.text ? <p>{session.transcriptReview.text}</p> : session.transcriptReview?.sourceUtterances.map((u,i) => {
@@ -163,10 +163,6 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
         <button type="button" className="ct-action" disabled={Boolean(saving)} onClick={() => cancel(session.id)}>取消修订</button>
       </div>
     </div> : <>
-      <div className="ct-inline-edit-actions"><button type="button" className="ct-text-button" disabled={!canEdit}
-        title={!onSave ? '请在桌面版修订转写' : undefined} onClick={start}><Pencil size={14} />修正文字</button>
-        {revision !== null || stale ? <button type="button" className="ct-text-button" disabled={!canEdit} onClick={() => void save(true)}><RotateCcw size={14} />{importedText ? '恢复导入原文' : '恢复原始转写'}</button> : null}
-      </div>
       <div className="ct-transcript-lines">
         {rows.length ? rows.map((u,index) => <div className="ct-reviewed-utterance" key={index}
           data-source-selected={selection?.index === index ? 'true' : undefined}
@@ -179,6 +175,10 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
           </div>
           <p>{u.text}</p>
         </div>) : companionReviewedTranscript(session).split('\n').map((line,i) => <p key={i}>{line || '\u00a0'}</p>)}
+      </div>
+      <div className="ct-inline-edit-actions"><button type="button" className="ct-text-button" disabled={!canEdit}
+        title={!onSave ? '请在桌面版修订转写' : undefined} onClick={start}><Pencil size={14} />修正文字</button>
+        {revision !== null || stale ? <button type="button" className="ct-text-button" disabled={!canEdit} onClick={() => void save(true)}><RotateCcw size={14} />{importedText ? '恢复导入原文' : '恢复原始转写'}</button> : null}
       </div>
     </>}
     {result?.id === session.id ? <p className="ct-step-meta" role="status">{result.message}</p> : null}
