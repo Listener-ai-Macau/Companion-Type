@@ -20,6 +20,17 @@ export function readableCalendarTime(value:string):string {
   return `${readableCalendarTime(m[1])} ${m[2]}:${m[3]}${seconds}（UTC${zone}）`;
 }
 export function seedCalendarTime(value:string):CalendarTimeDraft {
+  // Prefill only a complete explicit year/month/day (optionally24-hour time).
+  // It is a visible draft, not a saved conversion. Relative/partial dates,
+  // alternatives, conditions and invalid dates are never resolved here.
+  const chinese=value.match(/^([0-9]{4})年\s*([0-9]{1,2})月\s*([0-9]{1,2})日(?:\s*([0-9]{1,2}):([0-9]{2}))?$/);
+  if(chinese){
+    const date=`${chinese[1]}-${chinese[2].padStart(2,'0')}-${chinese[3].padStart(2,'0')}`;
+    const time=chinese[4]===undefined?'':`${chinese[4].padStart(2,'0')}:${chinese[5]}`;
+    if(validCalendarDate(date)&&(!time||(Number(chinese[4])<=23&&Number(chinese[5])<=59))){
+      return{expected:value,date,time,timed:!!time,zone:'local',offset:'+00:00'};
+    }
+  }
   const m=value.match(/^(\d{4}-\d{2}-\d{2})(?:[Tt ](\d{2}:\d{2}))?/);
   const offset=value.match(/(?:[Zz]|[+-]\d{2}:\d{2})$/)?.[0];
   return{expected:value,date:m&&validCalendarDate(m[1])?m[1]:'',time:m?.[2]??'',timed:!/^\d{4}-\d{2}-\d{2}$/.test(value),zone:offset?'offset':'local',offset:offset?(/[Zz]/.test(offset)?'+00:00':offset):'+00:00'};

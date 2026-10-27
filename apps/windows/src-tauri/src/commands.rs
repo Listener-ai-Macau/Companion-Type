@@ -183,6 +183,7 @@ pub enum CompanionMeetingExportFormat {
     #[serde(rename = "todotxt")]
     TodoText,
     Ics,
+    Calendar,
 }
 
 impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExportFormat {
@@ -195,6 +196,7 @@ impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExpor
             CompanionMeetingExportFormat::Todo => Self::Todo,
             CompanionMeetingExportFormat::TodoText => Self::TodoText,
             CompanionMeetingExportFormat::Ics => Self::Ics,
+            CompanionMeetingExportFormat::Calendar => Self::Calendar,
         }
     }
 }

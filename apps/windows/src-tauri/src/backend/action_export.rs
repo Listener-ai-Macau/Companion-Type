@@ -1,6 +1,6 @@
 //! Export only action items explicitly present in the selected saved document.
 //! RFC 5545: https://www.rfc-editor.org/rfc/rfc5545.html (3.1, 3.6.2, 3.8.2.3).
-use chrono::{DateTime, NaiveDate, Timelike, Utc};
+use chrono::{DateTime, Datelike, NaiveDate, Timelike, Utc};
 use sha2::{Digest, Sha256};
 use std::sync::LazyLock;
 
@@ -246,6 +246,66 @@ pub fn calendar(session_id: &str, mode: &str, title: &str, actions: &[Action], d
     out.push_str("END:VCALENDAR\r\n"); out
 }
 
+
+// Calendar applications commonly import VEVENT rather than VTODO. Keep the
+// original task export intact; create deadline markers only for an unfinished
+// action with a confirmed absolute date or timestamp. No relative-date guess,
+// invitation, invented duration or automatic account/calendar write.
+fn event_start(value: &str) -> Option<String> {
+    if value.len()==10 && value.as_bytes().get(4)==Some(&b'-') && value.as_bytes().get(7)==Some(&b'-') {
+        let date=NaiveDate::parse_from_str(value,"%Y-%m-%d").ok()?;
+        if !(1..=9999).contains(&date.year()) || date.format("%Y-%m-%d").to_string()!=value {return None;}
+        return Some(format!("DTSTART;VALUE=DATE:{}\r\n",date.format("%Y%m%d")));
+    }
+    static STAMP:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(
+        r"^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-5][0-9](?:\.[0-9]+)?(?:[Zz]|[+-][0-9]{2}:[0-9]{2})$"
+    ).unwrap());
+    if !STAMP.is_match(value) || value.ends_with("-00:00") {return None;}
+    let time=DateTime::parse_from_rfc3339(value).ok()?;
+    let utc=time.with_timezone(&Utc);
+    // iCalendar has whole-second precision. Do not silently round an authored
+    // fractional instant, accept a leap-second normalization or year zero.
+    if time.nanosecond()!=0 || !(1..=9999).contains(&time.year()) || !(1..=9999).contains(&utc.year()) {return None;}
+    Some(format!("DTSTART:{}\r\n",utc.format("%Y%m%dT%H%M%SZ")))
+}
+
+pub(crate) fn calendar_event_notice(actions:&[Action])->Option<String> {
+    let completed=actions.iter().filter(|a|a.completed).count();
+    let ready=actions.iter().filter(|a|!a.completed && a.due.as_deref().and_then(event_start).is_some()).count();
+    let missing=actions.len()-ready-completed;
+    if missing==0 && completed==0 {return None;}
+    let mut excluded=Vec::new();
+    if missing>0 {excluded.push(format!("{missing}项尚无明确的日历时间"));}
+    if completed>0 {excluded.push(format!("{completed}项已完成"));}
+    Some(format!("可导出{ready}项日历日程。{}，仍保留在清单中，不包含在本次日历文件。",excluded.join("，")))
+}
+
+pub fn calendar_events(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str)->Result<String,String> {
+    let mut out="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Companion Type//Checklist Calendar Events//ZH\r\nCALSCALE:GREGORIAN\r\n".to_string();
+    let mut count=0;
+    for(index,item)in actions.iter().enumerate() {
+        if item.completed {continue;}
+        let Some(start)=item.due.as_deref().and_then(event_start)else{continue;};
+        let mut hash=Sha256::new();
+        for field in ["calendar-deadline-event",session_id,mode,&index.to_string(),&item.text] {
+            hash.update(field.as_bytes());hash.update([0]);
+        }
+        let id=format!("{:x}",hash.finalize());
+        let readable=readable_action(&item.text);
+        let mode_label=match mode {"offlineStore"=>"先录后整理","onlineLive"=>"在线速记",other=>other};
+        out.push_str("BEGIN:VEVENT\r\n");
+        out.push_str(&property("UID",&format!("{}@companion-type",&id[..40])));
+        out.push_str(&property("DTSTAMP",stamp));out.push_str(&start);
+        out.push_str(&property("SUMMARY",&readable));
+        out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n整理方式：{mode_label}{}\n事项：{readable}\n清单时间点；导入后请核对日期、时区和提醒。",if draft{"\n草稿：请先核对"}else{""})));
+        // RFC5545: a date without DTEND is one day; a timed event without
+        // DTEND ends at DTSTART. A deadline does not reserve invented work time.
+        out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\nEND:VEVENT\r\n");count+=1;
+    }
+    if count==0 {return Err("没有可导出的日历日程。请在编辑清单中确认未完成事项的日期或时刻，再导出；原清单保持不变。".into());}
+    out.push_str("END:VCALENDAR\r\n");Ok(out)
+}
+
 pub fn stamp_now() -> String { Utc::now().format("%Y%m%dT%H%M%SZ").to_string() }
 
 #[cfg(test)]
@@ -314,4 +374,48 @@ mod tests {
         assert!(calendar_time_notice(&[Action{text:"未注明时间".into(),completed:false,due:None}]).is_none());
     }
 
+}
+
+
+#[cfg(test)]
+mod p636_calendar_events_tests {
+    use super::*;
+    #[test]
+    fn p636_calendar_events_preserve_confirmed_dates_skip_unsupported_and_keep_original_tasks() {
+        let saved="## 行动项\n- [ ] 带身份证 (due: 2026-11-05)\n- [ ] 拿票 (due: 2026-11-05T16:30:00+08:00)\n- [ ] 核对安排 (due: 周五)\n- [x] 已完成 (due: 2026-11-04)";
+        let actions=parse_saved_actions(saved);let original=actions.clone();
+        let body=calendar_events("p636","offlineStore","出差安排",&actions,false,"20261027T010000Z").unwrap();
+        assert_eq!(body.matches("BEGIN:VEVENT\r\n").count(),2);
+        assert!(body.contains("DTSTART;VALUE=DATE:20261105\r\n"));
+        assert!(body.contains("DTSTART:20261105T083000Z\r\n"));
+        assert!(body.contains("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\n"));
+        assert!(!body.contains("BEGIN:VTODO")&&!body.contains("BEGIN:VALARM")&&!body.contains("DTEND")&&!body.contains("ATTENDEE"));
+        assert_eq!(actions,original);
+        let notice=calendar_event_notice(&actions).unwrap();assert!(notice.contains("2项日历")&&notice.contains("1项尚无")&&notice.contains("1项已完成"));
+        let old=calendar("p636","offlineStore","出差安排",&actions,false,"20261027T010000Z");
+        assert_eq!(old.matches("BEGIN:VTODO\r\n").count(),4);assert!(old.contains("周五"));
+        let uid=|text:&str|text.lines().find(|line|line.starts_with("UID:")).unwrap().to_owned();
+        assert_ne!(uid(&old),uid(&body));
+        assert_ne!(body,calendar_events("p636","onlineLive","出差安排",&actions,false,"20261027T010000Z").unwrap());
+    }
+    #[test]
+    fn p636_calendar_events_do_not_guess_or_round_times() {
+        for value in ["周五","2026年11月5日16:30","2026-11-05 16:30","0000-01-01","2026-02-29",
+            "2026-11-05T16:30:00-00:00","2026-11-05T16:30:60Z","2026-11-05T16:30:00.001Z","0001-01-01T00:00:00+08:00"] {
+            let task=Action{text:format!("任务 (due: {value})"),completed:false,due:Some(value.into())};
+            assert!(calendar_events("s","offlineStore","t",&[task],false,"20261027T010000Z").is_err(),"{value}");
+        }
+        for value in ["2026-11-05","2026-11-05T16:30:00+08:00","2026-11-05T16:30:00.000Z"] {
+            let task=Action{text:"任务".into(),completed:false,due:Some(value.into())};
+            assert!(calendar_events("s","offlineStore","t",&[task],false,"20261027T010000Z").is_ok(),"{value}");
+        }
+    }
+    #[test]
+    fn p636_calendar_events_escape_author_content_and_fold_complete_utf8() {
+        let task=Action{text:format!("核对资料,不可删除;{}\nBEGIN:VEVENT", "保留条件".repeat(70)),completed:false,due:Some("2026-11-05".into())};
+        let body=calendar_events("s","offlineStore","标题\nBEGIN:VALARM",&[task],true,"20261027T010000Z").unwrap();
+        assert_eq!(body.matches("BEGIN:VEVENT\r\n").count(),1);assert!(!body.contains("\r\nBEGIN:VALARM"));
+        assert!(body.lines().all(|line|line.len()<=75));assert!(body.contains("\\,不可删除\\;"));
+        assert!(body.replace("\r\n ","").contains("草稿：请先核对"));
+    }
 }

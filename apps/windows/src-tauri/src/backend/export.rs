@@ -37,6 +37,7 @@ pub enum MeetingExportFormat {
     Todo,
     TodoText,
     Ics,
+    Calendar,
 }
 
 impl MeetingExportFormat {
@@ -48,7 +49,7 @@ impl MeetingExportFormat {
             Self::Srt => "srt",
             Self::Todo => "md",
             Self::TodoText => "txt",
-            Self::Ics => "ics",
+            Self::Ics | Self::Calendar => "ics",
         }
     }
 
@@ -61,6 +62,7 @@ impl MeetingExportFormat {
             Self::Todo => "待办清单 Markdown",
             Self::TodoText => "待办清单普通文本",
             Self::Ics => "iCalendar 待办事项",
+            Self::Calendar => "日历日程 (.ics)",
         }
     }
 }
@@ -86,7 +88,7 @@ pub fn content_hash(prepared: &PreparedMeetingExport) -> String {
     use sha2::Digest;
     let mut hash=sha2::Sha256::new();
     hash.update(prepared.suggested_name.as_bytes());hash.update([0]);
-    if prepared.format==MeetingExportFormat::Ics {
+    if matches!(prepared.format,MeetingExportFormat::Ics|MeetingExportFormat::Calendar) {
         // The generated DTSTAMP is the export instant, not saved content.
         // Every other byte (including UID, title, mode, literal time and DUE)
         // remains bound to the user's reviewed saved result.
@@ -208,7 +210,7 @@ pub fn prepare_meeting_export(
 
     let mut warning=None;
     let content = match format {
-        MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics => {
+        MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics | MeetingExportFormat::Calendar => {
             let processing = minutes_variant_for_mode(session, meeting_mode).and_then(|v| v.processing.as_ref())
                 .or_else(|| if minutes_variant_for_mode(session, meeting_mode).is_none() {
                     session.minutes.as_ref().and_then(|m| m.processing.as_ref())
@@ -235,6 +237,7 @@ pub fn prepare_meeting_export(
                 return Err("这版已保存纪要中没有可导出的待办。请在“行动项”或“Action Items”标题下用列表填写任务并保存。".into());
             }
             if format==MeetingExportFormat::Ics { warning=super::action_export::calendar_time_notice(&actions); }
+            if format==MeetingExportFormat::Calendar { warning=super::action_export::calendar_event_notice(&actions); }
             let draft = saved.lines().any(|line| line.starts_with("> 草稿："));
             if matches!(format, MeetingExportFormat::Todo | MeetingExportFormat::TodoText) {
                 let body=super::action_export::todo(&session.title, &actions, draft);
@@ -243,6 +246,8 @@ pub fn prepare_meeting_export(
                 if format==MeetingExportFormat::TodoText {
                     body.strip_prefix("# ").unwrap_or(&body).to_owned()
                 }else{body}
+            } else if format==MeetingExportFormat::Calendar {
+                super::action_export::calendar_events(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now())?
             } else {
                 super::action_export::calendar(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now())
             }
@@ -280,6 +285,7 @@ pub fn prepare_meeting_export(
         MeetingExportFormat::Todo => "待办清单",
         MeetingExportFormat::TodoText => "待办清单",
         MeetingExportFormat::Ics => "待办日历",
+        MeetingExportFormat::Calendar => "日历日程",
     };
     let both_modes = session.minutes_by_mode.offline_store.is_some() && session.minutes_by_mode.online_live.is_some();
     let mode_label = if both_modes && !matches!(format, MeetingExportFormat::Txt | MeetingExportFormat::Srt) {
@@ -988,6 +994,34 @@ mod tests {
         assert!(occupied.contains("文件占用")&&occupied.contains("os error 32"),"{occupied}");
         let other=windows_commit_error(Error::from_hresult(HRESULT(0x80040070u32 as i32)));
         assert!(!other.contains("磁盘空间不足"),"another facility is not Windows disk-full error 112");
+    }
+    #[test]
+    fn p636_calendar_export_follows_saved_mode_source_hash_and_unchanged_state() {
+        let mut s=session("原话保留，不用重录",vec![],None);
+        let variant=|text:&str|CompanionV1MinutesVariant {
+            processing:None,source_note_context:None,source_review_revision:None,
+            status:"minutesReady".into(),quality:"final".into(),source:"userEdited".into(),
+            markdown:text.into(),generated_at:None,partial_count:0,
+        };
+        s.minutes_by_mode.offline_store=Some(variant("## 行动项\n- [ ] 带证件 (due: 2026-11-05T16:30:00+08:00)\n- [ ] 待确认 (due: 周五)"));
+        s.minutes_by_mode.online_live=Some(variant("## 行动项\n- [ ] 线上安排 (due: 2026-11-06)"));
+        let before=serde_json::to_value(&s).unwrap();
+        let prepared=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Calendar).unwrap();
+        let text=String::from_utf8(prepared.bytes.clone()).unwrap();
+        assert!(prepared.suggested_name.ends_with("日历日程.ics"));
+        assert!(text.contains("DTSTART:20261105T083000Z"));assert!(!text.contains("线上安排"));
+        assert!(prepared.warning.as_ref().unwrap().contains("1项尚无"));
+        let mut restamped=prepared.clone();
+        restamped.bytes=text.split_inclusive("\r\n").map(|line|if line.starts_with("DTSTAMP:"){"DTSTAMP:20261101T000000Z\r\n"}else{line}).collect::<String>().into_bytes();
+        assert_eq!(content_hash(&prepared),content_hash(&restamped));
+        require_unchanged(&restamped,Some(&content_hash(&prepared))).unwrap();
+        s.minutes_by_mode.offline_store.as_mut().unwrap().markdown.push_str("\n- [ ] 改后的任务 (due: 2026-11-07)");
+        let changed=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Calendar).unwrap();
+        assert!(require_unchanged(&changed,Some(&content_hash(&prepared))).is_err());
+        assert_ne!(content_hash(&prepared),content_hash(&prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Ics).unwrap()));
+        s.minutes_by_mode.offline_store.as_mut().unwrap().markdown="## 行动项\n- [ ] 待确认 (due: 周五)".into();
+        assert!(prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Calendar).unwrap_err().contains("没有可导出的日历日程"));
+        assert_eq!(s.transcript_text,before["transcriptText"].as_str().unwrap());
     }
     #[test]
     fn p612_calendar_handoff_follows_saved_mode_and_preserves_unparsed_time_as_text() {

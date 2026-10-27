@@ -640,6 +640,7 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             let format = match args.get(index+3).map(String::as_str) {
                 Some("todo") => backend::export::MeetingExportFormat::Todo,
                 Some("ics") => backend::export::MeetingExportFormat::Ics,
+                Some("calendar") => backend::export::MeetingExportFormat::Calendar,
                 _ => return Err("export format must be todo or ics".into()),
             };
             let output = args.get(index+4).ok_or("requires output path")?;
