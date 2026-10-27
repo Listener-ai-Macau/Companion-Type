@@ -1818,7 +1818,8 @@ export function CompanionDashboard({
                 </>:null}
                 <div className="ct-button-row">
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale}
-                    onClick={()=>{setCalendarExportReview(null);setRecordingResultOpen(true);setEditingMinutes(true);}}>先核对时间</button>
+                    onClick={()=>{setCalendarExportReview(null);setRecordingResultOpen(true);setEditingMinutes(true);
+                      setCalendarEditRequest(`${selectedSession.id}:${minutesViewMode}:${++calendarEditSequence.current}`);}}>先核对时间</button>
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete}
                     onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash)}>{calendarExportReview.format==='calendar'?(calendarExportReview.remindAtTime?'导出并设置提醒':'导出日程'):'按文字说明导出'}</button>
                   <button type="button" className="ct-text-button" disabled={exportBusy} onClick={()=>setCalendarExportReview(null)}>取消导出</button>

@@ -39,7 +39,13 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
     if(index<0){if(value)fields.push({key,value});}else fields[index]={key,value};
     change(row.id,{metadata:fields});
   };
-  const calendarTarget=rows.findIndex(row=>row.text.trim()&&!/^\[[xX]\]\s/.test(row.prefix));
+  const pending=(row:Row)=>!!row.text.trim()&&!/^\[[xX]\]\s/.test(row.prefix);
+  const due=(row:Row)=>row.metadata.find(field=>field.key==='due')?.value??'';
+  // Start with an unresolved item, then a date-only item needing a clock.
+  // Already confirmed earlier rows must not hide the one the user is fixing.
+  const unresolved=rows.findIndex(row=>pending(row)&&readableCalendarTime(due(row))===due(row));
+  const dateOnly=rows.findIndex(row=>pending(row)&&/^\d{4}-\d{2}-\d{2}(前)?$/.test(due(row)));
+  const calendarTarget=unresolved>=0?unresolved:dateOnly>=0?dateOnly:rows.findIndex(pending);
   return <div className="ct-action-list-editor">
     <p className="ct-step-meta" role={calendarRequestKey?"status":undefined}>{calendarRequestKey?"先确认要放入日历的日期或时刻；确认后保存修改，再导出。原时间说明仍在，未替你猜日期。":"时间说明先按文字保存；需要导入日历时，再确认日期与时刻。"}</p>
     {rows.map((row,index)=><div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
