@@ -302,7 +302,12 @@ pub fn calendar_events(session_id:&str,mode:&str,title:&str,actions:&[Action],dr
         // DTEND ends at DTSTART. A deadline does not reserve invented work time.
         out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\nEND:VEVENT\r\n");count+=1;
     }
-    if count==0 {return Err("没有可导出的日历日程。请在编辑清单中确认未完成事项的日期或时刻，再导出；原清单保持不变。".into());}
+    if count==0 {
+        if actions.iter().all(|item|item.completed) {
+            return Err("CALENDAR_NO_PENDING_ACTIONS:清单事项均已完成，没有需要放入日历的未完成事项；原清单保持不变。".into());
+        }
+        return Err("CALENDAR_TIME_REQUIRED:没有可导出的日历日程。请在编辑清单中确认未完成事项的日期或时刻，再导出；原清单保持不变。".into());
+    }
     out.push_str("END:VCALENDAR\r\n");Ok(out)
 }
 
@@ -417,5 +422,24 @@ mod p636_calendar_events_tests {
         assert_eq!(body.lines().filter(|line|*line=="BEGIN:VEVENT").count(),1);assert!(!body.contains("\r\nBEGIN:VALARM"));
         assert!(body.lines().all(|line|line.len()<=75));assert!(body.contains("\\,不可删除\\;"));
         assert!(body.replace("\r\n ","").contains("草稿：请先核对"));
+    }
+}
+
+
+#[cfg(test)]
+mod p637_calendar_capability_tests {
+    use super::*;
+    #[test]
+    fn p637_calendar_requires_time_is_distinct_from_completed_and_file_io() {
+        let pending=Action{text:"先确认再买".into(),completed:false,due:Some("本周六上午出门前".into())};
+        let error=calendar_events("s","offlineStore","采购",&[pending.clone()],false,"20261027T010000Z").unwrap_err();
+        assert!(error.starts_with("CALENDAR_TIME_REQUIRED:"));assert!(error.contains("原清单保持不变"));
+        let mut done=pending.clone();done.completed=true;
+        let completed=calendar_events("s","offlineStore","采购",&[done],false,"20261027T010000Z").unwrap_err();
+        assert!(completed.starts_with("CALENDAR_NO_PENDING_ACTIONS:"));assert!(!completed.starts_with("CALENDAR_TIME_REQUIRED:"));
+        assert_eq!(pending.due.as_deref(),Some("本周六上午出门前"));
+        let mut confirmed=pending;confirmed.due=Some("2026-10-31T09:00:00+08:00".into());
+        let body=calendar_events("s","offlineStore","采购",&[confirmed],false,"20261027T010000Z").unwrap();
+        assert!(body.contains("DTSTART:20261031T010000Z"));
     }
 }

@@ -1,11 +1,13 @@
 import {useEffect,useRef,useState} from 'react';
 import {confirmedCalendarTime,seedCalendarTime,readableCalendarTime,type CalendarTimeDraft} from './calendarTime';
 
-export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending}:{
-  value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;
+export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,openRequestKey}:{
+  value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;openRequestKey?:string;
 }){
   const[draft,setDraft]=useState<CalendarTimeDraft|null>(null),dialog=useRef<HTMLDialogElement|null>(null),activePending=useRef<typeof onPending>(undefined);
-  const open=!!draft;
+  const open=!!draft,lastRequested=useRef<string|undefined>(undefined);
+  const begin=()=>{if(draft||activePending.current)return;activePending.current=onPending;onPending?.(1);setDraft(seedCalendarTime(value));};
+  useEffect(()=>{if(openRequestKey&&lastRequested.current!==openRequestKey){lastRequested.current=openRequestKey;begin();}},[openRequestKey]);
   const finishPending=()=>{const callback=activePending.current;activePending.current=undefined;callback?.(-1);};
   useEffect(()=>()=>finishPending(),[]);
   useEffect(()=>{if(open&&!dialog.current?.open)dialog.current?.showModal();},[open]);
@@ -15,7 +17,7 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending}:{
   const patch=(change:Partial<CalendarTimeDraft>)=>setDraft(current=>current?{...current,...change}:current);
   return <>
     <button type="button" className="ct-text-button" disabled={disabled} aria-label={`${label} 确认日历时间`}
-      onClick={()=>{activePending.current=onPending;onPending?.(1);setDraft(seedCalendarTime(value));}}>确认日历时间</button>
+      onClick={begin}>确认日历时间</button>
     {draft?<dialog ref={dialog} aria-label={`${label} 日历时间`} onCancel={event=>{event.preventDefault();close();}} onClose={()=>{setDraft(null);finishPending();}}
       style={{width:'min(92vw,28rem)',maxHeight:'85vh',overflow:'auto',boxSizing:'border-box',padding:24,border:'1px solid #c7d3c9',borderRadius:16}}>
       <h3>确认日历时间</h3>

@@ -1,4 +1,4 @@
-import {operationErrorText} from './operationFailure';
+import {operationErrorText,calendarExportNeedsTime} from './operationFailure';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
@@ -299,8 +299,8 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   });
 }
 
-function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext, manual=false, onCalendarPending }: {
-  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;onCalendarPending?:(delta:1|-1)=>void;
+function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext, manual=false, onCalendarPending, calendarRequestKey }: {
+  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;
 }) {
   const fields = basicMinutesFields(markdown, noteContext, manual);
   if (!fields) return <textarea value={markdown} onChange={event => onChange(event.target.value)}
@@ -308,9 +308,10 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
   const primary = fields.some(item=>item.key==='Summary'||item.key==='Action Items')
     ? fields.filter(item=>item.key==='Summary'||item.key==='Action Items') : fields.slice(0,1);
   const secondary = fields.filter(item=>!primary.includes(item));
+  const calendarTarget=fields.find(item=>item.key==='Action Items'&&item.value.split(/\r?\n/).some(line=>line.trim()&&!/^\s*\[[xX]\]\s/.test(line)));
   const field = (item: typeof fields[number]) => <div key={`${item.key}-${fields.indexOf(item)}`} className="ct-basic-minutes-field">
     <span>{item.label}{item.key === 'Action Items' ? '（分别修改）' : ''}</span>
-    {item.key==='Action Items'?<ActionListEditor onCalendarPending={onCalendarPending} value={item.value} disabled={disabled} onChange={value=>{
+    {item.key==='Action Items'?<ActionListEditor calendarRequestKey={item===calendarTarget?calendarRequestKey:undefined} onCalendarPending={onCalendarPending} value={item.value} disabled={disabled} onChange={value=>{
       const newline=markdown.includes('\r\n')?'\r\n':'\n';
       const body=value.split(/\r?\n/).map(line=>line.trim()?`- ${line}`:line).join(newline);
       onChange(markdown.slice(0,item.start)+newline+body+newline+newline+markdown.slice(item.end));
@@ -452,6 +453,9 @@ export function CompanionDashboard({
     minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string; createManual?: CompanionMeetingSaveRequest['createManual'];calendarContext?:CompanionMinutesNoteContext|null }>>;
   }>>({});
   const [editingMinutes, setEditingMinutes] = useState(false);
+  const [calendarEditRequest,setCalendarEditRequest]=useState<string|null>(null);
+  const calendarEditSequence=useRef(0);
+  useEffect(()=>{if(!editingMinutes)setCalendarEditRequest(null);},[editingMinutes]);
   const [calendarPendingCount,setCalendarPendingCount]=useState(0);
   const [saveMeetingBusy, setSaveMeetingBusy] = useState(false);
   const actionSaveActive=useRef(false);
@@ -655,10 +659,10 @@ export function CompanionDashboard({
     const request=window.requestAnimationFrame(()=>{
       const editor=document.getElementById('ct-active-minutes-editor');
       editor?.scrollIntoView({block:'start'});
-      editor?.querySelector<HTMLInputElement>('input[aria-label^="待办 "]')?.focus({preventScroll:true});
+      if(!calendarEditRequest)editor?.querySelector<HTMLInputElement>('input[aria-label^="待办 "]')?.focus({preventScroll:true});
     });
     return()=>window.cancelAnimationFrame?.(request);
-  },[editingMinutes,selectedSession?.id]);
+  },[editingMinutes,selectedSession?.id,calendarEditRequest]);
 
   useEffect(()=>{
     if(!openSavedRecordingId || selectedSession?.id!==openSavedRecordingId)return;
@@ -1081,7 +1085,7 @@ export function CompanionDashboard({
   };
   const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string) => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
-    const sessionId = selectedSession.id;
+    const sessionId = selectedSession.id,exportSourceKey=copySourceKey;
     const unsavedForExport = titleDirty || transcriptReviewUnsaved || calendarPendingCount>0
       || (format !== 'txt' && format !== 'srt' && minutesDirty)
       || ((format === 'json' || format === 'txt' || format === 'markdown') && (noteUnsaved || bookmarkUnsaved));
@@ -1109,7 +1113,15 @@ export function CompanionDashboard({
       const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}) });
       setExportResult({ sessionId, format, origin, path: result?.path, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' || format === 'calendar' ? '。文件尚未导入日历，请导入后核对日期与提醒。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
-      setExportResult({ sessionId, format, origin, kind: 'error', message: error instanceof SavedPreviewInterrupted?error.message:`保存未完成：${operationErrorText(error,'export')}` });
+      if(format==='calendar'&&calendarExportNeedsTime(error)&&onSaveMeeting&&copySourceRef.current===exportSourceKey&&basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)){
+        // Read-only native preflight refused a calendar with no confirmed
+        // pending time. Continue the user's intent at that exact saved record,
+        // not a fictitious storage failure or a file chooser with empty data.
+        setCalendarExportReview(null);setExportResult(null);
+        setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);
+        setEditingMinutes(true);
+        setCalendarEditRequest(`${sessionId}:${minutesViewMode}:${++calendarEditSequence.current}`);
+      }else setExportResult({ sessionId, format, origin, kind: 'error', message: error instanceof SavedPreviewInterrupted?error.message:`保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
   const exportAudio = async () => {
@@ -1798,7 +1810,7 @@ export function CompanionDashboard({
                 {manualMinutes||selectedDraft?.minutes?.[minutesViewMode]?.createManual?<details className="ct-checklist-source" open>
                   <summary>对照原话</summary><p className="ct-step-meta" style={{maxHeight:100,overflow:'auto',whiteSpace:'pre-wrap'}}>{companionReviewedTranscript(selectedSession)}</p>
                 </details>:null}
-                <MinutesContentEditor onCalendarPending={changeCalendarPending} manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={calendarPendingCount>0 && minutesEntry && 'calendarContext'in minutesEntry?minutesEntry.calendarContext:minutesDisplayContext}
+                <MinutesContentEditor calendarRequestKey={calendarEditRequest??undefined} onCalendarPending={changeCalendarPending} manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={calendarPendingCount>0 && minutesEntry && 'calendarContext'in minutesEntry?minutesEntry.calendarContext:minutesDisplayContext}
                   label={selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单':`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
 
                 {offlineMinutes && onlineMinutes ? <p className="ct-step-meta">只修改当前版本，另一份整理结果保持不变。</p> : null}

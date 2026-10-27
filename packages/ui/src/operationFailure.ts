@@ -49,6 +49,10 @@ function messageOf(error:unknown):string{
   try{return typeof error==='string'?error.slice(0,4096):error instanceof Error?error.message.slice(0,4096):'';}
   catch{return '';}
 }
+/** A bounded local capability code, never a provider/OS detail whitelist. */
+export function calendarExportNeedsTime(error:unknown):boolean{
+  return /^CALENDAR_TIME_REQUIRED(?::|$)/.test(messageOf(error).replace(/^Error:\s*/,''));
+}
 function classify(text:string,scope:OperationScope):OperationFailureKind{
   if(/(?:\b(?:ENOSPC|StorageFull)\b|no space left on device|\bdisk (?:is )?full\b|os error 112\b|磁盘空间不足)/i.test(text))return 'storage';
   if(/(?:(?:^(?:HTTP\s*)?(?:401|403)\b|\bHTTP(?: status)?[:= ]+(?:401|403)\b|\b(?:Unauthorized|Forbidden)\b)|服务.{0,8}(?:密钥|授权|配置)|未配置|not configured|missing (?:api|access)[ _-]?key)/i.test(text))return 'configuration';
@@ -69,6 +73,8 @@ function classify(text:string,scope:OperationScope):OperationFailureKind{
  * arbitrary OS/service details become bounded, actionable public guidance. */
 export function describeOperationFailure(error:unknown,scope:OperationScope='general'):OperationFailure{
   const text=messageOf(error).replace(/^Error:\s*/,''),kind=classify(text,scope);
+  if(scope==='export'&&calendarExportNeedsTime(error))return{kind:'unknown',message:'请先确认未完成事项的日历日期或时刻；本次还没有打开文件保存窗口，原清单保持不变。'};
+  if(scope==='export'&&/^CALENDAR_NO_PENDING_ACTIONS(?::|$)/.test(text))return{kind:'unknown',message:'清单中的事项均已完成，没有需要放入日历的未完成事项；原清单保持不变。'};
   if(known.has(text))return {kind,message:text};
   return {kind,message:kind==='unknown'?fallback[scope]:kind==='permission'?(permissionAdvice[scope]??advice.permission):advice[kind]};
 }
