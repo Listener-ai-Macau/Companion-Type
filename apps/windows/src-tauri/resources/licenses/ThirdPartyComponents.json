@@ -3,7 +3,7 @@
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
     "apps/windows/src-tauri/Cargo.lock": "2a53e4eaf2836baf452c851622e7b93d78334fdd56755bc8dc94a8a470dfe9ea",
-    "package-lock.json": "7f362194a6395994cab8be97ba96b9c4c5721ecab21b27dbef2ffc84832d5cd7"
+    "package-lock.json": "bd0bc0fccdc08fb7ad6a91df929c4dc2a22acf0087632c3ce027d4ab5d55f9e6"
   },
   "components": [
     {
@@ -7502,6 +7502,50 @@
           "origin": "pinned vendored native Opus source"
         }
       ]
+    },
+    {
+      "name": "qrcode",
+      "version": "1.5.4",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Local saved-checklist QR browser renderer",
+      "source": "https://registry.npmjs.org/qrcode/-/qrcode-1.5.4.tgz",
+      "integrity": "sha512-1ca71Zgiu6ORjHqFBDpnSMTR2ReToX4l1Au1VFLyVeBTFavzQnv5JxMFr3ukHVKpSrSA2MCk0lNJSykjUfz7Zg==",
+      "repository": {
+        "type": "git",
+        "url": "git://github.com/soldair/node-qrcode.git"
+      },
+      "texts": [
+        {
+          "path": "license",
+          "sha256": "8df47c6ad9ac2c41eb9b2a72def9908959da0ede8dadd56c7b249c1bdb0c5ce6",
+          "file": "texts/8df47c6ad9ac2c41eb9b2a72def9908959da0ede8dadd56c7b249c1bdb0c5ce6.txt",
+          "origin": "installed exact locked npm package"
+        }
+      ],
+      "cachedArchiveVerified": false
+    },
+    {
+      "name": "dijkstrajs",
+      "version": "1.0.3",
+      "license": "MIT",
+      "ecosystem": "npm",
+      "role": "Local saved-checklist QR browser renderer",
+      "source": "https://registry.npmjs.org/dijkstrajs/-/dijkstrajs-1.0.3.tgz",
+      "integrity": "sha512-qiSlmBq9+BCdCA/L46dw8Uy93mloxsPSbwnm5yrKn2vMPiy8KyAskTF6zuV/j5BMsmOGZDPs7KjU+mjb670kfA==",
+      "repository": {
+        "type": "git",
+        "url": "git://github.com/tcort/dijkstrajs"
+      },
+      "texts": [
+        {
+          "path": "LICENSE.md",
+          "sha256": "c46324e45a005413535a6fb7a97e9eacd3cc6bf30335b7d5c10b8ee3af9e60c2",
+          "file": "texts/c46324e45a005413535a6fb7a97e9eacd3cc6bf30335b7d5c10b8ee3af9e60c2.txt",
+          "origin": "installed exact locked npm package"
+        }
+      ],
+      "cachedArchiveVerified": false
     }
   ],
   "localCompanyInputs": [
@@ -7527,5 +7571,5 @@
     }
   ],
   "platformSource": "d8cac4bf16dd30ed63fd67a7997a8832d85aed23",
-  "licenseTextCount": 230
+  "licenseTextCount": 232
 }

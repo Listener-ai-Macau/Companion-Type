@@ -24,6 +24,8 @@ import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOr
 import { companionMinutesNotesCurrent, type CompanionMinutesNoteContext } from '@companion-type/core';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { CompanionExportFeedback, exportFileName } from './CompanionExportFeedback';
+import { CompanionChecklistPhone, type ChecklistPhoneResult } from './CompanionChecklistPhone';
+import { checklistPhoneCode } from './checklistPhone';
 import { briefMinutes } from './briefMinutes';
 import {ActionListEditor} from './ActionListEditor';
 
@@ -999,8 +1001,16 @@ export function CompanionDashboard({
   }, [exportResult, selectedSession?.id]);
   const [copyResult,setCopyResult]=useState<{sessionId:string;sourceKey:string;kind:'pending'|'copied'|'ready'|'error';message:string;text?:string}|null>(null);
   const [copyBusy,setCopyBusy]=useState(false);
-  const copySourceKey=JSON.stringify([selectedSession?.id,minutesViewMode,minutesMarkdown,titleDirty,minutesDirty,transcriptReviewUnsaved,calendarPendingCount,editingMinutes]);
+  const copySourceKey=JSON.stringify([selectedSession?.id,selectedSession?.title,minutesViewMode,minutesMarkdown,titleDirty,minutesDirty,noteUnsaved,transcriptReviewUnsaved,calendarPendingCount,editingMinutes,selectedMinutesStale,minutesIncomplete]);
   const copySourceRef=useRef(copySourceKey);copySourceRef.current=copySourceKey;
+  const [phoneResult,setPhoneResult]=useState<ChecklistPhoneResult|null>(null);
+  const [phoneBusy,setPhoneBusy]=useState(false);
+  const phoneGeneration=useRef(0);
+  useEffect(()=>{phoneGeneration.current++;setPhoneResult(null);},[copySourceKey]);
+  const closePhoneChecklist=()=>{
+    phoneGeneration.current++;setPhoneResult(null);
+    if(phoneBusy)previewTask.current?.cancel();
+  };
   const renderSavedReading = () => selectedSession ? (<MinutesReadingView markdown={localDraftForDisplay(minutesMarkdown, (selectedMinutesVariant ?? legacyMinutes)?.source)}
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
                 recordingTitle={meetingTitle(selectedSession)} recordingTime={recordingTimeLabel(selectedSession.startedAt)}
@@ -1048,6 +1058,25 @@ export function CompanionDashboard({
       }
     }catch(error){setCopyResult({sessionId,sourceKey,kind:'error',message:error instanceof SavedPreviewInterrupted?error.message:`清单未复制：${operationErrorText(error,'export')}`});}
     finally{exportActive.current=false;setCopyBusy(false);}
+  };
+  const showPhoneChecklist = async () => {
+    if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||exportActive.current||selectedMinutesStale||minutesIncomplete)return;
+    const sessionId=selectedSession.id,sourceKey=copySourceKey,generation=++phoneGeneration.current;
+    if(titleDirty||minutesDirty||noteUnsaved||transcriptReviewUnsaved||calendarPendingCount>0){
+      setPhoneResult({sessionId,sourceKey,kind:'error',message:'还有未保存的修改，请先保存或取消后再带走。'});return;
+    }
+    const current=()=>phoneGeneration.current===generation&&copySourceRef.current===sourceKey;
+    exportActive.current=true;setPhoneBusy(true);setPhoneResult({sessionId,sourceKey,kind:'pending'});
+    window.requestAnimationFrame(()=>document.getElementById('ct-phone-checklist')?.scrollIntoView({block:'nearest'}));
+    try{
+      const preview=await readExportPreview({sessionId,meetingMode:minutesViewMode,format:'todo'});
+      if(!current())return;
+      if(!/^[a-f0-9]{64}$/.test(preview.contentHash)||typeof preview.textContent!=='string'||!preview.textContent.trim())throw Error('没有可带走的已保存清单。');
+      const code=await checklistPhoneCode(preview.textContent);
+      if(current())setPhoneResult({sessionId,sourceKey,...code});
+    }catch(error){
+      if(current())setPhoneResult({sessionId,sourceKey,kind:'error',message:error instanceof SavedPreviewInterrupted?error.message:`清单未带走：${operationErrorText(error,'export')}`});
+    }finally{exportActive.current=false;setPhoneBusy(false);}
   };
   const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string) => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
@@ -1719,7 +1748,10 @@ export function CompanionDashboard({
               {manualMinutes&&!editingMinutes&&hasMinutes?renderSavedReading():null}
               <div className="ct-inline-edit-actions ct-minutes-export-actions">
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 && onPreviewMeetingExport ? <button type="button" className="ct-action"
-                  disabled={controlsBusy||oobeBlockedByRecording||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
+                  disabled={controlsBusy||oobeBlockedByRecording||phoneBusy||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
+                  onClick={()=>void showPhoneChecklist()}>{phoneBusy?'正在准备…':'带到手机'}</button> : null}
+                {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 && onPreviewMeetingExport ? <button type="button" className="ct-action"
+                  disabled={controlsBusy||oobeBlockedByRecording||phoneBusy||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
                   onClick={()=>void copyChecklist()}>{copyBusy?'正在准备…':'复制清单'}</button> : null}
 
                 {!editingMinutes && hasMinutes ? <button type="button" className="ct-action"
@@ -1733,6 +1765,8 @@ export function CompanionDashboard({
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
                   title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => setEditingMinutes(true)}><Pencil size={14} />{savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'}</button> : null}
               </div>
+              {phoneResult?.sessionId===selectedSession.id&&phoneResult.sourceKey===copySourceKey&&!editingMinutes
+                ? <CompanionChecklistPhone result={phoneResult} onClose={closePhoneChecklist}/> : null}
               {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '需要提醒时，可导出到支持待办的日历；导入后请核对日期和提醒，不会自动设置。'}</p> : null}
               {calendarExportReview?.sessionId===selectedSession.id&&calendarExportReview.mode===minutesViewMode&&!editingMinutes?<div className="ct-calendar-export-review" role="status">
                 <p>还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。</p>

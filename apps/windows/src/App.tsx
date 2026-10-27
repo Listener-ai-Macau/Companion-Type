@@ -222,7 +222,7 @@ export function App() {
   useEffect(() => {
     if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) return;
     let cancelled = false;
-    let timer: ReturnType<typeof window.setTimeout>;
+    let timer: number;
     const delay = liveMeeting || controlledMeeting || boardActive ? 500 : recoveringMeeting ? 1000 : 3000;
     const poll = async () => {
       try { if (!operationActive.current) await cachedReader.current?.request(); }
