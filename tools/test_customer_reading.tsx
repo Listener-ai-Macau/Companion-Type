@@ -7,7 +7,7 @@ import {CompanionTranscriptReview} from '../packages/ui/src/CompanionTranscriptR
 import {CalendarTimeEditor} from '../packages/ui/src/CalendarTimeEditor';
 import {ActionListEditor} from '../packages/ui/src/ActionListEditor';
 import {seedCalendarTime,confirmedCalendarTime} from '../packages/ui/src/calendarTime';
-import {libraryPreview} from '../packages/ui/src/libraryPreview';
+import {libraryPreview,latestSavedResult} from '../packages/ui/src/libraryPreview';
 
 // Customer-reported reading and navigation contracts. IPC is deliberately not
 // provided: this suite cannot write a recording, call a provider or touch a board.
@@ -25,7 +25,7 @@ assert.deepEqual(libraryPreview(row,'酒店'),{text:'酒店在火车站附近',l
 assert.match(libraryPreview(row,'随身包').text,/注明时间：2026-10-28 晚上/);
 assert.doesNotMatch(libraryPreview(row,'随身包').text,/due:/);
 assert.match(libraryPreview(row,'due:').text,/due:/,'literal stored syntax remains searchable');
-assert.equal(libraryPreview(row,'出差准备').target,undefined,'title matches do not force a source detour');
+assert.equal(libraryPreview(row,'出差准备').target,'result','an authored list heading resumes the saved result');
 
 const ambiguous=seedCalendarTime('2026-10-28 晚上');
 assert.equal(ambiguous.date,'2026-10-28');assert.equal(ambiguous.time,'');
@@ -95,3 +95,15 @@ act(()=>tree.root.findByProps({'aria-label':'待办 1 清除日历时间，改�
 assert.equal(changes.at(-1),'[ ] 带身份证和充电线 (owner: 我)','only an explicit clear removes the calendar value');
 act(()=>tree.unmount());
 console.log('PASS friendly calendar editing: readable value, exact timestamp preserved until explicit change');
+
+// Returning to an authored shopping list must not send a matching source word
+// back to the transcript. Recency is existing saved-work time, not wall clock.
+const shopping=structuredClone(row);shopping.title='购物';shopping.transcriptText='咖啡豆和牛奶';shopping.exportedAt=null;
+shopping.minutesByMode.offlineStore={...shopping.minutesByMode.offlineStore!,source:'userAuthored',markdown:'## 行动项\n- [ ] 买非深烘咖啡豆\n- [ ] 预算未确认先不买礼物',generatedAt:'2026-10-27T06:00:00Z'};
+shopping.minutes={...shopping.minutes!,source:'userAuthored',markdown:shopping.minutesByMode.offlineStore.markdown,generatedAt:'2026-10-27T06:00:00Z'};
+const stored=JSON.stringify(shopping);assert.equal(libraryPreview(shopping,'咖啡').target,'result');
+assert.equal(latestSavedResult([shopping])?.session.id,shopping.id);
+assert.equal(latestSavedResult([shopping])?.at,'2026-10-27T06:00:00Z');
+assert.equal(latestSavedResult([{...shopping,organization:{...shopping.organization!,trashedAt:'2026-10-27T07:00:00Z'}}]),null);
+assert.equal(JSON.stringify(shopping),stored);
+console.log('PASS saved-list return: authored result wins shared source word, true saved timestamp, trash excluded, durable data unchanged');

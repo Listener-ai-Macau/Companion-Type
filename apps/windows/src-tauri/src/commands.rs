@@ -180,6 +180,8 @@ pub enum CompanionMeetingExportFormat {
     Json,
     Srt,
     Todo,
+    #[serde(rename = "todotxt")]
+    TodoText,
     Ics,
 }
 
@@ -191,6 +193,7 @@ impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExpor
             CompanionMeetingExportFormat::Json => Self::Json,
             CompanionMeetingExportFormat::Srt => Self::Srt,
             CompanionMeetingExportFormat::Todo => Self::Todo,
+            CompanionMeetingExportFormat::TodoText => Self::TodoText,
             CompanionMeetingExportFormat::Ics => Self::Ics,
         }
     }

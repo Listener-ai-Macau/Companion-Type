@@ -35,6 +35,7 @@ pub enum MeetingExportFormat {
     Json,
     Srt,
     Todo,
+    TodoText,
     Ics,
 }
 
@@ -46,6 +47,7 @@ impl MeetingExportFormat {
             Self::Json => "json",
             Self::Srt => "srt",
             Self::Todo => "md",
+            Self::TodoText => "txt",
             Self::Ics => "ics",
         }
     }
@@ -57,6 +59,7 @@ impl MeetingExportFormat {
             Self::Json => "JSON",
             Self::Srt => "SubRip subtitles",
             Self::Todo => "待办清单 Markdown",
+            Self::TodoText => "待办清单普通文本",
             Self::Ics => "iCalendar 待办事项",
         }
     }
@@ -205,7 +208,7 @@ pub fn prepare_meeting_export(
 
     let mut warning=None;
     let content = match format {
-        MeetingExportFormat::Todo | MeetingExportFormat::Ics => {
+        MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics => {
             let processing = minutes_variant_for_mode(session, meeting_mode).and_then(|v| v.processing.as_ref())
                 .or_else(|| if minutes_variant_for_mode(session, meeting_mode).is_none() {
                     session.minutes.as_ref().and_then(|m| m.processing.as_ref())
@@ -233,8 +236,13 @@ pub fn prepare_meeting_export(
             }
             if format==MeetingExportFormat::Ics { warning=super::action_export::calendar_time_notice(&actions); }
             let draft = saved.lines().any(|line| line.starts_with("> 草稿："));
-            if format == MeetingExportFormat::Todo {
-                super::action_export::todo(&session.title, &actions, draft)
+            if matches!(format, MeetingExportFormat::Todo | MeetingExportFormat::TodoText) {
+                let body=super::action_export::todo(&session.title, &actions, draft);
+                // The same validated checklist, in a universally readable text
+                // file. Keep checkboxes, conditions and source notices intact.
+                if format==MeetingExportFormat::TodoText {
+                    body.strip_prefix("# ").unwrap_or(&body).to_owned()
+                }else{body}
             } else {
                 super::action_export::calendar(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now())
             }
@@ -270,6 +278,7 @@ pub fn prepare_meeting_export(
         MeetingExportFormat::Json => "完整资料",
         MeetingExportFormat::Srt => "字幕",
         MeetingExportFormat::Todo => "待办清单",
+        MeetingExportFormat::TodoText => "待办清单",
         MeetingExportFormat::Ics => "待办日历",
     };
     let both_modes = session.minutes_by_mode.offline_store.is_some() && session.minutes_by_mode.online_live.is_some();
@@ -855,6 +864,28 @@ mod tests {
         assert!(online.contains("第二模式任务")); assert!(!online.contains("新任务"));
         s.minutes_by_mode.offline_store.as_mut().unwrap().markdown = "## 行动项\n- 无".into();
         assert!(prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::Ics).unwrap_err().contains("没有可导出"));
+    }
+
+    #[test]
+    fn plain_checklist_keeps_saved_conditions_and_original_data() {
+        let mut s=session("这是原话，不是本次要带走的清单",vec![],Some(minutes()));
+        s.minutes_by_mode.offline_store=Some(CompanionV1MinutesVariant {
+            processing:None,source_note_context:None,source_review_revision:None,
+            status:"minutesReady".into(),source:"userAuthored".into(),quality:"final".into(),
+            markdown:"## 行动项\n- [ ] 预算未确认先不买礼物 (due: 2026-10-29T20:00:00+08:00, owner: 我)\n- [x] 找到非深烘咖啡豆".into(),
+            generated_at:Some("2026-10-27T06:00:00Z".into()),partial_count:0,
+        });
+        let before=serde_json::to_value(&s).unwrap();
+        let plain=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::TodoText).unwrap();
+        let text=std::str::from_utf8(&plain.bytes).unwrap();
+        assert!(plain.suggested_name.ends_with("-待办清单.txt"));
+        assert!(text.contains("预算未确认先不买礼物"));
+        assert!(text.contains("20:00")&&text.contains("我"));
+        assert!(text.contains("[x] 找到非深烘咖啡豆"));
+        assert!(!text.contains("这是原话")&&!text.contains("陈明")&&!text.starts_with("# "));
+        assert_eq!(serde_json::to_value(&s).unwrap(),before);
+        s.minutes_by_mode.offline_store.as_mut().unwrap().source_review_revision=Some(99);
+        assert!(prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::TodoText).is_err());
     }
 
     #[test]
