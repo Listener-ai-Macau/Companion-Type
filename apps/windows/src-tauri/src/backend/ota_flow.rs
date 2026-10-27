@@ -18,7 +18,7 @@ pub(super) struct WbaFlow {
 /// complete signed-file radio/storage delivery qualify the bounded WWR route;
 /// throughput and coexistence stability remain separately measured.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum SimpleTransportProfile { Automatic, Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed466PeerHandoff, Windowed215PeerHandoff, Windowed215Hold, Continuous215PeerHandoff }
+pub(super) enum SimpleTransportProfile { Automatic, Acknowledged, Windowed244, Windowed244PeerHandoff, Windowed491PeerHandoff, Windowed466PeerHandoff, Windowed215PeerHandoff, Windowed215Hold, Continuous215PeerHandoff, Continuous240PeerHandoff }
 
 impl SimpleTransportProfile {
     pub fn parse(value: Option<&str>) -> Result<Self, String> {
@@ -32,6 +32,7 @@ impl SimpleTransportProfile {
             "windowed_215_peer_handoff" => Ok(Self::Windowed215PeerHandoff),
             "windowed_215_hold" => Ok(Self::Windowed215Hold),
             "continuous_215_peer_handoff" => Ok(Self::Continuous215PeerHandoff),
+            "continuous_240_peer_handoff" => Ok(Self::Continuous240PeerHandoff),
             _ => Err("未知的最简OTA传输诊断配置；未连接设备或发送升级内容".into()),
         }
     }
@@ -56,7 +57,7 @@ impl SimpleTransportProfile {
     /// retain their existing checkpoint cadence for controlled comparisons.
     /// No larger RAM ring, wire window, payload or radio parameter is inferred.
     pub fn continuous_durable_queue(self,flow:WbaFlow,mtu:u16)->bool {
-        matches!(self,Self::Automatic|Self::Continuous215PeerHandoff) && flow.pipelined && flow.notify_credits &&
+        matches!(self,Self::Automatic|Self::Continuous215PeerHandoff|Self::Continuous240PeerHandoff) && flow.pipelined && flow.notify_credits &&
         flow.window_notify_guaranteed && (16..64).contains(&flow.queue_chunks) &&
         flow.window_chunks==64 && flow.payload_bytes>=466 && mtu>=473
     }
@@ -72,8 +73,8 @@ impl SimpleTransportProfile {
             (flow.payload_bytes<466 || mtu<473 || flow.window_chunks<=flow.queue_chunks) {
             return Err("设备或MTU未确认WOC3长窗口/466字节包形，未开始升级".into());
         }
-        if self==Self::Continuous215PeerHandoff && !self.continuous_durable_queue(flow,mtu) {
-            return Err("连续215对照需要实际有界队列/64窗口/耐久通知及同一大MTU能力；未开始升级".into());
+        if matches!(self,Self::Continuous215PeerHandoff|Self::Continuous240PeerHandoff) && !self.continuous_durable_queue(flow,mtu) {
+            return Err("连续单包对照需要实际有界队列/64窗口/耐久通知及同一大MTU能力；未开始升级".into());
         }
         let payload=self.file_payload_cap().min(flow.payload_bytes).min(mtu.saturating_sub(7));
         if payload==0 {Err("当前ATT MTU不能承载升级数据".into())} else {Ok(payload)}
@@ -89,8 +90,8 @@ impl SimpleTransportProfile {
         match self {
             Self::Automatic => Err("自动升级策略尚未绑定实际设备能力和MTU；未开始升级".into()),
             Self::Acknowledged => Ok(false),
-            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold | Self::Continuous215PeerHandoff if flow.pipelined => Ok(true),
-            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold | Self::Continuous215PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold | Self::Continuous215PeerHandoff | Self::Continuous240PeerHandoff if flow.pipelined => Ok(true),
+            Self::Windowed244 | Self::Windowed491PeerHandoff | Self::Windowed466PeerHandoff | Self::Windowed244PeerHandoff | Self::Windowed215PeerHandoff | Self::Windowed215Hold | Self::Continuous215PeerHandoff | Self::Continuous240PeerHandoff => Err("设备没有确认可用的无响应写入窗口；未开始升级，不能冒充窗口对照".into()),
         }
     }
     /// Called only from the transfer engine's validated durable progress.
@@ -108,16 +109,20 @@ impl SimpleTransportProfile {
     /// octets =251+226; the model removes one25-byte tail versus491.
     /// Explicit comparison only: no speed or actual radio shape promised.
     pub fn file_payload_cap(self)->u16 {
-        if self==Self::Windowed491PeerHandoff {491} else if self==Self::Windowed466PeerHandoff {466} else if matches!(self,Self::Windowed215PeerHandoff|Self::Windowed215Hold|Self::Continuous215PeerHandoff) {215} else {240}
+        if self==Self::Continuous240PeerHandoff {240} else if self==Self::Windowed491PeerHandoff {491} else if self==Self::Windowed466PeerHandoff {466} else if matches!(self,Self::Windowed215PeerHandoff|Self::Windowed215Hold|Self::Continuous215PeerHandoff) {215} else {240}
     }
     pub fn releases_after_first_durable_window(self)->bool {
-        matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff|Self::Windowed466PeerHandoff|Self::Continuous215PeerHandoff)
+        matches!(self,Self::Windowed244PeerHandoff|Self::Windowed215PeerHandoff|Self::Windowed491PeerHandoff|Self::Windowed466PeerHandoff|Self::Continuous215PeerHandoff|Self::Continuous240PeerHandoff)
     }
     /// Device RX is Windows OTA TX. Automatic selection and explicit215 use
     /// the same actual protected-budget predicate.
     /// A short budget must be an actual protected BLK1 observation, not an
     /// OS preference acceptance, guessed radio capability or missing field.
     pub fn require_link(self,link:Option<super::ble_link_budget::LinkBudget>)->Result<(),String> {
+        if self==Self::Continuous240PeerHandoff {
+            return if full_2m_receive_budget(link) {Ok(())}
+                else {Err("连续240对照需要本次受保护设备RX的2M/251octets/至少1064us预算；未开始升级".into())};
+        }
         if self!=Self::Continuous215PeerHandoff{return Ok(());}
         if short_2m_receive_budget(link) {Ok(())}
         else {Err("连续215对照未观察到本次设备RX/电脑TX的2M/965us预算；未开始升级".into())}
@@ -126,7 +131,7 @@ impl SimpleTransportProfile {
     /// than also shortening its lifetime with the smaller packet. This is a
     /// host preference threshold, never a larger wire window/queue credit.
     pub fn preference_handoff_bytes(self,payload:u16,wire_chunks:u16)->usize {
-        usize::from(if self==Self::Continuous215PeerHandoff {466} else {payload})*usize::from(wire_chunks)
+        usize::from(if matches!(self,Self::Continuous215PeerHandoff|Self::Continuous240PeerHandoff) {466} else {payload})*usize::from(wire_chunks)
     }
     pub fn name(self) -> &'static str {
         match self { Self::Automatic => "automatic", Self::Acknowledged => "acknowledged", Self::Windowed244 => "windowed_244",
@@ -135,7 +140,8 @@ impl SimpleTransportProfile {
             Self::Windowed244PeerHandoff => "windowed_244_peer_handoff",
             Self::Windowed215PeerHandoff => "windowed_215_peer_handoff",
             Self::Windowed215Hold => "windowed_215_hold",
-            Self::Continuous215PeerHandoff => "continuous_215_peer_handoff" }
+            Self::Continuous215PeerHandoff => "continuous_215_peer_handoff",
+            Self::Continuous240PeerHandoff => "continuous_240_peer_handoff" }
     }
 }
 
@@ -144,6 +150,14 @@ impl SimpleTransportProfile {
 fn short_2m_receive_budget(link:Option<super::ble_link_budget::LinkBudget>)->bool {
     link.is_some_and(|b|b.connected&&b.encrypted&&b.rx_phy==Some(2)&&
         b.rx_time_us==Some(965)&&matches!(b.rx_octets,Some(226)|Some(251)))
+}
+
+// Explicit single-HCI/single-LL control for the already-delivered packed
+// device arena. 240file+4offset+3ATT+4L2CAP=251; encrypted LE2M needs1064us.
+// Default automatic selection is unchanged pending real A/B evidence.
+fn full_2m_receive_budget(link:Option<super::ble_link_budget::LinkBudget>)->bool {
+    link.is_some_and(|b|b.connected&&b.encrypted&&b.rx_phy==Some(2)&&
+        b.rx_octets==Some(251)&&b.rx_time_us.is_some_and(|t|t>=1064))
 }
 
 /// Before any manifest/BEGIN/DATA, one Unreachable discovery may be
