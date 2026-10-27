@@ -1,4 +1,5 @@
 import {operationErrorText} from './operationFailure';
+import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
@@ -437,6 +438,9 @@ export function CompanionDashboard({
   const [resourceBusy, setResourceBusy] = useState(false);
   const [exportBusy, setExportBusy] = useState(false);
   const exportActive = useRef(false);
+  const previewTask=useRef<{cancel:()=>void}|null>(null);
+  const [previewWaiting,setPreviewWaiting]=useState(false);
+  useEffect(()=>()=>previewTask.current?.cancel(),[]);
   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin}|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
@@ -994,6 +998,12 @@ export function CompanionDashboard({
   const renderExportFeedback = (origin: MeetingExportOrigin, className?: string) =>
     exportResult && exportResult.sessionId === selectedSession?.id && exportResult.origin === origin
       ? <div data-ct-export-feedback={origin}><CompanionExportFeedback feedback={exportResult} className={className}/></div> : null;
+  const readExportPreview = async (request:CompanionMeetingExportRequest) => {
+    const task=savedExportPreview(()=>onPreviewMeetingExport!(request));
+    previewTask.current=task;setPreviewWaiting(true);
+    try{return await task.result;}
+    finally{if(previewTask.current===task){previewTask.current=null;setPreviewWaiting(false);}}
+  };
   const copyChecklist = async () => {
     if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||exportActive.current||selectedMinutesStale||minutesIncomplete)return;
     const sessionId=selectedSession.id,sourceKey=copySourceKey;
@@ -1003,7 +1013,7 @@ export function CompanionDashboard({
     exportActive.current=true;setCopyBusy(true);
     setCopyResult({sessionId,sourceKey,kind:'pending',message:'正在准备已保存的清单…'});
     try{
-      const preview=await onPreviewMeetingExport({sessionId,meetingMode:minutesViewMode,format:'todo'});
+      const preview=await readExportPreview({sessionId,meetingMode:minutesViewMode,format:'todo'});
       if(copySourceRef.current!==sourceKey)return;
       if(!/^[a-f0-9]{64}$/.test(preview.contentHash)||typeof preview.textContent!=='string'||!preview.textContent.trim())throw Error('没有可复制的已保存清单。');
       const text=preview.textContent;
@@ -1014,7 +1024,7 @@ export function CompanionDashboard({
       }catch{
         setCopyResult({sessionId,sourceKey,kind:'ready',text,message:'自动复制未完成。可在下方选择已保存的清单，再复制。'});
       }
-    }catch(error){setCopyResult({sessionId,sourceKey,kind:'error',message:`清单未复制：${operationErrorText(error,'export')}`});}
+    }catch(error){setCopyResult({sessionId,sourceKey,kind:'error',message:error instanceof SavedPreviewInterrupted?error.message:`清单未复制：${operationErrorText(error,'export')}`});}
     finally{exportActive.current=false;setCopyBusy(false);}
   };
   const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string) => {
@@ -1034,7 +1044,7 @@ export function CompanionDashboard({
       let contentHash=confirmedHash;
       if(format==='ics'&&onPreviewMeetingExport&&!contentHash){
         setExportResult({sessionId,format,origin,kind:'pending',message:'正在核对日历时间…'});
-        const preview=await onPreviewMeetingExport({sessionId,meetingMode:minutesViewMode,format});
+        const preview=await readExportPreview({sessionId,meetingMode:minutesViewMode,format});
         if(!/^[a-f0-9]{64}$/.test(preview.contentHash))throw Error('Invalid export preview');
         contentHash=preview.contentHash;
         if(preview.warning){
@@ -1043,10 +1053,11 @@ export function CompanionDashboard({
         }
       }
       setCalendarExportReview(null);
+      setExportResult({sessionId,format,origin,kind:'pending',message:'请选择文件保存位置；也可在保存窗口取消。'});
       const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}) });
       setExportResult({ sessionId, format, origin, path: result?.path, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' ? '。请导入日历后核对日期与提醒；导出文件不会自动创建提醒。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
-      setExportResult({ sessionId, format, origin, kind: 'error', message: `保存未完成：${operationErrorText(error,'export')}` });
+      setExportResult({ sessionId, format, origin, kind: 'error', message: error instanceof SavedPreviewInterrupted?error.message:`保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
   const exportAudio = async () => {
@@ -1349,6 +1360,10 @@ export function CompanionDashboard({
 
   return (
     <main className={`ct-shell ct-simple ct-${surface}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}`}>
+      {previewWaiting?<div className="ct-status-banner" role="status">
+        <p>正在核对已保存的内容，尚未开始保存或复制。</p>
+        <button type="button" className="ct-action" onClick={()=>previewTask.current?.cancel()}>取消等待</button>
+      </div>:null}
       <header className="ct-topbar">
         <div>
           <p className="ct-kicker">Companion Type</p>

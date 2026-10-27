@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {confirmedCalendarTime,seedCalendarTime,type CalendarTimeDraft} from './calendarTime';
+import {confirmedCalendarTime,seedCalendarTime,readableCalendarTime,type CalendarTimeDraft} from './calendarTime';
 
 export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending}:{
   value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;
@@ -19,7 +19,7 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending}:{
     {draft?<dialog ref={dialog} aria-label={`${label} 日历时间`} onCancel={event=>{event.preventDefault();close();}} onClose={()=>{setDraft(null);finishPending();}}
       style={{width:'min(92vw,28rem)',maxHeight:'85vh',overflow:'auto',boxSizing:'border-box',padding:24,border:'1px solid #c7d3c9',borderRadius:16}}>
       <h3>确认日历时间</h3>
-      {draft.expected?<p className="ct-step-meta" style={{overflowWrap:'anywhere'}}>原时间说明：{draft.expected}</p>:null}
+      {draft.expected?<p className="ct-step-meta" style={{overflowWrap:'anywhere'}}>原时间：{readableCalendarTime(draft.expected)}</p>:null}
       <p className="ct-step-meta">这会更新本项清单的时间，原话仍保留。导入日历后需核对截止时间与提醒。</p>
       <label style={{display:'block',marginBottom:12}}>日期<input aria-label={`${label} 日历日期`} type="date" min="0001-01-01" max="9999-12-31" value={draft.date} disabled={disabled}
         style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({date:event.target.value})}/></label>

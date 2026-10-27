@@ -1,5 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
 import {CalendarTimeEditor} from './CalendarTimeEditor';
+import {readableCalendarTime} from './calendarTime';
 import {nativeActionParts,actionTaskBody,type ActionMetadata} from './actionMetadata';
 
 type Metadata=ActionMetadata;
@@ -50,9 +51,15 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending}:{va
       </div>
       <details open={row.metadata.some(field=>field.value.trim())||undefined}>
         <summary className="ct-step-meta">时间与负责人</summary>
-        <label><span className="ct-step-meta">时间说明（文字）</span>
+        {row.metadata.some(field=>field.key==='due'&&readableCalendarTime(field.value)!==field.value)?<div>
+          <span className="ct-step-meta">日历时间</span>
+          <p>{readableCalendarTime(row.metadata.find(field=>field.key==='due')!.value)}</p>
+          <button type="button" className="ct-text-button" disabled={disabled}
+            aria-label={`待办 ${index+1} 清除日历时间，改用文字说明`}
+            onClick={()=>metadata(row,'due','')}>清除日历时间，改用文字说明</button>
+        </div>:<label><span className="ct-step-meta">时间说明（文字）</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 时间`} value={row.metadata.find(field=>field.key==='due')?.value??''}
-            disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>
+            disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>}
         <CalendarTimeEditor label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
           disabled={disabled} onConfirm={value=>metadata(row,'due',value)} onPending={onCalendarPending}/>
         <label><span className="ct-step-meta">负责人</span>

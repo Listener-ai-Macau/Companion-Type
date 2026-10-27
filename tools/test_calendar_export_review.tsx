@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import React from 'react';import {act,create} from 'react-test-renderer';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {savedExportPreview,SavedPreviewInterrupted} from '../packages/ui/src/savedExportPreview';
 import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
 (globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;},cancelAnimationFrame:()=>{}};
 let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
@@ -38,5 +39,15 @@ await act(async()=>{button('导出日历待办').props.onClick();button('导出�
 const count=previews.length;assert.equal(exports.length,2);
 await act(async()=>releasePreview({contentHash:hash,warning:null}));
 assert.equal(previews.length,count);assert.equal(exports.length,3,'double-click does not issue a second preview/save operation');
+releasePreview=true;
+await act(async()=>{button('导出日历待办').props.onClick();});
+assert.ok(button('取消等待'));
+await act(async()=>button('取消等待').props.onClick());
+assert.match(text(tree.toJSON()),/已停止等待/);
+assert.equal(button('导出日历待办').props.disabled,false,'a stopped read-only wait releases the UI');
+await act(async()=>releasePreview({contentHash:hash,warning:null}));
+assert.equal(exports.length,3,'a late reply after cancellation must not open a save dialog');
+const timed=savedExportPreview(()=>new Promise(()=>{}),15);
+await assert.rejects(timed.result,(e:unknown)=>e instanceof SavedPreviewInterrupted&&/尚未开始保存或复制/.test(e.message));
 act(()=>tree.unmount());assert.equal(JSON.stringify(snapshot),original);
-console.log('PASS calendar pre-save review: native parser response, cancellation, edit route, explicit text-only export, fingerprint binding, duplicate exclusion and unchanged original');
+console.log('PASS calendar pre-save review: parser/fingerprint, cancellation/timeout releases UI, late reply cannot export, duplicates and original preserved');

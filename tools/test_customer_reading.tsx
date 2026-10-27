@@ -5,6 +5,7 @@ import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packag
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 import {CompanionTranscriptReview} from '../packages/ui/src/CompanionTranscriptReview';
 import {CalendarTimeEditor} from '../packages/ui/src/CalendarTimeEditor';
+import {ActionListEditor} from '../packages/ui/src/ActionListEditor';
 import {seedCalendarTime,confirmedCalendarTime} from '../packages/ui/src/calendarTime';
 import {libraryPreview} from '../packages/ui/src/libraryPreview';
 
@@ -81,3 +82,16 @@ await act(async()=>{finishPreview({contentHash:'a'.repeat(64),textContent:payloa
 assert.deepEqual(copied,[],'a changed source cannot write the previously prepared payload');act(()=>tree.unmount());
 assert.equal(JSON.stringify(snapshot),before,'copy and fallback do not rewrite durable source');
 console.log('PASS direct copy: native text/no file dialog, explicit unavailable fallback, changed-source exclusion and unchanged original');
+
+const savedTimeRow='[ ] 带身份证 (due: 2026-10-28T20:00:00+08:00, owner: 我)';
+const changes:string[]=[];
+act(()=>{tree=create(<ActionListEditor value={savedTimeRow} disabled={false} onChange={v=>changes.push(v)}/>);});
+assert.match(text(tree.toJSON()),/2026年10月28日 20:00/);
+assert.equal(tree.root.findAllByProps({'aria-label':'待办 1 时间'}).length,0,'a confirmed date is not exposed as an ISO prose input');
+assert.deepEqual(changes,[],'reading a friendly date never rewrites the saved timestamp');
+act(()=>tree.root.findByProps({'aria-label':'待办 1 内容'}).props.onChange({target:{value:'带身份证和充电线'}}));
+assert.equal(changes.at(-1),'[ ] 带身份证和充电线 (due: 2026-10-28T20:00:00+08:00, owner: 我)');
+act(()=>tree.root.findByProps({'aria-label':'待办 1 清除日历时间，改用文字说明'}).props.onClick());
+assert.equal(changes.at(-1),'[ ] 带身份证和充电线 (owner: 我)','only an explicit clear removes the calendar value');
+act(()=>tree.unmount());
+console.log('PASS friendly calendar editing: readable value, exact timestamp preserved until explicit change');
