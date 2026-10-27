@@ -14,6 +14,11 @@ assert.equal(seedCalendarTime(confirmed.value).before,true);
 for(const raw of ['周五前','2026年11月6日15:00前或次日','2026-11-06或2026-11-07','如果通过则2026年11月6日15:00前','2026年2月30日15:00前']){
  assert.equal(seedCalendarTime(raw).date,'','Do not seed alternatives, conditions, relative or invalid dates');
 }
+for(const raw of ['2026-11-06 晚上','2026年11月6日晚上','2026-11-06 evening','2026-11-06 下午前']){
+ const period=seedCalendarTime(raw);assert.equal(period.date,'2026-11-06');assert.equal(period.time,'');assert.equal(period.timed,true);assert.equal(period.expected,raw);
+ assert.equal(confirmedCalendarTime(period).ok,false,'a part of day cannot silently become09:00 or any hour');
+}
+for(const raw of ['2026-11-06 晚上或2026-11-07','如果通过则2026年11月6日晚上','2026年2月30日晚上','明天晚上','2026-11-06 afternoon if approved'])assert.equal(seedCalendarTime(raw).date,'','alternatives, conditions, relative and invalid days remain unseeded');
 const original='[ ] 把样品检查结果发给小林；未测完不要写通过 (due: '+authored+')';
 let value=original,changes:string[]=[],pending:number[]=[],tree:any;
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');

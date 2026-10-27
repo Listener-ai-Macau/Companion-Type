@@ -33,6 +33,14 @@ export function seedCalendarTime(value:string):CalendarTimeDraft {
       return{expected:value,date,time,timed:!!time,zone:'local',offset:'+00:00',before};
     }
   }
+  // A named part of an explicit day supplies the date, never an hour.
+  // Keep this anchored to the whole value so alternatives/conditions are not
+  // rescued by a permissive date-prefix parser.
+  const period=base.match(/^(?:(\d{4}-\d{2}-\d{2})|(\d{4})年\s*(\d{1,2})月\s*(\d{1,2})日)\s*(?:清晨|早上|上午|中午|下午|傍晚|晚上|晚间|夜间|早|晚|morning|noon|afternoon|evening|night)$/i);
+  if(period){
+    const date=period[1]??`${period[2]}-${period[3].padStart(2,'0')}-${period[4].padStart(2,'0')}`;
+    if(validCalendarDate(date))return{expected:value,date,time:'',timed:true,zone:'local',offset:'+00:00',before};
+  }
   const m=base.match(/^(\d{4}-\d{2}-\d{2})(?:[Tt ](\d{2}:\d{2})(?::00(?:\.0+)?)?(?:[Zz]|[+-]\d{2}:\d{2})?)?$/);
   const offset=base.match(/(?:[Zz]|[+-]\d{2}:\d{2})$/)?.[0];
   return{expected:value,date:m&&validCalendarDate(m[1])?m[1]:'',time:m?.[2]??'',timed:!/^\d{4}-\d{2}-\d{2}$/.test(base),zone:offset?'offset':'local',offset:offset?(/[Zz]/.test(offset)?'+00:00':offset):'+00:00',before};

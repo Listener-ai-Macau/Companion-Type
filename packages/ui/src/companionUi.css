@@ -1668,3 +1668,6 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 /* Keep complete action labels readable when partial-result controls wrap. */
 .ct-minutes-export-actions { flex-wrap: wrap; }
 .ct-minutes-export-actions > button { flex: 0 0 auto; }
+
+/* Known-good imported text needs one status line; errors keep the full card. */
+.ct-imported-save-status { margin: 0 24px 14px; color: #42674e; font-size: 13px; line-height: 1.5; }

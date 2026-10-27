@@ -13,7 +13,7 @@ import {libraryPreview,latestSavedResult} from '../packages/ui/src/libraryPrevie
 // provided: this suite cannot write a recording, call a provider or touch a board.
 let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
 snapshot.host.persistence={status:'ready'};
-const row=structuredClone(snapshot.host.sessions[0]);row.id='reading-fixture';row.source='importedTranscript';
+const row=structuredClone(snapshot.host.sessions[0]);row.id='reading-fixture';row.source='importedTranscript';row.audioPath=null;row.audioBytes=0;row.audioStored=false;row.sourceDeviceId=null;row.deviceRecordingId=null;row.deviceRecordingKey=null;row.deviceTotalLength=null;row.deviceSha256=null;row.recorderControl=null;row.recorderControlUncertain=false;row.chunks=[];row.retention.audioCached=false;
 row.title='出差准备';row.transcriptText='出发前检查身份证。';row.transcriptFinal=true;row.pendingReason=null;
 row.meetingNotes=[{id:'note-one',text:'酒店在火车站附近',createdAt:'2026-10-27T00:00:00Z'}] as any;
 const markdown='# 出差准备\n\n## 行动项\n- [ ] 随身包放充电线 (due: 2026-10-28 晚上)\n';

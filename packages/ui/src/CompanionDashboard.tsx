@@ -1699,13 +1699,13 @@ export function CompanionDashboard({
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
               </div> : null}
             </div>
-            <div className="ct-meeting-badges">
+            {!(textOnlyImport && manualMinutes && !onlineMinutes) ? <div className="ct-meeting-badges">
               {finalTranscript ? <span className="ct-pill ct-pill-good">{selectedSession.source === 'importedTranscript' ? '已导入文字' : '文字已生成'}</span>
                 : <span className="ct-pill">{selectedSession.transcriptText ? '片段转写'
                   : selectedSession.processingPolicy === 'manual' && savedOriginalReady ? '原音已保存' : '尚未转写'}</span>}
               {offlineMinutes ? <span className="ct-pill">{offlineMinutes.source === 'userAuthored' ? '手写清单' : isTextOnlyImport(selectedSession) ? (offlineReady ? '文字整理' : '整理草稿') : offlineReady ? '先录后整理' : '整理草稿'}</span> : null}
               {onlineMinutes ? <span className="ct-pill">{onlineReady ? '在线纪要' : '在线草稿'}</span> : null}
-            </div>
+            </div> : null}
           </header>
           {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part !== 'minutes' ? <p className={saveMeetingResult.kind === 'error' ? 'ct-recording-notice ct-step-warn ct-save-result' : 'ct-recording-notice ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
           {!savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
@@ -1759,7 +1759,7 @@ export function CompanionDashboard({
           </div>
           {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details id="ct-recording-result" className="ct-recording-result"
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
-            <summary>整理结果{minutesDirty ? ' · 有未保存的修改' : ''}</summary>
+            <summary>{manualMinutes ? '手写清单' : '整理结果'}{minutesDirty ? ' · 有未保存的修改' : manualMinutes ? storageBlocked ? ' · 保存待确认' : ' · 已保存' : ''}</summary>
             <MinutesModeTabs value={minutesViewMode} onChange={setMinutesViewMode} dualMode={Boolean(offlineMinutes && onlineMinutes)}
               labels={{offlineStore:{visible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}`,accessible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理纪要'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`},
                 onlineLive:{visible:`在线速记 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}`,accessible:`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`}}}>
@@ -1777,7 +1777,7 @@ export function CompanionDashboard({
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写或本次使用的补充已变化。这版结果已保留，请重新整理后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>重新选择内容并整理</button>
-              </div> : selectedMinutesVariant ? <p className="ct-minutes-mode-meta">{manualMinutes ? '手写清单已保存 · 仅本机保存，不是自动整理' : selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
+              </div> : selectedMinutesVariant && !manualMinutes ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
               {selectedMinutesVariant?.source === 'rules_l0' ? <p className="ct-step-meta">仅摘录已有原句，需你核对并补充；原音和文字已保留。</p> : null}
               {manualMinutes&&!editingMinutes&&hasMinutes?renderSavedReading():null}
               <div className="ct-inline-edit-actions ct-minutes-export-actions">
@@ -1801,7 +1801,7 @@ export function CompanionDashboard({
               </div>
               {phoneResult?.sessionId===selectedSession.id&&phoneResult.sourceKey===copySourceKey&&!editingMinutes
                 ? <CompanionChecklistPhone result={phoneResult} onClose={closePhoneChecklist}/> : null}
-              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '日历文件会带上未完成事项和已确认时间，导入后核对提醒即可。'}</p> : null}
+              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '清单不自动提醒；需要时导出到日历，再核对提醒设置。'}</p> : null}
               {!editingMinutes ? <CompanionCalendarCopies key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`} session={selectedSession} mode={minutesViewMode} markdown={minutesMarkdown}/> : null}
               {calendarExportReview?.sessionId===selectedSession.id&&calendarExportReview.mode===minutesViewMode&&calendarExportReview.sourceKey===copySourceKey&&!editingMinutes?<div className="ct-calendar-export-review" role="status">
                 <p>{calendarExportReview.format==='calendar'?(calendarExportReview.warning||'把已确认的日期和时间带到常用日历；后续修改不会自动同步。'):'还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。'}</p>
@@ -2790,6 +2790,13 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   if (isTextOnlyImport(session)) {
     const saved = persistence?.status === 'ready';
     const failed = persistence?.status === 'blocked' || persistence?.status === 'unsaved';
+    // Confirmed text imports have no device/audio saving stages. Show one
+    // compact provenance/status line; preserve the complete card for uncertain,
+    // failed, ongoing or partial states instead of silently hiding their risk.
+    if(saved && session.transcriptFinal && session.transcriptText.trim() && !recoveryProcessing
+        && session.status!=='recording' && !session.captureIncomplete) {
+      return <p className="ct-imported-save-status" aria-label="文字保存状态">导入文字已保存在本机 · 无原录音</p>;
+    }
     return <section className="ct-safety-card" aria-label="文字保存状态">
       <header><strong>文字保存状态</strong><span>{saved ? '文字已保存在本机'
         : failed ? '文字保存失败' : '保存状态待确认'}</span></header>
@@ -2984,6 +2991,14 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
   const commonSupplement = actionChecklist?.compactSources && visibleActions.length === actionChecklist.items.length
     ? commonActionSupplement(visibleActions) : null;
   const firstActionIndex = visibleBlocks.findIndex(block => block.action);
+  // Show the source-date context where it can change the interpretation. A
+  // canonical date/time already carries its calendar date and explicit zone.
+  // This is a reading projection only, never a relative-date conversion.
+  const needsSourceDate=visibleActions.some(action=>{
+    const parts=nativeActionParts(action.text);
+    return parts.metadata.some(field=>field.key==='due'&&readableCalendarTime(field.value)===field.value)
+      || /今[天早晚]|明[天早晚]|后天|昨天|前天|(?:本|这|下|上)(?:周|星期|个?月)|周[一二三四五六日天]|星期[一二三四五六日天]/u.test(parts.body);
+  });
   return (
     <article className="ct-minutes-article">
       {visibleBlocks.map((block, index) => {
@@ -3015,7 +3030,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
           const shownTitle=shown.title;
           return <div key={index}>
           {index===firstActionIndex?<p className="ct-action-source-legend">这里只保存事项清单，不会定时通知。
-            {actionChecklist.recordingTime?<><br/>本条记录：{actionChecklist.recordingTime}。相对时间请核对原始来源的日期。</>:<>相对时间请核对原始来源的日期。</>}
+            {needsSourceDate ? (actionChecklist.recordingTime?<><br/>本条记录：{actionChecklist.recordingTime}。相对时间请核对原始来源的日期。</>:<>相对时间请核对原始来源的日期。</>) : null}
           </p>:null}
           {commonSupplement&&index===firstActionIndex?<p className="ct-action-source-legend">{commonSupplement.text.startsWith('共同适用规则：')?'共同适用规则：':'以下事项的共同补充：'}{commonSupplement.text.startsWith('共同适用规则：')?commonSupplement.text.slice('共同适用规则：'.length):commonSupplement.text}</p>:null}
           <div className="ct-minutes-item ct-minutes-action-item">

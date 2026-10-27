@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import React from 'react';import {act,create} from 'react-test-renderer';
+import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+(globalThis as any).document={activeElement:null,getElementById:()=>null};(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
+let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});snapshot.host.persistence={status:'ready'};
+const row=snapshot.host.sessions[0];row.id='reading-density';row.source='importedTranscript';row.audioPath=null;row.audioBytes=0;row.audioStored=false;row.sourceDeviceId=null;row.deviceRecordingId=null;row.deviceRecordingKey=null;row.deviceTotalLength=null;row.deviceSha256=null;row.recorderControl=null;row.recorderControlUncertain=false;row.chunks=[];row.retention.audioCached=false;row.title='样品清单';row.transcriptText='确认尺寸，未测完不要写通过。';row.transcriptFinal=true;row.pendingReason=null;row.captureIncomplete=false;
+row.audioPath=null;row.audioBytes=0;row.audioStored=false;row.sourceDeviceId=null;row.deviceRecordingId=null;
+const markdown='## Action Items\n- [ ] 确认尺寸，未测完不要写通过 (due: 2026-11-06T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)\n';
+row.minutes={...row.minutes!,markdown,source:'userAuthored',quality:'final'};row.minutesByMode={offlineStore:{...row.minutesByMode.offlineStore!,markdown,source:'userAuthored',quality:'final',status:'minutesReady'}};snapshot.host.sessions=[row];snapshot.host.selectedSessionId=row.id;
+const original=JSON.stringify(snapshot),saves:any[]=[];let tree:any;const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},onSaveMeeting:async(q:any)=>{saves.push(q);return snapshot;}});
+const open=()=>{act(()=>tree=create(<CompanionDashboard {...props()}/>));act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());};
+open();
+assert.match(text(tree.root.findByProps({'aria-label':'文字保存状态'})),/已保存在本机.*无原录音/);
+assert.equal(tree.root.findByProps({'aria-label':'文字保存状态'}).props.className,'ct-imported-save-status');
+assert.match(text(tree.root.findByProps({id:'ct-recording-result'}).findAllByType('summary')[0]),/手写清单.*已保存/);
+const legends=()=>tree.root.findAllByProps({className:'ct-action-source-legend'}).map(text).join('\n');
+assert.match(legends(),/不会定时通知/);assert.doesNotMatch(legends(),/本条记录/,'absolute confirmed dates need no repeated relative-date legend');
+assert.equal(JSON.stringify(snapshot),original,'reading projection must retain exact source and canonical timestamps');
+await act(async()=>tree.root.findAllByType('input').find((n:any)=>String(n.props['aria-label']).startsWith('标记完成：确认尺寸')).props.onChange({target:{checked:true}}));
+assert.equal(saves.length,1);assert.equal(saves[0].sessionId,row.id);assert.match(saves[0].markdown,/\[x\] 确认尺寸，未测完不要写通过 \(due: 2026-11-06T15:00:00\+08:00前\)/);assert.equal(JSON.stringify(snapshot),original);
+act(()=>tree.unmount());
+snapshot=structuredClone(snapshot);snapshot.host.sessions[0].minutesByMode!.offlineStore!.markdown=markdown.replace('核对包装 (due: 2026-11-07)','明天核对包装 (due: 明天)');snapshot.host.sessions[0].minutes!.markdown=snapshot.host.sessions[0].minutesByMode!.offlineStore!.markdown;
+open();assert.match(legends(),/本条记录/);assert.match(legends(),/相对时间请核对原始来源/);assert.match(text(tree.toJSON()),/明天/);act(()=>tree.unmount());
+for(const state of ['unsaved','blocked','unknown']as const){
+ snapshot=structuredClone(snapshot);snapshot.host.persistence={status:state as any,message:'保存待确认，不要关闭原窗口'};open();
+ assert.equal(tree.root.findAllByProps({className:'ct-imported-save-status'}).length,0);assert.match(text(tree.root.findByProps({id:'ct-recording-result'}).findAllByType('summary')[0]),/保存待确认/);assert.doesNotMatch(text(tree.root.findByProps({id:'ct-recording-result'}).findAllByType('summary')[0]),/已保存/);
+ const card=tree.root.findByProps({'aria-label':'文字保存状态'});assert.equal(card.props.className,'ct-safety-card');assert.match(text(card),/保存失败|待确认/);assert.match(text(card),/没有原录音/);
+ const mark=tree.root.findAllByType('input').find((n:any)=>String(n.props['aria-label']).startsWith('标记完成：确认尺寸'));assert.equal(mark.props.disabled,true,'uncertain persistence cannot toggle saved actions');act(()=>tree.unmount());
+}
+console.log('PASS reading density: only confirmed import compacted, exact saved text/date/action preserved, relative-date context visible, failure/unknown card and action locks retained');
