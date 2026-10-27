@@ -59,5 +59,8 @@ assert.equal(tree.root.findByProps({'aria-label':'待办 2 日历时间'}).type,
 assert.equal(tree.root.findByProps({'aria-label':'待办 2 日历日期'}).props.value,'2026-11-06');
 assert.equal(tree.root.findByProps({'aria-label':'待办 2 日历时刻'}).props.value,'15:00');
 assert.equal(exportCount,0);assert.equal(JSON.stringify(snapshot),beforeDashboard);
+act(()=>button('使用此日历时间').props.onClick());
+assert.equal(tree.root.findAllByType('dialog').length,0,'Confirming one row must not transfer the same request to another row');
+assert.equal(button('保存修改').props.disabled,false,'The confirmed draft can be saved without another unsolicited dialog');
 act(()=>tree.unmount());
 console.log('PASS actual review-to-time intent opens the unresolved row and seeds authored fields without saving/exporting');

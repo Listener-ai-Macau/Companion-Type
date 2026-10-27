@@ -21,6 +21,7 @@ function writeRow(row:Row):string{
 
 export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string}){
   const nextId=useRef(0),sent=useRef(value);
+  const calendarIntent=useRef<{key?:string;rowId?:number}>({});
   const parse=(text:string)=>text?text.split(/\r?\n/).map(raw=>readRow(raw,nextId.current++)):[readRow('',nextId.current++)];
   const [rows,setRows]=useState<Row[]>(()=>parse(value));
   useEffect(()=>{
@@ -45,7 +46,13 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
   // Already confirmed earlier rows must not hide the one the user is fixing.
   const unresolved=rows.findIndex(row=>pending(row)&&readableCalendarTime(due(row))===due(row));
   const dateOnly=rows.findIndex(row=>pending(row)&&/^\d{4}-\d{2}-\d{2}(前)?$/.test(due(row)));
-  const calendarTarget=unresolved>=0?unresolved:dateOnly>=0?dateOnly:rows.findIndex(pending);
+  const candidate=unresolved>=0?unresolved:dateOnly>=0?dateOnly:rows.findIndex(pending);
+  // One explicit review request opens one stable row. Confirming it changes
+  // its metadata, but must not automatically open another row and block Save.
+  if(calendarIntent.current.key!==calendarRequestKey){
+    calendarIntent.current={key:calendarRequestKey,rowId:rows[candidate]?.id};
+  }
+  const calendarTarget=rows.findIndex(row=>row.id===calendarIntent.current.rowId);
   return <div className="ct-action-list-editor">
     <p className="ct-step-meta" role={calendarRequestKey?"status":undefined}>{calendarRequestKey?"先确认要放入日历的日期或时刻；确认后保存修改，再导出。原时间说明仍在，未替你猜日期。":"时间说明先按文字保存；需要导入日历时，再确认日期与时刻。"}</p>
     {rows.map((row,index)=><div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
