@@ -60,9 +60,11 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending}:{va
         </div>:<label><span className="ct-step-meta">时间说明（文字）</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 时间`} value={row.metadata.find(field=>field.key==='due')?.value??''}
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>}
+        <div style={{margin:'4px 0 8px'}}>
         <CalendarTimeEditor label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
           disabled={disabled} onConfirm={value=>metadata(row,'due',value)} onPending={onCalendarPending}/>
-        <label><span className="ct-step-meta">负责人</span>
+        </div>
+        <label style={{display:'block'}}><span className="ct-step-meta">负责人</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 负责人`} value={row.metadata.find(field=>field.key==='owner')?.value??''}
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'owner',event.target.value)}/></label>
       </details>
