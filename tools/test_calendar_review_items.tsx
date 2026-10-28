@@ -8,7 +8,7 @@ import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packag
 let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
 snapshot.host.persistence={status:'ready'};
 const row=snapshot.host.sessions[0],id=row.id;
-row.minutesByMode.offlineStore!.markdown='## Action Items\n- [ ] 核对尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)';
+row.minutesByMode.offlineStore!.markdown='## Summary\n样品条件保持原文。\n\n## Action Items\n- [ ] 核对尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)';
 row.minutesByMode.offlineStore!.source='userAuthored';row.minutesByMode.offlineStore!.quality='final';row.minutesByMode.offlineStore!.status='minutesReady';
 const original=row.minutesByMode.offlineStore!.markdown,originalTranscript=row.transcriptText,otherMode=JSON.stringify(row.minutesByMode.onlineLive);
 let tree:any,failSave=false;const exports:any[]=[],saves:any[]=[];
@@ -48,7 +48,8 @@ failSave=false;await act(async()=>button('保存修改并返回日历预览').pr
 assert.match(text(tree.toJSON()),/将导出2项日程：2项附提醒，0项不提醒/);
 assert.equal(tree.root.findByProps({'aria-label':'日历提醒时间'}).props.value,'calendarreminder60');
 assert.equal(exports.length,0,'return re-previews; never silently exports');
-assert.equal(snapshot.host.sessions[0].minutesByMode.offlineStore!.markdown.split('\n')[1],original.split('\n')[1]);
+assert.equal(savedActions(snapshot.host.sessions[0].minutesByMode.offlineStore!.markdown)[0].text,savedActions(original)[0].text);
+assert.ok(snapshot.host.sessions[0].minutesByMode.offlineStore!.markdown.startsWith('## Summary\n样品条件保持原文。\n\n'));
 assert.match(snapshot.host.sessions[0].minutesByMode.offlineStore!.markdown,/2026-11-07T10:30:00/);
 await act(async()=>button('导出并设置提醒').props.onClick());
 assert.deepEqual(exports[0],{sessionId:id,meetingMode:'offlineStore',format:'calendarreminder60',expectedContentHash:'d'.repeat(64)});

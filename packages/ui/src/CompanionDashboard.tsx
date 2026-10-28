@@ -288,7 +288,7 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   }));
   if (!headings.length) return null;
   const prefix = markdown.slice(envelope.length, headings[0].index);
-  if (!(manual && prefix==='' && headings.length===1 && headings[0].key==='Action Items') && !/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
+  if (!(manual && prefix==='' && headings.some(heading=>heading.key==='Action Items')) && !/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
   return headings.map((match, index) => {
     const start = match.contentStart;
     const end = headings[index + 1]?.index ?? markdown.length;
