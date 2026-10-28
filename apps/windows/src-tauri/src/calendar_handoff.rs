@@ -156,7 +156,7 @@ fn registered_handlers()->Result<Vec<(String,String,windows::Win32::UI::Shell::I
         if value.is_null(){return None;}
         let text=unsafe{value.to_string()}.ok();unsafe{CoTaskMemFree(Some(value.0 as *const _));}text
     }
-    let enumerator=unsafe{SHAssocEnumHandlers(w!(".ics"),ASSOC_FILTER_NONE)}
+    let enumerator=unsafe{SHAssocEnumHandlers(w!(".ics"),ASSOC_FILTER_RECOMMENDED)}
         .map_err(|_|"Windows 暂时无法列出日历文件应用，请重试或手动导入。")?;
     let mut result=Vec::new();
     for _ in 0..64 {
