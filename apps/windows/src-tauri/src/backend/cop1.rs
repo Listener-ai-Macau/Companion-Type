@@ -4,6 +4,12 @@ use std::io::{BufReader, Read};
 use serde::{Deserialize, Serialize};
 #[path="cop1_boundary.rs"]
 mod boundary;
+#[path="cop1_audio_profile.rs"]
+mod audio_profile;
+pub(crate) use audio_profile::AudioProfile;
+#[cfg(test)]
+#[path="cop1_audio_profile_tests.rs"]
+mod audio_profile_tests;
 pub(crate) use boundary::{CodecBoundary,SampleBoundarySummary,SampleWindow};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize, Serialize)]
@@ -31,6 +37,10 @@ pub(crate) struct Timeline {
     pub ended_paused: bool,
     #[serde(default,skip_serializing_if="Option::is_none")]
     pub sample_boundary: Option<SampleBoundarySummary>,
+    /// Device-authored schema5 metadata, carried by the original audio hash.
+    /// Missing on older files means unknown, never current settings.
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub audio_profile: Option<AudioProfile>,
 }
 impl Timeline {
     pub(crate) fn source_origin_samples(&self)->u64 {
@@ -81,6 +91,10 @@ impl Timeline {
         self.events.push(event);Ok(())
     }
     pub(crate) fn add_segment(&mut self, summary: &Summary) -> Result<(),String> {
+        if (self.captured_samples!=0 || self.audio_profile.is_some()) && self.audio_profile!=summary.audio_profile {
+            return Err("同一录音的麦克风处理配置发生变化，原件已保留。".into());
+        }
+        self.audio_profile=summary.audio_profile;
         self.captured_samples=self.captured_samples.checked_add(summary.frames.checked_mul(320)
             .ok_or("COP1 sample count overflow")?).ok_or("COP1 sample count overflow")?;
         self.audio_packet_bytes+=summary.audio_packet_bytes;
@@ -108,6 +122,7 @@ pub(crate) struct Summary {
     pub partial: bool,
     pub codec_config: Option<CodecBoundary>,
     pub codec_end: Option<CodecBoundary>,
+    pub audio_profile: Option<AudioProfile>,
 }
 pub(crate) struct Reader<R: Read> {
     input: BufReader<R>,
@@ -129,7 +144,7 @@ impl<R: Read> Reader<R> {
         input.read_exact(&mut header).map_err(|_|"truncated COP1 header")?;
         let rate=u32::from_le_bytes(header[8..12].try_into().unwrap());
         if &header[..4]!=b"COP1" || header[5]!=1 ||
-            !matches!((header[4],header[7]),(1,0)|(2,1)|(3,3)|(4,7)) ||
+            !matches!((header[4],header[7]),(1,0)|(2,1)|(3,3)|(4,7)|(5,15)) ||
             !matches!(header[6],10|20|40|60) ||
             !matches!(rate,8000|12000|16000|24000|48000) ||
             (header[4]>=2 && (header[6]!=20 || rate!=16000 || source_offset%320!=0)) {
@@ -158,13 +173,25 @@ impl<R: Read> Reader<R> {
             let n=self.input.read(&mut prefix[..1]).map_err(|e|format!("read COP1: {e}"))?;
             if n==0 {self.done=true;return Ok(None);}
             self.summary.encoded_bytes+=1;
-            if self.schema>=2 && prefix[0]==255 {self.summary.padding_bytes+=1;continue;}
+            if self.schema>=2 && prefix[0]==255 {
+                if self.schema==5 && self.summary.audio_profile.is_none(){return Err("COP1 missing microphone processing prelude".into());}
+                self.summary.padding_bytes+=1;continue;
+            }
             if !self.exact(&mut prefix[1..])? {return Ok(None);}
             let count=usize::from(u16::from_le_bytes(prefix));
             if self.schema>=2 && count==0 {
                 let mut wire=[0;32];
                 if !self.exact(&mut wire[2..])? {return Ok(None);}
-                if self.schema==4 && &wire[2..6]==b"CDB1" {
+                if self.schema==5 && &wire[2..6]==b"APM1" {
+                    if begin!=44 || self.summary.codec_config.is_none() || self.summary.audio_profile.is_some() || self.summary.frames!=0 {
+                        return Err("COP1 microphone processing prelude order changed".into());
+                    }
+                    let mut full=[0u8;96];full[..32].copy_from_slice(&wire);
+                    if !self.exact(&mut full[32..])? {return Ok(None);}
+                    self.summary.audio_profile=Some(AudioProfile::decode(&full)?);
+                    self.summary.event_bytes+=96;continue;
+                }
+                if self.schema>=4 && &wire[2..6]==b"CDB1" {
                     let boundary=CodecBoundary::decode(&wire)?;
                     let current=self.source_offset.checked_add(self.summary.frames.checked_mul(320)
                         .ok_or("COP1 source sample overflow")?).ok_or("COP1 source sample overflow")?;
@@ -172,6 +199,7 @@ impl<R: Read> Reader<R> {
                         1 if begin==12 && self.summary.codec_config.is_none() &&
                             boundary.encoded_samples==self.source_offset => self.summary.codec_config=Some(boundary),
                         2 if begin%248==0 && self.summary.codec_end.is_none() &&
+                            (self.schema!=5 || self.summary.audio_profile.is_some()) &&
                             self.summary.codec_config.is_some_and(|config|config.delay_samples==boundary.delay_samples) &&
                             boundary.encoded_samples==current.checked_add(320).ok_or("COP1 source sample overflow")? &&
                             (boundary.valid_source_samples==current ||
@@ -183,8 +211,9 @@ impl<R: Read> Reader<R> {
                     return Ok(Some(Record::Boundary(boundary)));
                 }
                 if begin%248!=0 || &wire[2..6]!=b"CPG1" || wire[7]!=0 ||
+                    (self.schema==5 && self.summary.audio_profile.is_none()) ||
                     !(matches!(wire[6],1..=3) || (self.schema>=3 && wire[6]==4)) ||
-                    (self.schema==4 && (self.summary.codec_config.is_none() || self.summary.codec_end.is_some())) ||
+                    (self.schema>=4 && (self.summary.codec_config.is_none() || self.summary.codec_end.is_some())) ||
                     crc32fast::hash(&wire[..28])!=u32::from_le_bytes(wire[28..].try_into().unwrap()) {
                     return Err("invalid COP1 pause event alignment/schema/CRC".into());
                 }
@@ -208,9 +237,10 @@ impl<R: Read> Reader<R> {
                 self.last_event=Some(event);self.summary.event_bytes+=32;
                 return Ok(Some(Record::Event(event)));
             }
-            let drain=self.schema==4 && self.summary.codec_end.is_some();
+            let drain=self.schema>=4 && self.summary.codec_end.is_some();
             if count==0 || count>1275 ||
-                (self.schema==4 && self.summary.codec_config.is_none()) ||
+                (self.schema==5 && self.summary.audio_profile.is_none()) ||
+                (self.schema>=4 && self.summary.codec_config.is_none()) ||
                 (self.schema>=2 && (count!=40 || ((self.summary.pause_open || self.summary.ended_paused) && !drain))) {
                 return Err("invalid COP1 audio record or audio inside paused interval".into());
             }
@@ -227,7 +257,8 @@ impl<R: Read> Reader<R> {
     }
     pub(crate) fn finish(&self, allow_open_pause:bool) -> Result<Summary,String> {
         if !self.done || (self.summary.pause_open && !allow_open_pause) ||
-            (self.schema==4 && self.summary.codec_config.is_none() && !self.live_prefix) {
+            (self.schema==5 && self.summary.audio_profile.is_none() && !self.live_prefix) ||
+            (self.schema>=4 && self.summary.codec_config.is_none() && !self.live_prefix) {
             return Err("COP1 finalized timeline has an unresolved pause".into());
         }
         Ok(self.summary)

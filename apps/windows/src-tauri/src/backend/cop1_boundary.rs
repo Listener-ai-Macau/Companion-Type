@@ -66,10 +66,10 @@ pub(crate) struct SampleWindow {
 }
 impl SampleWindow {
     pub(crate) fn new(schema:u8,frame_samples:usize)->Result<Self,String> {
-        if !matches!(schema,1..=4) || !matches!(frame_samples,160|320|640|960) ||
+        if !matches!(schema,1..=5) || !matches!(frame_samples,160|320|640|960) ||
             (schema>=2 && frame_samples!=320) {return Err(invalid());}
-        Ok(Self{explicit:schema==4,frame_samples,delay:None,
-            skip_left:if schema==4 {0}else{frame_samples},encoded_samples:0,
+        Ok(Self{explicit:schema>=4,frame_samples,delay:None,
+            skip_left:if schema>=4 {0}else{frame_samples},encoded_samples:0,
             written_samples:0,closing:None})
     }
     pub(crate) fn observe(&mut self,value:CodecBoundary)->Result<(),String> {

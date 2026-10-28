@@ -14,6 +14,7 @@ pub(crate) struct LiveCursor {
     segment_frames: u64,
     prefix: Vec<u8>,
     schema: Option<u8>,
+    audio_profile: Option<cop1::AudioProfile>,
     window: Option<cop1::SampleWindow>,
     pcm: VecDeque<i16>,
     error: Option<String>,
@@ -21,14 +22,14 @@ pub(crate) struct LiveCursor {
 impl LiveCursor {
     pub(crate) fn new(key: SessionKey) -> Result<Self,String> {
         Ok(Self { key, decoder:MonoDecoder::new(16000)?,segment:0,frames:0,
-            segment_frames:0,prefix:Vec::new(),schema:None,window:None,pcm:VecDeque::new(),error:None })
+            segment_frames:0,prefix:Vec::new(),schema:None,audio_profile:None,window:None,pcm:VecDeque::new(),error:None })
     }
     pub(crate) fn key(&self)->&SessionKey { &self.key }
     pub(crate) fn duration_ms(&self)->u64 {
         self.window.as_ref().and_then(|w|w.finish(true).ok()).map_or(0,|b|b.written_samples/16)
     }
     pub(crate) fn captured_ms(&self)->u64 {
-        if self.schema==Some(4) {self.duration_ms()}else{self.frames*20}
+        if self.schema.is_some_and(|s|s>=4) {self.duration_ms()}else{self.frames*20}
     }
     pub(crate) fn error(&self)->Option<&str> { self.error.as_deref() }
     fn observe(&mut self,result:Result<(),String>) {
@@ -89,6 +90,9 @@ impl LiveCursor {
             if reader.position()>self.prefix.len() as u64 {records.push(record);}
         }
         let summary=reader.finish(allow_open)?;
+        if self.schema.is_some() && self.audio_profile!=summary.audio_profile {
+            return Err("同一录音的麦克风处理配置发生变化；停止在线视图，原件仍保留。".into());
+        }
         if summary.frames*320!=samples || summary.frames<self.segment_frames
             || summary.encoded_bytes!=bytes.len() as u64 {return Err(fail());}
         for record in records {
@@ -105,6 +109,7 @@ impl LiveCursor {
             while self.pcm.len()>30*16000 {self.pcm.pop_front();}
         }
         self.window.as_ref().ok_or_else(fail)?.finish(true)?;
+        self.audio_profile=summary.audio_profile;
         self.schema=Some(schema);self.segment_frames=frames;self.prefix=bytes.to_vec();
         if sealed {self.segment+=1;self.segment_frames=0;self.prefix.clear();}
         Ok(())
@@ -175,5 +180,14 @@ mod tests {
         assert_eq!(c.pcm.len(),30*16000);
         assert_eq!(c.pcm.iter().copied().collect::<Vec<_>>(),expected[expected.len()-30*16000..]);
         assert_eq!(c.captured_ms(),32080); // The 5s pause is not captured PCM.
+    }
+
+    #[test]fn audio_profile_live_successor_change_is_rejected_before_pcm_publication(){
+        let mut parts=super::super::audio_profile_tests::fixture();
+        let mut c=LiveCursor::new(parts[0].0.key.clone()).unwrap();let(d,p)=&parts[0];
+        c.accept(0,d.sample_offset,d.sample_count,p,true,false).unwrap();let before=c.frames;let pcm=c.pcm.clone();
+        let(d,p)=&mut parts[1];super::super::audio_profile_tests::change_identity(d,p);
+        assert!(c.accept(d.segment_index,d.sample_offset,d.sample_count,p,false,true).is_err());
+        assert_eq!(c.frames,before);assert_eq!(c.pcm,pcm);
     }
 }

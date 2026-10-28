@@ -616,7 +616,7 @@ fn verify_file(mut file: File, d: &Descriptor) -> Result<File, String> {
     }
     let schema=reader.schema;let summary=reader.finish(d.flags&4!=0)?;drop(reader);
     if summary.frames * 320 != d.sample_count || summary.encoded_bytes!=u64::from(d.encoded_length)
-        || (summary.ended_paused && d.flags&2==0 && !(schema==4&&summary.codec_end.is_some()))
+        || (summary.ended_paused && d.flags&2==0 && !(schema>=4&&summary.codec_end.is_some()))
         || hashed.bytes!=u64::from(d.encoded_length)
         || hashed.crc.finalize() != d.content_crc32
         || hashed.sha.finalize().as_slice() != d.sha256
@@ -664,7 +664,7 @@ fn decode(
         if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
     }
     let boundary=window.as_ref().ok_or_else(fail)?.finish(allow_incomplete_source_end(ds))?;
-    if schema==Some(4){timeline.as_mut().ok_or_else(fail)?.apply_boundary(boundary);}
+    if schema.is_some_and(|s|s>=4){timeline.as_mut().ok_or_else(fail)?.apply_boundary(boundary);}
     if boundary.written_samples != expected {
         return Err(fail());
     }
@@ -680,7 +680,7 @@ fn decode(
 
 fn select_schema(schema:&mut Option<u8>,timeline:&mut Option<cop1::Timeline>,current:u8)->Result<(),String> {
     if schema.is_some_and(|old|old!=current) {return Err("同一录音的原音格式发生变化，原件已保留。".into());}
-    if schema.is_none() {if matches!(current,2..=4) {*timeline=Some(cop1::Timeline::default());}*schema=Some(current);}
+    if schema.is_none() {if matches!(current,2..=5) {*timeline=Some(cop1::Timeline::default());}*schema=Some(current);}
     Ok(())
 }
 fn collect_timeline(ds:&[Descriptor],files:&mut [File])->Result<Option<cop1::Timeline>,String> {
@@ -702,7 +702,7 @@ fn collect_timeline(ds:&[Descriptor],files:&mut [File])->Result<Option<cop1::Tim
         if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
     }
     if let Some(window)=window {let b=window.finish(allow_incomplete_source_end(ds))?;
-        if schema==Some(4){timeline.as_mut().ok_or_else(fail)?.apply_boundary(b);}}
+        if schema.is_some_and(|s|s>=4){timeline.as_mut().ok_or_else(fail)?.apply_boundary(b);}}
     Ok(timeline)
 }
 fn allow_incomplete_source_end(ds:&[Descriptor])->bool {
@@ -725,3 +725,6 @@ mod live;
 pub(crate) use live::LiveCursor;
 pub(crate) use local::{LocalRestoreReport, restore_local_product,restore_local_session};
 pub(crate) use probe::{phase, verify};
+
+#[cfg(test)]
+mod audio_profile_tests;
