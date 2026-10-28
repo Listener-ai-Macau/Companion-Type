@@ -55,7 +55,11 @@ pub(crate) fn prepare(session:&CompanionV1HostSession,mode:&str,
         (session.meeting_mode==mode&&session.minutes_by_mode.offline_store.is_none()&&session.minutes_by_mode.online_live.is_none())
             .then(||session.minutes.as_ref().map(|v|v.markdown.clone())).flatten()
     }).ok_or("找不到这份日历对应的已保存清单。")?;
-    let actions=super::action_export::parse_saved_actions(&markdown);
+    // The export may have deduplicated chunked minutes. Re-reading raw lines
+    // here would invent extra saved events and shift their UID indices.
+    let actions=prepared.calendar_items.as_ref().ok_or("日历文件缺少对应的事项预览，未记录副本。")?.iter()
+        .map(|item|super::action_export::Action{text:item.text.clone(),completed:item.status=="completed",due:item.deadline.clone()})
+        .collect::<Vec<_>>();
     let entries=super::action_export::calendar_copy_entries(&session.id,mode,&actions,lead);
     let copy=Copy{schema:1,privacy_epoch:session.calendar_copy_epoch,meeting_mode:mode.into(),saved_at:chrono::Utc::now().to_rfc3339(),
         file_name:destination.file_name().ok_or("日历文件名无法读取。")?.to_string_lossy().into(),

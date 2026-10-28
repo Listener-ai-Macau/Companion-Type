@@ -27,6 +27,17 @@ fn path()->std::path::PathBuf {
     assert_eq!(copy.entries[0].uid,format!("{}@companion-type",&format!("{:x}",h.finalize())[..40]));
     assert!(prepare(&s,"offlineStore",&export::prepare_meeting_export(&s,"offlineStore",F::Markdown).unwrap(),std::path::Path::new("sample.md")).unwrap().is_none());
 }
+#[test] fn calendar_saved_summary_uses_the_same_deduplicated_actions_as_the_file() {
+    let mut s=row();let m=s.minutes.as_mut().unwrap();
+    m.markdown="## 行动项\n- [ ] 核对样品 (due: 2026-11-08T15:00:00+08:00)\n- [ ] 核对样品 (due: 2026-11-08T15:00:00+08:00)\n- [ ] 核对包装 (due: 2026-11-07)".into();
+    m.processing=Some(crate::companion_v1::CompanionV1MinutesProcessing{strategy:"chunkedSourceBacked".into(),source_bytes:1,processed_source_bytes:1,total_chunks:1,completed_chunks:1,resumed_chunks:0,complete:true});
+    let prepared=export::prepare_meeting_export(&s,"offlineStore",F::CalendarReminder30).unwrap();
+    let file=String::from_utf8(prepared.bytes.clone()).unwrap().replace("\r\n ","");
+    let copy=prepare(&s,"offlineStore",&prepared,std::path::Path::new("sample.ics")).unwrap().unwrap();
+    assert_eq!(file.matches("BEGIN:VEVENT").count(),2);
+    assert_eq!(copy.entries.len(),2,"saved summary must not report a removed duplicate");
+    for entry in copy.entries {assert!(file.contains(&format!("UID:{}\r\n",entry.uid)));}
+}
 #[test] fn commit_reopens_exact_copy_and_preserves_concurrent_text_not_stale_window() {
     let path=path();let original=vec![row()];session_store::save(&path,&original).unwrap();let copy=draft(&original[0],F::CalendarReminder30);
     let mut current=original.clone();current[0].title="另一窗口的新标题".into();current[0].minutes.as_mut().unwrap().markdown.push_str("\n补充：先确认样品");session_store::save(&path,&current).unwrap();
