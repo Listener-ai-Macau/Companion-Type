@@ -68,8 +68,20 @@ pub(crate) async fn open_companion_saved_calendar(app:tauri::AppHandle, coordina
 }
 
 #[cfg(windows)]
-fn open_default(path:&Path)->Result<(),String> {
+fn open_default(path:&Path)->Result<(),String> {open_shell(path,None)}
+
+#[cfg(windows)]
+fn shell_file_name(path:&Path)->Vec<u16> {
     use std::os::windows::ffi::OsStrExt;
+    let original:Vec<u16>=path.as_os_str().encode_wide().collect();
+    let mut normal=if original.starts_with(&[92,92,63,92,85,78,67,92]) {
+        let mut unc=vec![92,92];unc.extend_from_slice(&original[8..]);unc
+    }else if original.starts_with(&[92,92,63,92]) {original[4..].to_vec()}else{original};
+    normal.push(0);normal
+}
+
+#[cfg(windows)]
+fn open_shell(path:&Path, explicit_class:Option<&str>)->Result<(),String> {
     use windows::{core::{w,PCWSTR,PWSTR},Win32::{System::Com::{CoInitializeEx,CoUninitialize,COINIT_APARTMENTTHREADED,COINIT_DISABLE_OLE1DDE},UI::{Shell::*,WindowsAndMessaging::SW_SHOWNORMAL}}};
     struct Apartment; impl Drop for Apartment {fn drop(&mut self){unsafe{CoUninitialize();}}}
     unsafe{CoInitializeEx(None,COINIT_APARTMENTTHREADED|COINIT_DISABLE_OLE1DDE).ok()}.map_err(|_|"Windows 暂时不能打开日历文件，请重试或手动导入。")?;
@@ -77,16 +89,19 @@ fn open_default(path:&Path)->Result<(),String> {
     let query=|kind| {let mut output=vec![0u16;32768];let mut length=output.len()as u32;
         let result=unsafe{AssocQueryStringW(ASSOCF_NONE,kind,w!(".ics"),w!("open"),PWSTR(output.as_mut_ptr()),&mut length)};
         if result.is_err()||length<2||length as usize>output.len(){None}else{Some(String::from_utf16_lossy(&output[..length as usize-1]))}};
-    let prog_id=query(ASSOCSTR_PROGID);let executable=query(ASSOCSTR_EXECUTABLE);
-    if prog_id.as_deref().is_none_or(|p|p.eq_ignore_ascii_case("Unknown"))
-        ||executable.as_deref().is_some_and(|p|Path::new(p).file_name().is_some_and(|n|n.to_str().is_some_and(|s|s.eq_ignore_ascii_case("OpenWith.exe")))) {return Err(NO_APPLICATION.into());}
+    // Production always uses the user's default. The explicit class is used
+    // only by the ignored Windows receiver test; it never changes that default.
+    if explicit_class.is_none() {
+        let prog_id=query(ASSOCSTR_PROGID);let executable=query(ASSOCSTR_EXECUTABLE);
+        if prog_id.as_deref().is_none_or(|p|p.eq_ignore_ascii_case("Unknown"))
+            ||executable.as_deref().is_some_and(|p|Path::new(p).file_name().is_some_and(|n|n.to_str().is_some_and(|s|s.eq_ignore_ascii_case("OpenWith.exe")))) {return Err(NO_APPLICATION.into());}
+    }
     // Shell document opening uses a path, never a command string or frontend URL.
-    let normal=path.to_string_lossy();
-    let normal=normal.strip_prefix(r"\\?\UNC\").map(|p|format!(r"\\{p}"))
-        .unwrap_or_else(||normal.strip_prefix(r"\\?\").unwrap_or(&normal).to_string());
-    let file:Vec<u16>=std::ffi::OsStr::new(&normal).encode_wide().chain(Some(0)).collect();
+    let file=shell_file_name(path);
+    let class:Vec<u16>=explicit_class.unwrap_or("").encode_utf16().chain(Some(0)).collect();
     let mut info=SHELLEXECUTEINFOW{cbSize:std::mem::size_of::<SHELLEXECUTEINFOW>()as u32,
         fMask:SEE_MASK_NOASYNC|SEE_MASK_FLAG_NO_UI,lpVerb:w!("open"),lpFile:PCWSTR(file.as_ptr()),nShow:SW_SHOWNORMAL.0,..Default::default()};
+    if explicit_class.is_some() {info.fMask|=SEE_MASK_CLASSNAME;info.lpClass=PCWSTR(class.as_ptr());}
     unsafe{ShellExecuteExW(&mut info)}.map_err(|error|format!("Windows 未能打开日历文件（{}）。文件仍保留，请在常用日历中手动导入。",error.code()))
 }
 
@@ -123,6 +138,28 @@ mod tests {
         assert!(manager.open_with(&token,&[session.clone()],|_|panic!("trashed launched")).is_err());
         session.organization.trashed_at=None;
         session.calendar_copy_epoch+=1;assert!(manager.open_with(&token,&[session],|_|panic!("cleared launched")).is_err());std::fs::remove_file(path).unwrap();
+    }
+    #[cfg(windows)]
+    #[test]fn calendar_handoff_preserves_windows_path_units(){
+        use std::os::windows::ffi::OsStringExt;
+        let units:Vec<u16>=r"\\?\C:\日程\".encode_utf16().chain([0xd800]).chain(".ics".encode_utf16()).collect();
+        let path=PathBuf::from(std::ffi::OsString::from_wide(&units));
+        assert_eq!(shell_file_name(&path),units[4..].iter().copied().chain([0]).collect::<Vec<_>>());
+        assert_eq!(shell_file_name(Path::new(r"\\?\UNC\server\share\日程.ics")),r"\\server\share\日程.ics".encode_utf16().chain([0]).collect::<Vec<_>>());
+    }
+    #[cfg(windows)]
+    #[test]
+    #[ignore="Requires a prepared isolated desktop, private receiver profile and temporary explicit Shell class; never changes default apps"]
+    fn calendar_handoff_windows_receiver_contract(){
+        let path=PathBuf::from(std::env::var_os("P700_TEST_ICS").expect("prepared isolated file"));
+        let class=std::env::var("P700_TEST_CLASS").expect("temporary test association");assert!(class.starts_with("Companion.Calendar.Handoff.Test."));
+        let result=PathBuf::from(std::env::var_os("P700_TEST_RESULT").expect("isolated evidence destination"));
+        let mut session=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap()).unwrap().host.sessions.remove(0);session.id="fictional-windows-shell-handoff".into();
+        let bytes=std::fs::read(&path).unwrap();let hash=format!("{:x}",Sha256::digest(&bytes));let manager=CalendarHandoff::default();
+        let token=manager.remember(&session,&path,bytes.len()as u64,hash.clone()).unwrap();
+        let opened=manager.open_with(&token,&[session],|p|open_shell(p,Some(&class)));
+        std::fs::write(result,serde_json::to_vec_pretty(&serde_json::json!({"shellAccepted":opened.is_ok(),"error":opened.as_ref().err(),"fileSha256":hash,"explicitTestClass":class,"defaultAssociationExercised":false,"importConfirmed":false})).unwrap()).unwrap();
+        opened.unwrap();
     }
     #[cfg(windows)]
     #[test]fn calendar_handoff_keeps_checked_file_locked_during_open(){
