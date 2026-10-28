@@ -118,7 +118,7 @@ export async function previewCompanionMeetingExport(request: import('../../../pa
 }
 
 import type {CalendarOpenResult} from '../../../packages/ui/src/CompanionExportFeedback';
-export const openCompanionSavedCalendar=(token:string,choiceId?:string)=>invoke<CalendarOpenResult>('open_companion_saved_calendar',{token,choiceId:choiceId??null});
+export const openCompanionSavedCalendar=(token:string,choiceId?:string,chooseApplication=false)=>invoke<CalendarOpenResult>('open_companion_saved_calendar',{token,choiceId:choiceId??null,chooseApplication});
 
 export async function exportCompanionMeeting(request: {
   sessionId: string;

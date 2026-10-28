@@ -81,7 +81,7 @@ fn check_file(file:&File, receipt:&Receipt)->Result<(),String> {
 }
 
 #[tauri::command]
-pub(crate) async fn open_companion_saved_calendar(app:tauri::AppHandle, coordinator:tauri::State<'_,Arc<CompanionCoordinator>>, token:String,choice_id:Option<String>)->Result<CalendarOpenOutcome,String> {
+pub(crate) async fn open_companion_saved_calendar(app:tauri::AppHandle, coordinator:tauri::State<'_,Arc<CompanionCoordinator>>, token:String,choice_id:Option<String>,choose_application:Option<bool>)->Result<CalendarOpenOutcome,String> {
     let coordinator=coordinator.inner().clone();
     tauri::async_runtime::spawn_blocking(move|| {
         use tauri::Manager;
@@ -91,13 +91,13 @@ pub(crate) async fn open_companion_saved_calendar(app:tauri::AppHandle, coordina
             if snapshot.host.persistence.status!="ready" {return Err("请先恢复本机资料库，再打开日历文件；原文件仍保留。".into());}
             let manager=app.state::<CalendarHandoff>();
             let selected=choice_id.as_deref().map(|id|manager.selected_application(&token,id)).transpose()?;
-            manager.open_with(&token,&snapshot.host.sessions,|path|manager.response(&token,open_default(path,selected.as_deref())?))
+            manager.open_with(&token,&snapshot.host.sessions,|path|manager.response(&token,open_default(path,selected.as_deref(),choose_application.unwrap_or(false))?))
         }).join().map_err(|_|"打开日历文件的任务未完成；原文件仍保留。".to_string())?
     }).await.map_err(|_|"打开日历文件的任务未完成；原文件仍保留。".to_string())?
 }
 
 #[cfg(windows)]
-fn open_default(path:&Path,selected:Option<&str>)->Result<ShellOpenOutcome,String> {open_shell(path,None,selected)}
+fn open_default(path:&Path,selected:Option<&str>,list_only:bool)->Result<ShellOpenOutcome,String> {open_shell(path,None,selected,list_only)}
 
 #[cfg(windows)]
 fn shell_file_name(path:&Path)->Vec<u16> {
@@ -110,11 +110,12 @@ fn shell_file_name(path:&Path)->Vec<u16> {
 }
 
 #[cfg(windows)]
-fn open_shell(path:&Path, explicit_class:Option<&str>,selected:Option<&str>)->Result<ShellOpenOutcome,String> {
+fn open_shell(path:&Path, explicit_class:Option<&str>,selected:Option<&str>,list_only:bool)->Result<ShellOpenOutcome,String> {
     use windows::{core::{w,PCWSTR,PWSTR},Win32::{System::Com::{CoInitializeEx,CoUninitialize,COINIT_APARTMENTTHREADED,COINIT_DISABLE_OLE1DDE},UI::{Shell::*,WindowsAndMessaging::SW_SHOWNORMAL}}};
     struct Apartment; impl Drop for Apartment {fn drop(&mut self){unsafe{CoUninitialize();}}}
     unsafe{CoInitializeEx(None,COINIT_APARTMENTTHREADED|COINIT_DISABLE_OLE1DDE).ok()}.map_err(|_|"Windows 暂时不能打开日历文件，请重试或手动导入。")?;
     let _apartment=Apartment;
+    if list_only && selected.is_none() {return Ok(ShellOpenOutcome::Applications(registered_handlers()?.into_iter().map(|(name,label,_)|(name,label)).collect()));}
     if let Some(name)=selected {
         let handlers=registered_handlers()?;
         let (_,_,handler)=handlers.into_iter().find(|(candidate,_,_)|candidate==name)
@@ -176,7 +177,7 @@ fn registered_handlers()->Result<Vec<(String,String,windows::Win32::UI::Shell::I
 }
 
 #[cfg(not(windows))]
-fn open_default(_path:&Path,_selected:Option<&str>)->Result<ShellOpenOutcome,String>{Err("请在 Windows Companion Type 中打开已保存的日历文件。".into())}
+fn open_default(_path:&Path,_selected:Option<&str>,_list_only:bool)->Result<ShellOpenOutcome,String>{Err("请在 Windows Companion Type 中打开已保存的日历文件。".into())}
 
 #[cfg(test)]
 mod tests {
@@ -239,7 +240,7 @@ mod tests {
         let mut session=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap()).unwrap().host.sessions.remove(0);session.id="fictional-windows-shell-handoff".into();
         let bytes=std::fs::read(&path).unwrap();let hash=format!("{:x}",Sha256::digest(&bytes));let manager=CalendarHandoff::default();
         let token=manager.remember(&session,&path,bytes.len()as u64,hash.clone()).unwrap();
-        let opened=manager.open_with(&token,&[session],|p|open_shell(p,Some(&class),None));
+        let opened=manager.open_with(&token,&[session],|p|open_shell(p,Some(&class),None,false));
         std::fs::write(result,serde_json::to_vec_pretty(&serde_json::json!({"shellAccepted":opened.is_ok(),"error":opened.as_ref().err(),"fileSha256":hash,"explicitTestClass":class,"defaultAssociationExercised":false,"importConfirmed":false})).unwrap()).unwrap();
         opened.unwrap();
     }

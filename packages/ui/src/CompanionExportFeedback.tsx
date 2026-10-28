@@ -15,17 +15,17 @@ export function exportFileName(path: string): string {
 }
 
 export type CalendarOpenResult = {status:'requested'} | {status:'choose_application';applications:{id:string;label:string}[]};
-export type OpenSavedCalendar = (token:string,choiceId?:string)=>Promise<CalendarOpenResult>;
+export type OpenSavedCalendar = (token:string,choiceId?:string,chooseApplication?:boolean)=>Promise<CalendarOpenResult>;
 
 function CalendarOpen({token,open}:{token:string;open:OpenSavedCalendar}) {
   const [state,setState]=useState<'ready'|'opening'|'choosing'|'requested'|'cancelled'|'error'>('ready');
   const [applications,setApplications]=useState<{id:string;label:string}[]>([]);
   const [error,setError]=useState('');const pending=useRef(false),alive=useRef(true);
   useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);
-  const start=async(choiceId?:string)=>{
+  const start=async(choiceId?:string,chooseApplication=false)=>{
     if(pending.current)return;pending.current=true;setState('opening');setError('');
     try {
-      const result=await open(token,choiceId);
+      const result=await open(token,choiceId,chooseApplication);
       if(alive.current){
         if(result.status==='choose_application'){setApplications(result.applications);setState('choosing');}
         else{setApplications([]);setState('requested');}
@@ -34,11 +34,12 @@ function CalendarOpen({token,open}:{token:string;open:OpenSavedCalendar}) {
     finally{pending.current=false;}
   };
   return <div>
-    <button type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start()}>
+    <button type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(undefined,applications.length>0)}>
       {state==='opening'?'正在打开日历文件…':state==='requested'?'再次打开日历文件':applications.length?'重新读取应用列表':'打开日历文件'}
     </button>
+    {!applications.length?<button type="button" className="ct-link" disabled={state==='opening'} onClick={()=>void start(undefined,true)}>选择应用打开</button>:null}
     {applications.length?<div role="group" aria-label="选择接收日历文件的应用">
-      <p className="ct-step-meta">尚无可用的默认应用。选择已安装的日历应用打开这份文件；本次选择不会更改 Windows 默认应用。</p>
+      <p className="ct-step-meta">选择接收这份文件的日历应用。本次选择不会更改 Windows 默认应用。</p>
       <div className="ct-action-row">{applications.map(app=><button key={app.id} type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(app.id)}>{app.label}</button>)}
         <button type="button" className="ct-link" disabled={state==='opening'} onClick={()=>{setApplications([]);setError('');setState('cancelled');}}>暂不打开</button>
       </div>
