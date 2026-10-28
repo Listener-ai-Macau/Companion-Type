@@ -13,6 +13,57 @@ fn draft(s:&CompanionV1HostSession,format:F)->Copy {
 fn path()->std::path::PathBuf {
     let root=std::env::temp_dir().join(format!("companion-calendar-copy-{}",uuid::Uuid::new_v4()));std::fs::create_dir(&root).unwrap();root.join("sessions.json")
 }
+#[test] fn calendar_independent_reminders_keep_date_only_deadline_and_bind_source_and_copy() {
+    use super::super::action_export::{CalendarAlarm as A,CalendarReminderSelection as S};
+    let s=row();let original=serde_json::to_vec(&s).unwrap();
+    let base=export::prepare_meeting_export(&s,"offlineStore",F::CalendarReminder60).unwrap();
+    let items=base.calendar_items.as_ref().unwrap();
+    let choices=vec![S{uid:items[0].uid.clone(),reminder:A::None},S{uid:items[1].uid.clone(),reminder:A::At{at:"2026-11-06T18:00:00+08:00".into()}}];
+    let selected=export::prepare_meeting_export_with_reminders(&s,"offlineStore",F::CalendarReminder60,Some(&choices)).unwrap();
+    let file=String::from_utf8_lossy(&selected.bytes);
+    assert!(file.contains("DTSTART;VALUE=DATE:20261107\r\n"));
+    assert!(file.contains("DTSTART:20261106T070000Z\r\n"));
+    assert!(file.contains("TRIGGER;VALUE=DATE-TIME:20261106T100000Z\r\n"));
+    assert_eq!(file.matches("BEGIN:VALARM").count(),1);
+    assert!(!file.contains("TRIGGER;RELATED"));
+    assert!(export::require_unchanged(&selected,Some(&export::content_hash(&base))).is_err());
+    let copy=prepare(&s,"offlineStore",&selected,std::path::Path::new("independent.ics")).unwrap().unwrap();
+    assert_eq!(copy.schema,2);assert_eq!(copy.entries[1].deadline,"2026-11-07");
+    assert_eq!(copy.entries[1].reminder_at.as_deref(),Some("2026-11-06T18:00:00+08:00"));
+    assert!(copy.entries.iter().all(|e|e.reminder_minutes.is_none()));
+    let path=path();session_store::save(&path,&[s.clone()]).unwrap();
+    let (_,copies,_)=commit(&path,"original",copy.clone()).unwrap();assert_eq!(copies[0].entries,copy.entries);
+    let loaded:Vec<CompanionV1HostSession>=serde_json::from_slice(&session_store::load(&path).bytes.unwrap()).unwrap();
+    assert_eq!(loaded[0].calendar_copies[0].entries,copy.entries);
+    let mut changed=s.clone();changed.minutes.as_mut().unwrap().markdown=changed.minutes.as_ref().unwrap().markdown.replace("2026-11-07","2026-11-09");
+    assert!(export::prepare_meeting_export_with_reminders(&changed,"offlineStore",F::Calendar,Some(&choices)).is_err());
+    assert_eq!(serde_json::to_vec(&s).unwrap(),original);
+    // Legacy snapshots remain schema 1 and omit the new field.
+    let legacy=draft(&s,F::CalendarReminder30);assert_eq!(legacy.schema,1);
+    let bytes=serde_json::to_vec(&legacy).unwrap();assert!(!String::from_utf8_lossy(&bytes).contains("reminderAt"));
+    assert_eq!(serde_json::from_slice::<Copy>(&bytes).unwrap(),legacy);
+    std::fs::remove_dir_all(path.parent().unwrap()).unwrap();
+}
+#[test] fn calendar_reminders_reject_ambiguous_instants_duplicate_and_excluded_targets() {
+    use super::super::action_export::{CalendarAlarm as A,CalendarReminderSelection as S};
+    let s=row();let base=export::prepare_meeting_export(&s,"offlineStore",F::Calendar).unwrap();let items=base.calendar_items.unwrap();
+    for at in ["2026-11-06","2026-11-06T18:00:00-00:00","2026-11-06T18:00:00.001Z","2026-11-06T18:00:00Z前","2026-11-06T18:00:60Z","0000-01-01T18:00:00Z"] {
+        let choices=[S{uid:items[1].uid.clone(),reminder:A::At{at:at.into()}}];
+        assert!(export::prepare_meeting_export_with_reminders(&s,"offlineStore",F::Calendar,Some(&choices)).is_err(),"{at}");
+    }
+    for (uid,reminder) in [(items[1].uid.clone(),A::Before{minutes:60}),(items[0].uid.clone(),A::Before{minutes:29}),(items[2].uid.clone(),A::None),("wrong-source".into(),A::None)] {
+        assert!(export::prepare_meeting_export_with_reminders(&s,"offlineStore",F::Calendar,Some(&[S{uid,reminder}])).is_err());
+    }
+    let duplicate=[S{uid:items[0].uid.clone(),reminder:A::None},S{uid:items[0].uid.clone(),reminder:A::Before{minutes:60}}];
+    assert!(export::prepare_meeting_export_with_reminders(&s,"offlineStore",F::Calendar,Some(&duplicate)).is_err());
+    let choices=[S{uid:items[0].uid.clone(),reminder:A::Before{minutes:1440}}];
+    let selected=export::prepare_meeting_export_with_reminders(&s,"offlineStore",F::Calendar,Some(&choices)).unwrap();
+    assert!(String::from_utf8_lossy(&selected.bytes).contains("TRIGGER;RELATED=START:-PT1440M"));
+    assert!(export::prepare_meeting_export_with_reminders(&s,"offlineStore",F::Markdown,Some(&choices)).is_err());
+    let choices=[S{uid:items[0].uid.clone(),reminder:A::None}];
+    let selected=export::prepare_meeting_export_with_reminders(&s,"offlineStore",F::CalendarReminder60,Some(&choices)).unwrap();
+    assert!(!String::from_utf8_lossy(&selected.bytes).contains("VALARM"));
+}
 #[test] fn exact_file_identity_reminder_and_existing_uid_are_preserved() {
     let s=row();let prepared=export::prepare_meeting_export(&s,"offlineStore",F::CalendarReminder60).unwrap();
     let copy=prepare(&s,"offlineStore",&prepared,std::path::Path::new("sample.ics")).unwrap().unwrap();

@@ -1,24 +1,49 @@
+import {useState} from 'react';
 import {readableCalendarTime} from './calendarTime';
+import {CalendarReminderEditor} from './CalendarReminderEditor';
 
-/** These rows come from the same native preparation as the reviewed file hash. */
-export type CalendarExportItem={text:string;title:string;deadline:string|null;status:'timed'|'allDay'|'unconfirmed'|'completed'};
-export type CalendarReminderChoice={remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60'};
-export function CalendarExportItems({items,choice,disabled,onEdit}:{
+export type CalendarAlarm={kind:'none'}|{kind:'before';minutes:0|30|60|1440}|{kind:'at';at:string};
+export type CalendarReminderSelection={uid:string;reminder:CalendarAlarm};
+/** Native rows identify the exact source item used by the reviewed file. */
+export type CalendarExportItem={uid?:string;text:string;title:string;deadline:string|null;status:'timed'|'allDay'|'unconfirmed'|'completed';reminder?:CalendarAlarm};
+export type CalendarReminderChoice={remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';calendarReminders?:CalendarReminderSelection[]};
+export function effectiveCalendarAlarm(item:CalendarExportItem,choice:CalendarReminderChoice):CalendarAlarm {
+  return choice.calendarReminders?.find(s=>s.uid===item.uid)?.reminder??(choice.remindAtTime&&item.status==='timed'?{kind:'before',minutes:choice.reminderFormat==='calendarreminder'?0:choice.reminderFormat==='calendarreminder60'?60:30}:{kind:'none'});
+}
+export function calendarAlarmLabel(alarm:CalendarAlarm):string {
+  return alarm.kind==='none'?'不提醒':alarm.kind==='at'?`提醒：${readableCalendarTime(alarm.at)}`:alarm.minutes===0?'提醒：在截止时刻':alarm.minutes===60?'提醒：提前1小时':alarm.minutes===1440?'提醒：提前1天':`提醒：提前${alarm.minutes}分钟`;
+}
+export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onPending}:{
   items:CalendarExportItem[];choice:CalendarReminderChoice;disabled:boolean;onEdit?:(index:number)=>void;
+  onReminder?:(uid:string,reminder:CalendarAlarm|null)=>void;onPending?:(delta:1|-1)=>void;
 }){
+  const[editing,setEditing]=useState<number|null>(null);
   const included=items.filter(item=>item.status==='timed'||item.status==='allDay');
-  const alarms=choice.remindAtTime?included.filter(item=>item.status==='timed').length:0;
-  const reminder=choice.reminderFormat==='calendarreminder'?'在已确认的时刻':choice.reminderFormat==='calendarreminder60'?'提前1小时':'提前30分钟';
+  const alarms=included.filter(item=>effectiveCalendarAlarm(item,choice).kind!=='none').length;
   return <section aria-label="逐项日历预览">
     <p><strong>将导出{included.length}项日程：{alarms}项附提醒，{included.length-alarms}项不提醒。</strong></p>
-    <ul>{items.map((item,index)=><li key={index} style={{marginBottom:12,overflowWrap:'anywhere'}}>
-      <strong>{item.title}</strong><br/>
-      {item.status==='completed'?'已完成，本次不导出':item.status==='unconfirmed'?`时间尚未确认，本次不导出${item.deadline?`：${item.deadline}`:''}`:
-        `${readableCalendarTime(item.deadline??'')} · ${item.status==='allDay'?'全天日程，不提醒':choice.remindAtTime?`提醒：${reminder}`:'不提醒'}`}
-      {onEdit&&item.status!=='completed'?<><br/><button type="button" className="ct-text-button" disabled={disabled}
-        aria-label={`日历事项 ${index+1} ${item.status==='allDay'?'补充具体时刻':'修改日历时间'}`}
-        onClick={()=>onEdit(index)}>{item.status==='allDay'?'补充具体时刻':item.status==='unconfirmed'?'确认日期和时刻':'修改日历时间'}</button></>:null}
-    </li>)}</ul>
+    <ul>{items.map((item,index)=>{
+      const alarm=effectiveCalendarAlarm(item,choice),override=choice.calendarReminders?.find(s=>s.uid===item.uid)?.reminder;
+      return <li key={item.uid??index} style={{marginBottom:12,overflowWrap:'anywhere'}}>
+        <strong>{item.title}</strong><br/>
+        {item.status==='completed'?'已完成，本次不导出':item.status==='unconfirmed'?`时间尚未确认，本次不导出${item.deadline?`：${item.deadline}`:''}`:
+          `${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?' · 全天日程':''} · ${calendarAlarmLabel(alarm)}`}
+        {onReminder&&item.uid&&(item.status==='allDay'||item.status==='timed')?<label style={{display:'block',marginTop:8}}>本项提醒 <select aria-label={`日历事项 ${index+1} 提醒`} disabled={disabled}
+          value={!override?'default':override.kind==='before'?String(override.minutes):override.kind}
+          onChange={event=>{const value=event.currentTarget.value;if(value==='at'){setEditing(index);return;}
+            onReminder(item.uid!,value==='default'?null:value==='none'?{kind:'none'}:{kind:'before',minutes:Number(value) as 0|30|60|1440});}}>
+          <option value="default">{item.status==='allDay'?'默认不提醒':'按上方统一设置'}</option><option value="none">不提醒</option>
+          {item.status==='timed'?<><option value="0">在截止时刻</option><option value="30">提前30分钟</option><option value="60">提前1小时</option><option value="1440">提前1天</option></>:null}
+          <option value="at">指定提醒日期和时刻…</option>
+        </select>{override?.kind==='at'?<button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setEditing(index)}>修改提醒时刻</button>:null}</label>:null}
+        {onEdit&&item.status!=='completed'?<><br/><button type="button" className="ct-text-button" disabled={disabled}
+          aria-label={`日历事项 ${index+1} ${item.status==='allDay'?'补充具体时刻':'修改日历时间'}`}
+          onClick={()=>onEdit(index)}>{item.status==='allDay'?'补充具体时刻':item.status==='unconfirmed'?'确认日期和时刻':'修改日历时间'}</button></>:null}
+        {editing===index&&item.uid&&onReminder?<CalendarReminderEditor key={item.uid} deadline={item.deadline??''} initial={override?.kind==='at'?override.at:undefined}
+          label={`日历事项 ${index+1}`} disabled={disabled} onConfirm={at=>onReminder(item.uid!,{kind:'at',at})} onClose={()=>setEditing(null)} onPending={onPending}/>:null}
+      </li>;
+    })}</ul>
     <p className="ct-step-meta">已导入的日程不会自动更新；重复导入可能新增日程。改期后可在“查看已保存的日历副本”复制原名称，找到已有日程再修改。</p>
+    <p className="ct-step-meta">导入后找不到日程时，请把接收日历的日期范围切到对应截止日，或扩大列表的显示范围。</p>
   </section>;
 }

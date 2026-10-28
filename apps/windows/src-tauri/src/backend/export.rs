@@ -17,7 +17,7 @@ use crate::companion_v1::{
     CompanionV1UtteranceSegment,
 };
 use super::transcript_review;
-pub use super::action_export::CalendarPreviewItem;
+pub use super::action_export::{CalendarPreviewItem,CalendarReminderSelection};
 
 fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, context: &Option<super::minutes_context::Source>, manual: bool, body: String) -> String {
     if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session, context) {
@@ -203,6 +203,11 @@ pub fn prepare_meeting_export(
     meeting_mode: &str,
     format: MeetingExportFormat,
 ) -> Result<PreparedMeetingExport, String> {
+    prepare_meeting_export_with_reminders(session,meeting_mode,format,None)
+}
+
+pub fn prepare_meeting_export_with_reminders(session:&CompanionV1HostSession,meeting_mode:&str,format:MeetingExportFormat,calendar_reminders:Option<&[CalendarReminderSelection]>)->Result<PreparedMeetingExport,String>{
+    if calendar_reminders.is_some()&&!matches!(format,MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60){return Err("逐项提醒只用于日历日程导出。".into());}
     super::library_lifecycle::require_available(session)?;
     if !matches!(meeting_mode, "offlineStore" | "onlineLive") {
         return Err(format!("不支持的会议模式：{meeting_mode}"));
@@ -255,8 +260,9 @@ pub fn prepare_meeting_export(
                     body.strip_prefix("# ").unwrap_or(&body).to_owned()
                 }else{body}
             } else if matches!(format,MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60) {
-                calendar_items=Some(super::action_export::calendar_preview_items(&actions));
-                super::action_export::calendar_events_with_reminder_lead(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now(),match format{MeetingExportFormat::CalendarReminder=>Some(0),MeetingExportFormat::CalendarReminder30=>Some(30),MeetingExportFormat::CalendarReminder60=>Some(60),_=>None})?
+                let (file,items)=super::action_export::calendar_events_with_selections(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now(),match format{MeetingExportFormat::CalendarReminder=>Some(0),MeetingExportFormat::CalendarReminder30=>Some(30),MeetingExportFormat::CalendarReminder60=>Some(60),_=>None},calendar_reminders)?;
+                if calendar_reminders.is_some(){warning=super::action_export::calendar_event_notice(&actions);}
+                calendar_items=Some(items);file
             } else {
                 super::action_export::calendar(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now())
             }

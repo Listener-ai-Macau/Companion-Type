@@ -215,6 +215,8 @@ pub struct CompanionMeetingExportRequest {
     pub format: CompanionMeetingExportFormat,
     #[serde(default)]
     pub expected_content_hash: Option<String>,
+    #[serde(default)]
+    pub calendar_reminders: Option<Vec<crate::backend::export::CalendarReminderSelection>>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -496,7 +498,7 @@ pub fn preview_companion_meeting_export(
         .ok_or("找不到要导出的记录，请刷新后重试。")?;
     let plain_checklist=matches!(&request.format,CompanionMeetingExportFormat::TodoText);
     let copyable=matches!(&request.format,CompanionMeetingExportFormat::Todo);
-    let prepared=crate::backend::export::prepare_meeting_export(session,&request.meeting_mode,request.format.into())?;
+    let prepared=crate::backend::export::prepare_meeting_export_with_reminders(session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref())?;
     let text_content=if plain_checklist {
         Some(std::str::from_utf8(&prepared.bytes).map_err(|_|"清单文字无法读取，请保留已保存内容。")?.to_owned())
     } else if copyable {Some(crate::backend::export::checklist_copy_text(&prepared)?)} else {None};
@@ -509,6 +511,7 @@ pub async fn export_companion_meeting(
     coordinator: CompanionCoordinatorState<'_>,
     request: CompanionMeetingExportRequest,
 ) -> Result<Option<CompanionMeetingExportResult>, String> {
+    if request.calendar_reminders.is_some()&&request.expected_content_hash.is_none(){return Err("请先核对本次逐项提醒，再保存日历文件。".into());}
     let snapshot = coordinator.snapshot()?;
     let session = snapshot
         .host
@@ -518,10 +521,11 @@ pub async fn export_companion_meeting(
         .cloned()
         .ok_or_else(|| format!("meeting export target {} is missing", request.session_id))?;
     let format: crate::backend::export::MeetingExportFormat = request.format.into();
-    let prepared = crate::backend::export::prepare_meeting_export(
+    let prepared = crate::backend::export::prepare_meeting_export_with_reminders(
         &session,
         &request.meeting_mode,
         format,
+        request.calendar_reminders.as_deref(),
     )?;
 
     crate::backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
@@ -545,7 +549,7 @@ pub async fn export_companion_meeting(
         let current=coordinator.snapshot()?;
         let session=current.host.sessions.iter().find(|row|row.id==request.session_id)
             .ok_or("找不到要导出的记录，请刷新后重试。")?;
-        let latest=crate::backend::export::prepare_meeting_export(session,&request.meeting_mode,format)?;
+        let latest=crate::backend::export::prepare_meeting_export_with_reminders(session,&request.meeting_mode,format,request.calendar_reminders.as_deref())?;
         crate::backend::export::require_unchanged(&latest,Some(expected))?;
     }
     // A draft receipt is never committed on cancellation or failed file I/O.

@@ -510,7 +510,7 @@ export interface CompanionV1HostSession {
 }
 
 export interface CompanionCalendarCopy {
-  schema: 1;
+  schema: 1 | 2;
   privacyEpoch: number;
   meetingMode: CompanionV1MeetingMode;
   savedAt: string;
@@ -519,7 +519,7 @@ export interface CompanionCalendarCopy {
   contentHash: string;
   sourceTitle: string;
   sourceMarkdown: string;
-  entries: { uid: string; title: string; deadline: string; reminderMinutes: 0 | 30 | 60 | null }[];
+  entries: { uid: string; title: string; deadline: string; reminderMinutes: 0 | 30 | 60 | 1440 | null; reminderAt?: string | null }[];
 }
 
 export interface CompanionV1MinutesVariant {

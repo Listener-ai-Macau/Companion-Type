@@ -322,14 +322,30 @@ fn calendar_action_title(text:&str)->String {
 #[derive(Clone,Debug,serde::Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct CalendarPreviewItem {
+    pub uid:String,
     pub text:String,
     pub title:String,
     pub deadline:Option<String>,
     pub status:&'static str,
+    pub reminder:CalendarAlarm,
+}
+
+#[derive(Clone,Debug,serde::Serialize,serde::Deserialize,PartialEq,Eq)]
+#[serde(tag="kind",rename_all="camelCase",deny_unknown_fields)]
+pub enum CalendarAlarm { None, Before{minutes:u16}, At{at:String} }
+
+#[derive(Clone,Debug,serde::Deserialize)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+pub struct CalendarReminderSelection { pub uid:String, pub reminder:CalendarAlarm }
+
+pub(crate) fn absolute_alarm_utc(value:&str)->Option<String> {
+    if value.ends_with('前'){return None;}
+    event_start(value)?.strip_prefix("DTSTART:").map(|v|v.trim_end_matches("\r\n").to_owned())
 }
 
 pub(crate) fn calendar_preview_items(actions:&[Action])->Vec<CalendarPreviewItem> {
     actions.iter().map(|item|CalendarPreviewItem{
+        uid:String::new(),reminder:CalendarAlarm::None,
         text:item.text.clone(),title:calendar_action_title(&item.text),deadline:item.due.clone(),
         status:if item.completed {"completed"}else{match item.due.as_deref().and_then(event_start){
             Some(start) if start.starts_with("DTSTART:")=>"timed",Some(_)=>"allDay",None=>"unconfirmed",
@@ -343,12 +359,37 @@ pub(crate) fn calendar_copy_entries(session_id:&str,mode:&str,actions:&[Action],
         let start=item.due.as_deref().and_then(event_start)?;
         Some(super::calendar_copy::Entry{uid:calendar_event_uid(session_id,mode,index,&item.text),
             title:calendar_action_title(&item.text),deadline:item.due.clone()?,
-            reminder_minutes:lead.filter(|_|start.starts_with("DTSTART:"))})
+            reminder_minutes:lead.filter(|_|start.starts_with("DTSTART:")),reminder_at:None})
     }).collect()
 }
 
 pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>)->Result<String,String> {
+    calendar_events_with_selections(session_id,mode,title,actions,draft,stamp,lead_minutes,None).map(|(file,_)|file)
+}
+
+pub(crate) fn calendar_events_with_selections(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>,selections:Option<&[CalendarReminderSelection]>)->Result<(String,Vec<CalendarPreviewItem>),String> {
     if lead_minutes.is_some_and(|m|!matches!(m,0|30|60)){return Err("不支持的提前提醒时间；请重新选择，截止时间保持不变。".into());}
+    let mut items=calendar_preview_items(actions);
+    for(index,item)in items.iter_mut().enumerate(){
+        item.uid=calendar_event_uid(session_id,mode,index,&item.text);
+        if item.status=="timed" {if let Some(minutes)=lead_minutes {item.reminder=CalendarAlarm::Before{minutes};}}
+    }
+    if let Some(selections)=selections {
+        if selections.len()>4096{return Err("日历提醒数量超过上限，请分批导出。".into());}
+        let mut seen=std::collections::HashSet::new();
+        for selection in selections {
+            if !seen.insert(&selection.uid){return Err("同一事项的提醒重复，请重新核对。".into());}
+            let item=items.iter_mut().find(|item|item.uid==selection.uid&&matches!(item.status,"timed"|"allDay"))
+                .ok_or("清单事项已变化，请重新打开日历预览设置提醒；没有生成文件。")?;
+            match &selection.reminder {
+                CalendarAlarm::None=>{},
+                CalendarAlarm::Before{minutes} if item.status=="timed"&&matches!(minutes,0|30|60|1440)=>{},
+                CalendarAlarm::At{at} if absolute_alarm_utc(at).is_some()=>{},
+                _=>return Err("提醒需要明确的日期、时刻和时区；只有日期的截止日请单独指定提醒时刻。".into()),
+            }
+            item.reminder=selection.reminder.clone();
+        }
+    }
     let mut out="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Companion Type//Checklist Calendar Events//ZH\r\nCALSCALE:GREGORIAN\r\n".to_string();
     let mut count=0;
     let mut reminder_count=0;
@@ -366,9 +407,14 @@ pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title
         // RFC5545: a date without DTEND is one day; a timed event without
         // DTEND ends at DTSTART. A deadline does not reserve invented work time.
         out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\n");
-        if let Some(lead)=lead_minutes.filter(|_|start.starts_with("DTSTART:")) {
+        let alarm=&items[index].reminder;
+        if *alarm!=CalendarAlarm::None {
             out.push_str("BEGIN:VALARM\r\nACTION:DISPLAY\r\n");
-            out.push_str(&format!("TRIGGER;RELATED=START:{}\r\n",if lead==0{"PT0S".into()}else{format!("-PT{lead}M")}));
+            match alarm {
+                CalendarAlarm::Before{minutes}=>out.push_str(&format!("TRIGGER;RELATED=START:{}\r\n",if *minutes==0{"PT0S".into()}else{format!("-PT{minutes}M")})),
+                CalendarAlarm::At{at}=>out.push_str(&format!("TRIGGER;VALUE=DATE-TIME:{}\r\n",absolute_alarm_utc(at).ok_or("提醒时刻无法读取。")?)),
+                CalendarAlarm::None=>unreachable!(),
+            }
             out.push_str(&property("DESCRIPTION",&format!("清单提醒：{readable}")));
             out.push_str("END:VALARM\r\n");reminder_count+=1;
         }
@@ -380,10 +426,10 @@ pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title
         }
         return Err("CALENDAR_TIME_REQUIRED:没有可导出的日历日程。请在编辑清单中确认未完成事项的日期或时刻，再导出；原清单保持不变。".into());
     }
-    if lead_minutes.is_some() && reminder_count==0 {
+    if selections.is_none() && lead_minutes.is_some() && reminder_count==0 {
         return Err("CALENDAR_TIME_REQUIRED:提醒需要具体时刻。请确认未完成事项的时刻；只有日期的事项仍可作为全天日程导出，原清单保持不变。".into());
     }
-    out.push_str("END:VCALENDAR\r\n");Ok(out)
+    out.push_str("END:VCALENDAR\r\n");Ok((out,items))
 }
 
 pub fn stamp_now() -> String { Utc::now().format("%Y%m%dT%H%M%SZ").to_string() }

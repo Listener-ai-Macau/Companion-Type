@@ -11,6 +11,8 @@ pub struct Entry {
     pub title:String,
     pub deadline:String,
     pub reminder_minutes:Option<u16>,
+    #[serde(default,skip_serializing_if="Option::is_none")]
+    pub reminder_at:Option<String>,
 }
 
 #[derive(Clone,Debug,Deserialize,Serialize,PartialEq,Eq)]
@@ -31,12 +33,15 @@ pub struct Copy {
 impl Copy {
     fn validate(&self)->Result<(),String> {
         let hash=|s:&str|s.len()==64&&s.bytes().all(|b|b.is_ascii_digit()||(b'a'..=b'f').contains(&b));
-        if self.schema!=1||!matches!(self.meeting_mode.as_str(),"offlineStore"|"onlineLive")
+        if !matches!(self.schema,1|2)||!matches!(self.meeting_mode.as_str(),"offlineStore"|"onlineLive")
             ||self.saved_at.is_empty()||!hash(&self.file_sha256)||!hash(&self.content_hash)
             ||self.file_name.is_empty()||self.file_name.len()>1024||self.file_name.chars().any(|c|c.is_control()||matches!(c,'/'|'\\'))
             ||self.entries.is_empty()||self.entries.len()>4096
             ||self.entries.iter().any(|e|e.uid.is_empty()||e.title.is_empty()||e.deadline.is_empty()
-                ||e.reminder_minutes.is_some_and(|n|!matches!(n,0|30|60))) {
+                ||e.reminder_minutes.is_some_and(|n|!matches!(n,0|30|60|1440))
+                ||(e.reminder_at.is_some()&&e.reminder_minutes.is_some())
+                ||e.reminder_at.as_deref().is_some_and(|at|super::action_export::absolute_alarm_utc(at).is_none())
+                ||(self.schema==1&&(e.reminder_at.is_some()||e.reminder_minutes==Some(1440)))) {
             return Err("日历副本来源不完整；文件保存结果不变，请保留原文件。".into());
         }
         if serde_json::to_vec(self).map_err(|e|e.to_string())?.len()>1_048_576 {
@@ -49,7 +54,7 @@ impl Copy {
 pub(crate) fn prepare(session:&CompanionV1HostSession,mode:&str,
     prepared:&super::export::PreparedMeetingExport,destination:&std::path::Path)->Result<Option<Copy>,String> {
     use super::export::MeetingExportFormat as F;
-    let lead=match prepared.format {F::Calendar=>None,F::CalendarReminder=>Some(0),F::CalendarReminder30=>Some(30),F::CalendarReminder60=>Some(60),_=>return Ok(None)};
+    if !matches!(prepared.format,F::Calendar|F::CalendarReminder|F::CalendarReminder30|F::CalendarReminder60){return Ok(None);}
     let variant=match mode {"offlineStore"=>session.minutes_by_mode.offline_store.as_ref(),"onlineLive"=>session.minutes_by_mode.online_live.as_ref(),_=>return Err("不支持的日历整理方式。".into())};
     let markdown=variant.map(|v|v.markdown.clone()).or_else(|| {
         (session.meeting_mode==mode&&session.minutes_by_mode.offline_store.is_none()&&session.minutes_by_mode.online_live.is_none())
@@ -57,11 +62,14 @@ pub(crate) fn prepare(session:&CompanionV1HostSession,mode:&str,
     }).ok_or("找不到这份日历对应的已保存清单。")?;
     // The export may have deduplicated chunked minutes. Re-reading raw lines
     // here would invent extra saved events and shift their UID indices.
-    let actions=prepared.calendar_items.as_ref().ok_or("日历文件缺少对应的事项预览，未记录副本。")?.iter()
-        .map(|item|super::action_export::Action{text:item.text.clone(),completed:item.status=="completed",due:item.deadline.clone()})
-        .collect::<Vec<_>>();
-    let entries=super::action_export::calendar_copy_entries(&session.id,mode,&actions,lead);
-    let copy=Copy{schema:1,privacy_epoch:session.calendar_copy_epoch,meeting_mode:mode.into(),saved_at:chrono::Utc::now().to_rfc3339(),
+    use super::action_export::CalendarAlarm;
+    let entries=prepared.calendar_items.as_ref().ok_or("日历文件缺少对应的事项预览，未记录副本。")?.iter()
+        .filter(|item|matches!(item.status,"timed"|"allDay"))
+        .map(|item|Entry{uid:item.uid.clone(),title:item.title.clone(),deadline:item.deadline.clone().unwrap_or_default(),
+            reminder_minutes:match &item.reminder {CalendarAlarm::Before{minutes}=>Some(*minutes),_=>None},
+            reminder_at:match &item.reminder {CalendarAlarm::At{at}=>Some(at.clone()),_=>None}}).collect::<Vec<_>>();
+    let schema=if entries.iter().any(|e|e.reminder_at.is_some()||e.reminder_minutes==Some(1440)){2}else{1};
+    let copy=Copy{schema,privacy_epoch:session.calendar_copy_epoch,meeting_mode:mode.into(),saved_at:chrono::Utc::now().to_rfc3339(),
         file_name:destination.file_name().ok_or("日历文件名无法读取。")?.to_string_lossy().into(),
         file_sha256:format!("{:x}",Sha256::digest(&prepared.bytes)),content_hash:super::export::content_hash(prepared),
         source_title:session.title.clone(),source_markdown:markdown,entries};
