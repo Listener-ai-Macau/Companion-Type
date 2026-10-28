@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';
+import React from 'react';import {act,create} from 'react-test-renderer';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
+import {calendarCopyDetailsText} from '../packages/ui/src/CompanionCalendarCopies';
+(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;},cancelAnimationFrame:()=>{}};
+const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+snapshot.host.persistence={status:'ready'};const row=snapshot.host.sessions[0];
+const markdown='## Summary\n条件保持。\n\n## Action Items\n- [ ] 未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)';
+Object.assign(row.minutesByMode.offlineStore!,{markdown,source:'userAuthored',quality:'final',status:'minutesReady'});
+const before=JSON.stringify(snapshot),pending:{request:any;resolve:(result:any)=>void}[]=[],exports:any[]=[],unsaved:boolean[]=[];
+const items=[{uid:'timed-source',text:'未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)',title:'未测完不要写通过',deadline:'2026-11-08T15:00:00+08:00前',status:'timed' as const},
+  {uid:'date-source',text:'核对包装 (due: 2026-11-07)',title:'核对包装',deadline:'2026-11-07',status:'allDay' as const}];
+let tree:any;
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
+const field=(label:string)=>tree.root.findByProps({'aria-label':label});
+const onPreviewMeetingExport=(request:any):Promise<any>=>request.calendarReminders?.length?new Promise(resolve=>pending.push({request,resolve})):Promise.resolve({contentHash:'a'.repeat(64),calendarItems:items});
+act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}
+  onSaveMeeting={async()=>{throw Error('alarm must not save deadline');}} onUnsavedChange={value=>unsaved.push(value)}
+  onPreviewMeetingExport={onPreviewMeetingExport} onExportMeeting={async request=>{exports.push(request);return null;}}/>);});
+await act(async()=>button('导出到日历').props.onClick());
+const reminder=tree.root.findAllByType('input').find((n:any)=>n.props.type==='checkbox'&&n.parent?.type==='label'&&text(n.parent).includes('提醒我'));
+act(()=>reminder.props.onChange({currentTarget:{checked:true}}));
+act(()=>field('日历提醒时间').props.onChange({currentTarget:{value:'calendarreminder60'}}));
+act(()=>field('日历事项 2 提醒').props.onChange({currentTarget:{value:'at'}}));
+assert.equal(field('日历事项 2 提醒日期').props.value,'2026-11-07');
+assert.equal(field('日历事项 2 提醒时刻').props.value,'','never invent midnight');assert.equal(unsaved.at(-1),true);
+assert.equal(button('使用此提醒时刻').props.disabled,true);act(()=>button('取消').props.onClick());
+assert.equal(unsaved.at(-1),false);assert.equal(exports.length,0);assert.equal(pending.length,0);
+act(()=>field('日历事项 2 提醒').props.onChange({currentTarget:{value:'at'}}));
+act(()=>field('日历事项 2 提醒日期').props.onChange({target:{value:'2026-11-06'}}));
+act(()=>field('日历事项 2 提醒时刻').props.onChange({target:{value:'18:00'}}));
+act(()=>field('日历事项 2 提醒时区').props.onChange({target:{value:'offset'}}));
+act(()=>field('日历事项 2 提醒 UTC 偏移').props.onChange({target:{value:'+08:00'}}));
+await act(async()=>button('使用此提醒时刻').props.onClick());
+assert.equal(unsaved.at(-1),false);assert.equal(pending.length,1);
+assert.match(text(tree.toJSON()),/2026年11月7日 · 全天日程 · 提醒：2026年11月6日 18:00/);
+assert.equal(button('导出并设置提醒').props.disabled,true);
+await act(async()=>field('日历事项 1 提醒').props.onChange({currentTarget:{value:'none'}}));
+assert.equal(pending.length,2);assert.match(text(tree.toJSON()),/将导出2项日程：1项附提醒，1项不提醒/);
+await act(async()=>pending[0].resolve({contentHash:'b'.repeat(64),calendarItems:items}));
+assert.equal(button('导出并设置提醒').props.disabled,true,'late preview must not authorize changed selection');
+await act(async()=>pending[1].resolve({contentHash:'c'.repeat(64),calendarItems:items}));
+assert.equal(button('导出并设置提醒').props.disabled,false);
+await act(async()=>button('导出并设置提醒').props.onClick());
+assert.deepEqual(exports[0],{sessionId:row.id,meetingMode:'offlineStore',format:'calendarreminder60',expectedContentHash:'c'.repeat(64),calendarReminders:[
+  {uid:'date-source',reminder:{kind:'at',at:'2026-11-06T18:00:00+08:00'}},{uid:'timed-source',reminder:{kind:'none'}}]});
+assert.equal(JSON.stringify(snapshot),before,'source, deadline and other modes unchanged');
+const copy:any={fileName:'样品日历.ics',entries:[{title:'核对包装',deadline:'2026-11-07',reminderMinutes:null,reminderAt:'2026-11-06T18:00:00+08:00'}]};
+assert.match(calendarCopyDetailsText(copy),/时间：2026年11月7日\n提醒：2026年11月6日 18:00/);
+assert.match(calendarCopyDetailsText(copy),/接收日历中的后续修改不会同步回来/);
+act(()=>tree.unmount());console.log('PASS independent explicit alarm, unchanged date-only deadline/source, cancellation, stale preview refusal, exact selection/hash export, copy snapshot semantics');
