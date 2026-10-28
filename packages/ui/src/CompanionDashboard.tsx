@@ -6,6 +6,7 @@ import {readableCalendarTime} from './calendarTime';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
+import { CompanionRecordingReadiness, recordingRoomLabel } from './CompanionRecordingReadiness';
 import { CompanionHelp } from './CompanionHelp';
 import { CompanionPrivacyCleanup } from './CompanionPrivacyCleanup';
 import { MinutesModeTabs } from './MinutesModeTabs';
@@ -1471,11 +1472,6 @@ export function CompanionDashboard({
   // current free space. START still performs the existing authoritative check.
   const capacityUnavailable = Boolean(capacity && !capacity.busy
     && (capacity.usedEntries >= capacity.maxEntries || capacitySeconds <= 0));
-  const recordingRoomLabel = (seconds: number) => {
-    const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60);
-    return hours ? `${hours}小时${minutes ? `${minutes}分` : ''}`
-      : minutes ? `${minutes}分钟` : `${Math.floor(seconds)}秒`;
-  };
   const simpleStatus = boardLiveActive ? 'Companion 正在录音'
     : oobeBlockedByRecording ? '录音进行中'
       : storageBlocked ? '本机保存暂不可用，请先处理存储问题'
@@ -2058,15 +2054,13 @@ export function CompanionDashboard({
       </div>
 
       <section id="ct-device-recording-page" tabIndex={-1} className="ct-page-panel" hidden={pageView !== 'device'} aria-label="设备与同步内容">
-      <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
-        recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
-        onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setDetailSessionId(null);navigatePage('library');}} />
-      {onFindPet && connected && device?.deviceId ? <CompanionPetFind
-        deviceId={device.deviceId} supported={snapshot?.source==='firmware' && snapshot.speaker.findSupported===true}
-        blocked={controlsBusy||oobeBlockedByRecording} muted={snapshot?.speaker.muted!==false||snapshot.speaker.volume===0}
-        onFind={onFindPet} /> : null}
-
-      {connected ? <section className="ct-pending-banner" aria-label="设备录音容量">
+      <CompanionRecordingReadiness snapshot={snapshot} settings={productSettings} recording={oobeBlockedByRecording}
+        busy={controlsBusy} durationSeconds={durationValid ? boardMaxDurationSeconds : null}
+        onConnect={() => onControl({action:'deviceConnect',deviceId:device?.deviceId??undefined})}
+        onCheck={() => onControl({action:'oobeRunChecks',deviceId:device?.deviceId??undefined})}
+        onSettings={openSettings} onRefresh={onRefresh} capacityDetails={<>
+      {connected ? <details className="ct-readiness-capacity">
+        <summary>设备空间详情与同步建议</summary>
         <strong>设备录音空间 · 上次读取</strong><p>{capacityHint}</p>
         {capacity ? <p>未同步 {capacity.unsyncedEntries} 段，未封口 {capacity.writingEntries} 段，共占用 {formatBytes(capacity.protectedBytes)}；待回收（已同步或已确认删除）{capacity.consumedEntries} 段，{formatBytes(capacity.consumedBytes)}。
           设备独立开录：{capacity.localLimitSeconds ? `${capacity.localLimitSeconds / 60} 分钟` : '无时间上限，空间仍有限'}。</p> : null}
@@ -2083,7 +2077,8 @@ export function CompanionDashboard({
             onClick={() => void inspectRecordingLoss()}>{discardBusy ? '正在核对确认与回收…' : '查看可释放的最旧录音'}</button>
         </> : null}
         {discardMessage ? <p role="status">{discardMessage}</p> : null}
-      </section> : null}
+      </details> : null}
+        </>} />
       {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="开始设备录音">
         <div><strong>用 Companion 录音</strong>
           <p>{connected
@@ -2102,6 +2097,14 @@ export function CompanionDashboard({
           <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
         </div>
       </section> : null}
+
+      <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
+        recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
+        onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setDetailSessionId(null);navigatePage('library');}} />
+      {onFindPet && connected && device?.deviceId ? <CompanionPetFind
+        deviceId={device.deviceId} supported={snapshot?.source==='firmware' && snapshot.speaker.findSupported===true}
+        blocked={controlsBusy||oobeBlockedByRecording} muted={snapshot?.speaker.muted!==false||snapshot.speaker.volume===0}
+        onFind={onFindPet} /> : null}
 
       <button type="button" className="ct-workflow-toggle" onClick={() => setShowWorkflow((value) => !value)}>
         <span><HardDrive size={16} />更多录音与处理操作</span><span>{showWorkflow ? '收起' : '录音 · 同步 · 整理'}</span>

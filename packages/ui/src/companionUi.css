@@ -1674,3 +1674,20 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 
 /* Let the record-library actions keep their labels inside the buttons. */
 .ct-library-head { flex-wrap: wrap; }
+
+/* Recording advice stays beside its action; detailed storage accounting is optional. */
+.ct-readiness { padding: 22px; margin-bottom: 14px; border: 1px solid #dbe5d9; border-radius: 18px; background: #fff; }
+.ct-readiness header h2 { margin: 0 0 7px; font-size: 18px; }
+.ct-readiness header p { margin: 0 0 18px; line-height: 1.6; }
+.ct-readiness-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px; }
+.ct-readiness-grid h3 { margin: 0 0 8px; font-size: 15px; }
+.ct-readiness dl { margin: 12px 0; }
+.ct-readiness dl > div { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-top: 1px solid #edf0eb; font-size: 13px; line-height: 1.65; }
+.ct-readiness dt { color: #526253; }
+.ct-readiness dd { margin: 0; overflow-wrap: anywhere; }
+.ct-readiness dd > span, .ct-readiness dd > button { display: block; }
+.ct-readiness-note { font-size: 12px; line-height: 1.7; color: #657066; margin: 8px 0; }
+.ct-readiness-capacity { font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+.ct-readiness-capacity summary { cursor: pointer; padding: 8px 0; color: #416348; }
+.ct-readiness-capacity p { margin: 8px 0; }
+@media (max-width: 680px) { .ct-readiness { padding: 16px; } .ct-readiness-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
