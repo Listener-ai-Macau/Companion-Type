@@ -8,14 +8,14 @@ const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action
 snapshot.host.persistence={status:'ready'};const row=snapshot.host.sessions[0];
 const markdown='## Summary\n条件保持。\n\n## Action Items\n- [ ] 未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)';
 Object.assign(row.minutesByMode.offlineStore!,{markdown,source:'userAuthored',quality:'final',status:'minutesReady'});
-const before=JSON.stringify(snapshot),pending:{request:any;resolve:(result:any)=>void}[]=[],exports:any[]=[],unsaved:boolean[]=[];
+const before=JSON.stringify(snapshot),pending:{request:any;resolve:(result:any)=>void;reject:(error:Error)=>void}[]=[],exports:any[]=[],unsaved:boolean[]=[];
 const items=[{uid:'timed-source',text:'未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)',title:'未测完不要写通过',deadline:'2026-11-08T15:00:00+08:00前',status:'timed' as const},
   {uid:'date-source',text:'核对包装 (due: 2026-11-07)',title:'核对包装',deadline:'2026-11-07',status:'allDay' as const}];
 let tree:any;
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
 const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
 const field=(label:string)=>tree.root.findByProps({'aria-label':label});
-const onPreviewMeetingExport=(request:any):Promise<any>=>request.calendarReminders?.length?new Promise(resolve=>pending.push({request,resolve})):Promise.resolve({contentHash:'a'.repeat(64),calendarItems:items});
+const onPreviewMeetingExport=(request:any):Promise<any>=>request.calendarReminders?.length?new Promise((resolve,reject)=>pending.push({request,resolve,reject})):Promise.resolve({contentHash:'a'.repeat(64),calendarItems:items});
 act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}
   onSaveMeeting={async()=>{throw Error('alarm must not save deadline');}} onUnsavedChange={value=>unsaved.push(value)}
   onPreviewMeetingExport={onPreviewMeetingExport} onExportMeeting={async request=>{exports.push(request);return null;}}/>);});
@@ -50,4 +50,16 @@ assert.equal(JSON.stringify(snapshot),before,'source, deadline and other modes u
 const copy:any={fileName:'样品日历.ics',entries:[{title:'核对包装',deadline:'2026-11-07',reminderMinutes:null,reminderAt:'2026-11-06T18:00:00+08:00'}]};
 assert.match(calendarCopyDetailsText(copy),/时间：2026年11月7日\n提醒：2026年11月6日 18:00/);
 assert.match(calendarCopyDetailsText(copy),/接收日历中的后续修改不会同步回来/);
+await act(async()=>button('导出到日历').props.onClick());
+const again=tree.root.findAllByType('input').find((n:any)=>n.props.type==='checkbox'&&n.parent?.type==='label'&&text(n.parent).includes('提醒我'));
+act(()=>again.props.onChange({currentTarget:{checked:true}}));
+await act(async()=>field('日历事项 1 提醒').props.onChange({currentTarget:{value:'none'}}));
+assert.ok(button('导出日程'),'all explicit alarms disabled means plain export label');
+await act(async()=>pending[2].reject(Error('暂时无法核对')));
+assert.equal(button('导出日程').props.disabled,true);
+await act(async()=>button('重新核对提醒').props.onClick());
+assert.deepEqual(pending[3].request,pending[2].request,'retry retains the exact selection');
+await act(async()=>pending[3].resolve({contentHash:'e'.repeat(64),calendarItems:items}));
+assert.equal(button('导出日程').props.disabled,false);
+assert.equal(JSON.stringify(snapshot),before);
 act(()=>tree.unmount());console.log('PASS independent explicit alarm, unchanged date-only deadline/source, cancellation, stale preview refusal, exact selection/hash export, copy snapshot semantics');

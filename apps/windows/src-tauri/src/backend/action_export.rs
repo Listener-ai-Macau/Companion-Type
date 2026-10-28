@@ -294,7 +294,7 @@ pub(crate) fn calendar_event_reminder_notice(actions:&[Action])->Option<String> 
     let mut notes=Vec::new();
     if let Some(base)=calendar_event_notice(actions){notes.push(base);}
     let days=actions.iter().filter(|a|!a.completed && a.due.as_deref().and_then(event_start).is_some_and(|s|s.starts_with("DTSTART;VALUE=DATE:"))).count();
-    if days>0{notes.push(format!("{days}项只有日期，会保留为全天日程，不添加提醒；确认具体时刻后才能提醒。"));}
+    if days>0{notes.push(format!("{days}项只有日期，会保留为全天日程，默认不添加提醒；可在逐项预览中单独指定提醒时刻。"));}
     if notes.is_empty(){None}else{Some(notes.join(" "))}
 }
 

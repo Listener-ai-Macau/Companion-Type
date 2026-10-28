@@ -31,7 +31,7 @@ import { briefMinutes } from './briefMinutes';
 import {ActionListEditor} from './ActionListEditor';
 
 type MeetingExportOrigin = 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
-import {CalendarExportItems,type CalendarExportItem,type CalendarReminderChoice} from './CalendarExportItems';
+import {CalendarExportItems,effectiveCalendarAlarm,type CalendarExportItem,type CalendarReminderChoice} from './CalendarExportItems';
 import {savedActions,markSavedAction,commonActionSupplement,splitActionSupplement,compactActionSource,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { companionTranscriptUnmappedEdges } from '@companion-type/core';
@@ -467,6 +467,7 @@ export function CompanionDashboard({
   useEffect(()=>{if(!editingMinutes)setCalendarEditRequest(null);},[editingMinutes]);
   const [calendarPendingCount,setCalendarPendingCount]=useState(0);
   const [calendarReminderPending,setCalendarReminderPending]=useState(0);
+  const [calendarReminderRetry,setCalendarReminderRetry]=useState(0);
   const [calendarReminderPreview,setCalendarReminderPreview]=useState<{key:string;hash?:string;warning?:string;error?:string}|null>(null);
   const [saveMeetingBusy, setSaveMeetingBusy] = useState(false);
   const actionSaveActive=useRef(false);
@@ -1105,7 +1106,7 @@ export function CompanionDashboard({
       setCalendarReminderPreview({key:calendarReminderKey,hash:preview.contentHash,warning:preview.warning??''});}},error=>{if(alive)setCalendarReminderPreview({key:calendarReminderKey,error:operationErrorText(error,'export')});})
       .catch(error=>{if(alive)setCalendarReminderPreview({key:calendarReminderKey,error:String(error)});});
     return()=>{alive=false;task.cancel();};
-  },[calendarReminderKey,onPreviewMeetingExport]);
+  },[calendarReminderKey,onPreviewMeetingExport,calendarReminderRetry]);
   const calendarReminderReady=!calendarReminderKey||calendarReminderPreview?.key===calendarReminderKey&&!!calendarReminderPreview.hash;
   const changeCalendarReminderPending=(delta:1|-1)=>setCalendarReminderPending(count=>Math.max(0,count+delta));
   const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string,reviewChoice?:CalendarReminderChoice) => {
@@ -1870,12 +1871,13 @@ export function CompanionDashboard({
                   onPending={changeCalendarReminderPending}
                   onReminder={(uid,reminder)=>setCalendarExportReview(current=>current?{...current,calendarReminders:[...(current.calendarReminders??[]).filter(s=>s.uid!==uid),...(reminder?[{uid,reminder}]:[])]}:null)}
                   onEdit={basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)&&savedActions(minutesMarkdown).length===calendarExportReview.items.length&&savedActions(minutesMarkdown).every((a,n)=>a.text===calendarExportReview.items![n].text)?editCalendarItem:undefined}/>:null}
+                {calendarReminderKey&&calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?<button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording} onClick={()=>setCalendarReminderRetry(n=>n+1)}>重新核对提醒</button>:null}
                 {calendarReminderKey&&!calendarReminderReady?<p role="status">{calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?`提醒尚未核对：${calendarReminderPreview.error}`:'正在核对本次逐项提醒…'}</p>:null}
                 <div className="ct-button-row">
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale||calendarReminderPending>0}
                     onClick={()=>editCalendarItem()}>先核对时间</button>
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete||calendarReminderPending>0||!calendarReminderReady}
-                    onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarReminderKey?calendarReminderPreview?.hash:calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash,calendarExportReview)}>{calendarExportReview.format==='calendar'?(calendarExportReview.remindAtTime||calendarExportReview.calendarReminders?.some(s=>s.reminder.kind!=='none')?'导出并设置提醒':'导出日程'):'按文字说明导出'}</button>
+                    onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarReminderKey?calendarReminderPreview?.hash:calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash,calendarExportReview)}>{calendarExportReview.format==='calendar'?(calendarExportReview.items?.some(item=>(item.status==='timed'||item.status==='allDay')&&effectiveCalendarAlarm(item,calendarExportReview).kind!=='none')?'导出并设置提醒':'导出日程'):'按文字说明导出'}</button>
                   <button type="button" className="ct-text-button" disabled={exportBusy} onClick={()=>setCalendarExportReview(null)}>取消导出</button>
                 </div>
               </div>:null}
