@@ -5,6 +5,7 @@
 
 mod backend;
 mod commands;
+mod calendar_handoff;
 mod close_review;
 mod cache_updates;
 mod companion_v1;
@@ -275,6 +276,7 @@ pub fn run() {
         .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(backend::desktop_update::Manager::default())
         .manage(Arc::clone(&coordinator))
+        .manage(calendar_handoff::CalendarHandoff::default())
         .manage(board_online_live)
         .manage(Arc::clone(&close_review))
         .invoke_handler(tauri::generate_handler![
@@ -310,6 +312,7 @@ pub fn run() {
             commands::pause_companion_recording_sync,
             commands::discard_oldest_companion_recording,
             commands::export_companion_meeting,
+            calendar_handoff::open_companion_saved_calendar,
             commands::preview_companion_meeting_export,
             commands::export_companion_audio,
             commands::export_companion_library,

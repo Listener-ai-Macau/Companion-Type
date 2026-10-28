@@ -116,7 +116,7 @@ pub async fn export_companion_diagnostics(
         let report = crate::backend::diagnostics::report(&snapshot,device,include_device);
         let bytes=serde_json::to_vec_pretty(&report).map_err(|_| "无法生成诊断报告")?;
         let written=crate::backend::export::write_atomic(&destination,&bytes)?;
-        Ok(Some(CompanionMeetingExportResult { path:destination.to_string_lossy().into_owned(),bytes:written,warning }))
+        Ok(Some(CompanionMeetingExportResult { path:destination.to_string_lossy().into_owned(),bytes:written,warning,calendar_open_token:None }))
     }).await.map_err(|_| "诊断导出任务失败".to_string())?
 }
 
@@ -224,6 +224,8 @@ pub struct CompanionMeetingExportRequest {
 pub struct CompanionMeetingExportResult {
     pub path: String,
     pub bytes: u64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub calendar_open_token: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub warning: Option<String>,
 }
@@ -472,7 +474,7 @@ pub async fn export_companion_audio(
         let _lease = lease;
         crate::backend::audio_export::export(&snapshot, &session_id, &path)
     }).await.map_err(|e| format!("原音保存任务未完成：{e}"))??;
-    Ok(Some(CompanionMeetingExportResult { path: destination.to_string_lossy().into(), bytes, warning: None }))
+    Ok(Some(CompanionMeetingExportResult { path: destination.to_string_lossy().into(), bytes, warning: None,calendar_open_token:None }))
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -554,6 +556,8 @@ pub async fn export_companion_meeting(
     }
     // A draft receipt is never committed on cancellation or failed file I/O.
     let calendar_copy=crate::backend::calendar_copy::prepare(&session,&request.meeting_mode,&prepared,&destination);
+    let can_open_calendar=matches!(format,crate::backend::export::MeetingExportFormat::Calendar|crate::backend::export::MeetingExportFormat::CalendarReminder|crate::backend::export::MeetingExportFormat::CalendarReminder30|crate::backend::export::MeetingExportFormat::CalendarReminder60);
+    let file_hash={use sha2::{Digest,Sha256};format!("{:x}",Sha256::digest(&prepared.bytes))};
     let bytes = prepared.bytes;
     let write_path = destination.clone();
     let written = tauri::async_runtime::spawn_blocking(move || {
@@ -575,7 +579,14 @@ pub async fn export_companion_meeting(
         (Some(calendar),Some(record))=>Some(format!("{calendar} {record}")),
         (calendar,record)=>calendar.or(record),
     };
+    let (calendar_open_token,warning)=if can_open_calendar {
+        match app.state::<crate::calendar_handoff::CalendarHandoff>().remember(&session,&destination,written,file_hash) {
+            Ok(token)=>(Some(token),warning),
+            Err(error)=>(None,Some([warning.unwrap_or_default(),error].into_iter().filter(|s|!s.is_empty()).collect::<Vec<_>>().join(" "))),
+        }
+    }else{(None,warning)};
     Ok(Some(CompanionMeetingExportResult {
+        calendar_open_token,
         path: destination.to_string_lossy().to_string(),
         bytes: written,
         warning,

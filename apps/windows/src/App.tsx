@@ -22,7 +22,7 @@ import {
   applyCompanionControl,
   getRecordingSyncStatus, pauseRecordingSync, watchRecordingSync, watchCompanionSnapshotUpdates,
   discardOldestDeviceRecording,
-  exportCompanionMeeting,
+  exportCompanionMeeting, openCompanionSavedCalendar,
   previewCompanionMeetingExport,
   exportCompanionAudio,
   exportCompanionLibrary,
@@ -270,6 +270,7 @@ export function App() {
         }
         return result;
       })}
+      onOpenSavedCalendar={isTauriRuntime()?openCompanionSavedCalendar:undefined}
       onPreviewMeetingExport={(request)=>previewCompanionMeetingExport(request)}
       onExportDiagnostics={isTauriRuntime() ? (includeDevice) => exclusive('refresh', () => exportCompanionDiagnostics(includeDevice)) : undefined}
       onPreviewDiagnostics={isTauriRuntime() ? () => exclusive('refresh',previewCompanionDiagnostics) : undefined}
