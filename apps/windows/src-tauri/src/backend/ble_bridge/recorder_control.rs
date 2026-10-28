@@ -244,7 +244,7 @@ pub(super) async fn execute_owned(
     // connection closes, never left to unsubscribe a later fresh connection.
     let mut subscription=None;
     let link=NativeLinkGuard::capture(&device);
-    let result=link.run(async {
+    let mut result=link.run(async {
         let (chars,control,status)=require_recorder_channel(&device).await?;
         let identity=read_recorder_control_identity(&device.peripheral,&chars).await?;
         let peer=PausePeer::from_status(&identity)?.ok_or("当前固件没有明确支持暂停；未停止重开。")?;
@@ -314,7 +314,6 @@ pub(super) async fn execute_owned(
         device.verified_uid=Some(hex_lower(&actual_peer.uid));device.recording_peer=Some(actual_peer.clone());device.user_connection=true;
         device.observed_identity=Some(parse_device_identity(Some(&identity),None,None));
         if matches!(observed.state,1|3) {
-            *VERIFIED_SEGMENTED_RECORDER.lock().map_err(|_|"连续录音身份锁不可用")?=Some((device.device_id(),actual_peer));
             let previous=offline_connection_lock()?.remember(offline_connection::Lease {
                 device:device.clone(),device_id:device.device_id(),start_token:start_request,recording_id:anchor,logical_key:observed.key.clone(),
             })?;
@@ -324,6 +323,16 @@ pub(super) async fn execute_owned(
             last_error:observed.last_error,meeting_id:anchor,duration_ms:duration,sync_state,logical_key:observed.key},journal.clone()))
     }).await;
     if let Some(mut lease)=subscription.take() {lease.close().await;}
+    if result.is_ok() {
+        // A successful QUERY/STOP or archived-catalogue recovery verifies the
+        // same device capability as a live capture. Retain it for the next
+        // ordinary START, including the early sealed-original return paths.
+        // Only the active recording lease depends on state1/3 above.
+        let remembered=device.recording_peer.as_ref().ok_or("已确认控制缺少核验的录音能力".to_string())
+            .and_then(|peer|VERIFIED_SEGMENTED_RECORDER.lock().map_err(|_|"连续录音身份锁不可用".to_string())
+                .map(|mut known|*known=Some((device.device_id(),peer.clone()))));
+        if let Err(error)=remembered {result=Err(error);}
+    }
     if result.is_err() {
         // A fresh START may have acquired its anchor immediately before the
         // loss callback. Retire that exact lease as well; the durable original
