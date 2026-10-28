@@ -480,6 +480,8 @@ pub struct CompanionMeetingExportPreview {
     pub warning: Option<String>,
     #[serde(skip_serializing_if="Option::is_none")]
     pub text_content: Option<String>,
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub calendar_items: Option<Vec<crate::backend::action_export::CalendarPreviewItem>>,
 }
 
 /// Same saved-source checks and calendar parser as export; no file dialog,
@@ -498,7 +500,7 @@ pub fn preview_companion_meeting_export(
     let text_content=if plain_checklist {
         Some(std::str::from_utf8(&prepared.bytes).map_err(|_|"清单文字无法读取，请保留已保存内容。")?.to_owned())
     } else if copyable {Some(crate::backend::export::checklist_copy_text(&prepared)?)} else {None};
-    Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning,text_content})
+    Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning,text_content,calendar_items:prepared.calendar_items})
 }
 
 #[tauri::command]

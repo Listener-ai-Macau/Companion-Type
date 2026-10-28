@@ -77,6 +77,7 @@ pub struct PreparedMeetingExport {
     pub suggested_name: String,
     pub format: MeetingExportFormat,
     pub warning: Option<String>,
+    pub calendar_items: Option<Vec<super::action_export::CalendarPreviewItem>>,
 }
 
 /// Plain checklist body from the same validated native TODO renderer. No file,
@@ -213,6 +214,7 @@ pub fn prepare_meeting_export(
     }
 
     let mut warning=None;
+    let mut calendar_items=None;
     let content = match format {
         MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics | MeetingExportFormat::Calendar | MeetingExportFormat::CalendarReminder | MeetingExportFormat::CalendarReminder30 | MeetingExportFormat::CalendarReminder60 => {
             let processing = minutes_variant_for_mode(session, meeting_mode).and_then(|v| v.processing.as_ref())
@@ -252,6 +254,7 @@ pub fn prepare_meeting_export(
                     body.strip_prefix("# ").unwrap_or(&body).to_owned()
                 }else{body}
             } else if matches!(format,MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60) {
+                calendar_items=Some(super::action_export::calendar_preview_items(&actions));
                 super::action_export::calendar_events_with_reminder_lead(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now(),match format{MeetingExportFormat::CalendarReminder=>Some(0),MeetingExportFormat::CalendarReminder30=>Some(30),MeetingExportFormat::CalendarReminder60=>Some(60),_=>None})?
             } else {
                 super::action_export::calendar(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now())
@@ -305,6 +308,7 @@ pub fn prepare_meeting_export(
         ),
         format,
         warning,
+        calendar_items,
     })
 }
 
@@ -1079,7 +1083,7 @@ mod tests {
         let s=session("原话保留",vec![],None);
         let prepared=|stamp:&str,title:&str,due:&str|PreparedMeetingExport{
             bytes:format!("BEGIN:VCALENDAR\r\nDTSTAMP:{stamp}\r\nSUMMARY:{title}\r\nDUE:{due}\r\nEND:VCALENDAR\r\n").into_bytes(),
-            suggested_name:"测试.ics".into(),format:MeetingExportFormat::Ics,warning:None};
+            suggested_name:"测试.ics".into(),format:MeetingExportFormat::Ics,warning:None,calendar_items:None};
         let a=prepared("20261027T010000Z","带身份证","20261028T120000Z");
         let later=prepared("20261027T020000Z","带身份证","20261028T120000Z");
         let digest=content_hash(&a);assert_eq!(digest,content_hash(&later));
@@ -1099,7 +1103,7 @@ mod tests {
             suggested_name:"清单.md".into(),
             format:MeetingExportFormat::Todo,
             bytes:"# 出差准备 — 待办事项\n- [ ] 带身份证（注明时间：明天上午）\n- [x] 已确认回程\n".as_bytes().to_vec(),
-            warning:None,
+            warning:None,calendar_items:None,
         };
         let copied=checklist_copy_text(&prepared).unwrap();
         assert_eq!(copied,"- [ ] 带身份证（注明时间：明天上午）\n- [x] 已确认回程");

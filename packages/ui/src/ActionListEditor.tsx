@@ -19,7 +19,7 @@ function writeRow(row:Row):string{
   return row.prefix+row.text+(fields.length?' ('+fields.map(field=>`${field.key}: ${field.value}`).join(', ')+')':'');
 }
 
-export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string}){
+export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey,calendarRequestRow,calendarRequestTimed}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarRequestRow?:number;calendarRequestTimed?:boolean}){
   const nextId=useRef(0),sent=useRef(value);
   const calendarIntent=useRef<{key?:string;rowId?:number}>({});
   const parse=(text:string)=>text?text.split(/\r?\n/).map(raw=>readRow(raw,nextId.current++)):[readRow('',nextId.current++)];
@@ -50,7 +50,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
   // One explicit review request opens one stable row. Confirming it changes
   // its metadata, but must not automatically open another row and block Save.
   if(calendarIntent.current.key!==calendarRequestKey){
-    calendarIntent.current={key:calendarRequestKey,rowId:rows[candidate]?.id};
+    calendarIntent.current={key:calendarRequestKey,rowId:rows[calendarRequestRow??candidate]?.id};
   }
   const calendarTarget=rows.findIndex(row=>row.id===calendarIntent.current.rowId);
   return <div className="ct-action-list-editor">
@@ -80,7 +80,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 时间`} value={row.metadata.find(field=>field.key==='due')?.value??''}
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>}
         <div style={{margin:'4px 0 8px'}}>
-        <CalendarTimeEditor openRequestKey={index===calendarTarget?calendarRequestKey:undefined} label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
+        <CalendarTimeEditor openWithTime={calendarRequestTimed} openRequestKey={index===calendarTarget?calendarRequestKey:undefined} label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
           disabled={disabled} onConfirm={value=>metadata(row,'due',value)} onPending={onCalendarPending}/>
         </div>
         <label style={{display:'block'}}><span className="ct-step-meta">负责人</span>

@@ -310,12 +310,39 @@ fn calendar_event_uid(session_id:&str,mode:&str,index:usize,text:&str)->String {
     format!("{}@companion-type",&format!("{:x}",hash.finalize())[..40])
 }
 
+// Remove only the complete known metadata suffix from the event title. Keep
+// every authored condition, and retain the readable full action in DESCRIPTION.
+fn calendar_action_title(text:&str)->String {
+    if readable_action(text)==text {return text.into();}
+    static SUFFIX:LazyLock<regex::Regex>=LazyLock::new(||regex::Regex::new(r"\s+\(([^()\r\n]+)\)$").unwrap());
+    let body=SUFFIX.find(text).map(|m|&text[..m.start()]).unwrap_or(text);
+    if body.trim().is_empty(){text.into()}else{body.into()}
+}
+
+#[derive(Clone,Debug,serde::Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct CalendarPreviewItem {
+    pub text:String,
+    pub title:String,
+    pub deadline:Option<String>,
+    pub status:&'static str,
+}
+
+pub(crate) fn calendar_preview_items(actions:&[Action])->Vec<CalendarPreviewItem> {
+    actions.iter().map(|item|CalendarPreviewItem{
+        text:item.text.clone(),title:calendar_action_title(&item.text),deadline:item.due.clone(),
+        status:if item.completed {"completed"}else{match item.due.as_deref().and_then(event_start){
+            Some(start) if start.starts_with("DTSTART:")=>"timed",Some(_)=>"allDay",None=>"unconfirmed",
+        }},
+    }).collect()
+}
+
 pub(crate) fn calendar_copy_entries(session_id:&str,mode:&str,actions:&[Action],lead:Option<u16>)->Vec<super::calendar_copy::Entry> {
     actions.iter().enumerate().filter_map(|(index,item)|{
         if item.completed{return None;}
         let start=item.due.as_deref().and_then(event_start)?;
         Some(super::calendar_copy::Entry{uid:calendar_event_uid(session_id,mode,index,&item.text),
-            title:readable_action(&item.text),deadline:item.due.clone()?,
+            title:calendar_action_title(&item.text),deadline:item.due.clone()?,
             reminder_minutes:lead.filter(|_|start.starts_with("DTSTART:"))})
     }).collect()
 }
@@ -334,7 +361,7 @@ pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title
         out.push_str("BEGIN:VEVENT\r\n");
         out.push_str(&property("UID",&id));
         out.push_str(&property("DTSTAMP",stamp));out.push_str(&start);
-        out.push_str(&property("SUMMARY",&readable));
+        out.push_str(&property("SUMMARY",&calendar_action_title(&item.text)));
         out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n整理方式：{mode_label}{}\n事项：{readable}\n清单时间点；导入后请核对日期、时区和提醒。",if draft{"\n草稿：请先核对"}else{""})));
         // RFC5545: a date without DTEND is one day; a timed event without
         // DTEND ends at DTSTART. A deadline does not reserve invented work time.
@@ -364,6 +391,25 @@ pub fn stamp_now() -> String { Utc::now().format("%Y%m%dT%H%M%SZ").to_string() }
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn calendar_preview_matches_export_and_short_titles_keep_conditions_in_both_places() {
+        let actions=parse_saved_actions("## Action Items\n- [ ] 核对尺寸，未测完不要写通过 (owner: 李, due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)\n- [ ] 以后再约 (due: 周五)\n- [x] 已办妥 (due: 2026-11-09)");
+        let preview=calendar_preview_items(&actions);
+        assert_eq!(preview.iter().map(|p|p.status).collect::<Vec<_>>(),vec!["timed","allDay","unconfirmed","completed"]);
+        let file=calendar_events_with_reminder_lead("id","offlineStore","样品",&actions,false,"20261028T120000Z",Some(30)).unwrap().replace("\r\n ","");
+        assert_eq!(file.matches("BEGIN:VEVENT").count(),2);
+        assert_eq!(file.matches("BEGIN:VALARM").count(),1);
+        assert!(file.contains("SUMMARY:核对尺寸，未测完不要写通过\r\n"));
+        assert!(file.contains("负责人：李"));assert!(file.contains("UTC+08:00"));
+        let copies=calendar_copy_entries("id","offlineStore",&actions,Some(30));
+        assert_eq!(copies[0].title,preview[0].title);
+        assert_eq!(copies[1].title,preview[1].title);
+        assert_eq!(copies[1].reminder_minutes,None);
+        assert_eq!(preview[0].text,actions[0].text);
+        for custom in ["事项 (unknown: 条件)","事项 (due: 2026-11-07, due: 2026-11-08)","事项 (owner: )"] {
+            assert_eq!(calendar_action_title(custom),custom,"unknown metadata stays literal");
+        }
+    }
     #[test]
     fn calendar_reminder_is_explicit_preserves_conditions_and_never_guesses_midnight() {
         let markdown="## 行动项\n- [ ] 咖啡豆不要深烘，确认灯座后买灯泡 (due: 2026-10-31T09:00:00+08:00)\n- [ ] 只确定星期六 (due: 2026-10-31)\n- [x] 已完成 (due: 2026-10-31T08:00:00+08:00)\n- [ ] 尚待商量 (due: 周末)";

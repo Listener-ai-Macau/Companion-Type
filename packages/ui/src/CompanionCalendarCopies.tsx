@@ -42,6 +42,7 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
       <textarea readOnly aria-label={entryIndex === null ? '日历副本信息' : '日程名称查找文字'} value={copyState.text}
         onFocus={event => event.currentTarget.select()} style={{ width: '100%', minHeight: entryIndex === null ? 110 : 70, boxSizing: 'border-box' }} /> : null}</div> : null;
   return <div className="ct-calendar-copies">
+    <p className="ct-step-meta">最近保存：{copies[0].entries.length}项日程，{copies[0].entries.filter(entry=>entry.reminderMinutes!==null).length}项附提醒，{copies[0].entries.filter(entry=>entry.reminderMinutes===null).length}项不提醒。请在接收日历核对导入结果。</p>
     {changed ? <p className="ct-step-warn">清单已修改，接收日历不会自动更新。可先查看上次保存的副本，找到原日程再核对。</p> : null}
     <details>
       <summary>查看已保存的日历副本</summary>
@@ -50,7 +51,7 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
       {copies.map((copy, index) => <section key={`${copy.fileSha256}:${copy.savedAt}`} aria-label={index === 0 ? '最近保存的日历文件' : '上一份日历文件'}>
         <p><strong>{index === 0 ? '最近保存' : '上一份副本'}</strong>：{copy.fileName}<br /><time dateTime={copy.savedAt}>{savedTime(copy.savedAt)}</time></p>
         <ul>{copy.entries.map((entry, n) => <li key={`${entry.uid}:${n}`}>
-          <strong>{entry.title}</strong><br />提醒：{reminderLabel(entry.reminderMinutes)}
+          <strong>{entry.title}</strong><br />时间：{readableCalendarTime(entry.deadline)}<br />提醒：{reminderLabel(entry.reminderMinutes)}
           <br /><button type="button" className="ct-text-button" aria-label={`复制日程名称：${entry.title}`}
             onClick={() => void copyText(copy, index, n)}>复制日程名称</button>
           {feedback(index, n)}

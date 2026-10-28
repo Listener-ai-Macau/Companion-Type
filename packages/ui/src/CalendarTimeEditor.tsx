@@ -1,12 +1,12 @@
 import {useEffect,useRef,useState} from 'react';
 import {confirmedCalendarTime,seedCalendarTime,readableCalendarTime,type CalendarTimeDraft} from './calendarTime';
 
-export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,openRequestKey}:{
-  value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;openRequestKey?:string;
+export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,openRequestKey,openWithTime}:{
+  value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;openRequestKey?:string;openWithTime?:boolean;
 }){
   const[draft,setDraft]=useState<CalendarTimeDraft|null>(null),dialog=useRef<HTMLDialogElement|null>(null),activePending=useRef<typeof onPending>(undefined);
   const open=!!draft,lastRequested=useRef<string|undefined>(undefined);
-  const begin=()=>{if(draft||activePending.current)return;activePending.current=onPending;onPending?.(1);setDraft(seedCalendarTime(value));};
+  const begin=()=>{if(draft||activePending.current)return;activePending.current=onPending;onPending?.(1);const seeded=seedCalendarTime(value);setDraft(openWithTime?{...seeded,timed:true}:seeded);};
   useEffect(()=>{if(openRequestKey&&lastRequested.current!==openRequestKey){lastRequested.current=openRequestKey;begin();}},[openRequestKey]);
   const finishPending=()=>{const callback=activePending.current;activePending.current=undefined;callback?.(-1);};
   useEffect(()=>()=>finishPending(),[]);
