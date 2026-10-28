@@ -1671,3 +1671,6 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 
 /* Known-good imported text needs one status line; errors keep the full card. */
 .ct-imported-save-status { margin: 0 24px 14px; color: #42674e; font-size: 13px; line-height: 1.5; }
+
+/* Let the record-library actions keep their labels inside the buttons. */
+.ct-library-head { flex-wrap: wrap; }
