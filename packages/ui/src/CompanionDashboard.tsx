@@ -24,7 +24,7 @@ import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,Companion
 import type {CompanionLibraryOrganizationRequest} from '../../core/src/libraryOrganization';
 import { companionMinutesNotesCurrent, type CompanionMinutesNoteContext } from '@companion-type/core';
 import { CompanionMeetingNotes } from './CompanionMeetingNotes';
-import { CompanionExportFeedback, exportFileName } from './CompanionExportFeedback';
+import { CompanionExportFeedback, exportFileName, type OpenSavedCalendar } from './CompanionExportFeedback';
 import { CompanionChecklistPhone, type ChecklistPhoneResult } from './CompanionChecklistPhone';
 import { checklistPhoneCode } from './checklistPhone';
 import { briefMinutes } from './briefMinutes';
@@ -214,7 +214,7 @@ export interface CompanionDashboardProps {
   }) => void | Promise<void>;
   onStopBoardOnlineLive?: () => void | Promise<void>;
   onSaveProductSettings?: (patch: CompanionProductSettingsPatch) => void | Promise<void>;
-  onOpenSavedCalendar?: (token:string)=>Promise<'requested'|'cancelled'>;
+  onOpenSavedCalendar?: OpenSavedCalendar;
   onExportMeeting?: (request: CompanionMeetingExportRequest) => Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string } | null>;
   onPreviewMeetingExport?:(request:CompanionMeetingExportRequest)=>Promise<{contentHash:string;warning?:string|null;textContent?:string|null;calendarItems?:CalendarExportItem[]|null}>;
   onPreviewDiagnostics?:()=>Promise<unknown>;

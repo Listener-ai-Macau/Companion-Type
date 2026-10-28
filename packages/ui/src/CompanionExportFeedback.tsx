@@ -14,20 +14,35 @@ export function exportFileName(path: string): string {
   return path.split(/[\\/]/).filter(Boolean).pop() ?? path;
 }
 
-function CalendarOpen({token,open}:{token:string;open:(token:string)=>Promise<'requested'|'cancelled'>}) {
-  const [state,setState]=useState<'ready'|'opening'|'requested'|'cancelled'|'error'>('ready');
+export type CalendarOpenResult = {status:'requested'} | {status:'choose_application';applications:{id:string;label:string}[]};
+export type OpenSavedCalendar = (token:string,choiceId?:string)=>Promise<CalendarOpenResult>;
+
+function CalendarOpen({token,open}:{token:string;open:OpenSavedCalendar}) {
+  const [state,setState]=useState<'ready'|'opening'|'choosing'|'requested'|'cancelled'|'error'>('ready');
+  const [applications,setApplications]=useState<{id:string;label:string}[]>([]);
   const [error,setError]=useState('');const pending=useRef(false),alive=useRef(true);
   useEffect(()=>{alive.current=true;return()=>{alive.current=false;};},[]);
-  const start=async()=>{
+  const start=async(choiceId?:string)=>{
     if(pending.current)return;pending.current=true;setState('opening');setError('');
-    try {const result=await open(token);if(alive.current)setState(result);}
-    catch(reason){if(alive.current){setError(reason instanceof Error?reason.message:String(reason));setState('error');}}
+    try {
+      const result=await open(token,choiceId);
+      if(alive.current){
+        if(result.status==='choose_application'){setApplications(result.applications);setState('choosing');}
+        else{setApplications([]);setState('requested');}
+      }
+    }catch(reason){if(alive.current){setError(reason instanceof Error?reason.message:String(reason));setState('error');}}
     finally{pending.current=false;}
   };
   return <div>
     <button type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start()}>
-      {state==='opening'?'正在打开或选择日历应用…':state==='requested'?'再次打开日历文件':'打开日历文件'}
+      {state==='opening'?'正在打开日历文件…':state==='requested'?'再次打开日历文件':applications.length?'重新读取应用列表':'打开日历文件'}
     </button>
+    {applications.length?<div role="group" aria-label="选择接收日历文件的应用">
+      <p className="ct-step-meta">尚无可用的默认应用。选择已安装的日历应用打开这份文件；本次选择不会更改 Windows 默认应用。</p>
+      <div className="ct-action-row">{applications.map(app=><button key={app.id} type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(app.id)}>{app.label}</button>)}
+        <button type="button" className="ct-link" disabled={state==='opening'} onClick={()=>{setApplications([]);setError('');setState('cancelled');}}>暂不打开</button>
+      </div>
+    </div>:null}
     {state==='requested'?<p className="ct-step-meta">已请求应用打开这份文件。请在接收应用中确认导入，并核对日期和提醒；再次导入可能产生重复日程。</p>:null}
     {state==='cancelled'?<p className="ct-step-meta">已取消选择应用。文件仍已保存，可再次打开或在常用日历中导入。</p>:null}
     {state==='error'?<p className="ct-step-warn" role="alert">{error}</p>:null}
@@ -35,7 +50,7 @@ function CalendarOpen({token,open}:{token:string;open:(token:string)=>Promise<'r
 }
 
 export function CompanionExportFeedback({ feedback, className='ct-export-result',onOpenSavedCalendar }: {
-  feedback: CompanionExportFeedbackValue; className?: string;onOpenSavedCalendar?:(token:string)=>Promise<'requested'|'cancelled'>;
+  feedback: CompanionExportFeedbackValue; className?: string;onOpenSavedCalendar?:OpenSavedCalendar;
 }) {
   const classes = new Set(className.split(/\s+/).filter(Boolean));
   if (feedback.hasWarning) {

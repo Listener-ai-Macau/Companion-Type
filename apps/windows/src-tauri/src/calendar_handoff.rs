@@ -5,12 +5,15 @@ use sha2::{Digest, Sha256};
 use crate::{companion_v1::CompanionV1HostSession, coordinator::CompanionCoordinator};
 
 #[derive(Clone)]
-struct Receipt { token:String, session_id:String, epoch:u64, path:PathBuf, bytes:u64, hash:String }
+struct Receipt { token:String, session_id:String, epoch:u64, path:PathBuf, bytes:u64, hash:String, choices:Vec<(String,String)> }
 #[derive(Default)]
 pub(crate) struct CalendarHandoff { receipts:Mutex<VecDeque<Receipt>> }
-#[derive(Clone,Copy,Debug,serde::Serialize)]
-#[serde(rename_all="snake_case")]
-pub(crate) enum CalendarOpenOutcome { Requested, Cancelled }
+#[derive(Debug,serde::Serialize)]
+pub(crate) struct CalendarApplication { id:String, label:String }
+#[derive(Debug,serde::Serialize)]
+#[serde(tag="status",rename_all="snake_case")]
+pub(crate) enum CalendarOpenOutcome { Requested, ChooseApplication { applications:Vec<CalendarApplication> } }
+enum ShellOpenOutcome { Requested, Applications(Vec<(String,String)>) }
 
 impl CalendarHandoff {
     pub(crate) fn remember(&self, session:&CompanionV1HostSession, path:&Path, bytes:u64, hash:String)->Result<String,String> {
@@ -23,8 +26,30 @@ impl CalendarHandoff {
         let token=uuid::Uuid::new_v4().to_string();
         let mut receipts=self.receipts.lock().map_err(|_|"打开入口暂时不可用，已保存的文件仍保留。")?;
         while receipts.len()>=32 {receipts.pop_front();}
-        receipts.push_back(Receipt{token:token.clone(),session_id:session.id.clone(),epoch:session.calendar_copy_epoch,path,bytes,hash});
+        receipts.push_back(Receipt{token:token.clone(),session_id:session.id.clone(),epoch:session.calendar_copy_epoch,path,bytes,hash,choices:Vec::new()});
         Ok(token)
+    }
+
+    fn selected_application(&self, token:&str, choice:&str)->Result<String,String> {
+        let rows=self.receipts.lock().map_err(|_|"应用选择暂时不可用，请重新打开文件。")?;
+        rows.iter().find(|r|r.token==token).and_then(|r|r.choices.iter().find(|(id,_)|id==choice))
+            .map(|(_,name)|name.clone()).ok_or_else(||"这个应用选择已过期，请重新打开文件并选择。".into())
+    }
+
+    fn response(&self, token:&str, result:ShellOpenOutcome)->Result<CalendarOpenOutcome,String> {
+        match result {
+            ShellOpenOutcome::Requested=>Ok(CalendarOpenOutcome::Requested),
+            ShellOpenOutcome::Applications(handlers)=>{
+                if handlers.is_empty() {return Err("Windows 尚未提供可接收 .ics 文件的应用。文件已保留；请在常用日历中导入，或安装支持日历文件的应用后重试。".into());}
+                let mut rows=self.receipts.lock().map_err(|_|"应用选择暂时不可用，请重试。")?;
+                let receipt=rows.iter_mut().find(|r|r.token==token).ok_or("这个打开入口已过期，请重新保存日历文件。")?;
+                receipt.choices.clear();
+                let applications=handlers.into_iter().map(|(name,label)|{
+                    let id=uuid::Uuid::new_v4().to_string();receipt.choices.push((id.clone(),name));CalendarApplication{id,label}
+                }).collect();
+                Ok(CalendarOpenOutcome::ChooseApplication{applications})
+            }
+        }
     }
 
     fn open_with<T>(&self, token:&str, rows:&[CompanionV1HostSession], opener:impl FnOnce(&Path)->Result<T,String>)->Result<T,String> {
@@ -56,12 +81,7 @@ fn check_file(file:&File, receipt:&Receipt)->Result<(),String> {
 }
 
 #[tauri::command]
-pub(crate) async fn open_companion_saved_calendar(app:tauri::AppHandle, coordinator:tauri::State<'_,Arc<CompanionCoordinator>>, token:String)->Result<CalendarOpenOutcome,String> {
-    use tauri::Manager;
-    #[cfg(windows)]
-    let owner=app.get_webview_window("main").ok_or("请在 Companion Type 主窗口打开日历文件。")?.hwnd().map_err(|_|"暂时无法取得窗口，请重试。")?.0 as isize;
-    #[cfg(not(windows))]
-    let owner=0;
+pub(crate) async fn open_companion_saved_calendar(app:tauri::AppHandle, coordinator:tauri::State<'_,Arc<CompanionCoordinator>>, token:String,choice_id:Option<String>)->Result<CalendarOpenOutcome,String> {
     let coordinator=coordinator.inner().clone();
     tauri::async_runtime::spawn_blocking(move|| {
         use tauri::Manager;
@@ -69,13 +89,15 @@ pub(crate) async fn open_companion_saved_calendar(app:tauri::AppHandle, coordina
         std::thread::spawn(move||{
             let snapshot=coordinator.snapshot()?;
             if snapshot.host.persistence.status!="ready" {return Err("请先恢复本机资料库，再打开日历文件；原文件仍保留。".into());}
-            app.state::<CalendarHandoff>().open_with(&token,&snapshot.host.sessions,|path|open_default(path,owner))
+            let manager=app.state::<CalendarHandoff>();
+            let selected=choice_id.as_deref().map(|id|manager.selected_application(&token,id)).transpose()?;
+            manager.open_with(&token,&snapshot.host.sessions,|path|manager.response(&token,open_default(path,selected.as_deref())?))
         }).join().map_err(|_|"打开日历文件的任务未完成；原文件仍保留。".to_string())?
     }).await.map_err(|_|"打开日历文件的任务未完成；原文件仍保留。".to_string())?
 }
 
 #[cfg(windows)]
-fn open_default(path:&Path,owner:isize)->Result<CalendarOpenOutcome,String> {open_shell(path,None,owner)}
+fn open_default(path:&Path,selected:Option<&str>)->Result<ShellOpenOutcome,String> {open_shell(path,None,selected)}
 
 #[cfg(windows)]
 fn shell_file_name(path:&Path)->Vec<u16> {
@@ -88,11 +110,23 @@ fn shell_file_name(path:&Path)->Vec<u16> {
 }
 
 #[cfg(windows)]
-fn open_shell(path:&Path, explicit_class:Option<&str>,owner:isize)->Result<CalendarOpenOutcome,String> {
+fn open_shell(path:&Path, explicit_class:Option<&str>,selected:Option<&str>)->Result<ShellOpenOutcome,String> {
     use windows::{core::{w,PCWSTR,PWSTR},Win32::{System::Com::{CoInitializeEx,CoUninitialize,COINIT_APARTMENTTHREADED,COINIT_DISABLE_OLE1DDE},UI::{Shell::*,WindowsAndMessaging::SW_SHOWNORMAL}}};
     struct Apartment; impl Drop for Apartment {fn drop(&mut self){unsafe{CoUninitialize();}}}
     unsafe{CoInitializeEx(None,COINIT_APARTMENTTHREADED|COINIT_DISABLE_OLE1DDE).ok()}.map_err(|_|"Windows 暂时不能打开日历文件，请重试或手动导入。")?;
     let _apartment=Apartment;
+    if let Some(name)=selected {
+        let handlers=registered_handlers()?;
+        let (_,_,handler)=handlers.into_iter().find(|(candidate,_,_)|candidate==name)
+            .ok_or("所选应用已不可用，请重新打开文件并选择其它应用。")?;
+        let file=shell_file_name(path);
+        let item:IShellItem=unsafe{SHCreateItemFromParsingName(PCWSTR(file.as_ptr()),None)}
+            .map_err(|_|"暂时无法准备已保存文件，请重试。")?;
+        let data:windows::Win32::System::Com::IDataObject=unsafe{item.BindToHandler(None,&BHID_DataObject)}
+            .map_err(|_|"暂时无法交接已保存文件，请重试。")?;
+        unsafe{handler.Invoke(&data)}.map_err(|error|format!("所选应用未能打开日历文件（{}）。文件仍保留，可重试或手动导入。",error.code()))?;
+        return Ok(ShellOpenOutcome::Requested);
+    }
     let query=|kind| {let mut output=vec![0u16;32768];let mut length=output.len()as u32;
         let result=unsafe{AssocQueryStringW(ASSOCF_NONE,kind,w!(".ics"),w!("open"),PWSTR(output.as_mut_ptr()),&mut length)};
         if result.is_err()||length<2||length as usize>output.len(){None}else{Some(String::from_utf16_lossy(&output[..length as usize-1]))}};
@@ -103,14 +137,7 @@ fn open_shell(path:&Path, explicit_class:Option<&str>,owner:isize)->Result<Calen
         let prog_id=query(ASSOCSTR_PROGID);let executable=query(ASSOCSTR_EXECUTABLE);
         if prog_id.as_deref().is_none_or(|p|p.eq_ignore_ascii_case("Unknown"))
             ||executable.as_deref().is_some_and(|p|Path::new(p).file_name().is_some_and(|n|n.to_str().is_some_and(|s|s.eq_ignore_ascii_case("OpenWith.exe")))) {
-            if owner==0 {return Err("请在 Companion Type 主窗口选择日历应用；已保存的文件仍保留。".into());}
-            let file=shell_file_name(path);
-            let info=OPENASINFO{pcszFile:PCWSTR(file.as_ptr()),pcszClass:PCWSTR::null(),oaifInFlags:OAIF_EXEC};
-            return match unsafe{SHOpenWithDialog(windows::Win32::Foundation::HWND(owner as *mut _),&info)} {
-                Ok(())=>Ok(CalendarOpenOutcome::Requested),
-                Err(error) if error.code().0 as u32==0x800704c7=>Ok(CalendarOpenOutcome::Cancelled),
-                Err(error)=>Err(format!("Windows 未能完成应用选择（{}）。文件仍保留，请在常用日历中导入下方保存位置的文件。",error.code())),
-            };
+            return Ok(ShellOpenOutcome::Applications(registered_handlers()?.into_iter().map(|(name,label,_)|(name,label)).collect()));
         }
     }
     // Shell document opening uses a path, never a command string or frontend URL.
@@ -119,11 +146,37 @@ fn open_shell(path:&Path, explicit_class:Option<&str>,owner:isize)->Result<Calen
     let mut info=SHELLEXECUTEINFOW{cbSize:std::mem::size_of::<SHELLEXECUTEINFOW>()as u32,
         fMask:SEE_MASK_NOASYNC|SEE_MASK_FLAG_NO_UI,lpVerb:w!("open"),lpFile:PCWSTR(file.as_ptr()),nShow:SW_SHOWNORMAL.0,..Default::default()};
     if explicit_class.is_some() {info.fMask|=SEE_MASK_CLASSNAME;info.lpClass=PCWSTR(class.as_ptr());}
-    unsafe{ShellExecuteExW(&mut info)}.map(|_|CalendarOpenOutcome::Requested).map_err(|error|format!("Windows 未能打开日历文件（{}）。文件仍保留，请在常用日历中手动导入。",error.code()))
+    unsafe{ShellExecuteExW(&mut info)}.map(|_|ShellOpenOutcome::Requested).map_err(|error|format!("Windows 未能打开日历文件（{}）。文件仍保留，请在常用日历中手动导入。",error.code()))
+}
+
+#[cfg(windows)]
+fn registered_handlers()->Result<Vec<(String,String,windows::Win32::UI::Shell::IAssocHandler)>,String> {
+    use windows::{core::{w,PWSTR},Win32::{System::Com::CoTaskMemFree,UI::Shell::*}};
+    fn owned_text(value:PWSTR)->Option<String> {
+        if value.is_null(){return None;}
+        let text=unsafe{value.to_string()}.ok();unsafe{CoTaskMemFree(Some(value.0 as *const _));}text
+    }
+    let enumerator=unsafe{SHAssocEnumHandlers(w!(".ics"),ASSOC_FILTER_NONE)}
+        .map_err(|_|"Windows 暂时无法列出日历文件应用，请重试或手动导入。")?;
+    let mut result=Vec::new();
+    for _ in 0..64 {
+        let mut item=[None];let mut count=0;
+        unsafe{enumerator.Next(&mut item,Some(&mut count))}.map_err(|_|"Windows 应用列表未读取完成，请重试。")?;
+        if count==0{break;}
+        if let Some(handler)=item[0].take() {
+            let name=unsafe{handler.GetName()}.ok().and_then(owned_text);
+            let label=unsafe{handler.GetUIName()}.ok().and_then(owned_text);
+            if let (Some(name),Some(label))=(name,label) {
+                if name.is_empty()||label.trim().is_empty()||name.to_lowercase().ends_with("openwith.exe")||result.iter().any(|(n,_,_)|n==&name){continue;}
+                result.push((name,label,handler));
+            }
+        }
+    }
+    Ok(result)
 }
 
 #[cfg(not(windows))]
-fn open_default(_path:&Path,_owner:isize)->Result<CalendarOpenOutcome,String>{Err("请在 Windows Companion Type 中打开已保存的日历文件。".into())}
+fn open_default(_path:&Path,_selected:Option<&str>)->Result<ShellOpenOutcome,String>{Err("请在 Windows Companion Type 中打开已保存的日历文件。".into())}
 
 #[cfg(test)]
 mod tests {
@@ -156,6 +209,18 @@ mod tests {
         session.organization.trashed_at=None;
         session.calendar_copy_epoch+=1;assert!(manager.open_with::<()>(&token,&[session],|_|panic!("cleared launched")).is_err());std::fs::remove_file(path).unwrap();
     }
+    #[test]fn calendar_handoff_application_choices_are_bound_to_saved_file(){
+        let(path,session,manager,token)=fixture();
+        let result=manager.response(&token,ShellOpenOutcome::Applications(vec![("trusted-receiver".into(),"Calendar".into())])).unwrap();
+        let CalendarOpenOutcome::ChooseApplication{applications}=result else{panic!("missing choice")};
+        let choice=&applications[0].id;
+        assert_eq!(manager.selected_application(&token,choice).unwrap(),"trusted-receiver");
+        assert!(manager.selected_application(&token,"C:\\untrusted.exe").is_err());
+        assert!(manager.selected_application("another-file",choice).is_err());
+        manager.response(&token,ShellOpenOutcome::Applications(vec![("new-receiver".into(),"New Calendar".into())])).unwrap();
+        assert!(manager.selected_application(&token,choice).is_err());
+        manager.open_with(&token,&[session],|_|Ok(())).unwrap();std::fs::remove_file(path).unwrap();
+    }
     #[cfg(windows)]
     #[test]fn calendar_handoff_preserves_windows_path_units(){
         use std::os::windows::ffi::OsStringExt;
@@ -174,7 +239,7 @@ mod tests {
         let mut session=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap()).unwrap().host.sessions.remove(0);session.id="fictional-windows-shell-handoff".into();
         let bytes=std::fs::read(&path).unwrap();let hash=format!("{:x}",Sha256::digest(&bytes));let manager=CalendarHandoff::default();
         let token=manager.remember(&session,&path,bytes.len()as u64,hash.clone()).unwrap();
-        let opened=manager.open_with(&token,&[session],|p|open_shell(p,Some(&class),0));
+        let opened=manager.open_with(&token,&[session],|p|open_shell(p,Some(&class),None));
         std::fs::write(result,serde_json::to_vec_pretty(&serde_json::json!({"shellAccepted":opened.is_ok(),"error":opened.as_ref().err(),"fileSha256":hash,"explicitTestClass":class,"defaultAssociationExercised":false,"importConfirmed":false})).unwrap()).unwrap();
         opened.unwrap();
     }
