@@ -5,6 +5,10 @@ import { applyCompanionV1ControlFixture, createCompanionV1Fixture } from '../pac
 import { CompanionDashboard } from '../packages/ui/src/CompanionDashboard';
 
 // Component tests in memory: no browser, device, microphone or remote service.
+(globalThis as any).document={activeElement:null,getElementById:()=>null};
+(globalThis as any).HTMLElement=class {};
+(globalThis as any).HTMLButtonElement=class extends HTMLElement {};
+(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
 const demo = applyCompanionV1ControlFixture(createCompanionV1Fixture(), { action: 'meetingLoadDemo' });
 const first = structuredClone(demo.host.sessions[0]);
 first.id = 'meeting-a'; first.title = '会议 A'; first.transcriptText = 'A 的转写';
@@ -15,9 +19,10 @@ second.status = 'recorded'; second.pendingReason = 'needs_transcription';
 second.recovery = { intent: 'none', requestedMeetingMode: 'offlineStore', stage: 'idle', attemptCount: 0, maxAttempts: 3 };
 let snapshot = createCompanionV1Fixture();
 snapshot.host.sessions = [first, second]; snapshot.host.selectedSessionId = first.id;
-const calls: any[] = [];
+const calls: any[] = [], lifecycleCalls: any[] = [];
 const props = () => ({ snapshot, surface: 'windows' as const, busyAction: null,
-  error: null, onRefresh: () => {}, onControl: (request: unknown) => { calls.push(request); } });
+  error: null, onRefresh: () => {}, onControl: (request: unknown) => { calls.push(request); },
+  onSaveLibraryLifecycle: async(request:unknown) => {lifecycleCalls.push(request);return snapshot;} });
 let renderer: any;
 act(() => { renderer = create(<CompanionDashboard {...props()} />); });
 const text = (node: any): string => typeof node === 'string' ? node : (node.children ?? []).map(text).join('');
@@ -41,26 +46,35 @@ assert.equal(button('导入到这条录音').props.disabled, true);
 assert.equal(calls.some((call) => call.action === 'meetingSelectSession'), false, 'must not auto-select a different readable meeting');
 assert.ok(button('会议 B'), 'explicitly selected unprocessed meeting stays visible');
 
-click('展开设置与工具');
-click('删当前录音');
-assert.equal(calls.length, 0, 'opening confirmation must not delete anything');
-assert.equal(renderer.root.findAllByProps({ role: 'alertdialog' }).length, 1);
-assert.match(text(renderer.root.findByProps({ role: 'alertdialog' })), /设备上的录音保持不变/);
-snapshot = structuredClone(snapshot); snapshot.host.selectedSessionId = first.id;
-snapshot.host.sessions[0].sourceDeviceId = 'AA:BB:CC:DD:EE:FF';
-snapshot.host.sessions[0].deviceRecordingId = 7;
-snapshot.host.sessions[0].deviceTotalLength = 128;
-snapshot.host.sessions[0].deviceSha256 = 'a'.repeat(64);
-snapshot.host.sessions[0].deviceReclaimed = false;
-act(() => renderer.update(<CompanionDashboard {...props()} />));
-assert.equal(renderer.root.findAllByProps({ role: 'alertdialog' }).length, 0, 'switching meeting invalidates old confirmation');
-click('删当前录音');
-assert.match(text(renderer.root.findByProps({ role: 'alertdialog' })), /精确回收设备/);
-click('保留内容');
-assert.equal(calls.length, 0);
-click('删当前录音'); click('确认删除');
-assert.equal(calls.at(-1).action, 'privacyDeleteSession');
-assert.equal(calls.at(-1).sessionId, first.id, 'confirmed request is bound to displayed meeting');
+// The approved product lifecycle now sends ordinary removal to a local
+// recoverable trash, never direct permanent/privacyDeleteSession or device
+// reclaim. Destructive text clearing retains its real scoped native dialog.
+snapshot=structuredClone(snapshot);snapshot.host.selectedSessionId=first.id;
+act(()=>renderer.update(<CompanionDashboard {...props()}/>));
+act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n)==='设置与工具').props.onClick());
+const privacyButton=(label:string)=>renderer.root.findByProps({id:'ct-privacy'}).findAllByType('button').find((n:any)=>text(n)===label);
+assert.equal(renderer.root.findAllByType('button').some((n:any)=>text(n)==='删当前录音'),false);
+assert.equal(privacyButton('删文本').props.disabled,false);
+act(()=>privacyButton('删文本').props.onClick());
+assert.equal(calls.length,0,'opening confirmation must not delete anything');
+assert.equal(renderer.root.findAllByType('dialog').length,1);
+assert.match(text(renderer.root.findByType('dialog')),/保留录音/);
+assert.match(text(renderer.root.findByType('dialog')),/备注也会删除/);
+snapshot=structuredClone(snapshot);snapshot.host.selectedSessionId=second.id;
+snapshot.host.sessions[1].transcriptText='B 的待核对文字';snapshot.host.sessions[1].transcriptFinal=true;
+act(()=>renderer.update(<CompanionDashboard {...props()}/>));
+assert.equal(renderer.root.findAllByType('dialog').length,0,'switching meeting invalidates old destructive confirmation');
+act(()=>privacyButton('删文本').props.onClick());
+assert.match(text(renderer.root.findByType('dialog')),/会议 B/);
+click('保留内容');assert.equal(calls.length,0);
+act(()=>privacyButton('删文本').props.onClick());click('确认删除');
+assert.equal(calls.at(-1).action,'privacyEraseTranscript');assert.equal(calls.at(-1).sessionId,second.id,'confirmed request is bound to displayed meeting');
+await act(async()=>privacyButton('移入回收站').props.onClick());
+assert.equal(lifecycleCalls.length,1);assert.deepEqual(lifecycleCalls[0],{targets:[{sessionId:second.id,expectedRevision:second.organization?.revision??0}],action:'trash'});
+assert.equal(calls.some(r=>r.action==='privacyDeleteSession'||r.action==='deviceDiscardOldestRecording'),false,'ordinary trash does not delete or consume a device recording');
+snapshot=structuredClone(snapshot);snapshot.host.sessions[1].organization={revision:0,folder:'',tags:[],favorite:false,protected:true};
+act(()=>renderer.update(<CompanionDashboard {...props()}/>));assert.equal(privacyButton('移入回收站').props.disabled,true,'protected source cannot be trashed through public UI');
+snapshot=structuredClone(snapshot);snapshot.host.sessions[1].organization.protected=false;act(()=>renderer.update(<CompanionDashboard {...props()}/>));
 const callsBeforePreview = calls.length;
 click('开始 10 秒预览');
 assert.match(text(renderer.root.findByProps({ 'aria-label': '陪伴模式预览' })), /10 秒/);
@@ -69,7 +83,7 @@ assert.equal(calls.length, callsBeforePreview, 'silent behavior preview must not
 
 snapshot = structuredClone(snapshot); snapshot.meeting.active = true;
 act(() => renderer.update(<CompanionDashboard {...props()} />));
-for (const label of ['扫描设备', '检查设备', '删当前录音', '清除全部本机会议', '导入到这条录音', '保存到设备', '恢复默认名称', '开始 10 秒预览']) {
+for (const label of ['扫描设备', '检查设备', '删文本', '清除全部本机会议', '导入到这条录音', '保存到设备', '恢复默认名称', '开始 10 秒预览']) {
   assert.equal(button(label).props.disabled, true, `${label} must not interrupt recording`);
 }
 act(() => renderer.unmount());
@@ -85,33 +99,40 @@ snapshot.host.sessions = [online]; snapshot.host.selectedSessionId = online.id;
 const exports: any[] = [];
 const exportProps = () => ({ ...props(), onExportMeeting: async (request: unknown) => { exports.push(request); return null; } });
 act(() => { renderer = create(<CompanionDashboard {...exportProps()} />); });
-click('展开设置与工具');
+act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n)==='设置与工具').props.onClick());
 click('TXT');
 assert.equal(exports.at(-1).meetingMode, 'onlineLive', 'transcript export must use the captured mode before minutes exist');
 snapshot = structuredClone(snapshot);
 snapshot.host.sessions[0].minutesByMode.onlineLive = {
-  ...first.minutesByMode.offlineStore!, meetingMode: 'onlineLive', markdown: '# 在线结果', status: 'minutesReady', quality: 'final',
+  ...first.minutesByMode.offlineStore!, meetingMode: 'onlineLive', markdown: '# 在线结果\n\n## Summary\n- 在线结果正文', status: 'minutesReady', quality: 'final',
 };
 act(() => renderer.update(<CompanionDashboard {...exportProps()} />));
-click('智能纪要');
-assert.equal(button('在线速记').props['aria-selected'], true, 'newly completed online minutes must select the available mode');
+assert.equal(renderer.root.findAllByType('button').find((n:any)=>text(n)==='设置与工具').props['aria-current'],'page',
+  'a background result must not steal the current settings route');
+click('我的记录');
+act(()=>renderer.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')&&text(n).includes(online.title)).props.onClick());
+act(()=>renderer.root.findByProps({id:'ct-recording-result'}).props.onToggle({currentTarget:{open:true}}));
+assert.equal(renderer.root.findByProps({id:'ct-recording-result'}).props.open,true,'the user can explicitly open the arriving saved result without an obsolete navigation tab');
+assert.equal(renderer.root.findAllByProps({role:'tablist','aria-label':'双模式纪要'}).length,0,'one available mode does not invent an empty alternate document');
 assert.match(text(renderer.root.findByProps({ className: 'ct-minutes-article' })), /在线结果/);
 snapshot = structuredClone(snapshot);
-snapshot.host.sessions[0].minutesByMode.offlineStore = { ...snapshot.host.sessions[0].minutesByMode.onlineLive!, meetingMode: 'offlineStore', markdown: '# 离线结果' };
+snapshot.host.sessions[0].minutesByMode.offlineStore = { ...snapshot.host.sessions[0].minutesByMode.onlineLive!, meetingMode: 'offlineStore', markdown: '# 离线结果\n\n## Summary\n- 离线结果正文' };
 snapshot.host.sessions[0].transcriptText += '，后台补齐';
 act(() => renderer.update(<CompanionDashboard {...exportProps()} />));
 assert.equal(button('在线速记').props['aria-selected'], true, 'background completion must preserve the viewed mode');
-click('完整转写');
+assert.match(text(renderer.root.findByProps({className:'ct-minutes-article'})),/在线结果正文/);
+assert.doesNotMatch(text(renderer.root.findByProps({className:'ct-minutes-article'})),/离线结果正文/);
+click('核对文字');
 snapshot = structuredClone(snapshot); snapshot.host.sessions[0].title = '后台同步标题';
 act(() => renderer.update(<CompanionDashboard {...exportProps()} />));
-assert.ok(button('完整转写').props.className.includes('active'), 'background updates must preserve the current reading tab');
+assert.equal(renderer.root.findByProps({id:'ct-recording-text-review'}).props.hidden,false,'background updates must preserve the current source-reading panel');
 act(() => renderer.unmount());
 console.log('PASS_COMPONENT_RECOVERY_MODE_ONLY: online transcript export, arriving minutes, stable reading mode');
 
 snapshot = structuredClone(snapshot);
 snapshot.host.persistence = { status: 'unsaved', message: '磁盘写入失败，最新内容尚未保存。请保留当前窗口。' };
 act(() => { renderer = create(<CompanionDashboard {...props()} />); });
-assert.match(text(renderer.root.findByProps({ 'aria-label': '会议保存状态' })), /尚未保存/);
+assert.match(text(renderer.root.findByProps({ 'aria-label': '录音保存状态' })), /尚未.*保存/);
 click('重试保存');
 assert.equal(calls.at(-1).action, 'hostRetrySave');
 snapshot = structuredClone(snapshot); snapshot.host.persistence.status = 'blocked';
@@ -120,7 +141,7 @@ click('重试恢复');
 assert.equal(calls.at(-1).action, 'hostRetrySave');
 snapshot = structuredClone(snapshot); snapshot.host.persistence.status = 'ready';
 act(() => renderer.update(<CompanionDashboard {...props()} />));
-assert.equal(renderer.root.findAllByProps({ 'aria-label': '会议保存状态' }).length, 0);
+assert.equal(renderer.root.findAllByProps({ 'aria-label': '录音保存状态' }).length, 0);
 act(() => renderer.unmount());
 console.log('PASS_COMPONENT_STORAGE_ONLY: persistent save/recovery warning and explicit retry');
 
@@ -129,7 +150,7 @@ const settings: any = { defaultMeetingMode: 'offlineStore', asrProvider: 'volcen
   openaiAsrModel: 'existing-model', deepseekBaseUrl: 'https://example.test/minutes',
   deepseekModel: 'existing-model', deepseekMinutesEnabled: true, bleCompress: false };
 act(() => { renderer = create(<CompanionDashboard {...props()} productSettings={settings} />); });
-click('展开设置与工具');
+act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n)==='设置与工具').props.onClick());
 const providerSelect = renderer.root.findAllByType('label').find((label: any) => text(label).includes('ASR 提供商'))!.findByType('select');
 assert.equal(renderer.root.findAllByType('label').some((label: any) => text(label).includes('兼容服务 Endpoint')), false,
   'inactive provider fields must stay hidden');
@@ -146,7 +167,7 @@ console.log('PASS_COMPONENT_SETTINGS_DRAFT_ONLY: unchanged refresh preserves ser
 
 snapshot = createCompanionV1Fixture(); snapshot.connected = true; snapshot.device.connected = true;
 act(() => { renderer = create(<CompanionDashboard {...props()} />); });
-click('展开设置与工具');
+act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n)==='设置与工具').props.onClick());
 click('板端开始录音');
 assert.equal(calls.at(-1).action, 'meetingStart');
 assert.equal(calls.at(-1).durationMs, 30 * 60 * 1000,
@@ -167,7 +188,7 @@ const connectedOnlineProps = () => ({ ...props(), productSettings: {
   ...settings, volcAppKeySet: true, volcAccessKeySet: true,
 }, onStartBoardOnlineLive: async (request: unknown) => { onlineStarts.push(request); } });
 act(() => { renderer = create(<CompanionDashboard {...connectedOnlineProps()} />); });
-click('展开设置与工具'); click('在线转写');
+act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n)==='设置与工具').props.onClick()); click('在线转写');
 const callCount = calls.length;
 assert.equal(button('板端开始录音').props.disabled, false);
 click('板端开始录音');
@@ -188,8 +209,8 @@ act(() => renderer.update(<CompanionDashboard {...connectedOnlineProps()} boardO
   partialCount:1,durationMs:1200000,maxDurationSeconds:1500,disconnectResume:false,finalRecordingPath:null,error:null,
 }} />));
 assert.match(text(renderer.root.findByProps({'aria-label':'设备录音容量'})),/目录 3\/7/);
-assert.match(text(renderer.root.findByProps({'aria-label':'当前录音'})),/距本次设定结束约 5:00/);
-assert.doesNotMatch(text(renderer.root.findByProps({'aria-label':'当前录音'})),/距 43 分钟/);
+assert.match(text(renderer.root.findByProps({'aria-label':'当前记录'})),/距本次设定结束约 5:00/);
+assert.doesNotMatch(text(renderer.root.findByProps({'aria-label':'当前记录'})),/距 43 分钟/);
 act(() => renderer.update(<CompanionDashboard {...connectedOnlineProps()} productSettings={settings} />));
 assert.equal(button('板端开始录音').props.disabled, true, 'online board capture requires a configured ASR service');
 act(() => renderer.unmount());
@@ -204,6 +225,12 @@ async function testProductPolish() {
   session.deviceReclaimed = false; session.audioStored = true; session.audioBytes = Math.max(session.audioBytes, 16000);
   session.minutesByMode!.onlineLive = { ...session.minutesByMode!.offlineStore!, markdown: '# 在线原稿', partialCount: 2 };
   session.minutesByMode!.offlineStore!.source = 'userEdited';
+  // The original exact-whitespace contract concerns the supported freeform
+  // document editor. Current native-envelope structured fields are covered by
+  // customer_reading/calendar suites, rather than being misidentified as the
+  // whole-document textarea.
+  session.minutesByMode!.offlineStore!.markdown = '# 离线原稿\n\n- 保留原项';
+  session.minutes={...session.minutesByMode!.offlineStore!};
   const otherSession = structuredClone(session); otherSession.id = 'other-audio-session'; otherSession.title = '另一场会议';
   snapshot.host.sessions.push(otherSession);
   const saveCalls: any[] = [];
@@ -223,6 +250,11 @@ async function testProductPolish() {
     },
   });
   const audioNodes: any[] = [];
+  const preparePlayback=()=>{
+    const node=renderer.root.findAllByType('button').find((n:any)=>['回听','重试回听'].includes(text(n)));
+    assert.ok(node,'current playback or explicit retry entry exists');assert.equal(node.props.disabled,false);
+    return node.props.onClick();
+  };
   act(() => { renderer = create(<CompanionDashboard {...polishedProps()} />, { createNodeMock: (element: any) => {
     if (element.type !== 'audio') return {};
     const node = { paused: false, removed: false, loaded: 0, pause() { this.paused = true; },
@@ -231,7 +263,7 @@ async function testProductPolish() {
   } }); });
   click('更多录音与处理操作');
   assert.match(text(renderer.toJSON()), /录制模式（先录后整理）纪要含人工修改。再次生成会替换这一版，建议先导出保存/);
-  const titleInput = () => renderer.root.findByProps({ 'aria-label': '会议标题' });
+  const titleInput = () => renderer.root.findByProps({ 'aria-label': '记录标题' });
   act(() => titleInput().props.onChange({ target: { value: '  用户标题草稿  ' } }));
   snapshot = structuredClone(snapshot); snapshot.host.sessions[0].title = '后台标题';
   act(() => renderer.update(<CompanionDashboard {...polishedProps()} />));
@@ -239,26 +271,29 @@ async function testProductPolish() {
   await act(async () => { await button('保存标题').props.onClick(); });
   assert.equal(saveCalls.at(-1).title, '用户标题草稿', 'host receives the trimmed title it persists');
   assert.notEqual(saveCalls.at(-1).expectedTitle, '后台标题', 'optimistic save keeps the edit baseline');
-  assert.match(text(renderer.toJSON()), /写入失败，草稿保留/);
+  assert.match(text(renderer.toJSON()), /保存尚未确认.*保留当前修改/,'failed persistence must use safe public save guidance, not claim success');
+  assert.doesNotMatch(text(renderer.toJSON()), /写入失败，草稿保留/,'raw backend message is not a public presentation contract');
   assert.equal(titleInput().props.value, '  用户标题草稿  ', 'failed persistence must keep the exact title draft');
   await act(async () => { await button('保存标题').props.onClick(); });
   assert.equal(saveCalls.at(-1).expectedTitle, '用户标题草稿', 'retry rebases an identical trimmed in-memory edit after persistence failure');
 
-  click('编辑当前纪要');
+  const editResult=()=>act(()=>renderer.root.findByProps({id:'ct-recording-result'}).findAllByType('button')
+    .find((node:any)=>/^编辑(?:清单|整理内容)$/.test(text(node))).props.onClick());
+  editResult();
   const minutesEditor = () => renderer.root.findAllByType('textarea').find((node: any) => String(node.props['aria-label'] ?? '').startsWith('编辑'));
   act(() => minutesEditor().props.onChange({ target: { value: '  \n# 用户离线草稿\n\n- 保留这项\n  ' } }));
   click('在线速记');
   assert.match(text(renderer.toJSON()), /录制模式（先录后整理）纪要含人工修改/,
     'generation warning follows the capture mode instead of the viewed minutes variant');
-  click('编辑当前纪要');
+  editResult();
   assert.equal(minutesEditor().props.value, '# 在线原稿', 'minutes drafts are isolated by mode');
-  click('取消'); click('先录后整理'); click('编辑当前纪要');
+  click('取消'); click('先录后整理'); editResult();
   assert.match(minutesEditor().props.value, /用户离线草稿/, 'switching modes must preserve the first mode draft');
   await act(async () => { await button('保存修改').props.onClick(); });
   assert.equal(saveCalls.at(-1).markdown, '# 用户离线草稿\n\n- 保留这项', 'host receives the trimmed markdown it persists');
   assert.match(minutesEditor().props.value, /\s# 用户离线草稿/, 'failed persistence keeps the exact markdown draft');
 
-  await act(async () => { await button('准备回听').props.onClick(); });
+  await act(async () => { await preparePlayback(); });
   assert.equal(renderer.root.findByType('audio').props.src, `asset://meeting/${session.id}`);
   snapshot = structuredClone(snapshot); snapshot.host.selectedSessionId = otherSession.id;
   act(() => renderer.update(<CompanionDashboard {...polishedProps()} />));
@@ -272,26 +307,32 @@ async function testProductPolish() {
   snapshot = structuredClone(snapshot); snapshot.meeting.active = true;
   act(() => renderer.update(<CompanionDashboard {...polishedProps()} />));
   assert.equal(renderer.root.findAllByType('audio').length, 0, 'starting any recording must remove the prepared audio player');
-  assert.match(text(renderer.root.findByProps({ 'aria-label': '本机原音回听' })), /录音进行中/);
+  const blockedPlayback=renderer.root.findAllByType('button').find((n:any)=>n.props['aria-controls']==='ct-recording-playback');
+  assert.equal(blockedPlayback.props.disabled,true,'the current recording locks the public playback entry');
+  assert.match(blockedPlayback.props.title,/录音进行中/);
+  assert.equal(button('重试回听').props.disabled,true,'an already open player cannot bypass the recording lock');
+  assert.match(text(renderer.root.findByProps({className:'ct-recording-activity','aria-label':'当前记录'})),/录音/);
   snapshot = structuredClone(snapshot); snapshot.meeting.active = false;
   act(() => renderer.update(<CompanionDashboard {...polishedProps()} />));
-  await act(async () => { await button('准备回听').props.onClick(); });
+  await act(async () => { await preparePlayback(); });
   act(() => renderer.root.findByType('audio').props.onError());
   assert.equal(renderer.root.findAllByType('audio').length, 0);
-  assert.match(text(renderer.root.findByProps({ 'aria-label': '本机原音回听' })), /移动、删除或损坏/);
-  await act(async () => { await button('准备回听').props.onClick(); });
+  assert.match(text(renderer.root.findByProps({id:'ct-saved-recording-workspace'})), /移动、删除或损坏/);
+  assert.equal(button('重试回听').props.disabled,false,'the source-bound playback failure retains an explicit enabled retry');
+  await act(async () => { await preparePlayback(); });
   const playerAtUnmount = audioNodes.at(-1);
   let safety = text(renderer.root.findByProps({ 'aria-label': '录音安全状态' }));
-  assert.match(safety, /可在删除会议时精确回收/);
+  assert.match(safety, /尚无设备回收确认/,'a verified computer copy does not prove the device has reclaimed its original');
+  assert.doesNotMatch(safety,/删除会议时精确回收/,'ordinary recoverable local trash must not be described as a device-space reclamation action');
   assert.doesNotMatch(safety, /设备副本已回收/);
   snapshot = structuredClone(snapshot); snapshot.host.sessions[0].deviceReclaimed = true;
   act(() => renderer.update(<CompanionDashboard {...polishedProps()} />));
   safety = text(renderer.root.findByProps({ 'aria-label': '录音安全状态' }));
   assert.match(safety, /设备副本已回收/);
 
-  const search = renderer.root.findByProps({ 'aria-label': '搜索标题、转写或纪要' });
+  const search = renderer.root.findByProps({ 'aria-label': '搜索标题、转写、补充或整理结果' });
   act(() => search.props.onChange({ target: { value: '绝对不存在的全文' } }));
-  assert.match(text(renderer.toJSON()), /没有找到相关会议/);
+  assert.match(text(renderer.toJSON()), /没有找到相关录音或补充/);
   act(() => renderer.unmount());
   assert.equal(playerAtUnmount.paused, true, 'unmount pauses the captured player node');
   assert.equal(playerAtUnmount.removed, true, 'unmount removes the captured player source');
@@ -301,7 +342,7 @@ async function testProductPolish() {
   const staleId = snapshot.host.sessions[0].id;
   const deferredProps = () => ({ ...props(), onPrepareAudio: (sessionId: string) => new Promise<{ sessionId: string; url: string }>((resolve) => { resolveAudio = resolve; }) });
   act(() => { renderer = create(<CompanionDashboard {...deferredProps()} />); });
-  act(() => button('准备回听').props.onClick());
+  act(() => preparePlayback());
   snapshot = structuredClone(snapshot); snapshot.meeting.active = true;
   act(() => renderer.update(<CompanionDashboard {...deferredProps()} />));
   await act(async () => { resolveAudio({ sessionId: staleId, url: 'asset://stale-result' }); });

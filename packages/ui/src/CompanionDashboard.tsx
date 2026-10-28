@@ -2823,7 +2823,7 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
     && /^[0-9a-f]{64}$/i.test(session.deviceSha256 ?? ''));
   const saveConfirmed = persistence?.status === 'ready';
   const saveFailed = persistence?.status === 'blocked' || persistence?.status === 'unsaved';
-  const canReclaim = exactDeviceCopy && localAudio && saveConfirmed
+  const localCopyVerified = exactDeviceCopy && localAudio && saveConfirmed
     && !session.captureIncomplete && !session.recorderControlUncertain;
   const steps = [
     {
@@ -2852,8 +2852,8 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
       state: wholeReclaimed ? '设备副本已回收' : growingDeviceCapture
         ? savedSegments > 0 && saveConfirmed ? '已保存分段可回收，尾段保留'
         : partialAudio ? '已收到片段，回收待确认' : '录音尾段保留'
-        : canReclaim ? '可在删除会议时精确回收' : deviceCopy ? '暂不回收' : '无需回收',
-      kind: wholeReclaimed ? 'done' : growingDeviceCapture || canReclaim ? 'active' : 'idle',
+        : localCopyVerified ? '尚无设备回收确认' : deviceCopy ? '暂不回收' : '无需回收',
+      kind: wholeReclaimed ? 'done' : growingDeviceCapture ? 'active' : 'idle',
     },
   ];
   return <section className="ct-safety-card" aria-label="录音安全状态">
@@ -2863,6 +2863,7 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
     {session.processingPolicy === 'manual' ? <p>这是一份普通录音。转写和纪要由你手动启动，同步原音后不会自动提交云端处理。</p> : null}
     <ol>{steps.map((step) => <li key={step.label} className={`ct-safety-${step.kind}`}><span aria-hidden="true" />
       <div><strong>{step.label}</strong><small>{step.state}</small></div></li>)}</ol>
+    {localCopyVerified && !wholeReclaimed ? <p>移入本机回收站会保留电脑原音，不会触发设备录音回收。</p> : null}
     {session.pendingReason === 'needs_device_sync' ? <p>录音仍在来源设备；重连同一台 Companion 后会从断点继续。</p> : null}
     {session.pendingReason === 'needs_segments' ? <p>这场录音尚未收齐。已有片段会保留，连接同一台 Companion 后继续同步。</p> : null}
     {session.deviceRecordingEndReason ? <p>{({user: '你已停止设备录音。', storageFull: '设备存储空间不足，录音已安全结束。', durationLimit: '已达到设定时长，设备录音已结束。', lowBattery: '设备因电量低结束了录音。', silence: '已达到设定的静音时长，设备录音已结束。'} as const)[session.deviceRecordingEndReason]} 原音同步和本机保存进度见上方。</p> : null}
