@@ -117,7 +117,7 @@ export async function previewCompanionMeetingExport(request: import('../../../pa
   return invoke('preview_companion_meeting_export',{request});
 }
 
-export const openCompanionSavedCalendar=(token:string)=>invoke<void>('open_companion_saved_calendar',{token});
+export const openCompanionSavedCalendar=(token:string)=>invoke<'requested'|'cancelled'>('open_companion_saved_calendar',{token});
 
 export async function exportCompanionMeeting(request: {
   sessionId: string;

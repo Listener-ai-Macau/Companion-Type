@@ -214,7 +214,7 @@ export interface CompanionDashboardProps {
   }) => void | Promise<void>;
   onStopBoardOnlineLive?: () => void | Promise<void>;
   onSaveProductSettings?: (patch: CompanionProductSettingsPatch) => void | Promise<void>;
-  onOpenSavedCalendar?: (token:string)=>Promise<void>;
+  onOpenSavedCalendar?: (token:string)=>Promise<'requested'|'cancelled'>;
   onExportMeeting?: (request: CompanionMeetingExportRequest) => Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string } | null>;
   onPreviewMeetingExport?:(request:CompanionMeetingExportRequest)=>Promise<{contentHash:string;warning?:string|null;textContent?:string|null;calendarItems?:CalendarExportItem[]|null}>;
   onPreviewDiagnostics?:()=>Promise<unknown>;
