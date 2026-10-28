@@ -17,6 +17,7 @@ use crate::companion_v1::{
     CompanionV1UtteranceSegment,
 };
 use super::transcript_review;
+pub use super::action_export::CalendarPreviewItem;
 
 fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, context: &Option<super::minutes_context::Source>, manual: bool, body: String) -> String {
     if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session, context) {
@@ -77,7 +78,7 @@ pub struct PreparedMeetingExport {
     pub suggested_name: String,
     pub format: MeetingExportFormat,
     pub warning: Option<String>,
-    pub calendar_items: Option<Vec<super::action_export::CalendarPreviewItem>>,
+    pub calendar_items: Option<Vec<CalendarPreviewItem>>,
 }
 
 /// Plain checklist body from the same validated native TODO renderer. No file,

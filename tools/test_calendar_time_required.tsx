@@ -36,7 +36,7 @@ assert.doesNotMatch(text(tree.toJSON()),/保存未完成|检查保存位置|不�
 assert.equal(dirty.at(-1),true,'Open confirmation participates in the existing unsaved/close guard');
 act(()=>dialogs[0].props.onCancel({preventDefault(){}}));assert.equal(tree.root.findAllByType('dialog').length,0);
 assert.equal(dirty.at(-1),false,'Cancelled untouched time releases unsaved guard');
-assert.equal(button('保存修改').props.disabled,true,'No saved value changes merely by entering this repair path');
+assert.equal(button('保存修改并返回日历预览').props.disabled,true,'No saved value changes merely by entering this repair path');
 act(()=>button('取消').props.onClick());assert.equal(JSON.stringify(snapshot),original);
 // A late capability response for a changed source cannot open an old editor.
 rejectLater=()=>{};await act(async()=>{button('导出到日历').props.onClick();});

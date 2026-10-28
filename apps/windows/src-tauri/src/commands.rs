@@ -481,7 +481,7 @@ pub struct CompanionMeetingExportPreview {
     #[serde(skip_serializing_if="Option::is_none")]
     pub text_content: Option<String>,
     #[serde(skip_serializing_if="Option::is_none")]
-    pub calendar_items: Option<Vec<crate::backend::action_export::CalendarPreviewItem>>,
+    pub calendar_items: Option<Vec<crate::backend::export::CalendarPreviewItem>>,
 }
 
 /// Same saved-source checks and calendar parser as export; no file dialog,

@@ -1257,7 +1257,7 @@ export function CompanionDashboard({
       else nextSession.minutes = { ...nextSession.minutes, [minutesViewMode]: undefined };
       return { ...current, [sessionId]: nextSession };
     });
-    if (part === 'minutes') {setEditingMinutes(false);setCalendarReturn(current=>current?{...current,expectedMarkdown:minutesMarkdown}:null);}
+    if (part === 'minutes') {setEditingMinutes(false);setCalendarReturn(null);}
     setSaveMeetingResult(null);
   };
   const saveMeetingDraft = async () => {
