@@ -138,23 +138,23 @@ mod tests {
     }
     #[test]fn calendar_handoff_exact_file_and_retry(){
         let(path,session,manager,token)=fixture();
-        assert_eq!(manager.open_with(&token,&[session.clone()],|_|Err::<(),String>("no receiver".into())).unwrap_err(),"no receiver");
-        manager.open_with(&token,&[session],|p|{assert_eq!(p,path.canonicalize().unwrap());assert!(std::fs::read(p).is_ok());Ok(())}).unwrap();std::fs::remove_file(path).unwrap();
+        assert_eq!(manager.open_with::<()>(&token,&[session.clone()],|_|Err::<(),String>("no receiver".into())).unwrap_err(),"no receiver");
+        manager.open_with::<()>(&token,&[session],|p|{assert_eq!(p,path.canonicalize().unwrap());assert!(std::fs::read(p).is_ok());Ok(())}).unwrap();std::fs::remove_file(path).unwrap();
     }
     #[test]fn calendar_handoff_changed_missing_unknown_never_launch(){
         let(path,session,manager,token)=fixture();let rows=[session];
-        assert!(manager.open_with("untrusted-path-or-token",&rows,|_|panic!("unknown launched")).is_err());
+        assert!(manager.open_with::<()>("untrusted-path-or-token",&rows,|_|panic!("unknown launched")).is_err());
         let mut bytes=std::fs::read(&path).unwrap();bytes[0]=b'X';std::fs::write(&path,bytes).unwrap();
-        assert!(manager.open_with(&token,&rows,|_|panic!("changed launched")).unwrap_err().contains("已变化"));
-        std::fs::remove_file(path).unwrap();assert!(manager.open_with(&token,&rows,|_|panic!("missing launched")).is_err());
+        assert!(manager.open_with::<()>(&token,&rows,|_|panic!("changed launched")).unwrap_err().contains("已变化"));
+        std::fs::remove_file(path).unwrap();assert!(manager.open_with::<()>(&token,&rows,|_|panic!("missing launched")).is_err());
     }
     #[test]fn calendar_handoff_removed_or_cleared_source_never_launch(){
         let(path,mut session,manager,token)=fixture();
-        assert!(manager.open_with(&token,&[],|_|panic!("removed launched")).is_err());
+        assert!(manager.open_with::<()>(&token,&[],|_|panic!("removed launched")).is_err());
         session.organization.trashed_at=Some("2026-10-28T15:00:00Z".into());
-        assert!(manager.open_with(&token,&[session.clone()],|_|panic!("trashed launched")).is_err());
+        assert!(manager.open_with::<()>(&token,&[session.clone()],|_|panic!("trashed launched")).is_err());
         session.organization.trashed_at=None;
-        session.calendar_copy_epoch+=1;assert!(manager.open_with(&token,&[session],|_|panic!("cleared launched")).is_err());std::fs::remove_file(path).unwrap();
+        session.calendar_copy_epoch+=1;assert!(manager.open_with::<()>(&token,&[session],|_|panic!("cleared launched")).is_err());std::fs::remove_file(path).unwrap();
     }
     #[cfg(windows)]
     #[test]fn calendar_handoff_preserves_windows_path_units(){
@@ -181,7 +181,7 @@ mod tests {
     #[cfg(windows)]
     #[test]fn calendar_handoff_keeps_checked_file_locked_during_open(){
         let(path,session,manager,token)=fixture();
-        manager.open_with(&token,&[session],|p|{
+        manager.open_with::<()>(&token,&[session],|p|{
             assert!(std::fs::OpenOptions::new().write(true).open(p).is_err());
             assert!(std::fs::remove_file(p).is_err());
             Ok(())
@@ -194,6 +194,6 @@ mod tests {
         let bytes=std::fs::read(&path).unwrap();
         for _ in 0..32 {manager.remember(&session,&path,bytes.len()as u64,format!("{:x}",Sha256::digest(&bytes))).unwrap();}
         assert_eq!(manager.receipts.lock().unwrap().len(),32);
-        assert!(manager.open_with(&token,&[session],|_|panic!("evicted launched")).is_err());std::fs::remove_file(path).unwrap();
+        assert!(manager.open_with::<()>(&token,&[session],|_|panic!("evicted launched")).is_err());std::fs::remove_file(path).unwrap();
     }
 }
