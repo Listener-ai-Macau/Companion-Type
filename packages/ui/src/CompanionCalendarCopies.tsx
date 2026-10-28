@@ -45,7 +45,7 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
     <p className="ct-step-meta">最近保存：{copies[0].entries.length}项日程，{copies[0].entries.filter(entry=>entry.reminderMinutes!==null||!!entry.reminderAt).length}项附提醒，{copies[0].entries.filter(entry=>entry.reminderMinutes===null&&!entry.reminderAt).length}项不提醒。请在接收日历核对导入结果。</p>
     {changed ? <p className="ct-step-warn">清单已修改，接收日历不会自动更新。可先查看上次保存的副本，找到原日程再核对。</p> : null}
     <details>
-      <summary>查看已保存的日历副本</summary>
+      <summary>查看已保存的日历副本：逐项日期和提醒</summary>
       <p className="ct-step-meta">这是导出文件当时的设置，接收日历中的后续修改不会同步回来。这里只记录本机成功保存的文件，无法确认是否已导入日历。若已导入旧文件，重新导入是否替换取决于接收日历，也可能新增；可按下面的原名称找到日程后修改。</p>
       <p className="ct-step-meta">找回原日程时，复制对应名称，再粘贴到接收日历的搜索框；找不到时，请扩大接收日历的日期范围。</p>
       {copies.map((copy, index) => <section key={`${copy.fileSha256}:${copy.savedAt}`} aria-label={index === 0 ? '最近保存的日历文件' : '上一份日历文件'}>

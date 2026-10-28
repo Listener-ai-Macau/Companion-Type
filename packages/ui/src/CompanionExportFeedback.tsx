@@ -22,6 +22,7 @@ export function CompanionExportFeedback({ feedback, className='ct-export-result'
   }
   return <div className={[...classes].join(' ')} role={feedback.kind === 'error' ? 'alert' : 'status'}>
     <span>{feedback.message}</span>
+    {feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))?<p className="ct-step-meta">1. 文件已保存 → 2. 在常用日历中导入该文件 → 3. 打开日程核对日期与提醒。</p>:null}
     {feedback.kind === 'saved' && feedback.path && (feedback.format === 'todo' || feedback.format === 'todotxt' || feedback.format === 'ics' || feedback.format === 'calendar' || feedback.format?.startsWith('calendarreminder'))
       ? <CompanionChecklistHandoff format={feedback.format?.startsWith('calendarreminder')?'calendar':feedback.format as 'todo'|'todotxt'|'ics'|'calendar'}/> : null}
     {feedback.kind === 'saved' && feedback.path ? <details>
