@@ -148,3 +148,47 @@ fn paused_tail_rejects_count_spoof_crc_valid_unpaired_or_partial_event_without_a
     assert_eq!(prefix.read(&peer,&tail.key).unwrap().unwrap().1,*body,"failed candidates leave durable raw cursor unchanged");
     drop(prefix);fs::remove_dir_all(root).unwrap();
 }
+
+
+// Actual C APM1 golden bytes; this fixture checks the live protocol contract,
+// not microphone acoustics or codec CPU performance.
+fn profile_tail(frames:u32)->(Peer,Tail,Vec<u8>) {
+    let (peer,base,_)=fixture(frames);
+    let mut raw=b"COP1\x05\x01\x14\x0f\x80\x3e\0\0".to_vec();
+    let mut boundary=[0u8;32];boundary[2..6].copy_from_slice(b"CDB1");boundary[6]=1;
+    boundary[8..12].copy_from_slice(&40u32.to_le_bytes());boundary[20..28].copy_from_slice(&u64::MAX.to_le_bytes());
+    let crc=crc32fast::hash(&boundary[..28]);boundary[28..].copy_from_slice(&crc.to_le_bytes());
+    raw.extend_from_slice(&boundary);raw.extend_from_slice(include_bytes!("../../fixtures/audio-profile-v1.bin"));
+    for _ in 0..frames {raw.extend_from_slice(&40u16.to_le_bytes());raw.extend_from_slice(&[0x35;40]);}
+    let wire=rewrite_wire(&base,u64::from(frames)*320,raw.len() as u32,31);
+    let tail=Tail::decode(&wire,&peer,&base.key,u32le(&wire,68)).unwrap();(peer,tail,raw)
+}
+#[test]
+fn schema5_tail_requires_explicit_profile_flag_and_keeps_legacy_formats_distinct() {
+    let (peer,tail,raw)=profile_tail(5);validate_audio(&tail,&raw).unwrap();
+    assert!(tail.timeline&&tail.bookmarks&&tail.source_boundary&&tail.audio_profile);
+    for flags in [3,7,15] {
+        let wire=rewrite_wire(&tail,tail.sample_count,tail.encoded_length,flags);
+        let old=Tail::decode(&wire,&peer,&tail.key,u32le(&wire,68)).unwrap();
+        assert!(!old.same_extent(&tail));assert!(validate_audio(&old,&raw).is_err());
+    }
+    for flags in [17,23,63] {
+        let wire=rewrite_wire(&tail,tail.sample_count,tail.encoded_length,flags);
+        assert!(Tail::decode(&wire,&peer,&tail.key,u32le(&wire,68)).is_err());
+    }
+    assert!(Descriptor::decode(&tail.wire).is_err());
+}
+#[test]
+fn schema5_profile_tail_reopens_grows_and_never_relabels_saved_provenance() {
+    let root=root();let (peer,first,bytes)=profile_tail(5);
+    let (prefix,empty)=Prefix::load(&root,&first,&peer).unwrap();assert!(empty.is_empty());
+    prefix.save(&first,&bytes,&peer).unwrap();drop(prefix);
+    let (_,grown,more)=profile_tail(10);let (prefix,saved)=Prefix::load(&root,&grown,&peer).unwrap();assert_eq!(saved,bytes);
+    let mut changed=more.clone();changed[44+12]^=1;
+    let crc=crc32fast::hash(&changed[44..136]);changed[136..140].copy_from_slice(&crc.to_le_bytes());
+    validate_audio(&grown,&changed).unwrap();
+    assert!(prefix.save(&grown,&changed,&peer).is_err(),"valid profile CRC cannot relabel an existing durable prefix");
+    prefix.save(&grown,&more,&peer).unwrap();drop(prefix);
+    let (prefix,saved)=Prefix::load(&root,&grown,&peer).unwrap();assert_eq!(saved,more);drop(prefix);
+    assert!(Prefix::load(&root,&first,&peer).is_err());fs::remove_dir_all(root).unwrap();
+}
