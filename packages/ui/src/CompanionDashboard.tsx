@@ -1096,6 +1096,15 @@ export function CompanionDashboard({
       if(current())setPhoneResult({sessionId,sourceKey,kind:'error',message:error instanceof SavedPreviewInterrupted?error.message:`清单未带走：${operationErrorText(error,'export')}`});
     }finally{exportActive.current=false;setPhoneBusy(false);}
   };
+  const calendarReviewElement=useRef<HTMLDivElement|null>(null);
+  const calendarReviewVisible=!!calendarExportReview&&calendarExportReview.sessionId===selectedSession?.id
+    &&calendarExportReview.mode===minutesViewMode&&calendarExportReview.sourceKey===copySourceKey&&!editingMinutes;
+  useEffect(()=>{
+    if(!calendarReviewVisible)return;
+    const region=calendarReviewElement.current;
+    region?.scrollIntoView({block:'start',behavior:'auto'});
+    region?.focus({preventScroll:true});
+  },[calendarReviewVisible,calendarExportReview?.sourceKey]);
   const calendarReminderKey=calendarExportReview?.format==='calendar'&&calendarExportReview.sourceKey===copySourceKey&&calendarExportReview.calendarReminders?.length
     ?JSON.stringify([calendarExportReview.sourceKey,calendarExportReview.remindAtTime,calendarExportReview.reminderFormat,calendarExportReview.calendarReminders]):'';
   useEffect(()=>{
@@ -1855,12 +1864,13 @@ export function CompanionDashboard({
                 ? <CompanionChecklistPhone result={phoneResult} onClose={closePhoneChecklist}/> : null}
               {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '清单不自动提醒；需要时导出到日历，再核对提醒设置。'}</p> : null}
               {!editingMinutes ? <CompanionCalendarCopies key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`} session={selectedSession} mode={minutesViewMode} markdown={minutesMarkdown}/> : null}
-              {calendarExportReview?.sessionId===selectedSession.id&&calendarExportReview.mode===minutesViewMode&&calendarExportReview.sourceKey===copySourceKey&&!editingMinutes?<div className="ct-calendar-export-review" role="status">
+              {calendarReviewVisible&&calendarExportReview?<div ref={calendarReviewElement} className="ct-calendar-export-review" role="region" aria-label="日历导出预览" tabIndex={-1}>
+                <h3>确认日历日程与提醒</h3>
                 <p>{calendarExportReview.format==='calendar'?((calendarReminderKey&&calendarReminderReady?calendarReminderPreview?.warning:calendarExportReview.warning)||'把已确认的日期和时间带到常用日历；后续修改不会自动同步。'):'还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。'}</p>
                 {calendarExportReview.format==='calendar'?<>
-                  <label className="ct-step-meta"><input type="checkbox" checked={!!calendarExportReview.remindAtTime}
+                  <label className="ct-step-meta"><input type="checkbox" aria-label="统一设置提醒" checked={!!calendarExportReview.remindAtTime}
                     disabled={controlsBusy||oobeBlockedByRecording||!calendarExportReview.reminderContentHash}
-                    onChange={event=>{const checked=event.currentTarget.checked;setCalendarExportReview(current=>current?{...current,remindAtTime:checked}:null);}}/> 提醒我</label>
+                    onChange={event=>{const checked=event.currentTarget.checked;setCalendarExportReview(current=>current?{...current,remindAtTime:checked}:null);}}/> 统一设置提醒</label>
                   {calendarExportReview.remindAtTime?<label className="ct-step-meta" style={{display:'block',marginTop:8}}>提醒时间
                     <select aria-label="日历提醒时间" value={calendarExportReview.reminderFormat??'calendarreminder30'} disabled={controlsBusy||oobeBlockedByRecording}
                       onChange={event=>{const selected=event.currentTarget.value;if(!['calendarreminder','calendarreminder30','calendarreminder60'].includes(selected))return;
@@ -1868,7 +1878,7 @@ export function CompanionDashboard({
                       <option value="calendarreminder30">提前30分钟</option><option value="calendarreminder60">提前1小时</option><option value="calendarreminder">在已确认的时刻</option>
                     </select>
                   </label>:null}
-                  <p className="ct-step-meta">统一设置适用于有具体截止时刻的事项。每项也可单独选择；只有日期时，可指定独立提醒时刻，保留全天截止日。</p>
+                  <p className="ct-step-meta">仅用于选择“按上方统一设置”的具体时刻事项，不覆盖已单独设置的提醒。只有日期的事项仍可单独指定提醒时刻，保留全天截止日。</p>
                 </>:null}
                 {calendarExportReview.items?<CalendarExportItems items={calendarExportReview.items} choice={calendarExportReview}
                   disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale}

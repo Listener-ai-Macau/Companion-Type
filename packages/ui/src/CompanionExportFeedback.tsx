@@ -34,6 +34,7 @@ function CalendarOpen({token,open}:{token:string;open:OpenSavedCalendar}) {
     finally{pending.current=false;}
   };
   return <div>
+    <p><strong>{state==='requested'?'已请求打开文件 → 下一步：在日历中确认导入':'下一步：打开文件 → 在日历中确认导入'}</strong></p>
     <button type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(undefined,applications.length>0)}>
       {state==='opening'?'正在打开日历文件…':state==='requested'?'再次打开日历文件':applications.length?'重新读取应用列表':'打开日历文件'}
     </button>
@@ -59,11 +60,11 @@ export function CompanionExportFeedback({ feedback, className='ct-export-result'
     classes.add('ct-step-warn');
   }
   return <div className={[...classes].join(' ')} role={feedback.kind === 'error' ? 'alert' : 'status'}>
-    <span>{feedback.message}</span>
+    <span>{feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))?<strong>{feedback.message}</strong>:feedback.message}</span>
     {feedback.kind==='saved'&&feedback.calendarOpenToken&&onOpenSavedCalendar
       &&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))
       ?<CalendarOpen key={feedback.calendarOpenToken} token={feedback.calendarOpenToken} open={onOpenSavedCalendar}/>:null}
-    {feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))?<p className="ct-step-meta">1. 文件已保存 → 2. 在常用日历中导入该文件 → 3. 打开日程核对日期与提醒。</p>:null}
+    {feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))?<p className="ct-step-meta">{feedback.calendarOpenToken&&onOpenSavedCalendar?'导入后，请打开日程核对日期与提醒。':'下一步：在常用日历中导入该文件，再打开日程核对日期与提醒。'}可展开已保存的日历副本，对照每项设置。</p>:null}
     {feedback.kind === 'saved' && feedback.path && (feedback.format === 'todo' || feedback.format === 'todotxt' || feedback.format === 'ics' || feedback.format === 'calendar' || feedback.format?.startsWith('calendarreminder'))
       ? <CompanionChecklistHandoff format={feedback.format?.startsWith('calendarreminder')?'calendar':feedback.format as 'todo'|'todotxt'|'ics'|'calendar'}/> : null}
     {feedback.kind === 'saved' && feedback.path ? <details>
