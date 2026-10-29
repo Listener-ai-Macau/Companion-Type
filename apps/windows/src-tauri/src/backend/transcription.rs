@@ -585,6 +585,22 @@ fn volcengine_transcript_from(
     clean_text: &str,
     per_utterance: &[CollectedUtterance],
 ) -> CompanionTranscript {
+    // Timed segments can be incomplete when the provider omits a timestamp.
+    // Never let a partial segmentation replace or later reconstruct the full text.
+    if !clean_text.is_empty() && !per_utterance.is_empty() {
+        let full: String = clean_text.chars().filter(|c| !c.is_whitespace()).collect();
+        let timed: String = per_utterance.iter().flat_map(|u| u.text.chars())
+            .filter(|c| !c.is_whitespace()).collect();
+        if full != timed {
+            return CompanionTranscript {
+                text: normalize_transcript(clean_text),
+                provider_id: "companion-type-volcengine-asr".to_string(),
+                mode: "ws-sauc:bigmodel:incomplete-timed-segments".to_string(),
+                evidence_path: None,
+                utterances: Vec::new(),
+            };
+        }
+    }
     let tagged = cluster_utterances_by_speaker(per_utterance);
     let any_speaker = tagged.iter().any(|u| u.speaker.is_some());
     let (text, mode) = if any_speaker {
@@ -1208,6 +1224,37 @@ mod tests {
         assert_eq!(fs::read(&source).unwrap(), bytes);
         for path in first.iter().chain(&second) { super::super::audio_artifacts::remove_temporary(path).unwrap(); }
         fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn full_provider_text_survives_incomplete_timed_utterances() {
+        let parts = vec![
+            CollectedUtterance { text:"第一句。".into(), start_ms:0, end_ms:1000,
+                provider_speaker:Some("A".into()), provider_request:None, embedding:None },
+            CollectedUtterance { text:"第二句。".into(), start_ms:2000, end_ms:3000,
+                provider_speaker:Some("B".into()), provider_request:None, embedding:None },
+        ];
+        let full="第一句。第二句。被漏掉的第三句。";
+        let result=volcengine_transcript_from(full,&parts);
+        assert_eq!(result.text,full,"never replace full provider text by partial timed utterances");
+        assert!(result.utterances.is_empty(),"incomplete timing must not be exposed as complete editable text");
+        let no_speakers=parts.into_iter().map(|mut u|{u.provider_speaker=None;u}).collect::<Vec<_>>();
+        let result=volcengine_transcript_from(full,&no_speakers);
+        assert_eq!(result.text,full);assert!(result.utterances.is_empty());
+    }
+
+    #[test]
+    fn complete_provider_text_keeps_speakers_and_timing() {
+        let parts = vec![
+            CollectedUtterance { text:"第一句。".into(), start_ms:0, end_ms:1000,
+                provider_speaker:Some("A".into()), provider_request:None, embedding:None },
+            CollectedUtterance { text:"第二句。".into(), start_ms:2000, end_ms:3000,
+                provider_speaker:Some("B".into()), provider_request:None, embedding:None },
+        ];
+        let result = volcengine_transcript_from("第一句。\n 第二句。", &parts);
+        assert_eq!(result.text, "说话人1: 第一句。\n说话人2: 第二句。");
+        assert_eq!(result.utterances.len(), 2);
+        assert_eq!((result.utterances[1].start_ms, result.utterances[1].end_ms), (2000, 3000));
     }
 
     #[test]
