@@ -23,11 +23,23 @@ pub(crate) fn owner_for_sync(snapshot: &CompanionV1Snapshot,
     request: &CompanionV1ControlRequest) -> Option<OwnedRecorder> {
     if request.action != Action::DeviceSyncRecordings { return None; }
     let mut active=snapshot.host.sessions.iter().filter(|row|row.status=="recording");
-    let row=active.next()?;
-    if active.next().is_some() || row.source!="boardDevice"
-        || row.device_recording_id.is_none_or(|id|id==0)
-        || snapshot.host.active_session_id.as_deref().is_some_and(|id|id!=row.id)
-        || request.session_id.as_deref().is_some_and(|id|id!=row.id) {return None;}
+    let first=active.next();
+    if active.next().is_some() {return None;}
+    let row=if let Some(row)=first {
+        if snapshot.host.active_session_id.as_deref().is_some_and(|id|id!=row.id)
+            || request.session_id.as_deref().is_some_and(|id|id!=row.id) {return None;}
+        row
+    } else {
+        // A specific capture can be recovered after a reconnect has already
+        // marked it captured. Do not turn that explicit request into a batch.
+        let id=request.session_id.as_deref()?;
+        if snapshot.device.recording || snapshot.host.active_session_id.is_some() {return None;}
+        let mut matching=snapshot.host.sessions.iter().filter(|row|row.id==id);
+        let row=matching.next()?;
+        if matching.next().is_some() || row.status!="captured" {return None;}
+        row
+    };
+    if row.source!="boardDevice" || row.device_recording_id.is_none_or(|id|id==0) {return None;}
     let source=row.source_device_id.as_deref()?;
     if !crate::backend::device_connection::stable_device_id(source)
         || request.device_id.as_deref().is_some_and(|id|!crate::backend::same_device_id(id,source))
@@ -36,6 +48,15 @@ pub(crate) fn owner_for_sync(snapshot: &CompanionV1Snapshot,
     if snapshot.device.mcu_uid.as_deref().is_some_and(|uid|!uid.eq_ignore_ascii_case(&key.public_key().device_uid)) {return None;}
     Some(OwnedRecorder{device_id:source.into(),session_id:row.id.clone(),recording_id:row.device_recording_id?,
         mcu_uid:Some(key.public_key().device_uid),logical_key:Some(key),journal:row.recorder_control.clone()})
+}
+
+/// An explicit segmented captured row must never silently become a batch
+/// request when its device/session identity fails validation.
+pub(crate) fn requests_closed_segmented(snapshot: &CompanionV1Snapshot,
+    request: &CompanionV1ControlRequest) -> bool {
+    request.action == Action::DeviceSyncRecordings && request.session_id.as_deref().is_some_and(|id|
+        snapshot.host.sessions.iter().any(|row|row.id==id && row.status=="captured"
+            && row.source=="boardDevice" && row.device_recording_key.is_some()))
 }
 
 pub(crate) fn owner_for_link(
@@ -441,6 +462,37 @@ mod tests {
         for action in [Action::MeetingStart,Action::MeetingStop,Action::DeviceConnect,Action::PrivacyEraseAll] {
             let mut r=request.clone();r.action=action;assert!(owner_for_sync(&snapshot,&r).is_none());
         }
+    }
+
+    #[test]
+    fn explicit_closed_original_sync_is_bound_to_that_recording() {
+        let mut snapshot=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            crate::control_request(Action::MeetingStart,Some("original-long".into()))).unwrap();
+        let row=&mut snapshot.host.sessions[0];row.source="boardDevice".into();row.status="captured".into();
+        row.source_device_id=Some("C8:92:FF:DD:3B:CA".into());row.device_recording_id=Some(32);
+        row.device_recording_key=Some(crate::companion_v1::CompanionV1RecordingKey{
+            device_uid:"180010000d50335754363720".into(),format_epoch:"1f59b27acf4936e1".into(),session_id:"000000000000000c".into()});
+        snapshot.host.active_session_id=None;snapshot.meeting.active=false;snapshot.device.recording=false;
+        let request=crate::control_request(Action::DeviceSyncRecordings,Some("original-long".into()));
+        let original=owner_for_sync(&snapshot,&request).expect("closed exact recording must remain scoped");
+        assert_eq!(original.recording_id,32);assert_eq!(original.logical_key.as_ref().unwrap().session_id,12);
+        assert!(requests_closed_segmented(&snapshot,&request));
+        for invalid in ["wrong_peer","wrong_uid","invalid_key","active","duplicate","other_owner"] {
+            let mut s=snapshot.clone();let mut r=request.clone();
+            match invalid {
+                "wrong_peer"=>r.device_id=Some("00:11:22:33:44:55".into()),
+                "wrong_uid"=>s.device.mcu_uid=Some("ff".repeat(12)),
+                "invalid_key"=>s.host.sessions[0].device_recording_key.as_mut().unwrap().device_uid="00".repeat(12),
+                "active"=>s.device.recording=true,
+                "duplicate"=>s.host.sessions.push(s.host.sessions[0].clone()),
+                "other_owner"=>s.host.active_session_id=Some("other".into()),_=>{}
+            }
+            assert!(requests_closed_segmented(&s,&r),"{invalid} must not fall back to batch");
+            assert!(owner_for_sync(&s,&r).is_none(),"{invalid}");
+        }
+        let general=crate::control_request(Action::DeviceSyncRecordings,None);
+        assert!(!requests_closed_segmented(&snapshot,&general));
+        assert!(owner_for_sync(&snapshot,&general).is_none(),"ordinary batch remains ordinary");
     }
 
     fn closed_owner() -> OwnedRecorder {

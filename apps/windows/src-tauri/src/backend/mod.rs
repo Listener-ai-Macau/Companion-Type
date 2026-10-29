@@ -2277,6 +2277,9 @@ impl CompanionBackend for FixtureCompanionBackend {
             }
             CompanionV1ControlAction::DeviceSyncRecordings => {
                 let original=owned_segmented_recording_sync(&snapshot,&request);
+                if original.is_none() && ble_bridge::requests_closed_segmented(&snapshot,&request) {
+                    return Err("无法确认所选原录音的设备与归属，未同步其它录音。".into());
+                }
                 if original.is_some() && self.live_asr.snapshot().active {
                     return Err("在线转写仍持有当前音频链路，原录音保持采集，请稍后同步。".into());
                 }

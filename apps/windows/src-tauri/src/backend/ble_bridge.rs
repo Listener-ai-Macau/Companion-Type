@@ -45,7 +45,7 @@ mod upload_benchmark;
 pub(crate) use upload_benchmark::receive_fixture as benchmark_recording_upload;
 use pull_session::PullSession;
 pub(crate) use offline_connection::{owner_for_link as owned_offline_recording_link,
-    owner_for_sync as owned_segmented_recording_sync, OwnedRecorder};
+    owner_for_sync as owned_segmented_recording_sync, requests_closed_segmented, OwnedRecorder};
 
 static OFFLINE_RECORDER_CONNECTION: std::sync::Mutex<offline_connection::Store<NativeDevice>> =
     std::sync::Mutex::new(offline_connection::Store::empty());
