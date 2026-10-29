@@ -9,7 +9,7 @@ export function carryRelativeReminderAfterSingleDeadlineEdit(
   selections:CalendarReminderSelection[]|undefined,
   change:{index:number;before:CalendarExportItem[]}|undefined,
   after:CalendarExportItem[],
-):{selections:CalendarReminderSelection[]|undefined;carried:boolean;carriedKind?:'before'|'none'} {
+):{selections:CalendarReminderSelection[]|undefined;carried:boolean;carriedKind?:'before'|'none';suggestedAbsolute?:{uid:string;at:string}} {
   const unchanged={selections,carried:false};
   if(!selections||!change||change.before.length!==after.length||change.index<0||change.index>=after.length)return unchanged;
   const old=change.before[change.index],now=after[change.index];
@@ -21,6 +21,9 @@ export function carryRelativeReminderAfterSingleDeadlineEdit(
   if(prior.body!==current.body||priorDue.length!==1||currentDue.length!==1||priorDue[0].value.trim()!==old.deadline||currentDue[0].value.trim()!==now.deadline||
     JSON.stringify(prior.metadata.filter(m=>m.key!=='due'))!==JSON.stringify(current.metadata.filter(m=>m.key!=='due')))return unchanged;
   const selected=selections.find(s=>s.uid===old.uid)!;
+  // An absolute reminder may no longer be appropriate after changing the
+  // deadline. Offer the exact prior instant; never apply or shift it silently.
+  if(selected.reminder.kind==='at')return {...unchanged,suggestedAbsolute:{uid:now.uid,at:selected.reminder.at}};
   if(selected.reminder.kind!=='before'&&selected.reminder.kind!=='none')return unchanged;
   if(selected.reminder.kind==='before'&&(old.status!=='timed'||now.status!=='timed'))return unchanged;
   const newUid=now.uid;

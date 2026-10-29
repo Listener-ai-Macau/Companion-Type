@@ -17,9 +17,10 @@ export function effectiveCalendarAlarm(item:CalendarExportItem,choice:CalendarRe
 export function calendarAlarmLabel(alarm:CalendarAlarm):string {
   return alarm.kind==='none'?'不提醒':alarm.kind==='at'?`提醒：${readableCalendarTime(alarm.at)}`:alarm.minutes===0?'提醒：在截止时刻':alarm.minutes===60?'提醒：提前1小时':alarm.minutes===1440?'提醒：提前1天':`提醒：提前${alarm.minutes}分钟`;
 }
-export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onReminders,onSlot,onPending}:{
+export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onReminders,onSlot,onPending,suggestedAbsolute}:{
   items:CalendarExportItem[];choice:CalendarReminderChoice;disabled:boolean;onEdit?:(index:number)=>void;
   onReminder?:(uid:string,reminder:CalendarAlarm|null)=>void;onReminders?:(selections:CalendarReminderSelection[])=>void;onSlot?:(uid:string,slot:CalendarExecutionSlot|null)=>void;onPending?:(delta:1|-1)=>void;
+  suggestedAbsolute?:{uid:string;at:string};
 }){
   const[editing,setEditing]=useState<number|null>(null);
   const[editingSlot,setEditingSlot]=useState<number|null>(null);
@@ -48,6 +49,10 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onR
           {item.status==='timed'?<><option value="0">在截止时刻</option><option value="30">提前30分钟</option><option value="60">提前1小时</option><option value="1440">提前1天</option></>:null}
           <option value="at">指定提醒日期和时刻…</option>
         </select>{override?.kind==='at'?<button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setEditing(index)}>修改提醒时刻</button>:null}</label>:null}
+        {onReminder&&item.uid&&suggestedAbsolute?.uid===item.uid&&(item.status==='allDay'||item.status==='timed')?<div className="ct-step-meta">
+          <p>原提醒：{readableCalendarTime(suggestedAbsolute.at)}。截止时间已更改，原提醒不会自动移动，请核对是否仍合适。</p>
+          <button type="button" className="ct-text-button" disabled={disabled} onClick={()=>onReminder(item.uid!,{kind:'at',at:suggestedAbsolute.at})}>保留这个原提醒时刻</button>
+        </div>:null}
         {onEdit&&item.status!=='completed'?<><br/><button type="button" className="ct-text-button" disabled={disabled}
           aria-label={`日历事项 ${index+1} ${item.status==='allDay'?'补充清单截止时刻':item.status==='unconfirmed'?'确认清单截止日期和时刻':'修改清单截止时间'}`}
           onClick={()=>onEdit(index)}>{item.status==='allDay'?'补充清单截止时刻':item.status==='unconfirmed'?'确认清单截止日期和时刻':'修改清单截止时间'}</button></>:null}
