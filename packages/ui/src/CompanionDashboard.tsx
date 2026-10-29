@@ -461,6 +461,8 @@ export function CompanionDashboard({
     minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string; createManual?: CompanionMeetingSaveRequest['createManual'];calendarContext?:CompanionMinutesNoteContext|null }>>;
   }>>({});
   const [editingMinutes, setEditingMinutes] = useState(false);
+  const savedMinutesHeading=useRef<HTMLDetailsElement|null>(null);
+  const [savedMinutesReveal,setSavedMinutesReveal]=useState<{sessionId:string;mode:CompanionV1MeetingMode}|null>(null);
   const [calendarEditRequest,setCalendarEditRequest]=useState<string|null>(null);
   const [calendarEditLine,setCalendarEditLine]=useState<number|undefined>();
   const [calendarEditTimed,setCalendarEditTimed]=useState(false);
@@ -1348,6 +1350,7 @@ export function CompanionDashboard({
       if(minutes&&savedSession&&meetingMinutesMarkdown(savedSession,mode)===submittedMinutes)
         setCalendarReturn(current=>current&&current.sessionId===sessionId&&current.mode===mode?{...current,expectedMarkdown:submittedMinutes}:current);
       setSaveMeetingResult({ sessionId, part: resultPart, kind: 'saved', message: '修改已保存。' });
+      if(minutes&&!calendarReturn)setSavedMinutesReveal({sessionId,mode});
     } catch (saveError) {
       setSaveMeetingResult({ sessionId, part: resultPart, kind: 'error', message: `未保存，草稿仍在：${operationErrorText(saveError,'save')}` });
     } finally {
@@ -1487,6 +1490,15 @@ export function CompanionDashboard({
         : !capacity || capacity.busy ? `剩余可录时长待读取 · ${configuredTranscription}`
           : capacityUnavailable ? `同步并确认保存后，设备才会复用空间 · ${configuredTranscription}`
             : `本地空间约可录 ${recordingRoomLabel(capacitySeconds)}（上次读取）${capacity.localLimitSeconds ? ` · 按键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''} · ${configuredTranscription}`;
+  useEffect(()=>{
+    if(!savedMinutesReveal)return;
+    if(savedMinutesReveal.sessionId!==selectedSession?.id||savedMinutesReveal.mode!==minutesViewMode||pageView!=='library'||!savedDetailOpen){setSavedMinutesReveal(null);return;}
+    if(editingMinutes||minutesDirty||!hasMinutes)return;
+    const region=savedMinutesHeading.current;
+    region?.scrollIntoView({block:'start',behavior:'auto'});
+    region?.querySelector('summary')?.focus({preventScroll:true});
+    setSavedMinutesReveal(null);
+  },[savedMinutesReveal,selectedSession?.id,minutesViewMode,pageView,savedDetailOpen,editingMinutes,minutesDirty,hasMinutes]);
   const footer = useMemo(() => {
     if (error) return error;
     if (nameError) return nameError;
@@ -1814,7 +1826,7 @@ export function CompanionDashboard({
                 title={audioBlockedReason ?? undefined} onClick={() => void prepareAudio()}>{audioBusy ? '正在准备…' : '重试回听'}</button>}
           </section>
           </div>
-          {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details id="ct-recording-result" className="ct-recording-result"
+          {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details ref={savedMinutesHeading} id="ct-recording-result" className="ct-recording-result"
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
             <summary>{manualMinutes ? '手写清单' : '整理结果'}{minutesDirty ? ' · 有未保存的修改' : manualMinutes ? storageBlocked ? ' · 保存待确认' : ' · 已保存' : ''}</summary>
             <MinutesModeTabs value={minutesViewMode} onChange={setMinutesViewMode} dualMode={Boolean(offlineMinutes && onlineMinutes)}
@@ -1841,6 +1853,7 @@ export function CompanionDashboard({
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 && onPreviewMeetingExport ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||phoneBusy||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
                   onClick={()=>void showPhoneChecklist()}>{phoneBusy?'正在准备…':'带到手机'}</button> : null}
+                {!editingMinutes&&hasMinutes&&savedActions(minutesMarkdown).length>0&&onPreviewMeetingExport?<span className="ct-step-meta">带到手机使用文字二维码；也可导出 TXT 自行传送。</span>:null}
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 && onPreviewMeetingExport ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||phoneBusy||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
                   onClick={()=>void copyChecklist()}>{copyBusy?'正在准备…':'复制清单'}</button> : null}

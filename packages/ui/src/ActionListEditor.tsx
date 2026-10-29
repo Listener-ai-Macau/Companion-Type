@@ -1,4 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
+import {ActionListCommonFields,commonFieldPatch} from './ActionListCommonFields';
 import {CalendarTimeEditor} from './CalendarTimeEditor';
 import {readableCalendarTime} from './calendarTime';
 import {nativeActionParts,actionTaskBody,type ActionMetadata} from './actionMetadata';
@@ -55,6 +56,16 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
   const calendarTarget=rows.findIndex(row=>row.id===calendarIntent.current.rowId);
   return <div className="ct-action-list-editor">
     <p className="ct-step-meta" role={calendarRequestKey?"status":undefined}>{calendarRequestKey?"先确认要放入日历的日期或时刻；确认后保存修改，再导出。原时间说明仍在，未替你猜日期。":"时间说明先按文字保存；需要导入日历时，再确认日期与时刻。"}</p>
+    <ActionListCommonFields revision={rows.map(writeRow).join('\n')} disabled={disabled} onPending={onCalendarPending}
+      rows={rows.map(row=>({eligible:pending(row),due:due(row),owner:row.metadata.find(field=>field.key==='owner')?.value??''}))}
+      onApply={(fields,replace)=>update(rows.map(row=>{
+        const patch=commonFieldPatch({eligible:pending(row),due:due(row),owner:row.metadata.find(field=>field.key==='owner')?.value??''},fields,replace);
+        if(!Object.keys(patch).length)return row;
+        const metadata=[...row.metadata];
+        for(const key of ['due','owner'] as const){const value=patch[key];if(value===undefined)continue;
+          const index=metadata.findIndex(field=>field.key===key);if(index<0)metadata.push({key,value});else metadata[index]={key,value};}
+        return {...row,metadata,changed:true};
+      }))}/>
     {rows.map((row,index)=><div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
       <div style={{display:'flex',gap:8,alignItems:'start'}}>
         <label style={{flex:1}}><span className="ct-step-meta">待办 {index+1}</span>

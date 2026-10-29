@@ -18,6 +18,7 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,ope
   return <>
     <button type="button" className="ct-text-button" disabled={disabled} aria-label={`${label} 确认日历时间`}
       onClick={begin}>确认日历时间</button>
+    <small className="ct-step-meta" style={{display:'block'}}>只确认本项日期，不会自动创建日历或提醒。</small>
     {draft?<dialog ref={dialog} aria-label={`${label} 日历时间`} onCancel={event=>{event.preventDefault();close();}} onClose={()=>{setDraft(null);finishPending();}}
       style={{width:'min(92vw,28rem)',maxHeight:'85vh',overflow:'auto',boxSizing:'border-box',padding:24,border:'1px solid #c7d3c9',borderRadius:16}}>
       <h3>确认日历时间</h3>
