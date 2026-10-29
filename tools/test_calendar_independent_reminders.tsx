@@ -57,11 +57,13 @@ const again=tree.root.findAllByType('input').find((n:any)=>n.props.type==='check
 act(()=>again.props.onChange({currentTarget:{checked:true}}));
 await act(async()=>field('日历事项 1 提醒').props.onChange({currentTarget:{value:'none'}}));
 assert.ok(button('保存日历文件'),'all explicit alarms disabled means plain export label');
-await act(async()=>pending[2].reject(Error('暂时无法核对')));
+const failedPreview=pending.at(-1)!;
+await act(async()=>failedPreview.reject(Error('暂时无法核对')));
 assert.equal(button('保存日历文件').props.disabled,true);
 await act(async()=>button('重新核对提醒').props.onClick());
-assert.deepEqual(pending[3].request,pending[2].request,'retry retains the exact selection');
-await act(async()=>pending[3].resolve({contentHash:'e'.repeat(64),calendarItems:items}));
+const retriedPreview=pending.at(-1)!;assert.notEqual(retriedPreview,failedPreview);
+assert.deepEqual(retriedPreview.request,failedPreview.request,'retry retains the exact selection');
+await act(async()=>retriedPreview.resolve({contentHash:'e'.repeat(64),calendarItems:items}));
 assert.equal(button('保存日历文件').props.disabled,false);
 assert.equal(JSON.stringify(snapshot),before);
 act(()=>tree.unmount());console.log('PASS independent explicit alarm, unchanged date-only deadline/source, cancellation, stale preview refusal, exact selection/hash export, copy snapshot semantics');

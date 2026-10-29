@@ -1131,6 +1131,11 @@ export function CompanionDashboard({
   const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string,reviewChoice?:CalendarReminderChoice,calendarSaveToken?:string) => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id,exportSourceKey=copySourceKey;
+    const savedCalendarReview=(format==='ics'||format.startsWith('calendar'))?calendarExportReview:null;
+    const restoreCalendarReview=()=>{
+      if(savedCalendarReview?.sourceKey===exportSourceKey&&copySourceRef.current===exportSourceKey)
+        setCalendarExportReview(savedCalendarReview);
+    };
     const unsavedForExport = titleDirty || transcriptReviewUnsaved || calendarPendingCount>0 || calendarReminderPending>0
       || (format !== 'txt' && format !== 'srt' && minutesDirty)
       || ((format === 'json' || format === 'txt' || format === 'markdown') && (noteUnsaved || bookmarkUnsaved));
@@ -1178,6 +1183,7 @@ export function CompanionDashboard({
       setCalendarExportReview(null);
       setExportResult({sessionId,format,origin,kind:'pending',message:'请选择文件保存位置；也可在保存窗口取消。'});
       const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(calendarSaveToken?{calendarSaveToken}:{}) });
+      if(!result)restoreCalendarReview();
       if(result?.calendarOpenToken&&format.startsWith('calendar'))setCalendarSaveTargets(current=>({...current,[JSON.stringify([sessionId,minutesViewMode,selectedSession.calendarCopyEpoch??0])]:{token:result.calendarOpenToken!,name:exportFileName(result.path)}}));
       setExportResult({ sessionId, format, origin, path: result?.path, calendarOpenToken:result?.calendarOpenToken,calendarFileUri:result?.calendarFileUri, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder') ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
@@ -1191,7 +1197,7 @@ export function CompanionDashboard({
         setCalendarEditLine(undefined);setCalendarEditTimed(false);setCalendarEditAll(false);
         setCalendarReturn({sessionId,mode:minutesViewMode,origin,...reviewChoice});
         setCalendarEditRequest(`${sessionId}:${minutesViewMode}:${++calendarEditSequence.current}`);
-      }else setExportResult({ sessionId, format, origin, kind: 'error', message: error instanceof SavedPreviewInterrupted?error.message:`保存未完成：${operationErrorText(error,'export')}` });
+      }else {restoreCalendarReview();setExportResult({ sessionId, format, origin, kind: 'error', message: error instanceof SavedPreviewInterrupted?error.message:`保存未完成：${operationErrorText(error,'export')}` });}
     } finally { exportActive.current = false; setExportBusy(false); }
   };
   useEffect(()=>{setCalendarReturn(null);setCalendarEditLine(undefined);setCalendarEditTimed(false);setCalendarEditAll(false);},[selectedSession?.id,minutesViewMode]);
