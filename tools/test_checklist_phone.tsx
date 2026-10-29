@@ -40,7 +40,7 @@ const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).joi
 const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
 assert.equal(requests.length,0,'Opening a record does not prepare or disclose a QR automatically');
-await act(async()=>{button('带到手机').props.onClick();for(let i=0;i<50&&!tree.root.findAllByProps({alt:'当前已保存清单的文字二维码'}).length;i++)await new Promise(resolve=>setTimeout(resolve,10));});
+await act(async()=>{button('显示文字二维码').props.onClick();for(let i=0;i<50&&!tree.root.findAllByProps({alt:'当前已保存清单的文字二维码'}).length;i++)await new Promise(resolve=>setTimeout(resolve,10));});
 assert.deepEqual(requests[0],{sessionId:row.id,meetingMode:'offlineStore',format:'todotxt'});
 assert.equal(tree.root.findByProps({alt:'当前已保存清单的文字二维码'}).props.src,encoded.dataUrl);
 assert.match(text(tree.toJSON()),/没有上传或自动发送/);
@@ -49,14 +49,14 @@ await act(async()=>button('收起').props.onClick());
 assert.equal(tree.root.findAllByProps({alt:'当前已保存清单的文字二维码'}).length,0);
 
 defer=true;
-await act(async()=>{button('带到手机').props.onClick();button('带到手机').props.onClick();});
+await act(async()=>{button('显示文字二维码').props.onClick();button('显示文字二维码').props.onClick();});
 assert.equal(requests.length,2,'Only one read-only preview per click while pending');
 await act(async()=>button('收起').props.onClick());
 await act(async()=>release!({contentHash:'a'.repeat(64),textContent:message}));
 assert.equal(tree.root.findAllByProps({alt:'当前已保存清单的文字二维码'}).length,0,'Closing before a late IPC reply cannot reveal the text/code');
-assert.equal(button('带到手机').props.disabled,false);
+assert.equal(button('显示文字二维码').props.disabled,false);
 
-await act(async()=>{button('带到手机').props.onClick();});
+await act(async()=>{button('显示文字二维码').props.onClick();});
 const pending=release!;
 snapshot=structuredClone(snapshot);snapshot.host.sessions[0].title='另一个已保存标题';
 await act(async()=>tree.update(<CompanionDashboard {...props()}/>));
@@ -65,7 +65,7 @@ assert.equal(tree.root.findAllByProps({alt:'当前已保存清单的文字二维
 snapshot=JSON.parse(original);defer=false;
 await act(async()=>tree.update(<CompanionDashboard {...props()}/>));
 await act(async()=>button('编辑清单').props.onClick());
-assert.equal(button('带到手机'),undefined,'Editing cannot disclose a previous saved/draft mixture');
+assert.equal(button('显示文字二维码'),undefined,'Editing cannot disclose a previous saved/draft mixture');
 act(()=>tree.unmount());
 assert.equal(JSON.stringify(snapshot),original);
 console.log('PASS full saved checklist QR decode, byte limit without truncation, ordinary UI intent, native preview source, cancel/late/stale/edit guards; no device/cloud/phone claim');

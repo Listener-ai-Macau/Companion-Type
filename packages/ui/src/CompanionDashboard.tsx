@@ -341,7 +341,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
     {secondary.length?<details><summary>更多整理内容</summary>
       {secondary.map(field)}
     </details>:null}
-    {manual?<details className="ct-manual-save-help"><summary>保存与提醒说明</summary><p className="ct-step-meta">自己填写的清单仅保存在本机，原话和补充仍保留；不会自动提取或创建提醒。</p></details>
+    {manual?<><p className="ct-step-meta">保存只保留本机清单，填写时间也不会自动创建日历或提醒。</p><details className="ct-manual-save-help"><summary>保存与提醒说明</summary><p className="ct-step-meta">自己填写的清单仅保存在本机，原话和补充仍保留；不会自动提取或创建提醒。</p></details></>
       :<p className="ct-step-meta">只修改整理结果，原录音文字和补充备注仍分别保留。</p>}
   </div>;
 }
@@ -1852,8 +1852,8 @@ export function CompanionDashboard({
               <div className="ct-inline-edit-actions ct-minutes-export-actions">
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 && onPreviewMeetingExport ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||phoneBusy||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
-                  onClick={()=>void showPhoneChecklist()}>{phoneBusy?'正在准备…':'带到手机'}</button> : null}
-                {!editingMinutes&&hasMinutes&&savedActions(minutesMarkdown).length>0&&onPreviewMeetingExport?<span className="ct-step-meta">带到手机使用文字二维码；也可导出 TXT 自行传送。</span>:null}
+                  onClick={()=>void showPhoneChecklist()}>{phoneBusy?'正在准备…':'显示文字二维码'}</button> : null}
+                {!editingMinutes&&hasMinutes&&savedActions(minutesMarkdown).length>0&&onPreviewMeetingExport?<span className="ct-step-meta">不会自动同步到手机；也可导出 TXT 自行传送。</span>:null}
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 && onPreviewMeetingExport ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||phoneBusy||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
                   onClick={()=>void copyChecklist()}>{copyBusy?'正在准备…':'复制清单'}</button> : null}

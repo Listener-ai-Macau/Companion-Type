@@ -139,7 +139,7 @@ Original audio and the library are local. Cloud transcription sends the relevant
 
 While editing a checklist with at least two unfinished items, choose **设置共同时间与负责人**. Enter common values once. By default only blank fields are filled, preserving different per-item settings. To replace existing values, explicitly select **同时替换已有值**, review the number of affected items and apply. Empty common fields do not clear existing values; completed items remain unchanged. You can still edit each item separately. Finally choose **保存清单** or **保存修改**. Cancelling the common-fields window does not apply its input.
 
-Common time is stored as entered text: “Saturday” is not inferred as a date. For calendar use, explicitly confirm each item's date or time, save, export, import and verify reminders. **带到手机** displays a text QR code; you can also export TXT and transfer it yourself. It does not automatically synchronize with a phone.
+Choose **确认共同日历日期** to explicitly confirm a date or time once, then review its application to the unfinished items. Date-only values do not invent an hour, and relative wording such as “Saturday” is never resolved automatically. Existing times remain protected unless replacement is selected. Cancelling the date window returns to the common-field draft; cancelling that draft leaves the checklist unchanged. Per-item calendar editing remains available. Save before exporting, importing and checking reminders. **显示文字二维码** displays a text QR code; TXT can also be transferred manually. Neither action automatically synchronizes a phone.
 
 ## Data, Costs and Backups
 

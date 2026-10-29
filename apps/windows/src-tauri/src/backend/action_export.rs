@@ -175,7 +175,10 @@ fn readable_action(text: &str) -> String {
         if !seen.insert(key){return text.into()}
         labels.push(if key=="due" {format!("{}：{}",if value.ends_with('前')||readable_time(value)!=value{"截止"}else{"注明时间"},readable_time(value))}else{format!("负责人：{value}")});
     }
-    format!("{}（{}）",&text[..suffix.get(0).unwrap().start()],labels.join("；"))
+    let body=&text[..suffix.get(0).unwrap().start()];
+    // Keep the authored condition verbatim; separate it from generated labels.
+    let gap=if body.ends_with(['）',')']) {" "}else{""};
+    format!("{body}{gap}（{}）",labels.join("；"))
 }
 
 pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
@@ -511,6 +514,8 @@ mod tests {
         }
         assert_eq!(readable_action("周五前核对 (due: 周五)"),"周五前核对（注明时间：周五）");
         assert_eq!(readable_action("核对 (owner: A,B, due: 未定)"),"核对（负责人：A,B；注明时间：未定）");
+        assert_eq!(readable_action("买咖啡豆（不要深烘） (due: 周六)"),"买咖啡豆（不要深烘） （注明时间：周六）");
+        assert_eq!(readable_action("确认后买灯泡(没确认就不买) (owner: 我, due: 2026-10-31)"),"确认后买灯泡(没确认就不买) （负责人：我；截止：2026年10月31日）");
         for value in ["明天下午3点","2026-02-29","0000-01-01","2026-10-26 15:00","2026-10-26T15:00:00-00:00"] {assert_eq!(readable_time(value),value);}
         assert_eq!(readable_time("2028-02-29"),"2028年2月29日");
         assert_eq!(readable_time("2026-10-26T07:00:12.125Z"),"2026年10月26日 07:00:12.125（UTC+00:00）");

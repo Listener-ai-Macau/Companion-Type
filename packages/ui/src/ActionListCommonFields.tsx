@@ -1,4 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
+import {CalendarTimeEditor} from './CalendarTimeEditor';
+import {readableCalendarTime} from './calendarTime';
 
 type Fields={due:string;owner:string};
 export type CommonActionRow=Fields & {eligible:boolean};
@@ -41,13 +43,18 @@ export function ActionListCommonFields({rows,revision,disabled,onApply,onPending
       style={{width:'min(92vw,30rem)',maxHeight:'85vh',overflow:'auto',boxSizing:'border-box',padding:24,border:'1px solid #c7d3c9',borderRadius:16}}>
       <h3>一次填写，多项使用</h3>
       <p className="ct-step-meta">只处理当前 {eligible.length} 条未完成事项；已完成事项不改。应用后仍可单独调整，最后点“保存清单”或“保存修改”才会保存。</p>
-      <label style={{display:'block',marginBottom:12}}>共同时间说明（文字）
+      {readableCalendarTime(draft.due)!==draft.due?<div style={{marginBottom:12}}>
+        <p className="ct-step-meta">已确认的共同日历时间</p><p>{readableCalendarTime(draft.due)}</p>
+        <button type="button" className="ct-text-button" disabled={disabled||stale} onClick={()=>setDraft({...draft,due:''})}>改用共同文字时间</button>
+      </div>:<label style={{display:'block',marginBottom:12}}>共同时间说明（文字）
         <input aria-label="共同时间说明" value={draft.due} disabled={disabled} placeholder="例如：周六；留空不改时间"
-          style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>setDraft({...draft,due:event.target.value})}/></label>
+          style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>setDraft({...draft,due:event.target.value})}/></label>}
+      <CalendarTimeEditor value={draft.due} label="共同时间" scope="common" disabled={disabled||stale} onPending={onPending}
+        onConfirm={due=>setDraft(current=>current?{...current,due}:current)}/>
       <label style={{display:'block',marginBottom:12}}>共同负责人
         <input aria-label="共同负责人" value={draft.owner} disabled={disabled} placeholder="例如：我；留空不改负责人"
           style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>setDraft({...draft,owner:event.target.value})}/></label>
-      <p className="ct-step-meta">已有字段只有一个相同值时会预填供核对。时间按你填写的文字使用，不推测日期，不创建日历或提醒。</p>
+      <p className="ct-step-meta">已有字段只有一个相同值时会预填供核对。“周六”等文字不会自动换算；需要日历时，可在上方明确确认日期。</p>
       <label><input type="checkbox" aria-label="同时替换已有时间或负责人" checked={draft.replace} disabled={disabled}
         onChange={event=>setDraft({...draft,replace:event.target.checked})}/> 同时替换已有值</label>
       <p className="ct-step-meta">默认只补空白字段，保留各项已有设置。勾选后，会将上面非空的字段应用到全部未完成事项。</p>
