@@ -1526,6 +1526,13 @@ impl CompanionBackend for FixtureCompanionBackend {
             .snapshot
             .lock()
             .map_err(|_| "Companion backend state lock failed".to_string())?;
+        // Capture the exact contents seen before a destructive operation; an
+        // ID alone cannot authorize clearing newer audio added concurrently.
+        let privacy_authorizations = if matches!(action,CompanionV1ControlAction::PrivacyEraseAudio
+            | CompanionV1ControlAction::PrivacyDeleteSession | CompanionV1ControlAction::PrivacyEraseAll) {
+            snapshot.host.sessions.iter().map(session_store::privacy_authorization)
+                .collect::<Result<Vec<_>,_>>()?
+        } else { Vec::new() };
         if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio
             | CompanionV1ControlAction::MeetingGenerateMinutes) && request.session_id.is_none() {
             request.session_id=selected_session(&snapshot).map(|s|s.id.clone());
@@ -3137,14 +3144,16 @@ impl CompanionBackend for FixtureCompanionBackend {
         if next.host.persistence.status == "ready" || action == CompanionV1ControlAction::MeetingStop {
             // Only an explicitly requested local privacy operation may remove
             // rows; never let an older UI snapshot erase a newly published row.
-            let allowed_removals: Vec<String> = match action {
-                CompanionV1ControlAction::PrivacyDeleteSession => requested_session_id.iter().cloned().collect(),
-                CompanionV1ControlAction::PrivacyEraseAll => snapshot.host.sessions.iter().map(|row| row.id.clone()).collect(),
+            let selected_authorization: Vec<(String,String)> = privacy_authorizations.iter()
+                .filter(|(id,_)| requested_session_id.as_deref()==Some(id.as_str())).cloned().collect();
+            let allowed_removals: Vec<(String,String)> = match action {
+                CompanionV1ControlAction::PrivacyDeleteSession => selected_authorization.clone(),
+                CompanionV1ControlAction::PrivacyEraseAll => privacy_authorizations.clone(),
                 _ => Vec::new(),
             };
-            let allowed_audio_clear: Vec<String> = match action {
-                CompanionV1ControlAction::PrivacyEraseAudio | CompanionV1ControlAction::PrivacyDeleteSession => requested_session_id.iter().cloned().collect(),
-                CompanionV1ControlAction::PrivacyEraseAll => snapshot.host.sessions.iter().map(|row| row.id.clone()).collect(),
+            let allowed_audio_clear: Vec<(String,String)> = match action {
+                CompanionV1ControlAction::PrivacyEraseAudio | CompanionV1ControlAction::PrivacyDeleteSession => selected_authorization,
+                CompanionV1ControlAction::PrivacyEraseAll => privacy_authorizations,
                 _ => Vec::new(),
             };
             let _ = persistence::save_snapshot_allowing_removals(&mut next, &allowed_removals, &allowed_audio_clear);

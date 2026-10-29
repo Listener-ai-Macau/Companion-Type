@@ -211,26 +211,44 @@ fn save_locked(
     Ok(())
 }
 
-/// A UI snapshot may have been read before another process published a new
-/// recording. Only explicitly selected privacy deletions may remove disk rows.
-/// Check and write while holding the same store lock.
+/// Bind a confirmed privacy action to the recording data visible when the
+/// action began. Reclaimed status may change during cleanup; ownership and
+/// contents must not be substituted by a later write.
+pub(crate) fn privacy_authorization(row: &CompanionV1HostSession) -> Result<(String, String), String> {
+    let value=serde_json::json!({
+        "audioStored":row.audio_stored,"audioCached":row.retention.audio_cached,
+        "audioPath":row.audio_path,"audioBytes":row.audio_bytes,"chunks":row.chunks,
+        "deviceKey":row.device_recording_key,"deviceLength":row.device_total_length,
+        "deviceHash":row.device_sha256,"transcript":row.transcript_text,
+        "liveTranscript":row.live_transcript_text,"notes":row.meeting_notes,
+        "minutes":row.minutes,"minutesByMode":row.minutes_by_mode,"organization":row.organization
+    });
+    let bytes=serde_json::to_vec(&value).map_err(|e|format!("核对录音清理身份失败：{e}"))?;
+    Ok((row.id.clone(),format!("{:x}",Sha256::digest(bytes))))
+}
+
+/// Check and write under one lock; a privacy authorization applies only to
+/// the exact recording contents visible before the user-requested operation.
 pub(crate) fn save_snapshot_checked(path: &Path, sessions: &[CompanionV1HostSession],
-    allowed_removals: &[String], allowed_audio_clear: &[String]) -> Result<(), String> {
+    allowed_removals: &[(String,String)], allowed_audio_clear: &[(String,String)]) -> Result<(), String> {
     let _lock = lock(path)?;
     let loaded = load_locked(path)?;
     if let Some(bytes) = loaded.bytes {
         let before = decode(&bytes)?;
-        if before.iter().any(|old| !sessions.iter().any(|row| row.id == old.id)
-            && !allowed_removals.iter().any(|id| id == &old.id)) {
-            return Err("磁盘中有新的录音，当前窗口尚未包含；未覆盖资料，请重新载入后重试。".into());
-        }
         for old in &before {
-            if let Some(next) = sessions.iter().find(|row| row.id == old.id) {
+            let next=sessions.iter().find(|row| row.id == old.id);
+            if next.is_none() {
+                let authorized=privacy_authorization(old)?;
+                if !allowed_removals.contains(&authorized) {
+                    return Err("磁盘中有新的或已变化的录音；未覆盖资料，请重新载入后重试。".into());
+                }
+            }
+            if let Some(next) = next {
                 let had_audio = old.audio_stored || old.retention.audio_cached;
                 let loses_audio = (old.audio_stored && !next.audio_stored)
                     || (old.retention.audio_cached && !next.retention.audio_cached)
                     || (had_audio && old.audio_path.is_some() && next.audio_path.is_none());
-                if loses_audio && !allowed_audio_clear.iter().any(|id| id == &old.id) {
+                if loses_audio && !allowed_audio_clear.contains(&privacy_authorization(old)?) {
                     return Err("这条录音的原音已在磁盘更新；未覆盖资料，请重新载入后重试。".into());
                 }
             }
@@ -280,9 +298,14 @@ mod tests {
         let primary=std::fs::read(&path).unwrap();let backup=std::fs::read(root.join("sessions.json.bak")).unwrap();
         assert!(save_snapshot_checked(&path,&stale,&[],&[]).is_err(),"stale snapshot must not discard a newer saved audio reference");
         assert_eq!(std::fs::read(&path).unwrap(),primary);assert_eq!(std::fs::read(root.join("sessions.json.bak")).unwrap(),backup);
-        assert!(save_snapshot_checked(&path,&stale,&[],&["other".into()]).is_err());
-        // Explicit cleanup of this exact recording is permitted.
-        save_snapshot_checked(&path,&stale,&[],&["first".into()]).unwrap();
+        let old_authorization=privacy_authorization(&stale[0]).unwrap();
+        assert!(save_snapshot_checked(&path,&stale,&[],&[old_authorization]).is_err(), "old authorization must not cover newer audio");
+        assert!(save_snapshot_checked(&path,&[],&[privacy_authorization(&stale[0]).unwrap()],&[]).is_err(), "old delete must not remove a newer recording");
+        assert_eq!(std::fs::read(&path).unwrap(),primary);assert_eq!(std::fs::read(root.join("sessions.json.bak")).unwrap(),backup);
+        // A new explicit cleanup of the currently observed content is permitted.
+        let fresh=decode(&primary).unwrap();let fresh_authorization=privacy_authorization(&fresh[0]).unwrap();
+        let mut cleared=fresh.clone();cleared[0].audio_stored=false;cleared[0].retention.audio_cached=false;cleared[0].audio_path=None;
+        save_snapshot_checked(&path,&cleared,&[],&[fresh_authorization]).unwrap();
         let cleared=decode(&std::fs::read(&path).unwrap()).unwrap();
         assert!(!cleared[0].audio_stored && !cleared[0].retention.audio_cached);
         std::fs::remove_dir_all(root).unwrap();
@@ -302,10 +325,10 @@ mod tests {
         assert!(save_snapshot_checked(&path,&stale,&[],&[]).is_err());
         assert_eq!(std::fs::read(&path).unwrap(),before);assert_eq!(std::fs::read(root.join("sessions.json.bak")).unwrap(),backup);
         // Confirming deletion of "first" must not authorize deleting a newer row.
-        assert!(save_snapshot_checked(&path,&[],&["first".into()],&[]).is_err());
+        assert!(save_snapshot_checked(&path,&[],&[privacy_authorization(&first).unwrap()],&[]).is_err());
         assert_eq!(std::fs::read(&path).unwrap(),before);
         let mut latest=decode(&before).unwrap();latest.retain(|row|row.id!="first");
-        save_snapshot_checked(&path,&latest,&["first".into()],&[]).unwrap();
+        save_snapshot_checked(&path,&latest,&[privacy_authorization(&first).unwrap()],&[]).unwrap();
         let saved=decode(&std::fs::read(&path).unwrap()).unwrap();
         assert_eq!(saved.len(),1);assert_eq!(saved[0].id,"new-recording");
         std::fs::remove_dir_all(root).unwrap();

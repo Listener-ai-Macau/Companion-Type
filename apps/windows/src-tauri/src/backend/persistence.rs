@@ -401,7 +401,7 @@ pub fn save_snapshot(snapshot: &mut CompanionV1Snapshot) -> Result<(), String> {
 }
 
 pub(crate) fn save_snapshot_allowing_removals(snapshot: &mut CompanionV1Snapshot,
-    allowed_removals: &[String], allowed_audio_clear: &[String]) -> Result<(), String> {
+    allowed_removals: &[(String,String)], allowed_audio_clear: &[(String,String)]) -> Result<(), String> {
     if snapshot.host.persistence.status == "blocked" {
         return Err("会议库尚未恢复，已暂停保存；请先重试恢复".into());
     }
@@ -426,7 +426,7 @@ pub(crate) fn save_snapshot_allowing_removals(snapshot: &mut CompanionV1Snapshot
 /// Persist a checkpoint and report failure to the caller. Tests without an
 /// explicit state path stay isolated from the real user profile.
 fn save_sessions_checked_allowing_removals(sessions: &[CompanionV1HostSession],
-    allowed_removals: &[String], allowed_audio_clear: &[String]) -> Result<(), String> {
+    allowed_removals: &[(String,String)], allowed_audio_clear: &[(String,String)]) -> Result<(), String> {
     if cfg!(test) && std::env::var("COMPANION_TYPE_STATE_PATH").is_err() {
         return Ok(());
     }
