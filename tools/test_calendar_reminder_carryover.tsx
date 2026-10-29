@@ -37,7 +37,9 @@ items=firstItems.map(i=>i.uid==='day'?{...i,uid:'changed-day',deadline:'2026-11-
 act(()=>tree.update(<CompanionDashboard {...props()}/>));await act(async()=>button('导出到日历').props.onClick());
 assert.equal(field('日历事项 1 提醒').props.value,'1440');assert.equal(field('日历事项 2 提醒').props.value,'default','same title/position with changed UID does not inherit absolute alarm');assert.equal(field('日历事项 3 提醒').props.value,'none');assert.match(text(tree.toJSON()),/上次文件中有2项提醒/);
 const latest=requests.filter(r=>r.calendarReminders?.length).at(-1);assert.ok(!latest.calendarReminders.some((s:any)=>s.uid==='day'||s.uid==='changed-day'));
-act(()=>tree.unmount());snapshot=JSON.parse(original);items=firstItems;act(()=>{tree=create(<CompanionDashboard {...props()}/>);});await act(async()=>button('导出到日历').props.onClick());assert.equal(field('日历事项 2 提醒').props.value,'at','fresh UI lifetime reads durable receipt, not temporary preview state');act(()=>tree.unmount());
+act(()=>tree.unmount());snapshot=JSON.parse(original);items=firstItems;act(()=>{tree=create(<CompanionDashboard {...props()}/>);});await act(async()=>button('导出到日历').props.onClick());assert.equal(field('日历事项 2 提醒').props.value,'at','fresh UI lifetime reads durable receipt, not temporary preview state');
+await act(async()=>button('按上次文件名保存…').props.onClick());assert.equal(exports.at(-1).calendarSavedName,true,'reuse is an explicit choice');assert.equal(exports.at(-1).calendarSaveToken,undefined);assert.ok(exports.at(-1).expectedContentHash);
+await act(async()=>button('保存日历文件（含提醒）').props.onClick());assert.equal(exports.at(-1).calendarSavedName,undefined,'ordinary new-file save remains unchanged');act(()=>tree.unmount());
 assert.equal(lastSavedCalendarReminders({...row,calendarCopyEpoch:1},'offlineStore'),undefined);
 assert.equal(lastSavedCalendarReminders(row,'onlineLive'),undefined);
 const latestNone={...copy,entries:[{...copy.entries[0],reminderMinutes:null}]};assert.deepEqual(lastSavedCalendarReminders({...row,calendarCopies:[latestNone,copy]},'offlineStore')!.selections,[{uid:'timed',reminder:{kind:'none'}}],'latest explicit no alarm never falls back to older alarm');

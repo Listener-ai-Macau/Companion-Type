@@ -176,6 +176,7 @@ export type CompanionMeetingExportRequest = {
   expectedContentHash?:string;
   calendarReminders?:CalendarReminderChoice['calendarReminders'];
   calendarSaveToken?:string;
+  calendarSavedName?:boolean;
 };
 
 export type CompanionMeetingSaveRequest = {
@@ -1129,7 +1130,7 @@ export function CompanionDashboard({
   },[calendarReminderKey,onPreviewMeetingExport,calendarReminderRetry]);
   const calendarReminderReady=!calendarReminderKey||calendarReminderPreview?.key===calendarReminderKey&&!!calendarReminderPreview.hash;
   const changeCalendarReminderPending=(delta:1|-1)=>setCalendarReminderPending(count=>Math.max(0,count+delta));
-  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string,reviewChoice?:CalendarReminderChoice,calendarSaveToken?:string) => {
+  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string,reviewChoice?:CalendarReminderChoice,calendarSaveToken?:string,calendarSavedName=false) => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id,exportSourceKey=copySourceKey;
     const savedCalendarReview=(format==='ics'||format.startsWith('calendar'))?calendarExportReview:null;
@@ -1186,7 +1187,7 @@ export function CompanionDashboard({
       }
       setCalendarExportReview(null);
       setExportResult({sessionId,format,origin,kind:'pending',message:'请选择文件保存位置；也可在保存窗口取消。'});
-      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(calendarSaveToken?{calendarSaveToken}:{}) });
+      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(calendarSaveToken?{calendarSaveToken}:{}),...(calendarSavedName?{calendarSavedName:true}:{}) });
       if(!result)restoreCalendarReview();
       if(result?.calendarOpenToken&&format.startsWith('calendar'))setCalendarSaveTargets(current=>({...current,[JSON.stringify([sessionId,minutesViewMode,selectedSession.calendarCopyEpoch??0])]:{token:result.calendarOpenToken!,name:exportFileName(result.path)}}));
       setExportResult({ sessionId, format, origin, path: result?.path, calendarOpenToken:result?.calendarOpenToken,calendarFileUri:result?.calendarFileUri, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder') ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
@@ -1895,7 +1896,6 @@ export function CompanionDashboard({
                 <h3>确认日历日程与提醒</h3>
                 <p>{calendarExportReview.format==='calendar'?((calendarReminderKey&&calendarReminderReady?calendarReminderPreview?.warning:calendarExportReview.warning)||'把已确认的日期和时间带到常用日历；后续修改不会自动同步。'):'还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。'}</p>
                 {calendarExportReview.reminderCarryover?<p className="ct-step-meta">已从“{calendarExportReview.reminderCarryover.fileName}”的最近保存记录带入{calendarExportReview.reminderCarryover.retained}项逐项设置。只沿用未变事项，下面仍可修改；不读取接收日历里的后续改动。</p>:null}
-                {calendarExportReview.format==='calendar' && selectedSession.calendarCopies?.some(copy=>copy.meetingMode===minutesViewMode && copy.privacyEpoch===(selectedSession.calendarCopyEpoch??0)) ? <p className="ct-step-meta">保存窗口会尝试带入上次的文件名；请自行核对文件夹和目标文件，也可改名另存。重启后不会记住文件夹。</p> : null}
                 {calendarExportReview.reminderSourceNote?<p className="ct-step-warn" role="status">{calendarExportReview.reminderSourceNote}</p>:null}
                 {calendarExportReview.format==='calendar'?<>
                   <label className="ct-step-meta"><input type="checkbox" aria-label="统一设置提醒" checked={!!calendarExportReview.remindAtTime}
@@ -1922,6 +1922,11 @@ export function CompanionDashboard({
                     onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarReminderKey?calendarReminderPreview?.hash:calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash,calendarExportReview,calendarSaveTargets[JSON.stringify([selectedSession.id,minutesViewMode,selectedSession.calendarCopyEpoch??0])].token)}>
                     保存到上次文件…（{calendarSaveTargets[JSON.stringify([selectedSession.id,minutesViewMode,selectedSession.calendarCopyEpoch??0])].name}）
                   </button><p className="ct-step-meta">将打开保存窗口，仍可取消或另存；位置记忆仅限本次打开 Type 期间。</p>
+                </div>:null}
+                {!calendarSaveTargets[JSON.stringify([selectedSession.id,minutesViewMode,selectedSession.calendarCopyEpoch??0])]&&calendarExportReview.format==='calendar'&&selectedSession.calendarCopies?.some(copy=>copy.meetingMode===minutesViewMode && copy.privacyEpoch===(selectedSession.calendarCopyEpoch??0))?<div className="ct-calendar-save-again">
+                  <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||calendarPendingCount>0||calendarReminderPending>0||!calendarReminderReady}
+                    onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarReminderKey?calendarReminderPreview?.hash:calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash,calendarExportReview,undefined,true)}>按上次文件名保存…</button>
+                  <p className="ct-step-meta">只填写上次文件名，请自行核对文件夹和目标文件，也可改名另存；重启后不会记住文件夹。</p>
                 </div>:null}
                 {calendarExportReview.items?<CalendarCopyComparison key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`}
                   copies={(selectedSession.calendarCopies??[]).filter(copy=>copy.meetingMode===minutesViewMode)} items={calendarExportReview.items} choice={calendarExportReview}/>:null}

@@ -31,6 +31,14 @@ pub(crate) fn saved_name_hint<'a>(session:&'a CompanionV1HostSession,mode:&str)-
     Some(name)
 }
 
+pub(crate) fn require_saved_name_unchanged(original:&CompanionV1HostSession,current:&CompanionV1HostSession,mode:&str,name:&str)->Result<(),String> {
+    crate::backend::library_lifecycle::require_available(current)?;
+    if current.id!=original.id || current.calendar_copy_epoch!=original.calendar_copy_epoch || saved_name_hint(current,mode)!=Some(name) {
+        return Err("上次文件记录已改变，请重新核对保存位置；本次未写入文件。".into());
+    }
+    Ok(())
+}
+
 impl CalendarHandoff {
     pub(crate) fn remember(&self, session:&CompanionV1HostSession, mode:&str, path:&Path, bytes:u64, hash:String)->Result<String,String> {
         if !path.is_absolute() || !path.extension().is_some_and(|s|s.to_str().is_some_and(|s|s.eq_ignore_ascii_case("ics"))) {
@@ -217,6 +225,13 @@ mod tests {
         };
         session.calendar_copies=vec![make("交接提醒.ics","offlineStore",0)];
         assert_eq!(saved_name_hint(&session,"offlineStore"),Some("交接提醒.ics"));
+        assert!(require_saved_name_unchanged(&session,&session,"offlineStore","交接提醒.ics").is_ok());
+        let mut later=session.clone();later.calendar_copy_epoch+=1;
+        assert!(require_saved_name_unchanged(&session,&later,"offlineStore","交接提醒.ics").is_err());
+        later=session.clone();later.calendar_copies[0].file_name="别的文件.ics".into();
+        assert!(require_saved_name_unchanged(&session,&later,"offlineStore","交接提醒.ics").is_err());
+        later=session.clone();later.organization.trashed_at=Some("now".into());
+        assert!(require_saved_name_unchanged(&session,&later,"offlineStore","交接提醒.ics").is_err());
         assert_eq!(saved_name_hint(&session,"onlineLive"),None);
         session.calendar_copy_epoch=1;assert_eq!(saved_name_hint(&session,"offlineStore"),None);session.calendar_copy_epoch=0;
         for name in ["../other.ics",r"C:\other.ics","other.txt"," ","bad:name.ics","a\n.ics","CON.ics","Lpt9.ics"] {

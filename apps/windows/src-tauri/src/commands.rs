@@ -219,6 +219,8 @@ pub struct CompanionMeetingExportRequest {
     pub calendar_reminders: Option<Vec<crate::backend::export::CalendarReminderSelection>>,
     #[serde(default)]
     pub calendar_save_token: Option<String>,
+    #[serde(default)]
+    pub calendar_saved_name: bool,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -539,10 +541,12 @@ pub async fn export_companion_meeting(
     // The snapshot/session clone above deliberately releases backend state
     // before opening the native dialog or performing disk I/O.
     let calendar_format=matches!(format,crate::backend::export::MeetingExportFormat::Calendar|crate::backend::export::MeetingExportFormat::CalendarReminder|crate::backend::export::MeetingExportFormat::CalendarReminder30|crate::backend::export::MeetingExportFormat::CalendarReminder60);
-    if request.calendar_save_token.is_some()&&(!calendar_format||request.expected_content_hash.is_none()) {
+    if (request.calendar_save_token.is_some()||request.calendar_saved_name)&&(!calendar_format||request.expected_content_hash.is_none()) {
         return Err("请先核对当前日历预览，再选择上次保存位置。".into());
     }
-    let suggested_name=if calendar_format {crate::calendar_handoff::saved_name_hint(&session,&request.meeting_mode).unwrap_or(&prepared.suggested_name)} else {&prepared.suggested_name};
+    if request.calendar_save_token.is_some()&&request.calendar_saved_name {return Err("请选择一种保存方式。".into());}
+    let saved_name=if request.calendar_saved_name {Some(crate::calendar_handoff::saved_name_hint(&session,&request.meeting_mode).ok_or("上次文件名不可用，请重新选择保存方式。")?)} else {None};
+    let suggested_name=saved_name.unwrap_or(&prepared.suggested_name);
     let mut dialog=app.dialog().file()
         .add_filter(prepared.format.dialog_label(), &[prepared.format.extension()])
         .set_file_name(suggested_name);
@@ -573,6 +577,11 @@ pub async fn export_companion_meeting(
         let current=coordinator.snapshot()?;
         let row=current.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("原记录已移除，未写入文件。")?;
         app.state::<crate::calendar_handoff::CalendarHandoff>().save_hint(token,row,&request.meeting_mode)?;
+    }
+    if let Some(name)=saved_name {
+        let current=coordinator.snapshot()?;
+        let row=current.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("原记录已移除，未写入文件。")?;
+        crate::calendar_handoff::require_saved_name_unchanged(&session,row,&request.meeting_mode,name)?;
     }
     // A draft receipt is never committed on cancellation or failed file I/O.
     let calendar_copy=crate::backend::calendar_copy::prepare(&session,&request.meeting_mode,&prepared,&destination);
