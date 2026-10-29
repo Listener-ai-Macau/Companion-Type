@@ -3,6 +3,7 @@ export function CompanionCalendarUpdateHelp({ onReturn }: { onReturn?: () => voi
   return <details className="ct-checklist-handoff">
     <summary>已经导入过，怎样改期并避免重复？</summary>
     <p>Type 清单、保存的日历文件与普通导入副本分别保存。只导入的旧日程不会随 Type 修改；如果日历已关联同一文件，重新保存该文件后可刷新读取。</p>
+    <p>关联文件若允许日历写入，在日历中修改可能直接改动该文件，但不会改 Type 清单。以后用 Type 覆盖保存同一文件前，请先确认是否需要保留日历里的修改；保存后在日历刷新并核对。</p>
     <details><summary>以后想用同一文件更新</summary>
       <ol>
         <li>先保留原导入副本。重新导出日历后，在保存结果展开“关联本地文件”，按本机日历的说明建立只读关联。</li>
