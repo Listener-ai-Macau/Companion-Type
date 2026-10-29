@@ -1,5 +1,9 @@
 // Exact, existing authored error contracts; dynamic OS/service details are not trusted.
 export const knownOperationErrors:readonly string[]=[
+  "当前字幕协议版本不受支持；回复已保留，请更新匹配的 Companion Type 与固件。",
+  "字幕状态无法核对；回复已保留，请重新读取设备状态。",
+  "当前连接未提供可核对的字幕读写接口；回复已保留。",
+  "这块固件还不支持宠物聊天字幕，请先安装匹配的联合固件。",
   "导出内容已变化，请重新查看当前记录后再导出；本次未写入文件。",
   "找不到要导出的记录，请刷新后重试。",
   "录音同步设置暂时不可读取，自动同步已暂停；设备原录音保留。请恢复本机设置文件后重试。",
