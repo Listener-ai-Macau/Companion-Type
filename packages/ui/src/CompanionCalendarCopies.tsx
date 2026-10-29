@@ -5,7 +5,7 @@ import type { CompanionCalendarCopy, CompanionV1HostSession, CompanionV1MeetingM
 const reminderLabel = (entry:CompanionCalendarCopy['entries'][number]) => entry.reminderAt ? readableCalendarTime(entry.reminderAt) : entry.reminderMinutes === null ? '未附提醒' : entry.reminderMinutes === 0 ? '在已确认的时刻' : entry.reminderMinutes === 60 ? '提前1小时' : entry.reminderMinutes === 1440 ? '提前1天' : `提前${entry.reminderMinutes}分钟`;
 function savedTime(value: string): string {
   const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? '保存时间待核对' : date.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
+  return Number.isNaN(date.getTime()) ? '保存时间待核对' : date.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 }
 
 export function calendarCopyDetailsText(copy: CompanionCalendarCopy): string {
@@ -42,7 +42,7 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
       <textarea readOnly aria-label={entryIndex === null ? '日历副本信息' : '日程名称查找文字'} value={copyState.text}
         onFocus={event => event.currentTarget.select()} style={{ width: '100%', minHeight: entryIndex === null ? 110 : 70, boxSizing: 'border-box' }} /> : null}</div> : null;
   return <div className="ct-calendar-copies">
-    <p className="ct-step-meta">最近保存：{copies[0].entries.length}项日程，{copies[0].entries.filter(entry=>entry.reminderMinutes!==null||!!entry.reminderAt).length}项附提醒，{copies[0].entries.filter(entry=>entry.reminderMinutes===null&&!entry.reminderAt).length}项不提醒。请在接收日历核对导入结果。</p>
+    <p className="ct-step-meta">最近文件记录：<time dateTime={copies[0].savedAt}>{savedTime(copies[0].savedAt)}</time> · {copies[0].entries.length}项日程，{copies[0].entries.filter(entry=>entry.reminderMinutes!==null||!!entry.reminderAt).length}项附提醒，{copies[0].entries.filter(entry=>entry.reminderMinutes===null&&!entry.reminderAt).length}项不提醒。请在接收日历核对日期、提醒和来源；文件记录不代表接收端已读取。</p>
     <details className="ct-calendar-handoff-help">
       <summary>导入后核对三步</summary>
       <ol>
@@ -51,7 +51,7 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
         <li>需要另排执行时段时，在接收日历明确修改开始与结束，保存后重新查看。Type 保留原截止记录；两边的修改不会自动同步。</li>
       </ol>
     </details>
-    {changed ? <p className="ct-step-warn">清单已修改，接收日历不会自动更新。可先查看上次保存的副本，找到原日程再核对。</p> : null}
+    {changed ? <p className="ct-step-warn">清单已有修改，日历文件尚需重新保存。只导入的旧副本不会更新；已关联同一文件的日历，可在保存后刷新读取。</p> : null}
     <details>
       <summary>查看已保存的日历副本：逐项日期和提醒</summary>
       <p className="ct-step-meta">这是导出文件当时的设置，接收日历中的后续修改不会同步回来。这里只记录本机成功保存的文件，无法确认是否已导入日历。若已导入旧文件，重新导入是否替换取决于接收日历，也可能新增；可按下面的原名称找到日程后修改。</p>

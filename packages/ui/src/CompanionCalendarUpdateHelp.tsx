@@ -1,8 +1,15 @@
 /** Local file handoff only. Reading this help never imports, edits or deletes a calendar. */
 export function CompanionCalendarUpdateHelp({ onReturn }: { onReturn?: () => void }) {
   return <details className="ct-checklist-handoff">
-    <summary>改了日期，已经导入的日历怎么办？</summary>
-    <p>Type 清单和接收日历分别保存。修改清单后，已经导入的日程不会自动更新。</p>
+    <summary>已经导入过，怎样改期并避免重复？</summary>
+    <p>Type 清单、保存的日历文件与普通导入副本分别保存。只导入的旧日程不会随 Type 修改；如果日历已关联同一文件，重新保存该文件后可刷新读取。</p>
+    <details><summary>以后想用同一文件更新</summary>
+      <ol>
+        <li>先保留原导入副本。重新导出日历后，在保存结果展开“关联本地文件”，按本机日历的说明建立只读关联。</li>
+        <li>核对关联日历名称、日期和提醒正确后，再隐藏专门用于旧导入的独立日历；若旧事项混在其他日历，不要整本隐藏或删除。</li>
+        <li>以后在 Type 修改并保存清单，再导出并保存到同一路径，核对本次提醒；日历刷新后重新打开事项查看。下面仍保留直接修改普通导入副本的方法。</li>
+      </ol>
+    </details>
     <ol>
       <li><strong>先找到原日程：</strong>返回原记录，展开“查看已保存的日历副本”，对照最近保存或上一份副本的事项名称、原截止时间和提醒，在接收日历搜索。没有副本说明的旧文件，可对照自己保留的原 .ics 文件或已有日程；不用重录或重写清单。</li>
       <li><strong>对照本次设置：</strong>在当前记录点“导出到日历”，展开“对照旧日程与本次日期、提醒”。选原文件、原日程和当前事项，核对两边名称、时间和提醒；可复制原名称用于搜索，也可复制整份改期对照。这里不会自动配对或改动接收日历。</li>

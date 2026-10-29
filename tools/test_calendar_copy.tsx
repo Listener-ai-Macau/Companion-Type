@@ -10,7 +10,7 @@ act(()=>{tree=create(<CompanionCalendarCopies session={row} mode="offlineStore" 
 row.calendarCopies=[copy,{...copy,fileName:'旧样品无提醒.ics',fileSha256:'c'.repeat(64),sourceMarkdown:'older',entries:[{...copy.entries[0],title:'旧日程的完整原名称',reminderMinutes:null}]},{...copy,meetingMode:'onlineLive',fileName:'another-mode.ics'}];
 const original=JSON.stringify(row);
 act(()=>{tree=create(<CompanionCalendarCopies session={row} mode="offlineStore" markdown="edited-date"/>);});
-assert.match(text(tree.toJSON()),/清单已修改，接收日历不会自动更新/);assert.match(text(tree.toJSON()),/旧日程的完整原名称/);assert.match(text(tree.toJSON()),/也可能新增/);assert.doesNotMatch(text(tree.toJSON()),/another-mode|已同步|尚未导入/);
+assert.match(text(tree.toJSON()),/清单已有修改，日历文件尚需重新保存/);assert.match(text(tree.toJSON()),/已关联同一文件的日历，可在保存后刷新读取/);assert.match(text(tree.toJSON()),/旧日程的完整原名称/);assert.match(text(tree.toJSON()),/也可能新增/);assert.doesNotMatch(text(tree.toJSON()),/another-mode|已同步|尚未导入/);
 assert.equal(tree.root.findAllByType('section').length,2);assert.equal(tree.root.findAllByType('time')[0].props.dateTime,copy.savedAt);assert.doesNotMatch(text(tree.toJSON()),/2026-10-28T06:30:00/);assert.match(calendarCopyDetailsText(copy),/提前1小时/);assert.match(calendarCopyDetailsText(copy),/不要深色/);
 const copied:string[]=[];
 Object.defineProperty(globalThis,'navigator',{value:{clipboard:{writeText:async(value:string)=>{copied.push(value);}}},configurable:true});

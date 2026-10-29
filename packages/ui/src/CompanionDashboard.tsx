@@ -1,5 +1,6 @@
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {CalendarCopyComparison} from './CalendarCopyComparison';
+import {lastSavedCalendarReminders,retainCalendarReminders} from './calendarReminderCarryover';
 import {operationErrorText,calendarExportNeedsTime} from './operationFailure';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
@@ -457,7 +458,7 @@ export function CompanionDashboard({
   const previewTask=useRef<{cancel:()=>void}|null>(null);
   const [previewWaiting,setPreviewWaiting]=useState(false);
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
-  const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
+  const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [calendarSaveTargets,setCalendarSaveTargets]=useState<Record<string,{token:string;name:string}>>({});
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; calendarOpenToken?:string;calendarFileUri?:string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
@@ -1170,9 +1171,12 @@ export function CompanionDashboard({
           }
           reminderContentHash=reminderHashes.calendarreminder;
           if(copySourceRef.current!==exportSourceKey)return;
-          const calendarReminders=reviewChoice?.calendarReminders?.filter(s=>preview.calendarItems?.some(item=>item.uid===s.uid&&(item.status==='timed'||item.status==='allDay')));
-          if((calendarReminders?.length??0)!==(reviewChoice?.calendarReminders?.length??0))warning+=' 已修改事项的单独提醒已清除，请按新截止时间重新设置；其它事项的选择保留。';
-          setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,calendarReminders,reminderContentHash,reminderHashes,reminderFormat:reviewChoice?.reminderFormat??'calendarreminder30',remindAtTime:!!reviewChoice?.remindAtTime&&!!reminderContentHash,items:preview.calendarItems??undefined});
+          const carried=reviewChoice===undefined?retainCalendarReminders(lastSavedCalendarReminders(selectedSession,minutesViewMode),preview.calendarItems??[]):undefined;
+          const priorReminders=reviewChoice?.calendarReminders??carried?.selections;
+          const calendarReminders=priorReminders?.filter(s=>preview.calendarItems?.some(item=>item.uid===s.uid&&(item.status==='timed'||item.status==='allDay')));
+          const reminderSourceNote=carried?.notCarriedAlarms?`上次文件中有${carried.notCarriedAlarms}项提醒对应的事项已改变或不再导出，未自动套用。请核对本次日期和提醒；未变事项的设置已保留。`:
+            (calendarReminders?.length??0)!==(reviewChoice?.calendarReminders?.length??0)&&reviewChoice?'已修改事项的单独提醒未自动套用，请按新截止时间重新设置；其它事项的选择保留。':undefined;
+          setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,reminderSourceNote,reminderCarryover:carried?{fileName:carried.fileName,retained:calendarReminders?.length??0}:undefined,calendarReminders,reminderContentHash,reminderHashes,reminderFormat:reviewChoice?.reminderFormat??'calendarreminder30',remindAtTime:!!reviewChoice?.remindAtTime&&!!reminderContentHash,items:preview.calendarItems??undefined});
           setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);setExportResult(null);return;
         }
         if(format==='ics'&&preview.warning){
@@ -1890,6 +1894,8 @@ export function CompanionDashboard({
               {calendarReviewVisible&&calendarExportReview?<div ref={calendarReviewElement} className="ct-calendar-export-review" role="region" aria-label="日历导出预览" tabIndex={-1}>
                 <h3>确认日历日程与提醒</h3>
                 <p>{calendarExportReview.format==='calendar'?((calendarReminderKey&&calendarReminderReady?calendarReminderPreview?.warning:calendarExportReview.warning)||'把已确认的日期和时间带到常用日历；后续修改不会自动同步。'):'还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。'}</p>
+                {calendarExportReview.reminderCarryover?<p className="ct-step-meta">已从“{calendarExportReview.reminderCarryover.fileName}”的最近保存记录带入{calendarExportReview.reminderCarryover.retained}项逐项设置。只沿用未变事项，下面仍可修改；不读取接收日历里的后续改动。</p>:null}
+                {calendarExportReview.reminderSourceNote?<p className="ct-step-warn" role="status">{calendarExportReview.reminderSourceNote}</p>:null}
                 {calendarExportReview.format==='calendar'?<>
                   <label className="ct-step-meta"><input type="checkbox" aria-label="统一设置提醒" checked={!!calendarExportReview.remindAtTime}
                     disabled={controlsBusy||oobeBlockedByRecording||!calendarExportReview.reminderContentHash}
