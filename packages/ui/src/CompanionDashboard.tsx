@@ -1186,7 +1186,7 @@ export function CompanionDashboard({
           const reminderNote=carried?.notCarriedAlarms?`上次文件中有${carried.notCarriedAlarms}项提醒对应的事项已改变或不再导出，未自动套用。请核对本次日期和提醒；未变事项的设置已保留。`:
             (calendarReminders?.length??0)!==(reviewChoice?.calendarReminders?.length??0)&&reviewChoice?'已修改事项的单独提醒未自动套用，请按新截止时间重新设置；其它事项的选择保留。':undefined;
           const missingSlots=carriedSlots?.notCarried??Math.max(0,(reviewChoice?.calendarSlots?.length??0)-(calendarSlots?.length??0));
-          const reminderSourceNote=[reminderNote,relativeCarry.carried?'这项的提前提醒已按新的截止时间沿用，请核对。':undefined,missingSlots?`${missingSlots}项原执行时段对应的事项已改变或不再导出，请重新核对；未变事项的时段保留。`:undefined].filter(Boolean).join(' ')||undefined;
+          const reminderSourceNote=[reminderNote,relativeCarry.carriedKind==='before'?'这项的提前提醒已按新的截止时间沿用，请核对。':relativeCarry.carriedKind==='none'?'这项仍设为不提醒，请核对。':undefined,missingSlots?`${missingSlots}项原执行时段对应的事项已改变或不再导出，请重新核对；未变事项的时段保留。`:undefined].filter(Boolean).join(' ')||undefined;
           setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,reminderSourceNote,reminderCarryover:carried?{fileName:carried.fileName,retained:calendarReminders?.length??0}:undefined,calendarReminders,calendarSlots,reminderContentHash,reminderHashes,reminderFormat:reviewChoice?.reminderFormat??'calendarreminder30',remindAtTime:!!reviewChoice?.remindAtTime&&!!reminderContentHash,items:preview.calendarItems??undefined});
           setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);setExportResult(null);return;
         }
