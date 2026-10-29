@@ -60,17 +60,22 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
             let device=row.source_device_id.as_deref().filter(|id|
                 crate::backend::device_connection::stable_device_id(id)).ok_or_else(fail)?;
             let stem=format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(&key).map_err(|_|fail())?));
-            if row.audio_stored {
-                // An indexed owned path is required. Privacy-disabled audio is
-                // filtered above; never recreate a deliberately discarded copy.
+            let existing_audio=if row.audio_stored {
+                // Normal startup need not repeatedly hash every healthy WAV.
+                // An explicit request must validate the selected file before
+                // claiming that no restoration is needed.
                 let expected=root.join(format!("{stem}.wav"));
                 if row.audio_path.as_deref()!=expected.to_str() {return Err(fail())};
-                if regular(&expected)? {return Ok(RestoreOutcome::Unchanged)};
-            }
+                if regular(&expected)? {
+                    if target.is_none() {return Ok(RestoreOutcome::Unchanged)};
+                    Some(expected)
+                } else {None}
+            } else {None};
             let receipt=root.join(format!(".{stem}.json"));
             // No manifest means missing device data, not an invitation to create
             // a new receiver intent from a filename or a temporary tail.
             if !regular(&receipt)? {
+                if existing_audio.is_some() {return Err("回听文件存在，但原音恢复记录缺失，无法核验；文件与回收状态均未修改。".into())};
                 if row.audio_stored {return Err("本机回听文件及原音恢复记录缺失，未生成空录音或修改回收状态。".into())};
                 return Ok(RestoreOutcome::Waiting)
             };
@@ -88,6 +93,15 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
             // axes and the receiver lock. A partial body cannot become playable.
             if saved.device.as_deref().is_some_and(|id|
                 !crate::backend::device_connection::same_device_id(id,device)) {return Err(fail())};
+            if let Some(path)=existing_audio {
+                let audio=saved.audio.as_ref().ok_or("回听文件缺少完整性记录，无法核验；现有文件和原始分段均已保留。")?;
+                let file=read_locked(&path).map_err(|_|"暂时无法读取回听文件进行核验；现有文件和原始分段均已保留。")?;
+                let actual=digest(file).map_err(|_|"回听文件核验未完成；现有文件和原始分段均已保留。")?;
+                if actual!=(audio.bytes,audio.sha256.clone()) {
+                    return Err("回听文件与原保存校验不一致；现有文件和原始分段均已保留，未覆盖或修改回收状态。".into());
+                }
+                return Ok(RestoreOutcome::Unchanged);
+            }
             let mut receiver=Receiver::open_for_local_repair(&root,&first.wire)?;
             if !receiver.plan()?.payloads_complete {return Ok(RestoreOutcome::Waiting)};
             // Persist the distinction before a possible disk/decode failure.
@@ -221,6 +235,30 @@ mod tests {
         r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();
         let wav=fs::read(&audio).unwrap();let receipt=r.receipt_path();drop(r);
         (root,index,d,payload,id,audio,wav,receipt)
+    }
+    #[test]
+    fn corrupt_existing_wav_explicit_recovery_must_not_report_unchanged() {
+        let(root,index,d,payload,id,audio,wav,receipt)=saved_case();
+        let healthy=restore_local_scope(&root,&index,Some(&id)).unwrap();
+        assert!(healthy.failures.is_empty()&&healthy.restored.is_empty(),"verified WAV should stay unchanged");
+        let mut damaged=wav.clone();let last=damaged.len()-1;damaged[last]^=1;
+        fs::write(&audio,&damaged).unwrap();
+        let before_index=fs::read(&index).unwrap();let before_receipt=fs::read(&receipt).unwrap();
+        let report=restore_local_scope(&root,&index,Some(&id)).unwrap();
+        assert_eq!(report.failures.len(),1,"damaged selected recording falsely treated as unchanged");
+        assert!(report.failures[0].error.contains("校验不一致"));
+        assert_eq!(fs::read(&audio).unwrap(),damaged);
+        assert_eq!(fs::read(&index).unwrap(),before_index);assert_eq!(fs::read(&receipt).unwrap(),before_receipt);
+        let r=Receiver::open_for_local_repair(&root,&d.encode().unwrap());assert!(r.is_err());drop(r);
+        {
+            let _environment=Environment::local(&root,&index);
+            let backend=crate::coordinator::CompanionCoordinator::new_fixture();
+            let request=serde_json::from_value(serde_json::json!({"action":"meetingRestoreAudio","sessionId":id})).unwrap();
+            let error=backend.apply_control(request).err().expect("explicit action must report corrupted WAV");
+            assert!(error.contains("校验不一致"));
+        }
+        assert_eq!(fs::read(&audio).unwrap(),damaged);assert_eq!(fs::read(&index).unwrap(),before_index);
+        assert!(!payload.is_empty());fs::remove_dir_all(root).unwrap();
     }
     #[test]
     fn r62_missing_wav_rebuilds_exactly_after_reclaim_without_radio_or_repeat_decode() {
