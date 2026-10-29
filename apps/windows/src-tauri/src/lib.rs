@@ -654,7 +654,10 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             let mut raw = Vec::new(); fs::File::open(input).map_err(|e| e.to_string())?.take(1_000_001).read_to_end(&mut raw).map_err(|e|e.to_string())?;
             if raw.len()>1_000_000 { return Err("session JSON exceeds 1 MB".into()); }
             let session: companion_v1::CompanionV1HostSession = serde_json::from_slice(&raw).map_err(|e|e.to_string())?;
-            let prepared = backend::export::prepare_meeting_export(&session,mode,format)?;
+            let slots=if matches!(format,backend::export::MeetingExportFormat::Calendar|backend::export::MeetingExportFormat::CalendarReminder|backend::export::MeetingExportFormat::CalendarReminder30|backend::export::MeetingExportFormat::CalendarReminder60){
+                backend::calendar_copy::latest_saved_slots(&session,mode)?
+            } else {None};
+            let prepared = backend::export::prepare_meeting_export_with_calendar_choices(&session,mode,format,None,slots)?;
             let bytes = backend::export::write_atomic(Path::new(output),&prepared.bytes)?;
             println!("meeting_export_json={}",serde_json::json!({"status":"EXPORTED_SAVED_DOCUMENT","bytes":bytes,"warning":prepared.warning,"networkAccess":false,"deviceAccess":false,"fullChainAcceptance":"NOT_RUN"}));
             Ok(())

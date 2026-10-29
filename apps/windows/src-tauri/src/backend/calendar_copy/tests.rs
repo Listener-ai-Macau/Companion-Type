@@ -140,6 +140,10 @@ fn path()->std::path::PathBuf {
     let (revision,copies,slots,_)=commit(&path,"original",copy.clone()).unwrap();assert_eq!(revision,1);assert_eq!(copies.len(),1);assert_eq!(slots.len(),1);assert_eq!(slots[0].content_hash,copies[0].content_hash);assert_eq!(slots[0].selections,vec![selection]);
     let reloaded:Vec<CompanionV1HostSession>=serde_json::from_slice(&session_store::load(&path).bytes.unwrap()).unwrap();
     assert_eq!(reloaded[0].calendar_slot_copies,slots);
+    assert_eq!(latest_saved_slots(&reloaded[0],"offlineStore").unwrap().unwrap(),slots[0].selections.as_slice());
+    assert!(latest_saved_slots(&reloaded[0],"onlineLive").unwrap().is_none());
+    let mut duplicate=reloaded[0].clone();duplicate.calendar_slot_copies.push(duplicate.calendar_slot_copies[0].clone());assert!(latest_saved_slots(&duplicate,"offlineStore").is_err());
+    let mut orphan=reloaded[0].clone();orphan.calendar_copies.clear();assert!(latest_saved_slots(&orphan,"offlineStore").is_err());
     let again=export::prepare_meeting_export_with_calendar_choices(&reloaded[0],"offlineStore",F::CalendarReminder60,None,Some(&slots[0].selections)).unwrap();
     assert_eq!(export::content_hash(&selected),export::content_hash(&again));
     let mut cleared=crate::companion_v1::fixture_snapshot();cleared.host.sessions=reloaded;cleared.host.selected_session_id=Some("original".into());
@@ -147,4 +151,21 @@ fn path()->std::path::PathBuf {
     assert!(cleared.host.sessions[0].calendar_slot_copies.is_empty());assert!(cleared.host.sessions[0].calendar_copies.is_empty());
     session_store::save(&path,&cleared.host.sessions).unwrap();let before=std::fs::read(&path).unwrap();assert!(commit(&path,"original",copy).is_err());assert_eq!(std::fs::read(&path).unwrap(),before);
     std::fs::remove_dir_all(path.parent().unwrap()).unwrap();
+}
+
+#[test] fn cli_preserves_matching_saved_slot_and_never_overwrites_when_source_changed() {
+    use super::super::action_export::{CalendarExecutionSlot,CalendarSlotSelection};
+    let path=path();let input=path.with_file_name("input.json");let output=path.with_file_name("output.ics");
+    let mut session=row();let base=export::prepare_meeting_export(&session,"offlineStore",F::Calendar).unwrap();
+    let selection=CalendarSlotSelection{uid:base.calendar_items.as_ref().unwrap()[0].uid.clone(),slot:CalendarExecutionSlot{start:"2026-11-06T09:00:00+08:00".into(),end:"2026-11-06T10:00:00+08:00".into()}};
+    let prepared=export::prepare_meeting_export_with_calendar_choices(&session,"offlineStore",F::Calendar,None,Some(&[selection])).unwrap();
+    let copy=prepare(&session,"offlineStore",&prepared,std::path::Path::new("样品.ics")).unwrap().unwrap();apply(std::slice::from_mut(&mut session),"original",copy).unwrap();
+    std::fs::write(&input,serde_json::to_vec(&session).unwrap()).unwrap();
+    let args=vec!["companion-type".into(),"--export-meeting-json".into(),input.to_string_lossy().into_owned(),"offlineStore".into(),"calendar".into(),output.to_string_lossy().into_owned()];
+    crate::run_diagnostics_cli(&args).unwrap().unwrap();let generated=std::fs::read_to_string(&output).unwrap();
+    assert!(generated.contains("DTSTART:20261106T010000Z\r\nDTEND:20261106T020000Z\r\n"));
+    let updated=session.minutes.as_ref().unwrap().markdown.replace("2026-11-06T15:00:00+08:00前","2026-11-06T16:00:00+08:00前");session.minutes.as_mut().unwrap().markdown=updated;
+    std::fs::write(&input,serde_json::to_vec(&session).unwrap()).unwrap();std::fs::write(&output,b"original target").unwrap();
+    assert!(crate::run_diagnostics_cli(&args).unwrap().is_err());assert_eq!(std::fs::read(&output).unwrap(),b"original target");
+    std::fs::remove_file(input).unwrap();std::fs::remove_file(output).unwrap();std::fs::remove_dir(path.parent().unwrap()).unwrap();
 }

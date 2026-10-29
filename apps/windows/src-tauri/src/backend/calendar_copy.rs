@@ -60,6 +60,19 @@ impl SlotCopy {
     }
 }
 
+/// Return only the exact slot settings for the latest saved file in this
+/// session, mode and privacy epoch. A mismatch is never guessed from a title.
+pub(crate) fn latest_saved_slots<'a>(session:&'a CompanionV1HostSession,mode:&str)->Result<Option<&'a [super::action_export::CalendarSlotSelection]>,String> {
+    let candidates=session.calendar_slot_copies.iter().filter(|s|s.privacy_epoch==session.calendar_copy_epoch&&s.meeting_mode==mode).collect::<Vec<_>>();
+    let Some(copy)=session.calendar_copies.iter().find(|c|c.privacy_epoch==session.calendar_copy_epoch&&c.meeting_mode==mode) else {
+        return if candidates.is_empty(){Ok(None)}else{Err("保存的执行时段缺少对应日历文件；请在 Type 中重新核对，未生成文件。".into())};
+    };
+    let matching=candidates.into_iter().filter(|s|s.content_hash==copy.content_hash).collect::<Vec<_>>();
+    if matching.len()>1{return Err("保存的执行时段有重复记录；请在 Type 中重新核对，未生成文件。".into());}
+    let Some(slots)=matching.first() else{return Ok(None)};
+    copy.validate()?;slots.validate_against(copy)?;Ok(Some(&slots.selections))
+}
+
 impl Copy {
     fn validate(&self)->Result<(),String> {
         let hash=|s:&str|s.len()==64&&s.bytes().all(|b|b.is_ascii_digit()||(b'a'..=b'f').contains(&b));
