@@ -251,6 +251,23 @@ pub(crate) fn save_snapshot_checked(path: &Path, sessions: &[CompanionV1HostSess
                 if loses_audio && !allowed_audio_clear.contains(&privacy_authorization(old)?) {
                     return Err("这条录音的原音已在磁盘更新；未覆盖资料，请重新载入后重试。".into());
                 }
+                // The receiver may publish another sealed raw segment without
+                // producing a final WAV. A stale same-row snapshot must not
+                // erase or alter those exact durable source references.
+                let mut has_segment = false;
+                let loses_segment = old.chunks.iter().filter(|chunk|
+                    chunk.stopped_at.as_deref() == Some("verified-v2-segment")).any(|chunk| {
+                        has_segment = true;
+                        !next.chunks.iter().any(|candidate| candidate.id == chunk.id
+                            && candidate.path == chunk.path && candidate.bytes == chunk.bytes
+                            && candidate.duration_ms == chunk.duration_ms
+                            && candidate.stopped_at == chunk.stopped_at
+                            && matches!(candidate.status.as_str(), "sealed" | "synced"))
+                    });
+                if (loses_segment || (has_segment && old.device_recording_key != next.device_recording_key))
+                    && !allowed_audio_clear.contains(&privacy_authorization(old)?) {
+                    return Err("磁盘中的录音分段已更新；未覆盖原音，请重新载入后重试。".into());
+                }
             }
         }
     }

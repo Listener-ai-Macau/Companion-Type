@@ -399,3 +399,32 @@ fn batch_pending_originals_continue_past_unrelated_damaged_receipt() {
     assert_eq!(blocked.blocked_count(),2);assert!(blocked.blocks(&ds[0].key).unwrap(),"never consume a session whose local receipt is corrupt");
     std::fs::remove_dir_all(root).unwrap();
 }
+
+#[test]
+fn stale_snapshot_must_not_remove_new_durable_partial_segment() {
+    let (_, ds, raw)=fixture();let root=std::env::temp_dir().join(format!("companion-partial-stale-{}",uuid::Uuid::new_v4()));
+    std::fs::create_dir(&root).unwrap();let index=root.join("sessions.json");let device="A1:B2:C3:D4:E5:F6";
+    let mut receiver=Receiver::open(&root,&ds[0].encode().unwrap()).unwrap();
+    receiver.accept_segment(&ds[0].encode().unwrap(),&raw).unwrap();receiver.publish(&index,device).unwrap();
+    let stale:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(&index).unwrap()).unwrap();
+    receiver.accept_segment(&ds[1].encode().unwrap(),&raw).unwrap();receiver.publish(&index,device).unwrap();drop(receiver);
+    let before=std::fs::read(&index).unwrap();let fresh:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&before).unwrap();
+    assert_eq!(fresh[0].chunks.len(),2);assert_eq!(stale[0].chunks.len(),1);
+    let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.host.sessions=stale.clone();
+    snapshot.host.persistence.status="unsaved".into();
+    let error=crate::backend::observe_failed_ota_drain(&mut snapshot,&index,"同步失败".into());
+    assert!(error.contains("未保存"));assert_eq!(snapshot.host.sessions[0].chunks.len(),1,"preserve unsaved user state");
+    snapshot.host.persistence.status="ready".into();
+    let error=crate::backend::observe_failed_ota_drain(&mut snapshot,&index,"同步失败".into());
+    assert!(error.contains("同步失败"));assert_eq!(snapshot.host.sessions[0].chunks.len(),2,"reload saved partial after failed OTA drain");
+    assert!(crate::backend::session_store::save_snapshot_checked(&index,&stale,&[],&[]).is_err(),"stale snapshot must not remove a durable raw segment");
+    assert_eq!(std::fs::read(&index).unwrap(),before);
+    let mut altered=fresh.clone();altered[0].chunks[1].bytes+=1;
+    assert!(crate::backend::session_store::save_snapshot_checked(&index,&altered,&[],&[]).is_err(),"immutable segment identity cannot be altered");
+    assert_eq!(std::fs::read(&index).unwrap(),before);
+    crate::backend::session_store::save_snapshot_checked(&index,&fresh,&[],&[]).unwrap();
+    let allow=crate::backend::session_store::privacy_authorization(&fresh[0]).unwrap();let mut cleared=fresh.clone();
+    cleared[0].chunks.clear();cleared[0].audio_path=None;cleared[0].retention.audio_cached=false;
+    crate::backend::session_store::save_snapshot_checked(&index,&cleared,&[],&[allow]).unwrap();
+    std::fs::remove_dir_all(root).unwrap();
+}

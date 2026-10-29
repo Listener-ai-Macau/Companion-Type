@@ -3424,7 +3424,13 @@ impl CompanionBackend for FixtureCompanionBackend {
         request.device_id=Some(device_id.clone());
         eprintln!("[companion-ota] recording_drain_begin device={device_id} ota_begin_allowed=0");
         let drain_started=std::time::Instant::now();
-        let operation=self.ble_bridge.sync_recordings_before_ota(&device_id)?;
+        let operation=match self.ble_bridge.sync_recordings_before_ota(&device_id) {
+            Ok(operation) => operation,
+            Err(error) => {
+                let mut snapshot=self.snapshot.lock().map_err(|_|format!("{error}；录音库暂时无法刷新，已保存原件保留。"))?;
+                return Err(observe_failed_ota_drain(&mut snapshot, &persistence::state_file_path(), error));
+            }
+        };
         {
             let mut snapshot=self.snapshot.lock().map_err(|_|"录音库状态暂时不可用，未开始升级。")?;
             observe_segmented_library(&mut snapshot,&operation,&persistence::state_file_path(),CompanionV1ControlAction::DeviceSyncRecordings)?;
@@ -4051,6 +4057,20 @@ fn reload_segmented_library(snapshot: &mut CompanionV1Snapshot, path: &std::path
         snapshot.host.selected_session_id = snapshot.host.sessions.first().map(|s| s.id.clone());
     }
     Ok(())
+}
+
+// A failed drain may already have durably published some source segments.
+// Refresh the current library before later UI writes, but never discard an
+// independently unsaved in-memory edit to make the refresh appear successful.
+fn observe_failed_ota_drain(snapshot: &mut CompanionV1Snapshot, index: &std::path::Path, mut error: String) -> String {
+    if snapshot.host.persistence.status == "unsaved" {
+        error.push_str("；窗口中有未保存的修改，原音仍已保留，请先处理保存问题。");
+    } else if let Err(load_error) = reload_segmented_library(snapshot, index) {
+        error.push_str(&format!("；已保存原音待重新读取：{load_error}"));
+    }
+    snapshot.device.message = error.clone();
+    snapshot.updated_at = observation_timestamp();
+    error
 }
 
 // The receiver may have committed partial rows before its transport failed.
