@@ -3632,8 +3632,15 @@ async fn meeting_control_native_owned(
             // Busy may be an already accepted START retried with the exact
             // request ID. Let firmware resolve that idempotently; never turn
             // a lost notification into a new, conflicting start request.
-            if !capacity.busy {super::recording_capacity::check_start(&capacity,max_seconds,
-                peer.as_ref().is_some_and(|p|p.logical_control) && recording_sync::owned_follow_allowed(&device.device_id()))?;}
+            if !capacity.busy {
+                let follow=peer.as_ref().is_some_and(|p|p.logical_control) &&
+                    recording_sync::owned_follow_allowed(&device.device_id());
+                if let Some(p)=peer.as_ref().filter(|p|p.logical_control) {
+                    segmented::check_fragmented_start(&device,&characteristics,p,&capacity,max_seconds,follow,request_id).await?;
+                } else {
+                    super::recording_capacity::check_start(&capacity,max_seconds,follow)?;
+                }
+            }
         }
     }
     if !control.properties.contains(CharPropFlags::WRITE) {

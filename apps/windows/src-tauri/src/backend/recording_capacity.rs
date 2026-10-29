@@ -49,6 +49,44 @@ pub(super) fn check_start(c:&CompanionV1RecordingCapacity,seconds:u16,
     check_budget(c,seconds,owned_sync_allowed)
 }
 
+/// Decode only a correlated optional allocation snapshot. An unrelated
+/// notification is ignored; a correlated but malformed response fails closed.
+pub(super) fn parse_slots_reply(p:&[u8],uid:&[u8;12],token:u32,generation:u32)->Result<Option<u8>,String> {
+    if p.len()<4||&p[..4]!=b"CSN1" {return Ok(None);}
+    if p.len()!=32 {return Err("设备录音容量快照长度无效，未开始录音。".into());}
+    if u32::from_le_bytes(p[4..8].try_into().unwrap())!=token {return Ok(None);}
+    if p[13..16]!=[0,0,0]||p[16..28]!=*uid||
+       crc32fast::hash(&p[..28])!=u32::from_le_bytes(p[28..32].try_into().unwrap()) {
+        return Err("设备录音容量快照校验失败，未开始录音。".into());
+    }
+    if u32::from_le_bytes(p[8..12].try_into().unwrap())!=generation {
+        return Err("设备录音目录已变化，请重试。".into());
+    }
+    Ok(Some(p[12]))
+}
+
+/// A fresh negotiated device snapshot counts whole independently allocatable
+/// extents, not total free bytes. The caller must bind its generation and UID
+/// to the protected START; legacy/unknown firmware keeps check_start unchanged.
+pub(super) fn check_start_with_slots(c:&CompanionV1RecordingCapacity,seconds:u16,
+    owned_sync_allowed:bool,segments:u8)->Result<(),String> {
+    if c.busy {return Err("recording preflight: 设备正在录音、回收或升级，请等待结束后重试".into());}
+    let (frames,extent)=match(c.segment_frames,c.segment_extent_bytes) {
+        (Some(f),Some(e)) if f>0&&e>0=>(f,e),
+        _=>return Err("recording preflight: 容量几何不可核对，未开始录音".into()),
+    };
+    let remaining=c.max_entries.checked_sub(c.used_entries).ok_or("录音目录无效")?;
+    if remaining==0 {return Err("recording preflight: 设备录音目录已满，请先同步并回收录音".into());}
+    let count=u32::from(segments);
+    let lower=(c.largest_free_extent/extent).min(u32::from(remaining));
+    let upper=(c.free_bytes/extent).min(u32::from(remaining));
+    if count<lower||count>upper {return Err("设备的空闲段数与容量状态不一致，未开始录音。".into());}
+    let needed=(u64::from(seconds)*50).div_ceil(u64::from(frames));
+    let needed=if owned_sync_allowed{needed.min(2)}else{needed};
+    if needed>u64::from(segments) {return Err(format!("recording preflight: 可用录音段不足以录制完整的 {seconds} 秒，请先同步录音。未开始录音，也未覆盖旧录音。"));}
+    Ok(())
+}
+
 fn check_budget(c:&CompanionV1RecordingCapacity,seconds:u16,
     owned_sync_allowed:bool)->Result<(),String> {
     if c.busy {return Err("recording preflight: 设备正在录音、回收或升级，请等待结束后重试".into());}
@@ -197,5 +235,38 @@ mod rolling_start_tests {
         let mut c=segmented();c.segment_frames=None;c.segment_extent_bytes=None;
         assert!(check_start(&c,10800,true).is_err());
         c.segment_frames=Some(6211);assert!(check_start(&c,60,true).is_err());
+    }
+}
+
+#[cfg(test)]
+mod fragmented_slots_tests {
+    use super::*;
+    #[test]
+    fn actual_device_model_response_is_generation_and_identity_bound() {
+        let p=include_bytes!("recording_capacity/fixtures/csn1-fragmented.bin");
+        let uid:[u8;12]=p[16..28].try_into().unwrap();
+        let generation=u32::from_le_bytes(p[8..12].try_into().unwrap());
+        assert_eq!(parse_slots_reply(p,&uid,901,generation).unwrap(),Some(2));
+        assert_eq!(parse_slots_reply(p,&uid,902,generation).unwrap(),None);
+        assert!(parse_slots_reply(p,&uid,901,generation.wrapping_add(1)).is_err());
+        let mut bad=*p;bad[16]^=1;assert!(parse_slots_reply(&bad,&uid,901,generation).is_err());
+        let mut bad=*p;bad[12]^=1;assert!(parse_slots_reply(&bad,&uid,901,generation).is_err());
+        let mut bad=*p;bad[13]=1;let crc=crc32fast::hash(&bad[..28]);bad[28..].copy_from_slice(&crc.to_le_bytes());
+        assert!(parse_slots_reply(&bad,&uid,901,generation).is_err());
+        assert!(parse_slots_reply(&p[..7],&uid,901,generation).is_err());
+    }
+    #[test]
+    fn whole_gaps_can_admit_but_total_bytes_and_false_counts_cannot() {
+        let c=CompanionV1RecordingCapacity{layout_version:3,busy:false,confirmed_discard_supported:false,
+            used_entries:1,max_entries:64,catalog_generation:1,data_bytes:811008,free_bytes:540672,
+            largest_free_extent:270336,protected_bytes:270336,consumed_bytes:0,bytes_per_second:2100,
+            reserve_headroom:4108,segment_frames:Some(6209),segment_extent_bytes:Some(270336),
+            local_limit_seconds:1800,unsynced_entries:1,writing_entries:0,consumed_entries:0};
+        assert!(check_start(&c,200,false).is_err());assert!(check_start(&c,200,true).is_err());
+        assert!(check_start_with_slots(&c,200,false,2).is_ok());
+        assert!(check_start_with_slots(&c,200,true,2).is_ok());
+        for count in [0,1,3,64] {assert!(check_start_with_slots(&c,200,false,count).is_err());}
+        let mut busy=c.clone();busy.busy=true;assert!(check_start_with_slots(&busy,200,false,2).is_err());
+        let mut full=c.clone();full.used_entries=64;assert!(check_start_with_slots(&full,0,false,0).is_err());
     }
 }

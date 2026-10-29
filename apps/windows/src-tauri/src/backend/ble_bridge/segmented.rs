@@ -104,6 +104,83 @@ pub(super) async fn read_catalog_with_profile(device: &NativeDevice,
     combine_operation_and_cleanup(result, lease.quiesce_for_control().await)
 }
 
+/// Only used after legacy contiguous-space admission rejects. Unsupported old
+/// firmware never changes its normal path; timeout returns None and keeps the
+/// original conservative rejection. All subscriptions are owned and retired.
+pub(super) async fn fragmented_slots(device:&NativeDevice,
+    chars:&std::collections::BTreeSet<Characteristic>,peer:&Peer,start_request:u32,
+    generation:u32)->Result<Option<u8>,String> {
+    if start_request==0 {return Err("录音请求身份无效。".into());}
+    let control=find_characteristic(chars,RECORDING_CONTROL_UUID)?;
+    if !control.properties.contains(CharPropFlags::WRITE|CharPropFlags::NOTIFY) {return Ok(None);}
+    let budget=env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS",8_000);
+    #[cfg(windows)]
+    let actual_mtu=device.connection_session.as_ref().ok_or("V2 recording has no owned GATT session")?
+        .wait_recording_mtu(budget).await?;
+    #[cfg(not(windows))]
+    let actual_mtu=251u16;
+    let mut notifications=bounded_ble_result("open capacity notifications",budget,
+        device.peripheral.notifications()).await?;
+    let mut lease=SubscriptionLease::open(NativeSubscriptions::new(
+        device.peripheral.clone(),vec![control.clone()]),1,budget).await?;
+    let result=async {
+        let negotiation=peer.negotiate_capacity(nonce(),actual_mtu,509)?;
+        bounded_ble_result("negotiate capacity snapshot",budget,
+            device.peripheral.write(&control,&negotiation,WriteType::WithResponse)).await?;
+        timeout(budget,async {
+            loop {let n=notifications.next().await.ok_or("录音容量连接已断开。")?;
+                if n.uuid==RECORDING_CONTROL_UUID&&n.value==negotiation {break;}}
+            Ok::<(),String>(())
+        }).await.map_err(|_|"设备录音容量协商超时。".to_string())??;
+        let mut request=[0u8;32];request[0]=2;request[1]=0x26;
+        request[4..8].copy_from_slice(&start_request.to_le_bytes());
+        request[8..20].copy_from_slice(&peer.uid);request[20..28].copy_from_slice(&peer.epoch.to_le_bytes());
+        let crc=crc32fast::hash(&request[..28]);request[28..32].copy_from_slice(&crc.to_le_bytes());
+        // An older firmware does not recognize this optional request. No
+        // start/stop/consume is sent; absent reply retains the original gate.
+        if bounded_ble_result("request capacity snapshot",budget,
+            device.peripheral.write(&control,&request,WriteType::WithResponse)).await.is_err() {return Ok(None);}
+        let observed=timeout(StdDuration::from_secs(2),async {
+            loop {
+                let n=notifications.next().await.ok_or("录音容量连接已断开。")?;
+                if n.uuid!=RECORDING_CONTROL_UUID||n.value.len()!=32||&n.value[..4]!=b"CSN1" {continue;}
+                if let Some(count)=super::super::recording_capacity::parse_slots_reply(
+                    &n.value,&peer.uid,start_request,generation)? {return Ok(Some(count));}
+            }
+        }).await;
+        match observed {Ok(v)=>v,Err(_)=>Ok(None)}
+    }.await;
+    combine_operation_and_cleanup(result,lease.quiesce_for_control().await)
+}
+
+pub(super) async fn check_fragmented_start(device:&NativeDevice,
+    chars:&std::collections::BTreeSet<Characteristic>,peer:&Peer,
+    capacity:&crate::companion_v1::CompanionV1RecordingCapacity,seconds:u16,follow:bool,
+    start_request:u32)->Result<(),String> {
+    let original=match super::super::recording_capacity::check_start(capacity,seconds,follow) {
+        Ok(())=>return Ok(()),Err(e)=>e,
+    };
+    let possible=match(capacity.segment_frames,capacity.segment_extent_bytes) {
+        (Some(frames),Some(extent)) if frames>0&&extent>0=>{
+            let count=(u64::from(seconds)*50).div_ceil(u64::from(frames));
+            let count=if follow{count.min(2)}else{count};
+            count>0 && count<=u64::from(capacity.free_bytes/extent) &&
+                count<=u64::from(capacity.max_entries.saturating_sub(capacity.used_entries))
+        },_=>false,
+    };
+    if !possible{return Err(original);}
+    let Some(count)=fragmented_slots(device,chars,peer,start_request,capacity.catalog_generation).await?
+        else{return Err(original);};
+    let fresh=read_recording_protocol_identity(&device.peripheral,chars).await?;
+    let fresh_peer=Peer::from_status(&fresh)?.ok_or("设备录音能力已改变，未开始录音。")?;
+    let fresh_capacity=super::super::recording_capacity::parse(&fresh)
+        .ok_or("设备容量状态已改变，未开始录音。")?;
+    if fresh_peer!=*peer||fresh_capacity!=*capacity {
+        return Err("设备录音目录或容量已改变，请重试。".into());
+    }
+    super::super::recording_capacity::check_start_with_slots(&fresh_capacity,seconds,follow,count)
+}
+
 async fn consume(device: &NativeDevice, chars: &std::collections::BTreeSet<Characteristic>,
     peer: &Peer, request: &[u8]) -> Result<(), String> {
     // ACK candidates come only from Receiver's revalidated raw+library commit.
