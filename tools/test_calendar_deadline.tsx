@@ -3,6 +3,7 @@ import React from 'react';import {act,create} from 'react-test-renderer';
 import {seedCalendarTime,confirmedCalendarTime,readableCalendarTime} from '../packages/ui/src/calendarTime';
 import {ActionListEditor} from '../packages/ui/src/ActionListEditor';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {savedActions} from '../packages/ui/src/savedActions';
 import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
 const authored='2026年11月6日15:00前',draft=seedCalendarTime(authored);
 assert.deepEqual([draft.date,draft.time,draft.before],['2026-11-06','15:00',true]);
@@ -57,15 +58,15 @@ row.minutes=row.minutes?{...row.minutes,markdown:row.minutesByMode.offlineStore!
 let exportCount=0;const beforeDashboard=JSON.stringify(snapshot);
 act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}
  onSaveMeeting={async()=>snapshot} onExportMeeting={async()=>{exportCount++;return null;}}
- onPreviewMeetingExport={async()=>({contentHash:'a'.repeat(64),warning:'One authored time still needs confirmation'})}/>);});
+ onPreviewMeetingExport={async()=>({contentHash:'a'.repeat(64),warning:'One authored time still needs confirmation',calendarItems:savedActions(row.minutesByMode.offlineStore!.markdown).map((a,index)=>({text:a.text,title:index?'样品检查，未测完不要写通过':'已确认事项',deadline:index?authored:'2026-11-05T14:00:00+08:00',status:index?'unconfirmed' as const:'timed' as const}))})}/>);});
 await act(async()=>button('导出到日历').props.onClick());
-await act(async()=>button('先核对时间').props.onClick());
-assert.equal(tree.root.findByProps({'aria-label':'待办 2 日历时间'}).type,'dialog','The public review action must open the actual unresolved date, not hidden editor details');
+await act(async()=>tree.root.findByProps({'aria-label':'日历事项 2 确认清单截止日期和时刻'}).props.onClick());
+assert.equal(tree.root.findByProps({'aria-label':'待办 2 日历时间'}).type,'dialog','The chosen unresolved row opens its own editor');
 assert.equal(tree.root.findByProps({'aria-label':'待办 2 日历日期'}).props.value,'2026-11-06');
 assert.equal(tree.root.findByProps({'aria-label':'待办 2 日历时刻'}).props.value,'15:00');
 assert.equal(exportCount,0);assert.equal(JSON.stringify(snapshot),beforeDashboard);
-act(()=>button('使用此日历时间').props.onClick());
+act(()=>button('确认这个截止时间').props.onClick());
 assert.equal(tree.root.findAllByType('dialog').length,0,'Confirming one row must not transfer the same request to another row');
-assert.equal(button('保存修改').props.disabled,false,'The confirmed draft can be saved without another unsolicited dialog');
+assert.equal(button('保存修改并返回日历预览').props.disabled,false,'The confirmed draft can be saved without another unsolicited dialog');
 act(()=>tree.unmount());
 console.log('PASS actual review-to-time intent opens the unresolved row and seeds authored fields without saving/exporting');

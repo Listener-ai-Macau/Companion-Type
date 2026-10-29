@@ -32,7 +32,7 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onR
       return <li key={item.uid??index} style={{marginBottom:12,overflowWrap:'anywhere'}}>
         <strong>{item.title}</strong><br/>
         {item.status==='completed'?'已完成，本次不导出':item.status==='unconfirmed'?`时间尚未确认，本次不导出${item.deadline?`：${item.deadline}`:''}`:
-          `${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?' · 全天日程':''} · ${calendarAlarmLabel(alarm)}`}
+          `清单截止：${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?' · 全天日程':''} · ${calendarAlarmLabel(alarm)}`}
         {item.status==='timed'?<p className="ct-step-meta">按截止时刻导出，不预设执行时长。{alarm.kind==='before'&&alarm.minutes===0&&/前|截止|before|by\b/i.test(item.deadline??'')?'当前在截止时才提醒；需要预留准备时间时，可选择提前提醒。':''}</p>:null}
         {onReminder&&item.uid&&(item.status==='allDay'||item.status==='timed')?<label style={{display:'block',marginTop:8}}>本项提醒 <select aria-label={`日历事项 ${index+1} 提醒`} disabled={disabled}
           value={!override?'default':override.kind==='before'?String(override.minutes):override.kind}
@@ -43,8 +43,8 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onR
           <option value="at">指定提醒日期和时刻…</option>
         </select>{override?.kind==='at'?<button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setEditing(index)}>修改提醒时刻</button>:null}</label>:null}
         {onEdit&&item.status!=='completed'?<><br/><button type="button" className="ct-text-button" disabled={disabled}
-          aria-label={`日历事项 ${index+1} ${item.status==='allDay'?'补充具体时刻':'修改日历时间'}`}
-          onClick={()=>onEdit(index)}>{item.status==='allDay'?'补充具体时刻':item.status==='unconfirmed'?'确认日期和时刻':'修改日历时间'}</button></>:null}
+          aria-label={`日历事项 ${index+1} ${item.status==='allDay'?'补充清单截止时刻':item.status==='unconfirmed'?'确认清单截止日期和时刻':'修改清单截止时间'}`}
+          onClick={()=>onEdit(index)}>{item.status==='allDay'?'补充清单截止时刻':item.status==='unconfirmed'?'确认清单截止日期和时刻':'修改清单截止时间'}</button></>:null}
         {editing===index&&item.uid&&onReminder?<CalendarReminderEditor key={item.uid} deadline={item.deadline??''} initial={override?.kind==='at'?override.at:undefined}
           label={`日历事项 ${index+1}`} disabled={disabled} onConfirm={at=>onReminder(item.uid!,{kind:'at',at})} onClose={()=>setEditing(null)} onPending={onPending}/>:null}
       </li>;

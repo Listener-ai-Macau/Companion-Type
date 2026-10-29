@@ -40,7 +40,7 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,ope
       <label style={{display:'block',marginBottom:12}}><input type="checkbox" aria-label={`${label} 在此时间之前完成`} checked={!!draft.before} disabled={disabled} onChange={event=>patch({before:event.target.checked})}/> 在此时间之前完成</label>
       {stale?<p className="ct-step-warn" role="alert">这项时间已变化，请取消后重新确认；旧输入未被覆盖。</p>
         :result?.ok?<p role="status">日历截止：{result.label}</p>:<p className="ct-step-meta" role="status">{result&&!result.ok?result.error:''}</p>}
-      <p className="ct-step-meta">这里只确认导出用的截止时间，不会自动创建日历或提醒。</p>
+      <p className="ct-step-meta">{scope==='common'?'确认后仍需选择应用范围并保存清单；不会自动创建日历或提醒。':'确认后仍需保存清单，保存会改变这项的截止时间；不会自动创建日历或提醒。'}</p>
       <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary" disabled={disabled||stale||!result?.ok}
         onClick={()=>{if(result?.ok&&!stale){onConfirm(result.value);close();}}}>{compact?'确认这个截止时间':'使用此日历时间'}</button>
         <button type="button" className="ct-action" onClick={close}>取消</button></div>

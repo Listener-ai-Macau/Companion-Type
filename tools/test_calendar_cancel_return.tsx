@@ -29,7 +29,7 @@ assert.equal(tree.root.findAllByType('dialog').length,0,'generic edit must not o
 await act(async()=>button('取消修改并返回日历预览').props.onClick());retained();
 // Even an accepted, unsaved deadline draft can be discarded without discarding
 // the independent alarm selections associated with the unchanged saved source.
-await act(async()=>field('日历事项 2 补充具体时刻').props.onClick());
+await act(async()=>field('日历事项 2 补充清单截止时刻').props.onClick());
 act(()=>field('待办 2 日历时刻').props.onChange({target:{value:'10:30'}}));
 await act(async()=>button('确认这个截止时间').props.onClick());assert.equal(dirty.at(-1),true);
 await act(async()=>button('取消修改并返回日历预览').props.onClick());retained();assert.equal(dirty.at(-1),false);

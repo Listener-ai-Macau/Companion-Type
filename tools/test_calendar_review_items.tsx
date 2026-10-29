@@ -29,12 +29,15 @@ const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
 await act(async()=>button('导出到日历').props.onClick());
 assert.match(text(tree.toJSON()),/将导出2项日程：0项附提醒，2项不提醒/);
+assert.match(text(tree.toJSON()),/清单截止：2026年11月7日/);
 const reminder=()=>tree.root.findAllByType('input').find((n:any)=>n.props.type==='checkbox'&&n.props['aria-label']==='统一设置提醒');
 act(()=>reminder().props.onChange({currentTarget:{checked:true}}));
 act(()=>tree.root.findByProps({'aria-label':'日历提醒时间'}).props.onChange({currentTarget:{value:'calendarreminder60'}}));
 assert.match(text(tree.toJSON()),/将导出2项日程：1项附提醒，1项不提醒/);
-await act(async()=>tree.root.findByProps({'aria-label':'日历事项 2 补充具体时刻'}).props.onClick());
+await act(async()=>tree.root.findByProps({'aria-label':'日历事项 2 补充清单截止时刻'}).props.onClick());
 assert.ok(tree.root.findByProps({'aria-label':'待办 2 日历时间'}));
+assert.match(text(tree.toJSON()),/确认后仍需保存清单，保存会改变这项的截止时间/);
+assert.doesNotMatch(text(tree.toJSON()),/这里只确认导出用的截止时间/);
 assert.equal(tree.root.findAllByProps({'aria-label':'编辑摘要'}).length,0);
 assert.equal(tree.root.findAllByType('input').filter((n:any)=>/负责人|内容/.test(n.props['aria-label']??'')).length,0,'single date path has no owner or task-body editing');
 assert.equal(button('添加一项'),undefined);assert.equal(button('设置共同时间与负责人'),undefined);
