@@ -397,10 +397,15 @@ pub fn load_sessions() -> Option<Vec<CompanionV1HostSession>> {
 /// Preserve real in-memory state on disk failure (a stopped recorder must stay
 /// stopped) while preventing further processing from pretending it is durable.
 pub fn save_snapshot(snapshot: &mut CompanionV1Snapshot) -> Result<(), String> {
+    save_snapshot_allowing_removals(snapshot, &[])
+}
+
+pub(crate) fn save_snapshot_allowing_removals(snapshot: &mut CompanionV1Snapshot,
+    allowed_removals: &[String]) -> Result<(), String> {
     if snapshot.host.persistence.status == "blocked" {
         return Err("会议库尚未恢复，已暂停保存；请先重试恢复".into());
     }
-    let result = save_sessions_checked(&snapshot.host.sessions);
+    let result = save_sessions_checked_allowing_removals(&snapshot.host.sessions, allowed_removals);
     match &result {
         Ok(()) => snapshot.host.persistence = Default::default(),
         Err(error) => {
@@ -420,11 +425,12 @@ pub fn save_snapshot(snapshot: &mut CompanionV1Snapshot) -> Result<(), String> {
 
 /// Persist a checkpoint and report failure to the caller. Tests without an
 /// explicit state path stay isolated from the real user profile.
-pub fn save_sessions_checked(sessions: &[CompanionV1HostSession]) -> Result<(), String> {
+fn save_sessions_checked_allowing_removals(sessions: &[CompanionV1HostSession],
+    allowed_removals: &[String]) -> Result<(), String> {
     if cfg!(test) && std::env::var("COMPANION_TYPE_STATE_PATH").is_err() {
         return Ok(());
     }
-    save_sessions_to(&state_file_path(), sessions)
+    super::session_store::save_snapshot_checked(&state_file_path(), sessions, allowed_removals)
 }
 
 #[cfg(test)]

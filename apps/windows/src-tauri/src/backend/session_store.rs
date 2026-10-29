@@ -211,6 +211,23 @@ fn save_locked(
     Ok(())
 }
 
+/// A UI snapshot may have been read before another process published a new
+/// recording. Only explicitly selected privacy deletions may remove disk rows.
+/// Check and write while holding the same store lock.
+pub(crate) fn save_snapshot_checked(path: &Path, sessions: &[CompanionV1HostSession],
+    allowed_removals: &[String]) -> Result<(), String> {
+    let _lock = lock(path)?;
+    let loaded = load_locked(path)?;
+    if let Some(bytes) = loaded.bytes {
+        let before = decode(&bytes)?;
+        if before.iter().any(|old| !sessions.iter().any(|row| row.id == old.id)
+            && !allowed_removals.iter().any(|id| id == &old.id)) {
+            return Err("磁盘中有新的录音，当前窗口尚未包含；未覆盖资料，请重新载入后重试。".into());
+        }
+    }
+    save_locked(path, sessions, |destination, bytes| super::export::write_atomic(destination, bytes).map(|_| ()))
+}
+
 pub fn save(path: &Path, sessions: &[CompanionV1HostSession]) -> Result<(), String> {
     save_with(path, sessions, |destination, bytes| super::export::write_atomic(destination, bytes).map(|_| ()))
 }
@@ -238,6 +255,29 @@ pub(crate) fn update_checked(path: &Path, edit: impl FnOnce(&mut Vec<CompanionV1
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn ui_snapshot_guard_rejects_unseen_recording_and_allows_exact_delete() {
+        use crate::companion_v1::{apply_fixture_control,fixture_snapshot,CompanionV1ControlAction};
+        let root=std::env::temp_dir().join(format!("companion-snapshot-guard-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();let path=root.join("sessions.json");
+        let snapshot=apply_fixture_control(fixture_snapshot(),crate::control_request(CompanionV1ControlAction::MeetingStart,Some("first".into()))).unwrap();
+        let first=snapshot.host.sessions.into_iter().find(|s|s.id=="first").unwrap();
+        save(&path,&[first.clone()]).unwrap();let stale=vec![first.clone()];
+        let mut newer=first.clone();newer.id="new-recording".into();
+        update_checked(&path,|rows|{rows.push(newer);Ok(())}).unwrap();
+        let before=std::fs::read(&path).unwrap();let backup=std::fs::read(root.join("sessions.json.bak")).unwrap();
+        assert!(save_snapshot_checked(&path,&stale,&[]).is_err());
+        assert_eq!(std::fs::read(&path).unwrap(),before);assert_eq!(std::fs::read(root.join("sessions.json.bak")).unwrap(),backup);
+        // Confirming deletion of "first" must not authorize deleting a newer row.
+        assert!(save_snapshot_checked(&path,&[],&["first".into()]).is_err());
+        assert_eq!(std::fs::read(&path).unwrap(),before);
+        let mut latest=decode(&before).unwrap();latest.retain(|row|row.id!="first");
+        save_snapshot_checked(&path,&latest,&["first".into()]).unwrap();
+        let saved=decode(&std::fs::read(&path).unwrap()).unwrap();
+        assert_eq!(saved.len(),1);assert_eq!(saved[0].id,"new-recording");
+        std::fs::remove_dir_all(root).unwrap();
+    }
     fn workspace() -> PathBuf {
         let path = std::env::temp_dir().join(format!("companion-store-{}", uuid::Uuid::new_v4()));
         fs::create_dir_all(&path).unwrap(); path.join("sessions.json")

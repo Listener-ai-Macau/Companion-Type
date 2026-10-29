@@ -3135,7 +3135,14 @@ impl CompanionBackend for FixtureCompanionBackend {
         // Do not silently dismiss an existing storage warning on a read-only
         // action. A stop must retain its real state even if saving fails.
         if next.host.persistence.status == "ready" || action == CompanionV1ControlAction::MeetingStop {
-            let _ = persistence::save_snapshot(&mut next);
+            // Only an explicitly requested local privacy operation may remove
+            // rows; never let an older UI snapshot erase a newly published row.
+            let allowed_removals: Vec<String> = match action {
+                CompanionV1ControlAction::PrivacyDeleteSession => requested_session_id.iter().cloned().collect(),
+                CompanionV1ControlAction::PrivacyEraseAll => snapshot.host.sessions.iter().map(|row| row.id.clone()).collect(),
+                _ => Vec::new(),
+            };
+            let _ = persistence::save_snapshot_allowing_removals(&mut next, &allowed_removals);
         }
         if let Some(mut result) = cleanup_summary {
             result.index_saved = next.host.persistence.status == "ready";
