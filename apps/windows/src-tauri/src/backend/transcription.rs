@@ -8,10 +8,8 @@
 
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::sync::LazyLock;
 use std::time::Duration;
 
-use regex::Regex;
 
 mod chunk_cache;
 
@@ -27,32 +25,10 @@ use denzic_host_audio_v1_core::{
     ASR_REQUEST_TIMEOUT_SECONDS,
 };
 
-static MEETING_ASR_TERM_RULES: LazyLock<Vec<(Regex, &'static str)>> = LazyLock::new(|| {
-    vec![
-        (Regex::new(r"(?i)\boffice\s*16").unwrap(), "Opus 16"),
-        (
-            Regex::new(r"(?i)\bfeel[\s、，。,:：；;]*close\b").unwrap(),
-            "fail closed",
-        ),
-        (
-            Regex::new(r"(?i)\bopen([\s、，。,:：；;]*14兆)").unwrap(),
-            "Opus$1",
-        ),
-        (Regex::new(r"(?i)\bopus\s*16").unwrap(), "Opus 16"),
-        (Regex::new(r"文件职位").unwrap(), "文件直喂"),
-    ]
-});
-
-/// Platform whitespace normalization plus narrowly-scoped corrections for
-/// stable mechanical-ASR homophones observed on real WB55 microphone audio.
-/// Every replacement requires the acoustic near-token to be present; this is
-/// correction, not insertion of facts absent from the provider transcript.
+/// Preserve the provider's words. A fixed list of engineering homophones can
+/// silently change legitimate meeting content; only whitespace is normalized.
 fn normalize_transcript(text: &str) -> String {
-    let mut normalized = platform_normalize_transcript(text);
-    for (pattern, replacement) in MEETING_ASR_TERM_RULES.iter() {
-        normalized = pattern.replace_all(&normalized, *replacement).into_owned();
-    }
-    normalized
+    platform_normalize_transcript(text)
 }
 
 #[derive(Clone, Debug)]
@@ -1235,15 +1211,9 @@ mod tests {
     }
 
     #[test]
-    fn real_board_mechanical_homophones_are_corrected_without_inserting_claims() {
-        let normalized = normalize_transcript(
-            "默认 Office 16；关键词 open 14兆、FEEL、CLOSE；文件职位不算闭环。",
-        );
-        assert!(normalized.contains("Opus 16"), "{normalized}");
-        assert!(normalized.contains("Opus 14兆"), "{normalized}");
-        assert!(normalized.contains("fail closed"), "{normalized}");
-        assert!(normalized.contains("文件直喂"), "{normalized}");
-        assert!(!normalize_transcript("普通会议没有这些词").contains("Opus"));
+    fn preserve_user_words_transcription() {
+        let input = "使用 Office 16；open 14兆；feel close；文件职位；Opus 16。";
+        assert_eq!(normalize_transcript(input), input);
     }
     use std::io::{Read, Write};
     use std::net::TcpListener;

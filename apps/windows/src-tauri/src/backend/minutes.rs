@@ -388,15 +388,16 @@ fn run_deepseek_prompt(endpoint: &str, model: &str, api_key: &str,
             .is_none_or(|text| text.trim().is_empty()) {
         return Err(safe_minutes_http_error(http_policy::Failure::InvalidResponse));
     }
-    parse_external_minutes_stdout(&content, session, l0).map(|mut m| {
-        // The model doesn't reliably echo the fixed source/quality fields
-        // (the python helper used setdefault to pin them). This is the
-        // native deepseek path, so pin them here too.
-        m.source = "llm_deepseek".to_string();
-        m.quality = "final".to_string();
-        m.markdown = clean_noise_tokens(&m.markdown);
-        (m, object)
-    })
+    parse_external_minutes_stdout(&content, session, l0)
+        .map(|minutes| (finalize_deepseek_minutes(minutes), object))
+}
+
+// Preserve the returned words: fixed substitutions from old engineering
+// samples can turn valid customer facts into different facts.
+fn finalize_deepseek_minutes(mut minutes: CompanionV1MeetingMinutes) -> CompanionV1MeetingMinutes {
+    minutes.source = "llm_deepseek".to_string();
+    minutes.quality = "final".to_string();
+    minutes
 }
 
 /// Strip ```json ... ``` fences a model may emit despite `response_format:
@@ -410,22 +411,6 @@ fn strip_code_fences(content: &str) -> String {
         .filter(|line| !line.trim_start().starts_with("```"))
         .collect::<Vec<_>>()
         .join("\n")
-}
-
-/// Normalize well-known ASR-noise tokens the model may still emit (mirrors the
-/// python helper's post-processing).
-fn clean_noise_tokens(markdown: &str) -> String {
-    let mut md = markdown.to_string();
-    for (bad, good) in [
-        ("QTE", "codec"),
-        ("甄姬扬声器", "真机扬声器"),
-        ("i am a", "IMA"),
-        ("office 16", "Opus 16"),
-        ("GPID", "PID"),
-    ] {
-        md = md.replace(bad, good);
-    }
-    md
 }
 
 const DEEPSEEK_SYSTEM_PROMPT: &str = "你是 Companion 会议纪要助手。根据会议转写输出严格 JSON（不要 markdown 代码围栏），字段：summary(string[]), decisions(string[]), actionItems({text,owner?,due?}[]), questions(string[]), keywords(string[]), unsupportedClaims(string[] 转写不足以支持、你刻意未写入的推测), markdown(string 完整中文纪要 Markdown)。source 固定 llm_deepseek，quality固定 final。markdown 需含：标题、摘要、决定、行动项、问题、关键词。\n硬性规则（防编造）：\n1) 只使用转写中出现的事实；不要发明负责人、日期、产品名、缩写。\n2) 只有转写明确给出行动项、待办、负责人或跟进任务时才输出 actionItems；不得把决定、风险或验收原则自行改写成任务。owner / due 仅当转写明确出现时才填。\n3) 专有名词、数字、单位和否定关系以转写为准，不用预设产品词或固定样例纠改原话。不确定的术语标为待核对；不得把风险、未完成或未验收改成已完成。\n4) 同一任务不要重复派给多人；无法确认归属时写「负责人：待确认」。\n5) 不确定的内容放入 unsupportedClaims，不要写进 decisions/actionItems。\n6) 用户消息中的来源事实锚点来自确定性转写提取；summary 与 markdown 必须覆盖每一项的原意。可去重和压缩措辞，但不得遗漏或改变数值、主体、先后关系与风险。\n7) 转写的说话人编号是来源标签，不是已核实身份。“说话人?”/“说话人？”表示片段归属未知，不能据此推断另一位发言者、人数、同一人或负责人；保留其内容与未知归属，只有原话或明确人工核对才可确认身份。";
@@ -1566,11 +1551,15 @@ mod tests {
     }
 
     #[test]
-    fn clean_noise_tokens_normalizes_known_noise() {
-        assert_eq!(
-            clean_noise_tokens("QTE 甄姬扬声器 i am a office 16 GPID"),
-            "codec 真机扬声器 IMA Opus 16 PID"
-        );
+    fn preserve_user_words_minutes() {
+        let input = "QTE 甄姬扬声器 i am a office 16 GPID";
+        let session = session_with_text(input);
+        let l0 = rules_l0_minutes(&session, "now");
+        let parsed = parse_external_minutes_stdout(input, &session, &l0).unwrap();
+        let minutes = finalize_deepseek_minutes(parsed);
+        assert_eq!(minutes.markdown, input);
+        assert_eq!(minutes.source, "llm_deepseek");
+        assert_eq!(minutes.quality, "final");
     }
 
     #[test]
