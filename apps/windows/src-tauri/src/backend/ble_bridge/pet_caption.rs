@@ -1,16 +1,12 @@
 //! PCP1 uses the existing encrypted card write/status values. No OTA/settings
 //! characteristic is borrowed, and ATT success is never called visible success.
 use super::*;
+#[path = "pet_caption_protocol.rs"]
+mod protocol;
+use protocol::parse;
 const WRITE:Uuid=Uuid::from_u128(0x8f7a20017b7d4f3d9d6f6c2d1b7c0000);
 const STATUS:Uuid=Uuid::from_u128(0x8f7a20027b7d4f3d9d6f6c2d1b7c0000);
 
-fn parse(value:&[u8])->Result<(u8,u32,u32),String> {
-    if value.len()!=16 || &value[..4]!=b"PCS1" {
-        return Err("这块固件还不支持宠物聊天字幕，请先安装匹配的联合固件。".into());
-    }
-    Ok((value[4],u32::from_le_bytes(value[8..12].try_into().unwrap()),
-        u32::from_le_bytes(value[12..16].try_into().unwrap())))
-}
 fn packet(op:u8,token:u32,start:u8,count:u8)->Vec<u8> {
     let mut p=b"PCP1".to_vec();p.extend_from_slice(&[op,start,count,0]);p.extend_from_slice(&token.to_le_bytes());p
 }
@@ -49,7 +45,12 @@ pub(crate) fn supported(device:&str)->Result<(),String> {
     run_native_blocking(async {
         let peer=connect_native_device(Some(device)).await?;
         let result=async {
-            let status=find_characteristic(&peer.peripheral.characteristics(),STATUS)?;
+            let chars=peer.peripheral.characteristics();
+            let status=find_characteristic(&chars,STATUS)?;
+            let write=find_characteristic(&chars,WRITE)?;
+            if !status.properties.contains(CharPropFlags::READ) || !write.properties.contains(CharPropFlags::WRITE) {
+                return Err("当前连接未提供可核对的字幕读写接口；回复已保留。".into());
+            }
             let value=peer.peripheral.read(&status).await.map_err(|_|"无法读取宠物字幕能力")?;
             parse(&value).map(|_|())
         }.await;
@@ -74,12 +75,15 @@ pub(crate) fn show(device:&str,token:u32,pixels:&[u8],cancel:&AtomicBool)->Resul
             let chars=peer.peripheral.characteristics();
             let write=find_characteristic(&chars,WRITE)?;
             let status=find_characteristic(&chars,STATUS)?;
+            if !status.properties.contains(CharPropFlags::READ) || !write.properties.contains(CharPropFlags::WRITE) {
+                return Err("当前连接未提供可核对的字幕读写接口；回复已保留。".into());
+            }
             let capability=peer.peripheral.read(&status).await.map_err(|_|"无法读取宠物字幕状态")?;
             let (initial_state,initial_owner,_)=parse(&capability)?;
             let no_initial_own_caption=initial_owner!=token || matches!(initial_state,0|4|5);
             // Op5 is negotiated, so old firmware/hosts keep immediate BEGIN.
             // Reservation drains one existing frame without relaxing its gate.
-            let begin=if capability[7]>>4==2 {5} else {1};
+            let begin=protocol::begin_operation(&capability)?;
             let write_packet=|p:Vec<u8>| {
                 let peer=&peer;let write=&write;
                 async move {peer.peripheral.write(write,&p,WriteType::WithResponse).await.map_err(|_|"宠物字幕未发送完成".to_string())}
