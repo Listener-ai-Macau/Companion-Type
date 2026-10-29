@@ -305,8 +305,8 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   });
 }
 
-function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext, manual=false, onCalendarPending, calendarRequestKey, calendarLineIndex, calendarRequestTimed, calendarOnly=false }: {
-  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarLineIndex?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;
+function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext, manual=false, onCalendarPending, calendarRequestKey, calendarLineIndex, calendarRequestTimed, calendarOnly=false, calendarAll=false }: {
+  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarLineIndex?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;calendarAll?:boolean;
 }) {
   const fields = basicMinutesFields(markdown, noteContext, manual);
   if (!fields&&calendarOnly)return <p className="ct-step-warn">清单结构已变化，请取消后重新选择事项；旧输入仍保留。</p>;
@@ -321,7 +321,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
   const requestedRow=requestedOffset!==undefined&&calendarTarget?markdown.slice(calendarTarget.start,requestedOffset).trimStart().split(/\r?\n/).length-1:undefined;
   const field = (item: typeof fields[number]) => <div key={`${item.key}-${fields.indexOf(item)}`} className="ct-basic-minutes-field">
     {!calendarOnly?<span>{item.label}{item.key === 'Action Items' ? '（分别修改）' : ''}</span>:null}
-    {item.key==='Action Items'?<ActionListEditor calendarOnly={calendarOnly} calendarRequestRow={item===calendarTarget?requestedRow:undefined} calendarRequestTimed={calendarRequestTimed} calendarRequestKey={item===calendarTarget?calendarRequestKey:undefined} onCalendarPending={onCalendarPending} value={item.value} disabled={disabled} onChange={value=>{
+    {item.key==='Action Items'?<ActionListEditor calendarOnly={calendarOnly} calendarAll={calendarAll} calendarRequestRow={item===calendarTarget?requestedRow:undefined} calendarRequestTimed={calendarRequestTimed} calendarRequestKey={item===calendarTarget?calendarRequestKey:undefined} onCalendarPending={onCalendarPending} value={item.value} disabled={disabled} onChange={value=>{
       const newline=markdown.includes('\r\n')?'\r\n':'\n';
       const body=value.split(/\r?\n/).map(line=>line.trim()?`- ${line}`:line).join(newline);
       onChange(markdown.slice(0,item.start)+newline+body+newline+newline+markdown.slice(item.end));
@@ -338,7 +338,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
       已填写 {item.value.split(/\r?\n/).filter(line => line.trim()).length} 项。修改内容时，已注明的时间和负责人会单独保留。
     </small> : null}
   </div>;
-  if(calendarOnly)return <div className="ct-basic-minutes-editor ct-single-calendar-edit">{calendarTarget?field(calendarTarget):<p role="alert">找不到所选事项，请取消后重新选择。</p>}<p className="ct-step-meta">这里只修改所选事项的截止时间。确认后请保存，或取消返回原预览。</p></div>;
+  if(calendarOnly)return <div className="ct-basic-minutes-editor ct-single-calendar-edit">{calendarAll?fields.filter(item=>item.key==='Action Items').map(field):calendarTarget?field(calendarTarget):<p role="alert">找不到所选事项，请取消后重新选择。</p>}<p className="ct-step-meta">{calendarAll?'这里只修改各项截止时间，事项原文、摘要和负责人保留。':'这里只修改所选事项的截止时间。'}确认后请保存，或取消返回原预览。</p></div>;
   return <div className="ct-basic-minutes-editor">
     {primary.map(field)}
     {secondary.length?<details><summary>更多整理内容</summary>
@@ -468,6 +468,7 @@ export function CompanionDashboard({
   const [savedMinutesReveal,setSavedMinutesReveal]=useState<{sessionId:string;mode:CompanionV1MeetingMode}|null>(null);
   const [calendarEditRequest,setCalendarEditRequest]=useState<string|null>(null);
   const [calendarEditLine,setCalendarEditLine]=useState<number|undefined>();
+  const [calendarEditAll,setCalendarEditAll]=useState(false);
   const [calendarEditTimed,setCalendarEditTimed]=useState(false);
   const [calendarReturn,setCalendarReturn]=useState<(CalendarReminderChoice&{sessionId:string;mode:CompanionV1MeetingMode;origin:MeetingExportOrigin;expectedMarkdown?:string;fromPreview?:boolean})|null>(null);
   const calendarEditSequence=useRef(0);
@@ -1184,13 +1185,13 @@ export function CompanionDashboard({
         setCalendarExportReview(null);setExportResult(null);
         setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);
         setEditingMinutes(true);
-        setCalendarEditLine(undefined);setCalendarEditTimed(false);
+        setCalendarEditLine(undefined);setCalendarEditTimed(false);setCalendarEditAll(false);
         setCalendarReturn({sessionId,mode:minutesViewMode,origin,...reviewChoice});
         setCalendarEditRequest(`${sessionId}:${minutesViewMode}:${++calendarEditSequence.current}`);
       }else setExportResult({ sessionId, format, origin, kind: 'error', message: error instanceof SavedPreviewInterrupted?error.message:`保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
-  useEffect(()=>{setCalendarReturn(null);setCalendarEditLine(undefined);setCalendarEditTimed(false);},[selectedSession?.id,minutesViewMode]);
+  useEffect(()=>{setCalendarReturn(null);setCalendarEditLine(undefined);setCalendarEditTimed(false);setCalendarEditAll(false);},[selectedSession?.id,minutesViewMode]);
   useEffect(()=>{
     if(!calendarReturn?.expectedMarkdown||editingMinutes||saveMeetingBusy||calendarPendingCount>0||minutesDirty||titleDirty)return;
     const request=calendarReturn;setCalendarReturn(null);
@@ -1202,6 +1203,7 @@ export function CompanionDashboard({
     const actions=savedActions(minutesMarkdown);
     if(index!==undefined&&(!review.items||actions.length!==review.items.length||actions.some((a,n)=>a.text!==review.items![n].text)))return;
     setCalendarReturn(review.format==='calendar'?{sessionId:selectedSession.id,mode:minutesViewMode,origin:review.origin,fromPreview:true,remindAtTime:review.remindAtTime,reminderFormat:review.reminderFormat,calendarReminders:review.calendarReminders}:null);
+    setCalendarEditAll(index===undefined&&!!basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes));
     setCalendarEditLine(index===undefined?undefined:actions[index].lineIndex);
     setCalendarEditTimed(index!==undefined&&review.items?.[index].status==='allDay');
     setCalendarExportReview(null);setRecordingResultOpen(true);setEditingMinutes(true);
@@ -1264,7 +1266,7 @@ export function CompanionDashboard({
         expectedTranscriptText:companionReviewedTranscript(selectedSession),
         expectedReviewRevision:companionTranscriptReviewRevision(selectedSession),expectedNoteRevision:selectedSession.noteRevision??0,
       }}}}}));
-    setCalendarEditLine(undefined);setCalendarEditRequest(null);setSaveMeetingResult(null);setOrganizationChoiceId(null);setRecordingResultOpen(true);setEditingMinutes(true);
+    setCalendarEditAll(false);setCalendarEditLine(undefined);setCalendarEditRequest(null);setSaveMeetingResult(null);setOrganizationChoiceId(null);setRecordingResultOpen(true);setEditingMinutes(true);
   };
   const changeCalendarPending=useCallback((delta:1|-1)=>{
     setCalendarPendingCount(value=>Math.max(0,value+delta));
@@ -1870,7 +1872,7 @@ export function CompanionDashboard({
                   title={minutesIncomplete ? '整理完成后才能导出整场待办' : '把未完成事项和已确认时间写成日程文件，导入常用日历后核对提醒'}
                   onClick={()=>void exportMeeting('calendar')}>导出到日历</button> : null}
                 {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
-                  title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => {setCalendarEditLine(undefined);setCalendarEditRequest(null);setEditingMinutes(true);}}><Pencil size={14} />{savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'}</button> : null}
+                  title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => {setCalendarEditAll(false);setCalendarEditLine(undefined);setCalendarEditRequest(null);setEditingMinutes(true);}}><Pencil size={14} />{savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'}</button> : null}
               </div>
               {phoneResult?.sessionId===selectedSession.id&&phoneResult.sourceKey===copySourceKey&&!editingMinutes
                 ? <CompanionChecklistPhone result={phoneResult} onClose={closePhoneChecklist}/> : null}
@@ -1903,7 +1905,7 @@ export function CompanionDashboard({
                 {calendarReminderKey&&!calendarReminderReady?<p role="status">{calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?`提醒尚未核对：${calendarReminderPreview.error}`:'正在核对本次逐项提醒…'}</p>:null}
                 <div className="ct-button-row">
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale||calendarReminderPending>0}
-                    onClick={()=>editCalendarItem()}>编辑完整清单（含时间）</button>
+                    onClick={()=>editCalendarItem()}>{basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)?'核对各项截止时间':'编辑完整清单（含时间）'}</button>
                   <span className="ct-step-meta">只改一项截止时间，可用该事项下方的时间按钮。</span>
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete||calendarReminderPending>0||!calendarReminderReady}
                     onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarReminderKey?calendarReminderPreview?.hash:calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash,calendarExportReview)}>{calendarExportReview.format==='calendar'?(calendarExportReview.items?.some(item=>(item.status==='timed'||item.status==='allDay')&&effectiveCalendarAlarm(item,calendarExportReview).kind!=='none')?'保存日历文件（含提醒）':'保存日历文件'):'按文字说明导出'}</button>
@@ -1918,7 +1920,7 @@ export function CompanionDashboard({
               {editingMinutes ? <div id="ct-active-minutes-editor" className="ct-minutes-editor">
 
                 <div className="ct-minutes-savebar" aria-label="整理内容保存">
-                  <span>{calendarEditLine!==undefined?`修改这一项的截止时间${minutesDirty?' · 尚未保存':''}`:selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单 · 尚未保存':minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
+                  <span>{calendarEditAll?`核对各项截止时间${minutesDirty?' · 尚未保存':''}`:calendarEditLine!==undefined?`修改这一项的截止时间${minutesDirty?' · 尚未保存':''}`:selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单 · 尚未保存':minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
                 <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary"
                   disabled={!minutesDirty || saveMeetingBusy || calendarPendingCount>0 || !minutesDraft.trim() || (!!selectedDraft?.minutes?.[minutesViewMode]?.createManual && !savedActions(minutesDraft).length)} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : selectedDraft?.minutes?.[minutesViewMode]?.createManual?'保存清单':calendarReturn?'保存修改并返回日历预览':'保存修改'}</button>
                   <button type="button" className="ct-action" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('minutes')}>{calendarReturn?.fromPreview?'取消修改并返回日历预览':'取消'}</button></div>
@@ -1926,10 +1928,10 @@ export function CompanionDashboard({
                     <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn' : 'ct-step-ok'}
                       role={saveMeetingResult.kind === 'error' ? 'alert' : 'status'}>{saveMeetingResult.message}</p> : null}
                 </div>
-                {manualMinutes||selectedDraft?.minutes?.[minutesViewMode]?.createManual?<details className="ct-checklist-source" open={calendarEditLine===undefined}>
+                {manualMinutes||selectedDraft?.minutes?.[minutesViewMode]?.createManual?<details className="ct-checklist-source" open={!calendarEditAll&&calendarEditLine===undefined}>
                   <summary>对照原话</summary><p className="ct-step-meta" style={{maxHeight:100,overflow:'auto',whiteSpace:'pre-wrap'}}>{companionReviewedTranscript(selectedSession)}</p>
                 </details>:null}
-                <MinutesContentEditor calendarOnly={calendarEditLine!==undefined} calendarLineIndex={calendarEditLine} calendarRequestTimed={calendarEditTimed} calendarRequestKey={calendarEditRequest??undefined} onCalendarPending={changeCalendarPending} manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={calendarPendingCount>0 && minutesEntry && 'calendarContext'in minutesEntry?minutesEntry.calendarContext:minutesDisplayContext}
+                <MinutesContentEditor calendarOnly={calendarEditAll||calendarEditLine!==undefined} calendarAll={calendarEditAll} calendarLineIndex={calendarEditLine} calendarRequestTimed={calendarEditTimed} calendarRequestKey={calendarEditRequest??undefined} onCalendarPending={changeCalendarPending} manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={calendarPendingCount>0 && minutesEntry && 'calendarContext'in minutesEntry?minutesEntry.calendarContext:minutesDisplayContext}
                   label={selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单':`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
 
                 {offlineMinutes && onlineMinutes ? <p className="ct-step-meta">只修改当前版本，另一份整理结果保持不变。</p> : null}

@@ -20,7 +20,7 @@ function writeRow(row:Row):string{
   return row.prefix+row.text+(fields.length?' ('+fields.map(field=>`${field.key}: ${field.value}`).join(', ')+')':'');
 }
 
-export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey,calendarRequestRow,calendarRequestTimed,calendarOnly=false}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarRequestRow?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean}){
+export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey,calendarRequestRow,calendarRequestTimed,calendarOnly=false,calendarAll=false}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarRequestRow?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;calendarAll?:boolean}){
   const nextId=useRef(0),sent=useRef(value);
   const calendarIntent=useRef<{key?:string;rowId?:number}>({});
   const parse=(text:string)=>text?text.split(/\r?\n/).map(raw=>readRow(raw,nextId.current++)):[readRow('',nextId.current++)];
@@ -66,7 +66,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
           const index=metadata.findIndex(field=>field.key===key);if(index<0)metadata.push({key,value});else metadata[index]={key,value};}
         return {...row,metadata,changed:true};
       }))}/>:null}
-    {rows.map((row,index)=>calendarOnly&&index!==calendarTarget?null:<div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
+    {rows.map((row,index)=>calendarOnly&&!calendarAll&&index!==calendarTarget?null:<div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
       {calendarOnly?<p><strong>{row.text}</strong></p>:<div style={{display:'flex',gap:8,alignItems:'start'}}>
         <label style={{flex:1}}><span className="ct-step-meta">待办 {index+1}</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 内容`} value={row.text} disabled={disabled}
@@ -74,9 +74,9 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
         <button type="button" className="ct-text-button" disabled={disabled} aria-label={`删除待办 ${index+1}`}
           onClick={()=>update(rows.filter(item=>item.id!==row.id))}>删除</button>
       </div>}
-      <details open={calendarRequestKey&&index===calendarTarget?true:undefined}>
+      <details open={calendarOnly||calendarRequestKey&&index===calendarTarget?true:undefined}>
         <summary className="ct-step-meta" aria-label={`待办 ${index+1} 时间与负责人`}>
-          时间与负责人
+          {calendarOnly?'截止时间':'时间与负责人'}
           {row.metadata.filter(field=>field.value.trim()).map(field=><span key={field.key} style={{marginLeft:10,overflowWrap:'anywhere'}}>
             {field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止：':'时间：'):'负责人：'}{field.key==='due'?readableCalendarTime(field.value):field.value}
           </span>)}
