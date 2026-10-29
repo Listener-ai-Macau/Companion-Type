@@ -62,6 +62,15 @@ if ($SourceCommit) {
 AssertInstallBaseline
 $tag = (Hash $Msi).Substring(0,12)
 $extractDir = Join-Path $out "payload-$tag"
+# MSI administrative extraction does not accept the long content-addressed
+# licence paths that fit in normal file APIs. Keep logs at the requested output
+# and stage the payload independently when the base path consumes the budget.
+if ($extractDir.Length -gt 120) {
+    $stageRoot = Join-Path ([IO.Path]::GetTempPath()) 'companion-type-msi'
+    $extractDir = Join-Path $stageRoot ($tag + '-' + [Guid]::NewGuid().ToString('N').Substring(0,8))
+    if ($extractDir.Length -gt 120) { throw 'A shorter temporary directory is required for MSI payload extraction' }
+    New-Item -ItemType Directory -Force -Path $stageRoot | Out-Null
+}
 if (Test-Path -LiteralPath $extractDir) { throw 'Use a fresh extraction directory for this candidate' }
 Installer ('/a ' + (Quote $Msi) + ' /qn /norestart TARGETDIR=' + (Quote $extractDir) + ' /L*v ' + (Quote (Join-Path $out "extract-$tag.log")))
 $payloadDir = Join-Path $extractDir 'PFiles\Companion Type'
