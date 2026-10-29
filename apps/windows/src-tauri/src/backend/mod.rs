@@ -536,6 +536,14 @@ pub(crate) fn recover_persisted_board_recording(
     recording_id: u32,
     wav_path: &std::path::Path,
 ) -> Result<String, String> {
+    recover_persisted_board_recording_at(recording_id, wav_path, &persistence::state_file_path())
+}
+
+fn recover_persisted_board_recording_at(
+    recording_id: u32,
+    wav_path: &std::path::Path,
+    state_path: &std::path::Path,
+) -> Result<String, String> {
     let expected_suffix = format!("-device-recording-{recording_id}.wav");
     let wav_name = wav_path
         .file_name()
@@ -560,37 +568,40 @@ pub(crate) fn recover_persisted_board_recording(
     let sha256 = format!("{:x}", Sha256::digest(&opus));
     let (wav_bytes, duration_ms) = wav_file_metrics(&wav_path.to_string_lossy())
         .ok_or_else(|| format!("recovery WAV is invalid: {}", wav_path.display()))?;
-    let mut sessions = persistence::load_sessions()
-        .ok_or_else(|| "recording library is unavailable for recovery".to_string())?;
-
-    let owner=legacy_recording_recovery_owner(&sessions,recording_id)?;
-    let session=&mut sessions[owner];
-    session.source = "deviceFlash".to_string();
-    session.status = "captured".to_string();
-    session.pending_reason = Some("needs_transcription".to_string());
-    board_meeting::retain_capture_dates(session);
-    session.duration_ms = duration_ms;
-    session.audio_path = Some(wav_path.to_string_lossy().to_string());
-    session.audio_bytes = wav_bytes;
-    session.audio_stored = true;
-    session.device_recording_id = Some(recording_id);
-    session.device_total_length = Some(total_length);
-    session.device_sha256 = Some(sha256);
-    session.device_reclaimed = false;
-    arm_meeting_recovery(session);
-    session.chunks = vec![audio_chunk(
-        format!("{}-board-recovered", session.id),
-        Some(wav_path.to_string_lossy().to_string()),
-        session.started_at.clone(),
-        session.stopped_at.clone(),
-        duration_ms,
-        wav_bytes,
-        "synced",
-    )];
-    session.retention.audio_cached = true;
-    let session_id = session.id.clone();
-    persistence::save_sessions_to(&persistence::state_file_path(), &sessions)?;
-    Ok(session_id)
+    // Read, identify and commit under one store lock. Another process may
+    // add a recording while this recovery validates WAV/Opus; replacing an
+    // earlier whole-library snapshot would otherwise erase that newer row.
+    let mut recovered_session = None;
+    session_store::update_checked(state_path, |sessions| {
+        let owner=legacy_recording_recovery_owner(sessions,recording_id)?;
+        let session=&mut sessions[owner];
+        session.source = "deviceFlash".to_string();
+        session.status = "captured".to_string();
+        session.pending_reason = Some("needs_transcription".to_string());
+        board_meeting::retain_capture_dates(session);
+        session.duration_ms = duration_ms;
+        session.audio_path = Some(wav_path.to_string_lossy().to_string());
+        session.audio_bytes = wav_bytes;
+        session.audio_stored = true;
+        session.device_recording_id = Some(recording_id);
+        session.device_total_length = Some(total_length);
+        session.device_sha256 = Some(sha256);
+        session.device_reclaimed = false;
+        arm_meeting_recovery(session);
+        session.chunks = vec![audio_chunk(
+            format!("{}-board-recovered", session.id),
+            Some(wav_path.to_string_lossy().to_string()),
+            session.started_at.clone(),
+            session.stopped_at.clone(),
+            duration_ms,
+            wav_bytes,
+            "synced",
+        )];
+        session.retention.audio_cached = true;
+        recovered_session = Some(session.id.clone());
+        Ok(())
+    })?;
+    recovered_session.ok_or_else(|| "recording recovery did not select a session".to_string())
 }
 
 fn legacy_recording_recovery_owner(sessions:&[CompanionV1HostSession],recording_id:u32)->Result<usize,String> {
@@ -4249,6 +4260,43 @@ mod tests {
         assert_eq!(super::legacy_recording_recovery_owner(&[legacy.clone()],3).unwrap(),0);
         let mut another=legacy.clone();another.id="another-pending".into();
         assert!(super::legacy_recording_recovery_owner(&[legacy,another],3).is_err());
+    }
+
+    #[test]
+    fn legacy_recovery_preserves_later_recording() {
+        let root=std::env::temp_dir().join(format!("companion-legacy-race-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap(); let path=root.join("sessions.json");
+        let wav=root.join("fixture-device-recording-3.wav");
+        // A tiny, private PCM WAV plus a separate nonempty fake Opus file.
+        let mut bytes=Vec::new(); bytes.extend_from_slice(b"RIFF"); bytes.extend_from_slice(&38u32.to_le_bytes());
+        bytes.extend_from_slice(b"WAVEfmt "); bytes.extend_from_slice(&16u32.to_le_bytes());
+        bytes.extend_from_slice(&1u16.to_le_bytes()); bytes.extend_from_slice(&1u16.to_le_bytes());
+        bytes.extend_from_slice(&16000u32.to_le_bytes()); bytes.extend_from_slice(&32000u32.to_le_bytes());
+        bytes.extend_from_slice(&2u16.to_le_bytes()); bytes.extend_from_slice(&16u16.to_le_bytes());
+        bytes.extend_from_slice(b"data"); bytes.extend_from_slice(&2u32.to_le_bytes()); bytes.extend_from_slice(&[0,0]);
+        std::fs::write(&wav,&bytes).unwrap();std::fs::write(wav.with_extension("opus"),b"fictional").unwrap();
+        let snapshot=super::apply_fixture_control(super::fixture_snapshot(),crate::control_request(
+            crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("owner".into()))).unwrap();
+        let mut original=snapshot.host.sessions.into_iter().find(|row|row.id=="owner").unwrap();
+        original.device_recording_id=Some(3);original.device_recording_key=None;original.recorder_control=None;
+        super::session_store::save(&path,&[original.clone()]).unwrap();
+        let mut later=original.clone();later.id="new-recording".into();later.device_recording_id=Some(4);
+        super::session_store::update_checked(&path,|rows|{rows.push(later);Ok(())}).unwrap();
+        assert_eq!(super::recover_persisted_board_recording_at(3,&wav,&path).unwrap(),"owner");
+        let rows=super::persistence::load_sessions_from(&path).unwrap();
+        assert!(rows.iter().any(|row|row.id=="new-recording"));
+        let recovered=rows.iter().find(|row|row.id=="owner").unwrap();
+        assert!(recovered.audio_stored && recovered.retention.audio_cached);
+        assert_eq!(recovered.device_recording_id,Some(3));
+        let primary=std::fs::read(&path).unwrap();let backup=std::fs::read(root.join("sessions.json.bak")).unwrap();
+        assert_eq!(primary,backup,"device data must remain recoverable from the backup");
+        // A conflicting second owner must fail without changing either copy.
+        let mut conflict=rows[0].clone();conflict.id="conflict".into();conflict.device_recording_id=Some(3);
+        super::session_store::update_checked(&path,|rows|{rows.push(conflict);Ok(())}).unwrap();
+        let before=std::fs::read(&path).unwrap();let before_backup=std::fs::read(root.join("sessions.json.bak")).unwrap();
+        assert!(super::recover_persisted_board_recording_at(3,&wav,&path).is_err());
+        assert_eq!(std::fs::read(&path).unwrap(),before);assert_eq!(std::fs::read(root.join("sessions.json.bak")).unwrap(),before_backup);
+        std::fs::remove_dir_all(root).unwrap();
     }
 
     #[test]
