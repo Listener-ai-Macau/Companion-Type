@@ -1,7 +1,30 @@
 import type {CompanionV1HostSession,CompanionV1MeetingMode} from '@companion-type/core';
 import type {CalendarExportItem,CalendarReminderSelection} from './CalendarExportItems';
+import {nativeActionParts} from './actionMetadata';
 
 export type SavedCalendarReminders={fileName:string;selections:CalendarReminderSelection[]};
+
+/** Only the row the user explicitly chose to edit can inherit a relative rule. */
+export function carryRelativeReminderAfterSingleDeadlineEdit(
+  selections:CalendarReminderSelection[]|undefined,
+  change:{index:number;before:CalendarExportItem[]}|undefined,
+  after:CalendarExportItem[],
+):{selections:CalendarReminderSelection[]|undefined;carried:boolean} {
+  const unchanged={selections,carried:false};
+  if(!selections||!change||change.before.length!==after.length||change.index<0||change.index>=after.length)return unchanged;
+  const old=change.before[change.index],now=after[change.index];
+  if(!old.uid||!now.uid||old.uid===now.uid||old.status!=='timed'||now.status!=='timed'||!old.deadline||!now.deadline||old.deadline===now.deadline)return unchanged;
+  if(change.before.filter(i=>i.uid===old.uid).length!==1||after.filter(i=>i.uid===now.uid).length!==1||selections.filter(s=>s.uid===old.uid).length!==1||selections.some(s=>s.uid===now.uid))return unchanged;
+  if(change.before.some((item,i)=>i!==change.index&&(item.uid!==after[i].uid||item.text!==after[i].text||item.deadline!==after[i].deadline||item.status!==after[i].status)))return unchanged;
+  const prior=nativeActionParts(old.text),current=nativeActionParts(now.text);
+  const priorDue=prior.metadata.filter(m=>m.key==='due'),currentDue=current.metadata.filter(m=>m.key==='due');
+  if(prior.body!==current.body||priorDue.length!==1||currentDue.length!==1||priorDue[0].value.trim()!==old.deadline||currentDue[0].value.trim()!==now.deadline||
+    JSON.stringify(prior.metadata.filter(m=>m.key!=='due'))!==JSON.stringify(current.metadata.filter(m=>m.key!=='due')))return unchanged;
+  const selected=selections.find(s=>s.uid===old.uid)!;
+  if(selected.reminder.kind!=='before')return unchanged;
+  const newUid=now.uid;
+  return {selections:selections.map(s=>s===selected?{uid:newUid,reminder:{...s.reminder}}:s),carried:true};
+}
 
 /** Read only an actual saved-file receipt in this record/mode/privacy epoch. */
 export function lastSavedCalendarReminders(session:CompanionV1HostSession,mode:CompanionV1MeetingMode):SavedCalendarReminders|undefined {

@@ -1,6 +1,6 @@
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {CalendarCopyComparison} from './CalendarCopyComparison';
-import {lastSavedCalendarReminders,retainCalendarReminders} from './calendarReminderCarryover';
+import {lastSavedCalendarReminders,retainCalendarReminders,carryRelativeReminderAfterSingleDeadlineEdit} from './calendarReminderCarryover';
 import {retainCalendarSlots} from './calendarSlotCarryover';
 import {operationErrorText,calendarExportNeedsTime} from './operationFailure';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
@@ -476,7 +476,7 @@ export function CompanionDashboard({
   const [calendarEditLine,setCalendarEditLine]=useState<number|undefined>();
   const [calendarEditAll,setCalendarEditAll]=useState(false);
   const [calendarEditTimed,setCalendarEditTimed]=useState(false);
-  const [calendarReturn,setCalendarReturn]=useState<(CalendarReminderChoice&{sessionId:string;mode:CompanionV1MeetingMode;origin:MeetingExportOrigin;expectedMarkdown?:string;fromPreview?:boolean})|null>(null);
+  const [calendarReturn,setCalendarReturn]=useState<(CalendarReminderChoice&{sessionId:string;mode:CompanionV1MeetingMode;origin:MeetingExportOrigin;expectedMarkdown?:string;fromPreview?:boolean;singleDeadlineChange?:{index:number;before:CalendarExportItem[]}})|null>(null);
   const calendarEditSequence=useRef(0);
   useEffect(()=>{if(!editingMinutes)setCalendarEditRequest(null);},[editingMinutes]);
   const [calendarPendingCount,setCalendarPendingCount]=useState(0);
@@ -1134,7 +1134,7 @@ export function CompanionDashboard({
   },[calendarReminderKey,onPreviewMeetingExport,calendarReminderRetry]);
   const calendarReminderReady=!calendarReminderKey||calendarReminderPreview?.key===calendarReminderKey&&!!calendarReminderPreview.hash;
   const changeCalendarReminderPending=(delta:1|-1)=>setCalendarReminderPending(count=>Math.max(0,count+delta));
-  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string,reviewChoice?:CalendarReminderChoice,calendarSaveToken?:string,calendarSavedName=false) => {
+  const exportMeeting = async (format: CompanionMeetingExportRequest['format'], origin: MeetingExportOrigin='document', confirmedHash?:string,reviewChoice?:CalendarReminderChoice&{singleDeadlineChange?:{index:number;before:CalendarExportItem[]}},calendarSaveToken?:string,calendarSavedName=false) => {
     if (!selectedSession || !onExportMeeting || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id,exportSourceKey=copySourceKey;
     const savedCalendarReview=(format==='ics'||format.startsWith('calendar'))?calendarExportReview:null;
@@ -1178,14 +1178,15 @@ export function CompanionDashboard({
           if(copySourceRef.current!==exportSourceKey)return;
           const carried=reviewChoice===undefined?retainCalendarReminders(lastSavedCalendarReminders(selectedSession,minutesViewMode),preview.calendarItems??[]):undefined;
           const carriedSlots=reviewChoice===undefined?retainCalendarSlots(selectedSession,minutesViewMode,preview.calendarItems??[]):undefined;
-          const priorReminders=reviewChoice?.calendarReminders??carried?.selections;
+          const relativeCarry=carryRelativeReminderAfterSingleDeadlineEdit(reviewChoice?.calendarReminders,reviewChoice?.singleDeadlineChange,preview.calendarItems??[]);
+          const priorReminders=relativeCarry.selections??carried?.selections;
           const calendarReminders=priorReminders?.filter(s=>preview.calendarItems?.some(item=>item.uid===s.uid&&(item.status==='timed'||item.status==='allDay')));
           const priorSlots=reviewChoice?.calendarSlots??carriedSlots?.selections;
           const calendarSlots=priorSlots?.filter(s=>preview.calendarItems?.some(item=>item.uid===s.uid&&(item.status==='timed'||item.status==='allDay')));
           const reminderNote=carried?.notCarriedAlarms?`上次文件中有${carried.notCarriedAlarms}项提醒对应的事项已改变或不再导出，未自动套用。请核对本次日期和提醒；未变事项的设置已保留。`:
             (calendarReminders?.length??0)!==(reviewChoice?.calendarReminders?.length??0)&&reviewChoice?'已修改事项的单独提醒未自动套用，请按新截止时间重新设置；其它事项的选择保留。':undefined;
           const missingSlots=carriedSlots?.notCarried??Math.max(0,(reviewChoice?.calendarSlots?.length??0)-(calendarSlots?.length??0));
-          const reminderSourceNote=[reminderNote,missingSlots?`${missingSlots}项原执行时段对应的事项已改变或不再导出，请重新核对；未变事项的时段保留。`:undefined].filter(Boolean).join(' ')||undefined;
+          const reminderSourceNote=[reminderNote,relativeCarry.carried?'这项的提前提醒已按新的截止时间沿用，请核对。':undefined,missingSlots?`${missingSlots}项原执行时段对应的事项已改变或不再导出，请重新核对；未变事项的时段保留。`:undefined].filter(Boolean).join(' ')||undefined;
           setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,reminderSourceNote,reminderCarryover:carried?{fileName:carried.fileName,retained:calendarReminders?.length??0}:undefined,calendarReminders,calendarSlots,reminderContentHash,reminderHashes,reminderFormat:reviewChoice?.reminderFormat??'calendarreminder30',remindAtTime:!!reviewChoice?.remindAtTime&&!!reminderContentHash,items:preview.calendarItems??undefined});
           setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);setExportResult(null);return;
         }
@@ -1225,7 +1226,7 @@ export function CompanionDashboard({
     const review=calendarExportReview;if(!selectedSession||!review)return;
     const actions=savedActions(minutesMarkdown);
     if(index!==undefined&&(!review.items||actions.length!==review.items.length||actions.some((a,n)=>a.text!==review.items![n].text)))return;
-    setCalendarReturn(review.format==='calendar'?{sessionId:selectedSession.id,mode:minutesViewMode,origin:review.origin,fromPreview:true,remindAtTime:review.remindAtTime,reminderFormat:review.reminderFormat,calendarReminders:review.calendarReminders,calendarSlots:review.calendarSlots}:null);
+    setCalendarReturn(review.format==='calendar'?{sessionId:selectedSession.id,mode:minutesViewMode,origin:review.origin,fromPreview:true,remindAtTime:review.remindAtTime,reminderFormat:review.reminderFormat,calendarReminders:review.calendarReminders,calendarSlots:review.calendarSlots,...(index!==undefined&&review.items?{singleDeadlineChange:{index,before:review.items.map(item=>({...item}))}}:{})}:null);
     setCalendarEditAll(index===undefined&&!!basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes));
     setCalendarEditLine(index===undefined?undefined:actions[index].lineIndex);
     setCalendarEditTimed(index!==undefined&&review.items?.[index].status==='allDay');
