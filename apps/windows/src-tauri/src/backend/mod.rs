@@ -3201,11 +3201,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                 let Some(operation) = observation.operation else { return Ok(snapshot.device.recording); };
                 observe_segmented_library(&mut snapshot, &operation, &persistence::state_file_path(),
                     CompanionV1ControlAction::DeviceSyncRecordings)?;
-                if !operation.ready {
-                    snapshot.connected = false; snapshot.device.connected = false;
-                    snapshot.device.connection_phase = "offline".into();
-                    return Err(operation.message);
-                }
+                require_follow_sync_success(&mut snapshot, &operation, observation.connection_reusable)?;
                 Ok(true)
             }
             Ok(None) => Ok(snapshot.device.recording),
@@ -4078,6 +4074,36 @@ fn observe_failed_device_connect(snapshot:&mut CompanionV1Snapshot,operation:&Co
         payload_hex:String::new(),accepted:false,message:error.clone(),
     });
     refresh_privacy_counts(snapshot);error
+}
+
+// A local receipt failure does not prove the active physical BLE connection
+// failed. Report incomplete sync, but preserve a reusable connection.
+fn require_follow_sync_success(snapshot: &mut CompanionV1Snapshot,
+    operation: &CompanionBleOperation, connection_reusable: bool) -> Result<(), String> {
+    if operation.ready { return Ok(()); }
+    if !connection_reusable {
+        snapshot.connected = false; snapshot.device.connected = false;
+        snapshot.device.connection_phase = "offline".into();
+    }
+    Err(operation.message.clone())
+}
+
+#[cfg(test)]
+mod follow_receipt_connection_tests {
+    use super::*;
+    #[test]
+    fn local_receipt_failure_keeps_verified_connection_while_transport_failure_closes_it() {
+        let mut snapshot = crate::companion_v1::fixture_snapshot();
+        snapshot.connected=true;snapshot.device.connected=true;snapshot.device.connection_phase="connected".into();
+        let operation=CompanionBleOperation { provider_id:"companion-type-windows-ble".into(),
+            mode:"windows-native-segmented-recording-pull".into(), ready:false, sync_paused:false,
+            device_id:Some("A1:B2:C3:D4:E5:F6".into()),recording_path:None,recordings:Vec::new(),
+            device_identity:None,message:"录音恢复记录损坏，原件保留".into() };
+        assert!(require_follow_sync_success(&mut snapshot,&operation,true).is_err());
+        assert!(snapshot.connected&&snapshot.device.connected);assert_eq!(snapshot.device.connection_phase,"connected");
+        assert!(require_follow_sync_success(&mut snapshot,&operation,false).is_err());
+        assert!(!snapshot.connected&&!snapshot.device.connected);assert_eq!(snapshot.device.connection_phase,"offline");
+    }
 }
 
 fn observe_segmented_library(snapshot: &mut CompanionV1Snapshot,

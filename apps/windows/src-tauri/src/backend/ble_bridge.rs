@@ -1595,6 +1595,7 @@ pub(crate) fn prepared_segmented_recording(device_id: &str) -> bool {
 pub(crate) struct FollowObservation {
     pub(super) identity: CompanionDeviceIdentity,
     pub(super) operation: Option<CompanionBleOperation>,
+    pub(super) connection_reusable: bool,
 }
 
 pub(crate) fn follow_prepared_recording_once(device_id: &str,
@@ -1678,7 +1679,7 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
             } else { finish_native_device_operation(device,true).await?; }
         } else { close_native_device(&device).await; }
         let identity = identity.ok_or("连续录音状态没有当前身份读回。")?;
-        result.map(|batch| Some(FollowObservation { identity, operation: batch.and_then(|batch| {
+        result.map(|batch| Some(FollowObservation { identity, connection_reusable: reusable, operation: batch.and_then(|batch| {
             if batch.failures.is_empty() && !batch.paused
                 && batch.segmented.as_ref().is_none_or(|ids| ids.is_empty()) { None }
             else {
