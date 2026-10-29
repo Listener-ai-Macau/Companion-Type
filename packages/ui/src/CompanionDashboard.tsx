@@ -1,4 +1,5 @@
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
+import {CalendarCopyComparison} from './CalendarCopyComparison';
 import {operationErrorText,calendarExportNeedsTime} from './operationFailure';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
@@ -1887,13 +1888,15 @@ export function CompanionDashboard({
                       <option value="calendarreminder30">提前30分钟</option><option value="calendarreminder60">提前1小时</option><option value="calendarreminder">在已确认的时刻</option>
                     </select>
                   </label>:null}
-                  <p className="ct-step-meta">仅用于选择“按上方统一设置”的具体时刻事项，不覆盖已单独设置的提醒。只有日期的事项仍可单独指定提醒时刻，保留全天截止日。</p>
+                  <p className="ct-step-meta">例如选择“提前30分钟”，有具体时刻且未单独设置提醒的事项，就会提前30分钟提醒。每项下方会显示实际设置；只有日期的事项需单独指定提醒时刻。</p>
                 </>:null}
                 {calendarExportReview.items?<CalendarExportItems items={calendarExportReview.items} choice={calendarExportReview}
                   disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale}
                   onPending={changeCalendarReminderPending}
                   onReminder={(uid,reminder)=>setCalendarExportReview(current=>current?{...current,calendarReminders:[...(current.calendarReminders??[]).filter(s=>s.uid!==uid),...(reminder?[{uid,reminder}]:[])]}:null)}
                   onEdit={basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)&&savedActions(minutesMarkdown).length===calendarExportReview.items.length&&savedActions(minutesMarkdown).every((a,n)=>a.text===calendarExportReview.items![n].text)?editCalendarItem:undefined}/>:null}
+                {calendarExportReview.items?<CalendarCopyComparison key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`}
+                  copies={(selectedSession.calendarCopies??[]).filter(copy=>copy.meetingMode===minutesViewMode)} items={calendarExportReview.items} choice={calendarExportReview}/>:null}
                 {calendarReminderKey&&calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?<button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording} onClick={()=>setCalendarReminderRetry(n=>n+1)}>重新核对提醒</button>:null}
                 {calendarReminderKey&&!calendarReminderReady?<p role="status">{calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?`提醒尚未核对：${calendarReminderPreview.error}`:'正在核对本次逐项提醒…'}</p>:null}
                 <div className="ct-button-row">

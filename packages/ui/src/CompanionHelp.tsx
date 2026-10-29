@@ -38,12 +38,12 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
         <button key={id} type="button" className="ct-action" onClick={()=>reveal(id)}>{label}</button>)}
     </nav>
     <div id="ct-help-calendar-update"><CompanionCalendarUpdateHelp onReturn={onRecording}/></div>
-    <details open><summary>怎样和宠物聊天、起名字或记住一件事？</summary>      <p>先在“设备与同步”连接宠物，再展开页面最上方的“我的宠物”。目前聊天需要连接电脑，只用宠物麦克风。</p>      <p>点“开聊”后说一句话，说完点“说完了”；每句最多12秒，短回复显示在宠物屏幕底部。不会在后台持续收音。</p>      <p>在“名字、性格与记忆”查看这只宠物。“改名字与性格”可调整称呼和相处方式；“记住一句”只保存你确认的小事。需要聊天使用时再开启记忆开关，随时可以暂停、修改或删除。</p>    </details>    <h3 id="ct-help-recording" tabIndex={-1}>录音与找回</h3>    <ol className="ct-use-help-steps">
+    <details><summary>怎样和宠物聊天、起名字或记住一件事？</summary>      <p>先在“设备与同步”连接宠物，再展开页面最上方的“我的宠物”。目前聊天需要连接电脑，只用宠物麦克风。</p>      <p>点“开聊”后说一句话，说完点“说完了”；每句最多12秒，短回复显示在宠物屏幕底部。不会在后台持续收音。</p>      <p>在“名字、性格与记忆”查看这只宠物。“改名字与性格”可调整称呼和相处方式；“记住一句”只保存你确认的小事。需要聊天使用时再开启记忆开关，随时可以暂停、修改或删除。</p>    </details>    <details id="ct-help-recording"><summary>录音与找回</summary>    <ol className="ct-use-help-steps">
       <li><strong>在宠物上开始</strong><p>回到宠物首页，默认双击左下角开始录音。睡着时先短按实体键唤醒；改过录音手势时，按已选手势操作。</p></li>
       <li><strong>停止，等设备保存</strong><p>录音时再次双击屏幕停止，等待设备显示“已保存”。保存中或异常时，先保留设备上的内容。</p></li>
       <li><strong>回到 Type 找到它</strong><p>在“设备与同步”连接并同步，等本机原音保存完成，再到“我的记录”按标题、日期或内容查找。需要时回听或转文字。</p></li>
     </ol>
-    <p className="ct-use-help-key">设备“已保存”与电脑“已收齐”是两步。文字还没生成，不等于原音没有保存。</p>
+    <p className="ct-use-help-key">设备“已保存”与电脑“已收齐”是两步。文字还没生成，不等于原音没有保存。</p></details>
 
     <details><summary>文字不对，或有一句话看不懂，怎么办？</summary>
       <p>文字由语音识别生成，显示“文字已生成”不代表每句话都正确。先回到这条录音，点“回听”核对原音；需要改字时，点“核对文字”，修改后保存修订。</p>

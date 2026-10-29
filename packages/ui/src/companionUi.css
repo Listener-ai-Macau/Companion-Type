@@ -1699,3 +1699,11 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-use-help summary,.ct-use-help h3 {scroll-margin-top:140px;}
 .ct-calendar-other-methods {margin-top:12px;}
 .ct-calendar-other-methods>summary {cursor:pointer;font-weight:600;}
+
+.ct-calendar-comparison {margin:16px 0;padding:12px;border:1px solid #dce5de;border-radius:10px;}
+.ct-calendar-comparison summary {cursor:pointer;font-weight:600;}
+.ct-calendar-comparison select {display:block;width:100%;min-width:0;max-width:100%;margin:8px 0;min-height:40px;}
+.ct-calendar-comparison-columns {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.ct-calendar-comparison-columns section {min-width:0;padding:10px;background:#f4f7f2;border-radius:8px;overflow-wrap:anywhere;}
+.ct-calendar-comparison h4 {margin:0 0 8px;}
+@media(max-width:600px){.ct-calendar-comparison-columns{grid-template-columns:1fr;}}
