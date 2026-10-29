@@ -15,6 +15,22 @@ pub(crate) struct CalendarApplication { id:String, label:String }
 pub(crate) enum CalendarOpenOutcome { Requested, ChooseApplication { applications:Vec<CalendarApplication> } }
 enum ShellOpenOutcome { Requested, Applications(Vec<(String,String)>) }
 
+/// A remembered basename is only a dialog suggestion, never a remembered path
+/// or permission to replace a file. Invalid historical names fall back to the
+/// ordinary generated name.
+pub(crate) fn saved_name_hint<'a>(session:&'a CompanionV1HostSession,mode:&str)->Option<&'a str> {
+    let copy=session.calendar_copies.iter().find(|c|c.meeting_mode==mode && c.privacy_epoch==session.calendar_copy_epoch)?;
+    let name=copy.file_name.as_str();
+    let stem=name.split('.').next()?.to_ascii_uppercase();
+    let reserved=matches!(stem.as_str(),"CON"|"PRN"|"AUX"|"NUL")
+        || (stem.len()==4 && (stem.starts_with("COM")||stem.starts_with("LPT")) && matches!(stem.as_bytes()[3],b'1'..=b'9'));
+    if name.is_empty() || name.trim()!=name || name.encode_utf16().count()>255
+        || reserved
+        || name.chars().any(|c|c.is_control()||matches!(c,'/'|'\\'|':'|'*'|'?'|'"'|'<'|'>'|'|'))
+        || !Path::new(name).extension().is_some_and(|s|s.to_str().is_some_and(|s|s.eq_ignore_ascii_case("ics"))) {return None;}
+    Some(name)
+}
+
 impl CalendarHandoff {
     pub(crate) fn remember(&self, session:&CompanionV1HostSession, mode:&str, path:&Path, bytes:u64, hash:String)->Result<String,String> {
         if !path.is_absolute() || !path.extension().is_some_and(|s|s.to_str().is_some_and(|s|s.eq_ignore_ascii_case("ics"))) {
@@ -194,6 +210,20 @@ fn open_default(_path:&Path,_selected:Option<&str>,_list_only:bool)->Result<Shel
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]fn remembered_basename_is_scoped_and_never_a_path() {
+        let (path,mut session,_,_)=fixture();
+        let make=|name:&str,mode:&str,epoch:u64| crate::backend::calendar_copy::Copy {
+            schema:1,privacy_epoch:epoch,meeting_mode:mode.into(),saved_at:"2026-10-29".into(),file_name:name.into(),file_sha256:"a".repeat(64),content_hash:"b".repeat(64),source_title:"例".into(),source_markdown:"示例".into(),entries:vec![]
+        };
+        session.calendar_copies=vec![make("交接提醒.ics","offlineStore",0)];
+        assert_eq!(saved_name_hint(&session,"offlineStore"),Some("交接提醒.ics"));
+        assert_eq!(saved_name_hint(&session,"onlineLive"),None);
+        session.calendar_copy_epoch=1;assert_eq!(saved_name_hint(&session,"offlineStore"),None);session.calendar_copy_epoch=0;
+        for name in ["../other.ics",r"C:\other.ics","other.txt"," ","bad:name.ics","a\n.ics","CON.ics","Lpt9.ics"] {
+            session.calendar_copies[0].file_name=name.into();assert_eq!(saved_name_hint(&session,"offlineStore"),None,"{name}");
+        }
+        std::fs::remove_file(path).unwrap();
+    }
     fn fixture()->(PathBuf,CompanionV1HostSession,CalendarHandoff,String){
         let path=std::env::temp_dir().join(format!("companion-calendar-{}.ics",uuid::Uuid::new_v4()));
         std::fs::write(&path,b"BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n").unwrap();

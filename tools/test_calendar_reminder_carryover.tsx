@@ -25,7 +25,7 @@ const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null
  onExportMeeting:async(r:any)=>{exports.push(r);return null;}});
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});await act(async()=>button('导出到日历').props.onClick());
 assert.equal(field('日历事项 1 提醒').props.value,'1440');assert.equal(field('日历事项 2 提醒').props.value,'at');assert.equal(field('日历事项 3 提醒').props.value,'none');assert.equal(field('日历事项 4 提醒').props.value,'default','new item never receives old global defaults');
-assert.match(text(tree.toJSON()),/最近保存记录带入3项逐项设置/);assert.match(text(tree.toJSON()),/上次文件中有1项提醒对应的事项已改变或不再导出/,'source notice survives completed native preview warning');
+assert.match(text(tree.toJSON()),/最近保存记录带入3项逐项设置/);assert.match(text(tree.toJSON()),/请自行核对文件夹和目标文件/,'name is only a hint and folder remains explicit');assert.match(text(tree.toJSON()),/上次文件中有1项提醒对应的事项已改变或不再导出/,'source notice survives completed native preview warning');
 assert.match(text(tree.toJSON()),/2026年11月7日 09:00/);assert.equal(JSON.stringify(snapshot),original);
 await act(async()=>button('保存日历文件（含提醒）').props.onClick());assert.equal(exports.length,1);assert.equal(exports[0].expectedContentHash,hash(exports[0]));assert.deepEqual(exports[0].calendarReminders,[
  {uid:'timed',reminder:{kind:'before',minutes:1440}},{uid:'day',reminder:{kind:'at',at:'2026-11-07T09:00:00+08:00'}},{uid:'none',reminder:{kind:'none'}}]);

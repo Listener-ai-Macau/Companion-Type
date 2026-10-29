@@ -1895,6 +1895,7 @@ export function CompanionDashboard({
                 <h3>确认日历日程与提醒</h3>
                 <p>{calendarExportReview.format==='calendar'?((calendarReminderKey&&calendarReminderReady?calendarReminderPreview?.warning:calendarExportReview.warning)||'把已确认的日期和时间带到常用日历；后续修改不会自动同步。'):'还有时间说明未确认为日历截止时间。可以先核对，也可将时间按文字说明导出。'}</p>
                 {calendarExportReview.reminderCarryover?<p className="ct-step-meta">已从“{calendarExportReview.reminderCarryover.fileName}”的最近保存记录带入{calendarExportReview.reminderCarryover.retained}项逐项设置。只沿用未变事项，下面仍可修改；不读取接收日历里的后续改动。</p>:null}
+                {calendarExportReview.format==='calendar' && selectedSession.calendarCopies?.some(copy=>copy.meetingMode===minutesViewMode && copy.privacyEpoch===(selectedSession.calendarCopyEpoch??0)) ? <p className="ct-step-meta">保存窗口会尝试带入上次的文件名；请自行核对文件夹和目标文件，也可改名另存。重启后不会记住文件夹。</p> : null}
                 {calendarExportReview.reminderSourceNote?<p className="ct-step-warn" role="status">{calendarExportReview.reminderSourceNote}</p>:null}
                 {calendarExportReview.format==='calendar'?<>
                   <label className="ct-step-meta"><input type="checkbox" aria-label="统一设置提醒" checked={!!calendarExportReview.remindAtTime}

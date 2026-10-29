@@ -542,9 +542,10 @@ pub async fn export_companion_meeting(
     if request.calendar_save_token.is_some()&&(!calendar_format||request.expected_content_hash.is_none()) {
         return Err("请先核对当前日历预览，再选择上次保存位置。".into());
     }
+    let suggested_name=if calendar_format {crate::calendar_handoff::saved_name_hint(&session,&request.meeting_mode).unwrap_or(&prepared.suggested_name)} else {&prepared.suggested_name};
     let mut dialog=app.dialog().file()
         .add_filter(prepared.format.dialog_label(), &[prepared.format.extension()])
-        .set_file_name(&prepared.suggested_name);
+        .set_file_name(suggested_name);
     if let Some(token)=request.calendar_save_token.as_deref() {
         let hint=app.state::<crate::calendar_handoff::CalendarHandoff>().save_hint(token,&session,&request.meeting_mode)?;
         let parent=hint.parent().ok_or("上次保存目录无法读取，请重新选择。")?;
