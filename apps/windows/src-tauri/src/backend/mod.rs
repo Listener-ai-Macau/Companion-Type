@@ -3142,7 +3142,12 @@ impl CompanionBackend for FixtureCompanionBackend {
                 CompanionV1ControlAction::PrivacyEraseAll => snapshot.host.sessions.iter().map(|row| row.id.clone()).collect(),
                 _ => Vec::new(),
             };
-            let _ = persistence::save_snapshot_allowing_removals(&mut next, &allowed_removals);
+            let allowed_audio_clear: Vec<String> = match action {
+                CompanionV1ControlAction::PrivacyEraseAudio | CompanionV1ControlAction::PrivacyDeleteSession => requested_session_id.iter().cloned().collect(),
+                CompanionV1ControlAction::PrivacyEraseAll => snapshot.host.sessions.iter().map(|row| row.id.clone()).collect(),
+                _ => Vec::new(),
+            };
+            let _ = persistence::save_snapshot_allowing_removals(&mut next, &allowed_removals, &allowed_audio_clear);
         }
         if let Some(mut result) = cleanup_summary {
             result.index_saved = next.host.persistence.status == "ready";
