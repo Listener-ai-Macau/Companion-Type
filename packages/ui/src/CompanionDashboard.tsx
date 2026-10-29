@@ -1941,7 +1941,9 @@ export function CompanionDashboard({
                   <p className="ct-step-meta">只填写上次文件名，请自行核对文件夹和目标文件，也可改名另存；重启后不会记住文件夹。</p>
                 </div>:null}
                 {calendarExportReview.items?<CalendarCopyComparison key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`}
-                  copies={(selectedSession.calendarCopies??[]).filter(copy=>copy.meetingMode===minutesViewMode)} slotCopies={selectedSession.calendarSlotCopies} items={calendarExportReview.items} choice={calendarExportReview}/>:null}
+                  copies={(selectedSession.calendarCopies??[]).filter(copy=>copy.meetingMode===minutesViewMode&&copy.privacyEpoch===(selectedSession.calendarCopyEpoch??0))} slotCopies={selectedSession.calendarSlotCopies} items={calendarExportReview.items} choice={calendarExportReview}
+                  disabled={controlsBusy||oobeBlockedByRecording||calendarReminderPending>0}
+                  onUseReminder={(uid,reminder)=>setCalendarExportReview(current=>current&&current.sourceKey===copySourceKey&&current.items?.some(item=>item.uid===uid&&(item.status==='timed'||item.status==='allDay'))?{...current,suggestedAbsolute:current.suggestedAbsolute?.uid===uid?undefined:current.suggestedAbsolute,calendarReminders:[...(current.calendarReminders??[]).filter(selection=>selection.uid!==uid),{uid,reminder}]}:current)}/>:null}
                 {calendarReminderKey&&calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?<button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording} onClick={()=>setCalendarReminderRetry(n=>n+1)}>重新核对提醒</button>:null}
                 {calendarReminderKey&&!calendarReminderReady?<p role="status">{calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?`提醒尚未核对：${calendarReminderPreview.error}`:'正在核对本次逐项提醒…'}</p>:null}
                 <div className="ct-button-row">

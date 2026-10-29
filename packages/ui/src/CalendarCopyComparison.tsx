@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import type {CompanionCalendarCopy,CompanionCalendarSlotCopy} from '@companion-type/core';
 import {savedSlotFor,readableSlot} from './calendarSavedSlot';
-import {calendarAlarmLabel,effectiveCalendarAlarm,type CalendarExportItem,type CalendarReminderChoice} from './CalendarExportItems';
+import {calendarAlarmLabel,effectiveCalendarAlarm,type CalendarAlarm,type CalendarExportItem,type CalendarReminderChoice} from './CalendarExportItems';
 import {readableCalendarTime} from './calendarTime';
 
 const alarmText=(value:string)=>value.replace(/^提醒：/,'');
@@ -27,10 +27,16 @@ function ComparisonCopy({oldTitle,text}:{oldTitle:string;text:string}) {
 
 /** Reading only. The user chooses both entries; names, positions and dates do
  * not establish identity or prove that an external calendar imported a file. */
-export function CalendarCopyComparison({copies,items,choice,slotCopies}:{copies:CompanionCalendarCopy[];items:CalendarExportItem[];choice:CalendarReminderChoice;slotCopies?:CompanionCalendarSlotCopy[]}) {
+export function CalendarCopyComparison({copies,items,choice,slotCopies,onUseReminder,disabled=false}:{copies:CompanionCalendarCopy[];items:CalendarExportItem[];choice:CalendarReminderChoice;slotCopies?:CompanionCalendarSlotCopy[];onUseReminder?:(uid:string,reminder:CalendarAlarm)=>void;disabled?:boolean}) {
   const [fileIndex,setFileIndex]=useState(0),[oldIndex,setOldIndex]=useState(''),[currentIndex,setCurrentIndex]=useState('');
   const copy=copies[fileIndex];if(!copy||!items.length)return null;
   const old=oldIndex===''?undefined:copy.entries[Number(oldIndex)],current=currentIndex===''?undefined:items[Number(currentIndex)];
+  const reusable:CalendarAlarm|undefined=old&&current&&current.uid&&copy.entries.filter(entry=>entry.uid===old.uid).length===1&&items.filter(item=>item.uid===current.uid).length===1&&(current.status==='timed'||current.status==='allDay')
+    ?old.reminderAt&&old.reminderMinutes==null?{kind:'at',at:old.reminderAt}
+      :!old.reminderAt&&old.reminderMinutes==null?{kind:'none'}
+      :!old.reminderAt&&old.reminderMinutes!=null&&[0,30,60,1440].includes(old.reminderMinutes)&&current.status==='timed'?{kind:'before',minutes:old.reminderMinutes}
+      :undefined
+    :undefined;
   const oldSlot=old?savedSlotFor(copy,old.uid,slotCopies):undefined;
   const when=new Date(copy.savedAt),saved=Number.isNaN(when.getTime())?'保存时间待核对':when.toLocaleString('zh-CN',{hour12:false});
   const comparison=old&&current?[`改期对照（请确认是同一事项）`,`原文件：${copy.fileName}\n保存时间：${saved}`,`原日程名称：${old.title}\n原时间：${readableCalendarTime(old.deadline)}${oldSlot?`\n原执行时段：${readableSlot(oldSlot)}`:''}\n原提醒：${oldAlarm(old)}`,`当前事项：${current.title}\n当前时间：${currentTime(current,choice)}\n当前提醒：${currentAlarm(current,choice)}`,'本对照未修改接收日历，也不能确认旧文件已导入。请找到原日程，核对后修改；重新导入可能产生重复。'].join('\n\n'):'';
@@ -50,12 +56,14 @@ export function CalendarCopyComparison({copies,items,choice,slotCopies}:{copies:
       </section>
       <section aria-label="当前预览中的事项"><h4>当前预览中的事项</h4>
         <select aria-label="要对照的当前事项" value={currentIndex} onChange={event=>setCurrentIndex(event.currentTarget.value)}>
-          <option value="">选择当前事项…</option>{items.map((item,i)=><option key={item.uid??i} value={i}>{i+1}. {item.title} · {currentTime(item,choice)}</option>)}
+          <option value="">选择当前事项…</option>{items.map((item,i)=><option key={`${item.uid??'no-uid'}:${i}`} value={i}>{i+1}. {item.title} · {currentTime(item,choice)}</option>)}
         </select>
         {current?<p><strong>{current.title}</strong><br/>当前时间：{currentTime(current,choice)}<br/>当前提醒：{currentAlarm(current,choice)}</p>:null}
       </section>
     </div>
     {old&&current?<><p className="ct-step-meta">这是你选出的两项对照，尚未修改接收日历。请核对名称、原日期和条件，避免改错事项。</p>
+      {onUseReminder&&reusable&&current.uid?<><p className="ct-step-meta">确认是同一事项后，可以把上方原提醒用于本次日历。具体时刻不会随截止日期自动移动，请先核对。</p>
+        <button type="button" className="ct-text-button" disabled={disabled} onClick={()=>onUseReminder(current.uid!,reusable)}>将原提醒用于当前事项</button></>:null}
       <ComparisonCopy key={comparison} oldTitle={old.title} text={comparison}/></>:null}
   </details>;
 }
