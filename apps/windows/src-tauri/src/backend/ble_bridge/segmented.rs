@@ -341,7 +341,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
     // Lost final replies can leave NO device entry. Only exact local manifests
     // for this UID+epoch+receiver reopen that durable session, no blind scan.
     let groups = microphone_groups(&peer,
-        Receiver::pending_initials(&root, &peer, &device.device_id())?, entries, scope)?;
+        Receiver::pending_initials(&root, &peer, &device.device_id(), scope)?, entries, scope)?;
     let mut batch = NativeRecordingBatch { device_id: device.device_id(), recordings: Vec::new(),
         failures: Vec::new(), paused: false, connection_reusable: true, segmented: Some(Vec::new()) };
     let mut pull_session = None;

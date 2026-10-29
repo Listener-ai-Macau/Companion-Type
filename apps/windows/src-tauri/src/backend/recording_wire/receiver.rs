@@ -78,7 +78,14 @@ impl Receiver {
     /// empty (power loss after removal, before its successful reply). Enumerate
     /// only this format's exact manifest names; never adopt arbitrary audio.
     pub(crate) fn pending_initials(root: &Path, peer: &super::transport::Peer,
-        device: &str) -> Result<Vec<Vec<u8>>, String> {
+        device: &str, scope: Option<&SessionKey>) -> Result<Vec<Vec<u8>>, String> {
+        // An explicitly selected original is keyed by its complete immutable
+        // session identity. Do not inspect unrelated local receipts, but never
+        // ignore a corrupt receipt belonging to the selected original.
+        if scope.is_some_and(|key| key.device_uid != peer.uid || key.format_epoch != peer.epoch) {
+            return Err(fail());
+        }
+        let scoped_hash = scope.map(|key| serde_json::to_vec(key).map(|v| format!("{:x}", Sha256::digest(v))).map_err(|_| fail())).transpose()?;
         let mut pending = Vec::new();
         for entry in fs::read_dir(root).map_err(|_| fail())? {
             let entry = entry.map_err(|_| fail())?;
@@ -86,6 +93,7 @@ impl Receiver {
             let Some(name) = name.to_str() else { continue; };
             let Some(hash) = name.strip_prefix(".board-session-").and_then(|s| s.strip_suffix(".json")) else { continue; };
             if hash.len() != 64 || !hash.bytes().all(|b| b.is_ascii_hexdigit()) { continue; }
+            if scoped_hash.as_deref().is_some_and(|wanted| hash != wanted) { continue; }
             let mut body = Vec::new();
             read_locked(&entry.path())?.take(MAX_RECEIPT + 1).read_to_end(&mut body).map_err(|_| fail())?;
             if body.len() as u64 > MAX_RECEIPT { return Err(fail()); }
