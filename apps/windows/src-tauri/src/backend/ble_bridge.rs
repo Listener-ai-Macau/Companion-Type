@@ -1225,12 +1225,23 @@ where S:futures::Stream<Item=ValueNotification>+Unpin {
     let deadline=StdInstant::now()+budget;
     bounded_ble_result("send segmented-loss instruction",StdDuration::from_secs(8),
         device.peripheral.write(characteristic,request,WriteType::WithResponse)).await?;
+    await_segmented_loss_response(notifications,request,complete,deadline,StdDuration::from_secs(8)).await
+}
+
+async fn await_segmented_loss_response<S>(notifications:&mut S, request:&[u8;super::recording_discard_v3::BYTES],
+    complete:bool,deadline:StdInstant,wait_slice:StdDuration) -> Result<Vec<u8>,String>
+where S:futures::Stream<Item=ValueNotification>+Unpin {
     loop {
-        let remaining=remaining_deadline_budget(deadline,StdDuration::from_secs(8));
+        let remaining=remaining_deadline_budget(deadline,wait_slice);
         if remaining.is_zero(){return Err("设备未提供确认回执。".into());}
-        let n=timeout(remaining,notifications.next()).await
-            .map_err(|_|"设备未提供确认回执。".to_string())?
-            .ok_or("设备连接已断开。")?;
+        // A slice timeout is not the total deadline. Confirmed erasure can
+        // outlast one slice; keep the same connection and never resend the
+        // destructive confirmation. The overall deadline is checked above.
+        let n=match timeout(remaining,notifications.next()).await {
+            Err(_) => continue,
+            Ok(None) => return Err("设备连接已断开。".into()),
+            Ok(Some(n)) => n,
+        };
         if n.uuid!=DELETE_PRIVACY_UUID {continue;}
         let p=n.value;
         if p.len()==16 && &p[..4]==b"CDX3" && p[4..8]==request[8..12] {
@@ -6319,6 +6330,42 @@ mod tests {
     }
 
     use super::*;
+
+    // Real receive loop with scaled time, no device or destructive command.
+    #[tokio::test]
+    async fn segmented_loss_waits_through_silent_slices_for_completion() {
+        let mut request=[0u8;super::super::recording_discard_v3::BYTES];
+        request[..4].copy_from_slice(b"CDS3");request[4]=2;request[8]=19;
+        let mut receipt=request;receipt[5]=2;
+        let mut stream=Box::pin(futures::stream::once(async move {
+            sleep(StdDuration::from_millis(45)).await;
+            ValueNotification {uuid:DELETE_PRIVACY_UUID,value:receipt.to_vec()}
+        }));
+        let result=await_segmented_loss_response(&mut stream,&request,true,
+            StdInstant::now()+StdDuration::from_millis(160),StdDuration::from_millis(10)).await;
+        assert_eq!(result.unwrap(),receipt);
+    }
+
+    #[tokio::test]
+    async fn segmented_loss_total_deadline_and_disconnect_remain_errors() {
+        let mut request=[0u8;super::super::recording_discard_v3::BYTES];
+        request[..4].copy_from_slice(b"CDS3");request[4]=2;request[8]=20;
+        let mut empty=Box::pin(futures::stream::pending::<ValueNotification>());
+        let start=StdInstant::now();
+        let result=await_segmented_loss_response(&mut empty,&request,true,
+            StdInstant::now()+StdDuration::from_millis(50),StdDuration::from_millis(10)).await;
+        assert!(result.is_err());assert!(start.elapsed()>=StdDuration::from_millis(40));
+        let mut closed=Box::pin(futures::stream::empty::<ValueNotification>());
+        let result=await_segmented_loss_response(&mut closed,&request,true,
+            StdInstant::now()+StdDuration::from_millis(50),StdDuration::from_millis(10)).await;
+        assert!(result.unwrap_err().contains("断开"));
+        // A deadline started before the write must not be reset after it.
+        let mut late=Box::pin(futures::stream::pending::<ValueNotification>());
+        let start=StdInstant::now();
+        let result=await_segmented_loss_response(&mut late,&request,true,
+            start-StdDuration::from_millis(1),StdDuration::from_millis(10)).await;
+        assert!(result.is_err());assert!(start.elapsed()<StdDuration::from_millis(40));
+    }
 
     #[test]
     fn follower_reconnect_rejects_changed_uid_epoch_or_missing_v2() {
