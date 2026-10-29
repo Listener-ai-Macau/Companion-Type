@@ -995,6 +995,19 @@ mod board_online_live_tests {
         assert!(!text.contains("已经同步"));
     }
     #[test]
+    fn segmented_loss_prompt_describes_only_remaining_audio() {
+        let info = crate::backend::recording_discard::RecordingLossInfo {
+            recording_id: 43, started_at_unix_seconds: 0, duration_ms: 61_000,
+            encoded_bytes: 12_345, releasable_bytes: 16_384,
+            available_after_seconds: 0, requested_seconds: 1800, segmented_remaining_only: true,
+        };
+        let text=recording_loss_message(&info);
+        for required in ["#43", "剩余未同步音频", "永久删除", "其它录音保留", "需重新检查"] {
+            assert!(text.contains(required), "missing {required}");
+        }
+        assert!(!text.contains("释放后连续可录约 0"));
+    }
+    #[test]
     fn online_duration_is_rejected_instead_of_silently_clamped() {
         assert_eq!(validate_board_online_duration(Some(1800)).unwrap(),1800);
         assert_eq!(validate_board_online_duration(None).unwrap(),2580);
