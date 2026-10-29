@@ -423,6 +423,11 @@ fn recording_loss_message(info: &crate::backend::recording_discard::RecordingLos
             .unwrap_or_else(|| "时间未知".into())
     };
     let seconds = u64::from(info.duration_ms).div_ceil(1000);
+    if info.segmented_remaining_only {
+        return format!("最旧尚未同步的设备录音 #{}\n录制时间：{}\n设备上剩余未同步音频：{} 分 {} 秒，{:.1} KiB；可释放：{:.1} KiB\n\n建议先同步。继续后，上述剩余原音将永久删除，不能撤销；其它录音保留。释放后能否满足录制时长需重新检查，操作不会自动开始录音。\n\n确认只在本次连接内短暂有效。",
+            info.recording_id, started, seconds / 60, seconds % 60,
+            f64::from(info.encoded_bytes)/1024.0, f64::from(info.releasable_bytes)/1024.0);
+    }
     format!("最旧尚未确认完整同步的设备录音 #{}\n录制时间：{}\n时长：{} 分 {} 秒\n原音：{:.1} KiB；可释放：{:.1} KiB\n当前请求：{} 分 {} 秒；释放后连续可录约 {} 分 {} 秒\n\n建议先同步录音。继续后，这一条设备原音将永久删除，不能撤销；其它录音保留，不会自动开始新录音。若仍不足，需要重新查看下一条并单独确认。\n\n确认仅在本次连接内短暂有效，过期后需重新查看具体录音。",
         info.recording_id, started, seconds / 60, seconds % 60,
         f64::from(info.encoded_bytes) / 1024.0, f64::from(info.releasable_bytes) / 1024.0,
@@ -980,7 +985,7 @@ mod board_online_live_tests {
         let info = crate::backend::recording_discard::RecordingLossInfo {
             recording_id: 42, started_at_unix_seconds: 0, duration_ms: 61_000,
             encoded_bytes: 12_345, releasable_bytes: 16_384,
-            available_after_seconds: 900, requested_seconds: 1800,
+            available_after_seconds: 900, requested_seconds: 1800, segmented_remaining_only: false,
         };
         let text = recording_loss_message(&info);
         for required in ["#42", "设备尚未校时", "1 分 1 秒", "16.0 KiB", "30 分 0 秒",

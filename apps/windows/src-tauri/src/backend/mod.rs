@@ -69,6 +69,7 @@ mod recording_sync_flow_tests;
 pub(crate) mod recording_wire;
 pub(crate) mod recorder_control;
 pub(crate) mod recording_discard;
+pub(crate) mod recording_discard_v3;
 pub(crate) use ble_bridge::discard_oldest_recording;
 mod audio_decode;
 mod cop1;

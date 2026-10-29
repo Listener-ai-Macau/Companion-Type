@@ -17,6 +17,7 @@ pub(super) const CANCELLED: u16 = 16;
 #[serde(rename_all = "camelCase")]
 pub(crate) struct RecordingLossInfo {
     pub recording_id: u32,
+    pub segmented_remaining_only: bool,
     pub started_at_unix_seconds: u32,
     pub duration_ms: u32,
     pub encoded_bytes: u32,
@@ -83,7 +84,7 @@ pub(super) fn parse_offer(p: &[u8], request: &[u8; BYTES],
     Ok(Offer {
         wire: p.try_into().unwrap(),
         info: RecordingLossInfo {
-            recording_id: word(p, 8), started_at_unix_seconds: word(p, 60),
+            recording_id: word(p, 8), segmented_remaining_only: false, started_at_unix_seconds: word(p, 60),
             duration_ms: word(p, 64), encoded_bytes: word(p, 12), releasable_bytes: word(p, 68),
             available_after_seconds: word(p, 80).saturating_sub(c.reserve_headroom) / c.bytes_per_second,
             requested_seconds: word(p, 76),

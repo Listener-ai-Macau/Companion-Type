@@ -1088,8 +1088,14 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
                 .await.ok_or("未读到设备容量，请重新连接或更新配套固件。")?;
             let capacity = super::recording_capacity::parse(&payload)
                 .ok_or("设备容量格式未知，请更新配套固件。")?;
-            if !capacity.confirmed_discard_supported || capacity.busy {
-                return Err("当前设备不支持单条删除，或正在录音、回收、升级；请先同步录音。".into());
+            if capacity.busy {
+                return Err("设备正在录音、回收或升级，请等待并先同步录音。".into());
+            }
+            if &payload[36..40]==b"CCQ2" {
+                return discard_segmented_recording(&device, &characteristics, &payload, &capacity, seconds, confirm).await;
+            }
+            if !capacity.confirmed_discard_supported {
+                return Err("当前设备不支持单条删除，请先同步录音。".into());
             }
             let characteristic = find_characteristic(&characteristics, DELETE_PRIVACY_UUID)?;
             if !characteristic.properties.contains(CharPropFlags::WRITE)
@@ -1140,6 +1146,105 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
         close_native_device(&device).await;
         result
     })
+}
+
+// CDS3 is a non-destructive capability probe on the existing segmented
+// characteristic. An older peer may not reply; never reinterpret it as V1.
+async fn discard_segmented_recording<F>(device: &NativeDevice,
+    chars: &std::collections::BTreeSet<Characteristic>, payload: &[u8],
+    capacity: &crate::companion_v1::CompanionV1RecordingCapacity, seconds: u16, confirm: F)
+    -> Result<super::recording_discard::RecordingDiscardReport, String>
+where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
+    use super::recording_discard as legacy;
+    use super::recording_discard_v3 as v3;
+    use crate::backend::recording_wire::transport::Peer;
+    use pull_session::{NativeSubscriptions, SubscriptionLease};
+    let peer=Peer::from_status(payload)?.ok_or("设备没有可核验的分段录音身份，请先同步或更新设备。")?;
+    let control=find_characteristic(chars,RECORDING_CONTROL_UUID)?;
+    let privacy=find_characteristic(chars,DELETE_PRIVACY_UUID)?;
+    if !control.properties.contains(CharPropFlags::WRITE | CharPropFlags::NOTIFY) ||
+       !privacy.properties.contains(CharPropFlags::WRITE | CharPropFlags::NOTIFY) {
+        return Err("设备没有可确认的录音控制通道。".into());
+    }
+    let budget=StdDuration::from_secs(8);
+    #[cfg(windows)]
+    let mtu=device.connection_session.as_ref().ok_or("没有可用的设备会话，未发送删除请求。")?
+        .wait_recording_mtu(budget).await?;
+    #[cfg(not(windows))]
+    let mtu=251u16;
+    if mtu<139 {return Err("当前蓝牙连接容量不足，未发送删除请求；请重新连接。".into());}
+    let mut notifications=bounded_ble_result("open segmented-loss notifications",budget,
+        device.peripheral.notifications()).await?;
+    let mut lease=SubscriptionLease::open(NativeSubscriptions::new(device.peripheral.clone(),
+        vec![control.clone(),privacy.clone()]),2,budget).await?;
+    let result=async {
+        let negotiation=peer.negotiate_capacity(segmented::nonce(),mtu,244)?;
+        bounded_ble_result("negotiate segmented-loss identity",budget,
+            device.peripheral.write(&control,&negotiation,WriteType::WithResponse)).await?;
+        timeout(budget,async {
+            loop {
+                let n=notifications.next().await.ok_or("分段录音身份协商连接已断开。")?;
+                if n.uuid==RECORDING_CONTROL_UUID && n.value==negotiation {return Ok::<(),String>(());}
+            }
+        }).await.map_err(|_|"分段录音身份协商超时，未发送删除确认。".to_string())??;
+        let id=segmented::nonce();
+        let request=v3::preview_request(id).map_err(str::to_string)?;
+        let issued=StdInstant::now();
+        let bytes=discard_segmented_exchange(device,&privacy,&mut notifications,&request,false).await?;
+        let offer=v3::parse_offer(&bytes,id).map_err(str::to_string)?;
+        if offer.uid!=peer.uid || offer.epoch!=peer.epoch || offer.generation!=capacity.catalog_generation ||
+            offer.reserved_bytes>capacity.protected_bytes || offer.segments>capacity.unsynced_entries {
+            return Err("设备录音候选与当前身份或容量不一致，未发送删除确认。".into());
+        }
+        let duration_ms=u32::try_from(offer.samples/16).map_err(|_|"设备录音时长超出支持范围，未删除。")?;
+        let info=legacy::RecordingLossInfo {recording_id:offer.oldest_id,segmented_remaining_only:true,
+            started_at_unix_seconds:offer.started_unix_s,duration_ms,encoded_bytes:offer.encoded_bytes,
+            releasable_bytes:offer.reserved_bytes,available_after_seconds:0,requested_seconds:u32::from(seconds)};
+        let accepted=confirm(&info);
+        let decision=offer.decision(accepted,issued.elapsed().as_millis().min(u128::from(u64::MAX)) as u64)
+            .map_err(str::to_string)?;
+        if !accepted {
+            let _=discard_segmented_exchange(device,&privacy,&mut notifications,&decision,false).await;
+            return Ok(legacy::RecordingDiscardReport{status:"cancelled".into(),recording:Some(info),
+                message:"已取消，未发送删除确认。".into()});
+        }
+        let response=discard_segmented_exchange(device,&privacy,&mut notifications,&decision,true).await
+            .map_err(|e|format!("录音 #{} 的删除结果尚未确认，请重新读取设备目录；{e}",info.recording_id))?;
+        offer.validate_response(&response,v3::CONFIRM,2).map_err(str::to_string)?;
+        Ok(legacy::RecordingDiscardReport{status:"deleted".into(),recording:Some(info),
+            message:"设备剩余未同步音频已删除并回收，请重新读取容量；没有自动开始录音。".into()})
+    }.await;
+    combine_operation_and_cleanup(result,lease.quiesce_for_control().await)
+}
+
+async fn discard_segmented_exchange<S>(device:&NativeDevice, characteristic:&Characteristic,
+    notifications:&mut S, request:&[u8;super::recording_discard_v3::BYTES], complete:bool)
+    -> Result<Vec<u8>,String>
+where S:futures::Stream<Item=ValueNotification>+Unpin {
+    let budget=StdDuration::from_secs(if complete{600}else{8});
+    let deadline=StdInstant::now()+budget;
+    bounded_ble_result("send segmented-loss instruction",StdDuration::from_secs(8),
+        device.peripheral.write(characteristic,request,WriteType::WithResponse)).await?;
+    loop {
+        let remaining=remaining_deadline_budget(deadline,StdDuration::from_secs(8));
+        if remaining.is_zero(){return Err("设备未提供确认回执。".into());}
+        let n=timeout(remaining,notifications.next()).await
+            .map_err(|_|"设备未提供确认回执。".to_string())?
+            .ok_or("设备连接已断开。")?;
+        if n.uuid!=DELETE_PRIVACY_UUID {continue;}
+        let p=n.value;
+        if p.len()==16 && &p[..4]==b"CDX3" && p[4..8]==request[8..12] {
+            if crc32fast::hash(&p[..12])!=u32::from_le_bytes(p[12..16].try_into().unwrap()) {
+                return Err("设备删除状态校验失败。".into());
+            }
+            return Err("设备尚未提供可删除候选，请先同步或重新读取目录。".into());
+        }
+        if p.len()!=super::recording_discard_v3::BYTES || &p[..4]!=b"CDS3" ||
+           p[4]!=request[4] || p[8..12]!=request[8..12] || p.as_slice()==request {continue;}
+        if p[5]==3 {return Err("设备拒绝这次确认；目录可能已变化或设备正在使用。".into());}
+        if (complete || request[4]==super::recording_discard_v3::CANCEL) && p[5]!=2 {continue;}
+        return Ok(p);
+    }
 }
 
 async fn discard_exchange<S>(device: &NativeDevice, characteristic: &Characteristic,
