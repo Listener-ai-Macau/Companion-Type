@@ -1892,11 +1892,12 @@ export function CompanionDashboard({
                       <option value="calendarreminder30">提前30分钟</option><option value="calendarreminder60">提前1小时</option><option value="calendarreminder">在已确认的时刻</option>
                     </select>
                   </label>:null}
-                  <p className="ct-step-meta">例如选择“提前30分钟”，有具体时刻且未单独设置提醒的事项，就会提前30分钟提醒。每项下方会显示实际设置；只有日期的事项需单独指定提醒时刻。</p>
+                  <details><summary>统一提醒的应用范围</summary><p className="ct-step-meta">例如选择“提前30分钟”，有具体时刻且未单独设置提醒的事项，就会提前30分钟提醒。每项下方会显示实际设置；全天事项可在下方一次明确当天提醒时刻，仍可逐项覆盖。</p></details>
                 </>:null}
                 {calendarExportReview.items?<CalendarExportItems items={calendarExportReview.items} choice={calendarExportReview}
                   disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale}
                   onPending={changeCalendarReminderPending}
+                  onReminders={selections=>setCalendarExportReview(current=>current?{...current,calendarReminders:[...(current.calendarReminders??[]).filter(existing=>!selections.some(selection=>selection.uid===existing.uid)),...selections]}:null)}
                   onReminder={(uid,reminder)=>setCalendarExportReview(current=>current?{...current,calendarReminders:[...(current.calendarReminders??[]).filter(s=>s.uid!==uid),...(reminder?[{uid,reminder}]:[])]}:null)}
                   onEdit={basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)&&savedActions(minutesMarkdown).length===calendarExportReview.items.length&&savedActions(minutesMarkdown).every((a,n)=>a.text===calendarExportReview.items![n].text)?editCalendarItem:undefined}/>:null}
                 {calendarExportReview.items?<CalendarCopyComparison key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`}

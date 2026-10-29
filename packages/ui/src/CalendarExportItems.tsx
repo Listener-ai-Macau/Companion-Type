@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {readableCalendarTime} from './calendarTime';
 import {CalendarReminderEditor} from './CalendarReminderEditor';
+import {CalendarAllDayReminders} from './CalendarAllDayReminders';
 
 export type CalendarAlarm={kind:'none'}|{kind:'before';minutes:0|30|60|1440}|{kind:'at';at:string};
 export type CalendarReminderSelection={uid:string;reminder:CalendarAlarm};
@@ -13,21 +14,26 @@ export function effectiveCalendarAlarm(item:CalendarExportItem,choice:CalendarRe
 export function calendarAlarmLabel(alarm:CalendarAlarm):string {
   return alarm.kind==='none'?'不提醒':alarm.kind==='at'?`提醒：${readableCalendarTime(alarm.at)}`:alarm.minutes===0?'提醒：在截止时刻':alarm.minutes===60?'提醒：提前1小时':alarm.minutes===1440?'提醒：提前1天':`提醒：提前${alarm.minutes}分钟`;
 }
-export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onPending}:{
+export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onReminders,onPending}:{
   items:CalendarExportItem[];choice:CalendarReminderChoice;disabled:boolean;onEdit?:(index:number)=>void;
-  onReminder?:(uid:string,reminder:CalendarAlarm|null)=>void;onPending?:(delta:1|-1)=>void;
+  onReminder?:(uid:string,reminder:CalendarAlarm|null)=>void;onReminders?:(selections:CalendarReminderSelection[])=>void;onPending?:(delta:1|-1)=>void;
 }){
   const[editing,setEditing]=useState<number|null>(null);
+  const[allDayEditing,setAllDayEditing]=useState(false);
   const included=items.filter(item=>item.status==='timed'||item.status==='allDay');
   const alarms=included.filter(item=>effectiveCalendarAlarm(item,choice).kind!=='none').length;
   return <section aria-label="逐项日历预览">
     <p><strong>将导出{included.length}项日程：{alarms}项附提醒，{included.length-alarms}项不提醒。</strong></p>
+    {onReminders&&items.some(item=>item.status==='allDay'&&item.uid)?<button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setAllDayEditing(true)}>全天事项：一次设置当天提醒时刻</button>:null}
+    {allDayEditing&&onReminders?<CalendarAllDayReminders key={JSON.stringify([items.filter(item=>item.status==='allDay').map(item=>[item.uid,item.text,item.deadline]),choice.calendarReminders])}
+      items={items} choice={choice} disabled={disabled} onApply={onReminders} onClose={()=>setAllDayEditing(false)} onPending={onPending}/>:null}
     <ul>{items.map((item,index)=>{
       const alarm=effectiveCalendarAlarm(item,choice),override=choice.calendarReminders?.find(s=>s.uid===item.uid)?.reminder;
       return <li key={item.uid??index} style={{marginBottom:12,overflowWrap:'anywhere'}}>
         <strong>{item.title}</strong><br/>
         {item.status==='completed'?'已完成，本次不导出':item.status==='unconfirmed'?`时间尚未确认，本次不导出${item.deadline?`：${item.deadline}`:''}`:
           `${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?' · 全天日程':''} · ${calendarAlarmLabel(alarm)}`}
+        {item.status==='timed'?<p className="ct-step-meta">按截止时刻导出，不预设执行时长。</p>:null}
         {onReminder&&item.uid&&(item.status==='allDay'||item.status==='timed')?<label style={{display:'block',marginTop:8}}>本项提醒 <select aria-label={`日历事项 ${index+1} 提醒`} disabled={disabled}
           value={!override?'default':override.kind==='before'?String(override.minutes):override.kind}
           onChange={event=>{const value=event.currentTarget.value;if(value==='at'){setEditing(index);return;}
