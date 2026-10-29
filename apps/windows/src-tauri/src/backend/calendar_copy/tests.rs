@@ -169,3 +169,21 @@ fn path()->std::path::PathBuf {
     assert!(crate::run_diagnostics_cli(&args).unwrap().is_err());assert_eq!(std::fs::read(&output).unwrap(),b"original target");
     std::fs::remove_file(input).unwrap();std::fs::remove_file(output).unwrap();std::fs::remove_dir(path.parent().unwrap()).unwrap();
 }
+
+#[test] fn stale_same_revision_slot_metadata_must_not_replace_saved_calendar() {
+    use super::super::action_export::{CalendarExecutionSlot,CalendarSlotSelection};
+    let path=path();let row=row();session_store::save(&path,&[row.clone()]).unwrap();
+    let base=export::prepare_meeting_export(&row,"offlineStore",F::Calendar).unwrap();
+    let selection=CalendarSlotSelection{uid:base.calendar_items.as_ref().unwrap()[0].uid.clone(),slot:CalendarExecutionSlot{start:"2026-11-06T09:00:00+08:00".into(),end:"2026-11-06T10:00:00+08:00".into()}};
+    let prepared=export::prepare_meeting_export_with_calendar_choices(&row,"offlineStore",F::Calendar,None,Some(&[selection])).unwrap();
+    let copy=prepare(&row,"offlineStore",&prepared,std::path::Path::new("样品.ics")).unwrap().unwrap();commit(&path,"original",copy).unwrap();
+    let current:Vec<CompanionV1HostSession>=serde_json::from_slice(&session_store::load(&path).bytes.unwrap()).unwrap();
+    assert_eq!(current[0].calendar_slot_copies.len(),1);let primary_before=std::fs::read(&path).unwrap();let backup=path.with_file_name("sessions.json.bak");let backup_before=std::fs::read(&backup).unwrap();
+    let mut stale=current.clone();stale[0].calendar_slot_copies.clear();
+    assert!(session_store::save(&path,&stale).is_err(),"same-revision snapshot must not silently erase saved execution slots");
+    assert_eq!(std::fs::read(&path).unwrap(),primary_before);assert_eq!(std::fs::read(&backup).unwrap(),backup_before);
+    let mut different=current.clone();different[0].calendar_slot_copies[0].selections[0].slot.start="2026-11-06T08:00:00+08:00".into();
+    assert!(session_store::save(&path,&different).is_err(),"same-revision snapshot must not silently change saved execution slots");
+    assert_eq!(std::fs::read(&path).unwrap(),primary_before);assert_eq!(std::fs::read(&backup).unwrap(),backup_before);
+    std::fs::remove_file(&path).unwrap();std::fs::remove_file(&backup).unwrap();std::fs::remove_file(path.with_file_name("sessions.json.lock")).unwrap();std::fs::remove_dir(path.parent().unwrap()).unwrap();
+}

@@ -179,7 +179,8 @@ fn save_locked(
             if sessions.iter().find(|s|s.id==row.id).is_some_and(|next|
                 next.calendar_copy_epoch<row.calendar_copy_epoch ||
                 next.calendar_copy_revision<row.calendar_copy_revision ||
-                next.calendar_copy_revision==row.calendar_copy_revision&&next.calendar_copies!=row.calendar_copies){
+                next.calendar_copy_revision==row.calendar_copy_revision&&
+                    (next.calendar_copies!=row.calendar_copies||next.calendar_slot_copies!=row.calendar_slot_copies)){
                 return Err("磁盘中的日历副本说明已变化；拒绝用旧窗口覆盖，请重新载入后核对。".into());
             }
             if row.organization.protected && !sessions.iter().any(|s|s.id==row.id){
