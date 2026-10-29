@@ -20,7 +20,7 @@ function writeRow(row:Row):string{
   return row.prefix+row.text+(fields.length?' ('+fields.map(field=>`${field.key}: ${field.value}`).join(', ')+')':'');
 }
 
-export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey,calendarRequestRow,calendarRequestTimed}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarRequestRow?:number;calendarRequestTimed?:boolean}){
+export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey,calendarRequestRow,calendarRequestTimed,calendarOnly=false}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarRequestRow?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean}){
   const nextId=useRef(0),sent=useRef(value);
   const calendarIntent=useRef<{key?:string;rowId?:number}>({});
   const parse=(text:string)=>text?text.split(/\r?\n/).map(raw=>readRow(raw,nextId.current++)):[readRow('',nextId.current++)];
@@ -55,8 +55,8 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
   }
   const calendarTarget=rows.findIndex(row=>row.id===calendarIntent.current.rowId);
   return <div className="ct-action-list-editor">
-    <p className="ct-step-meta" role={calendarRequestKey?"status":undefined}>{calendarRequestKey?"先确认要放入日历的日期或时刻；确认后保存修改，再导出。原时间说明仍在，未替你猜日期。":"时间说明先按文字保存；需要导入日历时，再确认日期与时刻。"}</p>
-    <ActionListCommonFields revision={rows.map(writeRow).join('\n')} disabled={disabled} onPending={onCalendarPending}
+    {!calendarOnly?<p className="ct-step-meta" role={calendarRequestKey?"status":undefined}>{calendarRequestKey?"先确认要放入日历的日期或时刻；确认后保存修改，再导出。原时间说明仍在，未替你猜日期。":"时间说明先按文字保存；需要导入日历时，再确认日期与时刻。"}</p>:null}
+    {!calendarOnly?<ActionListCommonFields revision={rows.map(writeRow).join('\n')} disabled={disabled} onPending={onCalendarPending}
       rows={rows.map(row=>({eligible:pending(row),due:due(row),owner:row.metadata.find(field=>field.key==='owner')?.value??''}))}
       onApply={(fields,replace)=>update(rows.map(row=>{
         const patch=commonFieldPatch({eligible:pending(row),due:due(row),owner:row.metadata.find(field=>field.key==='owner')?.value??''},fields,replace);
@@ -65,15 +65,15 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
         for(const key of ['due','owner'] as const){const value=patch[key];if(value===undefined)continue;
           const index=metadata.findIndex(field=>field.key===key);if(index<0)metadata.push({key,value});else metadata[index]={key,value};}
         return {...row,metadata,changed:true};
-      }))}/>
-    {rows.map((row,index)=><div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
-      <div style={{display:'flex',gap:8,alignItems:'start'}}>
+      }))}/>:null}
+    {rows.map((row,index)=>calendarOnly&&index!==calendarTarget?null:<div key={row.id} className="ct-action-edit-row" style={{marginBottom:12}}>
+      {calendarOnly?<p><strong>{row.text}</strong></p>:<div style={{display:'flex',gap:8,alignItems:'start'}}>
         <label style={{flex:1}}><span className="ct-step-meta">待办 {index+1}</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 内容`} value={row.text} disabled={disabled}
             placeholder="一件要做的事" onChange={event=>change(row.id,{text:event.target.value})}/></label>
         <button type="button" className="ct-text-button" disabled={disabled} aria-label={`删除待办 ${index+1}`}
           onClick={()=>update(rows.filter(item=>item.id!==row.id))}>删除</button>
-      </div>
+      </div>}
       <details open={calendarRequestKey&&index===calendarTarget?true:undefined}>
         <summary className="ct-step-meta" aria-label={`待办 ${index+1} 时间与负责人`}>
           时间与负责人
@@ -81,7 +81,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
             {field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止：':'时间：'):'负责人：'}{field.key==='due'?readableCalendarTime(field.value):field.value}
           </span>)}
         </summary>
-        {row.metadata.some(field=>field.key==='due'&&readableCalendarTime(field.value)!==field.value)?<div>
+        {calendarOnly?<p className="ct-step-meta">当前截止：{due(row)?readableCalendarTime(due(row)):'未注明'}</p>:row.metadata.some(field=>field.key==='due'&&readableCalendarTime(field.value)!==field.value)?<div>
           <span className="ct-step-meta">日历时间</span>
           <p>{readableCalendarTime(row.metadata.find(field=>field.key==='due')!.value)}</p>
           <button type="button" className="ct-text-button" disabled={disabled}
@@ -91,15 +91,15 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 时间`} value={row.metadata.find(field=>field.key==='due')?.value??''}
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>}
         <div style={{margin:'4px 0 8px'}}>
-        <CalendarTimeEditor openWithTime={calendarRequestTimed} openRequestKey={index===calendarTarget?calendarRequestKey:undefined} label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
+        <CalendarTimeEditor compact={calendarOnly} openWithTime={calendarRequestTimed} openRequestKey={index===calendarTarget?calendarRequestKey:undefined} label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
           disabled={disabled} onConfirm={value=>metadata(row,'due',value)} onPending={onCalendarPending}/>
         </div>
-        <label style={{display:'block'}}><span className="ct-step-meta">负责人</span>
+        {!calendarOnly?<label style={{display:'block'}}><span className="ct-step-meta">负责人</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 负责人`} value={row.metadata.find(field=>field.key==='owner')?.value??''}
-            disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'owner',event.target.value)}/></label>
+            disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'owner',event.target.value)}/></label>:null}
       </details>
     </div>)}
-    <button type="button" className="ct-text-button" disabled={disabled}
-      onClick={()=>setRows([...rows,readRow('',nextId.current++)])}>添加一项</button>
+    {!calendarOnly?<button type="button" className="ct-text-button" disabled={disabled}
+      onClick={()=>setRows([...rows,readRow('',nextId.current++)])}>添加一项</button>:null}
   </div>;
 }

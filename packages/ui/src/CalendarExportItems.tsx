@@ -43,7 +43,9 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onP
           label={`日历事项 ${index+1}`} disabled={disabled} onConfirm={at=>onReminder(item.uid!,{kind:'at',at})} onClose={()=>setEditing(null)} onPending={onPending}/>:null}
       </li>;
     })}</ul>
+    <details className="ct-calendar-import-notes"><summary>导入与改期注意事项</summary>
     <p className="ct-step-meta">已导入的日程不会自动更新；重复导入可能新增日程。改期后可在“查看已保存的日历副本”复制原名称，找到已有日程再修改。</p>
     <p className="ct-step-meta">导入后找不到日程时，请把接收日历的日期范围切到对应截止日，或扩大列表的显示范围。</p>
+    <p className="ct-step-meta">接收日历首次使用时，可能需要先关闭欢迎页、启用本地日历或完成导入向导。保存文件后，请在接收日历逐项核对名称、日期和提醒。</p></details>
   </section>;
 }

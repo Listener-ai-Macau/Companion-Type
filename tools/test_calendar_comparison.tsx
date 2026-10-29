@@ -18,7 +18,7 @@ assert.equal(button('复制改期对照'),undefined);select('要对照的当前�
 const copied:string[]=[];Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async(s:string)=>{copied.push(s);}}}});
 await act(async()=>button('复制原日程名称').props.onClick());assert.equal(copied[0],copy.entries[0].title);
 await act(async()=>button('复制改期对照').props.onClick());
-assert.match(copied[1],/原时间：2026年11月7日 15:00前（UTC\+08:00）/);assert.match(copied[1],/当前时间：2026年11月8日 10:30前（UTC\+08:00）/);assert.match(copied[1],/原提醒：提醒：提前1小时/);assert.match(copied[1],/当前提醒：提醒：提前1天/);assert.match(copied[1],/未确认就不交付/);assert.match(copied[1],/未修改接收日历/);
+assert.match(copied[1],/原时间：2026年11月7日 15:00前（UTC\+08:00）/);assert.match(copied[1],/当前时间：2026年11月8日 10:30前（UTC\+08:00）/);assert.match(copied[1],/原提醒：提前1小时/);assert.match(copied[1],/当前提醒：提前1天/);assert.match(copied[1],/未确认就不交付/);assert.match(copied[1],/未修改接收日历/);
 Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async()=>{throw Error('denied');}}}});
 select('要对照的当前事项','0');await act(async()=>button('复制改期对照').props.onClick());
 assert.match(tree.root.findByProps({'aria-label':'改期对照复制文字'}).props.value,/2026年11月9日（全天）/);assert.match(tree.root.findByProps({'aria-label':'改期对照复制文字'}).props.value,/09:00（UTC\+08:00）/);

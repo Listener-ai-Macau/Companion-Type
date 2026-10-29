@@ -3,9 +3,10 @@ import type {CompanionCalendarCopy} from '@companion-type/core';
 import {calendarAlarmLabel,effectiveCalendarAlarm,type CalendarExportItem,type CalendarReminderChoice} from './CalendarExportItems';
 import {readableCalendarTime} from './calendarTime';
 
-const oldAlarm=(entry:CompanionCalendarCopy['entries'][number])=>calendarAlarmLabel(entry.reminderAt?{kind:'at',at:entry.reminderAt}:entry.reminderMinutes===null?{kind:'none'}:{kind:'before',minutes:entry.reminderMinutes});
+const alarmText=(value:string)=>value.replace(/^提醒：/,'');
+const oldAlarm=(entry:CompanionCalendarCopy['entries'][number])=>alarmText(calendarAlarmLabel(entry.reminderAt?{kind:'at',at:entry.reminderAt}:entry.reminderMinutes===null?{kind:'none'}:{kind:'before',minutes:entry.reminderMinutes}));
 const currentTime=(item:CalendarExportItem)=>item.status==='completed'?'已完成，本次不导出':item.status==='unconfirmed'?`时间尚未确认，本次不导出${item.deadline?`：${item.deadline}`:''}`:`${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?'（全天）':''}`;
-const currentAlarm=(item:CalendarExportItem,choice:CalendarReminderChoice)=>item.status==='completed'||item.status==='unconfirmed'?'本次不导出提醒':calendarAlarmLabel(effectiveCalendarAlarm(item,choice));
+const currentAlarm=(item:CalendarExportItem,choice:CalendarReminderChoice)=>item.status==='completed'||item.status==='unconfirmed'?'本次不导出提醒':alarmText(calendarAlarmLabel(effectiveCalendarAlarm(item,choice)));
 
 function ComparisonCopy({oldTitle,text}:{oldTitle:string;text:string}) {
   const [feedback,setFeedback]=useState<{message:string;text?:string}|null>(null);

@@ -31,10 +31,10 @@ await act(async()=>button('取消修改并返回日历预览').props.onClick());
 // the independent alarm selections associated with the unchanged saved source.
 await act(async()=>field('日历事项 2 补充具体时刻').props.onClick());
 act(()=>field('待办 2 日历时刻').props.onChange({target:{value:'10:30'}}));
-await act(async()=>button('使用此日历时间').props.onClick());assert.equal(dirty.at(-1),true);
+await act(async()=>button('确认这个截止时间').props.onClick());assert.equal(dirty.at(-1),true);
 await act(async()=>button('取消修改并返回日历预览').props.onClick());retained();assert.equal(dirty.at(-1),false);
 assert.deepEqual(previews.at(-1).calendarReminders,selections,'re-preview binds original settings again');
-await act(async()=>button('导出并设置提醒').props.onClick());
+await act(async()=>button('保存日历文件（含提醒）').props.onClick());
 assert.equal(exports.length,1);assert.deepEqual(exports[0].calendarReminders,selections);assert.equal(exports[0].expectedContentHash,hash(exports[0]));
 assert.equal(JSON.stringify(snapshot),before);
 act(()=>tree.unmount());console.log('PASS explicit edit label/no arbitrary dialog; cancel untouched and changed deadline drafts restores per-item alarms through native re-preview without save/export; explicit final export binds preserved choices');
