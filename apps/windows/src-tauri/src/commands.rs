@@ -579,12 +579,45 @@ pub async fn export_companion_meeting(
     if let Some(token)=request.calendar_save_token.as_deref() {
         let current=coordinator.snapshot()?;
         let row=current.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("原记录已移除，未写入文件。")?;
-        app.state::<crate::calendar_handoff::CalendarHandoff>().save_hint(token,row,&request.meeting_mode)?;
+        let handoff=app.state::<crate::calendar_handoff::CalendarHandoff>();
+        handoff.save_hint(token,row,&request.meeting_mode)?;
+        let confirmed=handoff.confirm_replacement(token,row,&request.meeting_mode,&destination,|| {
+            app.dialog().message("所选日历文件与上次保存的内容不同，可能包含日历里新增或改过的内容，也可能是另一份同名文件。覆盖会用本次清单替换所选文件。\n\n如需保留，取消后可另存新文件。")
+                .title("日历文件内容已不同")
+                .kind(MessageDialogKind::Warning)
+                .buttons(MessageDialogButtons::OkCancelCustom("仍然覆盖".into(),"取消并保留".into()))
+                .blocking_show()
+        })?;
+        if !confirmed {return Ok(None);}
+        // Another window can change the source while the additional prompt is
+        // open. Check the reviewed content and scoped token again afterwards.
+        let current=coordinator.snapshot()?;
+        let row=current.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("原记录已移除，未写入文件。")?;
+        handoff.save_hint(token,row,&request.meeting_mode)?;
+        if let Some(expected)=request.expected_content_hash.as_deref() {
+            let latest=crate::backend::export::prepare_meeting_export_with_calendar_choices(row,&request.meeting_mode,format,request.calendar_reminders.as_deref(),request.calendar_slots.as_deref())?;
+            crate::backend::export::require_unchanged(&latest,Some(expected))?;
+        }
     }
     if let Some(name)=saved_name {
         let current=coordinator.snapshot()?;
         let row=current.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("原记录已移除，未写入文件。")?;
         crate::calendar_handoff::require_saved_name_unchanged(&session,row,&request.meeting_mode,name)?;
+        let confirmed=crate::calendar_handoff::CalendarHandoff::confirm_saved_name_replacement(row,&request.meeting_mode,name,&destination,|| {
+            app.dialog().message("所选日历文件与上次保存的内容不同，可能包含日历里新增或改过的内容，也可能是另一份同名文件。覆盖会用本次清单替换所选文件。\n\n如需保留，取消后可另存新文件。")
+                .title("日历文件内容已不同")
+                .kind(MessageDialogKind::Warning)
+                .buttons(MessageDialogButtons::OkCancelCustom("仍然覆盖".into(),"取消并保留".into()))
+                .blocking_show()
+        })?;
+        if !confirmed {return Ok(None);}
+        let current=coordinator.snapshot()?;
+        let row=current.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("原记录已移除，未写入文件。")?;
+        crate::calendar_handoff::require_saved_name_unchanged(&session,row,&request.meeting_mode,name)?;
+        if let Some(expected)=request.expected_content_hash.as_deref() {
+            let latest=crate::backend::export::prepare_meeting_export_with_calendar_choices(row,&request.meeting_mode,format,request.calendar_reminders.as_deref(),request.calendar_slots.as_deref())?;
+            crate::backend::export::require_unchanged(&latest,Some(expected))?;
+        }
     }
     // A draft receipt is never committed on cancellation or failed file I/O.
     let calendar_copy=crate::backend::calendar_copy::prepare(&session,&request.meeting_mode,&prepared,&destination);

@@ -6,6 +6,8 @@ use crate::{companion_v1::CompanionV1HostSession, coordinator::CompanionCoordina
 
 #[derive(Clone)]
 struct Receipt { token:String, session_id:String, epoch:u64, mode:String, path:PathBuf, bytes:u64, hash:String, choices:Vec<(String,String)> }
+#[derive(Debug,PartialEq,Eq)]
+enum ReplacementState { Other, Missing, Original, Changed { target:PathBuf, bytes:u64, hash:String } }
 #[derive(Default)]
 pub(crate) struct CalendarHandoff { receipts:Mutex<VecDeque<Receipt>> }
 #[derive(Debug,serde::Serialize)]
@@ -33,7 +35,8 @@ pub(crate) fn saved_name_hint<'a>(session:&'a CompanionV1HostSession,mode:&str)-
 
 pub(crate) fn require_saved_name_unchanged(original:&CompanionV1HostSession,current:&CompanionV1HostSession,mode:&str,name:&str)->Result<(),String> {
     crate::backend::library_lifecycle::require_available(current)?;
-    if current.id!=original.id || current.calendar_copy_epoch!=original.calendar_copy_epoch || saved_name_hint(current,mode)!=Some(name) {
+    let last=|session:&CompanionV1HostSession|session.calendar_copies.iter().find(|c|c.meeting_mode==mode && c.privacy_epoch==session.calendar_copy_epoch).map(|c|(c.content_hash.clone(),c.file_sha256.clone()));
+    if current.id!=original.id || current.calendar_copy_epoch!=original.calendar_copy_epoch || saved_name_hint(current,mode)!=Some(name) || last(original)!=last(current) {
         return Err("上次文件记录已改变，请重新核对保存位置；本次未写入文件。".into());
     }
     Ok(())
@@ -65,6 +68,87 @@ impl CalendarHandoff {
         }
         Ok(receipt.path.clone())
     }
+
+    /// Warn only when the user selected the actual previous file and its
+    /// contents differ from the saved receipt. A different Save As target
+    /// remains an ordinary user-selected destination.
+    fn replacement_state(&self,token:&str,session:&CompanionV1HostSession,mode:&str,destination:&Path)->Result<ReplacementState,String> {
+        let hint=self.save_hint(token,session,mode)?;
+        let receipt=self.receipts.lock().map_err(|_|"上次日历文件暂时无法核对；本次未写入文件。")?.iter().find(|r|r.token==token).cloned()
+            .ok_or("上次保存入口已过期；本次未写入文件。")?;
+        let target=match destination.canonicalize() {
+            Ok(path)=>path,
+            Err(e) if e.kind()==std::io::ErrorKind::NotFound=>return Ok(ReplacementState::Missing),
+            Err(_)=>return Err("无法核对所选日历文件；本次未写入。请关闭占用它的程序后重试，或另存新文件。".into()),
+        };
+        if target!=hint && !same_location_name(destination,&hint) { return Ok(ReplacementState::Other); }
+        inspect_file(&target,&receipt.hash,Some(receipt.bytes),target!=hint)
+    }
+
+    /// After a restart only the last basename/hash is retained, never its
+    /// path. A matching name may be a different file, so the prompt must not
+    /// claim that this is certainly the original destination.
+    pub(crate) fn confirm_saved_name_replacement(session:&CompanionV1HostSession,mode:&str,name:&str,destination:&Path,confirm:impl FnOnce()->bool)->Result<bool,String> {
+        if saved_name_hint(session,mode)!=Some(name) {return Err("上次文件记录已改变；本次未写入文件。".into());}
+        let copy=session.calendar_copies.iter().find(|c|c.meeting_mode==mode && c.privacy_epoch==session.calendar_copy_epoch)
+            .ok_or("上次文件记录已改变；本次未写入文件。")?;
+        if !destination.file_name().and_then(|n|n.to_str()).is_some_and(|n|same_filename(n,name)) {return Ok(true);}
+        if copy.file_sha256.len()!=64 || !copy.file_sha256.bytes().all(|b|b.is_ascii_digit()||(b'a'..=b'f').contains(&b)) {
+            return Err("上次保存记录无法核对；本次未覆盖，请另存新文件。".into());
+        }
+        let before=inspect_file(destination,&copy.file_sha256,None,false)?;
+        if !matches!(before,ReplacementState::Changed{..}) {return Ok(true);}
+        if !confirm() {return Ok(false);}
+        if inspect_file(destination,&copy.file_sha256,None,false)?!=before {
+            return Err("日历文件在确认期间再次变化；本次未写入。请重新核对或另存新文件。".into());
+        }
+        Ok(true)
+    }
+
+    /// The callback is a user-facing confirmation, not authorization to
+    /// bypass the normal native Save As / overwrite confirmation.
+    pub(crate) fn confirm_replacement(&self,token:&str,session:&CompanionV1HostSession,mode:&str,destination:&Path,confirm:impl FnOnce()->bool)->Result<bool,String> {
+        let before=self.replacement_state(token,session,mode,destination)?;
+        if !matches!(before,ReplacementState::Changed{..}) {return Ok(true);}
+        if !confirm() {return Ok(false);}
+        if self.replacement_state(token,session,mode,destination)?!=before {
+            return Err("日历文件在确认期间再次变化；本次未写入。请重新核对或另存新文件。".into());
+        }
+        Ok(true)
+    }
+}
+
+fn same_filename(a:&str,b:&str)->bool {
+    #[cfg(windows)] {a.to_lowercase()==b.to_lowercase()}
+    #[cfg(not(windows))] {a==b}
+}
+fn same_location_name(a:&Path,b:&Path)->bool {
+    let parents=a.parent().and_then(|p|p.canonicalize().ok()).zip(b.parent().and_then(|p|p.canonicalize().ok()));
+    let names=a.file_name().and_then(|n|n.to_str()).zip(b.file_name().and_then(|n|n.to_str()));
+    parents.is_some_and(|(left,right)|left==right) && names.is_some_and(|(left,right)|same_filename(left,right))
+}
+fn inspect_file(destination:&Path,expected_hash:&str,expected_bytes:Option<u64>,force_changed:bool)->Result<ReplacementState,String> {
+        let target=match destination.canonicalize() {
+            Ok(path)=>path,
+            Err(e) if e.kind()==std::io::ErrorKind::NotFound=>return Ok(ReplacementState::Missing),
+            Err(_)=>return Err("无法核对所选日历文件；本次未写入。请关闭占用它的程序后重试，或另存新文件。".into()),
+        };
+        let mut options=std::fs::OpenOptions::new();options.read(true);
+        #[cfg(windows)] { use std::os::windows::fs::OpenOptionsExt; options.share_mode(1); }
+        let mut file=options.open(&target).map_err(|_|"无法核对上次日历文件；本次未写入。请关闭占用它的程序后重试，或另存新文件。")?;
+        let metadata=file.metadata().map_err(|_|"无法核对上次日历文件；本次未写入。")?;
+        if !metadata.is_file(){return Err("所选日历位置不是普通文件；本次未写入。".into());}
+        let size=metadata.len();
+        if size>64*1024*1024 {return Err("上次日历文件过大，无法安全核对；本次未覆盖，请另存新文件。".into());}
+        let mut hash=Sha256::new();let mut buffer=[0u8;16384];let mut total=0u64;
+        loop {let count=file.read(&mut buffer).map_err(|_|"日历文件读取未完成；本次未写入。")?;if count==0 {break;}total+=count as u64;if total>64*1024*1024 {return Err("日历文件在核对时变化；本次未写入。".into());}hash.update(&buffer[..count]);}
+        if total!=size {return Err("日历文件在核对时变化；本次未写入。".into());}
+        let hash=format!("{:x}",hash.finalize());
+        if !force_changed && expected_bytes.is_none_or(|n|n==size) && hash==expected_hash {Ok(ReplacementState::Original)}
+        else {Ok(ReplacementState::Changed{target,bytes:size,hash})}
+}
+
+impl CalendarHandoff {
 
     fn selected_application(&self, token:&str, choice:&str)->Result<String,String> {
         let rows=self.receipts.lock().map_err(|_|"应用选择暂时不可用，请重新打开文件。")?;
@@ -270,6 +354,60 @@ mod tests {
         assert_eq!(std::fs::read(&path).unwrap(),b"external change");
         std::fs::remove_file(path).unwrap();
         assert!(manager.save_hint(&token,&session,&session.meeting_mode).is_ok());
+    }
+    #[test]fn external_calendar_edit_requires_specific_confirmation_and_preserves_cancel() {
+        let(path,session,manager,_)=fixture();
+        let original=include_bytes!("calendar_test_fixtures/p723-original.ics");
+        let external=include_bytes!("calendar_test_fixtures/p723-thunderbird-edit.ics");
+        std::fs::write(&path,original).unwrap();
+        let token=manager.remember(&session,&session.meeting_mode,&path,original.len()as u64,format!("{:x}",Sha256::digest(original))).unwrap();
+        assert!(manager.confirm_replacement(&token,&session,&session.meeting_mode,&path,||panic!("unchanged prompted")).unwrap());
+        std::fs::write(&path,external).unwrap();
+        assert!(!manager.confirm_replacement(&token,&session,&session.meeting_mode,&path,||false).unwrap());
+        assert_eq!(std::fs::read(&path).unwrap(),external);
+        assert!(manager.confirm_replacement(&token,&session,&session.meeting_mode,&path,||true).unwrap());
+        assert_eq!(std::fs::read(&path).unwrap(),external); // Confirmation itself never writes.
+        let other=path.with_file_name(format!("companion-other-{}.ics",uuid::Uuid::new_v4()));
+        std::fs::write(&other,b"unrelated existing file").unwrap();
+        assert!(manager.confirm_replacement(&token,&session,&session.meeting_mode,&other,||panic!("other destination prompted")).unwrap());
+        assert_eq!(std::fs::read(&other).unwrap(),b"unrelated existing file");
+        std::fs::remove_file(other).unwrap();std::fs::remove_file(path).unwrap();
+    }
+    #[test]fn calendar_file_changed_during_confirmation_is_not_overwritten() {
+        let(path,session,manager,token)=fixture();
+        std::fs::write(&path,b"external edit").unwrap();
+        let error=manager.confirm_replacement(&token,&session,&session.meeting_mode,&path,||{
+            std::fs::write(&path,b"another edit").unwrap();true
+        }).unwrap_err();
+        assert!(error.contains("再次变化"));assert_eq!(std::fs::read(&path).unwrap(),b"another edit");
+        assert!(manager.confirm_replacement("bad token",&session,&session.meeting_mode,&path,||panic!("bad token prompted")).is_err());
+        assert!(manager.confirm_replacement(&token,&session,"onlineLive",&path,||panic!("wrong mode prompted")).is_err());
+        std::fs::remove_file(&path).unwrap();
+        assert!(manager.confirm_replacement(&token,&session,&session.meeting_mode,&path,||panic!("missing file prompted")).unwrap());
+    }
+    #[test]fn reopened_saved_name_compares_content_without_remembering_a_path() {
+        let(path,mut session,_,_)=fixture();
+        let original=include_bytes!("calendar_test_fixtures/p723-original.ics");
+        let external=include_bytes!("calendar_test_fixtures/p723-thunderbird-edit.ics");
+        std::fs::write(&path,original).unwrap();let name=path.file_name().unwrap().to_str().unwrap().to_owned();
+        session.calendar_copies=vec![crate::backend::calendar_copy::Copy{
+            schema:1,privacy_epoch:session.calendar_copy_epoch,meeting_mode:session.meeting_mode.clone(),saved_at:"2026-10-29".into(),
+            file_name:name.clone(),file_sha256:format!("{:x}",Sha256::digest(original)),content_hash:"b".repeat(64),source_title:"例".into(),source_markdown:"示例".into(),entries:vec![],transient_slots:vec![]
+        }];
+        assert!(CalendarHandoff::confirm_saved_name_replacement(&session,&session.meeting_mode,&name,&path,||panic!("unchanged prompted")).unwrap());
+        std::fs::write(&path,external).unwrap();
+        assert!(!CalendarHandoff::confirm_saved_name_replacement(&session,&session.meeting_mode,&name,&path,||false).unwrap());
+        assert_eq!(std::fs::read(&path).unwrap(),external);
+        let error=CalendarHandoff::confirm_saved_name_replacement(&session,&session.meeting_mode,&name,&path,||{std::fs::write(&path,b"modified again").unwrap();true}).unwrap_err();
+        assert!(error.contains("再次变化"));assert_eq!(std::fs::read(&path).unwrap(),b"modified again");
+        let other=path.with_file_name(format!("new-{}.ics",uuid::Uuid::new_v4()));std::fs::write(&other,b"different file name").unwrap();
+        assert!(CalendarHandoff::confirm_saved_name_replacement(&session,&session.meeting_mode,&name,&other,||panic!("different filename prompted")).unwrap());
+        let mut later=session.clone();later.calendar_copies[0].file_sha256="c".repeat(64);
+        assert!(require_saved_name_unchanged(&session,&later,&session.meeting_mode,&name).is_err());
+        later.calendar_copies[0].file_sha256="invalid".into();
+        assert!(CalendarHandoff::confirm_saved_name_replacement(&later,&later.meeting_mode,&name,&path,||panic!("invalid saved digest prompted")).is_err());
+        assert_eq!(std::fs::read(&path).unwrap(),b"modified again");
+        std::fs::remove_file(other).unwrap();std::fs::remove_file(path).unwrap();
     }
     #[test]fn calendar_handoff_exact_file_and_retry(){
         let(path,session,manager,token)=fixture();
