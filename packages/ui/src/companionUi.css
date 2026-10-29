@@ -1691,3 +1691,11 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 .ct-readiness-capacity summary { cursor: pointer; padding: 8px 0; color: #416348; }
 .ct-readiness-capacity p { margin: 8px 0; }
 @media (max-width: 680px) { .ct-readiness { padding: 16px; } .ct-readiness-grid { grid-template-columns: minmax(0, 1fr); gap: 18px; } }
+
+/* Keep help navigation and its exit visible without collapsing the full guide. */
+.ct-use-help-heading {position:sticky;top:8px;z-index:3;background:#fbfdf9;padding:10px 0;border-bottom:1px solid #dce5de;}
+.ct-use-help-heading .ct-action {flex-shrink:0;min-height:40px;}
+.ct-use-help-nav {display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;}
+.ct-use-help summary,.ct-use-help h3 {scroll-margin-top:140px;}
+.ct-calendar-other-methods {margin-top:12px;}
+.ct-calendar-other-methods>summary {cursor:pointer;font-weight:600;}

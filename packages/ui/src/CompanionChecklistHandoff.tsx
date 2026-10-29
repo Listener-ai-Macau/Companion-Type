@@ -14,7 +14,7 @@ export function CompanionChecklistHandoff({format,onReturn}:{format:'todo'|'todo
   return <details className="ct-checklist-handoff">
     <summary>{format==='ics'?'日历待办已保存，接下来怎么用？':'清单怎样带到手机、设置提醒？'}</summary>
     <ol>
-      <li><strong>只想随手查看：</strong>短清单可返回已保存的清单，点“带到手机”，用支持文字二维码的扫码工具取用。{format==='todotxt'?'也可把导出的 .txt 清单传到手机，或放进你自己的同步文件夹，用文本应用打开。':'也可把导出的 .md 清单传到手机，用支持文本或 Markdown 的应用打开。'}“[ ]”表示未完成事项。</li>
+      <li><strong>只想随手查看：</strong>短清单可返回已保存的清单，点“显示文字二维码”，用支持文字二维码的扫码工具取用。{format==='todotxt'?'也可把导出的 .txt 清单传到手机，或放进你自己的同步文件夹，用文本应用打开。':'也可把导出的 .md 清单传到手机，用支持文本或 Markdown 的应用打开。'}“[ ]”表示未完成事项。</li>
       <li><strong>需要日历提醒：</strong>可返回清单，选择“导出到日历”，把事项和已确认时间一起导入常用日历，再核对提醒。也可按自己的习惯使用手机待办应用。</li>
     </ol>
     <CompanionCalendarUpdateHelp onReturn={onReturn}/>

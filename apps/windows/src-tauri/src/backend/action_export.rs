@@ -233,6 +233,10 @@ pub(crate) fn property(name: &str, value: &str) -> String {
 }
 
 pub fn calendar(session_id: &str, mode: &str, title: &str, actions: &[Action], draft: bool, stamp: &str) -> String {
+    calendar_with_provenance(session_id,mode,title,actions,draft,stamp,None)
+}
+
+pub(crate) fn calendar_with_provenance(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,provenance:Option<&str>)->String {
     let mut out = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Companion Type//Action Items//ZH\r\nCALSCALE:GREGORIAN\r\n".to_string();
     for (index, item) in actions.iter().enumerate() {
         // Include mode and text so unrelated sessions/tasks cannot collide.
@@ -245,7 +249,8 @@ pub fn calendar(session_id: &str, mode: &str, title: &str, actions: &[Action], d
         let readable=readable_action(&item.text);
         out.push_str(&property("SUMMARY", &readable));
         let mode_label=match mode {"offlineStore"=>"先录后整理","onlineLive"=>"在线速记",other=>other};
-        let description = format!("记录：{title}\n整理方式：{mode_label}{}\n事项：{readable}", if draft { "\n草稿：请先核对" } else { "" });
+        let origin=provenance.map(str::to_owned).unwrap_or_else(||format!("整理方式：{mode_label}"));
+        let description = format!("记录：{title}\n{origin}{}\n事项：{readable}", if draft { "\n草稿：请先核对" } else { "" });
         out.push_str(&property("DESCRIPTION", &description));
         if let Some(due) = item.due.as_deref().and_then(due_property) { out.push_str(&due); }
         out.push_str(if item.completed { "STATUS:COMPLETED\r\n" } else { "STATUS:NEEDS-ACTION\r\n" });
@@ -371,6 +376,10 @@ pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title
 }
 
 pub(crate) fn calendar_events_with_selections(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>,selections:Option<&[CalendarReminderSelection]>)->Result<(String,Vec<CalendarPreviewItem>),String> {
+    calendar_events_with_selections_and_provenance(session_id,mode,title,actions,draft,stamp,lead_minutes,selections,None)
+}
+
+pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>,selections:Option<&[CalendarReminderSelection]>,provenance:Option<&str>)->Result<(String,Vec<CalendarPreviewItem>),String> {
     if lead_minutes.is_some_and(|m|!matches!(m,0|30|60)){return Err("不支持的提前提醒时间；请重新选择，截止时间保持不变。".into());}
     let mut items=calendar_preview_items(actions);
     for(index,item)in items.iter_mut().enumerate(){
@@ -406,7 +415,8 @@ pub(crate) fn calendar_events_with_selections(session_id:&str,mode:&str,title:&s
         out.push_str(&property("UID",&id));
         out.push_str(&property("DTSTAMP",stamp));out.push_str(&start);
         out.push_str(&property("SUMMARY",&calendar_action_title(&item.text)));
-        out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n整理方式：{mode_label}{}\n事项：{readable}\n清单时间点；导入后请核对日期、时区和提醒。",if draft{"\n草稿：请先核对"}else{""})));
+        let origin=provenance.map(str::to_owned).unwrap_or_else(||format!("整理方式：{mode_label}"));
+        out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n{origin}{}\n事项：{readable}\n清单时间点；导入后请核对日期、时区和提醒。",if draft{"\n草稿：请先核对"}else{""})));
         // RFC5545: a date without DTEND is one day; a timed event without
         // DTEND ends at DTSTART. A deadline does not reserve invented work time.
         out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\n");

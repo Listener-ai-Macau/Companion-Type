@@ -38,7 +38,12 @@ function CalendarOpen({token,open}:{token:string;open:OpenSavedCalendar}) {
     <button type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(undefined,applications.length>0)}>
       {state==='opening'?'正在打开日历文件…':state==='requested'?'再次打开日历文件':applications.length?'重新读取应用列表':'打开日历文件'}
     </button>
-    {!applications.length?<button type="button" className="ct-link" disabled={state==='opening'} onClick={()=>void start(undefined,true)}>选择应用打开</button>:null}
+    <details className="ct-calendar-other-methods" open={state==='error'||state==='choosing'||undefined}>
+      <summary>其他打开方式和导入说明</summary>
+      <p className="ct-step-meta">通常先用“打开日历文件”。没有合适的默认应用，或想使用其他日历时，再选择下面的方式。</p>
+      {!applications.length?<button type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(undefined,true)}>选择应用打开</button>:null}
+      <CompanionChecklistHandoff format="calendar"/>
+    </details>
     {applications.length?<div role="group" aria-label="选择接收日历文件的应用">
       <p className="ct-step-meta">选择接收这份文件的日历应用。本次选择不会更改 Windows 默认应用。</p>
       <div className="ct-action-row">{applications.map(app=><button key={app.id} type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(app.id)}>{app.label}</button>)}
@@ -66,6 +71,7 @@ export function CompanionExportFeedback({ feedback, className='ct-export-result'
       ?<CalendarOpen key={feedback.calendarOpenToken} token={feedback.calendarOpenToken} open={onOpenSavedCalendar}/>:null}
     {feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))?<p className="ct-step-meta">{feedback.calendarOpenToken&&onOpenSavedCalendar?'导入后，请打开日程核对日期与提醒。':'下一步：在常用日历中导入该文件，再打开日程核对日期与提醒。'}可展开已保存的日历副本，对照每项设置。</p>:null}
     {feedback.kind === 'saved' && feedback.path && (feedback.format === 'todo' || feedback.format === 'todotxt' || feedback.format === 'ics' || feedback.format === 'calendar' || feedback.format?.startsWith('calendarreminder'))
+      && !(feedback.calendarOpenToken&&onOpenSavedCalendar&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder')))
       ? <CompanionChecklistHandoff format={feedback.format?.startsWith('calendarreminder')?'calendar':feedback.format as 'todo'|'todotxt'|'ics'|'calendar'}/> : null}
     {feedback.kind === 'saved' && feedback.path ? <details>
       <summary>查看保存位置</summary>

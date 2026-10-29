@@ -20,9 +20,11 @@ act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" b
   onSaveMeeting={async()=>{throw Error('alarm must not save deadline');}} onUnsavedChange={value=>unsaved.push(value)}
   onPreviewMeetingExport={onPreviewMeetingExport} onExportMeeting={async request=>{exports.push(request);return null;}}/>);});
 await act(async()=>button('导出到日历').props.onClick());
-const reminder=tree.root.findAllByType('input').find((n:any)=>n.props.type==='checkbox'&&n.parent?.type==='label'&&text(n.parent).includes('提醒我'));
+assert.equal(text(field('日历事项 1 提醒').findAllByType('option')[0]),'不提醒（默认）');
+const reminder=tree.root.findAllByType('input').find((n:any)=>n.props.type==='checkbox'&&n.props['aria-label']==='统一设置提醒');
 act(()=>reminder.props.onChange({currentTarget:{checked:true}}));
 act(()=>field('日历提醒时间').props.onChange({currentTarget:{value:'calendarreminder60'}}));
+assert.equal(text(field('日历事项 1 提醒').findAllByType('option')[0]),'统一设置：提醒：提前1小时');
 act(()=>field('日历事项 2 提醒').props.onChange({currentTarget:{value:'at'}}));
 assert.equal(field('日历事项 2 提醒日期').props.value,'2026-11-07');
 assert.equal(field('日历事项 2 提醒时刻').props.value,'','never invent midnight');assert.equal(unsaved.at(-1),true);
@@ -51,7 +53,7 @@ const copy:any={fileName:'样品日历.ics',entries:[{title:'核对包装',deadl
 assert.match(calendarCopyDetailsText(copy),/时间：2026年11月7日\n提醒：2026年11月6日 18:00/);
 assert.match(calendarCopyDetailsText(copy),/接收日历中的后续修改不会同步回来/);
 await act(async()=>button('导出到日历').props.onClick());
-const again=tree.root.findAllByType('input').find((n:any)=>n.props.type==='checkbox'&&n.parent?.type==='label'&&text(n.parent).includes('提醒我'));
+const again=tree.root.findAllByType('input').find((n:any)=>n.props.type==='checkbox'&&n.props['aria-label']==='统一设置提醒');
 act(()=>again.props.onChange({currentTarget:{checked:true}}));
 await act(async()=>field('日历事项 1 提醒').props.onChange({currentTarget:{value:'none'}}));
 assert.ok(button('导出日程'),'all explicit alarms disabled means plain export label');

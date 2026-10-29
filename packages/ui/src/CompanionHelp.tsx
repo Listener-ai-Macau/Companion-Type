@@ -12,16 +12,33 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
 }) {
   const panel = useRef<HTMLElement>(null);
   useEffect(() => { panel.current?.focus({ preventScroll: true }); }, []);
+  const reveal=(id:string)=>{
+    const target=panel.current?.querySelector<HTMLElement>(`#${id}`);if(!target)return;
+    const detail=target.tagName==='DETAILS'?target as HTMLDetailsElement:target.querySelector('details');
+    if(detail)detail.open=true;
+    const focus=detail?.querySelector('summary')??target;
+    focus.focus({preventScroll:true});
+    window.requestAnimationFrame(()=>focus.scrollIntoView({block:'start',behavior:'auto'}));
+  };
+  const revealOpened=(target:EventTarget|null)=>{
+    const summary=(target as HTMLElement|null)?.closest?.('summary');
+    if(!summary||!panel.current?.contains(summary))return;
+    window.requestAnimationFrame(()=>{if((summary.parentElement as HTMLDetailsElement)?.open)summary.scrollIntoView({block:'start',behavior:'auto'});});
+  };
   return <section ref={panel} id="ct-use-help" className="ct-use-help" tabIndex={-1}
-    aria-labelledby="ct-use-help-title" onKeyDown={event => {
+    aria-labelledby="ct-use-help-title" onClick={event=>revealOpened(event.target)} onKeyDown={event => {
       if (event.key === 'Escape') { event.stopPropagation(); onClose(); }
     }}>
     <div className="ct-use-help-heading">
       <div><h2 id="ct-use-help-title">使用帮助</h2><p>找回录音、带走清单，或了解宠物互动。</p></div>
-      <button type="button" className="ct-text-button" onClick={onClose}>关闭帮助</button>
+      <button type="button" className="ct-action" onClick={onClose}>关闭帮助</button>
     </div>
-    {onRecording ? <CompanionCalendarUpdateHelp onReturn={onRecording}/> : null}
-    <details open><summary>怎样和宠物聊天、起名字或记住一件事？</summary>      <p>先在“设备与同步”连接宠物，再展开页面最上方的“我的宠物”。目前聊天需要连接电脑，只用宠物麦克风。</p>      <p>点“开聊”后说一句话，说完点“说完了”；每句最多12秒，短回复显示在宠物屏幕底部。不会在后台持续收音。</p>      <p>在“名字、性格与记忆”查看这只宠物。“改名字与性格”可调整称呼和相处方式；“记住一句”只保存你确认的小事。需要聊天使用时再开启记忆开关，随时可以暂停、修改或删除。</p>    </details>    <h3>录音与找回</h3>    <ol className="ct-use-help-steps">
+    <nav className="ct-use-help-nav" aria-label="帮助目录">
+      {([['ct-help-recording','录音与找回'],['ct-help-checklist','清单、手机与提醒'],['ct-help-calendar-update','日历改期'],['ct-help-quiet','安静互动'],['ct-help-recovery','连接与保存问题']] as const).map(([id,label])=>
+        <button key={id} type="button" className="ct-action" onClick={()=>reveal(id)}>{label}</button>)}
+    </nav>
+    <div id="ct-help-calendar-update"><CompanionCalendarUpdateHelp onReturn={onRecording}/></div>
+    <details open><summary>怎样和宠物聊天、起名字或记住一件事？</summary>      <p>先在“设备与同步”连接宠物，再展开页面最上方的“我的宠物”。目前聊天需要连接电脑，只用宠物麦克风。</p>      <p>点“开聊”后说一句话，说完点“说完了”；每句最多12秒，短回复显示在宠物屏幕底部。不会在后台持续收音。</p>      <p>在“名字、性格与记忆”查看这只宠物。“改名字与性格”可调整称呼和相处方式；“记住一句”只保存你确认的小事。需要聊天使用时再开启记忆开关，随时可以暂停、修改或删除。</p>    </details>    <h3 id="ct-help-recording" tabIndex={-1}>录音与找回</h3>    <ol className="ct-use-help-steps">
       <li><strong>在宠物上开始</strong><p>回到宠物首页，默认双击左下角开始录音。睡着时先短按实体键唤醒；改过录音手势时，按已选手势操作。</p></li>
       <li><strong>停止，等设备保存</strong><p>录音时再次双击屏幕停止，等待设备显示“已保存”。保存中或异常时，先保留设备上的内容。</p></li>
       <li><strong>回到 Type 找到它</strong><p>在“设备与同步”连接并同步，等本机原音保存完成，再到“我的记录”按标题、日期或内容查找。需要时回听或转文字。</p></li>
@@ -38,7 +55,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <p>原话里的“明天”“下周”等是录音当时的说法，请对照录音日期；Type 保留原话，不会把它们自动改成今天的相对时间。补充里的时间请对照补充时的语境，需要时可编辑成明确日期。</p>
       {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前记录</button> : null}
     </details>
-    <CompanionChecklistHandoff format="todotxt" onReturn={onRecording}/>
+    <div id="ct-help-checklist"><CompanionChecklistHandoff format="todotxt" onReturn={onRecording}/></div>
     <details><summary>双击、实体键和菜单录音，是同一件事吗？</summary>
       <p>都是开始或停止同一台 Companion 的设备录音，选一种顺手的方式即可，不需要依次操作三个入口。</p>
       <ul><li>触摸快捷：宠物首页默认双击左下角开录，录音画面双击停录。也可在设备菜单中改为左下角向右拉开录。</li>
@@ -54,7 +71,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <p>日常连接使用蓝牙，USB-C 用于供电。到“设备与同步”查看连接和报错；首次配对可在宠物菜单的“连接”中开启配对。</p>
       <p>睡着的宠物可先短按实体键唤醒。墨水屏会保留旧画面，单凭画面不能确认录音或保存状态。仍无响应时，保留当时提示和日志，不先清空录音或恢复默认。</p>
     </details>
-    <details><summary>怎样安静陪着？静音、安静互动和安静时段有什么不同？</summary>
+    <details id="ct-help-quiet"><summary>怎样安静陪着？静音、安静互动和安静时段有什么不同？</summary>
       <ul>
         <li><strong>静音：</strong>关闭提示音，仍保留表情和轻触回应。宠物首页右上往下拉可进入快捷调节，也可在“设备 → 音量与静音”设置。</li>
         <li><strong>安静互动：</strong>到“宠物 → 互动程度”选择“安静·无声轻回应”。它会减少主动变化、抑制短音，轻摸时仍会回应，适合想让它安静陪着的时候。</li>
@@ -62,7 +79,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       </ul>
       <p>这三项分别控制声音、互动程度和夜间时段；其中任一项要求无声时，短音都会受限。录音时普通提示音也会受到限制。</p>
     </details>
-    <details><summary>保存、连接或服务报错后，怎样继续？</summary>
+    <details id="ct-help-recovery"><summary>保存、连接或服务报错后，怎样继续？</summary>
       <ul>
         <li><strong>磁盘空间不足：</strong>先保留当前修改，释放保存位置所在磁盘的空间，再用页面上的“重试保存”。不要为了重试清空录音。</li>
         <li><strong>没有文件权限或文件被占用：</strong>检查当前用户能否写入该位置；导出时可另选本机目录。先关闭占用目标文件的其它程序，不覆盖原音。</li>

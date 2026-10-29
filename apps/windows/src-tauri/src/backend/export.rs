@@ -164,6 +164,20 @@ fn saved_minutes_markdown_for_mode(
     Err(format!("{meeting_mode} minutes have not been generated"))
 }
 
+// Record provenance is independent of the saved minutes mode. In particular,
+// imported text can live in the offlineStore slot without ever being recorded.
+fn calendar_provenance(session:&CompanionV1HostSession,minutes_source:Option<&str>)->String {
+    let record=match session.source.as_str() {
+        "importedTranscript"=>"导入文字",
+        "deviceFlash"|"boardDevice"=>"Companion 录音",
+        "hostMicrophone"=>"本机麦克风",
+        "fixture"=>"演示记录",
+        _=>"来源未注明",
+    };
+    let checklist=if minutes_source==Some("userAuthored"){"用户手写清单"}else{"已保存整理结果"};
+    format!("记录来源：{record}\n清单来源：{checklist}")
+}
+
 fn session_has_final_transcript(session: &CompanionV1HostSession) -> bool {
     transcript_review::final_transcript_available(session)
 }
@@ -252,6 +266,9 @@ pub fn prepare_meeting_export_with_reminders(session:&CompanionV1HostSession,mee
             if format==MeetingExportFormat::Calendar { warning=super::action_export::calendar_event_notice(&actions); }
             if matches!(format,MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60) { warning=super::action_export::calendar_event_reminder_notice(&actions); }
             let draft = saved.lines().any(|line| line.starts_with("> 草稿："));
+            let minutes_source=minutes_variant_for_mode(session,meeting_mode).map(|v|v.source.as_str())
+                .or_else(||session.minutes.as_ref().map(|m|m.source.as_str()));
+            let provenance=calendar_provenance(session,minutes_source);
             if matches!(format, MeetingExportFormat::Todo | MeetingExportFormat::TodoText) {
                 let body=super::action_export::todo(&session.title, &actions, draft);
                 // The same validated checklist, in a universally readable text
@@ -260,11 +277,11 @@ pub fn prepare_meeting_export_with_reminders(session:&CompanionV1HostSession,mee
                     body.strip_prefix("# ").unwrap_or(&body).to_owned()
                 }else{body}
             } else if matches!(format,MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60) {
-                let (file,items)=super::action_export::calendar_events_with_selections(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now(),match format{MeetingExportFormat::CalendarReminder=>Some(0),MeetingExportFormat::CalendarReminder30=>Some(30),MeetingExportFormat::CalendarReminder60=>Some(60),_=>None},calendar_reminders)?;
+                let (file,items)=super::action_export::calendar_events_with_selections_and_provenance(&session.id,meeting_mode,&session.title,&actions,draft,&super::action_export::stamp_now(),match format{MeetingExportFormat::CalendarReminder=>Some(0),MeetingExportFormat::CalendarReminder30=>Some(30),MeetingExportFormat::CalendarReminder60=>Some(60),_=>None},calendar_reminders,Some(&provenance))?;
                 if calendar_reminders.is_some(){warning=super::action_export::calendar_event_notice(&actions);}
                 calendar_items=Some(items);file
             } else {
-                super::action_export::calendar(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now())
+                super::action_export::calendar_with_provenance(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now(),Some(&provenance))
             }
         }
         MeetingExportFormat::Markdown => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
@@ -627,7 +644,7 @@ pub fn render_action_items_ical(session: &CompanionV1HostSession) -> String {
             completed: false, due: item.due.clone(),
         }
     }).collect::<Vec<_>>()).unwrap_or_default();
-    super::action_export::calendar(&session.id, &session.meeting_mode, &session.title, &actions, false, &super::action_export::stamp_now())
+    super::action_export::calendar_with_provenance(&session.id, &session.meeting_mode, &session.title, &actions, false, &super::action_export::stamp_now(),Some(&calendar_provenance(session,session.minutes.as_ref().map(|m|m.source.as_str()))))
 }
 
 #[cfg(test)]
@@ -704,6 +721,37 @@ mod tests {
             markdown: "# Q3 Review".into(),
             llm_note: None,
         }
+    }
+
+    #[test]
+    fn calendar_provenance_follows_record_and_selected_saved_source_without_changing_uid() {
+        let mut s=session("导入原话，未测完不要写通过",vec![],Some(minutes()));
+        s.source="importedTranscript".into();
+        let m=s.minutes.as_mut().unwrap();m.source="userAuthored".into();m.quality="final".into();
+        m.markdown="## Action Items\n- [ ] 未测完不要写通过 (due: 2026-11-08T15:00:00+08:00)".into();
+        let original=s.clone();
+        for format in [MeetingExportFormat::Ics,MeetingExportFormat::Calendar,MeetingExportFormat::CalendarReminder60] {
+            let prepared=prepare_meeting_export(&s,"offlineStore",format).unwrap();
+            let text=String::from_utf8(prepared.bytes.clone()).unwrap().replace("\r\n ","");
+            assert!(text.contains("记录来源：导入文字\\n清单来源：用户手写清单"));
+            assert!(!text.contains("先录后整理")&&!text.contains("在线速记"));
+            assert!(text.contains("未测完不要写通过"));
+            let uid=text.lines().find(|line|line.starts_with("UID:")).unwrap().to_owned();
+            for (source,label) in [("boardDevice","Companion 录音"),("hostMicrophone","本机麦克风"),("fixture","演示记录"),("futureSource","来源未注明")] {
+                let mut other=s.clone();other.source=source.into();
+                let changed=prepare_meeting_export(&other,"offlineStore",format).unwrap();
+                let body=String::from_utf8(changed.bytes.clone()).unwrap().replace("\r\n ","");
+                assert!(body.contains(&format!("记录来源：{label}")));
+                assert!(body.lines().any(|line|line==uid),"provenance is not a new event identity");
+                assert_ne!(content_hash(&changed),content_hash(&prepared),"review binds the true source notice");
+            }
+        }
+        s.minutes_by_mode.offline_store=Some(CompanionV1MinutesVariant { processing:None,source_note_context:None,source_review_revision:None,
+            status:"minutesReady".into(),markdown:s.minutes.as_ref().unwrap().markdown.clone(),source:"llm_command".into(),quality:"final".into(),generated_at:None,partial_count:0 });
+        let selected=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Calendar).unwrap();
+        let body=String::from_utf8(selected.bytes).unwrap().replace("\r\n ","");
+        assert!(body.contains("清单来源：已保存整理结果")&&!body.contains("用户手写清单"),"selected variant, not fallback provenance");
+        assert_eq!(s.transcript_text,original.transcript_text);assert_eq!(s.minutes,original.minutes);
     }
 
     #[test]

@@ -1,5 +1,38 @@
 # Readiness and Experience Boundaries
 
+Updated 29 October 2026. **P708** is the current locally installed Windows Type delivery. The table distinguishes delivered operations from their observed scope. Public installers, formal service entitlements and whole-product acceptance remain incomplete.
+
+[User guide](USER_GUIDE.md) · [Product introduction](../README.md) · [简体中文](STATUS.zh-CN.md)
+
+| Everyday purpose | Delivered operation and evidence | Scope still open |
+| --- | --- | --- |
+| Record now, organize later | Device capture, Type reception and local saving remain. Preparation separates device state, local saving and organization services. Capture does not require transcription configuration first. | The preparation page does not establish calibrated battery life, full capacity, long recording, power-loss recovery or acoustic quality. |
+| Avoid repeated entry | Enter a shared time and owner once. Blank fields are filled by default; different existing values remain unless replacement is explicitly chosen. Individual edits remain possible. | An independent simulated customer saved and exported three actions with one shared text time. Other purposes, long-term use and overall content quality need separate evidence. |
+| Turn written plans into calendar entries | Explicitly confirm a shared date or time once, or confirm individual actions. Relative dates are not inferred. Choose reminders per item before export; a date-only action can remain an all-day event. | Actual P706 native use checked three shared dates, saved actions and matching TXT/ICS times. The P706 customer did not use the shared-date editor; they saved and checked two independent reminders. P708 corrects the recording-mode description wrongly attached to imported text, preserving record provenance separately from a manual checklist. Import and actual notifications require a receiving calendar. |
+| Take a checklist elsewhere | Export TXT, show a text QR code, or save a calendar file with confirmed times and choose a receiving application. A visible notice explains that saving a local checklist does not create reminders. | A QR code is not automatic sync. Real phone receipt remains unqualified. Imported calendar copies do not automatically follow later Type edits; repeated imports can duplicate events. |
+| Find content and retain original wording | Text, manual checklists, separate notes, search and multiple exports remain. Conditions in the original task body are retained; source text and saved checklists remain distinct. | Transcription and organization may be wrong. Check important facts. An editable automatically organized draft requires the actual existing service conditions. |
+| Continue after a failure | Draft protection, actionable errors, explicit save retries and cancel/return paths remain. Cancelling the date dialog returns to the shared-field draft. Help has section shortcuts and a close button retained while scrolling. Calendar handoff highlights the default open path and groups alternatives in expandable guidance. | Specific occupied-file recovery has actual evidence. Real full disks, power loss and all combined failure conditions remain open. |
+| Pet and quiet use | Original expressions, accessories, interactions, quiet modes and shortcuts remain, with distinct protections for settings and recording state. | Physical touch, assembled IMU axes, display quality, acoustics, power and long-term experience are not fully qualified. |
+| Platforms and updates | Windows remains the daily software path. Type and matching device packages are delivered separately. Unknown caption protocols are explicitly refused before transmission. | Windows delivery does not qualify native phone/macOS/Linux products, public downloads or account entitlements. A phone diagnostic app is not a consumer phone product. |
+
+Existing receiver evidence: a P701 independent simulated customer imported two events and their separate reminders into local Thunderbird and found them again after reopening it. This establishes that local import and persistence, not future notification or real phone sync. P706 did not repeat or expand that receiver qualification.
+
+The most recent normal device delivery read for this page is **FW737 / UI84R22 / Boot575 at 09:36 on 29 October**: bounded idle IMU recovery is integrated, and an actual 13.2-second recording, stop and durable WAV save passed. Sustained deep sleep, actual power, physical IMU-fault recovery, touch and battery calibration remain open. Later versions follow their actual receipts; an ongoing candidate is not treated as the normal installed version.
+
+Original audio and the library are local. Cloud transcription sends relevant audio; cloud organization sends selected text and explicitly chosen additions; chat uses the utterance and permitted memory. See the [guide](USER_GUIDE.md) for costs, quotas, backup and deletion scope. The speaker provides short prompts, not spoken chat. Wake-word entry is not delivered. The indicative hardware price is USD 199; tax, shipping and service entitlements are unconfirmed. This page does not establish public availability.
+
+<details>
+<summary>Delivery references</summary>
+
+The P706 source checkpoint inherited by P708: `bb6fd793f560efd4269f38ab6893ab5c34a4a36a`. It inherits P705 caption-protocol protection, P703 shared fields and P704 data/cost guidance. Installed payloads match the package, and hashes of 3,710 existing files were unchanged after installation. Actual native candidate checks covered 980/420-pixel windows; a narrow desktop window does not qualify a native phone product. Later documentation changes do not imply a new application build or install.
+
+</details>
+
+<details>
+<summary>Historical records through 25 October 2026</summary>
+
+# Readiness and Experience Boundaries
+
 Updated 25 October 2026. This page was checked against **FW662 / UI84 / Boot575 with the Windows Type P577 joint release**, including the current recording-protocol and OTA recovery fixes. This is not a public release or whole-product acceptance claim. Later versions follow their actual delivery packages.
 
 [User guide](USER_GUIDE.md) · [Product introduction](../README.md) · [简体中文](STATUS.zh-CN.md)
@@ -59,5 +92,7 @@ Updated 2026-10-04. This describes the **FW1.1.18 / UI36 and Type user-experienc
 
 The pages reuse existing Companion screen/art previews without modifying the source PNG pixels. The surrounding frame is illustrative. These are not new-board photographs; clocks, battery and Bluetooth icons are sample state. See the [asset provenance](assets/companion/provenance.json).
 
+
+</details>
 
 </details>

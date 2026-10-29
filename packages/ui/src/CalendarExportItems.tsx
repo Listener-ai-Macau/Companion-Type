@@ -32,7 +32,7 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onP
           value={!override?'default':override.kind==='before'?String(override.minutes):override.kind}
           onChange={event=>{const value=event.currentTarget.value;if(value==='at'){setEditing(index);return;}
             onReminder(item.uid!,value==='default'?null:value==='none'?{kind:'none'}:{kind:'before',minutes:Number(value) as 0|30|60|1440});}}>
-          <option value="default">{item.status==='allDay'?'默认不提醒':'按上方统一设置'}</option><option value="none">不提醒</option>
+          <option value="default">{item.status==='timed'&&choice.remindAtTime?`统一设置：${calendarAlarmLabel(effectiveCalendarAlarm(item,{...choice,calendarReminders:undefined}))}`:'不提醒（默认）'}</option><option value="none">不提醒</option>
           {item.status==='timed'?<><option value="0">在截止时刻</option><option value="30">提前30分钟</option><option value="60">提前1小时</option><option value="1440">提前1天</option></>:null}
           <option value="at">指定提醒日期和时刻…</option>
         </select>{override?.kind==='at'?<button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setEditing(index)}>修改提醒时刻</button>:null}</label>:null}

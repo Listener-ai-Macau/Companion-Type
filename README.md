@@ -51,7 +51,7 @@ The first-use guide remembers progress per device. A browser demo cannot complet
 | Read along at your computer | Online notes with a configured streaming transcription service |
 | Find a thought again | Search titles, full transcripts and both minutes variants; play retained local audio |
 | Make the notes your own | Edit titles and minutes with manual-source labels, mode isolation and save-conflict checks |
-| Take the result elsewhere | Markdown / TXT / JSON and original audio; SRT with aligned timing; saved action-list and calendar-task `.ics` exports without automatic notification setup |
+| Take the result elsewhere | Markdown / TXT / JSON and original audio; SRT with aligned timing. Share a time and owner across checklist items, export TXT or show a text QR code. Explicitly confirm dates and choose per-item reminders for calendar export; import still takes place in the receiving calendar |
 | Know what is saved | Separate device copy, transfer, local-save and reclaim status; explicit save retry |
 
 Background recovery does not overwrite manual edits. Explicit regeneration replaces the original recording mode's minutes; viewing another mode does not change that target. Editing clears stale structured action items. Ordinary offline recordings generate minutes for their capture mode; the completed online workflow can generate both mode variants.
