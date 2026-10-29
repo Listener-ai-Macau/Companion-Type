@@ -411,6 +411,55 @@ pub fn run() {
         });
 }
 
+fn prepare_headless_meeting_export(
+    session:&companion_v1::CompanionV1HostSession,
+    request:&commands::CompanionMeetingExportRequest,
+)->Result<backend::export::PreparedMeetingExport,String> {
+    // A CLI destination is caller-selected; it has neither the native Save As
+    // confirmation nor an in-process handoff receipt required by GUI hints.
+    if request.calendar_save_token.is_some() || request.calendar_saved_name {
+        return Err("上次日历文件的保存选择需要在 Type 窗口确认；本次未写入文件。".into());
+    }
+    if (request.calendar_reminders.is_some() || request.calendar_slots.is_some()) && request.expected_content_hash.is_none() {
+        return Err("请先核对本次逐项提醒和执行时段，再保存日历文件。".into());
+    }
+    let prepared=backend::export::prepare_meeting_export_with_calendar_choices(
+        session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref()
+    )?;
+    backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
+    Ok(prepared)
+}
+
+#[cfg(test)]
+mod headless_calendar_request_tests {
+    use super::*;
+    #[test]
+    fn selected_alarm_slot_hash_and_gui_hint_are_not_silently_discarded() {
+        let sessions:Vec<companion_v1::CompanionV1HostSession>=serde_json::from_str(include_str!("calendar_test_fixtures/p738-sessions.json")).unwrap();
+        let row=&sessions[0];
+        let base=backend::export::prepare_meeting_export(row,"offlineStore",backend::export::MeetingExportFormat::Calendar).unwrap();
+        let uid=&base.calendar_items.as_ref().unwrap()[1].uid;
+        let mut value=serde_json::json!({"sessionId":row.id,"meetingMode":"offlineStore","format":"calendar",
+            "expectedContentHash":"0".repeat(64),"calendarReminders":[{"uid":uid,"reminder":{"kind":"at","at":"2026-11-07T08:00:00+08:00"}}],
+            "calendarSlots":[{"uid":uid,"slot":{"start":"2026-11-07T09:00:00+08:00","end":"2026-11-07T10:00:00+08:00"}}]});
+        let request=|v:serde_json::Value|serde_json::from_value::<commands::CompanionMeetingExportRequest>(v).unwrap();
+        let stale=request(value.clone());assert!(prepare_headless_meeting_export(row,&stale).is_err());
+        let prepared=backend::export::prepare_meeting_export_with_calendar_choices(row,"offlineStore",backend::export::MeetingExportFormat::Calendar,stale.calendar_reminders.as_deref(),stale.calendar_slots.as_deref()).unwrap();
+        let hash=backend::export::content_hash(&prepared);value["expectedContentHash"]=hash.clone().into();
+        let checked=prepare_headless_meeting_export(row,&request(value.clone())).unwrap();let file=String::from_utf8(checked.bytes).unwrap();
+        assert!(file.contains("TRIGGER;VALUE=DATE-TIME:20261107T000000Z\r\n"));
+        assert!(file.contains("DTSTART:20261107T010000Z\r\nDTEND:20261107T020000Z\r\n"));
+        println!("P738_VALID_PREVIEW_HASH={hash}");
+        let mut no_hash=value.clone();no_hash.as_object_mut().unwrap().remove("expectedContentHash");assert!(prepare_headless_meeting_export(row,&request(no_hash)).is_err());
+        let mut hinted=value.clone();hinted["calendarSaveToken"]="stale-token".into();assert!(prepare_headless_meeting_export(row,&request(hinted)).is_err());
+        let mut named=value.clone();named["calendarSavedName"]=true.into();assert!(prepare_headless_meeting_export(row,&request(named)).is_err());
+        let mut wrong=value.clone();wrong["format"]="markdown".into();assert!(prepare_headless_meeting_export(row,&request(wrong)).is_err());
+        let mut bad_uid=value.clone();bad_uid["calendarReminders"][0]["uid"]="different-item".into();assert!(prepare_headless_meeting_export(row,&request(bad_uid)).is_err());
+        let legacy=request(serde_json::json!({"sessionId":row.id,"meetingMode":"offlineStore","format":"calendar"}));
+        assert_eq!(backend::export::content_hash(&prepare_headless_meeting_export(row,&legacy).unwrap()),backend::export::content_hash(&base));
+    }
+}
+
 // Headless local review uses the very same persistence and export boundary as
 // the desktop commands. It never uploads audio or substitutes an ASR result.
 fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
@@ -532,7 +581,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
                 return Err("请结束录音并保存会议，再导出。".into());
             }
             let session = snapshot.host.sessions.iter().find(|s| s.id == request.session_id).ok_or("找不到这场会议。")?;
-            let export = backend::export::prepare_meeting_export(session, &request.meeting_mode, request.format.into())?;
+            let export = prepare_headless_meeting_export(session,&request)?;
             backend::export::write_atomic(Path::new(destination), &export.bytes)?;
             println!("meeting_workspace_result=EXPORTED_LOCAL_MEETING");
         } else if operation == 4 {
