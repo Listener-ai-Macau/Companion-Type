@@ -43,6 +43,14 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
         onFocus={event => event.currentTarget.select()} style={{ width: '100%', minHeight: entryIndex === null ? 110 : 70, boxSizing: 'border-box' }} /> : null}</div> : null;
   return <div className="ct-calendar-copies">
     <p className="ct-step-meta">最近保存：{copies[0].entries.length}项日程，{copies[0].entries.filter(entry=>entry.reminderMinutes!==null||!!entry.reminderAt).length}项附提醒，{copies[0].entries.filter(entry=>entry.reminderMinutes===null&&!entry.reminderAt).length}项不提醒。请在接收日历核对导入结果。</p>
+    <details className="ct-calendar-handoff-help">
+      <summary>导入后核对三步</summary>
+      <ol>
+        <li>在常用日历导入刚保存的文件，并确认接收日历。首次使用本地 Thunderbird 时可收起账号引导、启用本地日历，再打开原文件；本地日历不需要邮箱账号。</li>
+        <li>按下方副本中的名称找到每项，逐项核对日期、时区和提醒；找不到时扩大日期范围。这里列的是文件设置，无法代替接收日历的实际结果。</li>
+        <li>需要另排执行时段时，在接收日历明确修改开始与结束，保存后重新查看。Type 保留原截止记录；两边的修改不会自动同步。</li>
+      </ol>
+    </details>
     {changed ? <p className="ct-step-warn">清单已修改，接收日历不会自动更新。可先查看上次保存的副本，找到原日程再核对。</p> : null}
     <details>
       <summary>查看已保存的日历副本：逐项日期和提醒</summary>

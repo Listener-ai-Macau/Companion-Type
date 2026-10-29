@@ -1903,7 +1903,8 @@ export function CompanionDashboard({
                 {calendarReminderKey&&!calendarReminderReady?<p role="status">{calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?`提醒尚未核对：${calendarReminderPreview.error}`:'正在核对本次逐项提醒…'}</p>:null}
                 <div className="ct-button-row">
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onSaveMeeting||selectedMinutesStale||calendarReminderPending>0}
-                    onClick={()=>editCalendarItem()}>编辑并确认日历时间</button>
+                    onClick={()=>editCalendarItem()}>编辑完整清单（含时间）</button>
+                  <span className="ct-step-meta">只改一项截止时间，可用该事项下方的时间按钮。</span>
                   <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||selectedMinutesStale||minutesIncomplete||calendarReminderPending>0||!calendarReminderReady}
                     onClick={()=>void exportMeeting(calendarExportReview.remindAtTime?(calendarExportReview.reminderFormat??'calendarreminder30'):calendarExportReview.format,calendarExportReview.origin,calendarReminderKey?calendarReminderPreview?.hash:calendarExportReview.remindAtTime?calendarExportReview.reminderHashes?.[calendarExportReview.reminderFormat??'calendarreminder30']:calendarExportReview.contentHash,calendarExportReview)}>{calendarExportReview.format==='calendar'?(calendarExportReview.items?.some(item=>(item.status==='timed'||item.status==='allDay')&&effectiveCalendarAlarm(item,calendarExportReview).kind!=='none')?'保存日历文件（含提醒）':'保存日历文件'):'按文字说明导出'}</button>
                   <button type="button" className="ct-text-button" disabled={exportBusy} onClick={()=>setCalendarExportReview(null)}>取消导出</button>

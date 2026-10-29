@@ -24,7 +24,7 @@ for(const[label,value]of[['日历事项 2 提醒日期','2026-11-06'],['日历�
 await act(async()=>button('使用此提醒时刻').props.onClick());
 const selections=structuredClone(previews.at(-1).calendarReminders);
 const retained=()=>{assert.equal(field('日历事项 1 提醒').props.value,'1440');assert.equal(field('日历事项 2 提醒').props.value,'at');assert.match(text(tree.toJSON()),/2026年11月7日 · 全天日程 · 提醒：2026年11月6日 18:00/);assert.equal(JSON.stringify(snapshot),before);assert.equal(exports.length,0);};
-await act(async()=>button('编辑并确认日历时间').props.onClick());
+await act(async()=>button('编辑完整清单（含时间）').props.onClick());
 assert.equal(tree.root.findAllByType('dialog').length,0,'generic edit must not open an arbitrary item');
 await act(async()=>button('取消修改并返回日历预览').props.onClick());retained();
 // Even an accepted, unsaved deadline draft can be discarded without discarding
