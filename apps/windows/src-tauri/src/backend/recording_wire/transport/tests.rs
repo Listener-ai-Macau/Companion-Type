@@ -154,7 +154,7 @@ fn exact_receipt_and_pending_host_recovery_survive_empty_device_directory() {
     let crc = crc32fast::hash(&wrong[..80]); wrong[80..].copy_from_slice(&crc.to_le_bytes());
     assert!(!receipt_matches(&ack, &wrong, &peer).unwrap());
     drop(r);
-    let pending = Receiver::pending_initials(&root, &peer, device, None).unwrap();
+    let pending = Receiver::pending_initials(&root, &peer, device, None).unwrap().initials;
     assert_eq!(pending.len(), 1);
     let mut r = Receiver::open(&root, &pending[0]).unwrap();
     assert!(r.has_segment(&ds[0].encode().unwrap()).unwrap(), "durable raw must avoid a second radio pull");
@@ -165,8 +165,8 @@ fn exact_receipt_and_pending_host_recovery_survive_empty_device_directory() {
     r.publish(&index, device).unwrap();
     for ack in r.ack_candidates(&index).unwrap() { r.confirm_acked(&ack).unwrap(); }
     r.assemble().unwrap(); r.publish(&index, device).unwrap(); drop(r);
-    assert!(Receiver::pending_initials(&root, &peer, device, None).unwrap().is_empty());
-    assert!(Receiver::pending_initials(&root, &peer, "11:22:33:44:55:66", None).unwrap().is_empty());
+    assert!(Receiver::pending_initials(&root, &peer, device, None).unwrap().initials.is_empty());
+    assert!(Receiver::pending_initials(&root, &peer, "11:22:33:44:55:66", None).unwrap().initials.is_empty());
     // Leave the isolated artifacts available on failure. Delete only this
     // exact, newly created test directory after all affected paths passed.
     assert!(root.parent() == Some(Path::new(&std::env::temp_dir())));
@@ -375,13 +375,27 @@ fn scoped_pending_original_ignores_unrelated_corrupt_manifest_without_ack() {
     std::fs::create_dir(&root).unwrap();let device="A1:B2:C3:D4:E5:F6";
     let mut r=Receiver::open(&root,&ds[0].encode().unwrap()).unwrap();r.accept_segment(&ds[0].encode().unwrap(),&raw).unwrap();r.publish(&root.join("sessions.json"),device).unwrap();drop(r);
     let unrelated=root.join(format!(".board-session-{}.json","f".repeat(64)));std::fs::write(&unrelated,b"{broken").unwrap();
-    let pending=Receiver::pending_initials(&root,&peer,device,Some(&ds[0].key)).expect("unrelated corrupted receipt must not block exact original");
+    let pending=Receiver::pending_initials(&root,&peer,device,Some(&ds[0].key)).expect("unrelated corrupted receipt must not block exact original").initials;
     assert_eq!(pending,vec![ds[0].encode().unwrap()]);assert_eq!(std::fs::read(&unrelated).unwrap(),b"{broken");
-    assert!(Receiver::pending_initials(&root,&peer,device,None).is_err(),"unscoped must not ignore damaged receipts");
+    assert_eq!(Receiver::pending_initials(&root,&peer,device,None).unwrap().blocked_count(),1,"unscoped must report damaged receipts");
     let mut foreign=ds[0].key.clone();foreign.format_epoch+=1;assert!(Receiver::pending_initials(&root,&peer,device,Some(&foreign)).is_err());
     let target=root.join(format!(".board-session-{:x}.json",Sha256::digest(serde_json::to_vec(&ds[0].key).unwrap())));
     std::fs::write(&target,b"{also broken").unwrap();
     assert!(Receiver::pending_initials(&root,&peer,device,Some(&ds[0].key)).is_err(),"the selected original remains fail-closed");
     assert_eq!(std::fs::read(&unrelated).unwrap(),b"{broken");
+    std::fs::remove_dir_all(root).unwrap();
+}
+
+#[test]
+fn batch_pending_originals_continue_past_unrelated_damaged_receipt() {
+    let (peer,ds,raw)=fixture();let root=std::env::temp_dir().join(format!("companion-batch-corrupt-{}",uuid::Uuid::new_v4()));
+    std::fs::create_dir(&root).unwrap();let device="A1:B2:C3:D4:E5:F6";
+    let mut r=Receiver::open(&root,&ds[0].encode().unwrap()).unwrap();r.accept_segment(&ds[0].encode().unwrap(),&raw).unwrap();r.publish(&root.join("sessions.json"),device).unwrap();drop(r);
+    let bad=root.join(format!(".board-session-{}.json","f".repeat(64)));std::fs::write(&bad,b"{broken").unwrap();
+    let scan=Receiver::pending_initials(&root,&peer,device,None).expect("healthy originals should remain available for batch sync");
+    assert_eq!(scan.initials,vec![ds[0].encode().unwrap()]);assert_eq!(scan.blocked_count(),1);assert!(!scan.blocks(&ds[0].key).unwrap());assert_eq!(std::fs::read(&bad).unwrap(),b"{broken");
+    let target=root.join(format!(".board-session-{:x}.json",Sha256::digest(serde_json::to_vec(&ds[0].key).unwrap())));
+    std::fs::write(&target,b"{also broken").unwrap();let blocked=Receiver::pending_initials(&root,&peer,device,None).unwrap();
+    assert_eq!(blocked.blocked_count(),2);assert!(blocked.blocks(&ds[0].key).unwrap(),"never consume a session whose local receipt is corrupt");
     std::fs::remove_dir_all(root).unwrap();
 }

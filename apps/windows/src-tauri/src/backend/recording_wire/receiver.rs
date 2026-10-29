@@ -73,20 +73,32 @@ pub(crate) struct Receiver {
     ready: bool,
 }
 enum OpenMode { Strict, LocalRepair, DamagedRepair, PrepareSync }
+pub(crate) struct PendingScan {
+    pub(crate) initials: Vec<Vec<u8>>,
+    blocked: BTreeSet<String>,
+}
+impl PendingScan {
+    pub(crate) fn blocked_count(&self) -> usize { self.blocked.len() }
+    pub(crate) fn blocks(&self, key: &SessionKey) -> Result<bool, String> {
+        Ok(self.blocked.contains(&receipt_key_hash(key)?))
+    }
+}
+fn receipt_key_hash(key: &SessionKey) -> Result<String, String> {
+    Ok(format!("{:x}", Sha256::digest(serde_json::to_vec(key).map_err(|_| fail())?)))
+}
 impl Receiver {
     /// Recover pending physical receipts even if the device directory is now
     /// empty (power loss after removal, before its successful reply). Enumerate
     /// only this format's exact manifest names; never adopt arbitrary audio.
     pub(crate) fn pending_initials(root: &Path, peer: &super::transport::Peer,
-        device: &str, scope: Option<&SessionKey>) -> Result<Vec<Vec<u8>>, String> {
-        // An explicitly selected original is keyed by its complete immutable
-        // session identity. Do not inspect unrelated local receipts, but never
-        // ignore a corrupt receipt belonging to the selected original.
+        device: &str, scope: Option<&SessionKey>) -> Result<PendingScan, String> {
+        // A scoped operation never needs to open an unrelated local receipt.
+        // A failed receipt still blocks its own exact session and OTA.
         if scope.is_some_and(|key| key.device_uid != peer.uid || key.format_epoch != peer.epoch) {
             return Err(fail());
         }
-        let scoped_hash = scope.map(|key| serde_json::to_vec(key).map(|v| format!("{:x}", Sha256::digest(v))).map_err(|_| fail())).transpose()?;
-        let mut pending = Vec::new();
+        let scoped_hash = scope.map(receipt_key_hash).transpose()?;
+        let mut scan = PendingScan { initials: Vec::new(), blocked: BTreeSet::new() };
         for entry in fs::read_dir(root).map_err(|_| fail())? {
             let entry = entry.map_err(|_| fail())?;
             let name = entry.file_name();
@@ -94,25 +106,28 @@ impl Receiver {
             let Some(hash) = name.strip_prefix(".board-session-").and_then(|s| s.strip_suffix(".json")) else { continue; };
             if hash.len() != 64 || !hash.bytes().all(|b| b.is_ascii_hexdigit()) { continue; }
             if scoped_hash.as_deref().is_some_and(|wanted| hash != wanted) { continue; }
-            let mut body = Vec::new();
-            read_locked(&entry.path())?.take(MAX_RECEIPT + 1).read_to_end(&mut body).map_err(|_| fail())?;
-            if body.len() as u64 > MAX_RECEIPT { return Err(fail()); }
-            let receipt: Receipt = serde_json::from_slice(&body).map_err(|_| fail())?;
-            if receipt.schema != 1 || receipt.segments.is_empty() || receipt.segments.len() > MAX_SEGMENTS as usize {
-                return Err(fail());
-            }
-            let d = Descriptor::decode(&receipt.segments[0].wire)?;
-            let expected = format!("{:x}", Sha256::digest(serde_json::to_vec(&d.key).map_err(|_| fail())?));
-            if hash != expected { return Err(fail()); }
-            if d.key.device_uid != peer.uid || d.key.format_epoch != peer.epoch { continue; }
-            if receipt.device.as_deref().is_some_and(|id|
-                !crate::backend::device_connection::same_device_id(id, device)) { continue; }
-            if receipt.audio.is_none() || receipt.segments.iter().any(|s| !s.acked) {
-                pending.push(d.encode()?);
+            let decoded = (|| -> Result<Option<Vec<u8>>, String> {
+                let mut body = Vec::new();
+                read_locked(&entry.path())?.take(MAX_RECEIPT + 1).read_to_end(&mut body).map_err(|_| fail())?;
+                if body.len() as u64 > MAX_RECEIPT { return Err(fail()); }
+                let receipt: Receipt = serde_json::from_slice(&body).map_err(|_| fail())?;
+                if receipt.schema != 1 || receipt.segments.is_empty() || receipt.segments.len() > MAX_SEGMENTS as usize { return Err(fail()); }
+                let d = Descriptor::decode(&receipt.segments[0].wire)?;
+                if hash != receipt_key_hash(&d.key)? { return Err(fail()); }
+                if d.key.device_uid != peer.uid || d.key.format_epoch != peer.epoch { return Ok(None); }
+                if receipt.device.as_deref().is_some_and(|id| !crate::backend::device_connection::same_device_id(id, device)) { return Ok(None); }
+                if receipt.audio.is_none() || receipt.segments.iter().any(|s| !s.acked) { return Ok(Some(d.encode()?)); }
+                Ok(None)
+            })();
+            match decoded {
+                Ok(Some(wire)) => scan.initials.push(wire),
+                Ok(None) => (),
+                Err(e) if scope.is_some() => return Err(e),
+                Err(_) => { scan.blocked.insert(hash.to_ascii_lowercase()); },
             }
         }
-        pending.sort_by_key(|p| super::u64le(p, 20));
-        Ok(pending)
+        scan.initials.sort_by_key(|p| super::u64le(p, 20));
+        Ok(scan)
     }
     /// Reuse only durable, revalidated sealed originals after the device has
     /// consumed their directory entries. Never promote a growing prefix or

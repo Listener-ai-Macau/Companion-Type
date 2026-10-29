@@ -1,7 +1,7 @@
 //! Native product binding for the durable V2 receiver. No seed, new cloud
 //! service or file-name-only consume. V1 keeps its original transfer path.
 use super::*;
-use crate::backend::recording_wire::{Descriptor, SessionKey, receiver::{Receiver,SyncRepair},
+use crate::backend::recording_wire::{Descriptor, SessionKey, receiver::{Receiver,SyncRepair,PendingScan},
     transport::{Directory, Peer, receipt_matches}};
 use crate::backend::recording_wire::tail::{Tail,Prefix};
 use std::collections::BTreeMap;
@@ -329,6 +329,17 @@ fn microphone_groups(peer: &Peer, pending: Vec<Vec<u8>>, entries: Vec<RecordingE
     Ok(microphones)
 }
 
+// Do not act on any device segment belonging to a local receipt that could
+// not be read or validated; keep other complete session identities independent.
+fn isolate_blocked_groups(scan: &PendingScan, all: SessionGroups) -> Result<(SessionGroups, Vec<String>), String> {
+    let mut groups = SessionGroups::new();
+    for (key, value) in all { if !scan.blocks(&key)? { groups.insert(key, value); } }
+    let failures = if scan.blocked_count() == 0 { Vec::new() } else {
+        vec![format!("{}条本地录音恢复记录损坏或被占用，已保留对应设备原件", scan.blocked_count())]
+    };
+    Ok((groups, failures))
+}
+
 pub(super) async fn sync_catalog_limited(device: &NativeDevice,
     chars: &std::collections::BTreeSet<Characteristic>, peer: Peer, entries: Vec<RecordingEntry>,
     job: &RecordingSyncJob, link_policy: &mut SealedLinkPolicy,
@@ -340,10 +351,11 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
     let index = crate::backend::persistence::state_file_path();
     // Lost final replies can leave NO device entry. Only exact local manifests
     // for this UID+epoch+receiver reopen that durable session, no blind scan.
-    let groups = microphone_groups(&peer,
-        Receiver::pending_initials(&root, &peer, &device.device_id(), scope)?, entries, scope)?;
+    let scan = Receiver::pending_initials(&root, &peer, &device.device_id(), scope)?;
+    let all_groups = microphone_groups(&peer, scan.initials.clone(), entries, scope)?;
+    let (groups, failures) = isolate_blocked_groups(&scan, all_groups)?;
     let mut batch = NativeRecordingBatch { device_id: device.device_id(), recordings: Vec::new(),
-        failures: Vec::new(), paused: false, connection_reusable: true, segmented: Some(Vec::new()) };
+        failures, paused: false, connection_reusable: true, segmented: Some(Vec::new()) };
     let mut pull_session = None;
     let mut admitted = std::collections::BTreeSet::new();
     let mut deferred = false;
@@ -495,6 +507,24 @@ mod follow_tests {
     fn peer() -> Peer {
         Peer { uid: [0x35;12], epoch: 2, capacity: 64, max_value_bytes: 509,
             logical_control: true, growing_tail: true, batch_interval: true, pause_control: true }
+    }
+    #[test]
+    fn batch_corrupt_receipt_blocks_only_its_exact_session_and_ota() {
+        use sha2::{Digest, Sha256};
+        let p=peer();let good=directory_entry(&p,14,1,91);let bad=directory_entry(&p,15,1,92);
+        let good_key=good.segment.as_ref().unwrap().key.clone();let bad_key=bad.segment.as_ref().unwrap().key.clone();
+        let root=std::env::temp_dir().join(format!("companion-batch-isolate-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();
+        let name=format!(".board-session-{:x}.json",Sha256::digest(serde_json::to_vec(&bad_key).unwrap()));
+        std::fs::write(root.join(name),b"{broken").unwrap();
+        let scan=Receiver::pending_initials(&root,&p,"A1:B2:C3:D4:E5:F6",None).unwrap();
+        let all=microphone_groups(&p,scan.initials.clone(),vec![good,bad],None).unwrap();
+        let (groups,failures)=isolate_blocked_groups(&scan,all).unwrap();
+        assert!(groups.contains_key(&good_key));assert!(!groups.contains_key(&bad_key));assert_eq!(failures.len(),1);
+        let batch=NativeRecordingBatch {device_id:"A1:B2:C3:D4:E5:F6".into(),recordings:Vec::new(),
+            failures,paused:false,connection_reusable:true,segmented:Some(vec!["saved-good".into()])};
+        assert!(require_ota_sync_outcome(batch).is_err(),"partial batch must never authorize OTA");
+        std::fs::remove_dir_all(root).unwrap();
     }
     #[test]
     fn unrelated_diagnostics_do_not_block_scoped_or_automatic_microphone_follow() {
