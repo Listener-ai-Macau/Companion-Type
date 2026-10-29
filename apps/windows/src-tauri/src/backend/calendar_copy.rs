@@ -28,6 +28,36 @@ pub struct Copy {
     pub source_title:String,
     pub source_markdown:String,
     pub entries:Vec<Entry>,
+    /// Passed only between preparation and commit; the v1/v2 receipt format
+    /// stays byte-compatible for older installations.
+    #[serde(skip)]
+    pub(crate) transient_slots:Vec<super::action_export::CalendarSlotSelection>,
+}
+
+/// Slot settings are kept beside receipts, never embedded into the legacy
+/// receipt schema. They carry the exact receipt hash and privacy epoch.
+#[derive(Clone,Debug,Deserialize,Serialize,PartialEq,Eq)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+pub struct SlotCopy {
+    pub privacy_epoch:u64,
+    pub meeting_mode:String,
+    pub content_hash:String,
+    pub selections:Vec<super::action_export::CalendarSlotSelection>,
+}
+
+impl SlotCopy {
+    fn validate_against(&self,copy:&Copy)->Result<(),String> {
+        if self.privacy_epoch!=copy.privacy_epoch||self.meeting_mode!=copy.meeting_mode||self.content_hash!=copy.content_hash
+            ||self.selections.is_empty()||self.selections.len()>copy.entries.len() {return Err("执行时段与日历副本不一致；原文件保留，请重新核对。".into());}
+        let mut seen=std::collections::HashSet::new();
+        for selection in &self.selections {
+            if !seen.insert(&selection.uid)||copy.entries.iter().filter(|e|e.uid==selection.uid).count()!=1
+                ||super::action_export::slot_in_utc(&selection.slot).is_none() {
+                return Err("执行时段与日历事项不一致；原文件保留，请重新核对。".into());
+            }
+        }
+        Ok(())
+    }
 }
 
 impl Copy {
@@ -69,11 +99,13 @@ pub(crate) fn prepare(session:&CompanionV1HostSession,mode:&str,
             reminder_minutes:match &item.reminder {CalendarAlarm::Before{minutes}=>Some(*minutes),_=>None},
             reminder_at:match &item.reminder {CalendarAlarm::At{at}=>Some(at.clone()),_=>None}}).collect::<Vec<_>>();
     let schema=if entries.iter().any(|e|e.reminder_at.is_some()||e.reminder_minutes==Some(1440)){2}else{1};
+    let transient_slots=prepared.calendar_items.as_ref().into_iter().flatten().filter_map(|item|item.execution_slot.as_ref().map(|slot|super::action_export::CalendarSlotSelection{uid:item.uid.clone(),slot:slot.clone()})).collect();
     let copy=Copy{schema,privacy_epoch:session.calendar_copy_epoch,meeting_mode:mode.into(),saved_at:chrono::Utc::now().to_rfc3339(),
         file_name:destination.file_name().ok_or("日历文件名无法读取。")?.to_string_lossy().into(),
         file_sha256:format!("{:x}",Sha256::digest(&prepared.bytes)),content_hash:super::export::content_hash(prepared),
-        source_title:session.title.clone(),source_markdown:markdown,entries};
+        source_title:session.title.clone(),source_markdown:markdown,entries,transient_slots};
     copy.validate()?;
+    if !copy.transient_slots.is_empty(){SlotCopy{privacy_epoch:copy.privacy_epoch,meeting_mode:copy.meeting_mode.clone(),content_hash:copy.content_hash.clone(),selections:copy.transient_slots.clone()}.validate_against(&copy)?;}
     Ok(Some(copy))
 }
 
@@ -85,6 +117,17 @@ pub(crate) fn apply(rows:&mut [CompanionV1HostSession],id:&str,mut copy:Copy)->R
     super::library_lifecycle::require_available(row)?;
     if row.calendar_copy_epoch!=copy.privacy_epoch {return Err("文字已在其它窗口清除；文件已保存，没有将旧文字重新附回记录。".into());}
     for old in &row.calendar_copies {old.validate()?;}
+    let mut slot_keys=std::collections::HashSet::new();
+    for slots in &row.calendar_slot_copies {
+        if !slot_keys.insert((slots.privacy_epoch,&slots.meeting_mode,&slots.content_hash)) {return Err("保存的执行时段重复；原文件保留，请先核对。".into());}
+        let old=row.calendar_copies.iter().find(|old|old.privacy_epoch==slots.privacy_epoch&&old.meeting_mode==slots.meeting_mode&&old.content_hash==slots.content_hash)
+            .ok_or("保存的执行时段缺少对应副本；原文件保留，请先核对。")?;
+        slots.validate_against(old)?;
+    }
+    let new_slots=if copy.transient_slots.is_empty(){None}else{
+        let slots=SlotCopy{privacy_epoch:copy.privacy_epoch,meeting_mode:copy.meeting_mode.clone(),content_hash:copy.content_hash.clone(),selections:std::mem::take(&mut copy.transient_slots)};
+        slots.validate_against(&copy)?;Some(slots)
+    };
     let revision=row.calendar_copy_revision.checked_add(1).ok_or("日历副本版本已超出范围。")?;
     // Keep current/previous semantic file snapshots per mode. Re-saving the
     // same content updates its filename/time without evicting a different copy.
@@ -94,17 +137,23 @@ pub(crate) fn apply(rows:&mut [CompanionV1HostSession],id:&str,mut copy:Copy)->R
             if old.content_hash!=copy.content_hash&&mode_count<2 {next.push(old.clone());mode_count+=1;}
         }else if next.iter().filter(|c|c.meeting_mode==old.meeting_mode).count()<2 {next.push(old.clone());}
     }
-    row.calendar_copies=next;row.calendar_copy_revision=revision;row.exported_at=Some(copy.saved_at);
+    let mut next_slots=Vec::new();if let Some(slots)=new_slots {next_slots.push(slots);}
+    for slots in &row.calendar_slot_copies {
+        // The newest receipt is replaced even when its content matches.
+        if slots.privacy_epoch==copy.privacy_epoch&&slots.meeting_mode==copy.meeting_mode&&slots.content_hash==copy.content_hash {continue;}
+        if next.iter().any(|old|old.privacy_epoch==slots.privacy_epoch&&old.meeting_mode==slots.meeting_mode&&old.content_hash==slots.content_hash){next_slots.push(slots.clone());}
+    }
+    row.calendar_copies=next;row.calendar_slot_copies=next_slots;row.calendar_copy_revision=revision;row.exported_at=Some(copy.saved_at);
     Ok(())
 }
 
-pub(crate) fn commit(path:&std::path::Path,id:&str,copy:Copy)->Result<(u64,Vec<Copy>,Option<String>),String> {
+pub(crate) fn commit(path:&std::path::Path,id:&str,copy:Copy)->Result<(u64,Vec<Copy>,Vec<SlotCopy>,Option<String>),String> {
     super::session_store::update_checked(path,|rows|apply(rows,id,copy))?;
     let loaded=super::session_store::load(path);
     if loaded.state.status!="ready" {return Err("日历文件已保存，副本说明暂时无法重读；请刷新后核对。".into());}
     let rows:Vec<CompanionV1HostSession>=serde_json::from_slice(&loaded.bytes.ok_or("副本说明保存后找不到原记录。")?).map_err(|e|e.to_string())?;
     let row=rows.iter().find(|r|r.id==id).ok_or("副本说明保存后原记录已变化，请刷新核对。")?;
-    Ok((row.calendar_copy_revision,row.calendar_copies.clone(),row.exported_at.clone()))
+    Ok((row.calendar_copy_revision,row.calendar_copies.clone(),row.calendar_slot_copies.clone(),row.exported_at.clone()))
 }
 
 #[cfg(test)]

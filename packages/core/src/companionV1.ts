@@ -505,8 +505,16 @@ export interface CompanionV1HostSession {
   calendarCopyRevision?: number;
   calendarCopyEpoch?: number;
   calendarCopies?: CompanionCalendarCopy[];
+  calendarSlotCopies?: CompanionCalendarSlotCopy[];
   exportedAt: string | null;
   retention: CompanionV1SessionRetention;
+}
+
+export interface CompanionCalendarSlotCopy {
+  privacyEpoch:number;
+  meetingMode:CompanionV1MeetingMode;
+  contentHash:string;
+  selections:{uid:string;slot:{start:string;end:string}}[];
 }
 
 export interface CompanionCalendarCopy {
@@ -1284,6 +1292,7 @@ export function applyCompanionV1ControlFixture(
         minutesByMode: { offlineStore: null, onlineLive: null },
         exportMarkdown: '',
         calendarCopies: [],
+        calendarSlotCopies: [],
         calendarCopyEpoch: (session.calendarCopyEpoch ?? 0) + 1,
         calendarCopyRevision: (session.calendarCopyRevision ?? 0) + 1,
         exportedAt: null,

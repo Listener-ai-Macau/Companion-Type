@@ -3349,9 +3349,9 @@ impl CompanionBackend for FixtureCompanionBackend {
             if cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none(){
                 calendar_copy::apply(&mut snapshot.host.sessions,session_id,copy)?;
             }else{
-                let (revision,copies,exported_at)=calendar_copy::commit(&persistence::state_file_path(),session_id,copy)?;
+                let (revision,copies,slot_copies,exported_at)=calendar_copy::commit(&persistence::state_file_path(),session_id,copy)?;
                 let row=snapshot.host.sessions.iter_mut().find(|r|r.id==session_id).ok_or("原记录已移除；未恢复原记录。")?;
-                row.calendar_copy_revision=revision;row.calendar_copies=copies;row.exported_at=exported_at;
+                row.calendar_copy_revision=revision;row.calendar_copies=copies;row.calendar_slot_copies=slot_copies;row.exported_at=exported_at;
             }
             snapshot.updated_at=observation_timestamp();return Ok(());
         }

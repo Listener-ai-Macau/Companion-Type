@@ -2,23 +2,27 @@ import {useState} from 'react';
 import {readableCalendarTime} from './calendarTime';
 import {CalendarReminderEditor} from './CalendarReminderEditor';
 import {CalendarAllDayReminders} from './CalendarAllDayReminders';
+import {CalendarExecutionSlotEditor} from './CalendarExecutionSlotEditor';
 
 export type CalendarAlarm={kind:'none'}|{kind:'before';minutes:0|30|60|1440}|{kind:'at';at:string};
 export type CalendarReminderSelection={uid:string;reminder:CalendarAlarm};
+export type CalendarExecutionSlot={start:string;end:string};
+export type CalendarSlotSelection={uid:string;slot:CalendarExecutionSlot};
 /** Native rows identify the exact source item used by the reviewed file. */
-export type CalendarExportItem={uid?:string;text:string;title:string;deadline:string|null;status:'timed'|'allDay'|'unconfirmed'|'completed';reminder?:CalendarAlarm};
-export type CalendarReminderChoice={remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';calendarReminders?:CalendarReminderSelection[]};
+export type CalendarExportItem={uid?:string;text:string;title:string;deadline:string|null;status:'timed'|'allDay'|'unconfirmed'|'completed';reminder?:CalendarAlarm;executionSlot?:CalendarExecutionSlot};
+export type CalendarReminderChoice={remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';calendarReminders?:CalendarReminderSelection[];calendarSlots?:CalendarSlotSelection[]};
 export function effectiveCalendarAlarm(item:CalendarExportItem,choice:CalendarReminderChoice):CalendarAlarm {
   return choice.calendarReminders?.find(s=>s.uid===item.uid)?.reminder??(choice.remindAtTime&&item.status==='timed'?{kind:'before',minutes:choice.reminderFormat==='calendarreminder'?0:choice.reminderFormat==='calendarreminder60'?60:30}:{kind:'none'});
 }
 export function calendarAlarmLabel(alarm:CalendarAlarm):string {
   return alarm.kind==='none'?'不提醒':alarm.kind==='at'?`提醒：${readableCalendarTime(alarm.at)}`:alarm.minutes===0?'提醒：在截止时刻':alarm.minutes===60?'提醒：提前1小时':alarm.minutes===1440?'提醒：提前1天':`提醒：提前${alarm.minutes}分钟`;
 }
-export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onReminders,onPending}:{
+export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onReminders,onSlot,onPending}:{
   items:CalendarExportItem[];choice:CalendarReminderChoice;disabled:boolean;onEdit?:(index:number)=>void;
-  onReminder?:(uid:string,reminder:CalendarAlarm|null)=>void;onReminders?:(selections:CalendarReminderSelection[])=>void;onPending?:(delta:1|-1)=>void;
+  onReminder?:(uid:string,reminder:CalendarAlarm|null)=>void;onReminders?:(selections:CalendarReminderSelection[])=>void;onSlot?:(uid:string,slot:CalendarExecutionSlot|null)=>void;onPending?:(delta:1|-1)=>void;
 }){
   const[editing,setEditing]=useState<number|null>(null);
+  const[editingSlot,setEditingSlot]=useState<number|null>(null);
   const[allDayEditing,setAllDayEditing]=useState(false);
   const included=items.filter(item=>item.status==='timed'||item.status==='allDay');
   const alarms=included.filter(item=>effectiveCalendarAlarm(item,choice).kind!=='none').length;
@@ -28,12 +32,14 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onR
     {allDayEditing&&onReminders?<CalendarAllDayReminders key={JSON.stringify([items.filter(item=>item.status==='allDay').map(item=>[item.uid,item.text,item.deadline]),choice.calendarReminders])}
       items={items} choice={choice} disabled={disabled} onApply={onReminders} onClose={()=>setAllDayEditing(false)} onPending={onPending}/>:null}
     <ul>{items.map((item,index)=>{
-      const alarm=effectiveCalendarAlarm(item,choice),override=choice.calendarReminders?.find(s=>s.uid===item.uid)?.reminder;
+      const alarm=effectiveCalendarAlarm(item,choice),override=choice.calendarReminders?.find(s=>s.uid===item.uid)?.reminder,slot=choice.calendarSlots?.find(s=>s.uid===item.uid)?.slot;
       return <li key={item.uid??index} style={{marginBottom:12,overflowWrap:'anywhere'}}>
         <strong>{item.title}</strong><br/>
         {item.status==='completed'?'已完成，本次不导出':item.status==='unconfirmed'?`时间尚未确认，本次不导出${item.deadline?`：${item.deadline}`:''}`:
-          `清单截止：${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?' · 全天日程':''} · ${calendarAlarmLabel(alarm)}`}
-        {item.status==='timed'?<p className="ct-step-meta">按截止时刻导出，不预设执行时长。{alarm.kind==='before'&&alarm.minutes===0&&/前|截止|before|by\b/i.test(item.deadline??'')?'当前在截止时才提醒；需要预留准备时间时，可选择提前提醒。':''}</p>:null}
+          `清单截止：${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?(slot?' · 仅日期':' · 全天日程'):''} · ${calendarAlarmLabel(alarm)}`}
+        {item.status==='timed'||item.status==='allDay'?<p className="ct-step-meta">{slot?`执行时段：${readableCalendarTime(slot.start)} 至 ${readableCalendarTime(slot.end)}。截止提醒仍按清单截止计算。`:item.status==='timed'?'按截止时刻导出，不预设执行时长。':''}{alarm.kind==='before'&&alarm.minutes===0&&/前|截止|before|by\b/i.test(item.deadline??'')?'当前在截止时才提醒；需要预留准备时间时，可选择提前提醒。':''}</p>:null}
+        {onSlot&&item.uid&&(item.status==='allDay'||item.status==='timed')?<div><button type="button" className="ct-text-button" disabled={disabled} onClick={()=>setEditingSlot(index)}>{slot?'修改执行时段':'预留执行时段'}</button>
+          {slot?<button type="button" className="ct-text-button" disabled={disabled} onClick={()=>onSlot(item.uid!,null)}>恢复仅按截止导出</button>:null}</div>:null}
         {onReminder&&item.uid&&(item.status==='allDay'||item.status==='timed')?<label style={{display:'block',marginTop:8}}>本项提醒 <select aria-label={`日历事项 ${index+1} 提醒`} disabled={disabled}
           value={!override?'default':override.kind==='before'?String(override.minutes):override.kind}
           onChange={event=>{const value=event.currentTarget.value;if(value==='at'){setEditing(index);return;}
@@ -47,6 +53,8 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onR
           onClick={()=>onEdit(index)}>{item.status==='allDay'?'补充清单截止时刻':item.status==='unconfirmed'?'确认清单截止日期和时刻':'修改清单截止时间'}</button></>:null}
         {editing===index&&item.uid&&onReminder?<CalendarReminderEditor key={item.uid} deadline={item.deadline??''} initial={override?.kind==='at'?override.at:undefined}
           label={`日历事项 ${index+1}`} disabled={disabled} onConfirm={at=>onReminder(item.uid!,{kind:'at',at})} onClose={()=>setEditing(null)} onPending={onPending}/>:null}
+        {editingSlot===index&&item.uid&&onSlot?<CalendarExecutionSlotEditor key={item.uid} deadline={item.deadline??''} initial={slot}
+          label={`日历事项 ${index+1}`} disabled={disabled} onConfirm={value=>onSlot(item.uid!,value)} onClose={()=>setEditingSlot(null)} onPending={onPending}/>:null}
       </li>;
     })}</ul>
     <details className="ct-calendar-import-notes"><summary>导入与改期注意事项</summary>

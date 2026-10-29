@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { readableCalendarTime } from './calendarTime';
-import type { CompanionCalendarCopy, CompanionV1HostSession, CompanionV1MeetingMode } from '@companion-type/core';
+import {savedSlotFor,readableSlot} from './calendarSavedSlot';
+import type { CompanionCalendarCopy, CompanionCalendarSlotCopy, CompanionV1HostSession, CompanionV1MeetingMode } from '@companion-type/core';
 
 const reminderLabel = (entry:CompanionCalendarCopy['entries'][number]) => entry.reminderAt ? readableCalendarTime(entry.reminderAt) : entry.reminderMinutes === null ? '未附提醒' : entry.reminderMinutes === 0 ? '在已确认的时刻' : entry.reminderMinutes === 60 ? '提前1小时' : entry.reminderMinutes === 1440 ? '提前1天' : `提前${entry.reminderMinutes}分钟`;
 function savedTime(value: string): string {
@@ -8,9 +9,11 @@ function savedTime(value: string): string {
   return Number.isNaN(date.getTime()) ? '保存时间待核对' : date.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 }
 
-export function calendarCopyDetailsText(copy: CompanionCalendarCopy): string {
-  return [`日历文件：${copy.fileName}`, ...copy.entries.map(entry =>
-    `${entry.title}\n时间：${readableCalendarTime(entry.deadline)}\n提醒：${reminderLabel(entry)}`),
+export function calendarCopyDetailsText(copy: CompanionCalendarCopy,slots?:CompanionCalendarSlotCopy[]): string {
+  return [`日历文件：${copy.fileName}`, ...copy.entries.map(entry => {
+    const slot=savedSlotFor(copy,entry.uid,slots);
+    return `${entry.title}\n${slot?'清单截止':'时间'}：${readableCalendarTime(entry.deadline)}${slot?`\n执行时段：${readableSlot(slot)}`:''}\n提醒：${reminderLabel(entry)}`;
+  }),
     '这是导出文件当时的设置，接收日历中的后续修改不会同步回来；请在接收日历核对。'].join('\n\n');
 }
 
@@ -26,7 +29,7 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
   const changed = copies[0].sourceMarkdown !== markdown || copies[0].sourceTitle !== session.title;
   const copyText = async (copy: CompanionCalendarCopy, index: number, entryIndex: number | null) => {
     const request = ++copyRequest.current;
-    const text = entryIndex === null ? calendarCopyDetailsText(copy) : copy.entries[entryIndex].title;
+    const text = entryIndex === null ? calendarCopyDetailsText(copy,session.calendarSlotCopies) : copy.entries[entryIndex].title;
     setCopyState(null);
     try {
       await navigator.clipboard.writeText(text);
@@ -48,7 +51,7 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
       <ol>
         <li>在常用日历导入刚保存的文件，并确认接收日历。首次使用本地 Thunderbird 时可收起账号引导、启用本地日历，再打开原文件；本地日历不需要邮箱账号。</li>
         <li>按下方副本中的名称找到每项，逐项核对日期、时区和提醒；找不到时扩大日期范围。这里列的是文件设置，无法代替接收日历的实际结果。</li>
-        <li>需要另排执行时段时，在接收日历明确修改开始与结束，保存后重新查看。Type 保留原截止记录，日历的修改不会写回清单；若日历关联了可写文件，修改可能写入该文件，以后用 Type 覆盖前请先确认是否需要保留。</li>
+        <li>需要另排执行时段时，可在 Type 日历预览中设置开始与结束，再保存并核对；也可在接收日历修改，保存后重新查看。Type 保留原截止记录，日历的修改不会写回清单；若日历关联了可写文件，修改可能写入该文件，以后用 Type 覆盖前请先确认是否需要保留。</li>
       </ol>
     </details>
     {changed ? <p className="ct-step-warn">清单已有修改，日历文件尚需重新保存。只导入的旧副本不会更新；已关联同一文件的日历，可在保存后刷新读取。</p> : null}
@@ -60,12 +63,12 @@ export function CompanionCalendarCopies({ session, mode, markdown }: {
       <p className="ct-step-meta">找回原日程时，复制对应名称，再粘贴到接收日历的搜索框；找不到时，请扩大接收日历的日期范围。</p>
       {copies.map((copy, index) => <section key={`${copy.fileSha256}:${copy.savedAt}`} aria-label={index === 0 ? '最近保存的日历文件' : '上一份日历文件'}>
         <p><strong>{index === 0 ? '最近保存' : '上一份副本'}</strong>：{copy.fileName}<br /><time dateTime={copy.savedAt}>{savedTime(copy.savedAt)}</time></p>
-        <ul>{copy.entries.map((entry, n) => <li key={`${entry.uid}:${n}`}>
-          <strong>{entry.title}</strong><br />时间：{readableCalendarTime(entry.deadline)}<br />提醒：{reminderLabel(entry)}
+        <ul>{copy.entries.map((entry, n) => {const slot=savedSlotFor(copy,entry.uid,session.calendarSlotCopies);return <li key={`${entry.uid}:${n}`}>
+          <strong>{entry.title}</strong><br />{slot?'清单截止':'时间'}：{readableCalendarTime(entry.deadline)}{slot?<><br/>执行时段：{readableSlot(slot)}</>:null}<br />提醒：{reminderLabel(entry)}
           <br /><button type="button" className="ct-text-button" aria-label={`复制日程名称：${entry.title}`}
             onClick={() => void copyText(copy, index, n)}>复制日程名称</button>
           {feedback(index, n)}
-        </li>)}</ul>
+        </li>})}</ul>
         <button type="button" className="ct-action" onClick={() => void copyText(copy, index, null)}>复制整份副本信息</button>
         {feedback(index, null)}
       </section>)}

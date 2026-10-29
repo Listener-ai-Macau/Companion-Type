@@ -1,6 +1,7 @@
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {CalendarCopyComparison} from './CalendarCopyComparison';
 import {lastSavedCalendarReminders,retainCalendarReminders} from './calendarReminderCarryover';
+import {retainCalendarSlots} from './calendarSlotCarryover';
 import {operationErrorText,calendarExportNeedsTime} from './operationFailure';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
@@ -175,6 +176,7 @@ export type CompanionMeetingExportRequest = {
   format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   expectedContentHash?:string;
   calendarReminders?:CalendarReminderChoice['calendarReminders'];
+  calendarSlots?:CalendarReminderChoice['calendarSlots'];
   calendarSaveToken?:string;
   calendarSavedName?:boolean;
 };
@@ -459,7 +461,7 @@ export function CompanionDashboard({
   const previewTask=useRef<{cancel:()=>void}|null>(null);
   const [previewWaiting,setPreviewWaiting]=useState(false);
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
-  const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
+  const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [calendarSaveTargets,setCalendarSaveTargets]=useState<Record<string,{token:string;name:string}>>({});
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; calendarOpenToken?:string;calendarFileUri?:string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
@@ -1118,13 +1120,13 @@ export function CompanionDashboard({
     region?.scrollIntoView({block:'start',behavior:'auto'});
     region?.focus({preventScroll:true});
   },[calendarReviewVisible,calendarExportReview?.sourceKey]);
-  const calendarReminderKey=calendarExportReview?.format==='calendar'&&calendarExportReview.sourceKey===copySourceKey&&calendarExportReview.calendarReminders?.length
-    ?JSON.stringify([calendarExportReview.sourceKey,calendarExportReview.remindAtTime,calendarExportReview.reminderFormat,calendarExportReview.calendarReminders]):'';
+  const calendarReminderKey=calendarExportReview?.format==='calendar'&&calendarExportReview.sourceKey===copySourceKey&&(calendarExportReview.calendarReminders?.length||calendarExportReview.calendarSlots?.length)
+    ?JSON.stringify([calendarExportReview.sourceKey,calendarExportReview.remindAtTime,calendarExportReview.reminderFormat,calendarExportReview.calendarReminders,calendarExportReview.calendarSlots]):'';
   useEffect(()=>{
     const review=calendarExportReview;if(!calendarReminderKey||!review||!onPreviewMeetingExport){setCalendarReminderPreview(null);return;}
     let alive=true;setCalendarReminderPreview(null);
     const task=savedExportPreview(()=>onPreviewMeetingExport({sessionId:review.sessionId,meetingMode:review.mode,
-      format:review.remindAtTime?(review.reminderFormat??'calendarreminder30'):'calendar',calendarReminders:review.calendarReminders}));
+      format:review.remindAtTime?(review.reminderFormat??'calendarreminder30'):'calendar',calendarReminders:review.calendarReminders,...(review.calendarSlots?.length?{calendarSlots:review.calendarSlots}:{})}));
     task.result.then(preview=>{if(alive){if(!/^[a-f0-9]{64}$/.test(preview.contentHash))throw Error('提醒预览无法读取。');
       setCalendarReminderPreview({key:calendarReminderKey,hash:preview.contentHash,warning:preview.warning??''});}},error=>{if(alive)setCalendarReminderPreview({key:calendarReminderKey,error:operationErrorText(error,'export')});})
       .catch(error=>{if(alive)setCalendarReminderPreview({key:calendarReminderKey,error:String(error)});});
@@ -1175,11 +1177,16 @@ export function CompanionDashboard({
           reminderContentHash=reminderHashes.calendarreminder;
           if(copySourceRef.current!==exportSourceKey)return;
           const carried=reviewChoice===undefined?retainCalendarReminders(lastSavedCalendarReminders(selectedSession,minutesViewMode),preview.calendarItems??[]):undefined;
+          const carriedSlots=reviewChoice===undefined?retainCalendarSlots(selectedSession,minutesViewMode,preview.calendarItems??[]):undefined;
           const priorReminders=reviewChoice?.calendarReminders??carried?.selections;
           const calendarReminders=priorReminders?.filter(s=>preview.calendarItems?.some(item=>item.uid===s.uid&&(item.status==='timed'||item.status==='allDay')));
-          const reminderSourceNote=carried?.notCarriedAlarms?`上次文件中有${carried.notCarriedAlarms}项提醒对应的事项已改变或不再导出，未自动套用。请核对本次日期和提醒；未变事项的设置已保留。`:
+          const priorSlots=reviewChoice?.calendarSlots??carriedSlots?.selections;
+          const calendarSlots=priorSlots?.filter(s=>preview.calendarItems?.some(item=>item.uid===s.uid&&(item.status==='timed'||item.status==='allDay')));
+          const reminderNote=carried?.notCarriedAlarms?`上次文件中有${carried.notCarriedAlarms}项提醒对应的事项已改变或不再导出，未自动套用。请核对本次日期和提醒；未变事项的设置已保留。`:
             (calendarReminders?.length??0)!==(reviewChoice?.calendarReminders?.length??0)&&reviewChoice?'已修改事项的单独提醒未自动套用，请按新截止时间重新设置；其它事项的选择保留。':undefined;
-          setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,reminderSourceNote,reminderCarryover:carried?{fileName:carried.fileName,retained:calendarReminders?.length??0}:undefined,calendarReminders,reminderContentHash,reminderHashes,reminderFormat:reviewChoice?.reminderFormat??'calendarreminder30',remindAtTime:!!reviewChoice?.remindAtTime&&!!reminderContentHash,items:preview.calendarItems??undefined});
+          const missingSlots=carriedSlots?.notCarried??Math.max(0,(reviewChoice?.calendarSlots?.length??0)-(calendarSlots?.length??0));
+          const reminderSourceNote=[reminderNote,missingSlots?`${missingSlots}项原执行时段对应的事项已改变或不再导出，请重新核对；未变事项的时段保留。`:undefined].filter(Boolean).join(' ')||undefined;
+          setCalendarExportReview({sessionId,mode:minutesViewMode,contentHash,origin,format,warning,sourceKey:exportSourceKey,reminderSourceNote,reminderCarryover:carried?{fileName:carried.fileName,retained:calendarReminders?.length??0}:undefined,calendarReminders,calendarSlots,reminderContentHash,reminderHashes,reminderFormat:reviewChoice?.reminderFormat??'calendarreminder30',remindAtTime:!!reviewChoice?.remindAtTime&&!!reminderContentHash,items:preview.calendarItems??undefined});
           setPageView('library');setDetailSessionId(sessionId);setRecordingResultOpen(true);setExportResult(null);return;
         }
         if(format==='ics'&&preview.warning){
@@ -1189,7 +1196,7 @@ export function CompanionDashboard({
       }
       setCalendarExportReview(null);
       setExportResult({sessionId,format,origin,kind:'pending',message:'请选择文件保存位置；也可在保存窗口取消。'});
-      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(calendarSaveToken?{calendarSaveToken}:{}),...(calendarSavedName?{calendarSavedName:true}:{}) });
+      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(reviewChoice?.calendarSlots?.length?{calendarSlots:reviewChoice.calendarSlots}:{}),...(calendarSaveToken?{calendarSaveToken}:{}),...(calendarSavedName?{calendarSavedName:true}:{}) });
       if(!result)restoreCalendarReview();
       if(result?.calendarOpenToken&&format.startsWith('calendar'))setCalendarSaveTargets(current=>({...current,[JSON.stringify([sessionId,minutesViewMode,selectedSession.calendarCopyEpoch??0])]:{token:result.calendarOpenToken!,name:exportFileName(result.path)}}));
       setExportResult({ sessionId, format, origin, path: result?.path, calendarOpenToken:result?.calendarOpenToken,calendarFileUri:result?.calendarFileUri, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder') ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
@@ -1218,7 +1225,7 @@ export function CompanionDashboard({
     const review=calendarExportReview;if(!selectedSession||!review)return;
     const actions=savedActions(minutesMarkdown);
     if(index!==undefined&&(!review.items||actions.length!==review.items.length||actions.some((a,n)=>a.text!==review.items![n].text)))return;
-    setCalendarReturn(review.format==='calendar'?{sessionId:selectedSession.id,mode:minutesViewMode,origin:review.origin,fromPreview:true,remindAtTime:review.remindAtTime,reminderFormat:review.reminderFormat,calendarReminders:review.calendarReminders}:null);
+    setCalendarReturn(review.format==='calendar'?{sessionId:selectedSession.id,mode:minutesViewMode,origin:review.origin,fromPreview:true,remindAtTime:review.remindAtTime,reminderFormat:review.reminderFormat,calendarReminders:review.calendarReminders,calendarSlots:review.calendarSlots}:null);
     setCalendarEditAll(index===undefined&&!!basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes));
     setCalendarEditLine(index===undefined?undefined:actions[index].lineIndex);
     setCalendarEditTimed(index!==undefined&&review.items?.[index].status==='allDay');
@@ -1917,6 +1924,7 @@ export function CompanionDashboard({
                   onPending={changeCalendarReminderPending}
                   onReminders={selections=>setCalendarExportReview(current=>current?{...current,calendarReminders:[...(current.calendarReminders??[]).filter(existing=>!selections.some(selection=>selection.uid===existing.uid)),...selections]}:null)}
                   onReminder={(uid,reminder)=>setCalendarExportReview(current=>current?{...current,calendarReminders:[...(current.calendarReminders??[]).filter(s=>s.uid!==uid),...(reminder?[{uid,reminder}]:[])]}:null)}
+                  onSlot={(uid,slot)=>setCalendarExportReview(current=>current?{...current,calendarSlots:[...(current.calendarSlots??[]).filter(s=>s.uid!==uid),...(slot?[{uid,slot}]:[])]}:null)}
                   onEdit={basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)&&savedActions(minutesMarkdown).length===calendarExportReview.items.length&&savedActions(minutesMarkdown).every((a,n)=>a.text===calendarExportReview.items![n].text)?editCalendarItem:undefined}/>:null}
                 {calendarSaveTargets[JSON.stringify([selectedSession.id,minutesViewMode,selectedSession.calendarCopyEpoch??0])]&&calendarExportReview.format==='calendar'?<div className="ct-calendar-save-again">
                   <p className="ct-step-meta">已关联本地文件的日历可在同一文件保存后读取更新。只有导入过的副本仍需另行修改；覆盖前先核对日历端是否改过内容。</p>
@@ -1931,7 +1939,7 @@ export function CompanionDashboard({
                   <p className="ct-step-meta">只填写上次文件名，请自行核对文件夹和目标文件，也可改名另存；重启后不会记住文件夹。</p>
                 </div>:null}
                 {calendarExportReview.items?<CalendarCopyComparison key={`${selectedSession.id}:${minutesViewMode}:${selectedSession.calendarCopyRevision??0}:${copySourceKey}`}
-                  copies={(selectedSession.calendarCopies??[]).filter(copy=>copy.meetingMode===minutesViewMode)} items={calendarExportReview.items} choice={calendarExportReview}/>:null}
+                  copies={(selectedSession.calendarCopies??[]).filter(copy=>copy.meetingMode===minutesViewMode)} slotCopies={selectedSession.calendarSlotCopies} items={calendarExportReview.items} choice={calendarExportReview}/>:null}
                 {calendarReminderKey&&calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?<button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording} onClick={()=>setCalendarReminderRetry(n=>n+1)}>重新核对提醒</button>:null}
                 {calendarReminderKey&&!calendarReminderReady?<p role="status">{calendarReminderPreview?.key===calendarReminderKey&&calendarReminderPreview.error?`提醒尚未核对：${calendarReminderPreview.error}`:'正在核对本次逐项提醒…'}</p>:null}
                 <div className="ct-button-row">

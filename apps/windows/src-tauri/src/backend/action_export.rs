@@ -336,6 +336,8 @@ pub struct CalendarPreviewItem {
     pub deadline:Option<String>,
     pub status:&'static str,
     pub reminder:CalendarAlarm,
+    #[serde(skip_serializing_if="Option::is_none")]
+    pub execution_slot:Option<CalendarExecutionSlot>,
 }
 
 #[derive(Clone,Debug,serde::Serialize,serde::Deserialize,PartialEq,Eq)]
@@ -346,6 +348,27 @@ pub enum CalendarAlarm { None, Before{minutes:u16}, At{at:String} }
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 pub struct CalendarReminderSelection { pub uid:String, pub reminder:CalendarAlarm }
 
+/// Explicit appointment times are separate from the authored action deadline.
+/// No duration, timezone or date is guessed from the deadline.
+#[derive(Clone,Debug,serde::Serialize,serde::Deserialize,PartialEq,Eq)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+pub struct CalendarExecutionSlot { pub start:String, pub end:String }
+
+#[derive(Clone,Debug,serde::Serialize,serde::Deserialize,PartialEq,Eq)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+pub struct CalendarSlotSelection { pub uid:String, pub slot:CalendarExecutionSlot }
+
+pub(crate) fn slot_in_utc(slot:&CalendarExecutionSlot)->Option<(DateTime<Utc>,DateTime<Utc>)> {
+    // Reuse the existing strict RFC3339 validation: offsets are mandatory,
+    // unknown -00:00, fractions and year-boundary overflow are rejected.
+    let parse=|s:&str| {
+        absolute_alarm_utc(s)?;
+        Some(DateTime::parse_from_rfc3339(s).ok()?.with_timezone(&Utc))
+    };
+    let start=parse(&slot.start)?;let end=parse(&slot.end)?;
+    (end>start).then_some((start,end))
+}
+
 pub(crate) fn absolute_alarm_utc(value:&str)->Option<String> {
     if value.ends_with('前'){return None;}
     event_start(value)?.strip_prefix("DTSTART:").map(|v|v.trim_end_matches("\r\n").to_owned())
@@ -354,6 +377,7 @@ pub(crate) fn absolute_alarm_utc(value:&str)->Option<String> {
 pub(crate) fn calendar_preview_items(actions:&[Action])->Vec<CalendarPreviewItem> {
     actions.iter().map(|item|CalendarPreviewItem{
         uid:String::new(),reminder:CalendarAlarm::None,
+        execution_slot:None,
         text:item.text.clone(),title:calendar_action_title(&item.text),deadline:item.due.clone(),
         status:if item.completed {"completed"}else{match item.due.as_deref().and_then(event_start){
             Some(start) if start.starts_with("DTSTART:")=>"timed",Some(_)=>"allDay",None=>"unconfirmed",
@@ -380,6 +404,10 @@ pub(crate) fn calendar_events_with_selections(session_id:&str,mode:&str,title:&s
 }
 
 pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>,selections:Option<&[CalendarReminderSelection]>,provenance:Option<&str>)->Result<(String,Vec<CalendarPreviewItem>),String> {
+    calendar_events_with_slots(session_id,mode,title,actions,draft,stamp,lead_minutes,selections,provenance,None)
+}
+
+pub(crate) fn calendar_events_with_slots(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>,selections:Option<&[CalendarReminderSelection]>,provenance:Option<&str>,slots:Option<&[CalendarSlotSelection]>)->Result<(String,Vec<CalendarPreviewItem>),String> {
     if lead_minutes.is_some_and(|m|!matches!(m,0|30|60)){return Err("不支持的提前提醒时间；请重新选择，截止时间保持不变。".into());}
     let mut items=calendar_preview_items(actions);
     for(index,item)in items.iter_mut().enumerate(){
@@ -402,6 +430,17 @@ pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mod
             item.reminder=selection.reminder.clone();
         }
     }
+    if let Some(slots)=slots {
+        if slots.len()>4096{return Err("日历时段数量超过上限，请分批导出。".into());}
+        let mut seen=std::collections::HashSet::new();
+        for selection in slots {
+            if !seen.insert(&selection.uid){return Err("同一事项的执行时段重复，请重新核对。".into());}
+            let item=items.iter_mut().find(|item|item.uid==selection.uid&&matches!(item.status,"timed"|"allDay"))
+                .ok_or("清单事项已变化，请重新打开日历预览设置执行时段；没有生成文件。")?;
+            if slot_in_utc(&selection.slot).is_none(){return Err("执行时段需要明确的开始、结束和时区，结束必须晚于开始；原清单保持不变。".into());}
+            item.execution_slot=Some(selection.slot.clone());
+        }
+    }
     let mut out="BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Companion Type//Checklist Calendar Events//ZH\r\nCALSCALE:GREGORIAN\r\n".to_string();
     let mut count=0;
     let mut reminder_count=0;
@@ -413,10 +452,15 @@ pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mod
         let mode_label=match mode {"offlineStore"=>"先录后整理","onlineLive"=>"在线速记",other=>other};
         out.push_str("BEGIN:VEVENT\r\n");
         out.push_str(&property("UID",&id));
-        out.push_str(&property("DTSTAMP",stamp));out.push_str(&start);
+        out.push_str(&property("DTSTAMP",stamp));
+        if let Some(slot)=&items[index].execution_slot {
+            let (from,to)=slot_in_utc(slot).ok_or("执行时段无法读取。")?;
+            out.push_str(&format!("DTSTART:{}\r\nDTEND:{}\r\n",from.format("%Y%m%dT%H%M%SZ"),to.format("%Y%m%dT%H%M%SZ")));
+        } else {out.push_str(&start);}
         out.push_str(&property("SUMMARY",&calendar_action_title(&item.text)));
         let origin=provenance.map(str::to_owned).unwrap_or_else(||format!("整理方式：{mode_label}"));
-        out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n{origin}{}\n事项：{readable}\n清单时间点；导入后请核对日期、时区和提醒。",if draft{"\n草稿：请先核对"}else{""})));
+        let semantics=if items[index].execution_slot.is_some(){"这是单独选择的执行时段；清单截止时间不变。导入后请核对时段、截止和提醒。"}else{"清单时间点；导入后请核对日期、时区和提醒。"};
+        out.push_str(&property("DESCRIPTION",&format!("记录：{title}\n{origin}{}\n事项：{readable}\n{semantics}",if draft{"\n草稿：请先核对"}else{""})));
         // RFC5545: a date without DTEND is one day; a timed event without
         // DTEND ends at DTSTART. A deadline does not reserve invented work time.
         out.push_str("CLASS:PRIVATE\r\nTRANSP:TRANSPARENT\r\nSTATUS:CONFIRMED\r\n");
@@ -424,6 +468,14 @@ pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mod
         if *alarm!=CalendarAlarm::None {
             out.push_str("BEGIN:VALARM\r\nACTION:DISPLAY\r\n");
             match alarm {
+                CalendarAlarm::Before{minutes} if items[index].execution_slot.is_some()=>{
+                    // The user's existing reminder is relative to the cutoff,
+                    // not the newly selected appointment start.
+                    let deadline=item.due.as_deref().and_then(|d|DateTime::parse_from_rfc3339(d.strip_suffix('前').unwrap_or(d)).ok()).ok_or("截止提醒需要明确的截止时刻。")?.with_timezone(&Utc);
+                    let trigger=deadline.checked_sub_signed(chrono::Duration::minutes(i64::from(*minutes))).ok_or("截止提醒超出可表示范围。")?;
+                    if !(1..=9999).contains(&trigger.year()){return Err("截止提醒超出可表示范围。".into());}
+                    out.push_str(&format!("TRIGGER;VALUE=DATE-TIME:{}\r\n",trigger.format("%Y%m%dT%H%M%SZ")));
+                },
                 CalendarAlarm::Before{minutes}=>out.push_str(&format!("TRIGGER;RELATED=START:{}\r\n",if *minutes==0{"PT0S".into()}else{format!("-PT{minutes}M")})),
                 CalendarAlarm::At{at}=>out.push_str(&format!("TRIGGER;VALUE=DATE-TIME:{}\r\n",absolute_alarm_utc(at).ok_or("提醒时刻无法读取。")?)),
                 CalendarAlarm::None=>unreachable!(),
@@ -450,6 +502,40 @@ pub fn stamp_now() -> String { Utc::now().format("%Y%m%dT%H%M%SZ").to_string() }
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn execution_slot_keeps_deadline_reminder_and_original_action_independent() {
+        let markdown="## Action Items\n- [ ] 核对尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)";
+        let actions=parse_saved_actions(markdown);let original=actions.iter().map(|a|(a.text.clone(),a.due.clone(),a.completed)).collect::<Vec<_>>();
+        let id=calendar_event_uid("session","offlineStore",0,&actions[0].text);
+        let slot=CalendarSlotSelection{uid:id.clone(),slot:CalendarExecutionSlot{start:"2026-11-08T09:00:00+08:00".into(),end:"2026-11-08T10:00:00+08:00".into()}};
+        let alarm=CalendarReminderSelection{uid:id.clone(),reminder:CalendarAlarm::Before{minutes:60}};
+        let (file,items)=calendar_events_with_slots("session","offlineStore","测试",&actions,false,"20261029T080000Z",None,Some(&[alarm]),None,Some(&[slot])).unwrap();
+        assert!(file.contains("DTSTART:20261108T010000Z\r\nDTEND:20261108T020000Z\r\n"));
+        assert!(file.contains("TRIGGER;VALUE=DATE-TIME:20261108T060000Z\r\n"));
+        assert!(file.contains("DTSTART;VALUE=DATE:20261107\r\n"));
+        assert!(file.contains(&format!("UID:{id}\r\n")));
+        assert_eq!(items[0].deadline.as_deref(),Some("2026-11-08T15:00:00+08:00前"));
+        assert_eq!(items[0].execution_slot.as_ref().unwrap().start,"2026-11-08T09:00:00+08:00");
+        assert_eq!(actions.iter().map(|a|(a.text.clone(),a.due.clone(),a.completed)).collect::<Vec<_>>(),original);
+        let old=calendar_events_with_selections_and_provenance("session","offlineStore","测试",&actions,false,"20261029T080000Z",None,None,None).unwrap();
+        let unchanged=calendar_events_with_slots("session","offlineStore","测试",&actions,false,"20261029T080000Z",None,None,None,None).unwrap();
+        assert_eq!(old.0,unchanged.0);
+    }
+    #[test]
+    fn execution_slot_rejects_unknown_duplicate_invalid_time_and_preserves_all_day_absolute_alarm() {
+        let actions=parse_saved_actions("## Action Items\n- [ ] 核对包装 (due: 2026-11-07)\n- [x] 已完成 (due: 2026-11-08)");
+        let id=calendar_event_uid("session","offlineStore",0,&actions[0].text);
+        let make=|uid:&str,start:&str,end:&str|CalendarSlotSelection{uid:uid.into(),slot:CalendarExecutionSlot{start:start.into(),end:end.into()}};
+        let good=make(&id,"2026-11-07T09:00:00+08:00","2026-11-07T10:00:00+08:00");
+        for slots in [vec![make("unknown","2026-11-07T09:00:00+08:00","2026-11-07T10:00:00+08:00")],vec![good.clone(),good.clone()],vec![make(&id,"2026-11-07T09:00:00","2026-11-07T10:00:00+08:00")],vec![make(&id,"2026-11-07T10:00:00+08:00","2026-11-07T09:00:00+08:00")],vec![make(&id,"2026-11-07T09:00:00-00:00","2026-11-07T10:00:00+08:00")]] {
+            assert!(calendar_events_with_slots("session","offlineStore","测试",&actions,false,"20261029T080000Z",None,None,None,Some(&slots)).is_err());
+        }
+        let alarm=CalendarReminderSelection{uid:id,reminder:CalendarAlarm::At{at:"2026-11-07T08:00:00+08:00".into()}};
+        let (file,_)=calendar_events_with_slots("session","offlineStore","测试",&actions,false,"20261029T080000Z",None,Some(&[alarm]),None,Some(&[good])).unwrap();
+        assert!(file.contains("TRIGGER;VALUE=DATE-TIME:20261107T000000Z\r\n"));
+        assert!(file.contains("DTSTART:20261107T010000Z\r\nDTEND:20261107T020000Z\r\n"));
+        assert_eq!(file.matches("BEGIN:VEVENT").count(),1);
+    }
     #[test]
     fn calendar_preview_matches_export_and_short_titles_keep_conditions_in_both_places() {
         let actions=parse_saved_actions("## Action Items\n- [ ] 核对尺寸，未测完不要写通过 (owner: 李, due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)\n- [ ] 以后再约 (due: 周五)\n- [x] 已办妥 (due: 2026-11-09)");

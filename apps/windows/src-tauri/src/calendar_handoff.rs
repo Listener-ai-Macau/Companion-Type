@@ -221,7 +221,7 @@ mod tests {
     #[test]fn remembered_basename_is_scoped_and_never_a_path() {
         let (path,mut session,_,_)=fixture();
         let make=|name:&str,mode:&str,epoch:u64| crate::backend::calendar_copy::Copy {
-            schema:1,privacy_epoch:epoch,meeting_mode:mode.into(),saved_at:"2026-10-29".into(),file_name:name.into(),file_sha256:"a".repeat(64),content_hash:"b".repeat(64),source_title:"例".into(),source_markdown:"示例".into(),entries:vec![]
+            schema:1,privacy_epoch:epoch,meeting_mode:mode.into(),saved_at:"2026-10-29".into(),file_name:name.into(),file_sha256:"a".repeat(64),content_hash:"b".repeat(64),source_title:"例".into(),source_markdown:"示例".into(),entries:vec![],transient_slots:vec![]
         };
         session.calendar_copies=vec![make("交接提醒.ics","offlineStore",0)];
         assert_eq!(saved_name_hint(&session,"offlineStore"),Some("交接提醒.ics"));
