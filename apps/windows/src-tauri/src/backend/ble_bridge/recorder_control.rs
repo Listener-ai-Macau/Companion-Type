@@ -9,6 +9,20 @@ use super::pull_session::{NativeSubscriptions, SubscriptionLease};
 type Observed=(PauseStatus,u32,u32,u8);
 const RECORDER_SERVICE_UUID:Uuid=Uuid::from_u128(0x8f7a00087b7d4f3d9d6f6c2d1b7c0000);
 
+/// An advertised CCQ2 capacity is not an optional legacy capability. Until
+/// its generation-bound snapshot is valid, never send a new START without
+/// the checks that protect the intended offline/rolling duration. An already
+/// accepted original only needs acknowledgement, not a second preflight.
+fn capacity_for_pending_start(identity:&[u8],disposition:Observation)
+    ->Result<Option<crate::companion_v1::CompanionV1RecordingCapacity>,String> {
+    if disposition==Observation::Accepted {return Ok(None);}
+    let capacity=crate::backend::recording_capacity::parse(identity);
+    if identity.get(36..40)==Some(b"CCQ2") && capacity.is_none() {
+        return Err("设备正在更新录音容量或容量状态无效；未发送开始命令，请稍后重试原请求。".into());
+    }
+    Ok(capacity)
+}
+
 fn recorder_channel(chars:&BTreeSet<Characteristic>)->Option<(Characteristic,Characteristic)> {
     let control=chars.iter().find(|c|c.service_uuid==RECORDER_SERVICE_UUID && c.uuid==MEETING_CONTROL_UUID
         && c.properties.contains(CharPropFlags::WRITE))?;
@@ -287,7 +301,7 @@ pub(super) async fn execute_owned(
             }
         }
         if journal.confirmed.is_none() && journal.pending.as_ref().is_some_and(|p|p.command==1) {
-            if let Some(capacity)=crate::backend::recording_capacity::parse(&identity) {
+            if let Some(capacity)=capacity_for_pending_start(&identity,disposition)? {
                 if !capacity.busy {
                     super::segmented::check_fragmented_start(&device,&chars,&actual_peer,&capacity,
                         journal.max_seconds,recording_sync::owned_follow_allowed(&device.device_id()),
@@ -350,6 +364,21 @@ pub(super) async fn execute_owned(
 #[cfg(test)]
 mod gatt_tests {
     use super::*;
+
+    #[test]
+    fn pending_start_checks_advertised_capacity_without_blocking_an_accepted_original() {
+        let mut wire=include_bytes!("../recording_capacity/fixtures/ccq2-current-arena.bin").to_vec();
+        assert!(capacity_for_pending_start(&wire,Observation::Previous).unwrap().is_some());
+        wire[41]&=!1; // Device explicitly reports a not-yet-valid snapshot.
+        assert!(capacity_for_pending_start(&wire,Observation::Previous).is_err());
+        assert!(capacity_for_pending_start(&wire,Observation::Accepted).unwrap().is_none());
+        wire[41]|=1;
+        wire[72..76].copy_from_slice(&u32::MAX.to_le_bytes());
+        assert!(capacity_for_pending_start(&wire,Observation::Previous).is_err());
+        wire[36..40].copy_from_slice(b"OLD1");
+        assert!(capacity_for_pending_start(&wire,Observation::Previous).unwrap().is_none(),
+            "unknown legacy capabilities keep their existing policy");
+    }
 
     fn local_fixture(index:usize,state:Option<u8>)->Observed {
         // Produced by the actual portable C recorder. Only explicit drain/
