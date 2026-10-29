@@ -751,7 +751,7 @@ mod tests {
         let selected=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Calendar).unwrap();
         let body=String::from_utf8(selected.bytes).unwrap().replace("\r\n ","");
         assert!(body.contains("清单来源：已保存整理结果")&&!body.contains("用户手写清单"),"selected variant, not fallback provenance");
-        assert_eq!(s.transcript_text,original.transcript_text);assert_eq!(s.minutes,original.minutes);
+        assert_eq!(s.transcript_text,original.transcript_text);assert_eq!(serde_json::to_value(&s.minutes).unwrap(),serde_json::to_value(&original.minutes).unwrap());
     }
 
     #[test]
