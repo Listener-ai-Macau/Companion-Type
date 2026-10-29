@@ -125,7 +125,8 @@ export async function exportCompanionMeeting(request: {
   meetingMode: 'offlineStore' | 'onlineLive';
   format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   expectedContentHash?:string;
-}): Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string } | null> {
+  calendarSaveToken?:string;
+}): Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string;calendarFileUri?:string } | null> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中选择位置并保存会议文件。');
   return invoke('export_companion_meeting', { request });
 }

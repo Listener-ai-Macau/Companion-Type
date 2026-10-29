@@ -1,0 +1,53 @@
+import assert from 'node:assert/strict';import {createHash} from 'node:crypto';
+import React from 'react';import {act,create} from 'react-test-renderer';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {CalendarFileLink} from '../packages/ui/src/CalendarFileLink';
+import {createCompanionV1Fixture,applyCompanionV1ControlFixture} from '../packages/core/src/companionV1';
+(globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;},cancelAnimationFrame:()=>{}};
+let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});snapshot.host.persistence={status:'ready'};
+const id=snapshot.host.sessions[0].id;
+snapshot.host.sessions[0].minutesByMode.offlineStore!.markdown='## Action Items\n- [ ] 尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 包装 (due: 2026-11-07)';
+const original=JSON.stringify(snapshot),calls:any[]=[];let save:'ok'|'cancel'|'error'='ok',tree:any,opened=0;
+const items:any[]=[{uid:'timed',text:'尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)',title:'尺寸，未测完不要写通过',deadline:'2026-11-08T15:00:00+08:00前',status:'timed'},
+ {uid:'day',text:'包装 (due: 2026-11-07)',title:'包装',deadline:'2026-11-07',status:'allDay'}];
+const hash=(request:any)=>createHash('sha256').update(JSON.stringify([request.format,request.calendarReminders])).digest('hex');
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
+const saveAgain=()=>tree.root.findAllByType('button').find((n:any)=>text(n).startsWith('保存到上次文件…'));
+const uri='file:///C:/%E6%97%A5%E7%A8%8B/%E6%A0%B7%E5%93%81%20%231.ics';
+const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},
+ onPreviewMeetingExport:async(request:any)=>({contentHash:hash(request),calendarItems:items}),
+ onOpenSavedCalendar:async()=>{opened++;return {status:'requested' as const};},
+ onExportMeeting:async(request:any)=>{calls.push(request);if(save==='error')throw Error('上次保存入口已过期，请选择保存新的日历文件。');if(save==='cancel')return null;
+  return {path:'C:\\日程\\样品 #1.ics',bytes:100,calendarOpenToken:'native-token-'+calls.length,calendarFileUri:uri};}});
+act(()=>{tree=create(<CompanionDashboard {...props()}/>);});
+await act(async()=>button('导出到日历').props.onClick());assert.equal(saveAgain(),undefined);
+await act(async()=>button('保存日历文件').props.onClick());assert.equal(calls.length,1);assert.equal(calls[0].calendarSaveToken,undefined);
+assert.equal(opened,0,'saving never opens or subscribes a receiver');
+assert.equal(tree.root.findByProps({'aria-label':'本地日历文件地址'}).props.value,uri);
+assert.match(text(tree.toJSON()),/取消“离线支持/);assert.match(text(tree.toJSON()),/只读/);assert.match(text(tree.toJSON()),/Type 无法确认外部日历/);
+await act(async()=>button('导出到日历').props.onClick());assert.match(text(saveAgain()),/样品 #1.ics/);
+await act(async()=>tree.root.findByProps({'aria-label':'日历事项 1 提醒'}).props.onChange({currentTarget:{value:'0'}}));
+assert.match(text(tree.toJSON()),/当前在截止时才提醒/);
+await act(async()=>tree.root.findByProps({'aria-label':'日历事项 1 提醒'}).props.onChange({currentTarget:{value:'60'}}));
+assert.doesNotMatch(text(tree.toJSON()),/当前在截止时才提醒/);
+save='cancel';await act(async()=>saveAgain().props.onClick());assert.equal(calls[1].calendarSaveToken,'native-token-1');
+assert.deepEqual(calls[1].calendarReminders,[{uid:'timed',reminder:{kind:'before',minutes:60}}]);assert.equal(calls[1].expectedContentHash,hash(calls[1]));
+assert.match(text(tree.toJSON()),/已取消保存/);assert.equal(opened,0);
+await act(async()=>button('导出到日历').props.onClick());assert.ok(saveAgain(),'cancel retains the last successful location');
+save='error';await act(async()=>saveAgain().props.onClick());assert.equal(calls.length,3);assert.match(text(tree.toJSON()),/上次保存入口已过期/);
+assert.equal(calls[2].calendarSaveToken,'native-token-1','failure does not silently retry elsewhere');
+await act(async()=>button('导出到日历').props.onClick());save='ok';await act(async()=>button('保存日历文件').props.onClick());
+assert.equal(calls[3].calendarSaveToken,undefined,'ordinary new destination remains independent');
+await act(async()=>button('导出到日历').props.onClick());await act(async()=>saveAgain().props.onClick());assert.equal(calls[4].calendarSaveToken,'native-token-4','new success replaces last location token');
+assert.equal(JSON.stringify(snapshot),original,'hints/help never modify authored text, deadlines or original session');
+snapshot=structuredClone(snapshot);snapshot.host.sessions[0].calendarCopyEpoch=1;act(()=>tree.update(<CompanionDashboard {...props()}/>));
+await act(async()=>button('导出到日历').props.onClick());assert.equal(saveAgain(),undefined,'privacy epoch invalidates old file location');
+act(()=>tree.unmount());
+const descriptor=Object.getOwnPropertyDescriptor(globalThis,'navigator');let copied='';
+Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async(s:string)=>{copied=s;}}}});
+act(()=>{tree=create(<CalendarFileLink uri={uri}/>);});await act(async()=>button('复制关联地址').props.onClick());assert.equal(copied,uri);assert.match(text(tree.toJSON()),/已复制文件地址/);
+Object.defineProperty(globalThis,'navigator',{configurable:true,value:{clipboard:{writeText:async()=>{throw Error('clipboard denied');}}}});
+await act(async()=>button('复制关联地址').props.onClick());assert.match(text(tree.toJSON()),/手动复制/);assert.equal(tree.root.findByProps({'aria-label':'本地日历文件地址'}).props.readOnly,true);
+act(()=>tree.unmount());if(descriptor)Object.defineProperty(globalThis,'navigator',descriptor);else delete (globalThis as any).navigator;
+console.log('PASS exact saved-file URI/help, explicit native save-location token with current reminder/hash, cancel/error no fallback, new file independent, token renewal/privacy epoch and clipboard fallback; no subscription/import invented');

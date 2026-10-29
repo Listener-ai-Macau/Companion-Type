@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { CompanionChecklistHandoff } from './CompanionChecklistHandoff';
+import {CalendarFileLink} from './CalendarFileLink';
 
 export interface CompanionExportFeedbackValue {
   message: string;
@@ -8,6 +9,7 @@ export interface CompanionExportFeedbackValue {
   kind?: 'saved' | 'cancelled' | 'pending' | 'error';
   path?: string;
   calendarOpenToken?: string;
+  calendarFileUri?:string;
 }
 
 export function exportFileName(path: string): string {
@@ -66,6 +68,7 @@ export function CompanionExportFeedback({ feedback, className='ct-export-result'
   }
   return <div className={[...classes].join(' ')} role={feedback.kind === 'error' ? 'alert' : 'status'}>
     <span>{feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))?<strong>{feedback.message}</strong>:feedback.message}</span>
+    {feedback.kind==='saved'&&feedback.calendarFileUri?<CalendarFileLink uri={feedback.calendarFileUri}/>:null}
     {feedback.kind==='saved'&&feedback.calendarOpenToken&&onOpenSavedCalendar
       &&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))
       ?<CalendarOpen key={feedback.calendarOpenToken} token={feedback.calendarOpenToken} open={onOpenSavedCalendar}/>:null}

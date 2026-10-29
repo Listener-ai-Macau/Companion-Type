@@ -33,7 +33,7 @@ export function CalendarExportItems({items,choice,disabled,onEdit,onReminder,onR
         <strong>{item.title}</strong><br/>
         {item.status==='completed'?'已完成，本次不导出':item.status==='unconfirmed'?`时间尚未确认，本次不导出${item.deadline?`：${item.deadline}`:''}`:
           `${readableCalendarTime(item.deadline??'')}${item.status==='allDay'?' · 全天日程':''} · ${calendarAlarmLabel(alarm)}`}
-        {item.status==='timed'?<p className="ct-step-meta">按截止时刻导出，不预设执行时长。</p>:null}
+        {item.status==='timed'?<p className="ct-step-meta">按截止时刻导出，不预设执行时长。{alarm.kind==='before'&&alarm.minutes===0&&/前|截止|before|by\b/i.test(item.deadline??'')?'当前在截止时才提醒；需要预留准备时间时，可选择提前提醒。':''}</p>:null}
         {onReminder&&item.uid&&(item.status==='allDay'||item.status==='timed')?<label style={{display:'block',marginTop:8}}>本项提醒 <select aria-label={`日历事项 ${index+1} 提醒`} disabled={disabled}
           value={!override?'default':override.kind==='before'?String(override.minutes):override.kind}
           onChange={event=>{const value=event.currentTarget.value;if(value==='at'){setEditing(index);return;}

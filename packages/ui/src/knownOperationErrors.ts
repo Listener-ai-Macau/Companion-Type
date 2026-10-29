@@ -1,5 +1,12 @@
 // Exact, existing authored error contracts; dynamic OS/service details are not trusted.
 export const knownOperationErrors:readonly string[]=[
+  "上次保存位置暂时无法读取，请重新选择保存位置。",
+  "上次保存入口已过期，请选择保存新的日历文件。",
+  "上次保存位置不属于当前记录或整理方式，请重新选择。",
+  "请先核对当前日历预览，再选择上次保存位置。",
+  "上次保存目录无法读取，请重新选择。",
+  "上次文件名无法读取，请重新选择。",
+  "原记录已移除，未写入文件。",
   "当前字幕协议版本不受支持；回复已保留，请更新匹配的 Companion Type 与固件。",
   "字幕状态无法核对；回复已保留，请重新读取设备状态。",
   "当前连接未提供可核对的字幕读写接口；回复已保留。",

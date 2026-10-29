@@ -5,7 +5,7 @@ use sha2::{Digest, Sha256};
 use crate::{companion_v1::CompanionV1HostSession, coordinator::CompanionCoordinator};
 
 #[derive(Clone)]
-struct Receipt { token:String, session_id:String, epoch:u64, path:PathBuf, bytes:u64, hash:String, choices:Vec<(String,String)> }
+struct Receipt { token:String, session_id:String, epoch:u64, mode:String, path:PathBuf, bytes:u64, hash:String, choices:Vec<(String,String)> }
 #[derive(Default)]
 pub(crate) struct CalendarHandoff { receipts:Mutex<VecDeque<Receipt>> }
 #[derive(Debug,serde::Serialize)]
@@ -16,7 +16,7 @@ pub(crate) enum CalendarOpenOutcome { Requested, ChooseApplication { application
 enum ShellOpenOutcome { Requested, Applications(Vec<(String,String)>) }
 
 impl CalendarHandoff {
-    pub(crate) fn remember(&self, session:&CompanionV1HostSession, path:&Path, bytes:u64, hash:String)->Result<String,String> {
+    pub(crate) fn remember(&self, session:&CompanionV1HostSession, mode:&str, path:&Path, bytes:u64, hash:String)->Result<String,String> {
         if !path.is_absolute() || !path.extension().is_some_and(|s|s.to_str().is_some_and(|s|s.eq_ignore_ascii_case("ics"))) {
             return Err("文件已保存；直接打开仅支持 .ics 日历文件，请在接收应用中手动导入。".into());
         }
@@ -26,8 +26,20 @@ impl CalendarHandoff {
         let token=uuid::Uuid::new_v4().to_string();
         let mut receipts=self.receipts.lock().map_err(|_|"打开入口暂时不可用，已保存的文件仍保留。")?;
         while receipts.len()>=32 {receipts.pop_front();}
-        receipts.push_back(Receipt{token:token.clone(),session_id:session.id.clone(),epoch:session.calendar_copy_epoch,path,bytes,hash,choices:Vec::new()});
+        receipts.push_back(Receipt{token:token.clone(),session_id:session.id.clone(),epoch:session.calendar_copy_epoch,mode:mode.into(),path,bytes,hash,choices:Vec::new()});
         Ok(token)
+    }
+
+    /// A location hint for an ordinary native Save As dialog, never authority
+    /// to overwrite. The user still selects and confirms the destination.
+    pub(crate) fn save_hint(&self, token:&str, session:&CompanionV1HostSession, mode:&str)->Result<PathBuf,String> {
+        let receipts=self.receipts.lock().map_err(|_|"上次保存位置暂时无法读取，请重新选择保存位置。")?;
+        let receipt=receipts.iter().find(|r|r.token==token).ok_or("上次保存入口已过期，请选择保存新的日历文件。")?;
+        crate::backend::library_lifecycle::require_available(session)?;
+        if receipt.session_id!=session.id || receipt.epoch!=session.calendar_copy_epoch || receipt.mode!=mode {
+            return Err("上次保存位置不属于当前记录或整理方式，请重新选择。".into());
+        }
+        Ok(receipt.path.clone())
     }
 
     fn selected_application(&self, token:&str, choice:&str)->Result<String,String> {
@@ -187,8 +199,32 @@ mod tests {
         std::fs::write(&path,b"BEGIN:VCALENDAR\r\nEND:VCALENDAR\r\n").unwrap();
         let mut session=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap()).unwrap().host.sessions.remove(0);session.id="fictional-handoff".into();
         let manager=CalendarHandoff::default();let bytes=std::fs::read(&path).unwrap();
-        let token=manager.remember(&session,&path,bytes.len()as u64,format!("{:x}",Sha256::digest(&bytes))).unwrap();
+        let token=manager.remember(&session,&session.meeting_mode,&path,bytes.len()as u64,format!("{:x}",Sha256::digest(&bytes))).unwrap();
         (path,session,manager,token)
+    }
+    #[test]fn calendar_save_hint_is_scoped_but_never_opens_or_writes() {
+        let(path,mut session,manager,token)=fixture();
+        let before=std::fs::read(&path).unwrap();
+        assert_eq!(manager.save_hint(&token,&session,&session.meeting_mode).unwrap(),path.canonicalize().unwrap());
+        assert!(manager.save_hint(&token,&session,"onlineLive").is_err());
+        assert!(manager.save_hint("arbitrary path",&session,&session.meeting_mode).is_err());
+        let original_id=session.id.clone();session.id="other-record".into();
+        assert!(manager.save_hint(&token,&session,&session.meeting_mode).is_err());session.id=original_id;
+        session.calendar_copy_epoch+=1;
+        assert!(manager.save_hint(&token,&session,&session.meeting_mode).is_err());session.calendar_copy_epoch-=1;
+        session.organization.trashed_at=Some("2026-10-29T00:00:00Z".into());
+        assert!(manager.save_hint(&token,&session,&session.meeting_mode).is_err());
+        assert_eq!(std::fs::read(&path).unwrap(),before);std::fs::remove_file(path).unwrap();
+    }
+    #[test]fn calendar_save_hint_keeps_explicit_native_overwrite_choice() {
+        let(path,session,manager,token)=fixture();
+        // A hint is deliberately independent of old file contents. External
+        // edits are not silently replaced: the command still opens Save As.
+        std::fs::write(&path,b"external change").unwrap();
+        assert_eq!(manager.save_hint(&token,&session,&session.meeting_mode).unwrap(),path.canonicalize().unwrap());
+        assert_eq!(std::fs::read(&path).unwrap(),b"external change");
+        std::fs::remove_file(path).unwrap();
+        assert!(manager.save_hint(&token,&session,&session.meeting_mode).is_ok());
     }
     #[test]fn calendar_handoff_exact_file_and_retry(){
         let(path,session,manager,token)=fixture();
@@ -239,7 +275,7 @@ mod tests {
         let result=PathBuf::from(std::env::var_os("P700_TEST_RESULT").expect("isolated evidence destination"));
         let mut session=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap()).unwrap().host.sessions.remove(0);session.id="fictional-windows-shell-handoff".into();
         let bytes=std::fs::read(&path).unwrap();let hash=format!("{:x}",Sha256::digest(&bytes));let manager=CalendarHandoff::default();
-        let token=manager.remember(&session,&path,bytes.len()as u64,hash.clone()).unwrap();
+        let token=manager.remember(&session,&session.meeting_mode,&path,bytes.len()as u64,hash.clone()).unwrap();
         let opened=manager.open_with(&token,&[session],|p|open_shell(p,Some(&class),None,false));
         std::fs::write(result,serde_json::to_vec_pretty(&serde_json::json!({"shellAccepted":opened.is_ok(),"error":opened.as_ref().err(),"fileSha256":hash,"explicitTestClass":class,"defaultAssociationExercised":false,"importConfirmed":false})).unwrap()).unwrap();
         opened.unwrap();
@@ -256,9 +292,9 @@ mod tests {
     }
     #[test]fn calendar_handoff_refuses_other_extensions_and_bounds_receipts(){
         let(path,session,manager,token)=fixture();
-        assert!(manager.remember(&session,&path.with_extension("exe"),0,String::new()).is_err());
+        assert!(manager.remember(&session,&session.meeting_mode,&path.with_extension("exe"),0,String::new()).is_err());
         let bytes=std::fs::read(&path).unwrap();
-        for _ in 0..32 {manager.remember(&session,&path,bytes.len()as u64,format!("{:x}",Sha256::digest(&bytes))).unwrap();}
+        for _ in 0..32 {manager.remember(&session,&session.meeting_mode,&path,bytes.len()as u64,format!("{:x}",Sha256::digest(&bytes))).unwrap();}
         assert_eq!(manager.receipts.lock().unwrap().len(),32);
         assert!(manager.open_with::<()>(&token,&[session],|_|panic!("evicted launched")).is_err());std::fs::remove_file(path).unwrap();
     }

@@ -116,7 +116,7 @@ pub async fn export_companion_diagnostics(
         let report = crate::backend::diagnostics::report(&snapshot,device,include_device);
         let bytes=serde_json::to_vec_pretty(&report).map_err(|_| "无法生成诊断报告")?;
         let written=crate::backend::export::write_atomic(&destination,&bytes)?;
-        Ok(Some(CompanionMeetingExportResult { path:destination.to_string_lossy().into_owned(),bytes:written,warning,calendar_open_token:None }))
+        Ok(Some(CompanionMeetingExportResult { path:destination.to_string_lossy().into_owned(),bytes:written,warning,calendar_open_token:None,calendar_file_uri:None }))
     }).await.map_err(|_| "诊断导出任务失败".to_string())?
 }
 
@@ -217,6 +217,8 @@ pub struct CompanionMeetingExportRequest {
     pub expected_content_hash: Option<String>,
     #[serde(default)]
     pub calendar_reminders: Option<Vec<crate::backend::export::CalendarReminderSelection>>,
+    #[serde(default)]
+    pub calendar_save_token: Option<String>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -226,6 +228,8 @@ pub struct CompanionMeetingExportResult {
     pub bytes: u64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub calendar_open_token: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub calendar_file_uri: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub warning: Option<String>,
 }
@@ -474,7 +478,7 @@ pub async fn export_companion_audio(
         let _lease = lease;
         crate::backend::audio_export::export(&snapshot, &session_id, &path)
     }).await.map_err(|e| format!("原音保存任务未完成：{e}"))??;
-    Ok(Some(CompanionMeetingExportResult { path: destination.to_string_lossy().into(), bytes, warning: None,calendar_open_token:None }))
+    Ok(Some(CompanionMeetingExportResult { path: destination.to_string_lossy().into(), bytes, warning: None,calendar_open_token:None,calendar_file_uri:None }))
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -534,12 +538,20 @@ pub async fn export_companion_meeting(
 
     // The snapshot/session clone above deliberately releases backend state
     // before opening the native dialog or performing disk I/O.
-    let destination = app
-        .dialog()
-        .file()
+    let calendar_format=matches!(format,crate::backend::export::MeetingExportFormat::Calendar|crate::backend::export::MeetingExportFormat::CalendarReminder|crate::backend::export::MeetingExportFormat::CalendarReminder30|crate::backend::export::MeetingExportFormat::CalendarReminder60);
+    if request.calendar_save_token.is_some()&&(!calendar_format||request.expected_content_hash.is_none()) {
+        return Err("请先核对当前日历预览，再选择上次保存位置。".into());
+    }
+    let mut dialog=app.dialog().file()
         .add_filter(prepared.format.dialog_label(), &[prepared.format.extension()])
-        .set_file_name(&prepared.suggested_name)
-        .blocking_save_file();
+        .set_file_name(&prepared.suggested_name);
+    if let Some(token)=request.calendar_save_token.as_deref() {
+        let hint=app.state::<crate::calendar_handoff::CalendarHandoff>().save_hint(token,&session,&request.meeting_mode)?;
+        let parent=hint.parent().ok_or("上次保存目录无法读取，请重新选择。")?;
+        let name=hint.file_name().and_then(|n|n.to_str()).ok_or("上次文件名无法读取，请重新选择。")?;
+        dialog=dialog.set_directory(parent).set_file_name(name);
+    }
+    let destination=dialog.blocking_save_file();
     let Some(destination) = destination else {
         return Ok(None);
     };
@@ -553,6 +565,13 @@ pub async fn export_companion_meeting(
             .ok_or("找不到要导出的记录，请刷新后重试。")?;
         let latest=crate::backend::export::prepare_meeting_export_with_reminders(session,&request.meeting_mode,format,request.calendar_reminders.as_deref())?;
         crate::backend::export::require_unchanged(&latest,Some(expected))?;
+    }
+    // The hint never bypasses the public Save As/overwrite confirmation. A
+    // cleared/removed source cannot regain access while the dialog was open.
+    if let Some(token)=request.calendar_save_token.as_deref() {
+        let current=coordinator.snapshot()?;
+        let row=current.host.sessions.iter().find(|s|s.id==request.session_id).ok_or("原记录已移除，未写入文件。")?;
+        app.state::<crate::calendar_handoff::CalendarHandoff>().save_hint(token,row,&request.meeting_mode)?;
     }
     // A draft receipt is never committed on cancellation or failed file I/O.
     let calendar_copy=crate::backend::calendar_copy::prepare(&session,&request.meeting_mode,&prepared,&destination);
@@ -580,13 +599,14 @@ pub async fn export_companion_meeting(
         (calendar,record)=>calendar.or(record),
     };
     let (calendar_open_token,warning)=if can_open_calendar {
-        match app.state::<crate::calendar_handoff::CalendarHandoff>().remember(&session,&destination,written,file_hash) {
+        match app.state::<crate::calendar_handoff::CalendarHandoff>().remember(&session,&request.meeting_mode,&destination,written,file_hash) {
             Ok(token)=>(Some(token),warning),
             Err(error)=>(None,Some([warning.unwrap_or_default(),error].into_iter().filter(|s|!s.is_empty()).collect::<Vec<_>>().join(" "))),
         }
     }else{(None,warning)};
     Ok(Some(CompanionMeetingExportResult {
         calendar_open_token,
+        calendar_file_uri:if can_open_calendar {tauri::Url::from_file_path(&destination).ok().map(|uri|uri.to_string())}else{None},
         path: destination.to_string_lossy().to_string(),
         bytes: written,
         warning,
