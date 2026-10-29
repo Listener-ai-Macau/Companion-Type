@@ -8,7 +8,7 @@ import {readableCalendarTime} from './calendarTime';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CompanionSetup } from './CompanionSetup';
-import { CompanionRecordingReadiness, recordingRoomLabel } from './CompanionRecordingReadiness';
+import { CompanionRecordingReadiness, fragmentedSpaceMayFit, recordingRoomLabel } from './CompanionRecordingReadiness';
 import { CompanionHelp } from './CompanionHelp';
 import { CompanionPrivacyCleanup } from './CompanionPrivacyCleanup';
 import { MinutesModeTabs } from './MinutesModeTabs';
@@ -818,6 +818,8 @@ export function CompanionDashboard({
   const captureBudgetBytes = capacity && lossBudgetValid
     ? recordingCapacityRequiredBytes(capacity, lossBudgetSeconds) : null;
   const capacityInsufficient = Boolean(capacity && lossBudgetValid && !recordingCapacityCanFit(capacity, lossBudgetSeconds, captureBudgetBytes ?? Infinity));
+  const fragmentedCapacityMaybe = Boolean(capacity && lossBudgetValid && fragmentedSpaceMayFit(capacity, lossBudgetSeconds));
+  const fragmentedCapacity = Boolean(capacity?.segmentFrames && capacity.segmentExtentBytes && capacity.freeBytes > capacity.largestFreeExtent);
   const inspectRecordingLoss = async () => {
     if (!onDiscardOldestRecording || !capacity?.confirmedDiscardSupported || !capacityInsufficient
       || capacity.busy || !capacity.unsyncedEntries || controlsBusy || settingsBusy || oobeBlockedByRecording || discardActive.current) return;
@@ -1508,7 +1510,7 @@ export function CompanionDashboard({
       : !connected ? '设备不在身边也能查看本机内容'
         : !capacity || capacity.busy ? `剩余可录时长待读取 · ${configuredTranscription}`
           : capacityUnavailable ? `同步并确认保存后，设备才会复用空间 · ${configuredTranscription}`
-            : `本地空间约可录 ${recordingRoomLabel(capacitySeconds)}（上次读取）${capacity.localLimitSeconds ? ` · 按键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''} · ${configuredTranscription}`;
+            : `${fragmentedCapacity ? '一块连续空间' : '本地空间'}约可录 ${recordingRoomLabel(capacitySeconds)}（上次读取）${fragmentedCapacity ? ' · 分散空间能否合用由开始时核对' : ''}${capacity.localLimitSeconds ? ` · 按键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''} · ${configuredTranscription}`;
   useEffect(()=>{
     if(!savedMinutesReveal)return;
     if(savedMinutesReveal.sessionId!==selectedSession?.id||savedMinutesReveal.mode!==minutesViewMode||pageView!=='library'||!savedDetailOpen){setSavedMinutesReveal(null);return;}
@@ -2122,7 +2124,7 @@ export function CompanionDashboard({
         <button type="button" className="ct-text-button" disabled={controlsBusy || oobeBlockedByRecording}
           onClick={() => onControl({action:'oobeRunChecks'})}>重新读取设备容量</button>
         {onDiscardOldestRecording && capacity?.confirmedDiscardSupported && capacityInsufficient ? <>
-          <p>优先同步保存录音。也可查看最旧未同步录音的具体时间、大小和风险，再决定是否删除这一条。</p>
+          <p>{fragmentedCapacityMaybe ? '一块连续空间不足，分散空间是否可用以开始前检查为准。' : ''}优先同步保存录音。也可查看最旧未同步录音的具体时间、大小和风险，再决定是否删除这一条。</p>
           <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || capacity.busy || !capacity.unsyncedEntries}
             onClick={() => void inspectRecordingLoss()}>{discardBusy ? '正在核对确认与回收…' : '查看可释放的最旧录音'}</button>
         </> : null}
@@ -2232,7 +2234,8 @@ export function CompanionDashboard({
             <p className="ct-step-meta">在线转写单次最多 43 分钟，另预留 2 分钟收尾空间；纯录音按设备空间和设定时长保存。支持分段的设备会把片段放在同一条录音里；电脑保存并核对完整后，设备才复用这些已同步的空间。</p>
             {captureBudgetBytes !== null ? <p className="ct-step-meta" role={capacityInsufficient && (!capacity?.segmentFrames || capacitySeconds <= 0) ? 'alert' : undefined}>
               {capacity?.segmentFrames && capacity.segmentExtentBytes ? <>
-                设备上次报告本地可录约 {formatDuration(capacitySeconds * 1000)}，本次计划 {formatDuration(requestedDurationMs)}。
+                设备上次报告{fragmentedCapacity ? '一块连续空间' : '本地'}可录约 {formatDuration(capacitySeconds * 1000)}，本次计划 {formatDuration(requestedDurationMs)}。
+                {fragmentedCapacity ? '分散空间能否合用由开始时核对。' : ''}
                 保持连接并开启同步可边录边上传；断开或暂停同步后使用本地空间，满时安全停录。
                 开始前会按当前同步状态重新核对空间，不会覆盖未上传录音。
               </> : <>

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import React from 'react';
 import {act,create} from 'react-test-renderer';
-import {CompanionRecordingReadiness} from '../packages/ui/src/CompanionRecordingReadiness';
+import {CompanionRecordingReadiness,fragmentedSpaceMayFit} from '../packages/ui/src/CompanionRecordingReadiness';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 import {createCompanionV1Fixture} from '../packages/core/src/companionV1';
 
@@ -13,14 +13,28 @@ snapshot.device.recordingCapacity={layoutVersion:1,busy:false,usedEntries:1,maxE
  dataBytes:4000000,freeBytes:3000000,largestFreeExtent:3000000,protectedBytes:1000000,consumedBytes:0,
  bytesPerSecond:10000,reserveHeadroom:0,localLimitSeconds:120,unsyncedEntries:1,writingEntries:0,consumedEntries:0};
 const calls:string[]=[];let tree:any;
-const render=(s:any=snapshot,recording=false)=><CompanionRecordingReadiness snapshot={s} settings={null}
- recording={recording} busy={false} durationSeconds={600} onConnect={()=>calls.push('connect')}
+const render=(s:any=snapshot,recording=false,duration=600)=><CompanionRecordingReadiness snapshot={s} settings={null}
+ recording={recording} busy={false} durationSeconds={duration} onConnect={()=>calls.push('connect')}
  onCheck={()=>calls.push('check')} onRefresh={()=>calls.push('refresh')} onSettings={()=>calls.push('settings')}/>;
 act(()=>{tree=create(render());});
 assert.deepEqual(calls,[],'opening advice has no automatic device, recording or service activity');
 assert.match(text(tree.toJSON()),/空间不够本次时长/);assert.match(text(tree.toJSON()),/约可录 5分钟/);
 assert.match(text(tree.toJSON()),/实体键单次上限 2分钟/);assert.match(text(tree.toJSON()),/没有可靠电量读数/);
 assert.match(text(tree.toJSON()),/不需要转写服务或离线识别模型/);
+const fragmented=structuredClone(snapshot);Object.assign(fragmented.device.recordingCapacity,{
+ freeBytes:540672,largestFreeExtent:270336,segmentExtentBytes:270336,segmentFrames:6209,maxEntries:64});
+const fragmentedCapacity=fragmented.device.recordingCapacity!;
+assert.equal(fragmentedSpaceMayFit(fragmentedCapacity,200),true,'total space only indicates a possibility');
+assert.equal(fragmentedSpaceMayFit({...fragmentedCapacity,freeBytes:300000},200),false,'insufficient total space');
+assert.equal(fragmentedSpaceMayFit({...fragmentedCapacity,largestFreeExtent:100000},200),false,'no complete extent');
+assert.equal(fragmentedSpaceMayFit({...fragmentedCapacity,maxEntries:2},200),false,'not enough directory slots');
+assert.equal(fragmentedSpaceMayFit({...fragmentedCapacity,busy:true},200),false,'busy report is not usable advice');
+assert.equal(fragmentedSpaceMayFit(snapshot.device.recordingCapacity!,200),false,'legacy report does not imply segmented support');
+act(()=>tree.update(render(fragmented,false,200)));
+assert.match(text(tree.toJSON()),/分散空间可能可用/);
+assert.match(text(tree.toJSON()),/开始时会核对分散空间/);
+assert.doesNotMatch(text(tree.toJSON()),/空间不够本次时长/);
+act(()=>tree.update(render()));
 act(()=>tree.root.findAllByType('button').find((b:any)=>text(b)==='重新检查设备').props.onClick());assert.deepEqual(calls,['check']);
 const stale=structuredClone(snapshot);stale.source='lastKnown';act(()=>tree.update(render(stale)));
 assert.match(text(tree.toJSON()),/上次设备结果仅供参考/);assert.doesNotMatch(text(tree.toJSON()),/约可录 5分钟/);
@@ -37,6 +51,9 @@ act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" b
 const find=(label:string)=>tree.root.findAllByType('button').find((b:any)=>text(b)===label);
 act(()=>find('设备与同步').props.onClick());
 const start=()=>find('开始录音');assert.equal(start().props.disabled,false,'missing ASR is not a record-only gate');
+act(()=>tree.update(<CompanionDashboard snapshot={fragmented} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={r=>controls.push(r)}/>));
+assert.match(text(tree.toJSON()),/一块连续空间/);assert.match(text(tree.toJSON()),/分散空间能否合用由开始时核对/);
+assert.equal(start().props.disabled,false,'fragmented advice does not gate the authoritative start check');
 act(()=>start().props.onClick());assert.equal(controls.length,1);assert.equal(controls[0].action,'meetingStart');assert.equal(controls[0].meetingMode,'offlineStore');
 const readonly=structuredClone(snapshot);readonly.host.persistence={status:'blocked'};
 act(()=>tree.update(<CompanionDashboard snapshot={readonly} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={r=>controls.push(r)}/>));

@@ -1,11 +1,23 @@
 import type { ReactNode } from 'react';
-import { recordingCapacityAvailableSeconds, recordingCapacityCanFit, type CompanionV1Snapshot } from '@companion-type/core';
+import { recordingCapacityAvailableSeconds, recordingCapacityCanFit, recordingCapacityRequiredBytes, type CompanionV1RecordingCapacity, type CompanionV1Snapshot } from '@companion-type/core';
 import type { CompanionProductSettingsPublic } from './CompanionDashboard';
 
 export function recordingRoomLabel(seconds: number) {
   const hours = Math.floor(seconds / 3600), minutes = Math.floor(seconds % 3600 / 60);
   return hours ? `${hours}小时${minutes ? `${minutes}分` : ''}`
     : minutes ? `${minutes}分钟` : `${Math.floor(seconds)}秒`;
+}
+
+/** A possibility only: free bytes do not reveal the number of complete extents. */
+export function fragmentedSpaceMayFit(c: CompanionV1RecordingCapacity, seconds: number): boolean {
+  const values = [c.segmentFrames, c.segmentExtentBytes, c.freeBytes, c.largestFreeExtent, c.usedEntries, c.maxEntries];
+  if (c.busy || !Number.isFinite(seconds) || seconds <= 0 || !values.every(v => Number.isSafeInteger(v) && v! >= 0)
+    || !c.segmentFrames || !c.segmentExtentBytes || c.usedEntries >= c.maxEntries
+    || c.largestFreeExtent < c.segmentExtentBytes || c.freeBytes <= c.largestFreeExtent) return false;
+  const required = recordingCapacityRequiredBytes(c, seconds);
+  return Number.isSafeInteger(required) && required <= c.freeBytes
+    && Math.ceil(seconds * 50 / c.segmentFrames) <= c.maxEntries - c.usedEntries
+    && !recordingCapacityCanFit(c, seconds);
 }
 
 /** The last device report is advice, not a replacement for START's space check. */
@@ -31,6 +43,8 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   const full = Boolean(capacity && !capacity.busy && (capacity.usedEntries >= capacity.maxEntries || seconds <= 0));
   const short = Boolean(capacity && !capacity.busy && durationSeconds !== null
     && !recordingCapacityCanFit(capacity, durationSeconds));
+  const fragmentedMaybe = Boolean(capacity && durationSeconds !== null && fragmentedSpaceMayFit(capacity, durationSeconds));
+  const fragmented = Boolean(capacity?.segmentFrames && capacity.segmentExtentBytes && capacity.freeBytes > capacity.largestFreeExtent);
   const save = snapshot?.host.persistence?.status;
   const saveProblem = save !== undefined && save !== 'ready';
   const recordingCheck = snapshot?.oobe.checks.find(check => check.id === 'boardMicrophone');
@@ -47,7 +61,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
         : saveProblem ? '请先恢复本机保存，再从电脑开始录音'
           : interfaceProblem ? '最近检查未通过，请重新检查录音接口'
             : full ? '设备空间不足，请先同步并确认保存'
-              : short ? '上次读取的空间不够本次时长，请先同步或缩短时长'
+              : short ? fragmentedMaybe ? '分散空间可能可用，开始前会重新核对' : '上次读取的空间不够本次时长，请先同步或缩短时长'
                 : save !== 'ready' ? '本机保存状态待读取，请先刷新'
                   : !capacity || capacity.busy ? '剩余可录时长待确认，开始时由设备检查'
                     : '已连接；开始录音时会再次检查设备空间';
@@ -72,8 +86,8 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
             : !capacity ? '尚未读到容量，不能预估可录时长。'
               : capacity.busy ? '上次读取时设备正在忙，结束后可重新读取。'
                 : full ? '空间或录音目录已满，请先同步并确认原音已保存。'
-                  : `约可录 ${recordingRoomLabel(seconds)}（上次读取）${capacity.localLimitSeconds ? `；实体键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''}。`}
-            {short && !full ? <span>不足本次 {recordingRoomLabel(durationSeconds!)}，请先同步或在“录音与同步”缩短时长。</span> : null}
+                  : `${fragmented ? '一块连续空间' : ''}约可录 ${recordingRoomLabel(seconds)}（上次读取）${capacity.localLimitSeconds ? `；实体键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''}。${fragmented ? '分散空间能否合用由开始时核对。' : ''}`}
+            {short && !full ? <span>{fragmentedMaybe ? `一块连续空间不足本次 ${recordingRoomLabel(durationSeconds!)}；开始时会核对分散空间，设备不支持或空间不足时会拒绝开录。` : `不足本次 ${recordingRoomLabel(durationSeconds!)}，请先同步或在“录音与同步”缩短时长。`}</span> : null}
             {connected ? <button type="button" className="ct-text-button" disabled={blocked} onClick={onCheck}>重新检查设备</button> : null}</dd></div>
           <div><dt>电量与供电</dt><dd>当前设备没有可靠电量读数，无法估计续航。长时间录音前请先充电或接稳定电源。</dd></div>
         </dl>
