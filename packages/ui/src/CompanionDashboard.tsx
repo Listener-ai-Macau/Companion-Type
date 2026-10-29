@@ -822,8 +822,12 @@ export function CompanionDashboard({
   const capacityInsufficient = Boolean(capacity && lossBudgetValid && !recordingCapacityCanFit(capacity, lossBudgetSeconds, captureBudgetBytes ?? Infinity));
   const fragmentedCapacityMaybe = Boolean(capacity && lossBudgetValid && fragmentedSpaceMayFit(capacity, lossBudgetSeconds));
   const fragmentedCapacity = Boolean(capacity?.segmentFrames && capacity.segmentExtentBytes && capacity.freeBytes > capacity.largestFreeExtent);
+  // CCQ2 peers retain the old capability bit for wire compatibility. Expose a
+  // safe attempt, not a claim of support: the backend must negotiate CDS3 on
+  // this connection before it can display an offer or send any confirmation.
+  const canInspectRecordingLoss = Boolean(capacity && (capacity.confirmedDiscardSupported || capacity.layoutVersion === 3));
   const inspectRecordingLoss = async () => {
-    if (!onDiscardOldestRecording || !capacity?.confirmedDiscardSupported || !capacityInsufficient
+    if (!onDiscardOldestRecording || !capacity || !canInspectRecordingLoss || !capacityInsufficient
       || capacity.busy || !capacity.unsyncedEntries || controlsBusy || settingsBusy || oobeBlockedByRecording || discardActive.current) return;
     discardActive.current = true; setDiscardBusy(true); setDiscardMessage(null);
     const expectedDevice = currentDiscardDevice.current;
@@ -2135,8 +2139,8 @@ export function CompanionDashboard({
           : '旧固件或未读到容量时，无法承诺完整时长；请重新读取，或升级到配套固件。'}</p>
         <button type="button" className="ct-text-button" disabled={controlsBusy || oobeBlockedByRecording}
           onClick={() => onControl({action:'oobeRunChecks'})}>重新读取设备容量</button>
-        {onDiscardOldestRecording && capacity?.confirmedDiscardSupported && capacityInsufficient ? <>
-          <p>{fragmentedCapacityMaybe ? '一块连续空间不足，分散空间是否可用以开始前检查为准。' : ''}优先同步保存录音。也可查看最旧未同步录音的具体时间、大小和风险，再决定是否删除这一条。</p>
+        {onDiscardOldestRecording && capacity && canInspectRecordingLoss && capacityInsufficient ? <>
+          <p>{fragmentedCapacityMaybe ? '一块连续空间不足，分散空间是否可用以开始前检查为准。' : ''}优先同步保存录音。也可尝试查看最旧未同步录音的具体时间、大小和风险，再决定是否删除这一条；设备不支持时会提示。</p>
           <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || capacity.busy || !capacity.unsyncedEntries}
             onClick={() => void inspectRecordingLoss()}>{discardBusy ? '正在核对确认与回收…' : '查看可释放的最旧录音'}</button>
         </> : null}
