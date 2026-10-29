@@ -72,7 +72,7 @@ pub(crate) struct Receiver {
     _usage: Option<audio_artifacts::WriterLease>,
     ready: bool,
 }
-enum OpenMode { Strict, LocalRepair, PrepareSync }
+enum OpenMode { Strict, LocalRepair, DamagedRepair, PrepareSync }
 impl Receiver {
     /// Recover pending physical receipts even if the device directory is now
     /// empty (power loss after removal, before its successful reply). Enumerate
@@ -141,6 +141,9 @@ impl Receiver {
     // Ordinary verification/ACK admission remains strict and never writes WAV.
     fn open_for_local_repair(root: &Path, initial_wire: &[u8]) -> Result<Self,String> {
         Self::open_inner(root,initial_wire,OpenMode::LocalRepair)
+    }
+    fn open_for_damaged_repair(root:&Path,initial_wire:&[u8])->Result<Self,String> {
+        Self::open_inner(root,initial_wire,OpenMode::DamagedRepair)
     }
     fn open_inner(root: &Path, initial_wire: &[u8], mode:OpenMode) -> Result<Self,String> {
         let initial = Descriptor::decode(initial_wire)?;
@@ -225,6 +228,7 @@ impl Receiver {
             },
             // Only SyncRepair owns this unchecked value. Its public surface
             // has no publish/consume operations; finish revalidates all files.
+            OpenMode::DamagedRepair=>this.recover_originals()?,
             OpenMode::PrepareSync=>(),
         }
         Ok(this)
@@ -460,8 +464,17 @@ impl Receiver {
         self.verify_audio_shape(&expected,&descriptors)?;
         let mut files=Vec::with_capacity(descriptors.len());
         for d in &descriptors {files.push(verify_file(read_locked(&self.payload_path(d))?,d)?);}
-        self.assemble_inner(&descriptors,&mut files,expected.samples,false,Some(&expected))?;
+        self.assemble_inner(&descriptors,&mut files,expected.samples,false,Some(&expected),None)?;
         Ok(())
+    }
+    fn rebuild_damaged_audio(&mut self,damaged:&(u64,String))->Result<PathBuf,String> {
+        let expected=self.receipt.audio.clone().ok_or_else(fail)?;
+        audio_artifacts::preflight_damaged_recording_pinned(self._usage.as_ref(),&self.audio_path(),
+            expected.bytes,&expected.sha256,damaged.0,&damaged.1)?;
+        let ds=self.descriptors()?;self.verify_audio_shape(&expected,&ds)?;
+        let mut files=Vec::with_capacity(ds.len());
+        for d in &ds {files.push(verify_file(read_locked(&self.payload_path(d))?,d)?);}
+        self.assemble_inner(&ds,&mut files,expected.samples,false,Some(&expected),Some(damaged))
     }
     fn verify_received_timeline(&self) -> Result<(),String> {
         let descriptors=self.descriptors()?.into_iter().zip(&self.receipt.segments)
@@ -501,9 +514,9 @@ impl Receiver {
         if regular(&path)? {
             // A previous crash may have replaced the WAV before the receipt was
             // committed. Recompute a candidate then compare; never trust a name.
-            return self.assemble_inner(&descriptors, &mut files, samples, true,None);
+            return self.assemble_inner(&descriptors, &mut files, samples, true,None,None);
         }
-        self.assemble_inner(&descriptors, &mut files, samples, false,None)
+        self.assemble_inner(&descriptors, &mut files, samples, false,None,None)
     }
     fn assemble_inner(
         &mut self,
@@ -512,6 +525,7 @@ impl Receiver {
         samples: u64,
         existing: bool,
         expected:Option<&Audio>,
+        damaged:Option<&(u64,String)>,
     ) -> Result<PathBuf, String> {
         let output = self.audio_path();
         let temporary = self.root.join(format!(
@@ -544,6 +558,11 @@ impl Receiver {
                             Ok(())
                         },
                     )?;
+                } else if let (Some(saved),Some(old))=(expected,damaged) {
+                    let backup=self.root.join(format!(".companion-damaged-{}.wav",uuid::Uuid::new_v4().simple()));
+                    audio_artifacts::restore_damaged_recording_pinned(self._usage.as_ref(),&output,
+                        saved.bytes,&saved.sha256,old.0,&old.1,&backup,
+                        ||replace_with_backup(&temporary,&output,&backup))?;
                 } else if let Some(saved)=expected {
                     audio_artifacts::restore_missing_recording_pinned(
                         self._usage.as_ref(),&output,saved.bytes,&saved.sha256,
@@ -583,6 +602,22 @@ impl Receiver {
     }
 }
 
+// Windows keeps the exact displaced file under the requested backup name,
+// including when a different process changed it just before replacement.
+#[cfg(windows)]
+fn replace_with_backup(source:&Path,destination:&Path,backup:&Path)->Result<(),String> {
+    use std::os::windows::ffi::OsStrExt;
+    use windows::core::PCWSTR;
+    use windows::Win32::Storage::FileSystem::{ReplaceFileW,REPLACE_FILE_FLAGS};
+    let wide=|p:&Path|p.as_os_str().encode_wide().chain(std::iter::once(0)).collect::<Vec<_>>();
+    let (dst,src,bak)=(wide(destination),wide(source),wide(backup));
+    unsafe {ReplaceFileW(PCWSTR(dst.as_ptr()),PCWSTR(src.as_ptr()),PCWSTR(bak.as_ptr()),
+        REPLACE_FILE_FLAGS(0),None,None).map_err(|e|format!("恢复回听文件未完成，原文件或备份已保留：{e}"))}
+}
+#[cfg(not(windows))]
+fn replace_with_backup(_source:&Path,_destination:&Path,_backup:&Path)->Result<(),String> {
+    Err("此平台暂不支持安全保留旧回听文件；原文件及原始分段均已保留。".into())
+}
 fn digest(mut file: File) -> Result<(u64, String), String> {
     let mut sha = Sha256::new();
     let mut bytes = 0u64;

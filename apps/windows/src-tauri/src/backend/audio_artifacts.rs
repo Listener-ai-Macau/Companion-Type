@@ -485,6 +485,64 @@ pub(crate) fn restore_missing_recording_pinned<T>(pinned:Option<&WriterLease>,pa
     bytes:u64,sha256:&str,commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
     restore_missing_pinned(pinned,path,path,Purpose::Recording,bytes,sha256,commit)
 }
+/// Do not create even a decode temporary if the exact saved recording has
+/// been retired, lost its owner, or changed since the explicit inspection.
+pub(crate) fn preflight_damaged_recording_pinned(pinned:Option<&WriterLease>,path:&Path,
+    bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str)->Result<(),String> {
+    let expected=Identity{bytes,sha256:sha256.to_owned()};
+    let damaged=Identity{bytes:damaged_bytes,sha256:damaged_sha256.to_owned()};
+    if damaged==expected || fingerprint(path)?!=Some(damaged) {return Err(fail())}
+    let Some(root)=managed_root(path) else{return Ok(())};
+    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(path)?;
+    if pinned.root!=root || pinned.source!=source {return Err(fail())}
+    let leaf=path.file_name().and_then(|n|n.to_str()).filter(|n|component(n)).ok_or_else(fail)?;
+    let _lock=lock(&root)?;let manifest=load(&root)?;
+    let target=manifest.files.iter().find(|i|i.file==leaf).ok_or_else(fail)?;
+    if target.purpose!=Purpose::Recording || target.phase!=Phase::Sealed ||
+       !target.sources.contains(&source) || target.identity.as_ref()!=Some(&expected) {
+        return Err("录音归属已失效，现有文件和原始分段均已保留。".into());
+    }
+    Ok(())
+}
+/// Restore a verified derivative while retaining the replaced preimage.
+/// A durable, linked backup intent exists before Windows replacement begins;
+/// interrupted or externally changed backup contents remain fail-closed.
+pub(crate) fn restore_damaged_recording_pinned<T>(pinned:Option<&WriterLease>,path:&Path,
+    bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str,backup:&Path,
+    commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
+    let expected=Identity{bytes,sha256:sha256.to_owned()};
+    let damaged=Identity{bytes:damaged_bytes,sha256:damaged_sha256.to_owned()};
+    if damaged==expected || fingerprint(path)?!=Some(damaged.clone()) || fingerprint(backup)?.is_some() {return Err(fail())}
+    let Some(root)=managed_root(path) else{return commit()};
+    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(path)?;
+    if pinned.root!=root || pinned.source!=source || managed_root(backup)!=Some(root.clone()) {return Err(fail())}
+    let leaf=path.file_name().and_then(|n|n.to_str()).filter(|n|component(n)).ok_or_else(fail)?;
+    let backup_leaf=backup.file_name().and_then(|n|n.to_str()).filter(|n|component(n)).ok_or_else(fail)?;
+    let _backup_lease=lease(&root,backup_leaf)?;
+    let _lock=lock(&root)?;let mut manifest=load(&root)?;
+    let target=manifest.files.iter().find(|i|i.file==leaf).ok_or_else(fail)?;
+    if target.purpose!=Purpose::Recording || target.phase!=Phase::Sealed ||
+        !target.sources.contains(&source) || target.identity.as_ref()!=Some(&expected) ||
+        manifest.files.iter().any(|i|i.file.eq_ignore_ascii_case(backup_leaf)) ||
+        fingerprint(path)?!=Some(damaged.clone()) || fingerprint(backup)?.is_some() {
+        return Err("录音归属或备份校验不符，现有文件均已保留，未进行替换。".into());
+    }
+    // The expected preimage makes a crash with a completed backup safe for
+    // privacy cleanup. A changed preimage never gets guessed on recovery.
+    manifest.files.push(Artifact{file:backup_leaf.to_owned(),sources:BTreeSet::from([source]),
+        purpose:Purpose::Recording,phase:Phase::Prepared,identity:Some(damaged)});
+    save(&root,&manifest)?;
+    let result=commit();
+    let backup_identity=fingerprint(backup)?;
+    let item=manifest.files.last_mut().ok_or_else(fail)?;
+    if let Some(actual)=backup_identity {item.identity=Some(actual);item.phase=Phase::Sealed;}
+    else {item.identity=None;item.phase=Phase::Gone;}
+    let backup_sealed=item.phase==Phase::Sealed;
+    save(&root,&manifest)?;
+    let result=result?;
+    if !backup_sealed || fingerprint(path)?!=Some(expected) {return Err(fail())}
+    Ok(result)
+}
 pub(crate) fn restore_missing_original_pinned<T>(pinned:Option<&WriterLease>,source:&Path,path:&Path,
     bytes:u64,sha256:&str,commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
     restore_missing_pinned(pinned,source,path,Purpose::CompressedOriginal,bytes,sha256,commit)

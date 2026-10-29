@@ -98,7 +98,18 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
                 let file=read_locked(&path).map_err(|_|"暂时无法读取回听文件进行核验；现有文件和原始分段均已保留。")?;
                 let actual=digest(file).map_err(|_|"回听文件核验未完成；现有文件和原始分段均已保留。")?;
                 if actual!=(audio.bytes,audio.sha256.clone()) {
-                    return Err("回听文件与原保存校验不一致；现有文件和原始分段均已保留，未覆盖或修改回收状态。".into());
+                    // Only an explicit selected recovery may repair a damaged
+                    // derivative. The exact originals, durable receipt and
+                    // ownership are checked again under the receiver lease.
+                    let mut receiver=Receiver::open_for_damaged_repair(&root,&first.wire)?;
+                    let path=receiver.rebuild_damaged_audio(&actual)?;
+                    let id=receiver.publish(index,device)?;
+                    if id!=row.id {return Err(fail())};
+                    let originals=receiver.descriptors()?.iter().map(|d|u64::from(d.encoded_length)).sum();
+                    let stored=receiver.receipt.audio.as_ref().ok_or_else(fail)?;
+                    return Ok(RestoreOutcome::Restored(LocalRestoredRecording {session_id:id,
+                        audio_path:path.to_string_lossy().into_owned(),original_bytes:originals,audio_bytes:stored.bytes,
+                        reclaim_pending:receiver.receipt.segments.iter().any(|segment|!segment.acked)}));
                 }
                 return Ok(RestoreOutcome::Unchanged);
             }
@@ -237,16 +248,95 @@ mod tests {
         (root,index,d,payload,id,audio,wav,receipt)
     }
     #[test]
+    fn damaged_wav_repair_refuses_retired_ownership_without_modifying_files() {
+        let(root,index,d,payload,id)=case();let _environment=Environment::local(&root,&index);
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        r.accept_segment(&d.encode().unwrap(),&payload).unwrap();let audio=r.assemble().unwrap();
+        r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();let raw=r.payload_path(&d);drop(r);
+        let mut damaged=fs::read(&audio).unwrap();let last=damaged.len()-1;damaged[last]^=1;fs::write(&audio,&damaged).unwrap();
+        let manifest=root.join(".audio-artifacts.json");let mut value:serde_json::Value=serde_json::from_slice(&fs::read(&manifest).unwrap()).unwrap();
+        let leaf=audio.file_name().unwrap().to_str().unwrap();
+        let item=value["files"].as_array_mut().unwrap().iter_mut().find(|v|v["file"]==leaf).unwrap();
+        item["phase"]=serde_json::Value::String("gone".into());fs::write(&manifest,serde_json::to_vec(&value).unwrap()).unwrap();
+        let manifest_before=fs::read(&manifest).unwrap();let index_before=fs::read(&index).unwrap();
+        let report=restore_local_scope(&root,&index,Some(&id)).unwrap();
+        assert_eq!(report.failures.len(),1);assert!(report.restored.is_empty());
+        assert_eq!(fs::read(&audio).unwrap(),damaged);assert_eq!(fs::read(&raw).unwrap(),payload);
+        assert_eq!(fs::read(&manifest).unwrap(),manifest_before);assert_eq!(fs::read(&index).unwrap(),index_before);
+        assert!(!fs::read_dir(&root).unwrap().filter_map(Result::ok).any(|e|e.file_name().to_string_lossy().starts_with(".companion-damaged-")));
+        drop(_environment);fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn repair_keeps_file_changed_at_commit_and_failed_commit_backup_managed() {
+        let(root,index,d,payload,id)=case();let _environment=Environment::local(&root,&index);
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        r.accept_segment(&d.encode().unwrap(),&payload).unwrap();let audio=r.assemble().unwrap();
+        r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();drop(r);
+        let good=fs::read(&audio).unwrap();let mut damaged=good.clone();let last=damaged.len()-1;damaged[last]^=1;
+        fs::write(&audio,&damaged).unwrap();
+        let expected_hash=format!("{:x}",Sha256::digest(&good));let damaged_hash=format!("{:x}",Sha256::digest(&damaged));
+        let temporary=root.join("repair-candidate.wav");fs::write(&temporary,&good).unwrap();
+        let backup=root.join(".companion-damaged-interleaved.wav");
+        let lease=audio_artifacts::writer(&audio).unwrap();
+        let result=audio_artifacts::restore_damaged_recording_pinned(lease.as_ref(),&audio,
+            good.len() as u64,&expected_hash,damaged.len() as u64,&damaged_hash,&backup,|| {
+                // Model a different process changing the destination after
+                // preflight but immediately before the OS replacement.
+                fs::write(&audio,b"new external contents").map_err(|e|e.to_string())?;
+                replace_with_backup(&temporary,&audio,&backup)?;
+                Err::<(),String>("injected after replacement".into())
+            });
+        assert!(result.is_err());drop(lease);
+        assert_eq!(fs::read(&audio).unwrap(),good);assert_eq!(fs::read(&backup).unwrap(),b"new external contents");
+        let second=restore_local_scope(&root,&index,Some(&id)).unwrap();assert!(second.failures.is_empty());
+        let erased=audio_artifacts::erase(&root,&[audio.to_string_lossy().into_owned()],&[]).unwrap();
+        assert!(erased.deleted>=2&&!backup.exists()&&!audio.exists());
+        drop(_environment);fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn managed_damaged_wav_repair_and_privacy_cleanup_keep_exact_ownership() {
+        let(root,index,d,payload,id)=case();let _environment=Environment::local(&root,&index);
+        let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+        r.accept_segment(&d.encode().unwrap(),&payload).unwrap();let audio=r.assemble().unwrap();
+        r.publish(&index,"C8:92:FF:DD:3B:CA").unwrap();drop(r);
+        let good=fs::read(&audio).unwrap();let mut damaged=good.clone();let last=damaged.len()-1;damaged[last]^=1;
+        fs::write(&audio,&damaged).unwrap();
+        let report=restore_local_scope(&root,&index,Some(&id)).unwrap();
+        assert_eq!(report.restored.len(),1);assert!(report.failures.is_empty());assert_eq!(fs::read(&audio).unwrap(),good);
+        let backups:Vec<_>=fs::read_dir(&root).unwrap().filter_map(Result::ok)
+            .map(|entry|entry.path()).filter(|p|p.file_name().unwrap().to_string_lossy().starts_with(".companion-damaged-")).collect();
+        assert_eq!(backups.len(),1);assert_eq!(fs::read(&backups[0]).unwrap(),damaged);
+        let erased=audio_artifacts::erase(&root,&[audio.to_string_lossy().into_owned()],&[]).unwrap();
+        assert!(erased.deleted>=2);assert!(!audio.exists()&&!backups[0].exists());
+        drop(_environment);fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn damaged_wav_is_rebuilt_from_verified_original_and_original_is_preserved() {
+        let(root,index,d,payload,id,audio,wav,receipt)=saved_case();
+        let mut damaged=wav.clone();let last=damaged.len()-1;damaged[last]^=1;
+        fs::write(&audio,&damaged).unwrap();
+        let before_receipt=fs::read(&receipt).unwrap();
+        let report=restore_local_scope(&root,&index,Some(&id)).unwrap();
+        assert_eq!(report.restored.len(),1,"verified original should repair selected WAV");
+        assert!(report.failures.is_empty());assert_eq!(fs::read(&audio).unwrap(),wav);
+        assert_eq!(fs::read(&receipt).unwrap(),before_receipt);
+        let backups:Vec<_>=fs::read_dir(&root).unwrap().filter_map(Result::ok)
+            .map(|entry|entry.path()).filter(|p|p.file_name().unwrap().to_string_lossy().starts_with(".companion-damaged-")).collect();
+        assert_eq!(backups.len(),1);assert_eq!(fs::read(&backups[0]).unwrap(),damaged);
+        let r=Receiver::open(&root,&d.encode().unwrap()).unwrap();assert_eq!(fs::read(r.payload_path(&d)).unwrap(),payload);
+        drop(r);fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
     fn corrupt_existing_wav_explicit_recovery_must_not_report_unchanged() {
         let(root,index,d,payload,id,audio,wav,receipt)=saved_case();
         let healthy=restore_local_scope(&root,&index,Some(&id)).unwrap();
         assert!(healthy.failures.is_empty()&&healthy.restored.is_empty(),"verified WAV should stay unchanged");
+        let r=Receiver::open(&root,&d.encode().unwrap()).unwrap();let raw=r.payload_path(&d);drop(r);
         let mut damaged=wav.clone();let last=damaged.len()-1;damaged[last]^=1;
-        fs::write(&audio,&damaged).unwrap();
+        fs::write(&audio,&damaged).unwrap();fs::write(&raw,b"damaged original").unwrap();
         let before_index=fs::read(&index).unwrap();let before_receipt=fs::read(&receipt).unwrap();
         let report=restore_local_scope(&root,&index,Some(&id)).unwrap();
-        assert_eq!(report.failures.len(),1,"damaged selected recording falsely treated as unchanged");
-        assert!(report.failures[0].error.contains("校验不一致"));
+        assert_eq!(report.failures.len(),1,"invalid original must not replace damaged WAV");
         assert_eq!(fs::read(&audio).unwrap(),damaged);
         assert_eq!(fs::read(&index).unwrap(),before_index);assert_eq!(fs::read(&receipt).unwrap(),before_receipt);
         let r=Receiver::open_for_local_repair(&root,&d.encode().unwrap());assert!(r.is_err());drop(r);
@@ -255,7 +345,7 @@ mod tests {
             let backend=crate::coordinator::CompanionCoordinator::new_fixture();
             let request=serde_json::from_value(serde_json::json!({"action":"meetingRestoreAudio","sessionId":id})).unwrap();
             let error=backend.apply_control(request).err().expect("explicit action must report corrupted WAV");
-            assert!(error.contains("校验不一致"));
+            assert!(!error.is_empty());
         }
         assert_eq!(fs::read(&audio).unwrap(),damaged);assert_eq!(fs::read(&index).unwrap(),before_index);
         assert!(!payload.is_empty());fs::remove_dir_all(root).unwrap();
