@@ -7,7 +7,7 @@
 //! file placement, the ratio resampler, and explicit synthetic test mode.
 
 use std::fs::create_dir_all;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
@@ -76,12 +76,32 @@ impl HostRecordingManager {
         super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStart).result(self.start_with_mode(session_id, title, &requested_mode, RealRecording::start))
     }
 
+    pub(super) fn start_checkpointed(&self, session_id: &str, title: &str,
+        checkpoint: impl FnOnce(&Path) -> Result<(), String>) -> Result<HostRecordingStart, String> {
+        let mode = std::env::var("COMPANION_TYPE_HOST_RECORDING_MODE")
+            .unwrap_or_else(|_| if cfg!(test) { "synthetic" } else { "real" }.to_string());
+        let _diagnostic_scope = super::diagnostics::RecordingScope::enter(session_id);
+        super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStart)
+            .result(self.start_with_mode_checkpointed(session_id, title, &mode, RealRecording::start, checkpoint))
+    }
+
     fn start_with_mode(
         &self,
         session_id: &str,
         title: &str,
         requested_mode: &str,
         start_real: impl FnOnce(PathBuf, Option<HostPcmSink>) -> Result<RealRecording, String>,
+    ) -> Result<HostRecordingStart, String> {
+        self.start_with_mode_checkpointed(session_id, title, requested_mode, start_real, |_| Ok(()))
+    }
+
+    fn start_with_mode_checkpointed(
+        &self,
+        session_id: &str,
+        title: &str,
+        requested_mode: &str,
+        start_real: impl FnOnce(PathBuf, Option<HostPcmSink>) -> Result<RealRecording, String>,
+        checkpoint: impl FnOnce(&Path) -> Result<(), String>,
     ) -> Result<HostRecordingStart, String> {
         let mut active = self
             .active
@@ -92,7 +112,16 @@ impl HostRecordingManager {
         }
 
         let path = recording_path(session_id, title)?;
+        // The exact session/path association must be durable before opening
+        // the microphone or allowing the writer to receive the first frame.
+        checkpoint(&path)?;
         let artifact = super::audio_artifacts::WriteLease::begin(&path, &path, super::audio_artifacts::Purpose::Recording)?;
+        #[cfg(test)]
+        if std::env::var_os("COMPANION_TEST_HOST_START_FAILURE").is_some() {
+            let mut bytes=denzic_host_audio_v1_core::wav::wav_header(0).to_vec(); bytes.extend(vec![42u8;32000]);
+            std::fs::write(&path,bytes).unwrap();
+            return Err("injected microphone startup failure after partial audio".into());
+        }
         let pcm_sink = self.pcm_sink.lock().ok().and_then(|slot| slot.clone());
 
         let (mode, mode_label) = if requested_mode.eq_ignore_ascii_case("synthetic") {
@@ -648,6 +677,22 @@ mod tests {
         assert!(erased.deleted >= 2);
         assert!(!path.exists() && !retained_copy.exists());
         assert_eq!(std::fs::read(&unknown).unwrap(), bytes);
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
+
+    #[test]
+    fn failed_owner_checkpoint_never_opens_microphone_or_creates_audio() {
+        let root=std::env::temp_dir().join(format!("host-checkpoint-fail-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let manager=HostRecordingManager::new();
+        let opened=std::cell::Cell::new(false);
+        let result=manager.start_with_mode_checkpointed("checkpoint-fail","test","real",|_,_| {
+            opened.set(true); Err("microphone should never start".into())
+        }, |_| Err("injected index write failure".into()));
+        assert!(result.is_err()); assert!(!opened.get());
+        assert!(!std::fs::read_dir(&root).unwrap().any(|entry|entry.unwrap().path().extension().is_some_and(|ext|ext=="wav")));
+        assert!(!root.join(".audio-artifacts.json").exists());
         std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
     }
 

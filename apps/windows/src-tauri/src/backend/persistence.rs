@@ -200,7 +200,7 @@ pub fn load_sessions_from(path: &Path) -> Option<Vec<CompanionV1HostSession>> {
     migrate_sessions(loaded.bytes?)
 }
 
-fn migrate_sessions(bytes: Vec<u8>) -> Option<Vec<CompanionV1HostSession>> {
+pub(super) fn migrate_sessions(bytes: Vec<u8>) -> Option<Vec<CompanionV1HostSession>> {
     match serde_json::from_slice::<Vec<CompanionV1HostSession>>(&bytes) {
         Ok(mut sessions) => {
             // Backward-compatible one-time migration. Older state has one

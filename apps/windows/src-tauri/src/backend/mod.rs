@@ -2707,6 +2707,11 @@ impl CompanionBackend for FixtureCompanionBackend {
                 report.failed_files
             ));
         }
+        let expected_host_library = if action == CompanionV1ControlAction::MeetingStart
+            && !meeting_start_supplied_audio && meeting_device_report.is_none() {
+            Some(snapshot.host.sessions.iter().map(session_store::privacy_authorization)
+                .collect::<Result<std::collections::BTreeSet<_>, _>>()?)
+        } else { None };
         let mut next = apply_control_at(snapshot.clone(), request.clone(), &observation_timestamp())?;
         if action == CompanionV1ControlAction::MeetingStart && meeting_device_report.is_none()
             && request.audio_path.as_deref().is_some_and(|path| path.starts_with("board://"))
@@ -2963,6 +2968,12 @@ impl CompanionBackend for FixtureCompanionBackend {
                 // (device sync / pre-seeded WAV tests).
                 if let Some(session) = selected_session_mut(&mut next) {
                     if !meeting_start_supplied_audio && meeting_device_report.is_none() {
+                        // A concurrent privacy action must be resolved before
+                        // starting either the live provider or local capture.
+                        let state_path = persistence::state_file_path();
+                        let _privacy_lock = if cfg!(test) && std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none() {
+                            None
+                        } else { Some(library_lifecycle::action_lock(&state_path)?) };
                         let online = session.meeting_mode == "onlineLive";
                         let mut live_mode = "idle".to_string();
                         if online {
@@ -2988,11 +2999,76 @@ impl CompanionBackend for FixtureCompanionBackend {
                             self.host_recording.set_pcm_sink(None);
                         }
 
-                        let start = match self.host_recording.start(&session.id, &session.title) {
+                        let session_id = session.id.clone();
+                        let title = session.title.clone();
+                        let mut prepared_auth = None;
+                        let start = match self.host_recording.start_checkpointed(&session_id, &title, |path| {
+                            session.source = "hostMicrophone".into();
+                            session.audio_path = Some(path.to_string_lossy().into_owned());
+                            session.audio_stored = false;
+                            session.audio_bytes = 0;
+                            session.retention.audio_cached = false;
+                            session.chunks = vec![audio_chunk(format!("{}-host-open", session.id),
+                                session.audio_path.clone(), session.started_at.clone(), None, 0, 0, "open")];
+                            if cfg!(test) && std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none() { return Ok(()); }
+                            prepared_auth = Some(session_store::privacy_authorization(session)?);
+                            session_store::update_checked(&state_path, |rows| {
+                                // Compare the same migration view used at startup;
+                                // older minutes may be projected into mode variants.
+                                let encoded = serde_json::to_vec(rows).map_err(|_| "会议库无法核对。")?;
+                                let normalized = persistence::migrate_sessions(encoded).ok_or("会议库无法核对。")?;
+                                let actual = normalized.iter().map(session_store::privacy_authorization)
+                                    .collect::<Result<std::collections::BTreeSet<_>, _>>()?;
+                                if expected_host_library.as_ref() != Some(&actual) {
+                                    return Err("会议库已在其他操作中变化，请刷新后重新开始；原资料保留。".into());
+                                }
+                                if rows.iter().any(|row| row.id == session.id) {
+                                    return Err("会议编号已存在，请刷新后重新开始录音；原记录保留。".into());
+                                }
+                                rows.insert(0, session.clone());
+                                Ok(())
+                            })
+                        }) {
                             Ok(start) => start,
                             Err(error) => {
                                 self.host_recording.set_pcm_sink(None);
                                 let _ = self.live_asr.stop_and_take_text();
+                                if let Some(expected) = prepared_auth {
+                                    let loaded = session_store::load(&state_path);
+                                    if loaded.state.status != "ready" {
+                                        return Err(format!("{error}；会议状态尚未确认保存，请重试恢复。"));
+                                    }
+                                    let owned = loaded.bytes.as_ref()
+                                        .and_then(|bytes| serde_json::from_slice::<Vec<crate::companion_v1::CompanionV1HostSession>>(bytes).ok())
+                                        .is_some_and(|rows| rows.iter().any(|row|
+                                            session_store::privacy_authorization(row).ok().as_ref() == Some(&expected)));
+                                    // A rejected checkpoint may have failed before any commit,
+                                    // or the same ID may belong to somebody else's session.
+                                    // Neither case authorizes us to change that row.
+                                    if !owned { return Err(error); }
+                                    let settled = session_store::update_checked(&state_path, |rows| {
+                                        let row = rows.iter_mut().find(|row| row.id == session_id)
+                                            .ok_or("启动失败后的会议记录不存在。")?;
+                                        if session_store::privacy_authorization(row)? != expected {
+                                            return Err("会议记录已变化，未覆盖其他资料。".into());
+                                        }
+                                        row.status = "captured".into();
+                                        row.capture_incomplete = true;
+                                        row.pending_reason = Some("capture_start_failed".into());
+                                        Ok(())
+                                    });
+                                    if settled.is_ok() {
+                                        session.status = "captured".into();
+                                        session.capture_incomplete = true;
+                                        session.pending_reason = Some("capture_start_failed".into());
+                                        next.host.active_session_id = None;
+                                        next.meeting.active = false;
+                                        next.meeting.status = "captured".into();
+                                        *snapshot = next.clone();
+                                    } else {
+                                        return Err(format!("{error}；会议状态尚未确认保存，请重试恢复。"));
+                                    }
+                                }
                                 return Err(error);
                             }
                         };
@@ -3008,6 +3084,15 @@ impl CompanionBackend for FixtureCompanionBackend {
                             "open",
                         )];
                         session.source = "hostMicrophone".to_string();
+                        // Isolated experiment: production WAV writer, synthetic input,
+                        // abrupt process exit before the ordinary snapshot save.
+                        #[cfg(test)]
+                        if std::env::var_os("COMPANION_TEST_HOST_START_EXIT").is_some() {
+                            let path = std::path::Path::new(session.audio_path.as_deref().unwrap());
+                            let mut writer = denzic_host_audio_v1_core::wav::WavWriter::create(path).unwrap();
+                            writer.append_bytes(&vec![42u8; 32000]).unwrap();
+                            std::process::exit(0);
+                        }
                         if let Some(echo) = next.last_control.as_mut() {
                             echo.message = format!(
                                 "host recording started {} ({}) -> {}; liveAsr={}",
@@ -4368,6 +4453,287 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    #[ignore]
+    fn isolated_host_start_exit_child() {
+        use super::*;
+        if std::env::var_os("COMPANION_TEST_HOST_START_EXIT").is_none() { return; }
+        let backend=FixtureCompanionBackend::new();
+        let request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("start-crash-owned".into()));
+        backend.apply_control(request).unwrap();
+        panic!("the injected process exit did not happen");
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_host_start_failure_child() {
+        use super::*;
+        if std::env::var_os("COMPANION_TEST_HOST_START_FAILURE").is_none() { return; }
+        let backend=FixtureCompanionBackend::new();
+        let request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("start-failed-owned".into()));
+        assert!(backend.apply_control(request).is_err());
+        let saved=super::persistence::load_sessions_from(&super::persistence::state_file_path()).unwrap();
+        let row=saved.iter().find(|s|s.id=="start-failed-owned").expect("partial audio owner retained");
+        assert_ne!(row.status,"recording","failed start must not claim a live recording");
+        assert!(!row.audio_stored && row.capture_incomplete);
+        assert!(std::path::Path::new(row.audio_path.as_deref().unwrap()).is_file(),"partial original retained");
+        let original_path=std::path::PathBuf::from(row.audio_path.as_deref().unwrap());
+        let original_bytes=std::fs::read(&original_path).unwrap();
+        {
+            let snapshot=backend.snapshot.lock().unwrap();
+            assert!(!snapshot.meeting.active);
+            assert!(snapshot.host.sessions.iter().any(|s|s.id==row.id && s.status!="recording"));
+        }
+        let restore=crate::control_request(CompanionV1ControlAction::MeetingRestoreAudio,Some(row.id.clone()));
+        let restored=backend.apply_control(restore).unwrap();
+        let restored_row=restored.host.sessions.iter().find(|s|s.id==row.id).unwrap();
+        assert!(restored_row.audio_stored && restored_row.capture_incomplete);
+        let recovered=std::fs::read(restored_row.audio_path.as_deref().unwrap()).unwrap();
+        assert_eq!(&recovered[44..],&original_bytes[44..]);
+        assert_eq!(std::fs::read(&original_path).unwrap(),original_bytes);
+    }
+
+    #[test]
+    fn failed_host_start_retains_partial_owner_without_claiming_recording() {
+        let root=std::env::temp_dir().join(format!("host-start-failure-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_start_failure_child","--ignored"])
+            .env("COMPANION_TEST_HOST_START_FAILURE","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_host_duplicate_session_child() {
+        use super::*;
+        let Some(root)=std::env::var_os("COMPANION_TEST_DUPLICATE_ROOT") else { return; };
+        let root=std::path::PathBuf::from(root); let existing=root.join("recordings/existing.wav");
+        std::fs::write(&existing,b"original already saved").unwrap();
+        let mut fixture=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            crate::control_request(CompanionV1ControlAction::MeetingStart,Some("existing-owned".into()))).unwrap();
+        let mut row=fixture.host.sessions.remove(0);row.id="existing-owned".into();row.status="captured".into();
+        row.source="hostMicrophone".into();row.audio_path=Some(existing.to_string_lossy().into_owned());
+        row.audio_stored=true;row.audio_bytes=22;row.retention.audio_cached=true;row.chunks.clear();
+        super::persistence::save_sessions_to(&super::persistence::state_file_path(),&[row]).unwrap();
+        let before=std::fs::read(super::persistence::state_file_path()).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        let request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("existing-owned".into()));
+        assert!(backend.apply_control(request).is_err());
+        assert_eq!(std::fs::read(super::persistence::state_file_path()).unwrap(),before);
+        assert_eq!(std::fs::read(&existing).unwrap(),b"original already saved");
+        let wavs=std::fs::read_dir(root.join("recordings")).unwrap().map(|e|e.unwrap().path())
+            .filter(|p|p.extension().is_some_and(|x|x=="wav")).count();
+        assert_eq!(wavs,1,"duplicate start cannot create an orphan file");
+    }
+
+    #[test]
+    fn duplicate_host_start_preserves_saved_session_and_original() {
+        let root=std::env::temp_dir().join(format!("host-duplicate-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_duplicate_session_child","--ignored"])
+            .env("COMPANION_TEST_DUPLICATE_ROOT",&root).env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_host_start_stop_child() {
+        use super::*;
+        if std::env::var_os("COMPANION_TEST_START_STOP").is_none() { return; }
+        let backend=FixtureCompanionBackend::new();
+        let id="durable-start-stop";
+        let started=backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingStart,Some(id.into()))).unwrap();
+        let active=started.host.sessions.iter().find(|r|r.id==id).unwrap();
+        assert_eq!(active.status,"recording"); assert!(!active.audio_stored);
+        let disk:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(super::persistence::state_file_path()).unwrap()).unwrap();
+        let saved=disk.iter().find(|r|r.id==id).unwrap();
+        assert_eq!(saved.status,"recording"); assert_eq!(saved.audio_path,active.audio_path);
+        let stopped=backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingStop,Some(id.into()))).unwrap();
+        let row=stopped.host.sessions.iter().find(|r|r.id==id).unwrap();
+        assert_eq!(row.status,"captured");assert!(row.audio_stored && row.audio_bytes>44);
+        let file=std::path::Path::new(row.audio_path.as_deref().unwrap());
+        super::meeting_workspace::validate_wav(file).unwrap();
+        let reloaded=FixtureCompanionBackend::new();let snapshot=reloaded.snapshot.lock().unwrap();
+        let saved=snapshot.host.sessions.iter().find(|r|r.id==id).unwrap();
+        assert!(saved.audio_stored);assert_eq!(saved.audio_path,row.audio_path);
+    }
+
+    #[test]
+    fn host_start_and_stop_preserve_index_and_real_saved_wav() {
+        let root=std::env::temp_dir().join(format!("host-start-stop-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_start_stop_child","--ignored"])
+            .env("COMPANION_TEST_START_STOP","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_host_stale_library_child() {
+        use super::*;
+        if std::env::var_os("COMPANION_TEST_STALE_LIBRARY").is_none() { return; }
+        let state=super::persistence::state_file_path();
+        let mut fixture=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            crate::control_request(CompanionV1ControlAction::MeetingStart,Some("deleted-owned".into()))).unwrap();
+        let mut old=fixture.host.sessions.remove(0);old.id="deleted-owned".into();old.status="captured".into();
+        old.audio_stored=false;old.audio_path=None;old.retention.audio_cached=false;old.chunks.clear();
+        super::persistence::save_sessions_to(&state,&[old]).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        // Model an explicit deletion by a different process after this snapshot was loaded.
+        super::persistence::save_sessions_to(&state,&[]).unwrap();
+        let request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("new-owned".into()));
+        assert!(backend.apply_control(request).is_err(),"a stale snapshot must not resurrect a deleted meeting");
+        let current=super::persistence::load_sessions_from(&state).unwrap();
+        assert!(current.is_empty(),"deleted meeting and attempted new meeting remain absent");
+    }
+
+    #[test]
+    fn host_start_rejects_stale_library_after_other_process_deletion() {
+        let root=std::env::temp_dir().join(format!("host-stale-library-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_stale_library_child","--ignored"])
+            .env("COMPANION_TEST_STALE_LIBRARY","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_host_legacy_minutes_child() {
+        use super::*;
+        if std::env::var_os("COMPANION_TEST_LEGACY_MINUTES").is_none() { return; }
+        let mut fixture=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            crate::control_request(CompanionV1ControlAction::MeetingStart,Some("older-meeting".into()))).unwrap();
+        let mut row=fixture.host.sessions.remove(0);row.status="captured".into();
+        row.minutes=Some(crate::companion_v1::CompanionV1MeetingMinutes {
+            processing:None,source_note_context:None,source_review_revision:None,
+            generated_at:"test".into(),source:"rules_l0".into(),quality:"draft".into(),
+            summary:vec![],decisions:vec![],action_items:vec![],questions:vec![],keywords:vec![],
+            markdown:"prior notes".into(),llm_note:None,
+        });
+        row.minutes_by_mode=Default::default();
+        super::persistence::save_sessions_to(&super::persistence::state_file_path(),&[row]).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        let request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("new-legacy-test".into()));
+        assert!(backend.apply_control(request).is_ok(),"normal legacy migration must not block a new recording");
+        let disk=super::persistence::load_sessions_from(&super::persistence::state_file_path()).unwrap();
+        assert!(disk.iter().any(|r|r.id=="older-meeting" && r.minutes.as_ref().is_some_and(|m|m.markdown=="prior notes")));
+        assert!(disk.iter().any(|r|r.id=="new-legacy-test"));
+    }
+
+    #[test]
+    fn host_start_accepts_unchanged_legacy_minutes_after_migration() {
+        let root=std::env::temp_dir().join(format!("host-legacy-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_legacy_minutes_child","--ignored"])
+            .env("COMPANION_TEST_LEGACY_MINUTES","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_host_privacy_lock_child() {
+        use super::*;
+        if std::env::var_os("COMPANION_TEST_START_PRIVACY_LOCK").is_none() { return; }
+        let state=super::persistence::state_file_path();
+        let backend=FixtureCompanionBackend::new();
+        let guard=super::library_lifecycle::action_lock(&state).unwrap();
+        let mut request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("lock-test".into()));
+        request.meeting_mode=Some("onlineLive".into());
+        assert!(backend.apply_control(request).is_err());
+        assert!(!state.exists(),"no session is saved while privacy operation owns the library");
+        assert!(!backend.snapshot.lock().unwrap().meeting.active);
+        drop(guard);
+    }
+
+    #[test]
+    fn host_start_waits_for_privacy_action_before_live_or_capture() {
+        let root=std::env::temp_dir().join(format!("host-privacy-lock-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_privacy_lock_child","--ignored"])
+            .env("COMPANION_TEST_START_PRIVACY_LOCK","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+        assert!(!std::fs::read_dir(root.join("recordings")).unwrap().any(|entry|entry.unwrap().path().extension().is_some_and(|e|e=="wav")));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_host_index_failure_child() {
+        use super::*;
+        if std::env::var_os("COMPANION_TEST_START_INDEX_FAILURE").is_none() { return; }
+        let state=super::persistence::state_file_path();
+        let backend=FixtureCompanionBackend::new();
+        std::fs::create_dir(&state).unwrap();
+        let request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("storage-failure".into()));
+        assert!(backend.apply_control(request).is_err(),"cannot start without durable session ownership");
+        assert!(!backend.snapshot.lock().unwrap().meeting.active);
+    }
+
+    #[test]
+    fn host_start_does_not_open_audio_when_index_cannot_be_saved() {
+        let root=std::env::temp_dir().join(format!("host-index-fail-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_index_failure_child","--ignored"])
+            .env("COMPANION_TEST_START_INDEX_FAILURE","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+        assert!(!std::fs::read_dir(root.join("recordings")).unwrap().any(|entry|entry.unwrap().path().extension().is_some_and(|e|e=="wav")));
+    }
+
+    #[test]
+    fn host_start_persists_owner_before_audio_can_arrive() {
+        let root=std::env::temp_dir().join(format!("host-start-crash-{}",uuid::Uuid::new_v4()));
+        let recordings=root.join("recordings");std::fs::create_dir_all(&recordings).unwrap();
+        let state=root.join("sessions.json");
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_host_start_exit_child","--ignored"])
+            .env("COMPANION_TEST_HOST_START_EXIT","1").env("COMPANION_TYPE_STATE_PATH",&state)
+            .env("COMPANION_TYPE_RECORDING_DIR",&recordings).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}",String::from_utf8_lossy(&child.stderr));
+        assert!(!String::from_utf8_lossy(&child.stdout).contains("test result:"),"failure injection did not exit");
+        let wavs:Vec<_>=std::fs::read_dir(&recordings).unwrap().map(|e|e.unwrap().path())
+            .filter(|p|p.extension().is_some_and(|x|x=="wav")).collect();
+        assert_eq!(wavs.len(),1);assert_eq!(std::fs::read(&wavs[0]).unwrap().len(),32044);
+        assert!(recordings.join(".audio-artifacts.json").exists());
+        let saved=super::persistence::load_sessions_from(&state).unwrap_or_default();
+        let row=saved.iter().find(|s|s.id=="start-crash-owned").expect("the active recording must have a durable meeting owner before PCM arrives");
+        assert_eq!(super::audio_artifacts::reference_key(std::path::Path::new(row.audio_path.as_deref().unwrap())).unwrap(),
+            super::audio_artifacts::reference_key(&wavs[0]).unwrap());
+        assert!(!row.audio_stored);
+        let original=std::fs::read(&wavs[0]).unwrap();
+        std::env::set_var("COMPANION_TYPE_STATE_PATH",&state);
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&recordings);
+        let backend=super::FixtureCompanionBackend::new();
+        let restore=crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingRestoreAudio,Some("start-crash-owned".into()));
+        let snapshot=super::CompanionBackend::apply_control(&backend,restore).unwrap();
+        let restored=snapshot.host.sessions.iter().find(|s|s.id=="start-crash-owned").unwrap();
+        assert!(restored.audio_stored && restored.capture_incomplete);
+        let recovered=std::fs::read(restored.audio_path.as_deref().unwrap()).unwrap();
+        assert_eq!(&recovered[44..],&original[44..]);
+        assert_eq!(std::fs::read(&wavs[0]).unwrap(),original,"the original remains unchanged");
+        std::env::remove_var("COMPANION_TYPE_STATE_PATH");
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
 
     #[test]
     fn p582_persisted_control_refuses_demo_before_touching_existing_rows_or_recording_state() {
