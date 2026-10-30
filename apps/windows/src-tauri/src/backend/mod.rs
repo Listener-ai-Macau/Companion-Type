@@ -178,7 +178,7 @@ fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
     interrupted_capture::hold(session);
 }
 
-fn pause_incomplete_host_recording(session: &mut CompanionV1HostSession, error: &str) {
+fn pause_incomplete_host_recording(session: &mut CompanionV1HostSession, error: &str, ownership_unconfirmed: bool) {
     // Keep the interruption visible after explicit processing or restart;
     // a prior confirmation cannot authorize a newly interrupted capture.
     session.capture_incomplete = true;
@@ -186,7 +186,7 @@ fn pause_incomplete_host_recording(session: &mut CompanionV1HostSession, error: 
     arm_meeting_recovery(session);
     session.status = "captured".to_string();
     session.transcript_final = false;
-    session.audio_stored = session.audio_bytes > 44 && session.audio_path.as_deref()
+    session.audio_stored = !ownership_unconfirmed && session.audio_bytes > 44 && session.audio_path.as_deref()
         .map(std::path::Path::new).filter(|path| path.is_absolute())
         .is_some_and(|path| std::fs::metadata(path).is_ok_and(|m| m.is_file() && m.len() == session.audio_bytes)
             && meeting_workspace::validate_wav(path).is_ok());
@@ -3257,9 +3257,11 @@ impl CompanionBackend for FixtureCompanionBackend {
             }
             CompanionV1ControlAction::MeetingStop | CompanionV1ControlAction::MeetingFinalize => {
                 let mut host_capture_error = None;
+                let mut host_ownership_unconfirmed = false;
                 if meeting_device_report.is_none() {
                     if let Some(stop) = self.host_recording.stop(requested_session_id.as_deref())? {
                         host_capture_error = stop.capture_error.clone();
+                        host_ownership_unconfirmed = !stop.ownership_confirmed;
                         if let Some(session) = selected_session_mut(&mut next) {
                             if session.id == stop.session_id {
                                 session.audio_path = Some(stop.path.to_string_lossy().to_string());
@@ -3394,7 +3396,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                 }
                 if let Some(error) = host_capture_error.as_deref() {
                     if let Some(session) = selected_session_mut(&mut next) {
-                        pause_incomplete_host_recording(session, error);
+                        pause_incomplete_host_recording(session, error, host_ownership_unconfirmed);
                     }
                     next.meeting.status = "captured".to_string();
                     if let Some(echo) = next.last_control.as_mut() {
@@ -5085,7 +5087,7 @@ mod tests {
         session.transcript_final = true;
         session.recovery = super::CompanionV1MeetingRecovery::armed("offlineStore");
         session.recovery.capture_review_confirmed = true;
-        super::pause_incomplete_host_recording(session, "麦克风已拔出");
+        super::pause_incomplete_host_recording(session, "麦克风已拔出", false);
         assert_eq!(session.audio_path.as_deref(), path.to_str());
         assert!(session.audio_stored);
         assert!(session.capture_incomplete, "the interruption must remain visible after processing and restart");
@@ -5118,7 +5120,7 @@ mod tests {
         let session=&mut snapshot.host.sessions[0];
         session.audio_path=Some(file.to_string_lossy().to_string());session.audio_bytes=raw.len() as u64;
         session.audio_stored=true;session.retention.audio_cached=true;
-        super::pause_incomplete_host_recording(session,"录音文件保存失败");
+        super::pause_incomplete_host_recording(session,"录音文件保存失败",false);
         assert!(!session.audio_stored, "a zero-length header plus PCM is not yet a playable WAV");
         assert!(session.retention.audio_cached, "raw local data is still retained");
         assert!(session.capture_incomplete);assert_eq!(std::fs::read(&file).unwrap(),raw);

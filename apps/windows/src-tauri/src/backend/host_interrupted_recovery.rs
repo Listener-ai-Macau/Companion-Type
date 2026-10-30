@@ -52,7 +52,15 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
     let interrupted_backfill = partial_tail == 0 && (0..=header.len()).any(|cut| {
         header[..cut] == complete[..cut] && header[cut..] == placeholder[cut..]
     });
-    if header != placeholder && !interrupted_backfill {
+    // Older writers updated the header only after a whole callback. A disk-full
+    // error can leave a valid shorter header followed by more complete samples.
+    // The exclusive, recorded product ownership above is required before using
+    // those bytes. Require complete samples and leave the original untouched;
+    // the existing conservative odd-tail rule remains unchanged.
+    let declared = u32::from_le_bytes(header[40..44].try_into().expect("fixed header"));
+    let prior_complete_header = partial_tail == 0 && declared % 2 == 0 && declared < payload
+        && header == denzic_host_audio_v1_core::wav::wav_header(declared);
+    if header != placeholder && !interrupted_backfill && !prior_complete_header {
         return Err("原录音不是可确认的录音格式，文件保留。".into());
     }
     let before = digest(source)?;

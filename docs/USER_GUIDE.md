@@ -130,7 +130,7 @@ If assistance is needed, note the time, previous action and current notice. **шо
 
 ## Updates and Data Destinations
 
-Type updates and pet firmware updates are separate. Type update controls are in Settings and tools. Pet firmware uses a complete matching package supplied with your delivery. End recording and relevant operations, save edits, then follow the interface.
+Type updates and pet firmware updates are separate. Type update controls are in Settings and tools. Pet firmware uses a complete matching package supplied with your delivery. End recording and related operations, and save unfinished edits. Before an update, Type first saves unsynced device recordings to the computer; after the save is confirmed, the corresponding device copies may be reclaimed. This does not automatically transcribe them. Then follow the update prompts.
 
 A completed transfer does not establish a successful pet update; wait for confirmation that the new application started. Retain a failed package and notice. Do not mix program and resource files or bypass compatibility and integrity checks.
 

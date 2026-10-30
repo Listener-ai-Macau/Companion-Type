@@ -2724,7 +2724,7 @@ export function CompanionDashboard({
               <span>设备更新</span>
             </div>
             <p className="ct-meeting-hint">
-              填写更新包清单路径，程序和屏幕资源会一起更新。下载中断后可重新开始；设备正常启动并确认新版本后才显示成功。录音期间无法更新。
+              填写更新包清单路径，程序和屏幕资源会一起更新。更新前会先将设备中未同步的录音保存到电脑；确认保存后，设备上的对应副本可能被回收，不会自动转文字。下载中断后可重新开始；设备正常启动并确认新版本后才显示成功。录音期间无法更新。
             </p>
             <div className="ct-settings-grid">
               <label className="ct-field">

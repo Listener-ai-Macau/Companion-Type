@@ -35,6 +35,7 @@ pub struct HostRecordingStop {
     pub bytes: u64,
     pub mode: String,
     pub capture_error: Option<String>,
+    pub ownership_confirmed: bool,
 }
 
 struct ActiveHostRecording {
@@ -195,7 +196,7 @@ impl Default for HostRecordingManager {
 
 fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecordingStop, String> {
     let elapsed_ms = recording.started_at.elapsed().as_millis().max(1) as u64;
-    let (path, bytes, mode, capture_error) = match recording.mode {
+    let (path, bytes, mode, mut capture_error) = match recording.mode {
         ActiveHostRecordingMode::Real(real) => {
             let stop = real.stop()?;
             (stop.path, stop.bytes, "host-microphone".to_string(), stop.capture_error)
@@ -209,7 +210,7 @@ fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecording
         }
     };
 
-    finish_capture_artifact(recording.artifact, &path, bytes, capture_error.as_deref())?;
+    let ownership_confirmed = complete_capture_artifact(recording.artifact, &path, bytes, &mut capture_error);
     Ok(HostRecordingStop {
         session_id: recording.session_id,
         path,
@@ -218,6 +219,7 @@ fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecording
         bytes,
         mode,
         capture_error,
+        ownership_confirmed,
     })
 }
 
@@ -236,6 +238,24 @@ fn finish_capture_artifact(artifact: Option<super::audio_artifacts::WriteLease>,
         artifact.finish()?;
     }
     Ok(())
+}
+
+// A full disk can prevent the ownership checkpoint even when audio bytes were
+// written. Still return the stopped recording and its path; the normal retry
+// can later persist the session and recover the original without cloud work.
+fn complete_capture_artifact(artifact: Option<super::audio_artifacts::WriteLease>, path: &Path,
+    bytes: u64, capture_error: &mut Option<String>) -> bool {
+    match finish_capture_artifact(artifact, path, bytes, capture_error.as_deref()) {
+        Ok(()) => true,
+        Err(error) => {
+            let detail = format!("录音保存尚未确认：{error}");
+            match capture_error {
+                Some(previous) => previous.push_str(&format!("；{detail}")),
+                None => *capture_error = Some(detail),
+            }
+            false
+        }
+    }
 }
 
 fn recording_path(session_id: &str, title: &str) -> Result<PathBuf, String> {
@@ -294,6 +314,16 @@ fn remember_capture_error(slot: &Mutex<Option<String>>, message: String) {
     }
 }
 
+// Commit the writer's byte count as each complete sample reaches the file.
+// A full disk may interrupt one callback halfway through; the earlier samples
+// must remain playable instead of leaving a header shorter than the PCM.
+fn append_captured_samples(writer: &mut WavWriter, samples: &[i16]) -> std::io::Result<()> {
+    for sample in samples {
+        writer.append_samples(std::slice::from_ref(sample))?;
+    }
+    Ok(())
+}
+
 fn finish_capture_file(
     writer: &Mutex<WavWriter>,
     capture_error: &Mutex<Option<String>>,
@@ -348,7 +378,7 @@ impl RealRecording {
                     return;
                 }
                 if let Ok(mut writer) = sink_writer.lock() {
-                    if let Err(error) = writer.append_samples(&resampled) {
+                    if let Err(error) = append_captured_samples(&mut writer, &resampled) {
                         remember_capture_error(&write_error, format!("录音写入失败：{error}"));
                     }
                 } else {
@@ -856,6 +886,59 @@ mod tests {
     }
 
     #[test]
+    #[ignore]
+    fn actual_full_disk_partial_write_can_recover_recording() {
+        use std::io::Write;
+        let root=std::path::PathBuf::from(std::env::var_os("COMPANION_FULL_DISK_TEST_ROOT").expect("explicit isolated test volume"));
+        assert_eq!(root, std::path::PathBuf::from(r"E:\CodexData\Companion\actual-full-disk-20261030\mount"));
+        assert_eq!(std::fs::read_to_string(root.join("test-volume-marker.txt")).unwrap(),"isolated test volume\n");
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let audio=root.join("full-disk-example-r4.wav");let filler=root.join("test-filler-r4.bin");
+        let lease=super::super::audio_artifacts::WriteLease::begin(&audio,&audio,super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let writer=Mutex::new(WavWriter::create(&audio).unwrap());
+        writer.lock().unwrap().append_bytes(&vec![42u8;32000]).unwrap();
+        let initial=std::fs::metadata(&audio).unwrap().len();
+        let mut f=std::fs::OpenOptions::new().create_new(true).write(true).open(&filler).unwrap();
+        for size in [65536usize,4096,512,1] {let block=vec![1u8;size];loop {if f.write_all(&block).is_err(){break;}}}
+        let fill_len=f.metadata().unwrap().len();assert!(fill_len>65536);
+        f.set_len(fill_len-65536).unwrap();f.sync_all().unwrap();drop(f);
+        let err=append_captured_samples(&mut writer.lock().unwrap(),&vec![100i16;100000]).expect_err("partial append should encounter real full volume");
+        let before_finalize=std::fs::metadata(&audio).unwrap().len();assert!(before_finalize>initial,"must actually write a partial batch");
+        let errors=Mutex::new(None);remember_capture_error(&errors,format!("录音写入失败：{err}"));
+        let (bytes,mut capture_error)=finish_capture_file(&writer,&errors);
+        let ownership_confirmed=complete_capture_artifact(lease,&audio,bytes,&mut capture_error);drop(writer);
+        assert!(!ownership_confirmed,"the full volume must report an uncommitted ownership checkpoint");
+        let raw=std::fs::read(&audio).unwrap();eprintln!("initial={initial} actual={} reported={} header_data={} capture_error={:?}",raw.len(),bytes,u32::from_le_bytes(raw[40..44].try_into().unwrap()),capture_error);
+        std::fs::remove_file(&filler).unwrap();
+        let mut fixture=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("real-full-disk".into()))).unwrap();
+        let mut row=fixture.host.sessions.remove(0);row.id="real-full-disk".into();row.source="hostMicrophone".into();row.status="captured".into();row.audio_path=Some(audio.to_string_lossy().to_string());row.audio_bytes=bytes;row.audio_stored=true;row.retention.audio_cached=true;row.chunks=crate::companion_v1::seal_companion_v1_session_chunks(&row,"stop",0,Some(bytes));
+        super::super::pause_incomplete_host_recording(&mut row,capture_error.as_deref().unwrap(),!ownership_confirmed);
+        assert!(row.capture_incomplete && !row.audio_stored,"uncommitted ownership needs recovery");
+        let auth=super::super::session_store::privacy_authorization(&row).unwrap();let state=root.join("sessions-r4.json");super::super::persistence::save_sessions_to(&state,&[row]).unwrap();
+        super::super::host_interrupted_recovery::recover_session_at(&state,"real-full-disk",&auth).expect("recover after freeing actual full volume");
+        assert_eq!(std::fs::read(&audio).unwrap(),raw,"the original remains unchanged");let rows=super::super::persistence::load_sessions_from(&state).unwrap();assert!(rows[0].audio_stored&&rows[0].capture_incomplete);
+        let restored=std::fs::read(rows[0].audio_path.as_deref().unwrap()).unwrap();assert_eq!(&restored[44..],&raw[44..]);
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
+
+    #[test]
+    #[ignore]
+    fn actual_full_disk_older_short_header_can_recover() {
+        let root=std::path::PathBuf::from(std::env::var_os("COMPANION_FULL_DISK_TEST_ROOT").expect("explicit isolated test volume"));
+        assert_eq!(root,std::path::PathBuf::from(r"E:\CodexData\Companion\actual-full-disk-20261030\mount"));
+        assert_eq!(std::fs::read_to_string(root.join("test-volume-marker.txt")).unwrap(),"isolated test volume\n");
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let original=root.join("full-disk-example-r2.wav");let before=std::fs::read(&original).unwrap();
+        let state=root.join("sessions-r2.json");let rows:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(&state).unwrap()).unwrap();
+        let row=rows.iter().find(|r|r.id=="real-full-disk").unwrap();let auth=super::super::session_store::privacy_authorization(row).unwrap();
+        super::super::host_interrupted_recovery::recover_session_at(&state,"real-full-disk",&auth).expect("existing product recording should recover after disk full");
+        let rows=super::super::persistence::load_sessions_from(&state).unwrap();let row=&rows[0];assert!(row.audio_stored && row.capture_incomplete);
+        assert_eq!(std::fs::read(&original).unwrap(),before);let saved=std::fs::read(row.audio_path.as_deref().unwrap()).unwrap();
+        assert_eq!(&saved[44..],&before[44..]);assert!(super::super::meeting_workspace::validate_wav(std::path::Path::new(row.audio_path.as_deref().unwrap())).is_ok());
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
+
+    #[test]
     fn failed_host_save_keeps_original_recoverable_in_the_same_meeting() {
         let root=std::env::temp_dir().join(format!("host-save-failure-{}",uuid::Uuid::new_v4()));
         std::fs::create_dir_all(&root).unwrap();std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
@@ -872,7 +955,7 @@ mod tests {
         row.audio_bytes=raw.len() as u64;row.audio_stored=true;row.retention.audio_cached=true;row.duration_ms=1000;
         row.chunks=crate::companion_v1::seal_companion_v1_session_chunks(&row,"test-stop",row.duration_ms,Some(row.audio_bytes));
         assert!(!row.chunks.is_empty(),"exercise the ordinary stop-created chunk metadata");
-        super::super::pause_incomplete_host_recording(&mut row,"录音文件保存失败");
+        super::super::pause_incomplete_host_recording(&mut row,"录音文件保存失败",false);
         assert!(!row.audio_stored && row.retention.audio_cached && row.capture_incomplete);
         let auth=super::super::session_store::privacy_authorization(&row).unwrap();
         super::super::persistence::save_sessions_to(&state,&[row]).unwrap();
