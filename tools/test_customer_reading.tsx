@@ -129,3 +129,18 @@ act(()=>tree.root.findByProps({'aria-label':'待办 2 内容'}).props.onChange({
 assert.equal(layeredChanges.at(-1),'[x] 带身份证 (due: 2026-10-28T20:00:00+08:00, owner: 我)\n[ ] 确认回程后再订票 (due: 未确认, owner: 小王)');
 act(()=>tree.unmount());
 console.log('PASS checklist hierarchy: visible date/owner summary, no automatic form expansion or draft rewrite, other-task edit retains exact completed timestamp and owner');
+
+// A date entry can display an exact single source for comparison, but must
+// neither pick a date nor select one of several matching spoken segments.
+const calendarSources=[{sessionId:'fictional',index:0,text:'明天开会，记得带身份证。',startMs:100,endMs:2000,speaker:null,reviewRevision:null}];
+const sourceDrafts:string[]=[];
+act(()=>{tree=create(<ActionListEditor value="[ ] 记得带身份证" disabled={false} calendarOnly calendarAll sourceSegments={calendarSources} onChange={v=>sourceDrafts.push(v)}/>);});
+act(()=>button('修改截止时间').props.onClick());
+assert.match(text(tree.toJSON()),/明天开会，记得带身份证/);
+assert.match(text(tree.toJSON()),/日期和是否适用于此事项请自行确认/);
+assert.equal(tree.root.findByProps({'aria-label':'待办 1 日历日期'}).props.value,'');
+assert.deepEqual(sourceDrafts,[],'opening context never changes the saved action');act(()=>tree.unmount());
+act(()=>{tree=create(<ActionListEditor value="[ ] 记得带身份证" disabled={false} calendarOnly calendarAll sourceSegments={[...calendarSources,{...calendarSources[0],index:1}]} onChange={v=>sourceDrafts.push(v)}/>);});
+act(()=>button('修改截止时间').props.onClick());
+assert.equal(tree.root.findAllByProps({'aria-label':'供核对的转写'}).length,0,'ambiguous excerpts must not be selected');
+act(()=>tree.unmount());console.log('PASS calendar context: exact excerpt, explicit date and ambiguous source guard');

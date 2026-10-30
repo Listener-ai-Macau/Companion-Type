@@ -1,8 +1,8 @@
 import {useEffect,useRef,useState} from 'react';
 import {confirmedCalendarTime,seedCalendarTime,readableCalendarTime,type CalendarTimeDraft} from './calendarTime';
 
-export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,openRequestKey,openWithTime,scope='item',compact=false}:{
-  value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;openRequestKey?:string;openWithTime?:boolean;scope?:'item'|'common';compact?:boolean;
+export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,openRequestKey,openWithTime,scope='item',compact=false,sourceContext}:{
+  value:string;label:string;disabled:boolean;onConfirm:(value:string)=>void;onPending?:(delta:1|-1)=>void;openRequestKey?:string;openWithTime?:boolean;scope?:'item'|'common';compact?:boolean;sourceContext?:{text:string;recordingTime?:string};
 }){
   const[draft,setDraft]=useState<CalendarTimeDraft|null>(null),dialog=useRef<HTMLDialogElement|null>(null),activePending=useRef<typeof onPending>(undefined);
   const open=!!draft,lastRequested=useRef<string|undefined>(undefined);
@@ -24,6 +24,12 @@ export function CalendarTimeEditor({value,label,disabled,onConfirm,onPending,ope
       <h3>{compact?'修改这一项的截止时间':'确认日历时间'}</h3>
       {draft.expected?<p className="ct-step-meta" style={{overflowWrap:'anywhere'}}>原时间：{readableCalendarTime(draft.expected)}</p>:null}
       <p className="ct-step-meta">{scope==='common'?'这里只更新共同时间草稿；返回后核对应用范围，再保存清单。原始文字不改。':'这会更新本项清单的时间，原话仍保留。导入日历后需核对截止时间与提醒。'}</p>
+      {sourceContext?<div className="ct-calendar-source-context" aria-label="供核对的转写">
+        <strong>供核对的转写</strong>
+        <p style={{maxHeight:100,overflow:'auto',whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{sourceContext.text}</p>
+        {sourceContext.recordingTime?<p className="ct-step-meta">录音时间（本机时区）：{sourceContext.recordingTime}</p>:null}
+        <p className="ct-step-meta">转写仅供对照，日期和是否适用于此事项请自行确认。</p>
+      </div>:null}
       <label style={{display:'block',marginBottom:12}}>日期<input aria-label={`${label} 日历日期`} type="date" min="0001-01-01" max="9999-12-31" value={draft.date} disabled={disabled}
         style={{display:'block',width:'100%',boxSizing:'border-box'}} onChange={event=>patch({date:event.target.value})}/></label>
       <label style={{display:'block',marginBottom:12}}><input type="checkbox" aria-label={`${label} 指定时刻`} checked={draft.timed} disabled={disabled} onChange={event=>patch({timed:event.target.checked})}/> 指定时刻</label>

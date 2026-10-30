@@ -310,8 +310,8 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   });
 }
 
-function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext, manual=false, onCalendarPending, calendarRequestKey, calendarLineIndex, calendarRequestTimed, calendarOnly=false, calendarAll=false }: {
-  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarLineIndex?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;calendarAll?:boolean;
+function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext, manual=false, onCalendarPending, calendarRequestKey, calendarLineIndex, calendarRequestTimed, calendarOnly=false, calendarAll=false, sourceSegments, recordingTime }: {
+  markdown: string; onChange: (value: string) => void; disabled: boolean; label: string; noteContext?: CompanionMinutesNoteContext | null; manual?: boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarLineIndex?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;calendarAll?:boolean;sourceSegments?:readonly CompanionTranscriptSource[];recordingTime?:string;
 }) {
   const fields = basicMinutesFields(markdown, noteContext, manual);
   if (!fields&&calendarOnly)return <p className="ct-step-warn">清单结构已变化，请取消后重新选择事项；旧输入仍保留。</p>;
@@ -326,7 +326,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
   const requestedRow=requestedOffset!==undefined&&calendarTarget?markdown.slice(calendarTarget.start,requestedOffset).trimStart().split(/\r?\n/).length-1:undefined;
   const field = (item: typeof fields[number]) => <div key={`${item.key}-${fields.indexOf(item)}`} className="ct-basic-minutes-field">
     {!calendarOnly?<span>{item.label}{item.key === 'Action Items' ? '（分别修改）' : ''}</span>:null}
-    {item.key==='Action Items'?<ActionListEditor calendarOnly={calendarOnly} calendarAll={calendarAll} calendarRequestRow={item===calendarTarget?requestedRow:undefined} calendarRequestTimed={calendarRequestTimed} calendarRequestKey={item===calendarTarget?calendarRequestKey:undefined} onCalendarPending={onCalendarPending} value={item.value} disabled={disabled} onChange={value=>{
+    {item.key==='Action Items'?<ActionListEditor sourceSegments={sourceSegments} recordingTime={recordingTime} calendarOnly={calendarOnly} calendarAll={calendarAll} calendarRequestRow={item===calendarTarget?requestedRow:undefined} calendarRequestTimed={calendarRequestTimed} calendarRequestKey={item===calendarTarget?calendarRequestKey:undefined} onCalendarPending={onCalendarPending} value={item.value} disabled={disabled} onChange={value=>{
       const newline=markdown.includes('\r\n')?'\r\n':'\n';
       const body=value.split(/\r?\n/).map(line=>line.trim()?`- ${line}`:line).join(newline);
       onChange(markdown.slice(0,item.start)+newline+body+newline+newline+markdown.slice(item.end));
@@ -1979,7 +1979,7 @@ export function CompanionDashboard({
                 {manualMinutes||selectedDraft?.minutes?.[minutesViewMode]?.createManual?<details className="ct-checklist-source" open={!calendarEditAll&&calendarEditLine===undefined}>
                   <summary>对照原话</summary><p className="ct-step-meta" style={{maxHeight:100,overflow:'auto',whiteSpace:'pre-wrap'}}>{companionReviewedTranscript(selectedSession)}</p>
                 </details>:null}
-                <MinutesContentEditor calendarOnly={calendarEditAll||calendarEditLine!==undefined} calendarAll={calendarEditAll} calendarLineIndex={calendarEditLine} calendarRequestTimed={calendarEditTimed} calendarRequestKey={calendarEditRequest??undefined} onCalendarPending={changeCalendarPending} manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={calendarPendingCount>0 && minutesEntry && 'calendarContext'in minutesEntry?minutesEntry.calendarContext:minutesDisplayContext}
+                <MinutesContentEditor sourceSegments={selectedMinutesStale||transcriptReviewUnsaved?[]:transcriptSources} recordingTime={selectedSession.startedAt?recordingTimeLabel(selectedSession.startedAt):undefined} calendarOnly={calendarEditAll||calendarEditLine!==undefined} calendarAll={calendarEditAll} calendarLineIndex={calendarEditLine} calendarRequestTimed={calendarEditTimed} calendarRequestKey={calendarEditRequest??undefined} onCalendarPending={changeCalendarPending} manual={manualMinutes || !!selectedDraft?.minutes?.[minutesViewMode]?.createManual} markdown={minutesDraft} onChange={updateMinutesDraft} noteContext={calendarPendingCount>0 && minutesEntry && 'calendarContext'in minutesEntry?minutesEntry.calendarContext:minutesDisplayContext}
                   label={selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单':`编辑${minutesViewMode === 'offlineStore' ? '先录后整理' : '在线速记'}纪要`} disabled={saveMeetingBusy} />
 
                 {offlineMinutes && onlineMinutes ? <p className="ct-step-meta">只修改当前版本，另一份整理结果保持不变。</p> : null}

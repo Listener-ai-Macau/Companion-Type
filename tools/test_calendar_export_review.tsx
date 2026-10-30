@@ -24,7 +24,7 @@ assert.equal(previews[0].sessionId,row.id);assert.equal(previews[0].meetingMode,
 assert.match(text(tree.toJSON()),/还有时间说明未确认为日历截止时间/);
 await act(async()=>button('取消导出').props.onClick());assert.equal(exports.length,0);
 await act(async()=>button('导出日历待办').props.onClick());
-await act(async()=>button('先核对时间').props.onClick());
+await act(async()=>button('编辑完整清单（含时间）').props.onClick());
 assert.ok(tree.root.findAllByProps({className:'ct-minutes-editor'}).length);assert.equal(exports.length,0);
 act(()=>tree.unmount());
 act(()=>{tree=create(<CompanionDashboard {...props()}/>);});

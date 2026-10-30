@@ -1,4 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
+import {companionMinutesReferencedSources,type CompanionTranscriptSource} from '@companion-type/core';
 import {ActionListCommonFields,commonFieldPatch} from './ActionListCommonFields';
 import {CalendarTimeEditor} from './CalendarTimeEditor';
 import {readableCalendarTime} from './calendarTime';
@@ -20,7 +21,7 @@ function writeRow(row:Row):string{
   return row.prefix+row.text+(fields.length?' ('+fields.map(field=>`${field.key}: ${field.value}`).join(', ')+')':'');
 }
 
-export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey,calendarRequestRow,calendarRequestTimed,calendarOnly=false,calendarAll=false}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarRequestRow?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;calendarAll?:boolean}){
+export function ActionListEditor({value,onChange,disabled,onCalendarPending,calendarRequestKey,calendarRequestRow,calendarRequestTimed,calendarOnly=false,calendarAll=false,sourceSegments=[],recordingTime}:{value:string;onChange:(value:string)=>void;disabled:boolean;onCalendarPending?:(delta:1|-1)=>void;calendarRequestKey?:string;calendarRequestRow?:number;calendarRequestTimed?:boolean;calendarOnly?:boolean;calendarAll?:boolean;sourceSegments?:readonly CompanionTranscriptSource[];recordingTime?:string}){
   const nextId=useRef(0),sent=useRef(value);
   const calendarIntent=useRef<{key?:string;rowId?:number}>({});
   const parse=(text:string)=>text?text.split(/\r?\n/).map(raw=>readRow(raw,nextId.current++)):[readRow('',nextId.current++)];
@@ -92,7 +93,7 @@ export function ActionListEditor({value,onChange,disabled,onCalendarPending,cale
             disabled={disabled} placeholder="未注明" onChange={event=>metadata(row,'due',event.target.value)}/></label>}
         <div style={{margin:'4px 0 8px'}}>
         <CalendarTimeEditor compact={calendarOnly} openWithTime={calendarRequestTimed} openRequestKey={index===calendarTarget?calendarRequestKey:undefined} label={`待办 ${index+1}`} value={row.metadata.find(field=>field.key==='due')?.value??''}
-          disabled={disabled} onConfirm={value=>metadata(row,'due',value)} onPending={onCalendarPending}/>
+          disabled={disabled} sourceContext={(()=>{const matches=companionMinutesReferencedSources(sourceSegments,row.text);return matches.length===1?{text:matches[0].text,recordingTime}:undefined;})()} onConfirm={value=>metadata(row,'due',value)} onPending={onCalendarPending}/>
         </div>
         {!calendarOnly?<label style={{display:'block'}}><span className="ct-step-meta">负责人</span>
           <input style={{width:'100%',boxSizing:'border-box'}} aria-label={`待办 ${index+1} 负责人`} value={row.metadata.find(field=>field.key==='owner')?.value??''}
