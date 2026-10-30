@@ -78,7 +78,7 @@ mod tests {
     }
     #[test] fn failure_stops_future_requests_and_explicit_silence_is_not_failure() {
         let (path,_)=fixture(70);let mut calls=0;
-        assert!(transcribe(&path,|_|{calls+=1;if calls==2 {Err("provider refused".into())}else{Ok("first".into())}}).is_err());assert_eq!(calls,2);
+        assert!(transcribe(&path,|_|{calls+=1;if calls==2 {Err("Volcengine auth rejected (HTTP 401)".into())}else{Ok("first".into())}}).is_err());assert_eq!(calls,2);
         calls=0;let result=transcribe(&path,|_|{calls+=1;if calls==2{Err(super::super::volcengine::NO_SPEECH_ERROR.into())}else{Ok(format!("part{calls}"))}}).unwrap();
         assert_eq!(result,"part1\npart3");fs::remove_file(path).unwrap();
     }
