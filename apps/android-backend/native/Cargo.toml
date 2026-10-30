@@ -12,6 +12,7 @@ mobile-asr = ["dep:futures", "dep:serde_json", "dep:tokio", "dep:tokio-tungsteni
 mobile-calendar = ["dep:chrono", "dep:regex", "dep:serde_json"]
 mobile-memo = ["dep:regex", "dep:serde_json"]
 mobile-minutes = ["mobile-memo", "dep:reqwest", "dep:uuid", "dep:chrono"]
+mobile-control = ["mobile-minutes"]
 
 [dependencies]
 crc32fast = "1"

@@ -36,6 +36,16 @@ mod companion_v1 {
     #[serde(rename_all="camelCase")]
     pub struct CompanionV1MinutesProcessing {pub strategy:String,pub source_bytes:usize,pub processed_source_bytes:usize,pub total_chunks:usize,pub completed_chunks:usize,pub resumed_chunks:usize,pub complete:bool}
     impl CompanionV1MinutesProcessing {pub fn is_complete(&self)->bool{self.strategy=="chunkedSourceBacked"&&self.complete&&self.total_chunks!=0&&self.completed_chunks==self.total_chunks&&self.resumed_chunks<=self.completed_chunks&&self.source_bytes!=0&&self.processed_source_bytes==self.source_bytes}}
+    #[cfg(feature="mobile-control")]
+    #[derive(Clone,Debug,serde::Serialize,serde::Deserialize,PartialEq,Eq)]
+    #[serde(rename_all="camelCase")]
+    pub struct CompanionV1RecordingKey {pub device_uid:String,pub format_epoch:String,pub session_id:String}
+    #[cfg(feature="mobile-control")]
+    #[derive(Clone,Copy,Debug,serde::Serialize,serde::Deserialize,PartialEq,Eq)]
+    #[serde(rename_all="camelCase")]
+    pub enum CompanionV1RecordingEndReason {User,StorageFull,DurationLimit,LowBattery,Silence}
+    #[cfg(feature="mobile-control")]
+    impl CompanionV1RecordingEndReason {pub(crate) fn from_code(code:u8)->Result<Option<Self>,String>{Ok(match code{0=>None,1=>Some(Self::User),2=>Some(Self::StorageFull),3=>Some(Self::DurationLimit),4=>Some(Self::LowBattery),5=>Some(Self::Silence),_=>return Err("unsupported recording end reason".into())})}}
 }
 #[cfg(feature="mobile-memo")]
 use companion_v1::CompanionV1MeetingMinutes;

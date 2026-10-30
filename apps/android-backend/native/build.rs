@@ -86,4 +86,45 @@ fn main() {
         std::fs::write(out.join("mobile_minutes_shared.rs"),text).expect("prepare shared minutes");
         println!("cargo:rerun-if-changed={}",original.display());
     }
+    if std::env::var_os("CARGO_FEATURE_MOBILE_CONTROL").is_some() {
+        let root=Path::new("../../windows/src-tauri/src/backend");
+        let out=std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
+        let read=|name:&str|{let path=root.join(name);println!("cargo:rerun-if-changed={}",path.display());std::fs::read_to_string(path).expect("shared recorder source").replace("\r\n","\n")};
+        let section=|text:&str,start:&str,end:&str|->String {
+            assert_eq!(text.matches(start).count(),1,"missing or ambiguous section start: {start}");
+            assert_eq!(text.matches(end).count(),1,"missing or ambiguous section end: {end}");
+            let a=text.find(start).unwrap();let b=text.find(end).unwrap();assert!(a<b);text[a..b].to_owned()
+        };
+        let source=read("recording_wire.rs");
+        let helpers=section(&source,"fn fail(reason: &str)","mod legacy;");
+        let key=section(&source,"#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize)]","#[derive(Clone, Debug, PartialEq, Eq)]\npub(crate) struct Descriptor");
+        let transport=read("recording_wire/transport.rs");
+        let transport=section(&transport,"const STATUS_PREFIX: usize","    pub(crate) fn validate(&self, d: &Descriptor)");
+        let transport=format!("use super::{{fail,u16le,u32le,u64le}};\n{transport}\n}}\n");
+        let transport_path=out.join("mobile_control_transport.rs");std::fs::write(&transport_path,transport).expect("prepare recorder peer");
+        let control_source=read("recording_wire/control.rs");
+        let test_path=root.join("recording_wire/control/pause_tests.rs").canonicalize().expect("shared pause tests").to_string_lossy().replace('\\',"/");
+        assert_eq!(control_source.matches("mod pause_tests;").count(),1);
+        let control_source=control_source.lines().map(|line|if let Some(doc)=line.strip_prefix("//!"){format!("//{doc}")}else{line.to_string()}).collect::<Vec<_>>().join("\n")
+            .replace("mod pause_tests;",&format!("#[path = \"{test_path}\"] mod pause_tests;"));
+        let control=out.join("mobile_control_protocol.rs");std::fs::write(&control,control_source).expect("prepare recorder protocol");
+        let peer_path=transport_path.to_string_lossy().replace('\\',"/");let control_path=control.to_string_lossy().replace('\\',"/");
+        std::fs::write(out.join("mobile_control_wire.rs"),format!("use serde::Serialize;\n{helpers}\n{key}\n#[path = \"{peer_path}\"] pub(crate) mod transport;\n#[path = \"{control_path}\"] pub(crate) mod control;\n")).expect("prepare recorder wire");
+        let journal=read("recorder_control.rs");
+        let prefix=section(&journal,"use std::{fs::", "/// The cross-process lock spans the complete command/status operation.");
+        let catalogue=read("recorder_control/catalogue.rs");
+        let catalogue=section(&catalogue,"use super::*;","    pub(crate) fn end_from_sealed_catalogue(")
+            .replace("use crate::backend::recording_wire::{self, Descriptor};\n","");
+        let catalogue_path=out.join("mobile_control_catalogue.rs");
+        std::fs::write(&catalogue_path,format!("{catalogue}\n}}\n")).expect("prepare recorder sealed status");
+        let catalogue_path=catalogue_path.to_string_lossy().replace('\\',"/");
+        let bridge=read("ble_bridge/recorder_control.rs");
+        let settlement=section(&bridge,"#[derive(Debug,PartialEq,Eq)]\nenum SettlementAction", "async fn settle(")
+            .replace("enum SettlementAction", "pub(crate) enum SettlementAction")
+            .replace("fn settlement_action(","pub(crate) fn settlement_action(");
+        std::fs::write(out.join("mobile_control_journal.rs"),format!("{prefix}\n#[path = \"{catalogue_path}\"] mod catalogue;\npub(crate) use catalogue::SealedCatalogueEnd;\n{settlement}")).expect("prepare recorder journal");
+        let device=read("device_connection.rs");
+        let identity=section(&device,"pub(crate) fn stable_device_id(","fn preference_path()");
+        std::fs::write(out.join("mobile_device_identity.rs"),identity).expect("prepare device identity comparison");
+    }
 }
