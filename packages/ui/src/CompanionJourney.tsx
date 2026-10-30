@@ -127,8 +127,9 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   return { stage: 0, title: '还没有可处理的录音', detail: '当前记录没有本机音频或完整文字，请先同步录音，也可以在处理步骤中导入文本。', label: '查看处理步骤', destination: 'workflow' };
 }
 
-export function CompanionJourney({ journey, blocked, onControl, onSettings, onWorkflow }: {
+export function CompanionJourney({ journey, blocked, onControl, onSettings, onWorkflow, hideAction = false }: {
   journey: MeetingJourney; blocked: boolean;
+  hideAction?: boolean;
   onControl: (request: CompanionV1ControlRequest) => void;
   onSettings: () => void; onWorkflow: () => void;
 }) {
@@ -142,7 +143,7 @@ export function CompanionJourney({ journey, blocked, onControl, onSettings, onWo
     </ol>}
     <div className="ct-journey-body">
       <div><h3>{journey.processing ? <LoaderCircle size={18} /> : <FileText size={18} />}{journey.title}</h3><p>{journey.detail}</p></div>
-      {journey.label ? <button type="button" className="ct-action ct-action-primary"
+      {journey.label && !hideAction ? <button type="button" className="ct-action ct-action-primary"
         disabled={blocked && Boolean(journey.request)} onClick={() => {
           if (journey.request) onControl(journey.request);
           else if (journey.destination === 'settings') onSettings();

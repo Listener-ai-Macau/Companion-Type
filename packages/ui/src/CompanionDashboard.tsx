@@ -936,6 +936,8 @@ export function CompanionDashboard({
     connected, deviceId: device?.deviceId, asrReady: asrConfigured,
     minutesReady: Boolean(productSettings?.deepseekMinutesEnabled && productSettings.deepseekApiKeySet),
   }) : null;
+  const journeyRepeatsPrimaryTranscription = Boolean(selectedSession && !finalTranscript && !journey?.handlesFailure
+    && journey?.request?.action === 'meetingTranscribeAudio' && journey.request.sessionId === selectedSession.id);
   const actualRecordingDurationMs = boardOnlineLive?.state === 'recording' ? boardOnlineLive.durationMs : 0;
   const recordingLimitMs = (boardOnlineLive?.maxDurationSeconds ?? 0) * 1000;
   const recordingRemainingMs = Math.max(0, recordingLimitMs - actualRecordingDurationMs);
@@ -1836,7 +1838,7 @@ export function CompanionDashboard({
             转文字需要先配置转写服务，原音已保留。<button type="button" className="ct-text-button" onClick={openSettings}>去配置</button>
           </p> : null}
           {transcriptionRunning ? <p className="ct-recording-notice" role="status">正在转文字，完成后会显示在这里。原音会保留。</p> : recoveryView?.isProcessing ? <p className="ct-recording-notice" role="status">{recoveryView.label}，完成后文字会显示在这里。</p> : null}
-          {journey && !journey.optional && !recoveryView?.isProcessing ? <CompanionJourney journey={journey}
+          {journey && !journey.optional && !recoveryView?.isProcessing ? <CompanionJourney journey={journey} hideAction={journeyRepeatsPrimaryTranscription}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked} onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow}/> : null}
           {selectedSession.recovery?.lastError && !journey?.handlesFailure ? <p className="ct-recording-notice ct-step-warn" role="status">处理未完成：{operationErrorText(selectedSession.recovery.lastError)}</p> : null}
           {audioResult?.sessionId===selectedSession.id ? <p className="ct-recording-notice ct-step-warn" role="status">{audioResult.message}</p> : null}
@@ -2012,7 +2014,7 @@ export function CompanionDashboard({
           </div>
           {renderExportFeedback('documentTools')}
 
-          {journey?.optional ? <CompanionJourney journey={journey} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
+          {journey?.optional ? <CompanionJourney journey={journey} hideAction={journeyRepeatsPrimaryTranscription} blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
             onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
             </details>
           </details> : null}
