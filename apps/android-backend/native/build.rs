@@ -37,4 +37,20 @@ fn main() {
         println!("cargo:rerun-if-changed={}",source.display());
         println!("cargo:rerun-if-changed={probe}");
     }
+    if std::env::var_os("CARGO_FEATURE_MOBILE_MEMO").is_some() {
+        // Include the exact comparison functions used by the shared short-memo
+        // extractor; fail closed if the desktop source layout ever changes.
+        let source=Path::new("../../windows/src-tauri/src/backend/minutes.rs");
+        let text=std::fs::read_to_string(source).expect("shared minutes source");
+        let start="fn normalized_fact_chars(text: &str) -> Vec<char> {";
+        let end="fn merge_missing_source_facts(";
+        assert_eq!(text.matches(start).count(),1);
+        assert_eq!(text.matches(end).count(),1);
+        let start_at=text.find(start).unwrap();let end_at=text.find(end).unwrap();
+        assert!(start_at<end_at);
+        let section=text[start_at..end_at].replace("fn source_fact_covered(","pub(super) fn source_fact_covered(");
+        let out=std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap()).join("minutes_fact_match.rs");
+        std::fs::write(out,section).expect("prepare shared fact comparison");
+        println!("cargo:rerun-if-changed={}",source.display());
+    }
 }

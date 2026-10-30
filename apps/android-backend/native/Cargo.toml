@@ -10,6 +10,7 @@ crate-type = ["rlib", "cdylib"]
 [features]
 mobile-asr = ["dep:futures", "dep:serde_json", "dep:tokio", "dep:tokio-tungstenite", "dep:uuid"]
 mobile-calendar = ["dep:chrono", "dep:regex", "dep:serde_json"]
+mobile-memo = ["dep:regex", "dep:serde_json"]
 
 [dependencies]
 crc32fast = "1"

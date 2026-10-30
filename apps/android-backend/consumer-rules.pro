@@ -1,4 +1,4 @@
-# Preserve the two JNI entry points when a consuming app enables shrinking.
+# Preserve JNI entry points when a consuming app enables shrinking.
 -keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeAudio {
     native <methods>;
 }
@@ -6,5 +6,8 @@
     native <methods>;
 }
 -keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeCalendar {
+    native <methods>;
+}
+-keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeMemo {
     native <methods>;
 }

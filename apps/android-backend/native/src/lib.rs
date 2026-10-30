@@ -20,6 +20,24 @@ mod calendar_copy {
 mod action_export;
 #[cfg(feature="mobile-calendar")]
 mod mobile_calendar;
+#[cfg(feature="mobile-memo")]
+mod companion_v1 {
+    #[derive(Clone,serde::Serialize)]
+    pub struct CompanionV1ActionItem {pub text:String,pub owner:Option<String>,pub due:Option<String>}
+    pub struct Note {pub text:String}
+    pub struct CompanionV1HostSession {pub transcript_text:String,pub duration_ms:u64,pub meeting_notes:Vec<Note>}
+}
+#[cfg(feature="mobile-memo")]
+struct CompanionV1MeetingMinutes {action_items:Vec<companion_v1::CompanionV1ActionItem>}
+#[cfg(feature="mobile-memo")]
+mod fact_match { include!(concat!(env!("OUT_DIR"),"/minutes_fact_match.rs")); }
+#[cfg(feature="mobile-memo")]
+use fact_match::source_fact_covered;
+#[cfg(feature="mobile-memo")]
+#[path = "../../../windows/src-tauri/src/backend/minutes/short_memo.rs"]
+mod short_memo;
+#[cfg(feature="mobile-memo")]
+mod mobile_memo;
 
 use sha2::{Digest,Sha256};
 use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},sync::atomic::{AtomicU64,Ordering}};
@@ -174,6 +192,23 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeCalendar_exportJso
         Ok(Ok(json))=>match env.new_string(json){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},
         Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
         Err(_)=>{let _=env.throw_new("java/io/IOException","calendar export failed; saved content was retained");std::ptr::null_mut()},
+    }
+}
+
+#[cfg(feature="mobile-memo")]
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeMemo_extractJson(
+    mut env:jni::JNIEnv,_class:jni::objects::JClass,input:jni::objects::JString,duration_ms:jni::sys::jlong
+) -> jni::sys::jstring {
+    let run=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<String,String> {
+        if duration_ms<0{return Err("录音时长无效。".into());}
+        let input:String=env.get_string(&input).map_err(|e|e.to_string())?.into();
+        mobile_memo::extract(&input,duration_ms as u64)
+    }));
+    match run {
+        Ok(Ok(json))=>match env.new_string(json){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},
+        Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
+        Err(_)=>{let _=env.throw_new("java/io/IOException","待办草稿未生成；原转写保留。");std::ptr::null_mut()},
     }
 }
 

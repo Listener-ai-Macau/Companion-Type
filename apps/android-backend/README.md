@@ -59,6 +59,20 @@ meetings remain accessible. The store leaves recordings untouched and keeps one
 previous text version. Private storage, backup retention and deletion policy are
 owned by the host app; no cloud sync or automatic calendar delivery is provided.
 
+`NativeMemo.extract(transcript, durationMillis)` can identify some literal task
+candidates in a short personal voice memo without network access. It reuses the
+desktop short-memo rules and returns JSON with `quality: "draft"`,
+`complete: false`, `eligible`, `fullPlanRecognized` and `actionItems`. It does not
+summarize a meeting, resolve dates or owners, or guarantee every task is found.
+An empty candidate list is not evidence that there are no tasks. The host must
+keep the full transcript, display the candidates for review, and save only what
+the user accepts. Use the actual recording duration; this rule supports at most
+120 seconds and 280 characters. The host chooses stable IDs for accepted tasks.
+
+```java
+String candidatesJson = NativeMemo.extract(transcript, decoded.samples / 16);
+```
+
 `NativeCalendar.export` prepares a local iCalendar document for tasks the user
 has reviewed. Invoke it on a worker thread; the host must present its preview and
 offer an explicit share/import action. It neither changes a calendar nor creates
