@@ -186,7 +186,10 @@ fn pause_incomplete_host_recording(session: &mut CompanionV1HostSession, error: 
     arm_meeting_recovery(session);
     session.status = "captured".to_string();
     session.transcript_final = false;
-    session.audio_stored = session.audio_bytes > 44;
+    session.audio_stored = session.audio_bytes > 44 && session.audio_path.as_deref()
+        .map(std::path::Path::new).filter(|path| path.is_absolute())
+        .is_some_and(|path| std::fs::metadata(path).is_ok_and(|m| m.is_file() && m.len() == session.audio_bytes)
+            && meeting_workspace::validate_wav(path).is_ok());
     session.recovery.stage = "paused".to_string();
     session.recovery.next_retry_at_unix_ms = None;
     session.recovery.last_error = Some(format!("录音不完整：{error}。已保留现有文件，请检查录音后再处理。"));
@@ -5074,13 +5077,16 @@ mod tests {
             recovery_request(super::CompanionV1ControlAction::MeetingStart, "partial-capture", false),
         ).unwrap();
         let session = &mut snapshot.host.sessions[0];
-        session.audio_path = Some("partial.wav".to_string());
-        session.audio_bytes = 32044;
+        let path = std::env::temp_dir().join(format!("valid-partial-{}.wav", uuid::Uuid::new_v4()));
+        let wav = denzic_host_audio_v1_core::wav::encode_wav(&[100i16, -100, 50]);
+        std::fs::write(&path, &wav).unwrap();
+        session.audio_path = Some(path.to_string_lossy().to_string());
+        session.audio_bytes = wav.len() as u64;
         session.transcript_final = true;
         session.recovery = super::CompanionV1MeetingRecovery::armed("offlineStore");
         session.recovery.capture_review_confirmed = true;
         super::pause_incomplete_host_recording(session, "麦克风已拔出");
-        assert_eq!(session.audio_path.as_deref(), Some("partial.wav"));
+        assert_eq!(session.audio_path.as_deref(), path.to_str());
         assert!(session.audio_stored);
         assert!(session.capture_incomplete, "the interruption must remain visible after processing and restart");
         assert!(!session.recovery.capture_review_confirmed, "a new interruption must require explicit review");
@@ -5094,8 +5100,28 @@ mod tests {
         assert!(reopened.capture_incomplete && !reopened.recovery.capture_review_confirmed);
         assert_eq!(reopened.recovery.stage, "paused");
         assert!(reopened.recovery.next_retry_at_unix_ms.is_none());
+        reopened.audio_path = Some(path.with_file_name("missing-partial.wav").to_string_lossy().to_string());
         assert!(super::interrupted_capture::confirm(&mut reopened).is_err());
         assert!(!reopened.recovery.capture_review_confirmed);
+    }
+
+    #[test]
+    fn host_save_failure_never_claims_an_invalid_file_is_playable() {
+        let root=std::env::temp_dir().join(format!("host-invalid-capture-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let file=root.join("interrupted.wav");
+        let mut raw=denzic_host_audio_v1_core::wav::wav_header(0).to_vec();
+        raw.extend(vec![42u8;32000]);
+        std::fs::write(&file,&raw).unwrap();
+        let mut snapshot = super::apply_fixture_control(super::fixture_snapshot(),
+            recovery_request(super::CompanionV1ControlAction::MeetingStart, "invalid-host", false)).unwrap();
+        let session=&mut snapshot.host.sessions[0];
+        session.audio_path=Some(file.to_string_lossy().to_string());session.audio_bytes=raw.len() as u64;
+        session.audio_stored=true;session.retention.audio_cached=true;
+        super::pause_incomplete_host_recording(session,"录音文件保存失败");
+        assert!(!session.audio_stored, "a zero-length header plus PCM is not yet a playable WAV");
+        assert!(session.retention.audio_cached, "raw local data is still retained");
+        assert!(session.capture_incomplete);assert_eq!(std::fs::read(&file).unwrap(),raw);
     }
 
     #[test]

@@ -209,7 +209,7 @@ fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecording
         }
     };
 
-    if let Some(artifact) = recording.artifact { artifact.finish()?; }
+    finish_capture_artifact(recording.artifact, &path, bytes, capture_error.as_deref())?;
     Ok(HostRecordingStop {
         session_id: recording.session_id,
         path,
@@ -219,6 +219,23 @@ fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecording
         mode,
         capture_error,
     })
+}
+
+// A failed save can leave recoverable PCM behind an unfinished WAV header.
+// Keep its ownership in the interrupted phase instead of sealing it as a
+// playable recording; the existing copy-only recovery can then find it.
+fn finish_capture_artifact(artifact: Option<super::audio_artifacts::WriteLease>, path: &Path,
+    reported_bytes: u64, capture_error: Option<&str>) -> Result<(), String> {
+    if let Some(artifact) = artifact {
+        if capture_error.is_some() {
+            let playable = reported_bytes > 44
+                && std::fs::metadata(path).is_ok_and(|m| m.is_file() && m.len() == reported_bytes)
+                && super::meeting_workspace::validate_wav(path).is_ok();
+            if !playable { drop(artifact); return Ok(()); }
+        }
+        artifact.finish()?;
+    }
+    Ok(())
 }
 
 fn recording_path(session_id: &str, title: &str) -> Result<PathBuf, String> {
@@ -836,6 +853,36 @@ mod tests {
             assert!(manager.stop(Some("failed-mic")).unwrap().is_none());
             assert!(manager.active.lock().unwrap().is_none());
         }
+    }
+
+    #[test]
+    fn failed_host_save_keeps_original_recoverable_in_the_same_meeting() {
+        let root=std::env::temp_dir().join(format!("host-save-failure-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let path=root.join("interrupted.wav");
+        let lease=super::super::audio_artifacts::WriteLease::begin(&path,&path,super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let mut raw=denzic_host_audio_v1_core::wav::wav_header(0).to_vec();raw.extend(vec![42u8;32000]);
+        std::fs::write(&path,&raw).unwrap();
+        super::finish_capture_artifact(lease,&path,raw.len() as u64,Some("录音文件保存失败")).unwrap();
+        let state=root.join("sessions.json");
+        let mut fixture=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("save-failure".into()))).unwrap();
+        let mut row=fixture.host.sessions.remove(0);row.id="save-failure".into();row.source="hostMicrophone".into();
+        row.status="captured".into();row.audio_path=Some(path.to_string_lossy().to_string());
+        row.audio_bytes=raw.len() as u64;row.audio_stored=true;row.retention.audio_cached=true;row.duration_ms=1000;
+        row.chunks=crate::companion_v1::seal_companion_v1_session_chunks(&row,"test-stop",row.duration_ms,Some(row.audio_bytes));
+        assert!(!row.chunks.is_empty(),"exercise the ordinary stop-created chunk metadata");
+        super::super::pause_incomplete_host_recording(&mut row,"录音文件保存失败");
+        assert!(!row.audio_stored && row.retention.audio_cached && row.capture_incomplete);
+        let auth=super::super::session_store::privacy_authorization(&row).unwrap();
+        super::super::persistence::save_sessions_to(&state,&[row]).unwrap();
+        super::super::host_interrupted_recovery::recover_session_at(&state,"save-failure",&auth).unwrap();
+        let restored=super::super::persistence::load_sessions_from(&state).unwrap();let row=&restored[0];
+        assert_eq!(row.id,"save-failure");assert!(row.audio_stored && row.capture_incomplete);
+        assert_eq!(row.pending_reason.as_deref(),Some("capture_interrupted"));
+        let saved=std::fs::read(row.audio_path.as_deref().unwrap()).unwrap();assert_eq!(&saved[44..],&raw[44..]);
+        assert_eq!(std::fs::read(&path).unwrap(),raw,"source must remain intact");
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
     }
 
     #[test]
