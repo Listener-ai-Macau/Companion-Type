@@ -52,9 +52,9 @@ pub fn decode_session(segments:&[Segment],output:&Path)->Result<Decoded,String> 
         file.write_all(&wav_header(0)).map_err(|e|e.to_string())?;
         let mut decoder=opus_decoder::MonoDecoder::new(16000)?;let mut window=None;let mut schema=None;let mut timeline=None;let mut written=0u64;
         for (s,d) in segments.iter().zip(&descriptions) {
-            let mut input=File::open(&s.path).map_err(|e|format!("open recording: {e}"))?;
+            let input=File::open(&s.path).map_err(|e|format!("open recording: {e}"))?;
             if input.metadata().map_err(|e|e.to_string())?.len()!=u64::from(d.length) {return Err("recording segment length changed".into());}
-            let mut bytes=Vec::with_capacity(d.length as usize);input.read_to_end(&mut bytes).map_err(|e|e.to_string())?;
+            let mut bytes=Vec::with_capacity(d.length as usize);input.take(u64::from(d.length)+1).read_to_end(&mut bytes).map_err(|e|e.to_string())?;
             if bytes.len()!=d.length as usize || crc32fast::hash(&bytes)!=d.crc || Sha256::digest(&bytes).as_slice()!=d.sha {return Err("recording segment checksum changed".into());}
             let mut reader=cop1::Reader::new(bytes.as_slice(),d.offset,false)?;
             if reader.frame_ms!=20||reader.source_rate!=16000||schema.is_some_and(|v|v!=reader.schema) {return Err("recording audio format changed".into());}
