@@ -47,6 +47,10 @@ the Gradle property `companionAndroidJniLibs` to the resulting `jniLibs` directo
 to package it. Build the matching library for each ABI the host app supports. The
 ARM64 binary and Java sources have compiled; Android packaging and actual phone
 execution remain unverified. It does not provide a playback UI.
+`package_android_candidate.py` can also assemble an ARM64 AAR for integration
+experiments from the compiled library and an Android API jar. That archive has
+not yet been validated by the Android Gradle plugin or on a phone and must not be
+treated as a release artifact.
 `RecordingClient.close()` closes the connection and
 can be used to interrupt a transfer; it does not stop device recording. No operation
 here deletes or consumes recordings on the device.
