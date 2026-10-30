@@ -124,6 +124,9 @@ An empty candidate list is not evidence that there are no tasks. The host must
 keep the full transcript, display the candidates for review, and save only what
 the user accepts. Use the actual recording duration; this rule supports at most
 120 seconds and 280 characters. The host chooses stable IDs for accepted tasks.
+For example, “今天下午三点开会，记得带蓝色文件夹” produces two literal
+draft candidates. This is a narrow rule and does not resolve the date or make
+a calendar event; unfamiliar wording can still be missed.
 
 ```java
 String candidatesJson = NativeMemo.extract(transcript, decoded.samples / 16);
