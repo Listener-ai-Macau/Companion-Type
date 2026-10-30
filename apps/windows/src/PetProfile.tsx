@@ -92,8 +92,12 @@ export function PetProfile({disabled,deviceUid,transcript,onUnsavedChange}:{disa
     if(!view||!editor)return;
     if(!editor.text.trim()){setError('写一句你确实想让它记住的内容即可。');return;}
     const now=Math.floor(Date.now()/1000);
-    const memory:Memory={id:editor.id,createdUtc:editor.createdUtc,
-      expiresUtc:editor.expiry==='keep'?editor.expiresUtc:editor.expiry==='forever'?0:now+Number(editor.expiry)*86400,
+    const original=view.profile.memories.find(m=>m.id===editor.id);
+    const contentChanged=!original||editor.text.trim()!==original.text||editor.kind!==original.kind;
+    const createdUtc=contentChanged?now:editor.createdUtc;
+    const expiresUtc=editor.expiry==='keep'?editor.expiresUtc:editor.expiry==='forever'?0:now+Number(editor.expiry)*86400;
+    if(expiresUtc!==0&&expiresUtc<=createdUtc){setError('这条记忆的原有效期已结束，请选择新的保留时间。');return;}
+    const memory:Memory={id:editor.id,createdUtc,expiresUtc,
       kind:editor.kind,text:editor.text.trim()};
     const memories=view.profile.memories.filter(m=>m.id!==memory.id);memories.push(memory);
     const submitted={...editor};
@@ -184,6 +188,7 @@ export function PetProfile({disabled,deviceUid,transcript,onUnsavedChange}:{disa
             <textarea style={{width:'100%',minHeight:72}} maxLength={160} readOnly={uncertain||differentPet} value={editor.text} placeholder="例如：和我说话尽量简短。"
               onChange={e=>setEditor({...editor,text:e.target.value})}/>
             <small style={{color:memoryBytes>160?'#ad352b':undefined}}>{memoryBytes>160?'这句话太长了，请简短一点。':'简短一句，最多约50个汉字。'}</small>
+            <p style={{fontSize:12}}>修改内容或类型后，保存日期会作为新的确认日期；选择“保留原有效期”时，到期时间不变。</p>
             <div style={{display:'flex',gap:12,flexWrap:'wrap',margin:'8px 0'}}>
               <label>保留多久<select disabled={uncertain||differentPet} value={editor.expiry} onChange={e=>setEditor({...editor,expiry:e.target.value})}>
                 {editor.expiry==='keep'?<option value="keep">保留原有效期</option>:null}

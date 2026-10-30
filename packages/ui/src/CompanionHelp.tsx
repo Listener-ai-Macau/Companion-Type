@@ -34,7 +34,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
       <button type="button" className="ct-action" onClick={onClose}>关闭帮助</button>
     </div>
     <nav className="ct-use-help-nav" aria-label="帮助目录">
-      {([['ct-help-recording','录音与找回'],['ct-help-checklist','清单、手机与提醒'],['ct-help-calendar-update','日历改期'],['ct-help-quiet','安静互动'],['ct-help-recovery','连接与保存问题']] as const).map(([id,label])=>
+      {([['ct-help-recording','录音与找回'],['ct-help-checklist','清单、手机与提醒'],['ct-help-calendar-update','日历改期'],['ct-help-play','宠物怎么玩'],['ct-help-quiet','安静互动'],['ct-help-recovery','连接与保存问题']] as const).map(([id,label])=>
         <button key={id} type="button" className="ct-action" onClick={()=>reveal(id)}>{label}</button>)}
     </nav>
     <div id="ct-help-calendar-update"><CompanionCalendarUpdateHelp onReturn={onRecording}/></div>
@@ -70,6 +70,14 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
     <details><summary>连不上，或画面一直不动怎么办？</summary>
       <p>日常连接使用蓝牙，USB-C 用于供电。到“设备与同步”查看连接和报错；首次配对可在宠物菜单的“连接”中开启配对。</p>
       <p>睡着的宠物可先短按实体键唤醒。墨水屏会保留旧画面，单凭画面不能确认录音或保存状态。仍无响应时，保留当时提示和日志，不先清空录音或恢复默认。</p>
+    </details>
+    <details id="ct-help-play"><summary>怎样和宠物互动、玩眼神小游戏？</summary>
+      <ul>
+        <li><strong>轻摸：</strong>在宠物首页轻点或横向轻摸额头，看看它的表情和小饰件回应。右上角和左下角还有快捷操作，想逗它时可以先摸屏幕中间。</li>
+        <li><strong>拿起：</strong>轻轻拿起、倾斜，再放稳，它会用眼神或表情回应。动作和画面需要一点时间，不必反复摇晃。</li>
+        <li><strong>眼神小游戏：</strong>在首页按住约3秒，等四格完成后松手，进入“宠物 → 眼神小游戏”。按屏幕提示点方向；想结束时向右滑。</li>
+      </ul>
+      <p>爱心、花和闪光是互动中的小表情与饰件，不表示录音或连接状态。安静互动下回应会更轻；录音时以录音状态为准。</p>
     </details>
     <details id="ct-help-quiet"><summary>怎样安静陪着？静音、安静互动和安静时段有什么不同？</summary>
       <ul>
