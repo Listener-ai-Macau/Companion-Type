@@ -20,4 +20,21 @@ fn main() {
     }
     println!("cargo:rerun-if-changed={}",root.display());
     build.compile("companion_opus");
+    if std::env::var_os("CARGO_FEATURE_MOBILE_ASR").is_some() {
+        let source=Path::new("../../windows/src-tauri/src/backend/volcengine.rs");
+        let probe=Path::new("../../windows/src-tauri/src/backend/volcengine/network_probe.rs").canonicalize().expect("shared ASR probe");
+        let probe=probe.to_string_lossy().replace('\\',"/");
+        let text=std::fs::read_to_string(source).expect("shared ASR adapter");
+        let text=text.lines().map(|line| if let Some(doc)=line.strip_prefix("//!"){format!("//{doc}")}else{line.to_string()}).collect::<Vec<_>>().join("\n");
+        assert_eq!(text.matches("mod network_probe;").count(),1);
+        let text=text.replace("mod network_probe;",&format!("#[path = \"{probe}\"] mod network_probe;"));
+        // Desktop-only unit tests depend on the Tauri host recording manager;
+        // mobile runs the shared adapter's local-network fixture separately.
+        assert_eq!(text.matches("#[cfg(test)]\nmod tests {").count(),1);
+        let text=text.replace("#[cfg(test)]\nmod tests {", "#[cfg(any())]\nmod tests {");
+        let out=std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap()).join("volcengine_shared.rs");
+        std::fs::write(out,text).expect("prepare shared ASR adapter");
+        println!("cargo:rerun-if-changed={}",source.display());
+        println!("cargo:rerun-if-changed={probe}");
+    }
 }

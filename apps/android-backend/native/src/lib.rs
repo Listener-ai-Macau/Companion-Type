@@ -3,6 +3,8 @@
 mod cop1;
 #[path = "../../../../third_party/denzic-platform/host_audio/host/rust/src/opus_decoder.rs"]
 mod opus_decoder;
+#[cfg(feature="mobile-asr")]
+mod volcengine { include!(concat!(env!("OUT_DIR"),"/volcengine_shared.rs")); }
 
 use sha2::{Digest,Sha256};
 use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},sync::atomic::{AtomicU64,Ordering}};
@@ -112,6 +114,33 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeAudio_decodeFiles(
         Ok(Ok(samples))=>samples,
         Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);0},
         Err(_)=>{let _=env.throw_new("java/io/IOException","audio decoding failed; original recordings were retained");0},
+    }
+}
+
+/// The existing Companion/Listener network fixture uses only local synthetic audio and a local server.
+#[cfg(feature="mobile-asr")]
+pub fn local_asr_probe()->Result<usize,String> {Ok(volcengine::verify_network()?.len())}
+
+/// Performs one explicitly requested recognition; credentials are supplied by the caller.
+#[cfg(feature="mobile-asr")]
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeTranscription_transcribeFile(
+    mut env:jni::JNIEnv,_class:jni::objects::JClass,wav:jni::objects::JString,
+    app_id:jni::objects::JString,access_token:jni::objects::JString,resource:jni::objects::JString
+) -> jni::sys::jstring {
+    let run=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<String,String> {
+        let wav:String=env.get_string(&wav).map_err(|e|e.to_string())?.into();
+        let app_id:String=env.get_string(&app_id).map_err(|e|e.to_string())?.into();
+        let access_token:String=env.get_string(&access_token).map_err(|e|e.to_string())?.into();
+        let resource_id:String=env.get_string(&resource).map_err(|e|e.to_string())?.into();
+        if app_id.trim().is_empty()||access_token.trim().is_empty()||resource_id.trim().is_empty(){return Err("recognition service configuration is incomplete".into());}
+        let provider=volcengine::VolcengineSaucAsr::new(volcengine::VolcengineCredentials{app_id,access_token,resource_id});
+        let (text,_utterances)=provider.transcribe_file(Path::new(&wav))?;Ok(text)
+    }));
+    match run {
+        Ok(Ok(text))=>match env.new_string(text){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},
+        Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
+        Err(_)=>{let _=env.throw_new("java/io/IOException","speech recognition failed; original audio was retained");std::ptr::null_mut()},
     }
 }
 

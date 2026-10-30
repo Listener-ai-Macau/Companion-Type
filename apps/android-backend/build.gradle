@@ -10,4 +10,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    def suppliedNativeLibraries = providers.gradleProperty('companionAndroidJniLibs').orNull
+    if (suppliedNativeLibraries != null) {
+        sourceSets.main.jniLibs.srcDir suppliedNativeLibraries
+    }
 }

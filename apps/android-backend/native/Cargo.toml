@@ -7,11 +7,19 @@ publish = false
 [lib]
 crate-type = ["rlib", "cdylib"]
 
+[features]
+mobile-asr = ["dep:futures", "dep:serde_json", "dep:tokio", "dep:tokio-tungstenite", "dep:uuid"]
+
 [dependencies]
 crc32fast = "1"
 jni = "0.21"
 serde = { version = "1", features = ["derive"] }
 sha2 = "0.10"
+futures = { version = "0.3", optional = true }
+serde_json = { version = "1", optional = true }
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "sync", "time", "net", "io-util", "macros"], optional = true }
+tokio-tungstenite = { version = "0.24", features = ["rustls-tls-webpki-roots"], optional = true }
+uuid = { version = "1", features = ["v4", "serde"], optional = true }
 
 [build-dependencies]
 cc = "1"
