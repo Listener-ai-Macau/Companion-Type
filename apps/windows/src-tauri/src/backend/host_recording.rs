@@ -394,6 +394,262 @@ fn write_synthetic_wav(path: &PathBuf, duration_ms: u64) -> Result<(), String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use super::super::CompanionBackend;
+
+    #[test]
+    #[ignore]
+    fn isolated_abrupt_host_recording_child() {
+        let Some(path) = std::env::var_os("COMPANION_CRASH_MODEL_FILE") else { return; };
+        let path = std::path::PathBuf::from(path);
+        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+        let _artifact = super::super::audio_artifacts::WriteLease::begin(
+            &path, &path, super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let mut writer = WavWriter::create(&path).unwrap();
+        writer.append_bytes(&vec![42u8; 32000]).unwrap();
+        // Deliberately exit this isolated child without Drop/finalize.
+        std::process::exit(0);
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_crash_during_recovery_child() {
+        let Some(path) = std::env::var_os("COMPANION_CRASH_MODEL_FILE") else { return; };
+        let result = super::super::host_interrupted_recovery::recover_copy(std::path::Path::new(&path));
+        if std::env::var_os("COMPANION_TEST_RECOVERY_COLLISION").is_some() { assert!(result.is_err()); }
+    }
+
+    #[test]
+    fn interrupted_recovery_can_retry_and_privacy_cleanup_without_touching_unknown_files() {
+        for stage in ["empty-created", "header-written", "identity-committed", "delete-cleared"] {
+            let root=std::env::temp_dir().join(format!("host-recovery-crash-{}-{}",stage,uuid::Uuid::new_v4()));
+            std::fs::create_dir_all(&root).unwrap();
+            let path=root.join("unfinished.wav");
+            let exe=std::env::current_exe().unwrap();
+            let child=std::process::Command::new(&exe)
+                .args(["--exact","backend::host_recording::tests::isolated_abrupt_host_recording_child","--ignored"])
+                .env("COMPANION_CRASH_MODEL_FILE",&path).env("COMPANION_TYPE_RECORDING_DIR",&root).output().unwrap();
+            assert!(child.status.success());
+            let raw=std::fs::read(&path).unwrap();
+            let mut recovery=std::process::Command::new(&exe);
+            recovery.args(["--exact","backend::host_recording::tests::isolated_crash_during_recovery_child","--ignored"])
+                .env("COMPANION_CRASH_MODEL_FILE",&path).env("COMPANION_TYPE_RECORDING_DIR",&root);
+            if stage == "header-written" { recovery.env("COMPANION_TEST_RECOVERY_CRASH_AFTER_HEADER","1"); }
+            else { recovery.env("COMPANION_TEST_RECOVERY_FAILPOINT",stage); }
+            let result=recovery.output().unwrap();
+            assert!(result.status.success());
+            assert!(!String::from_utf8_lossy(&result.stdout).contains("test result:"),"failpoint did not exit at {stage}");
+            assert_eq!(std::fs::read(&path).unwrap(),raw);
+            let orphans:Vec<_>=std::fs::read_dir(&root).unwrap().map(|entry|entry.unwrap().path())
+                .filter(|p|p.file_name().unwrap().to_string_lossy().starts_with("recovered-")).collect();
+            match stage {
+                "empty-created" => { assert_eq!(orphans.len(),1); assert_eq!(std::fs::metadata(&orphans[0]).unwrap().len(),0); }
+                "header-written" | "identity-committed" => assert!(orphans.is_empty(),"pending output should disappear at {stage}"),
+                "delete-cleared" => { assert_eq!(orphans.len(),1); assert_eq!(std::fs::read(&orphans[0]).unwrap().len(),raw.len()); },
+                _ => unreachable!(),
+            }
+            std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+            let recovered=super::super::host_interrupted_recovery::recover_copy(&path).unwrap();
+            let target=recovered.path.clone();drop(recovered);
+            let unknown=root.join("unrelated.wav");std::fs::write(&unknown,b"private unrelated file").unwrap();
+            let erased=super::super::audio_artifacts::erase(&root,&[target.to_string_lossy().to_string()],&[]);
+            assert!(erased.is_ok(),"privacy cleanup after {stage}: {:?}",erased.as_ref().err());
+            let report=erased.unwrap();
+            assert!(!path.exists()&&!target.exists());
+            if stage == "empty-created" {
+                assert!(orphans[0].exists(),"unowned empty file retained");
+                assert_eq!(std::fs::metadata(&orphans[0]).unwrap().len(),0);
+                let orphan_key=super::super::audio_artifacts::reference_key(&orphans[0]).unwrap();
+                assert!(report.retained_paths.iter().any(|p| super::super::audio_artifacts::reference_key(p).ok().as_ref()==Some(&orphan_key)));
+                assert_eq!(report.unverified_empty, 1);
+            } else if stage == "delete-cleared" { assert!(!orphans[0].exists()); }
+            assert_eq!(std::fs::read(&unknown).unwrap(),b"private unrelated file");
+            std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+        }
+    }
+
+    #[test]
+    fn recovery_filename_collision_never_adopts_or_deletes_unknown_file() {
+        let root=std::env::temp_dir().join(format!("host-recovery-collision-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let path=root.join("unfinished.wav");
+        let exe=std::env::current_exe().unwrap();
+        let child=std::process::Command::new(&exe)
+            .args(["--exact","backend::host_recording::tests::isolated_abrupt_host_recording_child","--ignored"])
+            .env("COMPANION_CRASH_MODEL_FILE",&path).env("COMPANION_TYPE_RECORDING_DIR",&root).output().unwrap();
+        assert!(child.status.success());
+        let raw=std::fs::read(&path).unwrap();
+        let collision=std::process::Command::new(&exe)
+            .args(["--exact","backend::host_recording::tests::isolated_crash_during_recovery_child","--ignored"])
+            .env("COMPANION_CRASH_MODEL_FILE",&path).env("COMPANION_TYPE_RECORDING_DIR",&root)
+            .env("COMPANION_TEST_RECOVERY_COLLISION","1").output().unwrap();
+        assert!(collision.status.success(),"{}",String::from_utf8_lossy(&collision.stderr));
+        let manifest:serde_json::Value=serde_json::from_slice(&std::fs::read(root.join(".audio-artifacts.json")).unwrap()).unwrap();
+        let item=manifest["files"].as_array().unwrap().iter().find(|item|item["purpose"]=="decodeTemporary").unwrap();
+        assert_eq!(item["phase"],"prepared");assert!(item["identity"].is_null(),"unknown file must not be adopted");
+        let unknown=root.join(item["file"].as_str().unwrap());
+        assert_eq!(std::fs::read(&unknown).unwrap(),b"unrelated collision");
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        assert!(super::super::audio_artifacts::erase(&root,&[path.to_string_lossy().to_string()],&[]).is_err());
+        assert_eq!(std::fs::read(&unknown).unwrap(),b"unrelated collision");
+        assert_eq!(std::fs::read(&path).unwrap(),raw);
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
+
+    #[test]
+    fn isolated_process_exit_keeps_raw_pcm_but_not_a_valid_wav() {
+        let root = std::env::temp_dir().join(format!("host-crash-model-{}", std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        let path = root.join("unfinished.wav");
+        assert!(!path.exists());
+        let result = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "backend::host_recording::tests::isolated_abrupt_host_recording_child", "--ignored"])
+            .env("COMPANION_CRASH_MODEL_FILE", &path)
+            .env("COMPANION_TYPE_RECORDING_DIR", &root)
+            .output().unwrap();
+        assert!(result.status.success());
+        let bytes=std::fs::read(&path).unwrap();
+        assert_eq!(bytes.len(), 32044);
+        assert_eq!(&bytes[44..], &vec![42u8; 32000]);
+        assert_eq!(u32::from_le_bytes(bytes[40..44].try_into().unwrap()), 0);
+        assert!(super::super::meeting_workspace::validate_wav(&path).is_err());
+        assert!(root.join(".audio-artifacts.json").exists(), "capture ownership must survive");
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let recovered = super::super::host_interrupted_recovery::recover_copy(&path).unwrap();
+        assert_eq!(recovered.bytes, 32044);
+        assert_eq!(recovered.duration_ms, 1000);
+        assert_ne!(recovered.path, path);
+        let restored = std::fs::read(&recovered.path).unwrap();
+        assert_eq!(&restored[44..], &bytes[44..]);
+        assert_eq!(std::fs::read(&path).unwrap(), bytes, "raw original stays byte-for-byte intact");
+        assert!(super::super::meeting_workspace::validate_wav(&recovered.path).is_ok());
+        drop(recovered);
+        let state_path = root.join("sessions.json");
+        let mut fixture = crate::companion_v1::apply_fixture_control(
+            crate::companion_v1::fixture_snapshot(),
+            crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart, Some("crashed-host".into()))).unwrap();
+        let mut session = fixture.host.sessions.remove(0);
+        session.id = "crashed-host".into(); session.source = "hostMicrophone".into();
+        session.status = "recording".into(); session.stopped_at = None;
+        session.audio_path = Some(path.to_string_lossy().to_string());
+        session.audio_stored = false; session.audio_bytes = 0; session.chunks.clear();
+        session.transcript_text = "保留之前的部分文字".into(); session.transcript_final = false;
+        let expected = super::super::session_store::privacy_authorization(&session).unwrap();
+        super::super::persistence::save_sessions_to(&state_path, &[session]).unwrap();
+        super::super::host_interrupted_recovery::recover_session_at(&state_path, "crashed-host", &expected).unwrap();
+        let saved = super::super::persistence::load_sessions_from(&state_path).unwrap();
+        let row = &saved[0];
+        assert!(row.audio_stored && row.retention.audio_cached && row.capture_incomplete);
+        assert_eq!(row.duration_ms, 1000);
+        assert!(row.stopped_at.is_none(), "the original stop time is unknown");
+        assert_eq!(row.transcript_text, "保留之前的部分文字");
+        assert!(!row.transcript_final);
+        assert_eq!(row.pending_reason.as_deref(), Some("capture_interrupted"));
+        let saved_copy = std::fs::read(row.audio_path.as_deref().unwrap()).unwrap();
+        assert_eq!(&saved_copy[44..], &bytes[44..]);
+        assert_eq!(std::fs::read(&path).unwrap(), bytes);
+        let before_retry = std::fs::read(&state_path).unwrap();
+        assert!(super::super::host_interrupted_recovery::recover_session_at(&state_path, "crashed-host", &expected).is_err());
+        assert_eq!(std::fs::read(&state_path).unwrap(), before_retry, "repeat cannot replace the saved copy");
+        let second = root.join("second-unfinished.wav");
+        let second_child = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "backend::host_recording::tests::isolated_abrupt_host_recording_child", "--ignored"])
+            .env("COMPANION_CRASH_MODEL_FILE", &second)
+            .env("COMPANION_TYPE_RECORDING_DIR", &root).output().unwrap();
+        assert!(second_child.status.success());
+        let second_raw = std::fs::read(&second).unwrap();
+        let state2 = root.join("session-two.json");
+        let mut second_session = row.clone();
+        second_session.id = "second-host".into(); second_session.status = "recording".into();
+        second_session.audio_path = Some(second.to_string_lossy().to_string());
+        second_session.audio_bytes = 0; second_session.audio_stored = false;
+        second_session.capture_incomplete = false; second_session.chunks.clear();
+        second_session.recovery = Default::default(); second_session.pending_reason = None;
+        super::super::persistence::save_sessions_to(&state2, &[second_session]).unwrap();
+        std::env::set_var("COMPANION_TYPE_STATE_PATH", &state2);
+        let backend = super::super::FixtureCompanionBackend::new();
+        let req: crate::companion_v1::CompanionV1ControlRequest = serde_json::from_value(serde_json::json!({"action":"meetingRestoreAudio", "sessionId":"second-host"})).unwrap();
+        let before_locked = std::fs::read(&state2).unwrap();
+        let privacy_lock = super::super::library_lifecycle::action_lock(&state2).unwrap();
+        assert!(backend.apply_control(req.clone()).is_err(), "privacy action prevents simultaneous recovery");
+        assert_eq!(std::fs::read(&state2).unwrap(), before_locked);
+        assert_eq!(std::fs::read(&second).unwrap(), second_raw);
+        drop(privacy_lock);
+        let restored = backend.apply_control(req).unwrap();
+        let restored_row = restored.host.sessions.iter().find(|s| s.id == "second-host").unwrap();
+        assert!(restored_row.audio_stored && restored_row.capture_incomplete);
+        assert_eq!(restored_row.pending_reason.as_deref(), Some("capture_interrupted"));
+        assert_eq!(&std::fs::read(restored_row.audio_path.as_deref().unwrap()).unwrap()[44..], &second_raw[44..]);
+        assert_eq!(std::fs::read(&second).unwrap(), second_raw);
+        std::env::remove_var("COMPANION_TYPE_STATE_PATH");
+        let third = root.join("third-unfinished.wav");
+        let third_child = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "backend::host_recording::tests::isolated_abrupt_host_recording_child", "--ignored"])
+            .env("COMPANION_CRASH_MODEL_FILE", &third)
+            .env("COMPANION_TYPE_RECORDING_DIR", &root).output().unwrap();
+        assert!(third_child.status.success());
+        let third_raw = std::fs::read(&third).unwrap();
+        let state3 = root.join("session-three.json");
+        let mut third_session = row.clone();
+        third_session.id = "third-host".into(); third_session.status = "recording".into();
+        third_session.audio_path = Some(third.to_string_lossy().to_string());
+        third_session.audio_bytes = 0; third_session.audio_stored = false;
+        third_session.capture_incomplete = false; third_session.chunks.clear();
+        third_session.recovery = Default::default(); third_session.pending_reason = None;
+        let third_auth = super::super::session_store::privacy_authorization(&third_session).unwrap();
+        super::super::persistence::save_sessions_to(&state3, &[third_session]).unwrap();
+        let raced = super::super::host_interrupted_recovery::recover_session_with(&state3, "third-host", &third_auth, || {
+            super::super::session_store::update_checked(&state3, |rows| {rows.clear(); Ok(())})
+        });
+        assert!(raced.is_err(), "a removed session must not be recreated after copying");
+        let remaining = super::super::persistence::load_sessions_from(&state3).unwrap();
+        assert!(remaining.is_empty());
+        assert_eq!(std::fs::read(&third).unwrap(), third_raw, "racing removal never mutates the original");
+
+
+        let unknown = root.join("unknown.wav");
+        std::fs::write(&unknown, &bytes).unwrap();
+        assert!(super::super::host_interrupted_recovery::recover_copy(&unknown).is_err());
+        assert_eq!(std::fs::read(&unknown).unwrap(), bytes);
+        let busy = root.join("still-recording.wav");
+        let busy_lease = super::super::audio_artifacts::WriteLease::begin(
+            &busy, &busy, super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let mut busy_writer = WavWriter::create(&busy).unwrap();
+        busy_writer.append_bytes(&[4u8; 200]).unwrap();
+        let before_busy = std::fs::read(&busy).unwrap();
+        assert!(super::super::host_interrupted_recovery::recover_copy(&busy).is_err(), "active writer must block recovery");
+        assert_eq!(std::fs::read(&busy).unwrap(), before_busy);
+        drop(busy_writer); drop(busy_lease);
+        let bad = root.join("malformed.wav");
+        let bad_lease = super::super::audio_artifacts::WriteLease::begin(
+            &bad, &bad, super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let mut corrupt = bytes.clone(); corrupt[24] ^= 1;
+        std::fs::write(&bad, &corrupt).unwrap();
+        drop(bad_lease);
+        assert!(super::super::host_interrupted_recovery::recover_copy(&bad).is_err(), "unknown format must not be guessed");
+        assert_eq!(std::fs::read(&bad).unwrap(), corrupt);
+        let finalized = root.join("finalized-before-index.wav");
+        let finalized_lease = super::super::audio_artifacts::WriteLease::begin(
+            &finalized, &finalized, super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let mut finalized_writer = WavWriter::create(&finalized).unwrap();
+        finalized_writer.append_bytes(&[8u8; 200]).unwrap();
+        finalized_writer.finalize().unwrap(); drop(finalized_writer); drop(finalized_lease);
+        let finalized_bytes = std::fs::read(&finalized).unwrap();
+        let finalized_copy = super::super::host_interrupted_recovery::recover_copy(&finalized).unwrap();
+        assert_eq!(std::fs::read(&finalized_copy.path).unwrap(), finalized_bytes);
+        assert_eq!(std::fs::read(&finalized).unwrap(), finalized_bytes);
+        drop(finalized_copy);
+        // Explicit privacy erasure of the restored recording must also reach
+        // the exact raw original, without touching an unrelated unknown file.
+        let retained_copy = std::path::PathBuf::from(row.audio_path.as_deref().unwrap());
+        assert!(root.canonicalize().unwrap().starts_with(std::env::temp_dir().canonicalize().unwrap()));
+        assert!(path.canonicalize().unwrap().starts_with(root.canonicalize().unwrap()));
+        assert!(retained_copy.canonicalize().unwrap().starts_with(root.canonicalize().unwrap()));
+        let erased = super::super::audio_artifacts::erase(&root, &[retained_copy.to_string_lossy().to_string()], &[]).unwrap();
+        assert!(erased.deleted >= 2);
+        assert!(!path.exists() && !retained_copy.exists());
+        assert_eq!(std::fs::read(&unknown).unwrap(), bytes);
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
 
     #[test]
     fn synthetic_recording_writes_valid_wav() {

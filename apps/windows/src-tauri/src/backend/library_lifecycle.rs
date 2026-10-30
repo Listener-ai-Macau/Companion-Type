@@ -31,7 +31,7 @@ pub fn validate_purge(snapshot:&CompanionV1Snapshot,request:&PurgeRequest)->Resu
 pub fn require_available(row:&CompanionV1HostSession)->Result<(),String>{
  if row.organization.trashed_at.is_some(){Err("录音已在回收站；请先恢复，再回听、编辑或处理。".into())}else{Ok(())}
 }
-fn action_lock(path:&Path)->Result<File,String>{
+pub(super) fn action_lock(path:&Path)->Result<File,String>{
  let mut name=path.as_os_str().to_os_string();name.push(".library-actions.lock");
  if let Some(parent)=path.parent(){std::fs::create_dir_all(parent).map_err(|e|e.to_string())?;}
  let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(std::path::PathBuf::from(name)).map_err(|e|format!("无法取得录音保护锁：{e}"))?;

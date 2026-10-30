@@ -264,6 +264,7 @@ impl PrivacyManager {
         match super::audio_artifacts::erase(root, sources, retained) {
             Ok(generated) => {
                 report.deleted_files += generated.deleted; report.shared_files += generated.shared;
+                report.skipped_files += generated.unverified_empty;
                 // A shared generated primary must also be protected from the
                 // conservative legacy/index-only fallback below.
                 seen.extend(generated.retained_paths.iter().map(|p| path_key(&p.to_string_lossy())));

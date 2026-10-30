@@ -14,6 +14,7 @@ assert.doesNotMatch(shown,/已安全保存|电脑已有副本|可以回听或导
 assert.equal(hostRecordingAudioConfirmed(s),false);
 const next=meetingJourney(s,{connected:false,asrReady:true,minutesReady:false});
 assert.notEqual(next.request?.action,'meetingTranscribeAudio','cannot submit an unverified recording');
+assert.equal(next.request?.action,'meetingRestoreAudio','offer local recovery of the owned original');
 const unmarked=structuredClone(s);unmarked.captureIncomplete=false;
 const unmarkedCard=create(<RecordingSafetyCard session={unmarked} persistence={{status:'ready'}} recoveryProcessing={false}/>);
 assert.match(text(unmarkedCard.toJSON()), /未确认保存/, 'missing interruption metadata must not hide an unsafe local path');

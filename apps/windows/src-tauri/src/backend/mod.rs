@@ -95,6 +95,7 @@ mod firmware_ota;
 mod system_ota;
 mod ota_readiness;
 mod host_recording;
+mod host_interrupted_recovery;
 mod live_asr;
 mod minutes;
 mod external_command;
@@ -1713,6 +1714,27 @@ impl CompanionBackend for FixtureCompanionBackend {
             let row=snapshot.host.sessions.iter().find(|row|row.id==id).ok_or("这份录音已不存在。")?;
             library_lifecycle::require_available(row)?;
             if row.status=="recording" {return Err("请先结束这份录音，再生成回听文件。".into());}
+            if row.source == "hostMicrophone" && !row.audio_stored {
+                let expected = session_store::privacy_authorization(row)?;
+                let path = persistence::state_file_path();
+                // Serialize against explicit privacy and library lifecycle
+                // actions while the raw original and copy are associated.
+                let _privacy_lock = library_lifecycle::action_lock(&path)?;
+                let outcome = host_interrupted_recovery::recover_session_at(&path, &id, &expected);
+                let refreshed = reload_segmented_library(&mut snapshot, &path);
+                if let Err(error) = outcome {
+                    return Err(match refreshed { Ok(()) => error, Err(load) => format!("{error}；会议状态尚未刷新：{load}") });
+                }
+                refreshed?;
+                snapshot.updated_at = observation_timestamp();
+                snapshot.last_control = Some(crate::companion_v1::CompanionV1ControlEcho {
+                    action, characteristic_uuid: crate::companion_v1::COMPANION_V1_HOST_RECORDING_CHANNEL,
+                    payload_hex: String::new(), accepted: true,
+                    message: "已恢复可回听片段；原文件保留，结尾可能缺失。".into(),
+                });
+                refresh_privacy_counts(&mut snapshot);
+                return Ok(snapshot.clone());
+            }
             let report=recording_wire::receiver::restore_local_session(&id)?;
             let refreshed=reload_segmented_library(&mut snapshot,&persistence::state_file_path());
             if let Some(failure)=report.failures.first() {

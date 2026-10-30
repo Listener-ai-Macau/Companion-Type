@@ -56,7 +56,8 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   if (session.status === 'recording') return { stage: 0, title: '这场会议正在录音', detail: '结束后再整理；当前文字可能仍是未完成片段。', processing: true };
   if (session.source === 'hostMicrophone' && !localAudio && !finalText && !finalMinutes) return {
     stage: 0, title: '录音保存尚未确认',
-    detail: '本机录音未确认保存，暂不能提交转写。已保留原文件路径，请先保留原文件。',
+    detail: '可以尝试恢复已写入的片段；原文件保留，结尾可能缺失。恢复过程只在本机进行。',
+    label: '尝试恢复录音', request: { action: 'meetingRestoreAudio', sessionId: session.id },
   };
   if (session.pendingReason === 'needs_local_audio') return {
     stage: 1, title: '原音已收齐，生成回听文件',
