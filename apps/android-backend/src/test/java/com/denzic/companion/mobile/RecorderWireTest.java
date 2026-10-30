@@ -61,11 +61,25 @@ public final class RecorderWireTest {
         try(RecordingClient repair=new RecordingClient(new FakeLink(status,page0,page1,wrongPacket))){repair.listRecordings();expectFailure(()->repair.download(41,repeatedFolder,null));}
         int retained=0;try(java.nio.file.DirectoryStream<Path> backups=Files.newDirectoryStream(repeatedFolder,"damaged-*.part")){for(Path ignored:backups)retained++;}
         if(retained!=2||Files.exists(repeatedFolder.resolve(SegmentReceiver.key(d)+".cop1")))throw new AssertionError("repeated integrity failure must stop with both copies retained");
-        try(RecordingClient client=new RecordingClient(link)){if(client.listRecordings().size()!=3)throw new AssertionError("client catalog");saved=client.download(41,folder,null);}
+        Path oversizedFolder=Files.createTempDirectory(root,"oversized-partial-");
+        try(SegmentReceiver stale=new SegmentReceiver(oversizedFolder,d)){stale.accept(p);}
+        byte[] oversized=Arrays.copyOf(audio,audio.length+1);oversized[oversized.length-1]=42;Files.write(oversizedFolder.resolve(SegmentReceiver.key(d)+".part"),oversized);
+        try(RecordingClient repair=new RecordingClient(new FakeLink(status,page0,page1,p))){repair.listRecordings();Path repaired=repair.download(41,oversizedFolder,null);if(!Arrays.equals(Files.readAllBytes(repaired),audio))throw new AssertionError("oversized partial should be replaced by a fresh transfer");}
+        try(java.nio.file.DirectoryStream<Path> backups=Files.newDirectoryStream(oversizedFolder,"damaged-*.part")){
+            java.util.Iterator<Path> it=backups.iterator();if(!it.hasNext()||!Arrays.equals(Files.readAllBytes(it.next()),oversized)||it.hasNext())throw new AssertionError("oversized partial must be retained");
+        }
+        try(RecordingClient client=new RecordingClient(link)){
+            if(client.listRecordings().size()!=3)throw new AssertionError("client catalog");saved=client.download(41,folder,null);
+            if(!client.download(41,folder,null).equals(saved)||link.pullCount!=1)throw new AssertionError("existing verified copy should be reused");
+            byte[] brokenCopy=Files.readAllBytes(saved);brokenCopy[0]^=1;Files.write(saved,brokenCopy);
+            if(!client.download(41,folder,null).equals(saved)||!Arrays.equals(Files.readAllBytes(saved),audio)||link.pullCount!=2)throw new AssertionError("damaged local copy should be reloaded");
+            try(java.nio.file.DirectoryStream<Path> backups=Files.newDirectoryStream(folder,"damaged-*.cop1")){
+                java.util.Iterator<Path> it=backups.iterator();if(!it.hasNext()||!Arrays.equals(Files.readAllBytes(it.next()),brokenCopy)||it.hasNext())throw new AssertionError("damaged local copy must be preserved");
+            }
+        }
         if(!link.closed||!Arrays.equals(Files.readAllBytes(saved),audio))throw new AssertionError("client durable copy");
         if(RecordingLibrary.list(folder).size()!=1||RecordingLibrary.list(folder).get(0).state!=RecordingLibrary.State.VERIFIED)throw new AssertionError("local recording inventory");
         if(RecordingLibrary.sessions(folder).size()!=1||RecordingLibrary.sessions(folder).get(0).state!=RecordingLibrary.SessionState.INCOMPLETE)throw new AssertionError("missing tail is not a complete session");
-        expectFailure(()->new SegmentReceiver(folder,d));
         RecorderWire.Descriptor second=catalog.entries().get(1);Path resumed;
         try(SegmentReceiver first=new SegmentReceiver(folder,second)){
             first.accept(packet(second,audio,0,7,false));if(first.resumeOffset()!=7)throw new AssertionError("partial progress");

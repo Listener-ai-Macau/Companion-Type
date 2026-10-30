@@ -38,6 +38,8 @@ the next attempt. It checks packet integrity, final SHA-256 and CRC before expos
 the complete local copy. If a completed partial fails the final integrity check,
 it keeps that damaged file and retries the segment once from the device. A repeated
 failure is returned to the caller, and both damaged copies are retained.
+An existing verified local segment is reused on a repeat download. If that local
+copy or a partial is damaged, it is retained separately while a new copy is fetched.
 `RecordingLibrary` reports verified, partial and damaged
 copies; verified means encoded bytes match the device descriptor, not that they
 have been decoded or played. `sessions` groups segments by device, epoch and

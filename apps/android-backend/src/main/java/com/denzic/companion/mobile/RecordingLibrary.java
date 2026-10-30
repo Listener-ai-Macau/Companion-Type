@@ -95,7 +95,7 @@ public final class RecordingLibrary {
         }
         return Collections.unmodifiableList(result);
     }
-    private static boolean verified(Path file,RecorderWire.Descriptor d) throws IOException {
+    static boolean verified(Path file,RecorderWire.Descriptor d) throws IOException {
         if(Files.size(file)!=d.encodedLength)return false;
         MessageDigest sha;try{sha=MessageDigest.getInstance("SHA-256");}catch(NoSuchAlgorithmException e){throw new AssertionError(e);}
         CRC32 crc=new CRC32();byte[] buffer=new byte[32768];

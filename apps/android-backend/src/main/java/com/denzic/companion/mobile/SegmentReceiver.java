@@ -28,12 +28,14 @@ public final class SegmentReceiver implements Closeable {
     private final FileLock lock;
     private final MessageDigest sha;
     private final CRC32 crc=new CRC32();
+    private final boolean existingComplete;
     private long offset,sequence;
     private boolean closed;
 
     private static String hex(byte[] data) {StringBuilder b=new StringBuilder(data.length*2);for(byte x:data)b.append(String.format(java.util.Locale.ROOT,"%02x",x&255));return b.toString();}
     static String key(RecorderWire.Descriptor d) {return hex(d.uid())+"-"+Long.toUnsignedString(d.epoch,16)+"-"+Long.toUnsignedString(d.sessionId,16)+"-"+d.segmentIndex+"-"+d.recordingId+"-"+hex(d.sha256());}
     private static MessageDigest digest() {try{return MessageDigest.getInstance("SHA-256");}catch(NoSuchAlgorithmException e){throw new AssertionError(e);}}
+    private Path damagedPath(String extension) {return part.resolveSibling("damaged-"+Long.toUnsignedString(descriptor.sessionId,16)+"-"+descriptor.recordingId+"-"+UUID.randomUUID()+extension);}
 
     /**
      * Open or resume the exact descriptor's partial file. Existing data is
@@ -48,7 +50,7 @@ public final class SegmentReceiver implements Closeable {
         RandomAccessFile lf=new RandomAccessFile(privateDirectory.resolve(key+".lock").toFile(),"rw");FileChannel lc=lf.getChannel();FileLock held;
         try {held=lc.tryLock();} catch(OverlappingFileLockException e){lc.close();lf.close();throw new IOException("recording is already being received",e);} catch(IOException e){lc.close();lf.close();throw e;}
         if(held==null){lc.close();lf.close();throw new IOException("recording is already being received");}
-        RandomAccessFile f=null;
+        RandomAccessFile f=null;MessageDigest h=digest();boolean alreadyComplete=false;
         try {
             Path metadata=privateDirectory.resolve(key+".meta");
             if(Files.exists(metadata)) {
@@ -59,11 +61,19 @@ public final class SegmentReceiver implements Closeable {
                 try(RandomAccessFile m=new RandomAccessFile(temporary.toFile(),"rw")){m.write(descriptor.wireBytes());m.getFD().sync();}
                 try{Files.move(temporary,metadata,StandardCopyOption.ATOMIC_MOVE);}finally{Files.deleteIfExists(temporary);}
             }
-            if(Files.exists(complete))throw new IOException("recording already exists; verify or open the existing copy");
-            f=new RandomAccessFile(part.toFile(),"rw");long size=f.length();if(size>descriptor.encodedLength)throw new IOException("partial recording is longer than its descriptor; retained");
-            MessageDigest h=digest();byte[] buffer=new byte[32768];long read=0;while(read<size){int n=f.read(buffer,0,(int)Math.min(buffer.length,size-read));if(n<0)throw new IOException("partial recording changed while reading");h.update(buffer,0,n);crc.update(buffer,0,n);read+=n;}f.seek(size);this.offset=size;this.sha=h;
+            if(Files.exists(complete)) {
+                if(RecordingLibrary.verified(complete,descriptor)){alreadyComplete=true;this.offset=descriptor.encodedLength;}
+                else {
+                    Files.move(complete,damagedPath(".cop1"),StandardCopyOption.ATOMIC_MOVE);
+                }
+            }
+            if(!alreadyComplete) {
+                f=new RandomAccessFile(part.toFile(),"rw");long size=f.length();
+                if(size>descriptor.encodedLength) {f.close();f=null;Files.move(part,damagedPath(".part"),StandardCopyOption.ATOMIC_MOVE);f=new RandomAccessFile(part.toFile(),"rw");size=0;}
+                byte[] buffer=new byte[32768];long read=0;while(read<size){int n=f.read(buffer,0,(int)Math.min(buffer.length,size-read));if(n<0)throw new IOException("partial recording changed while reading");h.update(buffer,0,n);crc.update(buffer,0,n);read+=n;}f.seek(size);this.offset=size;
+            }
         } catch(IOException|RuntimeException e){if(f!=null)f.close();held.release();lc.close();lf.close();throw e;}
-        this.file=f;this.lockFile=lf;this.lockChannel=lc;this.lock=held;
+        this.file=f;this.lockFile=lf;this.lockChannel=lc;this.lock=held;this.sha=h;this.existingComplete=alreadyComplete;
     }
     public long resumeOffset() {return offset;}
     public long nextSequence() {return sequence;}
@@ -78,10 +88,10 @@ public final class SegmentReceiver implements Closeable {
     /** Verify full encoded bytes and publish a local copy; this does not prove playback or clear the device. */
     public Path finish() throws IOException {
         if(closed||!completeBytesReceived())throw new IOException("recording is incomplete; partial file retained");
+        if(existingComplete){close();return complete;}
         if(crc.getValue()!=descriptor.contentCrc||!Arrays.equals(sha.digest(),descriptor.sha256())) {
             file.getFD().sync();file.close();
-            Path retained=part.resolveSibling("damaged-"+Long.toUnsignedString(descriptor.sessionId,16)+"-"+descriptor.recordingId+"-"+UUID.randomUUID()+".part");
-            try {Files.move(part,retained,StandardCopyOption.ATOMIC_MOVE);throw new IntegrityMismatch();}
+            try {Files.move(part,damagedPath(".part"),StandardCopyOption.ATOMIC_MOVE);throw new IntegrityMismatch();}
             finally {close();}
         }
         file.getFD().sync();file.close();
@@ -93,7 +103,7 @@ public final class SegmentReceiver implements Closeable {
     }
     @Override public void close() throws IOException {
         if(closed)return;closed=true;IOException problem=null;
-        try{file.close();}catch(IOException e){problem=e;}
+        try{if(file!=null)file.close();}catch(IOException e){problem=e;}
         try{lock.release();}catch(IOException e){if(problem==null)problem=e;}
         try{lockChannel.close();}catch(IOException e){if(problem==null)problem=e;}
         try{lockFile.close();}catch(IOException e){if(problem==null)problem=e;}
