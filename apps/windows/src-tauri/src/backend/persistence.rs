@@ -95,6 +95,16 @@ pub(crate) fn reconcile_session_recovery(session: &mut CompanionV1HostSession) {
         return;
     }
     if super::interrupted_capture::hold(session) { return; }
+    // A retry checkpoint is not proof that a host capture was finalized.
+    // Keep any partial text and original file, without spending an ASR attempt.
+    let pending_transcription = session.recovery.stage == "pendingTranscription"
+        || session.recovery.stage == "transcribing"
+        || (session.recovery.stage == "retryBackoff"
+            && (session.recovery.retry_stage.is_empty() || session.recovery.retry_stage == "transcription"));
+    if pending_transcription && super::host_audio_unconfirmed(session) {
+        super::hold_unconfirmed_host_audio(session);
+        return;
+    }
     // An attempt is durably consumed before remote work. If the process died
     // while it was in flight, resume that exact stage through backoff instead
     // of silently resetting the budget.

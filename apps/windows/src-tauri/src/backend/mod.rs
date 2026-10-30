@@ -146,6 +146,22 @@ fn unix_time_ms() -> u64 {
         .unwrap_or(u64::MAX)
 }
 
+const UNCONFIRMED_HOST_AUDIO: &str = "本机录音保存尚未确认，请先尝试恢复原录音；未提交转写。";
+
+fn host_audio_unconfirmed(session: &CompanionV1HostSession) -> bool {
+    session.source == "hostMicrophone"
+        && !(session.transcript_final && !session.transcript_text.trim().is_empty())
+        && (!session.audio_stored || !session.retention.audio_cached || session.audio_bytes <= 44
+            || session.audio_path.as_deref().is_none_or(|path| path.trim().is_empty()))
+}
+
+fn hold_unconfirmed_host_audio(session: &mut CompanionV1HostSession) {
+    session.recovery.stage = "paused".into();
+    session.recovery.next_retry_at_unix_ms = None;
+    session.recovery.last_error = Some(UNCONFIRMED_HOST_AUDIO.into());
+    session.pending_reason = Some("recovery_paused".into());
+}
+
 fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
     // This explicit short capture belongs to the pet reply worker. Its raw
     // audio keeps the normal durable library/consume contract, without an
@@ -1666,6 +1682,21 @@ impl CompanionBackend for FixtureCompanionBackend {
                 }
                 if row.pending_reason.as_deref()==Some("needs_segments") {
                     return Err("原音分段尚未收齐，请先同步来源设备，再进行转写。".into());
+                }
+            }
+        }
+        if action == CompanionV1ControlAction::MeetingTranscribeAudio {
+            let target=request.session_id.as_deref().or(snapshot.host.selected_session_id.as_deref());
+            if let Some(index)=target.and_then(|id|snapshot.host.sessions.iter().position(|s|s.id==id)) {
+                if host_audio_unconfirmed(&snapshot.host.sessions[index]) {
+                    if !automatic_recovery { return Err(UNCONFIRMED_HOST_AUDIO.into()); }
+                    if snapshot.host.sessions[index].recovery.intent == "processMeeting"
+                        && !snapshot.device.recording && !snapshot.meeting.active
+                        && !snapshot.host.sessions.iter().any(|row| row.status == "recording") {
+                        hold_unconfirmed_host_audio(&mut snapshot.host.sessions[index]);
+                        persistence::save_snapshot(&mut snapshot)?;
+                    }
+                    return Ok(snapshot.clone());
                 }
             }
         }
@@ -4453,6 +4484,73 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    #[ignore]
+    fn unconfirmed_host_backoff_must_not_transcribe() {
+        use super::*;
+        let root=std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_CASE_ROOT").unwrap());
+        std::fs::create_dir_all(&root).unwrap();
+        let wav=root.join("synthetic-unfinished.wav");
+        let mut bytes=denzic_host_audio_v1_core::wav::wav_header(32000).to_vec();
+        bytes.extend(vec![0u8; 32000]);
+        std::fs::write(&wav,&bytes).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        install_recovery_session(&backend,"unconfirmed-host",&wav);
+        let row={
+            let mut snapshot=backend.snapshot.lock().unwrap();
+            let s=&mut snapshot.host.sessions[0];
+            s.source="hostMicrophone".into();
+            s.status="captured".into();
+            s.audio_stored=false;
+            s.audio_bytes=0;
+            s.retention.audio_cached=false;
+            s.capture_incomplete=false;
+            s.transcript_text="existing partial".into();
+            s.recovery=CompanionV1MeetingRecovery::armed("offlineStore");
+            s.recovery.stage="retryBackoff".into();
+            s.recovery.retry_stage="transcription".into();
+            s.recovery.next_retry_at_unix_ms=None;
+            s.pending_reason=Some("recovery_retry_wait".into());
+            s.chunks[0].status="open".into();
+            s.clone()
+        };
+        persistence::save_sessions_to(&persistence::state_file_path(),&[row]).unwrap();
+        drop(backend);
+        let restarted=FixtureCompanionBackend::new();
+        let after=restarted.apply_control(recovery_request(CompanionV1ControlAction::MeetingTranscribeAudio,"unconfirmed-host",true)).unwrap();
+        let row=&after.host.sessions[0];
+        assert!(!row.transcript_final,"unconfirmed host recording was submitted for transcription");
+        assert_eq!(row.recovery.attempt_count,0,"unconfirmed recording consumed retry budget");
+        assert_eq!(row.recovery.stage,"paused");
+        assert_eq!(row.transcript_text,"existing partial");
+        assert_eq!(std::fs::read(&wav).unwrap(),bytes,"original recording changed");
+        assert!(restarted.apply_control(recovery_request(CompanionV1ControlAction::MeetingTranscribeAudio,"unconfirmed-host",false)).is_err());
+        {
+            let mut snapshot=restarted.snapshot.lock().unwrap();
+            let row=&mut snapshot.host.sessions[0];
+            row.audio_stored=true;
+            row.audio_bytes=bytes.len() as u64;
+            row.retention.audio_cached=true;
+            row.chunks[0].status="sealed".into();
+            row.recovery=CompanionV1MeetingRecovery::armed("offlineStore");
+        }
+        let saved=restarted.apply_control(recovery_request(CompanionV1ControlAction::MeetingTranscribeAudio,"unconfirmed-host",false)).unwrap();
+        assert!(saved.host.sessions[0].transcript_final,"confirmed host recording should still transcribe");
+        assert_eq!(saved.host.sessions[0].transcript_text,"Synthetic forbidden result");
+        assert_eq!(std::fs::read(&wav).unwrap(),bytes);
+        {
+            let mut snapshot=restarted.snapshot.lock().unwrap();
+            let row=&mut snapshot.host.sessions[0];
+            row.audio_stored=false;
+            row.retention.audio_cached=false;
+            row.recovery.stage="retryBackoff".into();
+            row.recovery.retry_stage="minutes".into();
+            persistence::reconcile_session_recovery(row);
+            assert_eq!(row.recovery.stage,"retryBackoff","saved final text remains available for minutes");
+            assert!(row.transcript_final);
+        }
+    }
+
     #[test]
     #[ignore]
     fn isolated_host_start_exit_child() {
