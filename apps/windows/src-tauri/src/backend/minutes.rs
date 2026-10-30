@@ -897,12 +897,27 @@ fn merge_literal_conditional_followups(items: &mut Vec<CompanionV1ActionItem>, s
         let Some((_, followup)) = conditional.text.split_once('，') else { continue };
         let full = normalized_fact_chars(&conditional.text);
         let body = normalized_fact_chars(followup);
-        if items.iter().any(|item| {
+        // A provider may omit the literal connector “再” while shortening the
+        // same follow-up. Match only a substantial literal substring that has
+        // exactly one occurrence in the original, never a semantic guess.
+        let without_again = |text: &[char]| text.iter().copied().filter(|ch| *ch != '再').collect::<Vec<_>>();
+        let body_match = without_again(&body);
+        let original_match = without_again(&normalized_fact_chars(&session.transcript_text));
+        let has_full = items.iter().any(|item| {
             let text = normalized_fact_chars(&item.text);
             text.windows(full.len()).any(|window| window == full)
-        }) { continue; }
-        if let Some(item) = items.iter_mut().find(|item| normalized_fact_chars(&item.text) == body) {
-            *item = conditional.clone(); changed = true;
+        });
+        let matches: Vec<usize> = items.iter().enumerate().filter_map(|(index, item)| {
+            let text = without_again(&normalized_fact_chars(&item.text));
+            (text.len() >= 6 && body_match.windows(text.len()).any(|window| window == text)
+                && original_match.windows(text.len()).filter(|window| *window == text).count() == 1)
+                .then_some(index)
+        }).collect();
+        if has_full {
+            for index in matches.iter().rev() { items.remove(*index); changed = true; }
+        } else if let Some((&first, rest)) = matches.split_first() {
+            items[first] = conditional.clone(); changed = true;
+            for index in rest.iter().rev() { items.remove(*index); }
         } else if items.len() < 8 {
             items.push(conditional.clone()); changed = true;
         }
@@ -1211,6 +1226,22 @@ mod tests {
         let corrected = finalize_minutes(Ok(cloud), l0, &session);
         assert!(corrected.action_items.iter().any(|item| item.text == "如果客户提出修改，我们下周一再确认交货时间"));
         assert!(!corrected.action_items.iter().any(|item| item.text == "我们下周一再确认交货时间"));
+        let l0 = rules_l0_minutes(&session, "now");
+        let mut shortened = l0.clone(); shortened.source = "llm_deepseek".into();
+        shortened.action_items = vec![CompanionV1ActionItem{text:"下周一确认交货时间".into(),owner:None,due:None}];
+        let corrected_short = finalize_minutes(Ok(shortened), l0, &session);
+        assert!(corrected_short.action_items.iter().any(|item| item.text == "如果客户提出修改，我们下周一再确认交货时间"));
+        assert!(!corrected_short.action_items.iter().any(|item| item.text == "下周一确认交货时间"), "a shortened conditional action must not become an unconditional duplicate");
+        let mut both = vec![CompanionV1ActionItem{text:"如果客户提出修改，我们下周一再确认交货时间".into(),owner:None,due:None},
+            CompanionV1ActionItem{text:"下周一确认交货时间".into(),owner:None,due:None},
+            CompanionV1ActionItem{text:"核对包装材料".into(),owner:None,due:None}];
+        assert!(merge_literal_conditional_followups(&mut both, &session));
+        assert_eq!(both.len(), 2);
+        assert!(both.iter().any(|item| item.text == "核对包装材料"));
+        let ambiguous = session_with_text("明天下午2点，我们讨论产品包装，小王负责整理报价，周五之前发给大家，如果客户提出修改，我们下周一再确认交货时间。下周一确认交货时间。");
+        let mut distinct = vec![CompanionV1ActionItem{text:"下周一确认交货时间".into(),owner:None,due:None}];
+        assert!(merge_literal_conditional_followups(&mut distinct, &ambiguous));
+        assert_eq!(distinct.len(), 2, "a repeated source phrase may be a separate unconditional commitment");
         let mut already_present = corrected.action_items.clone();
         assert!(!merge_literal_conditional_followups(&mut already_present, &session));
         assert_eq!(already_present.iter().filter(|item| item.text == "如果客户提出修改，我们下周一再确认交货时间").count(), 1);
