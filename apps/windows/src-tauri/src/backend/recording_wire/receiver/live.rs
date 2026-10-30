@@ -105,7 +105,7 @@ impl LiveCursor {
             if pcm.len()!=320 {return Err(fail());}
             let range=self.window.as_mut().ok_or_else(fail)?.packet(pcm.len())?;
             self.frames+=1;
-            self.pcm.extend(pcm[range].iter().map(|&s|s.clamp(-29900,29900)));
+            self.pcm.extend(pcm[range].iter().copied());
             while self.pcm.len()>30*16000 {self.pcm.pop_front();}
         }
         self.window.as_ref().ok_or_else(fail)?.finish(true)?;
@@ -150,6 +150,18 @@ mod tests {
         for _ in 0..3 {b.extend_from_slice(&[3,0,0xf8,0xff,0xfe]);}b
     }
     fn cursor()->LiveCursor {LiveCursor::new(SessionKey {device_uid:[7;12],format_epoch:11,session_id:13}).unwrap()}
+    #[test] fn live_high_signal_keeps_decoder_range() {
+        let bytes=include_bytes!("fixtures/high-tone-clamp.cop1");
+        let mut c=cursor();c.accept(0,0,20*320,bytes,true,false).unwrap();
+        let mut reader=cop1::Reader::new(bytes.as_slice(),0,false).unwrap();
+        let mut decoder=MonoDecoder::new(16000).unwrap();let mut expected=Vec::new();let mut n=0;
+        while let Some(record)=reader.next().unwrap() {
+            if let cop1::Record::Audio(packet)=record {let pcm=decoder.decode(&packet).unwrap();
+                if n>0 {expected.extend(pcm);}n+=1;}
+        }
+        assert!(expected.iter().any(|&x|x>29900 || x < -29900));
+        assert_eq!(c.pcm.iter().copied().collect::<Vec<_>>(),expected);
+    }
     #[test]
     fn tail_growth_seal_and_next_segment_skip_only_one_frame() {
         let b=source();let mut c=cursor();
@@ -176,7 +188,7 @@ mod tests {
         c.accept(1,1280,1600*320,&next,true,false).unwrap();
         let mut decoder=MonoDecoder::new(16000).unwrap();let mut expected=Vec::new();
         for i in 0..1604 {let pcm=decoder.decode(&PACKET).unwrap();
-            if i>0 {expected.extend(pcm.into_iter().map(|s|s.clamp(-29900,29900)));}}
+            if i>0 {expected.extend(pcm);}}
         assert_eq!(c.pcm.len(),30*16000);
         assert_eq!(c.pcm.iter().copied().collect::<Vec<_>>(),expected[expected.len()-30*16000..]);
         assert_eq!(c.captured_ms(),32080); // The 5s pause is not captured PCM.

@@ -4,6 +4,16 @@
 use std::{fs, path::Path};
 use denzic_host_audio_v1_core::{opus_decoder::MonoDecoder, wav::WavWriter};
 
+// Current 16 kHz recordings use the full i16 output of the Opus decoder.
+// Older non-16 kHz imports retain their historical gain/limiting contract.
+pub(crate) fn source_pcm_sample(sample:i16, rate:u32)->i16 {
+    if rate==16000 { sample }
+    else {
+        let gain=if rate==8000 {48} else {1};
+        (i32::from(sample)*gain).clamp(-29900,29900) as i16
+    }
+}
+
 pub(crate) fn decode_recording(input:&Path, output:&Path, live_prefix:bool)->Result<u64,String> {
     super::diagnostics::Span::start(super::diagnostics::Operation::AudioDecode)
         .result(super::audio_artifacts::generated(output,output,super::audio_artifacts::Purpose::Recording,
@@ -34,8 +44,7 @@ fn decode_inner(input:&Path, output:&Path, live_prefix:bool)->Result<u64,String>
             let samples=&mut samples[range];
             // Historical originals retain their established mapping. New
             // source boundaries remove only the codec's measured latency.
-            let gain=if rate==8000 {48} else {1};
-            for value in samples.iter_mut() { *value=(*value as i32*gain).clamp(-29900,29900) as i16; }
+            for value in samples.iter_mut() { *value=source_pcm_sample(*value,rate); }
             let pcm=samples.iter().flat_map(|s|s.to_le_bytes()).collect::<Vec<_>>();
             if wav.data_bytes() as u64+pcm.len() as u64>1024*1024*1024 { return Err("decoded recording exceeds supported duration".into()); }
             wav.append_bytes(&pcm).map_err(|e|format!("write decoded audio: {e}"))?;
@@ -59,6 +68,34 @@ fn decode_inner(input:&Path, output:&Path, live_prefix:bool)->Result<u64,String>
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test] fn sixteen_khz_original_keeps_decoded_full_range() {
+        let dir=std::env::temp_dir().join(format!("companion-pcm-range-{}",uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();
+        let input=dir.join("synthetic.cop1");let output=dir.join("decoded.wav");
+        let raw=include_bytes!("recording_wire/receiver/fixtures/high-tone-clamp.cop1");
+        fs::write(&input,raw).unwrap();
+        let mut reader=super::super::cop1::Reader::new(raw.as_slice(),0,false).unwrap();
+        let mut decoder=MonoDecoder::new(16000).unwrap();let mut expected=Vec::new();let mut frame=0;
+        while let Some(record)=reader.next().unwrap() {
+            if let super::super::cop1::Record::Audio(packet)=record {
+                let samples=decoder.decode(&packet).unwrap();
+                if frame>0 {expected.extend(samples);}frame+=1;
+            }
+        }
+        assert!(expected.iter().any(|&x|x>29900 || x < -29900),"fixture must exercise the old clamp");
+        decode_recording(&input,&output,false).unwrap();
+        let wav=fs::read(&output).unwrap();let samples=wav[44..].chunks_exact(2)
+            .map(|v|i16::from_le_bytes([v[0],v[1]])).collect::<Vec<_>>();
+        assert!(samples==expected,"WAV must preserve the native decoder's 16-bit samples");
+        fs::remove_dir_all(dir).unwrap();
+    }
+    #[test] fn legacy_non_16khz_gain_and_limit_are_unchanged() {
+        assert_eq!(source_pcm_sample(1000,8000),29900);
+        assert_eq!(source_pcm_sample(-1000,8000),-29900);
+        assert_eq!(source_pcm_sample(30100,12000),29900);
+        assert_eq!(source_pcm_sample(i16::MIN,16000),i16::MIN);
+        assert_eq!(source_pcm_sample(i16::MAX,16000),i16::MAX);
+    }
     #[test] fn native_cop1_decode_and_partial_finalized_boundary_preserve_existing_audio() {
         let dir=std::env::temp_dir().join(format!("companion-native-opus-{}",uuid::Uuid::new_v4())); fs::create_dir_all(&dir).unwrap();
         let input=dir.join("input.cop1"); let output=dir.join("output.wav");

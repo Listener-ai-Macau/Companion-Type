@@ -561,8 +561,22 @@ impl Receiver {
             &temporary,
             audio_artifacts::Purpose::DecodeTemporary,
             || {
-                let timeline=decode(ds, files, &temporary, samples)?;
-                let (bytes, sha256) = digest(read_locked(&temporary)?)?;
+                // Receipts written by older releases hash the historically
+                // limited WAV. An orphaned WAV can also predate its receipt.
+                // Choose the old mapping only when its complete hash matches
+                // that existing artifact; never guess from its filename.
+                let target = if let Some(saved)=expected {
+                    Some((saved.bytes,saved.sha256.clone()))
+                } else if existing {
+                    Some(digest(read_locked(&output)?)?)
+                } else { None };
+                let mut timeline=decode(ds, files, &temporary, samples, false)?;
+                let mut candidate=digest(read_locked(&temporary)?)?;
+                if target.as_ref().is_some_and(|known| *known!=candidate) {
+                    timeline=decode(ds, files, &temporary, samples, true)?;
+                    candidate=digest(read_locked(&temporary)?)?;
+                }
+                let (bytes, sha256)=candidate;
                 if expected.is_some_and(|saved| saved.bytes!=bytes || saved.sha256!=sha256 ||
                     saved.samples!=samples || saved.timeline!=timeline) {
                     return Err("重建回听与原保存校验不一致；原始分段和恢复记录均已保留，未替换文件。".into());
@@ -689,6 +703,7 @@ fn decode(
     files: &mut [File],
     output: &Path,
     expected: u64,
+    legacy_limited: bool,
 ) -> Result<Option<cop1::Timeline>, String> {
     use denzic_host_audio_v1_core::{opus_decoder::MonoDecoder, wav::WavWriter};
     let mut decoder = MonoDecoder::new(16000)?;
@@ -714,7 +729,7 @@ fn decode(
             let range=window.as_mut().ok_or_else(fail)?.packet(pcm.len())?;
             let pcm = pcm[range]
                 .iter().copied()
-                .flat_map(|v| v.clamp(-29900, 29900).to_le_bytes())
+                .flat_map(|v| (if legacy_limited {v.clamp(-29900, 29900)} else {v}).to_le_bytes())
                 .collect::<Vec<_>>();
             wav.append_bytes(&pcm).map_err(|e|export::local_write_error("写入录音回听文件",&e))?;
         }

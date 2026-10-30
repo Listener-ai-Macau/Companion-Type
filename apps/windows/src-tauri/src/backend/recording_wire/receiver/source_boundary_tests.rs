@@ -21,6 +21,80 @@ fn parse_fixture(raw:&[u8])->Vec<(Descriptor,Vec<u8>)> {
     let count=parts.len()as u32;parts.last_mut().unwrap().0.flags=3;
     parts.last_mut().unwrap().0.total_segments=count;parts
 }
+fn high_tone_fixture()->(Descriptor,Vec<u8>) {
+    let payload=include_bytes!("fixtures/high-tone-clamp.cop1").to_vec();
+    let mut d=fixture()[0].0.clone();
+    d.segment_index=0;d.sample_offset=0;d.sample_count=20*320;
+    d.encoded_length=payload.len() as u32;d.content_crc32=crc32fast::hash(&payload);
+    d.sha256=Sha256::digest(&payload).into();d.total_segments=1;d.flags=3;
+    (d,payload)
+}
+#[test]
+#[ignore = "requires explicitly supplied local board originals"]
+fn real_saved_original_matches_old_wav_when_legacy_clamped() {
+    let receipt_path=std::env::var_os("COMPANION_REAL_PCM_RECEIPT").unwrap();
+    let old_wav=std::env::var_os("COMPANION_REAL_PCM_WAV").unwrap();
+    let expected_hash=std::env::var("COMPANION_REAL_PCM_WAV_SHA256").unwrap();
+    let expected_changed=std::env::var("COMPANION_REAL_PCM_CHANGED").unwrap().parse::<usize>().unwrap();
+    let receipt:serde_json::Value=serde_json::from_slice(&fs::read(receipt_path).unwrap()).unwrap();
+    let segments=receipt["segments"].as_array().unwrap();assert_eq!(segments.len(),2);
+    let wires=segments.iter().map(|v|serde_json::from_value::<Vec<u8>>(v["wire"].clone()).unwrap()).collect::<Vec<_>>();
+    let first=std::env::var_os("COMPANION_REAL_PCM_PART0").unwrap();
+    let second=std::env::var_os("COMPANION_REAL_PCM_PART1").unwrap();
+    let parts=[fs::read(first).unwrap(),fs::read(second).unwrap()];
+    let root=std::env::temp_dir().join(format!("companion-real-pcm-{}",uuid::Uuid::new_v4()));fs::create_dir_all(&root).unwrap();
+    let mut r=Receiver::open(&root,&wires[0]).unwrap();
+    for i in 0..2 {r.accept_segment(&wires[i],&parts[i]).unwrap();}
+    let output=r.assemble().unwrap();let decoded=fs::read(output).unwrap();let old=fs::read(old_wav).unwrap();
+    assert_eq!(format!("{:x}",Sha256::digest(&old)),expected_hash);
+    assert_eq!(decoded.len(),old.len());assert_eq!(&decoded[..44],&old[..44]);
+    let mut changed=0usize;
+    for (a,b) in decoded[44..].chunks_exact(2).zip(old[44..].chunks_exact(2)) {
+        let sample=i16::from_le_bytes([a[0],a[1]]);let previous=i16::from_le_bytes([b[0],b[1]]);
+        if sample!=previous {changed+=1;}
+        assert_eq!(sample.clamp(-29900,29900),previous);
+    }
+    assert_eq!(changed,expected_changed);drop(r);fs::remove_dir_all(root).unwrap();
+}
+#[test] fn high_signal_new_original_keeps_full_pcm_and_matches_import() {
+    let root=std::env::temp_dir().join(format!("companion-original-range-{}",uuid::Uuid::new_v4()));
+    fs::create_dir_all(&root).unwrap();let(d,p)=high_tone_fixture();
+    let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+    r.accept_segment(&d.encode().unwrap(),&p).unwrap();let assembled=r.assemble().unwrap();
+    let original=fs::read(&assembled).unwrap();
+    assert!(original[44..].chunks_exact(2).any(|v|i16::from_le_bytes([v[0],v[1]]).unsigned_abs()>29900));
+    let input=root.join("import.cop1");let imported=root.join("import.wav");fs::write(&input,&p).unwrap();
+    crate::backend::audio_decode::decode_recording(&input,&imported,false).unwrap();
+    assert_eq!(fs::read(imported).unwrap(),original);
+    let receipt_hash=r.receipt.audio.as_ref().unwrap().sha256.clone();
+    fs::remove_file(&assembled).unwrap();drop(r);
+    let restored=Receiver::open_for_local_repair(&root,&d.encode().unwrap()).unwrap();
+    assert_eq!(fs::read(&assembled).unwrap(),original);
+    assert_eq!(restored.receipt.audio.as_ref().unwrap().sha256,receipt_hash);
+    drop(restored);fs::remove_dir_all(root).unwrap();
+}
+#[test] fn legacy_limited_orphan_and_missing_wav_recover_by_full_hash() {
+    let root=std::env::temp_dir().join(format!("companion-legacy-range-{}",uuid::Uuid::new_v4()));
+    fs::create_dir_all(&root).unwrap();let(d,p)=high_tone_fixture();
+    let mut r=Receiver::open(&root,&d.encode().unwrap()).unwrap();
+    r.accept_segment(&d.encode().unwrap(),&p).unwrap();
+    let ds=r.descriptors().unwrap();let mut files=Vec::new();
+    for desc in &ds {files.push(verify_file(read_locked(&r.payload_path(desc)).unwrap(),desc).unwrap());}
+    let output=r.audio_path();decode(&ds,&mut files,&output,19*320,true).unwrap();
+    let legacy=fs::read(&output).unwrap();
+    assert!(legacy[44..].chunks_exact(2).any(|v|i16::from_le_bytes([v[0],v[1]]).unsigned_abs()==29900));
+    drop(files);
+    // Orphan left by an older version before its receipt was committed.
+    assert_eq!(r.assemble().unwrap(),output);assert_eq!(fs::read(&output).unwrap(),legacy);
+    let receipt_hash=r.receipt.audio.as_ref().unwrap().sha256.clone();
+    assert_eq!(receipt_hash,format!("{:x}",Sha256::digest(&legacy)));
+    fs::remove_file(&output).unwrap();drop(r);
+    // A legacy receipt still requires byte-identical reconstruction.
+    let restored=Receiver::open_for_local_repair(&root,&d.encode().unwrap()).unwrap();
+    assert_eq!(fs::read(&output).unwrap(),legacy);
+    assert_eq!(restored.receipt.audio.as_ref().unwrap().sha256,receipt_hash);
+    drop(restored);fs::remove_dir_all(root).unwrap();
+}
 #[test] fn exact_source_end_crosses_segment_without_early_completion_or_padding() {
     let root=std::env::temp_dir().join(format!("companion-boundary-{}",uuid::Uuid::new_v4()));
     fs::create_dir_all(&root).unwrap();let index=root.join("sessions.json");let parts=fixture();
