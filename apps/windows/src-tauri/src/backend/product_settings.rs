@@ -118,6 +118,8 @@ impl Default for CompanionProductSettings {
 pub struct CompanionProductSettingsPublic {
     pub default_meeting_mode: String,
     pub asr_provider: String,
+    /// A lightweight presence hint; the model and runtime are verified when used.
+    pub local_asr_available: bool,
     pub volc_app_key_set: bool,
     pub volc_access_key_set: bool,
     pub volc_resource_id: String,
@@ -183,6 +185,7 @@ impl CompanionProductSettings {
         CompanionProductSettingsPublic {
             default_meeting_mode: self.default_meeting_mode.clone(),
             asr_provider: self.asr_provider.clone(),
+            local_asr_available: super::transcription::local_asr_assets_present(),
             volc_app_key_set: !self.credential_blocks.volc_app_key && !self.volc_app_key.trim().is_empty(),
             volc_access_key_set: !self.credential_blocks.volc_access_key && !self.volc_access_key.trim().is_empty(),
             volc_resource_id: self.volc_resource_id.clone(),

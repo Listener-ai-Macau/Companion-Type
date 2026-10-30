@@ -97,6 +97,7 @@ import {
 export type CompanionProductSettingsPublic = {
   defaultMeetingMode: string;
   asrProvider: string;
+  localAsrAvailable?: boolean;
   volcAppKeySet: boolean;
   volcAccessKeySet: boolean;
   volcResourceId: string;
@@ -227,6 +228,7 @@ export interface CompanionDashboardProps {
   onPreviewDiagnostics?:()=>Promise<unknown>;
   onExportDiagnostics?: (includeDevice: boolean) => Promise<{path:string;bytes:number;warning?:string|null}|null>;
   onPrepareAudioComponents?: () => Promise<void>;
+  onPrepareLocalAsr?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
   onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>;
@@ -379,6 +381,7 @@ export function CompanionDashboard({
   onExportDiagnostics,
   onPreviewDiagnostics,
   onPrepareAudioComponents,
+  onPrepareLocalAsr,
   onCheckService,
   onPrepareAudio,
   onExportAudio,
@@ -880,15 +883,18 @@ export function CompanionDashboard({
   };
   const storageBlocked = Boolean(snapshot?.host.persistence && snapshot.host.persistence.status !== 'ready');
   const transcriptionRunning = busyAction === 'meetingTranscribeAudio';
-  const asrConfigured = productSettings?.asrProvider === 'volcengine'
+  const cloudAsrConfigured = productSettings?.asrProvider === 'volcengine'
     ? Boolean(productSettings.volcAppKeySet && productSettings.volcAccessKeySet)
     : Boolean(productSettings?.openaiAsrApiKeySet);
+  const asrConfigured = productSettings?.asrProvider === 'local-paraformer'
+    ? Boolean(productSettings.localAsrAvailable) : cloudAsrConfigured;
   useEffect(() => {
     onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
   }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
+      : formAsrProvider === 'local-paraformer' ? [!productSettings?.localAsrAvailable ? '本地转写模型' : '']
       : [!formOpenAiEndpoint.trim() ? '兼容服务 Endpoint' : '', !formOpenAiModel.trim() ? '兼容服务模型' : '', clearCredentials.includes('openaiAsrApiKey') || !(formOpenAiKey.trim() || productSettings?.openaiAsrApiKeySet) ? '兼容服务 Key' : '']),
     ...(formDeepseekEnabled
       ? [!formDeepseekBase.trim() ? 'DeepSeek Base URL' : '', !formDeepseekModel.trim() ? 'DeepSeek 模型' : '', clearCredentials.includes('deepseekApiKey') || !(formDeepseekKey.trim() || productSettings?.deepseekApiKeySet) ? 'DeepSeek Key' : ''] : []),
@@ -2281,14 +2287,14 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action ct-action-primary"
-                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !connected || !asrConfigured || !onStartBoardOnlineLive || !onlineDurationValid}
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !connected || !cloudAsrConfigured || productSettings?.asrProvider === 'local-paraformer' || !onStartBoardOnlineLive || !onlineDurationValid}
                 onClick={() => onStartBoardOnlineLive?.({
                   title: newMeetingTitle.trim() || 'Companion 会议',
                   deviceId: device?.deviceId,
                   maxDurationSeconds: boardMaxDurationSeconds,
                   partialIntervalMs: 8_000,
                 })}
-                title={!connected ? '请先连接 Companion' : !asrConfigured ? '请先配置转写服务；也可以直接在设备上录音' : '使用 Companion 麦克风开始在线会议'}
+                title={!connected ? '请先连接 Companion' : productSettings?.asrProvider === 'local-paraformer' ? '本地转写在录音结束后处理' : !cloudAsrConfigured ? '请先配置转写服务；也可以直接在设备上录音' : '使用 Companion 麦克风开始在线会议'}
               >
                 <Mic size={16} />
                 <span>开始在线会议</span>
@@ -2303,7 +2309,8 @@ export function CompanionDashboard({
                 <span>停止并生成纪要</span>
               </button>
             </div>
-            {!asrConfigured ? <p className="ct-step-meta">在线转写需要服务配置。你也可以先在设备上录音，稍后同步。<button type="button" className="ct-text-button" onClick={openSettings}>配置转写服务</button></p> : null}
+            {productSettings?.asrProvider === 'local-paraformer' ? <p className="ct-step-meta">本地转写在录音结束后处理。你可以先在设备上录音，稍后同步。</p>
+              : !cloudAsrConfigured ? <p className="ct-step-meta">在线转写需要服务配置。你也可以先在设备上录音，稍后同步。<button type="button" className="ct-text-button" onClick={openSettings}>配置转写服务</button></p> : null}
             {boardOnlineLive && boardOnlineLive.state !== 'idle' ? (
               <div className="ct-live-box" aria-label="板端在线会议状态">
                 <strong role="status">
@@ -2513,7 +2520,7 @@ export function CompanionDashboard({
               {operationErrorText(productSettings.storageWarning,'settings')}
             </p> : null}
             <p className="ct-secret-hint">
-              正式桌面版使用系统凭据管理器保存密钥。转写会把录音发送到所选 ASR 服务，智能纪要会把转写文字发送到 DeepSeek；空密钥保存不会覆盖已有值。
+              正式桌面版使用系统凭据管理器保存密钥。本地转写不会上传录音；选择云端转写时录音会发送到所选服务，智能纪要会把转写文字发送到 DeepSeek。空密钥保存不会覆盖已有值。
             </p>
             <p className="ct-service-boundary">使用自备或兼容服务时，数据会离开 Companion Type 并交给你填写的服务地址；该服务的保留期限、访问控制与可用性由服务提供者或你的部署负责。</p>
             <div className="ct-mode-row">
@@ -2538,9 +2545,18 @@ export function CompanionDashboard({
                 <select value={formAsrProvider} onChange={(e) => setFormAsrProvider(e.target.value)}>
                   <option value="volcengine">火山 Volcengine</option>
                   <option value="openai-compatible">OpenAI 兼容</option>
+                  <option value="local-paraformer">电脑本地转写（中文）</option>
                 </select>
               </label>
-              {formAsrProvider === 'volcengine' ? <>
+              {formAsrProvider === 'local-paraformer' ? <div className="ct-field">
+                <span>{productSettings?.localAsrAvailable ? '本地模型已准备' : '需要准备本地模型'}</span>
+                <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !onPrepareLocalAsr}
+                  onClick={() => { if (!onPrepareLocalAsr) return; setSettingsBusy(true); setSettingsMsg(null);
+                    void onPrepareLocalAsr().then(() => setSettingsMsg('已从本机 Listener 复制并校验中文转写模型。'))
+                      .catch(() => setSettingsMsg('本地转写模型尚未准备完成。请确认本机 Listener 模型可用，或继续使用云端转写；已有录音会保留。')).finally(() => setSettingsBusy(false)); }}>
+                  从本机 Listener 准备模型
+                </button>
+              </div> : formAsrProvider === 'volcengine' ? <>
                 <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
                 {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
                 {credentialField('volcAccessKey', '火山 Access Key', formVolcAccess, setFormVolcAccess, productSettings?.volcAccessKeySet)}
@@ -2615,7 +2631,7 @@ export function CompanionDashboard({
                 disabled={controlsBusy || settingsBusy || serviceBusy !== null || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && !formDeepseekEnabled)}
                 onClick={() => void checkService(service)}>{serviceBusy === service ? '正在测试…' : service === 'asr' ? '测试转写服务' : '测试纪要服务'}</button>)}
             </div>
-            <p className="ct-step-meta">按已保存配置发送一秒静音或固定测试文字，不读取会议或麦克风，服务商可能计费。测试通过不代表识别或纪要准确率通过。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>
+            <p className="ct-step-meta">本地转写测试只加载本机模型；云端测试会发送一秒静音或固定测试文字，可能计费。测试不读取会议或麦克风，也不能代表识别或纪要准确率。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>
             {(['asr', 'minutes'] as const).map(service => serviceResults[service] ? <p key={service} className="ct-step-meta" role="status">{service === 'asr' ? '转写' : '纪要'}：{serviceResults[service]}</p> : null)}
           </section>
 
@@ -2673,7 +2689,7 @@ export function CompanionDashboard({
                 className="ct-action ct-action-primary"
                 disabled={controlsBusy || oobeBlockedByRecording || storageBlocked
                   || (!unlimitedOffline && !durationValid) || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
-                  || (connected && meetingMode === 'onlineLive' && (!asrConfigured || !onStartBoardOnlineLive))}
+                  || (connected && meetingMode === 'onlineLive' && (!cloudAsrConfigured || productSettings?.asrProvider === 'local-paraformer' || !onStartBoardOnlineLive))}
                 onClick={() => {
                   if (connected && meetingMode === 'onlineLive') {
                     void onStartBoardOnlineLive?.({

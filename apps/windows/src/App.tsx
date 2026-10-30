@@ -31,6 +31,7 @@ import {
   exportCompanionDiagnostics,
   previewCompanionDiagnostics,
   prepareCompanionAudioComponents,
+  prepareCompanionLocalAsr,
   checkCompanionService,
   prepareCompanionAudio,
   saveCompanionMeetingEdit,
@@ -275,6 +276,7 @@ export function App() {
       onExportDiagnostics={isTauriRuntime() ? (includeDevice) => exclusive('refresh', () => exportCompanionDiagnostics(includeDevice)) : undefined}
       onPreviewDiagnostics={isTauriRuntime() ? () => exclusive('refresh',previewCompanionDiagnostics) : undefined}
       onPrepareAudioComponents={isTauriRuntime() ? () => exclusive('refresh', prepareCompanionAudioComponents) : undefined}
+      onPrepareLocalAsr={isTauriRuntime() ? () => exclusive('refresh', async () => { await prepareCompanionLocalAsr(); setProductSettings(await getProductSettings()); }) : undefined}
       onCheckService={isTauriRuntime() ? (service) => exclusive('refresh', () => checkCompanionService(service)) : undefined}
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}
       onExportAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => exportCompanionAudio(sessionId)) : undefined}

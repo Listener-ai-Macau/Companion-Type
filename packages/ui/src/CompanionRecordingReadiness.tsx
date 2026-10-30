@@ -49,7 +49,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   const saveProblem = save !== undefined && save !== 'ready';
   const recordingCheck = snapshot?.oobe.checks.find(check => check.id === 'boardMicrophone');
   const interfaceProblem = connected && recordingCheck?.status === 'fail';
-  const asrConfigured = settings?.asrProvider === 'volcengine'
+  const asrConfigured = settings?.asrProvider === 'local-paraformer' ? Boolean(settings.localAsrAvailable) : settings?.asrProvider === 'volcengine'
     ? Boolean(settings.volcAppKeySet && settings.volcAccessKeySet && settings.volcResourceId.trim())
     : Boolean(settings?.openaiAsrApiKeySet && settings.openaiAsrEndpoint.trim() && settings.openaiAsrModel.trim());
   const minutesConfigured = Boolean(settings?.deepseekMinutesEnabled && settings.deepseekApiKeySet
@@ -99,7 +99,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
         <p className="ct-readiness-note">这里未准备好，也可以先录音并保存原音。</p>
         <dl>
           <div><dt>转文字</dt><dd>{!settings ? '服务设置尚未读取。' : settings.storageSaveBlocked ? '服务设置暂不可用，请到服务设置处理保存提示。'
-            : asrConfigured ? '转写配置已保存；是否可调用仍以实际服务结果为准。'
+            : asrConfigured ? settings?.asrProvider === 'local-paraformer' ? '本地转写模型已准备，实际识别效果以使用结果为准。' : '转写配置已保存；是否可调用仍以实际服务结果为准。'
               : '转写配置尚不完整，需要时再到服务设置补齐。'}</dd></div>
           <div><dt>智能纪要</dt><dd>{!settings ? '服务设置尚未读取。' : settings.storageSaveBlocked ? '服务设置暂不可用。'
             : minutesConfigured ? '纪要配置已保存；是否可调用仍以实际服务结果为准。'

@@ -32,6 +32,7 @@ export const refineCompanionMeetingSpeakers = (sessionId:string) =>
 export type CompanionProductSettingsPublic = {
   defaultMeetingMode: string;
   asrProvider: string;
+  localAsrAvailable?: boolean;
   volcAppKeySet: boolean;
   volcAccessKeySet: boolean;
   volcResourceId: string;
@@ -148,6 +149,11 @@ export async function exportCompanionDiagnostics(includeDevice: boolean): Promis
 export async function prepareCompanionAudioComponents():Promise<void> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中准备音频组件。');
   return invoke('prepare_companion_audio_components');
+}
+
+export async function prepareCompanionLocalAsr():Promise<void> {
+  if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中准备本地转写模型。');
+  return invoke('prepare_companion_local_asr');
 }
 
 export async function exportCompanionAudio(sessionId: string): Promise<{path: string; bytes: number} | null> {

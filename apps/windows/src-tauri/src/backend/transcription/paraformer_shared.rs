@@ -11,7 +11,8 @@ use std::{
 pub(super) const RATE: usize = 16_000;
 pub(super) const MODEL_SHA: &str =
     "3ef6c19369b912f7caf3cef8e545c5ccd1a33d9d7ec792a46668dc41c4b229ec";
-const TOKENS_SHA: &str = "4b2d964e18b9cf139b473003b6698fb2ed9a2a5ec55b93daa677b28f578897aa";
+pub(super) const TOKENS_SHA: &str =
+    "4b2d964e18b9cf139b473003b6698fb2ed9a2a5ec55b93daa677b28f578897aa";
 #[repr(C)]
 struct FeatureConfig {
     sample_rate: i32,
@@ -189,7 +190,7 @@ struct RecognitionResult {
     text: String,
 }
 
-fn verified(path: &Path, expected: &str) -> Result<(), String> {
+pub(super) fn verified(path: &Path, expected: &str) -> Result<(), String> {
     let mut f =
         File::open(path).map_err(|e| format!("本地转写组件不可用 {}: {e}", path.display()))?;
     let mut hash = Sha256::new();

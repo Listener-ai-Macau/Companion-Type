@@ -336,6 +336,7 @@ pub fn run() {
             commands::export_companion_diagnostics,
             commands::preview_companion_diagnostics,
             commands::prepare_companion_audio_components,
+            commands::prepare_companion_local_asr,
             commands::get_companion_backend_capabilities,
             commands::get_companion_ble_bridge_status,
             commands::get_companion_board_online_live_status,

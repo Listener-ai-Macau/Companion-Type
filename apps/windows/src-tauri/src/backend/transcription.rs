@@ -15,6 +15,19 @@ mod chunk_cache;
 #[cfg(windows)]
 mod local_paraformer;
 
+pub(crate) fn local_asr_assets_present() -> bool {
+    #[cfg(windows)] { local_paraformer::assets_present() }
+    #[cfg(not(windows))] { false }
+}
+pub(crate) fn prepare_local_asr() -> Result<(),String> {
+    #[cfg(windows)] { local_paraformer::prepare() }
+    #[cfg(not(windows))] { Err("此平台暂不支持本地转写。".into()) }
+}
+pub(crate) fn check_local_asr() -> Result<(),String> {
+    #[cfg(windows)] { local_paraformer::check() }
+    #[cfg(not(windows))] { Err("此平台暂不支持本地转写。".into()) }
+}
+
 use super::diarization::{self, EmbeddingSegment};
 use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr};
 use crate::companion_v1::CompanionV1UtteranceSegment;
@@ -289,7 +302,7 @@ impl CompanionTranscriptionManager {
     }
 }
 
-fn local_provider_selected() -> bool {
+pub(super) fn local_provider_selected() -> bool {
     std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default().eq_ignore_ascii_case("local-paraformer")
 }
 

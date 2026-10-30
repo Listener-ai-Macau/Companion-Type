@@ -88,6 +88,11 @@ pub async fn prepare_companion_audio_components(coordinator: CompanionCoordinato
 }
 
 #[tauri::command]
+pub async fn prepare_companion_local_asr()->Result<(),String> {
+    tauri::async_runtime::spawn_blocking(crate::backend::prepare_local_asr).await.map_err(|_|"准备本地转写模型失败".to_string())?
+}
+
+#[tauri::command]
 pub async fn preview_companion_diagnostics(coordinator:CompanionCoordinatorState<'_>)->Result<serde_json::Value,String>{
     let coordinator=coordinator.inner().clone();
     tauri::async_runtime::spawn_blocking(move||{
