@@ -503,6 +503,29 @@ pub fn stamp_now() -> String { Utc::now().format("%Y%m%dT%H%M%SZ").to_string() }
 mod tests {
     use super::*;
     #[test]
+    fn completed_and_conditional_voice_actions_export_only_the_confirmed_event() {
+        // The relative date is explicitly confirmed by the user before export;
+        // the original condition must remain part of the calendar title.
+        let markdown = "## Action Items\n- [x] 小王负责整理报价，周五之前发给大家 (owner: 小王, due: 周五之前)\n- [ ] 如果客户提出修改，我们下周一再确认交货时间 (due: 2026-11-02T14:00:00+08:00)";
+        let actions = parse_saved_actions(markdown);
+        assert_eq!(actions.len(), 2);
+        assert!(actions[0].completed && !actions[1].completed);
+        let notice = calendar_event_notice(&actions).unwrap();
+        assert!(notice.contains("1项已完成"));
+        let (file, preview) = calendar_events_with_selections("voice-session", "offlineStore", "语音清单", &actions, true, "20261030T000000Z", Some(30), None).unwrap();
+        let decoded = file.replace("\r\n ", "");
+        assert_eq!(decoded.lines().filter(|line| *line == "BEGIN:VEVENT").count(), 1);
+        assert!(!decoded.contains("小王负责整理报价"));
+        assert!(decoded.contains("如果客户提出修改"));
+        assert!(decoded.contains("我们下周一再确认交货时间"));
+        assert!(decoded.contains("DTSTART:20261102T060000Z\r\n"));
+        assert!(decoded.contains("TRIGGER;RELATED=START:-PT30M\r\n"));
+        assert_eq!(preview[0].status, "completed");
+        assert_eq!(preview[1].status, "timed");
+        assert!(markdown.contains("[x] 小王") && markdown.contains("如果客户提出修改"));
+    }
+
+    #[test]
     fn execution_slot_keeps_deadline_reminder_and_original_action_independent() {
         let markdown="## Action Items\n- [ ] 核对尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 核对包装 (due: 2026-11-07)";
         let actions=parse_saved_actions(markdown);let original=actions.iter().map(|a|(a.text.clone(),a.due.clone(),a.completed)).collect::<Vec<_>>();
