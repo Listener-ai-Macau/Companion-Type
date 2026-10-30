@@ -797,6 +797,14 @@ export function CompanionDashboard({
   const durationError = !durationValid ? '请输入有效的录音时长，实际可录时间以设备空间为准。'
     : connected && meetingMode === 'onlineLive' && !onlineDurationValid ? '在线转写单次最多 43 分钟，请修改时长；不会自动截短。' : null;
   const capacity = connected ? device?.recordingCapacity : null;
+  // FW801's segmented recorder defines START=0 as no preset time limit.
+  // Older devices may also report localLimitSeconds=0 but use different START semantics.
+  const unlimitedDeviceRecording = Boolean(connected && snapshot?.source === 'firmware'
+    && device?.mode === 'windowsNative' && device.boardId === 0x57424155
+    && device.firmwareVersion != null && device.firmwareVersion >= 0x00010421
+    && capacity?.layoutVersion === 3 && capacity.segmentFrames != null
+    && capacity.segmentExtentBytes != null && capacity.localLimitSeconds === 0);
+  const unlimitedOffline = unlimitedDeviceRecording && meetingMode === 'offlineStore';
   currentDiscardDevice.current = connected ? device?.deviceId ?? null : null;
   useEffect(() => { setDiscardMessage(null); }, [device?.deviceId, connected]);
   const capacitySeconds = capacity && capacity.usedEntries < capacity.maxEntries
@@ -821,7 +829,7 @@ export function CompanionDashboard({
   const recordingControlBusy = busyAction !== null || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy || libraryBusy;
   const controlsBusy = recordingControlBusy || Boolean(recordingSync?.jobId);
   const lossBudgetSeconds = Math.ceil(boardMaxDurationSeconds + (meetingMode === 'onlineLive' ? 120 : 0));
-  const lossBudgetValid = durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
+  const lossBudgetValid = !unlimitedOffline && durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
   const captureBudgetBytes = capacity && lossBudgetValid
     ? recordingCapacityRequiredBytes(capacity, lossBudgetSeconds) : null;
   const capacityInsufficient = Boolean(capacity && lossBudgetValid && !recordingCapacityCanFit(capacity, lossBudgetSeconds, captureBudgetBytes ?? Infinity));
@@ -2130,7 +2138,7 @@ export function CompanionDashboard({
 
       <section id="ct-device-recording-page" tabIndex={-1} className="ct-page-panel" hidden={pageView !== 'device'} aria-label="设备与同步内容">
       <CompanionRecordingReadiness snapshot={snapshot} settings={productSettings} recording={oobeBlockedByRecording}
-        busy={controlsBusy} durationSeconds={durationValid ? boardMaxDurationSeconds : null}
+        busy={controlsBusy} durationSeconds={unlimitedDeviceRecording ? null : durationValid ? boardMaxDurationSeconds : null}
         onConnect={() => onControl({action:'deviceConnect',deviceId:device?.deviceId??undefined})}
         onCheck={() => onControl({action:'oobeRunChecks',deviceId:device?.deviceId??undefined})}
         onSettings={openSettings} onRefresh={onRefresh} capacityDetails={<>
@@ -2142,7 +2150,7 @@ export function CompanionDashboard({
         {capacity && capacity.writingEntries>0 && !oobeBlockedByRecording ? <p role="alert">
           设备仍保留未封口录音；校验不足的内容不会自动覆盖。请先同步可恢复的片段，剩余占用需要设备诊断后处理。
         </p> : null}
-        <p>{capacity ? '电脑开录使用下方填写的时长，开始前重新核对完整空间。空间不足会拒绝开录；不会自动覆盖未同步录音。'
+        <p>{capacity ? (unlimitedDeviceRecording ? '电脑开录没有预设时长，开始前检查可用空间；空间用完会保存已有录音并结束。' : '电脑开录使用下方填写的时长，开始前重新核对完整空间。空间不足会拒绝开录；不会自动覆盖未同步录音。')
           : '旧固件或未读到容量时，无法承诺完整时长；请重新读取，或升级到配套固件。'}</p>
         <button type="button" className="ct-text-button" disabled={controlsBusy || oobeBlockedByRecording}
           onClick={() => onControl({action:'oobeRunChecks'})}>重新读取设备容量</button>
@@ -2157,16 +2165,17 @@ export function CompanionDashboard({
       {!oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="开始设备录音">
         <div><strong>用 Companion 录音</strong>
           <p>{connected
-            ? `只保存原音，转写与纪要稍后手动启动。无需网络或转写配置。当前最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整。`
+            ? unlimitedDeviceRecording ? '只保存原音，转写与纪要稍后手动启动。录音持续到手动停止或设备空间用完。'
+              : `只保存原音，转写与纪要稍后手动启动。当前设备最长 ${draftMinutes || '—'} 分钟，可在录音与同步中调整或升级设备。`
             : '设备离线也能录：长按实体键约 1 秒开始，再长按约 1 秒停止；睡着时先短按唤醒。'}</p>
-          {!durationValid ? <p role="alert">请输入有效的录音时长。</p> : null}
+          {!durationValid && !unlimitedDeviceRecording ? <p role="alert">请输入有效的录音时长。</p> : null}
         </div>
         <div className="ct-button-row">
           <button type="button" className="ct-action ct-action-primary"
-            disabled={controlsBusy || storageBlocked || !connected || !device?.deviceId || !durationValid}
+            disabled={controlsBusy || storageBlocked || !connected || !device?.deviceId || (!unlimitedDeviceRecording && !durationValid)}
             onClick={() => onControl({ action: 'meetingStart', meetingMode: 'offlineStore',
               promptId: COMPANION_CAPTURE_ONLY_PROMPT,
-              deviceId: device?.deviceId ?? undefined, title: newMeetingTitle.trim() || 'Companion 录音', durationMs: requestedDurationMs })}>
+              deviceId: device?.deviceId ?? undefined, title: newMeetingTitle.trim() || 'Companion 录音', durationMs: unlimitedDeviceRecording ? 0 : requestedDurationMs })}>
             <Mic size={16} /><span>开始录音</span>
           </button>
           <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
@@ -2649,21 +2658,21 @@ export function CompanionDashboard({
                   spellCheck={false}
                 />
               </label>
-              <label className="ct-field ct-duration-field">
+              {!unlimitedOffline ? <label className="ct-field ct-duration-field">
                 <span>{connected ? '最长录音(分)' : '预计时长(分)'}</span>
                 <input
                   value={draftMinutes} aria-invalid={Boolean(durationError)} aria-describedby={durationError ? "ct-advanced-duration-error" : undefined}
                   onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))}
                   inputMode="numeric"
                 />
-              </label>
+              </label> : <p className="ct-step-meta">录音持续到手动停止或设备空间用完。</p>}
             </div>
             <div className="ct-button-row">
               <button
                 type="button"
                 className="ct-action ct-action-primary"
                 disabled={controlsBusy || oobeBlockedByRecording || storageBlocked
-                  || !durationValid || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
+                  || (!unlimitedOffline && !durationValid) || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
                   || (connected && meetingMode === 'onlineLive' && (!asrConfigured || !onStartBoardOnlineLive))}
                 onClick={() => {
                   if (connected && meetingMode === 'onlineLive') {
@@ -2678,7 +2687,7 @@ export function CompanionDashboard({
                       action: 'meetingStart',
                       title: draftTitle,
                       meetingMode,
-                      durationMs: requestedDurationMs,
+                      durationMs: unlimitedOffline ? 0 : requestedDurationMs,
                     });
                   }
                 }}
@@ -2702,7 +2711,7 @@ export function CompanionDashboard({
               </button> : null}
             </div>
             <p className="ct-step-meta">{connected
-              ? `${meetingMode === 'onlineLive' ? `实时转写单次最多 43 分钟，另预留 2 分钟收尾空间。${nearRecordingLimit ? ` 距本次设定结束约 ${formatDuration(recordingRemainingMs)}。` : ''}` : '先录后整理按填写时长检查完整空间，不会自动截短。'} 当前不支持无缝连续分段。在线模式需要配置转写服务。`
+              ? `${meetingMode === 'onlineLive' ? `实时转写单次最多 43 分钟，另预留 2 分钟收尾空间。${nearRecordingLimit ? ` 距本次设定结束约 ${formatDuration(recordingRemainingMs)}。` : ''}` : unlimitedOffline ? '不预设结束时间；设备空间用完时会保存已有录音并结束。' : '当前设备按填写时长录音，可升级后取消预设限时。'} 在线模式需要配置转写服务。`
               : '本机录音需要手动停止，保存后按实际音频长度显示时长。'}</p>
             {!durationValid || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
               ? <p id="ct-advanced-duration-error" className="ct-step-meta" role="alert">{durationError}</p> : null}

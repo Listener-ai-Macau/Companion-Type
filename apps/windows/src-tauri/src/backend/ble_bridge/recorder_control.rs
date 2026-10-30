@@ -301,6 +301,10 @@ pub(super) async fn execute_owned(
             }
         }
         if journal.confirmed.is_none() && journal.pending.as_ref().is_some_and(|p|p.command==1) {
+            if journal.max_seconds==0 && disposition!=Observation::Accepted
+                && !super::super::recording_capacity::supports_unlimited(&identity) {
+                return Err("当前设备尚不支持无预设时长录音，请先升级设备；原请求保留。".into());
+            }
             if let Some(capacity)=capacity_for_pending_start(&identity,disposition)? {
                 if !capacity.busy {
                     super::segmented::check_fragmented_start(&device,&chars,&actual_peer,&capacity,

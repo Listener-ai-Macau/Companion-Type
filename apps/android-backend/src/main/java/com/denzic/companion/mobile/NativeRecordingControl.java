@@ -36,7 +36,7 @@ public final class NativeRecordingControl {
 
     static String execute(RecordingClient.Link link,Path privateRoot,String hostSession,Action action,int seconds) throws IOException {
         if(link==null||privateRoot==null||hostSession==null||hostSession.trim().isEmpty()||action==null)throw new IllegalArgumentException("device, private directory, session and action required");
-        if(action==Action.START ? seconds<=0||seconds>65535 : seconds!=0)throw new IllegalArgumentException("duration required only for start");
+        if(action==Action.START ? seconds<0||seconds>65535 : seconds!=0)throw new IllegalArgumentException("duration required only for start");
         try{System.loadLibrary("companion_mobile_audio");return executeNative(new Callbacks(link),privateRoot.toAbsolutePath().toString(),hostSession,link.deviceAddress(),action.code,seconds);}
         catch(UnsatisfiedLinkError error){throw new IOException("mobile recording control library is not installed for this device",error);}
     }

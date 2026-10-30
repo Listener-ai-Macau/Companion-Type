@@ -86,6 +86,17 @@ fn explicit_start_retry_is_only_the_original_unconfirmed_initial_request() {
 }
 
 #[test]
+fn unlimited_remote_recording_restores_original_control_after_restart() {
+    let mut journal=running();journal.max_seconds=0;assert!(!journal.local_origin);
+    let mut row=original_row(&journal);row.status="recording".into();
+    let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.source="lastKnown";
+    snapshot.device.device_id=Some(DEVICE.into());snapshot.host.active_session_id=None;snapshot.host.sessions=vec![row];
+    let request=restart_recovery_request(&snapshot,DEVICE).expect("unlimited remote session remains recoverable");
+    assert_eq!(request.action,crate::companion_v1::CompanionV1ControlAction::MeetingRecoverControl);
+    assert_eq!(request.session_id.as_deref(),Some(HOST));
+}
+
+#[test]
 fn restart_recovery_uses_confirmed_durable_original_without_volatile_peer_cache() {
     let mut snapshot=crate::companion_v1::fixture_snapshot();let journal=running();let mut row=original_row(&journal);
     row.status="recording".into();row.recorder_control_uncertain=true;

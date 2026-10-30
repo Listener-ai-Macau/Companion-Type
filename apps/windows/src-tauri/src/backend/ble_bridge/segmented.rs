@@ -162,7 +162,7 @@ pub(super) async fn check_fragmented_start(device:&NativeDevice,
     };
     let possible=match(capacity.segment_frames,capacity.segment_extent_bytes) {
         (Some(frames),Some(extent)) if frames>0&&extent>0=>{
-            let count=(u64::from(seconds)*50).div_ceil(u64::from(frames));
+            let count=if seconds==0 {1} else {(u64::from(seconds)*50).div_ceil(u64::from(frames))};
             let count=if follow{count.min(2)}else{count};
             count>0 && count<=u64::from(capacity.free_bytes/extent) &&
                 count<=u64::from(capacity.max_entries.saturating_sub(capacity.used_entries))

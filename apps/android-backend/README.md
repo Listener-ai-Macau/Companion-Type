@@ -79,11 +79,18 @@ app-private directory for control records:
 ```java
 Path controlDir = context.getFilesDir().toPath().resolve("companion-control");
 String hostSession = NativeRecordingControl.newSessionId();
-String started = client.control(controlDir, hostSession, NativeRecordingControl.Action.START, 120);
+String started = client.control(controlDir, hostSession, NativeRecordingControl.Action.START, 0);
 String paused = client.control(controlDir, hostSession, NativeRecordingControl.Action.PAUSE, 0);
 String resumed = client.control(controlDir, hostSession, NativeRecordingControl.Action.RESUME, 0);
 String stopped = client.control(controlDir, hostSession, NativeRecordingControl.Action.STOP, 0);
 ```
+
+For a device that reports the WBA FW801-or-later unlimited-recording contract,
+pass `0` for `START` to record until the user stops or the device fills. The
+backend verifies the actual connected device and at least one available segment
+before sending; older or unrecognized firmware rejects that request instead of
+silently using its saved limit. This new contract is a software candidate until the
+matching firmware and phone have been tested together.
 
 Each result is JSON with `hostSession`, `state`, `recordingKey`, `anchor`,
 `durationMs`, `finishedLocally`, `confirmedByCatalogue` and `captureIncomplete`. A control error or lost connection is not a

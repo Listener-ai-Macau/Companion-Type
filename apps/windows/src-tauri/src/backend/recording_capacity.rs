@@ -2,6 +2,14 @@
 //! CCQ2 keeps the same48-byte tail and reports allocation geometry, not a host estimate.
 use crate::companion_v1::CompanionV1RecordingCapacity;
 
+/// FW801+ commits the WBA segmented START=0 contract. Zero on earlier
+/// firmware instead uses a saved device limit and must not be called unlimited.
+pub(super) fn supports_unlimited(payload:&[u8])->bool {
+    if payload.len()<84 || payload[0]!=1 || &payload[36..40]!=b"CCQ2" {return false;}
+    let version=u32::from_le_bytes(payload[4..8].try_into().unwrap());
+    version>=0x0001_0421 && parse(payload).is_some_and(|c|c.local_limit_seconds==0)
+}
+
 pub(super) fn parse(payload: &[u8]) -> Option<CompanionV1RecordingCapacity> {
     if payload.len()<84 || payload[0]!=1 || u32::from_le_bytes(payload[12..16].try_into().ok()?)!=0x5742_4155
         || !matches!(payload[40],1|3) || payload[41]&1==0 || payload[41]&!7!=0 {return None;}
@@ -81,7 +89,7 @@ pub(super) fn check_start_with_slots(c:&CompanionV1RecordingCapacity,seconds:u16
     let lower=(c.largest_free_extent/extent).min(u32::from(remaining));
     let upper=(c.free_bytes/extent).min(u32::from(remaining));
     if count<lower||count>upper {return Err("设备的空闲段数与容量状态不一致，未开始录音。".into());}
-    let needed=(u64::from(seconds)*50).div_ceil(u64::from(frames));
+    let needed=if seconds==0 {1} else {(u64::from(seconds)*50).div_ceil(u64::from(frames))};
     let needed=if owned_sync_allowed{needed.min(2)}else{needed};
     if needed>u64::from(segments) {return Err(format!("recording preflight: 可用录音段不足以录制完整的 {seconds} 秒，请先同步录音。未开始录音，也未覆盖旧录音。"));}
     Ok(())
@@ -93,13 +101,16 @@ fn check_budget(c:&CompanionV1RecordingCapacity,seconds:u16,
     if c.used_entries>=c.max_entries {return Err("recording preflight: 设备录音目录已满，请先同步并回收录音".into());}
     let wanted=match(c.segment_frames,c.segment_extent_bytes) {
         (Some(frames),Some(extent)) if frames>0 && extent>0 => {
-            let slots=(u64::from(seconds)*50).div_ceil(u64::from(frames));
+            // A zero-duration request on a verified new device means stop on
+            // user request or actual capacity, not a zero-byte recording.
+            let slots=if seconds==0 {1} else {(u64::from(seconds)*50).div_ceil(u64::from(frames))};
             let slots=if owned_sync_allowed{slots.min(2)}else{slots};
             if slots>u64::from(c.max_entries-c.used_entries) {
                 return Err(format!("recording preflight: 目录剩余槽位不足以录制完整的 {seconds} 秒；约可录 {} 秒，请先同步录音。",available_seconds(c)));
             }
             slots*u64::from(extent)
         },
+        (None,None) if seconds==0 =>return Err("设备暂不支持无预设时长录音，请先升级设备。".into()),
         (None,None)=>(u64::from(seconds)*u64::from(c.bytes_per_second)+u64::from(c.reserve_headroom)).div_ceil(4096)*4096,
         _=>return Err("recording preflight: 容量几何不可核对，未开始录音".into()),
     };
@@ -183,6 +194,18 @@ mod tests {
 mod segmented_capacity_tests {
     use super::*;
     fn real_c_status()->Vec<u8>{include_bytes!("recording_capacity/fixtures/ccq2-current-arena.bin").to_vec()}
+    #[test]fn unlimited_requires_new_wba_contract_and_one_allocatable_segment(){
+        let mut p=real_c_status();p[76..80].copy_from_slice(&0u32.to_le_bytes());
+        p[4..8].copy_from_slice(&0x0001_0420u32.to_le_bytes());assert!(!supports_unlimited(&p),"old firmware can also report local limit zero");
+        p[4..8].copy_from_slice(&0x0001_0421u32.to_le_bytes());assert!(supports_unlimited(&p));
+        let c=parse(&p).unwrap();assert!(check_start(&c,0,false).is_ok());
+        let mut insufficient=c.clone();insufficient.largest_free_extent=c.segment_extent_bytes.unwrap()-4096;
+        assert!(check_start(&insufficient,0,false).is_err());
+        insufficient=c.clone();insufficient.used_entries=insufficient.max_entries;
+        assert!(check_start(&insufficient,0,false).is_err());
+        insufficient=c.clone();insufficient.busy=true;assert!(check_start(&insufficient,0,false).is_err());
+        p[12..16].copy_from_slice(&0x1234u32.to_le_bytes());assert!(!supports_unlimited(&p));
+    }
     #[test]fn actual_c_geometry_and64_directory_allow_two_hours_without_raw_byte_estimate(){
         let c=parse(&real_c_status()).unwrap();assert_eq!(c.max_entries,64);
         assert_eq!((c.segment_frames,c.segment_extent_bytes),(Some(6211),Some(270336)));

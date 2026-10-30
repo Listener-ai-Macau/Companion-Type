@@ -86,6 +86,21 @@ public final class NativeRecordingControlJvmTest {
             expect(client.control(localRoot,host,NativeRecordingControl.Action.RESUME,0),"recording");
             if(physical.writes!=1)throw new AssertionError("resume was not the only command");
         }
+        Fake unlimited=new Fake(golden);
+        System.arraycopy(new byte[]{'C','C','Q','2'},0,unlimited.identity,36,4);unlimited.identity[40]=3;unlimited.identity[43]=64;
+        for(int at:new int[]{48,52,56})put(unlimited.identity,at,0x100000,4);
+        put(unlimited.identity,68,6400,4);put(unlimited.identity,72,0x50000,4);put(unlimited.identity,76,0,4);
+        put(unlimited.identity,4,0x00010420,4);
+        try(RecordingClient client=new RecordingClient(unlimited)) {
+            Path dir=root.resolve("unlimited");String session=NativeRecordingControl.newSessionId();
+            try{client.control(dir,session,NativeRecordingControl.Action.START,0);throw new AssertionError("old firmware accepted unlimited");}catch(IOException expected){}
+            if(unlimited.writes!=0)throw new AssertionError("old firmware received a start");
+            put(unlimited.identity,4,0x00010421,4);
+            expect(client.control(dir,session,NativeRecordingControl.Action.START,0),"recording");
+            expect(client.control(dir,session,NativeRecordingControl.Action.QUERY,0),"recording");
+            if(unlimited.writes!=1)throw new AssertionError("unlimited query must not start a second recording");
+            expect(client.control(dir,session,NativeRecordingControl.Action.STOP,0),"stopped");
+        }
         System.out.println("NativeRecordingControl JNI fake-link test passed");
     }
 }

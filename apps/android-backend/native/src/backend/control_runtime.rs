@@ -180,7 +180,7 @@ fn preflight<T:Transport>(transport:&mut T,identity:&[u8],peer:&Peer,seconds:u16
     };
     let original=match capacity::check_start(&c,seconds,false){Ok(())=>return Ok(()),Err(e)=>e};
     let possible=match(c.segment_frames,c.segment_extent_bytes){(Some(frames),Some(extent)) if frames>0&&extent>0=>{
-        let count=(u64::from(seconds)*50).div_ceil(u64::from(frames));
+        let count=if seconds==0 {1} else {(u64::from(seconds)*50).div_ceil(u64::from(frames))};
         count>0&&count<=u64::from(c.free_bytes/extent)&&count<=u64::from(c.max_entries.saturating_sub(c.used_entries))},_=>false};
     if !possible{return Err(original);}
     let mut request=[0u8;32];request[0]=2;request[1]=0x26;request[4..8].copy_from_slice(&token.to_le_bytes());
@@ -215,11 +215,14 @@ fn settle<T:Transport>(transport:&mut T,peer:&PausePeer,path:&Path,journal:&mut 
 
 /// Execute/query one original session. The OS lock covers journal and link operations.
 pub(crate) fn execute<T:Transport>(root:&Path,host:&str,device:&str,command:u8,seconds:u16,transport:&mut T)->Result<Report,String> {
-    if host.trim().is_empty()||host.len()>256||command>5||(command==1&&seconds==0)||(command!=1&&seconds!=0){return Err("录音操作参数不完整。".into());}
+    if host.trim().is_empty()||host.len()>256||command>5||(command!=1&&seconds!=0){return Err("录音操作参数不完整。".into());}
     let dir=device_dir(root,device)?;fs::create_dir_all(&dir).map_err(|_|"无法保存录音控制记录。")?;
     let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(dir.join("control.lock")).map_err(|_|"录音控制暂不可用。")?;
     lock.try_lock().map_err(|_|"该设备正在处理另一项录音操作。")?;
     let identity=transport.identity()?;let peer=PausePeer::from_status(&identity)?.ok_or("设备不支持当前录音控制。")?;
+    if command==1&&seconds==0&&!capacity::supports_unlimited(&identity) {
+        return Err("当前设备尚不支持无预设时长录音，请先升级设备；没有开始录音。".into());
+    }
     let actual=Peer::from_status(&identity)?.ok_or("设备录音身份不可用。")?;
     let raw=transport.status()?;let path=dir.join(journal_name(host));
     let mut journal=match read_journal(&path)? {
@@ -321,6 +324,20 @@ mod tests {
         }
         assert_eq!(fake.writes.iter().map(|w|w[5]).collect::<Vec<_>>(),[1,4,5,2]);
         let path=device_dir(&root,DEVICE).unwrap().join(journal_name("synthetic-session"));assert!(read_journal(&path).unwrap().unwrap().ended());
+        cleanup(&root);
+    }
+    #[test]
+    fn unlimited_start_rejects_old_firmware_and_recovers_same_new_session() {
+        let root=root();let mut fake=Fake::new();fake.fragmented();
+        fake.identity[76..80].copy_from_slice(&0u32.to_le_bytes());
+        fake.identity[4..8].copy_from_slice(&0x0001_0420u32.to_le_bytes());
+        assert!(execute(&root,"unlimited",DEVICE,1,0,&mut fake).is_err());assert!(fake.writes.is_empty());
+        fake.identity[4..8].copy_from_slice(&0x0001_0421u32.to_le_bytes());fake.fail_after_write=true;
+        assert!(execute(&root,"unlimited",DEVICE,1,0,&mut fake).is_err());
+        assert_eq!(fake.writes.len(),1);assert_eq!(&fake.writes[0][44..46],&[0,0]);
+        let report=execute(&root,"unlimited",DEVICE,0,0,&mut fake).unwrap();
+        assert_eq!(report.state,"recording");assert_eq!(fake.writes.len(),1,"query must not start a second capture");
+        assert_eq!(execute(&root,"unlimited",DEVICE,2,0,&mut fake).unwrap().state,"stopped");
         cleanup(&root);
     }
     #[test]

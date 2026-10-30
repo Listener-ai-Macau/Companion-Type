@@ -34,7 +34,7 @@ pub(crate) fn restart_recovery_request(snapshot:&CompanionV1Snapshot,device:&str
     let key=SessionKey::from_public(row.device_recording_key.as_ref()?).ok()?;
     if journal.schema!=1 || journal.host_session!=row.id || !same_device(&journal.device_id,device)
         || journal.uid!=key.device_uid || journal.epoch!=key.format_epoch
-        || journal.start_request==0 || (journal.max_seconds==0 && !journal.local_origin)
+        || journal.start_request==0
         || journal.key.as_ref()!=row.device_recording_key.as_ref()
         || journal.anchor.is_none_or(|id|id==0) || journal.anchor!=row.device_recording_id
         || journal.confirmed.as_ref().is_none_or(|confirmed|!matches!(confirmed.state,1|3))
@@ -209,7 +209,15 @@ pub(crate) fn apply(snapshot:&mut CompanionV1Snapshot,request:&CompanionV1Contro
         return Err("另一场录音正在进行，未控制或新开录音。".into());
     }
     let max_seconds=if command==1 {
-        saved.as_ref().map(|j|j.max_seconds).unwrap_or(super::super::recording_duration_seconds(request.duration_ms)?)
+        if let Some(journal)=saved.as_ref() {journal.max_seconds}
+        else if request.duration_ms==Some(0) {
+            let capable=snapshot.source=="firmware" && snapshot.device.board_id==Some(0x5742_4155)
+                && snapshot.device.firmware_version.is_some_and(|version|version>=0x0001_0421)
+                && snapshot.device.recording_capacity.as_ref().is_some_and(|c|c.layout_version==3&&c.local_limit_seconds==0
+                    && c.segment_frames.is_some()&&c.segment_extent_bytes.is_some());
+            if !capable {return Err("当前设备尚不支持无预设时长录音，请先升级设备；没有开始录音。".into());}
+            0
+        } else {super::super::recording_duration_seconds(request.duration_ms)?}
     } else {0};
     if new_start {reserve_start(snapshot,request,peer.as_ref().unwrap(),&device,&host,max_seconds)?;}
     let owned=snapshot.host.sessions.iter().find(|r|r.id==host).ok_or("原录音尚未保存。")?;
