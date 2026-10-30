@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class AndroidGattLink implements RecordingClient.Link {
     private static final UUID STATUS_SERVICE=UUID.fromString("8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000");
     private static final UUID RECORDING_SERVICE=UUID.fromString("8f7a0003-7b7d-4f3d-9d6f-6c2d1b7c0000");
+    private static final UUID MEETING_SERVICE=UUID.fromString("8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000");
     private static final UUID CCCD=UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
     private static final class Event {
         final String kind;final UUID id;final int status,state;final byte[] data;
@@ -75,11 +76,15 @@ public final class AndroidGattLink implements RecordingClient.Link {
         failure="Bluetooth "+kind+" timed out";throw new IOException(failure);
     }
     private BluetoothGattCharacteristic characteristic(UUID id) throws IOException {
-        UUID service=id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:RECORDING_SERVICE;
+        UUID service=id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:
+            (id.equals(RecordingClient.MEETING_CONTROL)||id.equals(RecordingClient.MEETING_STATUS)?MEETING_SERVICE:RECORDING_SERVICE);
         BluetoothGattService s=gatt.getService(service);BluetoothGattCharacteristic c=s==null?null:s.getCharacteristic(id);
         if(c==null)throw new IOException("Companion Bluetooth characteristic unavailable: "+id);return c;
     }
     @Override public int mtu(){return mtu;}
+    @Override public String deviceAddress() throws IOException {
+        check();try{return gatt.getDevice().getAddress();}catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
+    }
     @Override public synchronized byte[] read(UUID id) throws IOException {
         check();try{BluetoothGattCharacteristic c=characteristic(id);if((c.getProperties()&BluetoothGattCharacteristic.PROPERTY_READ)==0||!gatt.readCharacteristic(c))throw new IOException("Bluetooth read refused");Event e=waitOperation("read",id,15_000);if(e.data==null)throw new IOException("Bluetooth read returned no data");return e.data;}
         catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
@@ -105,7 +110,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
     @Override public byte[] await(UUID id,long timeoutMillis) throws IOException {
         if(timeoutMillis<=0)throw new IOException("Bluetooth wait timed out");ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q==null)throw new IOException("Bluetooth notifications not subscribed");long deadline=System.nanoTime()+TimeUnit.MILLISECONDS.toNanos(timeoutMillis);
         try{while(System.nanoTime()<deadline){check();byte[] p=q.poll(100,TimeUnit.MILLISECONDS);if(p!=null)return p;}}
-        catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException("Bluetooth wait interrupted",e);}throw new IOException("Bluetooth notification timed out");
+        catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException("Bluetooth wait interrupted",e);}throw new java.net.SocketTimeoutException("Bluetooth notification timed out");
     }
     @Override public void close() {if(!closed.compareAndSet(false,true))return;BluetoothGatt g=gatt;if(g!=null){try{g.disconnect();}catch(SecurityException ignored){}try{g.close();}catch(SecurityException ignored){}}}
 }

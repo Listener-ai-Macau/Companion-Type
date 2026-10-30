@@ -14,3 +14,12 @@
 -keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeMinutes {
     native <methods>;
 }
+-keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeRecordingControl {
+    native <methods>;
+}
+-keepclassmembers class com.denzic.companion.mobile.NativeRecordingControl$Callbacks {
+    public byte[] identity();
+    public byte[] status();
+    public void writeControl(byte[]);
+    public byte[] capacitySlots(byte[]);
+}

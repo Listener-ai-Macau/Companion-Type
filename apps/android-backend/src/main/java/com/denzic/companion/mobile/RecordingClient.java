@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Worker-thread backend for reading Companion V2 recordings through a GATT link. */
 public final class RecordingClient implements Closeable {
-    public static final UUID DEVICE_STATUS=uuid("1001"),RECORDING_CONTROL=uuid("3001"),RECORDING_LIST=uuid("3002"),RECORDING_PULL=uuid("3003");
+    public static final UUID DEVICE_STATUS=uuid("1001"),RECORDING_CONTROL=uuid("3001"),RECORDING_LIST=uuid("3002"),RECORDING_PULL=uuid("3003"),MEETING_CONTROL=uuid("8001"),MEETING_STATUS=uuid("8002");
     private static UUID uuid(String value){return UUID.fromString("8f7a"+value+"-7b7d-4f3d-9d6f-6c2d1b7c0000");}
     /** One connected, encrypted device. Operations are serialized by this client. */
     public interface Link extends Closeable {
@@ -20,6 +20,8 @@ public final class RecordingClient implements Closeable {
         void subscribe(UUID characteristic) throws IOException;
         void write(UUID characteristic,byte[] value) throws IOException;
         byte[] await(UUID characteristic,long timeoutMillis) throws IOException;
+        /** Stable address of the user-selected paired device. */
+        default String deviceAddress() throws IOException {throw new IOException("device address unavailable");}
     }
     public interface Progress { void onBytes(long received,long total); }
     private final Link link;private final RecorderWire.Peer peer;private final SecureRandom random=new SecureRandom();
@@ -55,6 +57,15 @@ public final class RecordingClient implements Closeable {
         throw new IOException("device recording capability is not ready; try again after reconnecting");
     }
     private void ensureOpen() throws IOException {if(closed.get())throw new IOException("device connection is closed");}
+
+    /** Explicit user-initiated recording control; use one stable host session ID for retries. */
+    public synchronized String control(Path privateDirectory,String hostSession,NativeRecordingControl.Action action,int maxSeconds) throws IOException {
+        ensureOpen();return NativeRecordingControl.execute(link,privateDirectory,hostSession,action,maxSeconds);
+    }
+    /** Find saved recording-control sessions, including any operation awaiting confirmation. */
+    public synchronized String controlSessions(Path privateDirectory) throws IOException {
+        ensureOpen();return NativeRecordingControl.list(link,privateDirectory);
+    }
 
     public synchronized List<RecorderWire.Descriptor> listRecordings() throws IOException {
         ensureOpen();current=null;RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,nonce());

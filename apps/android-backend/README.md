@@ -37,6 +37,33 @@ List<RecordingLibrary.Entry> saved = RecordingLibrary.list(directory);
 List<RecordingLibrary.Session> recordings = RecordingLibrary.sessions(directory);
 ```
 
+The same selected, paired connection can control a recording started by this
+mobile backend. Create a host session ID once, keep it for retries, and use an
+app-private directory for control records:
+
+```java
+Path controlDir = context.getFilesDir().toPath().resolve("companion-control");
+String hostSession = NativeRecordingControl.newSessionId();
+String started = client.control(controlDir, hostSession, NativeRecordingControl.Action.START, 120);
+String paused = client.control(controlDir, hostSession, NativeRecordingControl.Action.PAUSE, 0);
+String resumed = client.control(controlDir, hostSession, NativeRecordingControl.Action.RESUME, 0);
+String stopped = client.control(controlDir, hostSession, NativeRecordingControl.Action.STOP, 0);
+```
+
+Each result is JSON with `hostSession`, `state`, `recordingKey`, `anchor`,
+`durationMs` and `finishedLocally`. A control error or lost connection is not a
+stop confirmation; reconnect to the same device and use `controlSessions` to
+find saved session IDs and pending commands, then `QUERY` to check that exact
+session. For an unconfirmed start, an explicit `START` retry with the original
+duration resends the same saved command when appropriate; querying never creates
+a new recording. The backend checks capacity and existing control records before
+starting, including the device's fragmented-capacity snapshot where available.
+It does not consume or delete device recordings. A capture started by the physical
+button is not yet adopted by this mobile control API; a reboot that replaces the
+original live status may still require the original recording directory to be
+checked separately. Both paths remain incomplete. The app owns foreground
+lifetime and must show errors rather than guessing the recording state.
+
 Use `MeetingStore` in app-private storage to save and reopen a session's
 transcript, notes and user-reviewed tasks. Task owner and due are literal text;
 the store does not infer dates, generate tasks, or sync with the desktop.
@@ -180,7 +207,7 @@ String text = NativeTranscription.transcribe(wav, appId, accessToken, resourceId
 The current scope is discovery, connection, V2 recording directory, encoded-segment
 transfer, resume, local inventory, calendar export, and decoder/recognition candidates. Android
 phone validation, playback UI, long-recording recognition qualification,
-automatic note/task generation, start/stop controls, automatic sync, foreground service, iOS and
+phone/device control and receipt acceptance, automatic sync, foreground service, iOS and
 real-phone/device acceptance remain to be implemented or validated. Synthetic wire
 tests are not a substitute for that acceptance. Errors should be surfaced to the
 user so the user can retry; do not present an unfinished transfer as a recording.

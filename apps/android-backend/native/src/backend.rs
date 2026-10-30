@@ -46,6 +46,11 @@ pub(crate) mod device_connection {include!(concat!(env!("OUT_DIR"),"/mobile_devi
 pub(crate) mod recording_wire {include!(concat!(env!("OUT_DIR"),"/mobile_control_wire.rs"));}
 #[cfg(feature="mobile-control")]
 pub(crate) mod recorder_control {include!(concat!(env!("OUT_DIR"),"/mobile_control_journal.rs"));}
+#[cfg(feature="mobile-control")]
+#[path = "../../../windows/src-tauri/src/backend/recording_capacity.rs"]
+pub(crate) mod recording_capacity;
+#[cfg(feature="mobile-control")]
+pub(crate) mod control_runtime;
 #[cfg(all(test,feature="mobile-control"))]
 mod control_engine_tests;
 

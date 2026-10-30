@@ -46,6 +46,9 @@ mod companion_v1 {
     pub enum CompanionV1RecordingEndReason {User,StorageFull,DurationLimit,LowBattery,Silence}
     #[cfg(feature="mobile-control")]
     impl CompanionV1RecordingEndReason {pub(crate) fn from_code(code:u8)->Result<Option<Self>,String>{Ok(match code{0=>None,1=>Some(Self::User),2=>Some(Self::StorageFull),3=>Some(Self::DurationLimit),4=>Some(Self::LowBattery),5=>Some(Self::Silence),_=>return Err("unsupported recording end reason".into())})}}
+    #[cfg(feature="mobile-control")]
+    #[derive(Clone,Debug,PartialEq,Eq)]
+    pub struct CompanionV1RecordingCapacity {pub layout_version:u8,pub busy:bool,pub confirmed_discard_supported:bool,pub used_entries:u8,pub max_entries:u8,pub catalog_generation:u32,pub data_bytes:u32,pub free_bytes:u32,pub largest_free_extent:u32,pub protected_bytes:u32,pub consumed_bytes:u32,pub bytes_per_second:u32,pub reserve_headroom:u32,pub segment_frames:Option<u32>,pub segment_extent_bytes:Option<u32>,pub local_limit_seconds:u32,pub unsynced_entries:u8,pub writing_entries:u8,pub consumed_entries:u8}
 }
 #[cfg(feature="mobile-memo")]
 use companion_v1::CompanionV1MeetingMinutes;
@@ -67,6 +70,8 @@ pub mod http_policy;
 mod backend;
 #[cfg(feature="mobile-minutes")]
 mod mobile_minutes;
+#[cfg(feature="mobile-control")]
+mod mobile_control_jni;
 
 use sha2::{Digest,Sha256};
 use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},sync::atomic::{AtomicU64,Ordering}};
