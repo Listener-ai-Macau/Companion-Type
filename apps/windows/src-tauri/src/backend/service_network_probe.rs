@@ -160,7 +160,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
         };
         let (endpoint, worker) = fixture(response("200 OK", &body), Duration::ZERO, false)?;
         let passed = if minutes {
-            let client = http_policy::client(Duration::from_secs(2))
+            let client = http_policy::client_for_endpoint(Duration::from_secs(2), &http_policy::endpoint(&endpoint).map_err(|_| "Invalid fixture endpoint")?)
                 .map_err(|_| "Cannot create fixture HTTP client")?;
             let result = run_deepseek_request(
                 &endpoint,
@@ -276,7 +276,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
             };
             let started = Instant::now();
             let error = if minutes {
-                let client = http_policy::client(timeout)
+                let client = http_policy::client_for_endpoint(timeout, &http_policy::endpoint(&endpoint).map_err(|_| "Invalid fixture endpoint")?)
                     .map_err(|_| "Cannot create fixture HTTP client")?;
                 let result = run_deepseek_request(
                     &endpoint,
@@ -365,7 +365,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
             Duration::ZERO,
             false,
         )?;
-        let client = http_policy::client(Duration::from_secs(2))
+        let client = http_policy::client_for_endpoint(Duration::from_secs(2), &http_policy::endpoint(&endpoint).map_err(|_| "Invalid fixture endpoint")?)
             .map_err(|_| "Cannot create fixture HTTP client")?;
         let result = run_deepseek_request(
             &endpoint,
@@ -407,6 +407,17 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn remote_asr_uses_configured_proxy_fixture() {
+        use denzic_host_audio_v1_core::{asr::BatchAsrProvider, asr_openai::{OpenAiAsrConfig, OpenAiCompatibleAsr}};
+        let Ok(endpoint) = std::env::var("COMPANION_TEST_PROXY_REMOTE_ENDPOINT") else { return; };
+        let root=std::env::temp_dir().join(format!("asr-proxy-remote-{}",std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();let audio=root.join("fixture.wav");
+        std::fs::write(&audio,b"controlled fixture audio").unwrap();
+        let result=OpenAiCompatibleAsr::new(OpenAiAsrConfig::new(endpoint,"fixture-key")).transcribe_file(&audio).unwrap();
+        assert!(result.is_final);assert_eq!(result.text,"controlled proxy result");
+    }
+
     #[test]
     fn installed_probe_exercises_production_adapters_and_refuses_existing_output() {
         let output =

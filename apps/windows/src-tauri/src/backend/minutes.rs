@@ -226,8 +226,9 @@ fn deepseek_native_minutes(
     Some(run_deepseek_native(&api_key, session, l0))
 }
 
-fn deepseek_http_client() -> Result<reqwest::blocking::Client, String> {
-    http_policy::client(std::time::Duration::from_secs(180)).map_err(safe_minutes_http_error)
+fn deepseek_http_client(endpoint: &str) -> Result<reqwest::blocking::Client, String> {
+    let endpoint = http_policy::endpoint(endpoint).map_err(safe_minutes_http_error)?;
+    http_policy::client_for_endpoint(std::time::Duration::from_secs(180), &endpoint).map_err(safe_minutes_http_error)
 }
 
 fn safe_minutes_http_error(failure: http_policy::Failure) -> String {
@@ -250,7 +251,8 @@ fn run_deepseek_native(
         .filter(|v| !v.is_empty())
         .unwrap_or_else(|| "deepseek-v4-flash".to_string());
 
-    run_deepseek_request(&format!("{base}/chat/completions"), &model, api_key, session, l0, &deepseek_http_client()?)
+    let endpoint = format!("{base}/chat/completions");
+    run_deepseek_request(&endpoint, &model, api_key, session, l0, &deepseek_http_client(&endpoint)?)
 }
 
 // The installed fault probe calls this same request path with explicit test
