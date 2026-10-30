@@ -12,6 +12,8 @@ use std::time::Duration;
 
 
 mod chunk_cache;
+#[cfg(windows)]
+mod local_paraformer;
 
 use super::diarization::{self, EmbeddingSegment};
 use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr};
@@ -121,16 +123,18 @@ impl CompanionTranscriptionManager {
             if !identities.insert(identity) { return Err(format!("录音分段重复：第 {} 段，未提交转写。", index + 1)); }
             declared_paths.push(p);
         }
-        if let Ok(text) = std::env::var("COMPANION_TYPE_TRANSCRIPT_TEXT") {
-            let text = normalize_transcript(&text);
-            if !text.is_empty() {
-                return Ok(CompanionTranscript {
-                    text,
-                    provider_id: "companion-type-env-transcript".to_string(),
-                    mode: "env-text".to_string(),
-                    evidence_path: None,
-                    utterances: Vec::new(),
-                });
+        if !local_provider_selected() {
+            if let Ok(text) = std::env::var("COMPANION_TYPE_TRANSCRIPT_TEXT") {
+                let text = normalize_transcript(&text);
+                if !text.is_empty() {
+                    return Ok(CompanionTranscript {
+                        text,
+                        provider_id: "companion-type-env-transcript".to_string(),
+                        mode: "env-text".to_string(),
+                        evidence_path: None,
+                        utterances: Vec::new(),
+                    });
+                }
             }
         }
 
@@ -228,6 +232,12 @@ impl CompanionTranscriptionManager {
     }
 
     fn transcribe_existing_path(&self, audio: &Path) -> Result<CompanionTranscript, String> {
+        if local_provider_selected() {
+            #[cfg(windows)]
+            { return local_paraformer::transcribe(audio); }
+            #[cfg(not(windows))]
+            { return Err("此平台暂不支持本地转写；原录音保留。".into()); }
+        }
         if let Ok(text) = std::env::var("COMPANION_TYPE_TRANSCRIPT_TEXT") {
             let text = normalize_transcript(&text);
             if !text.is_empty() {
@@ -277,6 +287,10 @@ impl CompanionTranscriptionManager {
             "No Companion-Type transcription provider is configured. Set COMPANION_TYPE_TRANSCRIPT_TEXT, add an audio .transcript.txt sidecar, configure COMPANION_TYPE_ASR_ENDPOINT/API_KEY, or set COMPANION_TYPE_ASR_COMMAND.".to_string(),
         )
     }
+}
+
+fn local_provider_selected() -> bool {
+    std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default().eq_ignore_ascii_case("local-paraformer")
 }
 
 impl Default for CompanionTranscriptionManager {
