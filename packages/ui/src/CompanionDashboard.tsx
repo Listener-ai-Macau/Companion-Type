@@ -723,7 +723,11 @@ export function CompanionDashboard({
     setEditingMinutes(false);
   };
   const selectedMinutesVariant = minutesViewMode === 'onlineLive' ? onlineMinutes : offlineMinutes;
-  const recoveryView = selectedSession ? describeCompanionMeetingRecovery(selectedSession) : null;
+  const describedRecovery = selectedSession ? describeCompanionMeetingRecovery(selectedSession) : null;
+  const recoveryError = selectedSession?.recovery?.lastError;
+  const recoveryView = describedRecovery && recoveryError && describedRecovery.message.includes(recoveryError)
+    ? {...describedRecovery, message: describedRecovery.message.replace(recoveryError, operationErrorText(recoveryError))}
+    : describedRecovery;
   const finalTranscript = selectedSession ? companionSessionHasFinalTranscript(selectedSession) : false;
   const transcriptUnmappedEdges = selectedSession ? companionTranscriptUnmappedEdges(selectedSession) : [];
   const offlineReady = offlineMinutes?.status === 'minutesReady' && offlineMinutes.quality === 'final'

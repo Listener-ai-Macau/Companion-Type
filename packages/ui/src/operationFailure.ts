@@ -1,7 +1,7 @@
 import {knownOperationErrors} from './knownOperationErrors';
 
 export type OperationScope='general'|'device'|'recording'|'save'|'export'|'playback'|'settings'|'update'|'diagnostics'|'diagnosticsRead'|'serviceCheck'|'components'|'chat'|'profile';
-export type OperationFailureKind='permission'|'storage'|'rateLimit'|'network'|'device'|'configuration'|'busy'|'conflict'|'integrity'|'cancelled'|'unknown';
+export type OperationFailureKind='permission'|'storage'|'rateLimit'|'network'|'device'|'configuration'|'busy'|'conflict'|'integrity'|'cancelled'|'serviceUnavailable'|'unknown';
 export type OperationFailure={kind:OperationFailureKind;message:string};
 
 const known=new Set(knownOperationErrors);
@@ -10,6 +10,7 @@ const advice={
   storage:'本机磁盘空间不足。请释放保存位置所在磁盘的空间，再重试；尚未确认保存的修改请先保留。',
   rateLimit:'服务暂时限制请求。请稍后再试，或核对当前服务额度；不要连续重复提交。',
   network:'服务连接未完成。请检查网络和服务状态后再试；原有内容请保留，不需要重新录音。',
+  serviceUnavailable:'转写服务暂时不可用，请稍后重试；原音已保留，不需要重新录音。',
   device:'设备操作尚未确认。请先到“设备与同步”读取当前状态，避免重复开录、停录或写入。',
   configuration:'服务配置或授权尚不可用。请到“设置与工具”检查当前配置，不要在反馈中附上密钥。',
   busy:'上一项操作仍未结束。请先查看当前录音或处理状态，结束后再操作，不要重复提交。',
@@ -56,7 +57,8 @@ export function calendarExportNeedsTime(error:unknown):boolean{
 function classify(text:string,scope:OperationScope):OperationFailureKind{
   if(/(?:\b(?:ENOSPC|StorageFull)\b|no space left on device|\bdisk (?:is )?full\b|os error 112\b|磁盘空间不足)/i.test(text))return 'storage';
   if(/(?:(?:^(?:HTTP\s*)?(?:401|403)\b|\bHTTP(?: status)?[:= ]+(?:401|403)\b|\b(?:Unauthorized|Forbidden)\b)|服务.{0,8}(?:密钥|授权|配置)|未配置|not configured|missing (?:api|access)[ _-]?key)/i.test(text))return 'configuration';
-  if(/(?:\bHTTP(?: status)?[:= ]+(?:402|429)\b|^429\b|quota exceeded|rate limit)/i.test(text))return 'rateLimit';
+  if(/(?:^ASR provider returned (?:402|429)\b|\bHTTP(?: status)?[:= ]+(?:402|429)\b|^429\b|quota exceeded|rate limit)/i.test(text))return 'rateLimit';
+  if(/^ASR provider returned 5\d{2}\b/i.test(text))return 'serviceUnavailable';
   if(/(?:\b(?:EACCES|EPERM|EROFS|PermissionDenied|ReadOnlyFilesystem)\b|access (?:is )?denied|permission denied|os error (?:5|32|33)\b|sharing violation|lock violation|文件正在使用中|只读文件系统|目录权限|拒绝访问)/i.test(text))return 'permission';
   if(/(?:签名|哈希|完整性|checksum|hash mismatch|invalid signature|invalid manifest)/i.test(text))return 'integrity';
   if(/(?:已改变|已变化|已更新|旧回复已撤回|期间发生变化|revision (?:conflict|mismatch))/i.test(text))return 'conflict';
