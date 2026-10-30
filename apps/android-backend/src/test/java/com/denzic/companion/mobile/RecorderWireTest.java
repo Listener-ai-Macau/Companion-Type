@@ -42,6 +42,7 @@ public final class RecorderWireTest {
         try(RecordingClient client=new RecordingClient(link)){if(client.listRecordings().size()!=3)throw new AssertionError("client catalog");saved=client.download(41,folder,null);}
         if(!link.closed||!Arrays.equals(Files.readAllBytes(saved),audio))throw new AssertionError("client durable copy");
         if(RecordingLibrary.list(folder).size()!=1||RecordingLibrary.list(folder).get(0).state!=RecordingLibrary.State.VERIFIED)throw new AssertionError("local recording inventory");
+        if(RecordingLibrary.sessions(folder).size()!=1||RecordingLibrary.sessions(folder).get(0).state!=RecordingLibrary.SessionState.INCOMPLETE)throw new AssertionError("missing tail is not a complete session");
         expectFailure(()->new SegmentReceiver(folder,d));
         RecorderWire.Descriptor second=catalog.entries().get(1);Path resumed;
         try(SegmentReceiver first=new SegmentReceiver(folder,second)){
@@ -56,8 +57,13 @@ public final class RecorderWireTest {
         }
         if(!Arrays.equals(Files.readAllBytes(resumed),audio))throw new AssertionError("resumed recording differs");
         if(RecordingLibrary.list(folder).stream().filter(e->e.state==RecordingLibrary.State.VERIFIED).count()!=2)throw new AssertionError("resumed inventory");
+        RecorderWire.Descriptor third=catalog.entries().get(2);
+        try(SegmentReceiver receiver=new SegmentReceiver(folder,third)){receiver.accept(packet(third,audio,0,audio.length,true));receiver.finish();}
+        RecordingLibrary.Session session=RecordingLibrary.sessions(folder).get(0);
+        if(session.state!=RecordingLibrary.SessionState.COMPLETE||session.segments.size()!=3||session.segments.get(2).descriptor.segmentIndex!=2)throw new AssertionError("complete session must group ordered verified segments");
         Files.write(resumed,new byte[]{1,2,3});
         if(RecordingLibrary.list(folder).stream().filter(e->e.state==RecordingLibrary.State.DAMAGED).count()!=1)throw new AssertionError("damaged copy must not appear verified");
+        if(RecordingLibrary.sessions(folder).get(0).state!=RecordingLibrary.SessionState.DAMAGED)throw new AssertionError("a damaged segment must damage the session");
         p[p.length-1]^=1;expectFailure(()->RecorderWire.packet(d,p,0,0));
         System.out.println("PASS Windows golden directory, packet, client transfer and corruption paths");
     }

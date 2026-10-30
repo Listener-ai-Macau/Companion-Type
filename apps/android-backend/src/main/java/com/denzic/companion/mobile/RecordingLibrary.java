@@ -10,7 +10,12 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.zip.CRC32;
 
 /** Local encoded segment inventory. Call on a worker thread. */
@@ -24,6 +29,52 @@ public final class RecordingLibrary {
         private Entry(RecorderWire.Descriptor descriptor, State state, Path file) {
             this.descriptor=descriptor; this.state=state; this.file=file;
         }
+    }
+    public enum SessionState { COMPLETE, INCOMPLETE, DAMAGED }
+    /** Segments are grouped by device identity, format epoch and session ID. */
+    public static final class Session {
+        public final SessionState state;
+        public final List<Entry> segments;
+        private Session(SessionState state,List<Entry> entries) {
+            this.state=state;this.segments=Collections.unmodifiableList(new ArrayList<>(entries));
+        }
+    }
+
+    /** Group verified and partial local copies into recordings without connecting to the device. */
+    public static List<Session> sessions(Path directory) throws IOException {
+        Map<String,List<Entry>> groups=new LinkedHashMap<>();
+        for(Entry entry:list(directory)) {
+            RecorderWire.Descriptor d=entry.descriptor;
+            String identity=identity(d);
+            List<Entry> entries=groups.get(identity);
+            if(entries==null){entries=new ArrayList<>();groups.put(identity,entries);}
+            entries.add(entry);
+        }
+        List<Session> sessions=new ArrayList<>();
+        for(List<Entry> entries:groups.values()) {
+            entries.sort(Comparator.comparingLong(e->e.descriptor.segmentIndex));
+            boolean missing=false, damaged=false, terminal=false;long expectedOffset=0,previousIndex=-1;
+            int sourceMode=entries.get(0).descriptor.sourceMode;Set<Long> ids=new HashSet<>();
+            for(int i=0;i<entries.size();i++) {
+                Entry e=entries.get(i);RecorderWire.Descriptor d=e.descriptor;
+                if(e.state==State.DAMAGED)damaged=true;
+                if(e.state==State.PARTIAL)missing=true;
+                if(d.segmentIndex==previousIndex || terminal || !ids.add(d.recordingId) || d.sourceMode!=sourceMode)damaged=true;
+                if((d.segmentIndex==0&&d.sampleOffset!=0) || (previousIndex>=0 &&
+                        (d.sampleOffset<expectedOffset || (d.segmentIndex==previousIndex+1&&d.sampleOffset!=expectedOffset))))damaged=true;
+                if(d.segmentIndex!=i || d.sampleOffset!=expectedOffset)missing=true;
+                if((d.flags&2)!=0)terminal=true;
+                if((d.flags&4)!=0)missing=true;
+                expectedOffset=d.sampleOffset+d.sampleCount;previousIndex=d.segmentIndex;
+            }
+            if(!terminal)missing=true;
+            sessions.add(new Session(damaged?SessionState.DAMAGED:missing?SessionState.INCOMPLETE:SessionState.COMPLETE,entries));
+        }
+        return Collections.unmodifiableList(sessions);
+    }
+    private static String identity(RecorderWire.Descriptor d) {
+        StringBuilder uid=new StringBuilder();for(byte b:d.uid())uid.append(String.format(java.util.Locale.ROOT,"%02x",b&255));
+        return uid+":"+Long.toUnsignedString(d.epoch)+":"+Long.toUnsignedString(d.sessionId);
     }
 
     /** Checks every complete copy against its device descriptor; never modifies files. */

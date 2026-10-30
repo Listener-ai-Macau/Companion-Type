@@ -29,13 +29,16 @@ try (RecordingClient client = CompanionAndroidBackend.connect(context, selectedD
         (received, total) -> { /* update progress on the UI thread */ });
 }
 List<RecordingLibrary.Entry> saved = RecordingLibrary.list(directory);
+List<RecordingLibrary.Session> recordings = RecordingLibrary.sessions(directory);
 ```
 
 `download` retains an interrupted partial file and resumes that exact segment on
 the next attempt. It checks packet integrity, final SHA-256 and CRC before exposing
 the complete local copy. `RecordingLibrary` reports verified, partial and damaged
 copies; verified means encoded bytes match the device descriptor, not that they
-have been decoded or played. `RecordingClient.close()` closes the connection and
+have been decoded or played. `sessions` groups segments by device, epoch and
+session and reports whether the local set is complete, incomplete or damaged;
+it does not yet decode or offer playback. `RecordingClient.close()` closes the connection and
 can be used to interrupt a transfer; it does not stop device recording. No operation
 here deletes or consumes recordings on the device.
 
