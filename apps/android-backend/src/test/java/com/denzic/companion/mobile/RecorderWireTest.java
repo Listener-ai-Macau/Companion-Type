@@ -69,6 +69,10 @@ public final class RecorderWireTest {
             java.util.Iterator<Path> it=backups.iterator();if(!it.hasNext()||!Arrays.equals(Files.readAllBytes(it.next()),oversized)||it.hasNext())throw new AssertionError("oversized partial must be retained");
         }
         try(RecordingClient client=new RecordingClient(link)){
+            if(client.readDeviceStatus().previousRecordingDamageReported)throw new AssertionError("normal status should not report a damaged tail");
+            link.status[3]|=8;if(!client.readDeviceStatus().previousRecordingDamageReported)throw new AssertionError("reported old damaged tail must reach the caller");
+            link.status[3]&=~8;
+            link.status[20]^=1;expectFailure(()->client.readDeviceStatus());link.status[20]^=1;
             if(client.listRecordings().size()!=3)throw new AssertionError("client catalog");saved=client.download(41,folder,null);
             if(!client.download(41,folder,null).equals(saved)||link.pullCount!=1)throw new AssertionError("existing verified copy should be reused");
             byte[] brokenCopy=Files.readAllBytes(saved);brokenCopy[0]^=1;Files.write(saved,brokenCopy);

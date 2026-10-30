@@ -72,6 +72,13 @@ unavailable directory leaves the control session unresolved. This candidate has
 not yet been verified with a physical phone and recording card. The app owns foreground
 lifetime and must show errors rather than guessing the recording state.
 
+`client.readDeviceStatus()` returns the device's current `faultBitmap` and
+`previousRecordingDamageReported`. If this flag is true, tell the user that a
+previous recording segment may be unavailable and retain available recordings.
+This is a device observation, not a repair result. A false flag does not prove
+old recordings are intact: older firmware may not report this condition. The
+firmware implementation is a candidate and has not been tested on a real device.
+
 Use `MeetingStore` in app-private storage to save and reopen a session's
 transcript, notes and user-reviewed tasks. Task owner and due are literal text;
 the store does not infer dates, generate tasks, or sync with the desktop.

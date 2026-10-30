@@ -24,6 +24,12 @@ public final class RecordingClient implements Closeable {
         default String deviceAddress() throws IOException {throw new IOException("device address unavailable");}
     }
     public interface Progress { void onBytes(long received,long total); }
+    /** Device-reported observations; absence of a flag is not proof old audio is intact. */
+    public static final class DeviceStatus {
+        public final int faultBitmap;
+        public final boolean previousRecordingDamageReported;
+        private DeviceStatus(int faults){faultBitmap=faults;previousRecordingDamageReported=(faults&0x0800)!=0;}
+    }
     private final Link link;private final RecorderWire.Peer peer;private final SecureRandom random=new SecureRandom();
     private List<RecorderWire.Descriptor> current;private final AtomicBoolean closed=new AtomicBoolean();
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
@@ -57,6 +63,13 @@ public final class RecordingClient implements Closeable {
         throw new IOException("device recording capability is not ready; try again after reconnecting");
     }
     private void ensureOpen() throws IOException {if(closed.get())throw new IOException("device connection is closed");}
+
+    /** Read the current device observation without changing recordings or device state. */
+    public synchronized DeviceStatus readDeviceStatus() throws IOException {
+        ensureOpen();byte[] status=link.read(DEVICE_STATUS);RecorderWire.Peer observed=RecorderWire.Peer.fromStatus(status);
+        if(!Arrays.equals(peer.uid(),observed.uid())||peer.epoch!=observed.epoch)throw new IOException("device identity changed; reconnect before checking status");
+        return new DeviceStatus((status[2]&255)|((status[3]&255)<<8));
+    }
 
     /** Explicit user-initiated recording control; use one stable host session ID for retries. */
     public synchronized String control(Path privateDirectory,String hostSession,NativeRecordingControl.Action action,int maxSeconds) throws IOException {
