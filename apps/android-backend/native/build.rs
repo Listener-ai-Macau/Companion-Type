@@ -99,7 +99,7 @@ fn main() {
         let constants=section(&source,"const DESCRIPTOR_BYTES: usize", "const GOLDEN: &str");
         let helpers=section(&source,"fn fail(reason: &str)","mod legacy;");
         let key=section(&source,"#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize)]","#[derive(Clone, Debug, PartialEq, Eq)]\npub(crate) struct Descriptor");
-        let descriptor=section(&source,"#[derive(Clone, Debug, PartialEq, Eq)]\npub(crate) struct Descriptor","    pub(crate) fn verify_payload(");
+        let descriptor=section(&source,"#[derive(Clone, Debug, PartialEq, Eq)]\npub(crate) struct Descriptor","#[derive(Clone, Debug, PartialEq, Eq)]\nstruct Page");
         let group=section(&source,"#[derive(Debug, PartialEq, Eq, Serialize)]\n#[serde(rename_all = \"camelCase\")]\npub(crate) struct GroupPlan","fn unhex(s: &str)");
         let transport=read("recording_wire/transport.rs");
         let transport=section(&transport,"const STATUS_PREFIX: usize","    pub(crate) fn validate(&self, d: &Descriptor)");
@@ -112,7 +112,7 @@ fn main() {
             .replace("mod pause_tests;",&format!("#[path = \"{test_path}\"] mod pause_tests;"));
         let control=out.join("mobile_control_protocol.rs");std::fs::write(&control,control_source).expect("prepare recorder protocol");
         let peer_path=transport_path.to_string_lossy().replace('\\',"/");let control_path=control.to_string_lossy().replace('\\',"/");
-        std::fs::write(out.join("mobile_control_wire.rs"),format!("use serde::Serialize;\nuse std::collections::{{BTreeMap,BTreeSet}};\n{constants}\n{helpers}\n{key}\n{descriptor}\n}}\n{group}\n#[path = \"{peer_path}\"] pub(crate) mod transport;\n#[path = \"{control_path}\"] pub(crate) mod control;\n")).expect("prepare recorder wire");
+        std::fs::write(out.join("mobile_control_wire.rs"),format!("use serde::Serialize;\nuse sha2::{{Digest,Sha256}};\nuse std::collections::{{BTreeMap,BTreeSet}};\n{constants}\n{helpers}\n{key}\n{descriptor}\n{group}\n#[path = \"{peer_path}\"] pub(crate) mod transport;\n#[path = \"{control_path}\"] pub(crate) mod control;\n")).expect("prepare recorder wire");
         let journal=read("recorder_control.rs");
         let prefix=section(&journal,"use std::{fs::", "/// The cross-process lock spans the complete command/status operation.");
         let catalogue=read("recorder_control/catalogue.rs");

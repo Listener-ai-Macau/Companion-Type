@@ -21,6 +21,7 @@
     public byte[] identity();
     public byte[] status();
     public byte[][] catalogue();
+    public java.lang.String[] localFiles();
     public void writeControl(byte[]);
     public byte[] capacitySlots(byte[]);
 }

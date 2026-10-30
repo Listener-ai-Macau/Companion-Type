@@ -66,6 +66,15 @@ public final class NativeRecordingControlJvmTest {
             fake.rebootWithSealedDirectory();String recovered=client.reconcileControlFromDirectory(root,second);expect(recovered,"stopped");
             if(!recovered.contains("\"confirmedByCatalogue\":true")||fake.writes!=5)throw new AssertionError("catalogue recovery must not send stop: "+recovered);
             expect(client.control(root,second,NativeRecordingControl.Action.QUERY,0),"stopped");
+            String third=NativeRecordingControl.newSessionId();expect(client.control(root,third,NativeRecordingControl.Action.START,120),"recording");
+            byte[] live=fake.status.clone();fake.rebootWithSealedDirectory();put(fake.descriptor,8,2,4);put(fake.descriptor,28,1,4);
+            put(fake.descriptor,32,320,8);put(fake.descriptor,40,320,8);put(fake.descriptor,88,2,4);crc(fake.descriptor,0,108,108);
+            try{client.reconcileControlFromDirectory(root,third);throw new AssertionError("missing original segment accepted");}catch(IOException expected){}
+            Path recDir=root.resolve("local-recordings");Files.createDirectories(recDir);Path fixtures=Paths.get(args[3]);
+            byte[] first=Files.readAllBytes(fixtures.resolve("descriptor0.bin"));System.arraycopy(live,12,first,8,4);System.arraycopy(live,44,first,12,16);
+            System.arraycopy(fake.identity,20,first,96,12);crc(first,0,108,108);RecorderWire.Descriptor original=RecorderWire.Descriptor.decode(first);
+            String name=SegmentReceiver.key(original);Files.write(recDir.resolve(name+".meta"),first);Files.write(recDir.resolve(name+".cop1"),Files.readAllBytes(fixtures.resolve("payload.bin")));
+            expect(client.reconcileControlFromDirectory(root,third,recDir),"stopped");if(fake.writes!=6)throw new AssertionError("recovery sent a command");
         }
         byte[] local=Files.readAllBytes(Paths.get(args[2]));Fake physical=new Fake(golden);physical.status=Arrays.copyOfRange(local,8+8*80,8+9*80);
         try(RecordingClient client=new RecordingClient(physical)) {

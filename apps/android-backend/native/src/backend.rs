@@ -43,6 +43,8 @@ pub(super) mod minutes {include!(concat!(env!("OUT_DIR"),"/mobile_minutes_shared
 #[cfg(feature="mobile-control")]
 pub(crate) mod device_connection {include!(concat!(env!("OUT_DIR"),"/mobile_device_identity.rs"));}
 #[cfg(feature="mobile-control")]
+pub(crate) use crate::cop1;
+#[cfg(feature="mobile-control")]
 pub(crate) mod recording_wire {include!(concat!(env!("OUT_DIR"),"/mobile_control_wire.rs"));}
 #[cfg(feature="mobile-control")]
 pub(crate) mod recorder_control {include!(concat!(env!("OUT_DIR"),"/mobile_control_journal.rs"));}

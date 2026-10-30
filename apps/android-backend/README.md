@@ -72,6 +72,11 @@ unavailable directory leaves the control session unresolved. This candidate has
 not yet been verified with a physical phone and recording card. The app owns foreground
 lifetime and must show errors rather than guessing the recording state.
 
+When segments were already received locally, pass their private recording
+directory as the third argument to `reconcileControlFromDirectory`. The backend
+checks the saved bytes and combines matching originals with the device directory;
+it leaves conflicts and missing segments unresolved and never consumes audio.
+
 `client.readDeviceStatus()` returns the device's current `faultBitmap` and
 `previousRecordingDamageReported`. If this flag is true, tell the user that a
 previous recording segment may be unavailable and retain available recordings.

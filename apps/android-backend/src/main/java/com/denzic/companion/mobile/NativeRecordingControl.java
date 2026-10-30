@@ -16,9 +16,9 @@ public final class NativeRecordingControl {
     private static native String adoptNative(Callbacks callbacks,String privateRoot,String device) throws IOException;
     private static native String reconcileNative(Callbacks callbacks,String privateRoot,String hostSession,String device) throws IOException;
 
-    static String reconcile(RecordingClient client,RecordingClient.Link link,Path privateRoot,String hostSession) throws IOException {
+    static String reconcile(RecordingClient client,RecordingClient.Link link,Path privateRoot,String hostSession,Path recordingDirectory) throws IOException {
         if(client==null||link==null||privateRoot==null||hostSession==null||hostSession.trim().isEmpty())throw new IllegalArgumentException("device, private directory and session required");
-        try{System.loadLibrary("companion_mobile_audio");return reconcileNative(new Callbacks(link,client),privateRoot.toAbsolutePath().toString(),hostSession,link.deviceAddress());}
+        try{System.loadLibrary("companion_mobile_audio");return reconcileNative(new Callbacks(link,client,recordingDirectory),privateRoot.toAbsolutePath().toString(),hostSession,link.deviceAddress());}
         catch(UnsatisfiedLinkError error){throw new IOException("mobile recording control library is not installed for this device",error);}
     }
 
@@ -45,14 +45,29 @@ public final class NativeRecordingControl {
     public static final class Callbacks {
         private final RecordingClient.Link link;
         private final RecordingClient client;
-        Callbacks(RecordingClient.Link link){this(link,null);}
-        Callbacks(RecordingClient.Link link,RecordingClient client){this.link=link;this.client=client;}
+        private final Path recordingDirectory;
+        Callbacks(RecordingClient.Link link){this(link,null,null);}
+        Callbacks(RecordingClient.Link link,RecordingClient client,Path recordingDirectory){this.link=link;this.client=client;this.recordingDirectory=recordingDirectory;}
         public byte[] identity() throws IOException{return link.read(RecordingClient.DEVICE_STATUS);}
         public byte[] status() throws IOException{return link.read(RecordingClient.MEETING_STATUS);}
         public byte[][] catalogue() throws IOException {
             if(client==null)throw new IOException("recording directory is unavailable");
             java.util.List<RecorderWire.Descriptor> entries=client.listRecordings();byte[][] result=new byte[entries.size()][];
             for(int i=0;i<result.length;i++)result[i]=entries.get(i).wireBytes();return result;
+        }
+        public String[] localFiles() throws IOException {
+            if(recordingDirectory==null)return new String[0];
+            java.util.List<String> files=new java.util.ArrayList<>();
+            if(!java.nio.file.Files.exists(recordingDirectory))return new String[0];
+            try(java.nio.file.DirectoryStream<Path> metadata=java.nio.file.Files.newDirectoryStream(recordingDirectory,"*.meta")){
+                for(Path item:metadata){
+                    if(java.nio.file.Files.size(item)!=112)throw new IOException("invalid local recording metadata");
+                    RecorderWire.Descriptor descriptor=RecorderWire.Descriptor.decode(java.nio.file.Files.readAllBytes(item));
+                    String name=SegmentReceiver.key(descriptor);if(!item.getFileName().toString().equals(name+".meta"))throw new IOException("recording metadata filename mismatch");
+                    Path file=recordingDirectory.resolve(name+".cop1");if(java.nio.file.Files.exists(file))files.add(file.toAbsolutePath().toString());
+                }
+            }
+            return files.toArray(new String[0]);
         }
         public void writeControl(byte[] wire) throws IOException{link.write(RecordingClient.MEETING_CONTROL,wire);}
         public byte[] capacitySlots(byte[] request) throws IOException {

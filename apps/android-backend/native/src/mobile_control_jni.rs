@@ -41,6 +41,19 @@ impl Transport for JavaTransport<'_,'_> {
         }
         let _=self.env.delete_local_ref(array);Ok(entries)
     }
+    fn local_files(&mut self)->Result<Vec<std::path::PathBuf>,String>{
+        let value=match self.env.call_method(self.callback,"localFiles","()[Ljava/lang/String;",&[]).and_then(|v|v.l()){Ok(v)=>v,Err(_)=>return Err(self.error())};
+        if value.is_null(){return Err("本地录音目录不可用。".into());}
+        let array=JObjectArray::from(value);let len=self.env.get_array_length(&array).map_err(|_|"本地录音目录不可读取。")?;
+        if len>1024{return Err("本地录音目录过大。".into());}
+        let mut entries=Vec::with_capacity(len as usize);
+        for i in 0..len {let item=self.env.get_object_array_element(&array,i).map_err(|_|"本地录音路径不可读取。")?;
+            if item.is_null(){return Err("本地录音路径不可读取。".into());}
+            let value=JString::from(item);let path:String=self.env.get_string(&value).map_err(|_|"本地录音路径不可读取。")?.into();
+            let _=self.env.delete_local_ref(value);entries.push(path.into());
+        }
+        let _=self.env.delete_local_ref(array);Ok(entries)
+    }
 }
 
 #[no_mangle]

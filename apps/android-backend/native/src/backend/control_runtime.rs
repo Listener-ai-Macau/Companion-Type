@@ -11,6 +11,7 @@ pub(crate) trait Transport {
     /// The existing negotiated recording link sends this request and waits for CSN1.
     fn capacity_slots(&mut self,wire:&[u8])->Result<Option<Vec<u8>>,String>;
     fn catalogue(&mut self)->Result<Vec<Vec<u8>>,String> {Err("录音目录暂不可用。".into())}
+    fn local_files(&mut self)->Result<Vec<PathBuf>,String> {Ok(Vec::new())}
 }
 
 #[derive(serde::Serialize)]
@@ -127,6 +128,21 @@ pub(crate) fn reconcile_catalogue<T:Transport>(root:&Path,host:&str,device:&str,
         if (d.key.device_uid,d.key.format_epoch)!=(negotiated.uid,negotiated.epoch){return Err("录音目录设备身份已变化。".into());}
         if d.key==key{originals.push(d);}
     }
+    let local=transport.local_files()?;if local.len()>1024{return Err("本地录音目录过大。".into());}
+    for file in local {
+        if !file.is_absolute()||file.extension().is_none_or(|e|e!="cop1"){return Err("本地录音副本路径无效。".into());}
+        let meta=file.with_extension("meta");let meta_info=fs::symlink_metadata(&meta).map_err(|_|"本地录音元数据不可读取。")?;
+        if !meta_info.is_file()||meta_info.file_type().is_symlink()||meta_info.len()!=112{return Err("本地录音元数据无效。".into());}
+        let d=Descriptor::decode(&fs::read(meta).map_err(|_|"本地录音元数据不可读取。")?)?;
+        if d.key!=key{continue;}
+        let info=fs::symlink_metadata(&file).map_err(|_|"本地录音副本不可读取。")?;
+        if !info.is_file()||info.file_type().is_symlink()||info.len()!=u64::from(d.encoded_length){return Err("本地原录音副本无效。".into());}
+        let payload=fs::read(file).map_err(|_|"本地录音副本不可读取。")?;d.verify_payload(&payload)?;
+        if let Some(current)=originals.iter().find(|current|current.segment_index==d.segment_index){
+            if !current.same_content(&d){return Err("设备和本地原录音分段不一致。".into());}
+        }else{originals.push(d);}
+    }
+    originals.sort_by_key(|d|d.segment_index);
     let after=transport.status()?;
     if after!=before||Peer::from_status(&transport.identity()?)?.as_ref()!=Some(&negotiated){return Err("读取目录期间设备状态发生变化，请重试。".into());}
     journal.end_from_sealed_catalogue(&originals)?;save(&path,&journal)?;catalogue_report(&journal)
@@ -261,10 +277,10 @@ mod tests {
         let crc=crc32fast::hash(&p[..28]);p[28..32].copy_from_slice(&crc.to_le_bytes());s
     }
     fn crc_status(raw:&mut [u8]){let crc=crc32fast::hash(&raw[..76]);raw[76..80].copy_from_slice(&crc.to_le_bytes());}
-    struct Fake {identity:Vec<u8>,status:Vec<u8>,writes:Vec<Vec<u8>>,fail_after_write:bool,fail_before_write:bool,slots:Option<u8>,catalogue:Vec<Vec<u8>>,change_status:bool}
+    struct Fake {identity:Vec<u8>,status:Vec<u8>,writes:Vec<Vec<u8>>,fail_after_write:bool,fail_before_write:bool,slots:Option<u8>,catalogue:Vec<Vec<u8>>,change_status:bool,local_files:Vec<PathBuf>}
     impl Fake {
         fn new()->Self {let mut status=vector(0)[56..136].to_vec();status[1]=2;crc_status(&mut status);
-            Self{identity:capability(),status,writes:vec![],fail_after_write:false,fail_before_write:false,slots:None,catalogue:vec![],change_status:false}}
+            Self{identity:capability(),status,writes:vec![],fail_after_write:false,fail_before_write:false,slots:None,catalogue:vec![],change_status:false,local_files:vec![]}}
         fn fragmented(&mut self) {
             let s=&mut self.identity;s[36..40].copy_from_slice(b"CCQ2");s[40]=3;s[41]=1;s[42]=1;s[43]=64;
             for(at,n)in [(44,4u32),(48,0x100000),(52,0xf0000),(56,0x50000),(60,0x10000),(64,0),(68,6400),(72,0x50000),(76,1800)]{s[at..at+4].copy_from_slice(&n.to_le_bytes());}
@@ -288,6 +304,7 @@ mod tests {
             out[12]=count;out[16..28].copy_from_slice(&wire[8..20]);let crc=crc32fast::hash(&out[..28]);out[28..32].copy_from_slice(&crc.to_le_bytes());Ok(Some(out))
         }
         fn catalogue(&mut self)->Result<Vec<Vec<u8>>,String> {if self.change_status{self.status[1]=1;}Ok(self.catalogue.clone())}
+        fn local_files(&mut self)->Result<Vec<PathBuf>,String> {Ok(self.local_files.clone())}
     }
     fn root()->PathBuf {std::env::temp_dir().join(format!("companion-control-test-{}",uuid::Uuid::new_v4()))}
     fn cleanup(root:&Path) {
@@ -402,5 +419,25 @@ mod tests {
         }
         fake.catalogue=vec![d.encode().unwrap()];fake.change_status=true;
         assert!(reconcile_catalogue(&root,"original",DEVICE,&mut fake).is_err());assert_eq!(fs::read(&path).unwrap(),old);assert_eq!(fake.writes.len(),1);cleanup(&root);
+    }
+    #[test]
+    fn device_directory_and_verified_local_segment_recover_one_original() {
+        let root=root();let mut fake=Fake::new();let (path,template)=sealed_fixture(&root,&mut fake);let old=fs::read(&path).unwrap();
+        let golden:serde_json::Value=serde_json::from_str(include_str!("../../../../windows/src-tauri/src/backend/recording_wire/golden.json")).unwrap();
+        let unhex=|s:&str|s.as_bytes().chunks_exact(2).map(|p|u8::from_str_radix(std::str::from_utf8(p).unwrap(),16).unwrap()).collect::<Vec<u8>>();
+        let mut local=Descriptor::decode(&unhex(golden["descriptorsHex"][0].as_str().unwrap())).unwrap();
+        local.key=template.key.clone();local.recording_id=template.recording_id;local.flags=1;local.total_segments=0;
+        let payload=unhex(golden["payloadHex"].as_str().unwrap());local.verify_payload(&payload).unwrap();
+        let segment=root.join("local.cop1");fs::write(segment.with_extension("meta"),local.encode().unwrap()).unwrap();fs::write(&segment,&payload).unwrap();
+        let mut last=template.clone();last.recording_id+=1;last.segment_index=1;last.sample_offset=local.sample_count;last.sample_count=320;last.total_segments=2;
+        fake.catalogue=vec![last.encode().unwrap()];
+        assert!(reconcile_catalogue(&root,"original",DEVICE,&mut fake).is_err());fake.local_files=vec![segment.clone()];
+        let mut conflicting=local.clone();conflicting.sha256=[7;32];fake.catalogue=vec![conflicting.encode().unwrap()];
+        assert!(reconcile_catalogue(&root,"original",DEVICE,&mut fake).is_err());assert_eq!(fs::read(&path).unwrap(),old);
+        fake.catalogue=vec![last.encode().unwrap()];
+        let mut damaged=payload.clone();damaged[0]^=1;fs::write(&segment,&damaged).unwrap();
+        assert!(reconcile_catalogue(&root,"original",DEVICE,&mut fake).is_err());assert_eq!(fs::read(&path).unwrap(),old);
+        fs::write(&segment,&payload).unwrap();let report=reconcile_catalogue(&root,"original",DEVICE,&mut fake).unwrap();
+        assert_eq!(report.state,"stopped");assert_eq!(report.duration_ms,40);assert_eq!(fake.writes.len(),1);cleanup(&root);
     }
 }

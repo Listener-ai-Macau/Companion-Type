@@ -85,7 +85,12 @@ public final class RecordingClient implements Closeable {
     }
     /** Recover a previously confirmed capture from its complete sealed device directory. */
     public synchronized String reconcileControlFromDirectory(Path privateDirectory,String hostSession) throws IOException {
-        ensureOpen();return NativeRecordingControl.reconcile(this,link,privateDirectory,hostSession);
+        ensureOpen();return NativeRecordingControl.reconcile(this,link,privateDirectory,hostSession,null);
+    }
+    /** Also use fully verified copies previously received into this private recording directory. */
+    public synchronized String reconcileControlFromDirectory(Path privateDirectory,String hostSession,Path recordingDirectory) throws IOException {
+        ensureOpen();if(recordingDirectory==null)throw new IllegalArgumentException("recording directory required");
+        return NativeRecordingControl.reconcile(this,link,privateDirectory,hostSession,recordingDirectory);
     }
 
     public synchronized List<RecorderWire.Descriptor> listRecordings() throws IOException {
