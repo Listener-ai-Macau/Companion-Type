@@ -1205,7 +1205,7 @@ export function CompanionDashboard({
       const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(reviewChoice?.calendarSlots?.length?{calendarSlots:reviewChoice.calendarSlots}:{}),...(calendarSaveToken?{calendarSaveToken}:{}),...(calendarSavedName?{calendarSavedName:true}:{}) });
       if(!result)restoreCalendarReview();
       if(result?.calendarOpenToken&&format.startsWith('calendar'))setCalendarSaveTargets(current=>({...current,[JSON.stringify([sessionId,minutesViewMode,selectedSession.calendarCopyEpoch??0])]:{token:result.calendarOpenToken!,name:exportFileName(result.path)}}));
-      setExportResult({ sessionId, format, origin, path: result?.path, calendarOpenToken:result?.calendarOpenToken,calendarFileUri:result?.calendarFileUri, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder') ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
+      setExportResult({ sessionId, format, origin, path: result?.path, calendarOpenToken:result?.calendarOpenToken,calendarFileUri:result?.calendarFileUri, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${(format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder')) && !(result.calendarOpenToken && (format === 'calendar' || format.startsWith('calendarreminder'))) ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
     } catch (error) {
       if((format==='calendar'||format.startsWith('calendarreminder'))&&calendarExportNeedsTime(error)&&onSaveMeeting&&copySourceRef.current===exportSourceKey&&basicMinutesFields(minutesMarkdown,minutesDisplayContext,manualMinutes)){
         // Read-only native preflight refused a calendar with no confirmed
@@ -2488,7 +2488,128 @@ export function CompanionDashboard({
 
       {showAdvanced ? (
         <div className="ct-advanced">
-          <CompanionBehaviorPreview recording={oobeBlockedByRecording} />
+          <section className="ct-panel" id="ct-service-settings" tabIndex={-1} aria-label="转写与纪要服务">
+            <button type="button" className="ct-text-button ct-return-recording" onClick={returnToRecording}>← 返回录音</button>
+            <div className="ct-panel-title">
+              <Shield size={18} />
+              <span>转写与纪要服务</span>
+            </div>
+            {productSettings?.storageWarning ? <p className="ct-step-warn" role="alert">
+              {operationErrorText(productSettings.storageWarning,'settings')}
+            </p> : null}
+            <p className="ct-secret-hint">
+              正式桌面版使用系统凭据管理器保存密钥。转写会把录音发送到所选 ASR 服务，智能纪要会把转写文字发送到 DeepSeek；空密钥保存不会覆盖已有值。
+            </p>
+            <p className="ct-service-boundary">使用自备或兼容服务时，数据会离开 Companion Type 并交给你填写的服务地址；该服务的保留期限、访问控制与可用性由服务提供者或你的部署负责。</p>
+            <div className="ct-mode-row">
+              <button
+                type="button"
+                className={`ct-mode-chip ${formDefaultMode === 'offlineStore' ? 'active' : ''}`}
+                onClick={() => setFormDefaultMode('offlineStore')}
+              >
+                默认先录后整理
+              </button>
+              <button
+                type="button"
+                className={`ct-mode-chip ${formDefaultMode === 'onlineLive' ? 'active' : ''}`}
+                onClick={() => setFormDefaultMode('onlineLive')}
+              >
+                默认在线
+              </button>
+            </div>
+            <div className="ct-settings-grid">
+              <label className="ct-field">
+                <span>ASR 提供商</span>
+                <select value={formAsrProvider} onChange={(e) => setFormAsrProvider(e.target.value)}>
+                  <option value="volcengine">火山 Volcengine</option>
+                  <option value="openai-compatible">OpenAI 兼容</option>
+                </select>
+              </label>
+              {formAsrProvider === 'volcengine' ? <>
+                <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
+                {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
+                {credentialField('volcAccessKey', '火山 Access Key', formVolcAccess, setFormVolcAccess, productSettings?.volcAccessKeySet)}
+              </> : <>
+                <label className="ct-field"><span>兼容服务 Endpoint</span><input value={formOpenAiEndpoint} onChange={(e) => setFormOpenAiEndpoint(e.target.value)} spellCheck={false} /></label>
+                {credentialField('openaiAsrApiKey', '兼容服务 Key', formOpenAiKey, setFormOpenAiKey, productSettings?.openaiAsrApiKeySet)}
+                <label className="ct-field"><span>兼容服务模型</span><input value={formOpenAiModel} onChange={(e) => setFormOpenAiModel(e.target.value)} spellCheck={false} /></label>
+              </>}
+              {formDeepseekEnabled ? <>
+                {credentialField('deepseekApiKey', 'DeepSeek Key', formDeepseekKey, setFormDeepseekKey, productSettings?.deepseekApiKeySet)}
+                <label className="ct-field"><span>DeepSeek Base URL</span><input value={formDeepseekBase} onChange={(e) => setFormDeepseekBase(e.target.value)} spellCheck={false} /></label>
+                <label className="ct-field"><span>DeepSeek 模型</span><input value={formDeepseekModel} onChange={(e) => setFormDeepseekModel(e.target.value)} spellCheck={false} /></label>
+              </> : null}
+            </div>
+            <label className="ct-field-check">
+              <input type="checkbox" checked={formDeepseekEnabled} onChange={(e) => setFormDeepseekEnabled(e.target.checked)} />
+              启用 DeepSeek 智能纪要，整理摘要、决定与行动项
+            </label>
+            <label className="ct-field-check">
+              <input type="checkbox" checked={formBleCompress} onChange={(e) => setFormBleCompress(e.target.checked)} />
+              旧设备的节省流量模式（可能降低音质）
+            </label>
+            <p className="ct-step-meta">新版设备录音已压缩，会直接同步原始压缩音频。本开关仅适用于旧设备的未压缩录音，不会再次压缩已有的 Opus 录音。</p>
+            {missingServiceFields.length ? <p className="ct-step-warn" aria-label="服务配置缺项">
+              还缺：{missingServiceFields.join('、')}。可以先保存并使用“先录后整理”，但缺项会阻止对应的转写或智能纪要。
+            </p> : <p className="ct-step-meta" aria-label="服务配置完整性">必填项已提供，但实际服务调用仍需用一次真实转写/纪要验证。</p>}
+            <div className="ct-button-row">
+              <button
+                type="button"
+                className="ct-action ct-action-primary"
+                disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !productSettings || productSettings.storageSaveBlocked || !onSaveProductSettings}
+                onClick={() => {
+                  if (controlsBusy || settingsBusy || oobeBlockedByRecording || !productSettings || productSettings.storageSaveBlocked || !onSaveProductSettings || settingsActive.current) return;
+                  settingsActive.current = true;
+                  setSettingsMsg(null);
+                  setSettingsBusy(true);
+                  void Promise.resolve().then(() => onSaveProductSettings?.({
+                    defaultMeetingMode: formDefaultMode,
+                    asrProvider: formAsrProvider,
+                    volcAppKey: clearCredentials.includes('volcAppKey') ? '' : formVolcApp,
+                    volcAccessKey: clearCredentials.includes('volcAccessKey') ? '' : formVolcAccess,
+                    volcResourceId: formVolcResource,
+                    openaiAsrEndpoint: formOpenAiEndpoint,
+                    openaiAsrApiKey: clearCredentials.includes('openaiAsrApiKey') ? '' : formOpenAiKey,
+                    openaiAsrModel: formOpenAiModel,
+                    deepseekApiKey: clearCredentials.includes('deepseekApiKey') ? '' : formDeepseekKey,
+                    deepseekBaseUrl: formDeepseekBase,
+                    deepseekModel: formDeepseekModel,
+                    deepseekMinutesEnabled: formDeepseekEnabled,
+                    bleCompress: formBleCompress,
+                    clearCredentials,
+                  })).then(() => {
+                    setSettingsMsg('配置已保存，实际服务调用尚未验证。');
+                    setClearCredentials([]);
+                    setFormVolcApp('');
+                    setFormVolcAccess('');
+                    setFormOpenAiKey('');
+                    setFormDeepseekKey('');
+                  }).catch((err: unknown) => {
+                    setSettingsMsg(operationErrorText(err,'settings'));
+                  }).finally(() => { settingsActive.current = false; setSettingsBusy(false); });
+                }}
+              >
+                {settingsBusy ? '正在保存…' : '保存设置'}
+              </button>
+            </div>
+            {clearCredentials.length ? <p className="ct-step-warn" role="status">保存后将清空所选密钥，并停止对应服务。保存前可撤销清空；重新填写密钥后可恢复使用。</p>
+              : <p className="ct-step-meta">密钥留空会保持原值；需要删除时点“清空密钥”，再保存设置。</p>}
+            {settingsMsg ? <p className="ct-step-meta">{settingsMsg}</p> : null}
+            <div className="ct-button-row">
+              {(['asr', 'minutes'] as const).map(service => <button key={service} type="button" className="ct-action"
+                disabled={controlsBusy || settingsBusy || serviceBusy !== null || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && !formDeepseekEnabled)}
+                onClick={() => void checkService(service)}>{serviceBusy === service ? '正在测试…' : service === 'asr' ? '测试转写服务' : '测试纪要服务'}</button>)}
+            </div>
+            <p className="ct-step-meta">按已保存配置发送一秒静音或固定测试文字，不读取会议或麦克风，服务商可能计费。测试通过不代表识别或纪要准确率通过。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>
+            {(['asr', 'minutes'] as const).map(service => serviceResults[service] ? <p key={service} className="ct-step-meta" role="status">{service === 'asr' ? '转写' : '纪要'}：{serviceResults[service]}</p> : null)}
+          </section>
+
+          <details className="ct-panel ct-secondary-settings">
+            <summary>陪伴模式预览</summary>
+            <CompanionBehaviorPreview recording={oobeBlockedByRecording} />
+          </details>
+          <details className="ct-panel ct-secondary-settings">
+            <summary>电脑录音与其他录音选项</summary>
           <section className="ct-panel">
             <div className="ct-panel-title">
               <Mic size={18} />
@@ -2595,6 +2716,7 @@ export function CompanionDashboard({
               </div>
             ) : null}
           </section>
+          </details>
 
           <section className="ct-panel" aria-label="更新资源">
             <div className="ct-panel-title">
@@ -2710,122 +2832,6 @@ export function CompanionDashboard({
                 void onPrepareAudioComponents().then(() => setDiagnosticMsg('音频组件已校验并成功加载；后续会议可以使用本地说话人区分。'))
                   .catch((error) => setDiagnosticMsg(operationErrorText(error,'components'))).finally(() => {diagnosticActive.current=false;setDiagnosticBusy(false);});
               }}>准备说话人区分组件</button>
-          </section>
-
-          <section className="ct-panel" id="ct-service-settings" tabIndex={-1} aria-label="转写与纪要服务">
-            <button type="button" className="ct-text-button ct-return-recording" onClick={returnToRecording}>← 返回录音</button>
-            <div className="ct-panel-title">
-              <Shield size={18} />
-              <span>转写与纪要服务</span>
-            </div>
-            {productSettings?.storageWarning ? <p className="ct-step-warn" role="alert">
-              {operationErrorText(productSettings.storageWarning,'settings')}
-            </p> : null}
-            <p className="ct-secret-hint">
-              正式桌面版使用系统凭据管理器保存密钥。转写会把录音发送到所选 ASR 服务，智能纪要会把转写文字发送到 DeepSeek；空密钥保存不会覆盖已有值。
-            </p>
-            <p className="ct-service-boundary">使用自备或兼容服务时，数据会离开 Companion Type 并交给你填写的服务地址；该服务的保留期限、访问控制与可用性由服务提供者或你的部署负责。</p>
-            <div className="ct-mode-row">
-              <button
-                type="button"
-                className={`ct-mode-chip ${formDefaultMode === 'offlineStore' ? 'active' : ''}`}
-                onClick={() => setFormDefaultMode('offlineStore')}
-              >
-                默认先录后整理
-              </button>
-              <button
-                type="button"
-                className={`ct-mode-chip ${formDefaultMode === 'onlineLive' ? 'active' : ''}`}
-                onClick={() => setFormDefaultMode('onlineLive')}
-              >
-                默认在线
-              </button>
-            </div>
-            <div className="ct-settings-grid">
-              <label className="ct-field">
-                <span>ASR 提供商</span>
-                <select value={formAsrProvider} onChange={(e) => setFormAsrProvider(e.target.value)}>
-                  <option value="volcengine">火山 Volcengine</option>
-                  <option value="openai-compatible">OpenAI 兼容</option>
-                </select>
-              </label>
-              {formAsrProvider === 'volcengine' ? <>
-                <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
-                {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
-                {credentialField('volcAccessKey', '火山 Access Key', formVolcAccess, setFormVolcAccess, productSettings?.volcAccessKeySet)}
-              </> : <>
-                <label className="ct-field"><span>兼容服务 Endpoint</span><input value={formOpenAiEndpoint} onChange={(e) => setFormOpenAiEndpoint(e.target.value)} spellCheck={false} /></label>
-                {credentialField('openaiAsrApiKey', '兼容服务 Key', formOpenAiKey, setFormOpenAiKey, productSettings?.openaiAsrApiKeySet)}
-                <label className="ct-field"><span>兼容服务模型</span><input value={formOpenAiModel} onChange={(e) => setFormOpenAiModel(e.target.value)} spellCheck={false} /></label>
-              </>}
-              {formDeepseekEnabled ? <>
-                {credentialField('deepseekApiKey', 'DeepSeek Key', formDeepseekKey, setFormDeepseekKey, productSettings?.deepseekApiKeySet)}
-                <label className="ct-field"><span>DeepSeek Base URL</span><input value={formDeepseekBase} onChange={(e) => setFormDeepseekBase(e.target.value)} spellCheck={false} /></label>
-                <label className="ct-field"><span>DeepSeek 模型</span><input value={formDeepseekModel} onChange={(e) => setFormDeepseekModel(e.target.value)} spellCheck={false} /></label>
-              </> : null}
-            </div>
-            <label className="ct-field-check">
-              <input type="checkbox" checked={formDeepseekEnabled} onChange={(e) => setFormDeepseekEnabled(e.target.checked)} />
-              启用 DeepSeek 智能纪要，整理摘要、决定与行动项
-            </label>
-            <label className="ct-field-check">
-              <input type="checkbox" checked={formBleCompress} onChange={(e) => setFormBleCompress(e.target.checked)} />
-              旧设备的节省流量模式（可能降低音质）
-            </label>
-            <p className="ct-step-meta">新版设备录音已压缩，会直接同步原始压缩音频。本开关仅适用于旧设备的未压缩录音，不会再次压缩已有的 Opus 录音。</p>
-            {missingServiceFields.length ? <p className="ct-step-warn" aria-label="服务配置缺项">
-              还缺：{missingServiceFields.join('、')}。可以先保存并使用“先录后整理”，但缺项会阻止对应的转写或智能纪要。
-            </p> : <p className="ct-step-meta" aria-label="服务配置完整性">必填项已提供，但实际服务调用仍需用一次真实转写/纪要验证。</p>}
-            <div className="ct-button-row">
-              <button
-                type="button"
-                className="ct-action ct-action-primary"
-                disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !productSettings || productSettings.storageSaveBlocked || !onSaveProductSettings}
-                onClick={() => {
-                  if (controlsBusy || settingsBusy || oobeBlockedByRecording || !productSettings || productSettings.storageSaveBlocked || !onSaveProductSettings || settingsActive.current) return;
-                  settingsActive.current = true;
-                  setSettingsMsg(null);
-                  setSettingsBusy(true);
-                  void Promise.resolve().then(() => onSaveProductSettings?.({
-                    defaultMeetingMode: formDefaultMode,
-                    asrProvider: formAsrProvider,
-                    volcAppKey: clearCredentials.includes('volcAppKey') ? '' : formVolcApp,
-                    volcAccessKey: clearCredentials.includes('volcAccessKey') ? '' : formVolcAccess,
-                    volcResourceId: formVolcResource,
-                    openaiAsrEndpoint: formOpenAiEndpoint,
-                    openaiAsrApiKey: clearCredentials.includes('openaiAsrApiKey') ? '' : formOpenAiKey,
-                    openaiAsrModel: formOpenAiModel,
-                    deepseekApiKey: clearCredentials.includes('deepseekApiKey') ? '' : formDeepseekKey,
-                    deepseekBaseUrl: formDeepseekBase,
-                    deepseekModel: formDeepseekModel,
-                    deepseekMinutesEnabled: formDeepseekEnabled,
-                    bleCompress: formBleCompress,
-                    clearCredentials,
-                  })).then(() => {
-                    setSettingsMsg('配置已保存，实际服务调用尚未验证。');
-                    setClearCredentials([]);
-                    setFormVolcApp('');
-                    setFormVolcAccess('');
-                    setFormOpenAiKey('');
-                    setFormDeepseekKey('');
-                  }).catch((err: unknown) => {
-                    setSettingsMsg(operationErrorText(err,'settings'));
-                  }).finally(() => { settingsActive.current = false; setSettingsBusy(false); });
-                }}
-              >
-                {settingsBusy ? '正在保存…' : '保存设置'}
-              </button>
-            </div>
-            {clearCredentials.length ? <p className="ct-step-warn" role="status">保存后将清空所选密钥，并停止对应服务。保存前可撤销清空；重新填写密钥后可恢复使用。</p>
-              : <p className="ct-step-meta">密钥留空会保持原值；需要删除时点“清空密钥”，再保存设置。</p>}
-            {settingsMsg ? <p className="ct-step-meta">{settingsMsg}</p> : null}
-            <div className="ct-button-row">
-              {(['asr', 'minutes'] as const).map(service => <button key={service} type="button" className="ct-action"
-                disabled={controlsBusy || settingsBusy || serviceBusy !== null || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && !formDeepseekEnabled)}
-                onClick={() => void checkService(service)}>{serviceBusy === service ? '正在测试…' : service === 'asr' ? '测试转写服务' : '测试纪要服务'}</button>)}
-            </div>
-            <p className="ct-step-meta">按已保存配置发送一秒静音或固定测试文字，不读取会议或麦克风，服务商可能计费。测试通过不代表识别或纪要准确率通过。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>
-            {(['asr', 'minutes'] as const).map(service => serviceResults[service] ? <p key={service} className="ct-step-meta" role="status">{service === 'asr' ? '转写' : '纪要'}：{serviceResults[service]}</p> : null)}
           </section>
 
           <section className="ct-panel">

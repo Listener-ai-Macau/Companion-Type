@@ -36,7 +36,8 @@ function CalendarOpen({token,open}:{token:string;open:OpenSavedCalendar}) {
     finally{pending.current=false;}
   };
   return <div>
-    <p><strong>{state==='requested'?'已请求打开文件 → 下一步：在日历中确认导入':'下一步：打开文件 → 在日历中确认导入'}</strong></p>
+    <p><strong>{state==='requested'?'已请求应用打开文件 → 请在接收应用中确认导入':'下一步：打开文件 → 在日历中确认导入'}</strong></p>
+    <p className="ct-step-meta">导入后核对日期和提醒；可展开已保存的日历副本对照。{state==='requested'?'重复导入可能产生重复日程。':''}</p>
     <button type="button" className="ct-action" disabled={state==='opening'} onClick={()=>void start(undefined,applications.length>0)}>
       {state==='opening'?'正在打开日历文件…':state==='requested'?'再次打开日历文件':applications.length?'重新读取应用列表':'打开日历文件'}
     </button>
@@ -52,7 +53,6 @@ function CalendarOpen({token,open}:{token:string;open:OpenSavedCalendar}) {
         <button type="button" className="ct-link" disabled={state==='opening'} onClick={()=>{setApplications([]);setError('');setState('cancelled');}}>暂不打开</button>
       </div>
     </div>:null}
-    {state==='requested'?<p className="ct-step-meta">已请求应用打开这份文件。请在接收应用中确认导入，并核对日期和提醒；再次导入可能产生重复日程。</p>:null}
     {state==='cancelled'?<p className="ct-step-meta">已取消选择应用。文件仍已保存，可再次打开或在常用日历中导入。</p>:null}
     {state==='error'?<p className="ct-step-warn" role="alert">{error}</p>:null}
   </div>;
@@ -72,7 +72,7 @@ export function CompanionExportFeedback({ feedback, className='ct-export-result'
     {feedback.kind==='saved'&&feedback.calendarOpenToken&&onOpenSavedCalendar
       &&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))
       ?<CalendarOpen key={feedback.calendarOpenToken} token={feedback.calendarOpenToken} open={onOpenSavedCalendar}/>:null}
-    {feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))?<p className="ct-step-meta">{feedback.calendarOpenToken&&onOpenSavedCalendar?'导入后，请打开日程核对日期与提醒。':'下一步：在常用日历中导入该文件，再打开日程核对日期与提醒。'}可展开已保存的日历副本，对照每项设置。</p>:null}
+    {feedback.kind==='saved'&&feedback.path&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder'))&&!(feedback.calendarOpenToken&&onOpenSavedCalendar)?<p className="ct-step-meta">下一步：在常用日历中导入该文件，再打开日程核对日期与提醒。可展开已保存的日历副本，对照每项设置。</p>:null}
     {feedback.kind === 'saved' && feedback.path && (feedback.format === 'todo' || feedback.format === 'todotxt' || feedback.format === 'ics' || feedback.format === 'calendar' || feedback.format?.startsWith('calendarreminder'))
       && !(feedback.calendarOpenToken&&onOpenSavedCalendar&&(feedback.format==='calendar'||feedback.format?.startsWith('calendarreminder')))
       ? <CompanionChecklistHandoff format={feedback.format?.startsWith('calendarreminder')?'calendar':feedback.format as 'todo'|'todotxt'|'ics'|'calendar'}/> : null}

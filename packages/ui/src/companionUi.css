@@ -497,6 +497,20 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
   padding: 14px;
 }
 
+.ct-secondary-settings > summary {
+  cursor: pointer;
+  color: #293642;
+  font-weight: 700;
+}
+
+.ct-secondary-settings > .ct-panel {
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .ct-panel-title {
   display: flex;
   align-items: center;
