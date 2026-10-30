@@ -408,10 +408,17 @@ pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mod
 }
 
 pub(crate) fn calendar_events_with_slots(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>,selections:Option<&[CalendarReminderSelection]>,provenance:Option<&str>,slots:Option<&[CalendarSlotSelection]>)->Result<(String,Vec<CalendarPreviewItem>),String> {
+    calendar_events_with_slots_and_ids(session_id,mode,title,actions,draft,stamp,lead_minutes,selections,provenance,slots,None)
+}
+
+// Optional stable IDs let another client reuse this exporter without changing
+// the existing desktop identity scheme. They must be prepared by the caller.
+pub(crate) fn calendar_events_with_slots_and_ids(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:Option<u16>,selections:Option<&[CalendarReminderSelection]>,provenance:Option<&str>,slots:Option<&[CalendarSlotSelection]>,ids:Option<&[Option<String>]>)->Result<(String,Vec<CalendarPreviewItem>),String> {
     if lead_minutes.is_some_and(|m|!matches!(m,0|30|60)){return Err("不支持的提前提醒时间；请重新选择，截止时间保持不变。".into());}
+    if ids.is_some_and(|v|v.len()!=actions.len()){return Err("日历事项标识数量不匹配。".into());}
     let mut items=calendar_preview_items(actions);
     for(index,item)in items.iter_mut().enumerate(){
-        item.uid=calendar_event_uid(session_id,mode,index,&item.text);
+        item.uid=ids.and_then(|v|v[index].clone()).unwrap_or_else(||calendar_event_uid(session_id,mode,index,&item.text));
         if item.status=="timed" {if let Some(minutes)=lead_minutes {item.reminder=CalendarAlarm::Before{minutes};}}
     }
     if let Some(selections)=selections {
@@ -447,11 +454,11 @@ pub(crate) fn calendar_events_with_slots(session_id:&str,mode:&str,title:&str,ac
     for(index,item)in actions.iter().enumerate() {
         if item.completed {continue;}
         let Some(start)=item.due.as_deref().and_then(event_start)else{continue;};
-        let id=calendar_event_uid(session_id,mode,index,&item.text);
+        let id=&items[index].uid;
         let readable=readable_action(&item.text);
         let mode_label=match mode {"offlineStore"=>"先录后整理","onlineLive"=>"在线速记",other=>other};
         out.push_str("BEGIN:VEVENT\r\n");
-        out.push_str(&property("UID",&id));
+        out.push_str(&property("UID",id));
         out.push_str(&property("DTSTAMP",stamp));
         if let Some(slot)=&items[index].execution_slot {
             let (from,to)=slot_in_utc(slot).ok_or("执行时段无法读取。")?;

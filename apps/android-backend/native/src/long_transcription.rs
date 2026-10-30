@@ -110,4 +110,16 @@ mod tests {
         calls=0;super::transcribe_cached(&path,Some(&other),|_|{calls+=1;Ok("new profile".into())}).unwrap();assert_eq!(calls,3);
         for entry in fs::read_dir(&cache_dir).unwrap(){fs::remove_file(entry.unwrap().path()).unwrap();}fs::remove_dir(cache_dir).unwrap();fs::remove_file(path).unwrap();
     }
+    #[test] fn damaged_cache_is_repaired_by_the_next_successful_recognition() {
+        let (path,_)=fixture(2);let cache_dir=path.with_extension("cache");
+        let cache=super::super::asr_cache::Cache::new(&cache_dir,&serde_json::json!({"account":"fake"})).unwrap();
+        let mut calls=0;
+        super::transcribe_cached(&path,Some(&cache),|_|{calls+=1;Ok("original".into())}).unwrap();
+        let entry=fs::read_dir(&cache_dir).unwrap().next().unwrap().unwrap().path();
+        fs::write(entry,b"damaged").unwrap();
+        assert_eq!(super::transcribe_cached(&path,Some(&cache),|_|{calls+=1;Ok("recovered".into())}).unwrap(),"recovered");
+        assert_eq!(super::transcribe_cached(&path,Some(&cache),|_|{calls+=1;Ok("unexpected".into())}).unwrap(),"recovered");
+        assert_eq!(calls,2);
+        for entry in fs::read_dir(&cache_dir).unwrap(){fs::remove_file(entry.unwrap().path()).unwrap();}fs::remove_dir(cache_dir).unwrap();fs::remove_file(path).unwrap();
+    }
 }

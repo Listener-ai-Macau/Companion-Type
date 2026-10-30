@@ -43,7 +43,15 @@ impl Cache {
         let Ok(body)=serde_json::to_vec(&entry) else{return;};if body.len()>1024*1024{return;}
         let temp=self.dir.join(format!(".asr-{}-{}.tmp",std::process::id(),super::TEMP_COUNTER.fetch_add(1,Ordering::Relaxed)));
         if let Ok(mut out)=OpenOptions::new().write(true).create_new(true).open(&temp) {
-            if out.write_all(&body).and_then(|_|out.sync_all()).is_ok() {let _=fs::hard_link(&temp,self.path(pcm));}
+            if out.write_all(&body).and_then(|_|out.sync_all()).is_ok() {
+                let destination=self.path(pcm);
+                if fs::hard_link(&temp,&destination).is_err() && self.lookup(pcm).is_none() {
+                    // Replace an unreadable disposable cache entry only after a
+                    // new complete result has been durably written. A failure
+                    // leaves transcription successful and the recording intact.
+                    let _=fs::rename(&temp,destination);
+                }
+            }
             drop(out);let _=fs::remove_file(temp);
         }
     }

@@ -65,14 +65,17 @@ offer an explicit share/import action. It neither changes a calendar nor creates
 notifications. Dates must already be confirmed: use `YYYY-MM-DD` for an all-day
 deadline or RFC 3339 with an explicit offset for a timed deadline. Completed
 tasks are excluded. The returned `items` contain status and stable UIDs for the
-same session key, task position and text; after preview, optional `reminders` and
+same session key and saved task `id`, even after editing text or reordering. Use
+the existing `MeetingStore.Task.id` as each task's `id`; it must be unique within
+the session and remain unchanged on edits. For compatibility, tasks without an ID
+still use position and text, so their UID changes if either changes. After preview, optional `reminders` and
 `slots` can refer to these UIDs. An explicit slot requires start and end with
 offsets. Cross-device identity and synchronization are not provided. Owner is
 not inserted into the title automatically; include it in task text if needed.
 
 ```java
 String request = "{\"sessionKey\":\"recording-key\",\"title\":\"会议\"," +
-    "\"tasks\":[{\"text\":\"确认报价\",\"completed\":false," +
+    "\"tasks\":[{\"id\":\"saved-task-id\",\"text\":\"确认报价\",\"completed\":false," +
     "\"due\":\"2026-11-02T14:00:00+08:00\"}],\"reminderMinutes\":30}";
 String resultJson = NativeCalendar.export(request); // fields: calendar, items
 ```
@@ -125,6 +128,8 @@ full transcript; the original WAV is retained. Supply the optional app-private
 cache directory to reuse successfully recognized segments when retrying. The
 cache contains recognized text; the host owns its storage and removal. Cache writes
 are best effort, so a retry can still repeat provider charges when storage fails.
+A damaged cached chunk is replaced only after a new complete result is received;
+the original recording is retained.
 
 ```java
 Path privateCache = context.getFilesDir().toPath().resolve("companion-asr-cache");
