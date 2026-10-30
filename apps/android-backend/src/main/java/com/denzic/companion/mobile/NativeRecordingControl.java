@@ -13,6 +13,13 @@ public final class NativeRecordingControl {
     public static String newSessionId(){return UUID.randomUUID().toString();}
     private static native String executeNative(Callbacks callbacks,String privateRoot,String hostSession,String device,int command,int seconds) throws IOException;
     private static native String listNative(String privateRoot,String device,byte[] identity) throws IOException;
+    private static native String adoptNative(Callbacks callbacks,String privateRoot,String device) throws IOException;
+
+    static String adopt(RecordingClient.Link link,Path privateRoot) throws IOException {
+        if(link==null||privateRoot==null)throw new IllegalArgumentException("device and private directory required");
+        try{System.loadLibrary("companion_mobile_audio");return adoptNative(new Callbacks(link),privateRoot.toAbsolutePath().toString(),link.deviceAddress());}
+        catch(UnsatisfiedLinkError error){throw new IOException("mobile recording control library is not installed for this device",error);}
+    }
 
     static String list(RecordingClient.Link link,Path privateRoot) throws IOException {
         if(link==null||privateRoot==null)throw new IllegalArgumentException("device and private directory required");

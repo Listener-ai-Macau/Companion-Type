@@ -63,6 +63,41 @@ pub(crate) fn inventory(root:&Path,device:&str,identity:&[u8])->Result<Inventory
     }
     sessions.sort_by(|a,b|a.host_session.cmp(&b.host_session));Ok(Inventory{sessions,unreadable_count:unreadable})
 }
+/// Adopt only a CRC-checked, stable device-local original; this sends no control.
+pub(crate) fn adopt_local<T:Transport>(root:&Path,device:&str,transport:&mut T)->Result<Report,String> {
+    let dir=device_dir(root,device)?;fs::create_dir_all(&dir).map_err(|_|"无法保存录音控制记录。")?;
+    let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(dir.join("control.lock")).map_err(|_|"录音控制暂不可用。")?;
+    lock.try_lock().map_err(|_|"该设备正在处理另一项录音操作。")?;
+    let identity=transport.identity()?;let peer=PausePeer::from_status(&identity)?.ok_or("设备不支持当前录音控制。")?;
+    let raw=transport.status()?;let status=PauseStatus::decode(&raw)?;
+    let anchor=u32::from_le_bytes(raw[12..16].try_into().unwrap());let duration=u32::from_le_bytes(raw[20..24].try_into().unwrap());
+    let key=status.key.as_ref().ok_or("设备当前没有可接续的原录音。")?;let public=key.public_key();
+    let host=format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(key).map_err(|_|"原录音身份无法读取。")?));
+    // Use the shared desktop validation before creating or touching any record.
+    let checked=Journal::from_local(&peer,&host,device,&status,anchor,duration)?;
+    let mut existing:Option<(PathBuf,Journal)>=None;
+    for item in fs::read_dir(&dir).map_err(|_|"无法检查已有录音控制记录。")? {
+        let path=item.map_err(|_|"无法检查已有录音控制记录。")?.path();if path.extension().is_none_or(|e|e!="json"){continue;}
+        let old=read_journal(&path)?.ok_or("已有录音控制记录不可读取。")?;
+        if path.file_name().is_none_or(|n|n!=journal_name(&old.host_session).as_str())||!device_connection::same_device_id(&old.device_id,device){return Err("已有录音控制身份无法确认。".into());}
+        if old.key.as_ref()==Some(&public) {
+            if existing.is_some(){return Err("同一原录音存在重复控制记录，未自动选择。".into());}
+            existing=Some((path,old));
+        } else if !old.ended(){return Err("另一场录音仍待确认，未接管或重新开始。".into());}
+    }
+    let (path,mut journal)=match existing {
+        Some((path,old))=>{
+            old.matches(&peer,&old.host_session,device)?;
+            if old.ended()||old.anchor!=Some(anchor)||Some(old.start_request)!=status.local_start{return Err("原录音的控制身份不一致，未替换。".into());}
+            (path,old)
+        },
+        None=>(dir.join(journal_name(&host)),checked),
+    };
+    journal.observe_with_peer(&peer,&status,anchor,duration)?;save(&path,&journal)?;
+    let confirmed=journal.confirmed.as_ref().ok_or("原录音状态暂不可用。")?;
+    let state=if journal.pending.is_some(){"pending"}else{match confirmed.state{1=>"recording",3=>"paused",_=>return Err("原录音当前不处于可接续状态。".into())}};
+    Ok(Report{host_session:journal.host_session.clone(),state,recording_key:journal.key.clone(),anchor:journal.anchor,duration_ms:confirmed.duration_ms,finished_locally:confirmed.finished_locally})
+}
 fn validate_idle(raw:&[u8],peer:&PausePeer)->Result<(),String> {
     if raw.len()==80 {
         let s=PauseStatus::decode(raw)?;
@@ -177,6 +212,10 @@ mod tests {
         let golden=include_bytes!("../../../../windows/src-tauri/src/backend/cop1/tests/engine-pause-control.cpc3");
         &golden[8+index*137..8+(index+1)*137]
     }
+    fn local_vector(index:usize)->Vec<u8> {
+        let golden=include_bytes!("../../../../windows/src-tauri/src/backend/cop1/tests/engine-local-controls.cms3");
+        golden[8+index*80..8+(index+1)*80].to_vec()
+    }
     fn capability()->Vec<u8> {
         let mut s=vec![0;116];s[0]=1;s[12..16].copy_from_slice(&0x5742_4155u32.to_le_bytes());
         for(i,b)in s[20..32].iter_mut().enumerate(){*b=(i+1) as u8;}
@@ -204,7 +243,9 @@ mod tests {
         fn write_control(&mut self,wire:&[u8])->Result<(),String> {
             if self.fail_before_write{self.fail_before_write=false;return Err("synthetic write failure".into());}
             self.writes.push(wire.to_vec());let index=match wire[5]{1=>0,4=>2,5=>5,2=>8,_=>return Err("unexpected command".into())};
-            let mut status=vector(index)[56..136].to_vec();status[8..12].copy_from_slice(&wire[36..40]);status[60..64].copy_from_slice(&wire[48..52]);crc_status(&mut status);self.status=status;
+            let mut status=vector(index)[56..136].to_vec();
+            if wire[5]!=1 {status[32..60].copy_from_slice(&self.status[32..60]);}
+            status[8..12].copy_from_slice(&wire[36..40]);status[60..64].copy_from_slice(&wire[48..52]);crc_status(&mut status);self.status=status;
             if self.fail_after_write{self.fail_after_write=false;return Err("synthetic lost write confirmation".into());}Ok(())
         }
         fn capacity_slots(&mut self,wire:&[u8])->Result<Option<Vec<u8>>,String> {
@@ -261,5 +302,38 @@ mod tests {
         let root=root();let mut fake=Fake::new();fake.fragmented();
         assert_eq!(execute(&root,"synthetic-session",DEVICE,1,200,&mut fake).unwrap().state,"recording");
         assert_eq!(fake.writes.len(),1);cleanup(&root);
+    }
+    #[test]
+    fn device_button_recording_is_adopted_once_without_sending_start() {
+        let root=root();let mut fake=Fake::new();fake.status=local_vector(8);
+        let first=adopt_local(&root,DEVICE,&mut fake).unwrap();assert_eq!(first.state,"recording");assert_eq!(fake.writes.len(),0);
+        assert_eq!(first.anchor,Some(1));fake.status=local_vector(10);
+        let paused=adopt_local(&root,DEVICE,&mut fake).unwrap();assert_eq!(paused.state,"paused");assert_eq!(paused.host_session,first.host_session);
+        assert_eq!(adopt_local(&root,DEVICE,&mut fake).unwrap().host_session,first.host_session);
+        let inv=inventory(&root,DEVICE,&fake.identity).unwrap();assert_eq!(inv.sessions.len(),1);assert_eq!(inv.sessions[0].state,"paused");
+        assert_eq!(execute(&root,&first.host_session,DEVICE,5,0,&mut fake).unwrap().state,"recording");
+        assert_eq!(fake.writes.len(),1);assert_eq!(fake.writes[0][5],5);cleanup(&root);
+    }
+    #[test]
+    fn unverified_remote_or_transition_state_never_adopts_or_sends_control() {
+        let root=root();let mut fake=Fake::new();
+        for status in [local_vector(0),local_vector(9),local_vector(15)] {
+            fake.status=status;assert!(adopt_local(&root,DEVICE,&mut fake).is_err());assert!(fake.writes.is_empty());
+        }
+        assert!(inventory(&root,DEVICE,&fake.identity).unwrap().sessions.is_empty());cleanup(&root);
+    }
+    #[test]
+    fn local_recording_cannot_replace_a_different_original() {
+        let root=root();let mut fake=Fake::new();execute(&root,"existing",DEVICE,1,120,&mut fake).unwrap();
+        fake.status=local_vector(8);assert!(adopt_local(&root,DEVICE,&mut fake).is_err());assert_eq!(fake.writes.len(),1);
+        let inv=inventory(&root,DEVICE,&fake.identity).unwrap();assert_eq!(inv.sessions.len(),1);assert_eq!(inv.sessions[0].host_session,"existing");cleanup(&root);
+    }
+    #[test]
+    fn physical_pause_on_phone_started_original_reuses_its_existing_session() {
+        let root=root();let mut fake=Fake::new();execute(&root,"phone-session",DEVICE,1,120,&mut fake).unwrap();
+        let start=fake.writes[0][36..40].to_vec();let original_key=fake.status[52..60].to_vec();
+        fake.status=local_vector(2);fake.status[52..60].copy_from_slice(&original_key);fake.status[67..71].copy_from_slice(&start);crc_status(&mut fake.status);
+        let report=adopt_local(&root,DEVICE,&mut fake).unwrap();assert_eq!(report.host_session,"phone-session");assert_eq!(report.state,"paused");
+        assert_eq!(fake.writes.len(),1);assert_eq!(inventory(&root,DEVICE,&fake.identity).unwrap().sessions.len(),1);cleanup(&root);
     }
 }

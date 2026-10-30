@@ -29,7 +29,8 @@ public final class NativeRecordingControlJvmTest {
             if(id.equals(RecordingClient.RECORDING_CONTROL)&&value[1]==0x22){negotiation=value.clone();return;}
             if(!id.equals(RecordingClient.MEETING_CONTROL))throw new IOException("unexpected write");
             writes++;int n=value[5]==1?0:value[5]==4?2:value[5]==5?5:value[5]==2?8:-1;if(n<0)throw new IOException("unexpected command");
-            status=vector(n);System.arraycopy(value,36,status,8,4);System.arraycopy(value,48,status,60,4);crc(status,0,76,76);
+            byte[] previous=status;status=vector(n);if(value[5]!=1)System.arraycopy(previous,32,status,32,28);
+            System.arraycopy(value,36,status,8,4);System.arraycopy(value,48,status,60,4);crc(status,0,76,76);
             if(loseAck){loseAck=false;throw new IOException("synthetic dropped confirmation");}
         }
         public byte[] await(UUID id,long timeout)throws IOException {if(id.equals(RecordingClient.RECORDING_CONTROL)&&negotiation!=null)return negotiation.clone();throw new java.net.SocketTimeoutException("synthetic timeout");}
@@ -50,6 +51,16 @@ public final class NativeRecordingControlJvmTest {
             String inventory=client.controlSessions(root);if(!inventory.contains(second)||!inventory.contains("\"state\":\"pending\""))throw new AssertionError("pending session not discoverable: "+inventory);
             expect(client.control(root,second,NativeRecordingControl.Action.QUERY,0),"recording");
             if(fake.writes!=5)throw new AssertionError("new start was repeated");
+        }
+        byte[] local=Files.readAllBytes(Paths.get(args[2]));Fake physical=new Fake(golden);physical.status=Arrays.copyOfRange(local,8+8*80,8+9*80);
+        try(RecordingClient client=new RecordingClient(physical)) {
+            Path localRoot=root.resolve("local-button");String result=client.adoptLocalControl(localRoot);expect(result,"recording");
+            if(physical.writes!=0)throw new AssertionError("adoption sent a control command");
+            String marker="\"hostSession\":\"";int start=result.indexOf(marker);if(start<0)throw new AssertionError(result);
+            start+=marker.length();String host=result.substring(start,result.indexOf('"',start));
+            physical.status=Arrays.copyOfRange(local,8+10*80,8+11*80);expect(client.adoptLocalControl(localRoot),"paused");
+            expect(client.control(localRoot,host,NativeRecordingControl.Action.RESUME,0),"recording");
+            if(physical.writes!=1)throw new AssertionError("resume was not the only command");
         }
         System.out.println("NativeRecordingControl JNI fake-link test passed");
     }

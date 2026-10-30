@@ -122,7 +122,12 @@ fn main() {
         let settlement=section(&bridge,"#[derive(Debug,PartialEq,Eq)]\nenum SettlementAction", "async fn settle(")
             .replace("enum SettlementAction", "pub(crate) enum SettlementAction")
             .replace("fn settlement_action(","pub(crate) fn settlement_action(");
-        std::fs::write(out.join("mobile_control_journal.rs"),format!("{prefix}\n#[path = \"{catalogue_path}\"] mod catalogue;\npub(crate) use catalogue::SealedCatalogueEnd;\n{settlement}")).expect("prepare recorder journal");
+        let local=read("recorder_control/local_adoption.rs");
+        let local=section(&local,"impl Journal {\n    fn from_local(","pub(crate) fn adopt_local(")
+            .replace("    fn from_local(","    pub(crate) fn from_local(");
+        let local_path=out.join("mobile_control_local.rs");std::fs::write(&local_path,format!("use super::*;\n{local}")).expect("prepare original local adoption");
+        let local_path=local_path.to_string_lossy().replace('\\',"/");
+        std::fs::write(out.join("mobile_control_journal.rs"),format!("{prefix}\n#[path = \"{catalogue_path}\"] mod catalogue;\npub(crate) use catalogue::SealedCatalogueEnd;\n#[path = \"{local_path}\"] mod local_adoption;\n{settlement}")).expect("prepare recorder journal");
         let device=read("device_connection.rs");
         let identity=section(&device,"pub(crate) fn stable_device_id(","fn preference_path()");
         std::fs::write(out.join("mobile_device_identity.rs"),identity).expect("prepare device identity comparison");

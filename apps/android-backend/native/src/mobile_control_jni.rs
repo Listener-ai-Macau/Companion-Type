@@ -68,3 +68,22 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeRecordingControl_l
         Err(_)=>{let _=env.throw_new("java/io/IOException","录音控制记录无法读取；原音保留。");std::ptr::null_mut()},
     }
 }
+
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeRecordingControl_adoptNative<'local>(
+    mut env:JNIEnv<'local>,_class:JObject<'local>,callback:JObject<'local>,root:JString<'local>,device:JString<'local>
+)->jni::sys::jstring {
+    let result=std::panic::catch_unwind(std::panic::AssertUnwindSafe(||->Result<String,String>{
+        if callback.is_null(){return Err("录音连接不可用。".into());}
+        let root:String=env.get_string(&root).map_err(|_|"录音控制目录不可读取。")?.into();
+        let device:String=env.get_string(&device).map_err(|_|"设备身份不可读取。")?.into();
+        let mut transport=JavaTransport{env:&mut env,callback:&callback};
+        let report=control_runtime::adopt_local(Path::new(&root),&device,&mut transport)?;
+        serde_json::to_string(&report).map_err(|_|"原录音状态无法读取。".into())
+    }));
+    match result {
+        Ok(Ok(value))=>match env.new_string(value){Ok(s)=>s.into_raw(),Err(_)=>{let _=env.throw_new("java/io/IOException","原录音状态无法读取。");std::ptr::null_mut()}},
+        Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
+        Err(_)=>{let _=env.throw_new("java/io/IOException","原录音未接续；原音保持不变。");std::ptr::null_mut()},
+    }
+}

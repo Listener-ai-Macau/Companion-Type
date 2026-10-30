@@ -66,6 +66,10 @@ public final class RecordingClient implements Closeable {
     public synchronized String controlSessions(Path privateDirectory) throws IOException {
         ensureOpen();return NativeRecordingControl.list(link,privateDirectory);
     }
+    /** Bind an existing, verified physical-button capture without sending another START. */
+    public synchronized String adoptLocalControl(Path privateDirectory) throws IOException {
+        ensureOpen();return NativeRecordingControl.adopt(link,privateDirectory);
+    }
 
     public synchronized List<RecorderWire.Descriptor> listRecordings() throws IOException {
         ensureOpen();current=null;RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,nonce());

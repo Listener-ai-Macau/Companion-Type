@@ -58,10 +58,13 @@ session. For an unconfirmed start, an explicit `START` retry with the original
 duration resends the same saved command when appropriate; querying never creates
 a new recording. The backend checks capacity and existing control records before
 starting, including the device's fragmented-capacity snapshot where available.
-It does not consume or delete device recordings. A capture started by the physical
-button is not yet adopted by this mobile control API; a reboot that replaces the
-original live status may still require the original recording directory to be
-checked separately. Both paths remain incomplete. The app owns foreground
+It does not consume or delete device recordings. `client.adoptLocalControl(controlDir)`
+can bind a currently running or paused recording started with the device button;
+it reads verified device status and never sends START. Use its returned `hostSession`
+for later control, and `controlSessions` to find it again. The original status must
+explicitly identify a stable device-local recording; an unrelated or incomplete
+status is not adopted. A reboot that replaces the original live status may still
+require the original recording directory to be checked separately. The app owns foreground
 lifetime and must show errors rather than guessing the recording state.
 
 Use `MeetingStore` in app-private storage to save and reopen a session's
