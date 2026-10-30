@@ -3,7 +3,7 @@
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
     "apps/windows/src-tauri/Cargo.lock": "2a53e4eaf2836baf452c851622e7b93d78334fdd56755bc8dc94a8a470dfe9ea",
-    "package-lock.json": "bd0bc0fccdc08fb7ad6a91df929c4dc2a22acf0087632c3ce027d4ab5d55f9e6"
+    "package-lock.json": "e799241e1fb23138b1a7df7efdda4792dc08dc2c8928b2047d27cd1721c50a46"
   },
   "components": [
     {
@@ -7442,12 +7442,12 @@
     },
     {
       "name": "vite",
-      "version": "7.3.6",
+      "version": "7.3.7",
       "license": "MIT",
       "ecosystem": "npm",
       "role": "generated modulepreload helper provider; compiler is not bundled",
-      "source": "https://registry.npmjs.org/vite/-/vite-7.3.6.tgz",
-      "integrity": "sha512-4XP60spRGjSZFf1qYH+dJIkK2znL3zQfl9KkOV9MkkRR/3Dls0dxaBsQPTloEc5BLXWPL9vsOxopxyKoMmDueg==",
+      "source": "https://registry.npmjs.org/vite/-/vite-7.3.7.tgz",
+      "integrity": "sha512-AHEzTORMbi7/7aXp7w7KZ5+DCUdSeLsJz0grY8xHpc9DHdYb0vQu6DqJfm2tOw3gDExNgPgnJTXxM6syYFHaCA==",
       "repository": {
         "type": "git",
         "url": "git+https://github.com/vitejs/vite.git",
