@@ -13,6 +13,10 @@ owns Bluetooth permission requests, device selection, system pairing and UI. On
 Android 12 and later request Bluetooth scan and connect at runtime; on earlier
 supported releases request fine location for scanning. The manifest includes the
 corresponding declarations. A device must already be system paired before connect.
+`CompanionAndroidBackend.pairedDevices(context)` also lists system-paired devices,
+so a user can select their device even if it has a custom name or does not
+advertise the recording service. This list can include unrelated Bluetooth
+devices; it is a selection list, not a claim that each device is a Companion.
 Keep a connection and transfer in an appropriate user-visible foreground lifetime;
 the library does not provide a service or schedule background operations.
 

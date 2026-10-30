@@ -14,7 +14,10 @@ import android.os.Looper;
 import android.os.ParcelUuid;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
@@ -28,6 +31,20 @@ public final class AndroidDevices {
         void onDevice(BluetoothDevice device,String advertisedName);
         /** Called once after a normal stop or failure; null means no scan error. */
         void onFinished(String error);
+    }
+    /**
+     * Return system-paired devices for user selection, including custom names.
+     * These are candidates; connection and protocol negotiation identify Companion.
+     */
+    public static List<BluetoothDevice> pairedDevices(Context context) throws IOException {
+        if(context==null)throw new IllegalArgumentException("context required");
+        try {
+            BluetoothManager manager=(BluetoothManager)context.getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
+            BluetoothAdapter adapter=manager==null?null:manager.getAdapter();
+            if(adapter==null||!adapter.isEnabled())throw new IOException("Bluetooth is unavailable or turned off");
+            Set<BluetoothDevice> devices=adapter.getBondedDevices();
+            return Collections.unmodifiableList(new ArrayList<>(devices));
+        } catch(SecurityException error){throw new IOException("Bluetooth permission is required",error);}
     }
     public static final class Scan implements Closeable {
         private final BluetoothLeScanner scanner;private final Listener listener;private final Handler handler=new Handler(Looper.getMainLooper());
