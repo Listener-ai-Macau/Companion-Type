@@ -89,7 +89,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
     </details>
     <details id="ct-help-recovery"><summary>保存、连接或服务报错后，怎样继续？</summary>
       <ul>
-        <li><strong>磁盘空间不足：</strong>先保留当前修改，释放保存位置所在磁盘的空间，再用页面上的“重试保存”。不要为了重试清空录音。</li>
+        <li><strong>磁盘空间不足：</strong>释放保存位置所在磁盘的空间，保留当前内容并按页面提示重试保存。电脑录音保存未确认时，在“我的记录”打开那条录音；若有“尝试恢复录音”，可用它找回已写入的片段。原文件会保留，结尾可能缺失；不要为重试清空录音。</li>
         <li><strong>没有文件权限或文件被占用：</strong>检查当前用户能否写入该位置；导出时可另选本机目录。先关闭占用目标文件的其它程序，不覆盖原音。</li>
         <li><strong>网络或服务授权失败：</strong>在“设置与工具”核对已有配置和服务状态。转文字失败不需要重新录音；不要把密钥复制到反馈里。</li>
         <li><strong>设备没有回应：</strong>先到“设备与同步”读取当前状态。开始、停止、保存或档案写入尚未确认时，不要连续重复提交；也不要先清配对或恢复默认。</li>

@@ -116,6 +116,7 @@ Enter chat with the button. “开始录音” and “聊聊天” remain reserv
 | --- | --- |
 | Save unconfirmed, file occupied or permission denied | Retain input and keep the window open. Release the file or check local permissions, then retry through the same save entry. Internal notes do not have a separate destination picker. |
 | Local disk full | Free space on the destination disk and retry. Do not clear recordings merely to retry. |
+| Computer recording save unconfirmed | Open the recording in **我的记录**. If **尝试恢复录音** is offered, use it to recover written audio. The original file remains; the ending may be missing. |
 | Export destination not writable | Release the target file, check directory permissions or choose another local export location. |
 | Service configuration, authorization or network failure | Check current settings and service state. If original audio remains, you do not need to record again. Do not include keys in feedback. |
 | Device operation unconfirmed | Read current state in Device and sync before repeating start, stop or profile writes. Do not clear pairing or reset the device first. |
