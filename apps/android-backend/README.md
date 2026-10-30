@@ -200,6 +200,18 @@ still use position and text, so their UID changes if either changes. After previ
 offsets. Cross-device identity and synchronization are not provided. Owner is
 not inserted into the title automatically; include it in task text if needed.
 
+For saved meetings, `MeetingStore.Task` can also store a `CalendarSettings`
+containing a reminder and/or execution slot. The five-argument Task constructor
+retains previously saved choices for the same task ID; the six-argument version
+explicitly replaces them, and a null setting clears them. Check
+`task.calendarNeedsReview()` after a due date changes. `NativeCalendar.exportSaved`
+uses the saved choices and stable task IDs; it requests review of changed dates
+unless `reviewedChangedDates` is true. Saving explicitly reviewed choices against
+the new date clears the review flag. Completed tasks stay out of the export.
+The store reads existing CMW1 meetings and writes CMW2 when next saved; older
+backend versions cannot read CMW2, so do not roll back to them after saving new
+data. Import and reminder delivery still require real-phone verification.
+
 ```java
 String request = "{\"sessionKey\":\"recording-key\",\"title\":\"会议\"," +
     "\"tasks\":[{\"id\":\"saved-task-id\",\"text\":\"确认报价\",\"completed\":false," +

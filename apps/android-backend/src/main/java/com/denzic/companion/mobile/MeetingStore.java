@@ -34,13 +34,40 @@ public final class MeetingStore {
     private final Path directory;
     public MeetingStore(Path appPrivateDirectory) {if(appPrivateDirectory==null)throw new IllegalArgumentException("private directory required");directory=appPrivateDirectory;}
 
+    /** Explicit calendar choices, retained with the task until the user changes them. */
+    public static final class CalendarSettings {
+        public final Integer reminderMinutes;public final String reminderAt,slotStart,slotEnd,selectedForDue;
+        public CalendarSettings(Integer minutes,String at,String start,String end){this(minutes,at,start,end,null);}
+        private CalendarSettings(Integer minutes,String at,String start,String end,String due){
+            if(minutes!=null&&(minutes!=0&&minutes!=30&&minutes!=60&&minutes!=1440))throw new IllegalArgumentException("unsupported reminder");
+            if(minutes!=null&&at!=null)throw new IllegalArgumentException("choose one reminder");
+            if((start==null)!=(end==null))throw new IllegalArgumentException("execution time needs a start and end");
+            try {
+                if(at!=null)java.time.OffsetDateTime.parse(at);
+                if(start!=null&&!java.time.OffsetDateTime.parse(end).toInstant().isAfter(java.time.OffsetDateTime.parse(start).toInstant()))throw new IllegalArgumentException("invalid execution time");
+            }catch(java.time.DateTimeException e){throw new IllegalArgumentException("calendar time needs a date and offset",e);}
+            reminderMinutes=minutes;reminderAt=at;slotStart=start;slotEnd=end;selectedForDue=due;
+        }
+        private CalendarSettings selectedFor(String due){return new CalendarSettings(reminderMinutes,reminderAt,slotStart,slotEnd,due);}
+    }
     public static final class Task {
         public final String id,text,owner,due;
         public final boolean completed;
+        public final CalendarSettings calendar;
+        private final boolean calendarSpecified;
         public Task(String id,String text,String owner,String due,boolean completed) {
-            if(id==null||id.isEmpty()||text==null||text.trim().isEmpty())throw new IllegalArgumentException("task id and text required");
-            this.id=id;this.text=text;this.owner=owner;this.due=due;this.completed=completed;
+            this(id,text,owner,due,completed,null,false);
         }
+        /** Pass null to explicitly clear previously saved calendar choices. */
+        public Task(String id,String text,String owner,String due,boolean completed,CalendarSettings calendar) {
+            this(id,text,owner,due,completed,calendar==null?null:calendar.selectedFor(due),true);
+        }
+        private Task(String id,String text,String owner,String due,boolean completed,CalendarSettings calendar,boolean specified) {
+            if(id==null||id.isEmpty()||text==null||text.trim().isEmpty())throw new IllegalArgumentException("task id and text required");
+            this.id=id;this.text=text;this.owner=owner;this.due=due;this.completed=completed;this.calendar=calendar;this.calendarSpecified=specified;
+        }
+        /** A changed due date may require reviewing an existing reminder or execution slot. */
+        public boolean calendarNeedsReview(){return calendar!=null&&(calendar.reminderMinutes!=null||calendar.reminderAt!=null||calendar.slotStart!=null)&&!java.util.Objects.equals(due,calendar.selectedForDue);}
     }
     public static final class Snapshot {
         public final String sessionKey,transcript,notes;
@@ -126,7 +153,12 @@ public final class MeetingStore {
             Snapshot previous=loadLocked(key);long revision=previous==null?0:previous.revision;
             if(revision!=expectedRevision)throw new IOException("meeting changed; reload before saving");
             if(revision==Long.MAX_VALUE)throw new IOException("meeting revision limit reached");
-            Snapshot next=new Snapshot(key,revision+1,transcript,notes,copy,false);byte[] bytes=encode(next);
+            java.util.Map<String,Task> old=new java.util.HashMap<>();if(previous!=null)for(Task task:previous.tasks)old.put(task.id,task);
+            List<Task> merged=new ArrayList<>();for(Task task:copy){
+                Task prior=old.get(task.id);CalendarSettings settings=task.calendarSpecified?task.calendar:prior==null?null:prior.calendar;
+                merged.add(new Task(task.id,task.text,task.owner,task.due,task.completed,settings,true));
+            }
+            Snapshot next=new Snapshot(key,revision+1,transcript,notes,merged,false);byte[] bytes=encode(next);
             Path current=path(key,".meeting"),backup=path(key,".backup");
             Path temp=Files.createTempFile(directory,".meeting-",".tmp");
             try {
@@ -162,18 +194,23 @@ public final class MeetingStore {
     }
     private static byte[] encode(Snapshot value)throws IOException {
         LimitedOutput limited=new LimitedOutput();ByteArrayOutputStream buffer=limited.buffer;DataOutputStream out=new DataOutputStream(limited);
-        out.writeInt(0x434d5731);string(out,value.sessionKey);out.writeLong(value.revision);string(out,value.transcript);string(out,value.notes);out.writeInt(value.tasks.size());
-        for(Task task:value.tasks){string(out,task.id);string(out,task.text);string(out,task.owner);string(out,task.due);out.writeBoolean(task.completed);}
+        out.writeInt(0x434d5732);string(out,value.sessionKey);out.writeLong(value.revision);string(out,value.transcript);string(out,value.notes);out.writeInt(value.tasks.size());
+        for(Task task:value.tasks){string(out,task.id);string(out,task.text);string(out,task.owner);string(out,task.due);out.writeBoolean(task.completed);
+            out.writeBoolean(task.calendar!=null);if(task.calendar!=null){out.writeInt(task.calendar.reminderMinutes==null?-1:task.calendar.reminderMinutes);string(out,task.calendar.reminderAt);string(out,task.calendar.slotStart);string(out,task.calendar.slotEnd);string(out,task.calendar.selectedForDue);}}
         out.flush();byte[] body=buffer.toByteArray();if(body.length>MAX_BYTES-32)throw new IOException("meeting content is too large");buffer.write(digest().digest(body));return buffer.toByteArray();
     }
     private static Snapshot read(Path path,String key,boolean recovered)throws IOException {
         long size=Files.size(path);if(size<36||size>MAX_BYTES)throw new IOException("saved meeting is damaged");byte[] bytes=Files.readAllBytes(path);if(bytes.length!=size)throw new IOException("saved meeting changed while reading");
         int n=bytes.length-32;MessageDigest h=digest();h.update(bytes,0,n);if(!MessageDigest.isEqual(h.digest(),java.util.Arrays.copyOfRange(bytes,n,bytes.length)))throw new IOException("saved meeting is damaged");
-        DataInputStream in=new DataInputStream(new ByteArrayInputStream(bytes,0,n));if(in.readInt()!=0x434d5731)throw new IOException("unsupported meeting format");
+        DataInputStream in=new DataInputStream(new ByteArrayInputStream(bytes,0,n));int version=in.readInt();if(version!=0x434d5731&&version!=0x434d5732)throw new IOException("unsupported meeting format");
         String savedKey=string(in);long revision=in.readLong();String transcript=string(in),notes=string(in);int count=in.readInt();
         if(savedKey==null||savedKey.isEmpty()||(key!=null&&!key.equals(savedKey))||revision<=0||transcript==null||notes==null||count<0||count>MAX_TASKS)throw new IOException("invalid saved meeting");
         List<Task> tasks=new ArrayList<>();Set<String> ids=new HashSet<>();
-        try{for(int i=0;i<count;i++){Task task=new Task(string(in),string(in),string(in),string(in),in.readBoolean());if(!ids.add(task.id))throw new IOException("duplicate saved task");tasks.add(task);}}
+        try{for(int i=0;i<count;i++){
+            String id=string(in),text=string(in),owner=string(in),due=string(in);boolean completed=in.readBoolean();CalendarSettings calendar=null;
+            if(version==0x434d5732&&in.readBoolean()){int minutes=in.readInt();if(minutes < -1)throw new IOException("invalid saved reminder");
+                calendar=new CalendarSettings(minutes==-1?null:minutes,string(in),string(in),string(in),string(in));}
+            Task task=new Task(id,text,owner,due,completed,calendar,true);if(!ids.add(task.id))throw new IOException("duplicate saved task");tasks.add(task);}}
         catch(IllegalArgumentException e){throw new IOException("invalid saved task",e);}
         if(in.available()!=0)throw new IOException("unexpected saved meeting data");return new Snapshot(savedKey,revision,transcript,notes,tasks,recovered);
     }
