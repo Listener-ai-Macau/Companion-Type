@@ -250,6 +250,10 @@ store credentials. The existing service adapter has passed local synthetic-netwo
 fixtures; Android TLS and real-service operation remain unverified. Its TLS trust
 uses bundled public roots; custom user-installed roots are not supported here.
 Recordings longer than 45 seconds are sent sequentially in 30-second segments.
+If the service explicitly rejects the initial connection with a temporary HTTP
+429/500/502/503/504 response, the backend retries that connection once before
+any audio is sent. Authentication errors and uncertain failures after a
+possible upload return immediately for the caller to handle.
 If a segment fails, the call fails without presenting incomplete text as the
 full transcript; the original WAV is retained. Supply the optional app-private
 cache directory to reuse successfully recognized segments when retrying. The

@@ -5,6 +5,12 @@ const BYTES_PER_SECOND:u64=32_000;
 const SPLIT_THRESHOLD:u64=45*BYTES_PER_SECOND;
 const SEGMENT_BYTES:u64=30*BYTES_PER_SECOND;
 
+// These explicit WebSocket handshake rejections happen before any audio is
+// uploaded. Do not retry ambiguous connection failures after a possible upload.
+fn transient_handshake(error:&str)->bool {
+    [429,500,502,503,504].iter().any(|status|error==format!("Volcengine ws connect failed: HTTP {status}"))
+}
+
 /// A failure returns no complete transcript; the caller retains the original WAV.
 pub(super) fn transcribe_cached<F>(path:&Path,cache:Option<&super::asr_cache::Cache>,mut send:F)->Result<String,String>
 where F:FnMut(&[u8])->Result<String,String> {
@@ -16,7 +22,9 @@ where F:FnMut(&[u8])->Result<String,String> {
         let count=remaining.min(step) as usize;let mut pcm=vec![0;count];
         file.read_exact(&mut pcm).map_err(|_|"recording was truncated during transcription".to_string())?;
         let completed=if let Some(value)=cache.and_then(|store|store.lookup(&pcm)) {value} else {
-            let value=match send(&pcm) {
+            let first=send(&pcm);
+            let attempt=match first {Err(ref error) if transient_handshake(error)=>send(&pcm),other=>other};
+            let value=match attempt {
                 Ok(value) if !value.trim().is_empty()=>super::asr_cache::Completed::Text(value),
                 Ok(_)=>return Err("speech recognition returned an empty result".into()),
                 Err(error) if super::volcengine::is_no_speech_error(&error)=>super::asr_cache::Completed::Silence,
@@ -95,6 +103,29 @@ mod tests {
         let (path,_)=fixture(45);let mut calls=0;
         assert!(transcribe(&path,|pcm|{calls+=1;assert_eq!(pcm.len(),45*32000);Ok(String::new())}).is_err());
         assert_eq!(calls,1);fs::remove_file(path).unwrap();
+    }
+    #[test] fn transient_handshake_failure_gets_one_retry_without_repeating_auth_or_silence() {
+        let (path,_)=fixture(2);let mut calls=0;
+        let text=transcribe(&path,|_|{calls+=1;if calls==1{Err("Volcengine ws connect failed: HTTP 503".into())}else{Ok("成功".into())}}).unwrap();
+        assert_eq!(text,"成功");assert_eq!(calls,2);
+        for error in ["Volcengine auth rejected (HTTP 401). Check credentials", "Volcengine ASR completed without recognized speech", "Volcengine network connection failed"] {
+            calls=0;assert!(transcribe(&path,|_|{calls+=1;Err(error.into())}).is_err());assert_eq!(calls,1,"{error}");
+        }
+        calls=0;assert!(transcribe(&path,|_|{calls+=1;Err("Volcengine ws connect failed: HTTP 503".into())}).is_err());assert_eq!(calls,2);
+        fs::remove_file(path).unwrap();
+    }
+    #[test] fn long_recording_retries_only_rejected_chunk_and_reuses_completed_cache() {
+        let (path,_)=fixture(70);let cache_dir=path.with_extension("cache");
+        let cache=super::super::asr_cache::Cache::new(&cache_dir,&serde_json::json!({"account":"synthetic"})).unwrap();
+        let mut lengths=Vec::new();let mut second=Vec::new();
+        let result=transcribe_cached(&path,Some(&cache),|pcm|{lengths.push(pcm.len());
+            if lengths.len()==2 {second=pcm.to_vec();return Err("Volcengine ws connect failed: HTTP 503".into());}
+            if lengths.len()==3 {assert_eq!(pcm,second);}
+            Ok(format!("part{}",if lengths.len()==4{3}else{lengths.len().min(2)}))
+        }).unwrap();
+        assert_eq!(result,"part1\npart2\npart3");assert_eq!(lengths,[960_000,960_000,960_000,320_000]);
+        let mut calls=0;assert_eq!(transcribe_cached(&path,Some(&cache),|_|{calls+=1;Err("unexpected request".into())}).unwrap(),result);assert_eq!(calls,0);
+        for entry in fs::read_dir(&cache_dir).unwrap(){fs::remove_file(entry.unwrap().path()).unwrap();}fs::remove_dir(cache_dir).unwrap();fs::remove_file(path).unwrap();
     }
     #[test] fn interrupted_requests_reuse_only_completed_chunks_for_same_profile() {
         let (path,_)=fixture(70);let cache_dir=path.with_extension("cache");
