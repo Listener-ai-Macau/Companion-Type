@@ -7,6 +7,8 @@ mod opus_decoder;
 mod volcengine { include!(concat!(env!("OUT_DIR"),"/volcengine_shared.rs")); }
 #[cfg(feature="mobile-asr")]
 mod long_transcription;
+#[cfg(feature="mobile-asr")]
+mod asr_cache;
 
 use sha2::{Digest,Sha256};
 use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},sync::atomic::{AtomicU64,Ordering}};
@@ -126,18 +128,20 @@ pub fn local_asr_probe()->Result<usize,String> {Ok(volcengine::verify_network()?
 /// Performs one explicitly requested recognition; credentials are supplied by the caller.
 #[cfg(feature="mobile-asr")]
 #[no_mangle]
-pub extern "system" fn Java_com_denzic_companion_mobile_NativeTranscription_transcribeFile(
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeTranscription_transcribeFileWithCache(
     mut env:jni::JNIEnv,_class:jni::objects::JClass,wav:jni::objects::JString,
-    app_id:jni::objects::JString,access_token:jni::objects::JString,resource:jni::objects::JString
+    app_id:jni::objects::JString,access_token:jni::objects::JString,resource:jni::objects::JString,cache_dir:jni::objects::JString
 ) -> jni::sys::jstring {
     let run=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<String,String> {
         let wav:String=env.get_string(&wav).map_err(|e|e.to_string())?.into();
         let app_id:String=env.get_string(&app_id).map_err(|e|e.to_string())?.into();
         let access_token:String=env.get_string(&access_token).map_err(|e|e.to_string())?.into();
         let resource_id:String=env.get_string(&resource).map_err(|e|e.to_string())?.into();
+        let cache_dir:String=env.get_string(&cache_dir).map_err(|e|e.to_string())?.into();
         if app_id.trim().is_empty()||access_token.trim().is_empty()||resource_id.trim().is_empty(){return Err("recognition service configuration is incomplete".into());}
         let provider=volcengine::VolcengineSaucAsr::new(volcengine::VolcengineCredentials{app_id,access_token,resource_id});
-        long_transcription::transcribe(Path::new(&wav),|pcm|provider.transcribe_pcm_bytes(pcm).map(|(text,_)|text))
+        let cache=if cache_dir.is_empty(){None}else{Some(asr_cache::Cache::new(Path::new(&cache_dir),&provider.cache_configuration())?)};
+        long_transcription::transcribe_cached(Path::new(&wav),cache.as_ref(),|pcm|provider.transcribe_pcm_bytes(pcm).map(|(text,_)|text))
     }));
     match run {
         Ok(Ok(text))=>match env.new_string(text){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},

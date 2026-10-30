@@ -6,7 +6,7 @@ const SPLIT_THRESHOLD:u64=45*BYTES_PER_SECOND;
 const SEGMENT_BYTES:u64=30*BYTES_PER_SECOND;
 
 /// A failure returns no complete transcript; the caller retains the original WAV.
-pub(super) fn transcribe<F>(path:&Path,mut send:F)->Result<String,String>
+pub(super) fn transcribe_cached<F>(path:&Path,cache:Option<&super::asr_cache::Cache>,mut send:F)->Result<String,String>
 where F:FnMut(&[u8])->Result<String,String> {
     let mut file=File::open(path).map_err(|e|format!("open recording: {e}"))?;
     let (start,length)=pcm_range(&mut file)?;
@@ -15,11 +15,19 @@ where F:FnMut(&[u8])->Result<String,String> {
     while remaining>0 {
         let count=remaining.min(step) as usize;let mut pcm=vec![0;count];
         file.read_exact(&mut pcm).map_err(|_|"recording was truncated during transcription".to_string())?;
-        match send(&pcm) {
-            Ok(value) if !value.trim().is_empty()=>text.push(value),
-            Ok(_)=>return Err("speech recognition returned an empty result".into()),
-            Err(error) if super::volcengine::is_no_speech_error(&error)=>{},
-            Err(error)=>return Err(error),
+        let completed=if let Some(value)=cache.and_then(|store|store.lookup(&pcm)) {value} else {
+            let value=match send(&pcm) {
+                Ok(value) if !value.trim().is_empty()=>super::asr_cache::Completed::Text(value),
+                Ok(_)=>return Err("speech recognition returned an empty result".into()),
+                Err(error) if super::volcengine::is_no_speech_error(&error)=>super::asr_cache::Completed::Silence,
+                Err(error)=>return Err(error),
+            };
+            if let Some(store)=cache {store.save(&pcm,&value);}
+            value
+        };
+        match completed {
+            super::asr_cache::Completed::Text(value)=>text.push(value),
+            super::asr_cache::Completed::Silence=>{},
         }
         remaining-=count as u64;
     }
@@ -61,6 +69,7 @@ fn pcm_range(file:&mut File)->Result<(u64,u64),String> {
 mod tests {
     use super::*;
     use std::{fs,io::Write,sync::atomic::Ordering};
+    fn transcribe<F>(path:&Path,send:F)->Result<String,String> where F:FnMut(&[u8])->Result<String,String> {super::transcribe_cached(path,None,send)}
     fn fixture(seconds:usize)->(std::path::PathBuf,Vec<u8>) {
         let path=std::env::temp_dir().join(format!("companion-asr-fixture-{}-{}.wav",std::process::id(),super::super::TEMP_COUNTER.fetch_add(1,Ordering::Relaxed)));
         let pcm=(0..seconds*BYTES_PER_SECOND as usize).map(|i|(i%251) as u8).collect::<Vec<_>>();
@@ -86,5 +95,19 @@ mod tests {
         let (path,_)=fixture(45);let mut calls=0;
         assert!(transcribe(&path,|pcm|{calls+=1;assert_eq!(pcm.len(),45*32000);Ok(String::new())}).is_err());
         assert_eq!(calls,1);fs::remove_file(path).unwrap();
+    }
+    #[test] fn interrupted_requests_reuse_only_completed_chunks_for_same_profile() {
+        let (path,_)=fixture(70);let cache_dir=path.with_extension("cache");
+        let cache=super::super::asr_cache::Cache::new(&cache_dir,&serde_json::json!({"account":"fake-a","model":"fake"})).unwrap();
+        let mut calls=0;
+        assert!(super::transcribe_cached(&path,Some(&cache),|_|{calls+=1;if calls==2{Err("connection failed".into())}else{Ok("first".into())}}).is_err());assert_eq!(calls,2);
+        drop(cache);let cache=super::super::asr_cache::Cache::new(&cache_dir,&serde_json::json!({"account":"fake-a","model":"fake"})).unwrap();
+        calls=0;let text=super::transcribe_cached(&path,Some(&cache),|_|{calls+=1;Ok(format!("resumed{calls}"))}).unwrap();
+        assert_eq!(calls,2);assert_eq!(text,"first\nresumed1\nresumed2");
+        for entry in fs::read_dir(&cache_dir).unwrap(){let bytes=fs::read(entry.unwrap().path()).unwrap();assert!(!String::from_utf8(bytes).unwrap().contains("fake-a"));}
+        calls=0;assert_eq!(super::transcribe_cached(&path,Some(&cache),|_|{calls+=1;Err("unexpected request".into())}).unwrap(),text);assert_eq!(calls,0);
+        let other=super::super::asr_cache::Cache::new(&cache_dir,&serde_json::json!({"account":"fake-b","model":"fake"})).unwrap();
+        calls=0;super::transcribe_cached(&path,Some(&other),|_|{calls+=1;Ok("new profile".into())}).unwrap();assert_eq!(calls,3);
+        for entry in fs::read_dir(&cache_dir).unwrap(){fs::remove_file(entry.unwrap().path()).unwrap();}fs::remove_dir(cache_dir).unwrap();fs::remove_file(path).unwrap();
     }
 }

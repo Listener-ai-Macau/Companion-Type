@@ -67,8 +67,15 @@ fixtures; Android TLS and real-service operation remain unverified. Its TLS trus
 uses bundled public roots; custom user-installed roots are not supported here.
 Recordings longer than 45 seconds are sent sequentially in 30-second segments.
 If a segment fails, the call fails without presenting incomplete text as the
-full transcript; the original WAV is retained. Completed segments are not yet
-cached, so retrying the whole operation may repeat provider charges.
+full transcript; the original WAV is retained. Supply the optional app-private
+cache directory to reuse successfully recognized segments when retrying. The
+cache contains recognized text; the host owns its storage and removal. Cache writes
+are best effort, so a retry can still repeat provider charges when storage fails.
+
+```java
+Path privateCache = context.getFilesDir().toPath().resolve("companion-asr-cache");
+String text = NativeTranscription.transcribe(wav, appId, accessToken, resourceId, privateCache);
+```
 
 The current scope is discovery, connection, V2 recording directory, encoded-segment
 transfer, resume, local inventory, and decoder/recognition candidates. Android
