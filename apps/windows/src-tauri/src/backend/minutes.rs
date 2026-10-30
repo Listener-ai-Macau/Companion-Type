@@ -824,11 +824,57 @@ fn named_deadline_actions(segment: &str) -> Vec<CompanionV1ActionItem> {
     }).collect()
 }
 
+// Split a spoken passage only where it contains an explicit responsible person,
+// an immediately following dated handoff, and a separately worded condition.
+// Preserve both clauses literally; do not attach the conditional date or owner
+// to the first task, and keep the complete passage in the summary.
+fn mixed_assignment_and_condition(segment: &str) -> Option<Vec<CompanionV1ActionItem>> {
+    use std::sync::LazyLock;
+    static ASSIGNMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?:由)?(?P<owner>[\p{Han}A-Za-z·]{2,4})负责(?P<work>[^，,；;。！？?!]{2,60})$"
+    ).expect("explicit assignment"));
+    static HANDOFF: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?P<due>(?:(?:本|这|下)?周|星期)[一二三四五六日天](?:上午|下午|晚上)?(?:之前|前))\s*(?:发给|发送给|提交给|交给|带给)[^，,；;。！？?!]{1,32}$"
+    ).expect("explicit dated handoff"));
+    static CONDITION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?:如果|假如)[^，,；;。！？?!]{2,50}$"
+    ).expect("explicit condition"));
+    static FOLLOWUP: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?:我们|我|[\p{Han}A-Za-z·]{2,4})(?:(?:本|这|下)?周[一二三四五六日天]|星期[一二三四五六日天]|今天|明天|后天)?(?:上午|下午|晚上)?再(?:确认|核对|讨论|联系|检查|提交|发送|安排)[^，,；;。！？?!]{2,60}$"
+    ).expect("conditional followup"));
+    let clauses: Vec<_> = segment.split(['，', ',', '；', ';']).map(str::trim)
+        .filter(|s| !s.is_empty()).collect();
+    if clauses.len() < 4 || clauses.len() > 8 { return None; }
+    let positions: Vec<_> = clauses.iter().enumerate().filter(|(_,s)| ASSIGNMENT.is_match(s)).collect();
+    if positions.len() != 1 { return None; }
+    let (i, assignment) = positions[0];
+    if i + 3 != clauses.len() - 1 { return None; }
+    let blocked = ["如果", "假如", "可能", "也许", "建议", "希望", "是否", "取消", "不要", "不再", "不用", "无需", "没有", "未安排", "不负责", "无法"];
+    if clauses[..=i+1].iter().any(|part| blocked.iter().any(|word| part.contains(word)))
+        || blocked[7..].iter().any(|word| clauses[i+2].contains(word) || clauses[i+3].contains(word)) {
+        return None;
+    }
+    let assignment_match = ASSIGNMENT.captures(assignment)?;
+    let owner = assignment_match.name("owner")?.as_str();
+    if ["我们", "他们", "大家", "有人", "谁会"].contains(&owner) { return None; }
+    let handoff = HANDOFF.captures(clauses[i+1])?;
+    if !CONDITION.is_match(clauses[i+2]) || !FOLLOWUP.is_match(clauses[i+3]) { return None; }
+    Some(vec![CompanionV1ActionItem {
+        text: format!("{}，{}", assignment, clauses[i+1]),
+        owner: Some(owner.into()), due: Some(handoff.name("due")?.as_str().into()),
+    }, CompanionV1ActionItem {
+        text: format!("{}，{}", clauses[i+2], clauses[i+3]), owner: None, due: None,
+    }])
+}
+
 fn source_action_items(segments: &[String]) -> Vec<CompanionV1ActionItem> {
     let mut items = Vec::new();
     // Real explicit commitments come before broad responsibility excerpts.
-    for segment in segments { items.extend(named_deadline_actions(segment)); }
-    for segment in segments.iter().filter(|s| named_deadline_actions(s).is_empty() && has_action_marker(s)) {
+    for segment in segments {
+        if let Some(mixed) = mixed_assignment_and_condition(segment) { items.extend(mixed); }
+        else { items.extend(named_deadline_actions(segment)); }
+    }
+    for segment in segments.iter().filter(|s| mixed_assignment_and_condition(s).is_none() && named_deadline_actions(s).is_empty() && has_action_marker(s)) {
         items.push(CompanionV1ActionItem { text: segment.clone(),
             owner: extract_marker_value(segment, "owner"), due: extract_marker_value(segment, "due") });
     }
@@ -1115,6 +1161,31 @@ mod tests {
                 retention_label: "7 days local".to_string(),
                 expires_at: None,
             },
+        }
+    }
+
+    #[test]
+    fn mixed_transcript_keeps_explicit_assignment_separate_from_condition() {
+        let session = session_with_text("明天下午2点，我们讨论产品包装，小王负责整理报价，周五之前发给大家，如果客户提出修改，我们下周一再确认交货时间。");
+        let minutes = rules_l0_minutes(&session, "now");
+        assert_eq!(minutes.action_items.len(), 2);
+        assert_eq!(minutes.action_items[1].text, "如果客户提出修改，我们下周一再确认交货时间");
+        assert!(minutes.action_items[1].owner.is_none() && minutes.action_items[1].due.is_none());
+        let task = &minutes.action_items[0];
+        assert_eq!(task.text, "小王负责整理报价，周五之前发给大家");
+        assert_eq!(task.owner.as_deref(), Some("小王"));
+        assert_eq!(task.due.as_deref(), Some("周五之前"));
+        assert!(minutes.summary.join(" ").contains("如果客户提出修改"));
+        let other = rules_l0_minutes(&session_with_text("先核对样品，小陈负责检查尺寸，星期二前提交给客户，假如样品未到，我们下周三再安排验收。"), "now");
+        assert_eq!(other.action_items.len(), 2);
+        assert_eq!(other.action_items[0].text, "小陈负责检查尺寸，星期二前提交给客户");
+        assert_eq!(other.action_items[0].owner.as_deref(), Some("小陈"));
+        assert_eq!(other.action_items[0].due.as_deref(), Some("星期二前"));
+        assert_eq!(other.action_items[1].text, "假如样品未到，我们下周三再安排验收");
+        assert!(other.action_items[1].due.is_none());
+        for text in ["如果客户确认，小王负责整理报价，周五之前发给大家。", "小王不再负责整理报价，周五之前发给大家。", "可能小王负责整理报价，周五之前发给大家。"] {
+            let candidate = rules_l0_minutes(&session_with_text(text), "now");
+            assert!(!candidate.action_items.iter().any(|a| a.owner.as_deref() == Some("小王")), "must not turn conditional or negated mention into a firm assignment: {text}");
         }
     }
 
