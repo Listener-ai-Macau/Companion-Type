@@ -16,14 +16,17 @@ run or create confirmed tasks. `NativeMemo` is only a limited offline draft opti
 not the primary AI workflow and not a replacement for either cloud service.
 
 The source also contains an **experimental** `NativeLocalTranscription.transcribe`
-API for offline Chinese transcription of an already decoded WAV. It accepts the
-WAV, model root, pinned sherpa-onnx 1.13.1 runtime directory, and a per-recording
-app-private cache directory. Invoke it on a worker. The current candidate expects
+API for offline Chinese transcription of an already decoded WAV. The three-argument
+form accepts the WAV, model root and per-recording app-private cache directory;
+it loads the pinned runtime packaged with the APK, including when its native
+libraries are not extracted. The four-argument form accepts and verifies a
+separate runtime directory. Invoke either form on a worker. The candidate expects
 the Paraformer zh-small int8 model and tokens under
 `sherpa-onnx-paraformer-zh-small-2024-03-09/` in the model root; the arm64 runtime
 directory must contain the matching `libonnxruntime.so` and
-`libsherpa-onnx-c-api.so`. The model and runtime are separately provisioned, not
-included here. This API makes no cloud request and does not add punctuation,
+`libsherpa-onnx-c-api.so`. The model is separately provisioned and not included.
+The host APK must include the matching arm64 native libraries. This API makes
+no cloud request and does not add punctuation,
 word timestamps, or speaker labels. Use the resulting text with `NativeMinutes`
 only when the user has selected the configured cloud analysis. The model's weight
 redistribution terms, Android runtime loading, physical-phone performance and

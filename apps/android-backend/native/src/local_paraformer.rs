@@ -16,7 +16,7 @@ pub(super) fn transcribe(
 ) -> Result<String, String> {
     if !wav.is_absolute()
         || !model_dir.is_absolute()
-        || !runtime_dir.is_absolute()
+        || (!runtime_dir.as_os_str().is_empty() && !runtime_dir.is_absolute())
         || !cache_dir.is_absolute()
     {
         return Err("录音、本地模型及缓存需要使用应用内的完整路径。".into());
@@ -77,7 +77,9 @@ mod tests {
         let root = std::env::var_os("COMPANION_LOCAL_ASR_TEST_ROOT").unwrap();
         let wav = std::env::var_os("COMPANION_LOCAL_ASR_TEST_WAV").unwrap();
         let cache = std::env::var_os("COMPANION_LOCAL_ASR_TEST_CACHE").unwrap();
-        let root = Path::new(&root); let wav = Path::new(&wav); let cache = Path::new(&cache);
+        let root = Path::new(&root);
+        let wav = Path::new(&wav);
+        let cache = Path::new(&cache);
         let first = transcribe(wav, root, root, cache).unwrap();
         assert!(first.contains("蓝色文件夹"));
         let entries = std::fs::read_dir(cache).unwrap().count();

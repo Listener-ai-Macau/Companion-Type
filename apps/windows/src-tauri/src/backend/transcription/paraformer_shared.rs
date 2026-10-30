@@ -252,17 +252,19 @@ impl Runtime {
             verified(&runtime_root.join(name), hash)?;
         }
         #[cfg(target_os = "android")]
-        for (name, hash) in [
-            (
-                "libonnxruntime.so",
-                "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
-            ),
-            (
-                "libsherpa-onnx-c-api.so",
-                "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
-            ),
-        ] {
-            verified(&runtime_root.join(name), hash)?;
+        if !runtime_root.as_os_str().is_empty() {
+            for (name, hash) in [
+                (
+                    "libonnxruntime.so",
+                    "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+                ),
+                (
+                    "libsherpa-onnx-c-api.so",
+                    "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+                ),
+            ] {
+                verified(&runtime_root.join(name), hash)?;
+            }
         }
         let model = cpath(&model)?;
         let tokens = cpath(&tokens)?;
@@ -279,11 +281,19 @@ impl Runtime {
             let lib = Library::new(runtime_root.join("sherpa-onnx-c-api.dll"))
                 .map_err(|e| e.to_string())?;
             #[cfg(target_os = "android")]
-            let onnx =
-                Library::new(runtime_root.join("libonnxruntime.so")).map_err(|e| e.to_string())?;
+            let onnx = Library::new(if runtime_root.as_os_str().is_empty() {
+                std::path::PathBuf::from("libonnxruntime.so")
+            } else {
+                runtime_root.join("libonnxruntime.so")
+            })
+            .map_err(|e| e.to_string())?;
             #[cfg(target_os = "android")]
-            let lib = Library::new(runtime_root.join("libsherpa-onnx-c-api.so"))
-                .map_err(|e| e.to_string())?;
+            let lib = Library::new(if runtime_root.as_os_str().is_empty() {
+                std::path::PathBuf::from("libsherpa-onnx-c-api.so")
+            } else {
+                runtime_root.join("libsherpa-onnx-c-api.so")
+            })
+            .map_err(|e| e.to_string())?;
             let create: CreateRecognizer = *lib
                 .get(b"SherpaOnnxCreateOfflineRecognizer\0")
                 .map_err(|e| e.to_string())?;
