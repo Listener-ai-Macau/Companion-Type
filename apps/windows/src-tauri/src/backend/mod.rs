@@ -1766,6 +1766,28 @@ impl CompanionBackend for FixtureCompanionBackend {
                 refresh_privacy_counts(&mut snapshot);
                 return Ok(snapshot.clone());
             }
+            // A completed host capture can contain only a WAV header (for
+            // example, Stop before any microphone samples arrive). It has no
+            // board segments, so do not report it as a deleted device record.
+            if row.source == "hostMicrophone" && row.audio_stored
+                && (!row.retention.audio_cached || row.audio_bytes <= 44
+                    || row.audio_path.as_deref().is_none_or(|p| p.trim().is_empty())) {
+                let empty_header = row.audio_path.as_deref().map(std::path::Path::new)
+                    .filter(|path| path.is_absolute())
+                    .and_then(|path| {
+                        let meta=std::fs::symlink_metadata(path).ok()?;
+                        if !meta.is_file() || meta.file_type().is_symlink() || meta.len()!=44 { return None; }
+                        let mut file=std::fs::File::open(path).ok()?;
+                        let mut header=[0u8;44];
+                        std::io::Read::read_exact(&mut file,&mut header).ok()?;
+                        Some(file.metadata().ok()?.len()==44 && header==denzic_host_audio_v1_core::wav::wav_header(0))
+                    }).unwrap_or(false);
+                return Err(if empty_header {
+                    "当前本机录音文件只有文件头，没有可恢复的声音；原文件保留，请检查麦克风后重新录音。"
+                } else {
+                    "本机录音保存信息尚未确认，无法安全恢复；原文件保留，请检查录音文件。"
+                }.into());
+            }
             let report=recording_wire::receiver::restore_local_session(&id)?;
             let refreshed=reload_segmented_library(&mut snapshot,&persistence::state_file_path());
             if let Some(failure)=report.failures.first() {
@@ -4484,6 +4506,40 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    #[ignore]
+    fn empty_host_recording_restore_gives_relevant_error() {
+        use super::*;
+        let root=std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_CASE_ROOT").unwrap());
+        std::fs::create_dir_all(&root).unwrap();
+        let wav=root.join("empty.wav");
+        let bytes=denzic_host_audio_v1_core::wav::wav_header(0).to_vec();
+        std::fs::write(&wav,&bytes).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        install_recovery_session(&backend,"empty-host",&wav);
+        let row={
+            let mut snapshot=backend.snapshot.lock().unwrap();
+            let s=&mut snapshot.host.sessions[0];
+            s.source="hostMicrophone".into(); s.status="captured".into();
+            s.audio_stored=true; s.audio_bytes=44; s.retention.audio_cached=true;
+            s.device_recording_id=None; s.device_recording_key=None; s.recorder_control=None;
+            s.clone()
+        };
+        persistence::save_sessions_to(&persistence::state_file_path(),&[row]).unwrap();
+        drop(backend);
+        let restarted=FixtureCompanionBackend::new();
+        let error=restarted.apply_control(recovery_request(CompanionV1ControlAction::MeetingRestoreAudio,"empty-host",false)).unwrap_err();
+        println!("restore_error={error}");
+        assert!(error.contains("本机录音") && error.contains("没有"), "the restore error should explain the empty host recording");
+        assert_eq!(std::fs::read(&wav).unwrap(),bytes);
+        let mut with_samples=denzic_host_audio_v1_core::wav::wav_header(32000).to_vec();
+        with_samples.extend(vec![42u8;32000]);
+        std::fs::write(&wav,&with_samples).unwrap();
+        let mismatch=restarted.apply_control(recovery_request(CompanionV1ControlAction::MeetingRestoreAudio,"empty-host",false)).unwrap_err();
+        assert!(mismatch.contains("保存信息尚未确认") && !mismatch.contains("没有可恢复的声音"));
+        assert_eq!(std::fs::read(&wav).unwrap(),with_samples);
+    }
+
     #[test]
     #[ignore]
     fn unconfirmed_host_backoff_must_not_transcribe() {
