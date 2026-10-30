@@ -921,22 +921,23 @@ fn volcengine_multi_chunk_transcript(
             results[i] = Some(Err(last_error));
         }
     }
-    // Only a tail split from one continuous source may use the locally
-    // verified noise exception after the provider explicitly reports no result.
+    // Only an explicit completed no-speech result may finish an empty tail.
+    // A closed connection without a final is unknown, even for quiet audio.
     // Independent files have no proven post-roll boundary and must all succeed.
     if n > 1 {
         let final_index = n - 1;
-        let earlier_chunks_have_text = results[..final_index].iter().all(|result| {
+        let earlier_chunks_complete = results[..final_index].iter().all(|result| matches!(result, Some(Ok(_))));
+        let earlier_chunks_have_text = results[..final_index].iter().any(|result| {
             matches!(result, Some(Ok((text, _))) if !text.trim().is_empty())
         });
         let final_error = match results[final_index].as_ref() {
             Some(Err(error)) => Some(error.as_str()),
             _ => None,
         };
-        if earlier_chunks_have_text && final_error.is_some_and(|error| {
+        if earlier_chunks_complete && earlier_chunks_have_text && final_error.is_some_and(|error| {
             continuous_tail_may_be_empty(continuous_source, &paths[final_index], error)
         }) {
-            eprintln!("[transcription] chunk={}/{} verified_continuous_noise_tail=1", n, n);
+            eprintln!("[transcription] chunk={}/{} completed_no_speech_tail=1", n, n);
             results[final_index] = Some(Ok((String::new(), Vec::new())));
         }
     }
@@ -997,8 +998,10 @@ fn complete_chunk_results(
     Ok(completed)
 }
 
-fn continuous_tail_may_be_empty(source: Option<&Path>, tail: &Path, error: &str) -> bool {
-    source.is_some() && is_no_final_result_error(error) && trailing_chunk_lacks_speech_evidence(tail)
+fn continuous_tail_may_be_empty(source: Option<&Path>, _tail: &Path, error: &str) -> bool {
+    // A provider's explicit final empty result is evidence of no recognized
+    // speech. Energy alone cannot establish this: a real voice may be quiet.
+    source.is_some() && super::volcengine::is_no_speech_error(error)
 }
 
 fn transcribe_long_meeting_chunk(path: &Path, request: u64) -> Result<(String, Vec<CollectedUtterance>), String> {
@@ -1037,53 +1040,8 @@ fn asr_deferred_retry_count() -> usize {
         .clamp(1, 5)
 }
 
-fn is_no_final_result_error(error: &str) -> bool {
-    super::volcengine::is_no_speech_error(error) || error
-        .to_ascii_lowercase()
-        .ends_with("volcengine connection closed without a final result")
-}
-
 fn asr_error_is_retryable(error: &str) -> bool {
     !super::volcengine::is_no_speech_error(error)
-}
-
-fn trailing_chunk_lacks_speech_evidence(path: &Path) -> bool {
-    diarization::read_pcm16k_mono_wav(path)
-        .map(|pcm| pcm_lacks_speech_evidence(&pcm))
-        .unwrap_or(false)
-}
-
-/// Conservative local guard for a final full-size post-roll. WB55/Opus idle
-/// audio is not digital zero: it contains a stable microphone floor and rare
-/// decode spikes. Speech, even when quiet, creates strong 100 ms energy
-/// contrast. Classify as empty only when both the p95 energy is low and its
-/// contrast over the p10 floor is small; ambiguous audio remains a hard error.
-fn pcm_lacks_speech_evidence(pcm: &[u8]) -> bool {
-    const WINDOW_BYTES: usize = PCM_BYTES_PER_SECOND / 10; // 100 ms
-    if pcm.len() < PCM_BYTES_PER_SECOND || pcm.len() % 2 != 0 {
-        return false;
-    }
-    let mut energies = pcm
-        .chunks(WINDOW_BYTES)
-        .filter(|window| window.len() == WINDOW_BYTES)
-        .map(|window| {
-            let mut sum_squares = 0.0f64;
-            let mut samples = 0usize;
-            for sample in window.chunks_exact(2) {
-                let value = i16::from_le_bytes([sample[0], sample[1]]) as f64;
-                sum_squares += value * value;
-                samples += 1;
-            }
-            (sum_squares / samples.max(1) as f64).sqrt()
-        })
-        .collect::<Vec<_>>();
-    if energies.len() < 10 {
-        return false;
-    }
-    energies.sort_by(f64::total_cmp);
-    let p10 = energies[(energies.len() - 1) / 10];
-    let p95 = energies[95 * (energies.len() - 1) / 100];
-    p95 <= 900.0 && p95 <= p10.max(100.0) * 2.0
 }
 
 fn openai_provider_configured() -> bool {
@@ -1378,6 +1336,26 @@ mod tests {
     }
 
     #[test]
+    fn unconfirmed_quiet_tail_never_becomes_a_complete_transcript() {
+        let dir = std::env::temp_dir().join(format!("companion-unconfirmed-tail-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("tail.wav");
+        // Low-level, varying voice-like signal: amplitude cannot prove speech
+        // or silence. A closed connection without a final is still unknown.
+        let mut pcm = Vec::new();
+        for index in 0..(6 * 16_000) {
+            let level: i16 = if (index / 1600) % 4 == 0 { 35 } else { 120 };
+            let sample = if index % 2 == 0 { level } else { -level };
+            pcm.extend_from_slice(&sample.to_le_bytes());
+        }
+        write_pcm16k_mono_wav(&path, &pcm).unwrap();
+        let no_result = "Volcengine connection closed without a final result";
+        assert!(!continuous_tail_may_be_empty(Some(Path::new("source.wav")), &path, no_result),
+            "quiet audio and a missing final do not establish silence");
+        fs::remove_dir_all(dir).unwrap();
+    }
+
+    #[test]
     fn independent_or_speechful_tail_never_uses_continuous_noise_exception() {
         let dir = std::env::temp_dir().join(format!("companion-type-tail-{}", uuid::Uuid::new_v4()));
         fs::create_dir_all(&dir).unwrap();
@@ -1385,7 +1363,9 @@ mod tests {
         write_pcm16k_mono_wav(&short, &vec![0u8; 9 * PCM_BYTES_PER_SECOND]).unwrap();
         let no_result = "attempt 5/5: Volcengine connection closed without a final result";
         assert!(!continuous_tail_may_be_empty(None, &short, no_result));
-        assert!(continuous_tail_may_be_empty(Some(Path::new("source.wav")), &short, no_result));
+        assert!(!continuous_tail_may_be_empty(Some(Path::new("source.wav")), &short, no_result));
+        assert!(continuous_tail_may_be_empty(Some(Path::new("source.wav")), &short,
+            super::super::volcengine::NO_SPEECH_ERROR));
         assert!(!continuous_tail_may_be_empty(Some(Path::new("source.wav")), &short, "transport timeout"));
         assert!(!continuous_tail_may_be_empty(Some(Path::new("source.wav")), &short,
             "Volcengine connection closed without a final result; malformed response"));
@@ -1418,7 +1398,7 @@ mod tests {
     fn explicit_no_speech_is_not_retried_or_accepted_as_a_complete_meeting() {
         let error = "attempt 1/5: Volcengine ASR completed without recognized speech";
         assert!(!asr_error_is_retryable(error));
-        assert!(is_no_final_result_error(error));
+        assert!(super::super::volcengine::is_no_speech_error(error));
         assert!(asr_error_is_retryable("Volcengine connection closed without a final result"));
         let results = vec![Some(Err(error.to_string())), Some(Ok(("later real words".into(), Vec::new())))];
         assert!(complete_chunk_results(results).unwrap_err().contains("chunk 1 of 2"));
@@ -1485,32 +1465,6 @@ mod tests {
                 assert!(failure.contains(&format!("chunk {} of 3", failed_index + 1)) && failure.contains(error));
             }
         }
-    }
-
-    #[test]
-    fn full_trailing_stationary_noise_is_not_mistaken_for_speech() {
-        let mut noise = Vec::with_capacity(10 * PCM_BYTES_PER_SECOND);
-        for index in 0..(10 * 16_000) {
-            // Stable WB55-like microphone floor plus rare large decode spikes.
-            let sample: i16 = if index % 16_000 == 0 {
-                20_000
-            } else if index % 2 == 0 {
-                420
-            } else {
-                -420
-            };
-            noise.extend_from_slice(&sample.to_le_bytes());
-        }
-        assert!(pcm_lacks_speech_evidence(&noise));
-
-        // Two seconds of clearly modulated speech-like energy must keep the
-        // chunk fail-closed even when the remaining eight seconds are quiet.
-        for index in 2 * 16_000..4 * 16_000 {
-            let sample: i16 = if index % 2 == 0 { 4_000 } else { -4_000 };
-            let byte = index * 2;
-            noise[byte..byte + 2].copy_from_slice(&sample.to_le_bytes());
-        }
-        assert!(!pcm_lacks_speech_evidence(&noise));
     }
 
     #[test]
