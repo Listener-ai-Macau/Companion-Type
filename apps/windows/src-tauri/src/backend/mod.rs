@@ -179,6 +179,10 @@ fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
 }
 
 fn pause_incomplete_host_recording(session: &mut CompanionV1HostSession, error: &str) {
+    // Keep the interruption visible after explicit processing or restart;
+    // a prior confirmation cannot authorize a newly interrupted capture.
+    session.capture_incomplete = true;
+    session.recovery.capture_review_confirmed = false;
     arm_meeting_recovery(session);
     session.status = "captured".to_string();
     session.transcript_final = false;
@@ -5073,14 +5077,25 @@ mod tests {
         session.audio_path = Some("partial.wav".to_string());
         session.audio_bytes = 32044;
         session.transcript_final = true;
+        session.recovery = super::CompanionV1MeetingRecovery::armed("offlineStore");
+        session.recovery.capture_review_confirmed = true;
         super::pause_incomplete_host_recording(session, "麦克风已拔出");
         assert_eq!(session.audio_path.as_deref(), Some("partial.wav"));
         assert!(session.audio_stored);
+        assert!(session.capture_incomplete, "the interruption must remain visible after processing and restart");
+        assert!(!session.recovery.capture_review_confirmed, "a new interruption must require explicit review");
         assert!(!session.transcript_final);
         assert_eq!(session.status, "captured");
         assert_eq!(session.recovery.stage, "paused");
         assert!(session.recovery.next_retry_at_unix_ms.is_none());
         assert!(session.recovery.last_error.as_ref().unwrap().contains("麦克风已拔出"));
+        let mut reopened: super::CompanionV1HostSession = serde_json::from_slice(&serde_json::to_vec(session).unwrap()).unwrap();
+        super::persistence::reconcile_session_recovery(&mut reopened);
+        assert!(reopened.capture_incomplete && !reopened.recovery.capture_review_confirmed);
+        assert_eq!(reopened.recovery.stage, "paused");
+        assert!(reopened.recovery.next_retry_at_unix_ms.is_none());
+        assert!(super::interrupted_capture::confirm(&mut reopened).is_err());
+        assert!(!reopened.recovery.capture_review_confirmed);
     }
 
     #[test]
