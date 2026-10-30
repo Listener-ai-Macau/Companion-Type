@@ -18,6 +18,8 @@ assert.equal(next.request?.action,'meetingRestoreAudio','offer local recovery of
 const unmarked=structuredClone(s);unmarked.captureIncomplete=false;
 const unmarkedCard=create(<RecordingSafetyCard session={unmarked} persistence={{status:'ready'}} recoveryProcessing={false}/>);
 assert.match(text(unmarkedCard.toJSON()), /未确认保存/, 'missing interruption metadata must not hide an unsafe local path');
+const textAlreadySaved=structuredClone(s); textAlreadySaved.transcriptText='已有完整文字'; textAlreadySaved.transcriptFinal=true;
+assert.equal(meetingJourney(textAlreadySaved,{connected:false,asrReady:true,minutesReady:false}).request?.action,'meetingRestoreAudio','a completed transcript must not hide recovery of the original audio');
 const valid=structuredClone(s);valid.captureIncomplete=false;valid.audioStored=true;valid.audioBytes=32044;valid.retention.audioCached=true;valid.pendingReason='needs_transcription';
 assert.equal(hostRecordingAudioConfirmed(valid),true);
 assert.equal(meetingJourney(valid,{connected:false,asrReady:true,minutesReady:false}).request?.action,'meetingTranscribeAudio','a confirmed host recording remains usable');
