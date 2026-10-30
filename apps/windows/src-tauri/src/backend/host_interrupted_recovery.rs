@@ -29,16 +29,20 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
     let pinned = audio_artifacts::interrupted_host_writer(source)?;
     let metadata = fs::symlink_metadata(source).map_err(|_| "原录音无法读取。")?;
     let size = metadata.len();
-    if !metadata.is_file() || metadata.file_type().is_symlink() || size <= 44
-        || size > 512 * 1024 * 1024 || (size - 44) % 2 != 0 {
+    if !metadata.is_file() || metadata.file_type().is_symlink() || size <= 45
+        || size > 512 * 1024 * 1024 {
         return Err("原录音长度无法安全恢复，文件保留。".into());
     }
-    let payload = u32::try_from(size - 44).map_err(|_| "原录音过长，文件保留。")?;
+    // A crash may leave just one byte of the last 16-bit PCM sample. Never
+    // fabricate its missing half: copy only complete samples and retain the
+    // original byte-for-byte, including that trailing byte.
+    let partial_tail = (size - 44) % 2;
+    let payload = u32::try_from(size - 44 - partial_tail).map_err(|_| "原录音过长，文件保留。")?;
     let mut input = File::open(source).map_err(|_| "原录音无法打开。")?;
     let mut header = [0u8; 44];
     input.read_exact(&mut header).map_err(|_| "原录音文件头不完整。")?;
     if header != denzic_host_audio_v1_core::wav::wav_header(0)
-        && header != denzic_host_audio_v1_core::wav::wav_header(payload) {
+        && (partial_tail != 0 || header != denzic_host_audio_v1_core::wav::wav_header(payload)) {
         return Err("原录音不是可确认的录音格式，文件保留。".into());
     }
     let before = digest(source)?;
@@ -57,16 +61,19 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
         let mut streamed = Sha256::new();
         streamed.update(header);
         let mut copied = 0u64;
+        let mut read_bytes = 0u64;
         let mut block = [0u8; 64 * 1024];
         loop {
             let n = input.read(&mut block).map_err(|e| format!("不能读取录音：{e}"))?;
             if n == 0 { break; }
-            output.write_all(&block[..n]).map_err(|e| format!("不能复制录音：{e}"))?;
+            let complete = (u64::from(payload) - copied).min(n as u64) as usize;
+            output.write_all(&block[..complete]).map_err(|e| format!("不能复制录音：{e}"))?;
             streamed.update(&block[..n]);
-            copied += n as u64;
+            copied += complete as u64;
+            read_bytes += n as u64;
         }
         let copied_digest: [u8; 32] = streamed.finalize().into();
-        if copied != u64::from(payload) || copied_digest != before || digest(source)? != before {
+        if copied != u64::from(payload) || read_bytes != size - 44 || copied_digest != before || digest(source)? != before {
             return Err("原录音在恢复时发生变化，原文件保留。".into());
         }
         output.sync_all().map_err(|e| format!("不能保存恢复副本：{e}"))?;
@@ -76,7 +83,7 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
     // Link both the raw original and the derivative to the retained meeting.
     // Explicit future privacy erasure reaches the exact two files together.
     audio_artifacts::attach_group(source, &destination)?;
-    Ok(RecoveredHostAudio { path: destination, bytes: size, duration_ms: u64::from(payload) * 1000 / 32000, _writer: pinned })
+    Ok(RecoveredHostAudio { path: destination, bytes: u64::from(payload) + 44, duration_ms: u64::from(payload) * 1000 / 32000, _writer: pinned })
 }
 
 

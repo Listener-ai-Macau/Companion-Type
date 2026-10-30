@@ -525,6 +525,61 @@ mod tests {
     }
 
     #[test]
+    fn interrupted_host_wav_with_half_written_sample_recovers_complete_samples_only() {
+        use std::io::Write;
+        let root = std::env::temp_dir().join(format!("host-odd-tail-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let path = root.join("unfinished.wav");
+        let child = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "backend::host_recording::tests::isolated_abrupt_host_recording_child", "--ignored"])
+            .env("COMPANION_CRASH_MODEL_FILE", &path)
+            .env("COMPANION_TYPE_RECORDING_DIR", &root).output().unwrap();
+        assert!(child.status.success());
+        let mut f = std::fs::OpenOptions::new().append(true).open(&path).unwrap();
+        f.write_all(&[0x7f]).unwrap(); f.sync_all().unwrap(); drop(f);
+        let raw = std::fs::read(&path).unwrap();
+        assert_eq!(raw.len(), 32045);
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let result = super::super::host_interrupted_recovery::recover_copy(&path);
+        assert!(result.is_ok(), "a trailing half-sample should not hide the preceding complete recording: {:?}", result.as_ref().err());
+        let restored = result.unwrap();
+        assert_eq!(restored.bytes, 32044);
+        assert_eq!(restored.duration_ms, 1000);
+        let copy = std::fs::read(&restored.path).unwrap();
+        assert_eq!(&copy[44..], &raw[44..raw.len()-1]);
+        assert_eq!(std::fs::read(&path).unwrap(), raw, "source including partial byte remains untouched");
+        assert!(super::super::meeting_workspace::validate_wav(&restored.path).is_ok());
+        drop(restored);
+        let state = root.join("sessions.json");
+        let mut fixture = crate::companion_v1::apply_fixture_control(
+            crate::companion_v1::fixture_snapshot(),
+            crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart, Some("odd-tail".into()))).unwrap();
+        let mut row = fixture.host.sessions.remove(0);
+        row.id = "odd-tail".into(); row.source = "hostMicrophone".into(); row.status = "recording".into();
+        row.audio_path = Some(path.to_string_lossy().to_string()); row.audio_stored = false;
+        row.audio_bytes = 0; row.chunks.clear();
+        let expected = super::super::session_store::privacy_authorization(&row).unwrap();
+        super::super::persistence::save_sessions_to(&state, &[row]).unwrap();
+        super::super::host_interrupted_recovery::recover_session_at(&state, "odd-tail", &expected).unwrap();
+        let saved = super::super::persistence::load_sessions_from(&state).unwrap();
+        assert_eq!(saved[0].audio_bytes, 32044);
+        assert!(saved[0].capture_incomplete && saved[0].audio_stored);
+        assert_eq!(saved[0].pending_reason.as_deref(), Some("capture_interrupted"));
+        assert_eq!(&std::fs::read(saved[0].audio_path.as_deref().unwrap()).unwrap()[44..], &raw[44..raw.len()-1]);
+        assert_eq!(std::fs::read(&path).unwrap(), raw);
+        // A contradictory finalized header is not the interrupted-writer
+        // format. Keep the original and refuse to guess its meaning.
+        let conflict = root.join("finalized-odd.wav");
+        let lease = super::super::audio_artifacts::WriteLease::begin(
+            &conflict, &conflict, super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let mut wrong = denzic_host_audio_v1_core::wav::wav_header(2).to_vec();
+        wrong.extend([1, 2, 3]); std::fs::write(&conflict, &wrong).unwrap(); drop(lease);
+        assert!(super::super::host_interrupted_recovery::recover_copy(&conflict).is_err());
+        assert_eq!(std::fs::read(&conflict).unwrap(), wrong);
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
+
+    #[test]
     fn isolated_process_exit_keeps_raw_pcm_but_not_a_valid_wav() {
         let root = std::env::temp_dir().join(format!("host-crash-model-{}", std::process::id()));
         std::fs::create_dir_all(&root).unwrap();
