@@ -37,6 +37,15 @@ List<RecordingLibrary.Entry> saved = RecordingLibrary.list(directory);
 List<RecordingLibrary.Session> recordings = RecordingLibrary.sessions(directory);
 ```
 
+For a selected recording, `client.receiveSession(selectedSegment, directory, progress)`
+reads a fresh device directory and receives all currently sealed segments of the
+same session. After reconnecting to the same device, call it again with the same
+selected descriptor and private directory: saved segments are reused and partial
+segments resume. The result is `COMPLETE`, `INCOMPLETE`, or `DAMAGED`; a still
+recording or missing terminal segment is not presented as complete. The caller
+owns reconnection and foreground lifetime; this API does not schedule an Android
+background service or delete recordings from the device.
+
 The same selected, paired connection can control a recording started by this
 mobile backend. Create a host session ID once, keep it for retries, and use an
 app-private directory for control records:

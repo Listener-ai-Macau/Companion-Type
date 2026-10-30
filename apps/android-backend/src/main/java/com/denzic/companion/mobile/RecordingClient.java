@@ -24,6 +24,7 @@ public final class RecordingClient implements Closeable {
         default String deviceAddress() throws IOException {throw new IOException("device address unavailable");}
     }
     public interface Progress { void onBytes(long received,long total); }
+    public interface SessionProgress { void onSegment(int index,int count,long received,long total); }
     /** Device-reported observations; absence of a flag is not proof old audio is intact. */
     public static final class DeviceStatus {
         public final int faultBitmap;
@@ -100,6 +101,38 @@ public final class RecordingClient implements Closeable {
             while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new IOException("recording directory timed out");if(catalog.accept(link.await(RECORDING_LIST,remaining)))break;}
         }
         current=catalog.entries();return current;
+    }
+
+    /** Receive every currently sealed segment of the selected original session.
+     * Reconnect and call again with the same descriptor to resume partial files.
+     * A live session without its terminal segment remains INCOMPLETE. */
+    public synchronized RecordingLibrary.Session receiveSession(RecorderWire.Descriptor selected,Path privateDirectory,SessionProgress progress) throws IOException {
+        ensureOpen();if(selected==null||privateDirectory==null)throw new IllegalArgumentException("recording and private directory required");
+        peer.validate(selected);
+        List<RecorderWire.Descriptor> entries=listRecordings();java.util.ArrayList<RecorderWire.Descriptor> matches=new java.util.ArrayList<>();
+        for(RecorderWire.Descriptor d:entries)if(d.sessionId==selected.sessionId)matches.add(d);
+        matches.sort(java.util.Comparator.comparingLong(d->d.segmentIndex));
+        RecorderWire.Descriptor previous=null;
+        for(RecorderWire.Descriptor d:matches){
+            if(d.sourceMode!=selected.sourceMode||(d.segmentIndex==selected.segmentIndex&&!d.sameContent(selected)))throw new IOException("recording session identity changed; originals retained");
+            if(previous!=null&&(d.segmentIndex==previous.segmentIndex||(previous.flags&2)!=0||d.sampleOffset<previous.sampleOffset+previous.sampleCount||
+                (d.segmentIndex==previous.segmentIndex+1&&d.sampleOffset!=previous.sampleOffset+previous.sampleCount)))throw new IOException("recording session has conflicting segments; originals retained");
+            previous=d;
+        }
+        for(int i=0;i<matches.size();i++){
+            final int index=i;RecorderWire.Descriptor d=matches.get(i);
+            download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
+        }
+        for(RecordingLibrary.Session session:RecordingLibrary.sessions(privateDirectory)){
+            RecorderWire.Descriptor first=session.segments.get(0).descriptor;
+            if(first.sessionId==selected.sessionId&&first.epoch==selected.epoch&&Arrays.equals(first.uid(),selected.uid())){
+                for(RecordingLibrary.Entry entry:session.segments){RecorderWire.Descriptor d=entry.descriptor;
+                    if(d.sourceMode!=selected.sourceMode||(d.segmentIndex==selected.segmentIndex&&!d.sameContent(selected)))throw new IOException("local recording session identity changed; originals retained");
+                }
+                return session;
+            }
+        }
+        throw new IOException("selected recording has no available sealed segments");
     }
 
     /** Copy a selected sealed segment to app-private storage, retaining the device copy. */

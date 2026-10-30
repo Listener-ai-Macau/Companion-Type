@@ -17,16 +17,24 @@ public final class RecorderWireTest {
     private static void expectFailure(Checked c)throws Exception{try{c.run();throw new AssertionError("corrupt data was accepted");}catch(java.io.IOException expected){}}
     private interface Checked{void run()throws Exception;}
     private static final class FakeLink implements RecordingClient.Link {
-        final byte[] status,page0,page1,packet;byte[] control,list,pull,resumedPacket;boolean closed;int pullCount;
+        final byte[] status,page0,page1,packet;byte[] control,list,pull,resumedPacket,multiAudio;boolean closed,partialOnce,failOnNextPull;int pullCount;
+        final java.util.Map<Long,RecorderWire.Descriptor> segments=new java.util.HashMap<>();
         FakeLink(byte[] s,byte[] a,byte[] b,byte[] p){status=s;page0=a;page1=b;packet=p;}
         public int mtu(){return 247;} public byte[] read(UUID id){return status.clone();}
         public void subscribe(UUID id){} public void close(){closed=true;}
         public void write(UUID id,byte[] value){
             if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x22) control=value.clone();
             else if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x20){list=(value[12]==0?page0:page1).clone();System.arraycopy(value,8,list,16,4);CRC32 crc=new CRC32();crc.update(list,0,20);crc.update(list,24,list.length-24);put32(list,20,crc.getValue());}
-            else if(id.equals(RecordingClient.RECORDING_PULL)){if(value[2]!=4)throw new AssertionError("pull must stream the whole segment");pullCount++;pull=(value[28]==7&&resumedPacket!=null?resumedPacket:packet).clone();}else throw new AssertionError("unexpected command");
+            else if(id.equals(RecordingClient.RECORDING_PULL)){if(value[2]!=4)throw new AssertionError("pull must stream the whole segment");pullCount++;
+                if(multiAudio!=null){long recording=0,offset=0;for(int i=0;i<4;i++){recording|=(value[4+i]&255L)<<(8*i);offset|=(value[28+i]&255L)<<(8*i);}
+                    RecorderWire.Descriptor d=segments.get(recording);if(d==null)throw new AssertionError("unknown requested segment");
+                    if(partialOnce){partialOnce=false;failOnNextPull=true;pull=packet(d,multiAudio,0,7,false);}else pull=packet(d,multiAudio,(int)offset,multiAudio.length-(int)offset,true);
+                }else pull=(value[28]==7&&resumedPacket!=null?resumedPacket:packet).clone();
+            }else throw new AssertionError("unexpected command");
         }
-        public byte[] await(UUID id,long timeout){if(id.equals(RecordingClient.RECORDING_CONTROL))return control;if(id.equals(RecordingClient.RECORDING_LIST))return list;if(id.equals(RecordingClient.RECORDING_PULL))return pull;throw new AssertionError("unexpected notification");}
+        public byte[] await(UUID id,long timeout)throws java.io.IOException {if(id.equals(RecordingClient.RECORDING_CONTROL))return control;if(id.equals(RecordingClient.RECORDING_LIST))return list;if(id.equals(RecordingClient.RECORDING_PULL)){
+            if(pull==null&&failOnNextPull){failOnNextPull=false;throw new java.io.IOException("synthetic disconnect");}byte[] result=pull;if(failOnNextPull)pull=null;return result;}
+            throw new AssertionError("unexpected notification");}
     }
     public static void main(String[] args)throws Exception {
         Path root=Paths.get(args[0]);byte[] d0=Files.readAllBytes(root.resolve("descriptor0.bin"));byte[] page0=Files.readAllBytes(root.resolve("page0.bin"));byte[] page1=Files.readAllBytes(root.resolve("page1.bin"));byte[] audio=Files.readAllBytes(root.resolve("payload.bin"));
@@ -34,6 +42,20 @@ public final class RecorderWireTest {
         RecorderWire.Peer peer=RecorderWire.Peer.fromStatus(status);byte[] negotiation=peer.negotiate(23,247);if(negotiation.length!=32||negotiation[1]!=0x22)throw new AssertionError("negotiation");
         RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,17);if(!catalog.accept(page0)||catalog.complete()||catalog.accept(page0)||!catalog.accept(page1)||!catalog.complete())throw new AssertionError("golden directory or duplicate page");
         if(catalog.entries().size()!=3)throw new AssertionError("missing segments");RecorderWire.Descriptor d=catalog.entries().get(0);if(d.recordingId!=41||d.segmentIndex!=0||d.encodedLength!=audio.length)throw new AssertionError("golden descriptor");
+        Path whole=Files.createTempDirectory(root,"whole-session-");FakeLink firstLink=new FakeLink(status,page0,page1,null);firstLink.multiAudio=audio;firstLink.partialOnce=true;
+        for(RecorderWire.Descriptor item:catalog.entries())firstLink.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(firstLink)){expectFailure(()->client.receiveSession(d,whole,null));}
+        if(RecordingLibrary.list(whole).stream().noneMatch(e->e.state==RecordingLibrary.State.PARTIAL))throw new AssertionError("interrupted session must retain partial audio");
+        FakeLink secondLink=new FakeLink(status,page0,page1,null);secondLink.multiAudio=audio;for(RecorderWire.Descriptor item:catalog.entries())secondLink.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(secondLink)){
+            RecordingLibrary.Session received=client.receiveSession(d,whole,null);if(received.state!=RecordingLibrary.SessionState.COMPLETE||received.segments.size()!=3||secondLink.pullCount!=3)throw new AssertionError("whole session did not resume");
+            client.receiveSession(d,whole,null);if(secondLink.pullCount!=3)throw new AssertionError("verified session retransmitted");
+            byte[] changed=d.wireBytes();changed[94]=2;CRC32 changedCrc=new CRC32();changedCrc.update(changed,0,108);put32(changed,108,changedCrc.getValue());
+            expectFailure(()->client.receiveSession(RecorderWire.Descriptor.decode(changed),whole,null));if(secondLink.pullCount!=3)throw new AssertionError("conflicting identity started transfer");
+        }
+        byte[] shorter=page0.clone();put32(shorter,12,2);CRC32 shorterCrc=new CRC32();shorterCrc.update(shorter,0,20);shorterCrc.update(shorter,24,shorter.length-24);put32(shorter,20,shorterCrc.getValue());
+        FakeLink incompleteLink=new FakeLink(status,shorter,page1,null);incompleteLink.multiAudio=audio;for(RecorderWire.Descriptor item:catalog.entries())incompleteLink.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(incompleteLink)){if(client.receiveSession(d,Files.createTempDirectory(root,"session-incomplete-"),null).state!=RecordingLibrary.SessionState.INCOMPLETE)throw new AssertionError("missing final segment shown as complete");}
         byte[] broken=d0.clone();broken[32]^=1;expectFailure(()->RecorderWire.Descriptor.decode(broken));byte[] badPage=page0.clone();badPage[25]^=1;expectFailure(()->new RecorderWire.Catalog(peer,17).accept(badPage));
         expectFailure(()->new RecorderWire.Catalog(peer,17).accept(page1));byte[] altered=status.clone();altered[90]^=1;expectFailure(()->RecorderWire.Peer.fromStatus(altered));
         byte[] p=new byte[56+audio.length];p[0]=1;p[1]=1;put16(p,2,audio.length);put32(p,4,d.recordingId);put32(p,8,0);put32(p,12,0);put32(p,16,audio.length);System.arraycopy(d.sha256(),0,p,24,32);System.arraycopy(audio,0,p,56,audio.length);CRC32 c=new CRC32();c.update(p,4,16);c.update(audio);put32(p,20,c.getValue());
