@@ -37,8 +37,10 @@ public final class MeetingStore {
     /** Explicit calendar choices, retained with the task until the user changes them. */
     public static final class CalendarSettings {
         public final Integer reminderMinutes;public final String reminderAt,slotStart,slotEnd,selectedForDue;
+        private final boolean recoveredForReview;
         public CalendarSettings(Integer minutes,String at,String start,String end){this(minutes,at,start,end,null);}
-        private CalendarSettings(Integer minutes,String at,String start,String end,String due){
+        private CalendarSettings(Integer minutes,String at,String start,String end,String due){this(minutes,at,start,end,due,false);}
+        private CalendarSettings(Integer minutes,String at,String start,String end,String due,boolean recovered){
             if(minutes!=null&&(minutes!=0&&minutes!=30&&minutes!=60&&minutes!=1440))throw new IllegalArgumentException("unsupported reminder");
             if(minutes!=null&&at!=null)throw new IllegalArgumentException("choose one reminder");
             if((start==null)!=(end==null))throw new IllegalArgumentException("execution time needs a start and end");
@@ -46,9 +48,10 @@ public final class MeetingStore {
                 if(at!=null)java.time.OffsetDateTime.parse(at);
                 if(start!=null&&!java.time.OffsetDateTime.parse(end).toInstant().isAfter(java.time.OffsetDateTime.parse(start).toInstant()))throw new IllegalArgumentException("invalid execution time");
             }catch(java.time.DateTimeException e){throw new IllegalArgumentException("calendar time needs a date and offset",e);}
-            reminderMinutes=minutes;reminderAt=at;slotStart=start;slotEnd=end;selectedForDue=due;
+            reminderMinutes=minutes;reminderAt=at;slotStart=start;slotEnd=end;selectedForDue=due;recoveredForReview=recovered;
         }
         private CalendarSettings selectedFor(String due){return new CalendarSettings(reminderMinutes,reminderAt,slotStart,slotEnd,due);}
+        private CalendarSettings forReview(){return new CalendarSettings(reminderMinutes,reminderAt,slotStart,slotEnd,selectedForDue,true);}
     }
     public static final class Task {
         public final String id,text,owner,due;
@@ -67,7 +70,7 @@ public final class MeetingStore {
             this.id=id;this.text=text;this.owner=owner;this.due=due;this.completed=completed;this.calendar=calendar;this.calendarSpecified=specified;
         }
         /** A changed due date may require reviewing an existing reminder or execution slot. */
-        public boolean calendarNeedsReview(){return calendar!=null&&(calendar.reminderMinutes!=null||calendar.reminderAt!=null||calendar.slotStart!=null)&&!java.util.Objects.equals(due,calendar.selectedForDue);}
+        public boolean calendarNeedsReview(){return calendar!=null&&(calendar.reminderMinutes!=null||calendar.reminderAt!=null||calendar.slotStart!=null)&&(calendar.recoveredForReview||!java.util.Objects.equals(due,calendar.selectedForDue));}
     }
     public static final class Snapshot {
         public final String sessionKey,transcript,notes;
@@ -135,10 +138,10 @@ public final class MeetingStore {
         Path current=path(key,".meeting"),backup=path(key,".backup");
         IOException mainError=null;
         if(Files.exists(current)) {
-            try{return read(current,key,false);}catch(IOException e){mainError=e;}
+            try{return withCalendar(read(current,key,false),current);}catch(IOException e){mainError=e;}
         }
         if(Files.exists(backup)) {
-            try{return read(backup,key,true);}catch(IOException e){if(mainError!=null)e.addSuppressed(mainError);throw e;}
+            try{return withCalendar(read(backup,key,true),backup);}catch(IOException e){if(mainError!=null)e.addSuppressed(mainError);throw e;}
         }
         if(mainError!=null)throw mainError;
         return null;
@@ -163,6 +166,10 @@ public final class MeetingStore {
             Path temp=Files.createTempFile(directory,".meeting-",".tmp");
             try {
                 writeDurable(temp,bytes);
+                // Publish calendar choices first, retaining the preceding records.
+                // A crash before the meeting move therefore leaves the old
+                // meeting able to find its own choices by content hash.
+                writeCalendar(key,next,bytes);
                 if(previous!=null&&!previous.recoveredFromBackup) {
                     Path backupTemp=Files.createTempFile(directory,".meeting-backup-",".tmp");
                     try{writeDurable(backupTemp,Files.readAllBytes(current));Files.move(backupTemp,backup,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}
@@ -194,9 +201,8 @@ public final class MeetingStore {
     }
     private static byte[] encode(Snapshot value)throws IOException {
         LimitedOutput limited=new LimitedOutput();ByteArrayOutputStream buffer=limited.buffer;DataOutputStream out=new DataOutputStream(limited);
-        out.writeInt(0x434d5732);string(out,value.sessionKey);out.writeLong(value.revision);string(out,value.transcript);string(out,value.notes);out.writeInt(value.tasks.size());
-        for(Task task:value.tasks){string(out,task.id);string(out,task.text);string(out,task.owner);string(out,task.due);out.writeBoolean(task.completed);
-            out.writeBoolean(task.calendar!=null);if(task.calendar!=null){out.writeInt(task.calendar.reminderMinutes==null?-1:task.calendar.reminderMinutes);string(out,task.calendar.reminderAt);string(out,task.calendar.slotStart);string(out,task.calendar.slotEnd);string(out,task.calendar.selectedForDue);}}
+        out.writeInt(0x434d5731);string(out,value.sessionKey);out.writeLong(value.revision);string(out,value.transcript);string(out,value.notes);out.writeInt(value.tasks.size());
+        for(Task task:value.tasks){string(out,task.id);string(out,task.text);string(out,task.owner);string(out,task.due);out.writeBoolean(task.completed);}
         out.flush();byte[] body=buffer.toByteArray();if(body.length>MAX_BYTES-32)throw new IOException("meeting content is too large");buffer.write(digest().digest(body));return buffer.toByteArray();
     }
     private static Snapshot read(Path path,String key,boolean recovered)throws IOException {
@@ -213,5 +219,106 @@ public final class MeetingStore {
             Task task=new Task(id,text,owner,due,completed,calendar,true);if(!ids.add(task.id))throw new IOException("duplicate saved task");tasks.add(task);}}
         catch(IllegalArgumentException e){throw new IOException("invalid saved task",e);}
         if(in.available()!=0)throw new IOException("unexpected saved meeting data");return new Snapshot(savedKey,revision,transcript,notes,tasks,recovered);
+    }
+
+    // CMW1 remains readable by older backends. Calendar-only metadata is bound
+    // to the exact meeting bytes, rather than just a revision number: an old
+    // client may restore a backup and reuse a revision for different content.
+    private static final class CalendarRecord {
+        final byte[] meetingHash;final java.util.Map<String,CalendarSettings> values;
+        CalendarRecord(byte[] hash,java.util.Map<String,CalendarSettings> settings){meetingHash=hash;values=settings;}
+    }
+    private List<CalendarRecord> readCalendar(String key)throws IOException {
+        Path file=path(key,".calendar");if(!Files.exists(file))return new ArrayList<>();
+        long size=Files.size(file);if(size<40||size>MAX_BYTES)throw new IOException("saved calendar choices are damaged; meeting remains unchanged");
+        byte[] bytes=Files.readAllBytes(file);if(bytes.length!=size)throw new IOException("saved calendar choices changed while reading");
+        int n=bytes.length-32;MessageDigest hash=digest();hash.update(bytes,0,n);
+        if(!MessageDigest.isEqual(hash.digest(),java.util.Arrays.copyOfRange(bytes,n,bytes.length)))throw new IOException("saved calendar choices are damaged; meeting remains unchanged");
+        DataInputStream in=new DataInputStream(new ByteArrayInputStream(bytes,0,n));
+        int version=in.readInt();if(version!=0x43435331&&version!=0x43435332)throw new IOException("unsupported calendar choices format");
+        String savedKey=string(in);int count=in.readInt();
+        if(!key.equals(savedKey)||count<0||count>3)throw new IOException("invalid calendar choices identity");
+        List<CalendarRecord> result=new ArrayList<>();Set<String> hashes=new HashSet<>();
+        try {
+            for(int i=0;i<count;i++){
+                byte[] fingerprint=new byte[32];in.readFully(fingerprint);if(!hashes.add(hex(fingerprint)))throw new IOException("duplicate calendar choices version");
+                int taskCount=in.readInt();if(taskCount<0||taskCount>MAX_TASKS)throw new IOException("invalid calendar choices count");
+                java.util.Map<String,CalendarSettings> values=new java.util.HashMap<>();
+                for(int j=0;j<taskCount;j++){
+                    String id=string(in);int minutes=in.readInt();if(id==null||id.isEmpty()||minutes < -1)throw new IOException("invalid calendar choices");
+                    String at=string(in),start=string(in),end=string(in),due=string(in);boolean review=version==0x43435332&&in.readBoolean();
+                    CalendarSettings settings=new CalendarSettings(minutes==-1?null:minutes,at,start,end,due,review);
+                    if(values.put(id,settings)!=null)throw new IOException("duplicate calendar task");
+                }
+                result.add(new CalendarRecord(fingerprint,values));
+            }
+        }catch(IllegalArgumentException e){throw new IOException("invalid calendar choices",e);}
+        if(in.available()!=0)throw new IOException("unexpected calendar choices data");return result;
+    }
+    private Snapshot withCalendar(Snapshot snapshot,Path meeting)throws IOException {
+        byte[] bytes=Files.readAllBytes(meeting);
+        if(bytes.length<4||ByteBuffer.wrap(bytes,0,4).getInt()!=0x434d5731)return snapshot;
+        byte[] fingerprint=digest().digest(bytes);CalendarRecord match=null;List<CalendarRecord> records=readCalendar(snapshot.sessionKey);
+        for(CalendarRecord record:records)if(MessageDigest.isEqual(record.meetingHash,fingerprint)){match=record;break;}
+        // Older clients do not know the sidecar. Their normal save leaves the
+        // immediate prior file in .backup; use that exact verified ancestor to
+        // retain settings by stable task ID, with changed due dates marked for review.
+        if(match==null&&!snapshot.recoveredFromBackup) {
+            Path backup=path(snapshot.sessionKey,".backup");
+            if(Files.exists(backup))try {
+                Snapshot prior=read(backup,snapshot.sessionKey,false);
+                if(prior.revision!=Long.MAX_VALUE&&prior.revision+1==snapshot.revision) {
+                    byte[] priorHash=digest().digest(Files.readAllBytes(backup));
+                    for(CalendarRecord record:records)if(MessageDigest.isEqual(record.meetingHash,priorHash)){match=record;break;}
+                }
+            } catch(IOException ignored) { /* the current valid meeting remains readable */ }
+        }
+        if(match==null&&!records.isEmpty()) {
+            // Several edits in an older client may replace the immediate
+            // ancestor. Recover matching IDs for explicit review only; never
+            // silently export a possibly stale choice.
+            java.util.Map<String,CalendarSettings> recovered=new java.util.HashMap<>();
+            for(Task task:snapshot.tasks)for(CalendarRecord record:records){
+                CalendarSettings value=record.values.get(task.id);
+                if(value!=null){recovered.put(task.id,value.forReview());break;}
+            }
+            if(!recovered.isEmpty())match=new CalendarRecord(fingerprint,recovered);
+        }
+        if(match==null)return snapshot;
+        List<Task> tasks=new ArrayList<>();
+        for(Task task:snapshot.tasks)tasks.add(new Task(task.id,task.text,task.owner,task.due,task.completed,match.values.get(task.id),true));
+        return new Snapshot(snapshot.sessionKey,snapshot.revision,snapshot.transcript,snapshot.notes,tasks,snapshot.recoveredFromBackup);
+    }
+    private void writeCalendar(String key,Snapshot value,byte[] meeting)throws IOException {
+        List<CalendarRecord> old=readCalendar(key),records=new ArrayList<>();byte[] fingerprint=digest().digest(meeting);
+        java.util.Map<String,CalendarSettings> settings=new java.util.LinkedHashMap<>();
+        for(Task task:value.tasks)if(task.calendar!=null)settings.put(task.id,task.calendar);
+        records.add(new CalendarRecord(fingerprint,settings));
+        // Preserve the exact current and backup versions even after repeated
+        // interrupted saves; failed attempts must not evict the good backup.
+        for(String extension:new String[]{".meeting",".backup"}) {
+            Path existing=path(key,extension);if(!Files.exists(existing))continue;
+            long size=Files.size(existing);if(size<36||size>MAX_BYTES)continue;
+            byte[] bytes=Files.readAllBytes(existing);if(bytes.length!=size)throw new IOException("saved meeting changed while preparing calendar choices");
+            byte[] existingHash=digest().digest(bytes);
+            if(records.stream().anyMatch(record->MessageDigest.isEqual(record.meetingHash,existingHash)))continue;
+            for(CalendarRecord record:old)if(MessageDigest.isEqual(record.meetingHash,existingHash)){records.add(record);break;}
+        }
+        for(CalendarRecord record:old) {
+            if(records.size()==3)break;
+            if(records.stream().noneMatch(item->MessageDigest.isEqual(item.meetingHash,record.meetingHash)))records.add(record);
+        }
+        LimitedOutput limited=new LimitedOutput();ByteArrayOutputStream buffer=limited.buffer;DataOutputStream out=new DataOutputStream(limited);
+        out.writeInt(0x43435332);string(out,key);out.writeInt(records.size());
+        for(CalendarRecord record:records){out.write(record.meetingHash);out.writeInt(record.values.size());
+            for(java.util.Map.Entry<String,CalendarSettings> entry:record.values.entrySet()){
+                CalendarSettings c=entry.getValue();string(out,entry.getKey());out.writeInt(c.reminderMinutes==null?-1:c.reminderMinutes);
+                string(out,c.reminderAt);string(out,c.slotStart);string(out,c.slotEnd);string(out,c.selectedForDue);out.writeBoolean(c.recoveredForReview);
+            }
+        }
+        out.flush();byte[] body=buffer.toByteArray();buffer.write(digest().digest(body));
+        Path temp=Files.createTempFile(directory,".calendar-",".tmp");
+        try{writeDurable(temp,buffer.toByteArray());Files.move(temp,path(key,".calendar"),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}
+        finally{Files.deleteIfExists(temp);}
     }
 }

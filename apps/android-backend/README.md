@@ -137,6 +137,11 @@ that an earlier version was restored and ask the user to review it before saving
 meetings remain accessible. The store leaves recordings untouched and keeps one
 previous text version. Private storage, backup retention and deletion policy are
 owned by the host app; no cloud sync or automatic calendar delivery is provided.
+The meeting body remains readable by the preceding mobile backend; calendar
+choices are retained separately in the same private directory. Keep the meeting,
+backup and calendar files together during backup or deletion. If several edits
+were made in an older backend, recovered choices can require explicit review;
+check `calendarNeedsReview()` before reusing or exporting them.
 
 `NativeMemo.extract(transcript, durationMillis)` can identify some literal task
 candidates in a short personal voice memo without network access. It reuses the

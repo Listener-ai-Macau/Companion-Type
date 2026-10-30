@@ -23,7 +23,7 @@ public final class NativeCalendar {
                 .append(",\"completed\":").append(task.completed).append(",\"due\":").append(json(task.due)).append('}');
             MeetingStore.CalendarSettings setting=task.calendar;
             if(task.completed||setting==null)continue;
-            if(task.calendarNeedsReview()&&!reviewedChangedDates)throw new IOException("待办日期已更改，请先核对之前的提醒和执行时段。");
+            if(task.calendarNeedsReview()&&!reviewedChangedDates)throw new IOException("请先核对之前的提醒和执行时段。");
             String uid=calendarUid(meeting.sessionKey,task.id);
             if(setting.reminderMinutes!=null||setting.reminderAt!=null){
                 if(reminders.length()>0)reminders.append(',');reminders.append("{\"uid\":").append(json(uid)).append(",\"reminder\":{");
