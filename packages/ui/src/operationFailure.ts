@@ -58,13 +58,13 @@ function classify(text:string,scope:OperationScope):OperationFailureKind{
   if(/(?:\b(?:ENOSPC|StorageFull)\b|no space left on device|\bdisk (?:is )?full\b|os error 112\b|磁盘空间不足)/i.test(text))return 'storage';
   if(/(?:(?:^(?:HTTP\s*)?(?:401|403)\b|\bHTTP(?: status)?[:= ]+(?:401|403)\b|\b(?:Unauthorized|Forbidden)\b)|服务.{0,8}(?:密钥|授权|配置)|未配置|not configured|missing (?:api|access)[ _-]?key)/i.test(text))return 'configuration';
   if(/(?:^ASR provider returned (?:402|429)\b|\bHTTP(?: status)?[:= ]+(?:402|429)\b|^429\b|quota exceeded|rate limit)/i.test(text))return 'rateLimit';
-  if(/^ASR provider returned 5\d{2}\b/i.test(text))return 'serviceUnavailable';
+  if(/(?:^ASR provider returned 5\d{2}\b|(?:^|: )Volcengine ws connect failed: HTTP 5\d{2}\b)/i.test(text))return 'serviceUnavailable';
   if(/(?:\b(?:EACCES|EPERM|EROFS|PermissionDenied|ReadOnlyFilesystem)\b|access (?:is )?denied|permission denied|os error (?:5|32|33)\b|sharing violation|lock violation|文件正在使用中|只读文件系统|目录权限|拒绝访问)/i.test(text))return 'permission';
   if(/(?:签名|哈希|完整性|checksum|hash mismatch|invalid signature|invalid manifest)/i.test(text))return 'integrity';
   if(/(?:已改变|已变化|已更新|旧回复已撤回|期间发生变化|revision (?:conflict|mismatch))/i.test(text))return 'conflict';
   if(/(?:请先结束|正在录音|上一项操作|上一句聊天|\b(?:device_busy|operation_busy)\b)/i.test(text))return 'busy';
   if(/(?:设备未连接|尚未连接|没有连接|请先正常连接|宠物身份|device (?:not connected|disconnected)|BLE.{0,15}(?:disconnect|unavailable))/i.test(text))return 'device';
-  if(/(?:\b(?:ECONNREFUSED|ECONNRESET|ENOTFOUND|EAI_AGAIN)\b|failed to (?:fetch|connect)|network (?:error|unreachable)|DNS|没连上.{0,8}服务)/i.test(text))return 'network';
+  if(/(?:\b(?:ECONNREFUSED|ECONNRESET|ENOTFOUND|EAI_AGAIN)\b|failed to (?:fetch|connect)|network (?:error|unreachable)|(?:^|: )Volcengine (?:network connection failed|connection timed out|request timed out)\b|DNS|没连上.{0,8}服务)/i.test(text))return 'network';
   if(/(?:timed? ?out|timeout|超时)/i.test(text))return ['chat','settings','serviceCheck'].includes(scope)?'network':['device','recording','profile'].includes(scope)?'device':'unknown';
   if(/^(?:操作已取消。?|聊天已取消。?|cancelled|canceled)$/i.test(text))return 'cancelled';
   return 'unknown';

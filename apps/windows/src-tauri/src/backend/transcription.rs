@@ -801,6 +801,15 @@ fn volcengine_multi_chunk_transcript(
     paths: &[PathBuf],
     continuous_source: Option<&Path>,
 ) -> Result<CompanionTranscript, String> {
+    volcengine_multi_chunk_transcript_with(paths, continuous_source, &transcribe_long_meeting_chunk)
+}
+
+fn volcengine_multi_chunk_transcript_with<F>(
+    paths: &[PathBuf],
+    continuous_source: Option<&Path>,
+    transcribe: &F,
+) -> Result<CompanionTranscript, String>
+where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
     let n = paths.len();
     let retry_count = asr_chunk_retry_count();
     // Each per-chunk task does BOTH the SAUC transcription AND its diarization
@@ -822,7 +831,7 @@ fn volcengine_multi_chunk_transcript(
                         let mut last_error = String::new();
                         let chunk_retry_count = retry_count;
                         for attempt in 1..=chunk_retry_count {
-                            match transcribe_long_meeting_chunk(path, i as u64) {
+                            match transcribe(path, i as u64) {
                                 Ok(chunk) => return (i, Ok(chunk)),
                                 Err(error) => {
                                     last_error =
@@ -852,6 +861,12 @@ fn volcengine_multi_chunk_transcript(
                 }
             }
         });
+        // All chunks use the same saved credentials. Once a completed batch
+        // has an explicit authentication rejection, more batches cannot fix
+        // it; preserve the error and let the user correct the configuration.
+        if let Some((index, error)) = first_auth_failure(&results) {
+            return Err(format!("chunk {} of {}: {error}", index + 1, n));
+        }
     }
 
     // An explicit, valid empty final after EOS is a completed recognition with
@@ -895,7 +910,7 @@ fn volcengine_multi_chunk_transcript(
                 // session throttle from consuming the whole recovery budget.
                 std::thread::sleep(Duration::from_secs(5 * attempt as u64));
             }
-            match transcribe_long_meeting_chunk(path, i as u64) {
+            match transcribe(path, i as u64) {
                 Ok(chunk) => {
                     eprintln!(
                         "[transcription] chunk={}/{} deferred_recovery_pass attempt={}/{}",
@@ -1040,8 +1055,20 @@ fn asr_deferred_retry_count() -> usize {
         .clamp(1, 5)
 }
 
+fn asr_auth_rejected(error: &str) -> bool {
+    error.contains("Volcengine auth rejected (HTTP 401)")
+        || error.contains("Volcengine auth rejected (HTTP 403)")
+}
+
+fn first_auth_failure(results: &[Option<Result<ChunkTranscription, String>>]) -> Option<(usize, &str)> {
+    results.iter().enumerate().find_map(|(index, result)| match result {
+        Some(Err(error)) if asr_auth_rejected(error) => Some((index, error.as_str())),
+        _ => None,
+    })
+}
+
 fn asr_error_is_retryable(error: &str) -> bool {
-    !super::volcengine::is_no_speech_error(error)
+    !super::volcengine::is_no_speech_error(error) && !asr_auth_rejected(error)
 }
 
 fn openai_provider_configured() -> bool {
@@ -1392,6 +1419,31 @@ mod tests {
         let complete = complete_chunk_results(vec![Some(Ok(("first".into(), Vec::new()))),
             Some(Ok(("second".into(), Vec::new())))]).unwrap();
         assert_eq!(complete[0].0, "first"); assert_eq!(complete[1].0, "second");
+    }
+
+    #[test]
+    fn long_recording_does_not_retry_rejected_authentication() {
+        for status in [401, 403] {
+            let error = format!("Volcengine auth rejected (HTTP {status}). Check credentials");
+            assert!(!asr_error_is_retryable(&error));
+            assert!(!asr_error_is_retryable(&format!("attempt 1/5: {error}")));
+        }
+        assert!(asr_error_is_retryable("Volcengine ws connect failed: HTTP 429"));
+        assert!(asr_error_is_retryable("Volcengine ws connect failed: HTTP 503"));
+        assert!(asr_error_is_retryable("Volcengine network connection failed"));
+        let error = "attempt 1/5: Volcengine auth rejected (HTTP 403). Check credentials";
+        let results = vec![Some(Ok(("already recognized".into(), Vec::new()))), Some(Err(error.into())), None];
+        assert_eq!(first_auth_failure(&results), Some((1, error)));
+        let transient = vec![Some(Err("Volcengine ws connect failed: HTTP 503".into())), None];
+        assert_eq!(first_auth_failure(&transient), None);
+        let calls = std::sync::atomic::AtomicUsize::new(0);
+        let paths: Vec<PathBuf> = (0..6).map(|i| PathBuf::from(format!("fictional-{i}.wav"))).collect();
+        let error = volcengine_multi_chunk_transcript_with(&paths, None, &|_, _| {
+            calls.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+            Err("Volcengine auth rejected (HTTP 401). Check credentials".into())
+        }).unwrap_err();
+        assert_eq!(calls.load(std::sync::atomic::Ordering::SeqCst), asr_parallel_worker_count());
+        assert!(error.contains("auth rejected") && error.contains("chunk"));
     }
 
     #[test]
