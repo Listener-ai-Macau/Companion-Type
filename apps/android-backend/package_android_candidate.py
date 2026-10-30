@@ -34,6 +34,7 @@ with tempfile.TemporaryDirectory(prefix="companion-aar-", dir=args.workdir) as t
     with args.output.open("xb") as stream, zipfile.ZipFile(stream, "w", zipfile.ZIP_DEFLATED) as out:
         out.writestr("AndroidManifest.xml", manifest)
         out.writestr("R.txt", "")
+        out.write(backend / "consumer-rules.pro", "proguard.txt")
         out.write(jar, "classes.jar")
         for lib in libraries:
             out.write(lib, "jni/" + lib.parent.name + "/" + lib.name)

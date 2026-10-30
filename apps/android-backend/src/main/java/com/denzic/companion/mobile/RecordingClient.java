@@ -70,16 +70,19 @@ public final class RecordingClient implements Closeable {
         ensureOpen();if(current==null)throw new IOException("read the recording directory first");
         RecorderWire.Descriptor found=null;for(RecorderWire.Descriptor d:current)if(d.recordingId==recordingId){found=d;break;}
         if(found==null)throw new IOException("recording is not in the current directory");
-        try(SegmentReceiver receiver=new SegmentReceiver(privateDirectory,found)){
-            if(!receiver.completeBytesReceived()){
-                link.write(RECORDING_PULL,peer.pull(found,receiver.resumeOffset()));
-                while(!receiver.completeBytesReceived()){
-                    if(Thread.currentThread().isInterrupted())throw new IOException("transfer interrupted; partial copy retained");
-                    receiver.accept(link.await(RECORDING_PULL,15_000));
-                    if(progress!=null)progress.onBytes(receiver.resumeOffset(),found.encodedLength);
+        for(int attempt=0;;attempt++) {
+            ensureOpen();
+            try(SegmentReceiver receiver=new SegmentReceiver(privateDirectory,found)){
+                if(!receiver.completeBytesReceived()){
+                    link.write(RECORDING_PULL,peer.pull(found,receiver.resumeOffset()));
+                    while(!receiver.completeBytesReceived()){
+                        if(Thread.currentThread().isInterrupted())throw new IOException("transfer interrupted; partial copy retained");
+                        receiver.accept(link.await(RECORDING_PULL,15_000));
+                        if(progress!=null)progress.onBytes(receiver.resumeOffset(),found.encodedLength);
+                    }
                 }
-            }
-            return receiver.finish();
+                return receiver.finish();
+            } catch(SegmentReceiver.IntegrityMismatch error) {if(attempt!=0)throw error;}
         }
     }
     /** May be called from another thread to interrupt a pending link operation. */

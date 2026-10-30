@@ -17,6 +17,10 @@ import java.util.zip.CRC32;
 
 /** Receives one sealed segment to private storage. It never deletes device audio. */
 public final class SegmentReceiver implements Closeable {
+    /** The damaged partial was retained separately, so one fresh transfer can be attempted. */
+    static final class IntegrityMismatch extends IOException {
+        IntegrityMismatch() {super("recording integrity mismatch; damaged partial retained");}
+    }
     private final RecorderWire.Descriptor descriptor;
     private final Path part,complete;
     private final RandomAccessFile file,lockFile;
@@ -74,7 +78,12 @@ public final class SegmentReceiver implements Closeable {
     /** Verify full encoded bytes and publish a local copy; this does not prove playback or clear the device. */
     public Path finish() throws IOException {
         if(closed||!completeBytesReceived())throw new IOException("recording is incomplete; partial file retained");
-        if(crc.getValue()!=descriptor.contentCrc||!Arrays.equals(sha.digest(),descriptor.sha256()))throw new IOException("recording integrity mismatch; partial file retained");
+        if(crc.getValue()!=descriptor.contentCrc||!Arrays.equals(sha.digest(),descriptor.sha256())) {
+            file.getFD().sync();file.close();
+            Path retained=part.resolveSibling("damaged-"+Long.toUnsignedString(descriptor.sessionId,16)+"-"+descriptor.recordingId+"-"+UUID.randomUUID()+".part");
+            try {Files.move(part,retained,StandardCopyOption.ATOMIC_MOVE);throw new IntegrityMismatch();}
+            finally {close();}
+        }
         file.getFD().sync();file.close();
         try {
             if(Files.exists(complete))throw new IOException("existing recording preserved");

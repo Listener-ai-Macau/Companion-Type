@@ -35,7 +35,10 @@ List<RecordingLibrary.Session> recordings = RecordingLibrary.sessions(directory)
 
 `download` retains an interrupted partial file and resumes that exact segment on
 the next attempt. It checks packet integrity, final SHA-256 and CRC before exposing
-the complete local copy. `RecordingLibrary` reports verified, partial and damaged
+the complete local copy. If a completed partial fails the final integrity check,
+it keeps that damaged file and retries the segment once from the device. A repeated
+failure is returned to the caller, and both damaged copies are retained.
+`RecordingLibrary` reports verified, partial and damaged
 copies; verified means encoded bytes match the device descriptor, not that they
 have been decoded or played. `sessions` groups segments by device, epoch and
 session and reports whether the local set is complete, incomplete or damaged.

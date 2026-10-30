@@ -5,7 +5,10 @@ plugins {
 android {
     namespace 'com.denzic.companion.mobile'
     compileSdk 35
-    defaultConfig { minSdk 26 }
+    defaultConfig {
+        minSdk 26
+        consumerProguardFiles 'consumer-rules.pro'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
