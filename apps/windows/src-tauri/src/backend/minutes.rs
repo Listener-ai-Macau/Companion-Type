@@ -181,6 +181,8 @@ pub(super) fn finalize_minutes(
             let assigned_added = session.meeting_notes.is_empty() && merge_explicit_source_assignments(&mut upgraded, &l0);
             let memo_actions_restored = session.meeting_notes.is_empty() && short_memo::restore_literal_actions(&mut upgraded, session);
             let independent_actions_restored = short_memo::merge_independent_actions(&mut upgraded.action_items, session);
+            let conditional_actions_restored = session.meeting_notes.is_empty()
+                && merge_literal_conditional_followups(&mut upgraded.action_items, session);
             let context_actions_restored=if let Some(Some(actions))=context_actions {
                 upgraded.action_items=actions; true
             } else {false};
@@ -189,7 +191,7 @@ pub(super) fn finalize_minutes(
             // original-only anchors here could revive a cancelled/conditional
             // plan as an unqualified current fact.
             let fallback_count = if validated_context {0}else{merge_missing_source_facts(&mut upgraded, &l0.summary)};
-            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() || has_unresolved_speaker(session) {
+            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || conditional_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() || has_unresolved_speaker(session) {
                 // The model may return a polished markdown body that omits facts
                 // already retained by deterministic extraction. Once a fallback
                 // is needed, render from the merged structured fields so the UI,
@@ -883,6 +885,31 @@ fn source_action_items(segments: &[String]) -> Vec<CompanionV1ActionItem> {
     items.truncate(8); items
 }
 
+// Restore only the literal conditional follow-up in the already recognized
+// mixed assignment pattern. Summary text does not make a task actionable.
+// If the provider included the exact follow-up but dropped its condition,
+// replace that task with the full source wording rather than inventing facts.
+fn merge_literal_conditional_followups(items: &mut Vec<CompanionV1ActionItem>, session: &CompanionV1HostSession) -> bool {
+    let mut changed = false;
+    for segment in split_segments(&session.transcript_text) {
+        let Some(mixed) = mixed_assignment_and_condition(&segment) else { continue };
+        let conditional = &mixed[1];
+        let Some((_, followup)) = conditional.text.split_once('，') else { continue };
+        let full = normalized_fact_chars(&conditional.text);
+        let body = normalized_fact_chars(followup);
+        if items.iter().any(|item| {
+            let text = normalized_fact_chars(&item.text);
+            text.windows(full.len()).any(|window| window == full)
+        }) { continue; }
+        if let Some(item) = items.iter_mut().find(|item| normalized_fact_chars(&item.text) == body) {
+            *item = conditional.clone(); changed = true;
+        } else if items.len() < 8 {
+            items.push(conditional.clone()); changed = true;
+        }
+    }
+    changed
+}
+
 fn merge_explicit_source_assignments(upgraded: &mut CompanionV1MeetingMinutes,
     l0: &CompanionV1MeetingMinutes) -> bool {
     let mut changed = false;
@@ -1163,6 +1190,37 @@ mod tests {
                 retention_label: "7 days local".to_string(),
                 expires_at: None,
             },
+        }
+    }
+
+    #[test]
+    fn cloud_minutes_keep_conditional_followup_as_a_separate_action() {
+        let session = session_with_text("明天下午2点，我们讨论产品包装，小王负责整理报价，周五之前发给大家，如果客户提出修改，我们下周一再确认交货时间。");
+        let l0 = rules_l0_minutes(&session, "now");
+        // This is the previously authorized real service's action result; no
+        // new recording or service call is needed to exercise the merge.
+        let mut cloud = l0.clone();
+        cloud.source = "llm_deepseek".into(); cloud.quality = "final".into();
+        cloud.action_items = vec![CompanionV1ActionItem {
+            text: "整理报价，周五之前发给大家".into(), owner: Some("小王".into()), due: Some("周五之前".into()),
+        }];
+        let merged = finalize_minutes(Ok(cloud.clone()), l0.clone(), &session);
+        assert!(merged.action_items.iter().any(|item| item.text == "如果客户提出修改，我们下周一再确认交货时间" && item.owner.is_none() && item.due.is_none()));
+        assert!(merged.markdown.contains("如果客户提出修改，我们下周一再确认交货时间"));
+        cloud.action_items.push(CompanionV1ActionItem{text:"我们下周一再确认交货时间".into(),owner:None,due:None});
+        let corrected = finalize_minutes(Ok(cloud), l0, &session);
+        assert!(corrected.action_items.iter().any(|item| item.text == "如果客户提出修改，我们下周一再确认交货时间"));
+        assert!(!corrected.action_items.iter().any(|item| item.text == "我们下周一再确认交货时间"));
+        let mut already_present = corrected.action_items.clone();
+        assert!(!merge_literal_conditional_followups(&mut already_present, &session));
+        assert_eq!(already_present.iter().filter(|item| item.text == "如果客户提出修改，我们下周一再确认交货时间").count(), 1);
+        for text in [
+            "讨论报价，听说小王负责整理报价，周五之前发给大家，如果客户提出修改，我们下周一再确认交货时间。",
+            "小王不再负责整理报价，周五之前发给大家，如果客户提出修改，我们下周一再确认交货时间。",
+        ] {
+            let mut items = Vec::new();
+            assert!(!merge_literal_conditional_followups(&mut items, &session_with_text(text)));
+            assert!(items.is_empty());
         }
     }
 
