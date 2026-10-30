@@ -39,7 +39,7 @@ import {CalendarExportItems,effectiveCalendarAlarm,type CalendarExportItem,type 
 import {savedActions,markSavedAction,commonActionSupplement,splitActionSupplement,compactActionSource,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
 import { companionTranscriptUnmappedEdges } from '@companion-type/core';
-import { CompanionJourney, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
+import { CompanionJourney, hostRecordingAudioConfirmed, meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
 import { CompanionRecoveryCenter } from './CompanionRecoveryCenter';
 import { CompanionRecordingSync } from './CompanionRecordingSync';
 import { CompanionRecorderControl } from './CompanionRecorderControl';
@@ -760,9 +760,10 @@ export function CompanionDashboard({
     selectedSession
     && selectedSession.status !== 'recording'
     && !['needs_device_sync','needs_segments','needs_local_audio'].includes(selectedSession.pendingReason ?? '')
-    && (selectedSession.deviceRecordingKey ? selectedSession.audioStored && selectedSession.retention.audioCached
-      && selectedSession.audioPath && selectedSession.audioBytes > 0
-      : (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0))),
+    && (selectedSession.source === 'hostMicrophone' ? hostRecordingAudioConfirmed(selectedSession)
+      : selectedSession.deviceRecordingKey ? selectedSession.audioStored && selectedSession.retention.audioCached
+        && selectedSession.audioPath && selectedSession.audioBytes > 0
+        : (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0))),
   );
   const unimportedTranscriptDraft = Boolean(transcriptEditor.current.dirty && selectedSession
     && transcriptDraft.trim() !== (selectedSession.transcriptText ?? '').trim());
@@ -2922,7 +2923,7 @@ function isTextOnlyImport(session: CompanionV1HostSession): boolean {
       'device_control_pending', 'capture_interrupted'].includes(session.pendingReason ?? '');
 }
 
-function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
+export function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   session: CompanionV1HostSession;
   persistence: CompanionV1Snapshot['host']['persistence'];
   recoveryProcessing: boolean;
@@ -2953,9 +2954,12 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
   const transferPending = ['needs_device_sync', 'needs_segments', 'needs_pull'].includes(session.pendingReason ?? '');
   const cachedAudio = Boolean(session.audioStored && session.audioPath && session.audioBytes > 0);
   const localAudio = !transferPending
-    && !captureOngoing && (session.deviceRecordingKey
-      ? Boolean(session.audioStored && session.audioPath && session.audioBytes > 0)
-      : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
+    && !captureOngoing && (session.source === 'hostMicrophone'
+      ? hostRecordingAudioConfirmed(session)
+      : session.deviceRecordingKey
+        ? Boolean(session.audioStored && session.audioPath && session.audioBytes > 0)
+        : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
+  const hostAudioUnconfirmed = session.source === 'hostMicrophone' && !captureOngoing && !localAudio;
   const partialAudio = !localAudio && (savedSegments > 0 || cachedAudio);
   const deviceCopy = Boolean(session.sourceDeviceId && (session.deviceRecordingId != null||session.deviceRecordingKey) && !wholeReclaimed);
   const growingDeviceCapture = captureOngoing && deviceCopy;
@@ -3007,7 +3011,8 @@ function RecordingSafetyCard({ session, persistence, recoveryProcessing }: {
     {session.pendingReason === 'needs_device_sync' ? <p>录音仍在来源设备；重连同一台 Companion 后会从断点继续。</p> : null}
     {session.pendingReason === 'needs_segments' ? <p>这场录音尚未收齐。已有片段会保留，连接同一台 Companion 后继续同步。</p> : null}
     {session.deviceRecordingEndReason ? <p>{({user: '你已停止设备录音。', storageFull: '设备存储空间不足，录音已安全结束。', durationLimit: '已达到设定时长，设备录音已结束。', lowBattery: '设备因电量低结束了录音。', silence: '已达到设定的静音时长，设备录音已结束。'} as const)[session.deviceRecordingEndReason]} 原音同步和本机保存进度见上方。</p> : null}
-    {session.captureIncomplete ? <p role="alert">这场录音曾意外中断，实际保存 {formatDuration(session.durationMs)}，结尾可能缺失。可以回听或导出原音；转写与纪要只覆盖已保存的片段。{!session.recovery?.captureReviewConfirmed ? '选择整理片段后才会继续处理。' : ''}</p> : null}
+    {hostAudioUnconfirmed ? <p role="alert">本机录音未确认保存，暂不能回听或转写。已保留原文件路径，请先保留原文件。</p>
+      : session.captureIncomplete ? <p role="alert">这场录音曾意外中断，实际保存 {formatDuration(session.durationMs)}，结尾可能缺失。可以回听或导出原音；转写与纪要只覆盖已保存的片段。{!session.recovery?.captureReviewConfirmed ? '选择整理片段后才会继续处理。' : ''}</p> : null}
     {saveFailed ? <p>{persistence?.message ? operationErrorText(persistence.message,'save') : '本机索引尚未安全保存，当前不会回收设备副本。'}</p> : null}
   </section>;
 }
