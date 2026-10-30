@@ -779,27 +779,26 @@ fn next_automatic_recovery(
                 None,
             );
         }
-        if recovery.stage == "pendingTranscription" {
+        if recovery.stage == "pendingTranscription"
+            && !(session.transcript_final && !session.transcript_text.trim().is_empty()) {
             return (
                 Some((session.id.clone(), AutomaticRecoveryAction::Transcribe)),
                 None,
             );
         }
         if recovery.stage == "retryBackoff" {
+            // Match the exact stage the backend can claim. An inconsistent
+            // checkpoint must not spin forever and starve later meetings.
+            let action = match recovery.retry_stage.as_str() {
+                "transcription" if !(session.transcript_final && !session.transcript_text.trim().is_empty())
+                    => AutomaticRecoveryAction::Transcribe,
+                "minutes" if session.transcript_final && !session.transcript_text.trim().is_empty()
+                    => AutomaticRecoveryAction::GenerateMinutes,
+                _ => continue,
+            };
             let due = recovery.next_retry_at_unix_ms.unwrap_or(now_ms);
             if due <= now_ms {
-                let action = if recovery.retry_stage == "minutes"
-                    && session.transcript_final
-                    && !session.transcript_text.trim().is_empty()
-                {
-                    AutomaticRecoveryAction::GenerateMinutes
-                } else {
-                    AutomaticRecoveryAction::Transcribe
-                };
-                return (
-                    Some((session.id.clone(), action)),
-                    None,
-                );
+                return (Some((session.id.clone(), action)), None);
             }
             next_wake = Some(next_wake.map_or(due, |current: u64| current.min(due)));
         }
@@ -2688,6 +2687,32 @@ mod tests {
         assert!(!should_attempt_device_reconnect(&snapshot));
         snapshot.device.connection_phase="pairingRequired".into();
         assert!(!should_attempt_device_reconnect(&snapshot));
+    }
+
+    #[test]
+    fn recovery_does_not_starve_other_meetings_on_inconsistent_retry_stage() {
+        let mut snapshot=snapshot_with_pending_recovery("invalid-minutes");
+        let original=snapshot.host.sessions[0].clone();
+        let bad=&mut snapshot.host.sessions[0];
+        bad.transcript_text="partial".into(); bad.transcript_final=false;
+        bad.recovery.stage="retryBackoff".into(); bad.recovery.retry_stage="minutes".into();
+        bad.recovery.next_retry_at_unix_ms=Some(0);
+        let mut healthy=original;healthy.id="healthy-pending".into();
+        healthy.recovery.stage="pendingTranscription".into();
+        snapshot.host.sessions.push(healthy);
+        assert_eq!(next_automatic_recovery(&snapshot,10).0,
+            Some(("healthy-pending".into(),AutomaticRecoveryAction::Transcribe)));
+        snapshot.host.sessions.remove(1);
+        assert_eq!(next_automatic_recovery(&snapshot,10),(None,None));
+        snapshot.host.sessions[0].recovery.retry_stage.clear();
+        assert_eq!(next_automatic_recovery(&snapshot,10),(None,None));
+        let row=&mut snapshot.host.sessions[0];
+        row.transcript_final=true; row.transcript_text="saved final".into();
+        row.recovery.stage="pendingTranscription".into();
+        assert_eq!(next_automatic_recovery(&snapshot,10),(None,None));
+        snapshot.host.sessions[0].recovery.stage="retryBackoff".into();
+        snapshot.host.sessions[0].recovery.retry_stage="transcription".into();
+        assert_eq!(next_automatic_recovery(&snapshot,10),(None,None));
     }
 
     #[test]

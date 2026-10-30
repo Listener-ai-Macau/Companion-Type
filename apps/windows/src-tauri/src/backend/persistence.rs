@@ -105,6 +105,31 @@ pub(crate) fn reconcile_session_recovery(session: &mut CompanionV1HostSession) {
         super::hold_unconfirmed_host_audio(session);
         return;
     }
+    // A finalized transcript wins over a stale transcription attempt. Move
+    // directly to minutes with its own budget, never submit the audio again.
+    let retrying_transcription = session.recovery.stage == "transcribing"
+        || (session.recovery.stage == "retryBackoff" && session.recovery.retry_stage == "transcription");
+    if retrying_transcription && super::transcript_review::final_transcript_available(session) {
+        session.recovery.stage = "pendingMinutes".into();
+        session.recovery.retry_stage = "minutes".into();
+        session.recovery.attempt_count = 0;
+        session.recovery.next_retry_at_unix_ms = None;
+        session.recovery.last_error = None;
+        session.pending_reason = None;
+        return;
+    }
+    // A minutes retry cannot proceed if only a partial transcript survived.
+    // Keep the saved fragment and consumed budget, and require transcription
+    // before the user can resume. Never invent or auto-submit final text.
+    let retrying_minutes = session.recovery.stage == "generatingMinutes"
+        || (session.recovery.stage == "retryBackoff" && session.recovery.retry_stage == "minutes");
+    if retrying_minutes && !super::transcript_review::final_transcript_available(session) {
+        session.recovery.stage = "paused".into();
+        session.recovery.next_retry_at_unix_ms = None;
+        session.recovery.last_error = Some("完整转写尚未保存，请先完成转写再生成纪要。".into());
+        session.pending_reason = Some("needs_transcription".into());
+        return;
+    }
     // An attempt is durably consumed before remote work. If the process died
     // while it was in flight, resume that exact stage through backoff instead
     // of silently resetting the budget.
@@ -712,6 +737,44 @@ mod tests {
         assert_eq!(session.recovery.retry_stage, "minutes");
         assert_eq!(session.pending_reason.as_deref(), Some("recovery_paused"));
         let _ = fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn recovery_final_transcript_skips_stale_transcription_retry() {
+        for stage in ["retryBackoff", "transcribing"] {
+            let mut session=sample_session("final-retry", "finished words");
+            session.recovery=CompanionV1MeetingRecovery::armed("offlineStore");
+            session.recovery.stage=stage.into();
+            session.recovery.retry_stage="transcription".into();
+            session.recovery.attempt_count=2;
+            reconcile_session_recovery(&mut session);
+            assert_eq!(session.recovery.stage,"pendingMinutes");
+            assert_eq!(session.recovery.retry_stage,"minutes");
+            assert_eq!(session.recovery.attempt_count,0);
+            assert!(session.transcript_final);
+            assert_eq!(session.transcript_text,"finished words");
+        }
+    }
+
+    #[test]
+    fn recovery_inconsistent_minutes_retry_preserves_partial_and_budget() {
+        for stage in ["retryBackoff", "generatingMinutes"] {
+            let mut session=sample_session("partial-minutes", "partial words");
+            session.transcript_final=false;
+            session.status="captured".into();
+            session.recovery=CompanionV1MeetingRecovery::armed("offlineStore");
+            session.recovery.stage=stage.into();
+            session.recovery.retry_stage="minutes".into();
+            session.recovery.attempt_count=2;
+            session.recovery.next_retry_at_unix_ms=Some(0);
+            reconcile_session_recovery(&mut session);
+            assert_eq!(session.recovery.stage,"paused");
+            assert_eq!(session.recovery.attempt_count,2);
+            assert!(session.recovery.next_retry_at_unix_ms.is_none());
+            assert_eq!(session.pending_reason.as_deref(),Some("needs_transcription"));
+            assert_eq!(session.transcript_text,"partial words");
+            assert!(!session.transcript_final);
+        }
     }
 
     #[test]
