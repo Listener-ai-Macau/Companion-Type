@@ -1087,6 +1087,19 @@ fn capture_pause_schedule(args: &[String], seconds: u64, incompatible: bool) -> 
     }
 }
 
+fn capture_start_duration(args: &[String], seconds: u64, follow: bool, recover_after_limit: bool) -> Result<u64, String> {
+    if args.iter().any(|arg| arg == "--no-recording-limit") {
+        if !follow || recover_after_limit {
+            return Err("No-limit capture requires following the original segments and cannot exercise limit recovery".into());
+        }
+        // Zero takes the ordinary product path, including firmware identity and
+        // capacity checks. The test still explicitly stops after `seconds`.
+        Ok(0)
+    } else {
+        Ok((seconds + if recover_after_limit { 0 } else { 30 }) * 1_000)
+    }
+}
+
 fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
     if !args.iter().any(|arg| arg == "--v1-real-meeting") {
         return None;
@@ -1118,6 +1131,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         if follow_original && recover_after_limit {
             return Err("An offline limit exercise cannot follow a disconnected original".into());
         }
+        let start_duration_ms = capture_start_duration(args, seconds, follow_original, recover_after_limit)?;
         // These exercise the normal product's disconnect/connect actions while
         // its original capture is still open. Actual radio loss is established
         // separately by HCI/UART, never inferred from a reducer acknowledgement.
@@ -1168,7 +1182,7 @@ fn run_v1_real_meeting_cli(args: &[String]) -> Option<Result<(), String>> {
         start.prompt_id = Some(companion_v1::CAPTURE_ONLY_PROMPT.into());
         start.meeting_mode = Some("offlineStore".to_string());
         start.device_id = Some(device_id.clone());
-        start.duration_ms = Some((seconds + if recover_after_limit { 0 } else { 30 }) * 1_000);
+        start.duration_ms = Some(start_duration_ms);
         let started = coordinator.apply_control(start)?;
         let started_session = started
             .host
@@ -2563,6 +2577,17 @@ mod tests {
         assert!(!verified_synced_audio(&forged));
         snap.host.sessions[1].audio_bytes+=1;assert!(synced_device_audio(&snap).is_err());
         fs::remove_file(path).unwrap();fs::remove_dir(root).unwrap();
+    }
+
+    #[test]
+    fn no_limit_capture_requires_follow_and_preserves_existing_test_modes() {
+        let plain=vec!["app".to_string()];
+        let unlimited=vec!["app".to_string(),"--no-recording-limit".to_string()];
+        assert_eq!(capture_start_duration(&plain,7200,true,false).unwrap(),7_230_000);
+        assert_eq!(capture_start_duration(&plain,45,false,true).unwrap(),45_000);
+        assert_eq!(capture_start_duration(&unlimited,7200,true,false).unwrap(),0);
+        assert!(capture_start_duration(&unlimited,7200,false,false).is_err());
+        assert!(capture_start_duration(&unlimited,7200,true,true).is_err());
     }
 
     #[test]
