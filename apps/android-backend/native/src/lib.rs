@@ -9,6 +9,8 @@ mod volcengine { include!(concat!(env!("OUT_DIR"),"/volcengine_shared.rs")); }
 mod long_transcription;
 #[cfg(feature="mobile-asr")]
 mod asr_cache;
+#[cfg(feature="mobile-local-asr")]
+mod local_paraformer;
 #[cfg(feature="mobile-calendar")]
 mod calendar_copy {
     // The shared calendar exporter references this existing desktop handoff type;
@@ -187,6 +189,27 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeAudio_decodeFiles(
 /// The existing Companion/Listener network fixture uses only local synthetic audio and a local server.
 #[cfg(feature="mobile-asr")]
 pub fn local_asr_probe()->Result<usize,String> {Ok(volcengine::verify_network()?.len())}
+
+/// Performs one explicitly requested recognition; credentials are supplied by the caller.
+#[cfg(feature="mobile-local-asr")]
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeLocalTranscription_transcribeFile(
+    mut env: jni::JNIEnv, _class: jni::objects::JClass, wav: jni::objects::JString,
+    model_dir: jni::objects::JString, runtime_dir: jni::objects::JString, cache_dir: jni::objects::JString,
+) -> jni::sys::jstring {
+    let run = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<String, String> {
+        let wav: String = env.get_string(&wav).map_err(|e| e.to_string())?.into();
+        let model: String = env.get_string(&model_dir).map_err(|e| e.to_string())?.into();
+        let runtime: String = env.get_string(&runtime_dir).map_err(|e| e.to_string())?.into();
+        let cache: String = env.get_string(&cache_dir).map_err(|e| e.to_string())?.into();
+        local_paraformer::transcribe(Path::new(&wav), Path::new(&model), Path::new(&runtime), Path::new(&cache))
+    }));
+    match run {
+        Ok(Ok(text)) => match env.new_string(text) { Ok(s) => s.into_raw(), Err(e) => { let _ = env.throw_new("java/io/IOException", e.to_string()); std::ptr::null_mut() } },
+        Ok(Err(error)) => { let _ = env.throw_new("java/io/IOException", error); std::ptr::null_mut() },
+        Err(_) => { let _ = env.throw_new("java/io/IOException", "本地转写未完成，原录音保留。"); std::ptr::null_mut() },
+    }
+}
 
 /// Performs one explicitly requested recognition; credentials are supplied by the caller.
 #[cfg(feature="mobile-asr")]

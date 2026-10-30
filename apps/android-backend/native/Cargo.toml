@@ -9,6 +9,7 @@ crate-type = ["rlib", "cdylib"]
 
 [features]
 mobile-asr = ["dep:futures", "dep:serde_json", "dep:tokio", "dep:tokio-tungstenite", "dep:uuid"]
+mobile-local-asr = ["mobile-asr", "dep:libloading"]
 mobile-calendar = ["dep:chrono", "dep:regex", "dep:serde_json"]
 mobile-memo = ["dep:regex", "dep:serde_json"]
 mobile-minutes = ["mobile-memo", "dep:reqwest", "dep:uuid", "dep:chrono"]
@@ -19,6 +20,7 @@ crc32fast = "1"
 jni = "0.21"
 serde = { version = "1", features = ["derive"] }
 sha2 = "0.10"
+libloading = { version = "0.8", optional = true }
 futures = { version = "0.3", optional = true }
 serde_json = { version = "1", optional = true }
 tokio = { version = "1", features = ["rt", "rt-multi-thread", "sync", "time", "net", "io-util", "macros"], optional = true }

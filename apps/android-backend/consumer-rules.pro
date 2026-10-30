@@ -5,6 +5,9 @@
 -keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeTranscription {
     native <methods>;
 }
+-keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeLocalTranscription {
+    native <methods>;
+}
 -keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeCalendar {
     native <methods>;
 }
