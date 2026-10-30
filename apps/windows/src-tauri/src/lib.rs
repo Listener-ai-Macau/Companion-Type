@@ -4,6 +4,7 @@
 //! and the shared Companion contract separate.
 
 mod backend;
+mod cli_fallback;
 mod commands;
 mod calendar_handoff;
 mod close_review;
@@ -44,6 +45,14 @@ fn exit_after_device_cleanup(code:i32)->! {
 
 pub fn run() {
     let args = std::env::args().collect::<Vec<_>>();
+    // Handle help before any command or application startup: the latter can
+    // reconnect to a device and resume recordings automatically.
+    if cli_fallback::help_requested(&args) {
+        println!("Companion Type: launch without arguments to open the app.\n\
+                  --system-ota-validate <manifest> checks a package offline.\n\
+                  Other command-line operations require an explicit supported command.");
+        process::exit(0);
+    }
     if args.iter().any(|arg|arg=="--recording-sync-status") {
         if args.len()!=2 {eprintln!("recording_sync_status_error=此只读入口不能与其它操作组合。");exit_after_device_cleanup(1);}
         match backend::recording_sync::status() {
@@ -246,8 +255,14 @@ pub fn run() {
         }
         exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
+    let unhandled_option = cli_fallback::unhandled_option(&args);
     if let Some(result) = run_embedded_audio_cli(args) {
         exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
+    }
+
+    if unhandled_option {
+        eprintln!("Unsupported command-line option; no application or device operation was started.");
+        process::exit(2);
     }
 
     // Load ASR / DeepSeek / compress preferences into process env before IPC.
