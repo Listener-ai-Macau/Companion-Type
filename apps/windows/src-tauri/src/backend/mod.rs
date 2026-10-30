@@ -1279,6 +1279,61 @@ mod live_stop_contract_tests {
         assert_eq!(session.transcript_text,"完整文本");
         assert_eq!(session.audio_path.as_deref(),Some("owned-original.wav"));
     }
+    #[test]
+    fn stop_without_worker_keeps_preexisting_partial_unfinished() {
+        let backend = FixtureCompanionBackend::new();
+        let mut session = sample();
+        session.id = "saved-partial-before-stop".into();
+        session.source = "hostMicrophone".into();
+        session.status = "recording".into();
+        session.transcript_text = "前半句".into();
+        session.live_transcript_text = "前半句".into();
+        session.transcript_final = false;
+        session.recovery = CompanionV1MeetingRecovery::default();
+        session.processing_policy = crate::companion_v1::CompanionV1ProcessingPolicy::Manual;
+        {
+            let mut snapshot = backend.snapshot.lock().unwrap();
+            snapshot.host.sessions = vec![session];
+            snapshot.host.selected_session_id = Some("saved-partial-before-stop".into());
+            snapshot.host.active_session_id = Some("saved-partial-before-stop".into());
+            snapshot.meeting.active = true;
+        }
+        let request = serde_json::from_value(serde_json::json!({"action":"meetingStop", "sessionId":"saved-partial-before-stop"})).unwrap();
+        let stopped = backend.apply_control(request).unwrap();
+        let s = &stopped.host.sessions[0];
+        assert_eq!(s.transcript_text, "前半句");
+        assert!(!s.transcript_final);
+        assert_eq!(s.status, "captured", "an unfinished prior partial must not be promoted by stop");
+        assert!(!transcript_review::final_transcript_available(s));
+        assert_eq!(s.pending_reason.as_deref(), Some("needs_transcription"));
+    }
+
+    #[test]
+    fn finalize_with_unfinished_partial_never_creates_complete_minutes() {
+        let mut snapshot = fixture_snapshot();
+        let mut session = sample();
+        session.id = "partial-finalize".into();
+        session.status = "recording".into();
+        session.transcript_text = "前半句".into();
+        session.live_transcript_text = "前半句".into();
+        session.transcript_final = false;
+        session.recovery = CompanionV1MeetingRecovery::default();
+        session.minutes = None;
+        session.minutes_by_mode = Default::default();
+        session.export_markdown.clear();
+        snapshot.host.sessions = vec![session];
+        snapshot.host.selected_session_id = Some("partial-finalize".into());
+        snapshot.host.active_session_id = Some("partial-finalize".into());
+        snapshot.meeting.active = true;
+        let request = serde_json::from_value(serde_json::json!({"action":"meetingFinalize", "sessionId":"partial-finalize"})).unwrap();
+        let result = apply_fixture_control(snapshot, request).unwrap();
+        let s = &result.host.sessions[0];
+        assert_eq!(s.transcript_text, "前半句");
+        assert!(!s.transcript_final);
+        assert!(s.minutes.is_none(), "incomplete live text cannot create final minutes");
+        assert_eq!(s.pending_reason.as_deref(), Some("needs_transcription"));
+    }
+
 }
 
 impl Default for FixtureCompanionBackend {

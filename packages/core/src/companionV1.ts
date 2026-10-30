@@ -970,13 +970,14 @@ export function applyCompanionV1ControlFixture(
         || session.liveTranscriptText.trim().length > 0;
       const finalTranscript = session.transcriptText.trim()
         || session.liveTranscriptText.trim();
-      // Offline: always store-first; empty transcript → needs_transcription.
-      // Online: live text already present → transcribed; still keep audioStored.
+      // A live hypothesis remains partial until a final transcript is confirmed.
+      const completeTranscript = hasTranscript && (session.transcriptFinal === true
+        || (session.transcriptFinal === undefined && companionSessionHasFinalTranscript(session)));
       const isOnline = session.meetingMode === 'onlineLive';
-      const status: CompanionV1HostSessionStatus = hasTranscript && isOnline
+      const status: CompanionV1HostSessionStatus = completeTranscript && isOnline
         ? 'transcribed'
         : 'captured';
-      const pendingReason: CompanionV1SessionPendingReason = hasTranscript
+      const pendingReason: CompanionV1SessionPendingReason = completeTranscript
         ? null
         : 'needs_transcription';
       updateHostSession(next, session.id, {
@@ -1037,7 +1038,7 @@ export function applyCompanionV1ControlFixture(
     }
     case 'meetingFinalize': {
       const session = requireSelectedSession(next, now, request);
-      if (session.transcriptText.trim()) {
+      if (companionSessionHasFinalTranscript(session)) {
         const minutes = buildCompanionMeetingMinutes(session, now);
         updateHostSession(next, session.id, {
           status: 'minutesReady',
@@ -1099,7 +1100,7 @@ export function applyCompanionV1ControlFixture(
     case 'meetingGenerateMinutes': {
       if (request.contextNoteRevision != null) throw new Error('此演示没有接入支持补充来源的原生整理，未假装已完成。');
       const session = requireSelectedSession(next, now, request);
-      if (!session.transcriptText.trim()) {
+      if (!companionSessionHasFinalTranscript(session)) {
         updateHostSession(next, session.id, {
           status: 'captured',
           pendingReason: 'needs_transcription',

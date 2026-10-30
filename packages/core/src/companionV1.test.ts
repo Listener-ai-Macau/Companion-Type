@@ -210,7 +210,7 @@ assert.equal(stopped.meeting.status, 'captured');
 assert.equal(selectedCompanionHostSession(stopped)?.pendingReason, 'needs_transcription');
 assert.equal(selectedCompanionHostSession(stopped)?.audioStored, true);
 
-// Online live route: partials during capture → stop transcribed-ready.
+// Online live route: a partial hypothesis remains unfinished after stop.
 let live = applyCompanionV1ControlFixture(createCompanionV1Fixture(), {
   action: 'meetingStart',
   title: 'Live meeting',
@@ -220,12 +220,18 @@ live = applyCompanionV1ControlFixture(live, {
   action: 'meetingAppendLiveTranscript',
   transcriptText: 'Decision: onlineLive streams partials.',
 });
+const liveBeforeStop = live;
 live = applyCompanionV1ControlFixture(live, {
   action: 'meetingStop',
   durationMs: 5000,
 });
-assert.equal(selectedCompanionHostSession(live)?.status, 'transcribed');
-assert.equal(selectedCompanionHostSession(live)?.pendingReason, null);
+assert.equal(selectedCompanionHostSession(live)?.status, 'captured');
+assert.equal(selectedCompanionHostSession(live)?.pendingReason, 'needs_transcription');
+assert.equal(companionSessionHasFinalTranscript(selectedCompanionHostSession(live)!), false);
+const partialFinalized = applyCompanionV1ControlFixture(liveBeforeStop, {action:'meetingFinalize'});
+assert.equal(selectedCompanionHostSession(partialFinalized)?.minutes, null);
+assert.equal(selectedCompanionHostSession(partialFinalized)?.pendingReason, 'needs_transcription');
+assert.throws(() => applyCompanionV1ControlFixture(live, {action:'meetingGenerateMinutes'}), /requires a transcript/i);
 assert.match(selectedCompanionHostSession(live)?.transcriptText ?? '', /onlineLive/);
 assert.equal(selectedCompanionHostSession(stopped)?.durationMs, 3600000);
 assert.equal(selectedCompanionHostSession(stopped)?.chunks.length, COMPANION_V1_ONE_HOUR_CHUNKS);

@@ -987,14 +987,13 @@ pub(crate) fn apply_control_at(
                 .to_string();
             let final_transcript = if !existing.is_empty() { existing } else { live };
             let has_transcript = !final_transcript.is_empty();
-            let is_online = snapshot.host.sessions[index].meeting_mode == "onlineLive";
-            let status = if has_transcript && is_online {
-                "transcribed"
-            } else {
-                "captured"
-            };
+            let session = &snapshot.host.sessions[index];
+            let complete_transcript = has_transcript && (session.transcript_final
+                || (session.recovery.intent == "none" && matches!(session.status.as_str(), "transcribed" | "minutesReady")));
+            let is_online = session.meeting_mode == "onlineLive";
+            let status = if complete_transcript && is_online { "transcribed" } else { "captured" };
             snapshot.host.sessions[index].status = status.to_string();
-            snapshot.host.sessions[index].pending_reason = if has_transcript {
+            snapshot.host.sessions[index].pending_reason = if complete_transcript {
                 None
             } else {
                 Some("needs_transcription".to_string())
@@ -1060,11 +1059,10 @@ pub(crate) fn apply_control_at(
         }
         CompanionV1ControlAction::MeetingFinalize => {
             let index = ensure_selected_session(&mut snapshot, &request, &now);
-            if snapshot.host.sessions[index]
-                .transcript_text
-                .trim()
-                .is_empty()
-            {
+            let session = &snapshot.host.sessions[index];
+            let complete_transcript = !session.transcript_text.trim().is_empty() && (session.transcript_final
+                || (session.recovery.intent == "none" && matches!(session.status.as_str(), "transcribed" | "minutesReady")));
+            if !complete_transcript {
                 snapshot.host.sessions[index].status = "captured".to_string();
                 snapshot.host.sessions[index].pending_reason =
                     Some("needs_transcription".to_string());
@@ -1114,11 +1112,10 @@ pub(crate) fn apply_control_at(
         }
         CompanionV1ControlAction::MeetingGenerateMinutes => {
             let index = ensure_selected_session(&mut snapshot, &request, &now);
-            if snapshot.host.sessions[index]
-                .transcript_text
-                .trim()
-                .is_empty()
-            {
+            let session = &snapshot.host.sessions[index];
+            let complete_transcript = !session.transcript_text.trim().is_empty() && (session.transcript_final
+                || (session.recovery.intent == "none" && matches!(session.status.as_str(), "transcribed" | "minutesReady")));
+            if !complete_transcript {
                 snapshot.host.sessions[index].status = "captured".to_string();
                 snapshot.host.sessions[index].pending_reason =
                     Some("needs_transcription".to_string());
