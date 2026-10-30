@@ -37,13 +37,20 @@ the next attempt. It checks packet integrity, final SHA-256 and CRC before expos
 the complete local copy. `RecordingLibrary` reports verified, partial and damaged
 copies; verified means encoded bytes match the device descriptor, not that they
 have been decoded or played. `sessions` groups segments by device, epoch and
-session and reports whether the local set is complete, incomplete or damaged;
-it does not yet decode or offer playback. `RecordingClient.close()` closes the connection and
+session and reports whether the local set is complete, incomplete or damaged.
+`NativeAudio.decode(session, output)` exposes the shared COP1/Opus decoder, with
+the original segments retained and an existing output never overwritten. It can
+also return an incomplete capture as such when all recovered segments are present.
+The Rust core and Java/native bridge have passed synthetic tests on Windows, but
+the Android native library is **not yet built or packaged**; this method will
+report that the decoder is unavailable until an ABI-matched library is integrated.
+It does not provide a playback UI. `RecordingClient.close()` closes the connection and
 can be used to interrupt a transfer; it does not stop device recording. No operation
 here deletes or consumes recordings on the device.
 
 The current scope is discovery, connection, V2 recording directory, encoded-segment
-transfer, resume, and local inventory. Playback/decoding, session assembly, ASR,
+transfer, resume, local inventory and a host-tested native decoder candidate. Android
+native packaging and validation, playback, ASR,
 meeting notes, start/stop controls, automatic sync, foreground service, iOS and
 real-phone/device acceptance remain to be implemented or validated. Synthetic wire
 tests are not a substitute for that acceptance. Errors should be surfaced to the
