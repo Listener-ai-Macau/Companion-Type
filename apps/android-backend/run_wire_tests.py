@@ -21,9 +21,10 @@ with tempfile.TemporaryDirectory(prefix="companion-wire-", dir=args.workdir) as 
         (tmp / name).write_bytes(bytes.fromhex(data))
     source = backend / "src/main/java/com/denzic/companion/mobile"
     test = backend / "src/test/java/com/denzic/companion/mobile"
-    files = [source / (name + ".java") for name in ("RecorderWire", "SegmentReceiver", "RecordingLibrary", "RecordingClient")]
-    files += [test / "RecorderWireTest.java", test / "SavedSyntheticWireReplay.java"]
+    files = [source / (name + ".java") for name in ("RecorderWire", "SegmentReceiver", "RecordingLibrary", "RecordingClient", "MeetingStore")]
+    files += [test / "RecorderWireTest.java", test / "SavedSyntheticWireReplay.java", test / "MeetingStoreTest.java"]
     subprocess.run(["javac", "--release", "8", "-d", str(tmp)] + list(map(str, files)), check=True)
     subprocess.run(["java", "-cp", str(tmp), "com.denzic.companion.mobile.RecorderWireTest", str(tmp)], check=True)
+    subprocess.run(["java", "-cp", str(tmp), "com.denzic.companion.mobile.MeetingStoreTest", str(tmp)], check=True)
     if args.saved_synthetic_wire:
         subprocess.run(["java", "-cp", str(tmp), "com.denzic.companion.mobile.SavedSyntheticWireReplay", str(args.saved_synthetic_wire)], check=True)

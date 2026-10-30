@@ -37,6 +37,28 @@ List<RecordingLibrary.Entry> saved = RecordingLibrary.list(directory);
 List<RecordingLibrary.Session> recordings = RecordingLibrary.sessions(directory);
 ```
 
+Use `MeetingStore` in app-private storage to save and reopen a session's
+transcript, notes and user-reviewed tasks. Task owner and due are literal text;
+the store does not infer dates, generate tasks, or sync with the desktop.
+
+```java
+MeetingStore store = new MeetingStore(context.getFilesDir().toPath().resolve("companion-meetings"));
+String key = MeetingStore.sessionKey(recordings.get(0).segments.get(0).descriptor);
+MeetingStore.Snapshot current = store.load(key); // null if never saved
+long revision = current == null ? 0 : current.revision;
+// reviewedTasks is the complete task list currently edited by the user.
+MeetingStore.Snapshot saved = store.save(key, revision, transcript, notes, reviewedTasks);
+MeetingStore.Inventory allSaved = store.list(); // works without a device connection
+```
+
+Call `save` only with the revision the user actually edited; a concurrent edit
+fails without replacing saved content. If `recoveredFromBackup` is true, show
+that an earlier version was restored and ask the user to review it before saving.
+`unreadableFiles` tells the host that some content needs attention while other
+meetings remain accessible. The store leaves recordings untouched and keeps one
+previous text version. Private storage, backup retention and deletion policy are
+owned by the host app; no cloud sync or automatic calendar delivery is provided.
+
 `download` retains an interrupted partial file and resumes that exact segment on
 the next attempt. It checks packet integrity, final SHA-256 and CRC before exposing
 the complete local copy. If a completed partial fails the final integrity check,
@@ -86,7 +108,7 @@ String text = NativeTranscription.transcribe(wav, appId, accessToken, resourceId
 The current scope is discovery, connection, V2 recording directory, encoded-segment
 transfer, resume, local inventory, and decoder/recognition candidates. Android
 phone validation, playback UI, long-recording recognition qualification,
-meeting notes, start/stop controls, automatic sync, foreground service, iOS and
+automatic note/task generation, start/stop controls, automatic sync, foreground service, iOS and
 real-phone/device acceptance remain to be implemented or validated. Synthetic wire
 tests are not a substitute for that acceptance. Errors should be surfaced to the
 user so the user can retry; do not present an unfinished transfer as a recording.
