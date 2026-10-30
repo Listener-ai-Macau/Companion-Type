@@ -59,6 +59,32 @@ meetings remain accessible. The store leaves recordings untouched and keeps one
 previous text version. Private storage, backup retention and deletion policy are
 owned by the host app; no cloud sync or automatic calendar delivery is provided.
 
+`NativeCalendar.export` prepares a local iCalendar document for tasks the user
+has reviewed. Invoke it on a worker thread; the host must present its preview and
+offer an explicit share/import action. It neither changes a calendar nor creates
+notifications. Dates must already be confirmed: use `YYYY-MM-DD` for an all-day
+deadline or RFC 3339 with an explicit offset for a timed deadline. Completed
+tasks are excluded. The returned `items` contain status and stable UIDs for the
+same session key, task position and text; after preview, optional `reminders` and
+`slots` can refer to these UIDs. An explicit slot requires start and end with
+offsets. Cross-device identity and synchronization are not provided. Owner is
+not inserted into the title automatically; include it in task text if needed.
+
+```java
+String request = "{\"sessionKey\":\"recording-key\",\"title\":\"会议\"," +
+    "\"tasks\":[{\"text\":\"确认报价\",\"completed\":false," +
+    "\"due\":\"2026-11-02T14:00:00+08:00\"}],\"reminderMinutes\":30}";
+String resultJson = NativeCalendar.export(request); // fields: calendar, items
+```
+
+For individual reminders, pass `reminders` such as
+`[{"uid":"<preview uid>","reminder":{"kind":"before","minutes":30}}]`
+or use `{"kind":"at","at":"2026-11-02T13:30:00+08:00"}`. Explicit execution
+times can be supplied as `slots` with `uid` and a `slot` object containing
+`start` and `end`. Use a JSON library to construct inputs from user data. Import
+behavior and reminder delivery depend on the chosen calendar app and still need
+real-phone acceptance.
+
 `download` retains an interrupted partial file and resumes that exact segment on
 the next attempt. It checks packet integrity, final SHA-256 and CRC before exposing
 the complete local copy. If a completed partial fails the final integrity check,
@@ -106,7 +132,7 @@ String text = NativeTranscription.transcribe(wav, appId, accessToken, resourceId
 ```
 
 The current scope is discovery, connection, V2 recording directory, encoded-segment
-transfer, resume, local inventory, and decoder/recognition candidates. Android
+transfer, resume, local inventory, calendar export, and decoder/recognition candidates. Android
 phone validation, playback UI, long-recording recognition qualification,
 automatic note/task generation, start/stop controls, automatic sync, foreground service, iOS and
 real-phone/device acceptance remain to be implemented or validated. Synthetic wire

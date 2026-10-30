@@ -9,6 +9,17 @@ mod volcengine { include!(concat!(env!("OUT_DIR"),"/volcengine_shared.rs")); }
 mod long_transcription;
 #[cfg(feature="mobile-asr")]
 mod asr_cache;
+#[cfg(feature="mobile-calendar")]
+mod calendar_copy {
+    // The shared calendar exporter references this existing desktop handoff type;
+    // the phone export itself uses the shared ICS functions, not this helper.
+    pub struct Entry {pub uid:String,pub title:String,pub deadline:String,pub reminder_minutes:Option<u16>,pub reminder_at:Option<String>}
+}
+#[cfg(feature="mobile-calendar")]
+#[path = "../../../windows/src-tauri/src/backend/action_export.rs"]
+mod action_export;
+#[cfg(feature="mobile-calendar")]
+mod mobile_calendar;
 
 use sha2::{Digest,Sha256};
 use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},sync::atomic::{AtomicU64,Ordering}};
@@ -147,6 +158,22 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeTranscription_tran
         Ok(Ok(text))=>match env.new_string(text){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},
         Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
         Err(_)=>{let _=env.throw_new("java/io/IOException","speech recognition failed; original audio was retained");std::ptr::null_mut()},
+    }
+}
+
+#[cfg(feature="mobile-calendar")]
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeCalendar_exportJson(
+    mut env:jni::JNIEnv,_class:jni::objects::JClass,request:jni::objects::JString
+) -> jni::sys::jstring {
+    let run=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<String,String> {
+        let request:String=env.get_string(&request).map_err(|e|e.to_string())?.into();
+        mobile_calendar::export_json(&request)
+    }));
+    match run {
+        Ok(Ok(json))=>match env.new_string(json){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},
+        Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
+        Err(_)=>{let _=env.throw_new("java/io/IOException","calendar export failed; saved content was retained");std::ptr::null_mut()},
     }
 }
 
