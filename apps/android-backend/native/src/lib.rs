@@ -5,6 +5,8 @@ mod cop1;
 mod opus_decoder;
 #[cfg(feature="mobile-asr")]
 mod volcengine { include!(concat!(env!("OUT_DIR"),"/volcengine_shared.rs")); }
+#[cfg(feature="mobile-asr")]
+mod long_transcription;
 
 use sha2::{Digest,Sha256};
 use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},sync::atomic::{AtomicU64,Ordering}};
@@ -135,7 +137,7 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeTranscription_tran
         let resource_id:String=env.get_string(&resource).map_err(|e|e.to_string())?.into();
         if app_id.trim().is_empty()||access_token.trim().is_empty()||resource_id.trim().is_empty(){return Err("recognition service configuration is incomplete".into());}
         let provider=volcengine::VolcengineSaucAsr::new(volcengine::VolcengineCredentials{app_id,access_token,resource_id});
-        let (text,_utterances)=provider.transcribe_file(Path::new(&wav))?;Ok(text)
+        long_transcription::transcribe(Path::new(&wav),|pcm|provider.transcribe_pcm_bytes(pcm).map(|(text,_)|text))
     }));
     match run {
         Ok(Ok(text))=>match env.new_string(text){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},

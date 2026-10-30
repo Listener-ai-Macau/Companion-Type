@@ -48,12 +48,13 @@ also return an incomplete capture as such when all recovered segments are presen
 The Android ARM64 native candidate is built using `build_android_native.py`; set
 the Gradle property `companionAndroidJniLibs` to the resulting `jniLibs` directory
 to package it. Build the matching library for each ABI the host app supports. The
-ARM64 binary and Java sources have compiled; Android packaging and actual phone
-execution remain unverified. It does not provide a playback UI.
+ARM64 binary and Java sources have compiled, and the library has been assembled
+with Android Gradle plugin 9.4.1. Actual phone execution remains unverified. It
+does not provide a playback UI.
 `package_android_candidate.py` can also assemble an ARM64 AAR for integration
-experiments from the compiled library and an Android API jar. That archive has
-not yet been validated by the Android Gradle plugin or on a phone and must not be
-treated as a release artifact.
+experiments from the compiled library and an Android API jar. That manually
+assembled archive has not yet been validated on a phone and must not be treated
+as a release artifact.
 `RecordingClient.close()` closes the connection and
 can be used to interrupt a transfer; it does not stop device recording. No operation
 here deletes or consumes recordings on the device.
@@ -64,10 +65,14 @@ fees clear before invocation. The library does not start this automatically or
 store credentials. The existing service adapter has passed local synthetic-network
 fixtures; Android TLS and real-service operation remain unverified. Its TLS trust
 uses bundled public roots; custom user-installed roots are not supported here.
+Recordings longer than 45 seconds are sent sequentially in 30-second segments.
+If a segment fails, the call fails without presenting incomplete text as the
+full transcript; the original WAV is retained. Completed segments are not yet
+cached, so retrying the whole operation may repeat provider charges.
 
 The current scope is discovery, connection, V2 recording directory, encoded-segment
 transfer, resume, local inventory, and decoder/recognition candidates. Android
-packaging and validation, playback UI, long-recording recognition qualification,
+phone validation, playback UI, long-recording recognition qualification,
 meeting notes, start/stop controls, automatic sync, foreground service, iOS and
 real-phone/device acceptance remain to be implemented or validated. Synthetic wire
 tests are not a substitute for that acceptance. Errors should be surfaced to the
