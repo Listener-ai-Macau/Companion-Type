@@ -1,6 +1,6 @@
 //! Portable CMC3 driver. The transport supplies only the already selected link.
 use super::{device_connection,export,recorder_control::{self,Journal,Observation,SettlementAction},
-    recording_capacity as capacity,recording_wire::{control::{self,PausePeer,PauseStatus},transport::Peer}};
+    recording_capacity as capacity,recording_wire::{Descriptor,SessionKey,control::{self,PausePeer,PauseStatus},transport::Peer}};
 use sha2::{Digest,Sha256};
 use std::{fs::{self,OpenOptions},path::{Path,PathBuf},time::{Duration,Instant}};
 
@@ -10,6 +10,7 @@ pub(crate) trait Transport {
     fn write_control(&mut self,wire:&[u8])->Result<(),String>;
     /// The existing negotiated recording link sends this request and waits for CSN1.
     fn capacity_slots(&mut self,wire:&[u8])->Result<Option<Vec<u8>>,String>;
+    fn catalogue(&mut self)->Result<Vec<Vec<u8>>,String> {Err("录音目录暂不可用。".into())}
 }
 
 #[derive(serde::Serialize)]
@@ -17,6 +18,7 @@ pub(crate) trait Transport {
 pub(crate) struct Report {
     pub host_session:String,pub state:&'static str,pub recording_key:Option<crate::companion_v1::CompanionV1RecordingKey>,
     pub anchor:Option<u32>,pub duration_ms:u32,pub finished_locally:bool,
+    pub confirmed_by_catalogue:bool,pub capture_incomplete:bool,
 }
 #[derive(serde::Serialize)]
 #[serde(rename_all="camelCase")]
@@ -57,9 +59,9 @@ pub(crate) fn inventory(root:&Path,device:&str,identity:&[u8])->Result<Inventory
         let record=read_journal(&path).and_then(|j|j.ok_or("控制记录已消失。".into()));
         let journal=match record {Ok(j) if path.file_name().is_some_and(|n|n==journal_name(&j.host_session).as_str()) && j.matches(&peer,&j.host_session,device).is_ok()=>j,
             _=>{unreadable+=1;continue;}};
-        let state=if journal.pending.is_some(){"pending"}else{match journal.confirmed.as_ref().map(|c|c.state){Some(1)=>"recording",Some(2)=>"stopped",Some(3)=>"paused",_=>"unknown"}};
+        let state=if journal.ended(){"stopped"}else if journal.pending.is_some(){"pending"}else{match journal.confirmed.as_ref().map(|c|c.state){Some(1)=>"recording",Some(3)=>"paused",_=>"unknown"}};
         sessions.push(InventoryItem{host_session:journal.host_session.clone(),state,recording_key:journal.key.clone(),anchor:journal.anchor,
-            duration_ms:journal.confirmed.as_ref().map_or(0,|c|c.duration_ms),pending_command:journal.pending.as_ref().map(|p|p.command),max_seconds:journal.max_seconds});
+            duration_ms:journal.sealed_catalogue_end.as_ref().map_or_else(||journal.confirmed.as_ref().map_or(0,|c|c.duration_ms),|e|e.duration_ms),pending_command:journal.pending.as_ref().map(|p|p.command),max_seconds:journal.max_seconds});
     }
     sessions.sort_by(|a,b|a.host_session.cmp(&b.host_session));Ok(Inventory{sessions,unreadable_count:unreadable})
 }
@@ -96,7 +98,38 @@ pub(crate) fn adopt_local<T:Transport>(root:&Path,device:&str,transport:&mut T)-
     journal.observe_with_peer(&peer,&status,anchor,duration)?;save(&path,&journal)?;
     let confirmed=journal.confirmed.as_ref().ok_or("原录音状态暂不可用。")?;
     let state=if journal.pending.is_some(){"pending"}else{match confirmed.state{1=>"recording",3=>"paused",_=>return Err("原录音当前不处于可接续状态。".into())}};
-    Ok(Report{host_session:journal.host_session.clone(),state,recording_key:journal.key.clone(),anchor:journal.anchor,duration_ms:confirmed.duration_ms,finished_locally:confirmed.finished_locally})
+    Ok(Report{host_session:journal.host_session.clone(),state,recording_key:journal.key.clone(),anchor:journal.anchor,duration_ms:confirmed.duration_ms,finished_locally:confirmed.finished_locally,confirmed_by_catalogue:false,capture_incomplete:false})
+}
+
+fn catalogue_report(journal:&Journal)->Result<Report,String> {
+    let proof=journal.sealed_catalogue_end.as_ref().ok_or("原录音封口证据缺失。")?;
+    Ok(Report{host_session:journal.host_session.clone(),state:"stopped",recording_key:journal.key.clone(),anchor:journal.anchor,
+        duration_ms:proof.duration_ms,finished_locally:false,confirmed_by_catalogue:true,capture_incomplete:proof.capture_incomplete})
+}
+
+/// Check the original complete sealed directory while the device is idle, without sending recording commands.
+pub(crate) fn reconcile_catalogue<T:Transport>(root:&Path,host:&str,device:&str,transport:&mut T)->Result<Report,String> {
+    if host.trim().is_empty()||host.len()>256{return Err("录音会话无效。".into());}
+    let dir=device_dir(root,device)?;
+    let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(dir.join("control.lock")).map_err(|_|"录音控制暂不可用。")?;
+    lock.try_lock().map_err(|_|"该设备正在处理另一项录音操作。")?;
+    let identity=transport.identity()?;let peer=PausePeer::from_status(&identity)?.ok_or("设备不支持当前录音控制。")?;
+    let negotiated=Peer::from_status(&identity)?.ok_or("设备录音身份不可用。")?;
+    let path=dir.join(journal_name(host));let mut journal=read_journal(&path)?.ok_or("没有找到这次录音的控制记录。")?;
+    journal.matches(&peer,host,device)?;
+    if journal.sealed_catalogue_end.is_some(){return catalogue_report(&journal);}
+    if journal.confirmed.is_none()||journal.anchor.is_none()||journal.unconfirmed_start_retry(){return Err("原录音尚未确认开始，无法从目录判断结束。".into());}
+    let key=SessionKey::from_public(journal.key.as_ref().ok_or("原录音身份缺失。")?)?;
+    let before=transport.status()?;validate_idle(&before,&peer)?;
+    let raw=transport.catalogue()?;if raw.len()>1024{return Err("录音目录过大。".into());}
+    let mut originals=Vec::new();
+    for bytes in raw {let d=Descriptor::decode(&bytes)?;
+        if (d.key.device_uid,d.key.format_epoch)!=(negotiated.uid,negotiated.epoch){return Err("录音目录设备身份已变化。".into());}
+        if d.key==key{originals.push(d);}
+    }
+    let after=transport.status()?;
+    if after!=before||Peer::from_status(&transport.identity()?)?.as_ref()!=Some(&negotiated){return Err("读取目录期间设备状态发生变化，请重试。".into());}
+    journal.end_from_sealed_catalogue(&originals)?;save(&path,&journal)?;catalogue_report(&journal)
 }
 fn validate_idle(raw:&[u8],peer:&PausePeer)->Result<(),String> {
     if raw.len()==80 {
@@ -191,6 +224,7 @@ pub(crate) fn execute<T:Transport>(root:&Path,host:&str,device:&str,command:u8,s
         },
         None=>return Err("没有找到这次录音的控制记录。".into()),
     };
+    if journal.sealed_catalogue_end.is_some(){return if command==0 {catalogue_report(&journal)}else{Err("原录音已结束；请开始新的录音。".into())};}
     let mut disposition=observation(&mut journal,&peer,&raw)?;save(&path,&journal)?;
     if disposition==Observation::Accepted || (matches!(command,0|2|3)&&journal.pending.is_some()) {
         settle(transport,&peer,&path,&mut journal,disposition,command==1)?;
@@ -201,7 +235,7 @@ pub(crate) fn execute<T:Transport>(root:&Path,host:&str,device:&str,command:u8,s
     }
     let confirmed=journal.confirmed.as_ref().ok_or("设备尚未确认录音状态；原请求保留。")?;
     let state=match confirmed.state {1=>"recording",2=>"stopped",3=>"paused",_=>return Err("设备录音状态尚未稳定。".into())};
-    Ok(Report{host_session:host.into(),state,recording_key:journal.key.clone(),anchor:journal.anchor,duration_ms:confirmed.duration_ms,finished_locally:confirmed.finished_locally})
+    Ok(Report{host_session:host.into(),state,recording_key:journal.key.clone(),anchor:journal.anchor,duration_ms:confirmed.duration_ms,finished_locally:confirmed.finished_locally,confirmed_by_catalogue:false,capture_incomplete:false})
 }
 
 #[cfg(test)]
@@ -227,10 +261,10 @@ mod tests {
         let crc=crc32fast::hash(&p[..28]);p[28..32].copy_from_slice(&crc.to_le_bytes());s
     }
     fn crc_status(raw:&mut [u8]){let crc=crc32fast::hash(&raw[..76]);raw[76..80].copy_from_slice(&crc.to_le_bytes());}
-    struct Fake {identity:Vec<u8>,status:Vec<u8>,writes:Vec<Vec<u8>>,fail_after_write:bool,fail_before_write:bool,slots:Option<u8>}
+    struct Fake {identity:Vec<u8>,status:Vec<u8>,writes:Vec<Vec<u8>>,fail_after_write:bool,fail_before_write:bool,slots:Option<u8>,catalogue:Vec<Vec<u8>>,change_status:bool}
     impl Fake {
         fn new()->Self {let mut status=vector(0)[56..136].to_vec();status[1]=2;crc_status(&mut status);
-            Self{identity:capability(),status,writes:vec![],fail_after_write:false,fail_before_write:false,slots:None}}
+            Self{identity:capability(),status,writes:vec![],fail_after_write:false,fail_before_write:false,slots:None,catalogue:vec![],change_status:false}}
         fn fragmented(&mut self) {
             let s=&mut self.identity;s[36..40].copy_from_slice(b"CCQ2");s[40]=3;s[41]=1;s[42]=1;s[43]=64;
             for(at,n)in [(44,4u32),(48,0x100000),(52,0xf0000),(56,0x50000),(60,0x10000),(64,0),(68,6400),(72,0x50000),(76,1800)]{s[at..at+4].copy_from_slice(&n.to_le_bytes());}
@@ -253,6 +287,7 @@ mod tests {
             let mut out=vec![0;32];out[..4].copy_from_slice(b"CSN1");out[4..8].copy_from_slice(&wire[4..8]);out[8..12].copy_from_slice(&self.identity[44..48]);
             out[12]=count;out[16..28].copy_from_slice(&wire[8..20]);let crc=crc32fast::hash(&out[..28]);out[28..32].copy_from_slice(&crc.to_le_bytes());Ok(Some(out))
         }
+        fn catalogue(&mut self)->Result<Vec<Vec<u8>>,String> {if self.change_status{self.status[1]=1;}Ok(self.catalogue.clone())}
     }
     fn root()->PathBuf {std::env::temp_dir().join(format!("companion-control-test-{}",uuid::Uuid::new_v4()))}
     fn cleanup(root:&Path) {
@@ -335,5 +370,37 @@ mod tests {
         fake.status=local_vector(2);fake.status[52..60].copy_from_slice(&original_key);fake.status[67..71].copy_from_slice(&start);crc_status(&mut fake.status);
         let report=adopt_local(&root,DEVICE,&mut fake).unwrap();assert_eq!(report.host_session,"phone-session");assert_eq!(report.state,"paused");
         assert_eq!(fake.writes.len(),1);assert_eq!(inventory(&root,DEVICE,&fake.identity).unwrap().sessions.len(),1);cleanup(&root);
+    }
+    fn sealed_fixture(root:&Path,fake:&mut Fake)->(PathBuf,Descriptor) {
+        execute(root,"original",DEVICE,1,120,fake).unwrap();
+        fake.fail_before_write=true;assert!(execute(root,"original",DEVICE,4,0,fake).is_err());
+        let path=device_dir(root,DEVICE).unwrap().join(journal_name("original"));let journal=read_journal(&path).unwrap().unwrap();
+        let key=SessionKey::from_public(journal.key.as_ref().unwrap()).unwrap();
+        let d=Descriptor{key:key.clone(),recording_id:journal.anchor.unwrap(),segment_index:0,sample_offset:0,sample_count:1_920_000,
+            encoded_length:30000,content_crc32:123,sha256:[9;32],total_segments:1,flags:3|16,codec:3,source_mode:1,sync_state:0};
+        let mut idle=vec![0;64];idle[0]=1;idle[1]=2;idle[28..32].copy_from_slice(b"CMS2");idle[32..44].copy_from_slice(&key.device_uid);idle[44..52].copy_from_slice(&key.format_epoch.to_le_bytes());
+        let crc=crc32fast::hash(&idle[..60]);idle[60..64].copy_from_slice(&crc.to_le_bytes());fake.status=idle;
+        (path,d)
+    }
+    #[test]
+    fn sealed_original_after_reboot_ends_without_fabricating_stop_ack() {
+        let root=root();let mut fake=Fake::new();let (path,d)=sealed_fixture(&root,&mut fake);
+        let original=read_journal(&path).unwrap().unwrap();fake.catalogue=vec![d.encode().unwrap()];
+        let report=reconcile_catalogue(&root,"original",DEVICE,&mut fake).unwrap();assert_eq!(report.state,"stopped");assert!(report.confirmed_by_catalogue);
+        let saved=read_journal(&path).unwrap().unwrap();assert_eq!(saved.pending,original.pending);assert_eq!(saved.confirmed,original.confirmed);
+        let inv=inventory(&root,DEVICE,&fake.identity).unwrap();assert_eq!(inv.sessions[0].state,"stopped");assert_eq!(inv.sessions[0].duration_ms,120000);
+        assert_eq!(execute(&root,"original",DEVICE,0,0,&mut fake).unwrap().state,"stopped");assert_eq!(fake.writes.len(),1);cleanup(&root);
+    }
+    #[test]
+    fn missing_corrupt_conflicting_or_changing_catalogue_never_ends_original() {
+        let root=root();let mut fake=Fake::new();let (path,d)=sealed_fixture(&root,&mut fake);let old=fs::read(&path).unwrap();
+        let mut different=d.clone();different.recording_id+=1;
+        let mut missing_terminal=d.clone();missing_terminal.flags=1;missing_terminal.total_segments=0;
+        let mut corrupt=d.encode().unwrap();corrupt[10]^=1;
+        for cat in [vec![],vec![different.encode().unwrap()],vec![missing_terminal.encode().unwrap()],vec![corrupt]] {
+            fake.catalogue=cat;assert!(reconcile_catalogue(&root,"original",DEVICE,&mut fake).is_err());assert_eq!(fs::read(&path).unwrap(),old);
+        }
+        fake.catalogue=vec![d.encode().unwrap()];fake.change_status=true;
+        assert!(reconcile_catalogue(&root,"original",DEVICE,&mut fake).is_err());assert_eq!(fs::read(&path).unwrap(),old);assert_eq!(fake.writes.len(),1);cleanup(&root);
     }
 }

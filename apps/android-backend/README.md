@@ -51,7 +51,7 @@ String stopped = client.control(controlDir, hostSession, NativeRecordingControl.
 ```
 
 Each result is JSON with `hostSession`, `state`, `recordingKey`, `anchor`,
-`durationMs` and `finishedLocally`. A control error or lost connection is not a
+`durationMs`, `finishedLocally`, `confirmedByCatalogue` and `captureIncomplete`. A control error or lost connection is not a
 stop confirmation; reconnect to the same device and use `controlSessions` to
 find saved session IDs and pending commands, then `QUERY` to check that exact
 session. For an unconfirmed start, an explicit `START` retry with the original
@@ -63,8 +63,13 @@ can bind a currently running or paused recording started with the device button;
 it reads verified device status and never sends START. Use its returned `hostSession`
 for later control, and `controlSessions` to find it again. The original status must
 explicitly identify a stable device-local recording; an unrelated or incomplete
-status is not adopted. A reboot that replaces the original live status may still
-require the original recording directory to be checked separately. The app owns foreground
+status is not adopted. If a reboot replaces the original live status, call
+`client.reconcileControlFromDirectory(controlDir, hostSession)` while connected
+to the same device. It checks a complete sealed directory between matching idle
+status reads, keeps the original command history and never sends STOP or deletes
+audio. The result reports whether the capture was incomplete; an incomplete or
+unavailable directory leaves the control session unresolved. This candidate has
+not yet been verified with a physical phone and recording card. The app owns foreground
 lifetime and must show errors rather than guessing the recording state.
 
 Use `MeetingStore` in app-private storage to save and reopen a session's

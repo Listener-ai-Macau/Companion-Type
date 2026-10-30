@@ -14,6 +14,13 @@ public final class NativeRecordingControl {
     private static native String executeNative(Callbacks callbacks,String privateRoot,String hostSession,String device,int command,int seconds) throws IOException;
     private static native String listNative(String privateRoot,String device,byte[] identity) throws IOException;
     private static native String adoptNative(Callbacks callbacks,String privateRoot,String device) throws IOException;
+    private static native String reconcileNative(Callbacks callbacks,String privateRoot,String hostSession,String device) throws IOException;
+
+    static String reconcile(RecordingClient client,RecordingClient.Link link,Path privateRoot,String hostSession) throws IOException {
+        if(client==null||link==null||privateRoot==null||hostSession==null||hostSession.trim().isEmpty())throw new IllegalArgumentException("device, private directory and session required");
+        try{System.loadLibrary("companion_mobile_audio");return reconcileNative(new Callbacks(link,client),privateRoot.toAbsolutePath().toString(),hostSession,link.deviceAddress());}
+        catch(UnsatisfiedLinkError error){throw new IOException("mobile recording control library is not installed for this device",error);}
+    }
 
     static String adopt(RecordingClient.Link link,Path privateRoot) throws IOException {
         if(link==null||privateRoot==null)throw new IllegalArgumentException("device and private directory required");
@@ -37,9 +44,16 @@ public final class NativeRecordingControl {
     /** Calls on the same encrypted GATT link; native code holds the device's control lock. */
     public static final class Callbacks {
         private final RecordingClient.Link link;
-        Callbacks(RecordingClient.Link link){this.link=link;}
+        private final RecordingClient client;
+        Callbacks(RecordingClient.Link link){this(link,null);}
+        Callbacks(RecordingClient.Link link,RecordingClient client){this.link=link;this.client=client;}
         public byte[] identity() throws IOException{return link.read(RecordingClient.DEVICE_STATUS);}
         public byte[] status() throws IOException{return link.read(RecordingClient.MEETING_STATUS);}
+        public byte[][] catalogue() throws IOException {
+            if(client==null)throw new IOException("recording directory is unavailable");
+            java.util.List<RecorderWire.Descriptor> entries=client.listRecordings();byte[][] result=new byte[entries.size()][];
+            for(int i=0;i<result.length;i++)result[i]=entries.get(i).wireBytes();return result;
+        }
         public void writeControl(byte[] wire) throws IOException{link.write(RecordingClient.MEETING_CONTROL,wire);}
         public byte[] capacitySlots(byte[] request) throws IOException {
             link.write(RecordingClient.RECORDING_CONTROL,request);

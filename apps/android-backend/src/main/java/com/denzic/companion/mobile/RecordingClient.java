@@ -70,6 +70,10 @@ public final class RecordingClient implements Closeable {
     public synchronized String adoptLocalControl(Path privateDirectory) throws IOException {
         ensureOpen();return NativeRecordingControl.adopt(link,privateDirectory);
     }
+    /** Recover a previously confirmed capture from its complete sealed device directory. */
+    public synchronized String reconcileControlFromDirectory(Path privateDirectory,String hostSession) throws IOException {
+        ensureOpen();return NativeRecordingControl.reconcile(this,link,privateDirectory,hostSession);
+    }
 
     public synchronized List<RecorderWire.Descriptor> listRecordings() throws IOException {
         ensureOpen();current=null;RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,nonce());

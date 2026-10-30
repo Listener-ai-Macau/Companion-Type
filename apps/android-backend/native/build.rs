@@ -96,8 +96,11 @@ fn main() {
             let a=text.find(start).unwrap();let b=text.find(end).unwrap();assert!(a<b);text[a..b].to_owned()
         };
         let source=read("recording_wire.rs");
+        let constants=section(&source,"const DESCRIPTOR_BYTES: usize", "const GOLDEN: &str");
         let helpers=section(&source,"fn fail(reason: &str)","mod legacy;");
         let key=section(&source,"#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize)]","#[derive(Clone, Debug, PartialEq, Eq)]\npub(crate) struct Descriptor");
+        let descriptor=section(&source,"#[derive(Clone, Debug, PartialEq, Eq)]\npub(crate) struct Descriptor","    pub(crate) fn verify_payload(");
+        let group=section(&source,"#[derive(Debug, PartialEq, Eq, Serialize)]\n#[serde(rename_all = \"camelCase\")]\npub(crate) struct GroupPlan","fn unhex(s: &str)");
         let transport=read("recording_wire/transport.rs");
         let transport=section(&transport,"const STATUS_PREFIX: usize","    pub(crate) fn validate(&self, d: &Descriptor)");
         let transport=format!("use super::{{fail,u16le,u32le,u64le}};\n{transport}\n}}\n");
@@ -109,14 +112,13 @@ fn main() {
             .replace("mod pause_tests;",&format!("#[path = \"{test_path}\"] mod pause_tests;"));
         let control=out.join("mobile_control_protocol.rs");std::fs::write(&control,control_source).expect("prepare recorder protocol");
         let peer_path=transport_path.to_string_lossy().replace('\\',"/");let control_path=control.to_string_lossy().replace('\\',"/");
-        std::fs::write(out.join("mobile_control_wire.rs"),format!("use serde::Serialize;\n{helpers}\n{key}\n#[path = \"{peer_path}\"] pub(crate) mod transport;\n#[path = \"{control_path}\"] pub(crate) mod control;\n")).expect("prepare recorder wire");
+        std::fs::write(out.join("mobile_control_wire.rs"),format!("use serde::Serialize;\nuse std::collections::{{BTreeMap,BTreeSet}};\n{constants}\n{helpers}\n{key}\n{descriptor}\n}}\n{group}\n#[path = \"{peer_path}\"] pub(crate) mod transport;\n#[path = \"{control_path}\"] pub(crate) mod control;\n")).expect("prepare recorder wire");
         let journal=read("recorder_control.rs");
         let prefix=section(&journal,"use std::{fs::", "/// The cross-process lock spans the complete command/status operation.");
         let catalogue=read("recorder_control/catalogue.rs");
-        let catalogue=section(&catalogue,"use super::*;","    pub(crate) fn end_from_sealed_catalogue(")
-            .replace("use crate::backend::recording_wire::{self, Descriptor};\n","");
+        let catalogue=catalogue.lines().map(|line|if let Some(doc)=line.strip_prefix("//!"){format!("//{doc}")}else{line.to_string()}).collect::<Vec<_>>().join("\n");
         let catalogue_path=out.join("mobile_control_catalogue.rs");
-        std::fs::write(&catalogue_path,format!("{catalogue}\n}}\n")).expect("prepare recorder sealed status");
+        std::fs::write(&catalogue_path,catalogue).expect("prepare recorder sealed status");
         let catalogue_path=catalogue_path.to_string_lossy().replace('\\',"/");
         let bridge=read("ble_bridge/recorder_control.rs");
         let settlement=section(&bridge,"#[derive(Debug,PartialEq,Eq)]\nenum SettlementAction", "async fn settle(")
