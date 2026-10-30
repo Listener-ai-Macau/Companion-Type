@@ -177,13 +177,19 @@ impl LiveAsrHub {
     }
 
     pub fn stop_and_take_text(&self) -> LiveAsrSnapshot {
-        self.stop.store(true, Ordering::SeqCst);
+        // Close the producer under its lock first: all buffers accepted
+        // before stop are then visible to the worker when it drains.
         if let Ok(mut tx) = self.pcm_tx.lock() {
             *tx = None;
         }
+        self.stop.store(true, Ordering::SeqCst);
         if let Ok(mut join) = self.join.lock() {
             if let Some(handle) = join.take() {
-                let _ = handle.join();
+                if handle.join().is_err() {
+                    if let Ok(mut error) = self.error.lock() {
+                        *error = Some("实时识别线程异常结束".to_string());
+                    }
+                }
             }
         }
         let snap = self.snapshot();

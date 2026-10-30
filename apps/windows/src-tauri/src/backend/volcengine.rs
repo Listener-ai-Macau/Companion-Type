@@ -463,12 +463,19 @@ impl VolcengineSaucAsr {
         let mut pending = Vec::<u8>::with_capacity(TARGET_AUDIO_CHUNK_BYTES * 2);
         loop {
             if stop.load(Ordering::SeqCst) {
-                break;
-            }
-            match pcm_rx.recv_timeout(Duration::from_millis(50)) {
-                Ok(chunk) => pending.extend_from_slice(&chunk),
-                Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {}
-                Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => break,
+                // The recorder has stopped producing. Drain every already
+                // accepted buffer before sending EOS so the final transcript
+                // covers the same tail as the saved original audio.
+                match pcm_rx.try_recv() {
+                    Ok(chunk) => pending.extend_from_slice(&chunk),
+                    Err(std::sync::mpsc::TryRecvError::Empty | std::sync::mpsc::TryRecvError::Disconnected) => break,
+                }
+            } else {
+                match pcm_rx.recv_timeout(Duration::from_millis(50)) {
+                    Ok(chunk) => pending.extend_from_slice(&chunk),
+                    Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {}
+                    Err(std::sync::mpsc::RecvTimeoutError::Disconnected) => break,
+                }
             }
             while pending.len() >= TARGET_AUDIO_CHUNK_BYTES {
                 let frame_bytes: Vec<u8> = pending.drain(..TARGET_AUDIO_CHUNK_BYTES).collect();
@@ -1385,6 +1392,49 @@ mod tests {
             resource_id: "volc.bigasr.sauc.duration".into(),
         });
         assert_ne!(identity, other_resource.cache_configuration());
+    }
+
+    #[test]
+    fn live_stop_drains_queued_pcm_before_final() {
+        for resource in ["volc.bigasr.sauc.duration", "volc.seedasr.sauc.duration"] {
+            let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+            let endpoint = format!("ws://{}", listener.local_addr().unwrap());
+            listener.set_nonblocking(true).unwrap();
+            let worker = std::thread::spawn(move || {
+                let runtime = tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
+                runtime.block_on(async {
+                    let listener = tokio::net::TcpListener::from_std(listener).unwrap();
+                    let (stream, _) = listener.accept().await.unwrap();
+                    let mut ws = tokio_tungstenite::accept_async(stream).await.unwrap();
+                    let mut audio = Vec::new();
+                    while let Some(message) = ws.next().await {
+                        let Message::Binary(data) = message.unwrap() else { continue; };
+                        let frame = frame_parse(&data).unwrap();
+                        if frame.message_type == Some(MessageType::AudioOnlyRequest) {
+                            audio.extend_from_slice(&frame.payload);
+                            if frame.is_final() { break; }
+                        }
+                    }
+                    ws.send(Message::Binary(frame_build(MessageType::FullServerResponse, Flags::LastPacket,
+                        Serialization::Json, br#"{"result":{"text":"complete"}}"#, None))).await.unwrap();
+                    audio
+                })
+            });
+            let mut provider = VolcengineSaucAsr::new(VolcengineCredentials {
+                app_id: "test-app".into(), access_token: "test-key".into(), resource_id: resource.into(),
+            });
+            provider.endpoint = endpoint;
+            let (tx, rx) = std::sync::mpsc::channel();
+            let mut expected = vec![1u8; TARGET_AUDIO_CHUNK_BYTES];
+            expected.extend(vec![2u8; 1234]);
+            tx.send(expected[..TARGET_AUDIO_CHUNK_BYTES].to_vec()).unwrap();
+            tx.send(expected[TARGET_AUDIO_CHUNK_BYTES..].to_vec()).unwrap();
+            drop(tx);
+            let result = provider.stream_pcm_session(rx, Arc::new(AtomicBool::new(true)), |_| {});
+            let actual = worker.join().unwrap();
+            assert_eq!(result.unwrap(), "complete");
+            assert_eq!(actual, expected, "queued PCM must be sent before final: {resource}");
+        }
     }
 
     #[test]

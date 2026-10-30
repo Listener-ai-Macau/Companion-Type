@@ -1220,6 +1220,65 @@ impl FixtureCompanionBackend {
             .count();
         session.retention.transcript_cached = true;
     }
+
+    // A partial hypothesis remains useful, but only a successful final
+    // response may complete transcription and unlock meeting generation.
+    fn finish_live_nonempty(session: &mut CompanionV1HostSession, live: &live_asr::LiveAsrSnapshot) -> bool {
+        Self::merge_live_asr_into_session(session, live);
+        if live.error.is_some() {
+            session.status = "captured".to_string();
+            session.transcript_final = false;
+            arm_meeting_recovery(session);
+            session.pending_reason = Some("needs_transcription".to_string());
+            return false;
+        }
+        session.transcript_final = true;
+        session.status = "transcribed".to_string();
+        session.pending_reason = None;
+        arm_meeting_recovery(session);
+        mark_recovery_transcribed(session);
+        true
+    }
+}
+
+#[cfg(test)]
+mod live_stop_contract_tests {
+    use super::*;
+    use crate::companion_v1::{apply_fixture_control, fixture_snapshot};
+    fn sample() -> CompanionV1HostSession {
+        let request=serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap();
+        let mut session=apply_fixture_control(fixture_snapshot(),request).unwrap().host.sessions.remove(0);
+        session.meeting_mode="onlineLive".into();
+        session.status="captured".into();
+        session.audio_stored=true;
+        session.audio_path=Some("owned-original.wav".into());
+        session.audio_bytes=12345;
+        session.retention.audio_cached=true;
+        session
+    }
+    #[test]
+    fn interrupted_live_preserves_partial_but_never_marks_it_final() {
+        let mut session=sample();
+        let live=live_asr::LiveAsrSnapshot {text:"前半句".into(),mode:"ws-sauc-streaming".into(),error:Some("connection closed before final".into()),partial_count:1,active:false};
+        let complete=FixtureCompanionBackend::finish_live_nonempty(&mut session,&live);
+        assert!(!complete,"provider failure cannot finalize a partial transcript");
+        assert!(!session.transcript_final);
+        assert_ne!(session.status,"transcribed");
+        assert_eq!(session.transcript_text,"前半句");
+        assert_eq!(session.audio_path.as_deref(),Some("owned-original.wav"));
+        assert!(session.audio_stored && session.retention.audio_cached);
+        assert!(session.pending_reason.is_some());
+    }
+    #[test]
+    fn confirmed_live_final_is_still_completed() {
+        let mut session=sample();
+        let live=live_asr::LiveAsrSnapshot {text:"完整文本".into(),mode:"ws-sauc-streaming".into(),error:None,partial_count:2,active:false};
+        assert!(FixtureCompanionBackend::finish_live_nonempty(&mut session,&live));
+        assert!(session.transcript_final);
+        assert_eq!(session.status,"transcribed");
+        assert_eq!(session.transcript_text,"完整文本");
+        assert_eq!(session.audio_path.as_deref(),Some("owned-original.wav"));
+    }
 }
 
 impl Default for FixtureCompanionBackend {
@@ -3022,15 +3081,9 @@ impl CompanionBackend for FixtureCompanionBackend {
                     if mode == "onlineLive" && host_capture_error.is_none()
                         && !selected_session(&next).is_some_and(interrupted_capture::needs_review) {
                         if !live.text.trim().is_empty() {
-                            if let Some(session) = selected_session_mut(&mut next) {
-                                Self::merge_live_asr_into_session(session, &live);
-                                session.transcript_final = true;
-                                session.status = "transcribed".to_string();
-                                session.pending_reason = None;
-                                arm_meeting_recovery(session);
-                                mark_recovery_transcribed(session);
-                            }
-                            next.meeting.status = "transcribed".to_string();
+                            let completed = selected_session_mut(&mut next)
+                                .is_some_and(|session| Self::finish_live_nonempty(session, &live));
+                            next.meeting.status = if completed { "transcribed" } else { "captured" }.to_string();
                             next.meeting.transcript_count =
                                 next.host
                                     .sessions
@@ -3038,10 +3091,11 @@ impl CompanionBackend for FixtureCompanionBackend {
                                     .filter(|s| !s.transcript_text.trim().is_empty())
                                     .count() as u32;
                             if let Some(echo) = next.last_control.as_mut() {
-                                echo.message = format!(
-                                    "onlineLive live stream closed via {} (partials={})",
-                                    live.mode, live.partial_count
-                                );
+                                echo.message = if completed {
+                                    format!("onlineLive live stream closed via {} (partials={})", live.mode, live.partial_count)
+                                } else {
+                                    "实时识别未完成，已保留录音和部分文字，可继续转写。".to_string()
+                                };
                             }
                         } else {
                             let (audio, empty) = selected_session(&next)
