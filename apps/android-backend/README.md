@@ -7,6 +7,14 @@ server account or shared credential is included; the caller can configure its ow
 recognition service. This is an engineering
 candidate, not a released mobile app or a claim of phone/device acceptance.
 
+The intended normal processing path is the existing cloud workflow: receive the
+recording, decode it, use Volcengine for speech-to-text, then send the transcript
+to the configured DeepSeek-compatible service for the summary and action items.
+The APIs below expose those steps separately; the host app must connect them and
+make uploads and any charges clear before starting. They do not automatically
+run or create confirmed tasks. `NativeMemo` is only a limited offline draft option,
+not the primary AI workflow and not a replacement for either cloud service.
+
 Add this directory as an Android library module to the host application's Gradle
 project (which supplies the Android Gradle plugin and API 35 SDK). The host app
 owns Bluetooth permission requests, device selection, system pairing and UI. On
@@ -153,6 +161,25 @@ long meeting, offer retry and do not display it as complete. Even a complete
 result needs user review for recognition and factual accuracy. Never auto-save
 generated tasks as confirmed or auto-import them into a calendar. Android network
 permission, real TLS, service response quality and phone execution remain unverified.
+
+The normal cloud path can be connected on a worker thread as follows. `session`
+is the selected local recording, the caller supplies the configured service
+values, and `wav` is a new private output path:
+
+```java
+NativeAudio.Result audio = NativeAudio.decode(session, wav);
+String transcript = NativeTranscription.transcribe(wav, appId, accessToken, resourceId, asrCache);
+// Save the transcript with the appropriate MeetingStore revision before continuing.
+org.json.JSONObject request = new org.json.JSONObject()
+    .put("sessionKey", MeetingStore.sessionKey(session.segments.get(0).descriptor))
+    .put("title", title).put("transcript", transcript).put("durationMillis", audio.samples / 16)
+    .put("endpoint", minutesEndpoint).put("model", minutesModel);
+String minutesJson = NativeMinutes.generate(request.toString(), minutesApiKey, minutesCache);
+```
+
+The caller should preserve the transcript without overwriting the user's edits,
+and offer retry if the second service fails; the summary result may contain an explicitly marked draft on service
+failure. The backend does not store the supplied service credentials.
 
 ```java
 Path cache = context.getFilesDir().toPath().resolve("companion-minutes-cache");
