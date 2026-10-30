@@ -580,6 +580,48 @@ mod tests {
     }
 
     #[test]
+    fn interrupted_header_backfill_preserves_all_recorded_samples() {
+        for cut in 0usize..=44 {
+            let root = std::env::temp_dir().join(format!("host-partial-header-{}", uuid::Uuid::new_v4()));
+            std::fs::create_dir_all(&root).unwrap();
+            let path = root.join("unfinished.wav");
+            let child = std::process::Command::new(std::env::current_exe().unwrap())
+                .args(["--exact", "backend::host_recording::tests::isolated_abrupt_host_recording_child", "--ignored"])
+                .env("COMPANION_CRASH_MODEL_FILE", &path)
+                .env("COMPANION_TYPE_RECORDING_DIR", &root).output().unwrap();
+            assert!(child.status.success());
+            let mut raw = std::fs::read(&path).unwrap();
+            let full = denzic_host_audio_v1_core::wav::wav_header((raw.len()-44) as u32);
+            raw[..cut].copy_from_slice(&full[..cut]);
+            std::fs::write(&path, &raw).unwrap();
+            std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+            let result = super::super::host_interrupted_recovery::recover_copy(&path);
+            assert!(result.is_ok(), "header interrupted at byte {cut}: {:?}", result.as_ref().err());
+            let restored = result.unwrap();
+            assert_eq!(restored.bytes, raw.len() as u64);
+            assert_eq!(restored.duration_ms, 1000);
+            let copy = std::fs::read(&restored.path).unwrap();
+            assert_eq!(&copy[..44], &full);
+            assert_eq!(&copy[44..], &raw[44..]);
+            assert_eq!(std::fs::read(&path).unwrap(), raw, "original remains byte-for-byte unchanged");
+            assert!(super::super::meeting_workspace::validate_wav(&restored.path).is_ok());
+            drop(restored);
+            if cut == 0 {
+                // A suffix-only update cannot come from write_header's forward
+                // write_all; do not infer ownership of contradictory bytes.
+                let bad = root.join("out-of-order-header.wav");
+                let lease = super::super::audio_artifacts::WriteLease::begin(
+                    &bad, &bad, super::super::audio_artifacts::Purpose::Recording).unwrap();
+                let mut inverse = raw.clone(); inverse[40..44].copy_from_slice(&full[40..44]);
+                std::fs::write(&bad, &inverse).unwrap(); drop(lease);
+                assert!(super::super::host_interrupted_recovery::recover_copy(&bad).is_err());
+                assert_eq!(std::fs::read(&bad).unwrap(), inverse);
+            }
+            std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+        }
+    }
+
+    #[test]
     fn isolated_process_exit_keeps_raw_pcm_but_not_a_valid_wav() {
         let root = std::env::temp_dir().join(format!("host-crash-model-{}", std::process::id()));
         std::fs::create_dir_all(&root).unwrap();

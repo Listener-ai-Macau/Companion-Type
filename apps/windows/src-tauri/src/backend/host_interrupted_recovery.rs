@@ -41,8 +41,18 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
     let mut input = File::open(source).map_err(|_| "原录音无法打开。")?;
     let mut header = [0u8; 44];
     input.read_exact(&mut header).map_err(|_| "原录音文件头不完整。")?;
-    if header != denzic_host_audio_v1_core::wav::wav_header(0)
-        && (partial_tail != 0 || header != denzic_host_audio_v1_core::wav::wav_header(payload)) {
+    let placeholder = denzic_host_audio_v1_core::wav::wav_header(0);
+    let complete = denzic_host_audio_v1_core::wav::wav_header(payload);
+    // The writer replaces the zero-size header from the beginning with this
+    // exact finalized header. A crash during write_all may leave a prefix of
+    // the new header and a suffix of the placeholder. Accept only a prefix
+    // matching this known transition and only with complete samples. With an
+    // incomplete sample the writer's final byte count is not knowable, so the
+    // earlier zero-header rule remains the sole safe match.
+    let interrupted_backfill = partial_tail == 0 && (0..=header.len()).any(|cut| {
+        header[..cut] == complete[..cut] && header[cut..] == placeholder[cut..]
+    });
+    if header != placeholder && !interrupted_backfill {
         return Err("原录音不是可确认的录音格式，文件保留。".into());
     }
     let before = digest(source)?;
