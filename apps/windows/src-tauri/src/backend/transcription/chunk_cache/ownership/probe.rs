@@ -34,6 +34,26 @@ impl Drop for Environment {
         }
     }
 }
+fn install_fixture(backend: &FixtureCompanionBackend, index: &Path, mut snapshot: CompanionV1Snapshot) -> Result<(), String> {
+    // Preserve the controlled rows' current durable revisions when preparing
+    // a new scenario. Real privacy actions still use the production guard.
+    if let Some(current) = persistence::load_sessions_from(index) {
+        for row in &mut snapshot.host.sessions {
+            if let Some(old) = current.iter().find(|old| old.id == row.id) {
+                row.calendar_copy_epoch = old.calendar_copy_epoch;
+                row.calendar_copy_revision = old.calendar_copy_revision;
+                row.calendar_copies = old.calendar_copies.clone();
+                row.calendar_slot_copies = old.calendar_slot_copies.clone();
+                row.organization = old.organization.clone();
+                row.note_revision = old.note_revision;
+                row.meeting_notes = old.meeting_notes.clone();
+            }
+        }
+    }
+    persistence::save_sessions_to(index, &snapshot.host.sessions)?;
+    *backend.snapshot.lock().map_err(|_| fail())? = snapshot;
+    Ok(())
+}
 fn request(action: Action, id: Option<&str>) -> CompanionV1ControlRequest {
     serde_json::from_value(json!({"action":action,"sessionId":id})).unwrap()
 }
@@ -160,7 +180,9 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     )?;
     let backend = FixtureCompanionBackend::new();
     let initial = snapshot(vec![session("a", &a), session("b", &b)], "a");
-    *backend.snapshot.lock().map_err(|_| fail())? = initial.clone();
+    // The product privacy guard requires the same durable library as the UI.
+    // This fixture owns the isolated index and cannot use a volatile-only row.
+    install_fixture(&backend, &index, initial.clone())?;
     check(
         "stale_session_target_rejected_before_cache_effects",
         backend
@@ -209,7 +231,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
             .open(&path)
             .map_err(|_| fail())?
     };
-    *backend.snapshot.lock().map_err(|_| fail())? = snapshot(vec![session("a", &a)], "a");
+    install_fixture(&backend, &index, snapshot(vec![session("a", &a)], "a"))?;
     #[cfg(windows)]
     {
         check(
@@ -263,7 +285,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     fs::remove_file(&a).map_err(|_| fail())?;
     let mut without_audio = snapshot(vec![session("a", &a)], "a");
     without_audio.host.sessions[0].audio_path = None;
-    *restarted.snapshot.lock().map_err(|_| fail())? = without_audio;
+    install_fixture(&restarted, &index, without_audio)?;
     restarted.apply_control(request(Action::PrivacyEraseTranscript, Some("a")))?;
     check(
         "session_owner_survives_absent_audio_pointer",
@@ -284,7 +306,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     )?;
     audio::remove_temporary(&scratch)?;
     bind_session(&root, "a", &audio::source_references(&a)?)?;
-    *restarted.snapshot.lock().map_err(|_| fail())? = snapshot(vec![session("a", &a)], "a");
+    install_fixture(&restarted, &index, snapshot(vec![session("a", &a)], "a"))?;
     restarted.apply_control(request(Action::PrivacyEraseTranscript, Some("a")))?;
     check("scratch_removal_does_not_orphan_cache", !path.exists())?;
     let prefix = recordings.join("prefix.wav");
@@ -317,15 +339,15 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     old.profile.processing_version = "pcm16k-mono-s16le-volc-final-v2".into();
     super::super::store(&root, &old, "Old V2 final body", &[])?;
     let old_path = old.path(&root)?;
-    *restarted.snapshot.lock().map_err(|_| fail())? = snapshot(vec![session("a", &a)], "a");
+    install_fixture(&restarted, &index, snapshot(vec![session("a", &a)], "a"))?;
     restarted.apply_control(request(Action::PrivacyEraseTranscript, Some("a")))?;
     check(
         "verified_old_v2_is_removed_by_exact_pcm_identity",
         !old_path.exists(),
     )?;
     super::super::store(&root, &old, "Old V2 final body", &[])?;
-    *restarted.snapshot.lock().map_err(|_| fail())? =
-        snapshot(vec![session("a", &a), session("b", &b)], "a");
+    install_fixture(&restarted, &index,
+        snapshot(vec![session("a", &a), session("b", &b)], "a"))?;
     restarted.apply_control(request(Action::PrivacyEraseTranscript, Some("a")))?;
     check("unbound_legacy_shared_pcm_is_preserved", old_path.is_file())?;
     let unknown = root.join(format!("{:064x}.json", 8));
@@ -353,7 +375,7 @@ pub(crate) fn verify(output: &Path) -> Result<Value, String> {
     put_wav(&a, &pcm)?;
     resolve(&root, &key, &a, provider)?;
     bind_session(&root, "a", &audio::source_references(&a)?)?;
-    *restarted.snapshot.lock().map_err(|_| fail())? = snapshot(vec![session("a", &a)], "a");
+    install_fixture(&restarted, &index, snapshot(vec![session("a", &a)], "a"))?;
     fs::write(&path, b"changed").map_err(|_| fail())?;
     check(
         "changed_owned_body_blocks_erase_without_index_commit",

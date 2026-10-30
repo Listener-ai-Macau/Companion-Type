@@ -6504,6 +6504,9 @@ mod tests {
             })
             .unwrap();
         assert_eq!(started.meeting.status, "recording");
+        // This is a controlled local WAV, not a Companion device recording.
+        // Keep the real device identity/STOP guard intact in the product.
+        backend.snapshot.lock().unwrap().host.sessions[0].source = "controlledLocalAudioFixture".into();
 
         let stopped = backend
             .apply_control(CompanionV1ControlRequest {
@@ -6624,7 +6627,9 @@ mod tests {
         let _ = std::fs::create_dir_all(&root);
         let audio = root.join("meeting.wav");
         let sidecar = root.join("meeting.transcript.txt");
-        std::fs::write(&audio, b"RIFF----WAVEfmt ").unwrap();
+        let mut wav=denzic_host_audio_v1_core::wav::wav_header(3200).to_vec();
+        wav.extend(vec![0u8; 3200]);
+        std::fs::write(&audio, &wav).unwrap();
         std::fs::write(
             &sidecar,
             "Decision: Companion-Type owns the ASR boundary.\nAction: Maya validates independent minutes.",
@@ -6652,6 +6657,8 @@ mod tests {
             started.host.sessions[0].audio_path.as_deref(),
             Some(audio.to_string_lossy().as_ref())
         );
+        // The supplied WAV is a local controlled fixture, not device audio.
+        backend.snapshot.lock().unwrap().host.sessions[0].source = "controlledLocalAudioFixture".into();
 
         let stopped = backend
             .apply_control(CompanionV1ControlRequest {
