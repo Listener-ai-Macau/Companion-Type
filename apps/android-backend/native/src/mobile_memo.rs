@@ -7,7 +7,7 @@ pub fn extract(transcript: &str, duration_ms: u64) -> Result<String, String> {
     }
     let eligible = transcript.chars().count() <= 280 && duration_ms <= 120_000;
     let session = CompanionV1HostSession {
-        transcript_text: transcript.into(), duration_ms, meeting_notes: Vec::new(),
+        transcript_text: transcript.into(), duration_ms, meeting_notes: Vec::new(), ..Default::default()
     };
     let recognized = if eligible { short_memo::actions(&session) } else { None };
     let full_plan_recognized = recognized.is_some();

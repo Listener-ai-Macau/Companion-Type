@@ -53,4 +53,37 @@ fn main() {
         std::fs::write(out,section).expect("prepare shared fact comparison");
         println!("cargo:rerun-if-changed={}",source.display());
     }
+    if std::env::var_os("CARGO_FEATURE_MOBILE_MINUTES").is_some() {
+        let root=Path::new("../../windows/src-tauri/src/backend");
+        let original=root.join("minutes.rs");
+        let out=std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap());
+        let mut text=std::fs::read_to_string(&original).expect("desktop minutes");
+        text=text.lines().map(|line|if let Some(doc)=line.strip_prefix("//!"){format!("//{doc}")}else{line.to_string()}).collect::<Vec<_>>().join("\n");
+        for module in ["long_meeting","short_memo","context_plan","question_sources"] {
+            let declaration=if module=="long_meeting" {"pub(super) mod long_meeting;".to_string()}else{format!("mod {module};")};
+            assert_eq!(text.matches(&declaration).count(),1);
+            let source=root.join("minutes").join(format!("{module}.rs"));
+            let path=source.canonicalize().expect("desktop minutes module").to_string_lossy().replace('\\',"/");
+            let path=if module=="long_meeting" {
+                let long=std::fs::read_to_string(&source).expect("desktop long minutes");
+                let long=long.lines().map(|line|if let Some(doc)=line.strip_prefix("//!"){format!("//{doc}")}else{line.to_string()}).collect::<Vec<_>>().join("\n");
+                assert_eq!(long.matches("#[cfg(test)]\nmod tests;").count(),1);
+                let long=long.replace("#[cfg(test)]\nmod tests;","#[cfg(any())]\nmod tests;");
+                let test_guard="if cfg!(test) && std::env::var_os(\"COMPANION_TYPE_STATE_PATH\").is_none()\n        && std::env::var_os(\"COMPANION_TYPE_STATE_DIR\").is_none() { return None; }";
+                assert_eq!(long.matches(test_guard).count(),1);
+                // The mobile caller must always provide its private cache root,
+                // including in tests. No desktop state directory is consulted.
+                let long=long.replace(test_guard,"");
+                let path=out.join("mobile_long_minutes.rs");std::fs::write(&path,long).expect("prepare long minutes");
+                path.to_string_lossy().replace('\\',"/")
+            }else{path};
+            let replacement=if module=="long_meeting" {format!("#[path = \"{path}\"] pub(super) mod long_meeting;")} else {format!("#[path = \"{path}\"] mod {module};")};
+            text=text.replace(&declaration,&replacement);
+            println!("cargo:rerun-if-changed={}",source.display());
+        }
+        assert_eq!(text.matches("#[cfg(test)]\nmod tests {").count(),1);
+        text=text.replace("#[cfg(test)]\nmod tests {","#[cfg(any())]\nmod tests {");
+        std::fs::write(out.join("mobile_minutes_shared.rs"),text).expect("prepare shared minutes");
+        println!("cargo:rerun-if-changed={}",original.display());
+    }
 }

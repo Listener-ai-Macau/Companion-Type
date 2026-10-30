@@ -30,7 +30,7 @@ name = triple.replace("-", "_")
 env["CC_" + name] = str(clang)
 env["AR_" + name] = str(ar)
 env["CARGO_TARGET_" + name.upper() + "_LINKER"] = str(clang)
-subprocess.run(["cargo", "build", "--offline", "--locked", "--release", "--features", "mobile-asr,mobile-calendar,mobile-memo", "--target", triple,
+subprocess.run(["cargo", "build", "--offline", "--locked", "--release", "--features", "mobile-asr,mobile-calendar,mobile-minutes", "--target", triple,
                 "--manifest-path", str(backend / "native/Cargo.toml")], env=env, check=True)
 source = target / triple / "release/libcompanion_mobile_audio.so"
 destination = work / "jniLibs" / args.abi / source.name

@@ -11,6 +11,7 @@ crate-type = ["rlib", "cdylib"]
 mobile-asr = ["dep:futures", "dep:serde_json", "dep:tokio", "dep:tokio-tungstenite", "dep:uuid"]
 mobile-calendar = ["dep:chrono", "dep:regex", "dep:serde_json"]
 mobile-memo = ["dep:regex", "dep:serde_json"]
+mobile-minutes = ["mobile-memo", "dep:reqwest", "dep:uuid", "dep:chrono"]
 
 [dependencies]
 crc32fast = "1"
@@ -24,6 +25,7 @@ tokio-tungstenite = { version = "0.24", features = ["rustls-tls-webpki-roots"], 
 uuid = { version = "1", features = ["v4", "serde"], optional = true }
 chrono = { version = "0.4", default-features = false, features = ["clock", "std"], optional = true }
 regex = { version = "1", optional = true }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls-webpki-roots"], optional = true }
 
 [build-dependencies]
 cc = "1"

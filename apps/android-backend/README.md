@@ -73,6 +73,33 @@ the user accepts. Use the actual recording duration; this rule supports at most
 String candidatesJson = NativeMemo.extract(transcript, decoded.samples / 16);
 ```
 
+`NativeMinutes.generate` runs the shared desktop service-backed minutes engine
+for a selected transcript, including its source checks and resumable long-meeting
+chunks. This explicitly sends the transcript to the supplied service and may
+incur charges. The host must identify the service, obtain the user's consent,
+and invoke it only after the user chooses to organize the recording. Keep the
+original transcript in `MeetingStore`; this method does not save or replace it.
+The app supplies its own service key and an app-private cache directory. The key
+is not written into the cache; the cache contains meeting text and must be handled
+as private data by the host. Supply a stable session key and the same effective
+service settings on retry to resume completed long-meeting chunks.
+
+Build the JSON with a library and provide `sessionKey`, `title`, `transcript`,
+`durationMillis`, `endpoint` (complete HTTPS chat-completions URL), and `model`.
+Pass the API key separately to `generate`. The response has desktop-compatible
+`source`, `quality`, `summary`, `decisions`, `actionItems`, `questions`,
+`markdown`, `llmNote`, and optionally `processing` with chunk counts and
+`complete`. Show a draft and its `llmNote` on provider failure; for a partial
+long meeting, offer retry and do not display it as complete. Even a complete
+result needs user review for recognition and factual accuracy. Never auto-save
+generated tasks as confirmed or auto-import them into a calendar. Android network
+permission, real TLS, service response quality and phone execution remain unverified.
+
+```java
+Path cache = context.getFilesDir().toPath().resolve("companion-minutes-cache");
+String minutesJson = NativeMinutes.generate(requestJson, apiKey, cache);
+```
+
 `NativeCalendar.export` prepares a local iCalendar document for tasks the user
 has reviewed. Invoke it on a worker thread; the host must present its preview and
 offer an explicit share/import action. It neither changes a calendar nor creates

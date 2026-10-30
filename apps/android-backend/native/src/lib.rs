@@ -22,13 +22,23 @@ mod action_export;
 mod mobile_calendar;
 #[cfg(feature="mobile-memo")]
 mod companion_v1 {
-    #[derive(Clone,serde::Serialize)]
+    #[derive(Clone,Debug,serde::Serialize,serde::Deserialize)]
     pub struct CompanionV1ActionItem {pub text:String,pub owner:Option<String>,pub due:Option<String>}
-    pub struct Note {pub text:String}
-    pub struct CompanionV1HostSession {pub transcript_text:String,pub duration_ms:u64,pub meeting_notes:Vec<Note>}
+    #[derive(Clone)] pub struct Note {pub text:String}
+    #[derive(Clone,serde::Serialize)] pub struct SpeakerName {pub name:String}
+    #[derive(Clone,serde::Serialize)] pub struct UtteranceEdit {pub speaker_name:Option<String>}
+    #[derive(Clone,serde::Serialize)] pub struct TranscriptReview {pub speaker_names:Vec<SpeakerName>,pub utterance_edits:Vec<UtteranceEdit>}
+    #[derive(Clone,Default)] pub struct CompanionV1HostSession {pub id:String,pub title:String,pub source:String,pub transcript_text:String,pub duration_ms:u64,pub meeting_notes:Vec<Note>,pub meeting_mode:String,pub audio_path:Option<String>,pub transcript_review:Option<TranscriptReview>,pub utterances:Vec<()>,pub minutes:Option<CompanionV1MeetingMinutes>,pub minutes_by_mode:()}
+    #[derive(Clone,Debug,serde::Serialize,serde::Deserialize)]
+    #[serde(rename_all="camelCase")]
+    pub struct CompanionV1MeetingMinutes {pub processing:Option<CompanionV1MinutesProcessing>,pub source_note_context:Option<()>,pub source_review_revision:Option<u64>,pub generated_at:String,pub source:String,pub quality:String,pub summary:Vec<String>,pub decisions:Vec<String>,pub action_items:Vec<CompanionV1ActionItem>,pub questions:Vec<String>,pub keywords:Vec<String>,pub markdown:String,pub llm_note:Option<String>}
+    #[derive(Clone,Debug,serde::Serialize,serde::Deserialize)]
+    #[serde(rename_all="camelCase")]
+    pub struct CompanionV1MinutesProcessing {pub strategy:String,pub source_bytes:usize,pub processed_source_bytes:usize,pub total_chunks:usize,pub completed_chunks:usize,pub resumed_chunks:usize,pub complete:bool}
+    impl CompanionV1MinutesProcessing {pub fn is_complete(&self)->bool{self.strategy=="chunkedSourceBacked"&&self.complete&&self.total_chunks!=0&&self.completed_chunks==self.total_chunks&&self.resumed_chunks<=self.completed_chunks&&self.source_bytes!=0&&self.processed_source_bytes==self.source_bytes}}
 }
 #[cfg(feature="mobile-memo")]
-struct CompanionV1MeetingMinutes {action_items:Vec<companion_v1::CompanionV1ActionItem>}
+use companion_v1::CompanionV1MeetingMinutes;
 #[cfg(feature="mobile-memo")]
 mod fact_match { include!(concat!(env!("OUT_DIR"),"/minutes_fact_match.rs")); }
 #[cfg(feature="mobile-memo")]
@@ -38,6 +48,15 @@ use fact_match::source_fact_covered;
 mod short_memo;
 #[cfg(feature="mobile-memo")]
 mod mobile_memo;
+#[cfg(feature="mobile-minutes")]
+extern crate self as denzic_host_audio_v1_core;
+#[cfg(feature="mobile-minutes")]
+#[path = "../../../../third_party/denzic-platform/host_audio/host/rust/src/http_policy.rs"]
+pub mod http_policy;
+#[cfg(feature="mobile-minutes")]
+mod backend;
+#[cfg(feature="mobile-minutes")]
+mod mobile_minutes;
 
 use sha2::{Digest,Sha256};
 use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path,PathBuf},sync::atomic::{AtomicU64,Ordering}};
@@ -209,6 +228,25 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeMemo_extractJson(
         Ok(Ok(json))=>match env.new_string(json){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},
         Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
         Err(_)=>{let _=env.throw_new("java/io/IOException","待办草稿未生成；原转写保留。");std::ptr::null_mut()},
+    }
+}
+
+#[cfg(feature="mobile-minutes")]
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeMinutes_generateJson(
+    mut env:jni::JNIEnv,_class:jni::objects::JClass,request:jni::objects::JString,
+    key:jni::objects::JString,cache:jni::objects::JString
+) -> jni::sys::jstring {
+    let run=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<String,String> {
+        let request:String=env.get_string(&request).map_err(|e|e.to_string())?.into();
+        let key:String=env.get_string(&key).map_err(|e|e.to_string())?.into();
+        let cache:String=env.get_string(&cache).map_err(|e|e.to_string())?.into();
+        mobile_minutes::generate_json(&request,&key,Path::new(&cache))
+    }));
+    match run {
+        Ok(Ok(json))=>match env.new_string(json){Ok(s)=>s.into_raw(),Err(e)=>{let _=env.throw_new("java/io/IOException",e.to_string());std::ptr::null_mut()}},
+        Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
+        Err(_)=>{let _=env.throw_new("java/io/IOException","纪要未生成；原转写保持不变。");std::ptr::null_mut()},
     }
 }
 

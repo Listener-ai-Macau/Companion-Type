@@ -11,3 +11,6 @@
 -keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeMemo {
     native <methods>;
 }
+-keepclasseswithmembernames,includedescriptorclasses class com.denzic.companion.mobile.NativeMinutes {
+    native <methods>;
+}
