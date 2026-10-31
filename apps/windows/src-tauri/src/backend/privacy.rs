@@ -12,6 +12,27 @@ fn session_audio_paths(session: &CompanionV1HostSession) -> impl Iterator<Item =
             tracks.microphone.iter().chain(&tracks.system).map(|part| part.path.as_str())))
 }
 
+/// Include registered originals that were not yet written into the session
+/// index when capture stopped unexpectedly. Only the selected recording is
+/// checkpointed for deletion; retained sessions are used solely to protect it.
+fn cleanup_audio_paths<'a>(sessions: impl Iterator<Item = &'a CompanionV1HostSession>,
+    checkpoint: bool) -> Result<Vec<String>, String> {
+    let mut paths = Vec::new();
+    for session in sessions {
+        paths.extend(session_audio_paths(session).map(str::to_owned));
+        let Some(tracks) = session.meeting_tracks.as_ref() else { continue; };
+        if session.source != "hostMeeting" || !matches!(tracks.state.as_str(), "recording" | "needsReview") { continue; }
+        let (mic, system) = super::audio_artifacts::meeting_capture_parts_for_cleanup(PathBuf::from(&tracks.root).as_path())?;
+        for part in mic.into_iter().chain(system) {
+            if checkpoint && !part.sealed {
+                super::audio_artifacts::checkpoint_interrupted_meeting_for_cleanup(&part.path)?;
+            }
+            paths.push(part.path.to_string_lossy().into_owned());
+        }
+    }
+    Ok(paths)
+}
+
 /// Validate before any file or device deletion. The UI confirmation carries
 /// the selected ID; a stale or missing ID must never broaden the operation.
 pub(super) fn validate_control(
@@ -163,33 +184,23 @@ impl PrivacyManager {
             report.failed_files = 1;
             return report;
         };
-        let retained_paths: Vec<String> = snapshot.host.sessions.iter().filter(|s| &s.id != selected_id)
-            .flat_map(session_audio_paths).map(str::to_owned).collect();
-        let sources: Vec<String> = snapshot.host.sessions.iter().filter(|s| &s.id == selected_id)
-            .flat_map(session_audio_paths).map(str::to_owned).collect();
+        let retained_paths = match cleanup_audio_paths(snapshot.host.sessions.iter().filter(|s| &s.id != selected_id), false) {
+            Ok(paths) => paths, Err(_) => { report.failed_files += 1; return report; }
+        };
+        let sources = match cleanup_audio_paths(snapshot.host.sessions.iter().filter(|s| &s.id == selected_id), true) {
+            Ok(paths) => paths, Err(_) => { report.failed_files += 1; return report; }
+        };
         if !self.erase_cache(snapshot, false, &sources, &retained_paths, &mut report) { return report; }
         let Some(handled) = self.erase_generated(&sources, &retained_paths, &mut seen, &mut report) else { return report; };
-        let protected: HashSet<_> = snapshot
-            .host
-            .sessions
-            .iter()
-            .filter(|session| &session.id != selected_id)
-            .flat_map(session_audio_paths)
-            .map(path_key)
-            .collect();
-        for session in &snapshot.host.sessions {
-            if selected_id != &session.id {
-                continue;
-            }
-            for path in session_audio_paths(session) {
-                self.erase_session_audio_once(
-                    Some(path),
-                    &mut seen,
-                    &protected,
-                    &handled,
-                    &mut report,
-                );
-            }
+        let protected: HashSet<_> = retained_paths.iter().map(|path| path_key(path)).collect();
+        for path in &sources {
+            self.erase_session_audio_once(
+                Some(path),
+                &mut seen,
+                &protected,
+                &handled,
+                &mut report,
+            );
         }
         report
     }
@@ -198,20 +209,19 @@ impl PrivacyManager {
         let mut report = PrivacyEraseReport::default();
         let mut seen = HashSet::new();
         let protected = HashSet::new();
-        let sources: Vec<String> = snapshot.host.sessions.iter()
-            .flat_map(session_audio_paths).map(str::to_owned).collect();
+        let sources = match cleanup_audio_paths(snapshot.host.sessions.iter(), true) {
+            Ok(paths) => paths, Err(_) => { report.failed_files += 1; return report; }
+        };
         if !self.erase_cache(snapshot, true, &sources, &[], &mut report) { return report; }
         let Some(handled) = self.erase_generated(&sources, &[], &mut seen, &mut report) else { return report; };
-        for session in &snapshot.host.sessions {
-            for path in session_audio_paths(session) {
-                self.erase_session_audio_once(
-                    Some(path),
-                    &mut seen,
-                    &protected,
-                    &handled,
-                    &mut report,
-                );
-            }
+        for path in &sources {
+            self.erase_session_audio_once(
+                Some(path),
+                &mut seen,
+                &protected,
+                &handled,
+                &mut report,
+            );
         }
         report
     }
@@ -369,6 +379,45 @@ mod tests {
         apply_fixture_control, fixture_snapshot, CompanionV1ControlAction,
         CompanionV1ControlRequest, CompanionV1MeetingTrackPart, CompanionV1MeetingTracks,
     };
+
+    #[test]
+    #[ignore = "changes recording-directory environment; run in isolation"]
+    fn deleting_interrupted_meeting_finds_registered_parts_and_preserves_shared() {
+        use std::io::Write;
+        use super::super::audio_artifacts::{Purpose, WriteLease};
+        use super::super::meeting_audio_tracks::TrackWriter;
+        let root = std::env::temp_dir().join(format!("companion-interrupted-delete-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let legacy = root.join("legacy"); std::fs::create_dir_all(&legacy).unwrap();
+        let anchor = root.join("meeting-owned");
+        let mut writer = TrackWriter::create_flat(&root, "meeting-owned-mic", 10).unwrap();
+        writer.append(&[1, 2, 3]).unwrap();
+        let complete = writer.finish().unwrap()[0].path.clone();
+        let partial = root.join("meeting-owned-system-00000000.wav");
+        let lease = WriteLease::begin(&partial, &partial, Purpose::Recording).unwrap().unwrap();
+        let mut file = std::fs::OpenOptions::new().write(true).create_new(true).open(&partial).unwrap();
+        file.write_all(&denzic_host_audio_v1_core::wav::wav_header(0)).unwrap();
+        file.write_all(&[4, 0, 5, 0]).unwrap(); file.sync_all().unwrap(); drop(file); drop(lease);
+        let unknown = root.join("meeting-owned-mic-00000001.wav"); std::fs::write(&unknown, b"other").unwrap();
+        let request: CompanionV1ControlRequest = serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap();
+        let mut snapshot = apply_fixture_control(fixture_snapshot(), request).unwrap();
+        let mut selected = snapshot.host.sessions.remove(0);
+        selected.id = "selected-interrupted".into(); selected.source = "hostMeeting".into();
+        selected.audio_path = None; selected.chunks.clear();
+        selected.meeting_tracks = Some(CompanionV1MeetingTracks { root: anchor.to_string_lossy().into_owned(), state: "recording".into(),
+            microphone: vec![], system: vec![], discontinuity: false, issue: None });
+        let mut retained = selected.clone(); retained.id = "retained".into(); retained.source = "hostMicrophone".into();
+        retained.meeting_tracks = None; retained.audio_path = Some(partial.to_string_lossy().into_owned());
+        snapshot.host.selected_session_id = Some(selected.id.clone()); snapshot.host.sessions = vec![selected, retained];
+        let manager = PrivacyManager::for_handoff_test(root.clone(), legacy);
+        let report = manager.erase_selected_audio(&snapshot);
+        assert_eq!(report.failed_files, 0); assert!(!complete.exists()); assert!(partial.exists()); assert!(unknown.exists());
+        snapshot.host.sessions.pop();
+        let retry = manager.erase_selected_audio(&snapshot);
+        assert_eq!(retry.failed_files, 0); assert!(!partial.exists()); assert!(unknown.exists());
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); std::fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn deleting_selected_meeting_tracks_preserves_shared_and_outside_files() {

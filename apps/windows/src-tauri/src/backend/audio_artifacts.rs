@@ -535,6 +535,16 @@ pub(super) struct MeetingCapturePart {
 /// session prefix. Never adopt a matching filename found by directory scan.
 #[allow(dead_code)]
 pub(super) fn meeting_capture_parts(anchor: &Path) -> Result<(Vec<MeetingCapturePart>, Vec<MeetingCapturePart>), String> {
+    meeting_capture_parts_inner(anchor, false)
+}
+
+/// Deletion also finds the original of a recovered copy and tolerates a prior
+/// interrupted deletion. It still uses only the recorded session prefix.
+pub(super) fn meeting_capture_parts_for_cleanup(anchor: &Path) -> Result<(Vec<MeetingCapturePart>, Vec<MeetingCapturePart>), String> {
+    meeting_capture_parts_inner(anchor, true)
+}
+
+fn meeting_capture_parts_inner(anchor: &Path, cleanup: bool) -> Result<(Vec<MeetingCapturePart>, Vec<MeetingCapturePart>), String> {
     let root = managed_root(anchor).ok_or("会议录音位置不可确认，原音保留。")?;
     let prefix = anchor.file_name().and_then(|s| s.to_str()).filter(|s| !s.is_empty() && s.len() <= 120
         && s.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_'))
@@ -552,8 +562,10 @@ pub(super) fn meeting_capture_parts(anchor: &Path) -> Result<(Vec<MeetingCapture
         let Ok(index) = digits.parse::<u64>() else { continue; };
         if digits != format!("{index:08}") { continue; }
         let path = root.join(&item.file);
+        if cleanup && item.phase == Phase::Gone { continue; }
         if item.purpose != Purpose::Recording || !item.sources.contains(&reference_key(&path)?)
-            || !matches!(item.phase, Phase::Prepared | Phase::Interrupted | Phase::Sealed) {
+            || !(matches!(item.phase, Phase::Prepared | Phase::Interrupted | Phase::Sealed)
+                || cleanup && item.phase == Phase::Deleting) {
             return Err("会议音轨归属或状态不可确认，原音保留。".into());
         }
         let actual = match fingerprint(&path)? {
@@ -562,21 +574,35 @@ pub(super) fn meeting_capture_parts(anchor: &Path) -> Result<(Vec<MeetingCapture
             // no samples to restore. Later registered parts still trigger the
             // continuity check; earlier complete parts remain recoverable.
             None if item.phase == Phase::Prepared && item.identity.is_none() => continue,
+            None if cleanup && item.phase == Phase::Deleting => continue,
             None => return Err("已登记的会议音轨缺失，原音保留。".into()),
         };
         if item.identity.as_ref().is_some_and(|expected| expected != &actual)
             || (item.phase == Phase::Sealed && item.identity.as_ref() != Some(&actual)) {
             return Err("会议音轨与保存记录不一致，原音保留。".into());
         }
-        source.push(MeetingCapturePart { path, index, sealed: item.phase == Phase::Sealed });
+        source.push(MeetingCapturePart { path, index, sealed: matches!(item.phase, Phase::Sealed | Phase::Deleting) });
     }
     for track in [&mut mic, &mut system] {
         track.sort_by_key(|part| part.index);
-        if track.iter().enumerate().any(|(index, part)| part.index != index as u64) {
+        if !cleanup && track.iter().enumerate().any(|(index, part)| part.index != index as u64) {
             return Err("会议音轨缺少分段，原音保留。".into());
         }
     }
     Ok((mic, system))
+}
+
+/// Make the recorded identity durable before the user deletes an interrupted
+/// part. The exclusive lease rejects an active writer; no bytes are changed.
+pub(super) fn checkpoint_interrupted_meeting_for_cleanup(path: &Path) -> Result<(), String> {
+    let pinned = interrupted_host_writer(path)?;
+    let actual = fingerprint(path)?.ok_or_else(fail)?;
+    let mut digest = [0u8; 32];
+    if actual.sha256.len() != 64 { return Err(fail()); }
+    for (index, byte) in digest.iter_mut().enumerate() {
+        *byte = u8::from_str_radix(&actual.sha256[index * 2..index * 2 + 2], 16).map_err(|_| fail())?;
+    }
+    checkpoint_interrupted_host(&pinned, path, actual.bytes, &digest)
 }
 
 pub(super) fn verify_sealed_meeting_part(path: &Path) -> Result<(), String> {

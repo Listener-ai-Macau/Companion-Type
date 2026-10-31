@@ -1356,6 +1356,7 @@ pub(crate) fn apply_control_at(
             snapshot.host.sessions[index].audio_path = None;
             snapshot.host.sessions[index].audio_bytes = 0;
             snapshot.host.sessions[index].audio_stored = false;
+            snapshot.host.sessions[index].meeting_tracks = None;
             snapshot.host.sessions[index].chunks = snapshot.host.sessions[index]
                 .chunks
                 .iter()
@@ -2696,6 +2697,10 @@ mod tests {
             CompanionV1MeetingRecovery::armed("offlineStore");
         audio_snapshot.host.sessions[0].pending_reason =
             Some("recovery_processing".to_string());
+        audio_snapshot.host.sessions[0].meeting_tracks = Some(CompanionV1MeetingTracks {
+            root: "meeting-root".into(), state: "recording".into(), microphone: vec![], system: vec![],
+            discontinuity: false, issue: None,
+        });
         let erased_audio = apply_fixture_control(
             audio_snapshot,
             CompanionV1ControlRequest { recording_source: None,
@@ -2717,6 +2722,7 @@ mod tests {
         assert_eq!(session.recovery, CompanionV1MeetingRecovery::default());
         assert!(session.pending_reason.is_none());
         assert!(session.audio_path.is_none());
+        assert!(session.meeting_tracks.is_none());
         assert_eq!(session.audio_bytes, 0);
     }
 
