@@ -31,6 +31,43 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+#[ignore = "replays the saved real-provider public long meeting without another cloud call"]
+fn replay_long_meeting_conditional_actions() {
+    let text=fs::read_to_string(std::env::var_os("COMPANION_MINUTES_PUBLIC_TEXT").unwrap()).unwrap();
+    let checkpoint=read_checkpoint(Path::new(&std::env::var_os("COMPANION_MINUTES_REPLAY_CHECKPOINT").unwrap())).unwrap();
+    let out=std::env::var_os("COMPANION_MINUTES_PUBLIC_OUTPUT").unwrap();
+    let source=session(&text);let root=root();
+    let result=run_with(&root,"https://fixture.invalid","replay","test",&source,"replay",|index,_,part,_| {
+        let chapter=checkpoint.chapters[index].as_ref().ok_or("recorded chapter missing")?;
+        if chapter.source_hash!=hash(part.transcript_text.as_bytes()) {return Err("recorded chapter source mismatch".into());}
+        Ok((chapter.minutes.clone(),chapter.evidence.clone()))
+    }).unwrap();
+    fs::write(out,serde_json::to_vec_pretty(&result).unwrap()).unwrap();
+    assert!(result.processing.as_ref().unwrap().complete);
+    let action=result.action_items.iter().find(|a|a.text.contains("小陈")&&a.text.contains("交货日期")).unwrap();
+    assert!(action.text.contains("如果客户提出修改")); assert!(action.due.is_none());
+    assert!(result.action_items.iter().any(|a|a.text.contains("小林")&&a.text.contains("参会材料")));
+    assert!(result.action_items.iter().any(|a|a.text.contains("小赵")&&a.text.contains("费用清单")));
+    assert!(!result.action_items.iter().any(|a|a.text.contains("小吴")));
+    cleanup(root);
+}
+
+#[test]
+fn conditional_action_from_summary_also_restores_condition_before_reminder() {
+    let source=format!("{}\n如果客户提出修改，小陈下周一再确认交货日期。", "前文".repeat(1000));
+    let part=session(&source);let (mut minutes,mut evidence)=response(&part);
+    minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {
+        text:"客户提出修改，小陈下周一再确认交货日期。".into(),owner:Some("小陈".into()),due:Some("下周一".into()) });
+    evidence.push(Evidence {field:"actionItems".into(),index:0,quote:"客户提出修改，小陈下周一再确认交货日期。".into()});
+    preserve_conditional_actions(&mut minutes,&mut evidence,&source);
+    assert_eq!(minutes.action_items[0].text,"如果客户提出修改，小陈下周一再确认交货日期。");
+    assert_eq!(minutes.action_items[0].due,None);
+    assert!(evidence.iter().any(|e|e.field=="actionItems" && e.quote.starts_with("如果")));
+    assert_eq!(retain_source_backed(&mut minutes,&mut evidence,&source),0);
+    validate_chapter(&minutes,&evidence,&source).unwrap();
+}
+
+#[test]
 fn focused_actions_restore_conditional_source_and_do_not_duplicate_existing_assignment() {
     let source = "小林负责整理材料，周五发给大家。如果客户提出修改，\n小陈下周一再确认交货日期。";
     let part = session(source); let (mut minutes, mut evidence)=response(&part);
@@ -43,6 +80,7 @@ fn focused_actions_restore_conditional_source_and_do_not_duplicate_existing_assi
         FocusedAction {text:"伪造事项".into(),owner:None,due:None,quote:"原文不存在的事项".into()},
     ];
     merge_focused_actions(&mut minutes,&mut evidence,source,actions);
+    preserve_conditional_actions(&mut minutes,&mut evidence,source);
     let omitted=retain_source_backed(&mut minutes,&mut evidence,source);
     mark_uncertain_items(&mut minutes,&evidence);
     assert_eq!(omitted,1); assert_eq!(minutes.action_items.len(),2);
