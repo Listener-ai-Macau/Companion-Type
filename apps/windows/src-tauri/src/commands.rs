@@ -158,6 +158,8 @@ pub struct PreparedAudioTimeline {
     path:String,
     source_identity:String,
     pause_timeline:Option<crate::backend::recording_pause_view::PauseTimeline>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    meeting_tracks: Option<crate::backend::meeting_workspace::PreparedMeetingAudioTracks>,
 }
 
 #[tauri::command]
@@ -168,12 +170,24 @@ pub async fn prepare_companion_audio_with_timeline(
     let prepared=tauri::async_runtime::spawn_blocking(move || {
         let _lease=coordinator.begin_audio_export()?;
         let snapshot=coordinator.snapshot()?;
+        let session = snapshot.host.sessions.iter().find(|row| row.id == session_id).ok_or("找不到这场会议")?;
+        if session.source == "hostMeeting" {
+            let tracks = crate::backend::meeting_workspace::local_meeting_audio_tracks(&snapshot, &session_id)?;
+            let first = tracks.microphone.first().or_else(|| tracks.system.first()).ok_or("会议音轨为空。")?;
+            return Ok::<_,String>(PreparedAudioTimeline { path:first.path.clone(), source_identity:tracks.source_identity.clone(),
+                pause_timeline:None, meeting_tracks:Some(tracks) });
+        }
         let path=crate::backend::meeting_workspace::local_audio_path(&snapshot,&session_id)?;
         let pause_timeline=crate::backend::recording_pause_view::prepare(&snapshot,&session_id)?;
         let source_identity=crate::backend::meeting_workspace::playback_identity(&session_id,&path)?;
-        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),source_identity,pause_timeline})
+        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),source_identity,pause_timeline,meeting_tracks:None})
     }).await.map_err(|e|format!("准备原音任务失败：{e}"))??;
     app.asset_protocol_scope().allow_file(&prepared.path).map_err(|e|format!("无法准备回听：{e}"))?;
+    if let Some(tracks) = &prepared.meeting_tracks {
+        for part in tracks.microphone.iter().chain(&tracks.system) {
+            app.asset_protocol_scope().allow_file(&part.path).map_err(|e|format!("无法准备回听：{e}"))?;
+        }
+    }
     Ok(prepared)
 }
 

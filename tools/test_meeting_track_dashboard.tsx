@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+class FakeAudio extends EventTarget {src='';readyState=0;currentTime=0;playbackRate=1;preservesPitch=true;paused=true;load(){if(this.src){this.readyState=1;this.dispatchEvent(new Event('loadedmetadata'));}}async play(){this.paused=false;}pause(){this.paused=true;}removeAttribute(name:string){if(name==='src')this.src='';}}
+const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+const row=snapshot.host.sessions[0];Object.assign(row,{id:'meeting-tracks-ui',title:'电脑会议',source:'hostMeeting',status:'captured',audioStored:true,audioBytes:192,durationMs:1000,audioPath:null,pendingReason:'needs_transcription',captureIncomplete:false,transcriptText:'',transcriptFinal:false,meetingTracks:{root:'C:/recordings/a',state:'captured',microphone:[{path:'C:/recordings/m.wav',firstSample:0,samples:16000}],system:[{path:'C:/recordings/s.wav',firstSample:0,samples:16000}],discontinuity:false,issue:null}});
+row.retention.audioCached=true;snapshot.host.sessions=[row];snapshot.host.selectedSessionId=row.id;snapshot.host.activeSessionId=null;snapshot.host.persistence={status:'ready'};snapshot.connected=false;snapshot.device.connected=false;snapshot.device.recording=false;snapshot.meeting.active=false;
+const calls:any[]=[];const tracks={microphone:[{url:'asset-mic',firstSample:0,samples:16000}],system:[{url:'asset-system',firstSample:0,samples:16000}]};
+const props:any={snapshot,surface:'windows',blocked:false,savingBusy:false,busyAction:null,error:null,asrReady:true,minutesReady:true,onControl:(r:any)=>calls.push(r),onRefresh:()=>{},onSettings:()=>{},onWorkflow:()=>{},onPrepareAudio:async(id:string)=>({sessionId:id,url:'asset-mic',sourceIdentity:'a'.repeat(64),meetingTracks:tracks})};
+const text=(node:any):string=>typeof node==='string'?node:(node?.children??[]).map(text).join('');const audio:FakeAudio[]=[];
+let view:any;await act(async()=>{view=create(<CompanionDashboard {...props}/>,{createNodeMock:(e:any)=>{if(e.type==='audio'){const f=new FakeAudio();audio.push(f);return f;}return null;}});});
+const begin=view.root.findAllByType('button').find((button:any)=>text(button)==='开始录电脑会议');assert.ok(begin);assert.equal(begin.props.disabled,false);
+await act(async()=>begin.props.onClick());assert.equal(calls.length,1);assert.equal(calls[0].action,'meetingStart');assert.equal(calls[0].recordingSource,'hostMeeting');assert.equal(calls[0].deviceId,undefined);assert.equal(calls[0].durationMs,0);
+const listen=view.root.findAllByType('button').find((button:any)=>text(button)==='回听');assert.ok(listen);assert.equal(listen.props.disabled,false);
+await act(async()=>{listen.props.onClick();await new Promise(setImmediate);});
+assert.equal(audio.length,2);const play=view.root.findAllByType('button').find((button:any)=>text(button)==='播放');assert.ok(play);
+await act(async()=>{play.props.onClick();await new Promise(setImmediate);});assert.equal(audio[0].src,'asset-mic');assert.equal(audio[1].src,'asset-system');assert.equal(audio[0].paused,false);assert.equal(audio[1].paused,false);
+await act(async()=>view.unmount());assert.equal(audio[0].paused,true);console.log('Meeting dashboard: explicit start without device and saved dual-track playback passed with fake audio.');

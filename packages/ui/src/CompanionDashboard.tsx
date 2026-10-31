@@ -19,6 +19,8 @@ import {CompanionPetFind,type PetFindRequest,type PetFindReport} from './Compani
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
 import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
+import { CompanionMeetingAudioPlayer, type MeetingAudioControl } from './CompanionMeetingAudioPlayer';
+import type { MeetingPlaybackTracks } from './meetingTrackPlayback';
 import {useListeningQueue} from './useListeningQueue';
 import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
 import {recordingInDates} from './libraryDates';
@@ -115,7 +117,7 @@ export type CompanionProductSettingsPublic = {
 };
 
 const listeningIdentity = (session:CompanionV1HostSession) => JSON.stringify([session.id,session.audioPath??'',
-  session.audioBytes,session.deviceSha256??'',session.deviceRecordingKey??'',session.audioStored,session.retention.audioCached]);
+  session.audioBytes,session.deviceSha256??'',session.deviceRecordingKey??'',session.audioStored,session.retention.audioCached,session.meetingTracks??null]);
 
 function recordingTimeLabel(value?: string | number | null) {
   const date = value !== undefined && value !== null && value !== '' ? new Date(value) : null;
@@ -231,7 +233,7 @@ export interface CompanionDashboardProps {
   onPrepareLocalAsr?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
-  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>;
+  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; meetingTracks?: MeetingPlaybackTracks }>;
   onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
   onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
@@ -494,9 +496,10 @@ export function CompanionDashboard({
   const [noteUnsaved,setNoteUnsaved]=useState(false);
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; part?: 'title' | 'minutes'; message: string; kind: 'saved' | 'error' } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
-  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>>({});
+  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; meetingTracks?: MeetingPlaybackTracks }>>({});
   const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
   const audioElement = useRef<HTMLAudioElement | null>(null);
+  const meetingAudioControl = useRef<MeetingAudioControl | null>(null);
   const audioRequestId = useRef(0);
   const [listeningEpoch,setListeningEpoch]=useState(0);
   const [formAsrProvider, setFormAsrProvider] = useState('volcengine');
@@ -767,7 +770,7 @@ export function CompanionDashboard({
     selectedSession
     && selectedSession.status !== 'recording'
     && !['needs_device_sync','needs_segments','needs_local_audio'].includes(selectedSession.pendingReason ?? '')
-    && (selectedSession.source === 'hostMicrophone' ? hostRecordingAudioConfirmed(selectedSession)
+    && (['hostMicrophone','hostMeeting'].includes(selectedSession.source) ? hostRecordingAudioConfirmed(selectedSession)
       : selectedSession.deviceRecordingKey ? selectedSession.audioStored && selectedSession.retention.audioCached
         && selectedSession.audioPath && selectedSession.audioBytes > 0
         : (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0))),
@@ -978,15 +981,15 @@ export function CompanionDashboard({
   const listeningQueue=useListeningQueue({
     rows:allLibrarySessions.filter(row=>!row.organization?.trashedAt).map(row=>({id:row.id,title:`${meetingTitle(row)} · ${isTextOnlyImport(row)?'导入文字':formatDuration(row.durationMs)} · ${row.deviceRecordingId!=null?`#${row.deviceRecordingId}`:isTextOnlyImport(row)?'文字':'录音'} · ${row.startedAt??row.id.slice(-8)}`,identity:listeningIdentity(row),
       ready:row.status!=='recording'&&row.pendingReason!=='needs_device_sync'&&row.audioStored&&row.retention.audioCached
-        &&Boolean(row.audioPath)&&!describeCompanionMeetingRecovery(row)?.isProcessing})),
+        &&(row.source==='hostMeeting' ? hostRecordingAudioConfirmed(row) : Boolean(row.audioPath))&&!describeCompanionMeetingRecovery(row)?.isProcessing})),
     selectedId:selectedSession?.id??'',
     disabled:controlsBusy||audioBusy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved||libraryUnsaved,
     hardBlocked:oobeBlockedByRecording||storageBlocked||Boolean(libraryFilters.trash),prepare:onPrepareAudio,
     select:id=>onControl({action:'meetingSelectSession',sessionId:id}),
-    pause:()=>audioElement.current?.pause(),
+    pause:()=>{audioElement.current?.pause();meetingAudioControl.current?.pause();},
     ready:(entry,audio,epoch)=>{
       setAudioSources(sources=>({...sources,[entry.id]:{url:audio.url,identity:entry.identity,
-        sourceIdentity:audio.sourceIdentity,pauseTimeline:audio.pauseTimeline}}));
+        sourceIdentity:audio.sourceIdentity,pauseTimeline:audio.pauseTimeline,meetingTracks:audio.meetingTracks}}));
       setListeningEpoch(epoch); setPlaybackOpen(true);
     },
   });
@@ -1447,12 +1450,23 @@ export function CompanionDashboard({
       const current = audioContext.current;
       if (requestId !== audioRequestId.current || current.sessionId !== sessionId
         || current.identity !== requestedIdentity || current.blocked) return;
-      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline } }));
+      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline, meetingTracks: prepared.meetingTracks } }));
     } catch (prepareError) {
       setAudioResult({ sessionId, message: `无法回听：${operationErrorText(prepareError,'playback')}` });
     } finally {
       setAudioBusy(false);
     }
+  };
+  const seekMeetingAudio = async (positionMs:number, stillCurrent:()=>boolean) => {
+    if (!Number.isSafeInteger(positionMs) || positionMs < 0 || !stillCurrent()) throw new Error('重点或原音身份已变化，请重新核对。');
+    if (!preparedAudio) await prepareAudio();
+    const deadline = Date.now() + 4000;
+    while (stillCurrent() && !meetingAudioControl.current && Date.now() < deadline) await new Promise(resolve=>setTimeout(resolve,40));
+    const player = meetingAudioControl.current;
+    if (!stillCurrent()) throw new Error('已切换会议，未定位其他会议的原音。');
+    if (!player || positionMs / 1000 > player.duration()) throw new Error('会议原音尚未准备完成或位置超出范围。');
+    player.pause(); await player.seek(positionMs / 1000);
+    if (!stillCurrent()) throw new Error('已切换会议，未定位其他会议的原音。');
   };
   const seekBookmark = async (sessionId:string,bookmarkId:string,positionMs:number) => {
     setPlaybackOpen(true);
@@ -1460,9 +1474,10 @@ export function CompanionDashboard({
     if (!selectedSession||selectedSession.id!==sessionId||!point
       ||companionBookmarkAudioPosition(selectedSession,point)!==positionMs) throw new Error('重点所属原音已变化，请重新核对。');
     const identity=audioIdentity;
-    await seekBookmarkAudio(positionMs,async()=>{if(!preparedAudio) await prepareAudio();},()=>audioElement.current,
-      ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked,
-      () => externalAudioSeek.current?.());
+    const stillCurrent = ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked;
+    if (selectedSession.source === 'hostMeeting') await seekMeetingAudio(positionMs, stillCurrent);
+    else await seekBookmarkAudio(positionMs,async()=>{if(!preparedAudio) await prepareAudio();},()=>audioElement.current,
+      stillCurrent, () => externalAudioSeek.current?.());
     setAudioResult({sessionId,message:'已定位到重点。点击原音播放器的播放按钮即可回听。'});
   };
   const resumeTranscriptDraft = (sessionId: string) => {
@@ -1487,9 +1502,11 @@ export function CompanionDashboard({
     if (!valid() || audioBlockedReason || controlsBusy || transcriptReviewUnsaved)
       throw new Error('这段转写或原音尚不可回听，请结束处理并重新核对。');
     const identity = audioIdentity;
-    await seekBookmarkAudio(source.startMs, async () => { if (!preparedAudio) await prepareAudio(); }, () => audioElement.current,
-      () => valid() && audioContext.current.sessionId === source.sessionId
-        && audioContext.current.identity === identity && !audioContext.current.blocked, () => externalAudioSeek.current?.());
+    const stillCurrent = () => valid() && audioContext.current.sessionId === source.sessionId
+      && audioContext.current.identity === identity && !audioContext.current.blocked;
+    if (selectedSession?.source === 'hostMeeting') await seekMeetingAudio(source.startMs, stillCurrent);
+    else await seekBookmarkAudio(source.startMs, async () => { if (!preparedAudio) await prepareAudio(); }, () => audioElement.current,
+      stillCurrent, () => externalAudioSeek.current?.());
     setAudioResult({ sessionId: source.sessionId, message: '已定位到这段原音。点击播放器的播放按钮即可回听。' });
   };
   const deleteLibraryKey = allLibrarySessions.map(row => [row.id, Boolean(row.organization?.protected)]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))).map(row=>JSON.stringify(row)).join('|');
@@ -1847,7 +1864,7 @@ export function CompanionDashboard({
             {!textOnlyImport ? <button type="button" className="ct-action" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
               disabled={Boolean(audioBlockedReason) || audioBusy} title={audioBlockedReason ?? undefined}
               onClick={() => {
-                if (playbackOpen) {audioElement.current?.pause(); setPlaybackOpen(false); return;}
+                if (playbackOpen) {audioElement.current?.pause(); meetingAudioControl.current?.pause(); setPlaybackOpen(false); return;}
                 setPlaybackOpen(true); if (!preparedAudio) void prepareAudio();
               }}><Headphones size={16}/>{audioBusy?'正在准备…':playbackOpen?'收起回听':'回听'}</button> : null}
           </div>
@@ -1862,7 +1879,11 @@ export function CompanionDashboard({
           <div id="ct-recording-playback" hidden={!playbackOpen}>
           <section className="ct-audio-card" aria-label="本机原音回听">
             <div><strong>原音回听</strong></div>
-            {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
+            {preparedAudio?.meetingTracks ? <CompanionMeetingAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.sourceIdentity}:${listeningEpoch}`}
+              tracks={preparedAudio.meetingTracks} controlRef={meetingAudioControl}
+              autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
+              onFinished={()=>listeningQueue.finished(preparedAudio.sourceIdentity)} />
+            : preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
               sourceIdentity={preparedAudio.sourceIdentity}
               sessionId={selectedSession.id}
               autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
@@ -2123,8 +2144,9 @@ export function CompanionDashboard({
             </div>
           <CompanionBookmarks session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveBookmark} onBusyChange={setBookmarkBusy} onUnsavedChange={setBookmarkUnsaved}
-            playbackPosition={()=>audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
-              ? Math.round(audioElement.current.currentTime*1000):null}
+            playbackPosition={()=>meetingAudioControl.current ? Math.round(meetingAudioControl.current.position()*1000)
+              : audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
+                ? Math.round(audioElement.current.currentTime*1000):null}
             onSeek={seekBookmark} onShowOriginal={()=>setRecordingToolsOpen(true)}
             onExport={onExportMeeting?()=>exportMeeting('json','bookmarks'):undefined}/>
           {renderExportFeedback('bookmarks')}
@@ -2191,6 +2213,15 @@ export function CompanionDashboard({
           </button>
           <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
         </div>
+      </section> : null}
+
+      {surface === 'windows' && !oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="录制电脑会议">
+        <div><strong>录制电脑会议</strong>
+          <p>同时保存电脑播放的声音和本机麦克风，结束后可回听、转文字和整理纪要。电脑播放的其他声音也会录进去。</p></div>
+        <div className="ct-button-row"><button type="button" className="ct-action" disabled={controlsBusy || storageBlocked}
+          onClick={() => onControl({action:'meetingStart',recordingSource:'hostMeeting',meetingMode:'offlineStore',
+            promptId:COMPANION_CAPTURE_ONLY_PROMPT,title:newMeetingTitle.trim() || '电脑会议录音',durationMs:0})}>
+          <Mic size={16}/><span>开始录电脑会议</span></button></div>
       </section> : null}
 
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}

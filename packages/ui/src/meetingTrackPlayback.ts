@@ -95,8 +95,8 @@ export class MeetingTrackPlayback {
     });
     if (epoch !== this.epoch || this.disposed) throw new Error('播放已停止。');
   }
-  private async transition(position: number, shouldPlay: boolean): Promise<void> {
-    if (this.disposed) return;
+  private async transition(position: number, shouldPlay: boolean): Promise<boolean> {
+    if (this.disposed) return false;
     this.cancelBufferWait?.(); this.cancelBufferWait = null;
     const epoch = ++this.epoch;
     this.moving = true;
@@ -112,16 +112,18 @@ export class MeetingTrackPlayback {
         channel.element.playbackRate = this.speed; channel.element.preservesPitch = true;
         channel.element.currentTime = Math.max(0, this.position - part.firstSample / RATE);
       }));
-      if (epoch !== this.epoch || this.disposed) return;
+      if (epoch !== this.epoch || this.disposed) return false;
       this.playing = shouldPlay && this.position < this.duration;
       if (this.playing) await Promise.all(this.channels.filter((_, i) => selected[i]).map(c => c.element.play()));
-      if (epoch !== this.epoch || this.disposed) return;
+      if (epoch !== this.epoch || this.disposed) return false;
       this.moving = false;
       this.report(null);
+      return true;
     } catch (error) {
-      if (epoch !== this.epoch || this.disposed) return;
+      if (epoch !== this.epoch || this.disposed) return false;
       this.channels.forEach(c => c.element.pause()); this.playing = false; this.moving = false;
       this.report(error instanceof Error ? error.message : '会议音轨无法播放，请重试。');
+      return false;
     }
   }
   async play(): Promise<void> {
@@ -136,7 +138,7 @@ export class MeetingTrackPlayback {
   }
   async seek(seconds: number): Promise<void> {
     if (!Number.isFinite(seconds)) throw new Error('回听位置无效。');
-    await this.transition(seconds, this.playing);
+    if (!await this.transition(seconds, this.playing)) throw new Error('无法定位会议音轨，请重试。');
   }
   setSpeed(speed: number): void {
     if (!Number.isFinite(speed) || speed < 0.5 || speed > 2) return;
