@@ -52,6 +52,12 @@ fn fixture(
                 _ => return Err("HTTP fixture accept failed".into()),
             }
         };
+        // On Windows an accepted stream can inherit the listener's
+        // nonblocking mode. The fixture needs bounded blocking reads: otherwise
+        // a request that has not arrived yet is mistaken for an I/O failure.
+        stream
+            .set_nonblocking(false)
+            .map_err(|_| "HTTP fixture stream setup failed")?;
         stream
             .set_read_timeout(Some(Duration::from_secs(2)))
             .map_err(|_| "HTTP fixture read setup failed")?;
@@ -416,6 +422,25 @@ mod tests {
         std::fs::write(&audio,b"controlled fixture audio").unwrap();
         let result=OpenAiCompatibleAsr::new(OpenAiAsrConfig::new(endpoint,"fixture-key")).transcribe_file(&audio).unwrap();
         assert!(result.is_final);assert_eq!(result.text,"controlled proxy result");
+    }
+
+    #[test]
+    fn fixture_waits_for_a_request_sent_after_connection() {
+        use std::io::{Read, Write};
+        use std::time::Duration;
+        let (endpoint, worker) = super::fixture(
+            super::response("200 OK", "{}"), Duration::ZERO, false,
+        ).unwrap();
+        let url = reqwest::Url::parse(&endpoint).unwrap();
+        let mut client = std::net::TcpStream::connect(("127.0.0.1", url.port().unwrap())).unwrap();
+        // A fast acceptor must wait for the connected client's request.
+        std::thread::sleep(Duration::from_millis(150));
+        client.write_all(b"GET / HTTP/1.1\r\nHost: localhost\r\n\r\n").unwrap();
+        let mut response = Vec::new();
+        client.read_to_end(&mut response).unwrap();
+        let request = worker.join().unwrap().unwrap();
+        assert!(request.starts_with(b"GET / HTTP/1.1"));
+        assert!(response.starts_with(b"HTTP/1.1 200 OK"));
     }
 
     #[test]
