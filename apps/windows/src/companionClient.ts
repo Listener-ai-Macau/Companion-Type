@@ -133,11 +133,12 @@ export async function exportCompanionMeeting(request: {
   return invoke('export_companion_meeting', { request });
 }
 
-export async function prepareCompanionAudio(sessionId: string): Promise<{sessionId: string; url: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null}> {
+export async function prepareCompanionAudio(sessionId: string): Promise<{sessionId: string; url: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null; parts: import('../../../packages/ui/src/recordingParts').RecordingPart[]}> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中回听这场会议的本机录音。浏览器演示没有原音。');
-  const prepared = await invoke<{path: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null}>('prepare_companion_audio_with_timeline', { sessionId });
+  const prepared = await invoke<{path: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null; parts?: Array<{path:string;firstSample:number;samples:number}>}>('prepare_companion_audio_with_timeline', { sessionId });
   if (!/^[a-f0-9]{64}$/.test(prepared.sourceIdentity)) throw new Error('桌面端未能核对这份原音，请重新准备回听。');
-  return { sessionId, url: convertFileSrc(prepared.path), sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline };
+  return { sessionId, url: convertFileSrc(prepared.path), sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline,
+    parts: (prepared.parts ?? []).map(part => ({url: convertFileSrc(part.path), firstSample: part.firstSample, samples: part.samples})) };
 }
 
 export async function previewCompanionDiagnostics():Promise<unknown>{return invoke('preview_companion_diagnostics');}

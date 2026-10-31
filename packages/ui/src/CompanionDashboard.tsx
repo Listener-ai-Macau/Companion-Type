@@ -19,6 +19,8 @@ import {CompanionPetFind,type PetFindRequest,type PetFindReport} from './Compani
 import { CompanionTranscriptReview } from './CompanionTranscriptReview';
 import { CompanionBookmarks } from './CompanionBookmarks';
 import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
+import { CompanionSegmentedAudioPlayer, type SegmentedPlaybackControl } from './CompanionSegmentedAudioPlayer';
+import type {RecordingPart} from './recordingParts';
 import {useListeningQueue} from './useListeningQueue';
 import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
 import {recordingInDates} from './libraryDates';
@@ -231,7 +233,7 @@ export interface CompanionDashboardProps {
   onPrepareLocalAsr?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
-  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>;
+  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[] }>;
   onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
   onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
@@ -494,9 +496,10 @@ export function CompanionDashboard({
   const [noteUnsaved,setNoteUnsaved]=useState(false);
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; part?: 'title' | 'minutes'; message: string; kind: 'saved' | 'error' } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
-  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null }>>({});
+  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[] }>>({});
   const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
   const audioElement = useRef<HTMLAudioElement | null>(null);
+  const segmentedAudio = useRef<SegmentedPlaybackControl|null>(null);
   const audioRequestId = useRef(0);
   const [listeningEpoch,setListeningEpoch]=useState(0);
   const [formAsrProvider, setFormAsrProvider] = useState('volcengine');
@@ -986,7 +989,7 @@ export function CompanionDashboard({
     pause:()=>audioElement.current?.pause(),
     ready:(entry,audio,epoch)=>{
       setAudioSources(sources=>({...sources,[entry.id]:{url:audio.url,identity:entry.identity,
-        sourceIdentity:audio.sourceIdentity,pauseTimeline:audio.pauseTimeline}}));
+        sourceIdentity:audio.sourceIdentity,pauseTimeline:audio.pauseTimeline,parts:audio.parts}}));
       setListeningEpoch(epoch); setPlaybackOpen(true);
     },
   });
@@ -1447,7 +1450,7 @@ export function CompanionDashboard({
       const current = audioContext.current;
       if (requestId !== audioRequestId.current || current.sessionId !== sessionId
         || current.identity !== requestedIdentity || current.blocked) return;
-      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline } }));
+      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline,parts:prepared.parts } }));
     } catch (prepareError) {
       setAudioResult({ sessionId, message: `无法回听：${operationErrorText(prepareError,'playback')}` });
     } finally {
@@ -1462,7 +1465,7 @@ export function CompanionDashboard({
     const identity=audioIdentity;
     await seekBookmarkAudio(positionMs,async()=>{if(!preparedAudio) await prepareAudio();},()=>audioElement.current,
       ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked,
-      () => externalAudioSeek.current?.());
+      () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===sessionId?segmentedAudio.current:null);
     setAudioResult({sessionId,message:'已定位到重点。点击原音播放器的播放按钮即可回听。'});
   };
   const resumeTranscriptDraft = (sessionId: string) => {
@@ -1489,7 +1492,7 @@ export function CompanionDashboard({
     const identity = audioIdentity;
     await seekBookmarkAudio(source.startMs, async () => { if (!preparedAudio) await prepareAudio(); }, () => audioElement.current,
       () => valid() && audioContext.current.sessionId === source.sessionId
-        && audioContext.current.identity === identity && !audioContext.current.blocked, () => externalAudioSeek.current?.());
+        && audioContext.current.identity === identity && !audioContext.current.blocked, () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===source.sessionId?segmentedAudio.current:null);
     setAudioResult({ sessionId: source.sessionId, message: '已定位到这段原音。点击播放器的播放按钮即可回听。' });
   };
   const deleteLibraryKey = allLibrarySessions.map(row => [row.id, Boolean(row.organization?.protected)]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))).map(row=>JSON.stringify(row)).join('|');
@@ -1862,7 +1865,16 @@ export function CompanionDashboard({
           <div id="ct-recording-playback" hidden={!playbackOpen}>
           <section className="ct-audio-card" aria-label="本机原音回听">
             <div><strong>原音回听</strong></div>
-            {preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
+            {preparedAudio ? (preparedAudio.parts && preparedAudio.parts.length>1 ? <CompanionSegmentedAudioPlayer
+              key={`${preparedAudio.identity}:${preparedAudio.sourceIdentity}:${listeningEpoch}`} playerRef={audioElement} controlRef={segmentedAudio}
+              parts={preparedAudio.parts} pauseTimeline={preparedAudio.pauseTimeline} sourceIdentity={preparedAudio.sourceIdentity} sessionId={selectedSession.id}
+              autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
+              onFinished={()=>listeningQueue.finished(preparedAudio.sourceIdentity)} onError={()=>{
+                if(audioContext.current.sessionId!==selectedSession.id || audioContext.current.identity!==preparedAudio.identity)return;
+                if(listeningQueue.active)listeningQueue.stop('原音无法播放，连续播放已停止。');
+                setAudioSources(current=>{const next={...current};delete next[selectedSession.id];return next;});
+                setAudioResult({sessionId:selectedSession.id,message:'无法回听：音频可能已移动、删除或损坏，请刷新后重试。'});
+              }} /> : <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
               sourceIdentity={preparedAudio.sourceIdentity}
               sessionId={selectedSession.id}
               autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
@@ -1878,7 +1890,7 @@ export function CompanionDashboard({
                   const next = { ...current }; delete next[selectedSession.id]; return next;
                 });
                 setAudioResult({ sessionId: selectedSession.id, message: '无法回听：音频可能已移动、删除或损坏，请刷新后重试。' });
-              }} />
+              }} />)
               : <button type="button" className="ct-action" disabled={Boolean(audioBlockedReason) || audioBusy}
                 title={audioBlockedReason ?? undefined} onClick={() => void prepareAudio()}>{audioBusy ? '正在准备…' : '重试回听'}</button>}
           </section>
@@ -2123,7 +2135,7 @@ export function CompanionDashboard({
             </div>
           <CompanionBookmarks session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveBookmark} onBusyChange={setBookmarkBusy} onUnsavedChange={setBookmarkUnsaved}
-            playbackPosition={()=>audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
+            playbackPosition={()=>segmentedAudio.current?.sessionId===selectedSession.id?Math.round(segmentedAudio.current.position()*1000):audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
               ? Math.round(audioElement.current.currentTime*1000):null}
             onSeek={seekBookmark} onShowOriginal={()=>setRecordingToolsOpen(true)}
             onExport={onExportMeeting?()=>exportMeeting('json','bookmarks'):undefined}/>
