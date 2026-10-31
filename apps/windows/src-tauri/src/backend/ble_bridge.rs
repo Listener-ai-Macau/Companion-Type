@@ -4874,6 +4874,7 @@ async fn sync_native_recordings_with_link_policy(
     // was lost. Its directory then lacks that ID, so normal pull cannot retry.
     // Replay only a durable intent from this device, with unchanged local
     // audio and session; never infer a receipt from the missing directory row.
+    let mut recovered_recordings = Vec::new();
     if delete_after_sync_enabled() {
         let root = native_recording_root()?;
         let state = super::persistence::state_file_path();
@@ -4890,12 +4891,24 @@ async fn sync_native_recordings_with_link_policy(
                     eprintln!("legacy recording receipt replay refused id={} local_audio_kept=1", intent.id());
                 }
                 Ok(_) => {
-                    if let Err(error) = intent.confirm(&state).and_then(|_| intent.remove(&root)) {
-                        eprintln!("legacy recording receipt saved for retry id={} error={error}", intent.id());
+                    match intent.confirm(&state) {
+                        Ok(()) => {
+                            // Propagate the confirmed row through the ordinary
+                            // reducer too, so an older in-memory snapshot does
+                            // not hide or overwrite the durable confirmation.
+                            recovered_recordings.push(intent.confirmed_recording());
+                            if let Err(error) = intent.release_cursor(&root) {
+                                eprintln!("legacy received cursor kept id={} error={error}", intent.id());
+                            }
+                            if let Err(error) = intent.remove(&root) {
+                                eprintln!("legacy recording receipt cleanup deferred id={} error={error}", intent.id());
+                            }
+                        }
+                        Err(error) => eprintln!("legacy recording receipt saved for retry id={} error={error}", intent.id()),
                     }
                 }
                 Err(error) => return Ok(NativeRecordingBatch {
-                    device_id: device.device_id(), recordings: Vec::new(),
+                    device_id: device.device_id(), recordings: recovered_recordings,
                     failures: vec![format!("录音已保存，设备确认暂未恢复：{error}")],
                     paused: false, connection_reusable: false, segmented: None,
                 }),
@@ -4907,7 +4920,7 @@ async fn sync_native_recordings_with_link_policy(
     if entries.is_empty() {
         return Ok(NativeRecordingBatch {
             device_id: device.device_id(),
-            recordings: Vec::new(),
+            recordings: recovered_recordings,
             failures: Vec::new(),
             paused: false,
             connection_reusable: true,
@@ -4919,7 +4932,8 @@ async fn sync_native_recordings_with_link_policy(
      * first.  Returning only after every directory entry has passed the full
      * length/SHA gate prevents the old one-recording-per-connect behaviour. */
     let backlog_count = entries.len();
-    let mut recordings = Vec::with_capacity(backlog_count);
+    let mut recordings = recovered_recordings;
+    recordings.reserve(backlog_count);
     let mut failures = Vec::new();
     let mut pull_session = None;
     let mut paused = false;
@@ -5170,7 +5184,8 @@ async fn sync_native_recording_entry(
                 sha256: sha256_hex.clone(), recording_path: path.to_string_lossy().into_owned(),
                 device_reclaimed: false, capture_incomplete: entry.capture_incomplete };
             let root = native_recording_root()?;
-            legacy_intent = Some(legacy_reclaim::prepare(&root, &super::persistence::state_file_path(), &device.device_id(), &item)?);
+            let cursor = (!compress).then(|| recording_transfer_source(&device.address, &entry));
+            legacy_intent = Some(legacy_reclaim::prepare(&root, &super::persistence::state_file_path(), &device.device_id(), &item, cursor)?);
         }
         match delete_privacy_on_device(
             device,

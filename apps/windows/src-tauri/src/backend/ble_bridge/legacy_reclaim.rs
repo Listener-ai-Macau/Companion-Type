@@ -14,9 +14,12 @@ pub(super) struct Intent {
     device: String,
     recording_id: u32,
     total_length: u32,
+    duration_ms: u32,
+    capture_incomplete: bool,
     device_sha256: String,
     audio_path: String,
     audio_sha256: String,
+    cursor: Option<super::super::recording_transfer::Source>,
 }
 
 fn hash_file(path: &Path) -> Result<String, String> {
@@ -43,6 +46,27 @@ impl Intent {
     pub(super) fn id(&self) -> u32 { self.recording_id }
     pub(super) fn len(&self) -> u32 { self.total_length }
     pub(super) fn audio_path(&self) -> &Path { Path::new(&self.audio_path) }
+    pub(super) fn release_cursor(&self, root: &Path) -> Result<(), String> {
+        match &self.cursor {
+            Some(source) => {
+                if !super::super::device_connection::same_device_id(&source.device, &self.device)
+                    || source.recording_id != self.recording_id || source.total_length != self.total_length {
+                    return Err("续传记录与设备录音不匹配".into());
+                }
+                let part = super::super::recording_transfer::path(root, source)?;
+                if !part.exists() { return Ok(()); }
+                if hash_file(&part)? != self.device_sha256 { return Err("续传文件与已确认录音不匹配".into()); }
+                super::super::recording_transfer::release(root, source.clone())
+            }
+            None => Ok(()),
+        }
+    }
+    pub(super) fn confirmed_recording(&self) -> CompanionSyncedRecording {
+        CompanionSyncedRecording { recording_id: self.recording_id, duration_ms: self.duration_ms,
+            total_length: self.total_length, sha256: self.device_sha256.clone(),
+            recording_path: self.audio_path.clone(), device_reclaimed: true,
+            capture_incomplete: self.capture_incomplete }
+    }
     pub(super) fn digest(&self) -> Result<[u8; 32], String> {
         if self.device_sha256.len() != 64 || !self.device_sha256.bytes().all(|b| b.is_ascii_hexdigit()) {
             return Err("设备录音校验值不可用".into());
@@ -90,10 +114,12 @@ impl Intent {
     }
 }
 
-pub(super) fn prepare(root: &Path, state: &Path, device: &str, item: &CompanionSyncedRecording) -> Result<(Intent, File), String> {
+pub(super) fn prepare(root: &Path, state: &Path, device: &str, item: &CompanionSyncedRecording,
+    cursor: Option<super::super::recording_transfer::Source>) -> Result<(Intent, File), String> {
     let intent = Intent { schema: 1, device: device.into(), recording_id: item.recording_id,
-        total_length: item.total_length, device_sha256: item.sha256.clone(),
-        audio_path: item.recording_path.clone(), audio_sha256: hash_file(Path::new(&item.recording_path))? };
+        total_length: item.total_length, duration_ms: item.duration_ms,
+        capture_incomplete: item.capture_incomplete, device_sha256: item.sha256.clone(),
+        audio_path: item.recording_path.clone(), audio_sha256: hash_file(Path::new(&item.recording_path))?, cursor };
     let guard = lock(root, &intent)?;
     intent.verify(state)?;
     let path = intent.path(root);
@@ -151,7 +177,7 @@ mod tests {
             sha256: "ab".repeat(32), recording_path: wav.to_string_lossy().into_owned(),
             device_reclaimed: false, capture_incomplete: false };
         super::super::super::checkpoint_received_recording(&state, device, &item).unwrap();
-        let (intent, guard) = prepare(&root, &state, device, &item).unwrap();
+        let (intent, guard) = prepare(&root, &state, device, &item, None).unwrap();
         assert!(lock(&root, &intent).is_err(), "another process must not replay during an active consume");
         drop(guard); // process/connection ends before its receipt is saved
         assert!(candidates(&root, "11:22:33:44:55:66", None, &[]).is_empty());
@@ -173,8 +199,16 @@ mod tests {
         assert!(recovered[0].verify(&state).is_err(), "never use an audio file no longer owned by the meeting");
         super::super::super::session_store::update(&state, |rows| rows[0].audio_path = Some(item.recording_path.clone())).unwrap();
         recovered[0].verify(&state).unwrap();
+        let before = super::super::super::session_store::load(&state);
+        let stale_rows: Vec<crate::companion_v1::CompanionV1HostSession> = serde_json::from_slice(&before.bytes.unwrap()).unwrap();
+        let mut snapshot = crate::companion_v1::fixture_snapshot();
+        snapshot.device.device_id = Some(device.into());
+        snapshot.host.sessions = stale_rows;
         // This corresponds to a matching real device receipt, not catalog absence.
         recovered[0].confirm(&state).unwrap();
+        super::super::super::merge_synced_recordings(&mut snapshot, &[recovered[0].confirmed_recording()]);
+        assert!(snapshot.host.sessions[0].device_reclaimed, "normal sync must see the recovered confirmation");
+        assert_eq!(snapshot.host.sessions[0].title, "用户修改的会议名称");
         assert!(recovered[0].verify(&state).is_err());
         recovered[0].remove(&root).unwrap();
         assert!(candidates(&root, device, None, &[]).is_empty());
