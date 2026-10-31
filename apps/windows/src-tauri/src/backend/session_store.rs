@@ -318,7 +318,7 @@ pub(crate) fn restore_backup(path:&Path,rows:&[CompanionV1HostSession])->Result<
                     if serde_json::to_vec(&valid).map_err(|e|e.to_string())?!=desired{return Err(original);}
                 }
             }
-            for (file,bytes) in &copies {if let Some(bytes)=bytes {preserve_corrupt(file,bytes)?;}}
+            for (file,bytes) in &copies {if let Some(bytes)=bytes {if decode(bytes).is_err(){preserve_corrupt(file,bytes)?;}}}
             let json=serde_json::to_vec_pretty(rows).map_err(|e|e.to_string())?;decode(&json)?;
             super::export::write_atomic(&backup,&json)?;
             super::export::write_atomic(path,&json)?;

@@ -58,6 +58,10 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
             leaf(raw,root)?;anchors.push(raw.clone());
         }
         if row.audio_stored && row.audio_path.is_none(){return Err("录音文件缺失，请先恢复。".into());}
+        if row.audio_stored {
+            let path=row.audio_path.as_deref().ok_or("录音文件缺失，请先恢复。")?;
+            super::meeting_workspace::validate_wav(Path::new(path)).map_err(|_|format!("“{}”的回听音频不完整，请先恢复后备份。",row.title))?;
+        }
     }
     anchors.sort();anchors.dedup();let mut files=audio_artifacts::backup_files_at(root,&anchors)?;
     let mut names=files.iter().map(|f|f.file.to_lowercase()).collect::<HashSet<_>>();
@@ -84,8 +88,19 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
 
 /// Writes a fresh self-contained directory; it never replaces an existing backup.
 pub fn save(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent:&Path)->Result<Report,String>{
+    if snapshot.host.persistence.status!="ready"||snapshot.meeting.active||snapshot.device.recording||snapshot.host.sessions.iter().any(|s|s.status=="recording"||matches!(s.recovery.stage.as_str(),"transcribing"|"generatingMinutes")){
+        return Err("请先完成录音和正在进行的整理，并保存会议库。".into());
+    }
     let root=recording_root.canonicalize().map_err(|_|"录音目录不可用。")?;
     let parent=parent.canonicalize().map_err(|_|"请选择备份目录。")?;
+    // The grouped receiver validates all compressed originals, timeline and
+    // playback parts before we represent a board session as backed up.
+    for row in &snapshot.host.sessions {
+        if row.audio_stored && row.device_recording_key.is_some(){
+            super::recording_wire::receiver::Receiver::verified_audio_parts(row)
+                .map_err(|_|format!("“{}”的录音分段不完整，请先恢复或同步后备份。",row.title))?;
+        }
+    }
     let mut paths=snapshot.host.sessions.iter().flat_map(|s|s.audio_path.iter().chain(s.chunks.iter().filter_map(|c|c.path.as_ref())))
         .filter(|p|!virtual_path(p)).cloned().collect::<Vec<_>>();
     paths.sort();paths.dedup();
@@ -233,6 +248,9 @@ mod tests {
         row.chunks.clear();row.chunks.push(crate::companion_v1::CompanionV1AudioChunk{id:"chunk".into(),path:row.audio_path.clone(),started_at:None,stopped_at:None,duration_ms:1,bytes:sound.len() as u64,status:"sealed".into()});
         row.transcript_text="虚构会议：周五前报价".into();row.transcript_final=true;
         let report=save(&snapshot,&source,&backups).unwrap();assert_eq!(report.files,3);
+        let broken=source.join("broken-legacy.wav");fs::write(&broken,b"not a WAV").unwrap();
+        let mut malformed=snapshot.clone();malformed.host.sessions[0].audio_path=Some(broken.to_string_lossy().into());malformed.host.sessions[0].chunks.clear();
+        let before=fs::read_dir(&backups).unwrap().count();assert!(save(&malformed,&source,&backups).is_err());assert_eq!(fs::read_dir(&backups).unwrap().count(),before);
         let backup=PathBuf::from(report.path);let m=read_manifest(&backup.join("manifest.json")).unwrap();assert_eq!(m.files.len(),3);
         let damaged_index=m.files.iter().position(|x|x.file=="recording-original.opus").unwrap();let file=backup.join("files").join(damaged_index.to_string());
         let original=fs::read(&file).unwrap();fs::write(&file,b"tampered").unwrap();assert!(restore_files(&backup,&target).is_err());
