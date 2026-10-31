@@ -177,6 +177,24 @@ pub async fn prepare_companion_audio_with_timeline(
     Ok(prepared)
 }
 
+/// Prepare the separately saved computer and microphone files without making
+/// a second copy. This is called only when the two-track player is available.
+#[tauri::command]
+pub async fn prepare_companion_meeting_audio_tracks(
+    app: AppHandle, coordinator: CompanionCoordinatorState<'_>, session_id: String,
+) -> Result<crate::backend::meeting_workspace::PreparedMeetingAudioTracks, String> {
+    let coordinator = coordinator.inner().clone();
+    let prepared = tauri::async_runtime::spawn_blocking(move || {
+        let _lease = coordinator.begin_audio_export()?;
+        let snapshot = coordinator.snapshot()?;
+        crate::backend::meeting_workspace::local_meeting_audio_tracks(&snapshot, &session_id)
+    }).await.map_err(|e| format!("准备会议回听失败：{e}"))??;
+    for part in prepared.microphone.iter().chain(&prepared.system) {
+        app.asset_protocol_scope().allow_file(&part.path).map_err(|e| format!("无法准备会议回听：{e}"))?;
+    }
+    Ok(prepared)
+}
+
 #[derive(Clone, Copy, Debug, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum CompanionMeetingExportFormat {
