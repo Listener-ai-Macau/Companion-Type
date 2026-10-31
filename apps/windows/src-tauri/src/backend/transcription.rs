@@ -1020,7 +1020,7 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
         }
     }
     let completed = complete_chunk_results(results)?;
-    let (clean_text, mut per_utterance) = merge_chunk_transcriptions(paths, completed);
+    let (clean_text, mut per_utterance) = merge_chunk_transcriptions(paths, completed)?;
     if let Some(source) = continuous_source {
         recollect_embeddings_from_full_audio(source, &mut per_utterance);
     }
@@ -1030,20 +1030,39 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
 fn merge_chunk_transcriptions(
     paths: &[PathBuf],
     completed: Vec<ChunkTranscription>,
-) -> (String, Vec<CollectedUtterance>) {
-    let mut per_utterance: Vec<CollectedUtterance> = Vec::new();
-    let mut clean_parts: Vec<String> = Vec::new();
-    let mut timeline_offset_ms = 0u64;
-    for (path, (text, mut embeds)) in paths.iter().zip(completed) {
-        for utterance in &mut embeds {
-            utterance.start_ms = utterance.start_ms.saturating_add(timeline_offset_ms);
-            utterance.end_ms = utterance.end_ms.saturating_add(timeline_offset_ms);
-        }
-        clean_parts.push(text);
-        per_utterance.extend(embeds);
-        timeline_offset_ms = timeline_offset_ms.saturating_add(wav_duration_ms(path));
+) -> Result<(String, Vec<CollectedUtterance>), String> {
+    if paths.len() != completed.len() {
+        return Err("转写分段数量不一致；已有录音和识别结果保留，可重试。".into());
     }
-    (clean_parts.join("\n"), per_utterance)
+    // Keep every completed provider result even if a later timing read fails:
+    // the optional recognition cache itself may also have failed to save.
+    let clean_text=completed.iter().map(|(text,_)|text.as_str()).collect::<Vec<_>>().join("\n");
+    let mut per_utterance: Vec<CollectedUtterance> = Vec::new();
+    // Keep sample precision across files; rounding each file separately loses
+    // up to one millisecond per boundary.
+    let mut preceding_bytes = 0u64;
+    for (index, (path, (_, mut embeds))) in paths.iter().zip(completed).enumerate() {
+        let bytes = match wav_pcm_bytes(path) {
+            Ok(bytes) => bytes,
+            Err(_) => {
+                eprintln!("[transcription] chunk={} timeline_unavailable=1 recognized_text_preserved=1",index+1);
+                return Ok((clean_text,Vec::new()));
+            }
+        };
+        let Some(timeline_offset_ms) = u64::try_from(preceding_bytes as u128 * 1_000 / PCM_BYTES_PER_SECOND as u128).ok() else {
+            return Ok((clean_text,Vec::new()));
+        };
+        for utterance in &mut embeds {
+            let (Some(start),Some(end))=(utterance.start_ms.checked_add(timeline_offset_ms),utterance.end_ms.checked_add(timeline_offset_ms)) else {
+                return Ok((clean_text,Vec::new()));
+            };
+            utterance.start_ms=start;utterance.end_ms=end;
+        }
+        per_utterance.extend(embeds);
+        let Some(total) = preceding_bytes.checked_add(bytes) else { return Ok((clean_text,Vec::new())); };
+        preceding_bytes=total;
+    }
+    Ok((clean_text, per_utterance))
 }
 
 type ChunkTranscription = (String, Vec<CollectedUtterance>);
@@ -1096,10 +1115,10 @@ fn transcribe_long_meeting_chunk(path: &Path, request: u64) -> Result<(String, V
     Ok((text, embeds))
 }
 
-fn wav_duration_ms(path: &Path) -> u64 {
-    diarization::read_pcm16k_mono_wav(path)
-        .map(|pcm| (pcm.len() as u64).saturating_mul(1_000) / PCM_BYTES_PER_SECOND as u64)
-        .unwrap_or(0)
+fn wav_pcm_bytes(path: &Path) -> Result<u64, String> {
+    let mut file = fs::File::open(path).map_err(|e| e.to_string())?;
+    let (_, bytes) = diarization::pcm16k_mono_wav_range(&mut file)?;
+    Ok(bytes)
 }
 
 fn asr_chunk_retry_count() -> usize {
@@ -1648,7 +1667,7 @@ mod tests {
             for (index, (text, _)) in completed.iter().enumerate() {
                 if index != quiet_index { assert_eq!(text, &format!("recognized words {index}")); }
             }
-            let (text, timed) = merge_chunk_transcriptions(&paths, completed);
+            let (text, timed) = merge_chunk_transcriptions(&paths, completed).unwrap();
             assert_eq!(timed.len(), 2);
             let spoken_indices = (0..3).filter(|index| *index != quiet_index).collect::<Vec<_>>();
             for (utterance, index) in timed.iter().zip(spoken_indices) {
@@ -1659,6 +1678,72 @@ mod tests {
         }
         for path in paths { fs::remove_file(path).unwrap(); }
         fs::remove_dir(dir).unwrap();
+    }
+
+    #[test]
+    #[ignore = "requires isolated valid public WAV and an absent first segment"]
+    fn missing_transcribed_segment_never_returns_incorrect_timestamps() {
+        let valid = PathBuf::from(std::env::var_os("COMPANION_TRANSCRIPTION_VALID_WAV").unwrap());
+        let missing = valid.with_file_name("missing-timeline-segment-never-created.wav");
+        assert!(!missing.exists());
+        let utterance = |text: &str| CollectedUtterance { text:text.into(), start_ms:100, end_ms:600,
+            provider_speaker:None,provider_request:None,embedding:None };
+        let (text,timed) = merge_chunk_transcriptions(&[missing,valid],vec![("first".into(),vec![utterance("first")]),("second".into(),vec![utterance("second")])]).unwrap();
+        assert_eq!(text,"first\nsecond", "completed recognition must be preserved even if the cache is unavailable");
+        assert!(timed.is_empty(), "unreadable segment must not produce misleading timestamps");
+        let missing_tail=PathBuf::from(std::env::var_os("COMPANION_TRANSCRIPTION_VALID_WAV").unwrap()).with_file_name("missing-timeline-segment-never-created.wav");
+        let valid=PathBuf::from(std::env::var_os("COMPANION_TRANSCRIPTION_VALID_WAV").unwrap());
+        let (text,timed)=merge_chunk_transcriptions(&[valid,missing_tail],vec![("first".into(),vec![utterance("first")]),("second".into(),vec![utterance("second")])]).unwrap();
+        assert_eq!(text,"first\nsecond");assert!(timed.is_empty());
+    }
+
+    #[test]
+    #[ignore = "requires isolated public WAV and serial simulated provider"]
+    fn completed_provider_text_survives_segment_disappearing_before_merge() {
+        let source=PathBuf::from(std::env::var_os("COMPANION_TRANSCRIPTION_VALID_WAV").unwrap());
+        let dir=std::env::temp_dir().join(format!("companion-merge-recovery-{}",uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();
+        let first=dir.join("first.wav");let second=dir.join("second.wav");
+        fs::copy(&source,&first).unwrap();fs::copy(&source,&second).unwrap();
+        let paths=vec![first.clone(),second.clone()];
+        let result=volcengine_multi_chunk_transcript_with(&paths,None,&|_,index| {
+            if index==1 {fs::remove_file(&first).unwrap();}
+            let text=if index==0 {"第一段。"} else {"第二段。"};
+            Ok((text.into(),vec![CollectedUtterance{text:text.into(),start_ms:100,end_ms:600,
+                provider_speaker:None,provider_request:None,embedding:None}]))
+        }).unwrap();
+        assert_eq!(result.text,"第一段。\n第二段。");
+        assert!(result.utterances.is_empty());
+        assert!(source.is_file() && second.is_file());
+        fs::remove_file(second).unwrap();fs::remove_dir(dir).unwrap();
+    }
+
+    #[test]
+    fn chunk_timeline_preserves_fractional_milliseconds_and_rejects_mismatched_results() {
+        let dir = std::env::temp_dir().join(format!("companion-chunk-clock-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();
+        let paths=(0..17).map(|index| {
+            let path=dir.join(format!("{index}.wav"));
+            write_pcm16k_mono_wav(&path,&[0u8;2]).unwrap();
+            path
+        }).collect::<Vec<_>>();
+        let completed=(0..17).map(|_| ("x".into(),vec![CollectedUtterance{text:"x".into(),start_ms:0,end_ms:1,
+            provider_speaker:None,provider_request:None,embedding:None}])).collect::<Vec<_>>();
+        let (_,timed)=merge_chunk_transcriptions(&paths,completed).unwrap();
+        assert_eq!(timed[15].start_ms,0);
+        assert_eq!(timed[16].start_ms,1);
+        assert!(merge_chunk_transcriptions(&paths,Vec::new()).is_err());
+        for path in paths {fs::remove_file(path).unwrap();}
+        fs::remove_dir(dir).unwrap();
+    }
+
+    #[test]
+    #[ignore = "requires public long-meeting WAV and expected data length"]
+    fn public_long_meeting_duration_uses_validated_wav_metadata() {
+        let path=PathBuf::from(std::env::var_os("COMPANION_TRANSCRIPTION_LONG_WAV").unwrap());
+        let expected=std::env::var("COMPANION_TRANSCRIPTION_EXPECTED_PCM_BYTES").unwrap().parse::<u64>().unwrap();
+        assert!(expected > 2 * 60 * 60 * PCM_BYTES_PER_SECOND as u64);
+        assert_eq!(wav_pcm_bytes(&path).unwrap(),expected);
     }
 
     #[test]
