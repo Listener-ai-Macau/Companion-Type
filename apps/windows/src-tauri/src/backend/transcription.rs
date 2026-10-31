@@ -181,22 +181,29 @@ impl CompanionTranscriptionManager {
             return volcengine_multi_file_transcript_with(&real_paths, &transcribe_long_meeting_chunk);
         }
 
+        let local = local_provider_selected();
         let mut parts = Vec::new();
+        let mut timed_parts = Vec::new();
         let mut providers = Vec::new();
         for path in &real_paths {
             let transcript = match self.transcribe_existing_path(path) {
                 Ok(transcript) => transcript,
                 // A digital-zero file carries no PCM signal. Do not discard a
                 // whole meeting because that independent segment has no words.
-                // Any nonzero or unreadable file keeps the original error.
-                Err(error) if local_provider_selected() && error == LOCAL_NO_SPEECH
-                    && wav_is_digital_silence(path)? => continue,
+                // Keep its place in the source clock for the later segments.
+                Err(error) if local && error == LOCAL_NO_SPEECH
+                    && wav_is_digital_silence(path)? => {
+                    timed_parts.push((String::new(), Vec::new()));
+                    continue;
+                },
                 Err(error) => return Err(error),
             };
             providers.push(transcript.provider_id.clone());
+            timed_parts.push((transcript.text.clone(), transcript.utterances));
             parts.push(transcript.text);
         }
         if parts.is_empty() { return Err(LOCAL_NO_SPEECH.into()); }
+        let utterances = if local { merge_local_timed_parts(&real_paths, timed_parts) } else { Vec::new() };
         Ok(CompanionTranscript {
             text: normalize_transcript(&parts.join("\n")),
             provider_id: "companion-type-chunk-merge".to_string(),
@@ -211,7 +218,7 @@ impl CompanionTranscriptionManager {
                     .join("+")
             ),
             evidence_path: None,
-            utterances: Vec::new(),
+            utterances,
         })
     }
 
@@ -1072,6 +1079,42 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
     Ok(volcengine_transcript_from(&clean_text, &per_utterance))
 }
 
+// Local ASR anchors are relative to each WAV, not the entire meeting. If
+// any duration or text coverage is unavailable, retain all recognized text
+// but omit timing rather than expose a misleading seek position.
+fn merge_local_timed_parts(
+    paths: &[PathBuf],
+    completed: Vec<(String, Vec<CompanionV1UtteranceSegment>)>,
+) -> Vec<CompanionV1UtteranceSegment> {
+    if paths.len() != completed.len() { return Vec::new(); }
+    let mut preceding_bytes=0u64;
+    let mut merged=Vec::new();
+    for (path,(text,mut anchors)) in paths.iter().zip(completed) {
+        let bytes=match wav_pcm_bytes(path) { Ok(bytes)=>bytes, Err(_)=>return Vec::new() };
+        let full:String=text.chars().filter(|c|!c.is_whitespace()).collect();
+        let covered:String=anchors.iter().flat_map(|a|a.text.chars()).filter(|c|!c.is_whitespace()).collect();
+        if full!=covered {return Vec::new();}
+        let offset=match u64::try_from(preceding_bytes as u128 * 1000 / PCM_BYTES_PER_SECOND as u128) {
+            Ok(value)=>value, Err(_)=>return Vec::new()
+        };
+        let max_end=match u64::try_from((bytes as u128 * 1000 + PCM_BYTES_PER_SECOND as u128 - 1) / PCM_BYTES_PER_SECOND as u128) {
+            Ok(value)=>value, Err(_)=>return Vec::new()
+        };
+        let mut previous_start=0;
+        for anchor in &mut anchors {
+            if anchor.start_ms < previous_start || anchor.start_ms >= anchor.end_ms || anchor.end_ms > max_end {
+                return Vec::new();
+            }
+            previous_start=anchor.start_ms;
+            let (Some(start),Some(end))=(anchor.start_ms.checked_add(offset),anchor.end_ms.checked_add(offset)) else {return Vec::new()};
+            anchor.start_ms=start;anchor.end_ms=end;
+        }
+        merged.extend(anchors);
+        preceding_bytes=match preceding_bytes.checked_add(bytes) {Some(value)=>value,None=>return Vec::new()};
+    }
+    merged
+}
+
 fn merge_chunk_transcriptions(
     paths: &[PathBuf],
     completed: Vec<ChunkTranscription>,
@@ -1838,6 +1881,46 @@ mod tests {
         }).unwrap();
         assert_eq!(result.text,"后续内容。");assert_eq!(attempts.load(Ordering::SeqCst),limit+1);
         fs::remove_file(first).unwrap();fs::remove_file(second).unwrap();fs::remove_dir(dir).unwrap();
+    }
+
+    #[test]
+    #[ignore = "requires public audio clips and an explicitly configured local ASR model"]
+    fn real_local_multi_file_transcription_keeps_complete_global_anchors() {
+        let dir=PathBuf::from(std::env::var_os("COMPANION_LOCAL_MULTI_CLIPS").unwrap());
+        assert!(local_provider_selected());
+        let paths=["first.wav","silence.wav","last.wav"].iter().map(|p|dir.join(p).to_string_lossy().into_owned()).collect::<Vec<_>>();
+        let result=CompanionTranscriptionManager::new().transcribe_session(None,&paths).unwrap();
+        let full:String=result.text.chars().filter(|c|!c.is_whitespace()).collect();
+        let covered:String=result.utterances.iter().flat_map(|u|u.text.chars()).filter(|c|!c.is_whitespace()).collect();
+        assert!(!full.is_empty());assert_eq!(full,covered);
+        assert!(result.utterances.iter().any(|u|u.start_ms<20_000));
+        assert!(result.utterances.iter().any(|u|u.start_ms>=22_000));
+        assert!(result.utterances.iter().all(|u|u.approximate_timing && u.end_ms<=42_000));
+        println!("characters={} anchors={} last_end_ms={}",full.chars().count(),result.utterances.len(),result.utterances.last().unwrap().end_ms);
+    }
+
+    #[test]
+    fn local_multi_file_anchors_follow_all_audio_including_silence() {
+        let dir=std::env::temp_dir().join(format!("companion-local-parts-timing-{}",uuid::Uuid::new_v4()));
+        fs::create_dir(&dir).unwrap();
+        let paths=(0..3).map(|i| {
+            let path=dir.join(format!("{i}.wav"));
+            write_pcm16k_mono_wav(&path,&vec![0u8;PCM_BYTES_PER_SECOND]).unwrap();path
+        }).collect::<Vec<_>>();
+        let anchor=|text:&str|CompanionV1UtteranceSegment{text:text.into(),start_ms:100,end_ms:600,
+            speaker:None,approximate_timing:true};
+        let completed=vec![("第一段".into(),vec![anchor("第一段")]),(String::new(),vec![]),
+            ("第三段".into(),vec![anchor("第三段")])];
+        let actual=merge_local_timed_parts(&paths,completed.clone());
+        assert_eq!(actual.iter().map(|v|(v.start_ms,v.end_ms)).collect::<Vec<_>>(),vec![(100,600),(2100,2600)]);
+        assert!(actual.iter().all(|v|v.approximate_timing));
+        let mut missing_coverage=completed.clone();missing_coverage[2].0.push_str("遗漏");
+        assert!(merge_local_timed_parts(&paths,missing_coverage).is_empty());
+        let mut outside=completed.clone();outside[2].1[0].end_ms=1001;
+        assert!(merge_local_timed_parts(&paths,outside).is_empty());
+        fs::remove_file(&paths[1]).unwrap();
+        assert!(merge_local_timed_parts(&paths,completed).is_empty(),"unknown duration must not cause false timestamps");
+        fs::remove_file(&paths[0]).unwrap();fs::remove_file(&paths[2]).unwrap();fs::remove_dir(dir).unwrap();
     }
 
     #[test]
