@@ -79,10 +79,7 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
                 if row.audio_stored {return Err("本机回听文件及原音恢复记录缺失，未生成空录音或修改回收状态。".into())};
                 return Ok(RestoreOutcome::Waiting)
             };
-            let mut bytes=Vec::new();read_locked(&receipt)?.take(MAX_RECEIPT+1)
-                .read_to_end(&mut bytes).map_err(|_|fail())?;
-            if bytes.len() as u64>MAX_RECEIPT {return Err(fail())};
-            let saved:Receipt=serde_json::from_slice(&bytes).map_err(|_|fail())?;
+            let saved=read_receipt(&receipt)?;
             let first=saved.segments.first().ok_or_else(fail)?;
             let descriptor=Descriptor::decode(&first.wire)?;
             if descriptor.key!=key || saved.segments.iter().any(|segment|
