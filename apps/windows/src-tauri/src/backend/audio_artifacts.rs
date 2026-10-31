@@ -530,7 +530,8 @@ pub(crate) fn interrupted_host_writer(path: &Path) -> Result<WriterLease, String
     let original = data.files.iter().find(|item| item.file == leaf).ok_or("原录音没有归属记录，未尝试恢复。")?;
     let current = fingerprint(path)?.ok_or("原录音文件不存在，未尝试恢复。")?;
     if original.purpose != Purpose::Recording || !original.sources.contains(&reference_key(path)?)
-        || !matches!(original.phase, Phase::Prepared | Phase::Interrupted)
+        || !matches!(original.phase, Phase::Prepared | Phase::Interrupted | Phase::Sealed)
+        || original.phase == Phase::Sealed && original.identity.is_none()
         || original.identity.as_ref().is_some_and(|saved| *saved != current) {
         return Err("录音归属或内容已变化，未尝试恢复；原文件保留。".into());
     }
@@ -540,7 +541,6 @@ pub(crate) fn interrupted_host_writer(path: &Path) -> Result<WriterLease, String
 /// Discover only parts explicitly registered before capture, in recording
 /// order.  A crash between registration and file creation can leave the last
 /// part absent; a gap before a later part must never truncate the meeting.
-#[cfg(test)]
 pub(super) fn interrupted_host_parts(pinned: &WriterLease, anchor: &Path) -> Result<Vec<PathBuf>, String> {
     let root = managed_root(anchor).ok_or_else(fail)?;
     let source = reference_key(anchor)?;
@@ -548,7 +548,7 @@ pub(super) fn interrupted_host_parts(pinned: &WriterLease, anchor: &Path) -> Res
     let stem = anchor.file_stem().and_then(|s|s.to_str()).ok_or_else(fail)?;
     let prefix = format!("{stem}.host-part-");
     let _guard = lock(&root)?;
-    let data = load(&root)?;
+    let mut data = load(&root)?;
     let mut parts = Vec::new();
     for item in &data.files {
         if item.purpose != Purpose::Recording || !item.sources.contains(&source) { continue; }
@@ -561,14 +561,18 @@ pub(super) fn interrupted_host_parts(pinned: &WriterLease, anchor: &Path) -> Res
         parts.push((index, path));
     }
     parts.sort_by_key(|(index,_)|*index);
-    let mut result=vec![anchor.to_path_buf()];
+    let mut result=vec![anchor.to_path_buf()];let mut missing_tail=None;
     for (position,(index,path)) in parts.iter().enumerate() {
         if *index != position+1 {return Err("录音分段缺失；原文件保留。".into());}
         match fs::symlink_metadata(path) {
             Ok(meta) if meta.is_file() && !meta.file_type().is_symlink() => result.push(path.clone()),
-            Err(e) if e.kind()==std::io::ErrorKind::NotFound && position+1==parts.len() => {},
+            Err(e) if e.kind()==std::io::ErrorKind::NotFound && position+1==parts.len() => {missing_tail=path.file_name().and_then(|n|n.to_str()).map(str::to_owned);},
             _ => return Err("录音分段缺失；原文件保留。".into()),
         }
+    }
+    if let Some(leaf)=missing_tail {
+        let item=data.files.iter_mut().find(|item|item.file==leaf).ok_or_else(fail)?;
+        item.phase=Phase::Gone;item.identity=None;save(&root,&data)?;
     }
     Ok(result)
 }
@@ -586,10 +590,10 @@ pub(crate) fn checkpoint_interrupted_host(pinned: &WriterLease, path: &Path, siz
     let leaf = path.file_name().and_then(|n| n.to_str()).filter(|n| component(n)).ok_or_else(fail)?;
     let original = data.files.iter_mut().find(|item| item.file == leaf).ok_or_else(fail)?;
     if original.purpose != Purpose::Recording || !original.sources.contains(&pinned.source)
-        || !matches!(original.phase, Phase::Prepared | Phase::Interrupted)
+        || !matches!(original.phase, Phase::Prepared | Phase::Interrupted | Phase::Sealed)
         || original.identity.as_ref().is_some_and(|saved| *saved != current) { return Err(fail()); }
     original.identity = Some(current);
-    original.phase = Phase::Interrupted;
+    if original.phase != Phase::Sealed { original.phase = Phase::Interrupted; }
     save(&root, &data)
 }
 

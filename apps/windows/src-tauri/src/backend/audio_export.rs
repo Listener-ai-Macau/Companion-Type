@@ -21,7 +21,10 @@ pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(Audio
     let path = super::meeting_workspace::local_audio_path(snapshot, session_id)?;
     let session = snapshot.host.sessions.iter().find(|s| s.id == session_id).ok_or("这场会议已不存在")?;
     let title = super::export::safe_file_stem(&session.title, session_id);
-    let audio=if session.device_recording_key.is_some() && (session.chunks.iter()
+    let audio=if let Some(parts)=super::host_segmented_capture::saved_parts(session)? {
+        if parts[0].0!=path {return Err("这场录音的分段尚未完整，未导出。".into());}
+        AudioSource::Parts(parts)
+    } else if session.device_recording_key.is_some() && (session.chunks.iter()
         .any(|chunk|chunk.stopped_at.as_deref()==Some("verified-v2-session-part"))
         || path.file_name().and_then(|name|name.to_str()).is_some_and(|name|name.contains(".parts-"))) {
         let parts=super::recording_wire::receiver::Receiver::verified_audio_parts(session)?;

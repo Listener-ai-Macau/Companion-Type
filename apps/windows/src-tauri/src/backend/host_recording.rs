@@ -36,6 +36,7 @@ pub struct HostRecordingStop {
     pub mode: String,
     pub capture_error: Option<String>,
     pub ownership_confirmed: bool,
+    pub parts: Vec<super::host_segmented_capture::HostAudioPart>,
 }
 
 struct ActiveHostRecording {
@@ -68,6 +69,14 @@ impl HostRecordingManager {
         if let Ok(mut slot) = self.pcm_sink.lock() {
             *slot = sink;
         }
+    }
+
+    pub(super) fn current_error(&self)->Option<(String,String)> {
+        let active=self.active.lock().ok()?;
+        let recording=active.as_ref()?;
+        let ActiveHostRecordingMode::Real(real)=&recording.mode else {return None};
+        let error=real.archive.error().or_else(||real.capture_error.lock().ok().and_then(|error|error.clone()))?;
+        Some((recording.session_id.clone(),error))
     }
 
     pub fn start(&self, session_id: &str, title: &str) -> Result<HostRecordingStart, String> {
@@ -196,30 +205,32 @@ impl Default for HostRecordingManager {
 
 fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecordingStop, String> {
     let elapsed_ms = recording.started_at.elapsed().as_millis().max(1) as u64;
-    let (path, bytes, mode, mut capture_error) = match recording.mode {
+    let (path, bytes, mode, mut capture_error, parts, parts_owned) = match recording.mode {
         ActiveHostRecordingMode::Real(real) => {
             let stop = real.stop()?;
-            (stop.path, stop.bytes, "host-microphone".to_string(), stop.capture_error)
+            (stop.path, stop.bytes, "host-microphone".to_string(), stop.capture_error, stop.parts, stop.ownership_confirmed)
         }
         ActiveHostRecordingMode::Synthetic => {
             write_synthetic_wav(&recording.path, elapsed_ms.max(1_000))?;
             let bytes = std::fs::metadata(&recording.path)
                 .map_err(|err| format!("read synthetic wav metadata: {err}"))?
                 .len();
-            (recording.path, bytes, "synthetic".to_string(), None)
+            (recording.path, bytes, "synthetic".to_string(), None, Vec::new(), true)
         }
     };
 
-    let ownership_confirmed = complete_capture_artifact(recording.artifact, &path, bytes, &mut capture_error);
+    let first_bytes=parts.first().map_or(bytes,|part|part.samples.saturating_mul(2).saturating_add(44));
+    let ownership_confirmed = complete_capture_artifact(recording.artifact, &path, first_bytes, &mut capture_error) && parts_owned;
     Ok(HostRecordingStop {
         session_id: recording.session_id,
         path,
-        duration_ms: bytes.saturating_sub(44).saturating_mul(1_000)
-            / (u64::from(TARGET_SAMPLE_RATE) * 2),
+        duration_ms: if parts.is_empty() { bytes.saturating_sub(44).saturating_mul(1_000)
+            / (u64::from(TARGET_SAMPLE_RATE) * 2) } else { parts.iter().map(|p|p.samples).sum::<u64>()/16 },
         bytes,
         mode,
         capture_error,
         ownership_confirmed,
+        parts,
     })
 }
 
@@ -296,7 +307,7 @@ fn sanitize_file_stem(value: &str) -> String {
 struct RealRecording {
     session: CaptureSession,
     path: PathBuf,
-    writer: Arc<Mutex<WavWriter>>,
+    archive: super::host_segmented_capture::CaptureArchive,
     capture_error: Arc<Mutex<Option<String>>>,
 }
 
@@ -304,6 +315,8 @@ struct RealRecordingStop {
     path: PathBuf,
     bytes: u64,
     capture_error: Option<String>,
+    parts: Vec<super::host_segmented_capture::HostAudioPart>,
+    ownership_confirmed: bool,
 }
 
 fn remember_capture_error(slot: &Mutex<Option<String>>, message: String) {
@@ -348,13 +361,11 @@ impl RealRecording {
         if let Some(parent) = path.parent() {
             create_dir_all(parent).map_err(|err| format!("create wav parent {parent:?}: {err}"))?;
         }
-        let writer = Arc::new(Mutex::new(
-            WavWriter::create(&path).map_err(|err| format!("create wav {path:?}: {err}"))?,
-        ));
-        let sink_writer = Arc::clone(&writer);
+        let archive = super::host_segmented_capture::CaptureArchive::start(&path)
+            .map_err(|err| format!("create wav {path:?}: {err}"))?;
+        let sink_writer = archive.queue();
         let capture_error = Arc::new(Mutex::new(None::<String>));
         let stream_error = Arc::clone(&capture_error);
-        let write_error = Arc::clone(&capture_error);
         let resampler_slot = Arc::new(Mutex::new(None::<RatioResampler>));
         let sink_resampler = Arc::clone(&resampler_slot);
 
@@ -377,13 +388,7 @@ impl RealRecording {
                 if resampled.is_empty() {
                     return;
                 }
-                if let Ok(mut writer) = sink_writer.lock() {
-                    if let Err(error) = append_captured_samples(&mut writer, &resampled) {
-                        remember_capture_error(&write_error, format!("录音写入失败：{error}"));
-                    }
-                } else {
-                    remember_capture_error(&write_error, "录音文件状态不可用".to_string());
-                }
+                sink_writer.push(resampled.clone());
                 if let Some(sink) = pcm_sink.as_ref() {
                     sink(&resampled);
                 }
@@ -391,18 +396,32 @@ impl RealRecording {
         )
         .map_err(|err| err.to_string())?;
 
-        Ok(Self { session, path, writer, capture_error })
+        Ok(Self { session, path, archive, capture_error })
     }
 
     fn stop(self) -> Result<RealRecordingStop, String> {
         if let Err(error) = self.session.stop() {
             remember_capture_error(&self.capture_error, format!("停止麦克风失败：{error}"));
         }
-        let (bytes, capture_error) = finish_capture_file(&self.writer, &self.capture_error);
+        let result=match self.archive.finish() {
+            Ok(result)=>result,
+            Err(error)=>{
+                remember_capture_error(&self.capture_error,error);
+                let capture_error=self.capture_error.lock().ok().and_then(|error|error.clone());
+                let bytes=std::fs::metadata(&self.path).map(|m|m.len()).unwrap_or(0);
+                return Ok(RealRecordingStop{path:self.path,bytes,capture_error,parts:Vec::new(),ownership_confirmed:false});
+            }
+        };
+        if let Some(error)=result.error {remember_capture_error(&self.capture_error,error);}
+        let bytes=result.parts.iter().map(|p|p.samples.saturating_mul(2).saturating_add(44)).sum::<u64>();
+        if bytes<=44 {remember_capture_error(&self.capture_error,"麦克风没有录到有效音频帧".to_string());}
+        let capture_error=self.capture_error.lock().ok().and_then(|error|error.clone());
         Ok(RealRecordingStop {
             path: self.path,
             bytes,
             capture_error,
+            parts:result.parts,
+            ownership_confirmed:result.ownership_confirmed,
         })
     }
 }

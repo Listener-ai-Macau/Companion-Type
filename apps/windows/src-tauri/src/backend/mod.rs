@@ -107,8 +107,7 @@ mod firmware_ota;
 mod system_ota;
 mod ota_readiness;
 mod host_recording;
-#[cfg(test)]
-mod host_segmented_capture;
+pub(crate) mod host_segmented_capture;
 mod host_interrupted_recovery;
 mod live_asr;
 mod minutes;
@@ -201,10 +200,14 @@ fn pause_incomplete_host_recording(session: &mut CompanionV1HostSession, error: 
     arm_meeting_recovery(session);
     session.status = "captured".to_string();
     session.transcript_final = false;
-    session.audio_stored = !ownership_unconfirmed && session.audio_bytes > 44 && session.audio_path.as_deref()
-        .map(std::path::Path::new).filter(|path| path.is_absolute())
-        .is_some_and(|path| std::fs::metadata(path).is_ok_and(|m| m.is_file() && m.len() == session.audio_bytes)
-            && meeting_workspace::validate_wav(path).is_ok());
+    let multipart = host_segmented_capture::saved_parts(session);
+    session.audio_stored = !ownership_unconfirmed && session.audio_bytes > 44 && match multipart {
+        Ok(Some(_)) => true,
+        Err(_) => false,
+        Ok(None) => session.audio_path.as_deref().map(std::path::Path::new).filter(|path| path.is_absolute())
+            .is_some_and(|path| std::fs::metadata(path).is_ok_and(|m| m.is_file() && m.len() == session.audio_bytes)
+                && meeting_workspace::validate_wav(path).is_ok()),
+    };
     session.recovery.stage = "paused".to_string();
     session.recovery.next_retry_at_unix_ms = None;
     session.recovery.last_error = Some(format!("录音不完整：{error}。已保留现有文件，请检查录音后再处理。"));
@@ -1533,6 +1536,10 @@ impl CompanionBackend for FixtureCompanionBackend {
         let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
         if snapshot.host.persistence.status!="ready" {return Err("请先保存或恢复会议库。".into());}
         let input=speaker_refinement::prepare(&snapshot,id)?;
+        let row=snapshot.host.sessions.iter().find(|s|s.id==id).ok_or("找不到这场会议")?;
+        if host_segmented_capture::saved_parts(row)?.is_some() {
+            return Err("超长分段录音的说话人重新区分暂不可用，原转写和分组已保留。".into());
+        }
         let path=meeting_workspace::local_audio_path(&snapshot,id)?;
         let request=CompanionV1ControlRequest {action:CompanionV1ControlAction::MeetingTranscribeAudio,session_id:Some(id.into()),
             context_note_revision: None, ble_name:None,prompt_id:None,title:None,transcript_text:None,meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
@@ -1593,7 +1600,9 @@ impl CompanionBackend for FixtureCompanionBackend {
         } else { stamp };
         let playback = if request.action == Action::AddAt {
             let path=meeting_workspace::local_audio_path(&snapshot,&request.session_id)?;
-            Some(if candidate.device_recording_key.is_some() {
+            Some(if let Some(parts)=host_segmented_capture::saved_parts(&candidate)? {
+                parts.iter().try_fold(0u64,|sum,(_,samples)|sum.checked_add(*samples).ok_or("录音时长无效。"))?/16
+            } else if candidate.device_recording_key.is_some() {
                 let parts=recording_wire::receiver::Receiver::verified_audio_parts(&candidate)?;
                 parts.iter().try_fold(0u64,|sum,(_,samples)|sum.checked_add(*samples).ok_or("录音时长无效。"))?/16
             } else {meeting_workspace::wav_duration_ms(&path)?})
@@ -1692,7 +1701,13 @@ impl CompanionBackend for FixtureCompanionBackend {
                 }
             }
         }
-        Ok(guard.clone())
+        let mut snapshot=guard.clone();
+        if let Some((id,error))=self.host_recording.current_error() {
+            if let Some(session)=snapshot.host.sessions.iter_mut().find(|session|session.id==id && session.status=="recording") {
+                session.recovery.last_error=Some(format!("录音可能已中断：{error}；请结束录音并检查已保存内容。"));
+            }
+        }
+        Ok(snapshot)
     }
 
     fn apply_control(
@@ -3343,12 +3358,9 @@ impl CompanionBackend for FixtureCompanionBackend {
                                     .stopped_at
                                     .clone()
                                     .unwrap_or_else(|| "host-recording-stop".to_string());
-                                session.chunks = seal_companion_v1_session_chunks(
-                                    session,
-                                    &stopped_at,
-                                    session.duration_ms,
-                                    Some(stop.bytes),
-                                );
+                                session.chunks = if stop.parts.len()>1 && stop.ownership_confirmed {
+                                    host_segmented_capture::session_chunks(&session.id,&stop.parts)?
+                                } else { seal_companion_v1_session_chunks(session,&stopped_at,session.duration_ms,Some(stop.bytes)) };
                                 session.source = "hostMicrophone".to_string();
                                 arm_meeting_recovery(session);
                                 if let Some(echo) = next.last_control.as_mut() {
@@ -4276,6 +4288,9 @@ fn requested_or_selected_session_mut<'a>(
 }
 
 fn transcription_chunk_paths(session: &CompanionV1HostSession) -> Result<Vec<String>, String> {
+    if let Some(parts)=host_segmented_capture::saved_parts(session)? {
+        return Ok(parts.into_iter().map(|(path,_)|path.to_string_lossy().into_owned()).collect());
+    }
     if session.device_recording_key.is_some() {
         // V2 chunks are immutable encoded originals, not independent WAVs.
         // Verify their exact receipt/CRC/SHA/sample axis and assembled audio

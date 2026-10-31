@@ -12,6 +12,10 @@ export const getRecordingSyncStatus = async () => api().syncStatus ? api().syncS
 export const watchRecordingSync = async (listener: (status: unknown) => void) => api().watchSync ? api().watchSync(listener) : (() => {});
 export const pauseRecordingSync = async (jobId: string) => api().pauseSync ? api().pauseSync(jobId) : false;
 export const exportCompanionMeeting = async () => null;
+export const openCompanionSavedCalendar = async () => null;
+export const backupCompanionLibrary = async () => null;
+export const restoreCompanionLibraryBackup = async () => null;
+export const prepareCompanionLocalAsr = async () => null;
 export const previewCompanionMeetingExport = (...args:unknown[])=>required('previewMeetingExport',...args);
 export const exportCompanionAudio = async () => null;
 export const exportCompanionDiagnostics = async () => null;

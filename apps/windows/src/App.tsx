@@ -208,6 +208,9 @@ export function App() {
   const controlledMeeting = Boolean(snapshot?.host?.sessions?.some(
     (session) => session.status === 'recording' && session.recorderControl,
   ));
+  const hostRecording = Boolean(snapshot?.host?.sessions?.some(
+    (session) => session.status === 'recording' && session.source === 'hostMicrophone',
+  ));
   const recoveringMeeting = Boolean(snapshot?.host?.sessions?.some((session) => (
     session.recovery?.intent === 'processMeeting'
     && !['idle', 'paused', 'complete'].includes(session.recovery.stage)
@@ -223,7 +226,7 @@ export function App() {
   // Active text/timing still ticks. Notifications and ticks share one reader;
   // slow native cache responses never accumulate an IPC queue.
   useEffect(() => {
-    if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) return;
+    if (!liveMeeting && !controlledMeeting && !hostRecording && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) return;
     let cancelled = false;
     let timer: number;
     const delay = liveMeeting || controlledMeeting || boardActive ? 500 : recoveringMeeting ? 1000 : 3000;
@@ -233,7 +236,7 @@ export function App() {
     };
     timer = window.setTimeout(() => void poll(), delay);
     return () => { cancelled = true; window.clearTimeout(timer); };
-  }, [liveMeeting, controlledMeeting, recoveringMeeting, watchingDevice, observingConnectedDevice, boardActive]);
+  }, [liveMeeting, controlledMeeting, hostRecording, recoveringMeeting, watchingDevice, observingConnectedDevice, boardActive]);
 
   return (
     <div className="ct-window-shell">

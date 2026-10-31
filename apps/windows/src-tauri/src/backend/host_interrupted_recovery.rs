@@ -140,9 +140,30 @@ pub(super) fn recover_session_with(state_path: &Path, id: &str, expected: &(Stri
     }
     let authorization = super::session_store::privacy_authorization(old)?;
     if &authorization != expected { return Err("原会议已变化，请刷新后再确认恢复；原文件保留。".into()); }
-    let copy = recover_copy(&original)?;
+    let pinned=audio_artifacts::interrupted_host_writer(&original)?;
+    let paths=audio_artifacts::interrupted_host_parts(&pinned,&original)?;
+    drop(pinned);
+    let mut copies=Vec::new();
+    for (index,path) in paths.iter().enumerate() {
+        let size=fs::metadata(path).map_err(|_|"原录音分段无法读取。")?.len();
+        if index>0 && index+1==paths.len() && size<=44 {
+            // A crash can occur after creating a part but before its first
+            // sample. Keep the empty original, but do not add an empty part to
+            // the recovered meeting.
+            let pin=audio_artifacts::interrupted_host_writer(path)?;
+            let hash=digest(path)?;audio_artifacts::checkpoint_interrupted_host(&pin,path,size,&hash)?;
+            continue;
+        }
+        copies.push(recover_copy(path)?);
+    }
+    if copies.is_empty(){return Err("没有可恢复的录音，原文件保留。".into());}
     after_copy()?;
-    let copy_path = copy.path.to_str().ok_or("恢复副本路径无法保存。")?.to_string();
+    let copy_path = copies[0].path.to_str().ok_or("恢复副本路径无法保存。")?.to_string();
+    let parts=copies.iter().map(|copy|super::host_segmented_capture::HostAudioPart{
+        path:copy.path.clone(),samples:(copy.bytes-44)/2,
+    }).collect::<Vec<_>>();
+    let total_bytes=copies.iter().try_fold(0u64,|sum,copy|sum.checked_add(copy.bytes).ok_or("录音容量无效。"))?;
+    let total_samples=parts.iter().try_fold(0u64,|sum,part|sum.checked_add(part.samples).ok_or("录音时长无效。"))?;
     let timestamp = super::observation_timestamp();
     super::session_store::update_checked(state_path, |current| {
         let row = current.iter_mut().find(|row| row.id == id).ok_or("原会议已移除；原文件与恢复副本保留。")?;
@@ -151,13 +172,14 @@ pub(super) fn recover_session_with(state_path: &Path, id: &str, expected: &(Stri
             return Err("原会议在恢复期间发生变化；原文件与恢复副本保留。".into());
         }
         row.audio_path = Some(copy_path.clone());
-        row.audio_bytes = copy.bytes;
-        row.duration_ms = copy.duration_ms;
+        row.audio_bytes = total_bytes;
+        row.duration_ms = total_samples/16;
         row.audio_stored = true;
         row.retention.audio_cached = true;
         row.capture_incomplete = true;
         if row.status == "recording" { row.status = "captured".into(); }
-        row.chunks = crate::companion_v1::seal_companion_v1_session_chunks(row, &timestamp, copy.duration_ms, Some(copy.bytes));
+        row.chunks = if parts.len()>1 {super::host_segmented_capture::session_chunks(&row.id,&parts)?}
+            else {crate::companion_v1::seal_companion_v1_session_chunks(row,&timestamp,row.duration_ms,Some(total_bytes))};
         super::interrupted_capture::hold(row);
         Ok(())
     })?;

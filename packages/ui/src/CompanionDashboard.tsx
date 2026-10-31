@@ -553,6 +553,8 @@ export function CompanionDashboard({
   const controlledRecorder = snapshot?.host.sessions.find((row) => row.recorderControl
     && (row.status === 'recording' || row.recorderControlUncertain)) ?? null;
   const activeRecorders = snapshot?.host.sessions.filter((row) => row.status === 'recording') ?? [];
+  const activeHostCaptureError = activeRecorders.find((row) => row.id === snapshot?.host.activeSessionId
+    && row.source === 'hostMicrophone')?.recovery?.lastError;
   const originalSyncRecorder = activeRecorders.length === 1
     && activeRecorders[0].source === 'boardDevice' && activeRecorders[0].deviceRecordingKey
     && activeRecorders[0].deviceRecordingId && activeRecorders[0].sourceDeviceId
@@ -1705,7 +1707,8 @@ export function CompanionDashboard({
 
       {!boardLiveActive && !controlledRecorder && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前记录">
         <div><strong>{device?.recording ? '设备录音中 · 上次读取' : '正在录音'}</strong>
-          <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p></div>
+          {activeHostCaptureError ? <p role="alert">本机录音保存遇到问题，可能没有继续录到声音。请结束录音并检查已保存内容。</p>
+            : <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p>}</div>
         {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={recordingControlBusy}
           onClick={() => onControl({ action: 'meetingStop', sessionId: snapshot.host.activeSessionId ?? undefined })}><Square size={15} />结束录音</button>
           : <button type="button" className="ct-action" disabled={controlsBusy}

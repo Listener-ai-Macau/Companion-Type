@@ -178,7 +178,7 @@ pub async fn prepare_companion_audio_with_timeline(
         let (pause_timeline,verified)=if row.device_recording_key.is_some() {
             let (timeline,parts)=crate::backend::recording_wire::receiver::Receiver::verified_audio_view(row)?;
             (timeline.as_ref().map(crate::backend::recording_pause_view::view),parts)
-        } else { (None,Vec::new()) };
+        } else { (None,crate::backend::host_segmented_capture::saved_parts(row)?.unwrap_or_default()) };
         let mut parts=Vec::new();
         let source_identity=if verified.len()>1 {
             let mut first_sample=0u64;

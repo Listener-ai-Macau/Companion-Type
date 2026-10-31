@@ -33,6 +33,8 @@ pub(super) fn confirm(session: &mut CompanionV1HostSession) -> Result<(), String
     }
     if session.device_recording_key.is_some() {
         super::recording_wire::receiver::Receiver::verify_saved_row(session)?;
+    } else if super::host_segmented_capture::saved_parts(session)?.is_some() {
+        // All parts and the total continuous sample axis were validated.
     } else {
         let path = session.audio_path.as_deref().map(std::path::Path::new)
             .filter(|p| p.is_absolute()).ok_or("中断录音缺少真实本机原音。")?;

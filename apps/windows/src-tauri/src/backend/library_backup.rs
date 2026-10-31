@@ -96,6 +96,7 @@ pub fn save(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent:&Path)->Re
     // The grouped receiver validates all compressed originals, timeline and
     // playback parts before we represent a board session as backed up.
     for row in &snapshot.host.sessions {
+        if row.audio_stored { super::host_segmented_capture::saved_parts(row)?; }
         if row.audio_stored && row.device_recording_key.is_some(){
             super::recording_wire::receiver::Receiver::verified_audio_parts(row)
                 .map_err(|_|format!("“{}”的录音分段不完整，请先恢复或同步后备份。",row.title))?;
