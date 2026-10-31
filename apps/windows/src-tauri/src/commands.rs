@@ -158,7 +158,12 @@ pub struct PreparedAudioTimeline {
     path:String,
     source_identity:String,
     pause_timeline:Option<crate::backend::recording_pause_view::PauseTimeline>,
+    parts:Vec<PreparedAudioPart>,
 }
+
+#[derive(Serialize)]
+#[serde(rename_all="camelCase")]
+struct PreparedAudioPart { path:String, first_sample:u64, samples:u64 }
 
 #[tauri::command]
 pub async fn prepare_companion_audio_with_timeline(
@@ -170,10 +175,29 @@ pub async fn prepare_companion_audio_with_timeline(
         let snapshot=coordinator.snapshot()?;
         let path=crate::backend::meeting_workspace::local_audio_path(&snapshot,&session_id)?;
         let pause_timeline=crate::backend::recording_pause_view::prepare(&snapshot,&session_id)?;
-        let source_identity=crate::backend::meeting_workspace::playback_identity(&session_id,&path)?;
-        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),source_identity,pause_timeline})
+        let row=snapshot.host.sessions.iter().find(|row|row.id==session_id).ok_or("找不到这场会议")?;
+        let verified=if row.device_recording_key.is_some() {
+            crate::backend::recording_wire::receiver::Receiver::verified_audio_parts(row)?
+        } else { Vec::new() };
+        let mut parts=Vec::new();
+        let source_identity=if verified.len()>1 {
+            let mut first_sample=0u64;
+            for (part,samples) in &verified {
+                let canonical=part.canonicalize().map_err(|_|"录音分段已移动或删除。")?;
+                if canonical.parent()!=path.parent() || canonical.extension().is_none_or(|ext|!ext.eq_ignore_ascii_case("wav")) {
+                    return Err("录音分段路径无效。".into());
+                }
+                parts.push(PreparedAudioPart{path:canonical.to_string_lossy().into_owned(),first_sample,samples:*samples});
+                first_sample=first_sample.checked_add(*samples).ok_or("录音时长无效。")?;
+            }
+            crate::backend::meeting_workspace::playback_parts_identity(&session_id,&verified)?
+        } else { crate::backend::meeting_workspace::playback_identity(&session_id,&path)? };
+        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),source_identity,pause_timeline,parts})
     }).await.map_err(|e|format!("准备原音任务失败：{e}"))??;
     app.asset_protocol_scope().allow_file(&prepared.path).map_err(|e|format!("无法准备回听：{e}"))?;
+    for part in &prepared.parts {
+        app.asset_protocol_scope().allow_file(&part.path).map_err(|e|format!("无法准备回听：{e}"))?;
+    }
     Ok(prepared)
 }
 

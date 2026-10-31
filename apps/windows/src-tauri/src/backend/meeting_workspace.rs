@@ -192,6 +192,19 @@ pub fn playback_identity(session_id:&str,path:&Path)->Result<String,String> {
     Ok(format!("{:x}",hash.finalize()))
 }
 
+/// One identity for the complete ordered recording, including every part.
+pub fn playback_parts_identity(session_id:&str,parts:&[(PathBuf,u64)])->Result<String,String> {
+    if parts.len()==1 { return playback_identity(session_id,&parts[0].0); }
+    if parts.is_empty() { return Err("这场会议没有本机音频".into()); }
+    let mut hash=Sha256::new(); hash.update(b"Companion playback parts v1\0");
+    hash.update((session_id.len() as u64).to_le_bytes()); hash.update(session_id.as_bytes());
+    for (path,samples) in parts {
+        let (bytes,digest)=super::audio_storage::fingerprint(path)?;
+        hash.update(samples.to_le_bytes()); hash.update(bytes.to_le_bytes()); hash.update(digest.as_bytes());
+    }
+    Ok(format!("{:x}",hash.finalize()))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

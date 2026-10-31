@@ -337,6 +337,9 @@ mod tests {
         assert_eq!(receiver.ack_candidates(&index).unwrap().len(),source.len());
         drop(receiver);
         assert_eq!(Receiver::verified_audio_paths(row).unwrap(),paths);
+        let playback_parts=Receiver::verified_audio_parts(row).unwrap();
+        assert_eq!(playback_parts.iter().map(|(path,_)|path.clone()).collect::<Vec<_>>(),paths);
+        assert_eq!(playback_parts.iter().map(|(_,samples)|samples).sum::<u64>(),row.duration_ms*16);
         assert_eq!(crate::backend::transcription_chunk_paths(row).unwrap(),
             paths.iter().map(|p|p.to_string_lossy().into_owned()).collect::<Vec<_>>());
         let mut reopened=Receiver::open(&root,&first).unwrap();

@@ -60,10 +60,13 @@ impl Receiver {
         Self::verify_saved_row_inner(row,false,None).map(|(timeline,_)|timeline)
     }
     pub(crate) fn verified_audio_paths(row:&crate::companion_v1::CompanionV1HostSession)->Result<Vec<PathBuf>,String> {
-        Self::verify_saved_row_inner(row,false,None).map(|(_,paths)|paths)
+        Self::verified_audio_parts(row).map(|parts|parts.into_iter().map(|(path,_)|path).collect())
+    }
+    pub(crate) fn verified_audio_parts(row:&crate::companion_v1::CompanionV1HostSession)->Result<Vec<(PathBuf,u64)>,String> {
+        Self::verify_saved_row_inner(row,false,None).map(|(_,parts)|parts)
     }
     fn verify_saved_row_inner(row: &crate::companion_v1::CompanionV1HostSession, require_reclaimed: bool,
-        original_anchor:Option<u32>) -> Result<(Option<cop1::Timeline>,Vec<PathBuf>),String> {
+        original_anchor:Option<u32>) -> Result<(Option<cop1::Timeline>,Vec<(PathBuf,u64)>),String> {
         let key = super::super::SessionKey::from_public(row.device_recording_key.as_ref().ok_or_else(fail)?)?;
         let audio = Path::new(row.audio_path.as_deref().ok_or_else(fail)?);
         if !audio.is_absolute() {return Err(fail());}
@@ -95,15 +98,18 @@ impl Receiver {
                 && c.path.as_deref()==Some(receiver.payload_path(&d).to_string_lossy().as_ref())
                 && c.bytes==u64::from(d.encoded_length) && matches!(c.status.as_str(),"sealed"|"synced")) {return Err(fail());}
         }
-        if let Some(parts)=&receiver.receipt.parts_audio {
+        let playback_parts = if let Some(parts)=&receiver.receipt.parts_audio {
             let details=parts.manifest.owned_details(&receiver.root,&receiver.audio_path())?;
             for (index,(path,_,samples,bytes)) in details.iter().enumerate() {
                 if !row.chunks.iter().any(|chunk|chunk.id==format!("{}-received-part-{index:08}",receiver.stem)
                     && chunk.path.as_deref()==path.to_str() && chunk.bytes==*bytes
                     && chunk.duration_ms==samples/16 && chunk.status=="synced") {return Err(fail());}
             }
-        }
-        Ok((receiver.playback_timeline().cloned(),playback_paths))
+            details.into_iter().map(|(path,_,samples,_)|(path,samples)).collect()
+        } else {
+            vec![(receiver.audio_path(),receiver.receipt.audio.as_ref().ok_or_else(fail)?.samples)]
+        };
+        Ok((receiver.playback_timeline().cloned(),playback_parts))
     }
     /// Checkpoint an incomplete meeting as well as a complete one. Sealed raw
     /// segments are discoverable after restart before any device consumption;
