@@ -102,14 +102,21 @@ impl PartManifest {
         Ok(paths)
     }
 
-    pub(super) fn verify_owned(&self, root: &Path, source: &Path) -> Result<Vec<PathBuf>, String> {
+    pub(super) fn owned_paths(&self, root: &Path, source: &Path) -> Result<Vec<PathBuf>, String> {
         let stem = source.file_stem().and_then(|name| name.to_str()).ok_or_else(fail)?;
         if source.parent() != Some(root) || self.file_prefix.as_deref()
             .is_none_or(|prefix| !prefix.starts_with(&format!("{stem}.parts-"))) {
             return Err(fail());
         }
+        self.paths(root)
+    }
+
+    pub(super) fn verify_owned(&self, root: &Path, source: &Path) -> Result<Vec<PathBuf>, String> {
+        self.owned_paths(root, source)?;
         self.verify(root)
     }
+
+    pub(super) fn total_samples(&self) -> u64 { self.total_samples }
 }
 
 struct OpenPart {
@@ -297,6 +304,39 @@ mod tests {
         assert!(decode_to_parts(&descriptors,&mut files,&dir,audio.samples,false,1000).is_err());
         assert_eq!(fs::read(&paths[0]).unwrap(),first,"existing output must never be replaced");
         drop(files);drop(receiver);fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn owned_parts_receipt_reopens_as_one_recording_and_detects_missing_middle() {
+        let parent=std::env::temp_dir(); assert!(parent.is_absolute());
+        let requested=parent.join(format!("companion-parts-receipt-{}",uuid::Uuid::new_v4()));
+        assert_eq!(requested.parent(),Some(parent.as_path())); fs::create_dir(&requested).unwrap();
+        let root=fs::canonicalize(&requested).unwrap();
+        assert!(root.starts_with(fs::canonicalize(&parent).unwrap()));
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let source=super::super::source_boundary_tests::fixture();
+        let first=source[0].0.encode().unwrap();
+        let mut receiver=Receiver::open(&root,&first).unwrap();
+        for (descriptor,payload) in &source { receiver.accept_segment(&descriptor.encode().unwrap(),payload).unwrap(); }
+        let raw=source.iter().map(|(descriptor,_)|receiver.payload_path(descriptor)).collect::<Vec<_>>();
+        let paths=receiver.assemble_parts_with_limit(1000).unwrap();
+        assert!(paths.len()>2 && paths.iter().all(|path|path.is_file()));
+        assert!(receiver.receipt.audio.is_none() && receiver.receipt.parts_audio.is_some());
+        assert!(receiver.assemble().is_err(), "a single-file caller must not silently receive only the first part");
+        drop(receiver);
+        let mut reopened=Receiver::open(&root,&first).unwrap();
+        assert_eq!(reopened.assemble_parts_with_limit(1000).unwrap(),paths);
+        drop(reopened);
+        let held=root.join("temporarily-missing.wav"); fs::rename(&paths[1],&held).unwrap();
+        assert!(Receiver::open(&root,&first).is_err(), "missing middle audio must not appear complete");
+        assert!(raw.iter().all(|path|path.is_file()));
+        fs::rename(&held,&paths[1]).unwrap();
+        let reopened=Receiver::open(&root,&first).unwrap(); drop(reopened);
+        let foreign=root.join("unrelated.wav"); fs::write(&foreign,b"other recording").unwrap();
+        audio_artifacts::erase(&root,&[paths[0].to_string_lossy().into_owned()],&[]).unwrap();
+        assert!(paths.iter().all(|path|!path.exists()));
+        assert_eq!(fs::read(&foreign).unwrap(),b"other recording");
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); fs::remove_dir_all(root).unwrap();
     }
 
     #[test]

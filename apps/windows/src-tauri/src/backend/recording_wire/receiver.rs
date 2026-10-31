@@ -61,10 +61,19 @@ struct Audio {
 }
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct PartsAudio {
+    manifest: parts::PartManifest,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    timeline: Option<cop1::Timeline>,
+}
+#[derive(Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct Receipt {
     schema: u32,
     segments: Vec<Segment>,
     audio: Option<Audio>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    parts_audio: Option<PartsAudio>,
     device: Option<String>,
 }
 
@@ -117,7 +126,7 @@ impl Receiver {
                 if hash != receipt_key_hash(&d.key)? { return Err(fail()); }
                 if d.key.device_uid != peer.uid || d.key.format_epoch != peer.epoch { return Ok(None); }
                 if receipt.device.as_deref().is_some_and(|id| !crate::backend::device_connection::same_device_id(id, device)) { return Ok(None); }
-                if receipt.audio.is_none() || receipt.segments.iter().any(|s| !s.acked) { return Ok(Some(d.encode()?)); }
+                if (receipt.audio.is_none() && receipt.parts_audio.is_none()) || receipt.segments.iter().any(|s| !s.acked) { return Ok(Some(d.encode()?)); }
                 Ok(None)
             })();
             match decoded {
@@ -200,6 +209,7 @@ impl Receiver {
                     acked: false,
                 }],
                 audio: None,
+                parts_audio: None,
                 device: None,
             }
         };
@@ -219,7 +229,8 @@ impl Receiver {
                 .windows(2)
                 .any(|pair| pair[0].segment_index >= pair[1].segment_index)
             || this.receipt.segments.iter().any(|s| s.acked && !s.received)
-            || this.receipt.audio.is_some() && !this.receipt.segments.iter().all(|s| s.received)
+            || this.receipt.audio.is_some() && this.receipt.parts_audio.is_some()
+            || (this.receipt.audio.is_some() || this.receipt.parts_audio.is_some()) && !this.receipt.segments.iter().all(|s| s.received)
             || this
                 .receipt
                 .device
@@ -318,7 +329,7 @@ impl Receiver {
             }
             return Ok(());
         }
-        if self.receipt.audio.is_some() {
+        if self.receipt.audio.is_some() || self.receipt.parts_audio.is_some() {
             return Err(fail());
         }
         let mut all = descriptors;
@@ -401,6 +412,9 @@ impl Receiver {
         self.recover_originals()?;
         if let Some(audio) = &self.receipt.audio {
             self.verify_audio(audio)?;
+        }
+        if let Some(audio) = &self.receipt.parts_audio {
+            self.verify_parts_audio(audio)?;
         }
         Ok(())
     }
@@ -499,10 +513,57 @@ impl Receiver {
         if !schemas.iter().all(|schema|*schema==1) {collect_timeline(&descriptors,&mut files)?;}
         Ok(())
     }
+
+    fn verify_parts_audio(&self, audio: &PartsAudio) -> Result<Vec<PathBuf>, String> {
+        let descriptors = self.descriptors()?;
+        let plan = plan_group(&descriptors, &BTreeSet::new())?;
+        if !plan.metadata_complete { return Err(fail()); }
+        let mut files = descriptors.iter().map(|d| verify_file(read_locked(&self.payload_path(d))?, d))
+            .collect::<Result<Vec<_>, String>>()?;
+        let timeline = collect_timeline(&descriptors, &mut files)?;
+        let samples = timeline.as_ref().map_or_else(|| plan.sample_count.checked_sub(320).ok_or_else(fail),
+            |t| Ok(t.playback_samples()))?;
+        if audio.manifest.total_samples() != samples || audio.timeline != timeline { return Err(fail()); }
+        audio.manifest.verify_owned(&self.root, &self.audio_path())
+    }
+
+    // The normal assembly/publication path remains single-WAV until playback,
+    // transcription, recovery and deletion all consume this receipt together.
+    // The small part size in tests exercises the same path without hours of PCM.
+    #[allow(dead_code)]
+    fn assemble_parts_with_limit(&mut self, max_pcm_bytes: u32) -> Result<Vec<PathBuf>, String> {
+        let plan = self.plan()?;
+        if !plan.payloads_complete { return Err("录音尚有缺段，已收齐的原音保留，等待继续同步。".into()); }
+        if let Some(saved) = &self.receipt.parts_audio { return self.verify_parts_audio(saved); }
+        if self.receipt.audio.is_some() { return Err(fail()); }
+        let descriptors = self.descriptors()?;
+        let mut files = descriptors.iter().map(|d| verify_file(read_locked(&self.payload_path(d))?, d))
+            .collect::<Result<Vec<_>, String>>()?;
+        let expected_timeline = collect_timeline(&descriptors, &mut files)?;
+        let samples = expected_timeline.as_ref().map_or_else(|| plan.sample_count.checked_sub(320).ok_or_else(fail),
+            |t| Ok(t.playback_samples()))?;
+        if samples == 0 { return Err(fail()); }
+        let source = self.audio_path();
+        let (manifest, timeline) = parts::decode_to_owned_manifest(&descriptors, &mut files, &self.root,
+            &source, self._usage.as_ref(), samples, false, max_pcm_bytes)?;
+        if timeline != expected_timeline { return Err(fail()); }
+        let paths = manifest.owned_paths(&self.root, &source)?;
+        audio_artifacts::attach_group(&source, paths.first().ok_or_else(fail)?)?;
+        self.receipt.parts_audio = Some(PartsAudio { manifest, timeline });
+        if let Err(error) = self.save() {
+            self.receipt.parts_audio = None;
+            return Err(error);
+        }
+        Ok(paths)
+    }
+
     pub(crate) fn assemble(&mut self) -> Result<PathBuf, String> {
         let plan = self.plan()?;
         if !plan.payloads_complete {
             return Err("录音尚有缺段，已收齐的原音保留，等待继续同步。".into());
+        }
+        if self.receipt.parts_audio.is_some() {
+            return Err("这场录音已保存为多个连续分段，需使用完整分段回听或转写；原音均已保留。".into());
         }
         if let Some(a) = &self.receipt.audio {
             self.verify_audio(a)?;
@@ -799,7 +860,7 @@ mod long_receipt_tests {
     #[test]
     fn reads_large_complete_receipt_and_rejects_truncated_json() {
         let path=std::env::temp_dir().join(format!("companion-large-receipt-{}-{:?}.json",std::process::id(),std::thread::current().id()));
-        let receipt=Receipt{schema:1,segments:vec![Segment{wire:vec![0;112],received:false,acked:false};10000],audio:None,device:None};
+        let receipt=Receipt{schema:1,segments:vec![Segment{wire:vec![0;112],received:false,acked:false};10000],audio:None,parts_audio:None,device:None};
         let mut file=OpenOptions::new().write(true).create_new(true).open(&path).unwrap();
         serde_json::to_writer(&mut file,&receipt).unwrap();file.sync_all().unwrap();drop(file);
         assert!(fs::metadata(&path).unwrap().len()>2*1024*1024);
