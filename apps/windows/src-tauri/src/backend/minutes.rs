@@ -1447,6 +1447,20 @@ mod tests {
     }
 
     #[test]
+    fn short_spoken_list_retains_nine_natural_tasks() {
+        let session = session_with_text("明天核对采购合同，整理销售报价，确认发货地址，检查库存数量，整理包装设计，联系客户回访，提交测试报告，核对生产排期，发送样品清单。");
+        let l0 = rules_l0_minutes(&session, "now");
+        assert_eq!(l0.action_items.len(), 9, "a short voice memo should not lose a natural list after eight items");
+        let mut cloud = l0.clone();
+        cloud.source = "llm_deepseek".into();
+        cloud.action_items.clear(); // Simulate a provider overlooking the list.
+        let result = finalize_minutes(Ok(cloud), l0, &session);
+        assert_eq!(result.action_items.len(), 9);
+        assert!(result.action_items.iter().any(|item| item.text.contains("发送样品清单")));
+        assert!(result.markdown.contains("发送样品清单"));
+    }
+
+    #[test]
     fn meeting_retains_all_nine_explicit_actions_from_the_model() {
         let tasks = ["核对采购合同", "整理销售报价", "确认发货地址", "检查库存数量", "更新包装设计",
             "安排客户回访", "提交测试报告", "核对生产排期", "发送样品清单"];
