@@ -23,9 +23,24 @@ libraries are not extracted. The four-argument form accepts and verifies a
 separate runtime directory. Invoke either form on a worker. The candidate expects
 the Paraformer zh-small int8 model and tokens under
 `sherpa-onnx-paraformer-zh-small-2024-03-09/` in the model root. Alternatively,
-the pinned SenseVoice int8 model and tokens can be separately provisioned under
-`sherpa-onnx-sense-voice-2024-07-17/`; create a `ready` file only after both
-files are completely saved. The backend validates both file hashes when loading,
+the pinned SenseVoice int8 model and tokens can be prepared on a worker thread:
+
+```java
+Path modelRoot = context.getFilesDir().toPath().resolve("companion-models");
+LocalModelPreparation.prepare(modelRoot, (downloaded, total) -> {
+    // Report progress to the UI on the UI thread.
+});
+boolean ready = LocalModelPreparation.isPrepared(modelRoot);
+String text = NativeLocalTranscription.transcribe(wav, modelRoot, privateCache);
+```
+
+Preparation is explicit, downloads approximately 240 MB, and can resume an
+interrupted download when the server supports it. Let the user choose when to
+download, particularly on mobile data. It downloads only model files and sends
+no recording. It validates both files before publishing readiness, retains an
+interrupted download for retry, and leaves a previously verified model in place
+until its replacement is verified. `isPrepared` also verifies the files; run it
+on a worker thread. The backend validates both file hashes when loading,
 prefers a completed SenseVoice directory and keeps its cache separate from
 Paraformer. The converted weights are from
 `csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17`, revision
