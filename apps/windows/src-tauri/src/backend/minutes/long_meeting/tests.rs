@@ -502,8 +502,34 @@ fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
     ];
     let endpoint = format!("http://{address}/chat/completions");
     let client = reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
-    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&client).unwrap(), vec![1]);
-    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&client).is_err());
-    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&client).is_err());
+    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).unwrap(), vec![1]);
+    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).is_err());
+    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).is_err());
     worker.join().unwrap();
+}
+
+
+#[test]
+fn background_context_reuses_only_matching_source_backed_actions() {
+    let root = root();
+    let source = session("小王周五整理报价。旁边说周六买猫粮。\n");
+    let minutes = run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,part,_| {
+        let (mut m, mut e) = response(part);
+        m.action_items = vec![
+            crate::companion_v1::CompanionV1ActionItem{text:"整理报价".into(),owner:Some("小王".into()),due:Some("周五".into())},
+            crate::companion_v1::CompanionV1ActionItem{text:"买猫粮".into(),owner:None,due:Some("周六".into())},
+        ];
+        e.push(Evidence{field:"actionItems".into(),index:0,quote:"小王周五整理报价".into()});
+        e.push(Evidence{field:"actionItems".into(),index:1,quote:"旁边说周六买猫粮".into()});
+        Ok((m,e))
+    }).unwrap();
+    let path = root.join(Identity::new("https://fixture.invalid","model","key",&source).filename());
+    let checkpoint = read_checkpoint(&path).unwrap();
+    let quotes = action_source_quotes(&checkpoint,&minutes);
+    assert_eq!(quotes.len(), 2);
+    assert_eq!(quotes[0], vec!["小王周五整理报价"]);
+    assert_eq!(quotes[1], vec!["旁边说周六买猫粮"]);
+    let mut other = minutes.clone(); other.action_items[0].due = Some("周一".into());
+    assert!(action_source_quotes(&checkpoint,&other)[0].is_empty());
+    cleanup(root);
 }

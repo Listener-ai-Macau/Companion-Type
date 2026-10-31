@@ -309,8 +309,12 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
     // described background chat; never delete them or change their attribution.
     if minutes.processing.as_ref().is_some_and(|p| p.complete)
         && !minutes.summary.is_empty() && !minutes.action_items.is_empty() {
+        let checkpoint_path = root.join(Identity::new(endpoint, model, key, session).filename());
+        let quotes = read_checkpoint(&checkpoint_path).ok()
+            .map(|checkpoint| action_source_quotes(&checkpoint, &minutes))
+            .unwrap_or_else(|| vec![Vec::new(); minutes.action_items.len()]);
         if let Ok(indices) = request_background_review(endpoint, model, key, session,
-            &minutes, client) {
+            &minutes, &quotes, client) {
             mark_background_candidates(session, &mut minutes, &indices);
         }
     }
@@ -322,6 +326,22 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
         }
     }
     Ok(minutes)
+}
+
+// The already validated chapter quotations provide context for each action.
+// Identical tasks can appear in several chapters; retain all distinct quotes.
+fn action_source_quotes(checkpoint: &Checkpoint, minutes: &CompanionV1MeetingMinutes) -> Vec<Vec<String>> {
+    let mut result = vec![Vec::new(); minutes.action_items.len()];
+    for chapter in checkpoint.chapters.iter().flatten() {
+        for evidence in chapter.evidence.iter().filter(|e| e.field == "actionItems") {
+            let Some(source_item) = chapter.minutes.action_items.get(evidence.index) else { continue; };
+            if let Some(index) = minutes.action_items.iter().position(|item|
+                item.text == source_item.text && item.owner == source_item.owner && item.due == source_item.due) {
+                if !result[index].contains(&evidence.quote) { result[index].push(evidence.quote.clone()); }
+            }
+        }
+    }
+    result
 }
 
 // Add an explicit cue to uncertain tasks, without removing them from the
@@ -351,11 +371,11 @@ fn mark_background_candidates(session: &CompanionV1HostSession,
 // reading cue, not a decision to discard speech or a new speaker identity.
 fn request_background_review(endpoint: &str, model: &str, key: &str,
     session: &CompanionV1HostSession, minutes: &CompanionV1MeetingMinutes,
-    client: &reqwest::blocking::Client) -> Result<Vec<usize>, String> {
+    quotes: &[Vec<String>], client: &reqwest::blocking::Client) -> Result<Vec<usize>, String> {
     let actions = minutes.action_items.iter().enumerate().map(|(id, item)|
-        serde_json::json!({"id":id,"text":item.text})).collect::<Vec<_>>();
+        serde_json::json!({"id":id,"text":item.text,"sourceQuotes":quotes.get(id)})).collect::<Vec<_>>();
     let input = serde_json::json!({"title":session.title,"summary":minutes.summary,"actions":actions}).to_string();
-    let instruction = "你是会议事项核对助手。根据全会摘要和候选行动，只标出摘要明确指出属于会议范围以外的旁人或背景闲谈的任务。不要仅凭与主要主题不同判为无关：会议可能换题，个人备忘可能有多个主题；身份或关联无法确认时不要标记。只返回 JSON 对象 {\"possiblyUnrelated\":[候选id]}；不要改写或添加事实。";
+    let instruction = "你是会议事项核对助手。根据全会摘要、候选行动及其原文引用，只标出有明确依据属于会议范围以外的旁人或背景闲谈的任务。不要仅凭与主要主题不同判为无关：会议可能换题，个人备忘可能有多个主题；身份或关联无法确认时不要标记。只返回 JSON 对象 {\"possiblyUnrelated\":[候选id]}；不要改写或添加事实。";
     if input.len().saturating_add(instruction.len()) > MAX_PROMPT_BYTES {
         return Err("会议事项过多，请自行核对。".into());
     }
