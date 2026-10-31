@@ -84,7 +84,7 @@ background service or delete recordings from the device.
 For a long meeting, `client.syncAvailableAndReclaim(selectedSegment, directory,
 progress)` is the explicit alternative: it receives currently sealed segments of
 that selected session, verifies the contiguous saved audio and device-authored
-timeline, makes the local files durable, and only then sends an exact receipt for
+timeline, syncs the local files and their Android directories, and only then sends an exact receipt for
 each saved segment to free its device space. It retains the original local files.
 Use an immediate child of the existing app-private files directory, as in the
 example above, so the recording directory and its parent can both be synced.

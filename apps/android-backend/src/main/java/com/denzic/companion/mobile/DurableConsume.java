@@ -24,10 +24,7 @@ final class DurableConsume {
     private boolean subscribed;
 
     DurableConsume(RecorderWire.Peer peer,RecordingClient.Link link) {
-        this(peer,link,directory->{
-            try(FileChannel f=FileChannel.open(directory,StandardOpenOption.READ)){f.force(true);}
-            catch(UnsupportedOperationException|SecurityException e){throw new IOException("cannot safely save recording directory",e);}
-        },
+        this(peer,link,AndroidDirectorySync::sync,
             prefix->NativeAudio.inspectPrefix(prefix));
     }
     DurableConsume(RecorderWire.Peer peer,RecordingClient.Link link,DirectorySync sync,PrefixCheck check) {
