@@ -19,6 +19,11 @@ assert.ok(enhancedSplit.detailKeywords?.includes('项目'));
 assert.ok(!enhancedSplit.overview.includes('讨论项目交付'));
 assert.ok(enhancedSplit.overview.includes('会议重点：项目交付'));
 assert.ok(enhancedSplit.overview.includes('准备材料'));
+const conciseMarkdown='## 会议概览\n\n> AI根据详细纪要整理，请结合原文核对。\n\n- 会议重点：项目交付\n\n'+markdown;
+const conciseSplit=splitLongMinutesEvidence(conciseMarkdown);
+assert.ok(conciseSplit?.detailSummary?.includes('讨论项目交付'));
+assert.ok(conciseSplit?.overview.includes('会议重点：项目交付'));
+assert.ok(conciseSplit?.evidence.includes('小王负责准备材料'));
 const customSection=splitLongMinutesEvidence(enhancedMarkdown.replace('## Decisions','## 用户补充\n- 不能隐藏\n\n## Decisions'))!;
 assert.equal(customSection.detailSummary,undefined,'unknown edited sections must remain visible');
 assert.ok(customSection.overview.includes('不能隐藏'));
@@ -58,8 +63,8 @@ assert.ok(tree.root.findByProps({id:'ct-recording-result'}).findAllByType('summa
 act(()=>tree.unmount());
 // The new format must keep the useful overview and one actionable checklist,
 // while the complete summary and original evidence remain separately available.
-row.minutes!.source='llm_deepseek';row.minutes!.markdown=enhancedMarkdown;
-row.minutesByMode!.offlineStore!.source='llm_deepseek';row.minutesByMode!.offlineStore!.markdown=enhancedMarkdown;
+row.minutes!.source='llm_deepseek';row.minutes!.markdown=conciseMarkdown;
+row.minutesByMode!.offlineStore!.source='llm_deepseek';row.minutesByMode!.offlineStore!.markdown=conciseMarkdown;
 saves.length=0;
 act(()=>tree=create(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}} onSaveMeeting={async(q:any)=>{saves.push(q);return snapshot;}}/>));
 act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
@@ -95,14 +100,15 @@ if (process.env.COMPANION_TEST_PUBLIC_MINUTES) {
   assert.ok(view.detailKeywords?.includes('场外衍生品'));
   assert.ok(!view.overview.includes('## Keywords'));
   assert.equal(real.summary.length,68);
-  assert.equal((view.overview.match(/^- /gm)??[]).length >= 9,true);
+  const isConcise=real.markdown.startsWith('## 会议概览\n');
+  assert.equal(isConcise ? (view.overview.match(/^- /gm)??[]).length>=3 : (view.overview.match(/^- /gm)??[]).length>=9,true);
   assert.ok(view.detailSummary.includes(real.summary[0]));
   snapshot.host.sessions=[actual];snapshot.host.selectedSessionId=actual.id;
   act(()=>tree=create(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}/>));
   act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
   const actualResult=tree.root.findByProps({id:'ct-recording-result'});
   const actualArticle=actualResult.findAllByType('article')[0];
-  assert.ok(text(actualArticle).includes('全会重点'));
+  assert.ok(text(actualArticle).includes(isConcise?'会议概览':'全会重点'));
   assert.ok(!text(actualArticle).includes(real.summary[0]),'68-item detailed summary is not expanded in the main view');
   assert.ok(actualResult.findAllByType('summary').some((s:any)=>text(s)==='查看完整摘要和关键词'));
   assert.ok(actualResult.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));

@@ -7,7 +7,7 @@ import {emptyActionNotice} from './savedActions';
 export function splitLongMinutesEvidence(markdown: string): {overview: string; evidence: string; detailSummary?: string; detailKeywords?: string} | null {
   // The current native format may place the selected meeting highlights before
   // the original long-meeting notice. Older saved minutes start at the notice.
-  const highlights = /^## 全会重点\r?\n\r?\n(?:- [^\r\n]+\r?\n)+\r?\n(?=> 长会议已按原文顺序处理全部)/.exec(markdown);
+  const highlights = /^(?:## 全会重点\r?\n\r?\n|## 会议概览\r?\n\r?\n> AI根据详细纪要整理，请结合原文核对。\r?\n\r?\n)(?:- [^\r\n]+\r?\n)+\r?\n(?=> 长会议已按原文顺序处理全部)/.exec(markdown);
   const body = highlights ? markdown.slice(highlights[0].length) : markdown;
   if (!/^> (?:长会议已按原文顺序处理全部|部分纪要：已完成)/.test(body)) return null;
   const marker = /\r?\n\r?\n## 分段原文依据\r?\n\r?\n/g;

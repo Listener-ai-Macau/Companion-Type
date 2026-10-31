@@ -403,6 +403,26 @@ fn product_text_erasure_clears_minutes_cache_even_without_any_asr_cache() {
 }
 
 #[test]
+fn concise_overview_preserves_complete_minutes_and_checks_sources() {
+    let source = session("会议原文");
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["讨论包装方案".into(), "周五前发送报价".into(), "下周确认交付".into()];
+    minutes.markdown = "# 完整纪要\n\n## 分段原文依据\n\n原文不变".into();
+    let original = minutes.markdown.clone();let summary = minutes.summary.clone();
+    let points = parse_concise_overview(r#"{"overview":[{"text":"讨论包装、报价和交付安排。","sources":[0,1,2]}]}"#,3).unwrap();
+    prepend_concise_overview(&mut minutes,&points);
+    assert!(minutes.markdown.starts_with("## 会议概览\n\n> AI根据详细纪要整理"));
+    assert!(minutes.markdown.contains("- 讨论包装、报价和交付安排。"));
+    assert!(minutes.markdown.ends_with(&original));assert_eq!(minutes.summary,summary);
+    for bad in [r#"{"overview":[{"text":"错误引用","sources":[3]}]}"#,
+        r#"{"overview":[{"text":"无引用","sources":[]}]}"#,
+        r#"{"overview":[{"text":"重复引用","sources":[0,0]}]}"#,
+        r#"{"overview":[{"text":"一行\n另一行","sources":[0]}]}"#] {
+        assert!(parse_concise_overview(bad,3).is_err());
+    }
+}
+
+#[test]
 fn overview_keeps_full_minutes_and_uses_only_selected_items_in_original_order() {
     let source = session("会议原文");
     let (mut minutes, _) = response(&source);
@@ -467,10 +487,10 @@ fn real_public_long_meeting_overview() {
     let base = std::env::var("DEEPSEEK_BASE_URL").unwrap_or_else(|_| "https://api.deepseek.com".into());
     let endpoint = format!("{}/chat/completions", base.trim_end_matches('/'));
     let client = super::super::deepseek_http_client(&endpoint).unwrap();
-    let indices = request_overview(&endpoint, &model, &key, &minutes.summary, &client).unwrap();
-    prepend_overview(&mut minutes, &indices);
+    let points = request_concise_overview(&endpoint, &model, &key, &minutes.summary, &client).unwrap();
+    prepend_concise_overview(&mut minutes, &points);
     assert!(minutes.markdown.ends_with(&original));
-    fs::write(output, serde_json::to_vec_pretty(&serde_json::json!({"indices":indices,"minutes":minutes})).unwrap()).unwrap();
+    fs::write(output, serde_json::to_vec_pretty(&serde_json::json!({"minutes":minutes})).unwrap()).unwrap();
 }
 
 
