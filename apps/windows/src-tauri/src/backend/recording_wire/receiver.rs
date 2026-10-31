@@ -693,9 +693,32 @@ fn decode(
     expected: u64,
     legacy_limited: bool,
 ) -> Result<Option<cop1::Timeline>, String> {
-    use denzic_host_audio_v1_core::{opus_decoder::MonoDecoder, wav::WavWriter};
-    let mut decoder = MonoDecoder::new(16000)?;
+    use denzic_host_audio_v1_core::wav::WavWriter;
     let mut wav = WavWriter::create(output).map_err(|e|export::local_write_error("创建录音回听文件",&e))?;
+    let timeline = decode_pcm(ds, files, expected, legacy_limited, |pcm| {
+        wav.append_bytes(pcm).map_err(|e|export::local_write_error("写入录音回听文件",&e))
+    })?;
+    wav.finalize().map_err(|e|export::local_write_error("完成录音回听文件",&e))?;
+    drop(wav);
+    OpenOptions::new()
+        .write(true)
+        .open(output)
+        .and_then(|f| f.sync_all())
+        .map_err(|e|export::local_write_error("提交录音回听文件",&e))?;
+    Ok(timeline)
+}
+
+// Keep one decoder and one sample window for the entire source session. A
+// sink may split output without resetting the codec or the source timeline.
+fn decode_pcm(
+    ds: &[Descriptor],
+    files: &mut [File],
+    expected: u64,
+    legacy_limited: bool,
+    mut write_pcm: impl FnMut(&[u8]) -> Result<(), String>,
+) -> Result<Option<cop1::Timeline>, String> {
+    use denzic_host_audio_v1_core::opus_decoder::MonoDecoder;
+    let mut decoder = MonoDecoder::new(16000)?;
     let mut window=None;
     let mut schema=None;let mut timeline=None;
     for (d, file) in ds.iter().zip(files) {
@@ -719,7 +742,7 @@ fn decode(
                 .iter().copied()
                 .flat_map(|v| (if legacy_limited {v.clamp(-29900, 29900)} else {v}).to_le_bytes())
                 .collect::<Vec<_>>();
-            wav.append_bytes(&pcm).map_err(|e|export::local_write_error("写入录音回听文件",&e))?;
+            write_pcm(&pcm)?;
         }
         let summary=reader.finish(d.flags&4!=0)?;
         if let Some(timeline)=timeline.as_mut() {timeline.add_segment(&summary)?;}
@@ -729,13 +752,6 @@ fn decode(
     if boundary.written_samples != expected {
         return Err(fail());
     }
-    wav.finalize().map_err(|e|export::local_write_error("完成录音回听文件",&e))?;
-    drop(wav);
-    OpenOptions::new()
-        .write(true)
-        .open(output)
-        .and_then(|f| f.sync_all())
-        .map_err(|e|export::local_write_error("提交录音回听文件",&e))?;
     Ok(timeline)
 }
 
