@@ -271,6 +271,15 @@ session and reports whether the local set is complete, incomplete or damaged.
 `NativeAudio.decode(session, output)` exposes the shared COP1/Opus decoder, with
 the original segments retained and an existing output never overwritten. It can
 also return an incomplete capture as such when all recovered segments are present.
+The matching Java/native backend also returns `audio.bookmarks`: verified
+device-authored marks from the same original recording. Each mark has its device
+`sequence`, `sourceSamples`, `playbackSamples` and `elapsedMillis`; the sample
+values are at 16 kHz, so `playbackSamples / 16` is the position in the decoded
+WAV in milliseconds. The captured/playback position excludes paused time, while
+`elapsedMillis` retains the device's elapsed-time observation. Associate marks
+with the session identity and persist any user edits in the host app; this API
+does not automatically save, consume or delete the device recording. The mark
+path has only host-side synthetic JNI tests, not phone/device acceptance.
 The Android ARM64 native candidate is built using `build_android_native.py`; set
 the Gradle property `companionAndroidJniLibs` to the resulting `jniLibs` directory
 to package it. Build the matching library for each ABI the host app supports. The

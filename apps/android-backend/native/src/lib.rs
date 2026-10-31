@@ -80,7 +80,8 @@ use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path
 
 /// A previously saved segment and its unmodified device descriptor.
 pub struct Segment { pub path:PathBuf, pub descriptor:[u8;112] }
-pub struct Decoded { pub path:PathBuf, pub samples:u64, pub capture_complete:bool }
+pub struct Decoded { pub path:PathBuf, pub samples:u64, pub capture_complete:bool, pub bookmarks:Vec<DecodedBookmark> }
+pub struct DecodedBookmark {pub sequence:u32,pub source_samples:u64,pub playback_samples:u64,pub elapsed_ms:u64}
 
 struct Description {uid:[u8;12],epoch:u64,session:u64,index:u32,recording:u32,offset:u64,samples:u64,
     length:u32,crc:u32,sha:[u8;32],total:u32,flags:u8,source:u8}
@@ -151,10 +152,18 @@ pub fn decode_session(segments:&[Segment],output:&Path)->Result<Decoded,String> 
         let recovered=descriptions.iter().any(|d|d.flags&4!=0);
         let boundary=window.unwrap().finish(descriptions.last().unwrap().flags&4!=0)?;
         if boundary.written_samples!=written||written==0{return Err("recording contains no complete audio".into());}
+        let bookmarks=if let Some(mut timeline)=timeline {
+            timeline.apply_boundary(boundary);
+            if timeline.bookmarks.len()>1024 || timeline.bookmarks.iter().any(|event|event.elapsed_ms>i64::MAX as u64) {
+                return Err("invalid device bookmark metadata; original retained".into());
+            }
+            timeline.bookmarks.iter().map(|event|DecodedBookmark {sequence:event.sequence,source_samples:event.sample_offset,
+                playback_samples:timeline.playback_position(event.sample_offset),elapsed_ms:event.elapsed_ms}).collect()
+        } else {Vec::new()};
         let data=(written*2) as u32;file.seek(SeekFrom::Start(0)).map_err(|e|e.to_string())?;file.write_all(&wav_header(data)).map_err(|e|e.to_string())?;file.sync_all().map_err(|e|e.to_string())?;
         // Publish without replacing a previous recording, even if another writer races us.
         fs::hard_link(&temporary,output).map_err(|e|format!("save decoded recording: {e}"))?;
-        Ok(Decoded{path:output.to_path_buf(),samples:written,capture_complete:!recovered})
+        Ok(Decoded{path:output.to_path_buf(),samples:written,capture_complete:!recovered,bookmarks})
     })();
     drop(file);let _=fs::remove_file(&temporary);result
 }
@@ -183,6 +192,38 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeAudio_decodeFiles(
         Ok(Ok(samples))=>samples,
         Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);0},
         Err(_)=>{let _=env.throw_new("java/io/IOException","audio decoding failed; original recordings were retained");0},
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeAudio_decodeFilesDetailed(
+    mut env:jni::JNIEnv,_class:jni::objects::JClass,paths:jni::objects::JObjectArray,
+    descriptors:jni::objects::JObjectArray,output:jni::objects::JString) -> jni::sys::jlongArray {
+    let run=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<jni::sys::jlongArray,String> {
+        let count=env.get_array_length(&paths).map_err(|e|e.to_string())?;
+        if count<=0||count>1024||env.get_array_length(&descriptors).map_err(|e|e.to_string())?!=count {return Err("invalid recording segment list".into());}
+        let output:String=env.get_string(&output).map_err(|e|e.to_string())?.into();
+        let mut segments=Vec::with_capacity(count as usize);
+        for i in 0..count {
+            let path=jni::objects::JString::from(env.get_object_array_element(&paths,i).map_err(|e|e.to_string())?);
+            let value:String=env.get_string(&path).map_err(|e|e.to_string())?.into();
+            env.delete_local_ref(path).map_err(|e|e.to_string())?;
+            let descriptor=jni::objects::JByteArray::from(env.get_object_array_element(&descriptors,i).map_err(|e|e.to_string())?);
+            let bytes=env.convert_byte_array(&descriptor).map_err(|e|e.to_string())?;
+            env.delete_local_ref(descriptor).map_err(|e|e.to_string())?;
+            segments.push(Segment{path:PathBuf::from(value),descriptor:bytes.try_into().map_err(|_|"invalid recording descriptor length")?});
+        }
+        let decoded=decode_session(&segments,Path::new(&output))?;
+        let mut values=Vec::with_capacity(1+decoded.bookmarks.len()*4);values.push(decoded.samples as i64);
+        for mark in decoded.bookmarks {values.extend([i64::from(mark.sequence),mark.source_samples as i64,mark.playback_samples as i64,mark.elapsed_ms as i64]);}
+        let array=env.new_long_array(values.len() as i32).map_err(|e|e.to_string())?;
+        env.set_long_array_region(&array,0,&values).map_err(|e|e.to_string())?;
+        Ok(array.into_raw())
+    }));
+    match run {
+        Ok(Ok(array))=>array,
+        Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
+        Err(_)=>{let _=env.throw_new("java/io/IOException","audio decoding failed; original recordings were retained");std::ptr::null_mut()},
     }
 }
 
@@ -334,6 +375,20 @@ mod mobile_tests {
         let mut broken=fs::read(&inputs[1].path).unwrap();broken[15]^=1;fs::write(&inputs[1].path,broken).unwrap();
         assert!(decode_session(&inputs,&dir.join("damaged.wav")).is_err());assert!(!dir.join("damaged.wav").exists());assert_eq!(fs::read(&out).unwrap(),wav);
         fs::remove_file(&inputs[0].path).unwrap();fs::remove_file(&inputs[1].path).unwrap();fs::remove_file(out).unwrap();fs::remove_dir(dir).unwrap();
+    }
+    #[test]
+    fn device_bookmark_preserves_capture_and_playback_position_across_pause() {
+        let dir=std::env::temp_dir().join(format!("companion-mobile-bookmark-{}-{}",std::process::id(),TEMP_COUNTER.fetch_add(1,Ordering::Relaxed)));
+        fs::create_dir(&dir).unwrap();
+        let mut raw=b"COP1\x03\x01\x14\x03\x80\x3e\x00\x00".to_vec();
+        cop1::tests::audio(&mut raw,2);cop1::tests::event(&mut raw,4,1,640,40);
+        cop1::tests::event(&mut raw,1,1,640,40);cop1::tests::event(&mut raw,2,2,640,5040);
+        cop1::tests::audio(&mut raw,2);
+        let part=segment(&dir,0,4,true,raw);let out=dir.join("audio.wav");
+        let decoded=decode_session(&[part],&out).unwrap();assert_eq!(decoded.samples,960);
+        assert_eq!(decoded.bookmarks.len(),1);let mark=&decoded.bookmarks[0];
+        assert_eq!((mark.sequence,mark.source_samples,mark.playback_samples,mark.elapsed_ms),(1,640,320,40));
+        fs::remove_file(dir.join("segment-0.cop1")).unwrap();fs::remove_file(out).unwrap();fs::remove_dir(dir).unwrap();
     }
     #[test]
     fn schema4_and_schema5_segments_keep_explicit_source_start_and_end() {
