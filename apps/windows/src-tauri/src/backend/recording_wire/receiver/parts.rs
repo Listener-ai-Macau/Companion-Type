@@ -13,6 +13,79 @@ pub(super) struct Part {
     pub sha256: String,
 }
 
+/// Durable, path-independent description of one continuous decoded recording.
+/// Filenames are derived from the owning directory and order, never read from
+/// a receipt. Old single-WAV receipts remain unchanged.
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub(super) struct PartRecord {
+    first_sample: u64,
+    samples: u64,
+    bytes: u64,
+    sha256: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub(super) struct PartManifest {
+    total_samples: u64,
+    parts: Vec<PartRecord>,
+}
+
+impl PartManifest {
+    fn from_parts(root: &Path, parts: &[Part], total_samples: u64) -> Result<Self, String> {
+        let records = parts.iter().enumerate().map(|(index, part)| {
+            if part.path != root.join(format!("part-{index:08}.wav")) { return Err(fail()); }
+            Ok(PartRecord { first_sample: part.first_sample, samples: part.samples,
+                bytes: part.bytes, sha256: part.sha256.clone() })
+        }).collect::<Result<Vec<_>, String>>()?;
+        let manifest = Self { total_samples, parts: records };
+        // PartWriter has already synced and hashed each newly written file.
+        // Check the sample layout here; rehash only when reopening it later.
+        manifest.paths(root)?;
+        Ok(manifest)
+    }
+
+    fn paths(&self, root: &Path) -> Result<Vec<PathBuf>, String> {
+        let metadata = fs::symlink_metadata(root).map_err(|_| fail())?;
+        if !metadata.is_dir() || metadata.file_type().is_symlink() || self.parts.is_empty() {
+            return Err(fail());
+        }
+        let mut next = 0u64;
+        let mut paths = Vec::with_capacity(self.parts.len());
+        for (index, part) in self.parts.iter().enumerate() {
+            let pcm = part.samples.checked_mul(2).ok_or_else(fail)?;
+            let pcm32 = u32::try_from(pcm).map_err(|_| fail())?;
+            if part.samples == 0 || part.first_sample != next || pcm32 > u32::MAX - 36
+                || part.bytes != pcm.checked_add(44).ok_or_else(fail)? {
+                return Err(fail());
+            }
+            next = next.checked_add(part.samples).ok_or_else(fail)?;
+            paths.push(root.join(format!("part-{index:08}.wav")));
+        }
+        if next != self.total_samples { return Err(fail()); }
+        Ok(paths)
+    }
+
+    /// Return all exact files in recording order after checking the saved
+    /// sample axis, WAV headers and content. A missing middle file is never a
+    /// shorter successful recording.
+    pub(super) fn verify(&self, root: &Path) -> Result<Vec<PathBuf>, String> {
+        let paths = self.paths(root)?;
+        for (part, path) in self.parts.iter().zip(&paths) {
+            let pcm32 = u32::try_from(part.samples.checked_mul(2).ok_or_else(fail)?).map_err(|_| fail())?;
+            let mut file = read_locked(path)?;
+            if file.metadata().map_err(|_| fail())?.len() != part.bytes { return Err(fail()); }
+            let mut header = [0u8; 44];
+            file.read_exact(&mut header).map_err(|_| fail())?;
+            if header != denzic_host_audio_v1_core::wav::wav_header(pcm32) { return Err(fail()); }
+            file.seek(SeekFrom::Start(0)).map_err(|_| fail())?;
+            if digest(file)? != (part.bytes, part.sha256.clone()) { return Err(fail()); }
+        }
+        Ok(paths)
+    }
+}
+
 struct OpenPart {
     file: File,
     path: PathBuf,
@@ -98,6 +171,14 @@ pub(super) fn decode_to_parts(ds: &[Descriptor], files: &mut [File], root: &Path
     Ok((output.finish(samples)?, timeline))
 }
 
+#[allow(dead_code)]
+pub(super) fn decode_to_manifest(ds: &[Descriptor], files: &mut [File], root: &Path,
+    samples: u64, legacy_limited: bool, max_pcm_bytes: u32,
+) -> Result<(PartManifest, Option<cop1::Timeline>), String> {
+    let (parts, timeline) = decode_to_parts(ds, files, root, samples, legacy_limited, max_pcm_bytes)?;
+    Ok((PartManifest::from_parts(root, &parts, samples)?, timeline))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -116,22 +197,35 @@ mod tests {
             verify_file(read_locked(&receiver.payload_path(d)).unwrap(),d).unwrap()
         ).collect::<Vec<_>>();
         let dir=root.join("new-parts");
-        let (parts,timeline)=decode_to_parts(&descriptors,&mut files,&dir,audio.samples,false,1000).unwrap();
-        assert!(parts.len()>2); assert_eq!(timeline,audio.timeline);
+        let (manifest,timeline)=decode_to_manifest(&descriptors,&mut files,&dir,audio.samples,false,1000).unwrap();
+        assert!(manifest.parts.len()>2); assert_eq!(timeline,audio.timeline);
+        let saved=serde_json::to_vec(&manifest).unwrap();
+        let reopened:PartManifest=serde_json::from_slice(&saved).unwrap();
+        let paths=reopened.verify(&dir).unwrap();
         let mut decoded=Vec::new(); let mut samples=0;
-        for part in &parts {
+        for (part,path) in reopened.parts.iter().zip(&paths) {
             assert_eq!(part.first_sample,samples);
-            crate::backend::meeting_workspace::validate_wav(&part.path).unwrap();
-            let bytes=fs::read(&part.path).unwrap();
+            crate::backend::meeting_workspace::validate_wav(path).unwrap();
+            let bytes=fs::read(path).unwrap();
             assert_eq!(bytes.len() as u64,part.bytes);
             assert_eq!(format!("{:x}",Sha256::digest(&bytes)),part.sha256);
             assert_eq!(part.samples*2,bytes.len() as u64-44);
             decoded.extend_from_slice(&bytes[44..]); samples+=part.samples;
         }
         assert_eq!(samples,audio.samples); assert_eq!(decoded,wav[44..]);
-        let first=fs::read(&parts[0].path).unwrap();
+        let first=fs::read(&paths[0]).unwrap();
+        let middle=fs::read(&paths[1]).unwrap();
+        fs::remove_file(&paths[1]).unwrap();
+        assert!(reopened.verify(&dir).is_err(), "a missing middle file must not become a shorter recording");
+        fs::write(&paths[1],&middle).unwrap();
+        let mut corrupt=middle.clone(); *corrupt.last_mut().unwrap()^=1; fs::write(&paths[1],&corrupt).unwrap();
+        assert!(reopened.verify(&dir).is_err(), "changed audio must not match the saved receipt");
+        fs::write(&paths[1],&middle).unwrap();
+        let mut wrong_axis=reopened.clone(); wrong_axis.parts[1].first_sample+=1;
+        assert!(wrong_axis.verify(&dir).is_err(), "a gap in the saved sample axis must be rejected");
+        assert_eq!(reopened.verify(&dir).unwrap(),paths);
         assert!(decode_to_parts(&descriptors,&mut files,&dir,audio.samples,false,1000).is_err());
-        assert_eq!(fs::read(&parts[0].path).unwrap(),first,"existing output must never be replaced");
+        assert_eq!(fs::read(&paths[0]).unwrap(),first,"existing output must never be replaced");
         drop(files);drop(receiver);fs::remove_dir_all(root).unwrap();
     }
 
