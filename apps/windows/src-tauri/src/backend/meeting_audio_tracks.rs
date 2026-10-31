@@ -25,6 +25,7 @@ struct OpenPart {
     path: PathBuf,
     first_sample: u64,
     samples: u64,
+    artifact: Option<super::audio_artifacts::WriteLease>,
 }
 
 #[allow(dead_code)]
@@ -63,9 +64,13 @@ impl TrackWriter {
 
     fn open_next(&mut self) -> io::Result<()> {
         let path = self.root.join(format!("{}-{:08}.wav", self.prefix, self.complete.len()));
+        // Each file receives the same ownership and active-writer protection
+        // as an ordinary host recording before any PCM can be written.
+        let artifact = super::audio_artifacts::WriteLease::begin(&path, &path, super::audio_artifacts::Purpose::Recording)
+            .map_err(io::Error::other)?;
         let mut file = OpenOptions::new().write(true).read(true).create_new(true).open(&path)?;
         file.write_all(&denzic_host_audio_v1_core::wav::wav_header(0))?;
-        self.current = Some(OpenPart { file, path, first_sample: self.cursor, samples: 0 });
+        self.current = Some(OpenPart { file, path, first_sample: self.cursor, samples: 0, artifact });
         Ok(())
     }
 
@@ -101,6 +106,7 @@ impl TrackWriter {
         if part.file.metadata()?.len() != HEADER + u64::from(bytes) {
             return Err(io::Error::other("WAV part length changed"));
         }
+        if let Some(artifact) = part.artifact.take() { artifact.finish().map_err(io::Error::other)?; }
         self.complete.push(TrackPart { path: part.path, first_sample: part.first_sample, samples: part.samples });
         Ok(())
     }
@@ -212,6 +218,24 @@ mod tests {
         assert_eq!(a[0].path.parent(), Some(root.as_path()));
         assert_eq!(b[0].path.parent(), Some(root.as_path()));
         assert_ne!(a[0].path, b[0].path); assert_eq!(pcm(&a[0]), [1, 2]); assert_eq!(pcm(&b[0]), [3, 4]);
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    #[ignore = "changes the process recording directory; run in isolation"]
+    fn managed_track_files_get_owned_and_can_be_cleaned() {
+        let root = root();
+        let old = std::env::var_os("COMPANION_TYPE_RECORDING_DIR");
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let mut track = TrackWriter::create_flat(&root, "owned-mic", 2).unwrap();
+        track.append(&[1,2,3]).unwrap();
+        let parts = track.finish().unwrap();
+        assert!(parts.iter().all(|p| super::super::audio_artifacts::is_managed(&p.path)));
+        let sources = parts.iter().map(|p| p.path.to_string_lossy().into_owned()).collect::<Vec<_>>();
+        let report = super::super::audio_artifacts::erase(&root, &sources, &[]).unwrap();
+        assert_eq!(report.deleted, 2); assert!(parts.iter().all(|p| !p.path.exists()));
+        if let Some(value) = old { std::env::set_var("COMPANION_TYPE_RECORDING_DIR", value); }
+        else { std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); }
         fs::remove_dir_all(root).unwrap();
     }
 }

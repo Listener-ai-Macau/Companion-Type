@@ -855,7 +855,7 @@ mod tests {
         assert_eq!(initial.host.sessions.len(), 0);
 
         coordinator
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -909,7 +909,7 @@ mod tests {
         snapshot.meeting.active = false;
         let mut session = crate::companion_v1::synced_device_session(
             &snapshot,
-            &CompanionV1ControlRequest {
+            &CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::DeviceSyncRecordings,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("recording".to_string()),

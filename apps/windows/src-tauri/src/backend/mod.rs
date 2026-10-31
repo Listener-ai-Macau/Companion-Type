@@ -1518,7 +1518,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         if snapshot.host.persistence.status!="ready" {return Err("请先保存或恢复会议库。".into());}
         let input=speaker_refinement::prepare(&snapshot,id)?;
         let path=meeting_workspace::local_audio_path(&snapshot,id)?;
-        let request=CompanionV1ControlRequest {action:CompanionV1ControlAction::MeetingTranscribeAudio,session_id:Some(id.into()),
+        let request=CompanionV1ControlRequest { recording_source: None,action:CompanionV1ControlAction::MeetingTranscribeAudio,session_id:Some(id.into()),
             context_note_revision: None, ble_name:None,prompt_id:None,title:None,transcript_text:None,meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
         let (mut snapshot,result)=self.run_meeting_work(snapshot,&request,||transcription::refine_saved_speakers(&path,&input.utterances))?;
         let labels=result?;
@@ -1703,6 +1703,17 @@ impl CompanionBackend for FixtureCompanionBackend {
                 .filter(|m| m == "onlineLive" || m == "offlineStore")
                 .unwrap_or_else(|| product_settings::load_settings().default_meeting_mode);
             request.meeting_mode = Some(mode);
+        }
+        if let Some(source) = request.recording_source.as_deref() {
+            if request.action != CompanionV1ControlAction::MeetingStart || source != "hostMeeting"
+                || request.audio_path.is_some() || request.device_id.is_some() {
+                return Err("会议录音来源无效，请重新选择。".into());
+            }
+            if request.meeting_mode.as_deref() != Some("offlineStore") {
+                return Err("电脑会议双音轨目前先保存录音，结束后再转写。".into());
+            }
+            #[cfg(not(windows))]
+            return Err("此平台暂不支持电脑会议音轨采集。".into());
         }
 
         // Serialize service jobs separately; a retry can wait here without
@@ -2181,6 +2192,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         }
         let mut transcription_note: Option<String> = None;
         let mut transcription_error: Option<String> = None;
+        let mut track_transcription_warning: Option<String> = None;
         let mut device_note: Option<String> = None;
         let mut privacy_report: Option<PrivacyEraseReport> = None;
         let mut synced_batch = Vec::new();
@@ -2756,6 +2768,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                 .clone()
                 .or_else(|| session.and_then(|session| session.audio_path.clone()));
             let chunk_paths = session.map(transcription_chunk_paths).transpose()?.unwrap_or_default();
+            let meeting_tracks = session.and_then(|session| session.meeting_tracks.clone());
             if session.is_some_and(|session| {
                 session.transcript_final && !session.transcript_text.trim().is_empty()
             }) {
@@ -2765,12 +2778,23 @@ impl CompanionBackend for FixtureCompanionBackend {
                 request
             } else {
                 let owner=session.map(|s|s.id.clone()).unwrap_or_default();
-                let (fresh,result)=self.run_meeting_work(snapshot,&request,||
-                    self.transcription.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths))?;
+                let (fresh,result)=self.run_meeting_work(snapshot,&request,|| {
+                    if let Some(tracks) = meeting_tracks {
+                        if tracks.state != "captured" { return Err("会议音轨尚未完整保存，请先恢复原音。".to_string()); }
+                        let mic = tracks.microphone.into_iter().map(|part| part.path).collect::<Vec<_>>();
+                        let system = tracks.system.into_iter().map(|part| part.path).collect::<Vec<_>>();
+                        meeting_audio_transcription::transcribe_tracks(&self.transcription, &owner, &mic, &system)
+                            .map(|result| (result.transcript, result.warnings))
+                    } else {
+                        self.transcription.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths)
+                            .map(|transcript| (transcript, vec![]))
+                    }
+                })?;
                 snapshot=fresh;
                 original_selected_session_id=snapshot.host.selected_session_id.clone();
                 match result {
-                Ok(transcript) => {
+                Ok((transcript, warnings)) => {
+                    if !warnings.is_empty() { track_transcription_warning = Some(warnings.join(" ")); }
                     transcription_note = Some(format!(
                         "{} ({}){}",
                         transcript.provider_id,
@@ -3112,15 +3136,19 @@ impl CompanionBackend for FixtureCompanionBackend {
 
                         let session_id = session.id.clone();
                         let title = session.title.clone();
+                        let host_meeting = request.recording_source.as_deref() == Some("hostMeeting");
                         let mut prepared_auth = None;
-                        let start = match self.host_recording.start_checkpointed(&session_id, &title, |path| {
-                            session.source = "hostMicrophone".into();
-                            session.audio_path = Some(path.to_string_lossy().into_owned());
+                        let checkpoint = |path: &std::path::Path| {
+                            session.source = if host_meeting { "hostMeeting" } else { "hostMicrophone" }.into();
+                            session.audio_path = if host_meeting { None } else { Some(path.to_string_lossy().into_owned()) };
                             session.audio_stored = false;
                             session.audio_bytes = 0;
                             session.retention.audio_cached = false;
-                            session.chunks = vec![audio_chunk(format!("{}-host-open", session.id),
-                                session.audio_path.clone(), session.started_at.clone(), None, 0, 0, "open")];
+                            session.meeting_tracks = host_meeting.then(|| crate::companion_v1::CompanionV1MeetingTracks {
+                                root: path.to_string_lossy().into_owned(), state: "recording".into(), microphone: vec![], system: vec![], discontinuity: false, issue: None,
+                            });
+                            session.chunks = if host_meeting { vec![] } else { vec![audio_chunk(format!("{}-host-open", session.id),
+                                session.audio_path.clone(), session.started_at.clone(), None, 0, 0, "open")] };
                             if cfg!(test) && std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none() { return Ok(()); }
                             prepared_auth = Some(session_store::privacy_authorization(session)?);
                             session_store::update_checked(&state_path, |rows| {
@@ -3139,7 +3167,14 @@ impl CompanionBackend for FixtureCompanionBackend {
                                 rows.insert(0, session.clone());
                                 Ok(())
                             })
-                        }) {
+                        };
+                        #[cfg(windows)]
+                        let attempt = if host_meeting {
+                            self.host_recording.start_meeting_checkpointed(&session_id, &title, checkpoint)
+                        } else { self.host_recording.start_checkpointed(&session_id, &title, checkpoint) };
+                        #[cfg(not(windows))]
+                        let attempt = self.host_recording.start_checkpointed(&session_id, &title, checkpoint);
+                        let start = match attempt {
                             Ok(start) => start,
                             Err(error) => {
                                 self.host_recording.set_pcm_sink(None);
@@ -3183,9 +3218,10 @@ impl CompanionBackend for FixtureCompanionBackend {
                                 return Err(error);
                             }
                         };
-                        session.audio_path = Some(start.path.to_string_lossy().to_string());
-                        session.retention.audio_cached = true;
-                        session.chunks = vec![audio_chunk(
+                        if !host_meeting {
+                            session.audio_path = Some(start.path.to_string_lossy().to_string());
+                            session.retention.audio_cached = true;
+                            session.chunks = vec![audio_chunk(
                             format!("{}-host-open", session.id),
                             Some(start.path.to_string_lossy().to_string()),
                             session.started_at.clone(),
@@ -3193,12 +3229,13 @@ impl CompanionBackend for FixtureCompanionBackend {
                             0,
                             0,
                             "open",
-                        )];
-                        session.source = "hostMicrophone".to_string();
+                            )];
+                            session.source = "hostMicrophone".to_string();
+                        }
                         // Isolated experiment: production WAV writer, synthetic input,
                         // abrupt process exit before the ordinary snapshot save.
                         #[cfg(test)]
-                        if std::env::var_os("COMPANION_TEST_HOST_START_EXIT").is_some() {
+                        if !host_meeting && std::env::var_os("COMPANION_TEST_HOST_START_EXIT").is_some() {
                             let path = std::path::Path::new(session.audio_path.as_deref().unwrap());
                             let mut writer = denzic_host_audio_v1_core::wav::WavWriter::create(path).unwrap();
                             writer.append_bytes(&vec![42u8; 32000]).unwrap();
@@ -3228,7 +3265,14 @@ impl CompanionBackend for FixtureCompanionBackend {
                     requested_session_id.as_deref(),
                 );
                 if let Some(session) = target {
-                    if let Some(error) = transcription_error.as_deref() {
+                    if let Some(warning) = track_transcription_warning.as_deref() {
+                        session.transcript_final = false;
+                        session.status = "captured".into();
+                        session.pending_reason = Some("needs_transcription".into());
+                        session.recovery.stage = "paused".into();
+                        session.recovery.last_error = Some(warning.to_string());
+                        session.recovery.next_retry_at_unix_ms = None;
+                    } else if let Some(error) = transcription_error.as_deref() {
                         schedule_recovery_failure(session, error);
                     } else if session.transcript_final
                         && !session.transcript_text.trim().is_empty()
@@ -3237,10 +3281,8 @@ impl CompanionBackend for FixtureCompanionBackend {
                     }
                 }
                 if let Some(echo) = next.last_control.as_mut() {
-                    echo.message = format!(
-                        "transcribed by Companion-Type provider {}",
-                        transcription_note.unwrap_or_else(|| "unknown".to_string())
-                    );
+                    echo.message = track_transcription_warning.unwrap_or_else(|| format!(
+                        "transcribed by Companion-Type provider {}", transcription_note.unwrap_or_else(|| "unknown".to_string())));
                 }
             }
             CompanionV1ControlAction::MeetingImportTranscript => {
@@ -3315,23 +3357,25 @@ impl CompanionBackend for FixtureCompanionBackend {
                         host_ownership_unconfirmed = !stop.ownership_confirmed;
                         if let Some(session) = selected_session_mut(&mut next) {
                             if session.id == stop.session_id {
-                                session.audio_path = Some(stop.path.to_string_lossy().to_string());
                                 session.duration_ms = stop.duration_ms;
                                 session.audio_bytes = stop.bytes;
-                                session.audio_stored = true;
-                                session.retention.audio_cached = true;
-                                let stopped_at = session
-                                    .stopped_at
-                                    .clone()
-                                    .unwrap_or_else(|| "host-recording-stop".to_string());
-                                session.chunks = seal_companion_v1_session_chunks(
-                                    session,
-                                    &stopped_at,
-                                    session.duration_ms,
-                                    Some(stop.bytes),
-                                );
-                                session.source = "hostMicrophone".to_string();
-                                arm_meeting_recovery(session);
+                                if let Some(tracks) = stop.meeting_tracks.clone() {
+                                    session.source = "hostMeeting".into();
+                                    session.audio_path = None;
+                                    session.chunks.clear();
+                                    session.audio_stored = stop.ownership_confirmed && stop.capture_error.is_none();
+                                    session.retention.audio_cached = stop.ownership_confirmed;
+                                    session.meeting_tracks = Some(tracks);
+                                    session.pending_reason = Some("needs_transcription".into());
+                                } else {
+                                    session.audio_path = Some(stop.path.to_string_lossy().to_string());
+                                    session.audio_stored = true;
+                                    session.retention.audio_cached = true;
+                                    let stopped_at = session.stopped_at.clone().unwrap_or_else(|| "host-recording-stop".to_string());
+                                    session.chunks = seal_companion_v1_session_chunks(session, &stopped_at, session.duration_ms, Some(stop.bytes));
+                                    session.source = "hostMicrophone".to_string();
+                                    arm_meeting_recovery(session);
+                                }
                                 if let Some(echo) = next.last_control.as_mut() {
                                     echo.message = format!(
                                         "host recording stopped ({}) {} bytes -> {}",
@@ -4479,7 +4523,7 @@ fn merge_synced_recordings(snapshot: &mut CompanionV1Snapshot, recordings: &[Com
         let id = received_recording_target(&snapshot.host.sessions, snapshot.device.device_id.as_deref(), item);
         if !snapshot.host.sessions.iter().any(|s| s.id == id) {
             let metrics = wav_file_metrics(&item.recording_path);
-            let request = CompanionV1ControlRequest {
+            let request = CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::DeviceSyncRecordings, context_note_revision: None, ble_name: None, session_id: Some(id.clone()), prompt_id: None,
                 title: Some(format!("设备录音 #{}", item.recording_id)), transcript_text: None,
                 meeting_mode: Some("offlineStore".into()), audio_path: Some(item.recording_path.clone()),
@@ -5230,7 +5274,7 @@ mod tests {
         session_id: &str,
         automatic: bool,
     ) -> CompanionV1ControlRequest {
-        CompanionV1ControlRequest {
+        CompanionV1ControlRequest { recording_source: None,
             action,
             context_note_revision: None, ble_name: None,
             session_id: Some(session_id.to_string()),
@@ -5294,7 +5338,7 @@ mod tests {
     #[test]
     fn interrupted_online_identity_and_sync_keep_user_edits() {
         let mut snapshot = fixture_snapshot();
-        let request = CompanionV1ControlRequest { action: CompanionV1ControlAction::MeetingStart,
+        let request = CompanionV1ControlRequest { recording_source: None, action: CompanionV1ControlAction::MeetingStart,
             meeting_mode: Some("onlineLive".into()), audio_path: Some("board://online/known".into()),
             device_id: Some("AA:BB:CC:DD:EE:FF".into()), ..recovery_request(CompanionV1ControlAction::MeetingStart,"known",false) };
         snapshot = apply_fixture_control(snapshot, request).unwrap();
@@ -5705,7 +5749,7 @@ mod tests {
     fn draft_minutes_do_not_block_an_explicit_upgrade_attempt() {
         let snapshot = apply_fixture_control(
             fixture_snapshot(),
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingLoadDemo,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("draft-upgrade".to_string()),
@@ -5874,7 +5918,7 @@ mod tests {
         audio_path: &std::path::Path,
     ) {
         let mut snapshot = fixture_snapshot();
-        let request = CompanionV1ControlRequest {
+        let request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name: None,
             session_id: Some(id.to_string()),
@@ -6442,7 +6486,7 @@ mod tests {
     #[test]
     fn active_recording_id_is_not_treated_as_already_pulled() {
         let mut snapshot = fixture_snapshot();
-        let request = CompanionV1ControlRequest {
+        let request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::MeetingStart,
             context_note_revision: None, ble_name: None,
             session_id: Some("filter-regression".to_string()),
@@ -6486,7 +6530,7 @@ mod tests {
         );
 
         let mut snapshot = fixture_snapshot();
-        let request = CompanionV1ControlRequest {
+        let request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name: None,
             session_id: Some("device-recording-42".to_string()),
@@ -6546,7 +6590,7 @@ mod tests {
         let backend = FixtureCompanionBackend::new();
         let session_id = "board-online-partial-reconcile-test";
         backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: Some(session_id.to_string()),
@@ -6633,7 +6677,7 @@ mod tests {
         let before_43 = identities.get(&43).cloned().unwrap();
         let deleted = apply_fixture_control(
             snapshot,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::PrivacyDeleteSession,
                 context_note_revision: None, ble_name: None,
                 session_id: Some(expected_id(42)),
@@ -6737,7 +6781,7 @@ mod tests {
 
         let backend = FixtureCompanionBackend::new();
         let started = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("mech-1".to_string()),
@@ -6757,7 +6801,7 @@ mod tests {
         backend.snapshot.lock().unwrap().host.sessions[0].source = "controlledLocalAudioFixture".into();
 
         let stopped = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStop,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("mech-1".to_string()),
@@ -6779,7 +6823,7 @@ mod tests {
         );
 
         let transcribed = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingTranscribeAudio,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("mech-1".to_string()),
@@ -6799,7 +6843,7 @@ mod tests {
         assert!(transcribed_session.pending_reason.is_none());
 
         let minutes = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingGenerateMinutes,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("mech-1".to_string()),
@@ -6827,7 +6871,7 @@ mod tests {
     fn fixture_backend_keeps_state_between_controls() {
         let backend = FixtureCompanionBackend::new();
         let started = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -6845,7 +6889,7 @@ mod tests {
         assert!(started.host.sessions[0].audio_path.is_some());
 
         let stopped = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStop,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -6886,7 +6930,7 @@ mod tests {
 
         let backend = FixtureCompanionBackend::new();
         let started = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("sidecar-session".to_string()),
@@ -6909,7 +6953,7 @@ mod tests {
         backend.snapshot.lock().unwrap().host.sessions[0].source = "controlledLocalAudioFixture".into();
 
         let stopped = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStop,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("sidecar-session".to_string()),
@@ -6926,7 +6970,7 @@ mod tests {
         assert_eq!(stopped.host.sessions[0].status, "captured");
 
         let transcribed = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingTranscribeAudio,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("sidecar-session".to_string()),
@@ -6952,7 +6996,7 @@ mod tests {
             .contains("companion-type-sidecar-transcript"));
 
         let minutes = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingGenerateMinutes,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("sidecar-session".to_string()),
@@ -6996,7 +7040,7 @@ mod tests {
 
         let backend = FixtureCompanionBackend::new();
         let started = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("live-1".to_string()),
@@ -7040,7 +7084,7 @@ mod tests {
         );
 
         let stopped = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStop,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("live-1".to_string()),
@@ -7123,7 +7167,7 @@ mod tests {
 
         let backend = FixtureCompanionBackend::new();
         backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("prod-native-1".to_string()),
@@ -7138,7 +7182,7 @@ mod tests {
             })
             .unwrap();
         backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStop,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("prod-native-1".to_string()),
@@ -7153,7 +7197,7 @@ mod tests {
             })
             .unwrap();
         let transcribed = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingTranscribeAudio,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("prod-native-1".to_string()),
@@ -7170,7 +7214,7 @@ mod tests {
         assert_eq!(transcribed.meeting.status, "transcribed");
 
         let minutes_snap = backend
-            .apply_control(CompanionV1ControlRequest {
+            .apply_control(CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingGenerateMinutes,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("prod-native-1".to_string()),
@@ -7223,7 +7267,7 @@ mod tests {
             snapshot.meeting.active = true;
             snapshot.meeting.status = "recording".to_string();
         }
-        let request = CompanionV1ControlRequest {
+        let request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::PrivacyEraseAll,
             context_note_revision: None, ble_name: None,
             session_id: None,
@@ -7258,7 +7302,7 @@ mod tests {
         let backend = FixtureCompanionBackend::new();
         {
             let mut snapshot = backend.snapshot.lock().unwrap();
-            let request = CompanionV1ControlRequest {
+            let request = CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::DeviceSyncRecordings,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("owned-recording".to_string()),
@@ -7284,7 +7328,7 @@ mod tests {
             snapshot.host.selected_session_id = Some("other-session".to_string());
             snapshot.device.device_id = Some("11:22:33:44:55:66".to_string());
         }
-        let request = CompanionV1ControlRequest {
+        let request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::PrivacyDeleteSession,
             context_note_revision: None, ble_name: None,
             session_id: Some("owned-recording".to_string()),

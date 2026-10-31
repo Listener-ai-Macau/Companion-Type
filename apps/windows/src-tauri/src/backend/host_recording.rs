@@ -36,6 +36,7 @@ pub struct HostRecordingStop {
     pub mode: String,
     pub capture_error: Option<String>,
     pub ownership_confirmed: bool,
+    pub meeting_tracks: Option<crate::companion_v1::CompanionV1MeetingTracks>,
 }
 
 struct ActiveHostRecording {
@@ -49,6 +50,8 @@ struct ActiveHostRecording {
 enum ActiveHostRecordingMode {
     Real(RealRecording),
     Synthetic,
+    #[cfg(windows)]
+    Meeting(super::meeting_audio_capture::Capture),
 }
 
 pub struct HostRecordingManager {
@@ -84,6 +87,23 @@ impl HostRecordingManager {
         let _diagnostic_scope = super::diagnostics::RecordingScope::enter(session_id);
         super::diagnostics::Span::start(super::diagnostics::Operation::HostRecordingStart)
             .result(self.start_with_mode_checkpointed(session_id, title, &mode, RealRecording::start, checkpoint))
+    }
+
+    /// Experimental two-track start. The caller checkpoints the session before
+    /// either device opens and must use the returned track metadata on stop.
+    #[cfg(windows)]
+    #[allow(dead_code)]
+    pub(super) fn start_meeting_checkpointed(&self, session_id: &str, title: &str,
+        checkpoint: impl FnOnce(&Path) -> Result<(), String>) -> Result<HostRecordingStart, String> {
+        let mut active = self.active.lock().map_err(|_| "host recording state lock failed".to_string())?;
+        if active.is_some() { return Err("已有本机录音正在进行，请先结束当前录音".into()); }
+        let mut path = recording_path(session_id, title)?;
+        path.set_extension("");
+        // 256 MiB PCM per file; recording itself continues into new files.
+        let capture = super::meeting_audio_capture::Capture::start(&path, 128 * 1024 * 1024, checkpoint)?;
+        *active = Some(ActiveHostRecording { session_id: session_id.into(), path: path.clone(),
+            started_at: Instant::now(), mode: ActiveHostRecordingMode::Meeting(capture), artifact: None });
+        Ok(HostRecordingStart { session_id: session_id.into(), path, mode: "host-meeting".into() })
     }
 
     fn start_with_mode(
@@ -196,30 +216,45 @@ impl Default for HostRecordingManager {
 
 fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecordingStop, String> {
     let elapsed_ms = recording.started_at.elapsed().as_millis().max(1) as u64;
-    let (path, bytes, mode, mut capture_error) = match recording.mode {
+    let (path, bytes, mode, mut capture_error, meeting_tracks) = match recording.mode {
         ActiveHostRecordingMode::Real(real) => {
             let stop = real.stop()?;
-            (stop.path, stop.bytes, "host-microphone".to_string(), stop.capture_error)
+            (stop.path, stop.bytes, "host-microphone".to_string(), stop.capture_error, None)
         }
         ActiveHostRecordingMode::Synthetic => {
             write_synthetic_wav(&recording.path, elapsed_ms.max(1_000))?;
             let bytes = std::fs::metadata(&recording.path)
                 .map_err(|err| format!("read synthetic wav metadata: {err}"))?
                 .len();
-            (recording.path, bytes, "synthetic".to_string(), None)
+            (recording.path, bytes, "synthetic".to_string(), None, None)
+        }
+        #[cfg(windows)]
+        ActiveHostRecordingMode::Meeting(capture) => {
+            let tracks = capture.stop()?.into_session_tracks(&recording.path)?;
+            let bytes = tracks.microphone.iter().chain(&tracks.system)
+                .fold(0u64, |sum, part| sum.saturating_add(part.samples.saturating_mul(2).saturating_add(44)));
+            let issue = tracks.issue.clone();
+            (recording.path, bytes, "host-meeting".to_string(), issue, Some(tracks))
         }
     };
 
-    let ownership_confirmed = complete_capture_artifact(recording.artifact, &path, bytes, &mut capture_error);
+    let ownership_confirmed = if let Some(tracks) = &meeting_tracks {
+        !tracks.microphone.is_empty() && !tracks.system.is_empty() && tracks.microphone.iter().chain(&tracks.system).all(|part|
+            super::audio_artifacts::is_managed(Path::new(&part.path)))
+    } else { complete_capture_artifact(recording.artifact, &path, bytes, &mut capture_error) };
+    let duration_ms = if let Some(tracks) = &meeting_tracks {
+        tracks.microphone.last().map(|part| part.first_sample.saturating_add(part.samples)).unwrap_or(0)
+            .saturating_mul(1_000) / u64::from(TARGET_SAMPLE_RATE)
+    } else { bytes.saturating_sub(44).saturating_mul(1_000) / (u64::from(TARGET_SAMPLE_RATE) * 2) };
     Ok(HostRecordingStop {
         session_id: recording.session_id,
         path,
-        duration_ms: bytes.saturating_sub(44).saturating_mul(1_000)
-            / (u64::from(TARGET_SAMPLE_RATE) * 2),
+        duration_ms,
         bytes,
         mode,
         capture_error,
         ownership_confirmed,
+        meeting_tracks,
     })
 }
 

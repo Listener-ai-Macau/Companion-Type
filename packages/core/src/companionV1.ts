@@ -615,6 +615,7 @@ export interface CompanionV1Snapshot {
 }
 
 export interface CompanionV1ControlRequest {
+  recordingSource?: 'hostMeeting';
   contextNoteRevision?: number;
   action: CompanionV1ControlAction;
   bleName?: string;

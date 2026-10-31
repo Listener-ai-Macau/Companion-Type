@@ -8,7 +8,7 @@ use crate::coordinator::CompanionCoordinator;
 use super::{Action,Request,live_queue::LiveQueue};
 
 fn control(action:Control,id:&str,device:&str)->CompanionV1ControlRequest {
-    CompanionV1ControlRequest {action,session_id:Some(id.into()),device_id:Some(device.into()),context_note_revision: None, ble_name:None,
+    CompanionV1ControlRequest { recording_source: None,action,session_id:Some(id.into()),device_id:Some(device.into()),context_note_revision: None, ble_name:None,
         prompt_id:None,title:Some("实板重点标记范围验证".into()),meeting_mode:Some("offlineStore".into()),
         audio_path:None,audio_bytes:None,duration_ms:Some(90000),transcript_text:None}
 }

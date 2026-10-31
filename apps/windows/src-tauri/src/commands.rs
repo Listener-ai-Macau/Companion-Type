@@ -747,7 +747,7 @@ pub(crate) fn start_board_online_live_owned(coordinator:Arc<CompanionCoordinator
         let mut request=request;request.device_id=device_id;
         return segmented_online_live::start(coordinator,manager,device_operation,request,session_id,title,max_duration_seconds);
     }
-    let prepared = coordinator.apply_control(CompanionV1ControlRequest {
+    let prepared = coordinator.apply_control(CompanionV1ControlRequest { recording_source: None,
         action: CompanionV1ControlAction::MeetingStart,
         context_note_revision: None, ble_name: None,
         session_id: Some(session_id.clone()),
@@ -1136,7 +1136,7 @@ mod board_online_live_tests {
         assert_eq!(active_meeting.host.active_session_id, active_id);
 
         let mut recording_session = idle;
-        let request = CompanionV1ControlRequest {
+        let request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name: None,
             session_id: Some("existing-row".to_string()),

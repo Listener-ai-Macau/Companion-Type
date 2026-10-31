@@ -224,7 +224,7 @@ mod tests {
             encoded_length:payload.len() as u32,content_crc32:crc32fast::hash(&payload),sha256:Sha256::digest(&payload).into(),
             total_segments:1,flags:3,codec:3,source_mode:1,sync_state:1};
         let id="captured-owned-row".to_string();let reference=format!("host://companion-type/recordings/{id}.wav");
-        let request=crate::companion_v1::CompanionV1ControlRequest {action:crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings,
+        let request=crate::companion_v1::CompanionV1ControlRequest { recording_source: None,action:crate::companion_v1::CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name:None,session_id:Some(id.clone()),prompt_id:None,title:None,transcript_text:None,meeting_mode:Some("offlineStore".into()),
             audio_path:Some(reference.clone()),audio_bytes:Some(1920000),device_id:Some("C8:92:FF:DD:3B:CA".into()),duration_ms:Some(60000)};
         let mut row=crate::companion_v1::synced_device_session(&crate::companion_v1::fixture_snapshot(),&request,"capture");
