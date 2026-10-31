@@ -814,7 +814,13 @@ fn backup_files_from(root:&Path, data:&Manifest, paths:&[String])->Result<Vec<Ba
         if !keys.contains(&reference_key(&path)?) {continue;}
         if matches!(item.purpose,Purpose::DecodeTemporary|Purpose::AsrTemporary|Purpose::TransferCursor|Purpose::LiveWindow) {continue;}
         if item.phase==Phase::Gone {continue;}
-        if item.phase!=Phase::Sealed {return Err("有录音文件仍在保存或恢复，请完成后再备份。".into());}
+        // A recovered host meeting retains its interrupted original alongside
+        // the playable copy. Recovery records the original's exact identity;
+        // preserve that original in the backup once it still matches. A live
+        // writer remains Prepared and cannot pass this check.
+        let recovered_original = item.phase == Phase::Interrupted
+            && item.purpose == Purpose::Recording && item.identity.is_some();
+        if item.phase!=Phase::Sealed && !recovered_original {return Err("有录音文件仍在保存或恢复，请完成后再备份。".into());}
         let actual=fingerprint(&path)?.ok_or("录音文件缺失，无法生成完整备份；请先恢复或同步。")?;
         if item.identity.as_ref()!=Some(&actual) {return Err("录音文件与保存记录不一致，未生成不完整备份。".into());}
         let mut sources=Vec::new();

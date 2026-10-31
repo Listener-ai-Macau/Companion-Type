@@ -225,6 +225,45 @@ pub(crate) fn restore_index(index:&Path,rows:&[CompanionV1HostSession])->Result<
 mod tests {
     use super::*;
     #[test]
+    fn recovered_interrupted_meeting_can_be_backed_up_and_restored() {
+        let base=std::env::temp_dir().join(format!("companion-recovered-backup-{}",uuid::Uuid::new_v4()));
+        let source=base.join("source"); let target=base.join("target"); let backups=base.join("backups");
+        for path in [&source,&target,&backups] { fs::create_dir_all(path).unwrap(); }
+        let source=source.canonicalize().unwrap(); let target=target.canonicalize().unwrap();
+        unsafe { std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&source); }
+        let original=source.join("interrupted.wav");
+        let lease=audio_artifacts::WriteLease::begin(&original,&original,Purpose::Recording).unwrap();
+        let mut raw=denzic_host_audio_v1_core::wav::wav_header(0).to_vec();
+        raw.extend_from_slice(&[1,2,3,4,5,6,7,8]); fs::write(&original,&raw).unwrap(); drop(lease);
+        let mut snapshot=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("recover-and-backup".into()))).unwrap();
+        let mut row=snapshot.host.sessions.remove(0);row.id="recover-and-backup".into();row.source="hostMicrophone".into();
+        row.status="recording".into();row.audio_path=Some(original.to_string_lossy().into());row.audio_stored=false;row.chunks.clear();
+        row.transcript_text="之前保存的文字".into();
+        let state=base.join("sessions.json");super::super::persistence::save_sessions_to(&state,&[row.clone()]).unwrap();
+        let expected=super::super::session_store::privacy_authorization(&row).unwrap();
+        super::super::host_interrupted_recovery::recover_session_at(&state,&row.id,&expected).unwrap();
+        row=super::super::persistence::load_sessions_from(&state).unwrap().remove(0);
+        let recovered=PathBuf::from(row.audio_path.as_ref().unwrap());
+        let recovered_bytes=fs::read(&recovered).unwrap();assert_eq!(&recovered_bytes[44..],&raw[44..]);
+        snapshot.host.sessions=vec![row];snapshot.host.persistence.status="ready".into();snapshot.meeting.active=false;snapshot.device.recording=false;
+        let report=save(&snapshot,&source,&backups).expect("a recovered meeting must remain backupable");
+        assert_eq!(report.files,2); assert_eq!(fs::read(&original).unwrap(),raw);
+        fs::write(&original,b"changed interrupted original").unwrap();
+        assert!(save(&snapshot,&source,&backups).is_err(),"a changed original cannot silently enter the backup");
+        fs::write(&original,&raw).unwrap();
+        unsafe { std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&target); }
+        let restored=restore_files(Path::new(&report.path),&target).unwrap();
+        restore_index(&base.join("restored.json"),&restored).unwrap();
+        assert_eq!(restored[0].transcript_text,"之前保存的文字");
+        assert_eq!(fs::read(restored[0].audio_path.as_ref().unwrap()).unwrap(),recovered_bytes);
+        assert_eq!(fs::read(target.join("interrupted.wav")).unwrap(),raw);
+        let backed_up_again=save(&{let mut s=snapshot.clone();s.host.sessions=restored;s},&target,&backups).unwrap();
+        assert_eq!(backed_up_again.files,2);
+        unsafe { std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); }
+        fs::remove_dir_all(base).unwrap();
+    }
+    #[test]
     fn backup_restore_preserves_owned_files_and_rejects_damage_or_collisions(){
         let base=std::env::temp_dir().join(format!("companion-library-backup-test-{}",uuid::Uuid::new_v4()));
         let source=base.join("source");let target=base.join("target");let backups=base.join("backups");
