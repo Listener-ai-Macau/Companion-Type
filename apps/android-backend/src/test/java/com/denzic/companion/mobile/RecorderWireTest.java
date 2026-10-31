@@ -42,6 +42,16 @@ public final class RecorderWireTest {
         RecorderWire.Peer peer=RecorderWire.Peer.fromStatus(status);byte[] negotiation=peer.negotiate(23,247);if(negotiation.length!=32||negotiation[1]!=0x22)throw new AssertionError("negotiation");
         RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,17);if(!catalog.accept(page0)||catalog.complete()||catalog.accept(page0)||!catalog.accept(page1)||!catalog.complete())throw new AssertionError("golden directory or duplicate page");
         if(catalog.entries().size()!=3)throw new AssertionError("missing segments");RecorderWire.Descriptor d=catalog.entries().get(0);if(d.recordingId!=41||d.segmentIndex!=0||d.encodedLength!=audio.length)throw new AssertionError("golden descriptor");
+        byte[] receipt=peer.consumeReceipt(d), expected=new byte[84];
+        System.arraycopy(new byte[]{'C','R','A','2',2,0,84,0},0,expected,0,8);System.arraycopy(d0,96,expected,8,12);
+        System.arraycopy(d0,12,expected,20,8);System.arraycopy(d0,20,expected,28,8);System.arraycopy(d0,28,expected,36,4);
+        System.arraycopy(d0,8,expected,40,4);System.arraycopy(d0,48,expected,44,4);System.arraycopy(d0,56,expected,48,32);
+        CRC32 receiptCrc=new CRC32();receiptCrc.update(expected,0,80);put32(expected,80,receiptCrc.getValue());
+        if(!Arrays.equals(receipt,expected)||!peer.receiptMatches(d,receipt))throw new AssertionError("exact protected receipt differs");
+        if(peer.receiptMatches(d,peer.consumeReceipt(catalog.entries().get(1)))||peer.receiptMatches(d,null))throw new AssertionError("another receipt confirmed the original");
+        byte[] forged=receipt.clone();forged[48]^=1;expectFailure(()->peer.receiptMatches(d,forged));
+        byte[] foreign=status.clone();foreign[20]^=1;statusCrc.reset();statusCrc.update(foreign,84,28);put32(foreign,112,statusCrc.getValue());
+        RecorderWire.Peer other=RecorderWire.Peer.fromStatus(foreign);expectFailure(()->other.consumeReceipt(d));
         Path whole=Files.createTempDirectory(root,"whole-session-");FakeLink firstLink=new FakeLink(status,page0,page1,null);firstLink.multiAudio=audio;firstLink.partialOnce=true;
         for(RecorderWire.Descriptor item:catalog.entries())firstLink.segments.put(item.recordingId,item);
         try(RecordingClient client=new RecordingClient(firstLink)){expectFailure(()->client.receiveSession(d,whole,null));}

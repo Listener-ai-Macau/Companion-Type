@@ -63,6 +63,25 @@ public final class RecorderWire {
             validate(d);if(offset<0||offset>=d.encodedLength)throw invalid("invalid pull offset");
             byte[] p=new byte[32];p[0]=2;p[1]=0x21;p[2]=4;put32(p,4,d.recordingId);put64(p,8,epoch);put64(p,16,d.sessionId);put32(p,24,d.segmentIndex);put32(p,28,offset);return p;
         }
+        /** Build an exact protected segment receipt; this method sends nothing. */
+        byte[] consumeReceipt(Descriptor d) throws IOException {
+            if(d==null)throw invalid("missing recording descriptor");validate(d);
+            byte[] p=new byte[84];System.arraycopy(new byte[]{'C','R','A','2',2,0,84,0},0,p,0,8);
+            System.arraycopy(uid,0,p,8,12);put64(p,20,epoch);put64(p,28,d.sessionId);
+            put32(p,36,d.segmentIndex);put32(p,40,d.recordingId);put32(p,44,d.encodedLength);
+            System.arraycopy(d.sha,0,p,48,32);put32(p,80,crc(p,0,80));return p;
+        }
+        /** Accept only the identical full receipt for this protected peer. */
+        boolean receiptMatches(Descriptor d,byte[] payload) throws IOException {
+            byte[] expected=consumeReceipt(d);
+            if(Arrays.equals(expected,payload))return true;
+            if(payload!=null && payload.length>=8 && magic(payload,0,"CRA2")) {
+                if(payload.length!=84 || u16(payload,4)!=2 || u16(payload,6)!=84 ||
+                    !Arrays.equals(Arrays.copyOfRange(payload,8,20),uid) || u64(payload,20)!=epoch || crc(payload,0,80)!=u32(payload,80))
+                    throw invalid("invalid physical consume receipt");
+            }
+            return false;
+        }
     }
 
     public static final class Descriptor {
