@@ -58,6 +58,10 @@ Speech recognition and organized results are different layers. Check important n
 
 When regenerating, explicitly choose **原话＋已保存补充** to include saved notes, or **仅原话** to use only the transcript. Regeneration can replace manual edits in the selected result; export important edits first.
 
+For a long meeting, read the short **会议概览** if present, then expand the full summary and source excerpts. Check important names, numbers and actions against the recording. No extracted action does not establish that there was no action.
+
+To transcribe without uploading the recording, open **设置与工具 → 转写与纪要服务**, select **电脑本地转写（中文）** as the ASR provider, prepare the local model and save settings. Initial model preparation needs an internet connection and storage; subsequent local transcription happens after recording and synchronization and does not upload the audio. Cloud transcription sends audio to the selected service; intelligent minutes still send the selected text to the configured minutes service and may incur charges.
+
 Write the action in its content field and time or owner separately. **The checklist does not send scheduled notifications.** “Tomorrow” and “next week” retain the recording's context; compare them with its date.
 
 Exactly matched items offer **核对原文** with a time. Rewritten items that cannot be matched offer **查看原话** without inventing a timestamp.
@@ -73,18 +77,21 @@ Recording details offer optional playback and checklist export. Expand **其它�
 | Format | Use and conditions |
 | --- | --- |
 | TXT, Markdown and JSON | Existing text or organized results; export does not invoke transcription or regenerate them. |
+| Word, PDF and mind map | Create a document from saved results; PDF lets you select included content. |
 | SRT | Requires genuine aligned timing. A whole-document rewrite cannot automatically recover alignment. |
 | Action list | Uses the current saved actions. Save edits before exporting. |
 | Calendar tasks `.ics` | Uses VTODO, requiring a task-compatible application. Explicit dates can become due dates; ambiguous phrases are not guessed. Export does not itself configure a notification in your calendar. |
 | Original audio | Choose a local destination for a separate copy; do not overwrite the original in the library. |
 
-You manage exported copies. Device sync is not cross-computer cloud backup. Once device segments are reclaimed, keep the computer's originals safe; export audio and text when you need another copy.
+You manage exported copies. Device sync is not cross-computer cloud backup. To back up the complete local library, open **我的记录 → 筛选与整理 → 备份与恢复会议库**, select **备份会议库**, and keep the complete resulting folder in a trusted place. On another computer, use **从备份恢复** in the same area and select the complete backup folder; an existing meeting is not overwritten. The folder is not encrypted and contains meeting text, minutes and associated audio. Individual exports and complete-library backups serve different purposes.
 
 Sealed recording segments may be received separately and grouped into one item. Received fragments do not prove a complete session. An interruption or missing-segment notice limits transcription and results to the content actually saved. Pausing sync pauses reception, not an ongoing device recording.
 
 ## Recording Space and Duration
 
-Read device recording capacity in **设备与同步**, using **重新读取设备容量** when needed. Computer-started capture uses the requested duration; standalone capture uses the saved device limit. Insufficient space rejects a start rather than automatically overwriting unsynced recordings.
+Read device recording capacity in **设备与同步**, using **重新读取设备容量** when needed. Compatible devices record without a preset end time until manually stopped or device storage fills; older devices may still require a duration, so follow the current interface. The device checks space before starting and does not automatically overwrite unsynced recordings.
+
+For longer meetings, keep the device connected and syncing where possible so sealed segments can be received while recording. If disconnected, recording uses remaining device space. When storage fills, the captured portion is saved and recording stops; later speech was not captured.
 
 Sync first when space is needed. Type confirms reclaim only after safely saving and checking sealed segments; the growing tail is not deleted early. If **查看可释放的最旧录音** is offered, read its specific contents and loss scope before confirming. That confirmation discards the unsynced content it lists; it is not a recoverable computer recycle-bin action.
 
@@ -100,7 +107,7 @@ Adjust mode, volume or quiet hours in the pet menu, save, then check device stat
 
 With working matching touch and motion hardware, gently stroke the home screen, slowly move a finger, or pick up, tilt or lightly shake the pet. Responses merge motion around completed display updates; each contact is not guaranteed an immediate frame. Repeated manual full refreshes are not the interaction method.
 
-Wake a sleeping pet with a short physical press. Closed eyes do not establish the chip's lowest-power mode. Battery level is an estimate; this release does not provide a verified number of days of battery life.
+Wake a sleeping pet with a short physical press. Closed eyes do not establish the chip's lowest-power mode. The current device has no reliable battery reading, so battery life cannot be estimated; charge it or use stable power before a long recording.
 
 After connecting, expand **我的宠物** at the top of Type:
 
@@ -149,7 +156,8 @@ Choose **确认共同日历日期** to explicitly confirm a date or time once, t
 | Your action | Content stored or sent | Destination and cost boundary |
 | --- | --- | --- |
 | Record on the device, synchronize audio, view records, write a checklist, save or export | Device audio; synchronized local audio, text, revisions, notes and lists; exported files | These actions themselves do not start cloud transcription or cloud minutes. Device copies, the local library and exports are managed separately. |
-| Start transcription, or explicitly select online transcription before recording | The relevant recording or live audio segments | Sent to the selected Volcengine service or configured compatible ASR endpoint. Provider account charges may apply. |
+| Select computer-local transcription and transcribe a saved recording | Saved recording | Processed on the computer without uploading audio; initial model preparation requires internet and storage. |
+| Select cloud transcription, or explicitly select online transcription before recording | The relevant recording or live audio segments | Sent to the selected Volcengine service or configured compatible ASR endpoint. Provider account charges may apply. |
 | Generate or regenerate intelligent minutes | The transcript and notes explicitly selected for that request | Sent to the configured DeepSeek or compatible minutes endpoint. This is not local-only processing; charges may apply. |
 | Explicitly start pet chat | Current utterance audio for recognition; recognized text, conversation context and allowed pet profile/memory for replies | Uses the configured recognition and chat services; charges may apply. It does not listen continuously in the background. |
 | Test the transcription or minutes service | One second of fixed silence or fixed test text | Sends a real service request and may incur charges. It does not read your meetings or microphone. Success proves only that particular request. |

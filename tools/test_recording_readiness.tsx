@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import React from 'react';
 import {act,create} from 'react-test-renderer';
+import {renderToStaticMarkup} from 'react-dom/server';
 import {CompanionRecordingReadiness,fragmentedSpaceMayFit} from '../packages/ui/src/CompanionRecordingReadiness';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {CompanionHelp} from '../packages/ui/src/CompanionHelp';
 import {createCompanionV1Fixture} from '../packages/core/src/companionV1';
 
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
@@ -13,7 +15,7 @@ snapshot.device.recordingCapacity={layoutVersion:1,busy:false,usedEntries:1,maxE
  dataBytes:4000000,freeBytes:3000000,largestFreeExtent:3000000,protectedBytes:1000000,consumedBytes:0,
  bytesPerSecond:10000,reserveHeadroom:0,localLimitSeconds:120,unsyncedEntries:1,writingEntries:0,consumedEntries:0};
 const calls:string[]=[];let tree:any;
-const render=(s:any=snapshot,recording=false,duration=600)=><CompanionRecordingReadiness snapshot={s} settings={null}
+const render=(s:any=snapshot,recording=false,duration=600,settings:any=null)=><CompanionRecordingReadiness snapshot={s} settings={settings}
  recording={recording} busy={false} durationSeconds={duration} onConnect={()=>calls.push('connect')}
  onCheck={()=>calls.push('check')} onRefresh={()=>calls.push('refresh')} onSettings={()=>calls.push('settings')}/>;
 act(()=>{tree=create(render());});
@@ -21,6 +23,15 @@ assert.deepEqual(calls,[],'opening advice has no automatic device, recording or 
 assert.match(text(tree.toJSON()),/空间不够本次时长/);assert.match(text(tree.toJSON()),/约可录 5分钟/);
 assert.match(text(tree.toJSON()),/实体键单次上限 2分钟/);assert.match(text(tree.toJSON()),/没有可靠电量读数/);
 assert.match(text(tree.toJSON()),/不需要转写服务或离线识别模型/);
+assert.match(text(tree.toJSON()),/电脑本地转写不上传录音；选择云端转写时会发送录音/);
+const localSettings={asrProvider:'local-paraformer',localAsrAvailable:true,deepseekMinutesEnabled:false};
+act(()=>tree.update(render(snapshot,false,600,localSettings)));
+assert.match(text(tree.toJSON()),/电脑本地转写不会上传录音/);
+assert.doesNotMatch(text(tree.toJSON()),/云端转写会把录音发送给所选服务/);
+const cloudSettings={asrProvider:'volcengine',volcAppKeySet:true,volcAccessKeySet:true,volcResourceId:'configured',deepseekMinutesEnabled:false};
+act(()=>tree.update(render(snapshot,false,600,cloudSettings)));
+assert.match(text(tree.toJSON()),/云端转写会把录音发送给所选服务/);
+assert.match(text(tree.toJSON()),/智能纪要会把选定的文字发送给配置的纪要服务/);
 const fragmented=structuredClone(snapshot);Object.assign(fragmented.device.recordingCapacity,{
  freeBytes:540672,largestFreeExtent:270336,segmentExtentBytes:270336,segmentFrames:6209,maxEntries:64});
 const fragmentedCapacity=fragmented.device.recordingCapacity!;
@@ -59,4 +70,10 @@ const readonly=structuredClone(snapshot);readonly.host.persistence={status:'bloc
 act(()=>tree.update(<CompanionDashboard snapshot={readonly} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={r=>controls.push(r)}/>));
 assert.equal(start().props.disabled,true,'existing local save safety gate remains');
 act(()=>tree.unmount());
+const noop=()=>{};
+const help=renderToStaticMarkup(<CompanionHelp onClose={noop} onDevice={noop} onLibrary={noop} onDiagnostics={noop}/>);
+assert.match(help,/长会议怎样录、怎样看重点/);
+assert.match(help,/电脑本地转写和云端整理有什么区别/);
+assert.match(help,/换电脑前怎样备份和恢复/);
+assert.match(help,/设备同步不是跨电脑云备份/);
 console.log('PASS readiness and ordinary action wiring: no automatic work, stale capacity suppressed, duration/slot advice, power unknown, interface failure, saved-only recording without ASR, busy/recovery safeguards. Controlled software cases, no device or cloud.');

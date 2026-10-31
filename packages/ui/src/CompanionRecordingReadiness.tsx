@@ -107,7 +107,11 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
                 : '智能纪要未启用；仍可查看文字或手写清单。'}</dd></div>
         </dl>
         <button type="button" className="ct-text-button" onClick={onSettings}>查看服务设置</button>
-        <p className="ct-readiness-note">手动启动转写会把录音发给所选服务；智能纪要会把转写文字发给 DeepSeek。本地说话人区分组件是可选项，不是录音或保存原音的前提。</p>
+        <p className="ct-readiness-note">{settings?.asrProvider === 'local-paraformer'
+          ? '电脑本地转写不会上传录音。'
+          : settings?.asrProvider === 'volcengine' || settings?.asrProvider === 'openai-compatible'
+            ? '云端转写会把录音发送给所选服务。' : '电脑本地转写不上传录音；选择云端转写时会发送录音。'}
+          智能纪要会把选定的文字发送给配置的纪要服务。本地说话人区分组件是可选项，不是录音或保存原音的前提。</p>
       </section>
     </div>
   </section>;

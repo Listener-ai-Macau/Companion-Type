@@ -1,6 +1,8 @@
 # Readiness and Experience Boundaries
 
-Updated 29 October 2026. **P708** is the current locally installed Windows Type delivery. The table distinguishes delivered operations from their observed scope. Public installers, formal service entitlements and whole-product acceptance remain incomplete.
+Updated 1 November 2026. The current Windows build provides local Chinese transcription, concise long-meeting overviews, local meeting-library backup and restore, and Word, PDF and mind-map export. Recording still requires a compatible device and available storage. The table below retains the 29 October P708 experience record; it is not a list of every later delivery.
+
+The product remains in development. Public installers and formal service entitlements have not been released; the consumer phone app, a two-hour real-device meeting and complete presales/aftercare acceptance remain open. Installation, software tests, real-device acceptance and sales readiness are different results.
 
 [User guide](USER_GUIDE.md) · [Product introduction](../README.md) · [简体中文](STATUS.zh-CN.md)
 

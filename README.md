@@ -64,7 +64,7 @@ Standard, Lively and Quiet have clear explanations and a stoppable ten-second si
 
 Original audio and the library are local. Cloud transcription sends relevant audio; cloud organization sends selected text and explicitly chosen notes. Chat may use the current utterance and memory you allow. This development version uses existing service configuration; formal accounts, fees and quotas follow actual delivery terms. Record-first is not fully local recognition, and a configured credential is not proof of a successful call.
 
-Computer-started recording uses the requested duration and a fresh capacity check; standalone capture uses the saved device limit. Sealed segments can be synced into one recording. An interruption, missing segments or a fault does not establish a complete session. Follow the item's status and the [user guide](docs/USER_GUIDE.md).
+Compatible devices support recording without a preset end time until you stop or device space runs out. Older devices may still require a duration; follow the current interface. Keep the device connected and syncing where possible for a long meeting. When storage fills, only the audio already captured is retained. Sealed segments can be synced into one recording; interruptions or missing segments do not establish a complete session. See the [user guide](docs/USER_GUIDE.md).
 
 ## One product, three parts
 

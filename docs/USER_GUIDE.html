@@ -93,6 +93,8 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 </tbody>
 </table>
 <p>When regenerating, explicitly choose <strong>原话＋已保存补充</strong> to include saved notes, or <strong>仅原话</strong> to use only the transcript. Regeneration can replace manual edits in the selected result; export important edits first.</p>
+<p>For a long meeting, read the short <strong>会议概览</strong> if present, then expand the full summary and source excerpts. Check important names, numbers and actions against the recording. No extracted action does not establish that there was no action.</p>
+<p>To transcribe without uploading the recording, open <strong>设置与工具 → 转写与纪要服务</strong>, select <strong>电脑本地转写（中文）</strong> as the ASR provider, prepare the local model and save settings. Initial model preparation needs an internet connection and storage; subsequent local transcription happens after recording and synchronization and does not upload the audio. Cloud transcription sends audio to the selected service; intelligent minutes still send the selected text to the configured minutes service and may incur charges.</p>
 <p>Write the action in its content field and time or owner separately. <strong>The checklist does not send scheduled notifications.</strong> “Tomorrow” and “next week” retain the recording's context; compare them with its date.</p>
 <p>Exactly matched items offer <strong>核对原文</strong> with a time. Rewritten items that cannot be matched offer <strong>查看原话</strong> without inventing a timestamp.</p>
 <p><img src="assets/usage/recording-detail.png" alt="Example recording detail with actions and original-text links" /></p>
@@ -112,6 +114,10 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 <td>Existing text or organized results; export does not invoke transcription or regenerate them.</td>
 </tr>
 <tr>
+<td>Word, PDF and mind map</td>
+<td>Create a document from saved results; PDF lets you select included content.</td>
+</tr>
+<tr>
 <td>SRT</td>
 <td>Requires genuine aligned timing. A whole-document rewrite cannot automatically recover alignment.</td>
 </tr>
@@ -129,10 +135,11 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 </tr>
 </tbody>
 </table>
-<p>You manage exported copies. Device sync is not cross-computer cloud backup. Once device segments are reclaimed, keep the computer's originals safe; export audio and text when you need another copy.</p>
+<p>You manage exported copies. Device sync is not cross-computer cloud backup. To back up the complete local library, open <strong>我的记录 → 筛选与整理 → 备份与恢复会议库</strong>, select <strong>备份会议库</strong>, and keep the complete resulting folder in a trusted place. On another computer, use <strong>从备份恢复</strong> in the same area and select the complete backup folder; an existing meeting is not overwritten. The folder is not encrypted and contains meeting text, minutes and associated audio. Individual exports and complete-library backups serve different purposes.</p>
 <p>Sealed recording segments may be received separately and grouped into one item. Received fragments do not prove a complete session. An interruption or missing-segment notice limits transcription and results to the content actually saved. Pausing sync pauses reception, not an ongoing device recording.</p>
 <h2 id="recording-space-and-duration">Recording Space and Duration</h2>
-<p>Read device recording capacity in <strong>设备与同步</strong>, using <strong>重新读取设备容量</strong> when needed. Computer-started capture uses the requested duration; standalone capture uses the saved device limit. Insufficient space rejects a start rather than automatically overwriting unsynced recordings.</p>
+<p>Read device recording capacity in <strong>设备与同步</strong>, using <strong>重新读取设备容量</strong> when needed. Compatible devices record without a preset end time until manually stopped or device storage fills; older devices may still require a duration, so follow the current interface. The device checks space before starting and does not automatically overwrite unsynced recordings.</p>
+<p>For longer meetings, keep the device connected and syncing where possible so sealed segments can be received while recording. If disconnected, recording uses remaining device space. When storage fills, the captured portion is saved and recording stops; later speech was not captured.</p>
 <p>Sync first when space is needed. Type confirms reclaim only after safely saving and checking sealed segments; the growing tail is not deleted early. If <strong>查看可释放的最旧录音</strong> is offered, read its specific contents and loss scope before confirming. That confirmation discards the unsynced content it lists; it is not a recoverable computer recycle-bin action.</p>
 <h2 id="delete-and-restore">Delete and Restore</h2>
 <p>Use <strong>筛选与整理</strong> to view the recycle bin. Ordinary removal moves local recordings there and allows restoration. Permanent deletion has a separate confirmation and cannot be undone. Protected recordings must be unprotected before deletion.</p>
@@ -140,7 +147,7 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 <h2 id="spend-time-with-your-pet">Spend Time With Your Pet</h2>
 <p>Adjust mode, volume or quiet hours in the pet menu, save, then check device state. Standard, Lively and Quiet control interruptions. A silent illustrative preview does not apply a setting. Quiet hours require correct time; use <strong>检查设备</strong> in Type's device page and check the computer's time and timezone if needed. Ordinary short sounds are suppressed during recording.</p>
 <p>With working matching touch and motion hardware, gently stroke the home screen, slowly move a finger, or pick up, tilt or lightly shake the pet. Responses merge motion around completed display updates; each contact is not guaranteed an immediate frame. Repeated manual full refreshes are not the interaction method.</p>
-<p>Wake a sleeping pet with a short physical press. Closed eyes do not establish the chip's lowest-power mode. Battery level is an estimate; this release does not provide a verified number of days of battery life.</p>
+<p>Wake a sleeping pet with a short physical press. Closed eyes do not establish the chip's lowest-power mode. The current device has no reliable battery reading, so battery life cannot be estimated; charge it or use stable power before a long recording.</p>
 <p>After connecting, expand <strong>我的宠物</strong> at the top of Type:</p>
 <ul>
 <li><strong>开聊</strong>: speak into the pet microphone and choose <strong>说完了</strong>. Each turn is up to twelve seconds; a short text reply appears at the bottom of the pet screen. The current implementation needs a connected computer and the configured existing services, and does not listen continuously in the background. <strong>取消</strong> ends the current request.</li>
@@ -214,7 +221,12 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 <td>These actions themselves do not start cloud transcription or cloud minutes. Device copies, the local library and exports are managed separately.</td>
 </tr>
 <tr>
-<td>Start transcription, or explicitly select online transcription before recording</td>
+<td>Select computer-local transcription and transcribe a saved recording</td>
+<td>Saved recording</td>
+<td>Processed on the computer without uploading audio; initial model preparation requires internet and storage.</td>
+</tr>
+<tr>
+<td>Select cloud transcription, or explicitly select online transcription before recording</td>
 <td>The relevant recording or live audio segments</td>
 <td>Sent to the selected Volcengine service or configured compatible ASR endpoint. Provider account charges may apply.</td>
 </tr>
@@ -250,4 +262,4 @@ h1{font-size:1.9rem;line-height:1.3;margin:0 0 18px}h2{font-size:1.35rem;line-he
 <p>Local cleanup cannot retract data already sent to a provider or remove device data, pet memory, other computers, manual backups or exports. Managed files are cleaned only when ownership is established; shared files and unverified legacy caches may remain and are reported in cleanup results. Moving to trash and permanent deletion are separate. Protection prevents accidental deletion; it is neither encryption nor a backup.</p>
 <p><strong>Device synchronization is not cross-computer cloud backup.</strong> After device space is reclaimed, preserve computer audio and needed text yourself. Export important material to a backup location you control and check that the files open. Disabling a service, disconnecting Bluetooth, restoring a name or uninstalling the application does not establish deletion from every location. Before transferring the device or changing computers, check local data, the device, pet memory, exported copies and data already sent remotely separately.</p>
 <p>Updated 29 October 2026. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.</p>
-</main><footer>Companion Type · Windows development documentation · 2026-10-29</footer></body></html>
+</main><footer>Companion Type · Windows development documentation · 2026-10-25</footer></body></html>
