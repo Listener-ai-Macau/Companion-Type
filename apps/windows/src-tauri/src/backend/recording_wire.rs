@@ -93,7 +93,7 @@ impl Descriptor {
         if self.recording_id == 0
             || self.key.format_epoch == 0
             || self.key.session_id == 0
-            || self.segment_index >= MAX_SEGMENTS
+            || self.segment_index == u32::MAX
             || self.codec != 3
             || self.source_mode > 2
             || self.sync_state > 2
@@ -404,7 +404,8 @@ pub(crate) fn plan_group(items: &[Descriptor], verified: &BTreeSet<u32>) -> Resu
         return Err(fail("segment exists after terminal segment"));
     }
     let end = expected.unwrap_or_else(|| segments.keys().next_back().unwrap() + 1);
-    let missing: Vec<_> = (0..end).filter(|n| !segments.contains_key(n)).collect();
+    // Keep a bounded sample of gaps; a corrupt distant index must not allocate billions of entries.
+    let missing: Vec<_> = (0..end).filter(|n| !segments.contains_key(n)).take(1024).collect();
     let mut previous: Option<&Descriptor> = None;
     let mut samples = 0u64;
     for d in segments.values() {
@@ -745,6 +746,28 @@ pub(crate) fn verify(output: &Path) -> Result<serde_json::Value, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn wide_segment_group_crosses_1024_and_bounds_gap_report() {
+        let fixture: serde_json::Value = serde_json::from_str(GOLDEN).unwrap();
+        let wire = unhex(fixture["descriptorsHex"][0].as_str().unwrap()).unwrap();
+        let original = Descriptor::decode(&wire).unwrap();
+        let mut segments = Vec::new();
+        for index in 0u32..1025 {
+            let mut d=original.clone();d.recording_id=index+1;d.segment_index=index;
+            d.sample_offset=u64::from(index)*d.sample_count;
+            d.flags=SEALED | if index==1024 { LAST } else { 0 };
+            d.total_segments=if index==1024 {1025} else {0};
+            let encoded=d.encode().unwrap();assert_eq!(Descriptor::decode(&encoded).unwrap().segment_index,index);
+            segments.push(d);
+        }
+        let complete=plan_group(&segments,&BTreeSet::new()).unwrap();
+        assert!(complete.metadata_complete);assert_eq!(complete.known_segments,1025);
+        segments.remove(500);let missing=plan_group(&segments,&BTreeSet::new()).unwrap();
+        assert_eq!(missing.missing_segments,vec![500]);assert!(!missing.metadata_complete);
+        let mut distant=original.clone();distant.segment_index=u32::MAX-1;distant.sample_offset=320;
+        let sparse=plan_group(&[original,distant],&BTreeSet::new()).unwrap();
+        assert_eq!(sparse.missing_segments.len(),1024);assert!(!sparse.metadata_complete);
+    }
     #[test]
     fn c_rust_wire_and_group_contract() {
         exercise().unwrap();

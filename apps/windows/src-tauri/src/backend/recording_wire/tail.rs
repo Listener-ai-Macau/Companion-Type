@@ -40,7 +40,7 @@ impl Tail {
             return Err(fail("invalid growing tail identity or frame"));
         }
         let n=u32le(p,60);let samples=u64le(p,52);let at=u64le(p,44);let timeline=u16le(p,74)&2!=0;
-        if u32le(p,36)==0 || u32le(p,40)>=1024 || !(54..=super::MAX_ENCODED).contains(&n)
+        if u32le(p,36)==0 || u32le(p,40)==u32::MAX || !(54..=super::MAX_ENCODED).contains(&n)
             || samples==0 || samples%320!=0 || samples>u64::from((n-12)/42)*320
             || (!timeline && ((n-12)%42!=0 || samples!=u64::from((n-12)/42)*320)) || at%320!=0
             || at.checked_add(samples).is_none() { return Err(fail("tail is not a complete COP1 frame prefix")); }

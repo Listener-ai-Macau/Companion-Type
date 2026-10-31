@@ -51,6 +51,18 @@ fn product_transcription_paths_use_verified_v2_wav_and_refuse_bad_raw_original()
 }
 
 #[test]
+fn accepts_wide_index_capability_and_rejects_unknown_bits() {
+    let (peer,_,_)=fixture();
+    let mut s=status(&peer);
+    s[92..96].copy_from_slice(&2047u32.to_le_bytes());
+    let crc=crc32fast::hash(&s[84..112]);s[112..116].copy_from_slice(&crc.to_le_bytes());
+    assert!(Peer::from_status(&s).unwrap().is_some());
+    s[92..96].copy_from_slice(&4095u32.to_le_bytes());
+    let crc=crc32fast::hash(&s[84..112]);s[112..116].copy_from_slice(&crc.to_le_bytes());
+    assert!(Peer::from_status(&s).is_err());
+}
+
+#[test]
 fn sealed_batch_reclaim_keeps_open_missing_and_background_segments_immediate() {
     let (_, ds, _) = fixture();
     let empty=std::collections::BTreeSet::new();

@@ -33,7 +33,8 @@ impl Peer {
         let epoch = u64le(p, 12);
         let capacity = u16le(p, 20);
         if u16le(p, 4) != 2 || usize::from(u16le(p, 6)) != CAP_BYTES
-            || u32le(p, 8) & REQUIRED_CAPS != REQUIRED_CAPS || u32le(p, 8) & !1023 != 0 || epoch == 0
+            || u32le(p, 8) & REQUIRED_CAPS != REQUIRED_CAPS || u32le(p, 8) & !2047 != 0 || epoch == 0
+            || (u32le(p,8)&1024!=0 && u32le(p,8)&256==0)
             || (u32le(p,8)&512!=0 && u32le(p,8)&256==0)
             || (u32le(p,8)&256!=0 && u32le(p,8)&192!=192)
             || (u32le(p,8)&128!=0 && u32le(p,8)&88!=88)
