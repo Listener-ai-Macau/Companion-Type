@@ -33,6 +33,14 @@ public final class NativeAudioJvmTest {
         try(SegmentReceiver receiver=new SegmentReceiver(root,descriptor)){
             receiver.accept(packet(raw,hash,0,248,0,false));receiver.accept(packet(raw,hash,248,raw.length-248,1,true));receiver.finish();}
         RecordingLibrary.Session session=RecordingLibrary.sessions(root).get(0);Path wav=root.resolve("output.wav");
+        NativeAudio.VerifiedPrefix ended=NativeAudio.inspectPrefix(session);
+        if(!ended.captureComplete||ended.encodedSamples!=960||ended.bookmarks.size()!=1||ended.bookmarks.get(0).sourceSamples!=640)throw new AssertionError("complete prefix metadata mismatch");
+        byte[] live=d.clone();live[20]=2;put32(live,88,0);live[92]=1;crc.reset();crc.update(live,0,108);put32(live,108,crc.getValue());
+        RecorderWire.Descriptor liveDescriptor=RecorderWire.Descriptor.decode(live);String liveKey=SegmentReceiver.key(liveDescriptor);
+        Files.write(root.resolve(liveKey+".meta"),live);Files.write(root.resolve(liveKey+".cop1"),raw);
+        RecordingLibrary.Session incomplete=RecordingLibrary.sessions(root).stream().filter(x->x.state==RecordingLibrary.SessionState.INCOMPLETE).findFirst().get();
+        NativeAudio.VerifiedPrefix prefix=NativeAudio.inspectPrefix(incomplete);
+        if(prefix.captureComplete||prefix.encodedSamples!=960||prefix.bookmarks.size()!=1||prefix.bookmarks.get(0).elapsedMillis!=40)throw new AssertionError("open prefix metadata mismatch");
         NativeAudio.Result result=NativeAudio.decode(session,wav);byte[] output=Files.readAllBytes(wav);
         if(result.samples!=640||!result.captureComplete||output.length!=1324||!Arrays.equals(Arrays.copyOf(output,4),new byte[]{'R','I','F','F'}))throw new AssertionError("native output mismatch");
         if(result.bookmarks.size()!=1||result.bookmarks.get(0).sequence!=1||result.bookmarks.get(0).sourceSamples!=640||

@@ -280,6 +280,13 @@ WAV in milliseconds. The captured/playback position excludes paused time, while
 with the session identity and persist any user edits in the host app; this API
 does not automatically save, consume or delete the device recording. The mark
 path has only host-side synthetic JNI tests, not phone/device acceptance.
+While a meeting is still recording, `NativeAudio.inspectPrefix(session)` can
+validate a contiguous, fully received local prefix and return device marks on
+their original source-sample axis. `encodedSamples` counts encoded 16 kHz
+samples and can include codec boundary padding; it is not the final playback
+duration. `captureComplete` is false until a non-recovered terminal segment is
+present. The final playback positions are supplied by `decode` after recording
+ends. Prefix inspection does not communicate with the device or reclaim space.
 The Android ARM64 native candidate is built using `build_android_native.py`; set
 the Gradle property `companionAndroidJniLibs` to the resulting `jniLibs` directory
 to package it. Build the matching library for each ABI the host app supports. The

@@ -82,6 +82,7 @@ use std::{fs::{self,File,OpenOptions},io::{Read,Seek,SeekFrom,Write},path::{Path
 pub struct Segment { pub path:PathBuf, pub descriptor:[u8;112] }
 pub struct Decoded { pub path:PathBuf, pub samples:u64, pub capture_complete:bool, pub bookmarks:Vec<DecodedBookmark> }
 pub struct DecodedBookmark {pub sequence:u32,pub source_samples:u64,pub playback_samples:u64,pub elapsed_ms:u64}
+struct VerifiedPrefix {encoded_samples:u64,capture_complete:bool,bookmarks:Vec<cop1::Event>}
 
 struct Description {uid:[u8;12],epoch:u64,session:u64,index:u32,recording:u32,offset:u64,samples:u64,
     length:u32,crc:u32,sha:[u8;32],total:u32,flags:u8,source:u8}
@@ -105,17 +106,58 @@ fn wav_header(size:u32)->[u8;44] {
     let mut h=[0u8;44];h[..4].copy_from_slice(b"RIFF");h[4..8].copy_from_slice(&(size+36).to_le_bytes());h[8..16].copy_from_slice(b"WAVEfmt ");h[16..20].copy_from_slice(&16u32.to_le_bytes());h[20..22].copy_from_slice(&1u16.to_le_bytes());h[22..24].copy_from_slice(&1u16.to_le_bytes());h[24..28].copy_from_slice(&16000u32.to_le_bytes());h[28..32].copy_from_slice(&32000u32.to_le_bytes());h[32..34].copy_from_slice(&2u16.to_le_bytes());h[34..36].copy_from_slice(&16u16.to_le_bytes());h[36..40].copy_from_slice(b"data");h[40..44].copy_from_slice(&size.to_le_bytes());h
 }
 
-/// Decode a complete set of verified sealed segments. An existing output is never overwritten.
-/// Call on a worker thread. The device and original segment files are not modified.
-pub fn decode_session(segments:&[Segment],output:&Path)->Result<Decoded,String> {
+fn descriptions_for(segments:&[Segment],require_terminal:bool)->Result<Vec<Description>,String> {
     if segments.is_empty()||segments.len()>1024{return Err("recording segments are missing".into());}
     let descriptions=segments.iter().map(|s|Description::parse(&s.descriptor)).collect::<Result<Vec<_>,_>>()?;
     let first=&descriptions[0];let mut offset=0u64;let mut ids=std::collections::HashSet::new();
     for (i,d) in descriptions.iter().enumerate() {
         if d.uid!=first.uid||d.epoch!=first.epoch||d.session!=first.session||d.source!=first.source||d.index!=i as u32||d.offset!=offset||!ids.insert(d.recording)||
-            ((d.flags&2!=0)!=(i+1==descriptions.len())) {return Err("recording session is missing or has conflicting segments".into());}
+            ((d.flags&2!=0) && i+1!=descriptions.len()) {return Err("recording session is missing or has conflicting segments".into());}
         offset=offset.checked_add(d.samples).ok_or("recording is too long")?;
     }
+    if require_terminal && descriptions.last().is_none_or(|d|d.flags&2==0) {return Err("recording has not ended; original retained".into());}
+    Ok(descriptions)
+}
+
+/// Verify an original contiguous sealed prefix while capture is still open.
+/// This reads only local files; it neither decodes nor consumes device data.
+fn inspect_prefix(segments:&[Segment])->Result<VerifiedPrefix,String> {
+    let descriptions=descriptions_for(segments,false)?;
+    let mut timeline=None;let mut window=None;let mut schema=None;let mut total=0u64;
+    for (s,d) in segments.iter().zip(&descriptions) {
+        let file=File::open(&s.path).map_err(|e|format!("open recording: {e}"))?;
+        if file.metadata().map_err(|e|e.to_string())?.len()!=u64::from(d.length) {return Err("recording segment length changed".into());}
+        let mut bytes=Vec::with_capacity(d.length as usize);file.take(u64::from(d.length)+1).read_to_end(&mut bytes).map_err(|e|e.to_string())?;
+        if bytes.len()!=d.length as usize || crc32fast::hash(&bytes)!=d.crc || Sha256::digest(&bytes).as_slice()!=d.sha {return Err("recording segment checksum changed".into());}
+        let mut reader=cop1::Reader::new(bytes.as_slice(),d.offset,false)?;
+        if reader.frame_ms!=20 || reader.source_rate!=16000 || schema.is_some_and(|v|v!=reader.schema) {return Err("recording audio format changed".into());}
+        if schema.is_none(){schema=Some(reader.schema);window=Some(cop1::SampleWindow::new(reader.schema,320)?);if reader.schema>=2{timeline=Some(cop1::Timeline::default());}}
+        while let Some(record)=reader.next()? {
+            match record {
+                cop1::Record::Audio(_)=>{window.as_mut().unwrap().packet(320)?;},
+                cop1::Record::Boundary(b)=>window.as_mut().unwrap().observe(b)?,
+                cop1::Record::Event(e)=>{if !window.as_ref().unwrap().event_allowed(){return Err("event after audio end".into());}timeline.as_mut().ok_or("unexpected event")?.push(e)?;},
+            }
+        }
+        let summary=reader.finish(d.flags&4!=0)?;
+        if summary.frames.checked_mul(320)!=Some(d.samples)||summary.encoded_bytes!=u64::from(d.length) {return Err("recording segment sample count changed".into());}
+        if summary.ended_paused && d.flags&2==0 && !(reader.schema>=4&&summary.codec_end.is_some()) {return Err("recording ended before its final segment".into());}
+        if let Some(t)=timeline.as_mut(){t.add_segment(&summary)?;}
+        total=total.checked_add(d.samples).ok_or("recording is too long")?;
+    }
+    let capture_complete=descriptions.last().is_some_and(|d|d.flags&2!=0) && descriptions.iter().all(|d|d.flags&4==0);
+    let boundary=window.ok_or("recording audio missing")?.finish(!capture_complete)?;
+    let bookmarks=if let Some(mut t)=timeline {t.apply_boundary(boundary);t.bookmarks} else {Vec::new()};
+    if bookmarks.len()>1024 || total>i64::MAX as u64 || bookmarks.iter().any(|e|e.elapsed_ms>i64::MAX as u64 || e.sample_offset>i64::MAX as u64) {
+        return Err("invalid recording metadata; original retained".into());
+    }
+    Ok(VerifiedPrefix{encoded_samples:total,capture_complete,bookmarks})
+}
+
+/// Decode a complete set of verified sealed segments. An existing output is never overwritten.
+/// Call on a worker thread. The device and original segment files are not modified.
+pub fn decode_session(segments:&[Segment],output:&Path)->Result<Decoded,String> {
+    let descriptions=descriptions_for(segments,true)?;
     let parent=output.parent().ok_or("output directory is missing")?;
     let counter=TEMP_COUNTER.fetch_add(1,Ordering::Relaxed);
     let temporary=parent.join(format!(".companion-decode-{}-{}.tmp",std::process::id(),counter));
@@ -224,6 +266,34 @@ pub extern "system" fn Java_com_denzic_companion_mobile_NativeAudio_decodeFilesD
         Ok(Ok(array))=>array,
         Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
         Err(_)=>{let _=env.throw_new("java/io/IOException","audio decoding failed; original recordings were retained");std::ptr::null_mut()},
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_denzic_companion_mobile_NativeAudio_inspectFiles(
+    mut env:jni::JNIEnv,_class:jni::objects::JClass,paths:jni::objects::JObjectArray,
+    descriptors:jni::objects::JObjectArray) -> jni::sys::jlongArray {
+    let run=std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| -> Result<jni::sys::jlongArray,String> {
+        let count=env.get_array_length(&paths).map_err(|e|e.to_string())?;
+        if count<=0||count>1024||env.get_array_length(&descriptors).map_err(|e|e.to_string())?!=count {return Err("invalid recording segment list".into());}
+        let mut segments=Vec::with_capacity(count as usize);
+        for i in 0..count {
+            let path=jni::objects::JString::from(env.get_object_array_element(&paths,i).map_err(|e|e.to_string())?);
+            let value:String=env.get_string(&path).map_err(|e|e.to_string())?.into();env.delete_local_ref(path).map_err(|e|e.to_string())?;
+            let descriptor=jni::objects::JByteArray::from(env.get_object_array_element(&descriptors,i).map_err(|e|e.to_string())?);
+            let bytes=env.convert_byte_array(&descriptor).map_err(|e|e.to_string())?;env.delete_local_ref(descriptor).map_err(|e|e.to_string())?;
+            segments.push(Segment{path:PathBuf::from(value),descriptor:bytes.try_into().map_err(|_|"invalid recording descriptor length")?});
+        }
+        let prefix=inspect_prefix(&segments)?;let mut values=Vec::with_capacity(2+prefix.bookmarks.len()*3);
+        values.push(prefix.encoded_samples as i64);values.push(i64::from(prefix.capture_complete));
+        for mark in prefix.bookmarks {values.extend([i64::from(mark.sequence),mark.sample_offset as i64,mark.elapsed_ms as i64]);}
+        let array=env.new_long_array(values.len() as i32).map_err(|e|e.to_string())?;
+        env.set_long_array_region(&array,0,&values).map_err(|e|e.to_string())?;Ok(array.into_raw())
+    }));
+    match run {
+        Ok(Ok(array))=>array,
+        Ok(Err(error))=>{let _=env.throw_new("java/io/IOException",error);std::ptr::null_mut()},
+        Err(_)=>{let _=env.throw_new("java/io/IOException","recording inspection failed; originals retained");std::ptr::null_mut()},
     }
 }
 
@@ -389,6 +459,20 @@ mod mobile_tests {
         assert_eq!(decoded.bookmarks.len(),1);let mark=&decoded.bookmarks[0];
         assert_eq!((mark.sequence,mark.source_samples,mark.playback_samples,mark.elapsed_ms),(1,640,320,40));
         fs::remove_file(dir.join("segment-0.cop1")).unwrap();fs::remove_file(out).unwrap();fs::remove_dir(dir).unwrap();
+    }
+    #[test]
+    fn live_prefix_inspection_keeps_marks_and_refuses_bad_or_missing_segments() {
+        let dir=std::env::temp_dir().join(format!("companion-mobile-prefix-{}-{}",std::process::id(),TEMP_COUNTER.fetch_add(1,Ordering::Relaxed)));
+        fs::create_dir(&dir).unwrap();let mut raw=b"COP1\x03\x01\x14\x03\x80\x3e\x00\x00".to_vec();
+        cop1::tests::audio(&mut raw,2);cop1::tests::event(&mut raw,4,1,640,40);
+        let part=segment(&dir,0,2,false,raw);let prefix=inspect_prefix(std::slice::from_ref(&part)).unwrap();
+        assert!(!prefix.capture_complete);assert_eq!(prefix.encoded_samples,640);assert_eq!(prefix.bookmarks.len(),1);
+        assert_eq!((prefix.bookmarks[0].sequence,prefix.bookmarks[0].sample_offset),(1,640));
+        let mut damaged=fs::read(&part.path).unwrap();damaged[12]^=1;fs::write(&part.path,damaged).unwrap();
+        assert!(inspect_prefix(&[part]).is_err());
+        let missing=segment(&dir,1,1,true,b"COP1\x03\x01\x14\x03\x80\x3e\x00\x00".to_vec());
+        assert!(inspect_prefix(&[missing]).is_err());
+        fs::remove_file(dir.join("segment-0.cop1")).unwrap();fs::remove_file(dir.join("segment-1.cop1")).unwrap();fs::remove_dir(dir).unwrap();
     }
     #[test]
     fn schema4_and_schema5_segments_keep_explicit_source_start_and_end() {

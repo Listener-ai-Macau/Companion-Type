@@ -16,6 +16,17 @@ public final class NativeAudio {
             this.sequence=sequence;sourceSamples=source;playbackSamples=playback;elapsedMillis=elapsed;
         }
     }
+    /** Device-authored mark whose final playback position is not yet known. */
+    public static final class SourceBookmark {
+        public final long sequence,sourceSamples,elapsedMillis;
+        private SourceBookmark(long sequence,long source,long elapsed) {this.sequence=sequence;sourceSamples=source;elapsedMillis=elapsed;}
+    }
+    public static final class VerifiedPrefix {
+        public final long encodedSamples;public final boolean captureComplete;public final List<SourceBookmark> bookmarks;
+        private VerifiedPrefix(long samples,boolean complete,List<SourceBookmark> marks) {
+            encodedSamples=samples;captureComplete=complete;bookmarks=Collections.unmodifiableList(marks);
+        }
+    }
     public static final class Result {
         public final Path path;
         public final long samples;
@@ -28,6 +39,26 @@ public final class NativeAudio {
     }
     private static native long decodeFiles(String[] paths,byte[][] descriptors,String output) throws IOException;
     private static native long[] decodeFilesDetailed(String[] paths,byte[][] descriptors,String output) throws IOException;
+    private static native long[] inspectFiles(String[] paths,byte[][] descriptors) throws IOException;
+
+    /** Validate the locally saved contiguous sealed prefix, without touching the device. */
+    public static VerifiedPrefix inspectPrefix(RecordingLibrary.Session session) throws IOException {
+        if(session==null)throw new IllegalArgumentException("session required");
+        if(session.state==RecordingLibrary.SessionState.DAMAGED)throw new IOException("recording is damaged; originals retained");
+        int count=session.segments.size();String[] paths=new String[count];byte[][] descriptors=new byte[count][];
+        for(int i=0;i<count;i++) {
+            RecordingLibrary.Entry entry=session.segments.get(i);
+            if(entry.state!=RecordingLibrary.State.VERIFIED)throw new IOException("recording has segments that have not been fully received");
+            paths[i]=entry.file.toAbsolutePath().toString();descriptors[i]=entry.descriptor.wireBytes();
+        }
+        try {
+            System.loadLibrary("companion_mobile_audio");long[] values=inspectFiles(paths,descriptors);
+            if(values==null||values.length<2||(values.length-2)%3!=0)throw new IOException("invalid recording metadata; originals retained");
+            List<SourceBookmark> marks=new ArrayList<>();
+            for(int i=2;i<values.length;i+=3)marks.add(new SourceBookmark(values[i],values[i+1],values[i+2]));
+            return new VerifiedPrefix(values[0],values[1]!=0,marks);
+        } catch(UnsatisfiedLinkError error){throw new IOException("mobile audio decoder needs the matching backend version",error);}
+    }
 
     /** The host must package the matching companion_mobile_audio native library for its ABI. */
     public static Result decode(RecordingLibrary.Session session,Path output) throws IOException {
