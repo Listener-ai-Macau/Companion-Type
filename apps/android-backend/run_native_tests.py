@@ -20,7 +20,15 @@ with tempfile.TemporaryDirectory(prefix="companion-jni-", dir=work) as tmp:
     tmp = Path(tmp)
     source = backend / "src/main/java/com/denzic/companion/mobile"
     test = backend / "src/test/java/com/denzic/companion/mobile/NativeAudioJvmTest.java"
-    files = [source / (name + ".java") for name in ("RecorderWire", "SegmentReceiver", "RecordingLibrary", "NativeAudio")]
-    subprocess.run(["javac", "--release", "8", "-d", str(tmp)] + list(map(str, files)) + [str(test)], check=True)
+    files = [source / (name + ".java") for name in (
+        "RecorderWire", "SegmentReceiver", "RecordingLibrary", "NativeAudio", "DeviceBookmarkCache",
+        "MeetingStore", "RecordingClient", "DurableConsume", "NativeRecordingControl")]
+    # The host fixture injects its own directory-sync function. It must never
+    # mistake a desktop stub for Android's real durable directory sync.
+    stub = tmp / "AndroidDirectorySync.java"
+    stub.write_text("package com.denzic.companion.mobile; final class AndroidDirectorySync { "
+                    "static void sync(java.nio.file.Path p) throws java.io.IOException { "
+                    "throw new java.io.IOException(\"Android directory sync unavailable in host test\"); }}", encoding="utf8")
+    subprocess.run(["javac", "--release", "8", "-encoding", "UTF-8", "-d", str(tmp)] + list(map(str, files)) + [str(stub), str(test)], check=True)
     subprocess.run(["java", "-Djava.library.path=" + str(work / "target/debug"), "-cp", str(tmp),
                     "com.denzic.companion.mobile.NativeAudioJvmTest", str(tmp)], env=env, check=True)

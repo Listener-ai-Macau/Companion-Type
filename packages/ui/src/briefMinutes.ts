@@ -47,13 +47,14 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   if (!transcript.trim() || [...transcript.trim()].length > 280 || !Number.isFinite(durationMs)
       || durationMs < 0 || durationMs > 120_000
       || markdown.includes('```') || markdown.includes('~~~')) return null;
-  const labels: Record<string, 'summary' | 'actions' | 'decisions' | 'questions' | 'keywords' | 'speakers' | 'unattributed'> = {
+  const labels: Record<string, 'summary' | 'actions' | 'decisions' | 'questions' | 'keywords' | 'speakers' | 'unattributed' | 'sourceExcerpts'> = {
     Summary: 'summary', 摘要: 'summary',
     'Action Items': 'actions', 行动项: 'actions', 待办: 'actions',
     Decisions: 'decisions', 决定: 'decisions', 已明确的决定: 'decisions', 关键决定: 'decisions',
     Questions: 'questions', 问题: 'questions', 待确认: 'questions', 待确认问题: 'questions',
     Keywords: 'keywords', 关键词: 'keywords',
     '讨论纪要(按说话人)': 'speakers', '发言归属未确认的原话': 'unattributed',
+    '补充原文（供核对）': 'sourceExcerpts',
   };
   const headings = [...markdown.matchAll(/^## ([^\r\n]+)\r?$/gm)];
   if (!headings.length) return null;
@@ -97,5 +98,6 @@ export function briefMinutes(markdown: string, transcript: string, durationMs: n
   if(!preferActions||noActions)reading.push(actionSection);
   if(!emptySection(sections.get('questions')??''))reading.push(`## 需确认\n\n${sections.get('questions')}`);
   if(sections.get('unattributed')?.trim())reading.push('## 归属未确认\n\n部分原话的发言者未确认；可展开完整整理逐句核对。');
+  if(sections.get('sourceExcerpts')?.trim())reading.push('## 补充原文\n\n有原话可供核对；可展开完整整理查看。');
   return reading.join('\n\n');
 }

@@ -43,7 +43,7 @@ fn main() {
         let source=Path::new("../../windows/src-tauri/src/backend/minutes.rs");
         let text=std::fs::read_to_string(source).expect("shared minutes source");
         let start="fn normalized_fact_chars(text: &str) -> Vec<char> {";
-        let end="fn merge_missing_source_facts(";
+        let end="fn missing_source_facts(";
         assert_eq!(text.matches(start).count(),1);
         assert_eq!(text.matches(end).count(),1);
         let start_at=text.find(start).unwrap();let end_at=text.find(end).unwrap();

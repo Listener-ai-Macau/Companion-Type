@@ -59,6 +59,18 @@ mod tests {
     }
 
     #[test]
+    fn paraphrased_short_summary_keeps_original_only_as_reviewable_excerpt() {
+        let response=json!({"summary":["发言者希望解决问题并引入学员。"],"decisions":[],"actionItems":[],"questions":[],"keywords":[],"markdown":"发言者希望解决问题并引入学员。","questionClassification":[{"sourceId":1,"kind":"statement"}]});
+        let (url,_,job)=server(vec![(200,response)]);let root=cache();
+        let input="以往的或者以后的我尽量把这个问题给你们解决了呃呃解决问题基础以上咱要把今年的招生学员引系到咱学校微咱学校啊这个微咱这个这个教育机构啊";
+        let value:Value=serde_json::from_str(&generate_json(&request(&url,input),"synthetic-key",&root).unwrap()).unwrap();
+        assert_eq!(value["quality"],"final");assert_eq!(value["summary"].as_array().unwrap().len(),1);
+        assert!(!value["summary"][0].as_str().unwrap().contains("呃呃"));
+        let markdown=value["markdown"].as_str().unwrap();assert!(markdown.contains("## 补充原文（供核对）"));assert!(markdown.contains(input));
+        job.join().unwrap();
+    }
+
+    #[test]
     fn long_meeting_keeps_completed_chunks_and_resumes_after_failure() {
         let chapter=json!({"summary":["follow up report"],"decisions":[],"actionItems":[],"questions":[],"keywords":[],"markdown":"follow up report",
             "evidence":[{"field":"summary","index":0,"quote":"follow up report"}]});

@@ -190,13 +190,17 @@ pub(super) fn finalize_minutes(
             // preserves all unused content as literal background. Reapplying
             // original-only anchors here could revive a cancelled/conditional
             // plan as an unqualified current fact.
-            let fallback_count = if validated_context {0}else{merge_missing_source_facts(&mut upgraded, &l0.summary)};
-            if upgraded.markdown.trim().is_empty() || fallback_count != 0 || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || conditional_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() || has_unresolved_speaker(session) {
-                // The model may return a polished markdown body that omits facts
-                // already retained by deterministic extraction. Once a fallback
-                // is needed, render from the merged structured fields so the UI,
-                // exports and accuracy gate all see the same source-backed facts.
+            let source_excerpts = if validated_context {Vec::new()}else{missing_source_facts(&upgraded, &l0.summary)};
+            if upgraded.markdown.trim().is_empty() || !source_excerpts.is_empty() || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || conditional_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() || has_unresolved_speaker(session) {
+                // Keep actions and the structured summary aligned with the
+                // rendered document; original excerpts are appended separately.
                 upgraded.markdown = render_minutes_markdown(session, &upgraded);
+            }
+            if !source_excerpts.is_empty() {
+                upgraded.markdown.push_str("\n## 补充原文（供核对）\n\n");
+                for excerpt in source_excerpts {
+                    upgraded.markdown.push_str("- ");upgraded.markdown.push_str(&excerpt);upgraded.markdown.push('\n');
+                }
             }
             upgraded
         }
@@ -693,11 +697,13 @@ fn source_fact_covered(source: &str, target: &str) -> bool {
     matched * 100 >= total * 48
 }
 
-fn merge_missing_source_facts(
-    upgraded: &mut CompanionV1MeetingMinutes,
+fn missing_source_facts(
+    upgraded: &CompanionV1MeetingMinutes,
     source_facts: &[String],
-) -> usize {
-    let mut searchable = upgraded.markdown.clone();
+) -> Vec<String> {
+    // Markdown may be regenerated below, so coverage must come from fields
+    // that will survive rendering rather than a provider's discarded body.
+    let mut searchable = String::new();
     for item in upgraded
         .summary
         .iter()
@@ -712,17 +718,16 @@ fn merge_missing_source_facts(
         searchable.push_str(&item.text);
     }
 
-    let mut added = 0;
+    let mut excerpts = Vec::new();
     for fact in source_facts {
         if source_fact_covered(fact, &searchable) {
             continue;
         }
-        upgraded.summary.push(fact.clone());
         searchable.push('\n');
         searchable.push_str(fact);
-        added += 1;
+        excerpts.push(fact.clone());
     }
-    added
+    excerpts
 }
 
 fn enforce_source_backed_action_items(
@@ -1376,10 +1381,26 @@ mod tests {
         assert!(result.markdown.contains("Windows蓝牙偶尔会抖"));
         assert!(result.markdown.contains("会议纪要通常不需要CD音质"));
         assert!(result.markdown.contains("## Summary"));
+        assert!(result.markdown.contains("## 补充原文（供核对）"));
+        assert_eq!(result.summary, vec!["会议讨论了录音同步，并决定先压缩再传输。"]);
         assert!(!source_fact_covered(
             "空中花儿和压玻璃必须分开跑",
             "明确空中传输与压缩环节必须分开运行",
         ));
+    }
+
+    #[test]
+    fn public_short_meeting_keeps_oral_excerpts_out_of_ai_summary() {
+        let session=session_with_text("以往的或者以后的我尽量把这个问题给你们解决了呃呃解决问题基础以上咱要把今年的招生学员引系到咱学校微咱学校啊这个微咱这个这个教育机构啊\n教一度啊也品牌也在提升个档次毕竟呃好多口碑也不错啊好多学生呃呃出去以后啊也引来了不少的这个学员\n你看看今年的招生各位有没有什么想法或者意见的哪个要先说说我这边尽量帮你们解决一下问题啊呃有说的呃\n差不多的在中上就是我会打断一下一些思路啊你们要做好准备好嗯那我先说一下吧我那个呃主要负责的是少");
+        let l0=rules_l0_minutes(&session,"now");let mut upgraded=l0.clone();
+        upgraded.source="llm_deepseek".into();upgraded.quality="final".into();
+        upgraded.summary=vec!["发言者表示尽量解决问题，并把今年的招生学员引到教育机构。".into(),"品牌档次和口碑有所提升，学生也带来新学员。".into()];
+        upgraded.markdown="# 模型纪要".into();
+        let result=finalize_minutes(Ok(upgraded),l0,&session);
+        assert_eq!(result.summary.len(),2);
+        assert!(result.markdown.contains("## 补充原文（供核对）"));
+        assert!(result.markdown.contains("以往的或者以后的我尽量"));
+        assert!(!result.summary.iter().any(|item|item.contains("呃呃")));
     }
 
     #[test]
