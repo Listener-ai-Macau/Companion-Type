@@ -1540,7 +1540,7 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 #ct-recording-playback[hidden] { display: none !important; }
 .ct-recording-text { padding: 4px 24px 24px; }
 .ct-recording-text h3 { margin: 0 0 14px; font-size: 15px; color: #2f4936; }
-.ct-recording-transcript { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; line-height: 1.85; margin: 0; color: #26372c; }
+.ct-recording-transcript { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; line-height: 1.85; margin: 0; color: #26372c; max-height: min(40vh, 22rem); overflow-y: auto; }
 .ct-recording-text-empty { color: #748076; font-size: 14px; line-height: 1.8; }
 .ct-recording-more { border-top: 1px solid #e5eae3; }
 .ct-recording-more > summary { padding: 16px 24px; color: #5e6d61; font-size: 13px; }

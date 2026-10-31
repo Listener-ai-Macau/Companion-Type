@@ -4,7 +4,7 @@ import {emptyActionNotice} from './savedActions';
 
 // Only the native long-meeting format has this exact overview/evidence split.
 // Any custom or ambiguous document stays on the ordinary complete reading path.
-export function splitLongMinutesEvidence(markdown: string): {overview: string; evidence: string; detailSummary?: string} | null {
+export function splitLongMinutesEvidence(markdown: string): {overview: string; evidence: string; detailSummary?: string; detailKeywords?: string} | null {
   // The current native format may place the selected meeting highlights before
   // the original long-meeting notice. Older saved minutes start at the notice.
   const highlights = /^## 全会重点\r?\n\r?\n(?:- [^\r\n]+\r?\n)+\r?\n(?=> 长会议已按原文顺序处理全部)/.exec(markdown);
@@ -26,7 +26,17 @@ export function splitLongMinutesEvidence(markdown: string): {overview: string; e
       const detailSummary = overview.slice(start,end).trimEnd();
       // Do not fold custom sections that happen to occur between these headings.
       if (!/^## /m.test(detailSummary.slice(detailSummary.indexOf('\n') + 1))) {
-        return {overview: overview.slice(0,start) + overview.slice(end), evidence, detailSummary};
+        let compact = overview.slice(0,start) + overview.slice(end);
+        const keywords = [...compact.matchAll(/^## (?:Keywords|关键词)\r?$/gm)];
+        let detailKeywords: string | undefined;
+        if (keywords.length === 1 && keywords[0].index !== undefined) {
+          const keywordStart = keywords[0].index;
+          const following = /^## /m.exec(compact.slice(keywordStart + keywords[0][0].length));
+          const keywordEnd = following?.index === undefined ? compact.length : keywordStart + keywords[0][0].length + following.index;
+          detailKeywords = compact.slice(keywordStart,keywordEnd).trimEnd();
+          compact = compact.slice(0,keywordStart) + compact.slice(keywordEnd);
+        }
+        return {overview: compact, evidence, detailSummary, detailKeywords};
       }
     }
   }

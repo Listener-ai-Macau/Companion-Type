@@ -2080,7 +2080,7 @@ export function CompanionDashboard({
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}
-              <p className="ct-recording-transcript" hidden={transcriptReviewOpen}>{companionReviewedTranscript(selectedSession)}</p>
+              <p className="ct-recording-transcript" role="region" aria-label="录音转写文字" tabIndex={0} hidden={transcriptReviewOpen}>{companionReviewedTranscript(selectedSession)}</p>
             </> : <p className="ct-recording-text-empty">{transcriptionRunning||recoveryView?.isProcessing?'正在转成文字，请稍候。':selectedSession.status==='recording'?'正在录音，结束并保存后可以转成文字。':selectedSession.pendingReason==='needs_local_audio'?'原音已收齐。先生成回听文件，再回听或转文字。':['needs_device_sync','needs_segments','needs_pull'].includes(selectedSession.pendingReason??'')?'录音尚未收齐，先从来源设备同步，再回听或转文字。':!hasSyncedAudio?'还没有可回听的本机录音，请先确认录音已保存。':selectedSession.pendingReason==='no_speech_detected'?'这次没有识别出文字。原录音仍在，可回听后决定是否重试。':'还没有文字，点“转文字”即可。原音会保留，随时可以回听。'}</p>}
           {transcriptUnmappedEdges.length > 0 ? <div className="ct-step-warn" role="status" aria-label="原音与文字的时间对应">
             {transcriptUnmappedEdges.map(edge => <p key={edge.edge}>
@@ -3119,8 +3119,9 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   const longEvidence=longEvidenceAllowed&&!noteContext?splitLongMinutesEvidence(reading):null;
   if(longEvidence)return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={longEvidence.overview} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
-    {longEvidence.detailSummary?<details className="ct-full-minutes"><summary>查看完整会议摘要</summary>
+    {longEvidence.detailSummary?<details className="ct-full-minutes"><summary>{longEvidence.detailKeywords?'查看完整摘要和关键词':'查看完整会议摘要'}</summary>
       <MarkdownMinutes markdown={longEvidence.detailSummary} {...sourceProps}/>
+      {longEvidence.detailKeywords?<MarkdownMinutes markdown={longEvidence.detailKeywords} {...sourceProps}/>:null}
     </details>:null}
     <details className="ct-full-minutes"><summary>查看各段原文依据</summary>
       <MarkdownMinutes markdown={longEvidence.evidence} {...sourceProps}/>

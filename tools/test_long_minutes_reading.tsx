@@ -15,6 +15,7 @@ const enhancedMarkdown='## 全会重点\n\n- 会议重点：项目交付\n\n'+ma
 const enhancedSplit=splitLongMinutesEvidence(enhancedMarkdown);
 assert.ok(enhancedSplit,'newly installed overview must preserve folded long-meeting evidence');
 assert.ok(enhancedSplit.detailSummary?.includes('讨论项目交付'));
+assert.ok(enhancedSplit.detailKeywords?.includes('项目'));
 assert.ok(!enhancedSplit.overview.includes('讨论项目交付'));
 assert.ok(enhancedSplit.overview.includes('会议重点：项目交付'));
 assert.ok(enhancedSplit.overview.includes('准备材料'));
@@ -63,7 +64,7 @@ saves.length=0;
 act(()=>tree=create(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}} onSaveMeeting={async(q:any)=>{saves.push(q);return snapshot;}}/>));
 act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
 const updated=tree.root.findByProps({id:'ct-recording-result'});
-const summaryDetail=updated.findAllByType('details').find((d:any)=>d.children[0]?.type==='summary' && text(d.children[0])==='查看完整会议摘要');
+const summaryDetail=updated.findAllByType('details').find((d:any)=>d.children[0]?.type==='summary' && text(d.children[0])==='查看完整摘要和关键词');
 assert.ok(summaryDetail && !summaryDetail.props.open, 'full summary is available but initially folded: '+updated.findAllByType('summary').map((s:any)=>text(s)).join('|'));
 assert.ok(text(summaryDetail).includes('讨论项目交付'));
 const mainArticle=updated.findAllByType('article')[0];
@@ -79,7 +80,7 @@ row.minutes!.source='userEdited';row.minutes!.markdown=saves[0].markdown;
 row.minutesByMode!.offlineStore!.source='userEdited';row.minutesByMode!.offlineStore!.markdown=saves[0].markdown;
 act(()=>tree.update(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}} onSaveMeeting={async(q:any)=>{saves.push(q);return snapshot;}}/>));
 const reopened=tree.root.findByProps({id:'ct-recording-result'});
-assert.ok(reopened.findAllByType('summary').some((s:any)=>text(s)==='查看完整会议摘要'));
+assert.ok(reopened.findAllByType('summary').some((s:any)=>text(s)==='查看完整摘要和关键词'));
 assert.ok(reopened.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));
 assert.equal(reopened.findAllByType('input').filter((n:any)=>String(n.props['aria-label']).startsWith('恢复为待办：')).length,1);
 act(()=>tree.unmount());
@@ -91,6 +92,8 @@ if (process.env.COMPANION_TEST_PUBLIC_MINUTES) {
   const real=actual.minutes;
   const view=splitLongMinutesEvidence(real.markdown);
   assert.ok(view?.detailSummary && view.evidence.includes('### 第8段'));
+  assert.ok(view.detailKeywords?.includes('场外衍生品'));
+  assert.ok(!view.overview.includes('## Keywords'));
   assert.equal(real.summary.length,68);
   assert.equal((view.overview.match(/^- /gm)??[]).length >= 9,true);
   assert.ok(view.detailSummary.includes(real.summary[0]));
@@ -101,8 +104,11 @@ if (process.env.COMPANION_TEST_PUBLIC_MINUTES) {
   const actualArticle=actualResult.findAllByType('article')[0];
   assert.ok(text(actualArticle).includes('全会重点'));
   assert.ok(!text(actualArticle).includes(real.summary[0]),'68-item detailed summary is not expanded in the main view');
-  assert.ok(actualResult.findAllByType('summary').some((s:any)=>text(s)==='查看完整会议摘要'));
+  assert.ok(actualResult.findAllByType('summary').some((s:any)=>text(s)==='查看完整摘要和关键词'));
   assert.ok(actualResult.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));
+  const transcript=tree.root.findByProps({'aria-label':'录音转写文字'});
+  assert.equal(transcript.props.tabIndex,0,'the complete transcript can be scrolled with a keyboard');
+  assert.equal(text(transcript),actual.transcriptText,'the reading viewport retains the complete transcript');
   act(()=>tree.unmount());
   console.log('PASS actual public long meeting: highlights, complete summary and source evidence remain available');
 }
