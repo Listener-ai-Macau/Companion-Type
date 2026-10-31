@@ -11,6 +11,8 @@ import {
 } from '@companion-type/core';
 
 export function hostRecordingAudioConfirmed(session: CompanionV1HostSession): boolean {
+  if (session.source === 'hostMeeting') return Boolean(session.audioStored && session.retention.audioCached
+    && session.meetingTracks && (session.meetingTracks.microphone.length || session.meetingTracks.system.length));
   return Boolean(session.audioStored && session.retention.audioCached && session.audioPath && session.audioBytes > 44);
 }
 
@@ -47,14 +49,15 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   const optionalOrganization = !recovery || (session.recovery?.stage === 'pendingMinutes' && !session.recovery.lastError);
   const draft = variants.some((item) => item?.markdown.trim()) || Boolean(session.minutes?.markdown.trim());
   const localAudio = session.pendingReason !== 'needs_device_sync'
-    && (session.source === 'hostMicrophone'
+    && (session.source === 'hostMicrophone' || session.source === 'hostMeeting'
       ? hostRecordingAudioConfirmed(session)
       : session.deviceRecordingKey
         ? Boolean(session.audioStored && session.retention.audioCached && session.audioPath && session.audioBytes > 0)
         : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
   const stage = finalMinutes ? 3 : finalText ? 2 : localAudio ? 1 : 0;
   if (session.status === 'recording') return { stage: 0, title: '这场会议正在录音', detail: '结束后再整理；当前文字可能仍是未完成片段。', processing: true };
-  if (session.source === 'hostMicrophone' && !localAudio && ((!finalText && !finalMinutes) || Boolean(session.audioPath))) return {
+  if ((session.source === 'hostMicrophone' || session.source === 'hostMeeting') && !localAudio
+    && ((!finalText && !finalMinutes) || Boolean(session.audioPath) || Boolean(session.meetingTracks?.root))) return {
     stage, title: '录音保存尚未确认',
     detail: '可以尝试恢复已写入的片段；原文件保留，结尾可能缺失。恢复过程只在本机进行。',
     label: '尝试恢复录音', request: { action: 'meetingRestoreAudio', sessionId: session.id },

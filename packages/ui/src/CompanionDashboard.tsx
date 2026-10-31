@@ -2997,12 +2997,12 @@ export function RecordingSafetyCard({ session, persistence, recoveryProcessing }
   const transferPending = ['needs_device_sync', 'needs_segments', 'needs_pull'].includes(session.pendingReason ?? '');
   const cachedAudio = Boolean(session.audioStored && session.audioPath && session.audioBytes > 0);
   const localAudio = !transferPending
-    && !captureOngoing && (session.source === 'hostMicrophone'
+    && !captureOngoing && (session.source === 'hostMicrophone' || session.source === 'hostMeeting'
       ? hostRecordingAudioConfirmed(session)
       : session.deviceRecordingKey
         ? Boolean(session.audioStored && session.audioPath && session.audioBytes > 0)
         : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
-  const hostAudioUnconfirmed = session.source === 'hostMicrophone' && !captureOngoing && !localAudio;
+  const hostAudioUnconfirmed = (session.source === 'hostMicrophone' || session.source === 'hostMeeting') && !captureOngoing && !localAudio;
   const partialAudio = !localAudio && (savedSegments > 0 || cachedAudio);
   const deviceCopy = Boolean(session.sourceDeviceId && (session.deviceRecordingId != null||session.deviceRecordingKey) && !wholeReclaimed);
   const growingDeviceCapture = captureOngoing && deviceCopy;
@@ -3095,6 +3095,7 @@ function meetingTitle(session: CompanionV1HostSession): string {
 function meetingSource(session: CompanionV1HostSession): string {
   if (session.source === 'deviceFlash' || session.source === 'boardDevice') return 'Companion 录音';
   if (session.source === 'hostMicrophone') return '本机麦克风';
+  if (session.source === 'hostMeeting') return '电脑会议与麦克风';
   if (session.source === 'importedTranscript') return '导入文字';
   return '演示记录';
 }

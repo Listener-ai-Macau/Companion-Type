@@ -524,7 +524,7 @@ pub(crate) fn interrupted_host_writer(path: &Path) -> Result<WriterLease, String
     Ok(pinned)
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub(super) struct MeetingCapturePart {
     pub(super) path: PathBuf,
     pub(super) index: u64,
@@ -570,6 +570,19 @@ pub(super) fn meeting_capture_parts(anchor: &Path) -> Result<(Vec<MeetingCapture
         }
     }
     Ok((mic, system))
+}
+
+pub(super) fn verify_sealed_meeting_part(path: &Path) -> Result<(), String> {
+    let root = managed_root(path).ok_or("会议音轨不在受管理目录。")?;
+    let _guard = lock(&root)?;
+    let data = load(&root)?;
+    let leaf = path.file_name().and_then(|s| s.to_str()).filter(|s| component(s)).ok_or_else(fail)?;
+    let item = data.files.iter().find(|item| item.file == leaf).ok_or_else(fail)?;
+    let actual = fingerprint(path)?.ok_or_else(fail)?;
+    if item.purpose != Purpose::Recording || item.phase != Phase::Sealed || item.identity.as_ref() != Some(&actual) {
+        return Err("会议音轨与保存记录不一致，原文件保留。".into());
+    }
+    Ok(())
 }
 
 /// Persist the verified raw original identity before producing a recovery

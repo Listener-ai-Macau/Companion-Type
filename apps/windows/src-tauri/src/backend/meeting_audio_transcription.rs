@@ -16,15 +16,15 @@ pub(super) struct TrackTranscription {
 #[allow(dead_code)]
 pub(super) fn transcribe_tracks(manager: &CompanionTranscriptionManager, session: &str,
     microphone: &[String], system: &[String]) -> Result<TrackTranscription, String> {
-    if microphone.is_empty() || system.is_empty() { return Err("会议音轨不完整，原录音保留。".into()); }
+    if microphone.is_empty() && system.is_empty() { return Err("会议音轨不完整，原录音保留。".into()); }
     let mut seen = HashSet::new();
     for path in microphone.iter().chain(system) {
         let identity = std::fs::canonicalize(path).map_err(|_| "会议音轨缺失，原录音保留。")?;
         if !seen.insert(identity) { return Err("会议音轨重复，未提交转写。".into()); }
     }
     let mut all = microphone.to_vec(); all.extend_from_slice(system);
-    let mic = transcribe_track(manager, microphone);
-    let output = transcribe_track(manager, system);
+    let mic = if microphone.is_empty() { Ok(None) } else { transcribe_track(manager, microphone) };
+    let output = if system.is_empty() { Ok(None) } else { transcribe_track(manager, system) };
     let result = combine_results(mic, output);
     if transcription::bind_cache_session(session, &all).is_err() {
         eprintln!("[transcription] meeting-track cache session binding pending");

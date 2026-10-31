@@ -8,7 +8,8 @@ import { meetingHasFinalMinutes, meetingJourney } from './CompanionJourney';
 export function manualRecordingIsSaved(session: CompanionV1HostSession): boolean {
   return session.processingPolicy === 'manual' && session.status !== 'recording'
     && session.audioStored && session.retention.audioCached && session.audioBytes > 0
-    && Boolean(session.audioPath && !/^(board|device|host):\/\//i.test(session.audioPath))
+    && (session.source === 'hostMeeting' ? Boolean(session.meetingTracks && (session.meetingTracks.microphone.length || session.meetingTracks.system.length))
+      : Boolean(session.audioPath && !/^(board|device|host):\/\//i.test(session.audioPath)))
     && !session.captureIncomplete && !session.recorderControlUncertain
     && (!session.pendingReason || session.pendingReason === 'needs_transcription')
     && !session.recovery?.lastError

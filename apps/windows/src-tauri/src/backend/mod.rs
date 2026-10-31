@@ -106,6 +106,7 @@ mod ota_readiness;
 mod host_recording;
 mod meeting_audio_timeline;
 mod meeting_audio_tracks;
+mod meeting_audio_recovery;
 mod meeting_audio_transcription;
 #[cfg(windows)]
 mod meeting_audio_capture;
@@ -164,10 +165,14 @@ fn unix_time_ms() -> u64 {
 const UNCONFIRMED_HOST_AUDIO: &str = "本机录音保存尚未确认，请先尝试恢复原录音；未提交转写。";
 
 fn host_audio_unconfirmed(session: &CompanionV1HostSession) -> bool {
-    session.source == "hostMicrophone"
-        && !(session.transcript_final && !session.transcript_text.trim().is_empty())
-        && (!session.audio_stored || !session.retention.audio_cached || session.audio_bytes <= 44
-            || session.audio_path.as_deref().is_none_or(|path| path.trim().is_empty()))
+    if session.transcript_final && !session.transcript_text.trim().is_empty() { return false; }
+    match session.source.as_str() {
+        "hostMicrophone" => !session.audio_stored || !session.retention.audio_cached || session.audio_bytes <= 44
+            || session.audio_path.as_deref().is_none_or(|path| path.trim().is_empty()),
+        "hostMeeting" => !session.audio_stored || !session.retention.audio_cached
+            || session.meeting_tracks.as_ref().is_none_or(|tracks| tracks.microphone.is_empty() && tracks.system.is_empty()),
+        _ => false,
+    }
 }
 
 fn hold_unconfirmed_host_audio(session: &mut CompanionV1HostSession) {
@@ -1814,6 +1819,25 @@ impl CompanionBackend for FixtureCompanionBackend {
             let row=snapshot.host.sessions.iter().find(|row|row.id==id).ok_or("这份录音已不存在。")?;
             library_lifecycle::require_available(row)?;
             if row.status=="recording" {return Err("请先结束这份录音，再生成回听文件。".into());}
+            if row.source == "hostMeeting" && !row.audio_stored {
+                let expected = session_store::privacy_authorization(row)?;
+                let path = persistence::state_file_path();
+                let _privacy_lock = library_lifecycle::action_lock(&path)?;
+                let outcome = meeting_audio_recovery::recover_session_at(&path, &id, &expected);
+                let refreshed = reload_segmented_library(&mut snapshot, &path);
+                if let Err(error) = outcome {
+                    return Err(match refreshed { Ok(()) => error, Err(load) => format!("{error}；会议状态尚未刷新：{load}") });
+                }
+                refreshed?;
+                snapshot.updated_at = observation_timestamp();
+                snapshot.last_control = Some(crate::companion_v1::CompanionV1ControlEcho {
+                    action, characteristic_uuid: crate::companion_v1::COMPANION_V1_HOST_RECORDING_CHANNEL,
+                    payload_hex: String::new(), accepted: true,
+                    message: "已找回会议音轨片段；原文件保留，结尾可能缺失。".into(),
+                });
+                refresh_privacy_counts(&mut snapshot);
+                return Ok(snapshot.clone());
+            }
             if row.source == "hostMicrophone" && !row.audio_stored {
                 let expected = session_store::privacy_authorization(row)?;
                 let path = persistence::state_file_path();
@@ -2769,6 +2793,8 @@ impl CompanionBackend for FixtureCompanionBackend {
                 .or_else(|| session.and_then(|session| session.audio_path.clone()));
             let chunk_paths = session.map(transcription_chunk_paths).transpose()?.unwrap_or_default();
             let meeting_tracks = session.and_then(|session| session.meeting_tracks.clone());
+            let track_review_confirmed = session.is_some_and(|session| session.recovery.capture_review_confirmed);
+            let expected_track_audio = session.map(|session| (session.audio_bytes, session.duration_ms));
             if session.is_some_and(|session| {
                 session.transcript_final && !session.transcript_text.trim().is_empty()
             }) {
@@ -2780,7 +2806,11 @@ impl CompanionBackend for FixtureCompanionBackend {
                 let owner=session.map(|s|s.id.clone()).unwrap_or_default();
                 let (fresh,result)=self.run_meeting_work(snapshot,&request,|| {
                     if let Some(tracks) = meeting_tracks {
-                        if tracks.state != "captured" { return Err("会议音轨尚未完整保存，请先恢复原音。".to_string()); }
+                        if tracks.state != "captured" && !(tracks.state == "needsReview" && track_review_confirmed) {
+                            return Err("会议音轨尚未确认，请先恢复原音。".to_string());
+                        }
+                        let (bytes, duration) = expected_track_audio.ok_or("会议音轨记录不存在。")?;
+                        meeting_audio_recovery::verify_tracks(&tracks, bytes, duration)?;
                         let mic = tracks.microphone.into_iter().map(|part| part.path).collect::<Vec<_>>();
                         let system = tracks.system.into_iter().map(|part| part.path).collect::<Vec<_>>();
                         meeting_audio_transcription::transcribe_tracks(&self.transcription, &owner, &mic, &system)
