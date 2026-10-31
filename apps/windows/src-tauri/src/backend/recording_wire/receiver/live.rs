@@ -58,9 +58,7 @@ impl LiveCursor {
         let stem=format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(&self.key).map_err(|_|fail())?));
         let path=root.join(format!(".{stem}.json"));
         if !regular(&path)? {return Ok(());}
-        let mut body=Vec::new();read_locked(&path)?.take(MAX_RECEIPT+1).read_to_end(&mut body).map_err(|_|fail())?;
-        if body.len() as u64>MAX_RECEIPT {return Err(fail());}
-        let receipt:Receipt=serde_json::from_slice(&body).map_err(|_|fail())?;
+        let receipt=read_receipt(&path)?;
         let first=receipt.segments.first().ok_or_else(fail)?;
         let d=Descriptor::decode(&first.wire)?;
         if d.key!=self.key {return Err(fail());}
