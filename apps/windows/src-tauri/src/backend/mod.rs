@@ -107,6 +107,8 @@ mod firmware_ota;
 mod system_ota;
 mod ota_readiness;
 mod host_recording;
+#[cfg(test)]
+mod host_segmented_capture;
 mod host_interrupted_recovery;
 mod live_asr;
 mod minutes;
