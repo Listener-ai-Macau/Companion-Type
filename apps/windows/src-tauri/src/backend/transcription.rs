@@ -178,7 +178,7 @@ impl CompanionTranscriptionManager {
         // diarize GLOBALLY across all chunks so speaker ids stay consistent —
         // per-chunk diarization would renumber the same person in each chunk.
         if volcengine_provider_configured() {
-            return volcengine_multi_chunk_transcript(&real_paths, None);
+            return volcengine_multi_file_transcript_with(&real_paths, &transcribe_long_meeting_chunk);
         }
 
         let mut parts = Vec::new();
@@ -867,13 +867,54 @@ fn volcengine_multi_chunk_transcript(
     volcengine_multi_chunk_transcript_with(paths, continuous_source, &transcribe_long_meeting_chunk)
 }
 
+// Each independent file may itself exceed the provider's safe request
+// window. Split only those files, keeping their original order and provenance.
+struct ProviderChunks { paths:Vec<PathBuf>, temporary:Vec<PathBuf>, continuous_parts:Vec<Option<usize>> }
+impl Drop for ProviderChunks {
+    fn drop(&mut self) {
+        for path in &self.temporary {
+            if super::audio_artifacts::remove_temporary(path).is_err() {
+                eprintln!("ASR temporary cleanup pending; recording ownership retained for retry");
+            }
+        }
+    }
+}
+fn volcengine_multi_file_transcript_with<F>(paths:&[PathBuf],transcribe:&F)->Result<CompanionTranscript,String>
+where F: Fn(&Path,u64)->Result<ChunkTranscription,String> + Sync {
+    let mut prepared=ProviderChunks{paths:Vec::new(),temporary:Vec::new(),continuous_parts:Vec::new()};
+    for (source_index,source) in paths.iter().enumerate() {
+        let parts=if is_long_wav(source) {
+            split_long_wav_into_chunks(source,asr_safe_chunk_seconds())
+                .map_err(|error|format!("长录音分段未完成，原音已保留，未提交转写：{error}"))?
+        } else {vec![source.clone()]};
+        let split=parts.len()>1;
+        for path in parts {
+            if path!=*source {prepared.temporary.push(path.clone());}
+            prepared.paths.push(path);prepared.continuous_parts.push(if split {Some(source_index)} else {None});
+        }
+    }
+    volcengine_multi_chunk_transcript_with_optional_silence(&prepared.paths,None,Some(&prepared.continuous_parts),transcribe)
+}
+
 fn volcengine_multi_chunk_transcript_with<F>(
     paths: &[PathBuf],
     continuous_source: Option<&Path>,
     transcribe: &F,
 ) -> Result<CompanionTranscript, String>
 where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
+    volcengine_multi_chunk_transcript_with_optional_silence(paths,continuous_source,None,transcribe)
+}
+fn volcengine_multi_chunk_transcript_with_optional_silence<F>(
+    paths: &[PathBuf],
+    continuous_source: Option<&Path>,
+    continuous_parts: Option<&[Option<usize>]>,
+    transcribe: &F,
+) -> Result<CompanionTranscript, String>
+where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
     let n = paths.len();
+    if continuous_parts.is_some_and(|flags|flags.len()!=n) {
+        return Err("录音分段来源不一致，未提交转写。".into());
+    }
     let retry_count = asr_chunk_retry_count();
     // Each per-chunk task does BOTH the SAUC transcription AND its diarization
     // embedding extraction, so the whole per-chunk pipeline (not just ASR) runs
@@ -938,6 +979,7 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
     // This classification is emitted only by the strict receive loop; a close
     // without a valid final, timeout or malformed response stays a failure.
     accept_completed_no_speech_chunks(continuous_source, &mut results);
+    accept_completed_no_speech_parts(continuous_parts, &mut results);
     // Every remaining failed leading or middle window remains a failure, even
     // if later requests succeed. A close does not establish silent pre-roll.
     // Seed SAUC occasionally closes one session without a final result while
@@ -999,6 +1041,9 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
             results[i] = Some(Err(last_error));
         }
     }
+    // A deferred retry can itself finish with an explicit no-speech result.
+    accept_completed_no_speech_chunks(continuous_source, &mut results);
+    accept_completed_no_speech_parts(continuous_parts, &mut results);
     // Only an explicit completed no-speech result may finish an empty tail.
     // A closed connection without a final is unknown, even for quiet audio.
     // Independent files have no proven post-roll boundary and must all succeed.
@@ -1077,6 +1122,28 @@ fn accept_completed_no_speech_chunks(
         if matches!(result, Some(Err(error)) if super::volcengine::is_no_speech_error(error)) {
             eprintln!("[transcription] chunk={}/{} completed_no_speech=1 original_audio_retained=1", index + 1, total);
             *result = Some(Ok((String::new(), Vec::new())));
+        }
+    }
+}
+
+fn accept_completed_no_speech_parts(
+    continuous_parts: Option<&[Option<usize>]>,
+    results: &mut [Option<Result<ChunkTranscription, String>>],
+) {
+    let Some(groups)=continuous_parts else {return};
+    // A quiet window can be accepted inside a file with recognized speech.
+    // If the whole independent file yields no speech, retain its error instead
+    // of silently dropping that recording because a different file had words.
+    let groups_with_words=groups.iter().zip(results.iter()).filter_map(|(group,result)| {
+        match (group,result) {
+            (Some(group),Some(Ok((text,_)))) if !text.trim().is_empty()=>Some(*group),
+            _=>None,
+        }
+    }).collect::<std::collections::HashSet<_>>();
+    for (index,(group,result)) in groups.iter().zip(results.iter_mut()).enumerate() {
+        if group.is_some_and(|id|groups_with_words.contains(&id)) && matches!(result,Some(Err(error)) if super::volcengine::is_no_speech_error(error)) {
+            eprintln!("[transcription] chunk={} completed_no_speech=1 continuous_file_part=1",index+1);
+            *result=Some(Ok((String::new(),Vec::new())));
         }
     }
 }
@@ -1716,6 +1783,61 @@ mod tests {
         assert!(result.utterances.is_empty());
         assert!(source.is_file() && second.is_file());
         fs::remove_file(second).unwrap();fs::remove_dir(dir).unwrap();
+    }
+
+    #[test]
+    #[ignore = "isolated simulated provider for independent long files"]
+    fn independent_long_files_are_split_before_cloud_transcription() {
+        let dir=std::env::temp_dir().join(format!("companion-independent-long-{}",uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();let _recordings=RecordingOverride::new(&dir);
+        let long=dir.join("long.wav");let short=dir.join("short.wav");
+        write_pcm16k_mono_wav(&long,&vec![0x15;65*PCM_BYTES_PER_SECOND+3_200]).unwrap();
+        write_pcm16k_mono_wav(&short,&vec![0x16;3*PCM_BYTES_PER_SECOND]).unwrap();
+        let before=(fs::read(&long).unwrap(),fs::read(&short).unwrap());
+        let original=vec![long.clone(),short.clone()];
+        let actual=volcengine_multi_file_transcript_with(&original,&|path,index| {
+            if wav_pcm_bytes(path)? > (30*PCM_BYTES_PER_SECOND) as u64 {
+                // A non-retryable fake failure keeps this test offline and fast.
+                return Err("Volcengine auth rejected (HTTP 401): fake service rejected long request".into());
+            }
+            if index==1 {return Err(super::super::volcengine::NO_SPEECH_ERROR.into());}
+            let text=match index {0=>"第一段。",2=>"继续讨论。",3=>"独立录音。",_=>"不应出现。"};
+            Ok((text.into(),vec![CollectedUtterance{text:text.into(),start_ms:0,end_ms:200,
+                provider_speaker:None,provider_request:None,embedding:None}]))
+        }).expect("long independent source should be submitted in safe windows");
+        assert!(actual.text.contains("第一段。") && actual.text.contains("继续讨论。") && actual.text.contains("独立录音。"));
+        assert_eq!(actual.utterances.iter().map(|u|u.start_ms).collect::<Vec<_>>(),vec![0,60_000,65_100]);
+        assert_eq!(fs::read(&long).unwrap(),before.0);assert_eq!(fs::read(&short).unwrap(),before.1);
+        let empty_long=volcengine_multi_file_transcript_with(&original,&|_,index| {
+            if index<3 {Err(super::super::volcengine::NO_SPEECH_ERROR.into())}
+            else {Ok(("另一场录音。".into(),Vec::new()))}
+        });
+        assert!(empty_long.is_err(),"a whole silent long source must not be hidden by another file's words");
+        let only_short=vec![short.clone(),short.with_file_name("other.wav")];fs::copy(&short,&only_short[1]).unwrap();
+        let independent=volcengine_multi_file_transcript_with(&only_short,&|_,index| {
+            if index==0 {Err(super::super::volcengine::NO_SPEECH_ERROR.into())}
+            else {Ok(("独立文字。".into(),Vec::new()))}
+        });
+        assert!(independent.is_err(),"a whole independent file must not be silently skipped");
+    }
+
+    #[test]
+    #[ignore = "isolated delayed provider retry fixture"]
+    fn deferred_retry_explicit_no_speech_does_not_drop_other_words() {
+        use std::sync::atomic::{AtomicUsize,Ordering};
+        let dir=std::env::temp_dir().join(format!("companion-deferred-silence-{}",uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();let first=dir.join("first.wav");let second=dir.join("second.wav");
+        write_pcm16k_mono_wav(&first,&[0u8;2]).unwrap();write_pcm16k_mono_wav(&second,&[0u8;2]).unwrap();
+        let paths=vec![first.clone(),second.clone()];let attempts=AtomicUsize::new(0);let limit=asr_chunk_retry_count();
+        let result=volcengine_multi_chunk_transcript_with_optional_silence(&paths,None,Some(&[Some(0),Some(0)]),&|_,index| {
+            if index==0 {
+                if attempts.fetch_add(1,Ordering::SeqCst)<limit {return Err("simulated temporary connection failure".into());}
+                return Err(super::super::volcengine::NO_SPEECH_ERROR.into());
+            }
+            Ok(("后续内容。".into(),Vec::new()))
+        }).unwrap();
+        assert_eq!(result.text,"后续内容。");assert_eq!(attempts.load(Ordering::SeqCst),limit+1);
+        fs::remove_file(first).unwrap();fs::remove_file(second).unwrap();fs::remove_dir(dir).unwrap();
     }
 
     #[test]
