@@ -146,8 +146,12 @@ pub(super) fn prepare() -> Result<(), String> {
         super::super::export::replace_file(&ready.canonicalize().map_err(|e|e.to_string())?, &model_dir.join("ready"))?;
         Ok(())
     })();
-    if result.is_err() && !assets_present() && ModelKind::available(&dest) == ModelKind::Paraformer {
-        if prepare_legacy(&dest, &stage).is_ok() { result = Ok(()); }
+    if result.is_err() && ModelKind::available(&dest) == ModelKind::Paraformer {
+        // A failed optional SenseVoice download must not report failure when
+        // the already-installed Paraformer and runtime are still usable.
+        let existing_verified = ASSETS.iter().all(|(name, hash)|
+            shared::verified(&dest.join(name), hash).is_ok());
+        if existing_verified || prepare_legacy(&dest, &stage).is_ok() { result = Ok(()); }
     }
     if let (Ok(actual), Ok(expected)) = (stage.canonicalize(), parent.canonicalize()) {
         if actual.parent() == Some(expected.as_path()) && actual.file_name() == stage.file_name() {
@@ -276,6 +280,18 @@ mod tests {
         let result=transcribe(Path::new(&fixture)).unwrap();
         assert_eq!(result.provider_id, "companion-type-local-sensevoice");
         assert!(result.text.contains("蓝色文件夹"));
+    }
+
+    #[test]
+    #[ignore = "requires isolated verified Paraformer assets and a deliberately unavailable network"]
+    fn existing_local_model_remains_ready_if_preparation_download_fails() {
+        let dest = root().unwrap();
+        assert!(std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR").is_some());
+        assert_eq!(ModelKind::available(&dest), ModelKind::Paraformer);
+        assert!(ASSETS.iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok()));
+        prepare().expect("an existing verified local model remains ready when download fails");
+        assert_eq!(ModelKind::available(&dest), ModelKind::Paraformer);
+        check().expect("the existing local model can still load");
     }
 
     #[test]

@@ -2561,7 +2561,7 @@ export function CompanionDashboard({
                       .catch(() => setSettingsMsg('本地模型准备未完成，请检查网络和存储空间后重试；已有录音会保留。')).finally(() => setSettingsBusy(false)); }}>
                   {settingsBusy ? '正在准备，请稍候…' : '准备本地转写模型'}
                 </button>
-                <p className="ct-step-meta">首次准备需下载约 240 MB，录音不会上传。模型：SenseVoice（FunAudioLLM），由 sherpa-onnx 转换。<a href="https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17" target="_blank" rel="noreferrer">模型来源</a> · <a href="https://github.com/modelscope/FunASR/blob/main/MODEL_LICENSE" target="_blank" rel="noreferrer">模型许可</a></p>
+                <p className="ct-step-meta">首次准备默认下载约 240 MB 的 SenseVoice（FunAudioLLM）模型，录音不会上传；如果下载失败，已有可用的 Paraformer 模型仍可继续使用。<a href="https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17" target="_blank" rel="noreferrer">模型来源</a> · <a href="https://github.com/modelscope/FunASR/blob/main/MODEL_LICENSE" target="_blank" rel="noreferrer">模型许可</a></p>
               </div> : formAsrProvider === 'volcengine' ? <>
                 <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
                 {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
