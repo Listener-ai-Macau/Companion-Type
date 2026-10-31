@@ -65,6 +65,10 @@ impl Receiver {
     pub(crate) fn verified_audio_parts(row:&crate::companion_v1::CompanionV1HostSession)->Result<Vec<(PathBuf,u64)>,String> {
         Self::verify_saved_row_inner(row,false,None).map(|(_,parts)|parts)
     }
+    pub(crate) fn verified_audio_view(row:&crate::companion_v1::CompanionV1HostSession)
+        ->Result<(Option<cop1::Timeline>,Vec<(PathBuf,u64)>),String> {
+        Self::verify_saved_row_inner(row,false,None)
+    }
     fn verify_saved_row_inner(row: &crate::companion_v1::CompanionV1HostSession, require_reclaimed: bool,
         original_anchor:Option<u32>) -> Result<(Option<cop1::Timeline>,Vec<(PathBuf,u64)>),String> {
         let key = super::super::SessionKey::from_public(row.device_recording_key.as_ref().ok_or_else(fail)?)?;

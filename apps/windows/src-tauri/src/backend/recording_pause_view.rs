@@ -23,7 +23,7 @@ pub fn prepare(snapshot:&CompanionV1Snapshot,id:&str)->Result<Option<PauseTimeli
  let timeline=super::recording_wire::receiver::Receiver::verified_source_timeline(row)?;
  Ok(timeline.as_ref().map(view))
 }
-fn view(timeline:&super::cop1::Timeline)->PauseTimeline {
+pub(crate) fn view(timeline:&super::cop1::Timeline)->PauseTimeline {
  let captured_duration_ms=timeline.playback_samples()/16;
  let mut gaps=Vec::new();
  for (i,pause) in timeline.events.iter().enumerate().filter(|(_,e)|e.kind==1) {

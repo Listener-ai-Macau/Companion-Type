@@ -174,11 +174,11 @@ pub async fn prepare_companion_audio_with_timeline(
         let _lease=coordinator.begin_audio_export()?;
         let snapshot=coordinator.snapshot()?;
         let path=crate::backend::meeting_workspace::local_audio_path(&snapshot,&session_id)?;
-        let pause_timeline=crate::backend::recording_pause_view::prepare(&snapshot,&session_id)?;
         let row=snapshot.host.sessions.iter().find(|row|row.id==session_id).ok_or("找不到这场会议")?;
-        let verified=if row.device_recording_key.is_some() {
-            crate::backend::recording_wire::receiver::Receiver::verified_audio_parts(row)?
-        } else { Vec::new() };
+        let (pause_timeline,verified)=if row.device_recording_key.is_some() {
+            let (timeline,parts)=crate::backend::recording_wire::receiver::Receiver::verified_audio_view(row)?;
+            (timeline.as_ref().map(crate::backend::recording_pause_view::view),parts)
+        } else { (None,Vec::new()) };
         let mut parts=Vec::new();
         let source_identity=if verified.len()>1 {
             let mut first_sample=0u64;
