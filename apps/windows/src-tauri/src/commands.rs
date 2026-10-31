@@ -684,6 +684,11 @@ fn validate_board_online_duration(seconds: Option<u16>) -> Result<u16,String> {
     Ok(seconds)
 }
 
+fn validate_online_duration_for_peer(seconds: Option<u16>, unlimited_capable: bool) -> Result<u16,String> {
+    if seconds == Some(0) && unlimited_capable { Ok(0) }
+    else { validate_board_online_duration(seconds) }
+}
+
 #[tauri::command]
 pub fn start_companion_board_online_live(
     coordinator: CompanionCoordinatorState<'_>,
@@ -703,8 +708,6 @@ pub(crate) fn start_board_online_live_owned(coordinator:Arc<CompanionCoordinator
     ) {
         return Err("板端在线会议已经在运行".to_string());
     }
-    let max_duration_seconds=validate_board_online_duration(request.max_duration_seconds)?;
-
     // Hold the shared device gate for the whole board capture/pull/finalize
     // lifecycle. OTA, OOBE, reconnect, and manual device controls must wait.
     let device_operation = coordinator.begin_board_recording_operation()?;
@@ -731,6 +734,12 @@ pub(crate) fn start_board_online_live_owned(coordinator:Arc<CompanionCoordinator
         .filter(|value| !value.is_empty())
         .unwrap_or_else(|| "Companion 板端在线会议".to_string());
     let segmented_peer=device_id.as_deref().and_then(crate::backend::known_segmented_peer);
+    let unlimited_capable = segmented_peer.as_ref().is_some_and(|p| p.pause_control && p.growing_tail)
+        && snapshot.source == "firmware" && snapshot.device.board_id == Some(0x5742_4155)
+        && snapshot.device.firmware_version.is_some_and(|v| v >= 0x0001_0421)
+        && snapshot.device.recording_capacity.as_ref().is_some_and(|c| c.layout_version == 3
+            && c.local_limit_seconds == 0 && c.segment_frames.is_some() && c.segment_extent_bytes.is_some());
+    let max_duration_seconds = validate_online_duration_for_peer(request.max_duration_seconds, unlimited_capable)?;
     if segmented_peer.is_some() || snapshot.device.board_id==Some(0x5742_4155) {
         if !segmented_peer.is_some_and(|p|p.pause_control && p.growing_tail) {
             return Err("请先正常连接当前 Companion 并读取连续录音能力，再开始在线会议；未发送旧版录音命令。".into());
@@ -1018,6 +1027,9 @@ mod board_online_live_tests {
         assert_eq!(validate_board_online_duration(None).unwrap(),2580);
         assert!(validate_board_online_duration(Some(2700)).is_err());
         assert!(validate_board_online_duration(Some(0)).is_err());
+        assert_eq!(validate_online_duration_for_peer(Some(0),true).unwrap(),0);
+        assert!(validate_online_duration_for_peer(Some(0),false).is_err());
+        assert_eq!(validate_online_duration_for_peer(Some(1800),false).unwrap(),1800);
     }
 
     #[test]

@@ -15,7 +15,7 @@ pub(super) fn start(coordinator:Arc<CompanionCoordinator>,manager:Arc<CompanionB
     *manager.stop_requested.lock().map_err(|_|"在线会议停止状态不可用。")?=Some(stop.clone());
     *manager.bookmarks.lock().map_err(|_|"在线会议重点队列不可用。")?=Some(queue.clone());
     manager.set_status(CompanionBoardOnlineLiveStatus {state:"starting".into(),session_id:Some(session.clone()),
-        device_id:request.device_id.clone(),max_duration_seconds:Some(seconds),..Default::default()});
+        device_id:request.device_id.clone(),max_duration_seconds:(seconds != 0).then_some(seconds),..Default::default()});
     let worker_manager=manager.clone();let failed_queue=queue.clone();
     let spawned=std::thread::Builder::new().name("companion-segmented-online".into()).spawn(move|| {
         let result=run(&coordinator,&worker_manager,lease,&request,&session,&title,seconds,&stop,&queue);
@@ -69,7 +69,7 @@ pub(super) fn recovery_schedule(options:&CompanionBoardOnlineLiveStartRequest,se
         (None,None)=>Ok(None),
         (Some(drop),reconnect)=>{
             let reconnect=reconnect.unwrap_or_else(||drop.saturating_add(4));
-            if drop==0 || drop>=reconnect || reconnect>=seconds {
+            if drop==0 || drop>=reconnect || (seconds != 0 && reconnect>=seconds) {
                 return Err("断连恢复时点须满足 0 < 断开 < 接回 < 录音时长，未发送开录。".into());
             }
             Ok(Some((drop,reconnect)))
@@ -96,13 +96,21 @@ fn reconnect_retry_delay(error:&str,attempts:u32)->Option<Duration> {
     Some(Duration::from_secs((1u64<<attempts.min(4)).min(15)))
 }
 
+fn board_start_seconds(seconds:u16)->u16 {
+    if seconds == 0 { 0 } else { seconds.saturating_add(120) }
+}
+
+fn capture_continues(seconds:u16,elapsed:Duration,stopped:bool)->bool {
+    !stopped && (seconds == 0 || elapsed < Duration::from_secs(u64::from(seconds)))
+}
+
 fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineLiveManager>,
     lease:CompanionDeviceOperationLease,options:&CompanionBoardOnlineLiveStartRequest,
     session:&str,title:&str,seconds:u16,stop:&AtomicBool,
     bookmarks:&crate::backend::recording_bookmarks::live_queue::LiveQueue)->Result<(),String> {
     use CompanionV1ControlAction as A;
     let started=coordinator.apply_online_capture_control(&lease,request(A::MeetingStart,session,
-        options.device_id.clone(),title,seconds.saturating_add(120)))?;
+        options.device_id.clone(),title,board_start_seconds(seconds)))?;
     let row=owned_row(&started,session,None)?;
     let key=SessionKey::from_public(row.device_recording_key.as_ref().ok_or("开录尚未确认连续会话身份；原控制已保存。")?)?;
     let anchor=row.device_recording_id.ok_or("开录尚未确认原录音编号；原控制已保存。")?;
@@ -127,7 +135,7 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
     let mut planned_drop_done=false;let mut planned_offline=false;
     let mut reconnect_at:Option<Instant>=None;let mut reconnect_attempts=0u32;
     let mut awaiting_prefix:Option<u64>=None;
-    while started_at.elapsed()<Duration::from_secs(u64::from(seconds)) && !stop.load(Ordering::Acquire) {
+    while capture_continues(seconds,started_at.elapsed(),stop.load(Ordering::Acquire)) {
         let elapsed=||started_at.elapsed().as_millis().min(u128::from(u64::MAX)) as u64;
         if !planned_drop_done && schedule.is_some_and(|(drop,_)|started_at.elapsed().as_secs()>=u64::from(drop)) {
             planned_drop_done=true;
@@ -265,6 +273,16 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn unlimited_online_capture_runs_until_explicit_stop() {
+        assert_eq!(board_start_seconds(0),0);
+        assert_eq!(board_start_seconds(1800),1920);
+        assert!(capture_continues(0,Duration::from_secs(7200),false));
+        assert!(!capture_continues(0,Duration::from_secs(7200),true));
+        assert!(!capture_continues(1800,Duration::from_secs(1800),false));
+        let r=request(CompanionV1ControlAction::MeetingStart,"test",None,"test",board_start_seconds(0));
+        assert_eq!(r.duration_ms,Some(0));
+    }
     #[test]
     fn ordinary_link_loss_keeps_paced_retry_without_overflow() {
         assert_eq!(reconnect_retry_delay("GATT peer unreachable",1),Some(Duration::from_secs(2)));

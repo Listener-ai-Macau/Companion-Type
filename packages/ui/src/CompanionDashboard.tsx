@@ -796,9 +796,6 @@ export function CompanionDashboard({
   const boardMaxDurationSeconds = requestedDurationMs / 1000;
   const durationValid = draftMinutes.trim() !== '' && Number.isSafeInteger(requestedDurationMs)
     && requestedDurationMs > 0 && (!connected || boardMaxDurationSeconds <= 65535);
-  const onlineDurationValid = durationValid && boardMaxDurationSeconds >= 12 && boardMaxDurationSeconds <= 2580;
-  const durationError = !durationValid ? '请输入有效的录音时长，实际可录时间以设备空间为准。'
-    : connected && meetingMode === 'onlineLive' && !onlineDurationValid ? '在线转写单次最多 43 分钟，请修改时长；不会自动截短。' : null;
   const capacity = connected ? device?.recordingCapacity : null;
   // FW801's segmented recorder defines START=0 as no preset time limit.
   // Older devices may also report localLimitSeconds=0 but use different START semantics.
@@ -808,6 +805,11 @@ export function CompanionDashboard({
     && capacity?.layoutVersion === 3 && capacity.segmentFrames != null
     && capacity.segmentExtentBytes != null && capacity.localLimitSeconds === 0);
   const unlimitedOffline = unlimitedDeviceRecording && meetingMode === 'offlineStore';
+  const unlimitedOnline = unlimitedDeviceRecording && meetingMode === 'onlineLive';
+  const onlineDurationValid = unlimitedDeviceRecording || (durationValid && boardMaxDurationSeconds >= 12 && boardMaxDurationSeconds <= 2580);
+  const durationError = (unlimitedOffline || unlimitedOnline) ? null
+    : !durationValid ? '请输入有效的录音时长，实际可录时间以设备空间为准。'
+    : connected && meetingMode === 'onlineLive' && !onlineDurationValid ? '当前设备在线转写单次最多 43 分钟，请修改时长。' : null;
   currentDiscardDevice.current = connected ? device?.deviceId ?? null : null;
   useEffect(() => { setDiscardMessage(null); }, [device?.deviceId, connected]);
   const capacitySeconds = capacity && capacity.usedEntries < capacity.maxEntries
@@ -832,7 +834,7 @@ export function CompanionDashboard({
   const recordingControlBusy = busyAction !== null || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy || libraryBusy;
   const controlsBusy = recordingControlBusy || Boolean(recordingSync?.jobId);
   const lossBudgetSeconds = Math.ceil(boardMaxDurationSeconds + (meetingMode === 'onlineLive' ? 120 : 0));
-  const lossBudgetValid = !unlimitedOffline && durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
+  const lossBudgetValid = !unlimitedOffline && !unlimitedOnline && durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
   const captureBudgetBytes = capacity && lossBudgetValid
     ? recordingCapacityRequiredBytes(capacity, lossBudgetSeconds) : null;
   const capacityInsufficient = Boolean(capacity && lossBudgetValid && !recordingCapacityCanFit(capacity, lossBudgetSeconds, captureBudgetBytes ?? Infinity));
@@ -2265,11 +2267,11 @@ export function CompanionDashboard({
               <label className="ct-field"><span>这次会议的名称（可选）</span><input value={newMeetingTitle}
                 placeholder="例如：周会、一次灵感" maxLength={120} disabled={oobeBlockedByRecording || controlsBusy}
                 onChange={(event) => setNewMeetingTitle(event.target.value)} /></label>
-              <label className="ct-field ct-duration-field"><span>最长录制时间（分钟）</span><input value={draftMinutes}
+              {!unlimitedDeviceRecording ? <label className="ct-field ct-duration-field"><span>最长录制时间（分钟）</span><input value={draftMinutes}
                 inputMode="numeric" disabled={oobeBlockedByRecording || controlsBusy} aria-invalid={Boolean(durationError)} aria-describedby={durationError ? "ct-workflow-duration-error" : undefined}
-                onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))} /></label>
+                onChange={(event) => setDraftMinutes(event.target.value.replace(/[^0-9]/g, ''))} /></label> : null}
             </div>
-            <p className="ct-step-meta">在线转写单次最多 43 分钟，另预留 2 分钟收尾空间；纯录音按设备空间和设定时长保存。支持分段的设备会把片段放在同一条录音里；电脑保存并核对完整后，设备才复用这些已同步的空间。</p>
+            <p className="ct-step-meta">{unlimitedDeviceRecording ? '不预设录音结束时间；空间不足时设备会结束录音并保留已有内容。' : '当前设备在线转写单次最多 43 分钟，另预留 2 分钟收尾空间。'}支持分段的设备会把片段放在同一条录音里；电脑保存并核对完整后，设备才复用这些已同步的空间。</p>
             {captureBudgetBytes !== null ? <p className="ct-step-meta" role={capacityInsufficient && (!capacity?.segmentFrames || capacitySeconds <= 0) ? 'alert' : undefined}>
               {capacity?.segmentFrames && capacity.segmentExtentBytes ? <>
                 设备上次报告{fragmentedCapacity ? '一块连续空间' : '本地'}可录约 {formatDuration(capacitySeconds * 1000)}，本次计划 {formatDuration(requestedDurationMs)}。
@@ -2291,7 +2293,7 @@ export function CompanionDashboard({
                 onClick={() => onStartBoardOnlineLive?.({
                   title: newMeetingTitle.trim() || 'Companion 会议',
                   deviceId: device?.deviceId,
-                  maxDurationSeconds: boardMaxDurationSeconds,
+                  maxDurationSeconds: unlimitedDeviceRecording ? 0 : boardMaxDurationSeconds,
                   partialIntervalMs: 8_000,
                 })}
                 title={!connected ? '请先连接 Companion' : productSettings?.asrProvider === 'local-paraformer' ? '本地转写在录音结束后处理' : !cloudAsrConfigured ? '请先配置转写服务；也可以直接在设备上录音' : '使用 Companion 麦克风开始在线会议'}
@@ -2332,7 +2334,7 @@ export function CompanionDashboard({
                 </div>
               </div>
             ) : null}
-            <p className="ct-step-meta">这次实时转写上限 {Math.ceil(boardMaxDurationSeconds / 60)} 分钟；可以提前停止，设备设置或空间不足也可能更早结束。已有板端录音仍可单独同步：</p>
+            <p className="ct-step-meta">{unlimitedDeviceRecording ? '实时转写随录音持续，手动停止或空间不足时结束。' : `这次实时转写上限 ${Math.ceil(boardMaxDurationSeconds / 60)} 分钟；可以提前停止，设备设置或空间不足也可能更早结束。`}已有板端录音仍可单独同步：</p>
             <div className="ct-button-row">
               <button
                 type="button"
@@ -2674,7 +2676,7 @@ export function CompanionDashboard({
                   spellCheck={false}
                 />
               </label>
-              {!unlimitedOffline ? <label className="ct-field ct-duration-field">
+              {!(unlimitedOffline || unlimitedOnline) ? <label className="ct-field ct-duration-field">
                 <span>{connected ? '最长录音(分)' : '预计时长(分)'}</span>
                 <input
                   value={draftMinutes} aria-invalid={Boolean(durationError)} aria-describedby={durationError ? "ct-advanced-duration-error" : undefined}
@@ -2688,14 +2690,14 @@ export function CompanionDashboard({
                 type="button"
                 className="ct-action ct-action-primary"
                 disabled={controlsBusy || oobeBlockedByRecording || storageBlocked
-                  || (!unlimitedOffline && !durationValid) || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
+                  || (!(unlimitedOffline || unlimitedOnline) && !durationValid) || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
                   || (connected && meetingMode === 'onlineLive' && (!cloudAsrConfigured || productSettings?.asrProvider === 'local-paraformer' || !onStartBoardOnlineLive))}
                 onClick={() => {
                   if (connected && meetingMode === 'onlineLive') {
                     void onStartBoardOnlineLive?.({
                       title: draftTitle.trim() || 'Companion 会议',
                       deviceId: device?.deviceId,
-                      maxDurationSeconds: boardMaxDurationSeconds,
+                      maxDurationSeconds: unlimitedOnline ? 0 : boardMaxDurationSeconds,
                       partialIntervalMs: 8_000,
                     });
                   } else {
@@ -2727,9 +2729,9 @@ export function CompanionDashboard({
               </button> : null}
             </div>
             <p className="ct-step-meta">{connected
-              ? `${meetingMode === 'onlineLive' ? `实时转写单次最多 43 分钟，另预留 2 分钟收尾空间。${nearRecordingLimit ? ` 距本次设定结束约 ${formatDuration(recordingRemainingMs)}。` : ''}` : unlimitedOffline ? '不预设结束时间；设备空间用完时会保存已有录音并结束。' : '当前设备按填写时长录音，可升级后取消预设限时。'} 在线模式需要配置转写服务。`
+              ? `${meetingMode === 'onlineLive' ? unlimitedOnline ? '不预设结束时间；手动停止或设备空间用完时结束。' : `当前设备实时转写单次最多 43 分钟，另预留 2 分钟收尾空间。${nearRecordingLimit ? ` 距本次设定结束约 ${formatDuration(recordingRemainingMs)}。` : ''}` : unlimitedOffline ? '不预设结束时间；设备空间用完时会保存已有录音并结束。' : '当前设备按填写时长录音，可升级后取消预设限时。'} 在线模式需要配置转写服务。`
               : '本机录音需要手动停止，保存后按实际音频长度显示时长。'}</p>
-            {!durationValid || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
+            {(!(unlimitedOffline || unlimitedOnline) && !durationValid) || (connected && meetingMode === 'onlineLive' && !onlineDurationValid)
               ? <p id="ct-advanced-duration-error" className="ct-step-meta" role="alert">{durationError}</p> : null}
             {(selectedSession?.status === 'recording' || selectedSession?.liveTranscriptText) ? (
               <div className="ct-live-box" aria-live="polite">
