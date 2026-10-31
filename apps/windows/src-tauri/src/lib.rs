@@ -476,6 +476,40 @@ mod headless_calendar_request_tests {
     }
 }
 
+fn local_recording_outcome_error(
+    operation: u8,
+    outcome_error: Option<String>,
+    persistence: &companion_v1::CompanionV1PersistenceState,
+) -> Option<String> {
+    outcome_error.or_else(|| {
+        if operation == 12 && persistence.status != "ready" {
+            Some(persistence.message.clone().filter(|s| !s.trim().is_empty())
+                .unwrap_or_else(|| "转写尚未保存到磁盘，请重试保存。".into()))
+        } else { None }
+    })
+}
+
+#[cfg(test)]
+mod local_recording_cli_result_tests {
+    use super::*;
+
+    #[test]
+    fn transcription_reports_unsaved_without_hiding_original_failure() {
+        let mut persistence = companion_v1::CompanionV1PersistenceState::default();
+        assert!(local_recording_outcome_error(12, None, &persistence).is_none());
+        persistence.status = "unsaved".into();
+        persistence.message = Some("写入失败，原录音保留".into());
+        assert_eq!(local_recording_outcome_error(12, None, &persistence).as_deref(),
+            Some("写入失败，原录音保留"));
+        assert_eq!(local_recording_outcome_error(12, Some("转写中断".into()), &persistence).as_deref(),
+            Some("转写中断"));
+        assert!(local_recording_outcome_error(13, None, &persistence).is_none(),
+            "a read-only snapshot must still be available for recovery");
+        persistence.message = None;
+        assert!(local_recording_outcome_error(12, None, &persistence).is_some());
+    }
+}
+
 // Headless local review uses the very same persistence and export boundary as
 // the desktop commands. It never uploads audio or substitutes an ASR result.
 fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
@@ -528,8 +562,9 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
                     else {companion_v1::CompanionV1ControlAction::MeetingSelectSession};
                 coordinator.apply_control(control_request(action,Some(id)))
             };
-            let error=outcome.as_ref().err().cloned();
+            let outcome_error=outcome.as_ref().err().cloned();
             let snapshot=match outcome {Ok(snapshot)=>snapshot,Err(_)=>coordinator.snapshot()?};
+            let error=local_recording_outcome_error(operation, outcome_error, &snapshot.host.persistence);
             backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&serde_json::json!({
                 "snapshot":snapshot,"settings":backend::product_settings::public_report(),"operationError":error,
                 "deviceAccess":false,"transcriptionRequested":operation==12
