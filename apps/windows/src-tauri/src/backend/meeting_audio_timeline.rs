@@ -26,18 +26,20 @@ impl Timeline {
     /// recording instead of retrying with this cursor.
     pub(super) fn append<E>(
         &mut self,
-        first: u64,
+        first: i64,
         samples: &[i16],
         mut write: impl FnMut(&[i16]) -> Result<(), E>,
     ) -> Result<(), E> {
         if samples.is_empty() {
             return Ok(());
         }
-        if first > self.next {
-            self.pad_to(first, &mut write)?;
+        if first >= 0 && first as u64 > self.next {
+            self.pad_to(first as u64, &mut write)?;
         }
-        let already_written = self.next.saturating_sub(first);
-        let skip = already_written.min(samples.len() as u64) as usize;
+        // Signed arithmetic also trims packets that started before the chosen
+        // common origin, without wrapping them to an enormous future offset.
+        let already_written = (i128::from(self.next) - i128::from(first)).max(0);
+        let skip = already_written.min(samples.len() as i128) as usize;
         let remaining = &samples[skip..];
         if !remaining.is_empty() {
             write(remaining)?;
@@ -98,6 +100,16 @@ mod tests {
         let mut lengths = Vec::new();
         timeline.append(20_000, &[42], |p| { lengths.push(p.len()); Ok::<_, ()>(()) }).unwrap();
         assert_eq!(lengths, [4096, 4096, 4096, 4096, 3616, 1]);
+    }
+
+    #[test]
+    fn packet_starting_before_origin_is_trimmed() {
+        let mut timeline = Timeline::new();
+        let mut output = Vec::new();
+        timeline.append(-2, &[1, 2, 3, 4], |p| { output.extend_from_slice(p); Ok::<_, ()>(()) }).unwrap();
+        timeline.append(-4, &[5, 6], |p| { output.extend_from_slice(p); Ok::<_, ()>(()) }).unwrap();
+        assert_eq!(output, [3, 4]);
+        assert_eq!(timeline.next, 2);
     }
 
     #[test]
