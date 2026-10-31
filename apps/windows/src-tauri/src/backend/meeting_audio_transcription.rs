@@ -70,6 +70,7 @@ fn combine(microphone: Option<CompanionTranscript>, system: Option<CompanionTran
         .filter_map(|(label, track)| track.map(|track| (label, track))).collect::<Vec<_>>();
     if tracks.is_empty() { return Err(transcription::LOCAL_NO_SPEECH.into()); }
     let timed = tracks.iter().all(|(_, t)| !t.utterances.is_empty()
+        && t.utterances.iter().all(|u| !u.approximate_timing && u.end_ms >= u.start_ms)
         && compact(&t.text) == compact(&t.utterances.iter().map(|u| u.text.as_str()).collect::<Vec<_>>().join("")));
     let mut utterances = Vec::new();
     let mut speaker_ids = BTreeMap::new();
@@ -138,6 +139,16 @@ mod tests {
         assert!(partial.transcript.text.contains("远端会议"));
         assert_eq!(partial.warnings.len(),1); assert!(partial.warnings[0].contains("可重试"));
         assert!(combine_results(Err("麦克风错误".into()),Err("电脑声音错误".into())).is_err());
+    }
+    #[test]
+    fn approximate_chunk_timing_does_not_pretend_to_order_speakers() {
+        let mut approximate = row("电脑内容",0,20_000,Some(0));
+        approximate.approximate_timing = true;
+        let result = combine(Some(transcript("本地",vec![row("本地",1000,2000,Some(0))])),
+            Some(transcript("电脑内容",vec![approximate]))).unwrap();
+        assert_eq!(result.mode,"source-grouped-tracks");
+        assert!(result.utterances.is_empty());
+        assert!(result.text.contains("电脑内容") && result.text.contains("本地"));
     }
 
     #[test]
