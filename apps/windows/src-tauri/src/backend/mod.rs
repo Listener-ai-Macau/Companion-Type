@@ -96,6 +96,7 @@ pub(crate) use diarization::model_files_present as speaker_model_files_present;
 pub(crate) use diarization::prepare_runtime as prepare_speaker_runtime;
 pub(crate) mod diagnostics;
 pub(crate) mod export;
+mod meeting_document_export;
 pub(crate) mod file_storage_probe;
 mod action_export;
 pub(crate) mod service_check;

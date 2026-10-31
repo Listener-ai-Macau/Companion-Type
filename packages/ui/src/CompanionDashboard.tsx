@@ -176,7 +176,7 @@ export type CompanionBoardOnlineLiveUiStatus = {
 export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
-  format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  format: 'markdown' | 'docx' | 'mindmap' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   expectedContentHash?:string;
   calendarReminders?:CalendarReminderChoice['calendarReminders'];
   calendarSlots?:CalendarReminderChoice['calendarSlots'];
@@ -1175,7 +1175,7 @@ export function CompanionDashboard({
     };
     const unsavedForExport = titleDirty || transcriptReviewUnsaved || calendarPendingCount>0 || calendarReminderPending>0
       || (format !== 'txt' && format !== 'srt' && minutesDirty)
-      || ((format === 'json' || format === 'txt' || format === 'markdown') && (noteUnsaved || bookmarkUnsaved));
+      || ((format === 'json' || format === 'txt' || format === 'markdown' || format === 'docx' || format === 'mindmap') && (noteUnsaved || bookmarkUnsaved));
     if (unsavedForExport) {
       setExportResult({ sessionId, format, origin, kind: 'error', message: '还有未保存的修改。请先保存或取消修改，再导出；本次没有生成文件。' });
       return;
@@ -2038,6 +2038,11 @@ export function CompanionDashboard({
               title={!onExportMeeting ? '请在 Windows Companion Type 中保存文件' : undefined}
               onClick={() => void exportMeeting('markdown','documentTools')}><Download size={15} />{exportBusy ? '正在导出…' : '导出整理全文'}</button>:null}
 
+            <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
+              onClick={()=>void exportMeeting('docx','documentTools')}>导出 Word 文档</button>
+            <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
+              title="生成可由 FreeMind、Freeplane 等兼容软件打开的 .mm 文件" onClick={()=>void exportMeeting('mindmap','documentTools')}>导出思维导图（.mm）</button>
+
             {savedActions(minutesMarkdown).length>0?<button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !hasMinutes || !onExportMeeting || selectedMinutesStale || minutesIncomplete}
               title="导出文件后需导入日历，再核对日期与提醒" onClick={() => void exportMeeting('ics','documentTools')}>导出日历待办</button>:null}
             <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes||!onExportMeeting}
@@ -2893,9 +2898,9 @@ export function CompanionDashboard({
               <span>多格式导出</span>
             </div>
             <div className="ct-button-row">
-              {(['markdown', 'txt', 'json', 'srt', 'todo', 'todotxt', 'ics'] as const).map((format) => <button key={format} type="button" className="ct-action"
-                disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || (['markdown', 'todo', 'todotxt', 'ics'].includes(format) ? !hasMinutes : !finalTranscript)}
-                onClick={() => void exportMeeting(format,'settings')}>{format === 'markdown' ? 'Markdown' : format === 'todo' ? '清单 Markdown' : format === 'todotxt' ? '清单 TXT' : format === 'ics' ? '日历待办 (.ics)' : format.toUpperCase()}</button>)}
+              {(['markdown', 'docx', 'mindmap', 'txt', 'json', 'srt', 'todo', 'todotxt', 'ics'] as const).map((format) => <button key={format} type="button" className="ct-action"
+                disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || (['markdown', 'docx', 'mindmap', 'todo', 'todotxt', 'ics'].includes(format) ? !hasMinutes : !finalTranscript)}
+                onClick={() => void exportMeeting(format,'settings')}>{format === 'markdown' ? 'Markdown' : format === 'docx' ? 'Word 文档' : format === 'mindmap' ? '思维导图' : format === 'todo' ? '清单 Markdown' : format === 'todotxt' ? '清单 TXT' : format === 'ics' ? '日历待办 (.ics)' : format.toUpperCase()}</button>)}
             </div>
             {renderExportFeedback('settings')}
             <p className="ct-step-meta">选择保存位置；导出只使用已保存的内容，不会重新调用转写或纪要服务。SRT 需要真实时间戳。</p>

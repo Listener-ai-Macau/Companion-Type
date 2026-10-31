@@ -741,13 +741,15 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             let input = args.get(index+1).ok_or("requires saved session JSON, mode, format, output")?;
             let mode = args.get(index+2).ok_or("requires meeting mode")?;
             let format = match args.get(index+3).map(String::as_str) {
+                Some("docx") => backend::export::MeetingExportFormat::Docx,
+                Some("mindmap") => backend::export::MeetingExportFormat::Mindmap,
                 Some("todo") => backend::export::MeetingExportFormat::Todo,
                 Some("ics") => backend::export::MeetingExportFormat::Ics,
                 Some("calendar") => backend::export::MeetingExportFormat::Calendar,
                 Some("calendarreminder") => backend::export::MeetingExportFormat::CalendarReminder,
                 Some("calendarreminder30") => backend::export::MeetingExportFormat::CalendarReminder30,
                 Some("calendarreminder60") => backend::export::MeetingExportFormat::CalendarReminder60,
-                _ => return Err("export format must be todo or ics".into()),
+                _ => return Err("unsupported export format".into()),
             };
             let output = args.get(index+4).ok_or("requires output path")?;
             use std::io::Read;

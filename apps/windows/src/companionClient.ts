@@ -124,7 +124,7 @@ export const openCompanionSavedCalendar=(token:string,choiceId?:string,chooseApp
 export async function exportCompanionMeeting(request: {
   sessionId: string;
   meetingMode: 'offlineStore' | 'onlineLive';
-  format: 'markdown' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  format: 'markdown' | 'docx' | 'mindmap' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   expectedContentHash?:string;
   calendarSaveToken?:string;
   calendarSavedName?:boolean;

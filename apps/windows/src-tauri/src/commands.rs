@@ -205,6 +205,8 @@ pub async fn prepare_companion_audio_with_timeline(
 #[serde(rename_all = "lowercase")]
 pub enum CompanionMeetingExportFormat {
     Markdown,
+    Docx,
+    Mindmap,
     Txt,
     Json,
     Srt,
@@ -222,6 +224,8 @@ impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExpor
     fn from(value: CompanionMeetingExportFormat) -> Self {
         match value {
             CompanionMeetingExportFormat::Markdown => Self::Markdown,
+            CompanionMeetingExportFormat::Docx => Self::Docx,
+            CompanionMeetingExportFormat::Mindmap => Self::Mindmap,
             CompanionMeetingExportFormat::Txt => Self::Txt,
             CompanionMeetingExportFormat::Json => Self::Json,
             CompanionMeetingExportFormat::Srt => Self::Srt,

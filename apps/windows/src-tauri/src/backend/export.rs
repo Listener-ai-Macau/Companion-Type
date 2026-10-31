@@ -32,6 +32,8 @@ fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum MeetingExportFormat {
     Markdown,
+    Docx,
+    Mindmap,
     Txt,
     Json,
     Srt,
@@ -48,6 +50,8 @@ impl MeetingExportFormat {
     pub fn extension(self) -> &'static str {
         match self {
             Self::Markdown => "md",
+            Self::Docx => "docx",
+            Self::Mindmap => "mm",
             Self::Txt => "txt",
             Self::Json => "json",
             Self::Srt => "srt",
@@ -60,6 +64,8 @@ impl MeetingExportFormat {
     pub fn dialog_label(self) -> &'static str {
         match self {
             Self::Markdown => "Markdown",
+            Self::Docx => "Word 文档",
+            Self::Mindmap => "思维导图（FreeMind）",
             Self::Txt => "Plain text",
             Self::Json => "JSON",
             Self::Srt => "SubRip subtitles",
@@ -288,7 +294,7 @@ pub fn prepare_meeting_export_with_calendar_choices(session:&CompanionV1HostSess
                 super::action_export::calendar_with_provenance(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now(),Some(&provenance))
             }
         }
-        MeetingExportFormat::Markdown => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
+        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
         MeetingExportFormat::Txt => {
             if session.bookmarks.is_empty() && session.meeting_notes.is_empty() { require_final_transcript(session)?; }
             render_txt(session)
@@ -315,7 +321,7 @@ pub fn prepare_meeting_export_with_calendar_choices(session:&CompanionV1HostSess
     };
     let file_stem = safe_file_stem(&session.title, &session.id);
     let purpose = match format {
-        MeetingExportFormat::Markdown => "整理结果",
+        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap => "整理结果",
         MeetingExportFormat::Txt => "文字与补充",
         MeetingExportFormat::Json => "完整资料",
         MeetingExportFormat::Srt => "字幕",
@@ -330,7 +336,11 @@ pub fn prepare_meeting_export_with_calendar_choices(session:&CompanionV1HostSess
         if meeting_mode == "onlineLive" { "在线速记-" } else { "先录后整理-" }
     } else { "" };
     Ok(PreparedMeetingExport {
-        bytes: content.into_bytes(),
+        bytes: match format {
+            MeetingExportFormat::Docx => super::meeting_document_export::word(&session.title, &content)?,
+            MeetingExportFormat::Mindmap => super::meeting_document_export::mindmap(&session.title, &content),
+            _ => content.into_bytes(),
+        },
         suggested_name: format!(
             "{file_stem}-{mode_label}{purpose}.{}",
             format.extension()
