@@ -346,8 +346,13 @@ fn append_conditional_source_actions(minutes: &mut CompanionV1MeetingMinutes,
         let Some(start)=["如果","假如","若是"].iter().filter_map(|w|sentence.find(w)).min() else {continue;};
         let quote=sentence[start..].trim();
         if quote.len()>600 || source.matches(quote).count()!=1 {continue;}
-        let Some((_,followup))=quote.split_once(['，',',']) else {continue;};
-        if ["取消","不再","不要","无需","不用","不需要"].iter().any(|word|followup.contains(word)) {continue;}
+        // Local ASR may produce a short line with no punctuation at all.
+        let followup=match quote.split_once(['，',',']) {
+            Some((_,tail))=>tail,
+            None if quote.len()<=240=>quote,
+            None=>continue,
+        };
+        if ["不再","不要再","无需再","不用再","不需要再","已取消","已经取消"].iter().any(|word|followup.contains(word)) {continue;}
         if !["再确认","再核对","再讨论","再联系","再检查","再提交","再发送","再安排","再处理","再跟进"].iter().any(|word|followup.contains(word)) {continue;}
         let existing=evidence.iter().filter(|e|e.field=="actionItems" && !e.quote.trim().is_empty())
             .find(|e|quote.contains(e.quote.trim().trim_end_matches(['。','！','？','!','?']))).map(|e|e.index);

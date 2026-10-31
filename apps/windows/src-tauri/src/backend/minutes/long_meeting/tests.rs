@@ -69,11 +69,13 @@ fn conditional_action_from_summary_also_restores_condition_before_reminder() {
 
 #[test]
 fn literal_conditional_followup_is_added_without_unrelated_or_cancelled_items() {
-    let source="小林负责整理材料。\n如果客户提出修改，小陈下周一再确认交货日期。\n如果取消订单，不需要再确认交货日期。";
+    let source="小林负责整理材料。\n如果客户提出修改，小陈下周一再确认交货日期。\n如果客户还有问题小周再跟进报价\n如果客户取消订单小王再联系退款\n如果取消订单不需要再确认交货日期。";
     let part=session(source);let (mut minutes,mut evidence)=response(&part);
     append_conditional_source_actions(&mut minutes,&mut evidence,source);
     preserve_conditional_actions(&mut minutes,&mut evidence,source);
-    assert_eq!(minutes.action_items.len(),1);
+    assert_eq!(minutes.action_items.len(),3);
+    assert!(minutes.action_items.iter().any(|a|a.text.contains("如果客户取消订单小王再联系退款")));
+    assert!(minutes.action_items.iter().any(|a|a.text.contains("如果客户还有问题小周再跟进报价")));
     assert!(minutes.action_items[0].text.contains("如果客户提出修改"));
     assert!(minutes.action_items[0].due.is_none());
     assert_eq!(retain_source_backed(&mut minutes,&mut evidence,source),0);
