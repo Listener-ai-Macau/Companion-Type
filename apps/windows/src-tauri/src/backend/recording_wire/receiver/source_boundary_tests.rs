@@ -30,6 +30,42 @@ fn high_tone_fixture()->(Descriptor,Vec<u8>) {
     (d,payload)
 }
 #[test]
+fn streaming_pcm_preserves_session_audio_and_timeline_across_output_boundaries() {
+    let root=std::env::temp_dir().join(format!("companion-pcm-stream-{}",uuid::Uuid::new_v4()));
+    fs::create_dir_all(&root).unwrap();
+    let parts=fixture();
+    let mut receiver=Receiver::open(&root,&parts[0].0.encode().unwrap()).unwrap();
+    for (descriptor,payload) in &parts {
+        receiver.accept_segment(&descriptor.encode().unwrap(),payload).unwrap();
+    }
+    let wav=fs::read(receiver.assemble().unwrap()).unwrap();
+    let saved=receiver.receipt.audio.as_ref().unwrap().clone();
+    let descriptors=receiver.descriptors().unwrap();
+    let mut files=descriptors.iter().map(|d|
+        verify_file(read_locked(&receiver.payload_path(d)).unwrap(),d).unwrap()
+    ).collect::<Vec<_>>();
+
+    // Split inside packets as well as across source files. The same decoder
+    // and sample window must continue across every output boundary.
+    let mut outputs=vec![Vec::<u8>::new()];
+    let timeline=decode_pcm(&descriptors,&mut files,saved.samples,false,|mut pcm| {
+        while !pcm.is_empty() {
+            if outputs.last().unwrap().len()==1000 {outputs.push(Vec::new());}
+            let count=pcm.len().min(1000-outputs.last().unwrap().len());
+            outputs.last_mut().unwrap().extend_from_slice(&pcm[..count]);
+            pcm=&pcm[count..];
+        }
+        Ok(())
+    }).unwrap();
+    assert!(outputs.len()>1);
+    assert_eq!(outputs.concat(),wav[44..]);
+    assert_eq!(timeline,saved.timeline);
+
+    let failure=decode_pcm(&descriptors,&mut files,saved.samples,false,|_|Err("output failed".into()));
+    assert!(matches!(failure,Err(ref error) if error=="output failed"));
+    drop(files);drop(receiver);fs::remove_dir_all(root).unwrap();
+}
+#[test]
 #[ignore = "requires explicitly supplied local board originals"]
 fn real_saved_original_matches_old_wav_when_legacy_clamped() {
     let receipt_path=std::env::var_os("COMPANION_REAL_PCM_RECEIPT").unwrap();
