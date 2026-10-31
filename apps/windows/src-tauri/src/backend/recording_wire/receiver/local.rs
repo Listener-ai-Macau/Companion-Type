@@ -73,7 +73,9 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
                         return Err(fail());
                     }
                     let first=saved.segments.first().ok_or_else(fail)?;
-                    if Descriptor::decode(&first.wire)?.key!=key || saved.device.as_deref().is_none_or(|id|
+                    if Descriptor::decode(&first.wire)?.key!=key || saved.segments.iter().any(|segment|
+                        Descriptor::decode(&segment.wire).map_or(true,|d|d.key!=key || d.source_mode!=super::super::SOURCE_MIC_SAI))
+                        || saved.device.as_deref().is_none_or(|id|
                         !crate::backend::device_connection::same_device_id(id,device)) {return Err(fail());}
                     let all_present=details.iter().try_fold(true,|all,(path,_,_,_)|Ok::<_,String>(regular(path)?&&all))?;
                     if row.audio_stored && target.is_none() && all_present {return Ok(RestoreOutcome::Unchanged);}

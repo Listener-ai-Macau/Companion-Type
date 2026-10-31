@@ -403,8 +403,13 @@ mod tests {
         let mut receiver=Receiver::open(&root,&first).unwrap();
         for (descriptor,payload) in &source {receiver.accept_segment(&descriptor.encode().unwrap(),payload).unwrap();}
         let originals=source.iter().map(|(d,_)|receiver.payload_path(d)).collect::<Vec<_>>();
+        receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
         let paths=receiver.assemble_parts_with_limit(1000).unwrap();assert!(paths.len()>3);
-        receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();let receipt=fs::read(receiver.receipt_path()).unwrap();drop(receiver);
+        let receipt=fs::read(receiver.receipt_path()).unwrap();drop(receiver);
+        assert!(!crate::backend::persistence::load_sessions_from(&index).unwrap()[0].audio_stored);
+        let after_interruption=super::super::local::restore_local(&root,&index).unwrap();
+        assert_eq!(after_interruption.restored.len(),1);assert!(after_interruption.failures.is_empty());
+        assert!(crate::backend::persistence::load_sessions_from(&index).unwrap()[0].audio_stored);
         let expected=paths.iter().map(|path|fs::read(path).unwrap()).collect::<Vec<_>>();
         let unrelated=root.join("unrelated.wav");fs::write(&unrelated,b"not a generated file").unwrap();
         fs::remove_file(&paths[1]).unwrap();fs::remove_file(&paths[2]).unwrap();
