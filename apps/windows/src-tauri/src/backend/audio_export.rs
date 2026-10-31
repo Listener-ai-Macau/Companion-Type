@@ -5,11 +5,31 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 use crate::companion_v1::CompanionV1Snapshot;
 
-pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(PathBuf, String), String> {
+#[derive(Debug,Clone,PartialEq,Eq)]
+pub enum AudioSource { Single(PathBuf), Parts(Vec<(PathBuf,u64)>) }
+impl AudioSource {
+    fn data_bytes(&self)->Result<u64,String> {
+        match self { Self::Single(_)=>Ok(0), Self::Parts(parts)=>parts.iter().try_fold(0u64,|sum,(_,samples)|
+            sum.checked_add(samples.checked_mul(2).ok_or("录音容量无效。")?).ok_or_else(||"录音容量无效。".into())) }
+    }
+    pub fn extension(&self)->Result<&'static str,String> {
+        Ok(if self.data_bytes()? > u64::from(u32::MAX-36) {"zip"} else {"wav"})
+    }
+}
+
+pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(AudioSource, String), String> {
     let path = super::meeting_workspace::local_audio_path(snapshot, session_id)?;
     let session = snapshot.host.sessions.iter().find(|s| s.id == session_id).ok_or("这场会议已不存在")?;
     let title = super::export::safe_file_stem(&session.title, session_id);
-    Ok((path, format!("{title}-original.wav")))
+    let audio=if session.device_recording_key.is_some() && (session.chunks.iter()
+        .any(|chunk|chunk.stopped_at.as_deref()==Some("verified-v2-session-part"))
+        || path.file_name().and_then(|name|name.to_str()).is_some_and(|name|name.contains(".parts-"))) {
+        let parts=super::recording_wire::receiver::Receiver::verified_audio_parts(session)?;
+        if parts.len()<2 || parts[0].0.canonicalize().ok().as_ref()!=Some(&path) {return Err("这场录音的分段尚未完整，未导出。".into());}
+        AudioSource::Parts(parts)
+    } else { AudioSource::Single(path) };
+    let extension=audio.extension()?;
+    Ok((audio, format!("{title}-original.{extension}")))
 }
 
 pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Path) -> Result<u64, String> {
@@ -25,7 +45,72 @@ pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Pa
             }
         }
     }
-    copy_atomic(&input, destination)
+    copy_source_atomic(&input, destination)
+}
+
+pub fn copy_source_atomic(source:&AudioSource,destination:&Path)->Result<u64,String> {
+    match source { AudioSource::Single(path)=>copy_atomic(path,destination),
+        AudioSource::Parts(parts)=>copy_parts_atomic(parts,destination) }
+}
+
+fn copy_parts_atomic(parts:&[(PathBuf,u64)],destination:&Path)->Result<u64,String> {
+    let source=AudioSource::Parts(parts.to_vec());
+    let zip=source.extension()?=="zip";
+    copy_parts_as(parts,destination,zip)
+}
+
+fn copy_parts_as(parts:&[(PathBuf,u64)],destination:&Path,zip:bool)->Result<u64,String> {
+    let source=AudioSource::Parts(parts.to_vec());
+    if parts.len()<2 {return Err("录音分段不完整。".into());}
+    if let Ok(target)=destination.canonicalize() {
+        if parts.iter().any(|(part,_)|part.canonicalize().is_ok_and(|path|path==target)) {
+            return Err("不能用导出覆盖原音，请另选位置。".into());
+        }
+    }
+    let parent=destination.parent().filter(|p|!p.as_os_str().is_empty()).ok_or("请选择完整的保存路径")?;
+    fs::create_dir_all(parent).map_err(|e|format!("无法创建保存目录：{e}"))?;
+    let temporary=parent.join(format!(".companion-audio-{}.tmp",uuid::Uuid::new_v4()));
+    let result=(|| {
+        let file=OpenOptions::new().write(true).create_new(true).open(&temporary).map_err(|e|e.to_string())?;
+        let (mut archive,mut output)=if zip {(Some(zip::ZipWriter::new(file)),None)} else {(None,Some(file))};
+        if let Some(out)=output.as_mut() {
+            let pcm=u32::try_from(source.data_bytes()?).map_err(|_|"录音容量超出WAV格式。")?;
+            out.write_all(&denzic_host_audio_v1_core::wav::wav_header(pcm)).map_err(|e|e.to_string())?;
+        }
+        let mut buffer=[0u8;65_536];
+        for (index,(path,samples)) in parts.iter().enumerate() {
+            super::meeting_workspace::validate_wav(path)?;
+            let expected=samples.checked_mul(2).and_then(|n|n.checked_add(44)).ok_or("录音容量无效。")?;
+            let mut input=File::open(path).map_err(|e|format!("无法读取原音：{e}"))?;
+            if input.metadata().map_err(|e|e.to_string())?.len()!=expected {return Err("录音分段已变化，请重试。".into());}
+            let mut header=[0u8;44];input.read_exact(&mut header).map_err(|e|e.to_string())?;
+            let pcm=u32::try_from(samples.checked_mul(2).ok_or("录音容量无效。")?).map_err(|_|"录音容量无效。")?;
+            if header!=denzic_host_audio_v1_core::wav::wav_header(pcm) {return Err("录音分段格式无效。".into());}
+            let mut hash=Sha256::new();hash.update(header);
+            if let Some(writer)=archive.as_mut() {
+                let options=zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored).large_file(true);
+                writer.start_file(format!("录音-{:05}.wav",index+1),options).map_err(|e|e.to_string())?;
+                writer.write_all(&header).map_err(|e|e.to_string())?;
+            }
+            let mut copied=44u64;
+            loop {let n=input.read(&mut buffer).map_err(|e|e.to_string())?;if n==0{break;}
+                copied=copied.checked_add(n as u64).ok_or("录音容量无效。")?;if copied>expected{return Err("录音分段已变化，请重试。".into());}
+                hash.update(&buffer[..n]);
+                if let Some(writer)=archive.as_mut(){writer.write_all(&buffer[..n]).map_err(|e|e.to_string())?;}
+                else {output.as_mut().ok_or("无法保存录音。")?.write_all(&buffer[..n]).map_err(|e|e.to_string())?;}
+            }
+            if copied!=expected{return Err("录音分段读取不完整。".into());}
+            let mut current=File::open(path).map_err(|e|e.to_string())?;let mut current_hash=Sha256::new();
+            loop {let n=current.read(&mut buffer).map_err(|e|e.to_string())?;if n==0{break;}current_hash.update(&buffer[..n]);}
+            if hash.finalize()!=current_hash.finalize(){return Err("录音在保存期间发生变化，请重试。".into());}
+        }
+        let file=if let Some(writer)=archive {writer.finish().map_err(|e|e.to_string())?} else {output.take().ok_or("无法保存录音。")?};
+        file.sync_all().map_err(|e|e.to_string())?;drop(file);
+        if !zip {super::meeting_workspace::validate_wav(&temporary)?;}
+        let bytes=fs::metadata(&temporary).map_err(|e|e.to_string())?.len();
+        super::export::replace_file(&temporary,destination)?;Ok(bytes)
+    })();
+    if result.is_err(){let _=fs::remove_file(&temporary);}result
 }
 
 pub fn copy_atomic(source: &Path, destination: &Path) -> Result<u64, String> {
@@ -114,5 +199,24 @@ mod tests {
         assert_eq!(export(&snapshot,"original",&output).unwrap(),48);
         snapshot.device.recording=true; assert!(export(&snapshot,"original",&output).is_err());
         assert_eq!(fs::read(&output).unwrap(),wav()); fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn segmented_export_writes_every_part_and_zip_fallback_preserves_each_wav() {
+        let root=std::env::temp_dir().join(format!("companion-segmented-export-{}",uuid::Uuid::new_v4()));
+        fs::create_dir(&root).unwrap();let first=root.join("first.wav");let second=root.join("second.wav");
+        let one=wav();let mut two=wav();two[44..].copy_from_slice(&[1,2,3,4]);
+        fs::write(&first,&one).unwrap();fs::write(&second,&two).unwrap();
+        let parts=vec![(first.clone(),2),(second.clone(),2)];let output=root.join("all.wav");
+        copy_parts_atomic(&parts,&output).unwrap();let got=fs::read(&output).unwrap();
+        assert_eq!(got.len(),52);assert_eq!(&got[..44],&denzic_host_audio_v1_core::wav::wav_header(8));
+        assert_eq!(&got[44..],&[0,0,0,0,1,2,3,4]);
+        let archive=root.join("all.zip");copy_parts_as(&parts,&archive,true).unwrap();
+        let mut zip=zip::ZipArchive::new(File::open(&archive).unwrap()).unwrap();assert_eq!(zip.len(),2);
+        for (index,expected) in [one.clone(),two.clone()].iter().enumerate() {let mut data=Vec::new();
+            zip.by_index(index).unwrap().read_to_end(&mut data).unwrap();assert_eq!(&data,expected);}
+        assert_eq!(AudioSource::Parts(vec![(first.clone(),u64::from(u32::MAX)/2)]).extension().unwrap(),"zip");
+        fs::write(&second,b"bad").unwrap();assert!(copy_parts_atomic(&parts,&output).is_err());assert_eq!(fs::read(&output).unwrap(),got);
+        assert_eq!(fs::read(&first).unwrap(),one);fs::remove_dir_all(root).unwrap();
     }
 }

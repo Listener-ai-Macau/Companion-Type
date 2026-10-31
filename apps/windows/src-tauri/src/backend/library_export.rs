@@ -25,7 +25,7 @@ struct Entry {
     organization: super::library_organization::Metadata,
     meeting_mode: String, file: String, bytes: u64, sha256: String,
 }
-enum Content { Audio(PathBuf), Document(Vec<u8>) }
+enum Content { Audio(audio_export::AudioSource), Document(Vec<u8>) }
 struct Plan { entry: Entry, content: Content }
 
 fn plans(snapshot: &CompanionV1Snapshot, request: &Request) -> Result<Vec<Plan>, String> {
@@ -45,7 +45,10 @@ fn plans(snapshot: &CompanionV1Snapshot, request: &Request) -> Result<Vec<Plan>,
         if matches!(row.recovery.stage.as_str(),"transcribing"|"generatingMinutes") { return Err(format!("“{}”仍在处理，请完成后导出。",row.title)); }
         let mode=match request.meeting_mode.as_deref() {None|Some("recorded")=>row.meeting_mode.as_str(),Some(m)=>m};
         let (content,extension)=match request.format {
-            Format::Audio=>(Content::Audio(audio_export::source(snapshot,&row.id).map_err(|e|format!("“{}”：{e}",row.title))?.0),"wav"),
+            Format::Audio=>{
+                let audio=audio_export::source(snapshot,&row.id).map_err(|e|format!("“{}”：{e}",row.title))?.0;
+                let extension=audio.extension()?;(Content::Audio(audio),extension)
+            },
             format=>{
                 let format=match format { Format::Txt=>export::MeetingExportFormat::Txt,Format::Json=>export::MeetingExportFormat::Json,
                     Format::Markdown=>export::MeetingExportFormat::Markdown,Format::Srt=>export::MeetingExportFormat::Srt,Format::Audio=>unreachable!() };
@@ -81,7 +84,7 @@ pub fn save(snapshot: &CompanionV1Snapshot, request: &Request, parent: &Path) ->
         for plan in &mut plans {
             let file=staging.join(&plan.entry.file);
             match &plan.content {
-                Content::Audio(source)=>{audio_export::copy_atomic(source,&file)?;},
+                Content::Audio(source)=>{audio_export::copy_source_atomic(source,&file)?;},
                 Content::Document(content)=>{export::write_atomic(&file,content)?;},
             }
             let (length,hash)=audio_storage::fingerprint(&file)?;

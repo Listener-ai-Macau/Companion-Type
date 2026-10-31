@@ -2131,7 +2131,7 @@ export function CompanionDashboard({
             <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
               onClick={() => void exportAudio()}><Download size={15} />保存原音</button>
             {renderExportFeedback('audio')}
-            <p>保存一份原始 WAV 到你选择的位置，可单独备份或使用其他播放器打开。此副本由你自行保管，删除录音不会删除它。</p>
+            <p>保存整场原音到你选择的位置，可单独备份或使用其他播放器打开。超出 WAV 格式容量时会保存为包含分段原音的 ZIP。此副本由你自行保管，删除录音不会删除它。</p>
             </div>
           <CompanionBookmarks session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveBookmark} onBusyChange={setBookmarkBusy} onUnsavedChange={setBookmarkUnsaved}

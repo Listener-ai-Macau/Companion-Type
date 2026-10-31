@@ -342,6 +342,19 @@ mod tests {
         assert_eq!(playback_parts.iter().map(|(_,samples)|samples).sum::<u64>(),row.duration_ms*16);
         assert_eq!(crate::backend::transcription_chunk_paths(row).unwrap(),
             paths.iter().map(|p|p.to_string_lossy().into_owned()).collect::<Vec<_>>());
+        let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.host.sessions=vec![row.clone()];
+        snapshot.meeting.active=false;snapshot.device.recording=false;
+        let output=root.join("complete-export.wav");
+        crate::backend::audio_export::export(&snapshot,&row.id,&output).unwrap();
+        let exported=fs::read(&output).unwrap();
+        let mut expected=Vec::new();for path in &paths {expected.extend_from_slice(&fs::read(path).unwrap()[44..]);}
+        assert_eq!(&exported[44..],expected.as_slice());
+        let request:crate::backend::library_export::Request=serde_json::from_value(serde_json::json!({
+            "targets":[{"sessionId":row.id,"expectedRevision":row.organization.revision}],"format":"audio"})).unwrap();
+        let report=crate::backend::library_export::save(&snapshot,&request,&root).unwrap();
+        let folder=PathBuf::from(report.path);let manifest:serde_json::Value=serde_json::from_slice(&fs::read(folder.join("manifest.json")).unwrap()).unwrap();
+        let exported_batch=fs::read(folder.join(manifest["entries"][0]["file"].as_str().unwrap())).unwrap();
+        assert_eq!(exported_batch,exported,"batch export must include the same complete recording");
         let mut reopened=Receiver::open(&root,&first).unwrap();
         reopened.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
         drop(reopened);

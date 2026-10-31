@@ -502,8 +502,10 @@ pub async fn export_companion_audio(
 ) -> Result<Option<CompanionMeetingExportResult>, String> {
     let lease = coordinator.begin_audio_export()?;
     let (original, name) = crate::backend::audio_export::source(&coordinator.snapshot()?, &session_id)?;
-    let destination = app.dialog().file().add_filter("原始录音 WAV", &["wav"])
-        .set_file_name(&name).blocking_save_file();
+    let chooser=app.dialog().file();
+    let chooser=if original.extension()?=="zip" {chooser.add_filter("分段原音 ZIP", &["zip"])}
+        else {chooser.add_filter("原始录音 WAV", &["wav"])};
+    let destination = chooser.set_file_name(&name).blocking_save_file();
     let Some(destination) = destination else { return Ok(None); };
     let destination = destination.simplified().into_path().map_err(|e| e.to_string())?;
     // Recheck the stable session identity after the user finishes the dialog.
