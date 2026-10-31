@@ -92,7 +92,7 @@ Updated 2026-10-04. This describes the **FW1.1.18 / UI36 and Type user-experienc
 
 ## Image provenance
 
-The pages reuse existing Companion screen/art previews without modifying the source PNG pixels. The surrounding frame is illustrative. These are not new-board photographs; clocks, battery and Bluetooth icons are sample state. See the [asset provenance](assets/companion/provenance.json).
+The pages reuse existing Companion screen/art previews without modifying the source PNG pixels. The surrounding frame is illustrative. These are not new-board photographs; clocks, battery and Bluetooth icons are sample state. Complete asset-provenance records are not included in the current delivery.
 
 
 </details>
