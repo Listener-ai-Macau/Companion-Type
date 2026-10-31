@@ -11,6 +11,8 @@ use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 
+const LOCAL_NO_SPEECH: &str = "没有识别到语音，原录音保留。";
+
 mod chunk_cache;
 #[cfg(windows)]
 mod local_paraformer;
@@ -182,10 +184,19 @@ impl CompanionTranscriptionManager {
         let mut parts = Vec::new();
         let mut providers = Vec::new();
         for path in &real_paths {
-            let transcript = self.transcribe_existing_path(path)?;
+            let transcript = match self.transcribe_existing_path(path) {
+                Ok(transcript) => transcript,
+                // A digital-zero file carries no PCM signal. Do not discard a
+                // whole meeting because that independent segment has no words.
+                // Any nonzero or unreadable file keeps the original error.
+                Err(error) if local_provider_selected() && error == LOCAL_NO_SPEECH
+                    && wav_is_digital_silence(path)? => continue,
+                Err(error) => return Err(error),
+            };
             providers.push(transcript.provider_id.clone());
             parts.push(transcript.text);
         }
+        if parts.is_empty() { return Err(LOCAL_NO_SPEECH.into()); }
         Ok(CompanionTranscript {
             text: normalize_transcript(&parts.join("\n")),
             provider_id: "companion-type-chunk-merge".to_string(),
@@ -737,6 +748,23 @@ pub(super) fn attach_cache_sources(sources: &std::collections::BTreeSet<String>,
 pub(super) use chunk_cache::ownership::erase as erase_cache;
 pub(crate) use chunk_cache::ownership::verify as verify_cache_privacy;
 
+/// Recognize only a completely zero-valued PCM file. No amplitude threshold
+/// is used, so quiet speech and unknown failures cannot be silently skipped.
+fn wav_is_digital_silence(path: &Path) -> Result<bool, String> {
+    use std::io::{Read, Seek, SeekFrom};
+    let mut file = fs::File::open(path).map_err(|_| "无法读取录音分段，原音保留。")?;
+    let (start, mut remaining) = diarization::pcm16k_mono_wav_range(&mut file)?;
+    file.seek(SeekFrom::Start(start)).map_err(|_| "无法读取录音分段，原音保留。")?;
+    let mut bytes = [0u8; 65_536];
+    while remaining > 0 {
+        let count = remaining.min(bytes.len() as u64) as usize;
+        file.read_exact(&mut bytes[..count]).map_err(|_| "录音分段读取中断，原音保留。")?;
+        if bytes[..count].iter().any(|value| *value != 0) { return Ok(false); }
+        remaining -= count as u64;
+    }
+    Ok(true)
+}
+
 /// Cheap size check: is this single WAV worth splitting into parallel sessions?
 fn is_long_wav(path: &Path) -> bool {
     let is_wav = path
@@ -1210,6 +1238,24 @@ mod tests {
     }
     impl Drop for RecordingOverride {
         fn drop(&mut self) { if let Some(value) = &self.0 { std::env::set_var("COMPANION_TYPE_RECORDING_DIR", value); } else { std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); } }
+    }
+
+    #[test]
+    fn independent_silence_check_never_filters_nonzero_or_damaged_pcm() {
+        let root = std::env::temp_dir().join(format!("companion-silence-check-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let path = root.join("audio.wav");
+        write_pcm16k_mono_wav(&path, &[0; 3200]).unwrap();
+        assert!(wav_is_digital_silence(&path).unwrap());
+        let mut barely_nonzero = vec![0; 3200];
+        barely_nonzero[3198] = 1;
+        write_pcm16k_mono_wav(&path, &barely_nonzero).unwrap();
+        assert!(!wav_is_digital_silence(&path).unwrap());
+        let mut truncated = fs::read(&path).unwrap();
+        truncated.pop();
+        fs::write(&path, &truncated).unwrap();
+        assert!(wav_is_digital_silence(&path).is_err());
+        fs::remove_dir_all(root).unwrap();
     }
 
     #[test]

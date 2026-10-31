@@ -6,7 +6,7 @@ use std::{
 };
 #[path = "paraformer_shared.rs"]
 mod shared;
-use shared::{cut_samples, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
+use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
 use std::{fs, path::PathBuf, sync::Mutex};
 
 const MODEL_BASE: &str = "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/resolve/2365baeacb507f821a0c8120fcee3d484dba7a07/";
@@ -196,6 +196,10 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         if buf.is_empty() {
             return Err("本地转写分段失败，原录音保留。".into());
         }
+        if is_digital_silence(&buf) {
+            offset += buf.len() as u64;
+            continue;
+        }
         let key = super::chunk_cache::Key::new(&buf, profile.clone())?;
         let result = super::chunk_cache::ownership::resolve(
             &super::asr_chunk_cache_root(),
@@ -219,7 +223,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     }
     let text = super::normalize_transcript(&parts.join("\n"));
     if text.is_empty() {
-        return Err("没有识别到语音，原录音保留。".into());
+        return Err(super::LOCAL_NO_SPEECH.into());
     }
     Ok(super::CompanionTranscript {
         text,

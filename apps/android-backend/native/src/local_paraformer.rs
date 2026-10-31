@@ -6,7 +6,7 @@ use std::{
 };
 #[path = "../../../windows/src-tauri/src/backend/transcription/paraformer_shared.rs"]
 mod shared;
-use shared::{cut_samples, wav_data, ModelKind, Runtime, RATE};
+use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, RATE};
 
 pub(super) fn transcribe(
     wav: &Path,
@@ -44,6 +44,10 @@ pub(super) fn transcribe(
         pcm.truncate(cut * 2);
         if pcm.is_empty() {
             return Err("本地转写分段失败，原录音保留。".into());
+        }
+        if is_digital_silence(&pcm) {
+            offset += pcm.len() as u64;
+            continue;
         }
         let completed = match cache.lookup(&pcm) {
             Some(done) => done,

@@ -476,6 +476,25 @@ pub(super) fn wav_data(file: &mut File) -> Result<(u64, u64), String> {
     Ok((start, len))
 }
 
+// PCM16 zero samples are known digital silence, not a low-volume heuristic.
+// Check before consulting caches so old hallucinations are never reused.
+pub(super) fn is_digital_silence(pcm: &[u8]) -> bool {
+    !pcm.is_empty() && pcm.len() % 2 == 0 && pcm.iter().all(|byte| *byte == 0)
+}
+
+#[cfg(test)]
+mod digital_silence_tests {
+    use super::is_digital_silence;
+    #[test]
+    fn only_zero_pcm_samples_are_silence() {
+        assert!(is_digital_silence(&[0; 3200]));
+        assert!(!is_digital_silence(&[]));
+        assert!(!is_digital_silence(&[0]));
+        assert!(!is_digital_silence(&[1, 0]));
+        assert!(!is_digital_silence(&[255, 255]));
+    }
+}
+
 // Cut near a quiet region, covering the original samples exactly once. This
 // model provides no word timestamps; it cannot promise seam-perfect text.
 pub(super) fn cut_samples(pcm: &[u8]) -> usize {
