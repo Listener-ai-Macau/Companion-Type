@@ -887,7 +887,7 @@ fn source_action_items(segments: &[String]) -> Vec<CompanionV1ActionItem> {
         items.push(CompanionV1ActionItem { text: segment.clone(),
             owner: extract_marker_value(segment, "owner"), due: extract_marker_value(segment, "due") });
     }
-    items.truncate(8); items
+    items
 }
 
 // Restore only the literal conditional follow-up in the already recognized
@@ -1431,6 +1431,27 @@ mod tests {
         let result = finalize_minutes(Ok(upgraded), l0, &session);
         assert!(result.action_items.is_empty());
         assert!(!result.markdown.contains("验证Windows蓝牙可复现性"));
+    }
+
+    #[test]
+    fn meeting_retains_all_nine_explicit_actions_from_the_model() {
+        let tasks = ["核对采购合同", "整理销售报价", "确认发货地址", "检查库存数量", "更新包装设计",
+            "安排客户回访", "提交测试报告", "核对生产排期", "发送样品清单"];
+        let transcript = format!("这次会议确认以下安排。{}",
+            tasks.iter().map(|task| format!("行动项：{task}。")).collect::<String>());
+        let mut session = session_with_text(&transcript);
+        session.duration_ms = 180_000; // Ordinary meeting, not the short-memo special case.
+        let l0 = rules_l0_minutes(&session, "now");
+        assert_eq!(l0.action_items.len(), tasks.len());
+        let mut model = l0.clone();
+        model.source = "llm_deepseek".into();
+        model.quality = "final".into();
+        model.action_items = tasks.iter().map(|task| CompanionV1ActionItem {
+            text: (*task).into(), owner: None, due: None,
+        }).collect();
+        let result = finalize_minutes(Ok(model), l0, &session);
+        assert_eq!(result.action_items.len(), tasks.len());
+        for task in tasks { assert!(result.action_items.iter().any(|item| item.text.contains(task))); }
     }
 
     #[test]
