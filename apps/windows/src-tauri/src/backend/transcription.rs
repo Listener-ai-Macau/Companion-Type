@@ -502,6 +502,11 @@ pub(super) fn refine_saved_speakers(audio:&Path,utterances:&[crate::companion_v1
     ->Result<CompanionTranscript,String> {
     let _usage=super::audio_artifacts::usage(audio)?;
     let segments=diarization::segment_embeddings(audio)?;
+    refined_transcript_from_embeddings(utterances,&segments)
+}
+
+fn refined_transcript_from_embeddings(utterances:&[crate::companion_v1::CompanionV1UtteranceSegment],segments:&[EmbeddingSegment])
+    ->Result<CompanionTranscript,String> {
     if segments.is_empty() {return Err("原音没有足够的可用声纹，保留原分组。".into());}
     let collected=utterances.iter().map(|u|CollectedUtterance {text:u.text.clone(),start_ms:u.start_ms,end_ms:u.end_ms,
         provider_speaker:None,provider_request:None,embedding:embedding_index_for_range(u.start_ms,u.end_ms,&segments)
@@ -509,6 +514,54 @@ pub(super) fn refine_saved_speakers(audio:&Path,utterances:&[crate::companion_v1
     let mut result=volcengine_transcript_from("",&collected);
     result.provider_id="companion-local-speaker-refinement".into();result.mode="saved-timing-local-only".into();
     Ok(result)
+}
+
+/// Process one short window at a time, then cluster over the whole meeting.
+/// This avoids loading a multi-gigabyte physical part into memory and keeps
+/// speaker times on the continuous sample axis across file boundaries.
+fn multipart_speaker_embeddings_with<F>(parts:&[(PathBuf,u64)],window_seconds:u64,extract:F)->Result<Vec<EmbeddingSegment>,String>
+where F:Fn(&Path)->Result<Vec<EmbeddingSegment>,String> {
+    use std::io::{Read,Seek,SeekFrom};
+    if parts.is_empty() || window_seconds==0 {return Err("录音分段不可用。".into());}
+    let window_bytes=window_seconds.checked_mul(32_000).ok_or("录音分段容量无效。")?;
+    let _usage=parts.iter().map(|(p,_)|super::audio_artifacts::usage(p)).collect::<Result<Vec<_>,_>>()?;
+    let root=super::audio_storage::recording_root()?;let mut offset_samples=0u64;let mut result=Vec::new();
+    for (source,samples) in parts {
+        let mut file=fs::File::open(source).map_err(|_|"录音分段无法读取。")?;
+        let (start,pcm_bytes)=diarization::pcm16k_mono_wav_range(&mut file)?;
+        if pcm_bytes!=samples.checked_mul(2).ok_or("录音容量无效。")? {return Err("录音分段长度已变化。".into());}
+        file.seek(SeekFrom::Start(start)).map_err(|e|e.to_string())?;
+        let mut remaining=pcm_bytes;
+        while remaining>0 {
+            let count=remaining.min(window_bytes);let count_usize=usize::try_from(count).map_err(|_|"录音分段容量无效。")?;
+            let temporary=if pcm_bytes<=window_bytes {None} else {
+                let path=root.join(format!(".companion-speaker-{}.wav",uuid::Uuid::new_v4().simple()));
+                let mut pcm=vec![0u8;count_usize];file.read_exact(&mut pcm).map_err(|_|"录音分段读取不完整。")?;
+                super::audio_artifacts::generated(source,&path,super::audio_artifacts::Purpose::AsrTemporary,
+                    ||write_pcm16k_mono_wav(&path,&pcm))?;
+                Some(path)
+            };
+            let extracted=extract(temporary.as_deref().unwrap_or(source));
+            if let Some(path)=temporary.as_ref() {
+                if super::audio_artifacts::remove_temporary(path).is_err() {eprintln!("speaker temporary cleanup pending; original retained");}
+            }
+            let base_ms=offset_samples/16;
+            for mut segment in extracted? {
+                segment.start_ms=segment.start_ms.checked_add(base_ms).ok_or("录音时长无效。")?;
+                segment.end_ms=segment.end_ms.checked_add(base_ms).ok_or("录音时长无效。")?;
+                result.push(segment);
+            }
+            offset_samples=offset_samples.checked_add(count/2).ok_or("录音时长无效。")?;
+            remaining-=count;
+        }
+    }
+    Ok(result)
+}
+
+pub(super) fn refine_saved_speakers_parts(parts:&[(PathBuf,u64)],utterances:&[crate::companion_v1::CompanionV1UtteranceSegment])
+    ->Result<CompanionTranscript,String> {
+    let segments=multipart_speaker_embeddings_with(parts,300,diarization::segment_embeddings)?;
+    refined_transcript_from_embeddings(utterances,&segments)
 }
 
 /// Cluster per-utterance embeddings GLOBALLY and assign each utterance a
@@ -1361,6 +1414,53 @@ fn split_command_args(value: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn multipart_speaker_windows_keep_global_time_and_clean_temporary_audio() {
+        let root=std::env::temp_dir().join(format!("companion-speaker-parts-{}",uuid::Uuid::new_v4()));
+        fs::create_dir(&root).unwrap();let root=root.canonicalize().unwrap();
+        unsafe {std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root)};
+        let samples=40_000u64;let pcm=vec![1u8;(samples*2) as usize];
+        let one=root.join("one.wav");let two=root.join("two.wav");
+        write_pcm16k_mono_wav(&one,&pcm).unwrap();write_pcm16k_mono_wav(&two,&pcm).unwrap();
+        let parts=vec![(one.clone(),samples),(two.clone(),samples)];
+        let embeddings=multipart_speaker_embeddings_with(&parts,1,|path|{
+            let mut file=fs::File::open(path).map_err(|e|e.to_string())?;
+            let (_,bytes)=diarization::pcm16k_mono_wav_range(&mut file)?;
+            Ok(vec![EmbeddingSegment{start_ms:0,end_ms:bytes/32,embedding:vec![1.0]}])
+        }).unwrap();
+        assert_eq!(embeddings.iter().map(|s|(s.start_ms,s.end_ms)).collect::<Vec<_>>(),
+            vec![(0,1000),(1000,2000),(2000,2500),(2500,3500),(3500,4500),(4500,5000)]);
+        assert!(!fs::read_dir(&root).unwrap().filter_map(Result::ok).any(|e|e.file_name().to_string_lossy().starts_with(".companion-speaker-")));
+        let calls=std::cell::Cell::new(0);
+        assert!(multipart_speaker_embeddings_with(&parts,1,|_|{calls.set(calls.get()+1);Err("injected extractor error".into())}).is_err());
+        assert_eq!(calls.get(),1);assert!(!fs::read_dir(&root).unwrap().filter_map(Result::ok).any(|e|e.file_name().to_string_lossy().starts_with(".companion-speaker-")));
+        assert_eq!(fs::metadata(&one).unwrap().len(),80_044);assert_eq!(fs::metadata(&two).unwrap().len(),80_044);
+        unsafe {std::env::remove_var("COMPANION_TYPE_RECORDING_DIR")};fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    #[ignore = "requires explicitly supplied public audio and installed local speaker model"]
+    fn public_multipart_speaker_embeddings_cover_both_parts() {
+        let first=PathBuf::from(std::env::var_os("COMPANION_TEST_PUBLIC_FIRST").expect("public first clip"));
+        let second=PathBuf::from(std::env::var_os("COMPANION_TEST_PUBLIC_LAST").expect("public second clip"));
+        let base=PathBuf::from(std::env::var_os("COMPANION_TEST_SPEAKER_ROOT").expect("isolated root"));
+        let root=base.join(format!("speaker-{}",uuid::Uuid::new_v4()));fs::create_dir_all(&root).unwrap();
+        let root=root.canonicalize().unwrap();unsafe {std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root)};
+        let mut parts=Vec::new();
+        for (i,source) in [first,second].iter().enumerate() {
+            let target=root.join(format!("public-{i}.wav"));fs::copy(source,&target).unwrap();
+            let mut file=fs::File::open(&target).unwrap();let (_,bytes)=diarization::pcm16k_mono_wav_range(&mut file).unwrap();
+            parts.push((target,bytes/2));
+        }
+        let boundary=parts[0].1/16;
+        let segments=multipart_speaker_embeddings_with(&parts,10,diarization::segment_embeddings).unwrap();
+        assert!(segments.iter().any(|s|s.start_ms<boundary));
+        assert!(segments.iter().any(|s|s.start_ms>=boundary));
+        assert!(!fs::read_dir(&root).unwrap().filter_map(Result::ok).any(|e|e.file_name().to_string_lossy().starts_with(".companion-speaker-")));
+        println!("public_part_boundary_ms={boundary} embedding_segments={}",segments.len());
+        unsafe {std::env::remove_var("COMPANION_TYPE_RECORDING_DIR")};fs::remove_dir_all(root).unwrap();
+    }
     struct RecordingOverride(Option<std::ffi::OsString>);
     impl RecordingOverride {
         fn new(path: &Path) -> Self { let old = std::env::var_os("COMPANION_TYPE_RECORDING_DIR"); std::env::set_var("COMPANION_TYPE_RECORDING_DIR", path); Self(old) }

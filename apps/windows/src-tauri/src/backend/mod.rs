@@ -1537,13 +1537,15 @@ impl CompanionBackend for FixtureCompanionBackend {
         if snapshot.host.persistence.status!="ready" {return Err("请先保存或恢复会议库。".into());}
         let input=speaker_refinement::prepare(&snapshot,id)?;
         let row=snapshot.host.sessions.iter().find(|s|s.id==id).ok_or("找不到这场会议")?;
-        if host_segmented_capture::saved_parts(row)?.is_some() {
-            return Err("超长分段录音的说话人重新区分暂不可用，原转写和分组已保留。".into());
-        }
+        let parts=if let Some(parts)=host_segmented_capture::saved_parts(row)? {parts}
+            else if row.device_recording_key.is_some() {recording_wire::receiver::Receiver::verified_audio_parts(row)?}
+            else {Vec::new()};
         let path=meeting_workspace::local_audio_path(&snapshot,id)?;
         let request=CompanionV1ControlRequest {action:CompanionV1ControlAction::MeetingTranscribeAudio,session_id:Some(id.into()),
             context_note_revision: None, ble_name:None,prompt_id:None,title:None,transcript_text:None,meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
-        let (mut snapshot,result)=self.run_meeting_work(snapshot,&request,||transcription::refine_saved_speakers(&path,&input.utterances))?;
+        let (mut snapshot,result)=self.run_meeting_work(snapshot,&request,||if parts.len()>1 {
+            transcription::refine_saved_speakers_parts(&parts,&input.utterances)
+        } else {transcription::refine_saved_speakers(&path,&input.utterances)})?;
         let labels=result?;
         let row=snapshot.host.sessions.iter_mut().find(|r|r.id==id).ok_or("这场录音已不存在，未重建。")?;
         if !speaker_refinement::apply(row,labels)? {return Ok(snapshot.clone());}
