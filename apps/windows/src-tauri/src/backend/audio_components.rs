@@ -38,6 +38,36 @@ fn install_file(stage:&Path,root:&Path,name:&str)->Result<(),String> {
     let destination=root.canonicalize().map_err(|_|"无法定位组件安装目录")?.join(name);
     super::export::replace_file(&source,&destination)
 }
+/// Prepare only the shared runtime, without downloading the speaker model.
+pub(crate) fn prepare_runtime(stage:&Path, existing:&Path)->Result<(),String> {
+    let legacy=PathBuf::from(std::env::var("APPDATA").unwrap_or_default()).join("Listener Type/models/speaker-verification");
+    let speaker=root();
+    for (name,hash) in &FILES[1..] {
+        for source in [existing, speaker.as_path(), legacy.as_path()] {
+            if matches(&source.join(name),hash) {
+                fs::copy(source.join(name),stage.join(name)).map_err(|_|"复制音频组件失败")?;
+                break;
+            }
+        }
+    }
+    if FILES[1..].iter().any(|(name,hash)|!matches(&stage.join(name),hash)) {
+        let archive=stage.join("runtime.tar.bz2"); download(RUNTIME_URL,&archive,ARCHIVE_HASH)?;
+        let reader=bzip2::read::BzDecoder::new(fs::File::open(archive).map_err(|_|"无法读取组件包")?);
+        for entry in tar::Archive::new(reader).entries().map_err(|_|"音频组件包损坏")? {
+            let mut entry=entry.map_err(|_|"音频组件条目损坏")?;
+            if !entry.header().entry_type().is_file() {continue;}
+            let name=entry.path().map_err(|_|"音频组件路径损坏")?.file_name().and_then(|n|n.to_str()).unwrap_or("").to_string();
+            if FILES[1..].iter().any(|(known,_)|*known==name) {
+                if entry.size()>64*1024*1024 {return Err("音频组件大小不符".into());}
+                let mut out=fs::File::create(stage.join(name)).map_err(|_|"无法解压组件")?;
+                std::io::copy(&mut entry,&mut out).map_err(|_|"解压音频组件失败")?;
+                out.sync_all().map_err(|_|"音频组件保存失败")?;
+            }
+        }
+    }
+    if FILES[1..].iter().all(|(name,hash)|matches(&stage.join(name),hash)) {Ok(())}
+    else {Err("本地转写组件校验失败，请重试。".into())}
+}
 pub(crate) fn prepare()->Result<(),String> {
     let _guard=INSTALL.try_lock().map_err(|_|"正在准备音频组件，请稍候")?;
     let root=root(); if verify(&root).is_ok() {return Ok(());}

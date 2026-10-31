@@ -6,7 +6,7 @@ use std::{
 };
 #[path = "../../../windows/src-tauri/src/backend/transcription/paraformer_shared.rs"]
 mod shared;
-use shared::{cut_samples, wav_data, Runtime, MODEL_SHA, RATE};
+use shared::{cut_samples, wav_data, ModelKind, Runtime, RATE};
 
 pub(super) fn transcribe(
     wav: &Path,
@@ -21,13 +21,14 @@ pub(super) fn transcribe(
     {
         return Err("录音、本地模型及缓存需要使用应用内的完整路径。".into());
     }
-    let runtime = Runtime::load(model_dir, runtime_dir)?;
+    let kind = ModelKind::available(model_dir);
+    let runtime = Runtime::load_model(model_dir, runtime_dir, kind)?;
     let mut file = File::open(wav).map_err(|e| e.to_string())?;
     let (start, len) = wav_data(&mut file)?;
     let cache = super::asr_cache::Cache::new(
         cache_dir,
         &serde_json::json!({
-            "provider":"local-paraformer", "model":MODEL_SHA, "runtime":"sherpa-onnx-1.13.1", "segmentation":"quiet-16s-v1"
+            "provider":kind.provider(), "model":kind.model_hash(), "runtime":"sherpa-onnx-1.13.1", "segmentation":"quiet-16s-v1"
         }),
     )?;
     let mut offset = 0u64;

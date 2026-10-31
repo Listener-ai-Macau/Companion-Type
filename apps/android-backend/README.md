@@ -22,7 +22,16 @@ it loads the pinned runtime packaged with the APK, including when its native
 libraries are not extracted. The four-argument form accepts and verifies a
 separate runtime directory. Invoke either form on a worker. The candidate expects
 the Paraformer zh-small int8 model and tokens under
-`sherpa-onnx-paraformer-zh-small-2024-03-09/` in the model root; the arm64 runtime
+`sherpa-onnx-paraformer-zh-small-2024-03-09/` in the model root. Alternatively,
+the pinned SenseVoice int8 model and tokens can be separately provisioned under
+`sherpa-onnx-sense-voice-2024-07-17/`; create a `ready` file only after both
+files are completely saved. The backend validates both file hashes when loading,
+prefers a completed SenseVoice directory and keeps its cache separate from
+Paraformer. The converted weights are from
+`csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17`, revision
+`2365baeacb507f821a0c8120fcee3d484dba7a07`, based on FunAudioLLM SenseVoice.
+The model weights are not included and their distribution terms remain to be
+confirmed for release. The arm64 runtime
 directory must contain the matching `libonnxruntime.so` and
 `libsherpa-onnx-c-api.so`. The model is separately provisioned and not included.
 The host APK must include the matching arm64 native libraries. This API makes

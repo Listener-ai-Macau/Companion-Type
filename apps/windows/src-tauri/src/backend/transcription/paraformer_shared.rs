@@ -13,6 +13,30 @@ pub(super) const MODEL_SHA: &str =
     "3ef6c19369b912f7caf3cef8e545c5ccd1a33d9d7ec792a46668dc41c4b229ec";
 pub(super) const TOKENS_SHA: &str =
     "4b2d964e18b9cf139b473003b6698fb2ed9a2a5ec55b93daa677b28f578897aa";
+pub(super) const SENSE_MODEL_SHA: &str =
+    "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51";
+pub(super) const SENSE_TOKENS_SHA: &str =
+    "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc";
+pub(super) const SENSE_DIR: &str = "sherpa-onnx-sense-voice-2024-07-17";
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(super) enum ModelKind { Paraformer, SenseVoice }
+impl ModelKind {
+    pub(super) fn available(root: &Path) -> Self {
+        let sense = root.join(SENSE_DIR);
+        if sense.join("ready").is_file() && sense.join("model.int8.onnx").is_file() && sense.join("tokens.txt").is_file() {
+            Self::SenseVoice
+        } else {
+            Self::Paraformer
+        }
+    }
+    pub(super) fn model_hash(self) -> &'static str {
+        match self { Self::Paraformer => MODEL_SHA, Self::SenseVoice => SENSE_MODEL_SHA }
+    }
+    pub(super) fn provider(self) -> &'static str {
+        match self { Self::Paraformer => "local-paraformer", Self::SenseVoice => "local-sensevoice" }
+    }
+}
 #[repr(C)]
 struct FeatureConfig {
     sample_rate: i32,
@@ -231,10 +255,17 @@ impl Drop for Runtime {
 }
 impl Runtime {
     pub(super) fn load(root: &Path, runtime_root: &Path) -> Result<Self, String> {
-        let model = root.join("sherpa-onnx-paraformer-zh-small-2024-03-09/model.int8.onnx");
-        let tokens = root.join("sherpa-onnx-paraformer-zh-small-2024-03-09/tokens.txt");
-        verified(&model, MODEL_SHA)?;
-        verified(&tokens, TOKENS_SHA)?;
+        Self::load_model(root, runtime_root, ModelKind::Paraformer)
+    }
+    pub(super) fn load_model(root: &Path, runtime_root: &Path, kind: ModelKind) -> Result<Self, String> {
+        let (dir, model_sha, tokens_sha) = match kind {
+            ModelKind::Paraformer => ("sherpa-onnx-paraformer-zh-small-2024-03-09", MODEL_SHA, TOKENS_SHA),
+            ModelKind::SenseVoice => (SENSE_DIR, SENSE_MODEL_SHA, SENSE_TOKENS_SHA),
+        };
+        let model = root.join(dir).join("model.int8.onnx");
+        let tokens = root.join(dir).join("tokens.txt");
+        verified(&model, model_sha)?;
+        verified(&tokens, tokens_sha)?;
         #[cfg(windows)]
         for (name, hash) in [
             (
@@ -270,6 +301,7 @@ impl Runtime {
         let model = cpath(&model)?;
         let tokens = cpath(&tokens)?;
         let cpu = CString::new("cpu").unwrap();
+        let chinese = CString::new("zh").unwrap();
         let greedy = CString::new("greedy_search").unwrap();
         unsafe {
             #[cfg(windows)]
@@ -322,7 +354,14 @@ impl Runtime {
             let mut config: OfflineRecognizerConfig = std::mem::zeroed();
             config.feat_config.sample_rate = RATE as i32;
             config.feat_config.feature_dim = 80;
-            config.model_config.paraformer.model = model.as_ptr();
+            match kind {
+                ModelKind::Paraformer => config.model_config.paraformer.model = model.as_ptr(),
+                ModelKind::SenseVoice => {
+                    config.model_config.sense_voice.model = model.as_ptr();
+                    config.model_config.sense_voice.language = chinese.as_ptr();
+                    config.model_config.sense_voice.use_itn = 0;
+                }
+            }
             config.model_config.tokens = tokens.as_ptr();
             config.model_config.num_threads = 2;
             config.model_config.provider = cpu.as_ptr();

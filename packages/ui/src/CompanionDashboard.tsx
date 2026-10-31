@@ -2554,10 +2554,11 @@ export function CompanionDashboard({
                 <span>{productSettings?.localAsrAvailable ? '本地模型已准备' : '需要准备本地模型'}</span>
                 <button type="button" className="ct-text-button" disabled={controlsBusy || settingsBusy || oobeBlockedByRecording || !onPrepareLocalAsr}
                   onClick={() => { if (!onPrepareLocalAsr) return; setSettingsBusy(true); setSettingsMsg(null);
-                    void onPrepareLocalAsr().then(() => setSettingsMsg('已从本机 Listener 复制并校验中文转写模型。'))
-                      .catch(() => setSettingsMsg('本地转写模型尚未准备完成。请确认本机 Listener 模型可用，或继续使用云端转写；已有录音会保留。')).finally(() => setSettingsBusy(false)); }}>
-                  从本机 Listener 准备模型
+                    void onPrepareLocalAsr().then(() => setSettingsMsg('本地中文转写模型已准备。'))
+                      .catch(() => setSettingsMsg('本地模型准备未完成，请检查网络和存储空间后重试；已有录音会保留。')).finally(() => setSettingsBusy(false)); }}>
+                  {settingsBusy ? '正在准备，请稍候…' : '准备本地转写模型'}
                 </button>
+                <p className="ct-step-meta">首次准备需下载约 240 MB，录音不会上传。模型：SenseVoice（FunAudioLLM），由 sherpa-onnx 转换。<a href="https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17" target="_blank" rel="noreferrer">模型来源</a> · <a href="https://github.com/modelscope/FunASR/blob/main/MODEL_LICENSE" target="_blank" rel="noreferrer">模型许可</a></p>
               </div> : formAsrProvider === 'volcengine' ? <>
                 <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
                 {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}
