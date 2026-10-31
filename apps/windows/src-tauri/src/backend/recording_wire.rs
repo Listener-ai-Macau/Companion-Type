@@ -764,7 +764,7 @@ mod tests {
         assert!(complete.metadata_complete);assert_eq!(complete.known_segments,1025);
         segments.remove(500);let missing=plan_group(&segments,&BTreeSet::new()).unwrap();
         assert_eq!(missing.missing_segments,vec![500]);assert!(!missing.metadata_complete);
-        let mut distant=original.clone();distant.segment_index=u32::MAX-1;distant.sample_offset=320;
+        let mut distant=original.clone();distant.segment_index=u32::MAX-1;distant.recording_id=99999;distant.sample_offset=320;
         let sparse=plan_group(&[original,distant],&BTreeSet::new()).unwrap();
         assert_eq!(sparse.missing_segments.len(),1024);assert!(!sparse.metadata_complete);
     }
