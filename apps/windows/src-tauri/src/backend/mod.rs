@@ -4246,10 +4246,10 @@ fn transcription_chunk_paths(session: &CompanionV1HostSession) -> Result<Vec<Str
     if session.device_recording_key.is_some() {
         // V2 chunks are immutable encoded originals, not independent WAVs.
         // Verify their exact receipt/CRC/SHA/sample axis and assembled audio
-        // before handing the one continuous WAV to the existing ASR pipeline.
+        // before handing all continuous WAV parts to the existing ASR pipeline.
         // The raw chunk metadata remains the provenance/consume contract.
-        recording_wire::receiver::Receiver::verify_saved_row(session)?;
-        return Ok(vec![session.audio_path.clone().ok_or("连续录音缺少已校验的原音。")?]);
+        return Ok(recording_wire::receiver::Receiver::verified_audio_paths(session)?
+            .into_iter().map(|path| path.to_string_lossy().into_owned()).collect());
     }
     // The host recorder seals five-minute timeline entries over ONE durable
     // WAV. Recognise that exact generated contract, not arbitrary duplicates:

@@ -27,13 +27,13 @@ impl Receiver {
         Ok(marks)
     }
     fn complete_captured_samples(&self)->Option<u64> {
-        self.receipt.audio.as_ref().and_then(|a|a.timeline.as_ref().map(|t|t.captured_samples)
-            // Schema1 has no pause events; verify_audio/decode still prove the
+        self.playback_samples().and_then(|samples| self.playback_timeline().map(|t|t.captured_samples)
+            // Schema1 has no pause events; verification still proves the
             // exact frame/sample count and one 320-sample logical pre-skip.
-            .or_else(||a.samples.checked_add(320)))
+            .or_else(||samples.checked_add(320)))
     }
     fn source_origin_samples(&self)->u64 {
-        self.receipt.audio.as_ref().and_then(|a|a.timeline.as_ref()).map_or(320,|t|t.source_origin_samples())
+        self.playback_timeline().map_or(320,|t|t.source_origin_samples())
     }
     /// An idempotent user STOP can return the existing completed result only
     /// after reopening the exact receipt and rechecking original segments/WAV.
@@ -57,10 +57,13 @@ impl Receiver {
         Self::verify_saved_row_inner(row,false,Some(anchor)).map(|_|())
     }
     pub(crate) fn verified_source_timeline(row:&crate::companion_v1::CompanionV1HostSession)->Result<Option<cop1::Timeline>,String> {
-        Self::verify_saved_row_inner(row,false,None)
+        Self::verify_saved_row_inner(row,false,None).map(|(timeline,_)|timeline)
+    }
+    pub(crate) fn verified_audio_paths(row:&crate::companion_v1::CompanionV1HostSession)->Result<Vec<PathBuf>,String> {
+        Self::verify_saved_row_inner(row,false,None).map(|(_,paths)|paths)
     }
     fn verify_saved_row_inner(row: &crate::companion_v1::CompanionV1HostSession, require_reclaimed: bool,
-        original_anchor:Option<u32>) -> Result<Option<cop1::Timeline>,String> {
+        original_anchor:Option<u32>) -> Result<(Option<cop1::Timeline>,Vec<PathBuf>),String> {
         let key = super::super::SessionKey::from_public(row.device_recording_key.as_ref().ok_or_else(fail)?)?;
         let audio = Path::new(row.audio_path.as_deref().ok_or_else(fail)?);
         if !audio.is_absolute() {return Err(fail());}
@@ -76,9 +79,10 @@ impl Receiver {
         }
         let mut receiver=Receiver::open(root,&first.wire)?;
         let plan=receiver.plan()?;
+        let playback_paths=receiver.playback_paths()?;
         if receiver.descriptors()?.iter().find(|d|d.flags&2!=0).and_then(Descriptor::end_reason)
             .is_some_and(|reason|row.device_recording_end_reason!=Some(reason)) {return Err(fail());}
-        if !plan.payloads_complete || receiver.receipt.audio.is_none() || receiver.audio_path()!=audio
+        if !plan.payloads_complete || playback_paths.first().is_none_or(|path|path!=audio)
             || receiver.receipt.device.as_deref().zip(row.source_device_id.as_deref())
                 .is_none_or(|(a,b)|!crate::backend::device_connection::same_device_id(a,b))
             || receiver.receipt.segments.iter().any(|s| !s.received || (require_reclaimed && !s.acked))
@@ -91,7 +95,15 @@ impl Receiver {
                 && c.path.as_deref()==Some(receiver.payload_path(&d).to_string_lossy().as_ref())
                 && c.bytes==u64::from(d.encoded_length) && matches!(c.status.as_str(),"sealed"|"synced")) {return Err(fail());}
         }
-        Ok(receiver.receipt.audio.as_ref().and_then(|a|a.timeline.clone()))
+        if let Some(parts)=&receiver.receipt.parts_audio {
+            let details=parts.manifest.owned_details(&receiver.root,&receiver.audio_path())?;
+            for (index,(path,_,samples,bytes)) in details.iter().enumerate() {
+                if !row.chunks.iter().any(|chunk|chunk.id==format!("{}-received-part-{index:08}",receiver.stem)
+                    && chunk.path.as_deref()==path.to_str() && chunk.bytes==*bytes
+                    && chunk.duration_ms==samples/16 && chunk.status=="synced") {return Err(fail());}
+            }
+        }
+        Ok((receiver.playback_timeline().cloned(),playback_paths))
     }
     /// Checkpoint an incomplete meeting as well as a complete one. Sealed raw
     /// segments are discoverable after restart before any device consumption;
@@ -115,7 +127,7 @@ impl Receiver {
         let device_marks=self.received_device_marks()?;
         let complete_samples=self.complete_captured_samples();
         let source_origin=self.source_origin_samples();
-        let playback_samples=self.receipt.audio.as_ref().map(|a|a.samples);
+        let playback_samples=self.playback_samples();
         let mut chunks = Vec::new();
         let mut bytes = 0u64;
         for (segment, d) in self.receipt.segments.iter().zip(&ds) {
@@ -133,8 +145,11 @@ impl Receiver {
             });
             bytes += u64::from(d.encoded_length);
         }
-        let audio_path = self.audio_path().to_string_lossy().into_owned();
-        let complete = self.receipt.audio.is_some();
+        let logical_path = self.audio_path().to_string_lossy().into_owned();
+        let playback_paths = self.playback_paths()?;
+        let audio_path = playback_paths.first().map(|p| p.to_string_lossy().into_owned())
+            .unwrap_or_else(|| logical_path.clone());
+        let complete = !playback_paths.is_empty();
         let local_audio_pending=plan.payloads_complete && !complete;
         if let Some(audio) = &self.receipt.audio {
             self.verify_audio(audio)?;
@@ -148,13 +163,23 @@ impl Receiver {
                 bytes: audio.bytes,
                 status: "synced".into(),
             });
+        } else if let Some(audio) = &self.receipt.parts_audio {
+            bytes = 0;
+            for (index, (path, _, samples, part_bytes)) in audio.manifest
+                .owned_details(&self.root, &self.audio_path())?.into_iter().enumerate() {
+                bytes = bytes.checked_add(part_bytes).ok_or_else(fail)?;
+                chunks.push(CompanionV1AudioChunk {
+                    id: format!("{}-received-part-{index:08}", self.stem),
+                    path: Some(path.to_string_lossy().into_owned()),
+                    started_at: None,
+                    stopped_at: Some("verified-v2-session-part".into()),
+                    duration_ms: samples / 16,
+                    bytes: part_bytes,
+                    status: "synced".into(),
+                });
+            }
         }
-        let duration = self
-            .receipt
-            .audio
-            .as_ref()
-            .map(|a| a.samples / 16)
-            .unwrap_or(plan.sample_count / 16);
+        let duration = playback_samples.map(|samples| samples / 16).unwrap_or(plan.sample_count / 16);
         // Known sealed segments can be consumed while the session grows. Only
         // a complete LAST catalogue plus all exact receipts retires the whole
         // session; missing metadata must not hide a tail or a missing segment.
@@ -169,7 +194,9 @@ impl Receiver {
             if let Some(old) = binding.map(|i| &next[i]) {
                 if old.source != "boardDevice"
                     || (old.audio_path.as_deref().is_some_and(|p| p != audio_path)
-                        && !owned_capture_placeholder(old, &logical_key))
+                        && !owned_capture_placeholder(old, &logical_key)
+                        && !(self.receipt.parts_audio.is_some() && !old.audio_stored
+                            && old.audio_path.as_deref() == Some(logical_path.as_str())))
                     || (old.audio_path.is_none() && !old.chunks.is_empty())
                     || old.source_device_id.as_deref().is_some_and(|old| {
                         !crate::backend::device_connection::same_device_id(old, device)
@@ -293,7 +320,9 @@ impl Receiver {
         let row = &sessions[self.library_binding(&sessions,&key)?.ok_or_else(fail)?];
         if self.descriptors()?.iter().find(|d|d.flags&2!=0).and_then(Descriptor::end_reason)
             .is_some_and(|reason|row.device_recording_end_reason!=Some(reason)) {return Err(fail());}
-        if row.audio_path.as_deref() != Some(self.audio_path().to_string_lossy().as_ref())
+        let playback_paths = self.playback_paths()?;
+        let expected_path = playback_paths.first().cloned().unwrap_or_else(|| self.audio_path());
+        if row.audio_path.as_deref() != Some(expected_path.to_string_lossy().as_ref())
             || !row
                 .source_device_id
                 .as_deref()
@@ -303,9 +332,9 @@ impl Receiver {
             return Err(fail());
         }
         crate::backend::recording_bookmarks::device::require_saved_with_origin(row,&self.received_device_marks()?,
-            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples(),self.receipt.audio.as_ref().map(|a|a.samples))?;
+            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples(),self.playback_samples())?;
         crate::backend::recording_bookmarks::logical::require_saved_with_origin(row,
-            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples(),self.receipt.audio.as_ref().map(|a|a.samples))?;
+            &SessionKey::from_public(&key)?,self.complete_captured_samples(),self.source_origin_samples(),self.playback_samples())?;
         let mut acks = Vec::new();
         for (s, d) in self.receipt.segments.iter().zip(self.descriptors()?) {
             if !s.received || s.acked {

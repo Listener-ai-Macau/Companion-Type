@@ -117,6 +117,12 @@ impl PartManifest {
     }
 
     pub(super) fn total_samples(&self) -> u64 { self.total_samples }
+
+    pub(super) fn owned_details(&self, root: &Path, source: &Path) -> Result<Vec<(PathBuf, u64, u64, u64)>, String> {
+        let paths = self.owned_paths(root, source)?;
+        Ok(paths.into_iter().zip(&self.parts).map(|(path, part)|
+            (path, part.first_sample, part.samples, part.bytes)).collect())
+    }
 }
 
 struct OpenPart {
@@ -304,6 +310,44 @@ mod tests {
         assert!(decode_to_parts(&descriptors,&mut files,&dir,audio.samples,false,1000).is_err());
         assert_eq!(fs::read(&paths[0]).unwrap(),first,"existing output must never be replaced");
         drop(files);drop(receiver);fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn published_parts_reopen_and_transcribe_as_one_complete_recording() {
+        let parent=std::env::temp_dir();
+        let requested=parent.join(format!("companion-parts-published-{}",uuid::Uuid::new_v4()));
+        assert_eq!(requested.parent(),Some(parent.as_path())); fs::create_dir(&requested).unwrap();
+        let root=fs::canonicalize(&requested).unwrap();
+        assert!(root.starts_with(fs::canonicalize(&parent).unwrap()));
+        let index=root.join("sessions.json");
+        let source=super::super::source_boundary_tests::fixture();
+        let first=source[0].0.encode().unwrap();
+        let mut receiver=Receiver::open(&root,&first).unwrap();
+        for (descriptor,payload) in &source { receiver.accept_segment(&descriptor.encode().unwrap(),payload).unwrap(); }
+        receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
+        let pending=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert!(!pending[0].audio_stored);
+        let paths=receiver.assemble_parts_with_limit(1000).unwrap();
+        assert!(paths.len()>2);
+        receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert_eq!(rows.len(),1); let row=&rows[0];
+        assert!(row.audio_stored);
+        assert_eq!(row.audio_path.as_deref(),paths[0].to_str());
+        assert_eq!(Receiver::verified_audio_paths(row).unwrap(),paths);
+        assert_eq!(crate::backend::transcription_chunk_paths(row).unwrap(),
+            paths.iter().map(|p|p.to_string_lossy().into_owned()).collect::<Vec<_>>());
+        assert_eq!(receiver.ack_candidates(&index).unwrap().len(),source.len());
+        drop(receiver);
+        let mut reopened=Receiver::open(&root,&first).unwrap();
+        reopened.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert_eq!(Receiver::verified_audio_paths(&rows[0]).unwrap(),paths);
+        drop(reopened);
+        let held=root.join("temporarily-missing.wav"); fs::rename(&paths[1],&held).unwrap();
+        assert!(crate::backend::transcription_chunk_paths(&rows[0]).is_err());
+        fs::rename(&held,&paths[1]).unwrap();
+        fs::remove_dir_all(root).unwrap();
     }
 
     #[test]

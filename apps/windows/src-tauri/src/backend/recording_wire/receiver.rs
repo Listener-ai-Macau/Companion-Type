@@ -274,6 +274,23 @@ impl Receiver {
     pub(crate) fn audio_path(&self) -> PathBuf {
         self.root.join(format!("{}.wav", self.stem))
     }
+    fn playback_paths(&self) -> Result<Vec<PathBuf>, String> {
+        if let Some(audio) = &self.receipt.parts_audio {
+            audio.manifest.owned_paths(&self.root, &self.audio_path())
+        } else if self.receipt.audio.is_some() {
+            Ok(vec![self.audio_path()])
+        } else {
+            Ok(Vec::new())
+        }
+    }
+    fn playback_samples(&self) -> Option<u64> {
+        self.receipt.audio.as_ref().map(|a| a.samples)
+            .or_else(|| self.receipt.parts_audio.as_ref().map(|a| a.manifest.total_samples()))
+    }
+    fn playback_timeline(&self) -> Option<&cop1::Timeline> {
+        self.receipt.audio.as_ref().and_then(|a| a.timeline.as_ref())
+            .or_else(|| self.receipt.parts_audio.as_ref().and_then(|a| a.timeline.as_ref()))
+    }
     fn payload_path(&self, d: &Descriptor) -> PathBuf {
         let digest = format!("{:x}", Sha256::digest(&d.sha256));
         self.root.join(format!(
