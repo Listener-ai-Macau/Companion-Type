@@ -68,29 +68,27 @@ fn conditional_action_from_summary_also_restores_condition_before_reminder() {
 }
 
 #[test]
-fn focused_actions_restore_conditional_source_and_do_not_duplicate_existing_assignment() {
-    let source = "小林负责整理材料，周五发给大家。如果客户提出修改，\n小陈下周一再确认交货日期。";
-    let part = session(source); let (mut minutes, mut evidence)=response(&part);
-    minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {
-        text:"整理材料".into(),owner:Some("小林".into()),due:Some("周五".into()) });
-    evidence.push(Evidence {field:"actionItems".into(), index:0, quote:"小林负责整理材料，周五发给大家。".into()});
-    let actions=vec![
-        FocusedAction {text:"整理材料".into(),owner:Some("小林".into()),due:Some("周五".into()),quote:"小林负责整理材料，周五发给大家。".into()},
-        FocusedAction {text:"确认交货日期".into(),owner:Some("小陈".into()),due:Some("下周一".into()),quote:"小陈下周一再确认交货日期。".into()},
-        FocusedAction {text:"伪造事项".into(),owner:None,due:None,quote:"原文不存在的事项".into()},
-    ];
-    merge_focused_actions(&mut minutes,&mut evidence,source,actions);
+fn literal_conditional_followup_is_added_without_unrelated_or_cancelled_items() {
+    let source="小林负责整理材料。\n如果客户提出修改，小陈下周一再确认交货日期。\n如果取消订单，不需要再确认交货日期。";
+    let part=session(source);let (mut minutes,mut evidence)=response(&part);
+    append_conditional_source_actions(&mut minutes,&mut evidence,source);
     preserve_conditional_actions(&mut minutes,&mut evidence,source);
-    let omitted=retain_source_backed(&mut minutes,&mut evidence,source);
-    mark_uncertain_items(&mut minutes,&evidence);
-    assert_eq!(omitted,1); assert_eq!(minutes.action_items.len(),2);
-    assert_eq!(minutes.action_items[0].owner.as_deref(),Some("小林"));
-    assert!(minutes.action_items[1].text.contains("如果客户提出修改"));
-    assert!(!minutes.action_items[1].text.contains('\n'));
-    assert!(minutes.action_items[1].text.contains("确认交货日期"));
-    assert_eq!(minutes.action_items[1].owner.as_deref(),Some("小陈"));
-    assert_eq!(minutes.action_items[1].due,None,"conditional dates cannot become unconditional reminders");
+    assert_eq!(minutes.action_items.len(),1);
+    assert!(minutes.action_items[0].text.contains("如果客户提出修改"));
+    assert!(minutes.action_items[0].due.is_none());
+    assert_eq!(retain_source_backed(&mut minutes,&mut evidence,source),0);
     validate_chapter(&minutes,&evidence,source).unwrap();
+}
+
+#[test]
+fn unrelated_previous_line_is_not_a_condition_for_a_task() {
+    let source="如果是参与这个\n请小赵明天下午把费用清单发给我。";
+    let part=session(source);let (mut minutes,mut evidence)=response(&part);
+    minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem{text:"发费用清单".into(),owner:Some("小赵".into()),due:Some("明天下午".into())});
+    evidence.push(Evidence{field:"actionItems".into(),index:0,quote:"请小赵明天下午把费用清单发给我".into()});
+    preserve_conditional_actions(&mut minutes,&mut evidence,source);
+    assert_eq!(minutes.action_items[0].due.as_deref(),Some("明天下午"));
+    assert!(!minutes.action_items[0].text.contains("如果"));
 }
 
 #[test]
@@ -380,9 +378,9 @@ fn request_budget_creates_partial_then_continues_without_lost_source() {
     let root=root(); let source=session(&"word ".repeat(CHUNK_BYTES * 7));
     let total=plan(&source.transcript_text).unwrap().len(); assert!(total>MAX_FRESH_REQUESTS);
     let first=run_with(&root,"https://fixture.invalid","model","key",&source,"first",|_,_,p,_|Ok(response(p))).unwrap();
-    assert_eq!(first.processing.as_ref().unwrap().completed_chunks,MAX_FRESH_REQUESTS / 2); assert_eq!(first.quality,"draft");
+    assert_eq!(first.processing.as_ref().unwrap().completed_chunks,MAX_FRESH_REQUESTS); assert_eq!(first.quality,"draft");
     let next=run_with(&root,"https://fixture.invalid","model","key",&source,"retry",|_,_,p,_|Ok(response(p))).unwrap();
-    assert_eq!(next.processing.as_ref().unwrap().resumed_chunks,MAX_FRESH_REQUESTS / 2);
+    assert_eq!(next.processing.as_ref().unwrap().resumed_chunks,MAX_FRESH_REQUESTS);
     let mut current=next;
     while !current.processing.as_ref().unwrap().is_complete() {
         current=run_with(&root,"https://fixture.invalid","model","key",&source,"continue",|_,_,p,_|Ok(response(p))).unwrap();
