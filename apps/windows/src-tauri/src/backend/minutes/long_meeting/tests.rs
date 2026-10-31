@@ -350,3 +350,74 @@ fn product_text_erasure_clears_minutes_cache_even_without_any_asr_cache() {
     let report=manager.erase_selected_transcript(&snapshot);
     assert_eq!(report.deleted_files,1); assert_eq!(report.failed_files,0); assert!(!path.exists()); cleanup(root);
 }
+
+#[test]
+fn overview_keeps_full_minutes_and_uses_only_selected_items_in_original_order() {
+    let source = session("会议原文");
+    let (mut minutes, _) = response(&source);
+    minutes.summary = (0..15).map(|i| format!("原有重点{i}")).collect();
+    minutes.markdown = "# 原来的完整纪要\n\n## 行动项\n\n- 跟进报价".into();
+    let full = minutes.markdown.clone();
+    let details = minutes.summary.clone();
+    prepend_overview(&mut minutes, &[12, 1, 8]);
+    assert!(minutes.markdown.starts_with("## 全会重点\n\n- 原有重点1\n- 原有重点8\n- 原有重点12"));
+    assert!(minutes.markdown.ends_with(&full));
+    assert_eq!(minutes.summary, details);
+    for bad in [vec![], vec![1, 1], vec![15], (0..13).collect()] {
+        let previous = minutes.markdown.clone();
+        prepend_overview(&mut minutes, &bad);
+        assert_eq!(minutes.markdown, previous);
+    }
+}
+
+#[test]
+fn overview_provider_response_must_be_valid_unique_indices() {
+    use std::{io::{Read, Write}, net::TcpListener, thread};
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let address = listener.local_addr().unwrap();
+    let worker = thread::spawn(move || {
+        for content in [r#"{"indices":[2,0]}"#, r#"{"indices":[1,1]}"#] {
+            let (mut stream, _) = listener.accept().unwrap();
+            stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
+            let mut data = Vec::new(); let mut buffer = [0u8; 4096];
+            loop {
+                let n = stream.read(&mut buffer).unwrap(); if n == 0 { break; }
+                data.extend_from_slice(&buffer[..n]);
+                if let Some(i) = data.windows(4).position(|w| w == b"\r\n\r\n") {
+                    let headers = String::from_utf8_lossy(&data[..i]);
+                    let length: usize = headers.lines().find_map(|l| l.split_once(':')
+                        .filter(|(k,_)| k.eq_ignore_ascii_case("content-length"))
+                        .and_then(|(_,v)| v.trim().parse().ok())).unwrap();
+                    if data.len() >= i + 4 + length { break; }
+                }
+            }
+            let payload = serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content}}]}).to_string();
+            write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: {}\r\n\r\n{}",payload.len(),payload).unwrap();
+        }
+    });
+    let endpoint = format!("http://{address}/chat/completions");
+    let client = reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
+    let items = vec!["第一项".into(), "第二项".into(), "第三项".into()];
+    assert_eq!(request_overview_section(&endpoint, "test", "test-key", &items, 0, items.len(), &client).unwrap(), vec![2,0]);
+    assert!(request_overview_section(&endpoint, "test", "test-key", &items, 0, items.len(), &client).is_err());
+    worker.join().unwrap();
+}
+
+#[test]
+#[ignore = "live public benchmark and configured DeepSeek service"]
+fn real_public_long_meeting_overview() {
+    let input = std::env::var("COMPANION_PUBLIC_MINUTES_RESULT").unwrap();
+    let output = std::env::var("COMPANION_PUBLIC_OVERVIEW_RESULT").unwrap();
+    let value: Value = serde_json::from_slice(&fs::read(input).unwrap()).unwrap();
+    let mut minutes: CompanionV1MeetingMinutes = serde_json::from_value(value["minutes"].clone()).unwrap();
+    let original = minutes.markdown.clone();
+    let key = std::env::var("DEEPSEEK_API_KEY").unwrap();
+    let model = std::env::var("DEEPSEEK_MODEL").unwrap_or_else(|_| "deepseek-chat".into());
+    let base = std::env::var("DEEPSEEK_BASE_URL").unwrap_or_else(|_| "https://api.deepseek.com".into());
+    let endpoint = format!("{}/chat/completions", base.trim_end_matches('/'));
+    let client = super::super::deepseek_http_client(&endpoint).unwrap();
+    let indices = request_overview(&endpoint, &model, &key, &minutes.summary, &client).unwrap();
+    prepend_overview(&mut minutes, &indices);
+    assert!(minutes.markdown.ends_with(&original));
+    fs::write(output, serde_json::to_vec_pretty(&serde_json::json!({"indices":indices,"minutes":minutes})).unwrap()).unwrap();
+}

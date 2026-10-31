@@ -286,7 +286,7 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
     generated_at: &str, client: &reqwest::blocking::Client) -> Result<CompanionV1MeetingMinutes, String> {
     let root = cache_root().ok_or("纪要分段缓存路径不可用，已有转写保留。")?;
     let slices = plan(&session.transcript_text)?;
-    run_with(&root, endpoint, model, key, session, generated_at, |index, total, part, _timeout| {
+    let mut minutes = run_with(&root, endpoint, model, key, session, generated_at, |index, total, part, _timeout| {
         // The generic L0 anchors include the first few transcript lines even
         // when they are filler. Long meetings retain their complete transcript
         // and cited source quotes, so do not force those lines into a summary.
@@ -302,7 +302,77 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
         let evidence: Vec<Evidence> = serde_json::from_value(object.get("evidence").cloned().unwrap_or(Value::Null))
             .map_err(|_| "分段纪要缺少原文引用，未认定整场完成。")?;
         Ok((minutes, evidence))
-    })
+    })?;
+    // An overview is an optional reading aid. Preserve all detailed minutes and
+    // never let a failed extra request downgrade or erase a completed meeting.
+    if minutes.processing.as_ref().is_some_and(|p| p.complete) && minutes.summary.len() > 12 {
+        if let Ok(indices) = request_overview(endpoint, model, key, &minutes.summary, client) {
+            prepend_overview(&mut minutes, &indices);
+        }
+    }
+    Ok(minutes)
+}
+
+// Select existing source-backed chapter items instead of inventing a second
+// set of facts. Full details remain in the original markdown and JSON fields.
+fn prepend_overview(minutes: &mut CompanionV1MeetingMinutes, indices: &[usize]) {
+    if indices.is_empty() || indices.len() > 12 { return; }
+    let mut selected = indices.to_vec();
+    selected.sort_unstable();
+    selected.dedup();
+    if selected.len() != indices.len() || selected.iter().any(|&i| i >= minutes.summary.len()) { return; }
+    let text = selected.iter().map(|&i| format!("- {}", minutes.summary[i])).collect::<Vec<_>>().join("\n");
+    minutes.markdown = format!("## 全会重点\n\n{text}\n\n{}", minutes.markdown);
+}
+
+fn request_overview(endpoint: &str, model: &str, key: &str, items: &[String],
+    client: &reqwest::blocking::Client) -> Result<Vec<usize>, String> {
+    let third = items.len() / 3;
+    let two_thirds = items.len() * 2 / 3;
+    let mut selected = Vec::new();
+    for (start, end) in [(0, third), (third, two_thirds), (two_thirds, items.len())] {
+        selected.extend(request_overview_section(endpoint, model, key, items, start, end, client)?);
+    }
+    Ok(selected)
+}
+
+// Each section is selected independently so a long opening cannot drown out
+// later topics. The model returns IDs of existing items, never rewritten facts.
+fn request_overview_section(endpoint: &str, model: &str, key: &str, items: &[String],
+    start: usize, end: usize, client: &reqwest::blocking::Client) -> Result<Vec<usize>, String> {
+    let input = (start..end).map(|i| serde_json::json!({"id":i,"text":items[i]})).collect::<Vec<_>>();
+    let input = serde_json::to_string(&input).map_err(|_| "无法读取纪要重点。")?;
+    let instruction = "你是会议重点筛选助手。每条内容有 id。选出最能概括本段主要议题和结论的2至3条，排除主持介绍、致谢和重复内容。只返回提供的原有id，不改写或增加事实。仅返回 JSON 对象 {\"indices\":[数字]}。";
+    if input.len().saturating_add(instruction.len()) > MAX_PROMPT_BYTES {
+        return Err("纪要重点过长，请查看完整纪要。".into());
+    }
+    let endpoint = super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
+    let mut body = serde_json::json!({"model":model,"temperature":0.1,
+        "messages":[{"role":"system","content":instruction},{"role":"user","content":input}],
+        "response_format":{"type":"json_object"},"max_tokens":512});
+    if model.to_ascii_lowercase().starts_with("deepseek-") {
+        body["thinking"] = serde_json::json!({"type":"disabled"});
+    }
+    let response = client.post(endpoint).bearer_auth(key).timeout(Duration::from_secs(15)).json(&body).send()
+        .map_err(|e| super::safe_minutes_http_error(super::http_policy::Failure::from_reqwest(e)))?;
+    let payload = super::http_policy::response_json(response, super::http_policy::MAX_RESPONSE_BYTES)
+        .map_err(super::safe_minutes_http_error)?;
+    if payload.pointer("/choices/0/finish_reason").and_then(Value::as_str) != Some("stop") {
+        return Err("纪要重点未生成，请查看完整纪要。".into());
+    }
+    let content = payload.pointer("/choices/0/message/content").and_then(Value::as_str)
+        .ok_or("纪要重点未生成，请查看完整纪要。")?;
+    let result: Value = serde_json::from_str(super::strip_code_fences(content).trim())
+        .map_err(|_| "纪要重点格式不正确，请查看完整纪要。")?;
+    let values = result.get("indices").and_then(Value::as_array).ok_or("纪要重点缺失。")?;
+    let mut selected = Vec::new();
+    for value in values {
+        let index = value.as_u64().and_then(|n| usize::try_from(n).ok())
+            .filter(|&n| n >= start && n < end).ok_or("纪要重点格式不正确。")?;
+        if !selected.contains(&index) && selected.len() < 3 { selected.push(index); }
+    }
+    if selected.len() < 2 { return Err("纪要重点不完整，请查看完整纪要。".into()); }
+    Ok(selected)
 }
 
 fn run_with<F>(root: &Path, endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
