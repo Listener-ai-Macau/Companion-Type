@@ -334,16 +334,16 @@ mod tests {
         assert_eq!(rows.len(),1); let row=&rows[0];
         assert!(row.audio_stored);
         assert_eq!(row.audio_path.as_deref(),paths[0].to_str());
+        assert_eq!(receiver.ack_candidates(&index).unwrap().len(),source.len());
+        drop(receiver);
         assert_eq!(Receiver::verified_audio_paths(row).unwrap(),paths);
         assert_eq!(crate::backend::transcription_chunk_paths(row).unwrap(),
             paths.iter().map(|p|p.to_string_lossy().into_owned()).collect::<Vec<_>>());
-        assert_eq!(receiver.ack_candidates(&index).unwrap().len(),source.len());
-        drop(receiver);
         let mut reopened=Receiver::open(&root,&first).unwrap();
         reopened.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
+        drop(reopened);
         let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
         assert_eq!(Receiver::verified_audio_paths(&rows[0]).unwrap(),paths);
-        drop(reopened);
         let held=root.join("temporarily-missing.wav"); fs::rename(&paths[1],&held).unwrap();
         assert!(crate::backend::transcription_chunk_paths(&rows[0]).is_err());
         fs::rename(&held,&paths[1]).unwrap();
