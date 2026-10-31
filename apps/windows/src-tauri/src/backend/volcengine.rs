@@ -442,7 +442,7 @@ impl VolcengineSaucAsr {
 
         let best = Arc::new(std::sync::Mutex::new(String::new()));
         let best_r = Arc::clone(&best);
-        let (final_tx, final_rx) = oneshot::channel::<Result<(), String>>();
+        let (final_tx, mut final_rx) = oneshot::channel::<Result<(), String>>();
         let audio_ended = Arc::new(AtomicBool::new(false));
         let audio_ended_r = Arc::clone(&audio_ended);
         let _receiver_task = ReceiveTask(tokio::spawn(async move {
@@ -465,6 +465,14 @@ impl VolcengineSaucAsr {
         let mut seq: i32 = 2;
         let mut pending = Vec::<u8>::with_capacity(TARGET_AUDIO_CHUNK_BYTES * 2);
         loop {
+            // The service can reject the stream while the microphone keeps
+            // producing. Do not wait for STOP before surfacing that failure.
+            match final_rx.try_recv() {
+                Ok(Err(error)) => return Err(error),
+                Ok(Ok(())) => return Err("Volcengine live result ended before recording input".into()),
+                Err(oneshot::error::TryRecvError::Closed) => return Err("Volcengine live final channel closed".into()),
+                Err(oneshot::error::TryRecvError::Empty) => {}
+            }
             if stop.load(Ordering::SeqCst) {
                 // The recorder has stopped producing. Drain every already
                 // accepted buffer before sending EOS so the final transcript
@@ -1455,6 +1463,39 @@ mod tests {
             assert_eq!(result.unwrap(), "complete");
             assert_eq!(actual, expected, "queued PCM must be sent before final: {resource}");
         }
+    }
+
+    #[test]
+    fn live_provider_error_is_reported_before_recording_stops() {
+        let listener=std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let endpoint=format!("ws://{}",listener.local_addr().unwrap());listener.set_nonblocking(true).unwrap();
+        let (sent_tx,sent_rx)=std::sync::mpsc::channel();
+        let server=std::thread::spawn(move || {
+            let rt=tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
+            rt.block_on(async {
+                let listener=tokio::net::TcpListener::from_std(listener).unwrap();
+                let (stream,_)=listener.accept().await.unwrap();let mut ws=tokio_tungstenite::accept_async(stream).await.unwrap();
+                assert!(matches!(ws.next().await.unwrap().unwrap(),Message::Binary(_)));
+                ws.send(Message::Binary(frame_build(MessageType::FullServerResponse,Flags::None,Serialization::Json,
+                    br#"{"result":{"text":"retained partial"}}"#,None))).await.unwrap();
+                ws.send(Message::Binary(frame_build(MessageType::FullServerResponse,Flags::None,Serialization::Json,
+                    br#"{"error":"synthetic failure"}"#,None))).await.unwrap();
+                sent_tx.send(()).unwrap();tokio::time::sleep(Duration::from_millis(1800)).await;
+            });
+        });
+        let mut provider=VolcengineSaucAsr::new(VolcengineCredentials{app_id:"test".into(),access_token:"test".into(),resource_id:"volc.seedasr.sauc.duration".into()});
+        provider.endpoint=endpoint;let (pcm_tx,pcm_rx)=std::sync::mpsc::channel();let (result_tx,result_rx)=std::sync::mpsc::channel();
+        let seen=Arc::new(std::sync::Mutex::new(String::new()));let callback=Arc::clone(&seen);
+        let worker=std::thread::spawn(move || {
+            let result=provider.stream_pcm_session(pcm_rx,Arc::new(AtomicBool::new(false)),move |text|*callback.lock().unwrap()=text.to_string());
+            result_tx.send(result).unwrap();
+        });
+        sent_rx.recv_timeout(Duration::from_secs(5)).unwrap();
+        let early=result_rx.recv_timeout(Duration::from_millis(900));let reported_before_stop=early.is_ok();
+        drop(pcm_tx);let result=early.unwrap_or_else(|_|result_rx.recv_timeout(Duration::from_secs(5)).unwrap());
+        worker.join().unwrap();server.join().unwrap();
+        assert!(reported_before_stop,"service error remained hidden until recording stopped");
+        assert!(result.is_err());assert_eq!(&*seen.lock().unwrap(),"retained partial");
     }
 
     #[test]
