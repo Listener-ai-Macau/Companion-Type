@@ -83,6 +83,17 @@ public final class MeetingStore {
             this.tasks=Collections.unmodifiableList(new ArrayList<>(tasks));this.recoveredFromBackup=recovered;
         }
     }
+    /** Saved AI result, separate from the user's notes and confirmed tasks. */
+    public static final class Minutes {
+        public final String sessionKey,json;
+        public final long revision,sourceMeetingRevision;
+        /** The saved transcript has changed, or is unavailable; review before reuse. */
+        public final boolean sourceChanged,sourceMissing,recoveredFromBackup;
+        private Minutes(String key,String json,long revision,long sourceRevision,boolean changed,boolean missing,boolean recovered) {
+            this.sessionKey=key;this.json=json;this.revision=revision;sourceMeetingRevision=sourceRevision;
+            sourceChanged=changed;sourceMissing=missing;recoveredFromBackup=recovered;
+        }
+    }
     public static final class Inventory {
         public final List<Snapshot> meetings;
         /** Number of unreadable files or temporarily unavailable meetings; others remain available. */
@@ -114,6 +125,94 @@ public final class MeetingStore {
     }
     /** Returns null for a session with no saved text or tasks. */
     public Snapshot load(String key) throws IOException {return locked(key,()->loadLocked(key));}
+    /** Reopen the last saved AI result, even if its source transcript has changed. */
+    public Minutes loadMinutes(String key) throws IOException {
+        return locked(key,()->{
+            Snapshot meeting;
+            try{meeting=loadLocked(key);}catch(IOException error){meeting=null;}
+            return loadMinutesLocked(key,meeting);
+        });
+    }
+    /**
+     * Save a generated or edited result for the transcript actually sent to AI.
+     * Both revisions are obtained before generation; 0 means no saved minutes.
+     * A conflict leaves both the meeting and the prior result untouched.
+     */
+    public Minutes saveMinutes(String key,long expectedMeetingRevision,long expectedMinutesRevision,
+                               String sourceTranscript,String minutesJson) throws IOException {
+        if(expectedMeetingRevision<=0||expectedMinutesRevision<0||sourceTranscript==null||minutesJson==null||minutesJson.trim().isEmpty())
+            throw new IllegalArgumentException("meeting, source text and minutes required");
+        return locked(key,()->{
+            Snapshot meeting=loadLocked(key);
+            if(meeting==null||meeting.revision!=expectedMeetingRevision||!meeting.transcript.equals(sourceTranscript))
+                throw new IOException("meeting changed; reload before saving minutes");
+            Minutes previous=loadMinutesLocked(key,meeting);
+            long revision=previous==null?0:previous.revision;
+            if(revision!=expectedMinutesRevision)throw new IOException("minutes changed; reload before saving");
+            if(revision==Long.MAX_VALUE)throw new IOException("minutes revision limit reached");
+            byte[] sourceHash=digest().digest(sourceTranscript.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes=encodeMinutes(key,revision+1,meeting.revision,sourceHash,minutesJson);
+            Path current=path(key,".minutes"),backup=path(key,".minutes-backup");
+            Path temp=Files.createTempFile(directory,".minutes-",".tmp");
+            try {
+                writeDurable(temp,bytes);
+                if(previous!=null&&!previous.recoveredFromBackup) {
+                    Path backupTemp=Files.createTempFile(directory,".minutes-backup-",".tmp");
+                    try{writeDurable(backupTemp,Files.readAllBytes(current));Files.move(backupTemp,backup,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}
+                    finally{Files.deleteIfExists(backupTemp);}
+                } else if(previous!=null&&Files.exists(current)) {
+                    Files.move(current,path(key,".minutes-damaged-"+UUID.randomUUID()+".bin"),StandardCopyOption.ATOMIC_MOVE);
+                }
+                Files.move(temp,current,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
+                return new Minutes(key,minutesJson,revision+1,meeting.revision,false,false,false);
+            } finally {Files.deleteIfExists(temp);}
+        });
+    }
+    /** Explicitly delete only this meeting's saved AI results and their backups. */
+    public int deleteMinutes(String key)throws IOException {
+        return locked(key,()->{
+            int removed=0;
+            if(Files.deleteIfExists(path(key,".minutes")))removed++;
+            if(Files.deleteIfExists(path(key,".minutes-backup")))removed++;
+            String prefix=path(key,".minutes-damaged-").getFileName().toString();
+            try(DirectoryStream<Path> files=Files.newDirectoryStream(directory,prefix+"*.bin")) {
+                for(Path file:files) {
+                    String name=file.getFileName().toString(),id=name.substring(prefix.length(),name.length()-4);
+                    try {
+                        if(!UUID.fromString(id).toString().equals(id))continue;
+                    } catch(IllegalArgumentException invalid){continue;}
+                    if(Files.deleteIfExists(file))removed++;
+                }
+            }
+            return removed;
+        });
+    }
+    private Minutes loadMinutesLocked(String key,Snapshot meeting)throws IOException {
+        Path current=path(key,".minutes"),backup=path(key,".minutes-backup");IOException mainError=null;
+        if(Files.exists(current))try{return readMinutes(current,key,meeting,false);}catch(IOException error){mainError=error;}
+        if(Files.exists(backup))try{return readMinutes(backup,key,meeting,true);}catch(IOException error){if(mainError!=null)error.addSuppressed(mainError);throw error;}
+        if(mainError!=null)throw mainError;
+        return null;
+    }
+    private static byte[] encodeMinutes(String key,long revision,long sourceRevision,byte[] sourceHash,String json)throws IOException {
+        LimitedOutput limited=new LimitedOutput();ByteArrayOutputStream buffer=limited.buffer;DataOutputStream out=new DataOutputStream(limited);
+        out.writeInt(0x434d4e31);string(out,key);out.writeLong(revision);out.writeLong(sourceRevision);out.write(sourceHash);string(out,json);
+        out.flush();byte[] body=buffer.toByteArray();buffer.write(digest().digest(body));return buffer.toByteArray();
+    }
+    private static Minutes readMinutes(Path path,String key,Snapshot meeting,boolean recovered)throws IOException {
+        long size=Files.size(path);if(size<88||size>MAX_BYTES)throw new IOException("saved minutes are damaged");
+        byte[] bytes=Files.readAllBytes(path);if(bytes.length!=size)throw new IOException("saved minutes changed while reading");
+        int n=bytes.length-32;MessageDigest hash=digest();hash.update(bytes,0,n);
+        if(!MessageDigest.isEqual(hash.digest(),java.util.Arrays.copyOfRange(bytes,n,bytes.length)))throw new IOException("saved minutes are damaged");
+        DataInputStream in=new DataInputStream(new ByteArrayInputStream(bytes,0,n));
+        if(in.readInt()!=0x434d4e31)throw new IOException("unsupported minutes format");
+        String savedKey=string(in);long revision=in.readLong(),sourceRevision=in.readLong();byte[] sourceHash=new byte[32];in.readFully(sourceHash);String json=string(in);
+        if(!key.equals(savedKey)||revision<=0||sourceRevision<=0||json==null||json.trim().isEmpty()||in.available()!=0)
+            throw new IOException("invalid saved minutes");
+        boolean missing=meeting==null;
+        boolean changed=missing||!MessageDigest.isEqual(sourceHash,digest().digest(meeting.transcript.getBytes(StandardCharsets.UTF_8)));
+        return new Minutes(savedKey,json,revision,sourceRevision,changed,missing,recovered);
+    }
     /** List saved meetings even when their recording device is disconnected. */
     public Inventory list() throws IOException {
         if(!Files.exists(directory))return new Inventory(Collections.emptyList(),0);

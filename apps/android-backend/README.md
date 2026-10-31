@@ -230,22 +230,47 @@ permission, real TLS, service response quality and phone execution remain unveri
 
 The normal cloud path can be connected on a worker thread as follows. `session`
 is the selected local recording, the caller supplies the configured service
-values, and `wav` is a new private output path:
+values, and `wav` is a new private output path. Save the transcript in
+`MeetingStore` first, then capture the meeting and minutes revisions before
+starting the potentially long AI request:
 
 ```java
 NativeAudio.Result audio = NativeAudio.decode(session, wav);
 String transcript = NativeTranscription.transcribe(wav, appId, accessToken, resourceId, asrCache);
 // Save the transcript with the appropriate MeetingStore revision before continuing.
+String meetingKey = MeetingStore.sessionKey(session.segments.get(0).descriptor);
+MeetingStore.Snapshot savedSource = store.load(meetingKey);
+if (savedSource == null || !savedSource.transcript.equals(transcript))
+    throw new IOException("Save or review the transcript before organizing it");
+MeetingStore.Minutes previousMinutes = store.loadMinutes(meetingKey);
+long minutesRevision = previousMinutes == null ? 0 : previousMinutes.revision;
 org.json.JSONObject request = new org.json.JSONObject()
-    .put("sessionKey", MeetingStore.sessionKey(session.segments.get(0).descriptor))
-    .put("title", title).put("transcript", transcript).put("durationMillis", audio.samples / 16)
+    .put("sessionKey", meetingKey)
+    .put("title", title).put("transcript", savedSource.transcript).put("durationMillis", audio.samples / 16)
     .put("endpoint", minutesEndpoint).put("model", minutesModel);
 String minutesJson = NativeMinutes.generate(request.toString(), minutesApiKey, minutesCache);
+MeetingStore.Minutes savedMinutes = store.saveMinutes(meetingKey, savedSource.revision,
+    minutesRevision, savedSource.transcript, minutesJson);
 ```
 
 The caller should preserve the transcript without overwriting the user's edits,
 and offer retry if the second service fails; the summary result may contain an explicitly marked draft on service
 failure. The backend does not store the supplied service credentials.
+
+`loadMinutes(meetingKey)` reopens the result independently of user notes and
+confirmed tasks. Its `json` is the saved `NativeMinutes` response, including any
+draft or partial status. If `sourceChanged` is true, show that the transcript
+has changed and the result needs review; `sourceMissing` means the source meeting
+could not be read. If `recoveredFromBackup` is true, an earlier result was
+recovered and should be shown as such. A revision or transcript conflict during
+`saveMinutes` preserves both versions: reload and reuse the already generated
+JSON only if it still matches the transcript, without automatically calling the
+service again. The result and one prior version are app-private files; existing
+meeting files remain readable by the previous backend. `deleteMinutes(meetingKey)`
+explicitly removes only that meeting's stored results and backups, leaving its
+recording, transcript, notes and tasks intact. The app also owns any separate
+minutes cache and must clear it according to its data-deletion policy. Phone
+storage behavior during an actual power interruption still requires device tests.
 
 ```java
 Path cache = context.getFilesDir().toPath().resolve("companion-minutes-cache");
