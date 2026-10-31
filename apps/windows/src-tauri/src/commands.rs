@@ -503,6 +503,27 @@ pub async fn export_companion_library(app:AppHandle,coordinator:CompanionCoordin
 }
 
 #[tauri::command]
+pub async fn backup_companion_library(app:AppHandle,coordinator:CompanionCoordinatorState<'_>)
+    ->Result<Option<crate::backend::library_backup::Report>,String>{
+    let lease=coordinator.begin_audio_export()?;
+    let Some(destination)=app.dialog().file().blocking_pick_folder() else{return Ok(None)};
+    let destination=destination.simplified().into_path().map_err(|e|e.to_string())?;
+    let snapshot=coordinator.snapshot()?;
+    tauri::async_runtime::spawn_blocking(move||{let _lease=lease;crate::backend::library_backup::save_product(&snapshot,&destination)})
+        .await.map_err(|e|format!("备份任务未完成：{e}"))?.map(Some)
+}
+
+#[tauri::command]
+pub async fn restore_companion_library_backup(app:AppHandle,coordinator:CompanionCoordinatorState<'_>)
+    ->Result<Option<CompanionV1Snapshot>,String>{
+    let Some(source)=app.dialog().file().blocking_pick_folder() else{return Ok(None)};
+    let source=source.simplified().into_path().map_err(|e|e.to_string())?;
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||coordinator.restore_library_backup(&source))
+        .await.map_err(|e|format!("备份恢复任务未完成：{e}"))?.map(Some)
+}
+
+#[tauri::command]
 pub async fn export_companion_audio(
     app: AppHandle,
     coordinator: CompanionCoordinatorState<'_>,

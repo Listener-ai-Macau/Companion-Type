@@ -298,6 +298,48 @@ pub(crate) fn update_checked(path: &Path, edit: impl FnOnce(&mut Vec<CompanionV1
     super::export::write_atomic(&sibling(path, ".bak"), &json).map(|_| ())
 }
 
+/// An explicit user-selected backup may repair an entirely unreadable index.
+/// Preserve every bad copy first; a valid existing copy is always merged.
+pub(crate) fn restore_backup(path:&Path,rows:&[CompanionV1HostSession])->Result<(),String>{
+    let _lock=lock(path)?;
+    let loaded=load_locked(path);
+    let mut current=match loaded {
+        Ok(loaded)=>loaded.bytes.map(|b|decode(&b)).transpose()?.unwrap_or_default(),
+        Err(original)=>{
+            let backup=sibling(path,".bak");let pending=sibling(path,".privacy-pending");
+            let copies=[(path.to_path_buf(),read_optional(path)?),(backup.clone(),read_optional(&backup)?),(pending.clone(),read_optional(&pending)?)];
+            if copies.iter().all(|(_,b)|b.is_none()) {return Err(original);}
+            // A previous explicit restore can have written one valid copy
+            // before a later write failed. Retry only that exact result;
+            // otherwise never replace an independently valid local index.
+            let desired=serde_json::to_vec(rows).map_err(|e|e.to_string())?;
+            for (_,bytes) in &copies {
+                if let Some(valid)=bytes.as_ref().and_then(|b|decode(b).ok()) {
+                    if serde_json::to_vec(&valid).map_err(|e|e.to_string())?!=desired{return Err(original);}
+                }
+            }
+            for (file,bytes) in &copies {if let Some(bytes)=bytes {preserve_corrupt(file,bytes)?;}}
+            let json=serde_json::to_vec_pretty(rows).map_err(|e|e.to_string())?;decode(&json)?;
+            super::export::write_atomic(&backup,&json)?;
+            super::export::write_atomic(path,&json)?;
+            if pending.exists(){fs::remove_file(&pending).map_err(|e|format!("恢复已保存，但旧清理记录仍需处理：{e}"))?;}
+            return Ok(());
+        }
+    };
+    let mut ids=current.iter().map(|r|r.id.clone()).collect::<HashSet<_>>();
+    for row in rows {
+        if ids.contains(&row.id){
+            let old=current.iter().find(|r|r.id==row.id).ok_or("会议身份无效。")?;
+            if serde_json::to_vec(old).map_err(|e|e.to_string())?!=serde_json::to_vec(row).map_err(|e|e.to_string())? {
+                return Err(format!("本机已有不同版本的“{}”，未覆盖。",row.title));
+            }
+        }else{ids.insert(row.id.clone());current.push(row.clone());}
+    }
+    save_locked(path,&current,|destination,bytes|super::export::write_atomic(destination,bytes).map(|_|()))?;
+    let json=serde_json::to_vec_pretty(&current).map_err(|e|e.to_string())?;
+    super::export::write_atomic(&sibling(path,".bak"),&json).map(|_|())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

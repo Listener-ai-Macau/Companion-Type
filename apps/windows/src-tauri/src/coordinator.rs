@@ -364,6 +364,11 @@ impl CompanionCoordinator {
         Ok(lease)
     }
 
+    pub fn restore_library_backup(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{
+        let _lease=self.begin_device_operation_kind(19)?;
+        self.backend.restore_library_backup(path)
+    }
+
     pub fn discard_oldest_recording<F>(&self, seconds: u16, confirm: F)
         -> Result<crate::backend::recording_discard::RecordingDiscardReport, String>
     where F: FnOnce(&crate::backend::recording_discard::RecordingLossInfo) -> bool {

@@ -6,11 +6,13 @@ import type {CompanionLibraryExportRequest,CompanionLibraryExportResult} from '.
 import type {CompanionLibraryStateRequest,CompanionLibraryPurgeRequest,CompanionLibraryPurgeResult} from '../../core/src/libraryOrganization';
 import {CompanionLibraryLifeActions} from './CompanionLibraryLifeActions';
 export interface LibraryFilters {folder:string;tag:string;favorites:boolean;from?:string;to?:string;trash?:boolean}
-export function CompanionLibraryTools({sessions,visible,selection,setSelection,filters,setFilters,blocked,onSave,onExport,onSaveLifecycle,onPurge,onBusyChange,onUnsavedChange}:{
+export function CompanionLibraryTools({sessions,visible,selection,setSelection,filters,setFilters,blocked,restoreBlocked,onSave,onExport,onBackup,onRestore,onSaveLifecycle,onPurge,onBusyChange,onUnsavedChange}:{
   sessions:CompanionV1HostSession[];visible:CompanionV1HostSession[];selection:Record<string,number>;
-  setSelection:(v:Record<string,number>)=>void;filters:LibraryFilters;setFilters:(v:LibraryFilters)=>void;blocked:boolean;
+  setSelection:(v:Record<string,number>)=>void;filters:LibraryFilters;setFilters:(v:LibraryFilters)=>void;blocked:boolean;restoreBlocked?:boolean;
   onSave?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExport?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
+  onBackup?:()=>Promise<{path:string;sessions:number;files:number;bytes:number}|null>;
+  onRestore?:()=>Promise<CompanionV1Snapshot|null>;
   onSaveLifecycle?:(request:CompanionLibraryStateRequest)=>Promise<CompanionV1Snapshot>;
   onPurge?:(request:CompanionLibraryPurgeRequest)=>Promise<CompanionLibraryPurgeResult>;
   onBusyChange?:(v:boolean)=>void;onUnsavedChange?:(v:boolean)=>void;
@@ -45,6 +47,20 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   } catch(e){setMessage(`未完成整批导出，选择仍保留：${operationErrorText(e,'export')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
+ const backupLibrary=async()=>{
+  if(blocked||active.current||!onBackup||draft)return;
+  active.current=true;setBusy(true);onBusyChange?.(true);setMessage('');
+  try{const result=await onBackup();setMessage(result?`已备份 ${result.sessions} 场会议到 ${result.path}。请妥善保管该文件夹。`:'已取消备份。');}
+  catch(e){setMessage(`备份未完成：${operationErrorText(e,'export')}`);}
+  finally{active.current=false;setBusy(false);onBusyChange?.(false);}
+ };
+ const restoreLibrary=async()=>{
+  if((restoreBlocked??blocked)||active.current||!onRestore||draft)return;
+  active.current=true;setBusy(true);onBusyChange?.(true);setMessage('');
+  try{const result=await onRestore();setMessage(result?'备份已恢复到本机会议库。':'已取消恢复。');}
+  catch(e){setMessage(`恢复未完成：${operationErrorText(e,'save')}`);}
+  finally{active.current=false;setBusy(false);onBusyChange?.(false);}
+ };
  return <section className="ct-library-tools" aria-label="录音分类与批量整理">
   <div className="ct-audio-tools">
    <label>文件夹 <select aria-label="筛选录音文件夹" value={filters.folder} onChange={e=>setFilters({...filters,folder:e.target.value})}>
@@ -59,6 +75,14 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
    <label>结束日期 <input type="date" aria-label="筛选录音结束日期" value={filters.to??''} onChange={e=>setFilters({...filters,to:e.target.value})}/></label>
   </div>
   {filters.from||filters.to?<p role="status">{filters.from&&filters.to&&filters.from>filters.to?'开始日期不能晚于结束日期，请调整日期范围。':'按录音开始的本地日期筛选，包含首尾两天；时间未知的录音在清除日期后可见。'}</p>:null}
+  {onBackup||onRestore?<details><summary>备份与恢复会议库</summary>
+    <p>备份包含本机会议文字、纪要和关联录音；文件夹未加密，请保存在可信的位置。换电脑时选择整个备份文件夹恢复，现有同一会议不会被覆盖。</p>
+    {draft?<p>请先保存或撤销分类修改。</p>:null}
+    <div className="ct-button-row">
+      {onBackup?<button type="button" className="ct-action" disabled={blocked||busy||draft||!sessions.length} onClick={()=>void backupLibrary()}>{busy?'正在处理…':'备份会议库'}</button>:null}
+      {onRestore?<button type="button" className="ct-action" disabled={(restoreBlocked??blocked)||busy||draft} onClick={()=>void restoreLibrary()}>{busy?'正在处理…':'从备份恢复'}</button>:null}
+    </div>
+  </details>:null}
   <details><summary>{filters.trash?'恢复或清除所选录音':'整理所选录音'} · 已选 {ids.length} 场</summary>
    <p>{filters.trash?'勾选要找回的录音，再点恢复；永久清除需要另外确认。':'文件夹是本机资料分类，不移动原音文件。支持四层路径，如“工作/项目”；标签用逗号分隔。批量保存只改已选录音。'}</p>
    <div className="ct-audio-tools">

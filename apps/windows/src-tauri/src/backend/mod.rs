@@ -59,6 +59,7 @@ pub(crate) mod minutes_context;
 pub(crate) mod library_organization;
 pub(crate) mod calendar_copy;
 pub(crate) mod library_export;
+pub(crate) mod library_backup;
 pub(crate) mod library_lifecycle;
 pub(crate) mod board_meeting;
 mod board_stop;
@@ -690,6 +691,7 @@ pub struct CompanionServiceBoundary {
 
 pub trait CompanionBackend: Send + Sync {
     fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String>;
+    fn restore_library_backup(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持恢复会议备份。".into())}
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
     fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport, String>;
@@ -1494,6 +1496,21 @@ impl CompanionBackend for FixtureCompanionBackend {
         }
         if cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none(){library_lifecycle::apply(&mut snapshot.host.sessions,&request,&connection_timestamp())?;}
         else{snapshot.host.sessions=library_lifecycle::commit(&persistence::state_file_path(),&request,&connection_timestamp())?;}
+        snapshot.updated_at=connection_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
+    }
+    fn restore_library_backup(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{
+        let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        if snapshot.host.persistence.status=="unsaved" {return Err("请先保存当前窗口中尚未保存的内容，再恢复备份。".into());}
+        if snapshot.meeting.active||snapshot.device.recording||snapshot.host.sessions.iter().any(|r|r.status=="recording"||matches!(r.recovery.stage.as_str(),"transcribing"|"generatingMinutes")) {
+            return Err("请先完成录音和整理，再恢复备份。".into());
+        }
+        library_backup::check_conflicts(path,&snapshot.host.sessions)?;
+        let root=audio_storage::recording_root()?;
+        let restored=library_backup::restore_files(path,&root)?;
+        library_backup::restore_index(&persistence::state_file_path(),&restored)?;
+        snapshot.host.sessions=persistence::load_sessions_from(&persistence::state_file_path())
+            .ok_or("备份已写入，请重新打开应用核对会议库。")?;
+        snapshot.host.persistence=Default::default();
         snapshot.updated_at=connection_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
     }
     fn save_library_organization(&self,request:library_organization::Request)->Result<CompanionV1Snapshot,String>{

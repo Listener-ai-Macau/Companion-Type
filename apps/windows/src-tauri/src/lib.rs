@@ -331,6 +331,8 @@ pub fn run() {
             commands::preview_companion_meeting_export,
             commands::export_companion_audio,
             commands::export_companion_library,
+            commands::backup_companion_library,
+            commands::restore_companion_library_backup,
             commands::save_companion_library_lifecycle,
             commands::purge_companion_library,
             commands::export_companion_diagnostics,
@@ -529,6 +531,8 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-transcribe-request" => Some((i,12)),
         "--local-recording-snapshot" => Some((i,13)),
         "--local-recording-select" => Some((i,14)),
+        "--library-backup-request" => Some((i,15)),
+        "--library-restore-request" => Some((i,16)),
         _ => None,
     })?;
     Some((|| {
@@ -540,7 +544,20 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         }
         if matches!(operation,6|12|13|14) {let _=backend::product_settings::load_and_apply();}
         let coordinator = CompanionCoordinator::new_fixture();
-        if matches!(operation,12|13|14) {
+        if matches!(operation,15|16) {
+            #[derive(serde::Deserialize)] #[serde(deny_unknown_fields)]
+            struct BackupRequest { directory:std::path::PathBuf }
+            let request:BackupRequest=serde_json::from_reader(file).map_err(|_|"备份请求格式不正确。")?;
+            if operation==15 {
+                let _lease=coordinator.begin_audio_export()?;
+                let report=backend::library_backup::save_product(&coordinator.snapshot()?,&request.directory)?;
+                backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&report).map_err(|e|e.to_string())?)?;
+            } else {
+                let result=coordinator.restore_library_backup(&request.directory)?;
+                backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|e|e.to_string())?)?;
+            }
+            println!("library_backup_result=LOCAL_OPERATION_COMPLETED");
+        } else if matches!(operation,12|13|14) {
             #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
             struct LocalRecordingRequest { session_id: Option<String> }
             let request:LocalRecordingRequest=serde_json::from_reader(file)

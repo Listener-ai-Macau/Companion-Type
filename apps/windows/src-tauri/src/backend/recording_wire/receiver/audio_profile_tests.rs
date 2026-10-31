@@ -58,3 +58,23 @@ fn root()->PathBuf{let p=std::env::temp_dir().join(format!("companion-audio-prof
     assert!(r.assemble().is_err());assert!(r.receipt.audio.is_none());for(d,p)in&parts{assert_eq!(fs::read(r.payload_path(d)).unwrap(),*p);}
     assert!(r.ack_candidates(&root.join("sessions.json")).is_err());assert!(r.receipt.segments.iter().all(|s|!s.acked));drop(r);fs::remove_dir_all(root).unwrap();
 }
+
+#[test]
+fn library_backup_roundtrip_keeps_real_segmented_receiver_playable(){
+    let base=root();let source=base.join("source");let target=base.join("target");let backups=base.join("backups");
+    for p in [&source,&target,&backups]{fs::create_dir(&p).unwrap();}
+    let source=source.canonicalize().unwrap();let target=target.canonicalize().unwrap();
+    unsafe{std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&source)};
+    let index=base.join("source-sessions.json");let parts=fixture();let mut receiver=Receiver::open(&source,&parts[0].0.encode().unwrap()).unwrap();
+    for (d,p) in &parts{receiver.accept_segment(&d.encode().unwrap(),p).unwrap();}
+    let audio=receiver.assemble().unwrap();let expected=fs::read(&audio).unwrap();receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();drop(receiver);
+    let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();assert_eq!(rows.len(),1);
+    let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.host.persistence.status="ready".into();snapshot.host.sessions=rows;snapshot.meeting.active=false;snapshot.device.recording=false;
+    let backup=crate::backend::library_backup::save(&snapshot,&source,&backups).unwrap();assert!(backup.files>=parts.len()+2);
+    unsafe{std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&target)};
+    let restored=crate::backend::library_backup::restore_files(Path::new(&backup.path),&target).unwrap();
+    let audio=Receiver::verified_audio_parts(&restored[0]).unwrap();assert_eq!(audio.len(),1);assert_eq!(fs::read(&audio[0].0).unwrap(),expected);
+    let target_index=base.join("target-sessions.json");crate::backend::library_backup::restore_index(&target_index,&restored).unwrap();
+    let reopened=crate::backend::persistence::load_sessions_from(&target_index).unwrap();assert_eq!(Receiver::verified_audio_parts(&reopened[0]).unwrap()[0].1,6400);
+    unsafe{std::env::remove_var("COMPANION_TYPE_RECORDING_DIR")};fs::remove_dir_all(base).unwrap();
+}

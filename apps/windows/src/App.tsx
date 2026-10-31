@@ -26,6 +26,8 @@ import {
   previewCompanionMeetingExport,
   exportCompanionAudio,
   exportCompanionLibrary,
+  backupCompanionLibrary,
+  restoreCompanionLibraryBackup,
   saveCompanionLibraryState,
   purgeCompanionLibrary,
   exportCompanionDiagnostics,
@@ -281,6 +283,10 @@ export function App() {
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}
       onExportAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => exportCompanionAudio(sessionId)) : undefined}
       onExportLibrary={isTauriRuntime()?(request)=>exclusive('refresh',()=>exportCompanionLibrary(request)):undefined}
+      onBackupLibrary={isTauriRuntime()?()=>exclusive('refresh',backupCompanionLibrary):undefined}
+      onRestoreLibrary={isTauriRuntime()?()=>exclusive('refresh',async()=>{
+        const next=await restoreCompanionLibraryBackup();if(next)setSnapshot(next);return next;
+      }):undefined}
       onSaveLibraryLifecycle={isTauriRuntime()?(request)=>exclusive('refresh',async()=>{
         const next=await saveCompanionLibraryState(request);setSnapshot(next);return next;
       }):undefined}

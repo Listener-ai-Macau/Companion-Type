@@ -195,6 +195,14 @@ export async function exportCompanionLibrary(request:import('../../../packages/c
   if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中导出本机录音。');
   return invoke('export_companion_library',{request});
 }
+export async function backupCompanionLibrary():Promise<{path:string;sessions:number;files:number;bytes:number}|null>{
+ if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中备份会议库。');
+ return invoke('backup_companion_library');
+}
+export async function restoreCompanionLibraryBackup():Promise<CompanionV1Snapshot|null>{
+ if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中恢复会议备份。');
+ return invoke('restore_companion_library_backup');
+}
 export async function saveCompanionLibraryState(request:import('../../../packages/core/src/libraryOrganization').CompanionLibraryStateRequest):Promise<CompanionV1Snapshot>{
  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中操作真实资料库。');
  return invoke('save_companion_library_lifecycle',{request});

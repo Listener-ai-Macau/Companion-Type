@@ -247,6 +247,8 @@ export interface CompanionDashboardProps {
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExportLibrary?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
+  onBackupLibrary?:()=>Promise<{path:string;sessions:number;files:number;bytes:number}|null>;
+  onRestoreLibrary?:()=>Promise<CompanionV1Snapshot|null>;
   onSaveLibraryLifecycle?:(request:CompanionLibraryStateRequest)=>Promise<CompanionV1Snapshot>;
   onPurgeLibrary?:(request:CompanionLibraryPurgeRequest)=>Promise<CompanionLibraryPurgeResult>;
   /** Host-only resource/firmware package validation (Windows Tauri). */
@@ -395,6 +397,8 @@ export function CompanionDashboard({
   onSaveNote,
   onSaveLibraryOrganization,
   onExportLibrary,
+  onBackupLibrary,
+  onRestoreLibrary,
   onSaveLibraryLifecycle,
   onPurgeLibrary,
   onValidateOtaPackage,
@@ -1738,7 +1742,8 @@ export function CompanionDashboard({
           <summary>筛选与整理{libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to||libraryFilters.trash?' · 已筛选':''}{Object.keys(librarySelection).length?` · 已选 ${Object.keys(librarySelection).length} 条`:''}</summary>
         <CompanionLibraryTools sessions={allLibrarySessions} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
           filters={libraryFilters} setFilters={setLibraryFilters} blocked={controlsBusy||oobeBlockedByRecording||storageBlocked}
-          onSave={onSaveLibraryOrganization} onExport={onExportLibrary} onSaveLifecycle={onSaveLibraryLifecycle} onPurge={onPurgeLibrary} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
+          restoreBlocked={controlsBusy||oobeBlockedByRecording||snapshot?.host.persistence?.status==='unsaved'}
+          onSave={onSaveLibraryOrganization} onExport={onExportLibrary} onBackup={onBackupLibrary} onRestore={onRestoreLibrary} onSaveLifecycle={onSaveLibraryLifecycle} onPurge={onPurgeLibrary} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
         </details>
         {libraryCurrentMessage?<p role="status">{libraryCurrentMessage}</p>:null}
         {visibleLibrary.length===0&&(libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to)?<div className="ct-library-empty">

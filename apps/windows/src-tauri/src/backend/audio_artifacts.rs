@@ -26,7 +26,7 @@ pub(crate) enum Purpose {
     SessionReceipt,
 }
 impl Purpose {
-    fn accepts(self, path: &Path) -> bool {
+    pub(super) fn accepts(self, path: &Path) -> bool {
         let ext = path
             .extension()
             .and_then(|e| e.to_str())
@@ -789,6 +789,99 @@ fn reachable(root: &Path, data: &Manifest, sources: &[String]) -> Result<BTreeSe
             return Ok(keys);
         }
     }
+}
+
+/// Exact retained files belonging to selected sources. This deliberately uses
+/// the ownership graph instead of guessing files by name or scanning the
+/// recording directory; scratch files and transfer cursors are not backups.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all="camelCase", deny_unknown_fields)]
+pub(crate) struct BackupFile {
+    pub file: String,
+    pub sources: Vec<String>,
+    pub purpose: Purpose,
+    pub bytes: u64,
+    pub sha256: String,
+}
+
+fn backup_files_from(root:&Path, data:&Manifest, paths:&[String])->Result<Vec<BackupFile>,String> {
+    let keys=reachable(root,data,paths)?;
+    let root_marker=reference_key(&root.join("backup-root-marker"))?;
+    let prefix=root_marker.strip_suffix("backup-root-marker").ok_or_else(fail)?;
+    let mut out=Vec::new();
+    for item in &data.files {
+        let path=root.join(&item.file);
+        if !keys.contains(&reference_key(&path)?) {continue;}
+        if matches!(item.purpose,Purpose::DecodeTemporary|Purpose::AsrTemporary|Purpose::TransferCursor|Purpose::LiveWindow) {continue;}
+        if item.phase==Phase::Gone {continue;}
+        if item.phase!=Phase::Sealed {return Err("有录音文件仍在保存或恢复，请完成后再备份。".into());}
+        let actual=fingerprint(&path)?.ok_or("录音文件缺失，无法生成完整备份；请先恢复或同步。")?;
+        if item.identity.as_ref()!=Some(&actual) {return Err("录音文件与保存记录不一致，未生成不完整备份。".into());}
+        let mut sources=Vec::new();
+        for source in &item.sources {
+            if !keys.contains(source) {continue;}
+            let leaf=source.strip_prefix(prefix).ok_or("录音来源不在受管理目录，暂不能完整备份。")?;
+            if !component(leaf) {return Err(fail());}
+            sources.push(leaf.to_owned());
+        }
+        if sources.is_empty(){return Err(fail());}
+        out.push(BackupFile{file:item.file.clone(),sources,purpose:item.purpose,bytes:actual.bytes,sha256:actual.sha256});
+    }
+    Ok(out)
+}
+
+pub(crate) fn backup_files_at(root:&Path,paths:&[String])->Result<Vec<BackupFile>,String> {
+    let _guard=lock(&root)?;
+    backup_files_from(&root,&load(&root)?,paths)
+}
+
+pub(crate) fn preflight_backup_targets(root:&Path,files:&[BackupFile])->Result<(),String>{
+    let _guard=lock(root)?;let data=load(root)?;
+    for item in files {
+        let source=reference_key(&root.join(item.sources.first().ok_or_else(fail)?))?;
+        let actual=fingerprint(&root.join(&item.file))?;
+        let old=data.files.iter().find(|x|x.file.eq_ignore_ascii_case(&item.file));
+        match (actual,old) {
+            (None,None)=>{},
+            (None,Some(old)) if old.phase==Phase::Gone && old.purpose==item.purpose && old.sources.contains(&source)=>{},
+            (Some(identity),Some(old)) if identity.bytes==item.bytes && identity.sha256==item.sha256
+                && old.identity.as_ref()==Some(&identity) && old.purpose==item.purpose
+                && old.sources.contains(&source) && matches!(old.phase,Phase::Sealed|Phase::Interrupted)=>{},
+            _=>return Err("本机已有冲突的录音文件或恢复记录，未覆盖原文件。".into()),
+        }
+    }
+    Ok(())
+}
+
+/// Allow a failed restore of a file that never appeared to retry. No existing
+/// file or unrelated ownership entry is removed.
+pub(crate) fn retry_absent_backup_file(root:&Path,item:&BackupFile)->Result<(),String> {
+    let path=root.join(&item.file);
+    if fingerprint(&path)?.is_some(){return Ok(());}
+    let source=item.sources.first().ok_or_else(fail)?;
+    let key=reference_key(&root.join(source))?;
+    let _guard=lock(root)?;let mut data=load(root)?;
+    if let Some(index)=data.files.iter().position(|x|x.file.eq_ignore_ascii_case(&item.file)) {
+        let old=&data.files[index];
+        if old.phase!=Phase::Gone || old.purpose!=item.purpose || !old.sources.contains(&key) {return Err(fail());}
+        data.files.remove(index);save(root,&data)?;
+    }
+    Ok(())
+}
+
+/// Reconstitute additional ownership edges only after every imported file was
+/// written and verified. This does not adopt an unrelated existing file.
+pub(crate) fn attach_backup_sources(root:&Path,files:&[BackupFile])->Result<(),String> {
+    let _guard=lock(root)?;let mut data=load(root)?;
+    for item in files {
+        let expected=Identity{bytes:item.bytes,sha256:item.sha256.clone()};
+        if fingerprint(&root.join(&item.file))?!=Some(expected.clone()){return Err(fail());}
+        let target=data.files.iter_mut().find(|x|x.file.eq_ignore_ascii_case(&item.file)).ok_or_else(fail)?;
+        if target.phase!=Phase::Sealed||target.purpose!=item.purpose||target.identity.as_ref()!=Some(&expected){return Err(fail());}
+        for source in &item.sources {if !component(source){return Err(fail());}target.sources.insert(reference_key(&root.join(source))?);}
+        if target.sources.len()>1024{return Err(fail());}
+    }
+    save(root,&data)
 }
 /// Attach explicitly generated prefix groups to the integrity-checked final
 /// recording. Includes failed consumers, never an inferred basename sibling.
