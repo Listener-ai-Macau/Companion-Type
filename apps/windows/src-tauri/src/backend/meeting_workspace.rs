@@ -438,6 +438,25 @@ mod tests {
         let saved=serde_json::to_value(&s).unwrap();assert!(edit_session(&mut s,&request,"2").is_err());assert_eq!(serde_json::to_value(&s).unwrap(),saved);
     }
 
+    #[test]
+    fn valid_long_wav_remains_playable_and_truncation_is_detected() {
+        use std::io::Write;
+        struct Scratch(std::path::PathBuf);
+        impl Drop for Scratch {
+            fn drop(&mut self) { let _ = std::fs::remove_file(&self.0); }
+        }
+        let path = std::env::temp_dir().join(format!("companion-long-wav-{}.wav", uuid::Uuid::new_v4()));
+        let mut file = std::fs::OpenOptions::new().read(true).write(true).create_new(true).open(&path).unwrap();
+        let scratch = Scratch(path);
+        let pcm_bytes = 512u32 * 1024 * 1024;
+        file.write_all(&denzic_host_audio_v1_core::wav::wav_header(pcm_bytes)).unwrap();
+        file.set_len(u64::from(pcm_bytes) + 44).unwrap();
+        drop(file);
+        assert_eq!(super::wav_duration_ms(&scratch.0).unwrap(), u64::from(pcm_bytes) * 1000 / 32000);
+        std::fs::OpenOptions::new().write(true).open(&scratch.0).unwrap()
+            .set_len(u64::from(pcm_bytes) + 42).unwrap();
+        assert!(super::wav_duration_ms(&scratch.0).is_err(), "a truncated original must still be detected");
+    }
 }
 
 pub(super) fn validate_wav(path: &std::path::Path) -> Result<(), String> {
@@ -449,7 +468,7 @@ pub(crate) fn wav_duration_ms(path: &std::path::Path) -> Result<u64, String> {
     let result = (|| -> std::io::Result<bool> {
         let mut file = File::open(path)?;
         let size = file.metadata()?.len();
-        if size < 44 || size > 512 * 1024 * 1024 { return Ok(false); }
+        if size < 44 { return Ok(false); }
         let mut header = [0u8; 12]; file.read_exact(&mut header)?;
         if &header[..4] != b"RIFF" || &header[8..12] != b"WAVE" { return Ok(false); }
         let riff_end = u32::from_le_bytes(header[4..8].try_into().unwrap()) as u64 + 8;

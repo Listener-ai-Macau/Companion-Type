@@ -29,8 +29,7 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
     let pinned = audio_artifacts::interrupted_host_writer(source)?;
     let metadata = fs::symlink_metadata(source).map_err(|_| "原录音无法读取。")?;
     let size = metadata.len();
-    if !metadata.is_file() || metadata.file_type().is_symlink() || size <= 45
-        || size > 512 * 1024 * 1024 {
+    if !metadata.is_file() || metadata.file_type().is_symlink() || size <= 45 {
         return Err("原录音长度无法安全恢复，文件保留。".into());
     }
     // A crash may leave just one byte of the last 16-bit PCM sample. Never
@@ -38,6 +37,9 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
     // original byte-for-byte, including that trailing byte.
     let partial_tail = (size - 44) % 2;
     let payload = u32::try_from(size - 44 - partial_tail).map_err(|_| "原录音过长，文件保留。")?;
+    // RIFF's size field includes 36 bytes in addition to the PCM payload.
+    // Larger recordings need multipart recovery; never saturate the header.
+    if payload > u32::MAX - 36 { return Err("原录音超过单个WAV格式容量，文件保留。".into()); }
     let mut input = File::open(source).map_err(|_| "原录音无法打开。")?;
     let mut header = [0u8; 44];
     input.read_exact(&mut header).map_err(|_| "原录音文件头不完整。")?;

@@ -572,6 +572,41 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "creates and recovers a synthetic WAV larger than 512 MiB"]
+    fn interrupted_long_host_wav_recovers_without_size_cutoff() {
+        use std::io::Read;
+        struct Scratch(std::path::PathBuf);
+        impl Drop for Scratch {
+            fn drop(&mut self) { let _ = std::fs::remove_dir_all(&self.0); }
+        }
+        let parent = std::env::temp_dir();
+        assert!(parent.is_absolute());
+        let root = parent.join(format!("companion-long-recovery-{}", uuid::Uuid::new_v4()));
+        assert_eq!(root.parent(), Some(parent.as_path()));
+        std::fs::create_dir(&root).unwrap();
+        let _scratch = Scratch(root.clone());
+        let path = root.join("unfinished.wav");
+        let child = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "backend::host_recording::tests::isolated_abrupt_host_recording_child", "--ignored"])
+            .env("COMPANION_CRASH_MODEL_FILE", &path)
+            .env("COMPANION_TYPE_RECORDING_DIR", &root).output().unwrap();
+        assert!(child.status.success());
+        let payload = 512u32 * 1024 * 1024;
+        let file = std::fs::OpenOptions::new().write(true).open(&path).unwrap();
+        file.set_len(u64::from(payload) + 44).unwrap(); file.sync_all().unwrap(); drop(file);
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let recovered = super::super::host_interrupted_recovery::recover_copy(&path).unwrap();
+        assert_eq!(recovered.bytes, u64::from(payload) + 44);
+        assert_eq!(recovered.duration_ms, u64::from(payload) * 1000 / 32000);
+        assert_eq!(super::super::meeting_workspace::wav_duration_ms(&recovered.path).unwrap(), recovered.duration_ms);
+        assert_eq!(std::fs::metadata(&path).unwrap().len(), u64::from(payload) + 44);
+        let mut header = [0u8; 44]; std::fs::File::open(&path).unwrap().read_exact(&mut header).unwrap();
+        assert_eq!(header, denzic_host_audio_v1_core::wav::wav_header(0));
+        drop(recovered);
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
+    }
+
+    #[test]
     fn interrupted_host_wav_with_half_written_sample_recovers_complete_samples_only() {
         use std::io::Write;
         let root = std::env::temp_dir().join(format!("host-odd-tail-{}", uuid::Uuid::new_v4()));
