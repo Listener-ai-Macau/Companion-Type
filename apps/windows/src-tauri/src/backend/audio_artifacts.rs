@@ -556,7 +556,14 @@ pub(super) fn meeting_capture_parts(anchor: &Path) -> Result<(Vec<MeetingCapture
             || !matches!(item.phase, Phase::Prepared | Phase::Interrupted | Phase::Sealed) {
             return Err("会议音轨归属或状态不可确认，原音保留。".into());
         }
-        let actual = fingerprint(&path)?.ok_or("已登记的会议音轨缺失，原音保留。")?;
+        let actual = match fingerprint(&path)? {
+            Some(actual) => actual,
+            // A crash between the ownership checkpoint and file creation has
+            // no samples to restore. Later registered parts still trigger the
+            // continuity check; earlier complete parts remain recoverable.
+            None if item.phase == Phase::Prepared && item.identity.is_none() => continue,
+            None => return Err("已登记的会议音轨缺失，原音保留。".into()),
+        };
         if item.identity.as_ref().is_some_and(|expected| expected != &actual)
             || (item.phase == Phase::Sealed && item.identity.as_ref() != Some(&actual)) {
             return Err("会议音轨与保存记录不一致，原音保留。".into());
@@ -1032,13 +1039,16 @@ mod meeting_recovery_tests {
         let mut system = TrackWriter::create_flat(&root, "meeting-unique-system", 2).unwrap();
         mic.append(&[1,2,3]).unwrap(); system.append(&[4,5]).unwrap();
         let a = mic.finish().unwrap(); let _ = system.finish().unwrap();
-        let unknown = root.join("meeting-unique-mic-00000002.wav"); fs::write(&unknown, b"unknown").unwrap();
+        let unknown = root.join("meeting-unique-mic-00000003.wav"); fs::write(&unknown, b"unknown").unwrap();
+        let pending = root.join("meeting-unique-mic-00000002.wav");
+        let pending_lease = WriteLease::begin(&pending, &pending, Purpose::Recording).unwrap().unwrap();
         let (found_mic, found_system) = meeting_capture_parts(&anchor).unwrap();
         assert_eq!(found_mic.len(), 2); assert_eq!(found_system.len(), 1);
         assert!(found_mic.iter().chain(&found_system).all(|p| p.sealed));
         fs::write(&a[0].path, b"changed").unwrap();
         assert!(meeting_capture_parts(&anchor).is_err());
         assert_eq!(fs::read(&unknown).unwrap(), b"unknown");
+        drop(pending_lease);
         if let Some(value) = old { std::env::set_var("COMPANION_TYPE_RECORDING_DIR", value); }
         else { std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); }
         fs::remove_dir_all(root).unwrap();

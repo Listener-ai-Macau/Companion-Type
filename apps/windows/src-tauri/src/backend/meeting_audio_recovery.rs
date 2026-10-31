@@ -163,8 +163,8 @@ mod tests {
         let saved: Vec<crate::companion_v1::CompanionV1HostSession> = serde_json::from_slice(&std::fs::read(&state).unwrap()).unwrap();
         let saved = &saved[0]; let tracks = saved.meeting_tracks.as_ref().unwrap();
         assert!(saved.audio_stored && saved.capture_incomplete); assert_eq!(tracks.state,"needsReview");
-        assert_eq!(tracks.microphone[0].path, original_mic.to_string_lossy());
-        assert_ne!(tracks.system[0].path, original_system.to_string_lossy());
+        assert_eq!(Path::new(&tracks.microphone[0].path).canonicalize().unwrap(), original_mic.canonicalize().unwrap());
+        assert_ne!(Path::new(&tracks.system[0].path).canonicalize().unwrap(), original_system.canonicalize().unwrap());
         assert_eq!(std::fs::read(&original_system).unwrap(), before);
         verify_tracks(tracks, saved.audio_bytes, saved.duration_ms).unwrap();
         if let Some(value) = previous { std::env::set_var("COMPANION_TYPE_RECORDING_DIR", value); }
