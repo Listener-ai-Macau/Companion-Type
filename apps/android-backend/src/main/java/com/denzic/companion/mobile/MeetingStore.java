@@ -245,6 +245,22 @@ public final class MeetingStore {
         if(mainError!=null)throw mainError;
         return null;
     }
+    /**
+     * Save a recognition result without replacing notes, tasks or calendar choices.
+     * expectedTranscript is the saved text observed before recognition, or null
+     * if the meeting did not exist. Keep the result and retry after a conflict.
+     */
+    public Snapshot saveTranscription(String key,String expectedTranscript,String recognizedText)throws IOException {
+        if(recognizedText==null)throw new IllegalArgumentException("recognized text required");
+        Snapshot previous=load(key);
+        if(previous!=null&&previous.transcript.equals(recognizedText))return previous;
+        if(previous==null) {
+            if(expectedTranscript!=null)throw new IOException("meeting changed; review transcription before saving");
+            return save(key,0,recognizedText,"",Collections.emptyList());
+        }
+        if(!previous.transcript.equals(expectedTranscript))throw new IOException("transcript changed; review transcription before saving");
+        return save(key,previous.revision,recognizedText,previous.notes,previous.tasks);
+    }
     /** Revision 0 creates a new meeting. A stale revision leaves the saved content untouched. */
     public Snapshot save(String key,long expectedRevision,String transcript,String notes,List<Task> tasks) throws IOException {
         if(transcript==null||notes==null||tasks==null||expectedRevision<0)throw new IllegalArgumentException("content and revision required");

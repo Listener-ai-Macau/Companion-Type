@@ -251,12 +251,11 @@ starting the potentially long AI request:
 
 ```java
 NativeAudio.Result audio = NativeAudio.decode(session, wav);
-String transcript = NativeTranscription.transcribe(wav, appId, accessToken, resourceId, asrCache);
-// Save the transcript with the appropriate MeetingStore revision before continuing.
 String meetingKey = MeetingStore.sessionKey(session.segments.get(0).descriptor);
-MeetingStore.Snapshot savedSource = store.load(meetingKey);
-if (savedSource == null || !savedSource.transcript.equals(transcript))
-    throw new IOException("Save or review the transcript before organizing it");
+MeetingStore.Snapshot beforeRecognition = store.load(meetingKey);
+String expectedText = beforeRecognition == null ? null : beforeRecognition.transcript;
+String transcript = NativeTranscription.transcribe(wav, appId, accessToken, resourceId, asrCache);
+MeetingStore.Snapshot savedSource = store.saveTranscription(meetingKey, expectedText, transcript);
 MeetingStore.Minutes previousMinutes = store.loadMinutes(meetingKey);
 long minutesRevision = previousMinutes == null ? 0 : previousMinutes.revision;
 org.json.JSONObject request = new org.json.JSONObject()
@@ -268,9 +267,17 @@ MeetingStore.Minutes savedMinutes = store.saveMinutes(meetingKey, savedSource.re
     minutesRevision, savedSource.transcript, minutesJson);
 ```
 
-The caller should preserve the transcript without overwriting the user's edits,
-and offer retry if the second service fails; the summary result may contain an explicitly marked draft on service
-failure. The backend does not store the supplied service credentials.
+When a meeting already has text, let the user choose whether to replace it with
+the new recognition result. `saveTranscription` preserves the meeting's current
+notes, confirmed tasks and calendar choices. It checks the text observed before
+recognition and rejects a conflicting edit; retain the returned `transcript` in
+the caller so it can be reviewed or retried without repeating recognition. A
+concurrent save can also require retry. Passing null as the expected text means
+the meeting did not exist when recognition started. The same saved text is an
+idempotent retry. The same method works with `NativeLocalTranscription.transcribe`.
+Offer retry if the second service fails; the summary result may contain an
+explicitly marked draft on service failure. The backend does not store the
+supplied service credentials.
 
 `loadMinutes(meetingKey)` reopens the result independently of user notes and
 confirmed tasks. Its `json` is the saved `NativeMinutes` response, including any
