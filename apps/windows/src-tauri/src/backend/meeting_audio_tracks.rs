@@ -30,6 +30,7 @@ struct OpenPart {
 #[allow(dead_code)]
 pub(super) struct TrackWriter {
     root: PathBuf,
+    prefix: String,
     limit: u64,
     cursor: u64,
     current: Option<OpenPart>,
@@ -45,11 +46,23 @@ impl TrackWriter {
             return Err(io::Error::new(io::ErrorKind::InvalidInput, "invalid WAV part size"));
         }
         fs::create_dir(root)?;
-        Ok(Self { root: root.into(), limit, cursor: 0, current: None, complete: Vec::new(), failed: false })
+        Ok(Self { root: root.into(), prefix: "part".into(), limit, cursor: 0, current: None, complete: Vec::new(), failed: false })
+    }
+
+    /// Save directly under the existing managed recordings directory, using a
+    /// unique session/source prefix. Existing privacy and ownership code only
+    /// recognizes direct children of that directory.
+    pub(super) fn create_flat(root: &Path, prefix: &str, limit: u64) -> io::Result<Self> {
+        if limit == 0 || limit > MAX_PART_SAMPLES || prefix.is_empty() || prefix.len() > 128
+            || !prefix.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_') {
+            return Err(io::Error::new(io::ErrorKind::InvalidInput, "invalid track name or part size"));
+        }
+        if !root.is_dir() { return Err(io::Error::new(io::ErrorKind::NotFound, "recording directory missing")); }
+        Ok(Self { root: root.into(), prefix: prefix.into(), limit, cursor: 0, current: None, complete: Vec::new(), failed: false })
     }
 
     fn open_next(&mut self) -> io::Result<()> {
-        let path = self.root.join(format!("part-{:08}.wav", self.complete.len()));
+        let path = self.root.join(format!("{}-{:08}.wav", self.prefix, self.complete.len()));
         let mut file = OpenOptions::new().write(true).read(true).create_new(true).open(&path)?;
         file.write_all(&denzic_host_audio_v1_core::wav::wav_header(0))?;
         self.current = Some(OpenPart { file, path, first_sample: self.cursor, samples: 0 });
@@ -185,6 +198,20 @@ mod tests {
         mic.append(&[11, 12]).unwrap(); drop(mic);
         let part = TrackPart { path: dir.join("part-00000000.wav"), first_sample: 0, samples: 2 };
         assert_eq!(pcm(&part), [11, 12]);
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn managed_flat_tracks_keep_sources_separate_and_reject_unsafe_names() {
+        let root = root();
+        assert!(TrackWriter::create_flat(&root, "../escape", 3).is_err());
+        let mut mic = TrackWriter::create_flat(&root, "unique-mic", 3).unwrap();
+        let mut system = TrackWriter::create_flat(&root, "unique-system", 3).unwrap();
+        mic.append(&[1, 2]).unwrap(); system.append(&[3, 4]).unwrap();
+        let a = mic.finish().unwrap(); let b = system.finish().unwrap();
+        assert_eq!(a[0].path.parent(), Some(root.as_path()));
+        assert_eq!(b[0].path.parent(), Some(root.as_path()));
+        assert_ne!(a[0].path, b[0].path); assert_eq!(pcm(&a[0]), [1, 2]); assert_eq!(pcm(&b[0]), [3, 4]);
         fs::remove_dir_all(root).unwrap();
     }
 }

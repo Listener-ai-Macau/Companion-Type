@@ -1,8 +1,10 @@
 //! Experimental two-source meeting recorder. Product session persistence,
 //! replay, transcription and the explicit UI choice must be connected before
 //! this module can be used as an end-user feature.
+#[cfg(test)]
 use std::fs;
 use std::path::Path;
+use std::io::Read;
 use std::sync::{mpsc, Arc, Mutex};
 use std::time::Duration;
 use denzic_host_audio_v1_core::capture::{CaptureOptions, CaptureSession, TimedCaptureInfo};
@@ -71,16 +73,59 @@ pub(super) struct CaptureResult {
     pub(super) error: Option<String>,
 }
 
+impl CaptureResult {
+    /// Prepare the exact files for an atomic session-index update. This does
+    /// not itself commit the session or authorize removal of any file.
+    #[allow(dead_code)]
+    pub(super) fn into_session_tracks(self, root: &Path) -> Result<crate::companion_v1::CompanionV1MeetingTracks, String> {
+        use crate::companion_v1::{CompanionV1MeetingTrackPart, CompanionV1MeetingTracks};
+        if !root.is_absolute() { return Err("会议保存位置无效".into()); }
+        let parent = root.parent().ok_or("会议保存位置无效")?.canonicalize().map_err(|_| "会议保存目录不可用")?;
+        let prefix = root.file_name().and_then(|s| s.to_str()).ok_or("会议保存名称无效")?;
+        let convert = |parts: Vec<TrackPart>, source: &str| -> Result<(Vec<CompanionV1MeetingTrackPart>, u64), String> {
+            let mut expected = 0u64;
+            let mut result = Vec::new();
+            for (index, part) in parts.into_iter().enumerate() {
+                let name = format!("{prefix}-{source}-{index:08}.wav");
+                if part.path.file_name().and_then(|s| s.to_str()) != Some(name.as_str())
+                    || part.path.parent().and_then(|p| p.canonicalize().ok()).as_ref() != Some(&parent)
+                    || part.first_sample != expected || part.samples == 0 {
+                    return Err("会议音轨分段不连续，原文件保留".into());
+                }
+                let metadata = std::fs::symlink_metadata(&part.path).map_err(|_| "会议音轨文件缺失")?;
+                let bytes = part.samples.checked_mul(2).and_then(|n| u32::try_from(n).ok()).ok_or("会议音轨分段过大")?;
+                if !metadata.is_file() || metadata.file_type().is_symlink() || metadata.len() != u64::from(bytes) + 44 {
+                    return Err("会议音轨文件不完整，原文件保留".into());
+                }
+                let mut header = [0u8; 44];
+                std::fs::File::open(&part.path).and_then(|mut f| f.read_exact(&mut header)).map_err(|_| "无法读取会议音轨")?;
+                if header != denzic_host_audio_v1_core::wav::wav_header(bytes) { return Err("会议音轨格式不正确，原文件保留".into()); }
+                expected = expected.checked_add(part.samples).ok_or("会议音轨长度无效")?;
+                result.push(CompanionV1MeetingTrackPart { path: part.path.to_string_lossy().into_owned(), first_sample: part.first_sample, samples: part.samples });
+            }
+            Ok((result, expected))
+        };
+        let (microphone, mic_samples) = convert(self.microphone, "mic")?;
+        let (system, system_samples) = convert(self.system, "system")?;
+        let complete = self.error.is_none() && !self.discontinuity && mic_samples > 0 && mic_samples == system_samples;
+        Ok(CompanionV1MeetingTracks { root: root.to_string_lossy().into_owned(),
+            state: if complete { "captured" } else { "needsReview" }.into(), microphone, system,
+            discontinuity: self.discontinuity, issue: self.error.or_else(|| (!complete).then(|| "会议音轨未完整对齐，请核对原音".into())) })
+    }
+}
+
 #[allow(dead_code)]
 impl Capture {
     /// Checkpoint the session/path first; no device opens without this step.
-    /// `root` is new, owned by that session, and remains on failure.
+    /// `root` is a unique unused session prefix directly in the managed
+    /// recordings directory. Individual WAV files remain on failure.
     pub(super) fn start(root: &Path, part_samples: u64,
         checkpoint: impl FnOnce(&Path) -> Result<(), String>) -> Result<Self, String> {
         checkpoint(root)?;
-        fs::create_dir(root).map_err(|e| e.to_string())?;
-        let mic = Track { timeline: Timeline::new(), writer: TrackWriter::create(&root.join("microphone"), part_samples).map_err(|e| e.to_string())?, resampler: None };
-        let system = Track { timeline: Timeline::new(), writer: TrackWriter::create(&root.join("system"), part_samples).map_err(|e| e.to_string())?, resampler: None };
+        let parent = root.parent().ok_or("录音保存位置无效")?;
+        let name = root.file_name().and_then(|s| s.to_str()).ok_or("录音名称无效")?;
+        let mic = Track { timeline: Timeline::new(), writer: TrackWriter::create_flat(parent, &format!("{name}-mic"), part_samples).map_err(|e| e.to_string())?, resampler: None };
+        let system = Track { timeline: Timeline::new(), writer: TrackWriter::create_flat(parent, &format!("{name}-system"), part_samples).map_err(|e| e.to_string())?, resampler: None };
         let (send, recv) = mpsc::sync_channel(1);
         let state = Arc::new(Mutex::new(State { origin: None, mic, system, error: None, discontinuity: false, ready: Some(send) }));
         let mic_state = Arc::clone(&state);
@@ -158,5 +203,21 @@ mod tests {
         assert_eq!(state.mic.timeline.samples(), 0);
         drop(state);
         fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn session_tracks_verify_part_identity_and_lengths() {
+        let dir = std::env::temp_dir().join(format!("meeting-index-{}-{}", std::process::id(), NEXT.fetch_add(1, Ordering::Relaxed)));
+        fs::create_dir(&dir).unwrap(); let anchor = dir.join("unique");
+        let mut mic = TrackWriter::create_flat(&dir, "unique-mic", 2).unwrap();
+        let mut output = TrackWriter::create_flat(&dir, "unique-system", 2).unwrap();
+        mic.append(&[1,2,3]).unwrap(); output.append(&[4,5,6]).unwrap();
+        let captured = CaptureResult { microphone: mic.finish().unwrap(), system: output.finish().unwrap(), discontinuity: false, error: None };
+        let altered = CaptureResult { microphone: captured.microphone.clone(), system: captured.system.clone(), discontinuity: false, error: None };
+        let indexed = captured.into_session_tracks(&anchor).unwrap();
+        assert_eq!(indexed.state, "captured"); assert_eq!(indexed.microphone.len(), 2); assert_eq!(indexed.system.len(), 2);
+        fs::write(&altered.system[0].path, b"replaced").unwrap();
+        assert!(altered.into_session_tracks(&anchor).is_err());
+        fs::remove_dir_all(dir).unwrap();
     }
 }

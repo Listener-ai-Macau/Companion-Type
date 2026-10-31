@@ -343,6 +343,10 @@ pub struct CompanionV1HostSession {
     pub audio_bytes: u64,
     #[serde(default)]
     pub audio_stored: bool,
+    /// Optional separate computer and microphone sources for an online meeting.
+    /// Existing sessions have no such field and retain their original behavior.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub meeting_tracks: Option<CompanionV1MeetingTracks>,
     /// Stable durable-board identity. None for host/imported sessions.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub device_recording_id: Option<u32>,
@@ -422,6 +426,27 @@ pub struct CompanionV1HostSession {
     pub calendar_slot_copies: Vec<crate::backend::calendar_copy::SlotCopy>,
     pub exported_at: Option<String>,
     pub retention: CompanionV1SessionRetention,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MeetingTrackPart {
+    pub path: String,
+    pub first_sample: u64,
+    pub samples: u64,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MeetingTracks {
+    pub root: String,
+    pub state: String,
+    pub microphone: Vec<CompanionV1MeetingTrackPart>,
+    pub system: Vec<CompanionV1MeetingTrackPart>,
+    #[serde(default)]
+    pub discontinuity: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub issue: Option<String>,
 }
 
 pub const CAPTURE_ONLY_PROMPT: &str = "__companion_capture_only__";
@@ -1582,7 +1607,7 @@ pub(crate) fn create_host_session(
     let processing_policy=if request.prompt_id.as_deref()==Some(CAPTURE_ONLY_PROMPT) {
         CompanionV1ProcessingPolicy::Manual
     } else {CompanionV1ProcessingPolicy::Automatic};
-    CompanionV1HostSession {
+    CompanionV1HostSession { meeting_tracks: None,
         note_revision: 0, meeting_notes: vec![],
         bookmark_revision: 0,
         bookmarks: vec![],

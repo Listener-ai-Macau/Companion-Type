@@ -249,6 +249,7 @@ export type CompanionV1HostSessionSource =
   | 'deviceFlash'
   | 'boardDevice'
   | 'hostMicrophone'
+  | 'hostMeeting'
   | 'importedTranscript';
 
 export type CompanionV1HostSessionStatus =
@@ -461,6 +462,15 @@ export interface CompanionV1HostSession {
   audioBytes: number;
   /** True once audio is sealed/synced on disk (offline always stores; online also stores backup). */
   audioStored: boolean;
+  /** Present only for meetings with independently recorded audio sources. */
+  meetingTracks?: {
+    root: string;
+    state: string;
+    microphone: Array<{ path: string; firstSample: number; samples: number }>;
+    system: Array<{ path: string; firstSample: number; samples: number }>;
+    discontinuity: boolean;
+    issue?: string | null;
+  } | null;
   /** Durable WB55 journal identity; absent for host/imported sessions. */
   deviceRecordingId?: number | null;
   /** Durable segmented identity supplied by the native verified receiver. */

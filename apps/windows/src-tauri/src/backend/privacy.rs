@@ -2,8 +2,15 @@ use std::collections::HashSet;
 use std::path::PathBuf;
 
 use crate::companion_v1::{
-    CompanionV1ControlAction, CompanionV1ControlRequest, CompanionV1Snapshot,
+    CompanionV1ControlAction, CompanionV1ControlRequest, CompanionV1HostSession, CompanionV1Snapshot,
 };
+
+fn session_audio_paths(session: &CompanionV1HostSession) -> impl Iterator<Item = &str> {
+    session.audio_path.iter().map(String::as_str)
+        .chain(session.chunks.iter().filter_map(|chunk| chunk.path.as_deref()))
+        .chain(session.meeting_tracks.iter().flat_map(|tracks|
+            tracks.microphone.iter().chain(&tracks.system).map(|part| part.path.as_str())))
+}
 
 /// Validate before any file or device deletion. The UI confirmation carries
 /// the selected ID; a stale or missing ID must never broaden the operation.
@@ -157,9 +164,9 @@ impl PrivacyManager {
             return report;
         };
         let retained_paths: Vec<String> = snapshot.host.sessions.iter().filter(|s| &s.id != selected_id)
-            .flat_map(|s| s.audio_path.iter().chain(s.chunks.iter().filter_map(|c| c.path.as_ref()))).cloned().collect();
+            .flat_map(session_audio_paths).map(str::to_owned).collect();
         let sources: Vec<String> = snapshot.host.sessions.iter().filter(|s| &s.id == selected_id)
-            .flat_map(|s| s.audio_path.iter().chain(s.chunks.iter().filter_map(|c| c.path.as_ref()))).cloned().collect();
+            .flat_map(session_audio_paths).map(str::to_owned).collect();
         if !self.erase_cache(snapshot, false, &sources, &retained_paths, &mut report) { return report; }
         let Some(handled) = self.erase_generated(&sources, &retained_paths, &mut seen, &mut report) else { return report; };
         let protected: HashSet<_> = snapshot
@@ -167,30 +174,16 @@ impl PrivacyManager {
             .sessions
             .iter()
             .filter(|session| &session.id != selected_id)
-            .flat_map(|session| {
-                session.audio_path.iter().map(String::as_str).chain(
-                    session
-                        .chunks
-                        .iter()
-                        .filter_map(|chunk| chunk.path.as_deref()),
-                )
-            })
+            .flat_map(session_audio_paths)
             .map(path_key)
             .collect();
         for session in &snapshot.host.sessions {
             if selected_id != &session.id {
                 continue;
             }
-            self.erase_session_audio_once(
-                session.audio_path.as_deref(),
-                &mut seen,
-                &protected,
-                &handled,
-                &mut report,
-            );
-            for chunk in &session.chunks {
+            for path in session_audio_paths(session) {
                 self.erase_session_audio_once(
-                    chunk.path.as_deref(),
+                    Some(path),
                     &mut seen,
                     &protected,
                     &handled,
@@ -206,20 +199,13 @@ impl PrivacyManager {
         let mut seen = HashSet::new();
         let protected = HashSet::new();
         let sources: Vec<String> = snapshot.host.sessions.iter()
-            .flat_map(|s| s.audio_path.iter().chain(s.chunks.iter().filter_map(|c| c.path.as_ref()))).cloned().collect();
+            .flat_map(session_audio_paths).map(str::to_owned).collect();
         if !self.erase_cache(snapshot, true, &sources, &[], &mut report) { return report; }
         let Some(handled) = self.erase_generated(&sources, &[], &mut seen, &mut report) else { return report; };
         for session in &snapshot.host.sessions {
-            self.erase_session_audio_once(
-                session.audio_path.as_deref(),
-                &mut seen,
-                &protected,
-                &handled,
-                &mut report,
-            );
-            for chunk in &session.chunks {
+            for path in session_audio_paths(session) {
                 self.erase_session_audio_once(
-                    chunk.path.as_deref(),
+                    Some(path),
                     &mut seen,
                     &protected,
                     &handled,
@@ -234,7 +220,7 @@ impl PrivacyManager {
         let mut report = PrivacyEraseReport::default();
         let Some(id) = snapshot.host.selected_session_id.as_ref().filter(|id| snapshot.host.sessions.iter().any(|s| &s.id == *id)) else { report.failed_files = 1; return report; };
         let paths = |selected: bool| snapshot.host.sessions.iter().filter(|s| (&s.id == id) == selected)
-            .flat_map(|s| s.audio_path.iter().chain(s.chunks.iter().filter_map(|c| c.path.as_ref()))).cloned().collect::<Vec<_>>();
+            .flat_map(session_audio_paths).map(str::to_owned).collect::<Vec<_>>();
         self.erase_cache(snapshot, false, &paths(true), &paths(false), &mut report);
         report
     }
@@ -381,8 +367,33 @@ mod tests {
     use super::*;
     use crate::companion_v1::{
         apply_fixture_control, fixture_snapshot, CompanionV1ControlAction,
-        CompanionV1ControlRequest,
+        CompanionV1ControlRequest, CompanionV1MeetingTrackPart, CompanionV1MeetingTracks,
     };
+
+    #[test]
+    fn deleting_selected_meeting_tracks_preserves_shared_and_outside_files() {
+        let root = std::env::temp_dir().join(format!("companion-tracks-privacy-{}", uuid::Uuid::new_v4()));
+        let legacy = root.join("legacy"); std::fs::create_dir_all(&legacy).unwrap();
+        let mic = root.join("meeting-mic-00000000.wav");
+        let shared = root.join("meeting-system-00000000.wav");
+        let outside = std::env::temp_dir().join(format!("companion-outside-{}.wav", uuid::Uuid::new_v4()));
+        for path in [&mic, &shared, &outside] { std::fs::write(path, b"audio").unwrap(); }
+        let request = serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap();
+        let mut snapshot = apply_fixture_control(fixture_snapshot(), request).unwrap();
+        let mut selected = snapshot.host.sessions.remove(0);
+        selected.id = "selected-tracks".into(); selected.audio_path = None; selected.chunks.clear();
+        let part = |path: &std::path::Path| CompanionV1MeetingTrackPart { path: path.to_string_lossy().into_owned(), first_sample: 0, samples: 1 };
+        selected.meeting_tracks = Some(CompanionV1MeetingTracks { root: root.join("meeting").to_string_lossy().into_owned(), state: "captured".into(),
+            microphone: vec![part(&mic), part(&outside)], system: vec![part(&shared)], discontinuity: false, issue: None });
+        let mut retained = selected.clone(); retained.id = "other-meeting".into();
+        retained.meeting_tracks.as_mut().unwrap().microphone.clear();
+        snapshot.host.selected_session_id = Some(selected.id.clone());
+        snapshot.host.sessions = vec![selected, retained];
+        let report = PrivacyManager::for_handoff_test(root.clone(), legacy).erase_selected_audio(&snapshot);
+        assert!(!mic.exists()); assert!(shared.exists()); assert!(outside.exists());
+        assert!(report.shared_files > 0); assert!(report.skipped_files > 0);
+        std::fs::remove_file(outside).unwrap(); std::fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn privacy_manager_deletes_only_owned_audio_cache() {
