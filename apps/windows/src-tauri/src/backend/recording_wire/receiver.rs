@@ -809,6 +809,7 @@ mod long_receipt_tests {
     }
 }
 
+mod parts;
 mod probe;
 mod publish;
 mod local;
