@@ -25,8 +25,8 @@ pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(Audio
         .any(|chunk|chunk.stopped_at.as_deref()==Some("verified-v2-session-part"))
         || path.file_name().and_then(|name|name.to_str()).is_some_and(|name|name.contains(".parts-"))) {
         let parts=super::recording_wire::receiver::Receiver::verified_audio_parts(session)?;
-        if parts.len()<2 || parts[0].0.canonicalize().ok().as_ref()!=Some(&path) {return Err("这场录音的分段尚未完整，未导出。".into());}
-        AudioSource::Parts(parts)
+        if parts.is_empty() || parts[0].0.canonicalize().ok().as_ref()!=Some(&path) {return Err("这场录音的分段尚未完整，未导出。".into());}
+        if parts.len()==1 {AudioSource::Single(parts[0].0.clone())} else {AudioSource::Parts(parts)}
     } else { AudioSource::Single(path) };
     let extension=audio.extension()?;
     Ok((audio, format!("{title}-original.{extension}")))

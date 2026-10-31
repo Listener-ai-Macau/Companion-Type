@@ -47,7 +47,10 @@ export function CompanionSegmentedAudioPlayer({parts,sourceIdentity,sessionId,pl
       if(token!==epoch.current)return;
       player.currentTime=target.offset;player.playbackRate=speedRef.current;player.preservesPitch=true;
       setCurrent(seconds);completed.current=false;moving.current=false;
-      if(play && seconds<duration) {await player.play();if(token!==epoch.current)return;playingRef.current=true;setPlaying(true);}
+      if(play && seconds<duration) {
+        try {await player.play();} catch {if(token===epoch.current)setMessage('播放已暂停，请点击播放继续。');return;}
+        if(token!==epoch.current)return;playingRef.current=true;setPlaying(true);
+      }
       remember(true);
     } catch(error) {if(token===epoch.current){moving.current=false;playingRef.current=false;setPlaying(false);}throw error;}
   };

@@ -22,8 +22,8 @@ pub(super) fn completed_retry(
     if snapshot.host.persistence.status != "ready" {
         return Err("这场录音已结束，但会议库尚未保存；请先重试保存。".into());
     }
-    if session.device_recording_key.is_some() {
-        super::recording_wire::receiver::Receiver::verify_completed_row(session)?;
+    let completed_parts=if session.device_recording_key.is_some() {
+        Some(super::recording_wire::receiver::Receiver::verified_completed_parts(session)?)
     } else if !session.device_recording_id.is_some_and(|id| id != 0)
         || !session.source_device_id.as_deref().is_some_and(device_connection::stable_device_id)
         || !session.device_total_length.is_some_and(|bytes| bytes > 0)
@@ -31,15 +31,25 @@ pub(super) fn completed_retry(
             sha.len() == 64 && sha.bytes().all(|byte| byte.is_ascii_hexdigit()))
     {
         return Err("这场录音的已保存记录不完整，未重发停止或覆盖原会议。".into());
-    }
+    } else {None};
     let unavailable = || "这场录音已结束，但本机原音已移动、损坏或与保存记录不一致；未重发停止或覆盖会议。".to_string();
     let path = session.audio_path.as_deref().map(std::path::Path::new)
         .filter(|path| path.is_absolute()).ok_or_else(unavailable)?;
-    let metadata = std::fs::symlink_metadata(path).map_err(|_| unavailable())?;
-    if !metadata.is_file() || metadata.file_type().is_symlink() || metadata.len() != session.audio_bytes
-        || super::meeting_workspace::wav_duration_ms(path).map_err(|_| unavailable())? != session.duration_ms
-    {
-        return Err(unavailable());
+    if let Some(parts)=completed_parts.filter(|parts|parts.len()>1) {
+        let mut bytes=0u64;let mut samples=0u64;
+        for (part,count) in parts {
+            let metadata=std::fs::symlink_metadata(part).map_err(|_|unavailable())?;
+            if !metadata.is_file() || metadata.file_type().is_symlink() {return Err(unavailable());}
+            bytes=bytes.checked_add(metadata.len()).ok_or_else(unavailable)?;
+            samples=samples.checked_add(count).ok_or_else(unavailable)?;
+        }
+        if bytes!=session.audio_bytes || samples/16!=session.duration_ms {return Err(unavailable());}
+    } else {
+        let metadata=std::fs::symlink_metadata(path).map_err(|_|unavailable())?;
+        if !metadata.is_file() || metadata.file_type().is_symlink() || metadata.len()!=session.audio_bytes
+            || super::meeting_workspace::wav_duration_ms(path).map_err(|_|unavailable())?!=session.duration_ms {
+            return Err(unavailable());
+        }
     }
     snapshot.updated_at = super::observation_timestamp();
     snapshot.last_control = Some(CompanionV1ControlEcho {

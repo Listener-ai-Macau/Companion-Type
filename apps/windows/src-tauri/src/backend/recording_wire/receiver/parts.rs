@@ -327,8 +327,7 @@ impl<'a> PartWriter<'a> {
     }
 }
 
-// This staging primitive is not yet connected to publication, playback or
-// ASR: until those accept all parts, the existing single-WAV limit remains.
+// This unowned staging primitive is used by focused decoding tests.
 #[allow(dead_code)]
 pub(super) fn decode_to_parts(ds: &[Descriptor], files: &mut [File], root: &Path,
     samples: u64, legacy_limited: bool, max_pcm_bytes: u32,
@@ -421,7 +420,7 @@ mod tests {
         for (descriptor,payload) in &source {receiver.accept_segment(&descriptor.encode().unwrap(),payload).unwrap();}
         let originals=source.iter().map(|(d,_)|receiver.payload_path(d)).collect::<Vec<_>>();
         receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
-        let paths=receiver.assemble_parts_with_limit(1000).unwrap();assert!(paths.len()>3);
+        receiver.assemble_session_with_limit(1000).unwrap();let paths=receiver.playback_paths().unwrap();assert!(paths.len()>3);
         let receipt=fs::read(receiver.receipt_path()).unwrap();drop(receiver);
         assert!(!crate::backend::persistence::load_sessions_from(&index).unwrap()[0].audio_stored);
         let after_interruption=super::super::local::restore_local(&root,&index).unwrap();
@@ -465,14 +464,16 @@ mod tests {
         receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
         let pending=crate::backend::persistence::load_sessions_from(&index).unwrap();
         assert!(!pending[0].audio_stored);
-        let paths=receiver.assemble_parts_with_limit(1000).unwrap();
+        receiver.assemble_session_with_limit(1000).unwrap();let paths=receiver.playback_paths().unwrap();
         assert!(paths.len()>2);
+        receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
+        let acks=receiver.ack_candidates(&index).unwrap();assert_eq!(acks.len(),source.len());
+        for ack in acks {receiver.confirm_acked(&ack).unwrap();}
         receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();
         let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
         assert_eq!(rows.len(),1); let row=&rows[0];
         assert!(row.audio_stored);
         assert_eq!(row.audio_path.as_deref(),paths[0].to_str());
-        assert_eq!(receiver.ack_candidates(&index).unwrap().len(),source.len());
         drop(receiver);
         assert_eq!(Receiver::verified_audio_paths(row).unwrap(),paths);
         let playback_parts=Receiver::verified_audio_parts(row).unwrap();
@@ -481,7 +482,10 @@ mod tests {
         assert_eq!(crate::backend::transcription_chunk_paths(row).unwrap(),
             paths.iter().map(|p|p.to_string_lossy().into_owned()).collect::<Vec<_>>());
         let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.host.sessions=vec![row.clone()];
-        snapshot.meeting.active=false;snapshot.device.recording=false;
+        snapshot.meeting.active=false;snapshot.device.recording=false;snapshot.host.active_session_id=None;
+        snapshot.host.persistence.status="ready".into();
+        assert!(crate::backend::board_stop::completed_retry(&mut snapshot,&row.id).unwrap(),
+            "a completed multipart recording must not be treated as a failed single WAV");
         let output=root.join("complete-export.wav");
         crate::backend::audio_export::export(&snapshot,&row.id,&output).unwrap();
         let exported=fs::read(&output).unwrap();

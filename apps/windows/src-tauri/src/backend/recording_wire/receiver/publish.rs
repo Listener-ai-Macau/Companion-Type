@@ -41,6 +41,9 @@ impl Receiver {
     pub(crate) fn verify_completed_row(row: &crate::companion_v1::CompanionV1HostSession) -> Result<(),String> {
         Self::verify_saved_row_inner(row, true, None).map(|_|())
     }
+    pub(crate) fn verified_completed_parts(row:&crate::companion_v1::CompanionV1HostSession)->Result<Vec<(PathBuf,u64)>,String> {
+        Self::verify_saved_row_inner(row,true,None).map(|(_,parts)|parts)
+    }
     /// A verified local original remains usable before physical consumption.
     /// This never authorizes an ACK or substitutes for a device reclaim receipt.
     pub(crate) fn verify_saved_row(row: &crate::companion_v1::CompanionV1HostSession) -> Result<(),String> {

@@ -1563,7 +1563,10 @@ impl CompanionBackend for FixtureCompanionBackend {
         } else { stamp };
         let playback = if request.action == Action::AddAt {
             let path=meeting_workspace::local_audio_path(&snapshot,&request.session_id)?;
-            Some(meeting_workspace::wav_duration_ms(&path)?)
+            Some(if candidate.device_recording_key.is_some() {
+                let parts=recording_wire::receiver::Receiver::verified_audio_parts(&candidate)?;
+                parts.iter().try_fold(0u64,|sum,(_,samples)|sum.checked_add(*samples).ok_or("录音时长无效。"))?/16
+            } else {meeting_workspace::wav_duration_ms(&path)?})
         } else { None };
         recording_bookmarks::apply(&mut candidate,&request,native_stamp.as_ref(),playback,&connection_timestamp())?;
         candidate.exported_at=None;

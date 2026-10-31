@@ -466,7 +466,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
                     receiver.confirm_acked(&ack)?;
                 }
             }
-            if receiver.plan()?.payloads_complete { receiver.assemble()?; }
+            if receiver.plan()?.payloads_complete { receiver.assemble_session()?; }
             let published_id = receiver.publish(&index, &device.device_id())?;
             let ids = batch.segmented.as_mut().unwrap();
             if !ids.contains(&published_id) { ids.push(published_id); }

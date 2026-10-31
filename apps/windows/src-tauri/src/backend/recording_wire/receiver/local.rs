@@ -150,13 +150,16 @@ pub(super) fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->R
             if receiver.receipt.audio.is_none() {
                 if receiver.publish(index,device)?!=row.id {return Err(fail());}
             }
-            let audio=receiver.assemble()?;
+            receiver.assemble_session()?;
+            let audio=receiver.playback_paths()?.into_iter().next().ok_or_else(fail)?;
             let id=receiver.publish(index,device)?;
             if id!=row.id {return Err(fail())};
             let originals=receiver.descriptors()?.iter().map(|d|u64::from(d.encoded_length)).sum();
-            let stored=receiver.receipt.audio.as_ref().ok_or_else(fail)?;
+            let audio_bytes=if let Some(stored)=receiver.receipt.audio.as_ref(){stored.bytes}
+                else {receiver.receipt.parts_audio.as_ref().ok_or_else(fail)?.manifest.owned_details(&root,&receiver.audio_path())?
+                    .iter().try_fold(0u64,|sum,(_,_,_,bytes)|sum.checked_add(*bytes).ok_or_else(fail))?};
             Ok(RestoreOutcome::Restored(LocalRestoredRecording { session_id:id,audio_path:audio.to_string_lossy().into_owned(),
-                original_bytes:originals,audio_bytes:stored.bytes,
+                original_bytes:originals,audio_bytes,
                 reclaim_pending:receiver.receipt.segments.iter().any(|segment|!segment.acked) }))
             // Tail replicas remain until normal authenticated sync retires them;
             // no fabricated radio Peer/ACK is used for local recovery.

@@ -555,10 +555,8 @@ impl Receiver {
         audio.manifest.verify_owned(&self.root, &self.audio_path())
     }
 
-    // The normal assembly/publication path remains single-WAV until playback,
-    // transcription, recovery and deletion all consume this receipt together.
-    // The small part size in tests exercises the same path without hours of PCM.
-    #[allow(dead_code)]
+    // Each part is a container boundary; the receipt keeps one meeting axis.
+    // Tests use a small size to exercise the same path without hours of PCM.
     fn assemble_parts_with_limit(&mut self, max_pcm_bytes: u32) -> Result<Vec<PathBuf>, String> {
         let plan = self.plan()?;
         if !plan.payloads_complete { return Err("录音尚有缺段，已收齐的原音保留，等待继续同步。".into()); }
@@ -583,6 +581,23 @@ impl Receiver {
             return Err(error);
         }
         Ok(paths)
+    }
+
+    /// Assemble one logical session. Callers publish the receipt, not a lone
+    /// path, so all playback and transcription parts remain associated.
+    pub(crate) fn assemble_session(&mut self)->Result<(),String> {
+        self.assemble_session_with_limit(MAX_PCM_BYTES as u32)
+    }
+    fn assemble_session_with_limit(&mut self,max_pcm_bytes:u32)->Result<(),String> {
+        let plan=self.plan()?;
+        if !plan.payloads_complete {return Err("录音尚有缺段，已收齐的原音保留，等待继续同步。".into());}
+        if self.receipt.parts_audio.is_some() {return Ok(());}
+        if self.receipt.audio.is_some() || plan.sample_count<=u64::from(max_pcm_bytes)/2 {
+            self.assemble()?;
+        } else {
+            self.assemble_parts_with_limit(max_pcm_bytes)?;
+        }
+        Ok(())
     }
 
     pub(crate) fn assemble(&mut self) -> Result<PathBuf, String> {
