@@ -1883,6 +1883,7 @@ export function CompanionDashboard({
             <div><strong>原音回听</strong></div>
             {preparedAudio?.meetingTracks ? <CompanionMeetingAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.sourceIdentity}:${listeningEpoch}`}
               tracks={preparedAudio.meetingTracks} controlRef={meetingAudioControl}
+              sourceIdentity={preparedAudio.sourceIdentity} sessionId={selectedSession.id}
               autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
               onFinished={()=>listeningQueue.finished(preparedAudio.sourceIdentity)} />
             : preparedAudio ? <CompanionAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.url}:${listeningEpoch}`} playerRef={audioElement} src={preparedAudio.url} pauseTimeline={preparedAudio.pauseTimeline}
