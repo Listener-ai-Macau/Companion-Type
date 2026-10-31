@@ -352,10 +352,24 @@ device-authored marks from the same original recording. Each mark has its device
 `sequence`, `sourceSamples`, `playbackSamples` and `elapsedMillis`; the sample
 values are at 16 kHz, so `playbackSamples / 16` is the position in the decoded
 WAV in milliseconds. The captured/playback position excludes paused time, while
-`elapsedMillis` retains the device's elapsed-time observation. Associate marks
-with the session identity and persist any user edits in the host app; this API
-does not automatically save, consume or delete the device recording. The mark
-path has only host-side synthetic JNI tests, not phone/device acceptance.
+`elapsedMillis` retains the device's elapsed-time observation. The host can save
+and reopen these device-created positions without decoding again:
+
+```java
+DeviceBookmarkCache markCache = new DeviceBookmarkCache(
+    context.getFilesDir().toPath().resolve("companion-device-marks"));
+markCache.save(session, audio); // audio is the NativeAudio.decode result for session
+DeviceBookmarkCache.Saved savedMarks = markCache.load(session);
+```
+
+Use a fresh `RecordingLibrary.sessions` result when reopening. The index binds
+the device, session and verified segment identities and accepts an unchanged
+recording after its receipt status changes. A missing, damaged or mismatched
+index returns null; decode the retained original again to rebuild it. The index
+is only a cache of device-created positions: user-created notes or edits must
+still be persisted separately. It does not save, consume or delete the original
+recording. The mark path has only host-side synthetic JNI tests, not phone/device
+acceptance.
 While a meeting is still recording, `NativeAudio.inspectPrefix(session)` can
 validate a contiguous, fully received local prefix and return device marks on
 their original source-sample axis. `encodedSamples` counts encoded 16 kHz

@@ -12,7 +12,7 @@ public final class NativeAudio {
     /** Device-authored mark on the same recording, with captured and playback positions. */
     public static final class Bookmark {
         public final long sequence,sourceSamples,playbackSamples,elapsedMillis;
-        private Bookmark(long sequence,long source,long playback,long elapsed) {
+        Bookmark(long sequence,long source,long playback,long elapsed) {
             this.sequence=sequence;sourceSamples=source;playbackSamples=playback;elapsedMillis=elapsed;
         }
     }
@@ -32,9 +32,10 @@ public final class NativeAudio {
         public final long samples;
         public final boolean captureComplete;
         public final List<Bookmark> bookmarks;
-        private Result(Path path,long samples,boolean captureComplete,List<Bookmark> bookmarks) {
+        final byte[] sourceFingerprint;
+        private Result(Path path,long samples,boolean captureComplete,List<Bookmark> bookmarks,byte[] fingerprint) {
             this.path=path;this.samples=samples;this.captureComplete=captureComplete;
-            this.bookmarks=Collections.unmodifiableList(bookmarks);
+            this.bookmarks=Collections.unmodifiableList(bookmarks);sourceFingerprint=fingerprint;
         }
     }
     private static native long decodeFiles(String[] paths,byte[][] descriptors,String output) throws IOException;
@@ -64,6 +65,7 @@ public final class NativeAudio {
     public static Result decode(RecordingLibrary.Session session,Path output) throws IOException {
         if(session==null||output==null)throw new IllegalArgumentException("session and output required");
         if(session.state==RecordingLibrary.SessionState.DAMAGED)throw new IOException("recording is damaged; originals retained");
+        byte[] fingerprint=DeviceBookmarkCache.fingerprint(session);
         int count=session.segments.size();String[] paths=new String[count];byte[][] descriptors=new byte[count][];boolean complete=true;
         for(int i=0;i<count;i++) {
             RecordingLibrary.Entry entry=session.segments.get(i);
@@ -78,7 +80,7 @@ public final class NativeAudio {
             if(values==null||values.length<1||(values.length-1)%4!=0)throw new IOException("invalid audio metadata; originals retained");
             List<Bookmark> marks=new ArrayList<>();
             for(int i=1;i<values.length;i+=4)marks.add(new Bookmark(values[i],values[i+1],values[i+2],values[i+3]));
-            return new Result(output,values[0],complete,marks);
+            return new Result(output,values[0],complete,marks,fingerprint);
         } catch(UnsatisfiedLinkError error){throw new IOException("mobile audio decoder needs the matching backend version",error);}
     }
 }

@@ -64,6 +64,27 @@ public final class NativeAudioJvmTest {
         if(result.samples!=640||!result.captureComplete||output.length!=1324||!Arrays.equals(Arrays.copyOf(output,4),new byte[]{'R','I','F','F'}))throw new AssertionError("native output mismatch");
         if(result.bookmarks.size()!=1||result.bookmarks.get(0).sequence!=1||result.bookmarks.get(0).sourceSamples!=640||
             result.bookmarks.get(0).playbackSamples!=320||result.bookmarks.get(0).elapsedMillis!=40)throw new AssertionError("device bookmark was not preserved");
+        Path index=root.resolve("marks");DeviceBookmarkCache cache=new DeviceBookmarkCache(index);
+        if(cache.load(session)!=null)throw new AssertionError("new recording already has an index");
+        cache.save(session,result);DeviceBookmarkCache.Saved reopened=new DeviceBookmarkCache(index).load(session);
+        if(reopened==null||reopened.samples!=640||!reopened.captureComplete||reopened.bookmarks.size()!=1||
+           reopened.bookmarks.get(0).sequence!=1||reopened.bookmarks.get(0).playbackSamples!=320||reopened.bookmarks.get(0).elapsedMillis!=40)
+            throw new AssertionError("device mark index did not reopen");
+        if(cache.load(incomplete)!=null)throw new AssertionError("index leaked to a different session");
+        try{cache.save(incomplete,result);throw new AssertionError("cross-session index was saved");}catch(java.io.IOException expected){}
+        Path metadata=root.resolve(SegmentReceiver.key(descriptor)+".meta");byte[] synced=d.clone();synced[95]=1;crc.reset();crc.update(synced,0,108);put32(synced,108,crc.getValue());Files.write(metadata,synced);
+        RecordingLibrary.Session received=RecordingLibrary.sessions(root).stream().filter(x->x.state==RecordingLibrary.SessionState.COMPLETE).findFirst().get();
+        if(cache.load(received)==null)throw new AssertionError("receipt state invalidated identical recording");
+        byte[] altered=synced.clone();altered[94]=1;crc.reset();crc.update(altered,0,108);put32(altered,108,crc.getValue());Files.write(metadata,altered);
+        RecordingLibrary.Session changed=RecordingLibrary.sessions(root).stream().filter(x->x.state==RecordingLibrary.SessionState.COMPLETE).findFirst().get();
+        if(cache.load(changed)!=null)throw new AssertionError("index accepted changed source metadata");
+        Files.write(metadata,synced);
+        Path indexFile;try(java.util.stream.Stream<Path> files=Files.list(index)){indexFile=files.filter(p->p.toString().endsWith(".device-marks")).findFirst().get();}
+        byte[] damaged=Files.readAllBytes(indexFile);damaged[damaged.length-1]^=1;Files.write(indexFile,damaged);
+        if(cache.load(received)!=null)throw new AssertionError("damaged index was accepted");
+        cache.save(received,result);
+        if(cache.load(received)==null||!Arrays.equals(Files.readAllBytes(root.resolve(SegmentReceiver.key(descriptor)+".cop1")),raw))
+            throw new AssertionError("index retry changed original recording");
         try{NativeAudio.decode(session,wav);throw new AssertionError("existing output replaced");}catch(java.io.IOException expected){}
         if(!Arrays.equals(Files.readAllBytes(wav),output))throw new AssertionError("existing output changed");
         System.out.println("PASS Java-to-native synthetic audio decode and existing-output preservation");
