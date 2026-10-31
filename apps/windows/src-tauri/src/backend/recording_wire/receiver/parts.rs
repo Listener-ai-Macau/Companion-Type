@@ -410,6 +410,31 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "requires an explicitly supplied public COP1 fixture and isolated output"]
+    fn create_public_speech_multipart_session_for_local_asr() {
+        let input=PathBuf::from(std::env::var_os("COMPANION_PUBLIC_MULTIPART_FIXTURE").unwrap());
+        let output=PathBuf::from(std::env::var_os("COMPANION_PUBLIC_MULTIPART_OUT").unwrap());
+        assert!(input.is_absolute()&&output.is_absolute()&&output.is_dir());
+        let root=output.join("recordings");fs::create_dir(&root).unwrap();let root=fs::canonicalize(root).unwrap();
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let payload=fs::read(&input).unwrap();let mut reader=cop1::Reader::new(payload.as_slice(),0,false).unwrap();
+        while reader.next().unwrap().is_some(){}let summary=reader.finish(false).unwrap();assert!(summary.frames>2000);
+        let mut descriptor=super::super::source_boundary_tests::fixture()[0].0.clone();
+        descriptor.segment_index=0;descriptor.sample_offset=0;descriptor.sample_count=summary.frames*320;
+        descriptor.encoded_length=u32::try_from(payload.len()).unwrap();descriptor.content_crc32=crc32fast::hash(&payload);
+        descriptor.sha256=Sha256::digest(&payload).into();descriptor.total_segments=1;descriptor.flags=3;
+        let mut receiver=Receiver::open(&root,&descriptor.encode().unwrap()).unwrap();
+        receiver.accept_segment(&descriptor.encode().unwrap(),&payload).unwrap();
+        receiver.assemble_session_with_limit(320_000).unwrap();let paths=receiver.playback_paths().unwrap();assert!(paths.len()>3);
+        let index=output.join("sessions.json");let id=receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();drop(receiver);
+        let rows=crate::backend::persistence::load_sessions_from(&index).unwrap();
+        assert_eq!(rows.len(),1);assert_eq!(rows[0].id,id);assert_eq!(Receiver::verified_audio_paths(&rows[0]).unwrap(),paths);
+        fs::write(output.join("fixture-result.json"),serde_json::to_vec_pretty(&serde_json::json!({
+            "sessionId":id,"partCount":paths.len(),"durationMs":rows[0].duration_ms,"inputSha256":format!("{:x}",Sha256::digest(&payload)),
+            "scope":"explicit public fixture, synthetic device receipt, no board or network"})).unwrap()).unwrap();
+    }
+
+    #[test]
     fn missing_middle_parts_are_restored_from_owned_originals_in_one_pass() {
         let parent=std::env::temp_dir();let requested=parent.join(format!("companion-parts-recovery-{}",uuid::Uuid::new_v4()));
         assert_eq!(requested.parent(),Some(parent.as_path()));fs::create_dir(&requested).unwrap();let root=fs::canonicalize(&requested).unwrap();
