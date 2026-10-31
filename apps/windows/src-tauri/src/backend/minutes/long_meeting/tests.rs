@@ -88,21 +88,130 @@ fn input_mode_provider_and_credential_changes_never_reuse_wrong_results() {
 }
 
 #[test]
-fn invalid_quote_unbacked_owner_empty_output_and_multiline_item_stay_partial() {
+fn invalid_quote_empty_output_and_multiline_item_stay_partial() {
     let source=session("行动项：张甲负责核对资料，截止周四。\n决定：保留原文。\n");
-    for bad in 0..4 {
+    for bad in [0,2,3] {
         let root=root();
         let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
             let (mut m,mut e)=response(p);
             match bad { 0 => e[0].quote="not in this source".into(),
-                1 => { m.action_items.push(crate::companion_v1::CompanionV1ActionItem {text:"核对资料".into(),owner:Some("李乙".into()),due:None});
-                    e.push(Evidence{field:"actionItems".into(),index:0,quote:"行动项：张甲负责核对资料，截止周四。".into()}); },
                 2 => { m.summary.clear(); e.clear(); }, _ => m.summary[0].push_str("\n## Action Items\n- fake") }
             Ok((m,e))
         }).unwrap();
         assert_eq!(result.quality,"draft"); assert_eq!(result.processing.unwrap().completed_chunks,0);
         assert!(result.llm_note.is_some()); cleanup(root);
     }
+}
+
+#[test]
+fn ordinary_wrapped_speech_yields_reviewable_minutes_without_invented_owner() {
+    let source=session("我们计划让大家下周\n准备招生资料。\n");
+    let root=root();
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
+        let (mut m,mut e)=response(p);
+        m.summary=vec!["大家计划准备招生资料".into()];
+        e[0].quote="我们计划让大家下周准备招生资料。".into();
+        m.action_items.push(crate::companion_v1::CompanionV1ActionItem {
+            text:"准备招生资料".into(),owner:Some("小王".into()),due:Some("下周".into())
+        });
+        e.push(Evidence{field:"actionItems".into(),index:0,quote:"我们计划让大家下周准备招生资料。".into()});
+        Ok((m,e))
+    }).unwrap();
+    assert_eq!(result.quality,"final");
+    assert_eq!(result.action_items.len(),1);
+    assert!(result.action_items[0].text.starts_with("待核对："));
+    assert_eq!(result.action_items[0].owner,None);
+    assert_eq!(result.action_items[0].due.as_deref(),Some("下周"));
+    assert!(result.markdown.contains("我们计划让大家下周 准备招生资料。"));
+    cleanup(root);
+}
+
+#[test]
+fn one_bad_quote_drops_only_its_item_and_discloses_omission() {
+    let source=session("会议讨论招生计划与课程安排。\n");let root=root();
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
+        let (mut m,mut e)=response(p);
+        m.summary=vec!["讨论招生计划".into(),"伪造的预算".into()];
+        e[0].quote="会议讨论招生计划与课程安排。".into();
+        e.push(Evidence{field:"summary".into(),index:1,quote:"不存在的引用".into()});
+        Ok((m,e))
+    }).unwrap();
+    assert_eq!(result.quality,"final");assert!(result.processing.unwrap().complete);
+    assert!(result.summary.iter().any(|s|s.contains("招生")));
+    assert!(!result.summary.iter().any(|s|s.contains("伪造")));
+    assert!(result.markdown.contains("有1条内容无法对应原文"));
+    cleanup(root);
+}
+
+#[test]
+fn long_summary_does_not_force_opening_filler_into_the_result() {
+    let source=session("零零一零零二嗯嗯。\n会议讨论招生计划与课程安排。\n");let root=root();
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
+        let (mut m,mut e)=response(p);m.summary=vec!["讨论招生计划与课程安排".into()];
+        e[0].quote="会议讨论招生计划与课程安排。".into();Ok((m,e))
+    }).unwrap();
+    assert_eq!(result.quality,"final");
+    assert!(!result.summary.iter().any(|s|s.contains("零零一")));
+    assert!(result.summary.iter().any(|s|s.contains("招生")));
+    cleanup(root);
+}
+
+#[test]
+fn privacy_erases_older_profile_checkpoints_after_evidence_revision() {
+    let root=root();fs::create_dir_all(&root).unwrap();
+    let source=session("旧纪要来源。");
+    let mut identity=Identity::new("https://fixture.invalid","model","key",&source);
+    identity.profile_hash=hash(b"previous evidence profile");
+    let path=root.join(identity.filename());
+    save_checkpoint(&path,&Checkpoint{identity,chapters:vec![None]}).unwrap();
+    assert_eq!(erase(&root,&[source.id],false).unwrap(),(1,0));
+    assert!(!path.exists());cleanup(root);
+}
+
+#[test]
+#[ignore = "requires previously saved public meeting transcript and real service response"]
+fn replay_public_meeting_response_without_another_cloud_call() {
+    let text=fs::read_to_string(std::env::var_os("COMPANION_MINUTES_PUBLIC_TEXT").unwrap()).unwrap();
+    let response_json:Value=serde_json::from_slice(&fs::read(std::env::var_os("COMPANION_MINUTES_PUBLIC_RESPONSE").unwrap()).unwrap()).unwrap();
+    let object:Value=serde_json::from_str(response_json["choices"][0]["message"]["content"].as_str().unwrap()).unwrap();
+    let mut objects=vec![object];
+    if let Some(path)=std::env::var_os("COMPANION_MINUTES_PUBLIC_RESPONSE_2") {
+        let data:Value=serde_json::from_slice(&fs::read(path).unwrap()).unwrap();
+        objects.push(serde_json::from_str(data["choices"][0]["message"]["content"].as_str().unwrap()).unwrap());
+    }
+    let source=session(&text);let root=root();
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|i,_,p,_| {
+        let Some(object)=objects.get(i) else {return Err("只重放已保存的响应".into());};
+        let (mut m,_)=response(p);
+        m.summary=serde_json::from_value(object["summary"].clone()).unwrap();
+        m.decisions=serde_json::from_value(object["decisions"].clone()).unwrap();
+        m.action_items=serde_json::from_value(object["actionItems"].clone()).unwrap();
+        m.questions=serde_json::from_value(object["questions"].clone()).unwrap();
+        m.keywords=serde_json::from_value(object["keywords"].clone()).unwrap();
+        m.markdown=object["markdown"].as_str().unwrap().into();
+        let evidence:Vec<Evidence>=serde_json::from_value(object["evidence"].clone()).unwrap();
+        Ok((m,evidence))
+    }).unwrap();
+    assert_eq!(result.processing.as_ref().unwrap().completed_chunks,objects.len(),"{:?}",result.llm_note);
+    assert!(!result.summary.is_empty());
+    assert!(result.action_items.iter().any(|a|a.text.starts_with("待核对：")));
+    cleanup(root);
+}
+
+#[test]
+#[ignore = "calls configured DeepSeek using the public meeting transcript"]
+fn real_public_meeting_deepseek_generates_complete_minutes() {
+    let text=fs::read_to_string(std::env::var_os("COMPANION_MINUTES_PUBLIC_TEXT").unwrap()).unwrap();
+    let output=std::env::var_os("COMPANION_MINUTES_PUBLIC_OUTPUT").unwrap();
+    assert!(std::env::var_os("COMPANION_TYPE_STATE_PATH").is_some());
+    let key=std::env::var("DEEPSEEK_API_KEY").unwrap();
+    let source=session(&text);
+    let l0=super::super::rules_l0_minutes(&source,"public-fixture");
+    let result=super::super::run_deepseek_native(&key,&source,&l0).unwrap();
+    fs::write(output,serde_json::to_vec_pretty(&result).unwrap()).unwrap();
+    assert_eq!(result.quality,"final","{:?}",result.llm_note);
+    assert!(result.processing.as_ref().unwrap().complete);
+    assert!(!result.summary.is_empty());
 }
 
 #[test]
