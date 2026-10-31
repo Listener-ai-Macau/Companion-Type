@@ -1627,6 +1627,7 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
         let mut identity = device.observed_identity.clone();
         let link = NativeLinkGuard::capture(&device);
         let result = link.run(async {
+            let mut original_finalized = false;
             let peer = device.recording_peer.clone().ok_or("连续录音连接身份不可用。")?;
             let chars = device.peripheral.characteristics();
             if let Some(lease) = owned.as_ref() {
@@ -1638,6 +1639,8 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
                     device.peripheral.read(&status)).await?;
                 let status = parse_meeting_status(&status)?;
                 lease.verify_observation(device.verified_uid.as_deref(),&device.device_id(),&current,&status,lease.start_token)?;
+                original_finalized = status.state == MEETING_STATE_FINALIZED;
+                if let Some(cursor) = live.as_deref_mut() { cursor.observe_verified_recorder_state(status.state); }
                 identity = Some(current);
             }
             let job = RecordingSyncJob::begin_background(device_id)?;
@@ -1653,7 +1656,7 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
             let (mut batch, deferred) = segmented::sync_catalog_limited(&device, &chars, peer.clone(), catalog.entries,
                 &job, &mut policy, Some(1), owned.as_ref().and_then(|lease| lease.logical_key.as_ref())).await?;
             if let Some(live)=live.as_deref_mut() {live.sealed(&native_recording_root()?,device_id);}
-            if !deferred&&!batch.paused&&batch.failures.is_empty()&&peer.growing_tail {
+            if !original_finalized&&!deferred&&!batch.paused&&batch.failures.is_empty()&&peer.growing_tail {
                 if let Some(scope)=tail_scope {
                     match segmented::follow_tail(&device,&chars,&peer,scope,&job,live.as_deref_mut()).await {
                         Ok(())=>(),Err(e) if e==recording_sync::PAUSED=>batch.paused=true,

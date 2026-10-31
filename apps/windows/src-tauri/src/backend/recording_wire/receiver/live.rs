@@ -18,11 +18,13 @@ pub(crate) struct LiveCursor {
     window: Option<cop1::SampleWindow>,
     pcm: VecDeque<i16>,
     error: Option<String>,
+    verified_recorder_state: Option<u8>,
 }
 impl LiveCursor {
     pub(crate) fn new(key: SessionKey) -> Result<Self,String> {
         Ok(Self { key, decoder:MonoDecoder::new(16000)?,segment:0,frames:0,
-            segment_frames:0,prefix:Vec::new(),schema:None,audio_profile:None,window:None,pcm:VecDeque::new(),error:None })
+            segment_frames:0,prefix:Vec::new(),schema:None,audio_profile:None,window:None,pcm:VecDeque::new(),error:None,
+            verified_recorder_state:None })
     }
     pub(crate) fn key(&self)->&SessionKey { &self.key }
     pub(crate) fn duration_ms(&self)->u64 {
@@ -32,6 +34,10 @@ impl LiveCursor {
         if self.schema.is_some_and(|s|s>=4) {self.duration_ms()}else{self.frames*20}
     }
     pub(crate) fn error(&self)->Option<&str> { self.error.as_deref() }
+    /// Only the follower calls this after verifying the same UID, logical key,
+    /// command and consistent recorder/device status on the active lease.
+    pub(crate) fn observe_verified_recorder_state(&mut self,state:u8) {self.verified_recorder_state=Some(state);}
+    pub(crate) fn original_finished(&self)->bool {self.verified_recorder_state==Some(2)}
     fn observe(&mut self,result:Result<(),String>) {
         if let Err(e)=result { if self.error.is_none() {self.error=Some(e);} }
     }
@@ -150,6 +156,14 @@ mod tests {
         for _ in 0..3 {b.extend_from_slice(&[3,0,0xf8,0xff,0xfe]);}b
     }
     fn cursor()->LiveCursor {LiveCursor::new(SessionKey {device_uid:[7;12],format_epoch:11,session_id:13}).unwrap()}
+    #[test]
+    fn verified_finished_state_does_not_confuse_pause_or_recording() {
+        let mut c=cursor();
+        assert!(!c.original_finished());
+        c.observe_verified_recorder_state(1);assert!(!c.original_finished());
+        c.observe_verified_recorder_state(3);assert!(!c.original_finished());
+        c.observe_verified_recorder_state(2);assert!(c.original_finished());
+    }
     #[test] fn live_high_signal_keeps_decoder_range() {
         let bytes=include_bytes!("fixtures/high-tone-clamp.cop1");
         let mut c=cursor();c.accept(0,0,20*320,bytes,true,false).unwrap();

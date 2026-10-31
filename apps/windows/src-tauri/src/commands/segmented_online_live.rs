@@ -199,6 +199,10 @@ fn run(coordinator:&Arc<CompanionCoordinator>,manager:&Arc<CompanionBoardOnlineL
             // A link failure suspends this consumer, never the microphone.
             match coordinator.follow_online_capture(&lease,session,&mut cursor) {
                 Ok(_)=>{
+                    if cursor.original_finished() {
+                        manager.observe_link("originalFinished",&coordinator.snapshot()?,session,elapsed(),cursor.captured_ms(),None);
+                        break;
+                    }
                     if awaiting_prefix.is_some_and(|prior|cursor.captured_ms()>prior) {
                         manager.observe_link("prefixResumed",&coordinator.snapshot()?,session,elapsed(),cursor.captured_ms(),None);
                         awaiting_prefix=None;
