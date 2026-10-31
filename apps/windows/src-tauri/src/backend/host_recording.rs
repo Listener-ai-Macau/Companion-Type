@@ -214,6 +214,13 @@ impl Default for HostRecordingManager {
     }
 }
 
+fn meeting_track_duration_ms(tracks: &crate::companion_v1::CompanionV1MeetingTracks) -> u64 {
+    [&tracks.microphone, &tracks.system].into_iter()
+        .filter_map(|parts| parts.last())
+        .map(|part| part.first_sample.saturating_add(part.samples))
+        .max().unwrap_or(0).saturating_mul(1_000) / u64::from(TARGET_SAMPLE_RATE)
+}
+
 fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecordingStop, String> {
     let elapsed_ms = recording.started_at.elapsed().as_millis().max(1) as u64;
     let (path, bytes, mode, mut capture_error, meeting_tracks) = match recording.mode {
@@ -243,8 +250,7 @@ fn stop_active_recording(recording: ActiveHostRecording) -> Result<HostRecording
             super::audio_artifacts::is_managed(Path::new(&part.path)))
     } else { complete_capture_artifact(recording.artifact, &path, bytes, &mut capture_error) };
     let duration_ms = if let Some(tracks) = &meeting_tracks {
-        tracks.microphone.last().map(|part| part.first_sample.saturating_add(part.samples)).unwrap_or(0)
-            .saturating_mul(1_000) / u64::from(TARGET_SAMPLE_RATE)
+        meeting_track_duration_ms(tracks)
     } else { bytes.saturating_sub(44).saturating_mul(1_000) / (u64::from(TARGET_SAMPLE_RATE) * 2) };
     Ok(HostRecordingStop {
         session_id: recording.session_id,
@@ -506,6 +512,19 @@ fn write_synthetic_wav(path: &PathBuf, duration_ms: u64) -> Result<(), String> {
 mod tests {
     use super::*;
     use super::super::CompanionBackend;
+
+    #[test]
+    fn interrupted_meeting_duration_includes_the_longer_track() {
+        use crate::companion_v1::{CompanionV1MeetingTrackPart, CompanionV1MeetingTracks};
+        let part = |samples| CompanionV1MeetingTrackPart { path: String::new(), first_sample: 0, samples };
+        let mut tracks = CompanionV1MeetingTracks { root: String::new(), state: "needsReview".into(),
+            microphone: vec![part(16_000)], system: vec![part(32_000)], discontinuity: true, issue: None };
+        assert_eq!(meeting_track_duration_ms(&tracks), 2_000);
+        tracks.microphone.clear();
+        assert_eq!(meeting_track_duration_ms(&tracks), 2_000);
+        tracks.system.clear();
+        assert_eq!(meeting_track_duration_ms(&tracks), 0);
+    }
 
     #[test]
     #[ignore]
