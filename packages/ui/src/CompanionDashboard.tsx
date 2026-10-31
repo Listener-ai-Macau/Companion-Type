@@ -36,7 +36,7 @@ import { checklistPhoneCode } from './checklistPhone';
 import { briefMinutes, splitLongMinutesEvidence } from './briefMinutes';
 import {ActionListEditor} from './ActionListEditor';
 
-type MeetingExportOrigin = 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
+type MeetingExportOrigin = 'pdf' | 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
 import {CalendarExportItems,effectiveCalendarAlarm,type CalendarExportItem,type CalendarReminderChoice} from './CalendarExportItems';
 import {savedActions,markSavedAction,commonActionSupplement,splitActionSupplement,compactActionSource,type SavedAction} from './savedActions';
 import { seekBookmarkAudio } from './bookmarkAudio';
@@ -176,7 +176,8 @@ export type CompanionBoardOnlineLiveUiStatus = {
 export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
-  format: 'markdown' | 'docx' | 'mindmap' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  pdfSections?: {minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean};
   expectedContentHash?:string;
   calendarReminders?:CalendarReminderChoice['calendarReminders'];
   calendarSlots?:CalendarReminderChoice['calendarSlots'];
@@ -469,6 +470,8 @@ export function CompanionDashboard({
   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];suggestedAbsolute?:{uid:string;at:string};items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [calendarSaveTargets,setCalendarSaveTargets]=useState<Record<string,{token:string;name:string}>>({});
+  const [pdfSections,setPdfSections]=useState({minutes:true,transcript:false,highlights:true,timeline:false});
+  const [pdfPreview,setPdfPreview]=useState<{key:string;text?:string;hash?:string;error?:string;pending?:boolean}|null>(null);
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; calendarOpenToken?:string;calendarFileUri?:string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
@@ -766,6 +769,10 @@ export function CompanionDashboard({
   const minutesEntry=selectedDraft?.minutes?.[minutesViewMode];
   const minutesDirty = Boolean(selectedSession && minutesEntry && (minutesEntry.value!==minutesEntry.expected || minutesEntry.createManual));
   const hasMinutes = Boolean(minutesMarkdown.trim());
+  const hasPdfHighlights=Boolean(selectedSession?.bookmarks?.length || selectedSession?.meetingNotes?.length);
+  const selectedPdfSections={minutes:pdfSections.minutes&&hasMinutes,transcript:pdfSections.transcript&&finalTranscript,
+    highlights:pdfSections.highlights&&hasPdfHighlights,timeline:pdfSections.timeline&&pdfSections.transcript&&finalTranscript};
+  const hasPdfContent=selectedPdfSections.minutes||selectedPdfSections.transcript||selectedPdfSections.highlights;
   const hasSyncedAudio = Boolean(
     selectedSession
     && selectedSession.status !== 'recording'
@@ -1065,6 +1072,8 @@ export function CompanionDashboard({
   const [copyResult,setCopyResult]=useState<{sessionId:string;sourceKey:string;kind:'pending'|'copied'|'ready'|'error';message:string;text?:string}|null>(null);
   const [copyBusy,setCopyBusy]=useState(false);
   const copySourceKey=JSON.stringify([selectedSession?.id,selectedSession?.title,minutesViewMode,minutesMarkdown,titleDirty,minutesDirty,noteUnsaved,transcriptReviewUnsaved,calendarPendingCount,editingMinutes,selectedMinutesStale,minutesIncomplete]);
+  const pdfPreviewKey=JSON.stringify([copySourceKey,selectedSession?.transcriptText,selectedSession?.noteRevision,selectedSession?.bookmarkRevision,selectedSession?.transcriptReview?.revision,selectedPdfSections]);
+  const pdfPreviewKeyRef=useRef(pdfPreviewKey);pdfPreviewKeyRef.current=pdfPreviewKey;
   const copySourceRef=useRef(copySourceKey);copySourceRef.current=copySourceKey;
   const [phoneResult,setPhoneResult]=useState<ChecklistPhoneResult|null>(null);
   const [phoneBusy,setPhoneBusy]=useState(false);
@@ -1099,6 +1108,21 @@ export function CompanionDashboard({
     previewTask.current=task;setPreviewWaiting(true);
     try{return await task.result;}
     finally{if(previewTask.current===task){previewTask.current=null;setPreviewWaiting(false);}}
+  };
+  const previewPdf = async () => {
+    if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||!hasPdfContent)return;
+    const key=pdfPreviewKey;
+    if(titleDirty||transcriptReviewUnsaved||(selectedPdfSections.minutes&&minutesDirty)||
+       (selectedPdfSections.highlights&&(noteUnsaved||bookmarkUnsaved))) {
+      setPdfPreview({key,error:'所选内容有未保存的修改，请先保存或取消。'});return;
+    }
+    setPdfPreview({key,pending:true});
+    try {
+      const result=await readExportPreview({sessionId:selectedSession.id,meetingMode:minutesViewMode,format:'pdf',pdfSections:selectedPdfSections});
+      if(pdfPreviewKeyRef.current!==key)return;
+      if(!result.textContent||!/^[a-f0-9]{64}$/.test(result.contentHash))throw new Error('无法读取已保存内容。');
+      setPdfPreview({key,text:result.textContent,hash:result.contentHash});
+    }catch(error){if(pdfPreviewKeyRef.current===key)setPdfPreview({key,error:error instanceof Error?error.message:'预览未完成，请重试。'});}
   };
   const copyChecklist = async () => {
     if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||exportActive.current||selectedMinutesStale||minutesIncomplete)return;
@@ -1174,8 +1198,8 @@ export function CompanionDashboard({
         setCalendarExportReview(savedCalendarReview);
     };
     const unsavedForExport = titleDirty || transcriptReviewUnsaved || calendarPendingCount>0 || calendarReminderPending>0
-      || (format !== 'txt' && format !== 'srt' && minutesDirty)
-      || ((format === 'json' || format === 'txt' || format === 'markdown' || format === 'docx' || format === 'mindmap') && (noteUnsaved || bookmarkUnsaved));
+      || (format !== 'txt' && format !== 'srt' && minutesDirty && (format !== 'pdf' || selectedPdfSections.minutes))
+      || ((format === 'json' || format === 'txt' || format === 'markdown' || format === 'docx' || format === 'mindmap' || (format === 'pdf' && selectedPdfSections.highlights)) && (noteUnsaved || bookmarkUnsaved));
     if (unsavedForExport) {
       setExportResult({ sessionId, format, origin, kind: 'error', message: '还有未保存的修改。请先保存或取消修改，再导出；本次没有生成文件。' });
       return;
@@ -1228,7 +1252,7 @@ export function CompanionDashboard({
       }
       setCalendarExportReview(null);
       setExportResult({sessionId,format,origin,kind:'pending',message:'请选择文件保存位置；也可在保存窗口取消。'});
-      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(reviewChoice?.calendarSlots?.length?{calendarSlots:reviewChoice.calendarSlots}:{}),...(calendarSaveToken?{calendarSaveToken}:{}),...(calendarSavedName?{calendarSavedName:true}:{}) });
+      const result = await onExportMeeting({ sessionId, meetingMode: minutesViewMode, format,...(format==='pdf'?{pdfSections:selectedPdfSections}:{}),...(contentHash?{expectedContentHash:contentHash}:{}),...(reviewChoice?.calendarReminders?.length?{calendarReminders:reviewChoice.calendarReminders}:{}),...(reviewChoice?.calendarSlots?.length?{calendarSlots:reviewChoice.calendarSlots}:{}),...(calendarSaveToken?{calendarSaveToken}:{}),...(calendarSavedName?{calendarSavedName:true}:{}) });
       if(!result)restoreCalendarReview();
       if(result?.calendarOpenToken&&format.startsWith('calendar'))setCalendarSaveTargets(current=>({...current,[JSON.stringify([sessionId,minutesViewMode,selectedSession.calendarCopyEpoch??0])]:{token:result.calendarOpenToken!,name:exportFileName(result.path)}}));
       setExportResult({ sessionId, format, origin, path: result?.path, calendarOpenToken:result?.calendarOpenToken,calendarFileUri:result?.calendarFileUri, hasWarning:!!result?.warning, kind: result ? 'saved' : 'cancelled', message: result ? `已保存：${exportFileName(result.path)}${result.warning ? `（${result.warning}）` : ''}${(format === 'ics' || format === 'calendar' || format.startsWith('calendarreminder')) && !(result.calendarOpenToken && (format === 'calendar' || format.startsWith('calendarreminder'))) ? '。请在接收日历核对是否已导入，以及日期和提醒设置。' : ''}` : '已取消保存，录音内容保持不变。' });
@@ -2056,6 +2080,25 @@ export function CompanionDashboard({
             onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
             </details>
           </details> : null}
+          {hasMinutes||finalTranscript||hasPdfHighlights?<details className="ct-result-tools">
+            <summary>PDF 导出与分享</summary>
+            <p className="ct-step-meta">选择要放入文件的内容；保存后可自行分享。</p>
+            <div className="ct-button-row" aria-label="PDF 内容选择">
+              <label><input type="checkbox" checked={selectedPdfSections.minutes} disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,minutes:checked}));}}/>整理结果</label>
+              <label><input type="checkbox" checked={selectedPdfSections.transcript} disabled={controlsBusy||oobeBlockedByRecording||!finalTranscript} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,transcript:checked,timeline:checked?v.timeline:false}));}}/>录音文字</label>
+              <label><input type="checkbox" checked={selectedPdfSections.highlights} disabled={controlsBusy||oobeBlockedByRecording||!hasPdfHighlights} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,highlights:checked}));}}/>重点与补充</label>
+              <label><input type="checkbox" checked={selectedPdfSections.timeline} disabled={controlsBusy||oobeBlockedByRecording||!selectedPdfSections.transcript||!selectedSession.utterances?.length} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,timeline:checked}));}}/>分段时间与说话人</label>
+            </div>
+            <div className="ct-button-row">
+              <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onPreviewMeetingExport||!hasPdfContent||previewWaiting} onClick={()=>void previewPdf()}>预览所选内容</button>
+              <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||!hasPdfContent}
+                onClick={()=>void exportMeeting('pdf','pdf',pdfPreview?.key===pdfPreviewKey?pdfPreview.hash:undefined)}>{exportBusy?'正在生成…':'保存 PDF…'}</button>
+            </div>
+            {pdfPreview?.key===pdfPreviewKey&&pdfPreview.pending?<p role="status">正在准备预览…</p>:null}
+            {pdfPreview?.key===pdfPreviewKey&&pdfPreview.error?<p role="alert" className="ct-step-warn">{pdfPreview.error}</p>:null}
+            {pdfPreview?.key===pdfPreviewKey&&pdfPreview.text?<div><strong>{meetingTitle(selectedSession)}</strong><pre aria-label="PDF 内容预览" style={{whiteSpace:'pre-wrap',maxHeight:300,overflow:'auto'}}>{pdfPreview.text}</pre></div>:null}
+            {renderExportFeedback('pdf')}
+          </details>:null}
           <section className="ct-recording-text" aria-label="录音文字">
             <div className="ct-recording-text-heading"><h3>{hasMinutes?'原话与补充':'文字'}</h3>
               <div className="ct-button-row">

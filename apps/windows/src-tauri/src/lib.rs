@@ -439,8 +439,8 @@ fn prepare_headless_meeting_export(
     if (request.calendar_reminders.is_some() || request.calendar_slots.is_some()) && request.expected_content_hash.is_none() {
         return Err("请先核对本次逐项提醒和执行时段，再保存日历文件。".into());
     }
-    let prepared=backend::export::prepare_meeting_export_with_calendar_choices(
-        session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref()
+    let prepared=backend::export::prepare_meeting_export_selected(
+        session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref(),request.pdf_sections.as_ref()
     )?;
     backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
     Ok(prepared)
@@ -633,7 +633,11 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
             }
             let session = snapshot.host.sessions.iter().find(|s| s.id == request.session_id).ok_or("找不到这场会议。")?;
             let export = prepare_headless_meeting_export(session,&request)?;
-            backend::export::write_atomic(Path::new(destination), &export.bytes)?;
+            let data=if export.format==backend::export::MeetingExportFormat::Pdf {
+                let content=std::str::from_utf8(&export.bytes).map_err(|_|"PDF 内容无法读取。")?;
+                backend::pdf_export::render(&session.title,content)?
+            }else{export.bytes};
+            backend::export::write_atomic(Path::new(destination), &data)?;
             println!("meeting_workspace_result=EXPORTED_LOCAL_MEETING");
         } else if operation == 4 {
             let request: backend::meeting_notes::Request = serde_json::from_reader(file).map_err(|_| "会议备注请求格式不正确。")?;
@@ -741,6 +745,7 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             let input = args.get(index+1).ok_or("requires saved session JSON, mode, format, output")?;
             let mode = args.get(index+2).ok_or("requires meeting mode")?;
             let format = match args.get(index+3).map(String::as_str) {
+                Some("pdf") => backend::export::MeetingExportFormat::Pdf,
                 Some("docx") => backend::export::MeetingExportFormat::Docx,
                 Some("mindmap") => backend::export::MeetingExportFormat::Mindmap,
                 Some("todo") => backend::export::MeetingExportFormat::Todo,
@@ -759,8 +764,15 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             let slots=if matches!(format,backend::export::MeetingExportFormat::Calendar|backend::export::MeetingExportFormat::CalendarReminder|backend::export::MeetingExportFormat::CalendarReminder30|backend::export::MeetingExportFormat::CalendarReminder60){
                 backend::calendar_copy::latest_saved_slots(&session,mode)?
             } else {None};
-            let prepared = backend::export::prepare_meeting_export_with_calendar_choices(&session,mode,format,None,slots)?;
-            let bytes = backend::export::write_atomic(Path::new(output),&prepared.bytes)?;
+            let sections=if format==backend::export::MeetingExportFormat::Pdf {
+                args.get(index+5).map(|value|serde_json::from_str::<backend::export::PdfSections>(value).map_err(|e|e.to_string())).transpose()?
+            } else {None};
+            let prepared = backend::export::prepare_meeting_export_selected(&session,mode,format,None,slots,sections.as_ref())?;
+            let data=if format==backend::export::MeetingExportFormat::Pdf {
+                let content=std::str::from_utf8(&prepared.bytes).map_err(|_|"PDF 内容无法读取。")?;
+                backend::pdf_export::render(&session.title,content)?
+            }else{prepared.bytes};
+            let bytes = backend::export::write_atomic(Path::new(output),&data)?;
             println!("meeting_export_json={}",serde_json::json!({"status":"EXPORTED_SAVED_DOCUMENT","bytes":bytes,"warning":prepared.warning,"networkAccess":false,"deviceAccess":false,"fullChainAcceptance":"NOT_RUN"}));
             Ok(())
         })());

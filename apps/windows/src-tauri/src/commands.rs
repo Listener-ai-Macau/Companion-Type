@@ -207,6 +207,7 @@ pub enum CompanionMeetingExportFormat {
     Markdown,
     Docx,
     Mindmap,
+    Pdf,
     Txt,
     Json,
     Srt,
@@ -226,6 +227,7 @@ impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExpor
             CompanionMeetingExportFormat::Markdown => Self::Markdown,
             CompanionMeetingExportFormat::Docx => Self::Docx,
             CompanionMeetingExportFormat::Mindmap => Self::Mindmap,
+            CompanionMeetingExportFormat::Pdf => Self::Pdf,
             CompanionMeetingExportFormat::Txt => Self::Txt,
             CompanionMeetingExportFormat::Json => Self::Json,
             CompanionMeetingExportFormat::Srt => Self::Srt,
@@ -248,6 +250,8 @@ pub struct CompanionMeetingExportRequest {
     pub format: CompanionMeetingExportFormat,
     #[serde(default)]
     pub expected_content_hash: Option<String>,
+    #[serde(default)]
+    pub pdf_sections: Option<crate::backend::export::PdfSections>,
     #[serde(default)]
     pub calendar_reminders: Option<Vec<crate::backend::export::CalendarReminderSelection>>,
     #[serde(default)]
@@ -548,8 +552,10 @@ pub fn preview_companion_meeting_export(
         .ok_or("找不到要导出的记录，请刷新后重试。")?;
     let plain_checklist=matches!(&request.format,CompanionMeetingExportFormat::TodoText);
     let copyable=matches!(&request.format,CompanionMeetingExportFormat::Todo);
-    let prepared=crate::backend::export::prepare_meeting_export_with_calendar_choices(session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref())?;
-    let text_content=if plain_checklist {
+    let prepared=crate::backend::export::prepare_meeting_export_selected(session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref(),request.pdf_sections.as_ref())?;
+    let text_content=if matches!(&request.format,CompanionMeetingExportFormat::Pdf) {
+        Some(std::str::from_utf8(&prepared.bytes).map_err(|_|"PDF 内容无法读取，请保留已保存内容。")?.to_owned())
+    } else if plain_checklist {
         Some(std::str::from_utf8(&prepared.bytes).map_err(|_|"清单文字无法读取，请保留已保存内容。")?.to_owned())
     } else if copyable {Some(crate::backend::export::checklist_copy_text(&prepared)?)} else {None};
     Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning,text_content,calendar_items:prepared.calendar_items})
@@ -571,12 +577,13 @@ pub async fn export_companion_meeting(
         .cloned()
         .ok_or_else(|| format!("meeting export target {} is missing", request.session_id))?;
     let format: crate::backend::export::MeetingExportFormat = request.format.into();
-    let prepared = crate::backend::export::prepare_meeting_export_with_calendar_choices(
+    let prepared = crate::backend::export::prepare_meeting_export_selected(
         &session,
         &request.meeting_mode,
         format,
         request.calendar_reminders.as_deref(),
         request.calendar_slots.as_deref(),
+        request.pdf_sections.as_ref(),
     )?;
 
     crate::backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
@@ -611,7 +618,7 @@ pub async fn export_companion_meeting(
         let current=coordinator.snapshot()?;
         let session=current.host.sessions.iter().find(|row|row.id==request.session_id)
             .ok_or("找不到要导出的记录，请刷新后重试。")?;
-        let latest=crate::backend::export::prepare_meeting_export_with_calendar_choices(session,&request.meeting_mode,format,request.calendar_reminders.as_deref(),request.calendar_slots.as_deref())?;
+        let latest=crate::backend::export::prepare_meeting_export_selected(session,&request.meeting_mode,format,request.calendar_reminders.as_deref(),request.calendar_slots.as_deref(),request.pdf_sections.as_ref())?;
         crate::backend::export::require_unchanged(&latest,Some(expected))?;
     }
     // The hint never bypasses the public Save As/overwrite confirmation. A
@@ -665,8 +672,13 @@ pub async fn export_companion_meeting(
     let file_hash={use sha2::{Digest,Sha256};format!("{:x}",Sha256::digest(&prepared.bytes))};
     let bytes = prepared.bytes;
     let write_path = destination.clone();
+    let title=session.title.clone();
     let written = tauri::async_runtime::spawn_blocking(move || {
-        crate::backend::export::write_atomic(&write_path, &bytes)
+        let output=if format==crate::backend::export::MeetingExportFormat::Pdf {
+            let content=std::str::from_utf8(&bytes).map_err(|_|"PDF 内容无法读取。")?;
+            crate::backend::pdf_export::render(&title,content)?
+        }else{bytes};
+        crate::backend::export::write_atomic(&write_path, &output)
     })
     .await
     .map_err(|error| format!("meeting export task failed: {error}"))??;

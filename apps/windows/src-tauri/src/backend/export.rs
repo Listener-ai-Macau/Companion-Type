@@ -34,6 +34,7 @@ pub enum MeetingExportFormat {
     Markdown,
     Docx,
     Mindmap,
+    Pdf,
     Txt,
     Json,
     Srt,
@@ -52,6 +53,7 @@ impl MeetingExportFormat {
             Self::Markdown => "md",
             Self::Docx => "docx",
             Self::Mindmap => "mm",
+            Self::Pdf => "pdf",
             Self::Txt => "txt",
             Self::Json => "json",
             Self::Srt => "srt",
@@ -66,6 +68,7 @@ impl MeetingExportFormat {
             Self::Markdown => "Markdown",
             Self::Docx => "Word 文档",
             Self::Mindmap => "思维导图（FreeMind）",
+            Self::Pdf => "PDF 文档",
             Self::Txt => "Plain text",
             Self::Json => "JSON",
             Self::Srt => "SubRip subtitles",
@@ -231,6 +234,45 @@ pub fn prepare_meeting_export_with_reminders(session:&CompanionV1HostSession,mee
 }
 
 pub fn prepare_meeting_export_with_calendar_choices(session:&CompanionV1HostSession,meeting_mode:&str,format:MeetingExportFormat,calendar_reminders:Option<&[CalendarReminderSelection]>,calendar_slots:Option<&[CalendarSlotSelection]>)->Result<PreparedMeetingExport,String>{
+    prepare_meeting_export_selected(session,meeting_mode,format,calendar_reminders,calendar_slots,None)
+}
+
+#[derive(Clone, Debug, serde::Deserialize, serde::Serialize)]
+#[serde(rename_all="camelCase", deny_unknown_fields)]
+pub struct PdfSections {pub minutes:bool,pub transcript:bool,pub highlights:bool,pub timeline:bool}
+impl Default for PdfSections {fn default()->Self{Self{minutes:true,transcript:false,highlights:true,timeline:false}}}
+
+fn pdf_source(session:&CompanionV1HostSession,mode:&str,sections:&PdfSections)->Result<String,String>{
+    if !sections.minutes && !sections.transcript && !sections.highlights {return Err("请选择要放入 PDF 的内容。".into());}
+    if sections.timeline && !sections.transcript {return Err("时间及说话人需要同时选择录音文字。".into());}
+    let mut parts=Vec::new();
+    if sections.minutes {parts.push(saved_minutes_markdown_for_mode(session,mode)?);}
+    if sections.transcript {
+        require_final_transcript(session)?;
+        parts.push(format!("## 录音文字\n\n{}",transcript_review::effective_text(session)));
+        if sections.timeline {
+            let rows=transcript_review::effective_utterances(session);
+            if rows.is_empty(){return Err("这份录音没有可用的分段时间。".into());}
+            let mut table=String::from("## 分段时间与说话人\n\n以下时间沿用识别分段；近似时间已标明，与人工修订全文可能不完全一致。\n\n");
+            for (i,row) in rows.iter().enumerate(){
+                let time=if row.end_ms>row.start_ms {format!("{}–{}{}",pdf_time(row.start_ms),pdf_time(row.end_ms),if row.approximate_timing{"（约）"}else{""})}else{"时间未提供".into()};
+                let label=transcript_review::speaker_label(session,i).map(|x|format!(" {x}：")).unwrap_or_else(||" ".into());
+                table.push_str(&format!("- {time}{label}{}\n",row.text));
+            }
+            parts.push(table);
+        }
+    }
+    if sections.highlights {
+        let extra=format!("{}{}",render_bookmarks(session),super::meeting_notes::render(session));
+        if !extra.trim().is_empty(){parts.push(extra);}
+    }
+    if parts.is_empty(){return Err("所选内容为空，请选择其他内容。".into());}
+    Ok(parts.join("\n\n"))
+}
+fn pdf_time(ms:u64)->String {format!("{:02}:{:02}:{:02}",ms/3_600_000,(ms/60_000)%60,(ms/1_000)%60)}
+
+pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_mode:&str,format:MeetingExportFormat,calendar_reminders:Option<&[CalendarReminderSelection]>,calendar_slots:Option<&[CalendarSlotSelection]>,pdf_sections:Option<&PdfSections>)->Result<PreparedMeetingExport,String>{
+    if pdf_sections.is_some() && format!=MeetingExportFormat::Pdf {return Err("内容选择只适用于 PDF 导出。".into());}
     if (calendar_reminders.is_some()||calendar_slots.is_some())&&!matches!(format,MeetingExportFormat::Calendar|MeetingExportFormat::CalendarReminder|MeetingExportFormat::CalendarReminder30|MeetingExportFormat::CalendarReminder60){return Err("逐项提醒和执行时段只用于日历日程导出。".into());}
     super::library_lifecycle::require_available(session)?;
     if !matches!(meeting_mode, "offlineStore" | "onlineLive") {
@@ -294,6 +336,7 @@ pub fn prepare_meeting_export_with_calendar_choices(session:&CompanionV1HostSess
                 super::action_export::calendar_with_provenance(&session.id, meeting_mode, &session.title, &actions, draft, &super::action_export::stamp_now(),Some(&provenance))
             }
         }
+        MeetingExportFormat::Pdf => pdf_source(session,meeting_mode,pdf_sections.unwrap_or(&PdfSections::default()))?,
         MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
         MeetingExportFormat::Txt => {
             if session.bookmarks.is_empty() && session.meeting_notes.is_empty() { require_final_transcript(session)?; }
@@ -321,7 +364,7 @@ pub fn prepare_meeting_export_with_calendar_choices(session:&CompanionV1HostSess
     };
     let file_stem = safe_file_stem(&session.title, &session.id);
     let purpose = match format {
-        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap => "整理结果",
+        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Pdf => "整理结果",
         MeetingExportFormat::Txt => "文字与补充",
         MeetingExportFormat::Json => "完整资料",
         MeetingExportFormat::Srt => "字幕",
@@ -736,6 +779,28 @@ mod tests {
             markdown: "# Q3 Review".into(),
             llm_note: None,
         }
+    }
+
+    #[test]
+    fn pdf_selection_keeps_only_chosen_saved_content_and_truthful_timing() {
+        let mut m=minutes();m.markdown="## 摘要\n只在纪要中的秘密".into();
+        let utterance=CompanionV1UtteranceSegment{text:"小王交报价".into(),start_ms:3_600_000,end_ms:3_601_000,speaker:Some(0),approximate_timing:true};
+        let mut s=session("仅在原文中的内容",vec![utterance],Some(m));
+        s.meeting_notes.push(super::super::meeting_notes::Note{id:"n1".into(),text:"用户补充内容".into(),bookmark_id:None,created_at:"2026-01-01".into(),updated_at:"2026-01-01".into()});
+        let selection=PdfSections{minutes:false,transcript:true,highlights:false,timeline:true};
+        let preview=prepare_meeting_export_selected(&s,"offlineStore",MeetingExportFormat::Pdf,None,None,Some(&selection)).unwrap();
+        let body=std::str::from_utf8(&preview.bytes).unwrap();
+        assert!(body.contains("仅在原文中的内容") && body.contains("01:00:00–01:00:01（约）") && body.contains("说话人1"));
+        assert!(!body.contains("只在纪要中的秘密") && !body.contains("用户补充内容"));
+        let again=prepare_meeting_export_selected(&s,"offlineStore",MeetingExportFormat::Pdf,None,None,Some(&selection)).unwrap();
+        assert_eq!(content_hash(&preview),content_hash(&again));
+        let only_minutes=PdfSections{minutes:true,transcript:false,highlights:false,timeline:false};
+        let m=prepare_meeting_export_selected(&s,"offlineStore",MeetingExportFormat::Pdf,None,None,Some(&only_minutes)).unwrap();
+        let body=std::str::from_utf8(&m.bytes).unwrap();assert!(body.contains("只在纪要中的秘密")&&!body.contains("仅在原文中的内容"));
+        assert_ne!(content_hash(&preview),content_hash(&m));
+        let empty=PdfSections{minutes:false,transcript:false,highlights:false,timeline:false};
+        assert!(prepare_meeting_export_selected(&s,"offlineStore",MeetingExportFormat::Pdf,None,None,Some(&empty)).is_err());
+        assert!(prepare_meeting_export_selected(&s,"offlineStore",MeetingExportFormat::Markdown,None,None,Some(&only_minutes)).is_err());
     }
 
     #[test]

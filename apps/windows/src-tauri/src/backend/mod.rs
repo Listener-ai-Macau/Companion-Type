@@ -97,6 +97,7 @@ pub(crate) use diarization::prepare_runtime as prepare_speaker_runtime;
 pub(crate) mod diagnostics;
 pub(crate) mod export;
 mod meeting_document_export;
+pub(crate) mod pdf_export;
 pub(crate) mod file_storage_probe;
 mod action_export;
 pub(crate) mod service_check;
