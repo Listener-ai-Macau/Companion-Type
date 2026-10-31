@@ -439,3 +439,71 @@ fn real_public_long_meeting_overview() {
     assert!(minutes.markdown.ends_with(&original));
     fs::write(output, serde_json::to_vec_pretty(&serde_json::json!({"indices":indices,"minutes":minutes})).unwrap()).unwrap();
 }
+
+
+#[test]
+fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
+    let source = session("项目报价。旁边聊家务。");
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["会议讨论项目报价。".into(), "旁边出现家务闲聊。".into()];
+    minutes.action_items = vec![
+        crate::companion_v1::CompanionV1ActionItem { text:"周五发报价".into(), owner:Some("小王".into()), due:Some("周五".into()) },
+        crate::companion_v1::CompanionV1ActionItem { text:"买猫粮".into(), owner:None, due:None },
+    ];
+    minutes.markdown = "> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- 原始引用。".into();
+    let before = minutes.clone();
+    mark_background_candidates(&source, &mut minutes, &[1]);
+    assert_eq!(minutes.action_items.len(), 2);
+    assert_eq!(minutes.action_items[0].text, "周五发报价");
+    assert_eq!(minutes.action_items[0].owner.as_deref(), Some("小王"));
+    assert_eq!(minutes.action_items[0].due.as_deref(), Some("周五"));
+    assert_eq!(minutes.action_items[1].text, "可能来自背景对话，请核对：买猫粮");
+    assert!(minutes.markdown.contains("- 可能来自背景对话，请核对：买猫粮"));
+    assert!(minutes.markdown.ends_with("### 第1段\n- 原始引用。"));
+    assert_eq!(minutes.summary, before.summary);
+    let marked = minutes.markdown.clone();
+    mark_background_candidates(&source, &mut minutes, &[0,0]);
+    mark_background_candidates(&source, &mut minutes, &[3]);
+    assert_eq!(minutes.markdown, marked);
+    let mut malformed = before.clone(); malformed.markdown = "unexpected".into();
+    mark_background_candidates(&source, &mut malformed, &[0]);
+    assert_eq!(malformed.action_items[0].text, before.action_items[0].text);
+}
+
+#[test]
+fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
+    use std::{io::{Read, Write}, net::TcpListener, thread};
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let address = listener.local_addr().unwrap();
+    let worker = thread::spawn(move || {
+        for content in [r#"{"possiblyUnrelated":[1]}"#, r#"{"possiblyUnrelated":[1,1]}"#, r#"{"possiblyUnrelated":[2]}"#] {
+            let (mut stream, _) = listener.accept().unwrap();
+            stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
+            let mut data = Vec::new(); let mut buffer = [0u8; 4096];
+            loop {
+                let n = stream.read(&mut buffer).unwrap(); if n == 0 { break; }
+                data.extend_from_slice(&buffer[..n]);
+                if let Some(i) = data.windows(4).position(|w| w == b"\r\n\r\n") {
+                    let headers = String::from_utf8_lossy(&data[..i]);
+                    let length: usize = headers.lines().find_map(|l| l.split_once(':')
+                        .filter(|(k,_)| k.eq_ignore_ascii_case("content-length"))
+                        .and_then(|(_,v)| v.trim().parse().ok())).unwrap();
+                    if data.len() >= i + 4 + length { break; }
+                }
+            }
+            let payload = serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content}}]}).to_string();
+            write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: {}\r\n\r\n{}",payload.len(),payload).unwrap();
+        }
+    });
+    let source = session("会议原文"); let (mut minutes, _) = response(&source);
+    minutes.action_items = vec![
+        crate::companion_v1::CompanionV1ActionItem{text:"项目报价".into(),owner:None,due:None},
+        crate::companion_v1::CompanionV1ActionItem{text:"其他闲聊".into(),owner:None,due:None},
+    ];
+    let endpoint = format!("http://{address}/chat/completions");
+    let client = reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
+    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&client).unwrap(), vec![1]);
+    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&client).is_err());
+    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&client).is_err());
+    worker.join().unwrap();
+}

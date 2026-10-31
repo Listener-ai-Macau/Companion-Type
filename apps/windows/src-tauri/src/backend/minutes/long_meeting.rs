@@ -304,6 +304,16 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
             .map_err(|_| MISSING_EVIDENCE)?;
         Ok((minutes, evidence))
     })?;
+    // A nearby conversation can contain genuine instructions but not belong
+    // to this meeting. Mark only candidates the model can relate to explicitly
+    // described background chat; never delete them or change their attribution.
+    if minutes.processing.as_ref().is_some_and(|p| p.complete)
+        && !minutes.summary.is_empty() && !minutes.action_items.is_empty() {
+        if let Ok(indices) = request_background_review(endpoint, model, key, session,
+            &minutes, client) {
+            mark_background_candidates(session, &mut minutes, &indices);
+        }
+    }
     // An overview is an optional reading aid. Preserve all detailed minutes and
     // never let a failed extra request downgrade or erase a completed meeting.
     if minutes.processing.as_ref().is_some_and(|p| p.complete) && minutes.summary.len() > 12 {
@@ -312,6 +322,71 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
         }
     }
     Ok(minutes)
+}
+
+// Add an explicit cue to uncertain tasks, without removing them from the
+// editable list, changing owner/deadline, or modifying source quotes.
+fn mark_background_candidates(session: &CompanionV1HostSession,
+    minutes: &mut CompanionV1MeetingMinutes, indices: &[usize]) {
+    if indices.is_empty() { return; }
+    let mut unique = indices.to_vec(); unique.sort_unstable(); unique.dedup();
+    if unique.len() != indices.len() || unique.iter().any(|&i| i >= minutes.action_items.len()) { return; }
+    let Some((notice, _)) = minutes.markdown.split_once("\n\n") else { return; };
+    let Some((_, evidence)) = minutes.markdown.split_once("\n\n## 分段原文依据\n\n") else { return; };
+    let notice = notice.to_string(); let evidence = evidence.to_string();
+    let mut revised = minutes.clone();
+    for i in unique {
+        let item = &mut revised.action_items[i];
+        item.text = format!("可能来自背景对话，请核对：{}", item.text);
+    }
+    let mut header = revised.clone(); header.processing = None;
+    let mut source = session.clone(); source.transcript_text.clear(); source.transcript_review = None;
+    revised.markdown = format!("{}\n\n{}\n\n## 分段原文依据\n\n{}", notice,
+        super::render_minutes_markdown(&source, &header), evidence);
+    *minutes = revised;
+}
+
+// Review the already generated summary and action labels in one additional
+// request. A failure has no effect on the saved detailed minutes. This is a
+// reading cue, not a decision to discard speech or a new speaker identity.
+fn request_background_review(endpoint: &str, model: &str, key: &str,
+    session: &CompanionV1HostSession, minutes: &CompanionV1MeetingMinutes,
+    client: &reqwest::blocking::Client) -> Result<Vec<usize>, String> {
+    let actions = minutes.action_items.iter().enumerate().map(|(id, item)|
+        serde_json::json!({"id":id,"text":item.text})).collect::<Vec<_>>();
+    let input = serde_json::json!({"title":session.title,"summary":minutes.summary,"actions":actions}).to_string();
+    let instruction = "你是会议事项核对助手。根据全会摘要和候选行动，只标出摘要明确指出属于会议范围以外的旁人或背景闲谈的任务。不要仅凭与主要主题不同判为无关：会议可能换题，个人备忘可能有多个主题；身份或关联无法确认时不要标记。只返回 JSON 对象 {\"possiblyUnrelated\":[候选id]}；不要改写或添加事实。";
+    if input.len().saturating_add(instruction.len()) > MAX_PROMPT_BYTES {
+        return Err("会议事项过多，请自行核对。".into());
+    }
+    let endpoint = super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
+    let mut body = serde_json::json!({"model":model,"temperature":0.1,
+        "messages":[{"role":"system","content":instruction},{"role":"user","content":input}],
+        "response_format":{"type":"json_object"},"max_tokens":512});
+    if model.to_ascii_lowercase().starts_with("deepseek-") {
+        body["thinking"] = serde_json::json!({"type":"disabled"});
+    }
+    let response = client.post(endpoint).bearer_auth(key).timeout(Duration::from_secs(15)).json(&body).send()
+        .map_err(|e| super::safe_minutes_http_error(super::http_policy::Failure::from_reqwest(e)))?;
+    let payload = super::http_policy::response_json(response, super::http_policy::MAX_RESPONSE_BYTES)
+        .map_err(super::safe_minutes_http_error)?;
+    if payload.pointer("/choices/0/finish_reason").and_then(Value::as_str) != Some("stop") {
+        return Err("会议事项核对未完成。".into());
+    }
+    let content = payload.pointer("/choices/0/message/content").and_then(Value::as_str)
+        .ok_or("会议事项核对未完成。")?;
+    let result: Value = serde_json::from_str(super::strip_code_fences(content).trim())
+        .map_err(|_| "会议事项核对格式不正确。")?;
+    let values = result.get("possiblyUnrelated").and_then(Value::as_array)
+        .ok_or("会议事项核对格式不正确。")?;
+    let mut indices = Vec::new();
+    for value in values {
+        let index = value.as_u64().and_then(|n| usize::try_from(n).ok())
+            .filter(|&n| n < actions.len()).ok_or("会议事项核对格式不正确。")?;
+        if indices.contains(&index) { return Err("会议事项核对格式不正确。".into()); }
+        indices.push(index);
+    }
+    Ok(indices)
 }
 
 // Select existing source-backed chapter items instead of inventing a second
