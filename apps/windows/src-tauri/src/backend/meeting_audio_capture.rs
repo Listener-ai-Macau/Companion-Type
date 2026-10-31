@@ -91,6 +91,7 @@ struct State {
     system: Track,
     error: Option<String>,
     discontinuity: bool,
+    first_discontinuity: Option<(bool, i64)>,
     ready: Option<mpsc::SyncSender<Result<(), String>>>,
 }
 impl State {
@@ -107,6 +108,9 @@ impl State {
             self.fail("录音时间无法对齐，已保留现有文件".into()); return;
         };
         self.discontinuity |= info.discontinuity;
+        if info.discontinuity && self.first_discontinuity.is_none() {
+            self.first_discontinuity = Some((system, offset));
+        }
         let track = if system { &mut self.system } else { &mut self.mic };
         if let Err(error) = track.push(offset, pcm, rate) { self.fail(format!("录音写入失败：{error}")); return; }
         if !system { if let Some(ready) = self.ready.take() { let _ = ready.try_send(Ok(())); } }
@@ -127,6 +131,7 @@ pub(super) struct CaptureResult {
     pub(super) system: Vec<TrackPart>,
     pub(super) discontinuity: bool,
     pub(super) error: Option<String>,
+    first_discontinuity: Option<(bool, i64)>,
 }
 
 impl CaptureResult {
@@ -164,9 +169,14 @@ impl CaptureResult {
         let (microphone, mic_samples) = convert(self.microphone, "mic")?;
         let (system, system_samples) = convert(self.system, "system")?;
         let complete = self.error.is_none() && !self.discontinuity && mic_samples > 0 && mic_samples == system_samples;
+        let issue = self.error.or_else(|| self.first_discontinuity.map(|(system, offset)| {
+            let seconds = offset.max(0) as u64 / u64::from(SAMPLE_RATE);
+            let label = if system { "电脑声音" } else { "麦克风" };
+            format!("{label}在约{}分{:02}秒出现采集时序异常，请回听核对。", seconds / 60, seconds % 60)
+        })).or_else(|| (!complete).then(|| "会议音轨未完整对齐，请核对原音".into()));
         Ok(CompanionV1MeetingTracks { root: root.to_string_lossy().into_owned(),
             state: if complete { "captured" } else { "needsReview" }.into(), microphone, system,
-            discontinuity: self.discontinuity, issue: self.error.or_else(|| (!complete).then(|| "会议音轨未完整对齐，请核对原音".into())) })
+            discontinuity: self.discontinuity, issue })
     }
 }
 
@@ -183,7 +193,7 @@ impl Capture {
         let mic = Track { timeline: Timeline::new(), writer: TrackWriter::create_flat(parent, &format!("{name}-mic"), part_samples).map_err(|e| e.to_string())?, resampler: None };
         let system = Track { timeline: Timeline::new(), writer: TrackWriter::create_flat(parent, &format!("{name}-system"), part_samples).map_err(|e| e.to_string())?, resampler: None };
         let (send, recv) = mpsc::sync_channel(1);
-        let state = State { origin: None, mic, system, error: None, discontinuity: false, ready: Some(send) };
+        let state = State { origin: None, mic, system, error: None, discontinuity: false, first_discontinuity: None, ready: Some(send) };
         let (sender, packets) = mpsc::sync_channel::<WorkerMessage>(QUEUED_PACKETS);
         let failure: SharedFailure = Arc::new(Mutex::new(None));
         let sink = PacketSink { sender, failure };
@@ -262,7 +272,7 @@ impl Capture {
                 match &mut error { Some(existing) => existing.push_str(&format!("；{detail}")), None => error = Some(detail) }
             }
         }
-        Ok(CaptureResult { microphone, system, discontinuity: state.discontinuity, error })
+        Ok(CaptureResult { microphone, system, discontinuity: state.discontinuity, error, first_discontinuity: state.first_discontinuity })
     }
 }
 
@@ -294,7 +304,7 @@ mod tests {
         let root = std::env::temp_dir().join(format!("meeting-worker-finish-{}-{}", std::process::id(), NEXT.fetch_add(1, Ordering::Relaxed)));
         fs::create_dir(&root).unwrap();
         let track = |name: &str| Track { timeline: Timeline::new(), writer: TrackWriter::create(&root.join(name), 3).unwrap(), resampler: None };
-        let state = State { origin: None, mic: track("mic"), system: track("system"), error: None, discontinuity: false, ready: None };
+        let state = State { origin: None, mic: track("mic"), system: track("system"), error: None, discontinuity: false, first_discontinuity: None, ready: None };
         let (sender, packets) = mpsc::sync_channel(1);
         let sink = PacketSink { sender, failure: Arc::new(Mutex::new(None)) };
         let retained = sink.clone();
@@ -333,7 +343,7 @@ mod tests {
         fs::create_dir(&root).unwrap();
         let track = |name: &str| Track { timeline: Timeline::new(), writer: TrackWriter::create(&root.join(name), 3).unwrap(), resampler: None };
         let (send, recv) = mpsc::sync_channel(1);
-        let mut state = State { origin: None, mic: track("mic"), system: track("system"), error: None, discontinuity: false, ready: Some(send) };
+        let mut state = State { origin: None, mic: track("mic"), system: track("system"), error: None, discontinuity: false, first_discontinuity: None, ready: Some(send) };
         state.packet(false, &[0.5], 16_000, TimedCaptureInfo { captured_at: None, discontinuity: false });
         assert!(state.error.is_some());
         assert!(recv.try_recv().unwrap().is_err());
@@ -349,8 +359,12 @@ mod tests {
         let mut mic = TrackWriter::create_flat(&dir, "unique-mic", 2).unwrap();
         let mut output = TrackWriter::create_flat(&dir, "unique-system", 2).unwrap();
         mic.append(&[1,2,3]).unwrap(); output.append(&[4,5,6]).unwrap();
-        let captured = CaptureResult { microphone: mic.finish().unwrap(), system: output.finish().unwrap(), discontinuity: false, error: None };
-        let altered = CaptureResult { microphone: captured.microphone.clone(), system: captured.system.clone(), discontinuity: false, error: None };
+        let captured = CaptureResult { microphone: mic.finish().unwrap(), system: output.finish().unwrap(), discontinuity: false, error: None, first_discontinuity: None };
+        let altered = CaptureResult { microphone: captured.microphone.clone(), system: captured.system.clone(), discontinuity: false, error: None, first_discontinuity: None };
+        let flagged = CaptureResult { microphone: captured.microphone.clone(), system: captured.system.clone(), discontinuity: true, error: None, first_discontinuity: Some((true, 48_000)) };
+        let flagged = flagged.into_session_tracks(&anchor).unwrap();
+        assert_eq!(flagged.state, "needsReview");
+        assert!(flagged.issue.unwrap().contains("电脑声音在约0分03秒"));
         let indexed = captured.into_session_tracks(&anchor).unwrap();
         assert_eq!(indexed.state, "captured"); assert_eq!(indexed.microphone.len(), 2); assert_eq!(indexed.system.len(), 2);
         fs::write(&altered.system[0].path, b"replaced").unwrap();
