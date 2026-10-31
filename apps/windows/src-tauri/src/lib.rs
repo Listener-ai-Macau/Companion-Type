@@ -2283,6 +2283,11 @@ fn run_delete_device_recording_cli(args: &[String]) -> Option<Result<(), String>
 }
 
 fn run_firmware_ota_cli(args: &[String]) -> Option<Result<(), String>> {
+    if args.iter().any(|arg|arg=="--engineering-ota-preserve-capability") {
+        if args.len()!=2 { return Some(Err("Capability inspection cannot be combined with other operations".into())); }
+        println!("engineering_ota_preserve_capability=1");
+        return Some(Ok(()));
+    }
     if args.iter().any(|arg|arg=="--system-ota-inspect") {
         let result=(|| {
             if args.iter().any(|arg|matches!(arg.as_str(),"--system-ota-transfer"|"--firmware-ota-transfer"|"--resource-ota-transfer"|"--system-ota-validate"|"--resource-ota-validate")) {
