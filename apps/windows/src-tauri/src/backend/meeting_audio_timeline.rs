@@ -19,6 +19,8 @@ impl Timeline {
         Self { next: 0 }
     }
 
+    pub(super) fn samples(&self) -> u64 { self.next }
+
     /// Write a packet whose first sample is at `first` on the shared timeline.
     /// Packets that begin before the current cursor are trimmed, not replayed.
     /// The writer must either accept a whole slice or return an error without

@@ -407,14 +407,14 @@ impl RealRecording {
     }
 }
 
-struct RatioResampler {
+pub(super) struct RatioResampler {
     source_rate: u64,
     target_rate: u64,
     accumulator: u64,
 }
 
 impl RatioResampler {
-    fn new(source_rate: u32, target_rate: u32) -> Self {
+    pub(super) fn new(source_rate: u32, target_rate: u32) -> Self {
         Self {
             source_rate: source_rate.max(1) as u64,
             target_rate: target_rate.max(1) as u64,
@@ -422,7 +422,7 @@ impl RatioResampler {
         }
     }
 
-    fn process(&mut self, input: &[f32]) -> Vec<i16> {
+    pub(super) fn process(&mut self, input: &[f32]) -> Vec<i16> {
         let mut output = Vec::new();
         for sample in input {
             self.accumulator += self.target_rate;

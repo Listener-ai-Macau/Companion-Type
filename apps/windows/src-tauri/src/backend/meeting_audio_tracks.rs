@@ -1,4 +1,4 @@
-//! Durable, independently playable pieces of one aligned meeting track.
+//! Independently playable pieces of one aligned meeting track.
 //!
 //! Both microphone and computer output use the same timeline but have their
 //! own writer and directory. Splitting is a file-format detail, not a limit on
@@ -95,7 +95,15 @@ impl TrackWriter {
     pub(super) fn finish(mut self) -> io::Result<Vec<TrackPart>> {
         if self.failed { return Err(io::Error::other("track write failed; recover its saved files")); }
         self.finish_part()?;
-        Ok(self.complete)
+        Ok(std::mem::take(&mut self.complete))
+    }
+}
+
+impl Drop for TrackWriter {
+    fn drop(&mut self) {
+        // Best effort only: an interrupted process or a previous partial write
+        // still requires the caller's copy-based recovery path.
+        if !self.failed { let _ = self.finish_part(); }
     }
 }
 
@@ -167,6 +175,16 @@ mod tests {
         assert!(mic.append(&[1]).is_err());
         assert!(mic.finish().is_err());
         assert_eq!(fs::read(&path).unwrap(), b"prior");
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn normal_drop_finalizes_part_when_startup_of_other_track_fails() {
+        let root = root(); let dir = root.join("mic");
+        let mut mic = TrackWriter::create(&dir, 10).unwrap();
+        mic.append(&[11, 12]).unwrap(); drop(mic);
+        let part = TrackPart { path: dir.join("part-00000000.wav"), first_sample: 0, samples: 2 };
+        assert_eq!(pcm(&part), [11, 12]);
         fs::remove_dir_all(root).unwrap();
     }
 }
