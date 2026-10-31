@@ -38,8 +38,15 @@ const FINAL_RESULT_TIMEOUT: Duration = Duration::from_secs(30);
 const WEBSOCKET_SEND_TIMEOUT: Duration = Duration::from_millis(2_000);
 const WEBSOCKET_CONNECT_TIMEOUT: Duration = Duration::from_secs(8);
 const WEBSOCKET_MAX_RESPONSE_BYTES: usize = 4 * 1024 * 1024;
-const LIVE_SESSION_MAX_DURATION: Duration = Duration::from_secs(3 * 60 * 60);
+const BATCH_REQUEST_MAX_DURATION: Duration = Duration::from_secs(3 * 60 * 60);
 pub(super) const NO_SPEECH_ERROR: &str = "Volcengine ASR completed without recognized speech";
+
+async fn await_live_session<F>(future: F) -> Result<String, String>
+where F: std::future::Future<Output = Result<String, String>> {
+    // A live session lasts until capture ends or the provider reports an error.
+    // Connection, individual sends and the final response have separate bounds.
+    future.await
+}
 
 pub(super) fn is_no_speech_error(error: &str) -> bool {
     error.ends_with(NO_SPEECH_ERROR)
@@ -354,9 +361,7 @@ impl VolcengineSaucAsr {
     {
         if let Ok(handle) = tokio::runtime::Handle::try_current() {
             return tokio::task::block_in_place(move || {
-                handle.block_on(async { tokio::time::timeout(LIVE_SESSION_MAX_DURATION,
-                    self.stream_pcm_session_async(pcm_rx, stop, on_partial)).await
-                    .map_err(|_| "Volcengine live session timed out".to_string())? })
+                handle.block_on(await_live_session(self.stream_pcm_session_async(pcm_rx, stop, on_partial)))
             });
         }
         let runtime = tokio::runtime::Builder::new_multi_thread()
@@ -364,9 +369,7 @@ impl VolcengineSaucAsr {
             .enable_all()
             .build()
             .map_err(|e| format!("build tokio runtime: {e}"))?;
-        runtime.block_on(async { tokio::time::timeout(LIVE_SESSION_MAX_DURATION,
-            self.stream_pcm_session_async(pcm_rx, stop, on_partial)).await
-            .map_err(|_| "Volcengine live session timed out".to_string())? })
+        runtime.block_on(await_live_session(self.stream_pcm_session_async(pcm_rx, stop, on_partial)))
     }
 
     async fn stream_pcm_session_async<F>(
@@ -557,7 +560,7 @@ impl VolcengineSaucAsr {
     /// Also used by the cache boundary: hash and transcribe the exact same PCM
     /// snapshot even if the source file is later replaced.
     pub(crate) fn transcribe_pcm_bytes(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
-        let deadline = Duration::from_secs((pcm.len() as u64 / 32_000).saturating_add(60)).min(LIVE_SESSION_MAX_DURATION);
+        let deadline = Duration::from_secs((pcm.len() as u64 / 32_000).saturating_add(60)).min(BATCH_REQUEST_MAX_DURATION);
         // The transcription path is normally reached from a Tauri
         // spawn_blocking thread (no runtime context). Be defensive anyway: if
         // a caller already holds a tokio runtime, reuse it via block_in_place
@@ -1231,6 +1234,23 @@ fn classify_connect_error(err: tokio_tungstenite::tungstenite::Error) -> String 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn live_stream_does_not_end_at_three_hour_wall_clock_boundary() {
+        let rt=tokio::runtime::Builder::new_current_thread().enable_all().start_paused(true).build().unwrap();
+        rt.block_on(async {
+            let (send,receive)=tokio::sync::oneshot::channel::<Result<String,String>>();
+            let running=tokio::spawn(await_live_session(async move {receive.await.unwrap()}));
+            tokio::task::yield_now().await;
+            tokio::time::advance(Duration::from_secs(3*60*60+1)).await;
+            tokio::task::yield_now().await;
+            assert!(!running.is_finished(),"the active live stream was stopped by an elapsed-time limit");
+            send.send(Ok("final after user stop".into())).unwrap();
+            assert_eq!(running.await.unwrap().unwrap(),"final after user stop");
+            let failure=await_live_session(async {Err("connection lost".to_string())}).await;
+            assert_eq!(failure.unwrap_err(),"connection lost");
+        });
+    }
 
 
     #[test]
