@@ -1461,6 +1461,14 @@ mod tests {
     }
 
     #[test]
+    fn independent_short_memo_actions_are_not_capped_at_eight() {
+        let session = session_with_text("这次记录会务安排。明天核对采购合同。明天整理销售报价。明天确认发货地址。明天检查库存数量。明天整理包装设计。明天联系客户回访。明天提交测试报告。明天核对生产排期。明天发送样品清单。");
+        let l0 = rules_l0_minutes(&session, "now");
+        assert_eq!(l0.action_items.len(), 9);
+        assert!(l0.action_items.iter().any(|item| item.text.contains("发送样品清单")));
+    }
+
+    #[test]
     fn meeting_retains_all_nine_explicit_actions_from_the_model() {
         let tasks = ["核对采购合同", "整理销售报价", "确认发货地址", "检查库存数量", "更新包装设计",
             "安排客户回访", "提交测试报告", "核对生产排期", "发送样品清单"];

@@ -32,10 +32,9 @@ fn independent_actions(session: &CompanionV1HostSession) -> Vec<CompanionV1Actio
         } else {line};
         sentences.extend(body.split(['。','！','!']).map(str::trim).filter(|part|!part.is_empty()));
     }
-    if speakers.len()>1 || sentences.len()>8 {return vec![];}
+    if speakers.len()>1 {return vec![];}
     let clauses=sentences.iter().flat_map(|sentence|sentence.split(['，',',','；',';']))
         .map(str::trim).filter(|clause|!clause.is_empty()).collect::<Vec<_>>();
-    if clauses.len()>12 {return vec![];}
     // A recognised event prefix is a literal schedule, not unsafe narrative
     // "的时候". Only a validated positive event action may omit its prefix
     // from this safety check; every other word, cancellation and doubt stays.
@@ -53,7 +52,7 @@ fn independent_actions(session: &CompanionV1HostSession) -> Vec<CompanionV1Actio
             result.push(CompanionV1ActionItem{text:clause.into(),owner:None,due:None});
         }
     }
-    if result.len()>8 {return vec![];} result
+    result
 }
 
 // A small, literal imperative grammar. Keep the complete trigger in the task
@@ -76,7 +75,6 @@ pub(super) fn merge_independent_actions(items:&mut Vec<CompanionV1ActionItem>,
     let mut changed=false;
     for item in independent_actions(session) {
         if items.iter().any(|existing|super::source_fact_covered(&item.text,&existing.text)) {continue;}
-        if items.len()>=8 {break;}
         items.push(item);changed=true;
     }
     changed
@@ -113,7 +111,7 @@ fn plan_clauses(source:&str,duration_ms:u64,require_intent:bool)->Option<Vec<(St
     ).expect("constant context connector"));
     let clauses = text.split(['，', ',', '；', ';', '。', '.', '！', '!', '\n'])
         .map(str::trim).filter(|clause| !clause.is_empty()).collect::<Vec<_>>();
-    if clauses.is_empty() || clauses.len() > 8 { return None; }
+    if clauses.is_empty() { return None; }
     let mut items: Vec<(String,String)> = Vec::new();
     for (index, clause) in clauses.iter().enumerate() {
         if clause.chars().count() > 100 || clause.ends_with('了') { return None; }
