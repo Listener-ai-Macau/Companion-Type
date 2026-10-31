@@ -9,7 +9,8 @@ export function companionMinutesProcessingComplete(p?: CompanionV1MinutesProcess
 
 function sameUtterances(a: CompanionV1UtteranceSegment[], b: CompanionV1UtteranceSegment[]) {
   return a.length === b.length && a.every((u, i) => u.text === b[i].text && u.startMs === b[i].startMs
-    && u.endMs === b[i].endMs && (u.speaker ?? null) === (b[i].speaker ?? null));
+    && u.endMs === b[i].endMs && (u.speaker ?? null) === (b[i].speaker ?? null)
+    && Boolean(u.approximateTiming) === Boolean(b[i].approximateTiming));
 }
 export function companionTranscriptReviewIsStale(session: CompanionV1HostSession): boolean {
   const review = session.transcriptReview;

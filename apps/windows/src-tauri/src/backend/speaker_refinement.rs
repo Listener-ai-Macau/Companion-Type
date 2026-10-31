@@ -11,6 +11,9 @@ pub(super) fn prepare(snapshot:&CompanionV1Snapshot,id:&str)->Result<CompanionV1
     if !row.transcript_final || row.utterances.is_empty() || row.capture_incomplete {
         return Err("请先收齐原音并完成带时间轴的转写，再重新区分说话人。".into());
     }
+    if row.utterances.iter().any(|u|u.approximate_timing) {
+        return Err("本地转写提供的是整段近似位置，无法据此区分说话人；原音和文字已保留。".into());
+    }
     if super::transcript_review::active_revision(row).is_some() || super::transcript_review::review_is_stale(row)
         || row.minutes.as_ref().is_some_and(|m|m.source=="userEdited")
         || [&row.minutes_by_mode.offline_store,&row.minutes_by_mode.online_live].into_iter().flatten().any(|m|m.source=="userEdited") {
@@ -22,7 +25,7 @@ pub(super) fn prepare(snapshot:&CompanionV1Snapshot,id:&str)->Result<CompanionV1
 
 pub(super) fn apply(row:&mut CompanionV1HostSession,labels:super::transcription::CompanionTranscript)->Result<bool,String> {
     if labels.utterances.len()!=row.utterances.len() || labels.utterances.iter().zip(&row.utterances)
-        .any(|(new,old)|new.text!=old.text || new.start_ms!=old.start_ms || new.end_ms!=old.end_ms) {
+        .any(|(new,old)|new.text!=old.text || new.start_ms!=old.start_ms || new.end_ms!=old.end_ms || new.approximate_timing!=old.approximate_timing) {
         return Err("本地分组结果改变了原文字或时间轴，未保存。".into());
     }
     if labels.utterances==row.utterances {return Ok(false);}
@@ -47,6 +50,15 @@ pub(super) fn apply(row:&mut CompanionV1HostSession,labels:super::transcription:
 
 #[cfg(test)] mod tests {
     use super::*;
+    #[test] fn coarse_asr_windows_are_not_treated_as_single_speakers() {
+        let mut s=crate::companion_v1::fixture_snapshot();
+        let r=crate::companion_v1::CompanionV1ControlRequest {action:crate::companion_v1::CompanionV1ControlAction::MeetingLoadDemo,
+            session_id:Some("coarse-speakers".into()),context_note_revision:None,ble_name:None,prompt_id:None,title:None,transcript_text:Some("大家讨论。".into()),meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
+        s=crate::companion_v1::apply_fixture_control(s,r).unwrap();
+        s.host.sessions[0].utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment{text:"大家讨论。".into(),start_ms:0,end_ms:16000,speaker:None,approximate_timing:true}];
+        s.host.sessions[0].transcript_final=true;
+        assert!(prepare(&s,"coarse-speakers").unwrap_err().contains("近似位置"));
+    }
     #[test] fn local_labels_cannot_rewrite_words_and_keep_both_old_documents() {
         let mut s=crate::companion_v1::fixture_snapshot();
         let mut r=crate::companion_v1::CompanionV1ControlRequest {action:crate::companion_v1::CompanionV1ControlAction::MeetingLoadDemo,
@@ -54,10 +66,10 @@ pub(super) fn apply(row:&mut CompanionV1HostSession,labels:super::transcription:
         s=crate::companion_v1::apply_fixture_control(s,r.clone()).unwrap();
         r.action=crate::companion_v1::CompanionV1ControlAction::MeetingGenerateMinutes;
         r.meeting_mode=Some("onlineLive".into());s=crate::companion_v1::apply_fixture_control(s,r).unwrap();
-        let row=&mut s.host.sessions[0];row.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment{text:"原句。".into(),start_ms:0,end_ms:2000,speaker:Some(0)}];
+        let row=&mut s.host.sessions[0];row.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment{text:"原句。".into(),start_ms:0,end_ms:2000,speaker:Some(0),approximate_timing:false}];
         let old=row.minutes_by_mode.clone();let original=row.clone();
         let make=|word:&str|super::super::transcription::CompanionTranscript {text:format!("说话人2: {word}"),provider_id:"local".into(),mode:"local".into(),evidence_path:None,
-            utterances:vec![crate::companion_v1::CompanionV1UtteranceSegment{text:word.into(),start_ms:0,end_ms:2000,speaker:Some(1)}]};
+            utterances:vec![crate::companion_v1::CompanionV1UtteranceSegment{text:word.into(),start_ms:0,end_ms:2000,speaker:Some(1),approximate_timing:false}]};
         assert!(apply(row,make("改了原句")).is_err());assert_eq!(row.utterances,original.utterances);
         assert!(apply(row,make("原句。")).unwrap());
         for (before,after) in [(&old.offline_store,&row.minutes_by_mode.offline_store),(&old.online_live,&row.minutes_by_mode.online_live)] {

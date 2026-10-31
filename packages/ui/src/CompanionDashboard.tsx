@@ -2132,7 +2132,7 @@ export function CompanionDashboard({
           </details> : null}
           <div className="ct-document-actions">
             <span>保存当前转写；完整记录包含原始识别结果</span>
-            <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !selectedSession.utterances?.length || !onExportMeeting || transcriptReviewUnsaved}
+            <button type="button" className="ct-action" title={selectedSession.utterances?.some(u=>u.approximateTiming)?'本地转写只有近似分段位置，不能生成精确字幕。':undefined} disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !selectedSession.utterances?.length || selectedSession.utterances.some(u=>u.approximateTiming) || !onExportMeeting || transcriptReviewUnsaved}
               onClick={() => void exportMeeting('srt','recordingTools')}>保存字幕</button>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !onExportMeeting || transcriptReviewUnsaved}
               onClick={() => void exportMeeting('json','recordingTools')}>保存完整记录</button>
@@ -2388,7 +2388,7 @@ export function CompanionDashboard({
               disabled={!hasSyncedAudio && !selectedSession}
             />
             {(() => {
-              const utterances = selectedSession?.utterances ?? [];
+              const utterances = (selectedSession?.utterances ?? []).filter(u=>!u.approximateTiming);
               const taggedLines = (selectedSession?.transcriptText || transcriptDraft || '')
                 .split(/\r?\n/)
                 .map((line) => line.trim())
@@ -2431,9 +2431,9 @@ export function CompanionDashboard({
               <span>{selectedSession?.captureIncomplete ? '转写已保存的片段' : '转写'}</span>
               </button>
               {onRefineSpeakers ? <button type="button" className="ct-action"
-                title="只用已保存原音在电脑本地区分，不重新转写或上传；旧纪要保留为待更新草稿。"
+                title={selectedSession?.utterances?.some(u=>u.approximateTiming)?'本地转写只有近似分段位置，暂不能据此区分说话人。':'只用已保存原音在电脑本地区分，不重新转写或上传；旧纪要保留为待更新草稿。'}
                 disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !selectedSession?.audioStored
-                  || !selectedSession.transcriptFinal || !selectedSession.utterances?.length
+                  || !selectedSession.transcriptFinal || !selectedSession.utterances?.length || selectedSession.utterances.some(u=>u.approximateTiming)
                   || titleDirty || minutesDirty || transcriptEditor.current.dirty}
                 onClick={async()=>{
                   if (!selectedSession) return;
@@ -3210,7 +3210,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
         const links = onOpenSource && shownReferences.length ? <span className="ct-minutes-source-links">
           {shownReferences.map((source) => <button type="button" className="ct-text-button" key={source.index}
             disabled={blocked} aria-label={`${comparisonOnly?'对照第':'核对第'}${source.index + 1}段${comparisonOnly?'事项原文':'原文'}`}
-            onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
+            onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {source.approximateTiming?'约 ':''}{Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
           {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
           onClick={onShowTranscript}>{sourceFallbackLabel}</button></span>:null;

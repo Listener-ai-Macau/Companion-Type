@@ -302,6 +302,7 @@ pub fn prepare_meeting_export_with_calendar_choices(session:&CompanionV1HostSess
             if session.utterances.is_empty()
                 || session.utterances.iter().any(|utterance| {
                     utterance.text.trim().is_empty() || utterance.end_ms <= utterance.start_ms
+                        || utterance.approximate_timing
                 })
             {
                 return Err(
@@ -793,12 +794,14 @@ mod tests {
                 start_ms: 0,
                 end_ms: 1500,
                 speaker: Some(0),
+                approximate_timing: false,
             },
             CompanionV1UtteranceSegment {
                 text: "谢谢".into(),
                 start_ms: 1600,
                 end_ms: 3000,
                 speaker: Some(1),
+                approximate_timing: false,
             },
         ];
         let s = session("说话人1: 你好\n说话人2: 谢谢", utts, Some(minutes()));
@@ -819,12 +822,14 @@ mod tests {
                 start_ms: 0,
                 end_ms: 1500,
                 speaker: Some(0),
+                approximate_timing: false,
             },
             CompanionV1UtteranceSegment {
                 text: "谢谢".into(),
                 start_ms: 1_842_500,
                 end_ms: 1_843_999,
                 speaker: Some(1),
+                approximate_timing: false,
             },
         ];
         let s = session("irrelevant", utts, None);
@@ -1035,12 +1040,20 @@ mod tests {
                 start_ms: 1_000,
                 end_ms: 1_000,
                 speaker: None,
+                approximate_timing: false,
             }],
             None,
         );
         assert!(prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::Srt)
             .unwrap_err()
             .contains("真实时间轴"));
+
+        let s = session("local chunk", vec![CompanionV1UtteranceSegment {
+            text: "local chunk".into(), start_ms: 0, end_ms: 16_000,
+            speaker: None, approximate_timing: true,
+        }], None);
+        assert!(prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::Srt)
+            .unwrap_err().contains("真实时间轴"), "input windows must not masquerade as exact subtitles");
     }
 
     #[test]

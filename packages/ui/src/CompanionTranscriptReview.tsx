@@ -148,7 +148,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
         </label>)}
       </div> : null}
       {rows.length ? rows.map((source,index) => <div className="ct-transcript-review-row" key={index}>
-        <div className="ct-transcript-review-meta"><time>{stamp(source.startMs)}–{stamp(source.endMs)}</time>
+        <div className="ct-transcript-review-meta"><time>{source.approximateTiming?'约 ':''}{stamp(source.startMs)}–{stamp(source.endMs)}</time>
           <input aria-label={`第${index+1}段说话人`} maxLength={32} value={draft.rows[index].speakerName}
             placeholder={source.speaker == null ? '此段说话人（可选）' : draft.names[source.speaker] || `说话人${source.speaker+1}`}
             disabled={Boolean(saving)} onChange={(e) => change((d) => ({ ...d, rows: d.rows.map((row,i) => i===index ? { ...row, speakerName: e.target.value } : row) }))} />
@@ -168,7 +168,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
           data-source-selected={selection?.index === index ? 'true' : undefined}
           tabIndex={selection?.index === index ? -1 : undefined}
           ref={selection?.index === index ? selectedElement : undefined}>
-          <div className="ct-transcript-review-meta"><time>{stamp(u.startMs)}–{stamp(u.endMs)}</time><strong>{companionTranscriptSpeakerLabel(session,index)}</strong>
+          <div className="ct-transcript-review-meta"><time>{u.approximateTiming?'约 ':''}{stamp(u.startMs)}–{stamp(u.endMs)}</time>{u.approximateTiming?<strong>本地转写分段</strong>:<strong>{companionTranscriptSpeakerLabel(session,index)}</strong>}
             {onSeekSource && sourcesByIndex.has(index) ? <button type="button"
               className="ct-text-button" disabled={blocked || audioSeekBlocked || seeking}
               aria-label={`定位第${index + 1}段原音`} onClick={() => seek(sourcesByIndex.get(index)!)}>定位原音</button> : null}

@@ -13,6 +13,7 @@ export interface CompanionTranscriptSource {
   startMs: number;
   endMs: number;
   speaker: number | null;
+  approximateTiming?: boolean;
   reviewRevision: number | null;
 }
 
@@ -25,7 +26,7 @@ export function companionTranscriptSources(session: CompanionV1HostSession): Com
     row.text.trim() && Number.isSafeInteger(row.startMs) && Number.isSafeInteger(row.endMs)
       && row.startMs >= 0 && row.endMs > row.startMs
       ? [{ sessionId: session.id, index, text: row.text, startMs: row.startMs, endMs: row.endMs,
-        speaker: row.speaker ?? null, reviewRevision: revision }] : []);
+        speaker: row.speaker ?? null, approximateTiming: Boolean(row.approximateTiming), reviewRevision: revision }] : []);
 }
 
 export function companionTranscriptSourceIsCurrent(session: CompanionV1HostSession,
@@ -38,6 +39,7 @@ export function companionTranscriptSourceIsCurrent(session: CompanionV1HostSessi
   const edit = revision !== null ? session.transcriptReview?.utteranceEdits.find((e) => e.index === source.index) : null;
   return Boolean(current && (edit?.text ?? current.text) === source.text && current.startMs === source.startMs
     && current.endMs === source.endMs && (current.speaker ?? null) === source.speaker
+    && Boolean(current.approximateTiming) === Boolean(source.approximateTiming)
     && revision === source.reviewRevision && Number.isSafeInteger(current.startMs)
     && Number.isSafeInteger(current.endMs) && current.startMs >= 0 && current.endMs > current.startMs);
 }

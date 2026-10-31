@@ -206,8 +206,8 @@ mod tests {
         let mut session = apply_fixture_control(fixture_snapshot(), request).unwrap().host.sessions.remove(0);
         session.transcript_final = true;
         session.utterances = vec![
-            CompanionV1UtteranceSegment { text: "周四王交录音。".into(), start_ms: 1250, end_ms: 3200, speaker: Some(0) },
-            CompanionV1UtteranceSegment { text: "周五陈校对。".into(), start_ms: 7000, end_ms: 9000, speaker: Some(0) },
+            CompanionV1UtteranceSegment { text: "周四王交录音。".into(), start_ms: 1250, end_ms: 3200, speaker: Some(0), approximate_timing: false },
+            CompanionV1UtteranceSegment { text: "周五陈校对。".into(), start_ms: 7000, end_ms: 9000, speaker: Some(0), approximate_timing: false },
         ];
         session
     }

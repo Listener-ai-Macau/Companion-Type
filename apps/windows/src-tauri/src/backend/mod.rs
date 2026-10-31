@@ -5570,7 +5570,7 @@ mod tests {
         let mut snapshot = apply_fixture_control(fixture_snapshot(),recovery_request(CompanionV1ControlAction::MeetingLoadDemo,"review-source",false)).unwrap();
         let session = &mut snapshot.host.sessions[0]; let id = session.id.clone();
         session.transcript_final = true; session.meeting_mode = "onlineLive".into();
-        session.utterances = vec![CompanionV1UtteranceSegment { text:"owner 王 due 周五交录音。".into(),start_ms:1000,end_ms:3000,speaker:Some(0) }];
+        session.utterances = vec![CompanionV1UtteranceSegment { text:"owner 王 due 周五交录音。".into(),start_ms:1000,end_ms:3000,speaker:Some(0),approximate_timing:false }];
         session.minutes.as_mut().unwrap().quality = "final".into(); session.minutes_by_mode.offline_store.as_mut().unwrap().quality="final".into();
         session.minutes_by_mode.online_live = session.minutes_by_mode.offline_store.clone();
         let peer = serde_json::to_value(&session.minutes_by_mode.online_live).unwrap();

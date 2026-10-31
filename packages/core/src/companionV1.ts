@@ -414,6 +414,8 @@ export interface CompanionV1UtteranceSegment {
   text: string;
   startMs: number;
   endMs: number;
+  /** Input-window position, not an exact word or speaker timestamp. */
+  approximateTiming?: boolean;
   /** 0-based speaker id when diarization succeeds. */
   speaker?: number | null;
 }

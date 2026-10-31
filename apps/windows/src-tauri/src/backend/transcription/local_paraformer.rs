@@ -161,6 +161,18 @@ pub(super) fn check() -> Result<(), String> {
     let _runtime = Runtime::load_model(&root, &root, ModelKind::available(&root))?;
     Ok(())
 }
+
+// This is the input window, not a word/speaker timestamp. Keep a clear marker
+// so review can seek near the original audio without presenting it as exact.
+fn chunk_anchor(text: &str, start_byte: u64, end_byte: u64) -> Option<crate::companion_v1::CompanionV1UtteranceSegment> {
+    let text=super::normalize_transcript(text);
+    if text.is_empty() || end_byte <= start_byte || start_byte % 2 != 0 || end_byte % 2 != 0 {return None;}
+    let start_samples=(start_byte/2) as u128;let end_samples=(end_byte/2) as u128;
+    let start_ms=u64::try_from(start_samples*1000/RATE as u128).ok()?;
+    let end_ms=u64::try_from((end_samples*1000+RATE as u128-1)/RATE as u128).ok()?;
+    Some(crate::companion_v1::CompanionV1UtteranceSegment{text,start_ms,end_ms,speaker:None,approximate_timing:true})
+}
+
 pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, String> {
     let root = root()?;
     let kind = ModelKind::available(&root);
@@ -169,6 +181,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     let (start, len) = wav_data(&mut file)?;
     let mut offset = 0u64;
     let mut parts = Vec::new();
+    let mut anchors = Vec::new();
     let profile = super::chunk_cache::Profile::from_configuration(
         &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1"}),
     )?;
@@ -191,7 +204,14 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
             || runtime.transcribe(&buf).map(|text| (text, Vec::new())),
         );
         match result {
-            Ok((text, _)) => parts.push(text),
+            Ok((text, _)) => {
+                let normalized=super::normalize_transcript(&text);
+                if !normalized.is_empty() {
+                    let anchor=chunk_anchor(&normalized,offset,offset+buf.len() as u64)
+                        .ok_or("无法保存本地转写时间范围，原录音保留。")?;
+                    parts.push(normalized);anchors.push(anchor);
+                }
+            },
             Err(e) if e == "ASR final result is empty or has invalid timing" => {}
             Err(e) => return Err(format!("本地转写中断，原录音保留，可重试：{e}")),
         }
@@ -206,7 +226,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         provider_id: format!("companion-type-{}", kind.provider()),
         mode: match kind { ModelKind::Paraformer => "offline:paraformer", ModelKind::SenseVoice => "offline:sensevoice" }.into(),
         evidence_path: None,
-        utterances: Vec::new(),
+        utterances: anchors,
     })
 }
 
@@ -227,6 +247,19 @@ mod tests {
         assert!(Runtime::load_model(&dir, &dir, ModelKind::SenseVoice).is_err());
         assert_ne!(ModelKind::Paraformer.model_hash(), ModelKind::SenseVoice.model_hash());
         fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn cached_local_text_has_explicit_approximate_chunk_positions() {
+        let first=chunk_anchor(" 第一段。\r\n",0,32_000*16).unwrap();
+        let last=chunk_anchor("第二段。",32_000*20,32_000*25+16).unwrap();
+        assert_eq!((first.start_ms,first.end_ms),(0,16_000));
+        assert_eq!((last.start_ms,last.end_ms),(20_000,25_001));
+        assert!(first.approximate_timing && last.approximate_timing);
+        assert_eq!(first.speaker,None);
+        assert_eq!(super::super::normalize_transcript(&[first.text,last.text].join("\n")),"第一段。\n第二段。");
+        assert!(chunk_anchor("  ",0,10).is_none());
+        assert!(chunk_anchor("x",0,0).is_none());
     }
 
     #[test]
@@ -264,6 +297,13 @@ mod tests {
         let result=transcribe(Path::new(&fixture)).unwrap();
         assert_eq!(result.provider_id, "companion-type-local-sensevoice");
         assert!(!result.text.is_empty());
+        assert!(!result.utterances.is_empty());
+        assert!(result.utterances.iter().all(|u|u.approximate_timing && u.speaker.is_none() && u.end_ms>u.start_ms));
+        assert!(result.utterances.windows(2).all(|u|u[0].end_ms<=u[1].start_ms+1));
+        assert_eq!(super::super::normalize_transcript(&result.utterances.iter().map(|u|u.text.as_str()).collect::<Vec<_>>().join("\n")),result.text);
+        if let Some(path)=std::env::var_os("COMPANION_LOCAL_ASR_TEST_ANCHORS_OUTPUT") {
+            fs::write(path,serde_json::to_vec_pretty(&result.utterances).unwrap()).unwrap();
+        }
         fs::write(output, result.text).unwrap();
     }
 

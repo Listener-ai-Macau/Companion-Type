@@ -625,6 +625,9 @@ pub struct CompanionV1UtteranceSegment {
     pub start_ms: u64,
     pub end_ms: u64,
     pub speaker: Option<usize>,
+    /// True when the time covers an ASR input chunk, rather than a spoken utterance.
+    #[serde(default)]
+    pub approximate_timing: bool,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -2630,6 +2633,7 @@ mod tests {
             start_ms: 0,
             end_ms: 100,
             speaker: Some(0),
+            approximate_timing: false,
         }];
         snapshot.host.sessions = vec![session];
         snapshot.host.selected_session_id = Some("privacy-session".to_string());

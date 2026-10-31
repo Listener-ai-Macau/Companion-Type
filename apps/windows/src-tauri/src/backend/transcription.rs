@@ -651,6 +651,7 @@ fn volcengine_transcript_from(
             start_ms: u.start_ms,
             end_ms: u.end_ms,
             speaker: u.speaker,
+            approximate_timing: false,
         })
         .collect();
     CompanionTranscript {
