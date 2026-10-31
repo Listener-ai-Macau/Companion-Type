@@ -3119,6 +3119,9 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   const longEvidence=longEvidenceAllowed&&!noteContext?splitLongMinutesEvidence(reading):null;
   if(longEvidence)return <div className="ct-brief-minutes">
     <MarkdownMinutes markdown={longEvidence.overview} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
+    {longEvidence.detailSummary?<details className="ct-full-minutes"><summary>查看完整会议摘要</summary>
+      <MarkdownMinutes markdown={longEvidence.detailSummary} {...sourceProps}/>
+    </details>:null}
     <details className="ct-full-minutes"><summary>查看各段原文依据</summary>
       <MarkdownMinutes markdown={longEvidence.evidence} {...sourceProps}/>
     </details>

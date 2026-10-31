@@ -4,12 +4,23 @@ import {act,create} from 'react-test-renderer';
 import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
 import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 import {splitLongMinutesEvidence} from '../packages/ui/src/briefMinutes';
+import {readFileSync} from 'node:fs';
 
 (globalThis as any).document={activeElement:null,getElementById:()=>null};
 (globalThis as any).window={requestAnimationFrame:(fn:()=>void)=>{fn();return 0;}};
 (globalThis as any).HTMLElement=class {};
 (globalThis as any).HTMLButtonElement=class extends HTMLElement {};
 const markdown='> 长会议已按原文顺序处理全部2段。分段原文依据见下文，识别和事实准确性仍需核对。\n\n# 两小时会议\n\nGenerated: now\nDuration: 7200000 ms\nSource: importedTranscript\nMinutes engine: llm_deepseek (final)\n\n## Summary\n- 讨论项目交付\n\n## Decisions\n- 保留原录音\n\n## Action Items\n- 待核对：准备材料 (owner: 小王)\n\n## Questions\n- None captured\n\n## Keywords\n项目\n\n## 分段原文依据\n\n### 第1段\n\n- 小王负责准备材料。\n\n### 第2段\n\n- 我们要保留原录音。\n';
+const enhancedMarkdown='## 全会重点\n\n- 会议重点：项目交付\n\n'+markdown;
+const enhancedSplit=splitLongMinutesEvidence(enhancedMarkdown);
+assert.ok(enhancedSplit,'newly installed overview must preserve folded long-meeting evidence');
+assert.ok(enhancedSplit.detailSummary?.includes('讨论项目交付'));
+assert.ok(!enhancedSplit.overview.includes('讨论项目交付'));
+assert.ok(enhancedSplit.overview.includes('会议重点：项目交付'));
+assert.ok(enhancedSplit.overview.includes('准备材料'));
+const customSection=splitLongMinutesEvidence(enhancedMarkdown.replace('## Decisions','## 用户补充\n- 不能隐藏\n\n## Decisions'))!;
+assert.equal(customSection.detailSummary,undefined,'unknown edited sections must remain visible');
+assert.ok(customSection.overview.includes('不能隐藏'));
 const split=splitLongMinutesEvidence(markdown)!;
 assert.ok(split.overview.includes('准备材料'));
 assert.ok(split.evidence.includes('小王负责准备材料'));
@@ -44,4 +55,55 @@ act(()=>tree.update(<CompanionDashboard snapshot={structuredClone(snapshot)} sur
 assert.ok(tree.root.findByProps({id:'ct-recording-result'}).findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'),
   'checking a task keeps evidence expandable after the saved source becomes userEdited');
 act(()=>tree.unmount());
+// The new format must keep the useful overview and one actionable checklist,
+// while the complete summary and original evidence remain separately available.
+row.minutes!.source='llm_deepseek';row.minutes!.markdown=enhancedMarkdown;
+row.minutesByMode!.offlineStore!.source='llm_deepseek';row.minutesByMode!.offlineStore!.markdown=enhancedMarkdown;
+saves.length=0;
+act(()=>tree=create(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}} onSaveMeeting={async(q:any)=>{saves.push(q);return snapshot;}}/>));
+act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
+const updated=tree.root.findByProps({id:'ct-recording-result'});
+const summaryDetail=updated.findAllByType('details').find((d:any)=>d.children[0]?.type==='summary' && text(d.children[0])==='查看完整会议摘要');
+assert.ok(summaryDetail && !summaryDetail.props.open, 'full summary is available but initially folded: '+updated.findAllByType('summary').map((s:any)=>text(s)).join('|'));
+assert.ok(text(summaryDetail).includes('讨论项目交付'));
+const mainArticle=updated.findAllByType('article')[0];
+assert.ok(text(mainArticle).includes('会议重点：项目交付'));
+assert.ok(!text(mainArticle).includes('讨论项目交付'));
+assert.ok(updated.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));
+const updatedTasks=updated.findAllByType('input').filter((n:any)=>String(n.props['aria-label']).startsWith('标记完成：'));
+assert.equal(updatedTasks.length,1);
+await act(async()=>updatedTasks[0].props.onChange({target:{checked:true}}));
+assert.match(saves[0].markdown,/\[x\] 待核对：准备材料/);
+assert.ok(saves[0].markdown.includes('讨论项目交付') && saves[0].markdown.includes('小王负责准备材料。'));
+row.minutes!.source='userEdited';row.minutes!.markdown=saves[0].markdown;
+row.minutesByMode!.offlineStore!.source='userEdited';row.minutesByMode!.offlineStore!.markdown=saves[0].markdown;
+act(()=>tree.update(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}} onSaveMeeting={async(q:any)=>{saves.push(q);return snapshot;}}/>));
+const reopened=tree.root.findByProps({id:'ct-recording-result'});
+assert.ok(reopened.findAllByType('summary').some((s:any)=>text(s)==='查看完整会议摘要'));
+assert.ok(reopened.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));
+assert.equal(reopened.findAllByType('input').filter((n:any)=>String(n.props['aria-label']).startsWith('恢复为待办：')).length,1);
+act(()=>tree.unmount());
+
+// When supplied, inspect the actual public 130-minute installed-program result.
+// This verifies the real saved format without submitting its audio or text.
+if (process.env.COMPANION_TEST_PUBLIC_MINUTES) {
+  const actual=JSON.parse(readFileSync(process.env.COMPANION_TEST_PUBLIC_MINUTES,'utf8'));
+  const real=actual.minutes;
+  const view=splitLongMinutesEvidence(real.markdown);
+  assert.ok(view?.detailSummary && view.evidence.includes('### 第8段'));
+  assert.equal(real.summary.length,68);
+  assert.equal((view.overview.match(/^- /gm)??[]).length >= 9,true);
+  assert.ok(view.detailSummary.includes(real.summary[0]));
+  snapshot.host.sessions=[actual];snapshot.host.selectedSessionId=actual.id;
+  act(()=>tree=create(<CompanionDashboard snapshot={structuredClone(snapshot)} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}/>));
+  act(()=>tree.root.findAllByType('button').find((n:any)=>n.props.className?.includes('ct-library-card')).props.onClick());
+  const actualResult=tree.root.findByProps({id:'ct-recording-result'});
+  const actualArticle=actualResult.findAllByType('article')[0];
+  assert.ok(text(actualArticle).includes('全会重点'));
+  assert.ok(!text(actualArticle).includes(real.summary[0]),'68-item detailed summary is not expanded in the main view');
+  assert.ok(actualResult.findAllByType('summary').some((s:any)=>text(s)==='查看完整会议摘要'));
+  assert.ok(actualResult.findAllByType('summary').some((s:any)=>text(s)==='查看各段原文依据'));
+  act(()=>tree.unmount());
+  console.log('PASS actual public long meeting: highlights, complete summary and source evidence remain available');
+}
 console.log('PASS long minutes: one actionable row; evidence is expandable and retained when saving');

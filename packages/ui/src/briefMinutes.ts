@@ -4,15 +4,33 @@ import {emptyActionNotice} from './savedActions';
 
 // Only the native long-meeting format has this exact overview/evidence split.
 // Any custom or ambiguous document stays on the ordinary complete reading path.
-export function splitLongMinutesEvidence(markdown: string): {overview: string; evidence: string} | null {
-  if (!/^> (?:长会议已按原文顺序处理全部|部分纪要：已完成)/.test(markdown)) return null;
+export function splitLongMinutesEvidence(markdown: string): {overview: string; evidence: string; detailSummary?: string} | null {
+  // The current native format may place the selected meeting highlights before
+  // the original long-meeting notice. Older saved minutes start at the notice.
+  const highlights = /^## 全会重点\r?\n\r?\n(?:- [^\r\n]+\r?\n)+\r?\n(?=> 长会议已按原文顺序处理全部)/.exec(markdown);
+  const body = highlights ? markdown.slice(highlights[0].length) : markdown;
+  if (!/^> (?:长会议已按原文顺序处理全部|部分纪要：已完成)/.test(body)) return null;
   const marker = /\r?\n\r?\n## 分段原文依据\r?\n\r?\n/g;
   const matches = [...markdown.matchAll(marker)];
   if (matches.length !== 1 || matches[0].index === undefined) return null;
   const index = matches[0].index;
   const evidence = markdown.slice(index + matches[0][0].length);
   if (!/^### 第1段\r?\n\r?\n/.test(evidence)) return null;
-  return {overview: markdown.slice(0,index), evidence};
+  const overview = markdown.slice(0,index);
+  if (highlights) {
+    const summaries = [...overview.matchAll(/^## (?:Summary|摘要)\r?$/gm)];
+    const decisions = [...overview.matchAll(/^## (?:Decisions|决定)\r?$/gm)];
+    if (summaries.length === 1 && decisions.length === 1 && summaries[0].index !== undefined
+        && decisions[0].index !== undefined && summaries[0].index < decisions[0].index) {
+      const start = summaries[0].index, end = decisions[0].index;
+      const detailSummary = overview.slice(start,end).trimEnd();
+      // Do not fold custom sections that happen to occur between these headings.
+      if (!/^## /m.test(detailSummary.slice(detailSummary.indexOf('\n') + 1))) {
+        return {overview: overview.slice(0,start) + overview.slice(end), evidence, detailSummary};
+      }
+    }
+  }
+  return {overview, evidence};
 }
 
 export function briefMinutes(markdown: string, transcript: string, durationMs: number, actionsFirst=false): string | null {
