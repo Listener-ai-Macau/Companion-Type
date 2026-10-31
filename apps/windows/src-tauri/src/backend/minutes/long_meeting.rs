@@ -389,10 +389,10 @@ fn merge_focused_actions(minutes: &mut CompanionV1MeetingMinutes, evidence: &mut
         let matches=source.match_indices(&quote).map(|(i,_)|i).take(2).collect::<Vec<_>>();
         if !quote.is_empty() && matches.len()==1 {
             let start=matches[0];
-            let sentence_start=source[..start].rfind(['。','！','？','!','?','\n'])
+            let sentence_start=source[..start].rfind(['。','！','？','!','?'])
                 .map_or(0,|i|i+source[i..].chars().next().unwrap().len_utf8());
             let prefix=&source[sentence_start..start];
-            if ["如果","假如","若是","除非","只有"].iter().any(|word|prefix.contains(word)) {
+            if prefix.len()<=512 && ["如果","假如","若是","除非","只有"].iter().any(|word|prefix.contains(word)) {
                 let expanded=source[sentence_start..start+quote.len()].trim();
                 if expanded.len()<=1024 {quote=expanded.to_string();}
             }
@@ -410,12 +410,12 @@ fn merge_focused_actions(minutes: &mut CompanionV1MeetingMinutes, evidence: &mut
         if let Some(index)=same {
             // If the model shortened a conditional action, use the literal
             // source and do not turn its conditional date into a reminder.
-            if conditional {minutes.action_items[index].text=quote.clone(); minutes.action_items[index].due=None;}
+            if conditional {minutes.action_items[index].text=quote.replace(['\r','\n'], " "); minutes.action_items[index].due=None;}
             evidence.push(Evidence {field:"actionItems".into(),index,quote});
         } else {
             let index=minutes.action_items.len();
             minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {
-                text:if valid {quote.clone()} else {action.text}, owner, due });
+                text:if valid {quote.replace(['\r','\n'], " ")} else {action.text}, owner, due });
             evidence.push(Evidence {field:"actionItems".into(),index,quote});
         }
     }

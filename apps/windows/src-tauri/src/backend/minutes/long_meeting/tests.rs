@@ -32,7 +32,7 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 
 #[test]
 fn focused_actions_restore_conditional_source_and_do_not_duplicate_existing_assignment() {
-    let source = "小林负责整理材料，周五发给大家。如果客户提出修改，小陈下周一再确认交货日期。";
+    let source = "小林负责整理材料，周五发给大家。如果客户提出修改，\n小陈下周一再确认交货日期。";
     let part = session(source); let (mut minutes, mut evidence)=response(&part);
     minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {
         text:"整理材料".into(),owner:Some("小林".into()),due:Some("周五".into()) });
@@ -48,6 +48,7 @@ fn focused_actions_restore_conditional_source_and_do_not_duplicate_existing_assi
     assert_eq!(omitted,1); assert_eq!(minutes.action_items.len(),2);
     assert_eq!(minutes.action_items[0].owner.as_deref(),Some("小林"));
     assert!(minutes.action_items[1].text.contains("如果客户提出修改"));
+    assert!(!minutes.action_items[1].text.contains('\n'));
     assert!(minutes.action_items[1].text.contains("确认交货日期"));
     assert_eq!(minutes.action_items[1].owner.as_deref(),Some("小陈"));
     assert_eq!(minutes.action_items[1].due,None,"conditional dates cannot become unconditional reminders");
