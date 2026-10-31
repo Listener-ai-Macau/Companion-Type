@@ -337,7 +337,19 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
         let mut part = session.clone(); part.transcript_text = session.transcript_text[start..end].to_string();
         part.utterances.clear(); part.minutes = None; part.minutes_by_mode = Default::default();
         fresh += 1;
-        let result = request(index, slices.len(), &part, remaining.min(Duration::from_secs(180)))
+        let mut response = request(index, slices.len(), &part, remaining.min(Duration::from_secs(180)));
+        // A provider occasionally returns malformed/incomplete JSON despite a
+        // successful HTTP request. Retry that response once for this same
+        // source slice; never retry authentication or transport failures here.
+        // Both attempts count against the existing overall request/time budget.
+        if response.as_ref().is_err_and(|error| *error == super::safe_minutes_http_error(super::http_policy::Failure::InvalidResponse)) {
+            let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
+            if fresh < MAX_FRESH_REQUESTS && remaining >= Duration::from_secs(180) {
+                fresh += 1;
+                response = request(index, slices.len(), &part, remaining.min(Duration::from_secs(180)));
+            }
+        }
+        let result = response
             .and_then(|(mut minutes, mut evidence)| {
                 restore_quote_whitespace(&part.transcript_text, &mut evidence);
                 let omitted_items=retain_source_backed(&mut minutes,&mut evidence,&part.transcript_text);

@@ -71,6 +71,33 @@ fn durable_retry_only_submits_unfinished_chunks_and_preserves_tail_and_source() 
 }
 
 #[test]
+fn malformed_provider_response_is_retried_once_for_the_same_segment() {
+    let root = root(); let source = session(&"公开会议内容。\n".repeat(2000));
+    let mut calls = Vec::new();
+    let result = run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
+        calls.push(index);
+        if calls.len() == 1 { Err(super::super::safe_minutes_http_error(super::super::http_policy::Failure::InvalidResponse)) }
+        else { Ok(response(part)) }
+    }).unwrap();
+    assert_eq!(&calls[..2], &[0,0]);
+    assert!(result.processing.unwrap().is_complete());
+    cleanup(root);
+}
+
+#[test]
+fn repeated_malformed_response_stays_partial_and_does_not_loop() {
+    let root = root(); let source = session(&"公开会议内容。\n".repeat(2000));
+    let mut calls = 0;
+    let result = run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,_,_| {
+        calls += 1;
+        Err(super::super::safe_minutes_http_error(super::super::http_policy::Failure::InvalidResponse))
+    }).unwrap();
+    assert_eq!(calls,2); assert_eq!(result.quality,"draft");
+    assert_eq!(result.processing.unwrap().completed_chunks,0);
+    cleanup(root);
+}
+
+#[test]
 fn input_mode_provider_and_credential_changes_never_reuse_wrong_results() {
     let root = root(); let source = session(&"原文资料。\n".repeat(3000));
     let total = plan(&source.transcript_text).unwrap().len();
