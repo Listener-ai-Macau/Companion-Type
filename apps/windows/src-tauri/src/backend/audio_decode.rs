@@ -1,7 +1,7 @@
 //! Companion COP1 adapter. Codec is the platform's statically linked libopus;
 //! container validation, live-prefix policy and the established gain/pre-skip
 //! remain product-specific. No executable lookup or subprocess on the board path.
-use std::{fs, path::Path};
+use std::{fs, io::{Read, Seek, SeekFrom}, path::Path};
 use denzic_host_audio_v1_core::{opus_decoder::MonoDecoder, wav::WavWriter};
 
 // Current 16 kHz recordings use the full i16 output of the Opus decoder.
@@ -20,11 +20,20 @@ pub(crate) fn decode_recording(input:&Path, output:&Path, live_prefix:bool)->Res
             || decode_inner(input,output,live_prefix)))
 }
 fn decode_inner(input:&Path, output:&Path, live_prefix:bool)->Result<u64,String> {
-    if fs::metadata(input).map_err(|e| format!("read compressed recording: {e}"))?.len()>32*1024*1024 { return Err("compressed recording exceeds Companion capacity".into()); }
-    let bytes=fs::read(input).map_err(|e|format!("read compressed recording: {e}"))?;
+    let mut input_file=fs::File::open(input).map_err(|e|format!("read compressed recording: {e}"))?;
+    let initial_bytes=input_file.metadata().map_err(|e|format!("read compressed recording: {e}"))?.len();
+    let mut magic=[0;4];input_file.read_exact(&mut magic).map_err(|e|format!("read compressed recording: {e}"))?;
+    input_file.seek(SeekFrom::Start(0)).map_err(|e|format!("read compressed recording: {e}"))?;
     // Preserve legacy Ogg imports. The normal WBA codec=3 path is always COP1.
-    if bytes.starts_with(b"OggS") { return denzic_host_audio_v1_core::decode_opus_to_wav(input,output); }
-    let mut reader=super::cop1::Reader::new(bytes.as_slice(),0,live_prefix)?;
+    // The legacy Ogg helper still reads the whole input, so retain its bound
+    // until that separate path also supports streaming.
+    if &magic==b"OggS" {
+        if initial_bytes>32*1024*1024 {return Err("compressed recording exceeds Companion capacity".into());}
+        return denzic_host_audio_v1_core::decode_opus_to_wav(input,output);
+    }
+    // Use the length observed at open, so a live prefix cannot silently grow
+    // while this decoding pass is in progress. No whole-file allocation.
+    let mut reader=super::cop1::Reader::new(input_file.take(initial_bytes),0,live_prefix)?;
     let frame_ms=reader.frame_ms;
     let rate=reader.source_rate;
     let mut window=super::cop1::SampleWindow::new(reader.schema,frame_ms*16)?;
@@ -68,6 +77,27 @@ fn decode_inner(input:&Path, output:&Path, live_prefix:bool)->Result<u64,String>
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test] fn large_cop1_stream_is_not_rejected_for_compressed_size() {
+        use std::io::Write;
+        let temp=std::env::temp_dir().canonicalize().unwrap();
+        let dir=temp.join(format!("companion-large-cop1-{}",uuid::Uuid::new_v4()));
+        fs::create_dir(&dir).unwrap();assert!(dir.canonicalize().unwrap().starts_with(&temp));
+        let input=dir.join("large.cop1");let baseline=dir.join("baseline.cop1");
+        let expected=dir.join("baseline.wav");let output=dir.join("large.wav");
+        let raw=super::super::cop1::tests::fixture(0);
+        fs::write(&baseline,&raw).unwrap();decode_recording(&baseline,&expected,false).unwrap();
+        let mut file=std::io::BufWriter::new(fs::File::create(&input).unwrap());
+        file.write_all(&raw[..12]).unwrap();
+        // Valid schema-2 padding crosses the old 32 MiB input ceiling without
+        // producing hours of PCM; the audio and pause records stay identical.
+        let padding=[0xff;65536];for _ in 0..512 {file.write_all(&padding).unwrap();}
+        file.write_all(&padding[..216]).unwrap(); // Keep later COP1 events on 248-byte boundaries.
+        file.write_all(&raw[12..]).unwrap();file.flush().unwrap();drop(file);
+        assert!(fs::metadata(&input).unwrap().len()>32*1024*1024);
+        decode_recording(&input,&output,false).unwrap();
+        assert_eq!(fs::read(output).unwrap(),fs::read(expected).unwrap());
+        fs::remove_dir_all(dir).unwrap();
+    }
     #[test] fn sixteen_khz_original_keeps_decoded_full_range() {
         let dir=std::env::temp_dir().join(format!("companion-pcm-range-{}",uuid::Uuid::new_v4()));
         fs::create_dir_all(&dir).unwrap();
