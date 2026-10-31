@@ -81,6 +81,33 @@ recording or missing terminal segment is not presented as complete. The caller
 owns reconnection and foreground lifetime; this API does not schedule an Android
 background service or delete recordings from the device.
 
+For a long meeting, `client.syncAvailableAndReclaim(selectedSegment, directory,
+progress)` is the explicit alternative: it receives currently sealed segments of
+that selected session, verifies the contiguous saved audio and device-authored
+timeline, makes the local files durable, and only then sends an exact receipt for
+each saved segment to free its device space. It retains the original local files.
+Use an immediate child of the existing app-private files directory, as in the
+example above, so the recording directory and its parent can both be synced.
+It does not touch other sessions. A lost device reply remains pending on the
+phone; reconnecting to the same device and calling it again resolves the same
+receipt before processing later segments. Keep the recording directory and its
+`.receipt` / `.consume-pending` files together. On an error show the user the
+saved recording and allow retry; do not delete the private copies or claim a
+device confirmation that was not received. The host must use one stable private
+recording directory for the selected device and serialize consumers across
+connections, including desktop handoff: the device remembers only its latest
+four physical receipts. This is a software candidate and
+requires real Android/device acceptance, including Android storage durability.
+
+`client.followSessionAndReclaim(selectedSegment, directory, progress)` repeats
+that operation without a preset recording duration until the same session has a
+terminal segment. Obtain `selectedSegment` from the first sealed segment of the
+desired session; until one exists, the host can wait and read the directory again.
+Run it on a worker within a user-visible foreground lifetime;
+the host controls reconnect, cancellation and service scheduling. It releases the
+client lock between polls so recording control remains available. The returned
+session can still be incomplete if the device reports an interrupted capture.
+
 The same selected, paired connection can control a recording started by this
 mobile backend. Create a host session ID once, keep it for retries, and use an
 app-private directory for control records:
@@ -307,8 +334,8 @@ experiments from the compiled library and an Android API jar. That manually
 assembled archive has not yet been validated on a phone and must not be treated
 as a release artifact.
 `RecordingClient.close()` closes the connection and
-can be used to interrupt a transfer; it does not stop device recording. No operation
-here deletes or consumes recordings on the device.
+can be used to interrupt a transfer; it does not stop device recording. Only the
+explicit `...AndReclaim` operations above consume saved device segments.
 
 `NativeTranscription.transcribe` explicitly sends a selected WAV and caller-supplied
 credentials to Volcengine. The caller must make the provider, upload and possible
@@ -337,7 +364,7 @@ String text = NativeTranscription.transcribe(wav, appId, accessToken, resourceId
 The current scope is discovery, connection, V2 recording directory, encoded-segment
 transfer, resume, local inventory, calendar export, and decoder/recognition candidates. Android
 phone validation, playback UI, long-recording recognition qualification,
-phone/device control and receipt acceptance, automatic sync, foreground service, iOS and
+real phone/device control and receipt acceptance, automatic sync, foreground service, iOS and
 real-phone/device acceptance remain to be implemented or validated. Synthetic wire
 tests are not a substitute for that acceptance. Errors should be surfaced to the
 user so the user can retry; do not present an unfinished transfer as a recording.

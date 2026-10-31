@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Worker-thread backend for reading Companion V2 recordings through a GATT link. */
 public final class RecordingClient implements Closeable {
-    public static final UUID DEVICE_STATUS=uuid("1001"),RECORDING_CONTROL=uuid("3001"),RECORDING_LIST=uuid("3002"),RECORDING_PULL=uuid("3003"),MEETING_CONTROL=uuid("8001"),MEETING_STATUS=uuid("8002");
+    public static final UUID DEVICE_STATUS=uuid("1001"),RECORDING_CONTROL=uuid("3001"),RECORDING_LIST=uuid("3002"),RECORDING_PULL=uuid("3003"),RECORDING_CONSUME=uuid("6001"),MEETING_CONTROL=uuid("8001"),MEETING_STATUS=uuid("8002");
     private static UUID uuid(String value){return UUID.fromString("8f7a"+value+"-7b7d-4f3d-9d6f-6c2d1b7c0000");}
     /** One connected, encrypted device. Operations are serialized by this client. */
     public interface Link extends Closeable {
@@ -31,13 +31,15 @@ public final class RecordingClient implements Closeable {
         public final boolean previousRecordingDamageReported;
         private DeviceStatus(int faults){faultBitmap=faults;previousRecordingDamageReported=(faults&0x0800)!=0;}
     }
-    private final Link link;private final RecorderWire.Peer peer;private final SecureRandom random=new SecureRandom();
+    private final Link link;private final RecorderWire.Peer peer;private final DurableConsume durableConsume;private final SecureRandom random=new SecureRandom();
     private List<RecorderWire.Descriptor> current;private final AtomicBoolean closed=new AtomicBoolean();
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
 
     /** The caller first establishes the user's selected, bonded device link. */
-    public RecordingClient(Link link) throws IOException {
+    public RecordingClient(Link link) throws IOException {this(link,null,null);}
+    RecordingClient(Link link,DurableConsume.DirectorySync directorySync,DurableConsume.PrefixCheck prefixCheck) throws IOException {
         if(link==null)throw new IllegalArgumentException("link required");this.link=link;
+        if((directorySync==null)!=(prefixCheck==null))throw new IllegalArgumentException("both test dependencies are required");
         boolean ready=false;
         try {
             link.subscribe(RECORDING_CONTROL);link.subscribe(RECORDING_LIST);link.subscribe(RECORDING_PULL);
@@ -45,6 +47,7 @@ public final class RecordingClient implements Closeable {
             byte[] request=peer.negotiate(nonce(),link.mtu());link.write(RECORDING_CONTROL,request);
             long deadline=System.nanoTime()+8_000_000_000L;
             while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new IOException("recording negotiation timed out");if(Arrays.equals(request,link.await(RECORDING_CONTROL,remaining)))break;}
+            durableConsume=directorySync==null&&prefixCheck==null?new DurableConsume(peer,link):new DurableConsume(peer,link,directorySync,prefixCheck);
             ready=true;
         } finally {if(!ready)link.close();}
     }
@@ -133,6 +136,55 @@ public final class RecordingClient implements Closeable {
             }
         }
         throw new IOException("selected recording has no available sealed segments");
+    }
+
+    /**
+     * Receive and durably save each sealed segment of the selected original
+     * recording, then request an exact device receipt one segment at a time.
+     * A lost reply remains pending and is reconciled before any later segment.
+     */
+    public synchronized RecordingLibrary.Session syncAvailableAndReclaim(RecorderWire.Descriptor selected,Path privateDirectory,SessionProgress progress) throws IOException {
+        ensureOpen();if(selected==null||privateDirectory==null)throw new IllegalArgumentException("recording and private directory required");
+        peer.validate(selected);durableConsume.reconcilePending(privateDirectory);
+        List<RecorderWire.Descriptor> entries=listRecordings();java.util.ArrayList<RecorderWire.Descriptor> matches=new java.util.ArrayList<>();
+        for(RecorderWire.Descriptor d:entries)if(d.sessionId==selected.sessionId)matches.add(d);
+        matches.sort(java.util.Comparator.comparingLong(d->d.segmentIndex));
+        RecorderWire.Descriptor previous=null;boolean selectedOnDevice=false;
+        for(RecorderWire.Descriptor d:matches){
+            if(d.sourceMode!=selected.sourceMode||(d.segmentIndex==selected.segmentIndex&&!d.sameContent(selected)))
+                throw new IOException("recording session identity changed; originals retained");
+            if(d.segmentIndex==selected.segmentIndex)selectedOnDevice=true;
+            if(previous!=null&&(d.segmentIndex==previous.segmentIndex||(previous.flags&2)!=0||d.sampleOffset<previous.sampleOffset+previous.sampleCount||
+                (d.segmentIndex==previous.segmentIndex+1&&d.sampleOffset!=previous.sampleOffset+previous.sampleCount)))
+                throw new IOException("recording session has conflicting segments; originals retained");
+            previous=d;
+        }
+        if(!selectedOnDevice)RecordingLibrary.verifiedPrefix(privateDirectory,selected);
+        for(int i=0;i<matches.size();i++){
+            final int index=i;RecorderWire.Descriptor d=matches.get(i);
+            download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
+            durableConsume.consume(privateDirectory,d);
+        }
+        for(RecordingLibrary.Session session:RecordingLibrary.sessions(privateDirectory)){
+            if(session.segments.isEmpty())continue;
+            RecorderWire.Descriptor first=session.segments.get(0).descriptor;
+            if(first.sessionId==selected.sessionId&&first.epoch==selected.epoch&&Arrays.equals(first.uid(),selected.uid())){
+                if(session.state==RecordingLibrary.SessionState.DAMAGED)throw new IOException("local recording is damaged; originals retained");
+                RecordingLibrary.verifiedPrefix(privateDirectory,selected);
+                return session;
+            }
+        }
+        throw new IOException("selected recording has no available sealed segments");
+    }
+
+    /** Follow without a preset duration; close or interrupt to stop following. */
+    public RecordingLibrary.Session followSessionAndReclaim(RecorderWire.Descriptor selected,Path privateDirectory,SessionProgress progress) throws IOException {
+        while(true){
+            RecordingLibrary.Session session=syncAvailableAndReclaim(selected,privateDirectory,progress);
+            RecorderWire.Descriptor last=session.segments.get(session.segments.size()-1).descriptor;
+            if((last.flags&2)!=0)return session;
+            try{Thread.sleep(2_000);}catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException("recording follow interrupted; saved audio retained",e);}
+        }
     }
 
     /** Copy a selected sealed segment to app-private storage, retaining the device copy. */

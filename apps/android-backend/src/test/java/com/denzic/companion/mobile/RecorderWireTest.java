@@ -17,7 +17,7 @@ public final class RecorderWireTest {
     private static void expectFailure(Checked c)throws Exception{try{c.run();throw new AssertionError("corrupt data was accepted");}catch(java.io.IOException expected){}}
     private interface Checked{void run()throws Exception;}
     private static final class FakeLink implements RecordingClient.Link {
-        final byte[] status,page0,page1,packet;byte[] control,list,pull,resumedPacket,multiAudio;boolean closed,partialOnce,failOnNextPull;int pullCount;
+        final byte[] status,page0,page1,packet;byte[] control,list,pull,resumedPacket,multiAudio,consumeReply;boolean closed,partialOnce,failOnNextPull,loseConsumeReply;int pullCount,consumeWrites;
         final java.util.Map<Long,RecorderWire.Descriptor> segments=new java.util.HashMap<>();
         FakeLink(byte[] s,byte[] a,byte[] b,byte[] p){status=s;page0=a;page1=b;packet=p;}
         public int mtu(){return 247;} public byte[] read(UUID id){return status.clone();}
@@ -30,11 +30,18 @@ public final class RecorderWireTest {
                     RecorderWire.Descriptor d=segments.get(recording);if(d==null)throw new AssertionError("unknown requested segment");
                     if(partialOnce){partialOnce=false;failOnNextPull=true;pull=packet(d,multiAudio,0,7,false);}else pull=packet(d,multiAudio,(int)offset,multiAudio.length-(int)offset,true);
                 }else pull=(value[28]==7&&resumedPacket!=null?resumedPacket:packet).clone();
-            }else throw new AssertionError("unexpected command");
+            }else if(id.equals(RecordingClient.RECORDING_CONSUME)){consumeWrites++;consumeReply=value.clone();}
+            else throw new AssertionError("unexpected command");
         }
         public byte[] await(UUID id,long timeout)throws java.io.IOException {if(id.equals(RecordingClient.RECORDING_CONTROL))return control;if(id.equals(RecordingClient.RECORDING_LIST))return list;if(id.equals(RecordingClient.RECORDING_PULL)){
             if(pull==null&&failOnNextPull){failOnNextPull=false;throw new java.io.IOException("synthetic disconnect");}byte[] result=pull;if(failOnNextPull)pull=null;return result;}
+            if(id.equals(RecordingClient.RECORDING_CONSUME)){if(loseConsumeReply)throw new java.io.IOException("synthetic lost receipt");return consumeReply.clone();}
             throw new AssertionError("unexpected notification");}
+    }
+    private static byte[] page(RecorderWire.Descriptor a,RecorderWire.Descriptor b){
+        byte[] p=new byte[24+224];p[0]=2;p[1]=2;put16(p,2,112);put32(p,4,1);put32(p,8,0);put32(p,12,2);put32(p,16,17);
+        System.arraycopy(a.wireBytes(),0,p,24,112);System.arraycopy(b.wireBytes(),0,p,136,112);
+        CRC32 c=new CRC32();c.update(p,0,20);c.update(p,24,224);put32(p,20,c.getValue());return p;
     }
     public static void main(String[] args)throws Exception {
         Path root=Paths.get(args[0]);byte[] d0=Files.readAllBytes(root.resolve("descriptor0.bin"));byte[] page0=Files.readAllBytes(root.resolve("page0.bin"));byte[] page1=Files.readAllBytes(root.resolve("page1.bin"));byte[] audio=Files.readAllBytes(root.resolve("payload.bin"));
@@ -62,6 +69,31 @@ public final class RecorderWireTest {
             client.receiveSession(d,whole,null);if(secondLink.pullCount!=3)throw new AssertionError("verified session retransmitted");
             byte[] changed=d.wireBytes();changed[94]=2;CRC32 changedCrc=new CRC32();changedCrc.update(changed,0,108);put32(changed,108,changedCrc.getValue());
             expectFailure(()->client.receiveSession(RecorderWire.Descriptor.decode(changed),whole,null));if(secondLink.pullCount!=3)throw new AssertionError("conflicting identity started transfer");
+        }
+        Path reclaimFolder=Files.createTempDirectory(root,"reclaim-session-");FakeLink lost=new FakeLink(status,page0,page1,null);lost.multiAudio=audio;lost.loseConsumeReply=true;
+        for(RecorderWire.Descriptor item:catalog.entries())lost.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(lost,dir->{},prefix->{checkPrefix(prefix);})){expectFailure(()->client.syncAvailableAndReclaim(d,reclaimFolder,null));}
+        if(lost.consumeWrites!=1||!Files.isRegularFile(reclaimFolder.resolve(".consume-pending")))throw new AssertionError("lost consume confirmation not retained");
+        FakeLink reconnected=new FakeLink(status,page(catalog.entries().get(1),catalog.entries().get(2)),page1,null);reconnected.multiAudio=audio;
+        for(RecorderWire.Descriptor item:catalog.entries())reconnected.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(reconnected,dir->{},prefix->{checkPrefix(prefix);})){
+            RecordingLibrary.Session session=client.syncAvailableAndReclaim(d,reclaimFolder,null);
+            if(session.state!=RecordingLibrary.SessionState.COMPLETE||session.segments.size()!=3||reconnected.consumeWrites!=3||reconnected.pullCount!=2)
+                throw new AssertionError("lost receipt and absent original were not reconciled");
+            client.syncAvailableAndReclaim(d,reclaimFolder,null);
+            if(reconnected.consumeWrites!=3||reconnected.pullCount!=2)throw new AssertionError("confirmed segments were repeated");
+            if(client.followSessionAndReclaim(d,reclaimFolder,null).state!=RecordingLibrary.SessionState.COMPLETE)
+                throw new AssertionError("following did not stop on the original terminal segment");
+        }
+        byte[] absentWire=d.wireBytes();put32(absentWire,8,99);put32(absentWire,28,10);
+        long absentOffset=d.sampleCount*10;for(int i=0;i<8;i++)absentWire[32+i]=(byte)(absentOffset>>>(8*i));
+        CRC32 absentCrc=new CRC32();absentCrc.update(absentWire,0,108);put32(absentWire,108,absentCrc.getValue());
+        RecorderWire.Descriptor absent=RecorderWire.Descriptor.decode(absentWire);Path absentFolder=Files.createTempDirectory(root,"reclaim-unknown-");
+        FakeLink unselected=new FakeLink(status,page0,page1,null);unselected.multiAudio=audio;
+        for(RecorderWire.Descriptor item:catalog.entries())unselected.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(unselected,dir->{},prefix->{checkPrefix(prefix);})){
+            expectFailure(()->client.syncAvailableAndReclaim(absent,absentFolder,null));
+            if(unselected.pullCount!=0||unselected.consumeWrites!=0)throw new AssertionError("unknown selection touched the device session");
         }
         byte[] shorter=page0.clone();put32(shorter,12,2);CRC32 shorterCrc=new CRC32();shorterCrc.update(shorter,0,20);shorterCrc.update(shorter,24,shorter.length-24);put32(shorter,20,shorterCrc.getValue());
         FakeLink incompleteLink=new FakeLink(status,shorter,page1,null);incompleteLink.multiAudio=audio;for(RecorderWire.Descriptor item:catalog.entries())incompleteLink.segments.put(item.recordingId,item);
@@ -138,5 +170,8 @@ public final class RecorderWireTest {
         if(RecordingLibrary.sessions(folder).get(0).state!=RecordingLibrary.SessionState.DAMAGED)throw new AssertionError("a damaged segment must damage the session");
         p[p.length-1]^=1;expectFailure(()->RecorderWire.packet(d,p,0,0));
         System.out.println("PASS Windows golden directory, packet, client transfer and corruption paths");
+    }
+    private static void checkPrefix(RecordingLibrary.Session prefix)throws java.io.IOException {
+        if(prefix.segments.isEmpty()||prefix.segments.get(0).descriptor.segmentIndex!=0)throw new java.io.IOException("missing local prefix");
     }
 }

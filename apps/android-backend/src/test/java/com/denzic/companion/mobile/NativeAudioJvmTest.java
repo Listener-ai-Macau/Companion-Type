@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.zip.CRC32;
 import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 /** JVM-to-native bridge test with synthetic silent Opus, no Android device. */
 public final class NativeAudioJvmTest {
@@ -18,6 +19,14 @@ public final class NativeAudioJvmTest {
         put32(p,4,41);put32(p,8,sequence);put32(p,12,offset);put32(p,16,raw.length);
         if(last)System.arraycopy(hash,0,p,24,32);System.arraycopy(raw,offset,p,header,length);
         CRC32 crc=new CRC32();crc.update(p,4,16);crc.update(raw,offset,length);put32(p,20,crc.getValue());return p;
+    }
+    private static final class ReceiptLink implements RecordingClient.Link {
+        byte[] receipt;int writes;
+        public int mtu(){return 247;}public byte[] read(UUID id){throw new AssertionError();}
+        public void subscribe(UUID id){if(!id.equals(RecordingClient.RECORDING_CONSUME))throw new AssertionError();}
+        public void write(UUID id,byte[] value){writes++;receipt=value.clone();}
+        public byte[] await(UUID id,long timeout){return receipt.clone();}
+        public void close(){}
     }
     public static void main(String[] args)throws Exception {
         Path root=Files.createTempDirectory(Paths.get(args[0]),"jni-silence-");
@@ -35,6 +44,16 @@ public final class NativeAudioJvmTest {
         RecordingLibrary.Session session=RecordingLibrary.sessions(root).get(0);Path wav=root.resolve("output.wav");
         NativeAudio.VerifiedPrefix ended=NativeAudio.inspectPrefix(session);
         if(!ended.captureComplete||ended.encodedSamples!=960||ended.bookmarks.size()!=1||ended.bookmarks.get(0).sourceSamples!=640)throw new AssertionError("complete prefix metadata mismatch");
+        byte[] status=new byte[116];status[0]=1;put32(status,12,0x57424155L);System.arraycopy(d,96,status,20,12);
+        System.arraycopy(new byte[]{'C','R','V','2'},0,status,84,4);put16(status,88,2);put16(status,90,32);put32(status,92,7);
+        System.arraycopy(d,12,status,96,8);put16(status,104,64);put16(status,106,1024);put16(status,108,248);crc.reset();crc.update(status,84,28);put32(status,112,crc.getValue());
+        ReceiptLink link=new ReceiptLink();int[] validated={0};
+        DurableConsume consume=new DurableConsume(RecorderWire.Peer.fromStatus(status),link,dir->{},prefix->{
+            NativeAudio.VerifiedPrefix checked=NativeAudio.inspectPrefix(prefix);
+            if(checked.bookmarks.size()!=1||checked.bookmarks.get(0).sourceSamples!=640)throw new java.io.IOException("saved mark missing");validated[0]++;
+        });
+        if(!consume.consume(root,descriptor)||link.writes!=1||validated[0]!=1)throw new AssertionError("real JNI prefix was not verified before consume");
+        if(!Arrays.equals(Files.readAllBytes(root.resolve(SegmentReceiver.key(descriptor)+".cop1")),raw))throw new AssertionError("original was changed by consumption");
         byte[] live=d.clone();live[20]=2;put32(live,88,0);live[92]=1;crc.reset();crc.update(live,0,108);put32(live,108,crc.getValue());
         RecorderWire.Descriptor liveDescriptor=RecorderWire.Descriptor.decode(live);String liveKey=SegmentReceiver.key(liveDescriptor);
         Files.write(root.resolve(liveKey+".meta"),live);Files.write(root.resolve(liveKey+".cop1"),raw);

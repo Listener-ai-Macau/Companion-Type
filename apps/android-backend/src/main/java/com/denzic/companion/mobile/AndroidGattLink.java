@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class AndroidGattLink implements RecordingClient.Link {
     private static final UUID STATUS_SERVICE=UUID.fromString("8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000");
     private static final UUID RECORDING_SERVICE=UUID.fromString("8f7a0003-7b7d-4f3d-9d6f-6c2d1b7c0000");
+    private static final UUID PRIVACY_SERVICE=UUID.fromString("8f7a0006-7b7d-4f3d-9d6f-6c2d1b7c0000");
     private static final UUID MEETING_SERVICE=UUID.fromString("8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000");
     private static final UUID CCCD=UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
     private static final class Event {
@@ -76,7 +77,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
         failure="Bluetooth "+kind+" timed out";throw new IOException(failure);
     }
     private BluetoothGattCharacteristic characteristic(UUID id) throws IOException {
-        UUID service=id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:
+        UUID service=id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:id.equals(RecordingClient.RECORDING_CONSUME)?PRIVACY_SERVICE:
             (id.equals(RecordingClient.MEETING_CONTROL)||id.equals(RecordingClient.MEETING_STATUS)?MEETING_SERVICE:RECORDING_SERVICE);
         BluetoothGattService s=gatt.getService(service);BluetoothGattCharacteristic c=s==null?null:s.getCharacteristic(id);
         if(c==null)throw new IOException("Companion Bluetooth characteristic unavailable: "+id);return c;
