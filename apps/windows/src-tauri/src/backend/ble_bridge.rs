@@ -38,6 +38,7 @@ mod prepared_connection;
 mod segmented;
 mod batch_interval;
 mod recorder_control;
+mod legacy_reclaim;
 pub(crate) mod pet_caption;
 pub(crate) mod pet_profile;
 pub(crate) mod pet_find;
@@ -4869,6 +4870,38 @@ async fn sync_native_recordings_with_link_policy(
     if logical_key.is_some() {
         return Err("原分段录音的芯片与格式协议未核对，未退回旧物理ID收取其它录音。".into());
     }
+    // A legacy device can have completed the exact consume while its reply
+    // was lost. Its directory then lacks that ID, so normal pull cannot retry.
+    // Replay only a durable intent from this device, with unchanged local
+    // audio and session; never infer a receipt from the missing directory row.
+    if delete_after_sync_enabled() {
+        let root = native_recording_root()?;
+        let state = super::persistence::state_file_path();
+        let present: Vec<u32> = catalog.entries.iter().map(|e| e.recording_id).collect();
+        for intent in legacy_reclaim::candidates(&root, &device.device_id(), recording_id, &present) {
+            if job.is_paused() { break; }
+            let Ok(_lock) = legacy_reclaim::lock(&root, &intent) else { continue; };
+            let Ok(_audio_lease) = super::audio_artifacts::usage(intent.audio_path()) else { continue; };
+            if intent.verify(&state).is_err() { continue; }
+            let Ok(digest) = intent.digest() else { continue; };
+            match delete_privacy_on_device(device, DELETE_PRIVACY_OP_DELETE_RECORDING,
+                intent.id(), intent.len(), digest).await {
+                Ok(result) if result.refused => {
+                    eprintln!("legacy recording receipt replay refused id={} local_audio_kept=1", intent.id());
+                }
+                Ok(_) => {
+                    if let Err(error) = intent.confirm(&state).and_then(|_| intent.remove(&root)) {
+                        eprintln!("legacy recording receipt saved for retry id={} error={error}", intent.id());
+                    }
+                }
+                Err(error) => return Ok(NativeRecordingBatch {
+                    device_id: device.device_id(), recordings: Vec::new(),
+                    failures: vec![format!("录音已保存，设备确认暂未恢复：{error}")],
+                    paused: false, connection_reusable: false, segmented: None,
+                }),
+            }
+        }
+    }
     let entries = catalog.entries;
     let entries = pending_recordings(entries, known_recording_ids, recording_id);
     if entries.is_empty() {
@@ -5118,6 +5151,7 @@ async fn sync_native_recording_entry(
     let mut reclaim_transport_failed = false;
     let reclaim_started = StdInstant::now();
     if let Some(job) = job { job.reclaiming(); }
+    let mut legacy_intent = None;
     let device_erase_status = if delete_after_sync {
         // Finish both audio CCCD writes before opening the control stream.
         // This is outside the payload timer, after durable originals/index.
@@ -5126,6 +5160,18 @@ async fn sync_native_recording_entry(
         let quiesce_started = StdInstant::now();
         PullSession::quiesce_for_control(pull_session).await?;
         eprintln!("recording_sync_stage stage=sealed_stream_quiesce id={} elapsed_ms={} completed=true", entry.recording_id, quiesce_started.elapsed().as_millis());
+        // Persist exact replay identity before the first irreversible request.
+        // The V2 segmented receiver maintains its own durable journal.
+        let mut _audio_lease = None;
+        if entry.segment.is_none() {
+            _audio_lease = super::audio_artifacts::usage(&path)?;
+            let item = CompanionSyncedRecording { recording_id: entry.recording_id,
+                duration_ms: entry.duration_ms, total_length: entry.total_length,
+                sha256: sha256_hex.clone(), recording_path: path.to_string_lossy().into_owned(),
+                device_reclaimed: false, capture_incomplete: entry.capture_incomplete };
+            let root = native_recording_root()?;
+            legacy_intent = Some(legacy_reclaim::prepare(&root, &super::persistence::state_file_path(), &device.device_id(), &item)?);
+        }
         match delete_privacy_on_device(
             device,
             DELETE_PRIVACY_OP_DELETE_RECORDING,
@@ -5168,6 +5214,11 @@ async fn sync_native_recording_entry(
                 recording_path: path.to_string_lossy().into_owned(), device_reclaimed: true,
                 capture_incomplete: entry.capture_incomplete,
             })?;
+        if let Some((intent, _guard)) = legacy_intent {
+            if let Err(error) = intent.remove(&native_recording_root()?) {
+                eprintln!("legacy recording receipt cleanup deferred id={} error={error}", entry.recording_id);
+            }
+        }
     }
 
     /* Keep the complete .part through host decode and device ACK. If the app
