@@ -452,7 +452,7 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
     ];
     minutes.markdown = "> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- 原始引用。".into();
     let before = minutes.clone();
-    mark_background_candidates(&source, &mut minutes, &[1]);
+    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![1],duplicates:vec![]});
     assert_eq!(minutes.action_items.len(), 2);
     assert_eq!(minutes.action_items[0].text, "周五发报价");
     assert_eq!(minutes.action_items[0].owner.as_deref(), Some("小王"));
@@ -462,11 +462,11 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
     assert!(minutes.markdown.ends_with("### 第1段\n- 原始引用。"));
     assert_eq!(minutes.summary, before.summary);
     let marked = minutes.markdown.clone();
-    mark_background_candidates(&source, &mut minutes, &[0,0]);
-    mark_background_candidates(&source, &mut minutes, &[3]);
+    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![0,0],duplicates:vec![]});
+    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![3],duplicates:vec![]});
     assert_eq!(minutes.markdown, marked);
     let mut malformed = before.clone(); malformed.markdown = "unexpected".into();
-    mark_background_candidates(&source, &mut malformed, &[0]);
+    apply_action_review(&source, &mut malformed, &[], &ActionReview {background:vec![0],duplicates:vec![]});
     assert_eq!(malformed.action_items[0].text, before.action_items[0].text);
 }
 
@@ -502,7 +502,7 @@ fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
     ];
     let endpoint = format!("http://{address}/chat/completions");
     let client = reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
-    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).unwrap(), vec![1]);
+    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).unwrap().background, vec![1]);
     assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).is_err());
     assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).is_err());
     worker.join().unwrap();
@@ -532,4 +532,27 @@ fn background_context_reuses_only_matching_source_backed_actions() {
     let mut other = minutes.clone(); other.action_items[0].due = Some("周一".into());
     assert!(action_source_quotes(&checkpoint,&other)[0].is_empty());
     cleanup(root);
+}
+
+
+#[test]
+fn action_review_merges_only_same_source_and_attribution_and_retains_quotes() {
+    let source = session("原始会议语音。"); let (mut minutes, _) = response(&source);
+    let action = |text: &str, owner: Option<&str>, due: Option<&str>| crate::companion_v1::CompanionV1ActionItem {
+        text:text.into(), owner:owner.map(str::to_string), due:due.map(str::to_string)
+    };
+    minutes.action_items = vec![action("客户提出修改的话，确认交货时间",None,Some("下周一")),
+        action("若客户提出修改，确认交货时间",None,Some("下周一")),
+        action("确认其他产品的交货时间",None,Some("下周一")),
+        action("小李确认交货时间",Some("小李"),Some("下周一"))];
+    minutes.markdown = "> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- 客户提出修改，下周一确认交货时间。".into();
+    let quotes=vec![vec!["客户提出修改，下周一确认交货时间。".into()],vec!["客户提出修改，下周一确认交货时间。".into()],
+        vec!["另一产品的原话".into()],vec!["客户提出修改，下周一确认交货时间。".into()]];
+    let review=ActionReview {background:vec![1],duplicates:vec![vec![0,1],vec![2,3]]};
+    apply_action_review(&source,&mut minutes,&quotes,&review);
+    assert_eq!(minutes.action_items.len(),3);
+    assert!(minutes.action_items[0].text.starts_with("可能来自背景对话，请核对："));
+    assert!(minutes.action_items[1].text.contains("其他产品"));
+    assert_eq!(minutes.action_items[2].owner.as_deref(),Some("小李"));
+    assert!(minutes.markdown.ends_with("### 第1段\n- 客户提出修改，下周一确认交货时间。"));
 }

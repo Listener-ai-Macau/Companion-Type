@@ -313,9 +313,9 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
         let quotes = read_checkpoint(&checkpoint_path).ok()
             .map(|checkpoint| action_source_quotes(&checkpoint, &minutes))
             .unwrap_or_else(|| vec![Vec::new(); minutes.action_items.len()]);
-        if let Ok(indices) = request_background_review(endpoint, model, key, session,
+        if let Ok(review) = request_background_review(endpoint, model, key, session,
             &minutes, &quotes, client) {
-            mark_background_candidates(session, &mut minutes, &indices);
+            apply_action_review(session, &mut minutes, &quotes, &review);
         }
     }
     // An overview is an optional reading aid. Preserve all detailed minutes and
@@ -344,21 +344,42 @@ fn action_source_quotes(checkpoint: &Checkpoint, minutes: &CompanionV1MeetingMin
     result
 }
 
-// Add an explicit cue to uncertain tasks, without removing them from the
-// editable list, changing owner/deadline, or modifying source quotes.
-fn mark_background_candidates(session: &CompanionV1HostSession,
-    minutes: &mut CompanionV1MeetingMinutes, indices: &[usize]) {
-    if indices.is_empty() { return; }
-    let mut unique = indices.to_vec(); unique.sort_unstable(); unique.dedup();
-    if unique.len() != indices.len() || unique.iter().any(|&i| i >= minutes.action_items.len()) { return; }
+#[derive(Default)]
+struct ActionReview { background: Vec<usize>, duplicates: Vec<Vec<usize>> }
+
+// A model suggestion alone is not enough to remove an action: each member
+// must have the same attribution and at least one identical validated quote.
+// Distinct source evidence, conditions, owner or deadline remain reviewable.
+fn apply_action_review(session: &CompanionV1HostSession, minutes: &mut CompanionV1MeetingMinutes,
+    quotes: &[Vec<String>], review: &ActionReview) {
+    let count = minutes.action_items.len();
+    let mut background = review.background.clone(); background.sort_unstable(); background.dedup();
+    if background.len() != review.background.len() || background.iter().any(|&i| i >= count) { return; }
+    let mut remove = HashSet::new();
+    let mut in_group = HashSet::new();
+    for group in &review.duplicates {
+        let mut ids = group.clone(); ids.sort_unstable(); ids.dedup();
+        if ids.len() < 2 || ids.len() != group.len() || ids.iter().any(|&i| i >= count || !in_group.insert(i)) { continue; }
+        let first = ids[0];
+        let Some(first_quotes) = quotes.get(first) else { continue; };
+        let same_attribution = ids.iter().all(|&i| minutes.action_items[i].owner == minutes.action_items[first].owner
+            && minutes.action_items[i].due == minutes.action_items[first].due);
+        let common_quote = first_quotes.iter().any(|quote| !quote.trim().is_empty() && ids.iter()
+            .all(|&i| quotes.get(i).is_some_and(|values| values.contains(quote))));
+        if !same_attribution || !common_quote { continue; }
+        if ids.iter().any(|i| background.contains(i)) && !background.contains(&first) { background.push(first); }
+        remove.extend(ids.into_iter().skip(1));
+    }
+    if background.is_empty() && remove.is_empty() { return; }
     let Some((notice, _)) = minutes.markdown.split_once("\n\n") else { return; };
     let Some((_, evidence)) = minutes.markdown.split_once("\n\n## 分段原文依据\n\n") else { return; };
     let notice = notice.to_string(); let evidence = evidence.to_string();
     let mut revised = minutes.clone();
-    for i in unique {
-        let item = &mut revised.action_items[i];
-        item.text = format!("可能来自背景对话，请核对：{}", item.text);
+    for &i in &background {
+        revised.action_items[i].text = format!("可能来自背景对话，请核对：{}", revised.action_items[i].text);
     }
+    let mut index = 0usize;
+    revised.action_items.retain(|_| { let keep = !remove.contains(&index); index += 1; keep });
     let mut header = revised.clone(); header.processing = None;
     let mut source = session.clone(); source.transcript_text.clear(); source.transcript_review = None;
     revised.markdown = format!("{}\n\n{}\n\n## 分段原文依据\n\n{}", notice,
@@ -371,11 +392,11 @@ fn mark_background_candidates(session: &CompanionV1HostSession,
 // reading cue, not a decision to discard speech or a new speaker identity.
 fn request_background_review(endpoint: &str, model: &str, key: &str,
     session: &CompanionV1HostSession, minutes: &CompanionV1MeetingMinutes,
-    quotes: &[Vec<String>], client: &reqwest::blocking::Client) -> Result<Vec<usize>, String> {
+    quotes: &[Vec<String>], client: &reqwest::blocking::Client) -> Result<ActionReview, String> {
     let actions = minutes.action_items.iter().enumerate().map(|(id, item)|
-        serde_json::json!({"id":id,"text":item.text,"sourceQuotes":quotes.get(id)})).collect::<Vec<_>>();
+        serde_json::json!({"id":id,"text":item.text,"owner":item.owner,"due":item.due,"sourceQuotes":quotes.get(id)})).collect::<Vec<_>>();
     let input = serde_json::json!({"title":session.title,"summary":minutes.summary,"actions":actions}).to_string();
-    let instruction = "你是会议事项核对助手。根据全会摘要、候选行动及其原文引用，只标出有明确依据属于会议范围以外的旁人或背景闲谈的任务。不要仅凭与主要主题不同判为无关：会议可能换题，个人备忘可能有多个主题；身份或关联无法确认时不要标记。只返回 JSON 对象 {\"possiblyUnrelated\":[候选id]}；不要改写或添加事实。";
+    let instruction = "你是会议事项核对助手。根据全会摘要、候选行动及其原文引用，只标出有明确依据属于会议范围以外的旁人或背景闲谈的任务。不要仅凭与主要主题不同判为无关：会议可能换题，个人备忘可能有多个主题；身份或关联无法确认时不要标记。另找出确为同一事项、且负责人、期限、条件和原文引用一致的重复项；一个引用可能包含多个不同任务，不确定就不合并。只返回 JSON 对象 {\"possiblyUnrelated\":[候选id],\"duplicateGroups\":[[重复id,重复id]]}；不要改写或添加事实。";
     if input.len().saturating_add(instruction.len()) > MAX_PROMPT_BYTES {
         return Err("会议事项过多，请自行核对。".into());
     }
@@ -406,7 +427,21 @@ fn request_background_review(endpoint: &str, model: &str, key: &str,
         if indices.contains(&index) { return Err("会议事项核对格式不正确。".into()); }
         indices.push(index);
     }
-    Ok(indices)
+    let mut duplicates = Vec::new();
+    if let Some(groups) = result.get("duplicateGroups") {
+        for group in groups.as_array().ok_or("会议事项核对格式不正确。")? {
+            let mut ids = Vec::new();
+            for value in group.as_array().ok_or("会议事项核对格式不正确。")? {
+                let index = value.as_u64().and_then(|n| usize::try_from(n).ok())
+                    .filter(|&n| n < actions.len()).ok_or("会议事项核对格式不正确。")?;
+                if ids.contains(&index) { return Err("会议事项核对格式不正确。".into()); }
+                ids.push(index);
+            }
+            if ids.len() < 2 { return Err("会议事项核对格式不正确。".into()); }
+            duplicates.push(ids);
+        }
+    }
+    Ok(ActionReview { background: indices, duplicates })
 }
 
 // Select existing source-backed chapter items instead of inventing a second
