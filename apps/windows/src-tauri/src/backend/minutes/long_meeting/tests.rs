@@ -202,9 +202,11 @@ fn replay_public_meeting_response_without_another_cloud_call() {
     let response_json:Value=serde_json::from_slice(&fs::read(std::env::var_os("COMPANION_MINUTES_PUBLIC_RESPONSE").unwrap()).unwrap()).unwrap();
     let object:Value=serde_json::from_str(response_json["choices"][0]["message"]["content"].as_str().unwrap()).unwrap();
     let mut objects=vec![object];
-    if let Some(path)=std::env::var_os("COMPANION_MINUTES_PUBLIC_RESPONSE_2") {
-        let data:Value=serde_json::from_slice(&fs::read(path).unwrap()).unwrap();
-        objects.push(serde_json::from_str(data["choices"][0]["message"]["content"].as_str().unwrap()).unwrap());
+    for index in 2..=5 {
+        if let Some(path)=std::env::var_os(format!("COMPANION_MINUTES_PUBLIC_RESPONSE_{index}")) {
+            let data:Value=serde_json::from_slice(&fs::read(path).unwrap()).unwrap();
+            objects.push(serde_json::from_str(data["choices"][0]["message"]["content"].as_str().unwrap()).unwrap());
+        }
     }
     let source=session(&text);let root=root();
     let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|i,_,p,_| {
@@ -222,6 +224,10 @@ fn replay_public_meeting_response_without_another_cloud_call() {
     assert_eq!(result.processing.as_ref().unwrap().completed_chunks,objects.len(),"{:?}",result.llm_note);
     assert!(!result.summary.is_empty());
     assert!(result.action_items.iter().any(|a|a.text.starts_with("待核对：")));
+    assert_eq!(super::super::super::action_export::parse_saved_actions(&result.markdown).len(),result.action_items.len());
+    if let Some(path)=std::env::var_os("COMPANION_MINUTES_PUBLIC_OUTPUT") {
+        fs::write(path,serde_json::to_vec_pretty(&result).unwrap()).unwrap();
+    }
     cleanup(root);
 }
 
@@ -307,6 +313,11 @@ fn attributed_tasks_survive_merge_and_export_once_but_partial_export_is_refused(
         Ok((m,e))
     }).unwrap();
     assert_eq!(minutes.action_items.len(),2,"same task text with different attribution is not merged");
+    assert_eq!(super::super::super::action_export::parse_saved_actions(&minutes.markdown).len(),2,
+        "each saved task must appear only once in the reading/checklist document");
+    assert_eq!(minutes.markdown.matches("## Action Items").count(),1);
+    assert!(minutes.markdown.contains("## 分段原文依据\n\n### 第1段"));
+    assert!(minutes.markdown.contains(quote_a) && minutes.markdown.contains(quote_b));
     source.minutes_by_mode.offline_store=Some(super::super::super::minutes_variant(&minutes,0));
     source.minutes=Some(minutes);
     let exported=super::super::super::export::prepare_meeting_export(&source,"offlineStore",super::super::super::export::MeetingExportFormat::Todo).unwrap();

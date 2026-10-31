@@ -31,7 +31,7 @@ import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { CompanionExportFeedback, exportFileName, type OpenSavedCalendar } from './CompanionExportFeedback';
 import { CompanionChecklistPhone, type ChecklistPhoneResult } from './CompanionChecklistPhone';
 import { checklistPhoneCode } from './checklistPhone';
-import { briefMinutes } from './briefMinutes';
+import { briefMinutes, splitLongMinutesEvidence } from './briefMinutes';
 import {ActionListEditor} from './ActionListEditor';
 
 type MeetingExportOrigin = 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
@@ -1075,6 +1075,7 @@ export function CompanionDashboard({
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
                 recordingTitle={meetingTitle(selectedSession)} recordingTime={recordingTimeLabel(selectedSession.startedAt)}
                 compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
+                longEvidenceAllowed={minutesProcessing?.strategy === 'chunkedSourceBacked' && ['llm_deepseek','userEdited'].includes((selectedMinutesVariant ?? legacyMinutes)?.source ?? '')}
                 sourceFallbackLabel={manualMinutes?(selectedSession.meetingNotes?.length?'查看原话与补充':'查看原话'):undefined}
                 savedMarkdown={minutesMarkdown} noteContext={minutesDisplayContext}
                 onToggleAction={onSaveMeeting?(lineIndex,completed)=>void markAction(lineIndex,completed):undefined}
@@ -3096,8 +3097,8 @@ function meetingSource(session: CompanionV1HostSession): string {
   return '演示记录';
 }
 
-function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, durationMs, compactAllowed, noteContext, onToggleAction, actionsBlocked, recordingTitle, recordingTime, ...sourceProps }: {
-  markdown: string; transcript: string; durationMs: number; compactAllowed: boolean; noteContext?:CompanionMinutesNoteContext|null;
+function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, durationMs, compactAllowed, longEvidenceAllowed, noteContext, onToggleAction, actionsBlocked, recordingTitle, recordingTime, ...sourceProps }: {
+  markdown: string; transcript: string; durationMs: number; compactAllowed: boolean; longEvidenceAllowed?: boolean; noteContext?:CompanionMinutesNoteContext|null;
   recordingTitle?:string;recordingTime?:string;
   onToggleAction?:(lineIndex:number,completed:boolean)=>void;actionsBlocked?:boolean;savedMarkdown?:string;
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;sourceFallbackLabel?:string;
@@ -3115,6 +3116,13 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   // duplicated leading document heading while reading; saved markdown, editor,
   // exports, source-note provenance and later authored headings remain intact.
   const actionChecklist=onToggleAction?{items:savedActions(savedMarkdown),onToggle:onToggleAction,blocked:actionsBlocked,compactSources:!!noteContext,recordingTime}:undefined;
+  const longEvidence=longEvidenceAllowed&&!noteContext?splitLongMinutesEvidence(reading):null;
+  if(longEvidence)return <div className="ct-brief-minutes">
+    <MarkdownMinutes markdown={longEvidence.overview} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
+    <details className="ct-full-minutes"><summary>查看各段原文依据</summary>
+      <MarkdownMinutes markdown={longEvidence.evidence} {...sourceProps}/>
+    </details>
+  </div>;
   const brief = compactAllowed ? briefMinutes(reading, transcript, durationMs, !!noteContext) : null;
   if (!brief) return <div className="ct-brief-minutes">
     

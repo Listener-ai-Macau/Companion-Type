@@ -388,7 +388,7 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
             "长会议已处理{completed}/{}段；这是部分结果。{e} 已有原文保留，重试只提交未完成片段。", checkpoint.chapters.len())) };
     let mut chapters = Vec::new();
     for (index, chapter) in checkpoint.chapters.iter().enumerate() {
-        let Some(chapter) = chapter else { chapters.push(format!("## 第{}段\n\n> 尚未整理；原文仍在完整转写中。", index + 1)); continue; };
+        let Some(chapter) = chapter else { chapters.push(format!("### 第{}段\n\n> 尚未整理；原文仍在完整转写中。", index + 1)); continue; };
         for value in &chapter.minutes.summary { unique_push(&mut minutes.summary, value); }
         for value in &chapter.minutes.decisions { unique_push(&mut minutes.decisions, value); }
         for value in &chapter.minutes.questions { unique_push(&mut minutes.questions, value); }
@@ -400,13 +400,10 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
                 minutes.action_items.push(item.clone());
             }
         }
-        let mut part = session.clone(); part.title = format!("第{}段", index + 1);
-        // Do not duplicate the whole transcript in each chapter's speaker section.
-        part.transcript_text.clear(); part.transcript_review = None;
-        let mut chapter_minutes = chapter.minutes.clone();
-        chapter_minutes.markdown = super::render_minutes_markdown(&part, &chapter_minutes);
-        let mut rendered = chapter_minutes.markdown.replace(&format!("# 第{}段", index + 1), &format!("## 第{}段", index + 1));
-        rendered.push_str("\n### 本段原文依据\n\n");
+        // The overview already contains all validated chapter items. Repeating
+        // chapter summaries and action headings creates duplicate checklist
+        // rows; retain only the supporting quotes under each source segment.
+        let mut rendered = format!("### 第{}段\n\n", index + 1);
         let mut quotes = HashSet::new();
         for item in &chapter.evidence {
             if quotes.insert(&item.quote) { rendered.push_str(&format!("- {}\n", item.quote.replace('\n', " "))); }
@@ -415,7 +412,7 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
     }
     let mut header = minutes.clone(); header.processing = None;
     let mut overview_session = session.clone(); overview_session.transcript_text.clear(); overview_session.transcript_review = None;
-    minutes.markdown = format!("{}\n\n{}\n\n{}", if complete {
+    minutes.markdown = format!("{}\n\n{}\n\n## 分段原文依据\n\n{}", if complete {
         let warning=if omitted>0 {format!(" 有{omitted}条内容无法对应原文，已略过，请查看原始转写。") } else {String::new()};
         format!("> 长会议已按原文顺序处理全部{}段。分段原文依据见下文，识别和事实准确性仍需核对。{warning}", checkpoint.chapters.len())
     } else { format!("> 部分纪要：已完成{completed}/{}段。尚未处理的内容未计入完整结果。", checkpoint.chapters.len()) },

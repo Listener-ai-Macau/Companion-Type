@@ -1,6 +1,20 @@
 // A reading projection only. Saved text, extraction, editing and exports keep
 // the complete original document; this never derives tasks from a transcript.
 import {emptyActionNotice} from './savedActions';
+
+// Only the native long-meeting format has this exact overview/evidence split.
+// Any custom or ambiguous document stays on the ordinary complete reading path.
+export function splitLongMinutesEvidence(markdown: string): {overview: string; evidence: string} | null {
+  if (!/^> (?:长会议已按原文顺序处理全部|部分纪要：已完成)/.test(markdown)) return null;
+  const marker = /\r?\n\r?\n## 分段原文依据\r?\n\r?\n/g;
+  const matches = [...markdown.matchAll(marker)];
+  if (matches.length !== 1 || matches[0].index === undefined) return null;
+  const index = matches[0].index;
+  const evidence = markdown.slice(index + matches[0][0].length);
+  if (!/^### 第1段\r?\n\r?\n/.test(evidence)) return null;
+  return {overview: markdown.slice(0,index), evidence};
+}
+
 export function briefMinutes(markdown: string, transcript: string, durationMs: number, actionsFirst=false): string | null {
   if (!transcript.trim() || [...transcript.trim()].length > 280 || !Number.isFinite(durationMs)
       || durationMs < 0 || durationMs > 120_000
