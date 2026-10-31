@@ -60,6 +60,34 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
             let device=row.source_device_id.as_deref().filter(|id|
                 crate::backend::device_connection::stable_device_id(id)).ok_or_else(fail)?;
             let stem=format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(&key).map_err(|_|fail())?));
+            let receipt=root.join(format!(".{stem}.json"));
+            if regular(&receipt)? {
+                let saved=read_receipt(&receipt)?;
+                if let Some(audio)=&saved.parts_audio {
+                    let logical=root.join(format!("{stem}.wav"));
+                    let details=audio.manifest.owned_details(&root,&logical)?;
+                    let first_path=&details.first().ok_or_else(fail)?.0;
+                    let prior=row.audio_path.as_deref().ok_or_else(fail)?;
+                    if (row.audio_stored && Some(prior)!=first_path.to_str())
+                        || (!row.audio_stored && Some(prior)!=logical.to_str() && Some(prior)!=first_path.to_str()) {
+                        return Err(fail());
+                    }
+                    let first=saved.segments.first().ok_or_else(fail)?;
+                    if Descriptor::decode(&first.wire)?.key!=key || saved.device.as_deref().is_none_or(|id|
+                        !crate::backend::device_connection::same_device_id(id,device)) {return Err(fail());}
+                    let all_present=details.iter().try_fold(true,|all,(path,_,_,_)|Ok::<_,String>(regular(path)?&&all))?;
+                    if row.audio_stored && target.is_none() && all_present {return Ok(RestoreOutcome::Unchanged);}
+                    let mut receiver=Receiver::open_for_local_repair(&root,&first.wire)?;
+                    let paths=receiver.verify_parts_audio(receiver.receipt.parts_audio.as_ref().ok_or_else(fail)?)?;
+                    if receiver.publish(index,device)?!=row.id{return Err(fail());}
+                    if all_present && row.audio_stored {return Ok(RestoreOutcome::Unchanged);}
+                    let original_bytes=receiver.descriptors()?.iter().map(|d|u64::from(d.encoded_length)).sum();
+                    let audio_bytes=details.iter().try_fold(0u64,|sum,(_,_,_,bytes)|sum.checked_add(*bytes).ok_or_else(fail))?;
+                    return Ok(RestoreOutcome::Restored(LocalRestoredRecording{session_id:row.id.clone(),
+                        audio_path:paths.first().ok_or_else(fail)?.to_string_lossy().into_owned(),original_bytes,audio_bytes,
+                        reclaim_pending:receiver.receipt.segments.iter().any(|segment|!segment.acked)}));
+                }
+            }
             let existing_audio=if row.audio_stored {
                 // Normal startup need not repeatedly hash every healthy WAV.
                 // An explicit request must validate the selected file before
@@ -71,7 +99,6 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
                     Some(expected)
                 } else {None}
             } else {None};
-            let receipt=root.join(format!(".{stem}.json"));
             // No manifest means missing device data, not an invitation to create
             // a new receiver intent from a filename or a temporary tail.
             if !regular(&receipt)? {

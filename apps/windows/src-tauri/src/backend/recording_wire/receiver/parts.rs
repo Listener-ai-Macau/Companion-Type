@@ -123,6 +123,87 @@ impl PartManifest {
         Ok(paths.into_iter().zip(&self.parts).map(|(path, part)|
             (path, part.first_sample, part.samples, part.bytes)).collect())
     }
+
+    fn missing_owned(&self,root:&Path,source:&Path)->Result<(Vec<PathBuf>,Vec<bool>),String> {
+        let paths=self.owned_paths(root,source)?;
+        let mut missing=Vec::with_capacity(paths.len());
+        for (part,path) in self.parts.iter().zip(&paths) {
+            if !regular(path)? {missing.push(true);continue;}
+            let mut file=read_locked(path)?;let mut header=[0u8;44];
+            file.read_exact(&mut header).map_err(|_|fail())?;
+            let pcm=u32::try_from(part.samples.checked_mul(2).ok_or_else(fail)?).map_err(|_|fail())?;
+            file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;
+            if header!=denzic_host_audio_v1_core::wav::wav_header(pcm)
+                || digest(file)?!=(part.bytes,part.sha256.clone()) {
+                return Err("录音分段内容已损坏；现有文件和原始录音已保留。".into());
+            }
+            missing.push(false);
+        }
+        Ok((paths,missing))
+    }
+}
+
+struct RestoreFile {
+    file:Option<File>, lease:Option<audio_artifacts::WriteLease>, temporary:PathBuf,
+}
+impl Drop for RestoreFile {
+    fn drop(&mut self) {
+        drop(self.file.take());drop(self.lease.take());
+        if regular(&self.temporary).unwrap_or(false) {
+            if audio_artifacts::is_managed(&self.temporary) {let _=audio_artifacts::remove_temporary(&self.temporary);}
+            else {let _=fs::remove_file(&self.temporary);}
+        }
+    }
+}
+
+/// Decode once across the entire meeting, writing only parts that are absent.
+struct RestoreSink<'a> {
+    root:&'a Path,source:&'a Path,pinned:Option<&'a audio_artifacts::WriterLease>,
+    manifest:&'a PartManifest,paths:Vec<PathBuf>,missing:Vec<bool>,index:usize,written:u64,current:Option<RestoreFile>,
+}
+impl RestoreSink<'_> {
+    fn append(&mut self,mut pcm:&[u8])->Result<(),String> {
+        while !pcm.is_empty() {
+            let part=self.manifest.parts.get(self.index).ok_or_else(fail)?;
+            if self.written==0 && self.missing[self.index] {
+                let temporary=self.root.join(format!(".companion-segments-{}.wav",uuid::Uuid::new_v4().simple()));
+                let lease=audio_artifacts::WriteLease::begin_pinned(self.source,&temporary,audio_artifacts::Purpose::DecodeTemporary,self.pinned)?;
+                let file=OpenOptions::new().write(true).create_new(true).open(&temporary).map_err(|_|fail())?;
+                let pcm_bytes=u32::try_from(part.samples.checked_mul(2).ok_or_else(fail)?).map_err(|_|fail())?;
+                self.current=Some(RestoreFile{file:Some(file),lease,temporary});
+                self.current.as_mut().ok_or_else(fail)?.file.as_mut().ok_or_else(fail)?
+                    .write_all(&denzic_host_audio_v1_core::wav::wav_header(pcm_bytes)).map_err(|_|fail())?;
+            }
+            let remaining=part.samples.checked_mul(2).and_then(|v|v.checked_sub(self.written)).ok_or_else(fail)?;
+            let count=usize::try_from(remaining.min(pcm.len() as u64)).map_err(|_|fail())?;
+            if let Some(current)=self.current.as_mut(){current.file.as_mut().ok_or_else(fail)?.write_all(&pcm[..count]).map_err(|_|fail())?;}
+            self.written+=count as u64;pcm=&pcm[count..];
+            if self.written==part.samples*2 {self.finish_part()?;}
+        }
+        Ok(())
+    }
+    fn finish_part(&mut self)->Result<(),String> {
+        let part=self.manifest.parts.get(self.index).ok_or_else(fail)?;
+        if let Some(mut current)=self.current.take() {
+            let file=current.file.take().ok_or_else(fail)?;file.sync_all().map_err(|_|fail())?;drop(file);
+            let identity=if let Some(lease)=current.lease.take(){lease.finish_with_identity()?}else{digest(read_locked(&current.temporary)?)?};
+            if identity!=(part.bytes,part.sha256.clone()) {return Err("重建的录音与原保存记录不一致；原始录音已保留。".into());}
+            audio_artifacts::restore_missing_part_pinned(self.pinned,self.source,&self.paths[self.index],part.bytes,&part.sha256,
+                ||export::replace_file(&current.temporary,&self.paths[self.index]))?;
+            if audio_artifacts::is_managed(&current.temporary) {let _=audio_artifacts::remove_temporary(&current.temporary);}
+        }
+        self.index+=1;self.written=0;Ok(())
+    }
+}
+
+pub(super) fn restore_missing_owned(ds:&[Descriptor],files:&mut[File],root:&Path,source:&Path,
+    pinned:Option<&audio_artifacts::WriterLease>,manifest:&PartManifest,expected_timeline:&Option<cop1::Timeline>)->Result<bool,String> {
+    let (paths,missing)=manifest.missing_owned(root,source)?;
+    if !missing.iter().any(|value|*value){return Ok(false);}
+    let mut sink=RestoreSink{root,source,pinned,manifest,paths,missing,index:0,written:0,current:None};
+    let timeline=decode_pcm(ds,files,manifest.total_samples,false,|pcm|sink.append(pcm))?;
+    if sink.index!=manifest.parts.len() || sink.written!=0 || &timeline!=expected_timeline{return Err(fail());}
+    Ok(true)
 }
 
 struct OpenPart {
@@ -310,6 +391,34 @@ mod tests {
         assert!(decode_to_parts(&descriptors,&mut files,&dir,audio.samples,false,1000).is_err());
         assert_eq!(fs::read(&paths[0]).unwrap(),first,"existing output must never be replaced");
         drop(files);drop(receiver);fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn missing_middle_parts_are_restored_from_owned_originals_in_one_pass() {
+        let parent=std::env::temp_dir();let requested=parent.join(format!("companion-parts-recovery-{}",uuid::Uuid::new_v4()));
+        assert_eq!(requested.parent(),Some(parent.as_path()));fs::create_dir(&requested).unwrap();let root=fs::canonicalize(&requested).unwrap();
+        assert!(root.starts_with(fs::canonicalize(&parent).unwrap()));
+        let previous=std::env::var_os("COMPANION_TYPE_RECORDING_DIR");std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let index=root.join("sessions.json");let source=super::super::source_boundary_tests::fixture();let first=source[0].0.encode().unwrap();
+        let mut receiver=Receiver::open(&root,&first).unwrap();
+        for (descriptor,payload) in &source {receiver.accept_segment(&descriptor.encode().unwrap(),payload).unwrap();}
+        let originals=source.iter().map(|(d,_)|receiver.payload_path(d)).collect::<Vec<_>>();
+        let paths=receiver.assemble_parts_with_limit(1000).unwrap();assert!(paths.len()>3);
+        receiver.publish(&index,"C8:ED:45:EB:95:B4").unwrap();let receipt=fs::read(receiver.receipt_path()).unwrap();drop(receiver);
+        let expected=paths.iter().map(|path|fs::read(path).unwrap()).collect::<Vec<_>>();
+        let unrelated=root.join("unrelated.wav");fs::write(&unrelated,b"not a generated file").unwrap();
+        fs::remove_file(&paths[1]).unwrap();fs::remove_file(&paths[2]).unwrap();
+        let report=super::super::local::restore_local(&root,&index).unwrap();assert_eq!(report.restored.len(),1);
+        assert!(report.failures.is_empty());for (path,bytes) in paths.iter().zip(&expected){assert_eq!(&fs::read(path).unwrap(),bytes);}
+        assert_eq!(fs::read(&unrelated).unwrap(),b"not a generated file");
+        assert_eq!(fs::read(root.join(format!(".{}.json",crate::backend::persistence::load_sessions_from(&index).unwrap()[0].id))).unwrap(),receipt);
+        let again=super::super::local::restore_local(&root,&index).unwrap();assert!(again.restored.is_empty()&&again.failures.is_empty());
+        fs::remove_file(&paths[1]).unwrap();fs::remove_file(&originals[0]).unwrap();
+        let failed=super::super::local::restore_local(&root,&index).unwrap();assert_eq!(failed.failures.len(),1);
+        assert!(!paths[1].exists());assert_eq!(fs::read(&paths[2]).unwrap(),expected[2]);
+        assert_eq!(fs::read(&unrelated).unwrap(),b"not a generated file");
+        match previous {Some(value)=>std::env::set_var("COMPANION_TYPE_RECORDING_DIR",value),None=>std::env::remove_var("COMPANION_TYPE_RECORDING_DIR")};
+        fs::remove_dir_all(root).unwrap();
     }
 
     #[test]

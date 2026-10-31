@@ -626,6 +626,11 @@ pub(crate) fn restore_missing_recording_pinned<T>(pinned:Option<&WriterLease>,pa
     bytes:u64,sha256:&str,commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
     restore_missing_pinned(pinned,path,path,Purpose::Recording,bytes,sha256,commit)
 }
+/// A decoded part belongs to the same logical recording as its compressed source.
+pub(crate) fn restore_missing_part_pinned<T>(pinned:Option<&WriterLease>,source:&Path,path:&Path,
+    bytes:u64,sha256:&str,commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
+    restore_missing_pinned(pinned,source,path,Purpose::Recording,bytes,sha256,commit)
+}
 /// Do not create even a decode temporary if the exact saved recording has
 /// been retired, lost its owner, or changed since the explicit inspection.
 pub(crate) fn preflight_damaged_recording_pinned(pinned:Option<&WriterLease>,path:&Path,

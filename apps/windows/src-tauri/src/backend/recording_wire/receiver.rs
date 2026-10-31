@@ -249,6 +249,7 @@ impl Receiver {
             OpenMode::LocalRepair=>{
                 this.recover_originals()?;
                 this.rebuild_missing_audio()?;
+                this.rebuild_missing_parts()?;
                 this.recover()?;
             },
             // Only SyncRepair owns this unchecked value. Its public surface
@@ -507,6 +508,17 @@ impl Receiver {
         let mut files=Vec::with_capacity(descriptors.len());
         for d in &descriptors {files.push(verify_file(read_locked(&self.payload_path(d))?,d)?);}
         self.assemble_inner(&descriptors,&mut files,expected.samples,false,Some(&expected),None)?;
+        Ok(())
+    }
+    fn rebuild_missing_parts(&mut self)->Result<(),String> {
+        let Some(saved)=self.receipt.parts_audio.clone() else{return Ok(())};
+        let descriptors=self.descriptors()?;
+        let mut files=descriptors.iter().map(|d|verify_file(read_locked(&self.payload_path(d))?,d))
+            .collect::<Result<Vec<_>,String>>()?;
+        let timeline=collect_timeline(&descriptors,&mut files)?;
+        if timeline!=saved.timeline {return Err(fail());}
+        parts::restore_missing_owned(&descriptors,&mut files,&self.root,&self.audio_path(),self._usage.as_ref(),
+            &saved.manifest,&saved.timeline)?;
         Ok(())
     }
     fn rebuild_damaged_audio(&mut self,damaged:&(u64,String))->Result<PathBuf,String> {
