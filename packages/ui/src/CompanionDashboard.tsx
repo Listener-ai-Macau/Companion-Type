@@ -2077,6 +2077,8 @@ export function CompanionDashboard({
                   onClick={()=>resumeTranscriptDraft(sessionId)}>继续修正</button>:null}
               </p>;
             })}
+            {selectedSession.status === 'recording' && selectedSession.meetingMode === 'onlineLive' && selectedSession.pendingReason === 'needs_transcription' ?
+              <p className="ct-step-warn" role="status">实时转写已中断，录音会继续保存。结束后可以用完整录音重新转文字。</p> : null}
             {companionReviewedTranscript(selectedSession).trim() ? <>
               {!finalTranscript ? <p className="ct-step-warn">当前为片段文字，尚未完成整条转写。</p> : null}
               {companionTranscriptReviewIsStale(selectedSession) ? <p className="ct-step-warn">原始转写已更新，当前显示新文字；旧修订保留在“核对文字”中供查看。</p> : null}

@@ -1231,6 +1231,12 @@ impl FixtureCompanionBackend {
         session: &mut CompanionV1HostSession,
         live: &live_asr::LiveAsrSnapshot,
     ) {
+        // A failed live stream does not stop the recorder. Surface that the
+        // preserved audio still needs a complete transcription, even if the
+        // provider failed before returning its first partial.
+        if live.error.is_some() {
+            session.pending_reason = Some("needs_transcription".to_string());
+        }
         if live.text.trim().is_empty() {
             return;
         }
@@ -1293,6 +1299,36 @@ mod live_stop_contract_tests {
         assert_eq!(session.audio_path.as_deref(),Some("owned-original.wav"));
         assert!(session.audio_stored && session.retention.audio_cached);
         assert!(session.pending_reason.is_some());
+    }
+    #[test]
+    fn live_failure_is_visible_while_recording_even_before_first_partial() {
+        for text in ["", "已有片段"] {
+            let mut session=sample();session.status="recording".into();session.pending_reason=None;
+            session.transcript_text.clear();session.live_transcript_text.clear();session.transcript_final=false;
+            let live=live_asr::LiveAsrSnapshot {text:text.into(),mode:"ws-sauc-streaming".into(),error:Some("connection lost".into()),partial_count:u32::from(!text.is_empty()),active:false};
+            FixtureCompanionBackend::merge_live_asr_into_session(&mut session,&live);
+            assert_eq!(session.status,"recording");
+            assert_eq!(session.pending_reason.as_deref(),Some("needs_transcription"));
+            assert!(!session.transcript_final);
+            assert_eq!(session.audio_path.as_deref(),Some("owned-original.wav"));
+            if !text.is_empty(){assert_eq!(session.transcript_text,text);}
+        }
+    }
+    #[test]
+    fn recording_snapshot_reports_failed_live_stream_without_stopping_audio() {
+        let backend=FixtureCompanionBackend::new();let mut session=sample();
+        session.id="live-failure".into();session.status="recording".into();session.pending_reason=None;
+        session.transcript_text.clear();session.live_transcript_text.clear();session.transcript_final=false;
+        {
+            let mut snapshot=backend.snapshot.lock().unwrap();snapshot.host.sessions=vec![session];
+            snapshot.host.selected_session_id=Some("live-failure".into());snapshot.meeting.active=true;
+        }
+        backend.live_asr.set_failed_for_test("");
+        let snapshot=backend.snapshot().unwrap();let session=&snapshot.host.sessions[0];
+        assert!(snapshot.meeting.active);assert_eq!(session.status,"recording");
+        assert_eq!(session.pending_reason.as_deref(),Some("needs_transcription"));
+        assert_eq!(session.audio_path.as_deref(),Some("owned-original.wav"));
+        assert!(!session.transcript_final);
     }
     #[test]
     fn confirmed_live_final_is_still_completed() {
@@ -1616,7 +1652,7 @@ impl CompanionBackend for FixtureCompanionBackend {
             .lock()
             .map_err(|_| "Companion backend state lock failed".to_string())?;
         // While onlineLive recording, surface provisional stream text without a control click.
-        if live.active || !live.text.trim().is_empty() {
+        if live.active || !live.text.trim().is_empty() || live.error.is_some() {
             if let Some(session) = selected_session_mut(&mut guard) {
                 if session.meeting_mode == "onlineLive" && session.status == "recording" {
                     Self::merge_live_asr_into_session(session, &live);

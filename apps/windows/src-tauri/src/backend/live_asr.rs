@@ -43,6 +43,12 @@ impl LiveAsrHub {
         }
     }
 
+    #[cfg(test)]
+    pub(super) fn set_failed_for_test(&self, partial: &str) {
+        *self.text.lock().unwrap()=partial.to_string();
+        *self.error.lock().unwrap()=Some("simulated connection loss".to_string());
+    }
+
     pub fn snapshot(&self) -> LiveAsrSnapshot {
         LiveAsrSnapshot {
             text: self.text.lock().ok().map(|t| t.clone()).unwrap_or_default(),
@@ -54,7 +60,7 @@ impl LiveAsrHub {
                 .unwrap_or_else(|| "idle".to_string()),
             error: self.error.lock().ok().and_then(|e| e.clone()),
             partial_count: self.partial_count.lock().ok().map(|p| *p).unwrap_or(0),
-            active: self.join.lock().ok().map(|j| j.is_some()).unwrap_or(false),
+            active: self.join.lock().ok().is_some_and(|j| j.as_ref().is_some_and(|handle| !handle.is_finished())),
         }
     }
 
@@ -211,4 +217,29 @@ fn env_truthy(name: &str) -> bool {
         std::env::var(name).ok().as_deref(),
         Some("1") | Some("true") | Some("TRUE") | Some("yes") | Some("YES")
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn finished_failed_worker_is_not_reported_as_active_and_keeps_partial() {
+        let hub=LiveAsrHub::new();
+        *hub.text.lock().unwrap()="已识别的前半句".into();
+        let error=Arc::clone(&hub.error);
+        *hub.join.lock().unwrap()=Some(thread::spawn(move || {
+            *error.lock().unwrap()=Some("模拟连接中断".into());
+        }));
+        let deadline=std::time::Instant::now()+Duration::from_secs(2);
+        while !hub.join.lock().unwrap().as_ref().unwrap().is_finished() {
+            assert!(std::time::Instant::now()<deadline,"fixture worker did not finish");
+            thread::yield_now();
+        }
+        let state=hub.snapshot();
+        assert!(!state.active,"a completed worker cannot be an active live stream");
+        assert_eq!(state.text,"已识别的前半句");
+        assert_eq!(state.error.as_deref(),Some("模拟连接中断"));
+        let stopped=hub.stop_and_take_text();
+        assert_eq!(stopped.text,state.text);assert!(stopped.error.is_some());
+    }
 }
