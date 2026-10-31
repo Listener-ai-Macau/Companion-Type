@@ -151,7 +151,7 @@ pub(super) fn finalize_minutes(
     match result {
         Ok(mut upgraded) => {
             // This path validates every source slice and its evidence before
-            // constructing the document. Re-running the eight-item L0 filter
+            // constructing the document. Re-running the L0 action filter
             // here would discard tasks from later chapters and their citations.
             if upgraded.processing.is_some() {
                 if upgraded.quality == "final" && !upgraded.processing.as_ref().unwrap().is_complete() {
@@ -923,7 +923,7 @@ fn merge_literal_conditional_followups(items: &mut Vec<CompanionV1ActionItem>, s
         } else if let Some((&first, rest)) = matches.split_first() {
             items[first] = conditional.clone(); changed = true;
             for index in rest.iter().rev() { items.remove(*index); }
-        } else if items.len() < 8 {
+        } else {
             items.push(conditional.clone()); changed = true;
         }
     }
@@ -1258,6 +1258,19 @@ mod tests {
             assert!(!merge_literal_conditional_followups(&mut items, &session_with_text(text)));
             assert!(items.is_empty());
         }
+    }
+
+    #[test]
+    fn conditional_followup_is_not_dropped_after_eight_other_actions() {
+        let session = session_with_text("明天下午2点，我们讨论产品包装，小王负责整理报价，周五之前发给大家，如果客户提出修改，我们下周一再确认交货时间。");
+        let mut items = (1..=8).map(|index| CompanionV1ActionItem {
+            text: format!("其他事项{index}"), owner: None, due: None,
+        }).collect::<Vec<_>>();
+        assert!(merge_literal_conditional_followups(&mut items, &session));
+        assert_eq!(items.len(), 9);
+        assert_eq!(items[8].text, "如果客户提出修改，我们下周一再确认交货时间");
+        assert!(!merge_literal_conditional_followups(&mut items, &session));
+        assert_eq!(items.len(), 9);
     }
 
     #[test]
