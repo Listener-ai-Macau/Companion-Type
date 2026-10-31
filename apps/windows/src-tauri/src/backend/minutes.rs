@@ -177,7 +177,7 @@ pub(super) fn finalize_minutes(
                 .then(||short_memo::context_actions(session));
             let mut evidence=l0.clone();
             if let Some(actions)=&context_actions { evidence.action_items=actions.clone().unwrap_or_default(); }
-            let actions_changed = !validated_context && enforce_source_backed_action_items(&mut upgraded, &evidence);
+            let actions_changed = !validated_context && enforce_source_backed_action_items(&mut upgraded, &evidence, session);
             let assigned_added = session.meeting_notes.is_empty() && merge_explicit_source_assignments(&mut upgraded, &l0);
             let memo_actions_restored = session.meeting_notes.is_empty() && short_memo::restore_literal_actions(&mut upgraded, session);
             let independent_actions_restored = short_memo::merge_independent_actions(&mut upgraded.action_items, session);
@@ -733,16 +733,37 @@ fn missing_source_facts(
 fn enforce_source_backed_action_items(
     upgraded: &mut CompanionV1MeetingMinutes,
     l0: &CompanionV1MeetingMinutes,
+    session: &CompanionV1HostSession,
 ) -> bool {
     let mut changed = false;
+    let transcript_segments = split_segments(&session.transcript_text);
     upgraded.action_items.retain_mut(|item| {
-        let sources = l0.action_items.iter().filter(|source| {
+        let mut sources = l0.action_items.iter().filter(|source| {
             source_fact_covered(&source.text, &item.text)
                 || source_fact_covered(&item.text, &source.text)
-        }).collect::<Vec<_>>();
+        }).map(|source| source.text.as_str()).collect::<Vec<_>>();
         if sources.is_empty() {
+            // Original-only excerpts cannot resolve a later user supplement
+            // which may have cancelled or revised the plan.
+            if !session.meeting_notes.is_empty() {
+                changed = true;
+                return false;
+            }
+            // Oral assignments need not use the small rule extractor's verb
+            // list. Retain a uniquely literal source as a reviewable excerpt,
+            // preserving the complete sentence (including any condition).
+            let action = normalized_fact_chars(&item.text);
+            let matches = transcript_segments.iter().filter(|segment| {
+                let source = normalized_fact_chars(segment);
+                !action.is_empty() && source.windows(action.len()).filter(|window| *window == action).count() == 1
+            }).collect::<Vec<_>>();
+            if matches.len() != 1 {
+                changed = true;
+                return false;
+            }
+            sources.push(matches[0].as_str());
+            item.text = format!("待核对：{}", matches[0]);
             changed = true;
-            return false;
         }
         // Attribution must occur in this action's supporting excerpt. A name
         // or deadline elsewhere in the meeting is not evidence for this task.
@@ -751,7 +772,7 @@ fn enforce_source_backed_action_items(
         if let Some(owner) = item
             .owner
             .as_ref()
-            .filter(|owner| !sources.iter().all(|source| contains_case_insensitive(&source.text, owner)))
+            .filter(|owner| !sources.iter().all(|source| contains_case_insensitive(source, owner)))
         {
             unbound_inline_attribution |= contains_case_insensitive(&item.text, owner);
             item.owner = None;
@@ -760,7 +781,7 @@ fn enforce_source_backed_action_items(
         if let Some(due) = item
             .due
             .as_ref()
-            .filter(|due| !sources.iter().all(|source| contains_case_insensitive(&source.text, due)))
+            .filter(|due| !sources.iter().all(|source| contains_case_insensitive(source, due)))
         {
             unbound_inline_attribution |= contains_case_insensitive(&item.text, due);
             item.due = None;
@@ -773,7 +794,7 @@ fn enforce_source_backed_action_items(
             if sources.len() != 1 {
                 return false;
             }
-            item.text = sources[0].text.clone();
+            item.text = sources[0].to_string();
         }
         true
     });
@@ -1444,6 +1465,66 @@ mod tests {
         let result = finalize_minutes(Ok(upgraded), l0, &session);
         assert!(result.action_items.is_empty());
         assert!(!result.markdown.contains("验证Windows蓝牙可复现性"));
+    }
+
+    #[test]
+    fn l1_keeps_natural_spoken_assignment_as_reviewable_source() {
+        let mut session = session_with_text("小王明天安排客户回访。");
+        session.duration_ms = 180_000;
+        let l0 = rules_l0_minutes(&session, "now");
+        assert!(l0.action_items.is_empty());
+        let mut model = l0.clone();
+        model.source = "llm_deepseek".into();
+        model.action_items = vec![CompanionV1ActionItem {
+            text: "安排客户回访".into(), owner: Some("小王".into()), due: Some("明天".into()),
+        }];
+        let result = finalize_minutes(Ok(model), l0, &session);
+        assert_eq!(result.action_items.len(), 1);
+        assert_eq!(result.action_items[0].text, "待核对：小王明天安排客户回访");
+        assert_eq!(result.action_items[0].owner.as_deref(), Some("小王"));
+        assert_eq!(result.action_items[0].due.as_deref(), Some("明天"));
+        assert!(result.markdown.contains("小王明天安排客户回访"));
+    }
+
+    #[test]
+    fn reviewable_natural_assignment_keeps_condition_and_drops_invented_metadata() {
+        let mut session = session_with_text("如果客户确认，小王明天安排客户回访。");
+        session.duration_ms = 180_000;
+        let l0 = rules_l0_minutes(&session, "now");
+        assert!(l0.action_items.is_empty());
+        let mut model = l0.clone();
+        model.source = "llm_deepseek".into();
+        model.action_items = vec![CompanionV1ActionItem {
+            text: "安排客户回访".into(), owner: Some("小李".into()), due: Some("周五".into()),
+        }];
+        let result = finalize_minutes(Ok(model), l0, &session);
+        assert_eq!(result.action_items.len(), 1);
+        assert_eq!(result.action_items[0].text, "待核对：如果客户确认，小王明天安排客户回访");
+        assert_eq!(result.action_items[0].owner, None);
+        assert_eq!(result.action_items[0].due, None);
+    }
+
+    #[test]
+    fn natural_assignment_does_not_revive_supplemented_or_ambiguous_source() {
+        let mut session = session_with_text("小王明天安排客户回访。");
+        session.duration_ms = 180_000;
+        session.meeting_notes.push(crate::backend::meeting_notes::Note {
+            id: "note".into(), text: "这项安排已经取消".into(), bookmark_id: None,
+            created_at: "now".into(), updated_at: "now".into(),
+        });
+        let l0 = rules_l0_minutes(&session, "now");
+        let mut model = l0.clone();
+        model.action_items = vec![CompanionV1ActionItem { text: "安排客户回访".into(), owner: None, due: None }];
+        assert!(enforce_source_backed_action_items(&mut model, &l0, &session));
+        assert!(model.action_items.is_empty());
+
+        session.meeting_notes.clear();
+        session.transcript_text = "明天安排客户回访，下周再安排客户回访。".into();
+        let l0 = rules_l0_minutes(&session, "now");
+        let mut model = l0.clone();
+        model.action_items = vec![CompanionV1ActionItem { text: "安排客户回访".into(), owner: None, due: None }];
+        assert!(enforce_source_backed_action_items(&mut model, &l0, &session));
+        assert!(model.action_items.is_empty());
     }
 
     #[test]
