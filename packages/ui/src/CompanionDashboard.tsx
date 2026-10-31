@@ -1624,7 +1624,8 @@ export function CompanionDashboard({
       {recentSavedResult&&!oobeBlockedByRecording&&!savedDetailOpen?<section className="ct-recent-recording" aria-label="最近处理的记录">
         <div><span className="ct-section-eyebrow">{recentSavedResult.manual?'继续上次的清单':'继续上次的整理'}</span>
           <strong>{meetingTitle(recentSavedResult.session)}</strong>
-          <small><time dateTime={recentSavedResult.at}>{recordingTimeLabel(recentSavedResult.at)}</time></small></div>
+          <small><time dateTime={recentSavedResult.at}>{recordingTimeLabel(recentSavedResult.at)}</time></small>
+          {deviceStorageFullNotice(recentSavedResult.session) ? <p className="ct-step-warn" role="status">{deviceStorageFullNotice(recentSavedResult.session)}</p> : null}</div>
         <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy} onClick={openRecentSavedResult}>
           {recentSavedResult.manual?'打开清单':'打开整理结果'}</button>
       </section>:null}
@@ -1638,6 +1639,7 @@ export function CompanionDashboard({
           <small><time dateTime={recentSavedRecording.startedAt ?? undefined}>{recordingTimeLabel(recentSavedRecording.startedAt)}</time>
             {' · '}{formatDuration(recentSavedRecording.durationMs)}</small>
           {!localSaveConfirmed ? <p className="ct-step-warn" role="alert">本机保存尚未确认，请打开这条录音查看保存状态。</p> : null}
+          {deviceStorageFullNotice(recentSavedRecording) ? <p className="ct-step-warn" role="status">{deviceStorageFullNotice(recentSavedRecording)}</p> : null}
           {recentSavedRecording.captureIncomplete ? <p>已保存的录音片段可回听，完整录音仍待核对。</p> : null}
           {companionTranscriptUnmappedEdges(recentSavedRecording).length > 0 ? <p className="ct-step-warn">部分原音尚无对应文字，可打开核对。</p> : null}
         </div>
@@ -1763,6 +1765,7 @@ export function CompanionDashboard({
                     {preview.text ? <span className="ct-library-text-preview">
                       {preview.label ? <span className="ct-library-text-partial">{preview.label} · </span> : null}{preview.text}
                     </span> : null}
+                    {deviceStorageFullNotice(session) ? <small className="ct-step-warn">设备空间已满，录音提前停止</small> : null}
                     {session.organization?.protected?<small>已保护</small>:null}
                     {session.organization?.trashedAt?<small>移入时间：{trashTimeLabel(session.organization.trashedAt)}</small>:null}
                     {session.organization&&(session.organization.favorite||session.organization.folder||session.organization.tags.length)?<small>
@@ -1836,6 +1839,7 @@ export function CompanionDashboard({
               {onlineMinutes ? <span className="ct-pill">{onlineReady ? '在线纪要' : '在线草稿'}</span> : null}
             </div> : null}
           </header>
+          {deviceStorageFullNotice(selectedSession) ? <p className="ct-recording-notice ct-step-warn" role="status">{deviceStorageFullNotice(selectedSession)}</p> : null}
           {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part !== 'minutes' ? <p className={saveMeetingResult.kind === 'error' ? 'ct-recording-notice ct-step-warn ct-save-result' : 'ct-recording-notice ct-step-ok ct-save-result'} role="status">{saveMeetingResult.message}</p> : null}
           {!savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
           <div className="ct-recording-primary-actions">
@@ -3065,7 +3069,7 @@ export function RecordingSafetyCard({ session, persistence, recoveryProcessing }
     {localCopyVerified && !wholeReclaimed ? <p>移入本机回收站会保留电脑原音，不会触发设备录音回收。</p> : null}
     {session.pendingReason === 'needs_device_sync' ? <p>录音仍在来源设备；重连同一台 Companion 后会从断点继续。</p> : null}
     {session.pendingReason === 'needs_segments' ? <p>这场录音尚未收齐。已有片段会保留，连接同一台 Companion 后继续同步。</p> : null}
-    {session.deviceRecordingEndReason ? <p>{({user: '你已停止设备录音。', storageFull: '设备存储空间不足，录音已安全结束。', durationLimit: '已达到设定时长，设备录音已结束。', lowBattery: '设备因电量低结束了录音。', silence: '已达到设定的静音时长，设备录音已结束。'} as const)[session.deviceRecordingEndReason]} 原音同步和本机保存进度见上方。</p> : null}
+    {session.deviceRecordingEndReason ? <p>{({user: '你已停止设备录音。', storageFull: '设备空间已满，录音提前停止；停止后的内容没有录到。', durationLimit: '已达到设定时长，设备录音已结束。', lowBattery: '设备因电量低结束了录音。', silence: '已达到设定的静音时长，设备录音已结束。'} as const)[session.deviceRecordingEndReason]} 原音同步和本机保存进度见上方。</p> : null}
     {hostAudioUnconfirmed ? <p role="alert">本机录音未确认保存，暂不能回听或转写。已保留原文件路径，请先保留原文件。</p>
       : session.captureIncomplete ? <p role="alert">这场录音曾意外中断，实际保存 {formatDuration(session.durationMs)}，结尾可能缺失。可以回听或导出原音；转写与纪要只覆盖已保存的片段。{!session.recovery?.captureReviewConfirmed ? '选择整理片段后才会继续处理。' : ''}</p> : null}
     {saveFailed ? <p>{persistence?.message ? operationErrorText(persistence.message,'save') : '本机索引尚未安全保存，当前不会回收设备副本。'}</p> : null}
@@ -3079,6 +3083,12 @@ function InfoMetric({ label, value }: { label: string; value: string }) {
       <strong className="ct-metric-value">{value}</strong>
     </div>
   );
+}
+
+function deviceStorageFullNotice(session: CompanionV1HostSession): string | null {
+  return session.deviceRecordingEndReason === 'storageFull'
+    ? '设备空间已满，录音提前停止；停止后的内容没有录到。请检查设备剩余空间，腾出空间后再开始新录音。'
+    : null;
 }
 
 function meetingSearchText(session: CompanionV1HostSession): string {

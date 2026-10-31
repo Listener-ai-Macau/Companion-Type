@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {create, act} from 'react-test-renderer';
+import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+(globalThis as any).document={activeElement:null};
+(globalThis as any).HTMLButtonElement=class {};
+const text=(node:any):string=>typeof node==='string'?node:(node?.children??[]).map(text).join('');
+function render(reason:'storageFull'|'user') {
+ const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingStart',sessionId:'fictional-full'});
+ snapshot.host.persistence={status:'ready'}; snapshot.meeting.active=false;
+ const row=snapshot.host.sessions.find(x=>x.id==='fictional-full')!;
+ Object.assign(row,{source:'boardDevice',sourceDeviceId:'00:11:22:33:44:55',deviceRecordingId:17,status:'captured',startedAt:'2026-11-01T01:00:00Z',durationMs:420000,audioPath:'E:/fictional.wav',audioBytes:32044,audioStored:true,captureIncomplete:false,deviceRecordingEndReason:reason,processingPolicy:'manual',pendingReason:'needs_transcription',transcriptText:'',transcriptFinal:false,minutes:null,minutesByMode:{}});row.retention.audioCached=true;
+ snapshot.host.sessions=[row];snapshot.host.selectedSessionId=row.id;
+ const tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}/>);
+ return tree;
+}
+const full=render('storageFull');
+const recent=full.root.findByProps({'aria-label':'最近保存的录音'});
+assert.match(text(recent),/空间.*满.*停止/, 'recent recording must reveal that storage stopped capture');
+const card=full.root.findAllByType('button').find(b=>String(b.props.className??'').includes('ct-library-card'))!;
+assert.match(text(card),/空间.*满.*停止/,'library must identify an unexpectedly stopped recording');
+act(()=>card.props.onClick());
+const workspace=full.root.findByProps({id:'ct-saved-recording-workspace'});
+assert.equal(workspace.props.hidden,false);
+const direct=workspace.children.filter((node:any)=>typeof node!=='string' && node.props?.role==='status');
+assert.ok(direct.some((node:any)=>/停止后的内容没有录到/.test(text(node))),'warning must be visible before collapsed tools');
+full.unmount();
+const normal=render('user');
+const normalRecent=normal.root.findByProps({'aria-label':'最近保存的录音'});
+assert.doesNotMatch(text(normalRecent),/空间.*满.*停止/,'ordinary user stop is not reported as full storage');
+normal.unmount();
+console.log('PASS full storage stop is visible without opening advanced tools; normal stop unchanged');
