@@ -96,6 +96,7 @@ mod system_ota;
 mod ota_readiness;
 mod host_recording;
 mod meeting_audio_timeline;
+mod meeting_audio_tracks;
 mod host_interrupted_recovery;
 mod live_asr;
 mod minutes;
