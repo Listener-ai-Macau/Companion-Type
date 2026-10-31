@@ -139,4 +139,18 @@ mod tests {
         assert_eq!(partial.warnings.len(),1); assert!(partial.warnings[0].contains("可重试"));
         assert!(combine_results(Err("麦克风错误".into()),Err("电脑声音错误".into())).is_err());
     }
+
+    #[test]
+    #[ignore = "explicit public WAVs and local model are required"]
+    fn public_two_track_recordings_use_the_real_local_provider() {
+        assert!(transcription::local_provider_selected());
+        let mic = std::env::var("COMPANION_TEST_PUBLIC_MIC_WAV").unwrap();
+        let system = std::env::var("COMPANION_TEST_PUBLIC_SYSTEM_WAV").unwrap();
+        let result = transcribe_tracks(&CompanionTranscriptionManager::new(), "public-two-track-test", &[mic], &[system]).unwrap();
+        assert!(result.warnings.is_empty(), "{:?}", result.warnings);
+        assert!(result.transcript.text.contains("【麦克风】"));
+        assert!(result.transcript.text.contains("【电脑声音】"));
+        assert!(result.transcript.text.chars().count() > 20);
+        eprintln!("public tracks transcribed locally; mode={}, chars={}", result.transcript.mode, result.transcript.text.chars().count());
+    }
 }
