@@ -119,3 +119,44 @@ impl Capture {
         Ok(CaptureResult { microphone, system, discontinuity: state.discontinuity, error })
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::atomic::{AtomicU64, Ordering};
+    static NEXT: AtomicU64 = AtomicU64::new(0);
+
+    #[test]
+    fn resampled_capture_packets_keep_offsets_in_saved_parts() {
+        let root = std::env::temp_dir().join(format!("meeting-packets-{}-{}", std::process::id(), NEXT.fetch_add(1, Ordering::Relaxed)));
+        fs::create_dir(&root).unwrap();
+        let mut track = Track { timeline: Timeline::new(), writer: TrackWriter::create(&root.join("output"), 3).unwrap(), resampler: None };
+        // Four 32 kHz samples become two 16 kHz samples.
+        track.push(0, &[0.5, 0.5, -0.5, -0.5], 32_000).unwrap();
+        track.push(4, &[1.0, 1.0], 32_000).unwrap();
+        track.pad(7).unwrap();
+        let parts = track.writer.finish().unwrap();
+        let mut samples = Vec::new();
+        for part in parts {
+            let bytes = fs::read(part.path).unwrap();
+            samples.extend(bytes[44..].chunks_exact(2).map(|s| i16::from_le_bytes([s[0], s[1]])));
+        }
+        assert_eq!(samples, [16383, -16383, 0, 0, 32767, 0, 0]);
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn invalid_clock_reports_failure_without_inventing_alignment() {
+        let root = std::env::temp_dir().join(format!("meeting-invalid-clock-{}-{}", std::process::id(), NEXT.fetch_add(1, Ordering::Relaxed)));
+        fs::create_dir(&root).unwrap();
+        let track = |name: &str| Track { timeline: Timeline::new(), writer: TrackWriter::create(&root.join(name), 3).unwrap(), resampler: None };
+        let (send, recv) = mpsc::sync_channel(1);
+        let mut state = State { origin: None, mic: track("mic"), system: track("system"), error: None, discontinuity: false, ready: Some(send) };
+        state.packet(false, &[0.5], 16_000, TimedCaptureInfo { captured_at: None, discontinuity: false });
+        assert!(state.error.is_some());
+        assert!(recv.try_recv().unwrap().is_err());
+        assert_eq!(state.mic.timeline.samples(), 0);
+        drop(state);
+        fs::remove_dir_all(root).unwrap();
+    }
+}
