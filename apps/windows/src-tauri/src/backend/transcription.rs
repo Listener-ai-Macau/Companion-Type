@@ -11,7 +11,7 @@ use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 
-const LOCAL_NO_SPEECH: &str = "没有识别到语音，原录音保留。";
+pub(super) const LOCAL_NO_SPEECH: &str = "没有识别到语音，原录音保留。";
 
 mod chunk_cache;
 #[cfg(windows)]
@@ -744,7 +744,7 @@ pub(super) fn asr_chunk_cache_root() -> PathBuf {
         .join("asr-chunk-cache")
 }
 
-fn bind_cache_session(session: &str, paths: &[String]) -> Result<(), String> {
+pub(super) fn bind_cache_session(session: &str, paths: &[String]) -> Result<(), String> {
     let mut sources = std::collections::BTreeSet::new();
     for path in paths { sources.extend(super::audio_artifacts::source_references(Path::new(path))?); }
     chunk_cache::ownership::bind_session(&asr_chunk_cache_root(), session, &sources)
@@ -757,7 +757,7 @@ pub(crate) use chunk_cache::ownership::verify as verify_cache_privacy;
 
 /// Recognize only a completely zero-valued PCM file. No amplitude threshold
 /// is used, so quiet speech and unknown failures cannot be silently skipped.
-fn wav_is_digital_silence(path: &Path) -> Result<bool, String> {
+pub(super) fn wav_is_digital_silence(path: &Path) -> Result<bool, String> {
     use std::io::{Read, Seek, SeekFrom};
     let mut file = fs::File::open(path).map_err(|_| "无法读取录音分段，原音保留。")?;
     let (start, mut remaining) = diarization::pcm16k_mono_wav_range(&mut file)?;

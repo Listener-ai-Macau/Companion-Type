@@ -97,6 +97,7 @@ mod ota_readiness;
 mod host_recording;
 mod meeting_audio_timeline;
 mod meeting_audio_tracks;
+mod meeting_audio_transcription;
 #[cfg(windows)]
 mod meeting_audio_capture;
 mod host_interrupted_recovery;
