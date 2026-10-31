@@ -784,34 +784,41 @@ fn write_pcm16k_mono_wav(path: &Path, pcm: &[u8]) -> Result<(), String> {
 /// chunks in original order. The final chunk may be shorter; coverage is exact
 /// with no overlap, gap, or duplicated PCM.
 pub(super) fn split_long_wav_into_chunks(src: &Path, chunk_seconds: usize) -> Result<Vec<PathBuf>, String> {
-    let pcm = diarization::read_pcm16k_mono_wav(src)?;
-    if pcm.is_empty() {
-        return Err("cannot split empty PCM".to_string());
+    use std::io::{Read, Seek, SeekFrom};
+    let mut options = fs::OpenOptions::new();
+    options.read(true);
+    #[cfg(windows)]
+    {
+        use std::os::windows::fs::OpenOptionsExt;
+        options.share_mode(1); // Keep the original stable while streaming.
     }
+    let mut source = options.open(src).map_err(|e| format!("read wav {}: {e}", src.display()))?;
+    let (data_start, pcm_bytes) = diarization::pcm16k_mono_wav_range(&mut source)?;
     let frame = 3_200usize; // 100 ms at 16 kHz / s16 / mono
-    let chunk_bytes = ((chunk_seconds.max(1) * PCM_BYTES_PER_SECOND) / frame) * frame;
-    if pcm.len() <= chunk_bytes {
-        return Ok(vec![src.to_path_buf()]);
-    }
+    let chunk_bytes = chunk_seconds.max(1).checked_mul(PCM_BYTES_PER_SECOND)
+        .ok_or("WAV chunk size overflow")? / frame * frame;
+    if pcm_bytes <= chunk_bytes as u64 { return Ok(vec![src.to_path_buf()]); }
+    source.seek(SeekFrom::Start(data_start)).map_err(|e| e.to_string())?;
     let temp_dir = super::audio_storage::recording_root()?;
     let split_id = uuid::Uuid::new_v4().simple().to_string();
-    let mut paths: Vec<PathBuf> = Vec::with_capacity(pcm.len().div_ceil(chunk_bytes));
-    let mut start = 0usize;
-    let mut i = 0usize;
-    while start < pcm.len() {
-        let end = (start + chunk_bytes).min(pcm.len());
-        let path = temp_dir.join(format!(
-            ".companion-asr-{split_id}-{i}.wav"
-        ));
+    let mut paths: Vec<PathBuf> = Vec::new();
+    let mut remaining = pcm_bytes;
+    while remaining > 0 {
+        let count = remaining.min(chunk_bytes as u64) as usize;
+        let mut pcm = vec![0u8; count];
+        if source.read_exact(&mut pcm).is_err() {
+            for created in &paths { let _ = super::audio_artifacts::remove_temporary(created); }
+            return Err("truncated WAV PCM; original recording preserved".into());
+        }
+        let path = temp_dir.join(format!(".companion-asr-{split_id}-{}.wav", paths.len()));
         if let Err(error) = super::audio_artifacts::generated(src, &path, super::audio_artifacts::Purpose::AsrTemporary,
-            || write_pcm16k_mono_wav(&path, &pcm[start..end])) {
+            || write_pcm16k_mono_wav(&path, &pcm)) {
             let _ = super::audio_artifacts::remove_temporary(&path);
             for created in &paths { let _ = super::audio_artifacts::remove_temporary(created); }
             return Err(error);
         }
         paths.push(path);
-        start = end;
-        i += 1;
+        remaining -= count as u64;
     }
     Ok(paths)
 }
@@ -1348,6 +1355,89 @@ mod tests {
             collected, total,
             "chunks must cover all PCM with no loss or dup"
         );
+    }
+
+    // Exercises the production splitter on a two-hour file without involving
+    // a microphone, user recordings, or a speech service. Run explicitly.
+    #[test]
+    #[ignore = "two-hour disk fixture; run explicitly"]
+    fn two_hour_wav_split_preserves_every_pcm_byte() {
+        use std::io::{Read, Seek, SeekFrom, Write};
+        use sha2::{Digest, Sha256};
+        let root = std::env::temp_dir().join(format!("companion-two-hour-split-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&root).unwrap();
+        let _recordings = RecordingOverride::new(&root);
+        let src = if let Some(path) = std::env::var_os("COMPANION_PUBLIC_LONG_WAV") {
+            PathBuf::from(path)
+        } else {
+            let src = root.join("controlled-two-hour.wav");
+            let data_len = 2 * 60 * 60 * PCM_BYTES_PER_SECOND;
+            let mut file = fs::File::create(&src).unwrap();
+            let mut header = Vec::new();
+            header.extend_from_slice(b"RIFF");
+            header.extend_from_slice(&(36u32 + data_len as u32).to_le_bytes());
+            header.extend_from_slice(b"WAVEfmt ");
+            header.extend_from_slice(&16u32.to_le_bytes());
+            header.extend_from_slice(&1u16.to_le_bytes());
+            header.extend_from_slice(&1u16.to_le_bytes());
+            header.extend_from_slice(&16_000u32.to_le_bytes());
+            header.extend_from_slice(&32_000u32.to_le_bytes());
+            header.extend_from_slice(&2u16.to_le_bytes());
+            header.extend_from_slice(&16u16.to_le_bytes());
+            header.extend_from_slice(b"data");
+            header.extend_from_slice(&(data_len as u32).to_le_bytes());
+            file.write_all(&header).unwrap();
+            let mut remaining = data_len;
+            let mut index = 0u32;
+            while remaining > 0 {
+                let count = remaining.min(1_048_576);
+                let bytes = vec![(index % 251) as u8; count];
+                file.write_all(&bytes).unwrap();
+                remaining -= count;
+                index += 1;
+            }
+            file.sync_all().unwrap();
+            drop(file);
+            src
+        };
+        let mut source = fs::File::open(&src).unwrap();
+        let (start, data_len) = diarization::pcm16k_mono_wav_range(&mut source).unwrap();
+        assert!(data_len >= (2 * 60 * 60 * PCM_BYTES_PER_SECOND) as u64);
+        source.seek(SeekFrom::Start(start)).unwrap();
+        let mut expected = Sha256::new();
+        let mut left = data_len;
+        let mut buffer = [0u8; 65536];
+        while left > 0 {
+            let n = (left as usize).min(buffer.len());
+            source.read_exact(&mut buffer[..n]).unwrap();
+            expected.update(&buffer[..n]);
+            left -= n as u64;
+        }
+        drop(source);
+        let chunks = split_long_wav_into_chunks(&src, 30).unwrap();
+        let chunk_bytes = (30 * PCM_BYTES_PER_SECOND) as u64;
+        assert_eq!(chunks.len() as u64, data_len.div_ceil(chunk_bytes));
+        let mut actual = Sha256::new();
+        let mut total = 0u64;
+        for chunk in &chunks {
+            let mut file = fs::File::open(chunk).unwrap();
+            let (start, len) = diarization::pcm16k_mono_wav_range(&mut file).unwrap();
+            assert_eq!(len, (data_len - total).min(chunk_bytes));
+            file.seek(SeekFrom::Start(start)).unwrap();
+            let mut buffer = [0u8; 65536];
+            let mut left = len;
+            while left > 0 {
+                let n = (left as usize).min(buffer.len());
+                file.read_exact(&mut buffer[..n]).unwrap();
+                actual.update(&buffer[..n]);
+                total += n as u64;
+                left -= n as u64;
+            }
+        }
+        assert_eq!(total, data_len);
+        assert_eq!(actual.finalize(), expected.finalize());
+        for chunk in &chunks { super::super::audio_artifacts::remove_temporary(chunk).unwrap(); }
+        fs::remove_dir_all(root).unwrap();
     }
 
     #[test]

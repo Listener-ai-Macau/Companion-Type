@@ -505,50 +505,99 @@ pub fn diarize(wav_path: &Path) -> Result<Vec<DiarizationSegment>, String> {
         .collect())
 }
 
-pub(crate) fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
-    let bytes = std::fs::read(path).map_err(|e| format!("read wav {}: {e}", path.display()))?;
-    if bytes.len() < 44 || &bytes[0..4] != b"RIFF" || &bytes[8..12] != b"WAVE" {
-        return Err(format!("not a RIFF/WAVE: {}", path.display()));
-    }
-    let riff_end = u32::from_le_bytes(bytes[4..8].try_into().unwrap()) as usize + 8;
-    if riff_end != bytes.len() { return Err("WAV length does not match RIFF header; recording may be truncated".into()); }
-    let mut offset = 12;
-    let mut data: Option<(usize, usize)> = None;
+/// Validate the complete WAV structure while keeping audio on disk. The returned
+/// range can be read incrementally without loading an entire meeting into memory.
+pub(crate) fn pcm16k_mono_wav_range(file: &mut std::fs::File) -> Result<(u64, u64), String> {
+    use std::io::{Read, Seek, SeekFrom};
+    let size = file.metadata().map_err(|e| format!("read wav metadata: {e}"))?.len();
+    let mut header = [0u8; 12];
+    file.seek(SeekFrom::Start(0)).map_err(|e| e.to_string())?;
+    file.read_exact(&mut header).map_err(|_| "truncated WAV header; original recording preserved")?;
+    if &header[..4] != b"RIFF" || &header[8..] != b"WAVE" { return Err("not a RIFF/WAVE".into()); }
+    let riff_end = u32::from_le_bytes(header[4..8].try_into().unwrap()) as u64 + 8;
+    if riff_end != size { return Err("WAV length does not match RIFF header; recording may be truncated".into()); }
+    let mut offset = 12u64;
+    let mut data = None;
     let mut format_valid = false;
-    while offset + 8 <= bytes.len() {
-        let id = &bytes[offset..offset + 4];
-        let size = u32::from_le_bytes([
-            bytes[offset + 4],
-            bytes[offset + 5],
-            bytes[offset + 6],
-            bytes[offset + 7],
-        ]) as usize;
+    while offset + 8 <= riff_end {
+        file.seek(SeekFrom::Start(offset)).map_err(|e| e.to_string())?;
+        let mut chunk = [0u8; 8];
+        file.read_exact(&mut chunk).map_err(|_| "truncated WAV chunk; original recording preserved")?;
+        let length = u32::from_le_bytes(chunk[4..].try_into().unwrap()) as u64;
         let body = offset + 8;
-        let end = body.checked_add(size).filter(|end| *end <= riff_end)
+        let end = body.checked_add(length).filter(|end| *end <= riff_end)
             .ok_or("truncated WAV chunk; original recording preserved")?;
-        if id == b"fmt " {
-            if size < 16 || format_valid { return Err("invalid or duplicate WAV format".into()); }
-            let u16_at = |n: usize| u16::from_le_bytes(bytes[body+n..body+n+2].try_into().unwrap());
-            let u32_at = |n: usize| u32::from_le_bytes(bytes[body+n..body+n+4].try_into().unwrap());
+        if &chunk[..4] == b"fmt " {
+            if length < 16 || format_valid { return Err("invalid or duplicate WAV format".into()); }
+            let mut format = [0u8; 16];
+            file.read_exact(&mut format).map_err(|_| "truncated WAV format")?;
+            let u16_at = |n: usize| u16::from_le_bytes(format[n..n+2].try_into().unwrap());
+            let u32_at = |n: usize| u32::from_le_bytes(format[n..n+4].try_into().unwrap());
             if u16_at(0) != 1 || u16_at(2) != 1 || u32_at(4) != 16_000 || u32_at(8) != 32_000 || u16_at(12) != 2 || u16_at(14) != 16 {
                 return Err("unsupported WAV; expected 16 kHz mono PCM16".into());
             }
             format_valid = true;
+        } else if &chunk[..4] == b"data" {
+            if data.is_some() || length == 0 || length % 2 != 0 { return Err("invalid WAV PCM data chunk".into()); }
+            data = Some((body, length));
         }
-        if id == b"data" {
-            if data.is_some() || size == 0 || size % 2 != 0 { return Err("invalid WAV PCM data chunk".into()); }
-            data = Some((body, size));
-        }
-        offset = end + (size & 1);
+        offset = end + (length & 1);
     }
     if !format_valid || offset != riff_end { return Err("invalid WAV format or trailing chunk".into()); }
-    let (start, size) = data.ok_or_else(|| "WAV has no data chunk".to_string())?;
-    Ok(bytes[start..start + size].to_vec())
+    data.ok_or_else(|| "WAV has no data chunk".to_string())
+}
+
+pub(crate) fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
+    use std::io::{Read, Seek, SeekFrom};
+    let mut file = std::fs::File::open(path).map_err(|e| format!("read wav {}: {e}", path.display()))?;
+    let (start, size) = pcm16k_mono_wav_range(&mut file)?;
+    let size = usize::try_from(size).map_err(|_| "WAV data is too large")?;
+    let mut pcm = vec![0; size];
+    file.seek(SeekFrom::Start(start)).and_then(|_| file.read_exact(&mut pcm))
+        .map_err(|_| "truncated WAV PCM; original recording preserved")?;
+    Ok(pcm)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn streaming_wav_range_handles_padded_metadata_and_rejects_damaged_or_duplicate_data() {
+        let root = std::env::temp_dir().join(format!("companion-wav-range-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let path = root.join("input.wav");
+        let mut body = Vec::new();
+        body.extend_from_slice(b"WAVEfmt ");
+        body.extend_from_slice(&16u32.to_le_bytes());
+        body.extend_from_slice(&1u16.to_le_bytes());
+        body.extend_from_slice(&1u16.to_le_bytes());
+        body.extend_from_slice(&16_000u32.to_le_bytes());
+        body.extend_from_slice(&32_000u32.to_le_bytes());
+        body.extend_from_slice(&2u16.to_le_bytes());
+        body.extend_from_slice(&16u16.to_le_bytes());
+        body.extend_from_slice(b"LIST");
+        body.extend_from_slice(&3u32.to_le_bytes());
+        body.extend_from_slice(b"abc\0");
+        body.extend_from_slice(b"data");
+        body.extend_from_slice(&4u32.to_le_bytes());
+        body.extend_from_slice(&[1, 2, 3, 4]);
+        let mut wav = b"RIFF".to_vec();
+        wav.extend_from_slice(&(body.len() as u32).to_le_bytes());
+        wav.extend_from_slice(&body);
+        std::fs::write(&path, &wav).unwrap();
+        assert_eq!(read_pcm16k_mono_wav(&path).unwrap(), vec![1, 2, 3, 4]);
+        let mut duplicate = wav.clone();
+        duplicate.extend_from_slice(b"data\x02\0\0\0\x05\x06");
+        let length = (duplicate.len() as u32 - 8).to_le_bytes();
+        duplicate[4..8].copy_from_slice(&length);
+        std::fs::write(&path, &duplicate).unwrap();
+        assert!(read_pcm16k_mono_wav(&path).is_err());
+        wav.pop();
+        std::fs::write(&path, &wav).unwrap();
+        assert!(read_pcm16k_mono_wav(&path).is_err());
+        std::fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn ahc_two_speakers_split() {
