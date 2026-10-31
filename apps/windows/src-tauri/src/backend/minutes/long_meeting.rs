@@ -217,9 +217,16 @@ fn mark_uncertain_items(minutes: &mut CompanionV1MeetingMinutes, evidence: &[Evi
         let quotes=evidence.iter().filter(|e|e.field=="actionItems" && e.index==index).collect::<Vec<_>>();
         if quotes.is_empty() {continue;}
         let mut uncertain=!quotes.iter().any(|e|super::has_action_marker(&e.quote));
-        for field in [&mut action.owner, &mut action.due] {
-            if field.as_ref().is_some_and(|value| !value.trim().is_empty() && quotes.iter().any(|e|!e.quote.contains(value))) {
-                *field=None; uncertain=true;
+        // Additional excerpts need not repeat every detail if one excerpt
+        // already supports the complete owner/date pair on its own. Do not
+        // stitch separate excerpts into a possibly invented assignment.
+        let complete_quote=quotes.iter().any(|e| [&action.owner,&action.due].iter().all(|field|
+            field.as_ref().is_none_or(|value|value.trim().is_empty()||e.quote.contains(value))));
+        if !complete_quote {
+            for field in [&mut action.owner, &mut action.due] {
+                if field.as_ref().is_some_and(|value| !value.trim().is_empty() && quotes.iter().any(|e|!e.quote.contains(value))) {
+                    *field=None; uncertain=true;
+                }
             }
         }
         if uncertain && !action.text.starts_with("待核对：") {action.text=format!("待核对：{}",action.text);}
@@ -244,14 +251,14 @@ fn validate_chapter(minutes: &CompanionV1MeetingMinutes, evidence: &[Evidence], 
             || item.quote.len() > 1024 || !source.contains(&item.quote) {
             return Err("分段纪要的原文引用无效，未复用或提升为完整结果。".into());
         }
-        if item.field == "actionItems" {
-            let action = &minutes.action_items[item.index];
-            if [&action.owner, &action.due].iter()
-                .any(|v| v.as_ref().is_some_and(|v| !v.trim().is_empty() && !item.quote.contains(v))) {
-                return Err("分段行动项或归属缺少原文支持，待核对后重试。".into());
-            }
-        }
         cited.insert((item.field.as_str(), item.index));
+    }
+    for (index,action) in minutes.action_items.iter().enumerate() {
+        if !evidence.iter().any(|item|item.field=="actionItems" && item.index==index &&
+            [&action.owner,&action.due].iter().all(|field|
+                field.as_ref().is_none_or(|value|value.trim().is_empty()||item.quote.contains(value)))) {
+            return Err("分段行动项或归属缺少原文支持，待核对后重试。".into());
+        }
     }
     for (field, size) in [("summary", minutes.summary.len()), ("decisions", minutes.decisions.len()),
         ("actionItems", minutes.action_items.len()), ("questions", minutes.questions.len())] {

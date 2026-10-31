@@ -172,6 +172,39 @@ fn ordinary_wrapped_speech_yields_reviewable_minutes_without_invented_owner() {
 }
 
 #[test]
+fn extra_quote_does_not_erase_an_assignment_already_supported_by_one_excerpt() {
+    let s=session("小王负责整理报价，周五前发送。\n报价已经确定。\n");
+    let (mut m,mut e)=response(&s);
+    m.action_items.push(crate::companion_v1::CompanionV1ActionItem {
+        text:"整理并发送报价".into(),owner:Some("小王".into()),due:Some("周五".into())
+    });
+    for quote in ["小王负责整理报价，周五前发送。","报价已经确定。"] {
+        e.push(Evidence{field:"actionItems".into(),index:0,quote:quote.into()});
+    }
+    assert_eq!(retain_source_backed(&mut m,&mut e,&s.transcript_text),0);
+    mark_uncertain_items(&mut m,&e);
+    validate_chapter(&m,&e,&s.transcript_text).unwrap();
+    assert_eq!(m.action_items[0].owner.as_deref(),Some("小王"));
+    assert_eq!(m.action_items[0].due.as_deref(),Some("周五"));
+    assert!(!m.action_items[0].text.starts_with("待核对："));
+
+    let separate=session("小王负责整理报价。\n客户要求周五发送。\n");
+    let (mut m,mut e)=response(&separate);
+    m.action_items.push(crate::companion_v1::CompanionV1ActionItem {
+        text:"整理并发送报价".into(),owner:Some("小王".into()),due:Some("周五".into())
+    });
+    for quote in ["小王负责整理报价。","客户要求周五发送。"] {
+        e.push(Evidence{field:"actionItems".into(),index:0,quote:quote.into()});
+    }
+    retain_source_backed(&mut m,&mut e,&separate.transcript_text);
+    mark_uncertain_items(&mut m,&e);
+    validate_chapter(&m,&e,&separate.transcript_text).unwrap();
+    assert_eq!(m.action_items[0].owner,None);
+    assert_eq!(m.action_items[0].due,None);
+    assert!(m.action_items[0].text.starts_with("待核对："));
+}
+
+#[test]
 fn one_bad_quote_drops_only_its_item_and_discloses_omission() {
     let source=session("会议讨论招生计划与课程安排。\n");let root=root();
     let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
