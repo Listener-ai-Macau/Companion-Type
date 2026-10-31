@@ -17,4 +17,8 @@ const listen=view.root.findAllByType('button').find((button:any)=>text(button)==
 await act(async()=>{listen.props.onClick();await new Promise(setImmediate);});
 assert.equal(audio.length,2);const play=view.root.findAllByType('button').find((button:any)=>text(button)==='播放');assert.ok(play);
 await act(async()=>{play.props.onClick();await new Promise(setImmediate);});assert.equal(audio[0].src,'asset-mic');assert.equal(audio[1].src,'asset-system');assert.equal(audio[0].paused,false);assert.equal(audio[1].paused,false);
-await act(async()=>view.unmount());assert.equal(audio[0].paused,true);console.log('Meeting dashboard: explicit start without device and saved dual-track playback passed with fake audio.');
+await act(async()=>view.unmount());assert.equal(audio[0].paused,true);
+const active=structuredClone(snapshot);active.host.sessions[0].status='recording';active.host.sessions[0].meetingTracks!.issue='fake stream error';active.host.activeSessionId=active.host.sessions[0].id;active.meeting.active=true;
+await act(async()=>{view=create(<CompanionDashboard {...props} snapshot={active}/>);});
+assert.ok(view.root.findAllByProps({role:'alert'}).some((alert:any)=>text(alert).includes('电脑会议录音已中断')));
+await act(async()=>view.unmount());console.log('Meeting dashboard: explicit start without device, dual-track playback and visible interruption passed with fake audio.');

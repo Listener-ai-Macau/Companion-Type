@@ -170,6 +170,16 @@ impl HostRecordingManager {
         })
     }
 
+    #[cfg(windows)]
+    pub(super) fn meeting_capture_error(&self) -> Option<(String, String)> {
+        let active = self.active.lock().ok()?;
+        let recording = active.as_ref()?;
+        match &recording.mode {
+            ActiveHostRecordingMode::Meeting(capture) => capture.error().map(|error| (recording.session_id.clone(), error)),
+            _ => None,
+        }
+    }
+
     pub fn stop(
         &self,
         requested_session_id: Option<&str>,

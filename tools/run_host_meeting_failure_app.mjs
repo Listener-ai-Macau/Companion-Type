@@ -1,0 +1,10 @@
+import {build} from 'esbuild';
+import {spawnSync} from 'node:child_process';
+import {mkdirSync} from 'node:fs';
+import {pathToFileURL} from 'node:url';
+import path from 'node:path';
+const root=process.cwd(),out=path.join(root,'.cache/meeting-failure-app/test.mjs');mkdirSync(path.dirname(out),{recursive:true});
+const alias={'@companion-type/ui':process.env.COMPANION_TEST_DASHBOARD_STUB??path.join(root,'tools/fixtures/meeting_failure_dashboard.tsx')};
+const plugin={name:'test-client',setup(build){build.onResolve({filter:/^\.\/companionClient$/},()=>({path:process.env.COMPANION_TEST_CLIENT_STUB??path.join(root,'tools/fixtures/meeting_failure_client.mjs')}));}};
+await build({entryPoints:[path.join(root,'tools/test_host_meeting_failure_app.tsx')],outfile:out,bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',tsconfig:path.join(root,'apps/windows/tsconfig.json'),alias,plugins:[plugin],loader:{'.css':'empty','.txt':'text'}});
+const env=pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href;const result=spawnSync(process.execPath,['--import',env,out],{cwd:root,encoding:'utf8',windowsHide:true});process.stdout.write(result.stdout+result.stderr);process.exitCode=result.status??1;

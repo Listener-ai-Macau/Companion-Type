@@ -1689,7 +1689,9 @@ export function CompanionDashboard({
 
       {!boardLiveActive && !controlledRecorder && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前记录">
         <div><strong>{device?.recording ? '设备录音中 · 上次读取' : '正在录音'}</strong>
-          <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p></div>
+          <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p>
+          {snapshot?.host.sessions.find(s=>s.id===snapshot.host.activeSessionId && s.source==='hostMeeting')?.meetingTracks?.issue
+            ? <p role="alert">电脑会议录音已中断，正在结束并保留已录内容；如未完成，请点击结束录音后恢复。</p> : null}</div>
         {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={recordingControlBusy}
           onClick={() => onControl({ action: 'meetingStop', sessionId: snapshot.host.activeSessionId ?? undefined })}><Square size={15} />结束录音</button>
           : <button type="button" className="ct-action" disabled={controlsBusy}

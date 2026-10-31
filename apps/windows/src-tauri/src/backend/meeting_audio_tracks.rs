@@ -111,6 +111,18 @@ impl TrackWriter {
         Ok(())
     }
 
+    /// Return every sealed part even if a later write or finalization failed.
+    /// The incomplete current file stays registered for copy-based recovery.
+    pub(super) fn finish_recoverable(mut self) -> (Vec<TrackPart>, Option<String>) {
+        let error = if self.failed {
+            Some("音轨写入中断，已封存分段保留，末段可尝试恢复。".to_string())
+        } else {
+            self.finish_part().err().map(|e| format!("音轨末段保存未完成：{e}"))
+        };
+        self.failed = true; // Drop must not retry a failed write or finalization.
+        (std::mem::take(&mut self.complete), error)
+    }
+
     pub(super) fn finish(mut self) -> io::Result<Vec<TrackPart>> {
         if self.failed { return Err(io::Error::other("track write failed; recover its saved files")); }
         self.finish_part()?;
@@ -156,6 +168,40 @@ mod tests {
         assert_eq!(b.iter().flat_map(pcm).collect::<Vec<_>>(), [0, 0, 8, 9, 10, 0, 0]);
         fs::remove_dir_all(root).unwrap();
     }
+    #[test]
+    fn failed_later_part_keeps_sealed_parts_and_partial_file() {
+        let root = root(); let mut writer = TrackWriter::create(&root.join("mic"), 2).unwrap();
+        writer.append(&[1, 2, 3]).unwrap(); writer.failed = true;
+        let partial = writer.current.as_ref().unwrap().path.clone();
+        let (sealed, error) = writer.finish_recoverable();
+        assert!(error.is_some()); assert_eq!(sealed.len(), 1); assert_eq!(pcm(&sealed[0]), [1, 2]);
+        assert!(partial.is_file()); assert!(fs::metadata(partial).unwrap().len() > 44);
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[cfg(windows)]
+    #[test]
+    #[ignore = "changes recording-directory environment; run in isolation"]
+    fn failed_part_is_registered_and_recoverable_without_losing_sealed_part() {
+        let root = root(); let previous = std::env::var_os("COMPANION_TYPE_RECORDING_DIR");
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let anchor = root.join("meeting");
+        let mut writer = TrackWriter::create_flat(&root, "meeting-mic", 2).unwrap();
+        writer.append(&[1,2,3]).unwrap(); writer.failed = true;
+        let original = writer.current.as_ref().unwrap().path.clone();
+        let (sealed, error) = writer.finish_recoverable(); assert!(error.is_some()); assert_eq!(sealed.len(), 1);
+        let before = fs::read(&original).unwrap();
+        let recovered = super::super::meeting_audio_recovery::recover(&anchor).unwrap();
+        assert_eq!(recovered.tracks.microphone.len(), 2);
+        assert_eq!(fs::read(&original).unwrap(), before);
+        assert_ne!(std::path::Path::new(&recovered.tracks.microphone[1].path).canonicalize().unwrap(), original.canonicalize().unwrap());
+        assert_eq!(fs::read(&recovered.tracks.microphone[1].path).unwrap()[44..], [3,0]);
+        drop(recovered);
+        if let Some(value) = previous { std::env::set_var("COMPANION_TYPE_RECORDING_DIR", value); }
+        else { std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); }
+        fs::remove_dir_all(root).unwrap();
+    }
+
     #[test]
     fn existing_directory_and_invalid_part_size_are_never_replaced() {
         let root = root(); let existing = root.join("existing"); fs::create_dir(&existing).unwrap();

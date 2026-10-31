@@ -206,6 +206,20 @@ export function App() {
   const controlledMeeting = Boolean(snapshot?.host?.sessions?.some(
     (session) => session.status === 'recording' && session.recorderControl,
   ));
+  const localMeeting = Boolean(snapshot?.host?.sessions?.some(
+    (session) => session.status === 'recording' && session.source === 'hostMeeting',
+  ));
+  const failedLocalMeeting = snapshot?.host?.sessions?.find(session => session.status === 'recording'
+    && session.source === 'hostMeeting' && session.meetingTracks?.issue);
+  const stoppedOnFailure = useRef(new Set<string>());
+  useEffect(() => {
+    const session = failedLocalMeeting;
+    if (!session || busyAction || operationActive.current || stoppedOnFailure.current.has(session.id)) return;
+    // Capture has stopped accepting packets; finalize once so saved pieces can
+    // be recovered. A failed finalization is shown and remains user-retryable.
+    stoppedOnFailure.current.add(session.id);
+    void runControl({action:'meetingStop',sessionId:session.id});
+  }, [failedLocalMeeting?.id, failedLocalMeeting?.meetingTracks?.issue, busyAction]);
   const recoveringMeeting = Boolean(snapshot?.host?.sessions?.some((session) => (
     session.recovery?.intent === 'processMeeting'
     && !['idle', 'paused', 'complete'].includes(session.recovery.stage)
@@ -221,17 +235,17 @@ export function App() {
   // Active text/timing still ticks. Notifications and ticks share one reader;
   // slow native cache responses never accumulate an IPC queue.
   useEffect(() => {
-    if (!liveMeeting && !controlledMeeting && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) return;
+    if (!liveMeeting && !controlledMeeting && !localMeeting && !recoveringMeeting && !watchingDevice && !observingConnectedDevice && !boardActive) return;
     let cancelled = false;
     let timer: number;
-    const delay = liveMeeting || controlledMeeting || boardActive ? 500 : recoveringMeeting ? 1000 : 3000;
+    const delay = liveMeeting || controlledMeeting || boardActive ? 500 : localMeeting || recoveringMeeting ? 1000 : 3000;
     const poll = async () => {
       try { if (!operationActive.current) await cachedReader.current?.request(); }
       finally { if (!cancelled) timer = window.setTimeout(() => void poll(), delay); }
     };
     timer = window.setTimeout(() => void poll(), delay);
     return () => { cancelled = true; window.clearTimeout(timer); };
-  }, [liveMeeting, controlledMeeting, recoveringMeeting, watchingDevice, observingConnectedDevice, boardActive]);
+  }, [liveMeeting, controlledMeeting, localMeeting, recoveringMeeting, watchingDevice, observingConnectedDevice, boardActive]);
 
   return (
     <div className="ct-window-shell">

@@ -149,6 +149,13 @@ impl Capture {
         }
     }
 
+    /// An acquisition or write failure stops accepting further packets. Surface
+    /// it while the session is still open so the user can finish and recover.
+    pub(super) fn error(&self) -> Option<String> {
+        self.state.lock().map(|state| state.error.clone())
+            .unwrap_or_else(|_| Some("会议录音状态不可用，已录内容保留。".into()))
+    }
+
     pub(super) fn stop(self) -> Result<CaptureResult, String> {
         if let Err(e) = self.system.stop() { if let Ok(mut state) = self.state.lock() { state.fail(format!("停止电脑声音失败：{e}")); } }
         if let Err(e) = self.mic.stop() { if let Ok(mut state) = self.state.lock() { state.fail(format!("停止麦克风失败：{e}")); } }
@@ -158,9 +165,15 @@ impl Capture {
         if state.error.is_none() {
             if let Err(e) = state.mic.pad(end).and_then(|_| state.system.pad(end)) { state.fail(format!("保存录音失败：{e}")); }
         }
-        let error = state.error;
-        let microphone = state.mic.writer.finish().map_err(|e| format!("保存麦克风失败：{e}；原文件保留"))?;
-        let system = state.system.writer.finish().map_err(|e| format!("保存电脑声音失败：{e}；原文件保留"))?;
+        let mut error = state.error;
+        let (microphone, mic_error) = state.mic.writer.finish_recoverable();
+        let (system, system_error) = state.system.writer.finish_recoverable();
+        for (label, failure) in [("麦克风", mic_error), ("电脑声音", system_error)] {
+            if let Some(failure) = failure {
+                let detail = format!("{label}：{failure}");
+                match &mut error { Some(existing) => existing.push_str(&format!("；{detail}")), None => error = Some(detail) }
+            }
+        }
         Ok(CaptureResult { microphone, system, discontinuity: state.discontinuity, error })
     }
 }

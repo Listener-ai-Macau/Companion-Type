@@ -1666,6 +1666,8 @@ impl CompanionBackend for FixtureCompanionBackend {
     }
 
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String> {
+        #[cfg(windows)]
+        let meeting_capture_error = self.host_recording.meeting_capture_error();
         let live = self.live_asr.snapshot();
         let mut guard = self
             .snapshot
@@ -1679,7 +1681,14 @@ impl CompanionBackend for FixtureCompanionBackend {
                 }
             }
         }
-        Ok(guard.clone())
+        let mut observed = guard.clone();
+        #[cfg(windows)]
+        if let Some((id, error)) = meeting_capture_error {
+            if let Some(row) = observed.host.sessions.iter_mut().find(|row| row.id == id && row.status == "recording") {
+                if let Some(tracks) = row.meeting_tracks.as_mut() { tracks.issue = Some(error); }
+            }
+        }
+        Ok(observed)
     }
 
     fn apply_control(
