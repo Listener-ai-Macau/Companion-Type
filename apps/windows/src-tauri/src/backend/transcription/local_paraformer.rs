@@ -146,9 +146,9 @@ pub(super) fn prepare() -> Result<(), String> {
         super::super::export::replace_file(&ready.canonicalize().map_err(|e|e.to_string())?, &model_dir.join("ready"))?;
         Ok(())
     })();
-    if result.is_err() && ModelKind::available(&dest) == ModelKind::Paraformer {
-        // A failed optional SenseVoice download must not report failure when
-        // the already-installed Paraformer and runtime are still usable.
+    if result.is_err() {
+        // The preferred model may be present but damaged. Preserve a verified
+        // existing Paraformer and runtime when its download cannot be repaired.
         let existing_verified = ASSETS.iter().all(|(name, hash)|
             shared::verified(&dest.join(name), hash).is_ok());
         if existing_verified || prepare_legacy(&dest, &stage).is_ok() { result = Ok(()); }
@@ -160,9 +160,24 @@ pub(super) fn prepare() -> Result<(), String> {
     }
     result
 }
+// Prefer SenseVoice, but a broken preferred model must not hide a usable
+// verified Paraformer already on disk. The runtime verifies both alternatives.
+fn load_preferred(root: &Path) -> Result<(Runtime, ModelKind), String> {
+    let preferred = ModelKind::available(root);
+    match Runtime::load_model(root, root, preferred) {
+        Ok(runtime) => Ok((runtime, preferred)),
+        Err(error) if preferred == ModelKind::SenseVoice => {
+            match Runtime::load_model(root, root, ModelKind::Paraformer) {
+                Ok(runtime) => Ok((runtime, ModelKind::Paraformer)),
+                Err(_) => Err(error),
+            }
+        }
+        Err(error) => Err(error),
+    }
+}
 pub(super) fn check() -> Result<(), String> {
     let root = root()?;
-    let _runtime = Runtime::load_model(&root, &root, ModelKind::available(&root))?;
+    let (_runtime, _kind) = load_preferred(&root)?;
     Ok(())
 }
 
@@ -179,8 +194,7 @@ fn chunk_anchor(text: &str, start_byte: u64, end_byte: u64) -> Option<crate::com
 
 pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, String> {
     let root = root()?;
-    let kind = ModelKind::available(&root);
-    let runtime = Runtime::load_model(&root, &root, kind)?;
+    let (runtime, kind) = load_preferred(&root)?;
     let mut file = File::open(audio).map_err(|e| e.to_string())?;
     let (start, len) = wav_data(&mut file)?;
     let mut offset = 0u64;
@@ -292,6 +306,23 @@ mod tests {
         prepare().expect("an existing verified local model remains ready when download fails");
         assert_eq!(ModelKind::available(&dest), ModelKind::Paraformer);
         check().expect("the existing local model can still load");
+    }
+
+    #[test]
+    #[ignore = "requires isolated verified legacy model and deliberately corrupt SenseVoice files"]
+    fn corrupt_new_model_falls_back_to_verified_existing_model() {
+        let dest = root().unwrap();
+        assert!(std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR").is_some());
+        assert_eq!(ModelKind::available(&dest), ModelKind::SenseVoice);
+        assert!(shared::verified(&dest.join(shared::SENSE_DIR).join("model.int8.onnx"), shared::SENSE_MODEL_SHA).is_err());
+        assert!(ASSETS.iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok()));
+        assert!(load_preferred(&dest.parent().unwrap().join("unusable-models")).is_err(), "missing models must not be reported as ready");
+        check().expect("the verified existing model should load when the newer model is corrupt");
+        let wav=std::env::var_os("COMPANION_LOCAL_ASR_TEST_WAV").unwrap();
+        let transcript=transcribe(Path::new(&wav)).expect("offline transcription should use the verified fallback");
+        assert_eq!(transcript.provider_id,"companion-type-local-paraformer");
+        assert!(!transcript.text.trim().is_empty());
+        prepare().expect("preparation without network should retain the verified fallback");
     }
 
     #[test]
