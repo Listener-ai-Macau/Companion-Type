@@ -6,6 +6,7 @@ use std::fs;
 use std::path::Path;
 use std::io::Read;
 use std::sync::{mpsc, Arc, Mutex};
+use std::thread::{self, JoinHandle};
 use std::time::Duration;
 use denzic_host_audio_v1_core::capture::{CaptureOptions, CaptureSession, TimedCaptureInfo};
 use super::host_recording::RatioResampler;
@@ -14,6 +15,60 @@ use super::meeting_audio_tracks::{TrackPart, TrackWriter};
 
 const SAMPLE_RATE: u32 = 16_000;
 const MIC_START_TIMEOUT: Duration = Duration::from_secs(5);
+// The audio callbacks must not wait for file creation, writes, or fsync.
+// Keep only a short backlog; if storage cannot catch up, preserve the audio
+// already accepted and report the interruption instead of silently dropping it.
+const QUEUED_PACKETS: usize = 512;
+
+struct Packet {
+    system: bool,
+    pcm: Vec<f32>,
+    rate: u32,
+    info: TimedCaptureInfo,
+}
+
+enum WorkerMessage { Packet(Packet), Finish }
+
+type SharedFailure = Arc<Mutex<Option<String>>>;
+
+fn record_failure(failure: &SharedFailure, error: String) {
+    if let Ok(mut slot) = failure.lock() {
+        if slot.is_none() { *slot = Some(error); }
+    }
+}
+
+#[derive(Clone)]
+struct PacketSink {
+    sender: mpsc::SyncSender<WorkerMessage>,
+    failure: SharedFailure,
+}
+
+impl PacketSink {
+    fn submit(&self, system: bool, pcm: &[f32], rate: u32, info: TimedCaptureInfo) {
+        if self.failure.lock().map(|error| error.is_some()).unwrap_or(true) { return; }
+        let packet = Packet { system, pcm: pcm.to_vec(), rate, info };
+        match self.sender.try_send(WorkerMessage::Packet(packet)) {
+            Ok(()) => (),
+            Err(mpsc::TrySendError::Full(_)) => record_failure(&self.failure,
+                "录音保存跟不上采集，已录内容保留。".into()),
+            Err(mpsc::TrySendError::Disconnected(_)) => record_failure(&self.failure,
+                "录音处理已停止，已录内容保留。".into()),
+        }
+    }
+}
+
+fn finish_worker(sink: PacketSink, worker: JoinHandle<State>) -> Result<State, String> {
+    let failure = Arc::clone(&sink.failure);
+    // An explicit finish also handles a timed-out device startup whose
+    // underlying capture thread might still hold a sender clone.
+    let _ = sink.sender.send(WorkerMessage::Finish);
+    drop(sink);
+    let mut state = worker.join().map_err(|_| "录音处理线程意外停止，原文件保留".to_string())?;
+    let error = failure.lock().map(|error| error.clone())
+        .unwrap_or_else(|_| Some("会议录音状态不可用，已录内容保留。".into()));
+    if let Some(error) = error { state.fail(error); }
+    Ok(state)
+}
 
 struct Track {
     timeline: Timeline,
@@ -62,7 +117,8 @@ impl State {
 pub(super) struct Capture {
     mic: CaptureSession,
     system: CaptureSession,
-    state: Arc<Mutex<State>>,
+    sink: PacketSink,
+    worker: JoinHandle<State>,
 }
 
 #[allow(dead_code)]
@@ -127,40 +183,72 @@ impl Capture {
         let mic = Track { timeline: Timeline::new(), writer: TrackWriter::create_flat(parent, &format!("{name}-mic"), part_samples).map_err(|e| e.to_string())?, resampler: None };
         let system = Track { timeline: Timeline::new(), writer: TrackWriter::create_flat(parent, &format!("{name}-system"), part_samples).map_err(|e| e.to_string())?, resampler: None };
         let (send, recv) = mpsc::sync_channel(1);
-        let state = Arc::new(Mutex::new(State { origin: None, mic, system, error: None, discontinuity: false, ready: Some(send) }));
-        let mic_state = Arc::clone(&state);
-        let mic_errors = Arc::clone(&state);
+        let state = State { origin: None, mic, system, error: None, discontinuity: false, ready: Some(send) };
+        let (sender, packets) = mpsc::sync_channel::<WorkerMessage>(QUEUED_PACKETS);
+        let failure: SharedFailure = Arc::new(Mutex::new(None));
+        let sink = PacketSink { sender, failure };
+        let worker_failure = Arc::clone(&sink.failure);
+        let worker = thread::spawn(move || {
+            let mut state = state;
+            while let Ok(WorkerMessage::Packet(packet)) = packets.recv() {
+                state.packet(packet.system, &packet.pcm, packet.rate, packet.info);
+                if let Some(error) = state.error.as_ref() {
+                    record_failure(&worker_failure, error.clone());
+                }
+            }
+            state
+        });
+        let mic_sink = sink.clone();
+        let mic_errors = Arc::clone(&sink.failure);
         let mic = CaptureSession::start_timed_microphone(CaptureOptions { device_name: None, on_stream_error: Some(Arc::new(move |e| {
-            if let Ok(mut state) = mic_errors.lock() { state.fail(format!("麦克风中断：{e}")); }
-        })) }, move |pcm, rate, info| { if let Ok(mut state) = mic_state.lock() { state.packet(false, pcm, rate, info); } })
-            .map_err(|e| e.to_string())?;
+            record_failure(&mic_errors, format!("麦克风中断：{e}"));
+        })) }, move |pcm, rate, info| mic_sink.submit(false, pcm, rate, info));
+        let mic = match mic {
+            Ok(mic) => mic,
+            Err(error) => {
+                record_failure(&sink.failure, format!("麦克风未能开始录音：{error}"));
+                let _ = finish_worker(sink, worker);
+                return Err(error.to_string());
+            }
+        };
         match recv.recv_timeout(MIC_START_TIMEOUT) {
             Ok(Ok(())) => (),
-            result => { let _ = mic.stop(); return Err(format!("麦克风未能开始录音：{result:?}；已保留文件。")); }
+            result => {
+                let _ = mic.stop();
+                record_failure(&sink.failure, "麦克风未能开始录音".into());
+                let _ = finish_worker(sink, worker);
+                return Err(format!("麦克风未能开始录音：{result:?}；已保留文件。"));
+            }
         }
-        let output_state = Arc::clone(&state);
-        let output_errors = Arc::clone(&state);
+        let output_sink = sink.clone();
+        let output_errors = Arc::clone(&sink.failure);
         let output = CaptureSession::start_timed_system_output(CaptureOptions { device_name: None, on_stream_error: Some(Arc::new(move |e| {
-            if let Ok(mut state) = output_errors.lock() { state.fail(format!("电脑声音中断：{e}")); }
-        })) }, move |pcm, rate, info| { if let Ok(mut state) = output_state.lock() { state.packet(true, pcm, rate, info); } });
+            record_failure(&output_errors, format!("电脑声音中断：{e}"));
+        })) }, move |pcm, rate, info| output_sink.submit(true, pcm, rate, info));
         match output {
-            Ok(system) => Ok(Self { mic, system, state }),
-            Err(error) => { let _ = mic.stop(); Err(format!("电脑声音未能开始：{error}；已保留文件。")) }
+            Ok(system) => Ok(Self { mic, system, sink, worker }),
+            Err(error) => {
+                let _ = mic.stop();
+                record_failure(&sink.failure, format!("电脑声音未能开始：{error}"));
+                let _ = finish_worker(sink, worker);
+                Err(format!("电脑声音未能开始：{error}；已保留文件。"))
+            }
         }
     }
 
     /// An acquisition or write failure stops accepting further packets. Surface
     /// it while the session is still open so the user can finish and recover.
     pub(super) fn error(&self) -> Option<String> {
-        self.state.lock().map(|state| state.error.clone())
+        self.sink.failure.lock().map(|error| error.clone())
             .unwrap_or_else(|_| Some("会议录音状态不可用，已录内容保留。".into()))
     }
 
     pub(super) fn stop(self) -> Result<CaptureResult, String> {
-        if let Err(e) = self.system.stop() { if let Ok(mut state) = self.state.lock() { state.fail(format!("停止电脑声音失败：{e}")); } }
-        if let Err(e) = self.mic.stop() { if let Ok(mut state) = self.state.lock() { state.fail(format!("停止麦克风失败：{e}")); } }
-        let mutex = Arc::try_unwrap(self.state).map_err(|_| "录音线程尚未结束，原文件保留".to_string())?;
-        let mut state = mutex.into_inner().map_err(|_| "录音状态不可用，原文件保留".to_string())?;
+        let Self { mic, system, sink, worker } = self;
+        if let Err(e) = system.stop() { record_failure(&sink.failure, format!("停止电脑声音失败：{e}")); }
+        if let Err(e) = mic.stop() { record_failure(&sink.failure, format!("停止麦克风失败：{e}")); }
+        // Drain every accepted packet before sealing the WAV files.
+        let mut state = finish_worker(sink, worker)?;
         let end = state.mic.timeline.samples().max(state.system.timeline.samples());
         if state.error.is_none() {
             if let Err(e) = state.mic.pad(end).and_then(|_| state.system.pad(end)) { state.fail(format!("保存录音失败：{e}")); }
@@ -183,6 +271,42 @@ mod tests {
     use super::*;
     use std::sync::atomic::{AtomicU64, Ordering};
     static NEXT: AtomicU64 = AtomicU64::new(0);
+
+    #[test]
+    fn full_queue_reports_interruption_without_discarding_accepted_packet() {
+        let (sender, packets) = mpsc::sync_channel(1);
+        let sink = PacketSink { sender, failure: Arc::new(Mutex::new(None)) };
+        let info = TimedCaptureInfo { captured_at: None, discontinuity: false };
+        sink.submit(false, &[0.25], 16_000, info);
+        // No receiver is consuming: this must return rather than blocking the
+        // capture callback, and the first packet must remain recoverable.
+        sink.submit(true, &[0.75], 16_000, info);
+        assert!(sink.failure.lock().unwrap().as_ref().unwrap().contains("跟不上"));
+        match packets.try_recv().unwrap() {
+            WorkerMessage::Packet(packet) => assert_eq!(packet.pcm, [0.25]),
+            WorkerMessage::Finish => panic!("unexpected finish"),
+        }
+        assert!(matches!(packets.try_recv(), Err(mpsc::TryRecvError::Empty)));
+    }
+
+    #[test]
+    fn worker_finishes_even_if_a_timed_out_capture_keeps_a_sender() {
+        let root = std::env::temp_dir().join(format!("meeting-worker-finish-{}-{}", std::process::id(), NEXT.fetch_add(1, Ordering::Relaxed)));
+        fs::create_dir(&root).unwrap();
+        let track = |name: &str| Track { timeline: Timeline::new(), writer: TrackWriter::create(&root.join(name), 3).unwrap(), resampler: None };
+        let state = State { origin: None, mic: track("mic"), system: track("system"), error: None, discontinuity: false, ready: None };
+        let (sender, packets) = mpsc::sync_channel(1);
+        let sink = PacketSink { sender, failure: Arc::new(Mutex::new(None)) };
+        let retained = sink.clone();
+        let worker = thread::spawn(move || {
+            assert!(matches!(packets.recv(), Ok(WorkerMessage::Finish)));
+            state
+        });
+        drop(finish_worker(sink, worker).unwrap());
+        assert!(matches!(retained.sender.try_send(WorkerMessage::Finish), Err(mpsc::TrySendError::Disconnected(_))));
+        drop(retained);
+        fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn resampled_capture_packets_keep_offsets_in_saved_parts() {
