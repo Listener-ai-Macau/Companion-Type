@@ -537,6 +537,42 @@ pub(crate) fn interrupted_host_writer(path: &Path) -> Result<WriterLease, String
     Ok(pinned)
 }
 
+/// Discover only parts explicitly registered before capture, in recording
+/// order.  A crash between registration and file creation can leave the last
+/// part absent; a gap before a later part must never truncate the meeting.
+#[cfg(test)]
+pub(super) fn interrupted_host_parts(pinned: &WriterLease, anchor: &Path) -> Result<Vec<PathBuf>, String> {
+    let root = managed_root(anchor).ok_or_else(fail)?;
+    let source = reference_key(anchor)?;
+    if pinned.root != root || pinned.source != source { return Err(fail()); }
+    let stem = anchor.file_stem().and_then(|s|s.to_str()).ok_or_else(fail)?;
+    let prefix = format!("{stem}.host-part-");
+    let _guard = lock(&root)?;
+    let data = load(&root)?;
+    let mut parts = Vec::new();
+    for item in &data.files {
+        if item.purpose != Purpose::Recording || !item.sources.contains(&source) { continue; }
+        let Some(number) = item.file.strip_prefix(&prefix).and_then(|s|s.strip_suffix(".wav")) else {continue};
+        let index = number.parse::<usize>().map_err(|_|fail())?;
+        if index == 0 || number != format!("{index:08}") {return Err(fail());}
+        let path = root.join(&item.file);
+        if !item.sources.contains(&reference_key(&path)?) {return Err(fail());}
+        no_link(&path)?;
+        parts.push((index, path));
+    }
+    parts.sort_by_key(|(index,_)|*index);
+    let mut result=vec![anchor.to_path_buf()];
+    for (position,(index,path)) in parts.iter().enumerate() {
+        if *index != position+1 {return Err("录音分段缺失；原文件保留。".into());}
+        match fs::symlink_metadata(path) {
+            Ok(meta) if meta.is_file() && !meta.file_type().is_symlink() => result.push(path.clone()),
+            Err(e) if e.kind()==std::io::ErrorKind::NotFound && position+1==parts.len() => {},
+            _ => return Err("录音分段缺失；原文件保留。".into()),
+        }
+    }
+    Ok(result)
+}
+
 /// Persist the verified raw original identity before producing a recovery
 /// copy, so explicit future privacy erasure can verify and remove the source.
 pub(crate) fn checkpoint_interrupted_host(pinned: &WriterLease, path: &Path, size: u64, digest: &[u8; 32]) -> Result<(), String> {
