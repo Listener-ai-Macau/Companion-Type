@@ -29,17 +29,34 @@ pub(super) struct PartRecord {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub(super) struct PartManifest {
     total_samples: u64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    file_prefix: Option<String>,
     parts: Vec<PartRecord>,
 }
 
+fn part_path(root: &Path, prefix: Option<&str>, index: usize) -> Result<PathBuf, String> {
+    let name = if let Some(prefix) = prefix {
+        let rest = prefix.strip_prefix("board-session-").ok_or_else(fail)?;
+        let (session, generation) = rest.split_once(".parts-").ok_or_else(fail)?;
+        if session.len() != 64 || generation.len() != 32
+            || !session.bytes().chain(generation.bytes()).all(|b| b.is_ascii_hexdigit()) {
+            return Err(fail());
+        }
+        format!("{prefix}-part-{index:08}.wav")
+    } else {
+        format!("part-{index:08}.wav")
+    };
+    Ok(root.join(name))
+}
+
 impl PartManifest {
-    fn from_parts(root: &Path, parts: &[Part], total_samples: u64) -> Result<Self, String> {
+    fn from_parts(root: &Path, prefix: Option<String>, parts: &[Part], total_samples: u64) -> Result<Self, String> {
         let records = parts.iter().enumerate().map(|(index, part)| {
-            if part.path != root.join(format!("part-{index:08}.wav")) { return Err(fail()); }
+            if part.path != part_path(root, prefix.as_deref(), index)? { return Err(fail()); }
             Ok(PartRecord { first_sample: part.first_sample, samples: part.samples,
                 bytes: part.bytes, sha256: part.sha256.clone() })
         }).collect::<Result<Vec<_>, String>>()?;
-        let manifest = Self { total_samples, parts: records };
+        let manifest = Self { total_samples, file_prefix: prefix, parts: records };
         // PartWriter has already synced and hashed each newly written file.
         // Check the sample layout here; rehash only when reopening it later.
         manifest.paths(root)?;
@@ -61,7 +78,7 @@ impl PartManifest {
                 return Err(fail());
             }
             next = next.checked_add(part.samples).ok_or_else(fail)?;
-            paths.push(root.join(format!("part-{index:08}.wav")));
+            paths.push(part_path(root, self.file_prefix.as_deref(), index)?);
         }
         if next != self.total_samples { return Err(fail()); }
         Ok(paths)
@@ -84,6 +101,15 @@ impl PartManifest {
         }
         Ok(paths)
     }
+
+    pub(super) fn verify_owned(&self, root: &Path, source: &Path) -> Result<Vec<PathBuf>, String> {
+        let stem = source.file_stem().and_then(|name| name.to_str()).ok_or_else(fail)?;
+        if source.parent() != Some(root) || self.file_prefix.as_deref()
+            .is_none_or(|prefix| !prefix.starts_with(&format!("{stem}.parts-"))) {
+            return Err(fail());
+        }
+        self.verify(root)
+    }
 }
 
 struct OpenPart {
@@ -91,17 +117,25 @@ struct OpenPart {
     path: PathBuf,
     first_sample: u64,
     pcm_bytes: u32,
+    lease: Option<audio_artifacts::WriteLease>,
 }
 
-struct PartWriter {
+struct OwnedParts<'a> {
+    source: &'a Path,
+    pinned: Option<&'a audio_artifacts::WriterLease>,
+    prefix: String,
+}
+
+struct PartWriter<'a> {
     root: PathBuf,
+    owned: Option<OwnedParts<'a>>,
     max_pcm_bytes: u32,
     total_samples: u64,
     current: Option<OpenPart>,
     completed: Vec<Part>,
 }
 
-impl PartWriter {
+impl<'a> PartWriter<'a> {
     fn new(root: &Path, max_pcm_bytes: u32) -> Result<Self, String> {
         // RIFF has a 32-bit size including the 36 bytes after its size field.
         // Each split is internal; it is not a limit on the full recording.
@@ -109,16 +143,34 @@ impl PartWriter {
             return Err("音频分段大小无效。".into());
         }
         fs::create_dir(root).map_err(|e| export::local_write_error("创建录音分段目录", &e))?;
-        Ok(Self { root: root.into(), max_pcm_bytes, total_samples: 0, current: None, completed: Vec::new() })
+        Ok(Self { root: root.into(), owned: None, max_pcm_bytes, total_samples: 0, current: None, completed: Vec::new() })
+    }
+
+    fn new_owned(root: &Path, source: &'a Path, pinned: Option<&'a audio_artifacts::WriterLease>,
+        max_pcm_bytes: u32) -> Result<Self, String> {
+        if max_pcm_bytes < 2 || max_pcm_bytes % 2 != 0 || max_pcm_bytes > u32::MAX - 36
+            || source.parent() != Some(root) {
+            return Err(fail());
+        }
+        let stem = source.file_stem().and_then(|name| name.to_str()).ok_or_else(fail)?;
+        let prefix = format!("{stem}.parts-{}", uuid::Uuid::new_v4().simple());
+        // Check the derived name now; no receipt can direct writing elsewhere.
+        part_path(root, Some(&prefix), 0)?;
+        Ok(Self { root: root.into(), owned: Some(OwnedParts { source, pinned, prefix }),
+            max_pcm_bytes, total_samples: 0, current: None, completed: Vec::new() })
     }
 
     fn open_next(&mut self) -> Result<(), String> {
-        let path = self.root.join(format!("part-{:08}.wav", self.completed.len()));
+        let path = part_path(&self.root, self.owned.as_ref().map(|owned| owned.prefix.as_str()), self.completed.len())?;
+        let lease = if let Some(owned) = &self.owned {
+            audio_artifacts::WriteLease::begin_pinned(owned.source, &path,
+                audio_artifacts::Purpose::Recording, owned.pinned)?
+        } else { None };
         let mut file = OpenOptions::new().write(true).read(true).create_new(true).open(&path)
             .map_err(|e| export::local_write_error("创建录音分段", &e))?;
         file.write_all(&denzic_host_audio_v1_core::wav::wav_header(0))
             .map_err(|e| export::local_write_error("写入录音分段", &e))?;
-        self.current = Some(OpenPart { file, path, first_sample: self.total_samples, pcm_bytes: 0 });
+        self.current = Some(OpenPart { file, path, first_sample: self.total_samples, pcm_bytes: 0, lease });
         Ok(())
     }
 
@@ -146,7 +198,11 @@ impl PartWriter {
             .and_then(|_| current.file.sync_all())
             .map_err(|e| export::local_write_error("保存录音分段", &e))?;
         drop(current.file);
-        let (bytes, sha256) = digest(read_locked(&current.path)?)?;
+        let (bytes, sha256) = if let Some(lease) = current.lease {
+            lease.finish_with_identity()?
+        } else {
+            digest(read_locked(&current.path)?)?
+        };
         if bytes != u64::from(current.pcm_bytes) + 44 { return Err(fail()); }
         self.completed.push(Part { path: current.path, first_sample: current.first_sample,
             samples: u64::from(current.pcm_bytes / 2), bytes, sha256 });
@@ -176,7 +232,21 @@ pub(super) fn decode_to_manifest(ds: &[Descriptor], files: &mut [File], root: &P
     samples: u64, legacy_limited: bool, max_pcm_bytes: u32,
 ) -> Result<(PartManifest, Option<cop1::Timeline>), String> {
     let (parts, timeline) = decode_to_parts(ds, files, root, samples, legacy_limited, max_pcm_bytes)?;
-    Ok((PartManifest::from_parts(root, &parts, samples)?, timeline))
+    Ok((PartManifest::from_parts(root, None, &parts, samples)?, timeline))
+}
+
+/// Create flat, owned parts tied to the same recording as the compressed
+/// originals. A unique generation keeps an interrupted attempt separate.
+#[allow(dead_code)]
+pub(super) fn decode_to_owned_manifest(ds: &[Descriptor], files: &mut [File], root: &Path,
+    source: &Path, pinned: Option<&audio_artifacts::WriterLease>, samples: u64,
+    legacy_limited: bool, max_pcm_bytes: u32,
+) -> Result<(PartManifest, Option<cop1::Timeline>), String> {
+    let mut output = PartWriter::new_owned(root, source, pinned, max_pcm_bytes)?;
+    let prefix = output.owned.as_ref().map(|owned| owned.prefix.clone());
+    let timeline = decode_pcm(ds, files, samples, legacy_limited, |pcm| output.append(pcm))?;
+    let parts = output.finish(samples)?;
+    Ok((PartManifest::from_parts(root, prefix, &parts, samples)?, timeline))
 }
 
 #[cfg(test)]
@@ -227,6 +297,40 @@ mod tests {
         assert!(decode_to_parts(&descriptors,&mut files,&dir,audio.samples,false,1000).is_err());
         assert_eq!(fs::read(&paths[0]).unwrap(),first,"existing output must never be replaced");
         drop(files);drop(receiver);fs::remove_dir_all(root).unwrap();
+    }
+
+    #[test]
+    fn owned_parts_follow_recording_lifecycle_without_touching_other_files() {
+        let parent=std::env::temp_dir(); assert!(parent.is_absolute());
+        let root=parent.join(format!("companion-owned-parts-{}",uuid::Uuid::new_v4()));
+        assert_eq!(root.parent(),Some(parent.as_path())); fs::create_dir(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&root);
+        let source=super::super::source_boundary_tests::fixture();
+        let mut receiver=Receiver::open(&root,&source[0].0.encode().unwrap()).unwrap();
+        for (descriptor,payload) in &source { receiver.accept_segment(&descriptor.encode().unwrap(),payload).unwrap(); }
+        let primary=receiver.assemble().unwrap();
+        let expected=fs::read(&primary).unwrap();
+        let descriptors=receiver.descriptors().unwrap();
+        let mut files=descriptors.iter().map(|d|
+            verify_file(read_locked(&receiver.payload_path(d)).unwrap(),d).unwrap()
+        ).collect::<Vec<_>>();
+        let audio=receiver.receipt.audio.as_ref().unwrap();
+        let (manifest,timeline)=decode_to_owned_manifest(&descriptors,&mut files,&receiver.root,
+            &primary,receiver._usage.as_ref(),audio.samples,false,1000).unwrap();
+        assert_eq!(timeline,audio.timeline);
+        let reopened:PartManifest=serde_json::from_slice(&serde_json::to_vec(&manifest).unwrap()).unwrap();
+        let paths=reopened.verify_owned(&receiver.root,&primary).unwrap();
+        assert!(paths.len()>2 && paths.iter().all(|path|path.parent()==Some(receiver.root.as_path())));
+        let decoded=paths.iter().flat_map(|path|fs::read(path).unwrap()[44..].to_vec()).collect::<Vec<_>>();
+        assert_eq!(decoded,expected[44..]);
+        let foreign=receiver.root.join("unrelated.wav"); fs::write(&foreign,b"not part of this recording").unwrap();
+        assert!(reopened.verify_owned(&receiver.root,&receiver.root.join("other.wav")).is_err());
+        drop(files); drop(receiver);
+        let report=audio_artifacts::erase(&root,&[primary.to_string_lossy().into_owned()],&[]).unwrap();
+        assert!(report.deleted>=paths.len());
+        assert!(paths.iter().all(|path|!path.exists()));
+        assert_eq!(fs::read(&foreign).unwrap(),b"not part of this recording");
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); fs::remove_dir_all(root).unwrap();
     }
 
     #[test]

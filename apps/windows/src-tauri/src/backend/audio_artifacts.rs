@@ -351,6 +351,13 @@ impl WriteLease {
     ) -> Result<Option<Self>, String> {
         Self::begin_with(source,path,purpose,None)
     }
+    /// Keep an already pinned logical recording as the owner of a streamed
+    /// physical part for the whole time its file is being written.
+    pub(crate) fn begin_pinned(
+        source: &Path, path: &Path, purpose: Purpose, pinned: Option<&WriterLease>,
+    ) -> Result<Option<Self>, String> {
+        Self::begin_with(source, path, purpose, pinned)
+    }
     fn begin_with(source:&Path,path:&Path,purpose:Purpose,pinned:Option<&WriterLease>) -> Result<Option<Self>,String> {
         let Some(root) = managed_root(path) else {
             return Ok(None);
@@ -441,7 +448,7 @@ impl WriteLease {
         save(&self.root, &data)
     }
 
-    fn checkpoint(&mut self, phase: Phase) -> Result<(), String> {
+    fn checkpoint(&mut self, phase: Phase) -> Result<Option<(u64, String)>, String> {
         if phase == Phase::Sealed && self.root.join(&self.leaf).exists() {
             OpenOptions::new()
                 .write(true)
@@ -465,13 +472,19 @@ impl WriteLease {
         } else {
             phase
         };
+        let result = identity.as_ref().map(|value| (value.bytes, value.sha256.clone()));
         item.identity = identity;
         save(&self.root, &data)?;
         self.finished = true;
-        Ok(())
+        Ok(result)
     }
     pub(crate) fn finish(mut self) -> Result<(), String> {
-        self.checkpoint(Phase::Sealed)
+        self.checkpoint(Phase::Sealed).map(|_| ())
+    }
+    /// Reuse the identity already computed while sealing rather than reading
+    /// a potentially very large part a second time.
+    pub(crate) fn finish_with_identity(mut self) -> Result<(u64, String), String> {
+        self.checkpoint(Phase::Sealed)?.ok_or_else(fail)
     }
 }
 impl Drop for WriteLease {
