@@ -37,7 +37,7 @@ pub(crate) fn restore_local_session(id:&str)->Result<LocalRestoreReport,String> 
     restore_local_scope(&crate::backend::audio_storage::recording_root()?,
         &crate::backend::persistence::state_file_path(),Some(id))
 }
-fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<LocalRestoreReport,String> {
+pub(super) fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<LocalRestoreReport,String> {
     let root=root.canonicalize().map_err(|e|format!("本机录音目录不可用，未修改恢复记录：{e}"))?;
     let loaded=session_store::load(index);
     if loaded.state.status=="blocked" {
@@ -79,10 +79,13 @@ fn restore_local_scope(root:&Path,index:&Path,target:Option<&str>)->Result<Local
                         !crate::backend::device_connection::same_device_id(id,device)) {return Err(fail());}
                     let all_present=details.iter().try_fold(true,|all,(path,_,_,_)|Ok::<_,String>(regular(path)?&&all))?;
                     if row.audio_stored && target.is_none() && all_present {return Ok(RestoreOutcome::Unchanged);}
-                    let mut receiver=Receiver::open_for_local_repair(&root,&first.wire)?;
+                    let (mut receiver,repaired)=if target.is_some() {
+                        let mut receiver=Receiver::open_for_damaged_repair(&root,&first.wire)?;
+                        let repaired=receiver.rebuild_missing_parts(true)?;receiver.recover()?;(receiver,repaired)
+                    } else {(Receiver::open_for_local_repair(&root,&first.wire)?,!all_present)};
                     let paths=receiver.verify_parts_audio(receiver.receipt.parts_audio.as_ref().ok_or_else(fail)?)?;
                     if receiver.publish(index,device)?!=row.id{return Err(fail());}
-                    if all_present && row.audio_stored {return Ok(RestoreOutcome::Unchanged);}
+                    if !repaired && row.audio_stored {return Ok(RestoreOutcome::Unchanged);}
                     let original_bytes=receiver.descriptors()?.iter().map(|d|u64::from(d.encoded_length)).sum();
                     let audio_bytes=details.iter().try_fold(0u64,|sum,(_,_,_,bytes)|sum.checked_add(*bytes).ok_or_else(fail))?;
                     return Ok(RestoreOutcome::Restored(LocalRestoredRecording{session_id:row.id.clone(),

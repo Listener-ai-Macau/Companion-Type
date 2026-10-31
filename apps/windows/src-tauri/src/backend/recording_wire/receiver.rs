@@ -249,7 +249,7 @@ impl Receiver {
             OpenMode::LocalRepair=>{
                 this.recover_originals()?;
                 this.rebuild_missing_audio()?;
-                this.rebuild_missing_parts()?;
+                this.rebuild_missing_parts(false)?;
                 this.recover()?;
             },
             // Only SyncRepair owns this unchecked value. Its public surface
@@ -510,16 +510,15 @@ impl Receiver {
         self.assemble_inner(&descriptors,&mut files,expected.samples,false,Some(&expected),None)?;
         Ok(())
     }
-    fn rebuild_missing_parts(&mut self)->Result<(),String> {
-        let Some(saved)=self.receipt.parts_audio.clone() else{return Ok(())};
+    fn rebuild_missing_parts(&mut self,allow_damaged:bool)->Result<bool,String> {
+        let Some(saved)=self.receipt.parts_audio.clone() else{return Ok(false)};
         let descriptors=self.descriptors()?;
         let mut files=descriptors.iter().map(|d|verify_file(read_locked(&self.payload_path(d))?,d))
             .collect::<Result<Vec<_>,String>>()?;
         let timeline=collect_timeline(&descriptors,&mut files)?;
         if timeline!=saved.timeline {return Err(fail());}
         parts::restore_missing_owned(&descriptors,&mut files,&self.root,&self.audio_path(),self._usage.as_ref(),
-            &saved.manifest,&saved.timeline)?;
-        Ok(())
+            &saved.manifest,&saved.timeline,allow_damaged)
     }
     fn rebuild_damaged_audio(&mut self,damaged:&(u64,String))->Result<PathBuf,String> {
         let expected=self.receipt.audio.clone().ok_or_else(fail)?;

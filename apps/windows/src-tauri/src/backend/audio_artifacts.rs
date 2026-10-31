@@ -635,11 +635,19 @@ pub(crate) fn restore_missing_part_pinned<T>(pinned:Option<&WriterLease>,source:
 /// been retired, lost its owner, or changed since the explicit inspection.
 pub(crate) fn preflight_damaged_recording_pinned(pinned:Option<&WriterLease>,path:&Path,
     bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str)->Result<(),String> {
+    preflight_damaged_pinned(pinned,path,path,bytes,sha256,damaged_bytes,damaged_sha256)
+}
+pub(crate) fn preflight_damaged_part_pinned(pinned:Option<&WriterLease>,source:&Path,path:&Path,
+    bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str)->Result<(),String> {
+    preflight_damaged_pinned(pinned,source,path,bytes,sha256,damaged_bytes,damaged_sha256)
+}
+fn preflight_damaged_pinned(pinned:Option<&WriterLease>,source:&Path,path:&Path,
+    bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str)->Result<(),String> {
     let expected=Identity{bytes,sha256:sha256.to_owned()};
     let damaged=Identity{bytes:damaged_bytes,sha256:damaged_sha256.to_owned()};
     if damaged==expected || fingerprint(path)?!=Some(damaged) {return Err(fail())}
     let Some(root)=managed_root(path) else{return Ok(())};
-    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(path)?;
+    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(source)?;
     if pinned.root!=root || pinned.source!=source {return Err(fail())}
     let leaf=path.file_name().and_then(|n|n.to_str()).filter(|n|component(n)).ok_or_else(fail)?;
     let _lock=lock(&root)?;let manifest=load(&root)?;
@@ -656,14 +664,25 @@ pub(crate) fn preflight_damaged_recording_pinned(pinned:Option<&WriterLease>,pat
 pub(crate) fn restore_damaged_recording_pinned<T>(pinned:Option<&WriterLease>,path:&Path,
     bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str,backup:&Path,
     commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
+    restore_damaged_pinned(pinned,path,path,bytes,sha256,damaged_bytes,damaged_sha256,backup,commit)
+}
+pub(crate) fn restore_damaged_part_pinned<T>(pinned:Option<&WriterLease>,source:&Path,path:&Path,
+    bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str,backup:&Path,
+    commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
+    restore_damaged_pinned(pinned,source,path,bytes,sha256,damaged_bytes,damaged_sha256,backup,commit)
+}
+fn restore_damaged_pinned<T>(pinned:Option<&WriterLease>,source:&Path,path:&Path,
+    bytes:u64,sha256:&str,damaged_bytes:u64,damaged_sha256:&str,backup:&Path,
+    commit:impl FnOnce()->Result<T,String>)->Result<T,String> {
     let expected=Identity{bytes,sha256:sha256.to_owned()};
     let damaged=Identity{bytes:damaged_bytes,sha256:damaged_sha256.to_owned()};
     if damaged==expected || fingerprint(path)?!=Some(damaged.clone()) || fingerprint(backup)?.is_some() {return Err(fail())}
     let Some(root)=managed_root(path) else{return commit()};
-    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(path)?;
+    let pinned=pinned.ok_or_else(fail)?;let source=reference_key(source)?;
     if pinned.root!=root || pinned.source!=source || managed_root(backup)!=Some(root.clone()) {return Err(fail())}
     let leaf=path.file_name().and_then(|n|n.to_str()).filter(|n|component(n)).ok_or_else(fail)?;
     let backup_leaf=backup.file_name().and_then(|n|n.to_str()).filter(|n|component(n)).ok_or_else(fail)?;
+    let _target_lease=if source!=reference_key(path)? {Some(lease(&root,leaf)?)} else {None};
     let _backup_lease=lease(&root,backup_leaf)?;
     let _lock=lock(&root)?;let mut manifest=load(&root)?;
     let target=manifest.files.iter().find(|i|i.file==leaf).ok_or_else(fail)?;

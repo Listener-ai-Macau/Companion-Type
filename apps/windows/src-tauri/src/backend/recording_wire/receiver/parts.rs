@@ -124,24 +124,28 @@ impl PartManifest {
             (path, part.first_sample, part.samples, part.bytes)).collect())
     }
 
-    fn missing_owned(&self,root:&Path,source:&Path)->Result<(Vec<PathBuf>,Vec<bool>),String> {
+    fn inspect_owned(&self,root:&Path,source:&Path,allow_damaged:bool)->Result<(Vec<PathBuf>,Vec<PartRepair>),String> {
         let paths=self.owned_paths(root,source)?;
-        let mut missing=Vec::with_capacity(paths.len());
+        let mut repairs=Vec::with_capacity(paths.len());
         for (part,path) in self.parts.iter().zip(&paths) {
-            if !regular(path)? {missing.push(true);continue;}
+            if !regular(path)? {repairs.push(PartRepair::Missing);continue;}
+            let actual=digest(read_locked(path)?)?;
+            if actual!=(part.bytes,part.sha256.clone()) {
+                if !allow_damaged {return Err("录音分段内容已损坏；现有文件和原始录音已保留。".into());}
+                repairs.push(PartRepair::Damaged(actual));continue;
+            }
             let mut file=read_locked(path)?;let mut header=[0u8;44];
             file.read_exact(&mut header).map_err(|_|fail())?;
             let pcm=u32::try_from(part.samples.checked_mul(2).ok_or_else(fail)?).map_err(|_|fail())?;
-            file.seek(SeekFrom::Start(0)).map_err(|_|fail())?;
-            if header!=denzic_host_audio_v1_core::wav::wav_header(pcm)
-                || digest(file)?!=(part.bytes,part.sha256.clone()) {
-                return Err("录音分段内容已损坏；现有文件和原始录音已保留。".into());
-            }
-            missing.push(false);
+            if header!=denzic_host_audio_v1_core::wav::wav_header(pcm) {return Err(fail());}
+            repairs.push(PartRepair::None);
         }
-        Ok((paths,missing))
+        Ok((paths,repairs))
     }
 }
+
+#[derive(Clone)]
+enum PartRepair {None,Missing,Damaged((u64,String))}
 
 struct RestoreFile {
     file:Option<File>, lease:Option<audio_artifacts::WriteLease>, temporary:PathBuf,
@@ -159,13 +163,13 @@ impl Drop for RestoreFile {
 /// Decode once across the entire meeting, writing only parts that are absent.
 struct RestoreSink<'a> {
     root:&'a Path,source:&'a Path,pinned:Option<&'a audio_artifacts::WriterLease>,
-    manifest:&'a PartManifest,paths:Vec<PathBuf>,missing:Vec<bool>,index:usize,written:u64,current:Option<RestoreFile>,
+    manifest:&'a PartManifest,paths:Vec<PathBuf>,repairs:Vec<PartRepair>,index:usize,written:u64,current:Option<RestoreFile>,
 }
 impl RestoreSink<'_> {
     fn append(&mut self,mut pcm:&[u8])->Result<(),String> {
         while !pcm.is_empty() {
             let part=self.manifest.parts.get(self.index).ok_or_else(fail)?;
-            if self.written==0 && self.missing[self.index] {
+            if self.written==0 && !matches!(self.repairs[self.index],PartRepair::None) {
                 let temporary=self.root.join(format!(".companion-segments-{}.wav",uuid::Uuid::new_v4().simple()));
                 let lease=audio_artifacts::WriteLease::begin_pinned(self.source,&temporary,audio_artifacts::Purpose::DecodeTemporary,self.pinned)?;
                 let file=OpenOptions::new().write(true).create_new(true).open(&temporary).map_err(|_|fail())?;
@@ -188,8 +192,16 @@ impl RestoreSink<'_> {
             let file=current.file.take().ok_or_else(fail)?;file.sync_all().map_err(|_|fail())?;drop(file);
             let identity=if let Some(lease)=current.lease.take(){lease.finish_with_identity()?}else{digest(read_locked(&current.temporary)?)?};
             if identity!=(part.bytes,part.sha256.clone()) {return Err("重建的录音与原保存记录不一致；原始录音已保留。".into());}
-            audio_artifacts::restore_missing_part_pinned(self.pinned,self.source,&self.paths[self.index],part.bytes,&part.sha256,
-                ||export::replace_file(&current.temporary,&self.paths[self.index]))?;
+            match &self.repairs[self.index] {
+                PartRepair::Missing=>audio_artifacts::restore_missing_part_pinned(self.pinned,self.source,&self.paths[self.index],part.bytes,&part.sha256,
+                    ||export::replace_file(&current.temporary,&self.paths[self.index]))?,
+                PartRepair::Damaged((bytes,sha256))=>{
+                    let backup=self.root.join(format!(".companion-damaged-{}.wav",uuid::Uuid::new_v4().simple()));
+                    audio_artifacts::restore_damaged_part_pinned(self.pinned,self.source,&self.paths[self.index],part.bytes,&part.sha256,
+                        *bytes,sha256,&backup,||replace_with_backup(&current.temporary,&self.paths[self.index],&backup))?;
+                },
+                PartRepair::None=>return Err(fail()),
+            }
             if audio_artifacts::is_managed(&current.temporary) {let _=audio_artifacts::remove_temporary(&current.temporary);}
         }
         self.index+=1;self.written=0;Ok(())
@@ -197,10 +209,15 @@ impl RestoreSink<'_> {
 }
 
 pub(super) fn restore_missing_owned(ds:&[Descriptor],files:&mut[File],root:&Path,source:&Path,
-    pinned:Option<&audio_artifacts::WriterLease>,manifest:&PartManifest,expected_timeline:&Option<cop1::Timeline>)->Result<bool,String> {
-    let (paths,missing)=manifest.missing_owned(root,source)?;
-    if !missing.iter().any(|value|*value){return Ok(false);}
-    let mut sink=RestoreSink{root,source,pinned,manifest,paths,missing,index:0,written:0,current:None};
+    pinned:Option<&audio_artifacts::WriterLease>,manifest:&PartManifest,expected_timeline:&Option<cop1::Timeline>,allow_damaged:bool)->Result<bool,String> {
+    let (paths,repairs)=manifest.inspect_owned(root,source,allow_damaged)?;
+    if !repairs.iter().any(|value|!matches!(value,PartRepair::None)){return Ok(false);}
+    for ((part,path),repair) in manifest.parts.iter().zip(&paths).zip(&repairs) {
+        if let PartRepair::Damaged((bytes,sha256))=repair {
+            audio_artifacts::preflight_damaged_part_pinned(pinned,source,path,part.bytes,&part.sha256,*bytes,sha256)?;
+        }
+    }
+    let mut sink=RestoreSink{root,source,pinned,manifest,paths,repairs,index:0,written:0,current:None};
     let timeline=decode_pcm(ds,files,manifest.total_samples,false,|pcm|sink.append(pcm))?;
     if sink.index!=manifest.parts.len() || sink.written!=0 || &timeline!=expected_timeline{return Err(fail());}
     Ok(true)
@@ -418,6 +435,13 @@ mod tests {
         assert_eq!(fs::read(&unrelated).unwrap(),b"not a generated file");
         assert_eq!(fs::read(root.join(format!(".{}.json",crate::backend::persistence::load_sessions_from(&index).unwrap()[0].id))).unwrap(),receipt);
         let again=super::super::local::restore_local(&root,&index).unwrap();assert!(again.restored.is_empty()&&again.failures.is_empty());
+        let mut damaged=expected[2].clone();let last=damaged.len()-1;damaged[last]^=1;fs::write(&paths[2],&damaged).unwrap();
+        let id=crate::backend::persistence::load_sessions_from(&index).unwrap()[0].id.clone();
+        let repaired=super::super::local::restore_local_scope(&root,&index,Some(&id)).unwrap();
+        assert_eq!(repaired.restored.len(),1);assert!(repaired.failures.is_empty());assert_eq!(fs::read(&paths[2]).unwrap(),expected[2]);
+        let backups=fs::read_dir(&root).unwrap().filter_map(Result::ok).map(|entry|entry.path())
+            .filter(|path|path.file_name().and_then(|name|name.to_str()).is_some_and(|name|name.starts_with(".companion-damaged-")))
+            .collect::<Vec<_>>();assert_eq!(backups.len(),1);assert_eq!(fs::read(&backups[0]).unwrap(),damaged);
         fs::remove_file(&paths[1]).unwrap();fs::remove_file(&originals[0]).unwrap();
         let failed=super::super::local::restore_local(&root,&index).unwrap();assert_eq!(failed.failures.len(),1);
         assert!(!paths[1].exists());assert_eq!(fs::read(&paths[2]).unwrap(),expected[2]);
