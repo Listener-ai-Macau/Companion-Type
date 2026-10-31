@@ -192,3 +192,19 @@ fn schema5_profile_tail_reopens_grows_and_never_relabels_saved_provenance() {
     let (prefix,saved)=Prefix::load(&root,&grown,&peer).unwrap();assert_eq!(saved,more);drop(prefix);
     assert!(Prefix::load(&root,&first,&peer).is_err());fs::remove_dir_all(root).unwrap();
 }
+
+#[test]
+fn resumed_complete_tail_rejects_changed_sample_count_at_same_length() {
+    let root=root();
+    let (peer,tails,_,_)=engine_fixture();
+    let (tail,body)=&tails[1];
+    let (prefix,_)=Prefix::load(&root,tail,&peer).unwrap();
+    prefix.save(tail,body,&peer).unwrap();drop(prefix);
+    let spoof_wire=rewrite_wire(tail,tail.sample_count+320,tail.encoded_length,3);
+    let spoof=Tail::decode(&spoof_wire,&peer,&tail.key,u32le(&spoof_wire,68)).unwrap();
+    assert!(Prefix::load(&root,&spoof,&peer).is_err(),
+        "unchanged complete bytes cannot acquire a different sample count");
+    let (prefix,saved)=Prefix::load(&root,tail,&peer).unwrap();
+    assert_eq!(saved,*body);drop(prefix);
+    fs::remove_dir_all(root).unwrap();
+}

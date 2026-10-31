@@ -113,6 +113,11 @@ impl Prefix {
         let p=Self::open(root,tail.stem()?)?;
         let bytes=if let Some((old,bytes,_))=p.read(peer,&tail.key)? {
             if !tail.same_extent(&old)||old.encoded_length>tail.encoded_length||old.sample_count>tail.sample_count { return Err(fail("tail moved backwards or changed extent")); }
+            // The fast path can reuse a fully saved tail without calling save().
+            // The same immutable bytes cannot describe a different frame count.
+            if old.encoded_length==tail.encoded_length && old.sample_count!=tail.sample_count {
+                return Err(fail("unchanged tail bytes changed sample count"));
+            }
             bytes
         } else {Vec::new()};Ok((p,bytes))
     }
