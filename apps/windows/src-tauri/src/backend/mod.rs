@@ -5,6 +5,15 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+
+/// Read-only engineering admission check; never starts a firmware update.
+pub(crate) fn inspect_engineering_ota_preservation(device_id: &str) -> Result<(), String> {
+    if std::env::var("COMPANION_TYPE_ENGINEERING_PRESERVE_RECORDINGS").as_deref()!=Ok("1") {
+        return Err("工程保留模式未启用，未连接设备。".into());
+    }
+    ble_bridge::CompanionBleBridge::detect_default().sync_recordings_before_ota(device_id)?;
+    Ok(())
+}
 pub(crate) use ble_bridge::pet_find;
 pub(crate) mod lifecycle;
 pub(crate) use ble_bridge::release_process_device_links;
