@@ -31,6 +31,30 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn focused_actions_restore_conditional_source_and_do_not_duplicate_existing_assignment() {
+    let source = "小林负责整理材料，周五发给大家。如果客户提出修改，小陈下周一再确认交货日期。";
+    let part = session(source); let (mut minutes, mut evidence)=response(&part);
+    minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {
+        text:"整理材料".into(),owner:Some("小林".into()),due:Some("周五".into()) });
+    evidence.push(Evidence {field:"actionItems".into(), index:0, quote:"小林负责整理材料，周五发给大家。".into()});
+    let actions=vec![
+        FocusedAction {text:"整理材料".into(),owner:Some("小林".into()),due:Some("周五".into()),quote:"小林负责整理材料，周五发给大家。".into()},
+        FocusedAction {text:"确认交货日期".into(),owner:Some("小陈".into()),due:Some("下周一".into()),quote:"小陈下周一再确认交货日期。".into()},
+        FocusedAction {text:"伪造事项".into(),owner:None,due:None,quote:"原文不存在的事项".into()},
+    ];
+    merge_focused_actions(&mut minutes,&mut evidence,source,actions);
+    let omitted=retain_source_backed(&mut minutes,&mut evidence,source);
+    mark_uncertain_items(&mut minutes,&evidence);
+    assert_eq!(omitted,1); assert_eq!(minutes.action_items.len(),2);
+    assert_eq!(minutes.action_items[0].owner.as_deref(),Some("小林"));
+    assert!(minutes.action_items[1].text.contains("如果客户提出修改"));
+    assert!(minutes.action_items[1].text.contains("确认交货日期"));
+    assert_eq!(minutes.action_items[1].owner.as_deref(),Some("小陈"));
+    assert_eq!(minutes.action_items[1].due,None,"conditional dates cannot become unconditional reminders");
+    validate_chapter(&minutes,&evidence,source).unwrap();
+}
+
+#[test]
 fn source_partition_is_lossless_for_unicode_crlf_whitespace_and_long_lines() {
     for text in ["说话人2: 讨论👋、保留 1.8V 与否定句。\r\n\t\n".repeat(4000), "长".repeat(60000), " x\n\r\n".repeat(20000)] {
         let slices = plan(&text).unwrap(); assert!(slices.len() > 1);
@@ -317,10 +341,14 @@ fn request_budget_creates_partial_then_continues_without_lost_source() {
     let root=root(); let source=session(&"word ".repeat(CHUNK_BYTES * 7));
     let total=plan(&source.transcript_text).unwrap().len(); assert!(total>MAX_FRESH_REQUESTS);
     let first=run_with(&root,"https://fixture.invalid","model","key",&source,"first",|_,_,p,_|Ok(response(p))).unwrap();
-    assert_eq!(first.processing.as_ref().unwrap().completed_chunks,MAX_FRESH_REQUESTS); assert_eq!(first.quality,"draft");
+    assert_eq!(first.processing.as_ref().unwrap().completed_chunks,MAX_FRESH_REQUESTS / 2); assert_eq!(first.quality,"draft");
     let next=run_with(&root,"https://fixture.invalid","model","key",&source,"retry",|_,_,p,_|Ok(response(p))).unwrap();
-    assert_eq!(next.processing.as_ref().unwrap().resumed_chunks,MAX_FRESH_REQUESTS);
-    assert!(next.processing.unwrap().is_complete()); cleanup(root);
+    assert_eq!(next.processing.as_ref().unwrap().resumed_chunks,MAX_FRESH_REQUESTS / 2);
+    let mut current=next;
+    while !current.processing.as_ref().unwrap().is_complete() {
+        current=run_with(&root,"https://fixture.invalid","model","key",&source,"continue",|_,_,p,_|Ok(response(p))).unwrap();
+    }
+    assert_eq!(current.processing.unwrap().processed_source_bytes,source.transcript_text.len()); cleanup(root);
 }
 
 #[test]
