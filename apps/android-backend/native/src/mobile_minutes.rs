@@ -87,6 +87,38 @@ mod tests {
         assert!(resolved.parent()==Some(temp.as_path())&&resolved.file_name().unwrap().to_string_lossy().starts_with("companion-mobile-minutes-test-"));
         std::fs::remove_dir_all(resolved).unwrap();
     }
+
+    #[test]
+    fn missing_evidence_is_retried_without_user_restart() {
+        let chapter=json!({"summary":["follow up report"],"decisions":[],"actionItems":[],"questions":[],"keywords":[],"markdown":"follow up report",
+            "evidence":[{"field":"summary","index":0,"quote":"follow up report"}]});
+        let mut missing=chapter.clone();missing.as_object_mut().unwrap().remove("evidence");
+        let (url,calls,job)=server(vec![(200,missing),(200,chapter.clone()),(200,chapter.clone()),(200,chapter.clone()),(200,chapter)]);
+        let root=cache();let transcript="follow up report. ".repeat(3200);
+        let result:Value=serde_json::from_str(&generate_json(&request(&url,&transcript),"synthetic-key",&root).unwrap()).unwrap();
+        assert_eq!(result["quality"],"final");assert_eq!(result["processing"]["complete"],true);
+        assert_eq!(result["processing"]["sourceBytes"],transcript.len());assert_eq!(calls.load(Ordering::SeqCst),5);
+        job.join().unwrap();
+        let resolved=root.canonicalize().unwrap();let temp=std::env::temp_dir().canonicalize().unwrap();
+        assert!(resolved.parent()==Some(temp.as_path())&&resolved.file_name().unwrap().to_string_lossy().starts_with("companion-mobile-minutes-test-"));
+        std::fs::remove_dir_all(resolved).unwrap();
+    }
+    #[test]
+    fn repeated_missing_evidence_stays_draft_and_authentication_is_not_retried() {
+        let missing=json!({"summary":["follow up report"],"decisions":[],"actionItems":[],"questions":[],"keywords":[],"markdown":"follow up report"});
+        let transcript="follow up report. ".repeat(3200);
+        for (responses,expected_calls) in [(vec![(200,missing.clone()),(200,missing)],2),
+                                            (vec![(401,json!({}))],1)] {
+            let (url,calls,job)=server(responses);let root=cache();
+            let result:Value=serde_json::from_str(&generate_json(&request(&url,&transcript),"synthetic-key",&root).unwrap()).unwrap();
+            assert_eq!(result["quality"],"draft");assert_eq!(result["processing"]["complete"],false);
+            assert_eq!(result["processing"]["completedChunks"],0);assert_eq!(calls.load(Ordering::SeqCst),expected_calls);
+            job.join().unwrap();
+            let resolved=root.canonicalize().unwrap();let temp=std::env::temp_dir().canonicalize().unwrap();
+            assert!(resolved.parent()==Some(temp.as_path())&&resolved.file_name().unwrap().to_string_lossy().starts_with("companion-mobile-minutes-test-"));
+            std::fs::remove_dir_all(resolved).unwrap();
+        }
+    }
     #[test]
     fn rejects_insecure_remote_endpoint_before_sending() {
         assert!(generate_json(&request("http://example.com/chat/completions","synthetic"),"synthetic-key",&cache()).is_err());

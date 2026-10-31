@@ -85,6 +85,24 @@ fn malformed_provider_response_is_retried_once_for_the_same_segment() {
 }
 
 #[test]
+fn missing_evidence_retries_once_then_preserves_finished_chapters() {
+    let root=root();let source=session(&"公开会议内容。\n".repeat(2000));
+    let mut calls=Vec::new();
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
+        calls.push(index);
+        if calls.len()==1 {Err(MISSING_EVIDENCE.into())} else {Ok(response(part))}
+    }).unwrap();
+    assert_eq!(&calls[..2],&[0,0]);assert!(result.processing.unwrap().is_complete());
+    let mut repeated=0;
+    let other=session(&"另一场公开会议内容。\n".repeat(2000));
+    let partial=run_with(&root,"https://fixture.invalid","model","key",&other,"now",|_,_,_,_| {
+        repeated+=1;Err(MISSING_EVIDENCE.into())
+    }).unwrap();
+    assert_eq!(repeated,2);assert_eq!(partial.quality,"draft");assert_eq!(partial.processing.unwrap().completed_chunks,0);
+    cleanup(root);
+}
+
+#[test]
 fn repeated_malformed_response_stays_partial_and_does_not_loop() {
     let root = root(); let source = session(&"公开会议内容。\n".repeat(2000));
     let mut calls = 0;
