@@ -107,6 +107,7 @@ mod host_recording;
 mod meeting_audio_timeline;
 mod meeting_audio_tracks;
 mod meeting_audio_recovery;
+mod meeting_audio_mix;
 mod meeting_audio_transcription;
 #[cfg(windows)]
 mod meeting_audio_capture;
