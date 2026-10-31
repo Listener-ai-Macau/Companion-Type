@@ -74,6 +74,7 @@ const noop=()=>{};
 const help=renderToStaticMarkup(<CompanionHelp onClose={noop} onDevice={noop} onLibrary={noop} onDiagnostics={noop}/>);
 assert.match(help,/长会议怎样录、怎样看重点/);
 assert.match(help,/电脑本地转写和云端整理有什么区别/);
+assert.match(help,/长会议会分段整理并额外检查待办/);
 assert.match(help,/换电脑前怎样备份和恢复/);
 assert.match(help,/设备同步不是跨电脑云备份/);
 console.log('PASS readiness and ordinary action wiring: no automatic work, stale capacity suppressed, duration/slot advice, power unknown, interface failure, saved-only recording without ASR, busy/recovery safeguards. Controlled software cases, no device or cloud.');
