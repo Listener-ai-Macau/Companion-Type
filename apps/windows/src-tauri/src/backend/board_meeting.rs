@@ -69,9 +69,16 @@ fn capture_date(value: Option<&str>) -> Option<String> {
 pub(super) fn retain_capture_dates(session: &mut CompanionV1HostSession) {
     session.started_at = capture_date(session.started_at.as_deref());
     session.stopped_at = capture_date(session.stopped_at.as_deref());
+    let segmented = session.device_recording_key.is_some();
     for chunk in &mut session.chunks {
         chunk.started_at = capture_date(chunk.started_at.as_deref());
-        chunk.stopped_at = capture_date(chunk.stopped_at.as_deref());
+        // Segmented originals use these two values as provenance markers,
+        // not capture dates. Removing them on reload makes the next ordinary
+        // transcript/minutes save look like a lost device recording.
+        let provenance = segmented && matches!((chunk.stopped_at.as_deref(), chunk.status.as_str()),
+            (Some("verified-v2-segment"), "sealed" | "synced")
+                | (Some("verified-v2-session"), "synced"));
+        if !provenance { chunk.stopped_at = capture_date(chunk.stopped_at.as_deref()); }
     }
 }
 

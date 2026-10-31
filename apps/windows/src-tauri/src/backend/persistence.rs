@@ -687,6 +687,47 @@ mod tests {
     }
 
     #[test]
+    fn segmented_recording_reload_keeps_provenance_and_allows_transcript_save() {
+        use crate::companion_v1::CompanionV1RecordingKey;
+        let dir = std::env::temp_dir().join(format!("companion-segmented-reload-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();
+        let path = dir.join("sessions.json");
+        let mut session = sample_session("board-segmented", "");
+        session.source = "boardDevice".into();
+        session.status = "captured".into();
+        session.device_recording_key = Some(CompanionV1RecordingKey {
+            device_uid: "0123456789abcdef01234567".into(), format_epoch: "1".into(), session_id: "2".into(),
+        });
+        session.chunks = vec![
+            CompanionV1AudioChunk { id: "segment".into(), path: Some("segment.opus".into()),
+                started_at: None, stopped_at: Some("verified-v2-segment".into()), duration_ms: 5000,
+                bytes: 100, status: "sealed".into() },
+            CompanionV1AudioChunk { id: "assembled".into(), path: session.audio_path.clone(),
+                started_at: None, stopped_at: Some("verified-v2-session".into()), duration_ms: 5000,
+                bytes: session.audio_bytes, status: "synced".into() },
+        ];
+        save_sessions_to(&path, &[session]).unwrap();
+        let mut loaded = load_sessions_from(&path).unwrap();
+        assert_eq!(loaded[0].chunks[0].stopped_at.as_deref(), Some("verified-v2-segment"));
+        assert_eq!(loaded[0].chunks[1].stopped_at.as_deref(), Some("verified-v2-session"));
+        loaded[0].transcript_text = "已识别的会议内容".into();
+        loaded[0].transcript_final = true;
+        super::super::session_store::save_snapshot_checked(&path, &loaded, &[], &[]).unwrap();
+        let saved = load_sessions_from(&path).unwrap();
+        assert_eq!(saved[0].transcript_text, "已识别的会议内容");
+        assert!(saved[0].transcript_final);
+        assert_eq!(saved[0].chunks[0].stopped_at.as_deref(), Some("verified-v2-segment"));
+        let mut legacy = saved[0].clone();
+        legacy.device_recording_key = None;
+        super::super::board_meeting::retain_capture_dates(&mut legacy);
+        assert!(legacy.chunks.iter().all(|chunk| chunk.stopped_at.is_none()));
+        let mut wrong_status = saved[0].clone();
+        wrong_status.chunks[0].status = "recording".into();
+        super::super::board_meeting::retain_capture_dates(&mut wrong_status);
+        assert!(wrong_status.chunks[0].stopped_at.is_none());
+    }
+
+    #[test]
     fn load_returns_none_when_missing() {
         let path = std::env::temp_dir().join("definitely-missing-companion-state.json");
         let _ = fs::remove_file(&path);
