@@ -25,7 +25,7 @@ pub fn parse_offer(p:&[u8],expected_request:u32)->Result<Offer,&'static str> {
     let started=u32le(p,76);let last=u32le(p,80);let token=[u32le(p,84),u32le(p,88)];
     if a>=64||n==0||n>64||slots&(1u64<<a)==0||slots.count_ones()!=u32::from(n)||generation==0||epoch==0||session==0||
         uid.iter().all(|x|*x==0)||uid.iter().all(|x|*x==255)||samples==0||samples%320!=0||oldest_id==0||max_id<oldest_id||
-        encoded==0||reserved==0||reserved%4096!=0||last>=1024||(token[0]==0&&token[1]==0) {return Err("invalid offer fields")}
+        encoded==0||reserved==0||reserved%4096!=0||last==u32::MAX||(token[0]==0&&token[1]==0) {return Err("invalid offer fields")}
     Ok(Offer{request_id:expected_request,generation,uid,epoch,session,slots,samples,oldest_id,max_id,segments:n,
         anchor_slot:a,encoded_bytes:encoded,reserved_bytes:reserved,started_unix_s:started,last_index:last,token,wire:p.try_into().unwrap()})
 }

@@ -37,7 +37,7 @@ impl Journal {
                 end.duration_ms<c.duration_ms && !end.recovered_prefix)
             || (end.recovered_prefix && !end.capture_incomplete)
             || end.anchor==0 || end.terminal_recording_id==0 || end.total_segments==0
-            || end.total_segments>1024 || end.duration_ms==0
+            || end.duration_ms==0
             || end.terminal_sha256.len()!=64 || !end.terminal_sha256.bytes().all(|b|b.is_ascii_hexdigit())
             || end.terminal_sha256.bytes().all(|b|b==b'0')
             || end.end_reason.is_some_and(|reason|self.end_reason!=Some(reason)) {

@@ -1,7 +1,7 @@
 //! Durable V2 segment consumer. No BLE action is performed here. The caller
 //! must negotiate V2 and validate the actual UID. Every pathname is derived from validated
 //! immutable metadata, never loaded as an arbitrary path from a receipt.
-use super::{plan_group, Descriptor, GroupPlan, SessionKey, MAX_SEGMENTS};
+use super::{plan_group, Descriptor, GroupPlan, SessionKey};
 use crate::backend::{audio_artifacts, cop1, export, session_store};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -12,11 +12,15 @@ use std::{
     path::{Path, PathBuf},
 };
 
-const MAX_RECEIPT: u64 = 2 * 1024 * 1024;
 const ACK_BYTES: usize = 84;
 const MAX_PCM_BYTES: u64 = 1024 * 1024 * 1024;
 fn fail() -> String {
     "分段录音的恢复记录或文件不可用，原件已保留；请解除占用或重新同步缺失的段。".into()
+}
+// Parse the complete session receipt without a fixed recording-length ceiling.
+// BufReader avoids making an additional full in-memory copy of the JSON.
+fn read_receipt(path: &Path) -> Result<Receipt, String> {
+    serde_json::from_reader(std::io::BufReader::new(read_locked(path)?)).map_err(|_| fail())
 }
 fn regular(path: &Path) -> Result<bool, String> {
     match fs::symlink_metadata(path) {
@@ -107,11 +111,8 @@ impl Receiver {
             if hash.len() != 64 || !hash.bytes().all(|b| b.is_ascii_hexdigit()) { continue; }
             if scoped_hash.as_deref().is_some_and(|wanted| hash != wanted) { continue; }
             let decoded = (|| -> Result<Option<Vec<u8>>, String> {
-                let mut body = Vec::new();
-                read_locked(&entry.path())?.take(MAX_RECEIPT + 1).read_to_end(&mut body).map_err(|_| fail())?;
-                if body.len() as u64 > MAX_RECEIPT { return Err(fail()); }
-                let receipt: Receipt = serde_json::from_slice(&body).map_err(|_| fail())?;
-                if receipt.schema != 1 || receipt.segments.is_empty() || receipt.segments.len() > MAX_SEGMENTS as usize { return Err(fail()); }
+                let receipt = read_receipt(&entry.path())?;
+                if receipt.schema != 1 || receipt.segments.is_empty() { return Err(fail()); }
                 let d = Descriptor::decode(&receipt.segments[0].wire)?;
                 if hash != receipt_key_hash(&d.key)? { return Err(fail()); }
                 if d.key.device_uid != peer.uid || d.key.format_epoch != peer.epoch { return Ok(None); }
@@ -138,9 +139,7 @@ impl Receiver {
         let stem=format!("board-session-{:x}",Sha256::digest(serde_json::to_vec(key).map_err(|_|fail())?));
         let path=root.join(format!(".{stem}.json"));
         if !regular(&path)? {return Ok(Vec::new());}
-        let mut body=Vec::new();read_locked(&path)?.take(MAX_RECEIPT+1).read_to_end(&mut body).map_err(|_|fail())?;
-        if body.len() as u64>MAX_RECEIPT {return Err(fail());}
-        let receipt:Receipt=serde_json::from_slice(&body).map_err(|_|fail())?;
+        let receipt=read_receipt(&path)?;
         let first=receipt.segments.first().ok_or_else(fail)?;
         if Descriptor::decode(&first.wire)?.key!=*key {return Err(fail());}
         let receiver=Self::open(root,&first.wire)?;
@@ -187,16 +186,8 @@ impl Receiver {
         lock.try_lock().map_err(|_| fail())?;
         let path = root.join(format!(".{stem}.json"));
         let receipt = if regular(&path)? {
-            let mut bytes = vec![];
-            read_locked(&path)?
-                .take(MAX_RECEIPT + 1)
-                .read_to_end(&mut bytes)
-                .map_err(|_| fail())?;
-            if bytes.len() as u64 > MAX_RECEIPT {
-                return Err(fail());
-            }
-            let r: Receipt = serde_json::from_slice(&bytes).map_err(|_| fail())?;
-            if r.schema != 1 || r.segments.is_empty() || r.segments.len() > MAX_SEGMENTS as usize {
+            let r = read_receipt(&path)?;
+            if r.schema != 1 || r.segments.is_empty() {
                 return Err(fail());
             }
             r
@@ -298,9 +289,6 @@ impl Receiver {
             return Err(fail());
         }
         let bytes = serde_json::to_vec(&self.receipt).map_err(|_| fail())?;
-        if bytes.len() as u64 > MAX_RECEIPT {
-            return Err(fail());
-        }
         let result = audio_artifacts::generated_pinned(
             self._usage.as_ref(),
             &self.audio_path(),
@@ -330,7 +318,7 @@ impl Receiver {
             }
             return Ok(());
         }
-        if self.receipt.audio.is_some() || descriptors.len() >= MAX_SEGMENTS as usize {
+        if self.receipt.audio.is_some() {
             return Err(fail());
         }
         let mut all = descriptors;
@@ -788,6 +776,22 @@ mod pause_tests;
 mod device_bookmark_tests;
 #[cfg(test)]
 mod source_boundary_tests;
+
+#[cfg(test)]
+mod long_receipt_tests {
+    use super::*;
+    #[test]
+    fn reads_large_complete_receipt_and_rejects_truncated_json() {
+        let path=std::env::temp_dir().join(format!("companion-large-receipt-{}-{:?}.json",std::process::id(),std::thread::current().id()));
+        let receipt=Receipt{schema:1,segments:vec![Segment{wire:vec![0;112],received:false,acked:false};10000],audio:None,device:None};
+        let mut file=OpenOptions::new().write(true).create_new(true).open(&path).unwrap();
+        serde_json::to_writer(&mut file,&receipt).unwrap();file.sync_all().unwrap();drop(file);
+        assert!(fs::metadata(&path).unwrap().len()>2*1024*1024);
+        assert_eq!(read_receipt(&path).unwrap().segments.len(),10000);
+        fs::write(&path,b"{").unwrap();assert!(read_receipt(&path).is_err());
+        fs::remove_file(path).unwrap();
+    }
+}
 
 mod probe;
 mod publish;
