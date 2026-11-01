@@ -11,7 +11,13 @@ mod model_download;
 use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
 use std::{fs, path::PathBuf, sync::Mutex};
 
-const MODEL_BASE: &str = "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/resolve/2365baeacb507f821a0c8120fcee3d484dba7a07/";
+// Publisher's pinned ONNX weights. Metadata and vocabulary are derived from
+// the same published configuration; appending metadata does not alter weights.
+const OFFICIAL_URL: &str = "https://huggingface.co/funasr/Paraformer-large/resolve/6843c899b177f325d4bbdad8c08d85d5b1321f00/model_quant.onnx?download=true";
+const OFFICIAL_RAW_SHA: &str = "0418089a74ae93556db7802cacc7ea42d9ca55902cf90dfc2c3374bc248c7414";
+const OFFICIAL_RAW_SIZE: u64 = 237_653_364;
+const OFFICIAL_METADATA: &[u8] = include_bytes!("official_paraformer_assets/metadata.bin");
+const OFFICIAL_TOKENS: &[u8] = include_bytes!("official_paraformer_assets/tokens.txt");
 const ASSETS: [(&str, &str); 5] = [
     (
         "sherpa-onnx-paraformer-zh-small-2024-03-09/model.int8.onnx",
@@ -56,7 +62,9 @@ pub(super) fn assets_present() -> bool {
         let old_model = ASSETS[..2].iter().all(|(name, _)| dir.join(name).metadata().is_ok_and(|m|m.is_file() && m.len() > 0));
         let sense = dir.join(shared::SENSE_DIR);
         let present = |name: &str| sense.join(name).metadata().is_ok_and(|m|m.is_file() && m.len() > 0);
-        runtime && (old_model || (sense.join("ready").is_file() && present("model.int8.onnx") && present("tokens.txt")))
+        let official = dir.join(shared::OFFICIAL_DIR);
+        let official_present = official.join("ready").is_file() && ["model.int8.onnx", "tokens.txt"].iter().all(|name| official.join(name).metadata().is_ok_and(|m| m.is_file() && m.len() > 0));
+        runtime && (old_model || official_present || (sense.join("ready").is_file() && present("model.int8.onnx") && present("tokens.txt")))
     })
 }
 
@@ -91,10 +99,10 @@ pub(super) fn prepare() -> Result<(), String> {
         .try_lock()
         .map_err(|_| "本地转写模型正在准备，请稍候。")?;
     let dest = root()?;
-    let sense = dest.join(shared::SENSE_DIR);
-    if ModelKind::available(&dest) == ModelKind::SenseVoice
-        && shared::verified(&sense.join("model.int8.onnx"), shared::SENSE_MODEL_SHA).is_ok()
-        && shared::verified(&sense.join("tokens.txt"), shared::SENSE_TOKENS_SHA).is_ok()
+    let official = dest.join(shared::OFFICIAL_DIR);
+    if ModelKind::available(&dest) == ModelKind::OfficialParaformer
+        && shared::verified(&official.join("model.int8.onnx"), shared::OFFICIAL_MODEL_SHA).is_ok()
+        && shared::verified(&official.join("tokens.txt"), shared::OFFICIAL_TOKENS_SHA).is_ok()
         && ASSETS[2..].iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok()) {
         return Ok(());
     }
@@ -109,13 +117,23 @@ pub(super) fn prepare() -> Result<(), String> {
     lock.try_lock().map_err(|_| "本地模型正在准备，请稍候。")?;
     let stage = parent.join(format!("local-asr-{}", uuid::Uuid::new_v4()));
     fs::create_dir(&stage).map_err(|e| format!("无法准备本地模型：{e}"))?;
-    let assets = [("model.int8.onnx",239_233_841,shared::SENSE_MODEL_SHA), ("tokens.txt",315_894,shared::SENSE_TOKENS_SHA)];
     let mut result = (|| {
         super::super::audio_components::prepare_runtime(&stage, &dest)?;
         let client=reqwest::blocking::Client::builder().connect_timeout(std::time::Duration::from_secs(15))
             .timeout(std::time::Duration::from_secs(600)).build().map_err(|_| "无法创建模型下载连接。")?;
-        model_download::stage_assets(&client, MODEL_BASE, &sense, &stage, &downloads, &assets)?;
-        fs::create_dir_all(&sense).map_err(|e| e.to_string())?;
+        let partial=downloads.join(format!("{OFFICIAL_RAW_SHA}.part"));
+        model_download::fetch(&client, OFFICIAL_URL, OFFICIAL_RAW_SIZE, OFFICIAL_RAW_SHA, &partial)?;
+        let staged_model=stage.join("model.int8.onnx");
+        fs::copy(&partial, &staged_model).map_err(|_| "无法准备本地模型。")?;
+        let mut model=fs::OpenOptions::new().append(true).open(&staged_model).map_err(|e|e.to_string())?;
+        model.write_all(OFFICIAL_METADATA).and_then(|_|model.sync_all()).map_err(|e|e.to_string())?;
+        drop(model);
+        shared::verified(&staged_model, shared::OFFICIAL_MODEL_SHA)?;
+        let tokens=stage.join("tokens.txt");
+        let mut file=File::create(&tokens).map_err(|e|e.to_string())?;
+        file.write_all(OFFICIAL_TOKENS).and_then(|_|file.sync_all()).map_err(|e|e.to_string())?;
+        drop(file);shared::verified(&tokens, shared::OFFICIAL_TOKENS_SHA)?;
+        fs::create_dir_all(&official).map_err(|e| e.to_string())?;
         let dest = dest.canonicalize().map_err(|e| e.to_string())?;
         for (name, hash) in &ASSETS[2..] {
             if shared::verified(&dest.join(name), hash).is_err() {
@@ -123,8 +141,8 @@ pub(super) fn prepare() -> Result<(), String> {
                 super::super::export::replace_file(&file, &dest.join(name))?;
             }
         }
-        let model_dir = dest.join(shared::SENSE_DIR);
-        for (name, hash) in [("model.int8.onnx",shared::SENSE_MODEL_SHA), ("tokens.txt",shared::SENSE_TOKENS_SHA)] {
+        let model_dir = dest.join(shared::OFFICIAL_DIR);
+        for (name, hash) in [("model.int8.onnx",shared::OFFICIAL_MODEL_SHA), ("tokens.txt",shared::OFFICIAL_TOKENS_SHA)] {
             if shared::verified(&model_dir.join(name), hash).is_err() {
                 let file=stage.join(name).canonicalize().map_err(|e|e.to_string())?;
                 super::super::export::replace_file(&file, &model_dir.join(name))?;
@@ -133,22 +151,27 @@ pub(super) fn prepare() -> Result<(), String> {
         }
         let ready = stage.join("ready");
         let mut marker=File::create(&ready).map_err(|e|e.to_string())?;
-        marker.write_all(shared::SENSE_MODEL_SHA.as_bytes()).and_then(|_|marker.sync_all()).map_err(|e|e.to_string())?;
+        marker.write_all(shared::OFFICIAL_MODEL_SHA.as_bytes()).and_then(|_|marker.sync_all()).map_err(|e|e.to_string())?;
         drop(marker);
         super::super::export::replace_file(&ready.canonicalize().map_err(|e|e.to_string())?, &model_dir.join("ready"))?;
         Ok(())
     })();
     if result.is_err() {
-        // The preferred model may be present but damaged. Preserve a verified
-        // existing Paraformer and runtime when its download cannot be repaired.
-        let existing_verified = ASSETS.iter().all(|(name, hash)|
-            shared::verified(&dest.join(name), hash).is_ok());
-        if existing_verified || prepare_legacy(&dest, &stage).is_ok() { result = Ok(()); }
+        // Keep an existing verified model usable if the new download fails.
+        let runtime_verified = ASSETS[2..].iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok());
+        let old_verified = ASSETS[..2].iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok());
+        let sense = dest.join(shared::SENSE_DIR);
+        let sense_verified = sense.join("ready").is_file()
+            && shared::verified(&sense.join("model.int8.onnx"), shared::SENSE_MODEL_SHA).is_ok()
+            && shared::verified(&sense.join("tokens.txt"), shared::SENSE_TOKENS_SHA).is_ok();
+        if (runtime_verified && (old_verified || sense_verified)) || prepare_legacy(&dest, &stage).is_ok() { result = Ok(()); }
     }
     if result.is_ok() {
         // A verified fallback is already usable; do not leave abandoned model
         // downloads consuming disk space after a successful setup.
-        for (_, _, hash) in assets { let _ = fs::remove_file(downloads.join(format!("{hash}.part"))); }
+        if shared::verified(&dest.join(shared::OFFICIAL_DIR).join("model.int8.onnx"), shared::OFFICIAL_MODEL_SHA).is_ok() {
+            let _ = fs::remove_file(downloads.join(format!("{OFFICIAL_RAW_SHA}.part")));
+        }
     }
     if let (Ok(actual), Ok(expected)) = (stage.canonicalize(), parent.canonicalize()) {
         if actual.parent() == Some(expected.as_path()) && actual.file_name() == stage.file_name() {
@@ -157,20 +180,18 @@ pub(super) fn prepare() -> Result<(), String> {
     }
     result
 }
-// Prefer SenseVoice, but a broken preferred model must not hide a usable
-// verified Paraformer already on disk. The runtime verifies both alternatives.
+// A broken preferred model must not hide a usable verified older model.
 fn load_preferred(root: &Path) -> Result<(Runtime, ModelKind), String> {
     let preferred = ModelKind::available(root);
-    match Runtime::load_model(root, root, preferred) {
-        Ok(runtime) => Ok((runtime, preferred)),
-        Err(error) if preferred == ModelKind::SenseVoice => {
-            match Runtime::load_model(root, root, ModelKind::Paraformer) {
-                Ok(runtime) => Ok((runtime, ModelKind::Paraformer)),
-                Err(_) => Err(error),
-            }
+    let mut first_error = None;
+    for (index, kind) in [preferred, ModelKind::SenseVoice, ModelKind::Paraformer].into_iter().enumerate() {
+        if index > 0 && kind == preferred { continue; }
+        match Runtime::load_model(root, root, kind) {
+            Ok(runtime) => return Ok((runtime, kind)),
+            Err(error) => if first_error.is_none() { first_error = Some(error); },
         }
-        Err(error) => Err(error),
     }
+    Err(first_error.unwrap_or_else(|| "本地转写模型不可用。".into()))
 }
 pub(super) fn check() -> Result<(), String> {
     let root = root()?;
@@ -251,7 +272,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     Ok(super::CompanionTranscript {
         text,
         provider_id: format!("companion-type-{}", kind.provider()),
-        mode: match kind { ModelKind::Paraformer => "offline:paraformer", ModelKind::SenseVoice => "offline:sensevoice" }.into(),
+        mode: match kind { ModelKind::OfficialParaformer | ModelKind::Paraformer => "offline:paraformer", ModelKind::SenseVoice => "offline:sensevoice" }.into(),
         evidence_path: None,
         utterances: anchors,
         unrecognized,
@@ -311,6 +332,18 @@ mod tests {
         assert_eq!(ModelKind::available(&dir), ModelKind::SenseVoice);
         assert!(Runtime::load_model(&dir, &dir, ModelKind::SenseVoice).is_err());
         assert_ne!(ModelKind::Paraformer.model_hash(), ModelKind::SenseVoice.model_hash());
+        let official=dir.join(shared::OFFICIAL_DIR);
+        fs::create_dir_all(&official).unwrap();
+        fs::write(official.join("model.int8.onnx"), b"partial").unwrap();
+        fs::write(official.join("tokens.txt"), b"partial").unwrap();
+        assert_eq!(ModelKind::available(&dir), ModelKind::SenseVoice);
+        fs::write(official.join("ready"), b"ready").unwrap();
+        assert_eq!(ModelKind::available(&dir), ModelKind::OfficialParaformer);
+        assert!(Runtime::load_model(&dir, &dir, ModelKind::OfficialParaformer).is_err());
+        assert_ne!(ModelKind::OfficialParaformer.model_hash(), ModelKind::SenseVoice.model_hash());
+        assert_ne!(ModelKind::OfficialParaformer.model_hash(), ModelKind::Paraformer.model_hash());
+        use sha2::{Digest, Sha256};
+        assert_eq!(format!("{:x}", Sha256::digest(OFFICIAL_TOKENS)), shared::OFFICIAL_TOKENS_SHA);
         fs::remove_dir_all(&dir).unwrap();
     }
 
@@ -335,8 +368,33 @@ mod tests {
         prepare().unwrap();
         check().unwrap();
         let result=transcribe(Path::new(&fixture)).unwrap();
-        assert_eq!(result.provider_id, "companion-type-local-sensevoice");
+        assert_eq!(result.provider_id, "companion-type-local-paraformer-official");
         assert!(result.text.contains("蓝色文件夹"));
+    }
+
+    #[test]
+    #[ignore = "requires isolated seeded download, existing SenseVoice and public WAV"]
+    fn publisher_model_resumes_installs_transcribes_and_falls_back() {
+        let dir=root().unwrap();
+        let wav=PathBuf::from(std::env::var_os("COMPANION_TEST_PUBLIC_AUDIO").unwrap());
+        assert!(std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR").is_some());
+        let sense=dir.join(shared::SENSE_DIR);
+        shared::verified(&sense.join("model.int8.onnx"),shared::SENSE_MODEL_SHA).unwrap();
+        assert_eq!(ModelKind::available(&dir), ModelKind::SenseVoice);
+        prepare().expect("the pinned publisher model should resume and install");
+        assert_eq!(ModelKind::available(&dir), ModelKind::OfficialParaformer);
+        assert_eq!(load_preferred(&dir).unwrap().1, ModelKind::OfficialParaformer);
+        let result=transcribe(&wav).unwrap();
+        assert_eq!(result.provider_id,"companion-type-local-paraformer-official");
+        assert!(!result.text.trim().is_empty());
+        shared::verified(&sense.join("model.int8.onnx"),shared::SENSE_MODEL_SHA).unwrap();
+        let model=dir.join(shared::OFFICIAL_DIR).join("model.int8.onnx");
+        let mut file=fs::OpenOptions::new().write(true).open(model).unwrap();
+        file.write_all(b"corrupt isolated fixture").unwrap();drop(file);
+        assert_eq!(load_preferred(&dir).unwrap().1, ModelKind::SenseVoice);
+        let fallback=transcribe(&wav).unwrap();
+        assert_eq!(fallback.provider_id,"companion-type-local-sensevoice");
+        assert!(!fallback.text.trim().is_empty());
     }
 
     #[test]
