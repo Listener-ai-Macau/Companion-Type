@@ -119,6 +119,7 @@ mod meeting_audio_capture;
 mod host_interrupted_recovery;
 mod live_asr;
 mod minutes;
+pub(crate) mod meeting_qa;
 mod external_command;
 pub(crate) mod external_command_probe;
 #[cfg(windows)]

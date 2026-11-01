@@ -8,3 +8,5 @@ export * from './minutesSources';
 export * from './transcriptCoverage';
 
 export * from './recordingCapacity';
+
+export * from './meetingQa';

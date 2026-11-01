@@ -161,6 +161,33 @@ pub async fn preview_companion_meeting_transcription(coordinator:CompanionCoordi
         .await.map_err(|e|format!("重新转写未完成：{e}"))?
 }
 
+/// Analyze only the user-selected saved transcripts; recording files are never sent.
+#[tauri::command]
+pub async fn ask_companion_meetings(coordinator:CompanionCoordinatorState<'_>,question:String,session_ids:Vec<String>)
+    ->Result<crate::backend::meeting_qa::ResultView,String> {
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move|| {
+        let snapshot=coordinator.snapshot()?;
+        if snapshot.host.persistence.status!="ready" {return Err("会议资料尚未就绪，请稍后重试。".into());}
+        if session_ids.is_empty(){return Err("请选择至少一场已转写会议。".into());}
+        let mut documents=Vec::new();
+        for id in session_ids {
+            let session=snapshot.host.sessions.iter().find(|row|row.id==id).ok_or("所选会议已不存在，请刷新后重试。")?;
+            if session.organization.trashed_at.is_some() || !crate::backend::transcript_review::final_transcript_available(session)
+                || crate::backend::transcript_review::review_is_stale(session) {
+                return Err(format!("“{}”的转写尚未就绪，请先检查。",session.title));
+            }
+            documents.push(crate::backend::meeting_qa::Document{id:session.id.clone(),title:session.title.clone(),
+                text:crate::backend::transcript_review::effective_text(session)});
+        }
+        if std::env::var("COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED").as_deref()==Ok("0") {return Err("请先启用 AI 整理服务。".into());}
+        let key=std::env::var("DEEPSEEK_API_KEY").ok().filter(|key|!key.trim().is_empty()).ok_or("请先配置 AI 整理服务。")?;
+        let base=std::env::var("DEEPSEEK_BASE_URL").ok().filter(|s|!s.trim().is_empty()).unwrap_or_else(||"https://api.deepseek.com/v1".into());
+        let model=std::env::var("DEEPSEEK_MODEL").ok().filter(|s|!s.trim().is_empty()).unwrap_or_else(||"deepseek-v4-flash".into());
+        crate::backend::meeting_qa::ask(&crate::backend::meeting_qa::Request{question,documents,endpoint:format!("{}/chat/completions",base.trim_end_matches('/')),model},&key)
+    }).await.map_err(|_|"本次问答未完成，请重试。".to_string())?
+}
+
 #[tauri::command]
 pub fn prepare_companion_audio(
     app: AppHandle, coordinator: CompanionCoordinatorState<'_>, session_id: String,

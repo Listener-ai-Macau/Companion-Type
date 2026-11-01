@@ -206,6 +206,7 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
+  onAskMeetings?: (question:string,sessionIds:string[]) => Promise<import('@companion-type/core').MeetingQaResult>;
   onReadLicenses?: () => Promise<string>;
   settingsFooter?: ReactNode;
   onFindPet?: (request:PetFindRequest)=>Promise<PetFindReport>;
@@ -401,6 +402,7 @@ export function CompanionDashboard({
   onPreviewMeetingExport,
   onExportDiagnostics,
   onPreviewDiagnostics,
+  onAskMeetings,
   onPrepareAudioComponents,
   onPrepareLocalAsr,
   onCheckService,
@@ -494,6 +496,13 @@ export function CompanionDashboard({
   const [previewWaiting,setPreviewWaiting]=useState(false);
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];suggestedAbsolute?:{uid:string;at:string};items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
+  const [qaQuestion,setQaQuestion]=useState('');
+  const [qaSelected,setQaSelected]=useState<string[]>([]);
+  const [qaBusy,setQaBusy]=useState(false);
+  const [qaResult,setQaResult]=useState<import('@companion-type/core').MeetingQaResult|null>(null);
+  const [qaError,setQaError]=useState<string|null>(null);
+  const [qaSourceSnapshot,setQaSourceSnapshot]=useState<{ids:string[];identity:string}|null>(null);
+  const [qaPendingCitation,setQaPendingCitation]=useState<import('@companion-type/core').MeetingQaCitation|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
   const [pendingMinutesTemplate,setPendingMinutesTemplate]=useState<CompanionV1ControlRequest['minutesTemplate']>();
   const [templateId,setTemplateId]=useState<'meeting'|'interview'|'lecture'|'custom'>('meeting');
@@ -580,6 +589,8 @@ export function CompanionDashboard({
     [snapshot,libraryFilters.trash],
   );
   const savedDetailOpen=Boolean(selectedSession&&detailSessionId===selectedSession.id);
+  const qaDefaulted=useRef(false);
+  useEffect(()=>{if(selectedSession&&!qaDefaulted.current&&companionSessionHasFinalTranscript(selectedSession)){qaDefaulted.current=true;setQaSelected([selectedSession.id]);}},[selectedSession?.id,selectedSession?.transcriptFinal]);
   const device = snapshot?.device;
   const controlledRecorder = snapshot?.host.sessions.find((row) => row.recorderControl
     && (row.status === 'recording' || row.recorderControlUncertain)) ?? null;
@@ -598,6 +609,11 @@ export function CompanionDashboard({
     ? originalSyncRecorder : null;
   const privacy = snapshot?.privacy;
   const allLibrarySessions = snapshot?.host.sessions ?? [];
+  const qaEligibleSessions=allLibrarySessions.filter(row=>!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row));
+  const qaSelectedEligible=qaSelected.filter(id=>qaEligibleSessions.some(row=>row.id===id));
+  const qaIdentity=(ids:string[])=>JSON.stringify(ids.map(id=>{const row=allLibrarySessions.find(session=>session.id===id);
+    return row?[row.id,row.transcriptText,row.transcriptReview,row.utterances,row.organization?.trashedAt]:null;}));
+  const qaStale=Boolean(qaSourceSnapshot&&qaSourceSnapshot.identity!==qaIdentity(qaSourceSnapshot.ids));
   const savedCustomTemplates=useMemo(()=>savedCustomMinutesTemplates(allLibrarySessions),[allLibrarySessions]);
   const localSaveConfirmed = snapshot?.host.persistence?.status === 'ready';
   const recentSavedRecording = useMemo(() => allLibrarySessions
@@ -1020,6 +1036,12 @@ export function CompanionDashboard({
             : null;
   const audioIdentity = selectedSession ? listeningIdentity(selectedSession) : '';
   const [sourceSelection, setSourceSelection] = useState<CompanionTranscriptSource | null>(null);
+  useEffect(()=>{
+    if(!qaPendingCitation || selectedSession?.id!==qaPendingCitation.sessionId)return;
+    const matches=companionMinutesReferencedSources(companionTranscriptSources(selectedSession),qaPendingCitation.quote);
+    setTranscriptReviewOpen(true);setSourceSelection(matches.length===1?matches[0]:null);setQaPendingCitation(null);
+    window.requestAnimationFrame(()=>document.getElementById('ct-recording-text-review')?.scrollIntoView({block:'start'}));
+  },[qaPendingCitation,selectedSession]);
   const transcriptSources = useMemo(() => selectedSession ? companionTranscriptSources(selectedSession) : [], [selectedSession]);
   const sourceContext = useRef({ session: selectedSession, blocked: false });
   sourceContext.current = { session: selectedSession,
@@ -2230,6 +2252,28 @@ export function CompanionDashboard({
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
             </div>
+            {onAskMeetings ? <details className="ct-library-more" aria-label="向录音提问">
+              <summary>向录音提问</summary>
+              <p className="ct-step-meta">选择一场或多场已转写会议。会将已保存的转写发送到已配置的 AI 服务，录音不会上传；长会议可能需要几分钟。</p>
+              <div role="group" aria-label="选择要查询的会议">{qaEligibleSessions
+                .map(row=><label key={row.id}><input type="checkbox" checked={qaSelected.includes(row.id)} disabled={qaBusy}
+                  onChange={event=>setQaSelected(current=>event.target.checked?[...current,row.id]:current.filter(id=>id!==row.id))}/>{meetingTitle(row)}</label>)}</div>
+              <label>问题<textarea aria-label="录音问题" value={qaQuestion} disabled={qaBusy} onChange={event=>setQaQuestion(event.target.value)}/></label>
+              <button type="button" className="ct-action" disabled={qaBusy||storageBlocked||!qaQuestion.trim()||!qaSelectedEligible.length}
+                onClick={async()=>{const ids=[...qaSelectedEligible];const identity=qaIdentity(ids);setQaBusy(true);setQaError(null);setQaResult(null);setQaSourceSnapshot({ids,identity});
+                  try{setQaResult(await onAskMeetings(qaQuestion.trim(),ids));}catch(error){setQaError(operationErrorText(error,'general'));}finally{setQaBusy(false);}}}>{qaBusy?'正在查询…':'提问'}</button>
+              {qaError?<p className="ct-step-warn" role="alert">{qaError}</p>:null}
+              {qaResult?<div aria-label="录音问答结果">
+                {qaStale?<p className="ct-step-warn">会议文字或范围已变化；这是先前文字的结果，请重新提问。</p>:null}
+                {qaResult.incomplete?<p className="ct-step-warn">有片段未完成，本次答案可能不完整；请重试或缩小会议范围。</p>:null}
+                {!qaResult.items.length?<p>{qaResult.incomplete?'已处理的片段中未找到明确相关内容。':'所选文字中未找到明确相关内容；可以换一种问法或查看原文。'}</p>:null}
+                {qaResult.items.map((item,index)=><article key={`${item.citation.sessionId}-${index}`}><p>{item.text}</p>
+                  <blockquote>{item.citation.quote}</blockquote><button type="button" className="ct-text-button" disabled={controlsBusy||qaStale}
+                    onClick={()=>{setQaPendingCitation(item.citation);setOpenSavedRecordingId(item.citation.sessionId);
+                      setOpenSavedRecordingTarget('source');if(selectedSession?.id!==item.citation.sessionId)onControl({action:'meetingSelectSession',sessionId:item.citation.sessionId});}}>
+                    查看原文 · {item.citation.title}</button></article>)}
+              </div>:null}
+            </details>:null}
             {finalTranscript ? <details className="ct-library-more" aria-label="选择整理视角">
               <summary>按会议、访谈或课堂整理</summary>
               <p className="ct-step-meta">选择整理侧重点；新结果会保留在这场录音中，已有结果可在历史里切回。</p>
