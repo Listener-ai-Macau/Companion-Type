@@ -29,7 +29,8 @@ export type MeetingJourney = {
 };
 
 export function meetingHasFinalMinutes(session: CompanionV1HostSession): boolean {
-  const variants = Object.values(session.minutesByMode ?? {}).filter((v) => v != null);
+  const variants = [session.minutesByMode?.offlineStore, session.minutesByMode?.onlineLive]
+    .filter((v) => v != null);
   if (variants.length) return variants.every((item) => item?.status === 'minutesReady' && item.quality === 'final'
     && companionMinutesProcessingComplete(item.processing)
     && companionMinutesMatchTranscript(session, item.sourceReviewRevision));
@@ -44,7 +45,8 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
   if(recovery&&session.recovery?.lastError&&recovery.message.includes(session.recovery.lastError))
     recovery.message=recovery.message.replace(session.recovery.lastError,operationErrorText(session.recovery.lastError));
   const finalText = companionSessionHasFinalTranscript(session);
-  const variants = Object.values(session.minutesByMode ?? {}).filter(Boolean);
+  const variants = [session.minutesByMode?.offlineStore, session.minutesByMode?.onlineLive]
+    .filter((v) => v != null);
   const finalMinutes = meetingHasFinalMinutes(session);
   const optionalOrganization = !recovery || (session.recovery?.stage === 'pendingMinutes' && !session.recovery.lastError);
   const draft = variants.some((item) => item?.markdown.trim()) || Boolean(session.minutes?.markdown.trim());
