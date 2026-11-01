@@ -35,12 +35,22 @@ pub(crate) fn run<T>(session: &str, id: &str, work: impl FnOnce() -> Result<T, S
     let previous = CURRENT.with(|slot| slot.replace(Some(job.clone())));
     let _scope = Scope { previous, job: job.clone() };
     let result = work();
-    if job.cancelled.load(Ordering::Acquire) { Err(CANCELLED.into()) } else { result }
+    // A stop is accepted only until this exact job retires. Checking and
+    // retiring under the same lock prevents a late click from reporting
+    // success after the result has already passed its cancellation check.
+    let cancelled = {
+        let mut active = ACTIVE.lock().map_err(|_| "转写状态暂时不可用，请重试。")?;
+        if active.as_ref().and_then(Weak::upgrade).is_some_and(|j| Arc::ptr_eq(&j, &job)) {
+            *active = None;
+        }
+        job.cancelled.load(Ordering::Acquire)
+    };
+    if cancelled { Err(CANCELLED.into()) } else { result }
 }
 
 pub(crate) fn cancel(session: &str, id: &str) -> Result<bool, String> {
-    let job = ACTIVE.lock().map_err(|_| "转写状态暂时不可用，请重试。")?
-        .as_ref().and_then(Weak::upgrade);
+    let active = ACTIVE.lock().map_err(|_| "转写状态暂时不可用，请重试。")?;
+    let job = active.as_ref().and_then(Weak::upgrade);
     match job.filter(|job| !session.is_empty() && !id.is_empty() && job.session == session && job.id == id) {
         Some(job) => { job.cancelled.store(true, Ordering::Release); Ok(true) }
         None => Ok(false),
@@ -75,5 +85,20 @@ mod tests {
         assert_eq!(result.unwrap_err(), CANCELLED);
         assert!(!cancel("one", "job-one").unwrap());
         assert_eq!(run("two", "job-two", || { check_current()?; Ok(7) }).unwrap(), 7);
+    }
+
+    #[test]
+    fn accepted_stop_never_races_a_successful_job_result() {
+        use std::sync::mpsc;
+        for _ in 0..100 {
+            let (entered_tx,entered_rx)=mpsc::channel();let (release_tx,release_rx)=mpsc::channel();
+            let worker=std::thread::spawn(move || run("race", "race-job", || {
+                entered_tx.send(()).unwrap();release_rx.recv().unwrap();Ok(7)
+            }));
+            entered_rx.recv().unwrap();release_tx.send(()).unwrap();
+            let accepted=cancel("race", "race-job").unwrap();let result=worker.join().unwrap();
+            if accepted { assert_eq!(result.unwrap_err(),CANCELLED); }
+            else { assert_eq!(result.unwrap(),7); }
+        }
     }
 }
