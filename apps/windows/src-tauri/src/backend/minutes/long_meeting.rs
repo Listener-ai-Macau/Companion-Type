@@ -387,6 +387,12 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
         Ok((minutes, evidence))
     })?;
     super::super::meeting_processing_job::check_current()?;
+    if minutes.processing.as_ref().is_some_and(|p| !p.complete) {
+        let path = root.join(Identity::new_with_template(endpoint, model, key, session, template).filename());
+        if let Ok(checkpoint) = read_checkpoint(&path) {
+            append_unverified_chapters(&mut minutes, &checkpoint, &pending_minutes);
+        }
+    }
     // A nearby conversation can contain genuine instructions but not belong
     // to this meeting. Mark only candidates the model can relate to explicitly
     // described background chat; never delete them or change their attribution.
@@ -423,6 +429,52 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
     }
     super::super::meeting_processing_job::check_current()?;
     Ok(minutes)
+}
+
+// A provider can return a readable chapter but omit its source quotes. Keep
+// that content as explicitly unverified reference, separate from the verified
+// summary and task arrays; it must not become a completed chapter or checklist.
+fn append_unverified_chapters(minutes: &mut CompanionV1MeetingMinutes, checkpoint: &Checkpoint,
+    pending: &[Option<CompanionV1MeetingMinutes>]) {
+    if checkpoint.chapters.len()!=pending.len() { return; }
+    let mut sections=Vec::new();
+    for (index,(verified,draft)) in checkpoint.chapters.iter().zip(pending).enumerate() {
+        if verified.is_some() {continue;}
+        let Some(draft)=draft else {continue;};
+        let mut lines=Vec::new();
+        let mut add=|label:&str,value:&str| {
+            let value=value.trim();
+            if value.is_empty() || value.len()>4096 || lines.len()>=256 {return;}
+            let mut escaped=String::new();
+            for ch in value.chars() {
+                match ch {
+                    '\r' | '\n' => escaped.push(' '),
+                    '\\' | '`' | '*' | '_' | '[' | ']' | '#' | '>' => {escaped.push('\\');escaped.push(ch);},
+                    c if c.is_control() => escaped.push(' '),
+                    c => escaped.push(c),
+                }
+            }
+            lines.push(format!("- {label}：{escaped}"));
+        };
+        for item in &draft.summary {add("讨论",item);}
+        for item in &draft.decisions {add("可能的决定",item);}
+        for item in &draft.action_items {
+            let mut text=item.text.clone();
+            if let Some(owner)=item.owner.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的负责人：{owner}）"));}
+            if let Some(due)=item.due.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的时间：{due}）"));}
+            add("可能的行动",&text);
+        }
+        for item in &draft.questions {add("可能的问题",item);}
+        if !lines.is_empty() {sections.push(format!("### 第{}段\n\n{}",index+1,lines.join("\n")));}
+    }
+    if sections.is_empty() {return;}
+    let draft=format!("## 未核对的参考草稿\n\n> 以下是 AI 返回但未能自动对应原文的内容，仅供回听核对；可能有误，不作为已确认的决定或待办。\n\n{}",sections.join("\n\n"));
+    let marker="\n\n## 分段原文依据\n\n";
+    if let Some(index)=minutes.markdown.find(marker) {
+        minutes.markdown.insert_str(index,&format!("\n\n{draft}"));
+    } else {
+        minutes.markdown.push_str(&format!("\n\n{draft}"));
+    }
 }
 
 fn request_evidence_only(endpoint: &str, model: &str, key: &str, part: &CompanionV1HostSession,

@@ -31,6 +31,29 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn unverified_chapter_remains_visible_without_becoming_an_action_or_complete() {
+    let source=session("公开会议内容。");
+    let mut checkpoint=Checkpoint {identity:Identity::new("https://fixture.invalid","model","key",&source),chapters:vec![None]};
+    let (mut draft,evidence)=response(&source);
+    draft.summary=vec!["讨论产品包装".into()];
+    draft.action_items=vec![crate::companion_v1::CompanionV1ActionItem {
+        text:"发送报价".into(),owner:Some("小王".into()),due:Some("周五".into()) }];
+    let mut partial=assemble(&source,&checkpoint,0,"now",Some("缺少原文引用".into()));
+    append_unverified_chapters(&mut partial,&checkpoint,&[Some(draft.clone())]);
+    assert_eq!(partial.quality,"draft");assert!(!partial.processing.as_ref().unwrap().is_complete());
+    assert!(partial.action_items.is_empty());assert!(partial.summary.is_empty());
+    assert!(partial.markdown.contains("未核对的参考草稿"));assert!(partial.markdown.contains("讨论产品包装"));
+    assert!(partial.markdown.contains("可能的行动：发送报价"));assert!(partial.markdown.contains("可能的负责人：小王"));
+    assert!(partial.markdown.find("未核对的参考草稿").unwrap()<partial.markdown.find("分段原文依据").unwrap());
+    let (verified,evidence)={let (m,_)=response(&source);(m,evidence)};
+    let result_hash=chapter_digest(&verified,&evidence,0);
+    checkpoint.chapters[0]=Some(Chapter{start:0,end:source.transcript_text.len(),source_hash:hash(source.transcript_text.as_bytes()),minutes:verified,evidence,omitted_items:0,result_hash});
+    let mut complete=assemble(&source,&checkpoint,0,"now",None);
+    append_unverified_chapters(&mut complete,&checkpoint,&[Some(draft)]);
+    assert!(!complete.markdown.contains("未核对的参考草稿"));
+}
+
+#[test]
 fn template_changes_isolate_long_meeting_cache_without_invalidating_default() {
     let source=session("明天下午讨论包装，周五发报价。");
     let meeting=crate::companion_v1::MinutesTemplate{id:"meeting".into(),name:String::new(),instructions:String::new()}.normalized().unwrap();
