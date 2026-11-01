@@ -164,6 +164,26 @@ fn explicit_conditional_assignment_is_recovered_from_a_cached_chapter() {
 }
 
 #[test]
+fn conditional_time_is_not_a_responsible_person_even_in_cached_results() {
+    let text="会议讨论报价。\n如果客户修改，下周一负责确认交货时间。\n假如预算通过，明天上午负责发报价。\n如果收到样品，周一鸣负责检查包装。";
+    let part=session(text);let (mut minutes,mut evidence)=response(&part);
+    minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {
+        text:"如果客户修改，下周一负责确认交货时间".into(),owner:Some("下周一".into()),due:None });
+    evidence.push(Evidence {field:"actionItems".into(),index:0,quote:"如果客户修改，下周一负责确认交货时间".into()});
+    let mut chapter=Chapter {start:0,end:text.len(),source_hash:hash(text.as_bytes()),
+        result_hash:chapter_digest(&minutes,&evidence,0),minutes,evidence,omitted_items:0};
+    assert!(is_current(&chapter,0,text.len(),text));repair_cached_conditionals(&mut chapter,text);
+    assert_eq!(chapter.minutes.action_items.len(),3);
+    for phrase in ["下周一负责确认交货时间","明天上午负责发报价"] {
+        let action=chapter.minutes.action_items.iter().find(|a|a.text.contains(phrase)).unwrap();
+        assert!(action.owner.is_none());assert!(action.due.is_none());assert!(action.text.contains('如'));
+    }
+    assert_eq!(chapter.minutes.action_items.iter().find(|a|a.text.contains("周一鸣负责")).unwrap().owner.as_deref(),Some("周一鸣"));
+    assert!(is_current(&chapter,0,text.len(),text));let digest=chapter.result_hash.clone();
+    repair_cached_conditionals(&mut chapter,text);assert_eq!(chapter.result_hash,digest);
+}
+
+#[test]
 #[ignore = "reuses the previously saved public and fictional meeting; no network"]
 fn replay_saved_provider_chapters_repairs_conditional_assignment_without_resending() {
     let sessions: Vec<CompanionV1HostSession> = serde_json::from_slice(
