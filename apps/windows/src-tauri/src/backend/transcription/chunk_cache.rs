@@ -236,6 +236,13 @@ fn is_cache_name(name: &str) -> bool {
 }
 
 fn trim(root: &Path) {
+    trim_except(root, &std::collections::BTreeSet::new());
+}
+
+// A long transcription can contain more entries than the ordinary cache
+// budget. Keep its completed windows so stopping and continuing can reuse
+// them; older recordings still compete for the remaining cache budget.
+fn trim_except(root: &Path, protected: &std::collections::BTreeSet<String>) {
     let Ok(entries) = fs::read_dir(root) else {
         return;
     };
@@ -255,7 +262,9 @@ fn trim(root: &Path) {
         .collect::<Vec<_>>();
     entries.sort_by_key(|(modified, _)| *modified);
     let excess = entries.len().saturating_sub(MAX_ENTRIES);
-    for (_, path) in entries.into_iter().take(excess) {
+    for (_, path) in entries.into_iter().filter(|(_, path)| {
+        path.file_name().and_then(|name| name.to_str()).is_some_and(|name| !protected.contains(name))
+    }).take(excess) {
         let _ = fs::remove_file(path);
     }
 }

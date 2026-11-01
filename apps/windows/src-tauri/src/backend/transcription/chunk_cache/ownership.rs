@@ -232,7 +232,11 @@ fn publish(
     super::super::super::export::write_atomic(&path, &bytes)?;
     claim(&mut data, leaf, &bytes, sources, Phase::Ready)?;
     save(root, &data)?;
-    trim(root);
+    let protected = data.records.iter()
+        .filter(|r| r.phase != Phase::Ready || !r.sources.is_disjoint(sources))
+        .map(|r| r.file.clone())
+        .collect();
+    trim_except(root, &protected);
     // Retention may have removed bodies; don't retain their private path hints.
     data.records
         .retain(|r| r.phase == Phase::Deleting || root.join(&r.file).exists());
@@ -423,6 +427,45 @@ mod probe;
 pub(crate) use probe::verify;
 #[cfg(test)]
 mod tests {
+    use super::*;
+
+    #[test]
+    fn retention_preserves_all_windows_of_current_long_recording() {
+        let dir = std::env::temp_dir().join(format!("companion-cache-long-{}", uuid::Uuid::new_v4()));
+        fs::create_dir(&dir).unwrap();
+        let profile = Profile::from_configuration(&serde_json::json!({
+            "provider":"test", "model":"test", "language":"zh"
+        })).unwrap();
+        let current = BTreeSet::from(["current-recording".to_string()]);
+        let old = BTreeSet::from(["older-recording".to_string()]);
+        let mut journal = Journal { version: 1, records: Vec::new() };
+        let mut current_keys = Vec::new();
+        // Seed an older recording, followed by more than the ordinary global
+        // cache limit for the current recording. All entries have real V2
+        // identity and the same ownership journal used by production.
+        for index in 0u32..(MAX_ENTRIES as u32 + 5) {
+            let key = Key::new(&index.to_le_bytes(), profile.clone()).unwrap();
+            let entry = Entry { key: key.clone(), text: "完成".into(), utterances: vec![],
+                result_sha256: result_digest("完成", &[]).unwrap() };
+            let bytes = serde_json::to_vec(&entry).unwrap();
+            let path = key.path(&dir).unwrap();
+            fs::write(&path, &bytes).unwrap();
+            let owners = if index < 3 { &old } else { &current };
+            claim(&mut journal, path.file_name().unwrap().to_str().unwrap(), &bytes, owners, Phase::Ready).unwrap();
+            if index >= 3 { current_keys.push(key); }
+        }
+        save(&dir, &journal).unwrap();
+        let new_key = Key::new(&u32::MAX.to_le_bytes(), profile).unwrap();
+        publish(&dir, &new_key, "完成", &[], &current).unwrap();
+        for key in &current_keys {
+            assert!(load(&dir, key).is_some(), "current recording lost a completed window");
+        }
+        assert!(hit(&dir, &current_keys[0], &current).unwrap().is_some());
+        assert!(hit(&dir, &new_key, &current).unwrap().is_some());
+        assert_eq!(load_journal(&dir).unwrap().records.len(), current_keys.len() + 1);
+        fs::remove_dir_all(dir).unwrap();
+    }
+
     #[test]
     fn isolated_native_cache_privacy_contract() {
         let dir =
