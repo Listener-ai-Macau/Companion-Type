@@ -4,6 +4,10 @@ export const minutesStoppedMessage = "已停止整理，原始文字保留；重
 export const knownOperationErrors:readonly string[]=[
   transcriptionStoppedMessage,
   minutesStoppedMessage,
+  "AI 服务暂时不可用，请检查网络或稍后重试。",
+  "AI 服务繁忙或额度不足，请检查后重试。",
+  "AI 服务配置或请求有误，请检查后重试。",
+  "AI 服务鉴权失败，请检查配置。",
   "上次保存位置暂时无法读取，请重新选择保存位置。",
   "上次保存入口已过期，请选择保存新的日历文件。",
   "上次保存位置不属于当前记录或整理方式，请重新选择。",

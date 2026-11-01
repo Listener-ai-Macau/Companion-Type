@@ -2353,7 +2353,7 @@ export function CompanionDashboard({
               {qaSourceRemoved||qaRemovedNotice?<p className="ct-step-warn">所选会议已删除或转写已清除，本次问答结果已移除。</p>:null}
               {qaResult&&!qaSourceRemoved?<div aria-label="录音问答结果">
                 {qaStale?<p className="ct-step-warn">会议文字或范围已变化；这是先前文字的结果，请重新提问。</p>:null}
-                {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':'有片段未完成。'}本次答案可能不完整；请重试或缩小会议范围。</p>:null}
+                {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':qaResult.stopReason?operationErrorText(qaResult.stopReason,'general'):'有片段未完成。'}已查询 {qaResult.completedChunks}/{qaResult.totalChunks} 段，本次答案可能不完整；请重试或缩小会议范围。</p>:null}
                 {!qaResult.items.length?<p>{qaResult.incomplete?'已处理的片段中未找到明确相关内容。':'所选文字中未找到明确相关内容；可以换一种问法或查看原文。'}</p>:null}
                 {qaResult.items.map((item,index)=><article key={`${item.citation.sessionId}-${index}`}><p>{item.text}</p>
                   <blockquote>{item.citation.quote}</blockquote><button type="button" className="ct-text-button" disabled={controlsBusy||qaStale}
