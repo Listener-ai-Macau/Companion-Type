@@ -1,4 +1,5 @@
 import { companionSessionHasFinalTranscript, type CompanionV1HostSession } from './companionV1';
+import { companionReviewedUtterances } from './transcriptReview';
 
 export type CompanionTranscriptUnmappedEdge = {
   edge: 'start' | 'end'; startMs: number; durationMs: number;
@@ -13,7 +14,7 @@ export function companionTranscriptUnmappedEdges(session: CompanionV1HostSession
     || !session.audioStored || !session.retention.audioCached || !session.audioPath
     || /^(board|device|host):\/\//i.test(session.audioPath)
     || session.audioBytes <= 0 || !Number.isFinite(session.durationMs) || session.durationMs <= 0) return [];
-  const rows = (session.utterances ?? []).filter(row => row.text.trim());
+  const rows = companionReviewedUtterances(session).filter(row => row.text.trim());
   if (!rows.length || rows.some(row => !Number.isFinite(row.startMs) || !Number.isFinite(row.endMs)
     || row.startMs < 0 || row.endMs <= row.startMs || row.endMs > session.durationMs)) return [];
   const firstMs = rows.reduce((start, row) => Math.min(start, row.startMs), session.durationMs);

@@ -10,7 +10,7 @@ import {
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
 import {clearPlaybackMemory,clearSessionPlaybackMemory} from '../../../packages/ui/src/playbackMemory';
-import { refineCompanionMeetingSpeakers,controlCompanionPetFind } from './companionClient';
+import { refineCompanionMeetingSpeakers,previewCompanionMeetingTranscription,controlCompanionPetFind } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
 import {CloseReview} from './CloseReview';
@@ -379,6 +379,14 @@ export function App() {
       onRefineSpeakers={isTauriRuntime() ? (sessionId) => exclusive('refresh',async()=>{
         const saved=await refineCompanionMeetingSpeakers(sessionId);setSnapshot(saved);return saved;
       }):undefined}
+      onPreviewRetranscription={isTauriRuntime() ? async (sessionId) => {
+        if (operationActive.current) throw new Error('正在完成上一项操作，请稍候。');
+        const jobId=`__meeting_job__${globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${++meetingProcessingSequence}`}`;
+        processingTicket.current={sessionId,jobId}; setProcessingSessionId(sessionId);
+        setCancelProcessingPending(false); setProcessingNotice(null);
+        try { return await exclusive('meetingTranscribeAudio',()=>previewCompanionMeetingTranscription(sessionId,jobId)); }
+        finally { processingTicket.current=null; setProcessingSessionId(null); setCancelProcessingPending(false); }
+      }:undefined}
       onSaveBookmark={isTauriRuntime() ? (request) => exclusive('refresh',async()=>{
         try { const saved=await saveCompanionBookmark(request);setSnapshot(saved);return saved; }
         catch (error) { try {setSnapshot(await getCompanionSnapshot());}catch { /* keep the last readable library */ } throw error; }

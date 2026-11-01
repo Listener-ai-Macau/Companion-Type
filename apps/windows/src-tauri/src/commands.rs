@@ -155,6 +155,13 @@ pub async fn refine_companion_meeting_speakers(coordinator:CompanionCoordinatorS
 }
 
 #[tauri::command]
+pub async fn preview_companion_meeting_transcription(coordinator:CompanionCoordinatorState<'_>,session_id:String,job_id:String)->Result<String,String> {
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||coordinator.preview_meeting_transcription(&session_id,&job_id))
+        .await.map_err(|e|format!("重新转写未完成：{e}"))?
+}
+
+#[tauri::command]
 pub fn prepare_companion_audio(
     app: AppHandle, coordinator: CompanionCoordinatorState<'_>, session_id: String,
 ) -> Result<String, String> {

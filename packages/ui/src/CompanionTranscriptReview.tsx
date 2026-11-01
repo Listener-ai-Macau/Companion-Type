@@ -52,7 +52,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   const draft = drafts[session.id];
   const stale = companionTranscriptReviewIsStale(session);
   const revision = companionTranscriptReviewRevision(session);
-  const rows = draft?.sourceUtterances ?? companionReviewedUtterances(session);
+  const rows = draft ? (draft.rows.length ? draft.sourceUtterances : []) : companionReviewedUtterances(session);
   const sources = companionTranscriptSources(session);
   const sourcesByIndex = new Map(sources.map((source) => [source.index, source]));
   const selection = sourceSelection && companionTranscriptSourceIsCurrent(session, sourceSelection)
@@ -127,7 +127,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   }
 
   return <section className="ct-transcript-document" hidden={!visible} aria-label="转写核对">
-    <div className="ct-document-head"><strong>{draft ? '修正文字' : !stale && revision !== null ? '修订后的文字' : originalLabel}</strong><span>{companionReviewedTranscript(session).length} 字{!stale && revision !== null ? ' · 已人工修订' : ''}</span></div>
+    <div className="ct-document-head"><strong>{draft ? '修正文字' : !stale && revision !== null ? '修订后的文字' : originalLabel}</strong><span>{companionReviewedTranscript(session).length} 字{!stale && revision !== null ? ' · 已修订' : ''}</span></div>
     <p className="ct-step-meta">{draft ? importedText ? '导入原文会保留。这条记录没有原录音。' : '可对照原音修正文字和说话人。回听位置与原始识别结果会保留。' : importedText ? '只读查看。这条记录来自导入文字，没有原录音。' : '只读查看识别文字，可对照原音核对。'}</p>
     {stale ? <div className="ct-step-warn" role="status">原始转写已更新，旧修订已保留供核对，没有套用到新的时间轴。请重新核对，或恢复原始转写。
       <details><summary>查看之前的修订</summary>

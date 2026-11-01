@@ -90,6 +90,7 @@ import {
   type CompanionTranscriptSource,
   companionMinutesProcessingComplete,
   companionReviewedTranscript,
+  companionReviewedUtterances,
   companionTranscriptReviewRevision,
   companionTranscriptReviewIsStale,
   companionBleNameIsValid,
@@ -251,6 +252,7 @@ export interface CompanionDashboardProps {
   /** Conflict-aware metadata/minutes edit. The host persists before returning its next snapshot. */
   onSaveMeeting?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onRefineSpeakers?: (sessionId:string) => Promise<CompanionV1Snapshot>;
+  onPreviewRetranscription?: (sessionId:string) => Promise<string>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
@@ -407,6 +409,7 @@ export function CompanionDashboard({
   onDiscardOldestRecording,
   onSaveMeeting,
   onRefineSpeakers,
+  onPreviewRetranscription,
   onSaveBookmark,
   onSaveNote,
   onSaveLibraryOrganization,
@@ -423,6 +426,7 @@ export function CompanionDashboard({
   const [newMeetingTitle, setNewMeetingTitle] = useState('');
   const [draftMinutes, setDraftMinutes] = useState('30');
   const [transcriptDraft, setTranscriptDraft] = useState('');
+  const [retranscriptionPreview, setRetranscriptionPreview] = useState<{sessionId:string;text:string;sourceText:string;sourceUtterances:CompanionV1HostSession['utterances'];revision:number}|null>(null);
   const transcriptEditor = useRef<{ sessionId?: string; dirty: boolean }>({ dirty: false });
   const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string; targetTitle: string; selectedId: string | null; libraryKey: string } | null>(null);
   const deleteSubmitted = useRef(false);
@@ -926,8 +930,8 @@ export function CompanionDashboard({
   const asrConfigured = productSettings?.asrProvider === 'local-paraformer'
     ? Boolean(productSettings.localAsrAvailable) : cloudAsrConfigured;
   useEffect(() => {
-    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
-  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
+    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || Boolean(retranscriptionPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
+  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, retranscriptionPreview, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
@@ -2001,7 +2005,7 @@ export function CompanionDashboard({
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写或本次使用的补充已变化。这版结果已保留，请重新整理后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>重新选择内容并整理</button>
-              </div> : selectedMinutesVariant && !manualMinutes ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于人工修订' : ''}</p> : null}
+              </div> : selectedMinutesVariant && !manualMinutes ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于修订文字' : ''}</p> : null}
               {selectedMinutesVariant?.source === 'rules_l0' ? <p className="ct-step-meta">仅摘录已有原句，需你核对并补充；原音和文字已保留。</p> : null}
               {manualMinutes&&!editingMinutes&&hasMinutes?renderSavedReading():null}
               <div className="ct-inline-edit-actions ct-minutes-export-actions">
@@ -2257,7 +2261,7 @@ export function CompanionDashboard({
           </details> : null}
           <div className="ct-document-actions">
             <span>保存当前转写；完整记录包含原始识别结果</span>
-            <button type="button" className="ct-action" title={selectedSession.utterances?.some(u=>u.approximateTiming)?'本地转写只有近似分段位置，不能生成精确字幕。':undefined} disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !selectedSession.utterances?.length || selectedSession.utterances.some(u=>u.approximateTiming) || !onExportMeeting || transcriptReviewUnsaved}
+            <button type="button" className="ct-action" title={selectedSession.utterances?.some(u=>u.approximateTiming)?'本地转写只有近似分段位置，不能生成精确字幕。':undefined} disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !companionReviewedUtterances(selectedSession).length || companionReviewedUtterances(selectedSession).some(u=>u.approximateTiming) || !onExportMeeting || transcriptReviewUnsaved}
               onClick={() => void exportMeeting('srt','recordingTools')}>保存字幕</button>
             <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !finalTranscript || !onExportMeeting || transcriptReviewUnsaved}
               onClick={() => void exportMeeting('json','recordingTools')}>保存完整记录</button>
@@ -2533,8 +2537,8 @@ export function CompanionDashboard({
               disabled={!hasSyncedAudio && !selectedSession}
             />
             {(() => {
-              const utterances = (selectedSession?.utterances ?? []).filter(u=>!u.approximateTiming);
-              const taggedLines = (selectedSession?.transcriptText || transcriptDraft || '')
+              const utterances = (selectedSession ? companionReviewedUtterances(selectedSession) : []).filter(u=>!u.approximateTiming);
+              const taggedLines = (selectedSession ? companionReviewedTranscript(selectedSession) : transcriptDraft || '')
                 .split(/\r?\n/)
                 .map((line) => line.trim())
                 .filter((line) => /^说话人\d+[:：]/.test(line) || /^说话人\?[:：]/.test(line));
@@ -2569,17 +2573,27 @@ export function CompanionDashboard({
               <button
                 type="button"
                 className="ct-action"
-                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe}
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe || finalTranscript}
                 onClick={() => onControl({ action: 'meetingTranscribeAudio', sessionId: selectedSession?.id })}
               >
                 <FileText size={16} />
               <span>{selectedSession?.captureIncomplete ? '转写已保存的片段' : '转写'}</span>
               </button>
+              {onPreviewRetranscription && finalTranscript ? <button type="button" className="ct-action"
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe || Boolean(retranscriptionPreview)}
+                title="使用当前选择的转写方式生成另一份文字；云端方式会发送录音。"
+                onClick={async()=>{
+                  if (!selectedSession) return;
+                  const sessionId=selectedSession.id;setSaveMeetingResult(null);
+                  const sourceText=selectedSession.transcriptText, sourceUtterances=structuredClone(selectedSession.utterances ?? []), revision=selectedSession.transcriptReview?.revision ?? 0;
+                  try {const text=await onPreviewRetranscription(sessionId);setRetranscriptionPreview({sessionId,text,sourceText,sourceUtterances,revision});}
+                  catch(e) {setSaveMeetingResult({sessionId,kind:'error',message:`重新转写未完成：${operationErrorText(e,'general')}`});}
+                }}>重新转写并对比</button>:null}
               {onRefineSpeakers ? <button type="button" className="ct-action"
                 title={selectedSession?.utterances?.some(u=>u.approximateTiming)?'本地转写只有近似分段位置，暂不能据此区分说话人。':'只用已保存原音在电脑本地区分，不重新转写或上传；旧纪要保留为待更新草稿。'}
                 disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !selectedSession?.audioStored
                   || !selectedSession.transcriptFinal || !selectedSession.utterances?.length || selectedSession.utterances.some(u=>u.approximateTiming)
-                  || titleDirty || minutesDirty || transcriptEditor.current.dirty}
+                  || companionTranscriptReviewRevision(selectedSession)!==null || titleDirty || minutesDirty || transcriptEditor.current.dirty}
                 onClick={async()=>{
                   if (!selectedSession) return;
                   const sessionId=selectedSession.id;setSaveMeetingBusy(true);setSaveMeetingResult(null);
@@ -2602,6 +2616,26 @@ export function CompanionDashboard({
                 <span>导入到这条录音</span>
               </button>
             </div>
+            {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{productSettings?.asrProvider === 'local-paraformer' ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
+            {retranscriptionPreview && retranscriptionPreview.sessionId===selectedSession?.id ? <section aria-label="重新转写结果">
+              <p>这是新生成的文字，尚未替换已保存的转写。采用后保留原始转写、原录音和备注；旧纪要保留，可按新文字重新整理。新文字暂时没有对应的分段时间。</p>
+              <textarea className="ct-textarea ct-step-textarea" readOnly aria-label="新转写结果" value={retranscriptionPreview.text} />
+              <div className="ct-button-row">
+                <button type="button" className="ct-action" disabled={!onSaveMeeting || controlsBusy || transcriptEditor.current.dirty || transcriptReviewUnsaved || Boolean(selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length))}
+                  onClick={async()=>{
+                    if(!onSaveMeeting || !selectedSession || !retranscriptionPreview) return;
+                    const p=retranscriptionPreview;setSaveMeetingBusy(true);setSaveMeetingResult(null);
+                    try {
+                      const saved=await onSaveMeeting({sessionId:p.sessionId,transcriptReview:{expectedTranscriptText:p.sourceText,expectedUtterances:p.sourceUtterances ?? [],expectedRevision:p.revision,restoreOriginal:false,text:p.text,utteranceEdits:[],speakerNames:[]}});
+                      if(saved.host.persistence?.status && saved.host.persistence.status!=='ready') throw new Error('新文字尚未保存到磁盘，请重试。');
+                      setRetranscriptionPreview(null);setSaveMeetingResult({sessionId:p.sessionId,kind:'saved',message:'新文字已保存为修订；原始转写和旧纪要保留，可按需重新整理。'});
+                    } catch(e) {setSaveMeetingResult({sessionId:p.sessionId,kind:'error',message:`新文字未保存：${operationErrorText(e,'save')}`});}
+                    finally {setSaveMeetingBusy(false);}
+                  }}>采用新文字</button>
+                <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={()=>setRetranscriptionPreview(null)}>关闭结果</button>
+              </div>
+              {selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length) ? <p>这场录音已有人工修订，先保留原修订；新结果可复制出来比较。</p> : null}
+            </section>:null}
           </div>
         </div>
 
@@ -3021,7 +3055,8 @@ export function CompanionDashboard({
             </div>
             <div className="ct-button-row">
               {(['markdown', 'docx', 'mindmap', 'txt', 'json', 'srt', 'todo', 'todotxt', 'ics'] as const).map((format) => <button key={format} type="button" className="ct-action"
-                disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || (['markdown', 'docx', 'mindmap', 'todo', 'todotxt', 'ics'].includes(format) ? !hasMinutes : !finalTranscript)}
+                disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || (['markdown', 'docx', 'mindmap', 'todo', 'todotxt', 'ics'].includes(format) ? !hasMinutes : !finalTranscript)
+                  || (format==='srt' && (!selectedSession || !companionReviewedUtterances(selectedSession).length || companionReviewedUtterances(selectedSession).some(u=>u.approximateTiming)))}
                 onClick={() => void exportMeeting(format,'settings')}>{format === 'markdown' ? 'Markdown' : format === 'docx' ? 'Word 文档' : format === 'mindmap' ? '思维导图' : format === 'todo' ? '清单 Markdown' : format === 'todotxt' ? '清单 TXT' : format === 'ics' ? '日历待办 (.ics)' : format.toUpperCase()}</button>)}
             </div>
             {renderExportFeedback('settings')}

@@ -98,6 +98,9 @@ pub fn speaker_label(session: &CompanionV1HostSession, index: usize) -> Option<S
 pub fn effective_utterances(session: &CompanionV1HostSession) -> Vec<CompanionV1UtteranceSegment> {
     let mut utterances = session.utterances.clone();
     if let Some(review) = active_review(session) {
+        // A whole-document alternative has no verified alignment to the old
+        // ASR windows. Keep those windows in the original, not as new timing.
+        if review.text.is_some() { return Vec::new(); }
         for edit in &review.utterance_edits {
             if let Some(utterance) = utterances.get_mut(edit.index) { utterance.text = edit.text.clone(); }
         }
@@ -159,7 +162,9 @@ pub fn prepare_review(session: &CompanionV1HostSession, edit: &TranscriptReviewE
         return Ok(result);
     }
     if let Some(text) = &edit.text {
-        if !session.utterances.is_empty() { return Err("这份转写有时间轴，请逐段修订以保留回听位置。".into()); }
+        if !edit.utterance_edits.is_empty() || !edit.speaker_names.is_empty() {
+            return Err("整篇替代文字不能同时修改旧时间轴或说话人。".into());
+        }
         if !valid_text(text) { return Err("转写不能为空，且不能超过 200 KB 或包含非法控制字符。".into()); }
         if text.trim() != session.transcript_text.trim() { result.text = Some(text.trim().into()); }
     }
@@ -236,6 +241,43 @@ mod tests {
         assert!(serde_json::from_value::<CompanionV1HostSession>(legacy).unwrap().transcript_review.is_none());
     }
     #[test]
+    fn alternate_transcription_keeps_original_and_does_not_borrow_old_timestamps() {
+        let mut session=sample();let original=session.clone();
+        let edit=TranscriptReviewEdit {expected_transcript_text:session.transcript_text.clone(),
+            expected_utterances:session.utterances.clone(),expected_revision:0,restore_original:false,
+            text:Some("重新识别的完整会议内容。".into()),utterance_edits:vec![],speaker_names:vec![]};
+        session.transcript_review=Some(prepare_review(&session,&edit,"now").unwrap());
+        assert_eq!(session.transcript_text,original.transcript_text);
+        assert_eq!(session.utterances,original.utterances);
+        assert_eq!(session.audio_path,original.audio_path);
+        assert_eq!(effective_text(&session),"重新识别的完整会议内容。");
+        assert!(effective_utterances(&session).is_empty());
+        assert!(super::super::export::prepare_meeting_export(&session,&session.meeting_mode,super::super::export::MeetingExportFormat::Srt).is_err());
+        let exported:serde_json::Value=serde_json::from_str(&super::super::export::render_json(&session).unwrap()).unwrap();
+        assert_eq!(exported["utterances"].as_array().unwrap().len(),0);
+        assert_eq!(exported["speakerLabels"].as_array().unwrap().len(),0);
+        assert_eq!(exported["originalUtterances"].as_array().unwrap().len(),original.utterances.len());
+        let input=minutes_input(&session);assert_eq!(input.transcript_text,"重新识别的完整会议内容。");assert!(input.utterances.is_empty());
+        assert!(!minutes_current(&session,None));
+        let restored:CompanionV1HostSession=serde_json::from_str(&serde_json::to_string(&session).unwrap()).unwrap();
+        assert_eq!(effective_text(&restored),effective_text(&session));
+        assert_eq!(restored.transcript_text,original.transcript_text);
+        let mut mixed=edit;mixed.utterance_edits.push(UtteranceEdit {index:0,text:"不应附着旧时间轴".into(),speaker_name:None});
+        assert!(prepare_review(&original,&mixed,"now").is_err());
+        let mut saved=original.clone();
+        let prior_minutes=serde_json::to_value(&saved.minutes).unwrap();
+        let prior_notes=serde_json::to_value(&saved.meeting_notes).unwrap();
+        let request=super::super::meeting_workspace::MeetingEditRequest {session_id:saved.id.clone(),title:None,expected_title:None,
+            meeting_mode:None,markdown:None,expected_markdown:None,create_manual:None,transcript_review:Some(TranscriptReviewEdit {
+                expected_transcript_text:saved.transcript_text.clone(),expected_utterances:saved.utterances.clone(),expected_revision:0,
+                restore_original:false,text:Some("重新识别的完整会议内容。".into()),utterance_edits:vec![],speaker_names:vec![]})};
+        super::super::meeting_workspace::edit_session(&mut saved,&request,"now").unwrap();
+        assert_eq!(serde_json::to_value(&saved.minutes).unwrap(),prior_minutes);
+        assert_eq!(serde_json::to_value(&saved.meeting_notes).unwrap(),prior_notes);
+        assert_eq!(saved.transcript_text,original.transcript_text);assert_eq!(saved.utterances,original.utterances);
+        if saved.minutes.is_some() {assert_eq!(saved.pending_reason.as_deref(),Some("minutes_source_changed"));}
+    }
+    #[test]
     fn changed_asr_keeps_review_for_recovery_but_never_applies_old_indices() {
         let mut session = sample();
         session.transcript_review = Some(prepare_review(&session, &request(&session), "now").unwrap());
@@ -292,7 +334,7 @@ mod tests {
         assert_eq!(json["speakerLabels"][1],"小陈");
         assert_eq!(json["minutesCurrent"],false);
         let text = prepare_meeting_export(&session,"offlineStore",MeetingExportFormat::Txt).unwrap();
-        assert!(String::from_utf8(text.bytes).unwrap().contains("人工修订转写"));
+        assert!(String::from_utf8(text.bytes).unwrap().contains("修订后的转写"));
         session.utterances.clear();
         assert!(prepare_meeting_export(&session,"offlineStore",MeetingExportFormat::Srt).is_err(), "plain text never invents a timeline");
     }

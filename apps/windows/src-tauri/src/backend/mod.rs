@@ -737,6 +737,7 @@ pub trait CompanionBackend: Send + Sync {
         -> Result<CompanionV1Snapshot,String>;
     fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String>;
     fn refine_meeting_speakers(&self,_id:&str)->Result<CompanionV1Snapshot,String> {Err("当前环境未提供本地说话人区分。".into())}
+    fn preview_meeting_transcription(&self,_id:&str,_job_id:&str)->Result<String,String> {Err("当前环境不支持重新转写。".into())}
     fn capabilities(&self) -> CompanionBackendCapabilities;
     fn ble_bridge_status(&self) -> CompanionBleBridgeStatus;
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String>;
@@ -1652,6 +1653,44 @@ impl CompanionBackend for FixtureCompanionBackend {
         if snapshot.host.selected_session_id.as_deref()==Some(id) {snapshot.meeting.status="transcribed".into();}
         snapshot.updated_at=observation_timestamp();persistence::save_snapshot(&mut snapshot)?;
         refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
+    }
+    fn preview_meeting_transcription(&self,id:&str,job_id:&str)->Result<String,String> {
+        if id.is_empty() || !job_id.starts_with("__meeting_job__") {return Err("转写任务身份无效。".into());}
+        let _processing=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
+        if lifecycle::PROCESS.requested() {return Err(lifecycle::CLOSING.into());}
+        let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        if snapshot.host.persistence.status!="ready" {return Err("请先保存或恢复会议库。".into());}
+        let row=snapshot.host.sessions.iter().find(|s|s.id==id).ok_or("找不到这场录音。")?;
+        library_lifecycle::require_available(row)?;
+        if row.status=="recording" || host_audio_unconfirmed(row) {return Err("请先完成并保存录音。".into());}
+        if row.capture_incomplete && !row.recovery.capture_review_confirmed {return Err("请先确认已保存的录音片段。".into());}
+        if matches!(row.pending_reason.as_deref(),Some("needs_local_audio"|"needs_segments")) {return Err("请先完成原音同步。".into());}
+        let paths=transcription_chunk_paths(row)?;
+        let audio_path=row.audio_path.clone();
+        let tracks=row.meeting_tracks.clone();
+        let expected=(row.audio_bytes,row.duration_ms,row.recovery.capture_review_confirmed);
+        let request=CompanionV1ControlRequest { recording_source:None, action:CompanionV1ControlAction::MeetingTranscribeAudio,
+            session_id:Some(id.into()),context_note_revision:None,ble_name:None,prompt_id:Some(job_id.into()),title:None,
+            transcript_text:None,meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
+        let _privacy=library_lifecycle::privacy_guard(&snapshot,&request,&persistence::state_file_path())?;
+        privacy::validate_control(&snapshot,&request,self.live_asr.snapshot().active)?;
+        let (_snapshot,result)=self.run_meeting_work(snapshot,&request,||meeting_processing_job::run(id,job_id,
+            meeting_processing_job::Kind::Transcription,|| {
+                if let Some(tracks)=tracks {
+                    if tracks.state!="captured" && !(tracks.state=="needsReview" && expected.2) {
+                        return Err("会议音轨尚未确认，请先恢复原音。".into());
+                    }
+                    meeting_audio_recovery::verify_tracks(&tracks,expected.0,expected.1)?;
+                    let mic=tracks.microphone.into_iter().map(|p|p.path).collect::<Vec<_>>();
+                    let system=tracks.system.into_iter().map(|p|p.path).collect::<Vec<_>>();
+                    let result=meeting_audio_transcription::transcribe_tracks(&self.transcription,id,&mic,&system)?;
+                    if !result.warnings.is_empty() {return Err(result.warnings.join(" "));}
+                    Ok(result.transcript.text)
+                } else {
+                    self.transcription.transcribe_session_owned(id,audio_path.as_deref(),&paths).map(|r|r.text)
+                }
+            }))?;
+        result
     }
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport,String> {
         let report=recording_wire::receiver::restore_local_product()?;
@@ -4813,6 +4852,62 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn retranscription_preview_success_and_failure_keep_existing_session() {
+        use super::*;
+        let root=std::env::temp_dir().join(format!("companion-retranscription-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"));
+        std::env::set_var("COMPANION_TYPE_ASR_CACHE_DIR",root.join("cache"));
+        std::env::set_var("COMPANION_TYPE_ASR_PROVIDER","isolated-test");
+        std::env::set_var("COMPANION_TYPE_TRANSCRIPT_TEXT","本次新转写");
+        std::env::remove_var("COMPANION_TYPE_ASR_COMMAND");
+        let audio=root.join("meeting.wav");
+        let mut wav=denzic_host_audio_v1_core::wav::wav_header(3200).to_vec();wav.extend(vec![42u8;3200]);
+        std::fs::write(&audio,&wav).unwrap();
+        let backend=FixtureCompanionBackend::new();install_recovery_session(&backend,"preview-meeting",&audio);
+        {
+            let mut snapshot=backend.snapshot.lock().unwrap();
+            snapshot.host.persistence.status="ready".into();
+            let row=&mut snapshot.host.sessions[0];row.source="controlledLocalAudioFixture".into();
+            row.status="transcribed".into();row.transcript_final=true;row.transcript_text="之前的转写".into();
+        }
+        let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
+        assert_eq!(backend.preview_meeting_transcription("preview-meeting","__meeting_job__one").unwrap(),"本次新转写");
+        assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
+        assert_eq!(std::fs::read(&audio).unwrap(),wav);
+        std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
+        assert!(backend.preview_meeting_transcription("preview-meeting","__meeting_job__two").is_err());
+        assert!(backend.preview_meeting_transcription("missing","__meeting_job__three").is_err());
+        assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
+        assert_eq!(std::fs::read(&audio).unwrap(),wav);
+    }
+    #[test]
+    #[ignore = "requires isolated public WAV and installed local model"]
+    fn retranscription_preview_public_local_model() {
+        use super::*;
+        let root=std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_CASE_ROOT").unwrap());
+        std::fs::create_dir_all(&root).unwrap();
+        let audio=std::path::PathBuf::from(std::env::var_os("COMPANION_LOCAL_ASR_TEST_WAV").unwrap());
+        assert!(std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR").is_some());
+        std::env::set_var("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"));
+        std::env::set_var("COMPANION_TYPE_ASR_CACHE_DIR",root.join("cache"));
+        std::env::set_var("COMPANION_TYPE_ASR_PROVIDER","local-paraformer");
+        std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
+        let bytes=std::fs::read(&audio).unwrap();
+        let backend=FixtureCompanionBackend::new();install_recovery_session(&backend,"public-preview",&audio);
+        {
+            let mut snapshot=backend.snapshot.lock().unwrap();snapshot.host.persistence.status="ready".into();
+            let row=&mut snapshot.host.sessions[0];row.source="controlledLocalAudioFixture".into();
+            row.status="transcribed".into();row.transcript_final=true;row.transcript_text="旧识别结果".into();
+        }
+        let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
+        let result=backend.preview_meeting_transcription("public-preview","__meeting_job__local").unwrap();
+        assert!(!result.trim().is_empty());assert_ne!(result,"旧识别结果");
+        assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
+        assert_eq!(std::fs::read(&audio).unwrap(),bytes);
+        println!("public local-model preview: {} characters, original session and audio unchanged",result.chars().count());
+    }
     #[test]
     #[ignore]
     fn empty_host_recording_restore_gives_relevant_error() {

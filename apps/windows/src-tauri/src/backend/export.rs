@@ -25,7 +25,7 @@ fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>
     } else if manual {
         format!("> 用户手写清单，仅本机保存；不是自动整理或录音识别。\n\n{body}")
     } else if revision.is_some() {
-        format!("> 基于人工修订的转写生成；原始识别结果另行保留。\n\n{body}")
+        format!("> 基于修订后的转写生成；原始识别结果另行保留。\n\n{body}")
     } else { body }
 }
 
@@ -349,8 +349,9 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
         }
         MeetingExportFormat::Srt => {
             require_final_transcript(session)?;
-            if session.utterances.is_empty()
-                || session.utterances.iter().any(|utterance| {
+            let utterances=transcript_review::effective_utterances(session);
+            if utterances.is_empty()
+                || utterances.iter().any(|utterance| {
                     utterance.text.trim().is_empty() || utterance.end_ms <= utterance.start_ms
                         || utterance.approximate_timing
                 })
@@ -453,7 +454,7 @@ fn render_json_for_mode(
         original_transcript_text: &session.transcript_text,
         original_utterances: &session.utterances,
         transcript_review: &session.transcript_review,
-        speaker_labels: (0..session.utterances.len()).map(|i| transcript_review::speaker_label(session,i)).collect(),
+        speaker_labels: (0..transcript_review::effective_utterances(session).len()).map(|i| transcript_review::speaker_label(session,i)).collect(),
         review_stale: transcript_review::review_is_stale(session),
         minutes_current: (selected_variant.is_some() || legacy_minutes.is_some()) && transcript_review::minutes_current(session, selected_variant.map(|v| v.source_review_revision)
             .or_else(|| legacy_minutes.map(|m| m.source_review_revision)).flatten())
@@ -588,7 +589,7 @@ pub fn render_txt(session: &CompanionV1HostSession) -> String {
         session.title.trim()
     };
     let notice = if transcript_review::active_revision(session).is_some() {
-        "人工修订转写；原始识别结果另行保留。\n\n"
+        "修订后的转写；原始识别结果另行保留。\n\n"
     } else if transcript_review::review_is_stale(session) {
         "原始转写已更新；旧修订未套用，请核对保留的草稿。\n\n"
     } else { "" };

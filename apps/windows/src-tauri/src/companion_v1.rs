@@ -1223,9 +1223,10 @@ pub(crate) fn apply_control_at(
                     let final_transcript = session.transcript_final
                         || (session.recovery.intent == "none"
                             && matches!(session.status.as_str(), "transcribed" | "minutesReady"));
+                    let utterances = crate::backend::transcript_review::effective_utterances(session);
                     if !final_transcript
-                        || session.utterances.is_empty()
-                        || session.utterances.iter().any(|utterance| {
+                        || utterances.is_empty()
+                        || utterances.iter().any(|utterance| {
                             utterance.text.trim().is_empty()
                                 || utterance.end_ms <= utterance.start_ms
                         })

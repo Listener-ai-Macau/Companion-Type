@@ -34,6 +34,7 @@ export function companionTranscriptSpeakerLabel(session: CompanionV1HostSession,
     || (speaker == null ? '未分配说话人' : `说话人${speaker + 1}`);
 }
 export function companionReviewedUtterances(session: CompanionV1HostSession): CompanionV1UtteranceSegment[] {
+  if (companionTranscriptReviewRevision(session) !== null && session.transcriptReview?.text) return [];
   const edits = companionTranscriptReviewRevision(session) !== null ? session.transcriptReview?.utteranceEdits : undefined;
   return (session.utterances ?? []).map((u, index) => ({ ...u, text: edits?.find((e) => e.index === index)?.text ?? u.text }));
 }

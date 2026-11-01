@@ -4,6 +4,7 @@ import {act,create} from 'react-test-renderer';
 import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
 import {companionTranscriptSources,companionTranscriptSourceIsCurrent,companionMinutesReferencedSources} from '../packages/core/src/minutesSources';
 import {CompanionTranscriptReview} from '../packages/ui/src/CompanionTranscriptReview';
+import {companionReviewedTranscript,companionReviewedUtterances} from '../packages/core/src/transcriptReview';
 
 const snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
 const session=snapshot.host.sessions[0];
@@ -31,5 +32,17 @@ assert.ok(tree.root.findAllByType('time').some((n:any)=>text(n)==='约 0:16–0:
 assert.ok(tree.root.findAllByType('strong').some((n:any)=>text(n)==='本地转写分段'));
 await act(async()=>tree.root.findByProps({'aria-label':'定位第2段原音'}).props.onClick());
 assert.equal(seeked.length,1);assert.equal(seeked[0].startMs,16000);assert.equal(seeked[0].approximateTiming,true);
+act(()=>tree.unmount());
+const alternative=structuredClone(session);
+alternative.transcriptReview={revision:1,editedAt:'now',sourceTranscriptText:session.transcriptText,
+  sourceUtterances:structuredClone(session.utterances),text:'重新转写的新文字。',utteranceEdits:[],speakerNames:[]};
+assert.equal(companionReviewedTranscript(alternative),'重新转写的新文字。');
+assert.equal(companionReviewedUtterances(alternative).length,0);
+assert.equal(companionTranscriptSources(alternative).length,0,'a new transcription must not borrow old segment timestamps');
+act(()=>tree=create(<CompanionTranscriptReview session={alternative} visible={true} blocked={false}
+  onUnsavedChange={()=>{}} onSave={async()=>snapshot}/>));
+assert.ok(text(tree.toJSON()).includes('重新转写的新文字。'));
+act(()=>tree.root.findAllByType('button').find((n:any)=>text(n)==='修正文字').props.onClick());
+assert.equal(tree.root.findByProps({'aria-label':'修订转写全文'}).props.value,'重新转写的新文字。');
 act(()=>tree.unmount());
 console.log('PASS local ASR approximate source range, review and seek');
