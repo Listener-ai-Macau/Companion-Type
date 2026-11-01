@@ -43,6 +43,16 @@ impl Contract {
             serde_json::json!({"questionSourceUnits": units}))
     }
 
+    /// When the service omits classifications, retain only literal question
+    /// marks. Do not guess unpunctuated questions or discard an otherwise
+    /// useful summary solely because the optional classification is missing.
+    pub(super) fn literal_questions(&self) -> Vec<String> {
+        let mut result=vec!["问题来源分类未完成，以下仅按问号摘录，请查看完整原文。".into()];
+        result.extend(self.units.iter().filter(|text|text.contains('?') || text.contains('？'))
+            .map(|text|format!("原文提问：“{text}”")));
+        result
+    }
+
     pub(super) fn project(&self, object: &Value) -> Result<Vec<String>, String> {
         let rows = object.get("questionClassification").and_then(Value::as_array)
             .ok_or("纪要缺少问题来源分类；原文与草稿保留，未认定整理完成。")?;
@@ -70,5 +80,18 @@ impl Contract {
             }
         }
         Ok(result)
+    }
+}
+
+#[cfg(test)]
+mod fallback_tests {
+    use super::*;
+    #[test]
+    fn fallback_reports_only_literal_questions() {
+        let c=Contract{units:vec!["什么时候交货？".into(),"未确认价格".into(),"Can we ship?".into()]};
+        let q=c.literal_questions();
+        assert_eq!(q.len(),3);assert!(q[0].contains("仅按问号摘录"));
+        assert!(q[1].contains("什么时候交货？"));assert!(q[2].contains("Can we ship?"));
+        assert!(!q.iter().any(|v|v.contains("未确认价格")));
     }
 }

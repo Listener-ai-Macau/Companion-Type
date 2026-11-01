@@ -347,7 +347,11 @@ pub(super) fn run_deepseek_request_with_template(
                 // The provider classifies fixed source units. Only the local
                 // projection can create visible questions/review notices;
                 // free-form suggested interpretations are not source content.
-                minutes.questions = contract.project(&object)?;
+                minutes.questions = match contract.project(&object) {
+                    Ok(questions)=>questions,
+                    Err(_) if template.is_some()=>contract.literal_questions(),
+                    Err(error)=>return Err(error),
+                };
                 minutes.markdown.clear();
             }
             Ok(minutes)
