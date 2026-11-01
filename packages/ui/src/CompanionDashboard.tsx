@@ -564,7 +564,7 @@ export function CompanionDashboard({
   const segmentedAudio = useRef<SegmentedPlaybackControl|null>(null);
   const audioRequestId = useRef(0);
   const [listeningEpoch,setListeningEpoch]=useState(0);
-  const [formAsrProvider, setFormAsrProvider] = useState('volcengine');
+  const [formAsrProvider, setFormAsrProvider] = useState('local-paraformer');
   const [formVolcApp, setFormVolcApp] = useState('');
   const [formVolcAccess, setFormVolcAccess] = useState('');
   const [formVolcResource, setFormVolcResource] = useState('volc.bigasr.sauc.duration');
@@ -580,7 +580,7 @@ export function CompanionDashboard({
 
   useEffect(() => {
     if (!productSettings || productSettings.storageSaveBlocked) return;
-    setFormAsrProvider(productSettings.asrProvider || 'volcengine');
+    setFormAsrProvider(productSettings.asrProvider || 'local-paraformer');
     setFormVolcResource(productSettings.volcResourceId || 'volc.bigasr.sauc.duration');
     setFormOpenAiEndpoint(productSettings.openaiAsrEndpoint);
     setFormOpenAiModel(productSettings.openaiAsrModel);

@@ -71,7 +71,7 @@ fn clear_persisted_secrets(settings: &mut CompanionProductSettings) {
 pub struct CompanionProductSettings {
     /// offlineStore | onlineLive
     pub default_meeting_mode: String,
-    /// volcengine | openai-compatible | auto
+    /// local-paraformer | volcengine | openai-compatible | auto
     pub asr_provider: String,
     pub volc_app_key: String,
     pub volc_access_key: String,
@@ -95,7 +95,7 @@ impl Default for CompanionProductSettings {
     fn default() -> Self {
         Self {
             default_meeting_mode: "offlineStore".to_string(),
-            asr_provider: "volcengine".to_string(),
+            asr_provider: "local-paraformer".to_string(),
             volc_app_key: String::new(),
             volc_access_key: String::new(),
             volc_resource_id: "volc.bigasr.sauc.duration".to_string(),
@@ -630,6 +630,18 @@ fn parse_legacy_volc_credentials(json: &str) -> Option<(String, String, String)>
 mod tests {
     use super::*;
     use std::time::{SystemTime, UNIX_EPOCH};
+
+    #[test]
+    fn new_settings_use_local_transcription_but_explicit_cloud_is_preserved() {
+        let settings=CompanionProductSettings::default();
+        assert_eq!(settings.asr_provider,"local-paraformer");
+        assert_eq!(settings.public_with_environment("settings", |_| None).asr_provider,"local-paraformer");
+        let mut saved=settings.clone();saved.asr_provider="volcengine".into();
+        let restored:CompanionProductSettings=serde_json::from_slice(&serde_json::to_vec(&saved).unwrap()).unwrap();
+        assert_eq!(restored.asr_provider,"volcengine");
+        assert_eq!(settings.public_with_environment("settings", |k| (k=="COMPANION_TYPE_ASR_PROVIDER").then(|| "volcengine".to_string())).asr_provider,"volcengine");
+        assert!(!legacy_import_allowed(|k| (k=="COMPANION_TYPE_ASR_PROVIDER").then(|| "local-paraformer".to_string())));
+    }
 
     #[test]
     fn runtime_credentials_enable_ui_without_exposing_or_persisting_secrets() {
