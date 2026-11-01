@@ -1052,8 +1052,11 @@ export function CompanionDashboard({
   },[qaPendingCitation,selectedSession]);
   const transcriptSources = useMemo(() => selectedSession ? companionTranscriptSources(selectedSession) : [], [selectedSession]);
   const sourceContext = useRef({ session: selectedSession, blocked: false });
+  // Preparing the selected audio itself temporarily makes the app busy.  Once
+  // a seek starts, validate the actual source and recording, not that transient
+  // busy flag; otherwise every first seek rejects its own preparation.
   sourceContext.current = { session: selectedSession,
-    blocked: controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved };
+    blocked: oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved };
   const externalAudioSeek = useRef<(() => void) | null>(null);
   const audioContext = useRef({ sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) });
   audioContext.current = { sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) };
