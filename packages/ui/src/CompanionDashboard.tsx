@@ -2084,7 +2084,9 @@ export function CompanionDashboard({
           {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details ref={savedMinutesHeading} id="ct-recording-result" className="ct-recording-result"
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
             <summary>{manualMinutes ? '手写清单' : '整理结果'}{minutesDirty ? ' · 有未保存的修改' : manualMinutes ? storageBlocked ? ' · 保存待确认' : ' · 已保存' : ''}</summary>
-            {selectedUnrecognized.length ? <p className="ct-step-warn" role="status">部分原音没有识别出文字，整理只依据识别到的内容；可在下方查看时段并回听核对。</p> : null}
+            {selectedUnrecognized.length ? <p className="ct-step-warn" role="status">{selectedUnrecognized.some(part=>part.source?.includes('转写失败'))
+              ? '部分音轨转写失败，整理只依据已有文字；可在下方查看音轨并重新转写。'
+              : '部分原音没有识别出文字，整理只依据识别到的内容；可在下方查看时段并回听核对。'}</p> : null}
             <MinutesModeTabs value={minutesViewMode} onChange={setMinutesViewMode} dualMode={Boolean(offlineMinutes && onlineMinutes)}
               labels={{offlineStore:{visible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}`,accessible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理纪要'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`},
                 onlineLive:{visible:`在线速记 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}`,accessible:`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`}}}>
@@ -2270,7 +2272,9 @@ export function CompanionDashboard({
           </details>:null}
           <section className="ct-recording-text" aria-label="录音文字">
             {selectedUnrecognized.length ? <div className="ct-step-warn">
-              <p role="status">部分时段未识别出文字，可能是安静或声音不清晰。已有文字可以继续整理；建议回听原音核对。</p>
+              <p role="status">{selectedUnrecognized.some(part=>part.source?.includes('转写失败'))
+                ? '部分音轨转写失败，已有文字可以继续整理；原音已保留，可回听或重新转写。'
+                : '部分时段未识别出文字，可能是安静或声音不清晰。已有文字可以继续整理；建议回听原音核对。'}</p>
               <details>
                 <summary>查看全部 {selectedUnrecognized.length} 处未识别时段</summary>
                 <div className="ct-button-row" aria-label="未识别时段">
@@ -2380,7 +2384,9 @@ export function CompanionDashboard({
             {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{productSettings?.asrProvider === 'local-paraformer' ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
             {retranscriptionPreview && retranscriptionPreview.sessionId===selectedSession?.id ? <section aria-label="重新转写结果">
               <p>这是新生成的文字，尚未替换已保存的转写。采用后保留原始转写、原录音和备注；旧纪要保留，可按新文字重新整理。新文字暂时没有对应的分段时间。</p>
-              {retranscriptionPreview.unrecognized.length ? <p className="ct-step-warn">新转写有部分时段没有识别出文字，可能是安静或声音不清晰；采用后可继续整理，请回听核对。</p> : null}
+              {retranscriptionPreview.unrecognized.length ? <p className="ct-step-warn">{retranscriptionPreview.unrecognized.some(part=>part.source?.includes('转写失败'))
+                ? '新转写有音轨处理失败；采用后仅保存已有文字，原音保留，可以再重试。'
+                : '新转写有部分时段没有识别出文字，可能是安静或声音不清晰；采用后可继续整理，请回听核对。'}</p> : null}
               <textarea className="ct-textarea ct-step-textarea" readOnly aria-label="新转写结果" value={retranscriptionPreview.text} />
               <div className="ct-button-row">
                 <button type="button" className="ct-action" disabled={!onSaveMeeting || controlsBusy || transcriptEditor.current.dirty || transcriptReviewUnsaved || Boolean(selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length))}

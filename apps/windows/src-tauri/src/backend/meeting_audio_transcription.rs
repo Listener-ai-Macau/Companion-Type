@@ -23,9 +23,37 @@ pub(super) fn transcribe_tracks(manager: &CompanionTranscriptionManager, session
         if !seen.insert(identity) { return Err("会议音轨重复，未提交转写。".into()); }
     }
     let mut all = microphone.to_vec(); all.extend_from_slice(system);
-    let mic = if microphone.is_empty() { Ok(None) } else { transcribe_track(manager, microphone) };
-    let output = if system.is_empty() { Ok(None) } else { transcribe_track(manager, system) };
-    let result = combine_results(mic, output);
+    let result = (|| {
+        let mic = if microphone.is_empty() { Ok(None) } else { transcribe_track(manager, microphone) };
+        super::meeting_processing_job::check_current()?;
+        if mic.as_ref().err().is_some_and(|error| error==super::meeting_processing_job::TRANSCRIPTION_CANCELLED) {
+            return Err(super::meeting_processing_job::TRANSCRIPTION_CANCELLED.into());
+        }
+        let output = if system.is_empty() { Ok(None) } else { transcribe_track(manager, system) };
+        super::meeting_processing_job::check_current()?;
+        if output.as_ref().err().is_some_and(|error| error==super::meeting_processing_job::TRANSCRIPTION_CANCELLED) {
+            return Err(super::meeting_processing_job::TRANSCRIPTION_CANCELLED.into());
+        }
+        let mic_failed=mic.is_err();let output_failed=output.is_err();
+        let mut combined=combine_results(mic,output)?;
+        // Keep the successfully transcribed track useful. Persist exactly which
+        // source failed, so the partial result remains visibly incomplete after
+        // restarting and can be retried without inventing missing speech.
+        for (failed, paths, label) in [(mic_failed,microphone,"麦克风（转写失败）"),
+                                      (output_failed,system,"电脑声音（转写失败）")] {
+            if !failed { continue; }
+            let bytes=paths.iter().try_fold(0u64,|total,path| {
+                let bytes=transcription::wav_pcm_bytes(Path::new(path))?;
+                total.checked_add(bytes).ok_or_else(||"录音时间范围过大，原音保留。".to_string())
+            })?;
+            let end_ms=u64::try_from((bytes as u128*1000+31_999)/32_000)
+                .map_err(|_|"录音时间范围过大，原音保留。")?;
+            if end_ms==0 {return Err("未能确定失败音轨的时长，原音保留，请重试转写。".into());}
+            transcription::push_unrecognized(&mut combined.transcript.unrecognized,0,end_ms,Some(label.into()));
+        }
+        combined.transcript.unrecognized.sort_by_key(|range|(range.start_ms,range.end_ms));
+        Ok(combined)
+    })();
     if transcription::bind_cache_session(session, &all).is_err() {
         eprintln!("[transcription] meeting-track cache session binding pending");
     }
@@ -163,6 +191,37 @@ mod tests {
         assert!(partial.transcript.text.contains("远端会议"));
         assert_eq!(partial.warnings.len(),1); assert!(partial.warnings[0].contains("可重试"));
         assert!(combine_results(Err("麦克风错误".into()),Err("电脑声音错误".into())).is_err());
+    }
+    #[test]
+    fn failed_track_keeps_usable_transcript_and_persistent_missing_range() {
+        let root=std::env::temp_dir().join(format!("companion-dual-partial-{}",uuid::Uuid::new_v4()));
+        let audio_root=root.join("managed");std::fs::create_dir_all(&audio_root).unwrap();
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&audio_root);
+        std::env::set_var("COMPANION_TYPE_ASR_CACHE_DIR",root.join("cache"));
+        std::env::set_var("COMPANION_TYPE_ASR_PROVIDER","fixture");
+        for key in ["COMPANION_TYPE_TRANSCRIPT_TEXT","COMPANION_TYPE_ASR_ENDPOINT","COMPANION_TYPE_ASR_API_KEY","COMPANION_TYPE_ASR_COMMAND"] {std::env::remove_var(key);}
+        let mic=root.join("microphone.wav");let system=root.join("system.wav");
+        let mut pcm=denzic_host_audio_v1_core::wav::wav_header(32_000).to_vec();pcm.resize(32_044,0);
+        std::fs::write(&mic,&pcm).unwrap();std::fs::write(&system,&pcm).unwrap();
+        std::fs::write(root.join("microphone.transcript.txt"),"").unwrap();
+        std::fs::write(root.join("system.transcript.txt"),"明天讨论产品包装。").unwrap();
+        let result=transcribe_tracks(&CompanionTranscriptionManager::new(),"dual-partial-fixture",
+            &[mic.to_string_lossy().into_owned()],&[system.to_string_lossy().into_owned()]).unwrap();
+        assert!(result.transcript.text.contains("明天讨论产品包装。"));
+        assert_eq!(result.warnings.len(),1);
+        assert_eq!(result.transcript.unrecognized.len(),1,"the failed source must remain marked after the warning is gone");
+        assert_eq!((result.transcript.unrecognized[0].start_ms,result.transcript.unrecognized[0].end_ms),(0,1000));
+        assert!(result.transcript.unrecognized[0].source.as_deref().unwrap().contains("转写失败"));
+        std::fs::write(root.join("microphone.transcript.txt"),"请小王整理报价。").unwrap();
+        let retried=transcribe_tracks(&CompanionTranscriptionManager::new(),"dual-partial-fixture",
+            &[mic.to_string_lossy().into_owned()],&[system.to_string_lossy().into_owned()]).unwrap();
+        assert!(retried.warnings.is_empty() && retried.transcript.unrecognized.is_empty());
+        assert!(retried.transcript.text.contains("请小王整理报价") && retried.transcript.text.contains("明天讨论产品包装"));
+        std::fs::write(root.join("microphone.transcript.txt"),"").unwrap();
+        std::fs::write(root.join("system.transcript.txt"),"").unwrap();
+        assert!(transcribe_tracks(&CompanionTranscriptionManager::new(),"dual-partial-fixture",
+            &[mic.to_string_lossy().into_owned()],&[system.to_string_lossy().into_owned()]).is_err(),"two failed tracks must not be treated as usable");
+        assert_eq!(std::fs::read(&mic).unwrap(),pcm);assert_eq!(std::fs::read(&system).unwrap(),pcm);
     }
     #[test]
     fn approximate_chunk_timing_does_not_pretend_to_order_speakers() {

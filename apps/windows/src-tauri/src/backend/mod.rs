@@ -1695,7 +1695,6 @@ impl CompanionBackend for FixtureCompanionBackend {
                     let mic=tracks.microphone.into_iter().map(|p|p.path).collect::<Vec<_>>();
                     let system=tracks.system.into_iter().map(|p|p.path).collect::<Vec<_>>();
                     let result=meeting_audio_transcription::transcribe_tracks(&self.transcription,id,&mic,&system)?;
-                    if !result.warnings.is_empty() {return Err(result.warnings.join(" "));}
                     Ok(result.transcript.into())
                 } else {
                     self.transcription.transcribe_session_owned(id,audio_path.as_deref(),&paths).map(Into::into)
@@ -3518,14 +3517,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                     requested_session_id.as_deref(),
                 );
                 if let Some(session) = target {
-                    if let Some(warning) = track_transcription_warning.as_deref() {
-                        session.transcript_final = false;
-                        session.status = "captured".into();
-                        session.pending_reason = Some("needs_transcription".into());
-                        session.recovery.stage = "paused".into();
-                        session.recovery.last_error = Some(warning.to_string());
-                        session.recovery.next_retry_at_unix_ms = None;
-                    } else if let Some(error) = transcription_error.as_deref() {
+                    if let Some(error) = transcription_error.as_deref() {
                         schedule_recovery_failure(session, error);
                     } else if session.transcript_final
                         && !session.transcript_text.trim().is_empty()

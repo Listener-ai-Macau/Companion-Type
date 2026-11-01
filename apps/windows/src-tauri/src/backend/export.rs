@@ -19,6 +19,10 @@ use crate::companion_v1::{
 use super::transcript_review;
 pub use super::action_export::{CalendarPreviewItem,CalendarReminderSelection,CalendarSlotSelection};
 
+fn has_failed_transcription_track(session: &CompanionV1HostSession) -> bool {
+    transcript_review::effective_unrecognized(session).iter()
+        .any(|range|range.source.as_deref().is_some_and(|source|source.contains("转写失败")))
+}
 fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, context: &Option<super::minutes_context::Source>, manual: bool, body: String) -> String {
     let body=if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session, context) {
         format!("> 整理来源已变化：以下为之前保留的结果，转写或补充已更新，请重新整理后使用。\n\n{body}")
@@ -28,7 +32,10 @@ fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>
         format!("> 基于修订后的转写生成；原始识别结果另行保留。\n\n{body}")
     } else { body };
     if !manual && !transcript_review::effective_unrecognized(session).is_empty() {
-        format!("> 部分原音未识别出文字，以下整理仅依据已识别内容；请回听原音核对。\n\n{body}")
+        let notice=if has_failed_transcription_track(session) {
+            "部分音轨转写失败，以下整理仅依据已识别内容；原音已保留，可重新转写。"
+        } else {"部分原音未识别出文字，以下整理仅依据已识别内容；请回听原音核对。"};
+        format!("> {notice}\n\n{body}")
     } else { body }
 }
 
@@ -254,7 +261,8 @@ fn pdf_source(session:&CompanionV1HostSession,mode:&str,sections:&PdfSections)->
     if sections.transcript {
         require_final_transcript(session)?;
         if !sections.minutes && !transcript_review::effective_unrecognized(session).is_empty() {
-            parts.push("部分原音未识别出文字，可能是安静或声音不清晰；请回听原音核对。".into());
+            parts.push(if has_failed_transcription_track(session) {"部分音轨转写失败，已有文字不完整；原音已保留，可重新转写。"}
+                else {"部分原音未识别出文字，可能是安静或声音不清晰；请回听原音核对。"}.into());
         }
         parts.push(format!("## 录音文字\n\n{}",transcript_review::effective_text(session)));
         if sections.timeline {
@@ -719,6 +727,17 @@ pub fn render_action_items_ical(session: &CompanionV1HostSession) -> String {
 mod tests {
     use super::*;
     use crate::companion_v1::{CompanionV1ActionItem, CompanionV1SessionRetention};
+
+    #[test]
+    fn failed_track_warning_remains_clear_in_minutes_and_transcript_pdf() {
+        let mut row=session("明天讨论产品包装。",vec![],None);
+        row.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{
+            start_ms:0,end_ms:1000,source:Some("麦克风（转写失败）".into())}];
+        let minutes=minutes_source_notice(&row,None,&None,false,"已整理内容".into());
+        assert!(minutes.contains("部分音轨转写失败") && minutes.contains("已整理内容"));
+        let pdf=pdf_source(&row,"offlineStore",&PdfSections{minutes:false,transcript:true,highlights:false,timeline:false}).unwrap();
+        assert!(pdf.contains("部分音轨转写失败") && pdf.contains("明天讨论产品包装"));
+    }
 
     fn session(
         transcript: &str,
