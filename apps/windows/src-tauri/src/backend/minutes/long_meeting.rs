@@ -603,7 +603,7 @@ fn request_background_review(endpoint: &str, model: &str, key: &str,
     let input = serde_json::to_string(&ReviewInput {
         title: &session.title, summary: &summary, decisions: &decisions, questions: &questions, actions: &actions,
     }).map_err(|_| "会议事项核对未完成。")?;
-    let instruction = "你是会议内容核对助手。下列是整场会议分段纪要及对应原话。识别明显可能为旁人闲谈、录制现场干扰或同时发生的其他活动：结合全会语境和引用，尤其注意摘要明确提及的背景闲谈及其相关的决定、问题和行动项。标记仅用于提醒，不删除内容。正常换题、不同议题、多人会议或个人备忘中的不同任务不应标记，缺乏线索就保留。另找出同一事项且负责人、期限、条件和原文引用一致的重复行动，一个引用可能有不同任务，不确定就不合并。只返回JSON：{\"possiblyUnrelated\":[行动id],\"duplicateGroups\":[[行动id,行动id]],\"backgroundSummary\":[摘要id],\"backgroundDecisions\":[决定id],\"backgroundQuestions\":[问题id]}，不要添加事实。";
+    let instruction = "你是会议内容核对助手。资料由若干按时间顺序转写的章节组成，可能包含多位发言人、自然换题或多场连续会议；不同议题即使毫不相关，也都是会议内容，不能只因为不属于主要话题就标记为背景。只有原话或上下文中存在明确的旁人闲谈、录音现场干扰或会议进行时插入另一段对话的具体线索，才标记该条为可能背景。摘要若明确说明有闲谈，可结合其原话识别相关条目；事实不清、自然换题、独立发言、不同会议或仅主题不同均保留。仅用于提醒核对，不能删除原文。另找出同一事项且负责人、期限、条件及原文引用一致的重复行动，不确定不合并。只返回JSON：{\"possiblyUnrelated\":[行动id],\"duplicateGroups\":[[行动id,行动id]],\"backgroundSummary\":[摘要id],\"backgroundDecisions\":[决定id],\"backgroundQuestions\":[问题id]}。";
     if input.len().saturating_add(instruction.len()) > MAX_PROMPT_BYTES {
         return Err("会议事项过多，请自行核对。".into());
     }
