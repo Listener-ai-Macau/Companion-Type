@@ -193,7 +193,7 @@ fn chunk_anchor(text: &str, start_byte: u64, end_byte: u64) -> Option<crate::com
 }
 
 pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, String> {
-    super::super::transcription_job::check_current()?;
+    super::super::meeting_processing_job::check_current()?;
     let root = root()?;
     let (runtime, kind) = load_preferred(&root)?;
     let mut file = File::open(audio).map_err(|e| e.to_string())?;
@@ -205,7 +205,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1"}),
     )?;
     while offset < len {
-        super::super::transcription_job::check_current()?;
+        super::super::meeting_processing_job::check_current()?;
         let n = (len - offset).min((20 * RATE * 2 + 2) as u64) as usize;
         let mut buf = vec![0; n];
         file.seek(SeekFrom::Start(start + offset))
@@ -241,7 +241,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         }
         offset += buf.len() as u64;
     }
-    super::super::transcription_job::check_current()?;
+    super::super::meeting_processing_job::check_current()?;
     let text = super::normalize_transcript(&parts.join("\n"));
     if text.is_empty() {
         return Err(super::LOCAL_NO_SPEECH.into());
@@ -274,16 +274,16 @@ mod tests {
                 if observer_done.load(Ordering::Acquire) {return false;}
                 if fs::read_dir(&observer_cache).unwrap().filter_map(Result::ok)
                     .any(|entry|entry.file_name().to_string_lossy().starts_with("v2-")) {
-                    return super::super::super::transcription_job::cancel("public-meeting","public-job").unwrap();
+                    return super::super::super::meeting_processing_job::cancel("public-meeting","public-job").unwrap();
                 }
                 std::thread::sleep(std::time::Duration::from_millis(10));
             }
             false
         });
-        let stopped=super::super::super::transcription_job::run("public-meeting","public-job",||transcribe(&audio));
+        let stopped=super::super::super::meeting_processing_job::run("public-meeting","public-job",super::super::super::meeting_processing_job::Kind::Transcription,||transcribe(&audio));
         done.store(true,Ordering::Release);
         assert!(observer.join().unwrap(),"no completed window was cancelled");
-        assert_eq!(stopped.unwrap_err(),super::super::super::transcription_job::CANCELLED);
+        assert_eq!(stopped.unwrap_err(),super::super::super::meeting_processing_job::TRANSCRIPTION_CANCELLED);
         assert_eq!(fs::read(&audio).unwrap(),original);
         let saved=fs::read_dir(&cache).unwrap().filter_map(Result::ok)
             .map(|entry|entry.path()).find(|path|path.file_name().unwrap().to_string_lossy().starts_with("v2-"))

@@ -14,11 +14,11 @@ let request:any;const cancellations:any[]=[];
 (globalThis as any).__companionAppTest={
   snapshot:async()=>structuredClone(snapshot),
   control:async(value:any)=>{request=value;await pending;throw new Error(transcriptionStoppedMessage);},
-  cancelTranscription:async(session:string,job:string)=>{cancellations.push({session,job});return cancellations.length>1;},
+  cancelMeetingProcessing:async(session:string,job:string)=>{cancellations.push({session,job});return cancellations.length>1;},
 };
 let view:any;await act(async()=>{view=create(<App/>);});
 await act(async()=>{view.root.findByType(CompanionDashboard).props.onControl({action:'meetingTranscribeAudio',sessionId:'meeting-A'});await Promise.resolve();});
-assert.equal(request.sessionId,'meeting-A');assert.match(request.promptId,/^__transcription_job__/);
+assert.equal(request.sessionId,'meeting-A');assert.match(request.promptId,/^__meeting_job__/);
 const label=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(label).join('');
 const stop=view.root.findAllByType('button').find((n:any)=>label(n)==='停止转写');assert.ok(stop);
 await act(async()=>{stop.props.onClick();await Promise.resolve();});

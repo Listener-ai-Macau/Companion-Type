@@ -207,10 +207,10 @@ export interface CompanionDashboardProps {
   recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
   pauseSyncBusy?: boolean;
   onPauseSync?: (jobId: string) => void;
-  transcribingSessionId?: string | null;
-  cancelTranscriptionPending?: boolean;
-  transcriptionNotice?: string | null;
-  onCancelTranscription?: (sessionId: string) => void;
+  processingSessionId?: string | null;
+  cancelProcessingPending?: boolean;
+  processingNotice?: string | null;
+  onCancelMeetingProcessing?: (sessionId: string) => void;
   onUnsavedChange?: (unsaved: boolean) => void;
   snapshot: CompanionV1Snapshot | null;
   busyAction: CompanionV1ControlAction | 'refresh' | null;
@@ -372,10 +372,10 @@ export function CompanionDashboard({
   recordingSync = null,
   pauseSyncBusy = false,
   onPauseSync,
-  transcribingSessionId = null,
-  cancelTranscriptionPending = false,
-  transcriptionNotice = null,
-  onCancelTranscription,
+  processingSessionId = null,
+  cancelProcessingPending = false,
+  processingNotice = null,
+  onCancelMeetingProcessing,
   onUnsavedChange,
   snapshot,
   busyAction,
@@ -909,6 +909,7 @@ export function CompanionDashboard({
   };
   const storageBlocked = Boolean(snapshot?.host.persistence && snapshot.host.persistence.status !== 'ready');
   const transcriptionRunning = busyAction === 'meetingTranscribeAudio';
+  const minutesRunning = busyAction === 'meetingGenerateMinutes';
   const cloudAsrConfigured = productSettings?.asrProvider === 'volcengine'
     ? Boolean(productSettings.volcAppKeySet && productSettings.volcAccessKeySet)
     : Boolean(productSettings?.openaiAsrApiKeySet);
@@ -1694,12 +1695,13 @@ export function CompanionDashboard({
         <section className="ct-pending-banner" role="alert">{operationErrorText(snapshot.lastControl.message,'device')} <button type="button" className="ct-text-button" onClick={openQuickGuide}>查看恢复方法</button></section>
       ) : null}
 
-      {transcriptionNotice ? <p className="ct-recording-notice ct-step-ok" role="status">{transcriptionNotice}</p> : null}
-      {transcriptionRunning && transcribingSessionId && onCancelTranscription ?
+      {processingNotice ? <p className="ct-recording-notice ct-step-ok" role="status">{processingNotice}</p> : null}
+      {(transcriptionRunning || minutesRunning) && processingSessionId && onCancelMeetingProcessing ?
         <section className="ct-recording-notice" role="status">
-          <span>{cancelTranscriptionPending ? '正在停止转写，等待当前请求或音频片段结束；原录音保留。' : '正在转写，原录音会保留。'}</span>{' '}
-          <button type="button" className="ct-action" disabled={cancelTranscriptionPending}
-            onClick={() => onCancelTranscription(transcribingSessionId)}>{cancelTranscriptionPending ? '停止中…' : '停止转写'}</button>
+          <span>{minutesRunning ? (cancelProcessingPending ? '正在停止整理，等待当前请求结束；原始文字保留。' : '正在整理会议，原始文字会保留。')
+            : (cancelProcessingPending ? '正在停止转写，等待当前请求或音频片段结束；原录音保留。' : '正在转写，原录音会保留。')}</span>{' '}
+          <button type="button" className="ct-action" disabled={cancelProcessingPending}
+            onClick={() => onCancelMeetingProcessing(processingSessionId)}>{cancelProcessingPending ? '停止中…' : minutesRunning ? '停止整理' : '停止转写'}</button>
         </section> : null}
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
         resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync}

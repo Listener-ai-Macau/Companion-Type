@@ -443,8 +443,8 @@ pub fn pause_companion_recording_sync(job_id: String) -> Result<bool, String> {
 
 // Independent of the meeting workflow lock held by the active transcription.
 #[tauri::command]
-pub fn cancel_companion_transcription(session_id: String, job_id: String) -> Result<bool, String> {
-    crate::backend::transcription_job::cancel(&session_id, &job_id)
+pub fn cancel_companion_meeting_processing(session_id: String, job_id: String) -> Result<bool, String> {
+    crate::backend::meeting_processing_job::cancel(&session_id, &job_id)
 }
 
 fn apply_renderer_control(

@@ -311,6 +311,7 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
             .map_err(|_| MISSING_EVIDENCE)?;
         Ok((minutes, evidence))
     })?;
+    super::super::meeting_processing_job::check_current()?;
     // A nearby conversation can contain genuine instructions but not belong
     // to this meeting. Mark only candidates the model can relate to explicitly
     // described background chat; never delete them or change their attribution.
@@ -328,12 +329,17 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
     // An overview is an optional reading aid. Preserve all detailed minutes and
     // never let a failed extra request downgrade or erase a completed meeting.
     if minutes.processing.as_ref().is_some_and(|p| p.complete) && minutes.summary.len() > 12 {
+        super::super::meeting_processing_job::check_current()?;
         if let Ok(points) = request_concise_overview(endpoint, model, key, &minutes.summary, client) {
             prepend_concise_overview(&mut minutes, &points);
-        } else if let Ok(indices) = request_overview(endpoint, model, key, &minutes.summary, client) {
-            prepend_overview(&mut minutes, &indices);
+        } else {
+            super::super::meeting_processing_job::check_current()?;
+            if let Ok(indices) = request_overview(endpoint, model, key, &minutes.summary, client) {
+                prepend_overview(&mut minutes, &indices);
+            }
         }
     }
+    super::super::meeting_processing_job::check_current()?;
     Ok(minutes)
 }
 
@@ -586,6 +592,7 @@ fn request_overview(endpoint: &str, model: &str, key: &str, items: &[String],
     let two_thirds = items.len() * 2 / 3;
     let mut selected = Vec::new();
     for (start, end) in [(0, third), (third, two_thirds), (two_thirds, items.len())] {
+        super::super::meeting_processing_job::check_current()?;
         selected.extend(request_overview_section(endpoint, model, key, items, start, end, client)?);
     }
     Ok(selected)
@@ -652,6 +659,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
     save_checkpoint(&path, &checkpoint)?;
     let started = Instant::now(); let mut fresh = 0; let mut failure = None;
     for (index, &(start, end)) in slices.iter().enumerate() {
+        super::super::meeting_processing_job::check_current()?;
         if checkpoint.chapters[index].is_some() { continue; }
         let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
         // Native HTTP is bounded to 180s. Reserve the entire deadline before
@@ -669,6 +677,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
         // Both attempts count against the existing overall request/time budget.
         if response.as_ref().is_err_and(|error| *error == MISSING_EVIDENCE
             || *error == super::safe_minutes_http_error(super::http_policy::Failure::InvalidResponse)) {
+            super::super::meeting_processing_job::check_current()?;
             let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
             if fresh < MAX_FRESH_REQUESTS && remaining >= Duration::from_secs(180) {
                 fresh += 1;
@@ -694,6 +703,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
             Err(error) => { failure = Some(format!("第{}段整理失败：{error}", index + 1)); break; }
         }
     }
+    super::super::meeting_processing_job::check_current()?;
     Ok(assemble(session, &checkpoint, resumed, generated_at, failure))
 }
 

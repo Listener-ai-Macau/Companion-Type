@@ -134,6 +134,39 @@ fn durable_retry_only_submits_unfinished_chunks_and_preserves_tail_and_source() 
 }
 
 #[test]
+fn cancelled_long_minutes_keep_completed_chapters_and_resume_without_resending() {
+    use crate::backend::meeting_processing_job::{self,Kind,MINUTES_CANCELLED};
+    let root=root();let text=format!("{}最后结论：保留原音并等待实板验收。", "讨论内容用于分段压力，不包含新的决定或任务。\n".repeat(1400));
+    let source=session(&text);let total=plan(&text).unwrap().len();assert!(total>3);
+    let mut calls=Vec::new();
+    let stopped=meeting_processing_job::run(&source.id,"minutes-job",Kind::Minutes,||
+        run_with(&root,"https://fixture.invalid","model","private",&source,"first",|index,_,part,_|{
+            calls.push(index);
+            if index==1 {assert!(meeting_processing_job::cancel(&source.id,"minutes-job").unwrap());}
+            Ok(response(part))
+        }));
+    assert_eq!(stopped.unwrap_err(),MINUTES_CANCELLED);assert_eq!(calls,vec![0,1]);
+    let checkpoint=read_checkpoint(&root.join(Identity::new("https://fixture.invalid","model","private",&source).filename())).unwrap();
+    assert_eq!(checkpoint.chapters.iter().flatten().count(),2);assert_eq!(source.transcript_text,text);
+    calls.clear();let resumed=run_with(&root,"https://fixture.invalid","model","private",&source,"retry",|index,_,part,_|{
+        calls.push(index);Ok(response(part))
+    }).unwrap();
+    assert_eq!(calls,(2..total).collect::<Vec<_>>());assert!(resumed.processing.unwrap().complete);
+    assert_eq!(source.transcript_text,text);cleanup(root);
+}
+
+#[test]
+fn cancelled_malformed_minutes_response_does_not_send_a_retry() {
+    use crate::backend::meeting_processing_job::{self,Kind,MINUTES_CANCELLED};
+    let root=root();let source=session(&"公开会议内容。\n".repeat(2000));let mut calls=0;
+    let result=meeting_processing_job::run(&source.id,"minutes-job",Kind::Minutes,||
+        run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,_,_|{
+            calls+=1;assert!(meeting_processing_job::cancel(&source.id,"minutes-job").unwrap());Err(MISSING_EVIDENCE.into())
+        }));
+    assert_eq!(result.unwrap_err(),MINUTES_CANCELLED);assert_eq!(calls,1);cleanup(root);
+}
+
+#[test]
 fn malformed_provider_response_is_retried_once_for_the_same_segment() {
     let root = root(); let source = session(&"公开会议内容。\n".repeat(2000));
     let mut calls = Vec::new();

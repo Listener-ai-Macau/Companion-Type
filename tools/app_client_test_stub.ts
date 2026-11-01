@@ -1,7 +1,7 @@
 // Only bundled by the in-memory App test; never used by the production build.
 const api = () => (globalThis as any).__companionAppTest;
 export const isTauriRuntime = () => true;
-export const cancelCompanionTranscription = (sessionId:string,jobId:string) => api().cancelTranscription ? api().cancelTranscription(sessionId,jobId) : Promise.resolve(false);
+export const cancelCompanionMeetingProcessing = (sessionId:string,jobId:string) => api().cancelMeetingProcessing ? api().cancelMeetingProcessing(sessionId,jobId) : Promise.resolve(false);
 export const getDesktopUpdateStatus = async () => ({phase:'idle',message:'fixture only',currentVersion:'0.1.0',downloadedBytes:0});
 export const checkDesktopUpdate = getDesktopUpdateStatus;
 export const downloadDesktopUpdate = getDesktopUpdateStatus;

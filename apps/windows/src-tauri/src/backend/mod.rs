@@ -125,7 +125,7 @@ pub mod product_settings;
 /// In-memory import/fixture coordinator; the board owns physical NOR storage.
 pub mod recording_ring;
 mod transcription;
-pub(crate) mod transcription_job;
+pub(crate) mod meeting_processing_job;
 pub(crate) use transcription::prepare_local_asr;
 #[cfg(test)]
 mod meeting_processing_tests;
@@ -336,6 +336,10 @@ where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1Meeti
     };
     let mut failure = None;
     for mode in modes {
+        // A sealed meeting can have two products. Do not submit the second
+        // product after the user stopped the first; the outer job discards
+        // this temporary session and preserves the durable version.
+        if let Err(error) = meeting_processing_job::check_current() { return Some(error); }
         let mut input = session.clone();
         input.meeting_mode = mode.clone();
         let generated = generate(&input);
@@ -2802,16 +2806,16 @@ impl CompanionBackend for FixtureCompanionBackend {
                 request
             } else {
                 let owner=session.map(|s|s.id.clone()).unwrap_or_default();
-                let job_id=request.prompt_id.as_deref().filter(|id|id.starts_with("__transcription_job__"))
+                let job_id=request.prompt_id.as_deref().filter(|id|id.starts_with("__meeting_job__") || id.starts_with("__transcription_job__"))
                     .map(str::to_owned).unwrap_or_else(||uuid::Uuid::new_v4().to_string());
                 let (fresh,result)=self.run_meeting_work(snapshot,&request,|| {
                     let work = || self.transcription.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths);
-                    if automatic_recovery { work() } else { transcription_job::run(&owner,&job_id,work) }
+                    if automatic_recovery { work() } else { meeting_processing_job::run(&owner,&job_id,meeting_processing_job::Kind::Transcription,work) }
                 })?;
                 snapshot=fresh;
                 original_selected_session_id=snapshot.host.selected_session_id.clone();
-                if result.as_ref().err().is_some_and(|error| error==transcription_job::CANCELLED) {
-                    return Err(transcription_job::CANCELLED.into());
+                if result.as_ref().err().is_some_and(|error| error==meeting_processing_job::TRANSCRIPTION_CANCELLED) {
+                    return Err(meeting_processing_job::TRANSCRIPTION_CANCELLED.into());
                 }
                 match result {
                 Ok(transcript) => {
@@ -3310,12 +3314,18 @@ impl CompanionBackend for FixtureCompanionBackend {
                     .and_then(|id| snapshot.host.sessions.iter().find(|session| session.id == id))
                     .or_else(|| selected_session(&snapshot)).cloned();
                 if let Some(mut session) = input.filter(|session| !session.transcript_text.trim().is_empty()) {
-                    let (fresh,failure)=self.run_meeting_work(snapshot,&request,||
-                        refresh_minutes_products_for_mode(&mut session,&generated_at,request.meeting_mode.as_deref(),
+                    let owner=session.id.clone();
+                    let job_id=request.prompt_id.as_deref().filter(|id|id.starts_with("__meeting_job__"))
+                        .map(str::to_owned).unwrap_or_else(||uuid::Uuid::new_v4().to_string());
+                    let (fresh,result)=self.run_meeting_work(snapshot,&request,|| {
+                        let mut work=|| Ok(refresh_minutes_products_for_mode(&mut session,&generated_at,request.meeting_mode.as_deref(),
                             |input| if request.context_note_revision.is_some() {
                                 self.minutes.generate_with_context(input,&generated_at)
-                            } else { self.minutes.generate(input,&generated_at) }))?;
+                            } else { self.minutes.generate(input,&generated_at) }));
+                        if automatic_recovery { work() } else { meeting_processing_job::run(&owner,&job_id,meeting_processing_job::Kind::Minutes,work) }
+                    })?;
                     snapshot=fresh;
+                    let failure=result?;
                     // Context inclusion belongs only to this explicit request.
                     // Do not let generic automatic recovery replace a failed
                     // combined result with an original-only result silently.
