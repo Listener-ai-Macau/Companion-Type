@@ -521,6 +521,11 @@ export function CompanionDashboard({
       return {name:typeof saved?.name==='string'?saved.name:'',instructions:typeof saved?.instructions==='string'?saved.instructions:''};
     } catch {return {name:'',instructions:''};}
   });
+  const updateCustomTemplate=(next:{name:string;instructions:string})=>{
+    setCustomTemplate(next);
+    try {localStorage.setItem('companion.minutes.customTemplate.v1',JSON.stringify(next));setTemplateSaveError(false);}
+    catch {setTemplateSaveError(true);}
+  };
   const [calendarSaveTargets,setCalendarSaveTargets]=useState<Record<string,{token:string;name:string}>>({});
   const [pdfSections,setPdfSections]=useState({minutes:true,transcript:false,highlights:true,timeline:false});
   const [pdfPreview,setPdfPreview]=useState<{key:string;text?:string;hash?:string;error?:string;pending?:boolean}|null>(null);
@@ -2369,8 +2374,8 @@ export function CompanionDashboard({
                   <option key={JSON.stringify([saved.name,saved.instructions])} value={`saved:${index}`}>{saved.name}{savedCustomTemplates.filter(item=>item.name===saved.name).length>1?` · 同名 ${savedCustomTemplates.slice(0,index+1).filter(item=>item.name===saved.name).length}`:''}</option>)}</optgroup> : null}
               </select></label>
               {templateId==='custom' ? <div className="ct-field">
-                <label>模板名称<input aria-label="模板名称" value={customTemplate.name} onChange={event=>setCustomTemplate({...customTemplate,name:event.target.value})}/></label>
-                <label>整理要求<textarea aria-label="整理要求" value={customTemplate.instructions} onChange={event=>setCustomTemplate({...customTemplate,instructions:event.target.value})}/></label>
+                <label>模板名称<input aria-label="模板名称" value={customTemplate.name} onChange={event=>updateCustomTemplate({...customTemplate,name:event.target.value})}/></label>
+                <label>整理要求<textarea aria-label="整理要求" value={customTemplate.instructions} onChange={event=>updateCustomTemplate({...customTemplate,instructions:event.target.value})}/></label>
                 <p className="ct-step-meta">最近填写的模板保存在这台电脑；已用于整理的模板版本可在此选择，并随对应会议资料备份。</p>
                 {templateSaveError ? <p role="status">模板未能保存到本机，本次整理仍可继续。</p> : null}
               </div> : null}
