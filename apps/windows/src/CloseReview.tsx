@@ -15,7 +15,7 @@ function ClosingIndicator(){
   useEffect(()=>{const e=element.current;e?.showModal();return()=>e?.close();},[]);
   return <dialog ref={element} className="ct-delete-confirm" aria-label="正在确认退出" onCancel={e=>e.preventDefault()}>
     <strong>正在确认退出</strong><p role="status">等待当前操作安全收尾。若窗口标题提示尚未结束，可以稍后再次关闭窗口重试。</p>
-    <p>已保存的录音会保留；这里不会重新录音或开始处理。</p>
+    <p>电脑正在录制的音频会先保存；录音卡可以继续独立录音。</p>
   </dialog>;
 }
 /** Native Close asks this mounted owner to inspect current UI-only drafts.

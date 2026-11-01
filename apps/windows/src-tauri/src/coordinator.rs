@@ -148,6 +148,7 @@ impl CompanionCoordinator {
             }
             std::thread::sleep(std::time::Duration::from_millis(5));
         }
+        self.backend.finish_host_recording_on_exit()?;
         crate::backend::release_process_device_links()
     }
     pub fn begin_desktop_update_operation(&self) -> Result<CompanionDeviceOperationLease,String> {

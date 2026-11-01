@@ -71,6 +71,11 @@ impl HostRecordingManager {
         }
     }
 
+    pub(super) fn active_session_id(&self) -> Result<Option<String>, String> {
+        let active = self.active.lock().map_err(|_| "电脑录音状态暂时不可用。")?;
+        Ok(active.as_ref().map(|recording| recording.session_id.clone()))
+    }
+
     pub(super) fn current_error(&self)->Option<(String,String)> {
         let active=self.active.lock().ok()?;
         let recording=active.as_ref()?;

@@ -700,6 +700,7 @@ pub struct CompanionServiceBoundary {
 }
 
 pub trait CompanionBackend: Send + Sync {
+    fn finish_host_recording_on_exit(&self) -> Result<(), String>;
     fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String>;
     fn restore_library_backup(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持恢复会议备份。".into())}
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
@@ -1127,6 +1128,7 @@ pub struct FixtureCompanionBackend {
     snapshot: Mutex<CompanionV1Snapshot>,
     meeting_processing: Mutex<()>,
     host_recording: HostRecordingManager,
+    shutdown_host_recording: Mutex<Option<String>>,
     live_asr: Arc<LiveAsrHub>,
     transcription: CompanionTranscriptionManager,
     minutes: CompanionMinutesManager,
@@ -1177,6 +1179,7 @@ impl FixtureCompanionBackend {
             snapshot: Mutex::new(snapshot),
             meeting_processing: Mutex::new(()),
             host_recording: HostRecordingManager::new(),
+            shutdown_host_recording: Mutex::new(None),
             live_asr: Arc::new(LiveAsrHub::new()),
             transcription: CompanionTranscriptionManager::new(),
             minutes: CompanionMinutesManager::new(),
@@ -1487,6 +1490,34 @@ mod manual_disconnect_tests {
 }
 
 impl CompanionBackend for FixtureCompanionBackend {
+    fn finish_host_recording_on_exit(&self) -> Result<(), String> {
+        // Only this process's own microphone is stopped. A board recording is
+        // not owned by HostRecordingManager and must continue independently.
+        let mut pending=self.shutdown_host_recording.lock().map_err(|_|"电脑录音收尾状态不可用。")?;
+        if pending.is_none() { *pending=self.host_recording.active_session_id()?; }
+        let Some(id)=pending.clone() else {return Ok(());};
+        let active=self.host_recording.active_session_id()?;
+        if active.as_deref().is_some_and(|active|active!=id) {
+            return Err("另一场电脑录音仍在进行，未结束错误的录音。".into());
+        }
+        if active.as_deref()==Some(id.as_str()) {
+            let mut request=crate::control_request(CompanionV1ControlAction::MeetingStop,Some(id.clone()));
+            request.prompt_id=Some("__companion_shutdown_save_only__".into());
+            self.apply_control(request)?;
+        }
+        let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        let row=snapshot.host.sessions.iter().find(|row|row.id==id)
+            .ok_or("电脑录音保存状态尚未确认，已保留原文件。")?;
+        if row.source!="hostMicrophone" || row.status=="recording" || !row.audio_stored {
+            return Err("电脑录音尚未完成保存，已保留原文件供恢复。".into());
+        }
+        if snapshot.host.persistence.status!="ready" {
+            persistence::save_snapshot(&mut snapshot)
+                .map_err(|_|"电脑录音已停止，但会议库尚未保存；请处理存储问题后再次关闭。")?;
+        }
+        *pending=None;
+        Ok(())
+    }
     fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String> {
         let mut preference=self.connection_preference.lock().map_err(|_|"device connection preference lock failed")?;
         if target.is_some_and(|id| !device_connection::stable_device_id(id) ||
@@ -1729,6 +1760,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         }
         const AUTO_RECOVERY_PROMPT_ID: &str = "__companion_auto_recovery__";
         let automatic_recovery = request.prompt_id.as_deref() == Some(AUTO_RECOVERY_PROMPT_ID);
+        let shutdown_save_only = request.prompt_id.as_deref() == Some("__companion_shutdown_save_only__");
 
         // Default meeting mode from product settings / env when UI omits it.
         if matches!(request.action, CompanionV1ControlAction::MeetingStart)
@@ -3433,7 +3465,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                                     )
                                 })
                                 .unwrap_or((None, false));
-                            if empty {
+                            if empty && !shutdown_save_only {
                                 if let Some(path) = audio {
                                     match self
                                         .transcription
@@ -4841,6 +4873,60 @@ mod tests {
             .env("COMPANION_TEST_START_STOP","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
             .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
             .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_shutdown_host_capture_child() {
+        if std::env::var_os("COMPANION_TEST_SHUTDOWN_HOST").is_none() { return; }
+        let backend=FixtureCompanionBackend::new();
+        // An independently recording board has no owned host microphone.
+        {let mut s=backend.snapshot.lock().unwrap();s.device.recording=true;s.meeting.active=true;}
+        let before=serde_json::to_vec(&backend.snapshot().unwrap()).unwrap();
+        backend.finish_host_recording_on_exit().unwrap();
+        assert_eq!(serde_json::to_vec(&backend.snapshot().unwrap()).unwrap(),before);
+        {let mut s=backend.snapshot.lock().unwrap();s.device.recording=false;s.meeting.active=false;}
+        let id="exit-host-recording";
+        let mut request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some(id.into()));
+        request.meeting_mode=Some("onlineLive".into());
+        backend.apply_control(request).unwrap();
+        backend.finish_host_recording_on_exit().unwrap();
+        let stopped=backend.snapshot().unwrap();
+        let row=stopped.host.sessions.iter().find(|r|r.id==id).unwrap();
+        assert_eq!(row.status,"captured");assert!(row.audio_stored && row.audio_bytes>44);
+        assert!(row.transcript_text.is_empty());
+        assert!(!stopped.last_control.as_ref().unwrap().message.contains("fallback batch"));
+        super::meeting_workspace::validate_wav(std::path::Path::new(row.audio_path.as_deref().unwrap())).unwrap();
+        backend.finish_host_recording_on_exit().unwrap();
+        let reopened=FixtureCompanionBackend::new().snapshot().unwrap();
+        let saved=reopened.host.sessions.iter().find(|r|r.id==id).unwrap();
+        assert!(saved.audio_stored);assert_eq!(saved.audio_path,row.audio_path);
+
+        // A temporary failure writing the index must not be reported as a
+        // successful exit. Restore the original test index, then retry.
+        let second="exit-with-index-failure";
+        backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingStart,Some(second.into()))).unwrap();
+        let index=super::persistence::state_file_path();let backup=index.with_extension("exit-test-backup");
+        std::fs::rename(&index,&backup).unwrap();std::fs::create_dir(&index).unwrap();
+        assert!(backend.finish_host_recording_on_exit().is_err());
+        assert_eq!(backend.shutdown_host_recording.lock().unwrap().as_deref(),Some(second));
+        std::fs::remove_dir(&index).unwrap();std::fs::rename(&backup,&index).unwrap();
+        backend.finish_host_recording_on_exit().unwrap();
+        let recovered=FixtureCompanionBackend::new().snapshot().unwrap();
+        assert!(recovered.host.sessions.iter().find(|r|r.id==second).unwrap().audio_stored);
+    }
+
+    #[test]
+    fn shutdown_saves_owned_host_audio_without_touching_the_board() {
+        let root=std::env::temp_dir().join(format!("host-exit-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(root.join("recordings")).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_shutdown_host_capture_child","--ignored"])
+            .env("COMPANION_TEST_SHUTDOWN_HOST","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
+            .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_LIVE_ASR_OFF","1").env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1")
+            .env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
         assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
     }
 
