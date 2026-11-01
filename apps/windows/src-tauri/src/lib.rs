@@ -554,13 +554,16 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         if matches!(operation,6|12|13|14) {let _=backend::product_settings::load_and_apply();}
         let coordinator = CompanionCoordinator::new_fixture();
         if matches!(operation,15|16) {
-            #[derive(serde::Deserialize)] #[serde(deny_unknown_fields)]
-            struct BackupRequest { directory:std::path::PathBuf }
+            #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
+            struct BackupRequest { directory:std::path::PathBuf,#[serde(default)] include_templates:bool }
             let request:BackupRequest=serde_json::from_reader(file).map_err(|_|"备份请求格式不正确。")?;
             if operation==15 {
                 let _lease=coordinator.begin_audio_export()?;
                 let report=backend::library_backup::save_product(&coordinator.snapshot()?,&request.directory)?;
                 backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&report).map_err(|e|e.to_string())?)?;
+            } else if request.include_templates {
+                let result=commands::restore_library_with_templates(&coordinator,&request.directory)?;
+                backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|e|e.to_string())?)?;
             } else {
                 let result=coordinator.restore_library_backup(&request.directory)?;
                 backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|e|e.to_string())?)?;
