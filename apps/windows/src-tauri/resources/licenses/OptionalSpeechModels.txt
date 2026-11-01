@@ -4,6 +4,7 @@ FunASR Paraformer-large（新准备的中文本地模型）
 - 发布方：FunASR，固定修订 6843c899b177f325d4bbdad8c08d85d5b1321f00；模型卡标注 Apache-2.0。
   https://huggingface.co/funasr/Paraformer-large/tree/6843c899b177f325d4bbdad8c08d85d5b1321f00
 - 官方 model_quant.onnx SHA-256: 0418089a74ae93556db7802cacc7ea42d9ca55902cf90dfc2c3374bc248c7414
+- 官方下载不可用时可从 hf-mirror.com 的相同修订下载；镜像不是模型发布方，文件仍须符合上面的 SHA-256。
 - 为 sherpa-onnx 运行时只追加依据同修订配置和 am.mvn 生成的元数据，不改变运算图或权重；词表索引同样由该配置生成。
 - 带元数据模型 SHA-256: 8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54
 - tokens.txt SHA-256: 59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6

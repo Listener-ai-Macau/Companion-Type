@@ -2950,7 +2950,7 @@ export function CompanionDashboard({
                       .catch(() => setSettingsMsg('本地模型准备未完成，请检查网络和存储空间后重试；已有录音会保留。')).finally(() => setSettingsBusy(false)); }}>
                   {settingsBusy ? '正在准备，请稍候…' : '准备本地转写模型'}
                 </button>
-                <p className="ct-step-meta">准备时下载约 240 MB 的 FunASR 中文模型，录音不会上传；如果下载失败，已有可用的本地模型仍可继续使用。<a href="https://huggingface.co/funasr/Paraformer-large/tree/6843c899b177f325d4bbdad8c08d85d5b1321f00" target="_blank" rel="noreferrer">模型来源与许可</a></p>
+                <p className="ct-step-meta">准备时下载约 240 MB 的 FunASR 中文模型；官方站点不可用时会尝试镜像，下载文件均会校验。录音不会上传；如果下载失败，已有可用的本地模型仍可继续使用。<a href="https://huggingface.co/funasr/Paraformer-large/tree/6843c899b177f325d4bbdad8c08d85d5b1321f00" target="_blank" rel="noreferrer">模型来源与许可</a></p>
               </div> : formAsrProvider === 'volcengine' ? <>
                 <label className="ct-field"><span>火山 Resource ID</span><input value={formVolcResource} onChange={(e) => setFormVolcResource(e.target.value)} spellCheck={false} /></label>
                 {credentialField('volcAppKey', '火山 App Key', formVolcApp, setFormVolcApp, productSettings?.volcAppKeySet)}

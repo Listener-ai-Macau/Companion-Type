@@ -19,6 +19,30 @@ fn valid_range(value: &str, offset: u64, size: u64) -> bool {
     }
 }
 
+/// All sources serve the same pinned bytes. Never try another source for a
+/// local storage failure, and never accept a model without the final hash.
+pub(super) fn fetch_sources(client: &Client, urls: &[&str], size: u64, hash: &str, partial: &Path) -> Result<(), String> {
+    let mut last = None;
+    for url in urls {
+        match fetch(client, url, size, hash, partial) {
+            Ok(()) => return Ok(()),
+            Err(error) => {
+                let retryable = matches!(error.as_str(),
+                    "本地模型下载中断，重试可继续。" |
+                    "本地模型下载失败，请检查网络后重试。" |
+                    "模型服务器返回的续传范围不正确，已保留下载进度。" |
+                    "模型服务器返回的文件过大，已保留原下载进度。" |
+                    "本地模型下载未完成，重试可继续。" |
+                    "本地模型下载未完成，请重试。" |
+                    "本地模型校验失败，重试将重新下载。");
+                if !retryable { return Err(error); }
+                last = Some(error);
+            }
+        }
+    }
+    Err(last.unwrap_or_else(|| "本地模型下载来源不可用。".into()))
+}
+
 /// A partial is private to the pinned model hash and protected by the caller's
 /// process lock. A successful return means the complete file matches the hash.
 pub(super) fn fetch(client: &Client, url: &str, size: u64, hash: &str, partial: &Path) -> Result<(), String> {
@@ -222,6 +246,28 @@ mod tests {
         let dir=root();let part=dir.join("model.part");
         assert!(fetch(&client(),&url,10,&hash(expected),&part).is_err());
         assert_eq!(fs::metadata(&part).unwrap().len(),0);worker.join().unwrap();cleanup(&dir);
+    }
+
+    #[test]
+    fn alternate_source_resumes_prefix_and_verifies_complete_model() {
+        let data=b"abcdefghij";
+        let (primary,_,first)=server(vec![response("200 OK","Content-Length: 10\r\n",&data[..4])]);
+        let (mirror,requests,second)=server(vec![response("206 Partial Content","Content-Length: 6\r\nContent-Range: bytes 4-9/10\r\n",&data[4..])]);
+        let dir=root();let part=dir.join("model.part");
+        fetch_sources(&client(),&[&primary,&mirror],10,&hash(data),&part).unwrap();
+        first.join().unwrap();second.join().unwrap();
+        assert!(requests.lock().unwrap()[0].contains("range: bytes=4-"));
+        assert_eq!(fs::read(&part).unwrap(),data);cleanup(&dir);
+    }
+
+    #[test]
+    fn alternate_source_cannot_publish_a_wrong_hash() {
+        let expected=b"abcdefghij";let invalid=b"0123456789";
+        let (primary,_,first)=server(vec![response("503 Service Unavailable","Content-Length: 0\r\n",b"")]);
+        let (mirror,_,second)=server(vec![response("200 OK","Content-Length: 10\r\n",invalid)]);
+        let dir=root();let part=dir.join("model.part");
+        assert!(fetch_sources(&client(),&[&primary,&mirror],10,&hash(expected),&part).is_err());
+        first.join().unwrap();second.join().unwrap();assert_eq!(fs::metadata(&part).unwrap().len(),0);cleanup(&dir);
     }
 
     #[test]

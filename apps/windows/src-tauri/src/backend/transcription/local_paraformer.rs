@@ -14,6 +14,7 @@ use std::{fs, path::PathBuf, sync::Mutex};
 // Publisher's pinned ONNX weights. Metadata and vocabulary are derived from
 // the same published configuration; appending metadata does not alter weights.
 const OFFICIAL_URL: &str = "https://huggingface.co/funasr/Paraformer-large/resolve/6843c899b177f325d4bbdad8c08d85d5b1321f00/model_quant.onnx?download=true";
+const MIRROR_URL: &str = "https://hf-mirror.com/funasr/Paraformer-large/resolve/6843c899b177f325d4bbdad8c08d85d5b1321f00/model_quant.onnx?download=true";
 const OFFICIAL_RAW_SHA: &str = "0418089a74ae93556db7802cacc7ea42d9ca55902cf90dfc2c3374bc248c7414";
 const OFFICIAL_RAW_SIZE: u64 = 237_653_364;
 const OFFICIAL_METADATA: &[u8] = include_bytes!("official_paraformer_assets/metadata.bin");
@@ -122,7 +123,7 @@ pub(super) fn prepare() -> Result<(), String> {
         let client=reqwest::blocking::Client::builder().connect_timeout(std::time::Duration::from_secs(15))
             .timeout(std::time::Duration::from_secs(600)).build().map_err(|_| "无法创建模型下载连接。")?;
         let partial=downloads.join(format!("{OFFICIAL_RAW_SHA}.part"));
-        model_download::fetch(&client, OFFICIAL_URL, OFFICIAL_RAW_SIZE, OFFICIAL_RAW_SHA, &partial)?;
+        model_download::fetch_sources(&client, &[OFFICIAL_URL, MIRROR_URL], OFFICIAL_RAW_SIZE, OFFICIAL_RAW_SHA, &partial)?;
         let staged_model=stage.join("model.int8.onnx");
         fs::copy(&partial, &staged_model).map_err(|_| "无法准备本地模型。")?;
         let mut model=fs::OpenOptions::new().append(true).open(&staged_model).map_err(|e|e.to_string())?;
