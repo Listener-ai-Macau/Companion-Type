@@ -784,7 +784,7 @@ fn parse_concise_overview(content: &str, item_count: usize) -> Result<Vec<Concis
     for point in &points {
         let text = point.text.trim();
         if text.is_empty() || text.chars().count() > 200 || text.contains(['\n','\r'])
-            || point.sources.is_empty() || point.sources.len() > 6 || point.sources.iter().any(|&i| i >= item_count)
+            || point.sources.is_empty() || point.sources.iter().any(|&i| i >= item_count)
             || point.sources.iter().collect::<HashSet<_>>().len() != point.sources.len() {
             return Err("会议概览格式不正确。".into());
         }

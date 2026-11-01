@@ -627,6 +627,8 @@ fn concise_overview_preserves_complete_minutes_and_checks_sources() {
     minutes.markdown = "# 完整纪要\n\n## 分段原文依据\n\n原文不变".into();
     let original = minutes.markdown.clone();let summary = minutes.summary.clone();
     let points = parse_concise_overview(r#"{"overview":[{"text":"讨论包装、报价和交付安排。","sources":[0,1,2]}]}"#,3).unwrap();
+    let many_sources = parse_concise_overview(r#"{"overview":[{"text":"综合多个议题。","sources":[0,1,2,3,4,5,6,7,8]}]}"#, 9).unwrap();
+    assert_eq!(many_sources[0].sources.len(), 9);
     prepend_concise_overview(&mut minutes,&points);
     assert!(minutes.markdown.starts_with("## 会议概览\n\n> AI根据详细纪要整理"));
     assert!(minutes.markdown.contains("- 讨论包装、报价和交付安排。"));
