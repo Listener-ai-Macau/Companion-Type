@@ -1,0 +1,19 @@
+本地转写模型来源 / Local transcription model notices
+
+SenseVoiceSmall
+- 原始模型：FunAudioLLM / SenseVoiceSmall（阿里巴巴），https://github.com/QwenAudio/SenseVoice
+- 模型发布方：csukuangfj / sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17，修订 2365baeacb507f821a0c8120fcee3d484dba7a07。
+  https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/tree/2365baeacb507f821a0c8120fcee3d484dba7a07
+- 该转换版本的许可说明指向 FunASR 模型开源协议：https://github.com/modelscope/FunASR/blob/main/MODEL_LICENSE
+- model.int8.onnx SHA-256: c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51
+- tokens.txt SHA-256: f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc
+
+Paraformer zh-small（原有模型的兼容支持）
+- 模型发布方：csukuangfj / sherpa-onnx-paraformer-zh-small-2024-03-09，修订 5e2d6883a5b9c3bd7bdf39d7ddb55c732e78109e。
+  https://huggingface.co/csukuangfj/sherpa-onnx-paraformer-zh-small-2024-03-09/tree/5e2d6883a5b9c3bd7bdf39d7ddb55c732e78109e
+- 发布方列出的转换来源：crazyant / speech_paraformer_asr_nat-zh-cn-16k-common-vocab8358-onnx。
+  https://www.modelscope.cn/models/crazyant/speech_paraformer_asr_nat-zh-cn-16k-common-vocab8358-onnx
+- model.int8.onnx SHA-256: 3ef6c19369b912f7caf3cef8e545c5ccd1a33d9d7ec792a46668dc41c4b229ec
+- tokens.txt SHA-256: 4b2d964e18b9cf139b473003b6698fb2ed9a2a5ec55b93daa677b28f578897aa
+
+模型权重与本软件分别提供。运行时组件的许可见本软件的其他第三方许可说明。
