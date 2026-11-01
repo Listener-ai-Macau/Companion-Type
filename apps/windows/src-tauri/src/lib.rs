@@ -1920,7 +1920,7 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
             .and_then(|position| args.get(position + 1))
             .cloned();
         if device_id.is_none() {
-            if let Ok(scan) = coordinator.apply_control(companion_v1::CompanionV1ControlRequest { recording_source: None,
+            if let Ok(scan) = coordinator.apply_control(companion_v1::CompanionV1ControlRequest { minutes_template: None, recording_source: None,
                 action: companion_v1::CompanionV1ControlAction::DeviceScan,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -1945,7 +1945,7 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
                 );
             }
         }
-        let snap = coordinator.apply_control(companion_v1::CompanionV1ControlRequest { recording_source: None,
+        let snap = coordinator.apply_control(companion_v1::CompanionV1ControlRequest { minutes_template: None, recording_source: None,
             action: companion_v1::CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name: None,
             session_id: None,
@@ -2018,7 +2018,7 @@ fn control_request(
     action: companion_v1::CompanionV1ControlAction,
     session_id: Option<String>,
 ) -> companion_v1::CompanionV1ControlRequest {
-    companion_v1::CompanionV1ControlRequest { recording_source: None,
+    companion_v1::CompanionV1ControlRequest { minutes_template: None, recording_source: None,
         action,
         context_note_revision: None, ble_name: None,
         session_id,
@@ -2733,7 +2733,7 @@ mod tests {
         id: &str,
     ) -> companion_v1::CompanionV1Snapshot {
         let mut snapshot = companion_v1::fixture_snapshot();
-        let request = companion_v1::CompanionV1ControlRequest { recording_source: None,
+        let request = companion_v1::CompanionV1ControlRequest { minutes_template: None, recording_source: None,
             action: companion_v1::CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name: None,
             session_id: Some(id.to_string()),

@@ -77,7 +77,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
         }.cloned().or_else(|| {
             if session.meeting_mode != mode || session.minutes_by_mode.offline_store.is_some() || session.minutes_by_mode.online_live.is_some() { return None; }
             session.minutes.as_ref().map(|m| CompanionV1MinutesVariant {
-                processing: m.processing.clone(),
+                template: None, processing: m.processing.clone(),
                 source_note_context: m.source_note_context.clone(), source_review_revision: m.source_review_revision,
                 status: session.status.clone(), markdown: m.markdown.clone(), source: m.source.clone(),
                 quality: m.quality.clone(), generated_at: Some(m.generated_at.clone()), partial_count: 0,
@@ -102,7 +102,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
                 return Err("请填写至少一项待办，再保存手写清单。".into());
             }
             CompanionV1MinutesVariant {
-                processing: None, source_review_revision: super::transcript_review::active_revision(session),
+                template: None, processing: None, source_review_revision: super::transcript_review::active_revision(session),
                 source_note_context: Some(super::minutes_context::source(session)),
                 status: "minutesReady".into(), markdown: String::new(), source: "userAuthored".into(),
                 quality: "final".into(), generated_at: Some(now.into()), partial_count: 0,
@@ -376,6 +376,7 @@ mod tests {
         let mut session=sample();
         let mut older=session.minutes_by_mode.offline_store.clone().unwrap();
         older.markdown="用户之前的纪要".into();older.source="userEdited".into();older.source_review_revision=Some(23);
+        older.template=Some(crate::companion_v1::MinutesTemplate{id:"interview".into(),name:"访谈".into(),instructions:"访谈视角".into()});
         session.minutes_by_mode.history.push(crate::companion_v1::CompanionV1MinutesHistory {
             mode:"offlineStore".into(),archived_at:"earlier".into(),variant:older,
         });
@@ -389,11 +390,13 @@ mod tests {
         edit_session(&mut session,&request,"now").unwrap();
         let restored=session.minutes_by_mode.offline_store.as_ref().unwrap();
         assert_eq!(restored.markdown,"用户之前的纪要");assert_eq!(restored.source_review_revision,Some(23));
+        assert_eq!(restored.template.as_ref().unwrap().name,"访谈");
         assert_eq!(session.minutes_by_mode.history.last().unwrap().variant.markdown,current);
         assert_eq!(session.status,"transcribed");
         let reopened:CompanionV1HostSession=serde_json::from_slice(&serde_json::to_vec(&session).unwrap()).unwrap();
         assert_eq!(reopened.minutes_by_mode.history.last().unwrap().variant.markdown,current);
-        assert_eq!(reopened.minutes_by_mode.offline_store.unwrap().source_review_revision,Some(23));
+        let restored=reopened.minutes_by_mode.offline_store.unwrap();
+        assert_eq!(restored.source_review_revision,Some(23));assert_eq!(restored.template.unwrap().id,"interview");
     }
 
     #[test]

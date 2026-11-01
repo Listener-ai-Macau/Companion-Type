@@ -544,7 +544,10 @@ export interface CompanionCalendarCopy {
   entries: { uid: string; title: string; deadline: string; reminderMinutes: 0 | 30 | 60 | 1440 | null; reminderAt?: string | null }[];
 }
 
+export interface CompanionMinutesTemplate { id: 'meeting' | 'interview' | 'lecture' | 'custom'; name?: string; instructions?: string; }
+
 export interface CompanionV1MinutesVariant {
+  template?: CompanionMinutesTemplate | null;
   processing?: CompanionV1MinutesProcessing | null;
   sourceReviewRevision?: number | null;
   sourceNoteContext?: CompanionMinutesNoteContext | null;
@@ -618,6 +621,7 @@ export interface CompanionV1Snapshot {
 }
 
 export interface CompanionV1ControlRequest {
+  minutesTemplate?: CompanionMinutesTemplate;
   recordingSource?: 'hostMeeting';
   contextNoteRevision?: number;
   action: CompanionV1ControlAction;

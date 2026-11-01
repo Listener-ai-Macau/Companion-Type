@@ -31,6 +31,19 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn template_changes_isolate_long_meeting_cache_without_invalidating_default() {
+    let source=session("明天下午讨论包装，周五发报价。");
+    let meeting=crate::companion_v1::MinutesTemplate{id:"meeting".into(),name:String::new(),instructions:String::new()}.normalized().unwrap();
+    let interview=crate::companion_v1::MinutesTemplate{id:"interview".into(),name:String::new(),instructions:String::new()}.normalized().unwrap();
+    let default=Identity::new("https://fixture.invalid","model","key",&source);
+    assert_eq!(default.filename(),Identity::new_with_template("https://fixture.invalid","model","key",&source,None).filename());
+    let a=Identity::new_with_template("https://fixture.invalid","model","key",&source,Some(&meeting));
+    let b=Identity::new_with_template("https://fixture.invalid","model","key",&source,Some(&interview));
+    assert_ne!(a.filename(),b.filename());assert_ne!(a.filename(),default.filename());
+    assert_eq!(a.source_hash,b.source_hash,"all views refer to the same original transcript");
+}
+
+#[test]
 fn computer_capture_prompt_invalidates_only_its_own_chapter_cache() {
     let source=session("【麦克风】小李寄样品。\n【电脑声音】小王整理报价。");
     let endpoint="https://fixture.invalid";let model="model";let key="private";

@@ -828,7 +828,7 @@ mod tests {
                 assert_ne!(content_hash(&changed),content_hash(&prepared),"review binds the true source notice");
             }
         }
-        s.minutes_by_mode.offline_store=Some(CompanionV1MinutesVariant { processing:None,source_note_context:None,source_review_revision:None,
+        s.minutes_by_mode.offline_store=Some(CompanionV1MinutesVariant { template: None, processing:None,source_note_context:None,source_review_revision:None,
             status:"minutesReady".into(),markdown:s.minutes.as_ref().unwrap().markdown.clone(),source:"llm_command".into(),quality:"final".into(),generated_at:None,partial_count:0 });
         let selected=prepare_meeting_export(&s,"offlineStore",MeetingExportFormat::Calendar).unwrap();
         let body=String::from_utf8(selected.bytes).unwrap().replace("\r\n ","");
@@ -975,7 +975,7 @@ mod tests {
     fn formal_export_is_bound_to_the_requested_mode_and_saved_variant() {
         let mut s = session("final transcript", vec![], Some(minutes()));
         s.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
-            processing: None,
+            template: None, processing: None,
             source_note_context: None, source_review_revision: None,
             status: "minutesReady".to_string(),
             markdown: "# offline product".to_string(),
@@ -985,7 +985,7 @@ mod tests {
             partial_count: 0,
         });
         s.minutes_by_mode.online_live = Some(CompanionV1MinutesVariant {
-            processing: None,
+            template: None, processing: None,
             source_note_context: None, source_review_revision: None,
             status: "minutesReady".to_string(),
             markdown: "# online product".to_string(),
@@ -1020,13 +1020,13 @@ mod tests {
     fn action_exports_use_selected_saved_edits_never_stale_structured_items() {
         let mut s = session("final transcript", vec![], Some(minutes()));
         s.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
-            processing: None,
+            template: None, processing: None,
             source_note_context: None, source_review_revision: None,
             status: "minutesReady".into(), markdown: "## 行动项\n- [ ] 新任务 (due: 2026-10-09)".into(),
             source: "userEdited".into(), quality: "final".into(), generated_at: None, partial_count: 0,
         });
         s.minutes_by_mode.online_live = Some(CompanionV1MinutesVariant {
-            processing: None,
+            template: None, processing: None,
             source_note_context: None, source_review_revision: None,
             status: "minutesReady".into(), markdown: "## Action Items\n- 第二模式任务".into(),
             source: "saved".into(), quality: "final".into(), generated_at: None, partial_count: 1,
@@ -1047,7 +1047,7 @@ mod tests {
     fn plain_checklist_keeps_saved_conditions_and_original_data() {
         let mut s=session("这是原话，不是本次要带走的清单",vec![],Some(minutes()));
         s.minutes_by_mode.offline_store=Some(CompanionV1MinutesVariant {
-            processing:None,source_note_context:None,source_review_revision:None,
+            template: None, processing:None,source_note_context:None,source_review_revision:None,
             status:"minutesReady".into(),source:"userAuthored".into(),quality:"final".into(),
             markdown:"## 行动项\n- [ ] 预算未确认先不买礼物 (due: 2026-10-29T20:00:00+08:00, owner: 我)\n- [x] 找到非深烘咖啡豆".into(),
             generated_at:Some("2026-10-27T06:00:00Z".into()),partial_count:0,
@@ -1069,7 +1069,7 @@ mod tests {
     fn draft_markdown_is_exportable_but_visibly_labeled() {
         let mut s = session("final transcript", vec![], Some(minutes()));
         s.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
-            processing: None,
+            template: None, processing: None,
             source_note_context: None, source_review_revision: None,
             status: "retryPending".to_string(),
             markdown: "# 本机草稿".to_string(),
@@ -1178,7 +1178,7 @@ mod tests {
     fn p636_calendar_export_follows_saved_mode_source_hash_and_unchanged_state() {
         let mut s=session("原话保留，不用重录",vec![],None);
         let variant=|text:&str|CompanionV1MinutesVariant {
-            processing:None,source_note_context:None,source_review_revision:None,
+            template: None, processing:None,source_note_context:None,source_review_revision:None,
             status:"minutesReady".into(),quality:"final".into(),source:"userEdited".into(),
             markdown:text.into(),generated_at:None,partial_count:0,
         };
@@ -1206,7 +1206,7 @@ mod tests {
     fn p612_calendar_handoff_follows_saved_mode_and_preserves_unparsed_time_as_text() {
         let mut s=session("原话：明天下午三点检查样品",vec![],None);
         let variant=|due:&str|CompanionV1MinutesVariant {
-            processing:None,source_note_context:None,source_review_revision:None,
+            template: None, processing:None,source_note_context:None,source_review_revision:None,
             status:"minutesReady".into(),quality:"final".into(),source:"userEdited".into(),
             markdown:format!("## Action Items\n- [ ] 检查样品 (due: {due})"),
             generated_at:None,partial_count:0,

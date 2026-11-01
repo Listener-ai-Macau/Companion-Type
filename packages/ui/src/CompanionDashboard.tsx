@@ -494,6 +494,14 @@ export function CompanionDashboard({
   useEffect(()=>()=>previewTask.current?.cancel(),[]);
   const [calendarExportReview,setCalendarExportReview]=useState<{sessionId:string;mode:CompanionV1MeetingMode;contentHash:string;origin:MeetingExportOrigin;format:'ics'|'calendar';warning:string;sourceKey:string;reminderCarryover?:{fileName:string;retained:number};reminderSourceNote?:string;calendarReminders?:CalendarReminderChoice['calendarReminders'];calendarSlots?:CalendarReminderChoice['calendarSlots'];suggestedAbsolute?:{uid:string;at:string};items?:CalendarExportItem[];reminderContentHash?:string;remindAtTime?:boolean;reminderFormat?:'calendarreminder'|'calendarreminder30'|'calendarreminder60';reminderHashes?:Partial<Record<'calendarreminder'|'calendarreminder30'|'calendarreminder60',string>>}|null>(null);
   const [organizationChoiceId,setOrganizationChoiceId]=useState<string|null>(null);
+  const [pendingMinutesTemplate,setPendingMinutesTemplate]=useState<CompanionV1ControlRequest['minutesTemplate']>();
+  const [templateId,setTemplateId]=useState<'meeting'|'interview'|'lecture'|'custom'>('meeting');
+  const [templateSaveError,setTemplateSaveError]=useState(false);
+  const [customTemplate,setCustomTemplate]=useState<{name:string;instructions:string}>(()=>{
+    try {const saved=JSON.parse(localStorage.getItem('companion.minutes.customTemplate.v1')||'null');
+      return {name:typeof saved?.name==='string'?saved.name:'',instructions:typeof saved?.instructions==='string'?saved.instructions:''};
+    } catch {return {name:'',instructions:''};}
+  });
   const [calendarSaveTargets,setCalendarSaveTargets]=useState<Record<string,{token:string;name:string}>>({});
   const [pdfSections,setPdfSections]=useState({minutes:true,transcript:false,highlights:true,timeline:false});
   const [pdfPreview,setPdfPreview]=useState<{key:string;text?:string;hash?:string;error?:string;pending?:boolean}|null>(null);
@@ -1064,6 +1072,7 @@ export function CompanionDashboard({
     if (request.action === 'meetingGenerateMinutes' && targetId === selectedSession?.id) {
       if(snapshot?.minutesContextSupported && selectedSession?.meetingNotes?.length
           && request.contextNoteRevision==null && explicitSource!=='original') {
+        setPendingMinutesTemplate(request.minutesTemplate);
         setOrganizationChoiceId(selectedSession.id);
         window.requestAnimationFrame(()=>document.getElementById('ct-organization-source-choice')?.scrollIntoView({block:'nearest'}));
         return;
@@ -2030,7 +2039,7 @@ export function CompanionDashboard({
                 <summary>查看以前的整理结果</summary>
                 <p className="ct-step-meta">重新整理前的内容保存在这里。切换版本不会删除当前内容；旧版本可能基于之前的转写。</p>
                 {(selectedSession.minutesByMode?.history ?? []).map((item,index)=>({item,index})).reverse().filter(({item})=>item.mode===minutesViewMode).map(({item,index})=><details key={`${item.archivedAt}-${index}`}>
-                  <summary>{item.variant.source==='userEdited'||item.variant.source==='userAuthored'?'人工修改':'整理结果'} · {item.variant.generatedAt || item.archivedAt}</summary>
+                  <summary>{item.variant.template?.name || (item.variant.source==='userEdited'||item.variant.source==='userAuthored'?'人工修改':'整理结果')} · {item.variant.generatedAt || item.archivedAt}</summary>
                   <pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{item.variant.markdown}</pre>
                   <button type="button" className="ct-action" disabled={!onSaveMeeting||saveMeetingBusy||recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||editingMinutes}
                     onClick={()=>void restoreMinutesHistory(index,item.archivedAt,item.variant.markdown)}>使用这个版本</button>
@@ -2209,7 +2218,7 @@ export function CompanionDashboard({
                   disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || (!hasMinutes && !canGenerate)}
                   title={hasMinutes?'重新整理，已有结果保留':'整理已保存的文字'}
                   onClick={() => {
-                    if(snapshot?.minutesContextSupported && selectedSession.meetingNotes?.length)setOrganizationChoiceId(selectedSession.id);
+                    if(snapshot?.minutesContextSupported && selectedSession.meetingNotes?.length){setPendingMinutesTemplate(undefined);setOrganizationChoiceId(selectedSession.id);}
                     else runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id});
                   }}>{hasMinutes?'重新整理':'整理重点'}</button> : null}
                 {finalTranscript && !hasMinutes && onSaveMeeting ? <button type="button" className="ct-text-button"
@@ -2219,6 +2228,25 @@ export function CompanionDashboard({
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
             </div>
+            {finalTranscript ? <details className="ct-library-more" aria-label="选择整理视角">
+              <summary>按会议、访谈或课堂整理</summary>
+              <p className="ct-step-meta">选择整理侧重点；新结果会保留在这场录音中，已有结果可在历史里切回。</p>
+              <label>整理视角 <select aria-label="整理视角" value={templateId} onChange={event=>setTemplateId(event.target.value as typeof templateId)}>
+                <option value="meeting">会议</option><option value="interview">访谈</option><option value="lecture">课堂</option><option value="custom">自定义</option>
+              </select></label>
+              {templateId==='custom' ? <div className="ct-field">
+                <label>模板名称<input aria-label="模板名称" value={customTemplate.name} onChange={event=>setCustomTemplate({...customTemplate,name:event.target.value})}/></label>
+                <label>整理要求<textarea aria-label="整理要求" value={customTemplate.instructions} onChange={event=>setCustomTemplate({...customTemplate,instructions:event.target.value})}/></label>
+                <p className="ct-step-meta">自定义模板可保存在这台电脑，方便下次使用。</p>
+                {templateSaveError ? <p role="status">模板未能保存到本机，本次整理仍可继续。</p> : null}
+              </div> : null}
+              <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!canGenerate||noteUnsaved||minutesDirty||titleDirty||transcriptReviewUnsaved||(templateId==='custom'&&(!customTemplate.name.trim()||!customTemplate.instructions.trim()))}
+                onClick={()=>{
+                  const template=templateId==='custom'?{id:templateId,name:customTemplate.name.trim(),instructions:customTemplate.instructions.trim()}:{id:templateId};
+                  if(templateId==='custom') {try {localStorage.setItem('companion.minutes.customTemplate.v1',JSON.stringify(customTemplate));setTemplateSaveError(false);} catch {setTemplateSaveError(true);}}
+                  runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,minutesTemplate:template});
+                }}>按这个视角整理</button>
+            </details> : null}
             {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{productSettings?.asrProvider === 'local-paraformer' ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
             {retranscriptionPreview && retranscriptionPreview.sessionId===selectedSession?.id ? <section aria-label="重新转写结果">
               <p>这是新生成的文字，尚未替换已保存的转写。采用后保留原始转写、原录音和备注；旧纪要保留，可按新文字重新整理。新文字暂时没有对应的分段时间。</p>
@@ -2244,11 +2272,11 @@ export function CompanionDashboard({
               <p>原话和补充仍分开保留。选择补充时，只将当前已保存的内容用于这次整理；暂支持两分钟内的短备忘。</p>
               <div className="ct-button-row">
                 <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved}
-                  onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode},'original');}}>仅原话</button>
+                  onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,minutesTemplate:pendingMinutesTemplate},'original');setPendingMinutesTemplate(undefined);}}>仅原话</button>
                 <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved||!selectedSession.meetingNotes?.length}
                   onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,
-                    contextNoteRevision:selectedSession.noteRevision??0});}}>原话＋已保存补充</button>
-                <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={()=>setOrganizationChoiceId(null)}>取消</button>
+                    contextNoteRevision:selectedSession.noteRevision??0,minutesTemplate:pendingMinutesTemplate});setPendingMinutesTemplate(undefined);}}>原话＋已保存补充</button>
+                <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={()=>{setOrganizationChoiceId(null);setPendingMinutesTemplate(undefined);}}>取消</button>
               </div>
             </div>:null}
             {renderExportFeedback('text')}

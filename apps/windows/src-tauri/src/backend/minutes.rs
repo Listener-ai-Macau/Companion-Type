@@ -10,6 +10,7 @@ pub(super) mod long_meeting;
 mod short_memo;
 mod context_plan;
 mod question_sources;
+mod template;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -31,7 +32,7 @@ impl CompanionMinutesManager {
         let _diagnostic_scope=super::diagnostics::RecordingScope::enter(&session.id);
         let span = super::diagnostics::Span::start(super::diagnostics::Operation::Minutes);
         let input = super::transcript_review::minutes_input(session);
-        let mut minutes = self.generate_inner(&input, generated_at);
+        let mut minutes = self.generate_inner(&input, generated_at, None);
         minutes.source_review_revision = super::transcript_review::active_revision(session);
         span.finish(minutes.llm_note.as_deref().or_else(|| (minutes.quality != "final").then_some("provider did not produce final minutes")));
         minutes
@@ -44,7 +45,7 @@ impl CompanionMinutesManager {
         let span = super::diagnostics::Span::start(super::diagnostics::Operation::Minutes);
         let mut input = super::transcript_review::minutes_input(session);
         input.meeting_notes = session.meeting_notes.clone();
-        let mut result = self.generate_inner(&input, generated_at);
+        let mut result = self.generate_inner(&input, generated_at, None);
         result.source_review_revision = super::transcript_review::active_revision(session);
         result.source_note_context = Some(super::minutes_context::source(session));
         result.markdown = format!("{}\n\n{}", super::minutes_context::notice(result.source_note_context.as_ref().unwrap()), result.markdown);
@@ -52,7 +53,27 @@ impl CompanionMinutesManager {
         result
     }
 
-    fn generate_inner(&self, session: &CompanionV1HostSession, generated_at: &str) -> CompanionV1MeetingMinutes {
+    pub(crate) fn generate_with_template(&self, session: &CompanionV1HostSession, generated_at: &str,
+        template: &crate::companion_v1::MinutesTemplate, include_context: bool) -> CompanionV1MeetingMinutes {
+        let _diagnostic_scope=super::diagnostics::RecordingScope::enter(&session.id);
+        let span=super::diagnostics::Span::start(super::diagnostics::Operation::Minutes);
+        let mut input=super::transcript_review::minutes_input(session);
+        if include_context {input.meeting_notes=session.meeting_notes.clone();}
+        let mut result=self.generate_inner(&input,generated_at,Some(template));
+        result.source_review_revision=super::transcript_review::active_revision(session);
+        if include_context {
+            result.source_note_context=Some(super::minutes_context::source(session));
+            result.markdown=format!("{}\n\n{}",super::minutes_context::notice(result.source_note_context.as_ref().unwrap()),result.markdown);
+        }
+        if result.quality=="final" && result.llm_note.is_none() {
+            result.markdown=format!("> 整理视角：{}\n\n{}",template.name,result.markdown);
+        }
+        span.finish(result.llm_note.as_deref().or_else(||(result.quality!="final").then_some("template minutes unavailable")));
+        result
+    }
+
+    fn generate_inner(&self, session: &CompanionV1HostSession, generated_at: &str,
+        template: Option<&crate::companion_v1::MinutesTemplate>) -> CompanionV1MeetingMinutes {
         if let Err(reason) = long_meeting::validate_input(session) {
             return CompanionV1MeetingMinutes { processing: None, source_note_context: None, source_review_revision: None,
                 generated_at: generated_at.into(), source: "rules_l0".into(), quality: "draft".into(),
@@ -67,12 +88,12 @@ impl CompanionMinutesManager {
             l0.markdown = render_minutes_markdown(session,&l0);
         }
         // 1. Explicit external command override (advanced users / CI scripts).
-        if let Some(result) = session.meeting_notes.is_empty().then(||external_minutes_command(session, &l0)).flatten() {
+        if let Some(result) = (template.is_none() && session.meeting_notes.is_empty()).then(||external_minutes_command(session, &l0)).flatten() {
             return finalize_minutes(result, l0, session);
         }
         // 2. Native DeepSeek when an API key is configured (default product
         //    path; no python / relative-path dependency, survives packaging).
-        if let Some(result) = deepseek_native_minutes(session, &l0) {
+        if let Some(result) = deepseek_native_minutes(session, &l0, template) {
             if session.meeting_notes.is_empty() { return finalize_minutes(result,l0,session); }
             let evidence = rules_l0_minutes(session,generated_at);
             return match result {
@@ -80,7 +101,8 @@ impl CompanionMinutesManager {
                 Err(reason)=>{l0.llm_note=Some(reason);l0},
             };
         }
-        // 3. L0 rule draft fallback (no key, no command).
+        // A rule extract is not an AI-generated template result.
+        if template.is_some() {l0.llm_note=Some("使用整理模板需要先配置并启用 AI 纪要服务；原文和已有结果保留。".into());}
         l0
     }
 }
@@ -229,6 +251,7 @@ pub(super) fn finalize_minutes(
 fn deepseek_native_minutes(
     session: &CompanionV1HostSession,
     l0: &CompanionV1MeetingMinutes,
+    template: Option<&crate::companion_v1::MinutesTemplate>,
 ) -> Option<Result<CompanionV1MeetingMinutes, String>> {
     // A saved opt-out also applies when a key was inherited at launch or was
     // enabled earlier in this process. Keeping the key allows re-enabling later.
@@ -239,7 +262,7 @@ fn deepseek_native_minutes(
         .ok()
         .map(|v| v.trim().to_string())
         .filter(|v| !v.is_empty())?;
-    Some(run_deepseek_native(&api_key, session, l0))
+    Some(run_deepseek_native_with_template(&api_key, session, l0, template))
 }
 
 fn deepseek_http_client(endpoint: &str) -> Result<reqwest::blocking::Client, String> {
@@ -251,10 +274,16 @@ fn safe_minutes_http_error(failure: http_policy::Failure) -> String {
     format!("DeepSeek 纪要失败：{failure}。已有转写保留，请检查设置或稍后重试。")
 }
 
-fn run_deepseek_native(
+fn run_deepseek_native(api_key: &str, session: &CompanionV1HostSession,
+    l0: &CompanionV1MeetingMinutes) -> Result<CompanionV1MeetingMinutes, String> {
+    run_deepseek_native_with_template(api_key,session,l0,None)
+}
+
+fn run_deepseek_native_with_template(
     api_key: &str,
     session: &CompanionV1HostSession,
     l0: &CompanionV1MeetingMinutes,
+    template: Option<&crate::companion_v1::MinutesTemplate>,
 ) -> Result<CompanionV1MeetingMinutes, String> {
     let base = std::env::var("DEEPSEEK_BASE_URL")
         .ok()
@@ -268,7 +297,7 @@ fn run_deepseek_native(
         .unwrap_or_else(|| "deepseek-v4-flash".to_string());
 
     let endpoint = format!("{base}/chat/completions");
-    run_deepseek_request(&endpoint, &model, api_key, session, l0, &deepseek_http_client(&endpoint)?)
+    run_deepseek_request_with_template(&endpoint, &model, api_key, session, l0, &deepseek_http_client(&endpoint)?, template)
 }
 
 // The installed fault probe calls this same request path with explicit test
@@ -281,10 +310,19 @@ pub(super) fn run_deepseek_request(
     l0: &CompanionV1MeetingMinutes,
     client: &reqwest::blocking::Client,
 ) -> Result<CompanionV1MeetingMinutes, String> {
+    run_deepseek_request_with_template(endpoint,model,api_key,session,l0,client,None)
+}
+
+pub(super) fn run_deepseek_request_with_template(
+    endpoint: &str, model: &str, api_key: &str, session: &CompanionV1HostSession,
+    l0: &CompanionV1MeetingMinutes, client: &reqwest::blocking::Client,
+    template: Option<&crate::companion_v1::MinutesTemplate>,
+) -> Result<CompanionV1MeetingMinutes, String> {
     long_meeting::validate_input(session)?;
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
+    if let Some(template)=template {system.push_str(&template.prompt());}
     if let Some(contract) = &question_sources {
         user_payload.push_str(&contract.instruction());
         system.push_str(question_sources::SYSTEM_CONTRACT);
@@ -294,7 +332,7 @@ pub(super) fn run_deepseek_request(
         if !session.meeting_notes.is_empty() {
             return Err("本次补充与转写超出单次整理范围；原话和补充已保留，未截断或分段冒充完整整理。".into());
         }
-        return long_meeting::run(endpoint, model, api_key, session, &l0.generated_at, client);
+        return long_meeting::run_with_template(endpoint, model, api_key, session, &l0.generated_at, client, template);
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {

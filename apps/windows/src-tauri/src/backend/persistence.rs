@@ -277,7 +277,7 @@ pub(super) fn migrate_sessions(bytes: Vec<u8>) -> Option<Vec<CompanionV1HostSess
                 }
                 if let Some(minutes) = session.minutes.as_ref() {
                     let variant = CompanionV1MinutesVariant {
-                        processing: minutes.processing.clone(),
+                        template: None, processing: minutes.processing.clone(),
                         source_note_context: minutes.source_note_context.clone(), source_review_revision: minutes.source_review_revision,
                         status: "minutesReady".to_string(),
                         markdown: minutes.markdown.clone(),
@@ -876,7 +876,7 @@ mod tests {
         session.status = "minutesReady".to_string();
         session.minutes = Some(sample_minutes("# final"));
         session.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
-            processing: None,
+            template: None, processing: None,
             source_note_context: None, source_review_revision: None,
             status: "minutesReady".to_string(),
             markdown: "# final".to_string(),
@@ -903,7 +903,7 @@ mod tests {
         draft.llm_note = Some("temporary minutes service timeout".to_string());
         session.minutes = Some(draft);
         session.minutes_by_mode.offline_store = Some(CompanionV1MinutesVariant {
-            processing: None,
+            template: None, processing: None,
             source_note_context: None, source_review_revision: None,
             status: "retryPending".to_string(),
             markdown: "# readable fallback draft".to_string(),

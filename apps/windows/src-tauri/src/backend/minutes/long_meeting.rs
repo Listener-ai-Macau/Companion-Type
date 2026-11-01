@@ -36,6 +36,10 @@ struct Identity {
 
 impl Identity {
     fn new(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession) -> Self {
+        Self::new_with_template(endpoint,model,key,session,None)
+    }
+    fn new_with_template(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+        template: Option<&crate::companion_v1::MinutesTemplate>) -> Self {
         // Hash effective input/configuration, including scope and credential.
         // Neither credentials nor endpoint queries are persisted or logged.
         let source = serde_json::to_vec(&(&session.title, &session.transcript_text,
@@ -49,6 +53,7 @@ impl Identity {
             serde_json::to_vec(&(endpoint, model, key, super::DEEPSEEK_SYSTEM_PROMPT,
                 EVIDENCE_PROMPT, EVIDENCE_REVISION, MAX_PROMPT_BYTES, MAX_OUTPUT_TOKENS, CHUNK_BYTES)).unwrap()
         };
+        let profile=if let Some(template)=template {serde_json::to_vec(&(profile,template)).unwrap()} else {profile};
         Self { schema: SCHEMA.into(), session_hash: hash(session.id.as_bytes()),
             source_hash: hash(&source), profile_hash: hash(&profile) }
     }
@@ -339,12 +344,17 @@ fn continuation_label(session: &CompanionV1HostSession, start: usize) -> Option<
 
 pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
     generated_at: &str, client: &reqwest::blocking::Client) -> Result<CompanionV1MeetingMinutes, String> {
+    run_with_template(endpoint,model,key,session,generated_at,client,None)
+}
+
+pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+    generated_at: &str, client: &reqwest::blocking::Client, template: Option<&crate::companion_v1::MinutesTemplate>) -> Result<CompanionV1MeetingMinutes, String> {
     let root = cache_root().ok_or("纪要分段缓存路径不可用，已有转写保留。")?;
     let slices = plan(&session.transcript_text)?;
     let mut attempts = vec![0usize; slices.len()];
     let mut pending_minutes = vec![None; slices.len()];
     let mut pending_evidence = vec![Vec::<Evidence>::new(); slices.len()];
-    let mut minutes = run_with(&root, endpoint, model, key, session, generated_at, |index, total, part, _timeout| {
+    let mut minutes = run_with_profile(&root, endpoint, model, key, session, generated_at, template, |index, total, part, _timeout| {
         // A valid set of minutes without usable evidence need not be thrown
         // away: spend the existing retry on a smaller evidence-only request.
         if let Some(minutes) = pending_minutes[index].clone() {
@@ -366,8 +376,8 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
                 .map(|name| format!("原文同一行接续，已存在的说话人标签为：{name}。这不是新增说话人。"))
                 .unwrap_or_default(), super::minutes_user_payload(part, &l0));
         if retry { prompt.push_str(EVIDENCE_RETRY_PROMPT); }
-        let system = format!("{}{EVIDENCE_PROMPT}{}", super::DEEPSEEK_SYSTEM_PROMPT,
-            if retry { EVIDENCE_RETRY_PROMPT } else { "" });
+        let system = format!("{}{EVIDENCE_PROMPT}{}{}", super::DEEPSEEK_SYSTEM_PROMPT,
+            if retry { EVIDENCE_RETRY_PROMPT } else { "" }, template.map_or_else(String::new, |t|t.prompt()));
         let (minutes, object) = super::run_deepseek_prompt(endpoint, model, key, part, &l0,
             &prompt, &system, client)?;
         pending_minutes[index] = Some(minutes.clone());
@@ -383,7 +393,7 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
     let mut overview_summary = minutes.summary.clone();
     if minutes.processing.as_ref().is_some_and(|p| p.complete)
         && !minutes.summary.is_empty() {
-        let checkpoint_path = root.join(Identity::new(endpoint, model, key, session).filename());
+        let checkpoint_path = root.join(Identity::new_with_template(endpoint, model, key, session,template).filename());
         let checkpoint = read_checkpoint(&checkpoint_path).ok();
         let quotes = checkpoint.as_ref().map(|value| action_source_quotes(value, &minutes))
             .unwrap_or_else(|| vec![Vec::new(); minutes.action_items.len()]);
@@ -912,11 +922,17 @@ fn request_overview_section(endpoint: &str, model: &str, key: &str, items: &[Str
 }
 
 fn run_with<F>(root: &Path, endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
-    generated_at: &str, mut request: F) -> Result<CompanionV1MeetingMinutes, String>
+    generated_at: &str, request: F) -> Result<CompanionV1MeetingMinutes, String>
+where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(CompanionV1MeetingMinutes, Vec<Evidence>), String> {
+    run_with_profile(root,endpoint,model,key,session,generated_at,None,request)
+}
+
+fn run_with_profile<F>(root: &Path, endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+    generated_at: &str, template: Option<&crate::companion_v1::MinutesTemplate>, mut request: F) -> Result<CompanionV1MeetingMinutes, String>
 where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(CompanionV1MeetingMinutes, Vec<Evidence>), String> {
     let slices = plan(&session.transcript_text)?;
     validate_input(session)?;
-    let identity = Identity::new(endpoint, model, key, session);
+    let identity = Identity::new_with_template(endpoint, model, key, session,template);
     let _guard = root_lock(root)?;
     let path = root.join(identity.filename());
     let mut checkpoint = if path.exists() { read_checkpoint(&path)? }

@@ -462,7 +462,7 @@ mod tests {
 
         let snapshot = apply_fixture_control(
             fixture_snapshot(),
-            CompanionV1ControlRequest { recording_source: None,
+            CompanionV1ControlRequest { minutes_template: None, recording_source: None,
                 action: CompanionV1ControlAction::DeviceSyncRecordings,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("privacy-session".to_string()),
