@@ -177,6 +177,18 @@ fn hold_unconfirmed_host_audio(session: &mut CompanionV1HostSession) {
     session.pending_reason = Some("recovery_paused".into());
 }
 
+// A deliberate stop must not be interpreted on restart as a crashed job
+// eligible for automatic retry. Keep its already-consumed attempt and cache.
+fn pause_cancelled_meeting_work(snapshot: &mut CompanionV1Snapshot, id: &str, stage: &str, message: &str) -> Result<(), String> {
+    let Some(session)=snapshot.host.sessions.iter_mut().find(|session|session.id==id) else {return Ok(());};
+    if session.recovery.intent!="processMeeting" || session.recovery.stage!=stage {return Ok(());}
+    session.recovery.stage="paused".into();
+    session.recovery.next_retry_at_unix_ms=None;
+    session.recovery.last_error=Some(message.into());
+    session.pending_reason=Some("recovery_paused".into());
+    persistence::save_snapshot(snapshot)
+}
+
 fn arm_meeting_recovery(session: &mut CompanionV1HostSession) {
     // This explicit short capture belongs to the pet reply worker. Its raw
     // audio keeps the normal durable library/consume contract, without an
@@ -1492,7 +1504,13 @@ mod manual_disconnect_tests {
 
 impl CompanionBackend for FixtureCompanionBackend {
     fn finish_meeting_processing_on_exit(&self, budget: std::time::Duration) -> Result<(), String> {
-        meeting_processing_job::wait_for_idle(&self.meeting_processing, budget)
+        meeting_processing_job::wait_for_idle(&self.meeting_processing, budget)?;
+        let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用，无法确认处理状态已保存。")?;
+        if snapshot.host.persistence.status!="ready" {
+            persistence::save_snapshot(&mut snapshot)
+                .map_err(|_|"会议状态尚未保存，请处理保存问题后再次关闭。")?;
+        }
+        Ok(())
     }
     fn finish_host_recording_on_exit(&self) -> Result<(), String> {
         // Only this process's own microphone is stopped. A board recording is
@@ -2854,6 +2872,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                 snapshot=fresh;
                 original_selected_session_id=snapshot.host.selected_session_id.clone();
                 if result.as_ref().err().is_some_and(|error| error==meeting_processing_job::TRANSCRIPTION_CANCELLED) {
+                    pause_cancelled_meeting_work(&mut snapshot,&owner,"transcribing",meeting_processing_job::TRANSCRIPTION_CANCELLED)?;
                     return Err(meeting_processing_job::TRANSCRIPTION_CANCELLED.into());
                 }
                 match result {
@@ -3364,6 +3383,10 @@ impl CompanionBackend for FixtureCompanionBackend {
                         if automatic_recovery { work() } else { meeting_processing_job::run(&owner,&job_id,meeting_processing_job::Kind::Minutes,work) }
                     })?;
                     snapshot=fresh;
+                    if result.as_ref().err().is_some_and(|error| error==meeting_processing_job::MINUTES_CANCELLED) {
+                        pause_cancelled_meeting_work(&mut snapshot,&owner,"generatingMinutes",meeting_processing_job::MINUTES_CANCELLED)?;
+                        return Err(meeting_processing_job::MINUTES_CANCELLED.into());
+                    }
                     let failure=result?;
                     // Context inclusion belongs only to this explicit request.
                     // Do not let generic automatic recovery replace a failed
@@ -4879,6 +4902,53 @@ mod tests {
             .args(["--exact","backend::tests::isolated_host_start_stop_child","--ignored"])
             .env("COMPANION_TEST_START_STOP","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
             .env("COMPANION_TYPE_RECORDING_DIR",root.join("recordings")).env("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic")
+            .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
+        assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
+    }
+
+    #[test]
+    #[ignore]
+    fn isolated_cancelled_meeting_recovery_child() {
+        if std::env::var_os("COMPANION_TEST_CANCELLED_RECOVERY").is_none() { return; }
+        for (stage,message) in [("transcribing",meeting_processing_job::TRANSCRIPTION_CANCELLED),
+            ("generatingMinutes",meeting_processing_job::MINUTES_CANCELLED)] {
+            let mut snapshot=apply_fixture_control(fixture_snapshot(),
+                recovery_request(CompanionV1ControlAction::MeetingStart,"cancelled-meeting",false)).unwrap();
+            let row=&mut snapshot.host.sessions[0];
+            row.status="captured".into();row.source="boardDevice".into();
+            row.meeting_mode="offlineStore".into();
+            row.recovery=CompanionV1MeetingRecovery::armed("offlineStore");
+            row.recovery.stage=stage.into();row.recovery.attempt_count=1;
+            if stage=="generatingMinutes" {row.transcript_text="示例会议原文".into();row.transcript_final=true;}
+            let id=row.id.clone();
+            pause_cancelled_meeting_work(&mut snapshot,&id,stage,message).unwrap();
+            let mut reopened:Vec<CompanionV1HostSession>=serde_json::from_slice(
+                &std::fs::read(persistence::state_file_path()).unwrap()).unwrap();
+            let saved=reopened.iter_mut().find(|row|row.id==id).unwrap();
+            assert_eq!(saved.recovery.stage,"paused");assert_eq!(saved.recovery.attempt_count,1);
+            assert_eq!(saved.recovery.last_error.as_deref(),Some(message));
+            persistence::reconcile_session_recovery(saved);
+            assert_eq!(saved.recovery.stage,"paused");assert!(saved.recovery.next_retry_at_unix_ms.is_none());
+        }
+        // A failed stop-state save keeps the app open; a later close retries
+        // the same in-memory state after storage access has been restored.
+        let index=persistence::state_file_path();let backup=index.with_extension("cancel-test-backup");
+        let backend=FixtureCompanionBackend::new();
+        std::fs::rename(&index,&backup).unwrap();std::fs::create_dir(&index).unwrap();
+        {let mut snapshot=backend.snapshot.lock().unwrap();snapshot.host.persistence.status="unsaved".into();}
+        assert!(backend.finish_meeting_processing_on_exit(std::time::Duration::from_secs(1)).is_err());
+        std::fs::remove_dir(&index).unwrap();std::fs::rename(&backup,&index).unwrap();
+        backend.finish_meeting_processing_on_exit(std::time::Duration::from_secs(1)).unwrap();
+        assert_eq!(backend.snapshot().unwrap().host.persistence.status,"ready");
+    }
+
+    #[test]
+    fn cancelled_meeting_stays_paused_after_restart_and_failed_save_can_retry() {
+        let root=std::env::temp_dir().join(format!("meeting-cancel-exit-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        let child=std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact","backend::tests::isolated_cancelled_meeting_recovery_child","--ignored"])
+            .env("COMPANION_TEST_CANCELLED_RECOVERY","1").env("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"))
             .env("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1").env("COMPANION_TYPE_BLE_NATIVE_DISABLED","1").output().unwrap();
         assert!(child.status.success(),"{}\n{}",String::from_utf8_lossy(&child.stdout),String::from_utf8_lossy(&child.stderr));
     }
