@@ -56,6 +56,27 @@ pub(super) fn fetch(client: &Client, url: &str, size: u64, hash: &str, partial: 
     Err("本地模型下载未完成，请重试。".into())
 }
 
+/// Stage the pinned model and vocabulary as a unit. Finished downloads stay in
+/// the private download directory until every required file is verified.
+pub(super) fn stage_assets(client: &Client, base: &str, sense: &Path, stage: &Path,
+    downloads: &Path, assets: &[(&str, u64, &str)]) -> Result<(), String> {
+    for &(name, size, hash) in assets {
+        if super::shared::verified(&sense.join(name), hash).is_ok() {
+            fs::copy(sense.join(name), stage.join(name)).map_err(|_| "复制本地模型失败。")?;
+        } else {
+            fetch(client, &format!("{base}{name}?download=true"), size, hash,
+                &downloads.join(format!("{hash}.part")))?;
+        }
+    }
+    for &(name, _, hash) in assets {
+        let target=stage.join(name);
+        if !target.exists() { fs::rename(downloads.join(format!("{hash}.part")), &target)
+            .map_err(|_| "无法准备已下载的本地模型。")?; }
+        super::shared::verified(&target, hash)?;
+    }
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -123,6 +144,28 @@ mod tests {
         let dir=root();let part=dir.join("model.part");fs::write(&part,&data[..4]).unwrap();
         assert!(fetch(&client(),&url,10,&hash(data),&part).is_err());assert_eq!(fs::read(&part).unwrap(),&data[..4]);
         worker.join().unwrap();cleanup(&dir);
+    }
+
+    #[test]
+    fn completed_model_is_reused_when_vocabulary_download_was_interrupted() {
+        let model=b"abcdefghij";let tokens=b"12345678";
+        let (url,requests,worker)=server(vec![
+            response("200 OK","Content-Length: 10\r\n",model),
+            response("200 OK","Content-Length: 8\r\n",&tokens[..3]),
+            response("206 Partial Content","Content-Length: 5\r\nContent-Range: bytes 3-7/8\r\n",&tokens[3..]),
+        ]);
+        let dir=root();let downloads=dir.join("downloads");let stage=dir.join("stage");let sense=dir.join("existing");
+        fs::create_dir(&downloads).unwrap();fs::create_dir(&stage).unwrap();
+        let model_hash=hash(model);let token_hash=hash(tokens);
+        let assets=[("model",10,model_hash.as_str()),("tokens",8,token_hash.as_str())];
+        let base=format!("{url}/");
+        assert!(stage_assets(&client(),&base,&sense,&stage,&downloads,&assets).is_err());
+        assert_eq!(fs::read(downloads.join(format!("{model_hash}.part"))).unwrap(),model);
+        assert_eq!(fs::read(downloads.join(format!("{token_hash}.part"))).unwrap(),&tokens[..3]);
+        stage_assets(&client(),&base,&sense,&stage,&downloads,&assets).unwrap();
+        assert_eq!(fs::read(stage.join("model")).unwrap(),model);assert_eq!(fs::read(stage.join("tokens")).unwrap(),tokens);
+        worker.join().unwrap();let seen=requests.lock().unwrap();assert_eq!(seen.len(),3);
+        assert!(seen[2].contains("range: bytes=3-"));drop(seen);cleanup(&dir);
     }
 
     #[test]

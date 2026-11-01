@@ -114,22 +114,7 @@ pub(super) fn prepare() -> Result<(), String> {
         super::super::audio_components::prepare_runtime(&stage, &dest)?;
         let client=reqwest::blocking::Client::builder().connect_timeout(std::time::Duration::from_secs(15))
             .timeout(std::time::Duration::from_secs(600)).build().map_err(|_| "无法创建模型下载连接。")?;
-        // Keep finished and partial downloads together until both files are
-        // verified; a later failure can then resume without a second copy.
-        for (name, size, hash) in assets {
-            if shared::verified(&sense.join(name), hash).is_ok() {
-                fs::copy(sense.join(name), stage.join(name)).map_err(|_| "复制本地模型失败。")?;
-            } else {
-                model_download::fetch(&client, &format!("{MODEL_BASE}{name}?download=true"), size, hash,
-                    &downloads.join(format!("{hash}.part")))?;
-            }
-        }
-        for (name, _, hash) in assets {
-            let target=stage.join(name);
-            if !target.exists() { fs::rename(downloads.join(format!("{hash}.part")), &target)
-                .map_err(|_| "无法准备已下载的本地模型。")?; }
-            shared::verified(&target, hash)?;
-        }
+        model_download::stage_assets(&client, MODEL_BASE, &sense, &stage, &downloads, &assets)?;
         fs::create_dir_all(&sense).map_err(|e| e.to_string())?;
         let dest = dest.canonicalize().map_err(|e| e.to_string())?;
         for (name, hash) in &ASSETS[2..] {
