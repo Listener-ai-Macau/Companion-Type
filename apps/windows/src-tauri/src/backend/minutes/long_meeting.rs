@@ -659,7 +659,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
     save_checkpoint(&path, &checkpoint)?;
     let started = Instant::now(); let mut fresh = 0; let mut failure = None;
     let mut pending = (0..slices.len()).collect::<VecDeque<_>>();
-    let mut deferred = None;
+    let mut deferred: Option<usize> = None;
     while let Some(index) = pending.pop_front() {
         let (start, end) = slices[index];
         super::super::meeting_processing_job::check_current()?;
