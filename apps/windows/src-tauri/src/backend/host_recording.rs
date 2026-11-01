@@ -673,15 +673,25 @@ mod tests {
         assert_eq!(saved[0].pending_reason.as_deref(), Some("capture_interrupted"));
         assert_eq!(&std::fs::read(saved[0].audio_path.as_deref().unwrap()).unwrap()[44..], &raw[44..raw.len()-1]);
         assert_eq!(std::fs::read(&path).unwrap(), raw);
-        // A contradictory finalized header is not the interrupted-writer
-        // format. Keep the original and refuse to guess its meaning.
+        // A disk-full partial sample can leave an exact finalized header for
+        // all complete bytes followed by one incomplete byte.
         let conflict = root.join("finalized-odd.wav");
         let lease = super::super::audio_artifacts::WriteLease::begin(
             &conflict, &conflict, super::super::audio_artifacts::Purpose::Recording).unwrap();
-        let mut wrong = denzic_host_audio_v1_core::wav::wav_header(2).to_vec();
-        wrong.extend([1, 2, 3]); std::fs::write(&conflict, &wrong).unwrap(); drop(lease);
-        assert!(super::super::host_interrupted_recovery::recover_copy(&conflict).is_err());
-        assert_eq!(std::fs::read(&conflict).unwrap(), wrong);
+        let mut odd = denzic_host_audio_v1_core::wav::wav_header(2).to_vec();
+        odd.extend([1, 2, 3]); std::fs::write(&conflict, &odd).unwrap(); drop(lease);
+        let restored=super::super::host_interrupted_recovery::recover_copy(&conflict).unwrap();
+        assert_eq!(&std::fs::read(&restored.path).unwrap()[44..],&[1,2]);
+        assert_eq!(std::fs::read(&conflict).unwrap(),odd);
+        drop(restored);
+        // A header claiming bytes that were never present is still invalid.
+        let invalid=root.join("contradictory-odd.wav");
+        let lease=super::super::audio_artifacts::WriteLease::begin(
+            &invalid,&invalid,super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let mut wrong=denzic_host_audio_v1_core::wav::wav_header(4).to_vec();
+        wrong.extend([1,2,3]);std::fs::write(&invalid,&wrong).unwrap();drop(lease);
+        assert!(super::super::host_interrupted_recovery::recover_copy(&invalid).is_err());
+        assert_eq!(std::fs::read(&invalid).unwrap(),wrong);
         std::env::remove_var("COMPANION_TYPE_RECORDING_DIR");
     }
 

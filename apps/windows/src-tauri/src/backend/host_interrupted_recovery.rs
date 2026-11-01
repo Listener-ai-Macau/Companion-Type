@@ -49,20 +49,23 @@ pub(super) fn recover_copy(source: &Path) -> Result<RecoveredHostAudio, String> 
     // exact finalized header. A crash during write_all may leave a prefix of
     // the new header and a suffix of the placeholder. Accept only a prefix
     // matching this known transition and only with complete samples. With an
-    // incomplete sample the writer's final byte count is not knowable, so the
-    // earlier zero-header rule remains the sole safe match.
+    // incomplete sample an interrupted header transition is ambiguous; only
+    // the exact complete header or the earlier zero header is accepted.
     let interrupted_backfill = partial_tail == 0 && (0..=header.len()).any(|cut| {
         header[..cut] == complete[..cut] && header[cut..] == placeholder[cut..]
     });
     // Older writers updated the header only after a whole callback. A disk-full
     // error can leave a valid shorter header followed by more complete samples.
     // The exclusive, recorded product ownership above is required before using
-    // those bytes. Require complete samples and leave the original untouched;
-    // the existing conservative odd-tail rule remains unchanged.
+    // those bytes. Require complete samples and leave the original untouched.
     let declared = u32::from_le_bytes(header[40..44].try_into().expect("fixed header"));
     let prior_complete_header = partial_tail == 0 && declared % 2 == 0 && declared < payload
         && header == denzic_host_audio_v1_core::wav::wav_header(declared);
-    if header != placeholder && !interrupted_backfill && !prior_complete_header {
+    // A failed two-byte write can leave one byte after complete PCM; the
+    // writer can still finalize a header exactly matching the complete part.
+    // Copy those complete samples only, retaining the original odd byte.
+    let exact_header_with_partial_sample = partial_tail == 1 && header == complete;
+    if header != placeholder && !interrupted_backfill && !prior_complete_header && !exact_header_with_partial_sample {
         return Err("原录音不是可确认的录音格式，文件保留。".into());
     }
     let before = digest(source)?;
