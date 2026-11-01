@@ -43,17 +43,36 @@ impl LowPass {
         self.x2=self.x1;self.x1=x;self.y2=self.y1;self.y1=y;y
     }
 }
-struct SpeechConverter {rate:u32, channels:usize,resampler:RatioResampler,filters:Option<[LowPass;2]>}
+struct SpeechConverter {rate:u32, channels:usize,resampler:RatioResampler,filters:Option<[LowPass;2]>,invert_right:bool}
 impl SpeechConverter {
     fn new(rate:u32,channels:usize)->Result<Self,String> {
         if rate==0 || channels==0 {return Err("音频采样格式不完整。".into());}
         Ok(Self {rate,channels,resampler:RatioResampler::new(rate,16000),
-            filters:(rate>16000).then(||[LowPass::new(rate,0.5411961),LowPass::new(rate,1.306563)])})
+            filters:(rate>16000).then(||[LowPass::new(rate,0.5411961),LowPass::new(rate,1.306563)]),invert_right:false})
     }
     fn process(&mut self,samples:&[f32])->Vec<i16> {
         let mut mono=Vec::with_capacity(samples.len()/self.channels);
+        if self.channels==2 {
+            let (mut left,mut right,mut dot)=(0.0_f64,0.0_f64,0.0_f64);
+            for frame in samples.chunks_exact(2) {
+                let l=if frame[0].is_finite(){f64::from(frame[0])}else{0.0};
+                let r=if frame[1].is_finite(){f64::from(frame[1])}else{0.0};
+                left+=l*l;right+=r*r;dot+=l*r;
+            }
+            // Only reverse a channel when both carry a clear signal and their
+            // waveforms are nearly opposite. A hysteresis band avoids changing
+            // the choice on quiet or borderline packets.
+            if left>1e-8 && right>1e-8 {
+                let correlation=dot/(left*right).sqrt();
+                if correlation< -0.90 {self.invert_right=true;}
+                else if correlation> -0.70 {self.invert_right=false;}
+            }
+        }
         for frame in samples.chunks_exact(self.channels) {
-            let mut sample=frame.iter().map(|v|if v.is_finite(){*v as f64}else{0.0}).sum::<f64>()/self.channels as f64;
+            let mut sample=frame.iter().enumerate().map(|(index,v)|{
+                let value=if v.is_finite(){*v as f64}else{0.0};
+                if self.channels==2 && index==1 && self.invert_right {-value}else{value}
+            }).sum::<f64>()/self.channels as f64;
             if let Some(filters)=&mut self.filters { for filter in filters { sample=filter.process(sample); } }
             mono.push(sample.clamp(-1.0,1.0) as f32);
         }
@@ -193,6 +212,17 @@ mod tests {
         assert_eq!(pcm.len(),16000);
         let energy=pcm.iter().skip(100).map(|&x|f64::from(x).powi(2)).sum::<f64>()/15900.0;
         assert!(energy.sqrt()<4000.0,"high frequency energy should be filtered before downsampling");
+    }
+    #[test]
+    fn opposite_phase_stereo_does_not_cancel_speech() {
+        let mut converter=SpeechConverter::new(16000,2).unwrap();
+        let source=(0..1600).flat_map(|i|{let value=((i as f32)*0.08).sin()*0.4;[value,-value]}).collect::<Vec<_>>();
+        let output=converter.process(&source);assert_eq!(output.len(),1600);
+        let peak=output.iter().map(|&v|i32::from(v).abs()).max().unwrap();
+        assert!(peak>12000,"opposite-phase channels must not cancel to silence");
+        let quiet=vec![0.0;200];assert!(converter.process(&quiet).iter().all(|&v|v==0));
+        let normal=(0..1600).flat_map(|i|{let value=((i as f32)*0.08).sin()*0.4;[value,value]}).collect::<Vec<_>>();
+        assert!(converter.process(&normal).iter().any(|v|i32::from(*v).abs()>12000),"normal stereo must remain audible");
     }
     #[test]
     fn imported_recording_survives_reopen_and_backs_up_original() {
