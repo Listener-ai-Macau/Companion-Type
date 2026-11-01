@@ -52,7 +52,7 @@ foreach ($relative in $documents) {
     $safeTitle = [Net.WebUtility]::HtmlEncode($title)
     $document = @"
 <!doctype html>
-<html lang="$language"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data: file:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'none'"><title>$safeTitle</title><style>$css</style></head><body><main>$html</main><footer>Companion Type · Windows development documentation · 2026-10-25</footer></body></html>
+<html lang="$language"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data: file:; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none'; script-src 'none'"><title>$safeTitle</title><style>$css</style></head><body><main>$html</main><footer>Companion Type · Windows development documentation</footer></body></html>
 "@
     $destination = [IO.Path]::ChangeExtension($source, '.html')
     [IO.File]::WriteAllText($destination, $document, [Text.UTF8Encoding]::new($false))

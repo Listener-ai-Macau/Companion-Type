@@ -60,7 +60,9 @@ When regenerating, explicitly choose **原话＋已保存补充** to include sav
 
 For a long meeting, read the short **会议概览** if present, then expand the full summary and source excerpts. Check important names, numbers and actions against the recording. No extracted action does not establish that there was no action.
 
-To transcribe without uploading the recording, open **设置与工具 → 转写与纪要服务**, select **电脑本地转写（中文）** as the ASR provider, prepare the local model and save settings. Initial model preparation needs an internet connection and storage; subsequent local transcription happens after recording and synchronization and does not upload the audio. Cloud transcription sends audio to the selected service; intelligent minutes still send the selected text to the configured minutes service and may incur charges.
+When no transcription choice has been saved or separately configured, Type defaults to **电脑本地转写（中文）** (computer-local Chinese transcription); a previously saved cloud selection remains in effect. For first use, open **设置与工具 → 转写与纪要服务** and select **准备本地转写模型**. This needs internet and downloads about 240 MB; if the official site is unavailable, a mirror is tried and the file is verified. After the recording is finished and synchronized, select **转文字**. Local transcription does not upload audio. Cloud transcription sends audio to the selected service; intelligent minutes send selected text to the configured service and may incur charges.
+
+Open **向录音提问**, select transcribed recordings and enter a question. The question and selected transcripts are sent to the configured AI service; asking does not upload audio. Answers include source excerpts, but recognition and interpretation still require review. If the service fails, completed answers remain on the current page with the unfinished scope; use **保存回答到备注** to save a chosen answer as a note. Asking again reprocesses the selected content and may incur charges.
 
 Write the action in its content field and time or owner separately. **The checklist does not send scheduled notifications.** “Tomorrow” and “next week” retain the recording's context; compare them with its date.
 
@@ -125,6 +127,8 @@ Enter chat with the button. “开始录音” and “聊聊天” remain reserv
 | Local disk full | Free space on the destination disk and retry. Do not clear recordings merely to retry. |
 | Computer recording save unconfirmed | Open the recording in **我的记录**. If **尝试恢复录音** is offered, use it to recover written audio. The original file remains; the ending may be missing. |
 | Export destination not writable | Release the target file, check directory permissions or choose another local export location. |
+| Device recording cannot play | If **尝试恢复回听文件** is offered, try it when original device segments remain on the computer; recovery cannot be guaranteed without valid segments. |
+| Automatic sync settings unavailable | Connect the original device and choose **手动同步录音**. During recording, this uses the same session identity. Automatic sync remains paused until settings recover; other devices’ pause choices are not silently resumed. |
 | Service configuration, authorization or network failure | Check current settings and service state. If original audio remains, you do not need to record again. Do not include keys in feedback. |
 | Device operation unconfirmed | Read current state in Device and sync before repeating start, stop or profile writes. Do not clear pairing or reset the device first. |
 | Screen stays still | An e-paper screen retains its previous image. It alone does not establish whether recording continues. Retain content and notices, then check device connection and state. |
@@ -159,7 +163,8 @@ Choose **确认共同日历日期** to explicitly confirm a date or time once, t
 | Select computer-local transcription and transcribe a saved recording | Saved recording | Processed on the computer without uploading audio; initial model preparation requires internet and storage. |
 | Select cloud transcription, or explicitly select online transcription before recording | The relevant recording or live audio segments | Sent to the selected Volcengine service or configured compatible ASR endpoint. Provider account charges may apply. |
 | Generate or regenerate intelligent minutes | The transcript and notes explicitly selected for that request | Sent to the configured DeepSeek or compatible minutes endpoint. This is not local-only processing; charges may apply. |
-| Explicitly start pet chat | Current utterance audio for recognition; recognized text, conversation context and allowed pet profile/memory for replies | Uses the configured recognition and chat services; charges may apply. It does not listen continuously in the background. |
+| Ask a question about recordings | The question and transcripts of selected recordings | Sent to the configured AI service; audio is not uploaded for the question. Asking again reprocesses selected text and may incur charges. |
+| Explicitly start pet chat | Current utterance audio for recognition; recognized text, conversation context and allowed pet profile/memory for replies | Uses local or cloud transcription as configured; cloud transcription sends audio, and chat text goes to the configured chat service. Charges may apply. It does not listen continuously in the background. |
 | Test the transcription or minutes service | One second of fixed silence or fixed test text | Sends a real service request and may incur charges. It does not read your meetings or microphone. Success proves only that particular request. |
 | Prepare speaker separation components | Downloads pinned models and runtime files | Does not upload meeting audio. This optional speaker-separation component is not an offline speech-to-text model or a recording prerequisite. |
 | Preview or export local diagnostics | Stage events, program fingerprints and local pseudonymous linkage metadata | Saves locally to your chosen file without automatic sharing. Device logs require a separate explicit choice; meeting bodies, original audio and credentials are excluded by default. |
@@ -172,4 +177,4 @@ Local cleanup cannot retract data already sent to a provider or remove device da
 
 **Device synchronization is not cross-computer cloud backup.** After device space is reclaimed, preserve computer audio and needed text yourself. Export important material to a backup location you control and check that the files open. Disabling a service, disconnecting Bluetooth, restoring a name or uninstalling the application does not establish deletion from every location. Before transferring the device or changing computers, check local data, the device, pet memory, exported copies and data already sent remotely separately.
 
-Updated 29 October 2026. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.
+Updated 2 November 2026 for the Windows 0.1.13 engineering candidate. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.

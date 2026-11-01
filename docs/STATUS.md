@@ -1,6 +1,6 @@
 # Readiness and Experience Boundaries
 
-Updated 1 November 2026. The current Windows build provides local Chinese transcription, concise long-meeting overviews, local meeting-library backup and restore, and Word, PDF and mind-map export. Recording still requires a compatible device and available storage. The table below retains the 29 October P708 experience record; it is not a list of every later delivery.
+Updated 2 November 2026. The Windows 0.1.13 engineering candidate provides local Chinese transcription, long-meeting overviews, recording questions, local library backup and restore, and Word, PDF and mind-map export. Local transcription is the default when no prior choice has been saved; initial model preparation requires internet. An Android backend candidate is available for integration but does not include a phone front end. Recording still requires a compatible device and available storage. The table below retains the 29 October P708 experience record; it is not a list of every later delivery.
 
 The product remains in development. Public installers and formal service entitlements have not been released; the consumer phone app, a two-hour real-device meeting and complete presales/aftercare acceptance remain open. Installation, software tests, real-device acceptance and sales readiness are different results.
 
