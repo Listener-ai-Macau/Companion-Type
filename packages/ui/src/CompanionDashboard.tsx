@@ -36,7 +36,7 @@ import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { CompanionExportFeedback, exportFileName, type OpenSavedCalendar } from './CompanionExportFeedback';
 import { CompanionChecklistPhone, type ChecklistPhoneResult } from './CompanionChecklistPhone';
 import { checklistPhoneCode } from './checklistPhone';
-import { briefMinutes, splitLongMinutesEvidence } from './briefMinutes';
+import { briefMinutes, splitLongMinutesEvidence, splitShortMinutesEvidence } from './briefMinutes';
 import { savedCustomMinutesTemplates } from './minutesTemplateLibrary';
 import {ActionListEditor} from './ActionListEditor';
 
@@ -3520,13 +3520,19 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
       <MarkdownMinutes markdown={longEvidence.evidence} {...sourceProps}/>
     </details>
   </div>;
-  const brief = compactAllowed ? briefMinutes(reading, transcript, durationMs, !!noteContext) : null;
+  const shortEvidence=!noteContext?splitShortMinutesEvidence(reading,transcript):null;
+  const shortReading=shortEvidence?.overview??reading;
+  const shortSource=shortEvidence?<details className="ct-full-minutes"><summary>查看原话依据</summary>
+    <p>以下原话由 AI 整理时关联，仅供核对；关联和转写可能有误，编辑后请重新核对。</p><MarkdownMinutes markdown={shortEvidence.evidence} {...sourceProps}/>
+  </details>:null;
+  const brief = compactAllowed ? briefMinutes(shortReading, transcript, durationMs, !!noteContext) : null;
   if (!brief) return <div className="ct-brief-minutes">
     
-      <MarkdownMinutes markdown={reading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
+      <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
+    {shortSource}
     {reading!==markdown?<details className="ct-full-minutes"><summary>查看本次补充来源与完整整理</summary>
       
-      <MarkdownMinutes markdown={reading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
+      <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
       {noteContext?<details className="ct-full-minutes"><summary>核对本次补充来源</summary>
         <MarkdownMinutes markdown={minutesSourceEnvelope(noteContext)} {...sourceProps}/>
       </details>:null}
@@ -3543,11 +3549,12 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
     <MarkdownMinutes markdown={compactReading} actionChecklist={actionChecklist} {...sourceProps} />
     <details className="ct-full-minutes"><summary>{hasSourceAttribution ? '查看完整整理与发言归属' : checklistOnly ? '查看重点和完整整理' : '查看完整整理'}</summary>
       
-      <MarkdownMinutes markdown={reading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
+      <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
       {noteContext&&reading!==markdown?<details className="ct-full-minutes"><summary>核对本次补充来源</summary>
         <MarkdownMinutes markdown={minutesSourceEnvelope(noteContext)} {...sourceProps}/>
       </details>:null}
     </details>
+    {shortSource}
   </div>;
 }
 

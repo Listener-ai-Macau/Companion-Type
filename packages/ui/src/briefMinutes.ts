@@ -2,6 +2,22 @@
 // the complete original document; this never derives tasks from a transcript.
 import {emptyActionNotice} from './savedActions';
 
+// The native single-request result adds optional, validated verbatim excerpts.
+// Leave ambiguous/custom documents untouched and keep the complete saved text.
+export function splitShortMinutesEvidence(markdown: string, transcript: string): {overview: string; evidence: string} | null {
+  const marker = /\r?\n\r?\n## 原话核对\r?\n\r?\n> 以下原话由 AI 关联，仅供核对；关联和转写可能有误。\r?\n\r?\n/g;
+  const matches = [...markdown.matchAll(marker)];
+  if (matches.length !== 1 || matches[0].index === undefined) return null;
+  const index=matches[0].index;
+  const evidence=markdown.slice(index + matches[0][0].length);
+  const entries=evidence.trimEnd().split(/\r?\n\r?\n/);
+  if (!entries.length || !entries.every(entry=>{
+    const match=/^- (?:摘要|决定|事项|问题)：[^\r\n]+\r?\n- 原话：“([^\r\n]+)”$/.exec(entry);
+    return !!match && transcript.includes(match[1]);
+  })) return null;
+  return {overview:markdown.slice(0,index),evidence};
+}
+
 // Only the native long-meeting format has this exact overview/evidence split.
 // Any custom or ambiguous document stays on the ordinary complete reading path.
 export function splitLongMinutesEvidence(markdown: string): {overview: string; evidence: string; detailSummary?: string; detailKeywords?: string} | null {

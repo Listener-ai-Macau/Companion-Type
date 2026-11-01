@@ -11,6 +11,7 @@ mod short_memo;
 mod context_plan;
 mod question_sources;
 mod template;
+mod short_evidence;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -94,10 +95,13 @@ impl CompanionMinutesManager {
         // 2. Native DeepSeek when an API key is configured (default product
         //    path; no python / relative-path dependency, survives packaging).
         if let Some(result) = deepseek_native_minutes(session, &l0, template) {
-            if session.meeting_notes.is_empty() { return finalize_minutes(result,l0,session); }
-            let evidence = rules_l0_minutes(session,generated_at);
             return match result {
-                Ok(minutes)=>finalize_minutes(Ok(minutes),evidence,session),
+                Ok(native)=>{
+                    let base=if session.meeting_notes.is_empty(){l0}else{rules_l0_minutes(session,generated_at)};
+                    let mut minutes=finalize_minutes(Ok(native.minutes),base,session);
+                    short_evidence::append(&mut minutes, &native.evidence);
+                    minutes
+                },
                 Err(reason)=>{l0.llm_note=Some(reason);l0},
             };
         }
@@ -252,7 +256,7 @@ fn deepseek_native_minutes(
     session: &CompanionV1HostSession,
     l0: &CompanionV1MeetingMinutes,
     template: Option<&crate::companion_v1::MinutesTemplate>,
-) -> Option<Result<CompanionV1MeetingMinutes, String>> {
+) -> Option<Result<NativeMinutesResult, String>> {
     // A saved opt-out also applies when a key was inherited at launch or was
     // enabled earlier in this process. Keeping the key allows re-enabling later.
     if std::env::var("COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED").as_deref() == Ok("0") {
@@ -262,7 +266,7 @@ fn deepseek_native_minutes(
         .ok()
         .map(|v| v.trim().to_string())
         .filter(|v| !v.is_empty())?;
-    Some(run_deepseek_native_with_template(&api_key, session, l0, template))
+    Some(run_deepseek_native_result(&api_key, session, l0, template))
 }
 
 fn deepseek_http_client(endpoint: &str) -> Result<reqwest::blocking::Client, String> {
@@ -285,6 +289,18 @@ fn run_deepseek_native_with_template(
     l0: &CompanionV1MeetingMinutes,
     template: Option<&crate::companion_v1::MinutesTemplate>,
 ) -> Result<CompanionV1MeetingMinutes, String> {
+    run_deepseek_native_result(api_key,session,l0,template).map(|result| result.minutes)
+}
+
+struct NativeMinutesResult {
+    minutes: CompanionV1MeetingMinutes,
+    evidence: Vec<short_evidence::Entry>,
+}
+
+fn run_deepseek_native_result(
+    api_key: &str, session: &CompanionV1HostSession, l0: &CompanionV1MeetingMinutes,
+    template: Option<&crate::companion_v1::MinutesTemplate>,
+) -> Result<NativeMinutesResult, String> {
     let base = std::env::var("DEEPSEEK_BASE_URL")
         .ok()
         .map(|v| v.trim_end_matches('/').to_string())
@@ -297,7 +313,7 @@ fn run_deepseek_native_with_template(
         .unwrap_or_else(|| "deepseek-v4-flash".to_string());
 
     let endpoint = format!("{base}/chat/completions");
-    run_deepseek_request_with_template(&endpoint, &model, api_key, session, l0, &deepseek_http_client(&endpoint)?, template)
+    run_deepseek_request_with_evidence(&endpoint, &model, api_key, session, l0, &deepseek_http_client(&endpoint)?, template)
 }
 
 // The installed fault probe calls this same request path with explicit test
@@ -318,6 +334,14 @@ pub(super) fn run_deepseek_request_with_template(
     l0: &CompanionV1MeetingMinutes, client: &reqwest::blocking::Client,
     template: Option<&crate::companion_v1::MinutesTemplate>,
 ) -> Result<CompanionV1MeetingMinutes, String> {
+    run_deepseek_request_with_evidence(endpoint,model,api_key,session,l0,client,template).map(|result|result.minutes)
+}
+
+fn run_deepseek_request_with_evidence(
+    endpoint: &str, model: &str, api_key: &str, session: &CompanionV1HostSession,
+    l0: &CompanionV1MeetingMinutes, client: &reqwest::blocking::Client,
+    template: Option<&crate::companion_v1::MinutesTemplate>,
+) -> Result<NativeMinutesResult, String> {
     long_meeting::validate_input(session)?;
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
@@ -327,15 +351,18 @@ pub(super) fn run_deepseek_request_with_template(
         user_payload.push_str(&contract.instruction());
         system.push_str(question_sources::SYSTEM_CONTRACT);
     }
+    if session.meeting_notes.is_empty() { system.push_str(short_evidence::PROMPT); }
     if system.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES
         || question_sources.as_ref().is_some_and(|contract| !contract.fits_single_request()) {
         if !session.meeting_notes.is_empty() {
             return Err("本次补充与转写超出单次整理范围；原话和补充已保留，未截断或分段冒充完整整理。".into());
         }
-        return long_meeting::run_with_template(endpoint, model, api_key, session, &l0.generated_at, client, template);
+        return long_meeting::run_with_template(endpoint, model, api_key, session, &l0.generated_at, client, template)
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new()});
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {
+            let evidence=if session.meeting_notes.is_empty() {short_evidence::capture(&object,&minutes,&session.transcript_text)} else {Vec::new()};
             if context_plan::eligible(session) {
                 let plan=context_plan::validate(&object,session)?;
                 minutes.action_items=plan.action_items;
@@ -354,7 +381,7 @@ pub(super) fn run_deepseek_request_with_template(
                 };
                 minutes.markdown.clear();
             }
-            Ok(minutes)
+            Ok(NativeMinutesResult{minutes,evidence})
         })
 }
 
@@ -1301,6 +1328,36 @@ mod tests {
                 expires_at: None,
             },
         }
+    }
+
+    #[test]
+    fn short_ai_result_attaches_verbatim_quotes_through_normal_finalizer() {
+        use std::io::{Read,Write};
+        let listener=std::net::TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
+        let server=std::thread::spawn(move||{
+            let (mut socket,_)=listener.accept().unwrap();socket.set_read_timeout(Some(std::time::Duration::from_secs(10))).unwrap();
+            let mut request=Vec::new();let mut block=[0u8;8192];
+            loop {let n=socket.read(&mut block).unwrap();assert!(n>0);request.extend_from_slice(&block[..n]);
+                if let Some(i)=request.windows(4).position(|v|v==b"\r\n\r\n") {
+                    let header=String::from_utf8_lossy(&request[..i]);let length=header.lines().find_map(|line|line.split_once(':')
+                        .filter(|(key,_)|key.eq_ignore_ascii_case("content-length"))
+                        .map(|(_,value)|value.trim().parse::<usize>().unwrap())).unwrap();
+                    if request.len()>=i+4+length{break;}
+                }
+            }
+            let request=String::from_utf8(request).unwrap();assert!(request.contains("evidence 数组"));
+            let content=serde_json::json!({"summary":["明天下午讨论产品包装。"],"decisions":[],"actionItems":[],"questions":[],"keywords":["包装"],
+                "questionClassification":[{"sourceId":1,"kind":"statement"}],
+                "evidence":[{"field":"summary","index":0,"quote":"明天下午讨论产品包装。"}],
+                "markdown":"# 包装会议\n\n## Summary\n- 明天下午讨论产品包装。\n\n## Action Items\n- None captured"});
+            let response=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content.to_string()}}]}).to_string();
+            write!(socket,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",response.len(),response).unwrap();
+        });
+        let session=session_with_text("明天下午讨论产品包装。");let l0=rules_l0_minutes(&session,"now");
+        let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),None).unwrap();
+        let mut result=finalize_minutes(Ok(native.minutes),l0,&session);short_evidence::append(&mut result,&native.evidence);
+        assert!(result.markdown.contains("## 原话核对"));assert!(result.markdown.contains("原话：“明天下午讨论产品包装。”"));
+        assert_eq!(result.quality,"final");server.join().unwrap();
     }
 
     #[test]
