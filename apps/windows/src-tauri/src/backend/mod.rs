@@ -749,6 +749,7 @@ pub trait CompanionBackend: Send + Sync {
     fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String>;
     fn refine_meeting_speakers(&self,_id:&str)->Result<CompanionV1Snapshot,String> {Err("当前环境未提供本地说话人区分。".into())}
     fn preview_meeting_transcription(&self,_id:&str,_job_id:&str)->Result<transcription::TranscriptionPreview,String> {Err("当前环境不支持重新转写。".into())}
+    fn preview_meeting_gap(&self,_id:&str,_job_id:&str,_range:transcription::TranscriptionRange)->Result<transcription::TranscriptionPreview,String> {Err("当前环境不支持单段重新转写。".into())}
     fn capabilities(&self) -> CompanionBackendCapabilities;
     fn ble_bridge_status(&self) -> CompanionBleBridgeStatus;
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String>;
@@ -1700,6 +1701,30 @@ impl CompanionBackend for FixtureCompanionBackend {
                     self.transcription.transcribe_session_owned(id,audio_path.as_deref(),&paths).map(Into::into)
                 }
             }))?;
+        result
+    }
+    fn preview_meeting_gap(&self,id:&str,job_id:&str,range:transcription::TranscriptionRange)->Result<transcription::TranscriptionPreview,String> {
+        if id.is_empty() || !job_id.starts_with("__meeting_job__") {return Err("转写任务身份无效。".into());}
+        let _processing=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
+        if lifecycle::PROCESS.requested() {return Err(lifecycle::CLOSING.into());}
+        let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+        if snapshot.host.persistence.status!="ready" {return Err("请先保存或恢复会议库。".into());}
+        let row=snapshot.host.sessions.iter().find(|s|s.id==id).ok_or("找不到这场录音。")?;
+        library_lifecycle::require_available(row)?;
+        if !transcript_review::final_transcript_available(row) || row.source=="hostMeeting"
+            || !transcript_review::effective_unrecognized(row).iter().any(|gap|gap.source.is_none()
+                && gap.start_ms==range.start_ms && gap.end_ms==range.end_ms) {
+            return Err("所选未识别时段已变化，请刷新后重新选择。".into());
+        }
+        if row.capture_incomplete && !row.recovery.capture_review_confirmed {return Err("请先确认已保存的录音片段。".into());}
+        let path=meeting_workspace::local_audio_path(&snapshot,id)?;
+        let request=CompanionV1ControlRequest { minutes_template: None, recording_source:None, action:CompanionV1ControlAction::MeetingTranscribeAudio,
+            session_id:Some(id.into()),context_note_revision:None,ble_name:None,prompt_id:Some(job_id.into()),title:None,
+            transcript_text:None,meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
+        let _privacy=library_lifecycle::privacy_guard(&snapshot,&request,&persistence::state_file_path())?;
+        privacy::validate_control(&snapshot,&request,self.live_asr.snapshot().active)?;
+        let (_snapshot,result)=self.run_meeting_work(snapshot,&request,||meeting_processing_job::run(id,job_id,
+            meeting_processing_job::Kind::Transcription,||self.transcription.preview_gap(id,&path,&range)))?;
         result
     }
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport,String> {
@@ -4896,6 +4921,74 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    #[ignore = "requires previously authorized real-card audio and installed local model"]
+    fn gap_preview_authorized_weak_audio_preserves_source() {
+        use super::*;
+        use sha2::{Digest,Sha256};use std::io::Read;
+        fn digest(path:&std::path::Path)->Vec<u8>{let mut f=std::fs::File::open(path).unwrap();let mut h=Sha256::new();let mut b=[0u8;65536];loop{let n=f.read(&mut b).unwrap();if n==0{break;}h.update(&b[..n]);}h.finalize().to_vec()}
+        let root=std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_CASE_ROOT").unwrap());
+        let audio=std::path::PathBuf::from(std::env::var_os("COMPANION_LOCAL_ASR_TEST_WAV").unwrap());
+        assert!(std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR").is_some());std::fs::create_dir_all(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"));std::env::set_var("COMPANION_TYPE_RECORDING_DIR",root.join("recordings"));
+        std::env::set_var("COMPANION_TYPE_ASR_CACHE_DIR",root.join("cache"));std::env::set_var("COMPANION_TYPE_ASR_PROVIDER","local-paraformer");
+        std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
+        let original=digest(&audio);let backend=FixtureCompanionBackend::new();install_recovery_session(&backend,"authorized-gap",&audio);
+        {let mut snapshot=backend.snapshot.lock().unwrap();snapshot.host.persistence.status="ready".into();
+         let row=&mut snapshot.host.sessions[0];row.source="controlledLocalAudioFixture".into();row.status="transcribed".into();
+         row.transcript_final=true;row.transcript_text="原转写保留".into();row.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:16600,end_ms:31400,source:None}];}
+        let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
+        let outcome=backend.preview_meeting_gap("authorized-gap","__meeting_job__weak",transcription::TranscriptionRange{start_ms:16600,end_ms:31400});
+        match outcome {Ok(result)=>println!("Authorized weak gap local preview returned {} characters; no audio or text uploaded",result.text.chars().count()),
+            Err(error)=>{assert_eq!(error,transcription::LOCAL_NO_SPEECH);println!("Authorized weak gap still has no recognized words; no audio uploaded");}}
+        assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);assert_eq!(digest(&audio),original);
+    }
+    #[test]
+    #[ignore = "requires isolated public speech and installed local model"]
+    fn gap_preview_real_public_speech_uses_only_selected_interval() {
+        use super::*;
+        let root=std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_CASE_ROOT").unwrap());
+        let audio=std::path::PathBuf::from(std::env::var_os("COMPANION_LOCAL_ASR_TEST_WAV").unwrap());
+        assert!(std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR").is_some());std::fs::create_dir_all(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"));
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",root.join("recordings"));
+        std::env::set_var("COMPANION_TYPE_ASR_CACHE_DIR",root.join("cache"));
+        std::env::set_var("COMPANION_TYPE_ASR_PROVIDER","local-paraformer");
+        std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
+        let before_audio=std::fs::read(&audio).unwrap();let backend=FixtureCompanionBackend::new();install_recovery_session(&backend,"public-gap",&audio);
+        {let mut snapshot=backend.snapshot.lock().unwrap();snapshot.host.persistence.status="ready".into();
+         let row=&mut snapshot.host.sessions[0];row.source="controlledLocalAudioFixture".into();row.status="transcribed".into();
+         row.transcript_final=true;row.transcript_text="原转写保留".into();row.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:10000,end_ms:25000,source:None}];}
+        let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
+        let result=backend.preview_meeting_gap("public-gap","__meeting_job__public",transcription::TranscriptionRange{start_ms:10000,end_ms:25000}).unwrap();
+        assert!(result.text.chars().count()>10);assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
+        assert_eq!(std::fs::read(&audio).unwrap(),before_audio);
+        println!("Public speech gap preview: {} characters from selected 15 seconds; source audio and session unchanged",result.text.chars().count());
+    }
+    #[test]
+    #[ignore = "sets isolated state, recording and transcription environment"]
+    fn gap_preview_processes_selected_range_without_modifying_session_or_original() {
+        use super::*;
+        let root=std::env::temp_dir().join(format!("companion-gap-preview-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();
+        std::env::set_var("COMPANION_TYPE_STATE_PATH",root.join("sessions.json"));
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR",root.join("recordings"));
+        std::env::set_var("COMPANION_TYPE_ASR_CACHE_DIR",root.join("cache"));
+        std::env::set_var("COMPANION_TYPE_ASR_PROVIDER","isolated-test");
+        std::env::set_var("COMPANION_TYPE_TRANSCRIPT_TEXT","这段新识别");
+        std::env::remove_var("COMPANION_TYPE_ASR_COMMAND");
+        let audio=root.join("meeting.wav");let mut wav=denzic_host_audio_v1_core::wav::wav_header(32_000).to_vec();wav.extend(vec![42u8;32_000]);std::fs::write(&audio,&wav).unwrap();
+        let backend=FixtureCompanionBackend::new();install_recovery_session(&backend,"gap-meeting",&audio);
+        {let mut snapshot=backend.snapshot.lock().unwrap();snapshot.host.persistence.status="ready".into();
+         let row=&mut snapshot.host.sessions[0];row.source="controlledLocalAudioFixture".into();row.status="transcribed".into();
+         row.transcript_final=true;row.transcript_text="旧转写".into();row.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:200,end_ms:800,source:None}];}
+        let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
+        let range=transcription::TranscriptionRange{start_ms:200,end_ms:800};
+        assert_eq!(backend.preview_meeting_gap("gap-meeting","__meeting_job__gap",range).unwrap().text,"这段新识别");
+        assert!(backend.preview_meeting_gap("gap-meeting","__meeting_job__wrong",transcription::TranscriptionRange{start_ms:201,end_ms:800}).is_err());
+        assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);assert_eq!(std::fs::read(&audio).unwrap(),wav);
+        assert!(!std::fs::read_dir(root.join("recordings")).unwrap().any(|e|e.unwrap().file_name().to_string_lossy().contains("-range.wav")));
+    }
     #[test]
     fn retranscription_preview_success_and_failure_keep_existing_session() {
         use super::*;

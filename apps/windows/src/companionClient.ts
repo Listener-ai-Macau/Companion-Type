@@ -38,6 +38,8 @@ export const refineCompanionMeetingSpeakers = (sessionId:string) =>
   invoke<CompanionV1Snapshot>('refine_companion_meeting_speakers',{sessionId});
 export const previewCompanionMeetingTranscription = (sessionId:string,jobId:string) =>
   invoke<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>('preview_companion_meeting_transcription',{sessionId,jobId});
+export const previewCompanionMeetingGap = (sessionId:string,jobId:string,range:{startMs:number;endMs:number}) =>
+  invoke<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>('preview_companion_meeting_gap',{sessionId,jobId,range});
 
 export type CompanionProductSettingsPublic = {
   defaultMeetingMode: string;

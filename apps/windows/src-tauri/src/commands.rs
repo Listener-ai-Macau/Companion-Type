@@ -161,6 +161,13 @@ pub async fn preview_companion_meeting_transcription(coordinator:CompanionCoordi
         .await.map_err(|e|format!("重新转写未完成：{e}"))?
 }
 
+#[tauri::command]
+pub async fn preview_companion_meeting_gap(coordinator:CompanionCoordinatorState<'_>,session_id:String,job_id:String,range:crate::backend::transcription::TranscriptionRange)->Result<crate::backend::transcription::TranscriptionPreview,String> {
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||coordinator.preview_meeting_gap(&session_id,&job_id,range))
+        .await.map_err(|_|"单段转写未完成，原录音保留。".to_string())?
+}
+
 /// Analyze only the user-selected saved transcripts; recording files are never sent.
 #[tauri::command]
 pub async fn ask_companion_meetings(coordinator:CompanionCoordinatorState<'_>,question:String,session_ids:Vec<String>,job_id:String,resume:Option<crate::backend::meeting_qa::ResumeRequest>)

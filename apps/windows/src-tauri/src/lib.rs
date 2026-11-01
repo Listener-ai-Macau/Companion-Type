@@ -318,6 +318,7 @@ pub fn run() {
             commands::save_companion_meeting_edit,
             commands::refine_companion_meeting_speakers,
             commands::preview_companion_meeting_transcription,
+            commands::preview_companion_meeting_gap,
             commands::save_companion_meeting_note,
             commands::save_companion_bookmark,
             commands::import_companion_audio,

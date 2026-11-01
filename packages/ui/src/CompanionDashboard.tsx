@@ -260,6 +260,7 @@ export interface CompanionDashboardProps {
   onSaveMeeting?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onRefineSpeakers?: (sessionId:string) => Promise<CompanionV1Snapshot>;
   onPreviewRetranscription?: (sessionId:string) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
+  onPreviewGap?: (sessionId:string,range:{startMs:number;endMs:number}) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
@@ -420,6 +421,7 @@ export function CompanionDashboard({
   onSaveMeeting,
   onRefineSpeakers,
   onPreviewRetranscription,
+  onPreviewGap,
   onSaveBookmark,
   onSaveNote,
   onSaveLibraryOrganization,
@@ -437,6 +439,9 @@ export function CompanionDashboard({
   const [draftMinutes, setDraftMinutes] = useState('30');
   const [transcriptDraft, setTranscriptDraft] = useState('');
   const [retranscriptionPreview, setRetranscriptionPreview] = useState<{sessionId:string;text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[];sourceText:string;sourceUtterances:CompanionV1HostSession['utterances'];revision:number}|null>(null);
+  const [gapPreview,setGapPreview]=useState<{sessionId:string;startMs:number;endMs:number;text:string;partial:boolean;sourceText:string;sourceReview:string}|null>(null);
+  const [gapMessage,setGapMessage]=useState<{sessionId:string;text:string}|null>(null);
+  const [gapSaving,setGapSaving]=useState(false);
   const transcriptEditor = useRef<{ sessionId?: string; dirty: boolean }>({ dirty: false });
   const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string; targetTitle: string; selectedId: string | null; libraryKey: string } | null>(null);
   const deleteSubmitted = useRef(false);
@@ -625,6 +630,11 @@ export function CompanionDashboard({
       === originalSyncRecorder.sourceDeviceId!.replace(/[:-]/g, '').toLowerCase())) ? originalSyncRecorder : null;
   const privacy = snapshot?.privacy;
   const allLibrarySessions = snapshot?.host.sessions ?? [];
+  useEffect(()=>{
+    if(snapshot && gapPreview && !allLibrarySessions.some(row=>row.id===gapPreview.sessionId&&!row.organization?.trashedAt)) {
+      setGapPreview(null);setGapMessage(null);
+    }
+  },[snapshot,gapPreview?.sessionId]);
   const qaEligibleSessions=allLibrarySessions.filter(row=>!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row));
   const qaSelectedEligible=qaSelected.filter(id=>qaEligibleSessions.some(row=>row.id===id));
   const qaSessionsRef=useRef(allLibrarySessions);qaSessionsRef.current=allLibrarySessions;
@@ -1001,8 +1011,8 @@ export function CompanionDashboard({
   const asrConfigured = productSettings?.asrProvider === 'local-paraformer'
     ? Boolean(productSettings.localAsrAvailable) : cloudAsrConfigured;
   useEffect(() => {
-    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || Boolean(retranscriptionPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
-  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, retranscriptionPreview, transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
+    onUnsavedChange?.(Boolean(productSettings && serviceConfigDirty) || Object.values(meetingDrafts).some(draft => Boolean(draft.title) || Object.values(draft.minutes ?? {}).some(value=>!!value&&(value.value!==value.expected||!!value.createManual))) || transcriptEditor.current.dirty || Boolean(retranscriptionPreview) || Boolean(gapPreview) || transcriptReviewUnsaved || bookmarkUnsaved || noteUnsaved ||libraryUnsaved ||calendarPendingCount>0||calendarReminderPending>0);
+  }, [onUnsavedChange, serviceConfigDirty, productSettings, meetingDrafts, transcriptDraft, retranscriptionPreview,gapPreview,transcriptReviewUnsaved,bookmarkUnsaved,noteUnsaved,libraryUnsaved,calendarPendingCount,calendarReminderPending]);
   const missingServiceFields = [
     ...(formAsrProvider === 'volcengine'
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
@@ -1845,6 +1855,10 @@ export function CompanionDashboard({
       ) : null}
 
       {processingNotice ? <p className="ct-recording-notice ct-step-ok" role="status">{processingNotice}</p> : null}
+      {gapPreview && selectedSession?.id!==gapPreview.sessionId ? <p className="ct-recording-notice" role="status">另一场录音有未保存的单段转写结果。
+        <button type="button" className="ct-text-button" onClick={()=>{setOpenSavedRecordingId(gapPreview.sessionId);onControl({action:'meetingSelectSession',sessionId:gapPreview.sessionId});}}>返回核对</button>
+        <button type="button" className="ct-text-button" onClick={()=>setGapPreview(null)}>关闭结果</button>
+      </p>:null}
       {(transcriptionRunning || minutesRunning) && processingSessionId && onCancelMeetingProcessing ?
         <section className="ct-recording-notice" role="status">
           <span>{minutesRunning ? (cancelProcessingPending ? '正在停止整理，等待当前请求结束；原始文字保留。' : '正在整理会议，原始文字会保留。')
@@ -2311,15 +2325,52 @@ export function CompanionDashboard({
               <details>
                 <summary>查看全部 {selectedUnrecognized.length} 处未识别时段</summary>
                 <div className="ct-button-row" aria-label="未识别时段">
-                  {selectedUnrecognized.map((part,index)=><button type="button" className="ct-text-button"
-                    key={`${part.startMs}:${part.endMs}:${part.source??''}:${index}`}
-                    aria-label={`定位第 ${index+1} 处未识别原音：${part.source ? `${part.source} ` : ''}${formatDuration(part.startMs)}至${formatDuration(part.endMs)}`}
-                    disabled={Boolean(audioBlockedReason)||audioBusy||controlsBusy||storageBlocked}
-                    title={audioBlockedReason??'定位原音后点击播放回听'} onClick={()=>void seekUnrecognized(part)}>
-                    {part.source ? `${part.source} ` : ''}{formatDuration(part.startMs)}–{formatDuration(part.endMs)}
-                  </button>)}
+                  {selectedUnrecognized.map((part,index)=><span key={`${part.startMs}:${part.endMs}:${part.source??''}:${index}`}>
+                    <button type="button" className="ct-text-button"
+                      aria-label={`定位第 ${index+1} 处未识别原音：${part.source ? `${part.source} ` : ''}${formatDuration(part.startMs)}至${formatDuration(part.endMs)}`}
+                      disabled={Boolean(audioBlockedReason)||audioBusy||controlsBusy||storageBlocked}
+                      title={audioBlockedReason??'定位原音后点击播放回听'} onClick={()=>void seekUnrecognized(part)}>
+                      {part.source ? `${part.source} ` : ''}{formatDuration(part.startMs)}–{formatDuration(part.endMs)}
+                    </button>
+                    {onPreviewGap && part.source == null && selectedSession.source!=='hostMeeting' ?
+                      <button type="button" className="ct-text-button" aria-label={`重新转写第 ${index+1} 处未识别时段`}
+                        disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!canTranscribe||!hasOriginalAudio||Boolean(gapPreview)}
+                        onClick={async()=>{
+                          const sessionId=selectedSession.id,sourceText=selectedSession.transcriptText,sourceReview=JSON.stringify(selectedSession.transcriptReview??null);
+                          setGapMessage(null);
+                          try {const result=await onPreviewGap(sessionId,{startMs:part.startMs,endMs:part.endMs});
+                            setGapPreview({sessionId,startMs:part.startMs,endMs:part.endMs,text:result.text,partial:result.unrecognized.length>0,sourceText,sourceReview});}
+                          catch(error){setGapMessage({sessionId,text:`单段转写未完成：${operationErrorText(error,'general')}`});}
+                        }}>重试这段</button>:null}
+                  </span>)}
                 </div>
+                {onPreviewGap && selectedSession.source!=='hostMeeting' ? <p className="ct-step-meta">
+                  {productSettings?.asrProvider==='local-paraformer'?'重试使用当前本地模型，只处理所选时段，不上传录音。相同模型和音频可能得到相同结果；可在设置中切换已配置的转写方式。':'重试使用当前转写服务，仅发送所选音频时段，可能产生费用。'}结果供核对，不会自动覆盖原文字。
+                </p>:null}
               </details>
+              {gapMessage?.sessionId===selectedSession.id?<p role="status">{gapMessage.text}</p>:null}
+              {gapPreview?.sessionId===selectedSession.id ? <section aria-label="单段重新转写结果">
+                <p>{formatDuration(gapPreview.startMs)}–{formatDuration(gapPreview.endMs)} 的新结果，可编辑后复制或保存为备注；请回听核对，原文字不会自动改变。长会议整理时，如需把内容纳入纪要，请在核对文字中补充后重新整理。</p>
+                {gapPreview.partial?<p>这一时段仍有部分音频未识别出文字，请回听核对。</p>:null}
+                <textarea className="ct-textarea ct-step-textarea" aria-label="单段转写文字" value={gapPreview.text}
+                  onChange={event=>setGapPreview(current=>current?{...current,text:event.target.value}:current)}/>
+                {gapPreview.sourceText!==selectedSession.transcriptText || gapPreview.sourceReview!==JSON.stringify(selectedSession.transcriptReview??null)
+                  ? <p>原转写已变化；这是先前版本的参考结果，请重新核对。</p> : null}
+                <div className="ct-button-row">
+                  {onSaveNote?<button type="button" className="ct-text-button" disabled={gapSaving||controlsBusy||storageBlocked||!gapPreview.text.trim()
+                    ||gapPreview.sourceText!==selectedSession.transcriptText||gapPreview.sourceReview!==JSON.stringify(selectedSession.transcriptReview??null)}
+                    onClick={async()=>{
+                      const text=normalizeCompanionNoteText(`单段重新转写参考（请回听核对） ${formatDuration(gapPreview.startMs)}–${formatDuration(gapPreview.endMs)}\n${gapPreview.text}`);
+                      if([...text].length>4000){setGapMessage({sessionId:selectedSession.id,text:'内容超过备注长度，请复制需要的部分保存。'});return;}
+                      const noteId=crypto.randomUUID();setGapSaving(true);setGapMessage(null);
+                      try {const saved=await onSaveNote({sessionId:selectedSession.id,noteId,expectedRevision:selectedSession.noteRevision??0,action:'add',text,bookmarkId:null});
+                        if(!saved.host.sessions.find(row=>row.id===selectedSession.id)?.meetingNotes?.some(row=>row.id===noteId&&row.text===text))throw new Error('尚未确认备注保存，请重试。');
+                        setGapMessage({sessionId:selectedSession.id,text:'已保存为本机备注，原文字保持不变。'});setGapPreview(null);
+                      } catch(error){setGapMessage({sessionId:selectedSession.id,text:operationErrorText(error,'save')});}finally{setGapSaving(false);}
+                    }}>保存为备注</button>:null}
+                  <button type="button" className="ct-text-button" onClick={()=>setGapPreview(null)}>关闭结果</button>
+                </div>
+              </section>:null}
             </div> : null}
             <div className="ct-recording-text-heading"><h3>{hasMinutes?'原话与补充':'文字'}</h3>
               <div className="ct-button-row">

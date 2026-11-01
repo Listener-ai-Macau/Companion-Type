@@ -14,6 +14,7 @@ use std::time::Duration;
 pub(super) const LOCAL_NO_SPEECH: &str = "没有识别到语音，原录音保留。";
 
 mod chunk_cache;
+mod gap;
 #[cfg(windows)]
 mod local_paraformer;
 
@@ -66,6 +67,13 @@ pub struct CompanionTranscript {
 pub struct TranscriptionPreview {
     pub text: String,
     pub unrecognized: Vec<crate::companion_v1::CompanionV1UnrecognizedAudio>,
+}
+
+#[derive(Clone, Debug, serde::Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct TranscriptionRange {
+    pub start_ms: u64,
+    pub end_ms: u64,
 }
 impl From<CompanionTranscript> for TranscriptionPreview {
     fn from(value: CompanionTranscript) -> Self {
@@ -129,6 +137,10 @@ impl CompanionTranscriptionManager {
 
     pub fn transcribe_audio_owned(&self, session: &str, path: &str) -> Result<CompanionTranscript, String> {
         self.transcribe_session_owned(session, Some(path), &[])
+    }
+
+    pub(crate) fn preview_gap(&self,session:&str,path:&Path,range:&TranscriptionRange)->Result<TranscriptionPreview,String> {
+        gap::preview(self,session,path,range)
     }
 
     pub fn transcribe_audio(&self, audio_path: &str) -> Result<CompanionTranscript, String> {

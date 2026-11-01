@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
+
+let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
+snapshot.host.persistence={status:'ready'};snapshot.meeting.active=false;
+let row=snapshot.host.sessions[0];snapshot.host.selectedSessionId=row.id;
+Object.assign(row,{status:'transcribed',source:'importedAudio',audioPath:'C:/test/card.wav',audioStored:true,audioBytes:10000,transcriptText:'原始会议文字',transcriptFinal:true});
+row.retention.audioCached=true;row.transcriptUnrecognized=[{startMs:20000,endMs:35000},{startMs:70000,endMs:80000}];
+let captured:any,request:any;let tree:any;
+const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},
+ onPreviewGap:async(id:string,range:any)=>{captured={id,range};return {text:'小王周五发报价',unrecognized:[]};},
+ onSaveNote:async(note:any)=>{request=note;const saved=structuredClone(snapshot);saved.host.sessions[0].meetingNotes=[{id:note.noteId,text:note.text,bookmarkId:null,createdAt:'now',updatedAt:'now'}];return saved;}});
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>text(n)===label);
+await act(async()=>{tree=create(<CompanionDashboard {...props()}/>);});
+const retry=tree.root.findAllByType('button').find((n:any)=>n.props['aria-label']==='重新转写第 2 处未识别时段');
+assert.ok(retry);assert.equal(retry.props.disabled,false);
+await act(async()=>{await retry.props.onClick();});
+assert.deepEqual(captured,{id:row.id,range:{startMs:70000,endMs:80000}});
+assert.equal(tree.root.findByProps({'aria-label':'单段转写文字'}).props.value,'小王周五发报价');
+assert.equal(row.transcriptText,'原始会议文字');
+act(()=>tree.root.findByProps({'aria-label':'单段转写文字'}).props.onChange({target:{value:'小王周五发报价（待核）'}}));
+snapshot=structuredClone(snapshot);snapshot.host.sessions[0].transcriptText='后台新文字';
+act(()=>tree.update(<CompanionDashboard {...props()}/>));
+assert.equal(button('保存为备注').props.disabled,true,'stale source is not saved as a current range');
+assert.match(text(tree.toJSON()),/原转写已变化/);
+snapshot=structuredClone(snapshot);snapshot.host.sessions[0].transcriptText='原始会议文字';
+act(()=>tree.update(<CompanionDashboard {...props()}/>));
+await act(async()=>{await button('保存为备注').props.onClick();});
+assert.equal(request.sessionId,row.id);assert.match(request.text,/单段重新转写参考/);assert.match(request.text,/小王周五发报价（待核）/);
+assert.equal(row.transcriptText,'原始会议文字');assert.match(text(tree.toJSON()),/已保存为本机备注/);
+snapshot=structuredClone(snapshot);snapshot.host.sessions[0].source='hostMeeting';
+act(()=>tree.update(<CompanionDashboard {...props()}/>));
+assert.equal(tree.root.findAllByType('button').filter((n:any)=>String(n.props['aria-label']??'').startsWith('重新转写第 ')).length,0);
+act(()=>tree.unmount());console.log('PASS retry selected gap only, preserve transcript, save labeled note, and reject stale source');
