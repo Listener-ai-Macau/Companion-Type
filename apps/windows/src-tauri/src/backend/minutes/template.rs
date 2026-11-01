@@ -3,9 +3,9 @@ use crate::companion_v1::MinutesTemplate;
 impl MinutesTemplate {
     pub(crate) fn normalized(&self) -> Result<Self, String> {
         let (name, instructions) = match self.id.as_str() {
-            "meeting" => ("会议", "突出议题、决定、负责人、截止时间和下一步；没有明确决定或任务时不要补造。"),
-            "interview" => ("访谈", "突出访谈主题、受访者观点、问题与回答及可直接引用的原话；无法确定问答归属时标注待核对。"),
-            "lecture" => ("课堂", "突出主题、知识点、解释、例子及原话明确提出的问题；没有讲到的知识不要自行补充。"),
+            "meeting" => ("会议", "summary优先按议题归纳各项讨论结果；明确的决定、负责人、截止时间和下一步分别写入对应字段，没有明确内容时不要补造。"),
+            "interview" => ("访谈", "summary按实际问题组织，每条尽量合并一个问题及其对应回答，使用「问题：……；回答：……」格式；保留受访者观点、身份与有用原话。没有明确回答时写「回答未明确」，不要猜测。"),
+            "lecture" => ("课堂", "summary按主题组织知识点，每条尽量合并「知识点、讲解与对应例子」；没有讲到的内容不要自行补充，原话中明确的问题保留。"),
             "custom" => {
                 let name = self.name.trim();
                 let instructions = self.instructions.trim();
