@@ -9,7 +9,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const group=process.argv[2]??'core';
 const groups={core:['packages/core/src/companionV1.test.ts','packages/core/src/recordingProcessing.test.ts'],
-  customer:['tools/test_customer_reading.tsx','tools/test_calendar_export_review.tsx','tools/test_checklist_phone.tsx']};
+  customer:['tools/test_customer_reading.tsx','tools/test_calendar_export_review.tsx','tools/test_checklist_phone.tsx','tools/test_audio_import.tsx']};
 if(!Object.hasOwn(groups,group))throw Error('Choose core or customer');
 const environment=path.join(root,'tools/component_test_environment.mjs');
 const inputs=[...groups[group].map(name=>path.join(root,name)),path.join(root,'apps/windows/tsconfig.json'),

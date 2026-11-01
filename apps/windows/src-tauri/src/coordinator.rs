@@ -369,6 +369,11 @@ impl CompanionCoordinator {
         Ok(lease)
     }
 
+    pub fn import_audio_file(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{
+        if self.is_shutting_down() {return Err(crate::backend::lifecycle::CLOSING.into());}
+        self.backend.import_audio_file(path)
+    }
+
     pub fn restore_library_backup(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{
         let _lease=self.begin_device_operation_kind(19)?;
         self.backend.restore_library_backup(path)

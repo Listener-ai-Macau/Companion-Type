@@ -19892,3 +19892,177 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
+
+
+TEXT 4da95ec4ecb65b738d470b7d762894ad9c97da93e6cbfb18b570fc2c96f4b871
+Copyright (c) Ulrik Sverdrup "bluss" 2015-2023
+
+Permission is hereby granted, free of charge, to any
+person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the
+Software without restriction, including without
+limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice
+shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
+SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+
+
+arrayvec 0.7.8
+Role: audio import decoder and associated runtime input
+Declared license: MIT OR Apache-2.0
+Source: https://crates.io/api/v1/crates/arrayvec/0.7.8/download
+  LICENSE-APACHE -> TEXT a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2; exact checksum-verified crate
+  LICENSE-MIT -> TEXT 4da95ec4ecb65b738d470b7d762894ad9c97da93e6cbfb18b570fc2c96f4b871; exact checksum-verified crate
+
+
+bitflags 1.3.2
+Role: audio import decoder and associated runtime input
+Declared license: MIT/Apache-2.0
+Source: https://crates.io/api/v1/crates/bitflags/1.3.2/download
+  LICENSE-APACHE -> TEXT a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2; exact checksum-verified crate
+  LICENSE-MIT -> TEXT 6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb; exact checksum-verified crate
+
+
+TEXT 25a0874d15e7c834a47c3adc80901edb2219759254992023ef1010c3065413d5
+Copyright 2022 Dietrich Epp
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+
+extended 0.1.0
+Role: audio import decoder and associated runtime input
+Declared license: MIT
+Source: https://crates.io/api/v1/crates/extended/0.1.0/download
+  LICENSE.txt -> TEXT 25a0874d15e7c834a47c3adc80901edb2219759254992023ef1010c3065413d5; exact checksum-verified crate
+
+
+lazy_static 1.5.1
+Role: audio import decoder and associated runtime input
+Declared license: MIT OR Apache-2.0
+Source: https://crates.io/api/v1/crates/lazy_static/1.5.1/download
+  LICENSE-APACHE -> TEXT a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2; exact checksum-verified crate
+  LICENSE-MIT -> TEXT 23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3; exact checksum-verified crate
+
+
+symphonia 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-bundle-flac 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-bundle-flac/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-bundle-mp3 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-bundle-mp3/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-codec-aac 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-codec-aac/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-codec-alac 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-codec-alac/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-codec-pcm 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-codec-pcm/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-codec-vorbis 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-codec-vorbis/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-core 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-core/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-format-isomp4 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-format-isomp4/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-format-ogg 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-format-ogg/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-format-riff 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-format-riff/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-metadata 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-metadata/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)
+
+
+symphonia-utils-xiph 0.5.5
+Role: audio import decoder and associated runtime input
+Declared license: MPL-2.0
+Source: https://crates.io/api/v1/crates/symphonia-utils-xiph/0.5.5/download
+  LICENSE -> TEXT fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85; Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)

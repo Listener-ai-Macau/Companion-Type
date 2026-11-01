@@ -136,6 +136,9 @@ export async function exportCompanionMeeting(request: {
   return invoke('export_companion_meeting', { request });
 }
 
+export const importCompanionAudio = () => invoke<CompanionV1Snapshot | null>('import_companion_audio');
+export const cancelCompanionAudioImport = () => invoke<boolean>('cancel_companion_audio_import');
+
 export async function prepareCompanionAudio(sessionId: string): Promise<{sessionId: string; url: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null; parts: import('../../../packages/ui/src/recordingParts').RecordingPart[]; meetingTracks?: import('../../../packages/ui/src/meetingTrackPlayback').MeetingPlaybackTracks}> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中回听这场会议的本机录音。浏览器演示没有原音。');
   type Part = {path:string;firstSample:number;samples:number};

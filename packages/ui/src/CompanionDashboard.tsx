@@ -242,6 +242,8 @@ export interface CompanionDashboardProps {
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
   onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>;
   onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
+  onImportAudio?: () => Promise<CompanionV1Snapshot | null>;
+  onCancelImportAudio?: () => Promise<boolean>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
   onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
     status: 'deleted' | 'cancelled' | 'noCandidate'; message: string;
@@ -400,6 +402,8 @@ export function CompanionDashboard({
   onCheckService,
   onPrepareAudio,
   onExportAudio,
+  onImportAudio,
+  onCancelImportAudio,
   onDiscardOldestRecording,
   onSaveMeeting,
   onRefineSpeakers,
@@ -444,6 +448,8 @@ export function CompanionDashboard({
   const [librarySelection,setLibrarySelection]=useState<Record<string,number>>({});
   const [libraryBusy,setLibraryBusy]=useState(false);
   const [libraryCurrentMessage,setLibraryCurrentMessage]=useState('');
+  const [importingAudio,setImportingAudio]=useState(false);
+  const [importAudioMessage,setImportAudioMessage]=useState('');
   const [libraryUnsaved,setLibraryUnsaved]=useState(false);
   const [openSavedRecordingId, setOpenSavedRecordingId] = useState<string | null>(null);
   const [openSavedRecordingTarget, setOpenSavedRecordingTarget] = useState<'source'|'result'|null>(null);
@@ -2319,6 +2325,17 @@ export function CompanionDashboard({
           <Mic size={16}/><span>开始录电脑会议</span></button></div>
       </section> : null}
 
+      {surface === 'windows' && onImportAudio ? <section className="ct-recording-activity" aria-label="导入已有音频">
+        <div><strong>导入已有音频</strong><p>选择 WAV、MP3、M4A、AAC、FLAC 或 OGG（Vorbis），保存后可回听、转写并整理纪要。原文件保留，回听与转写使用本机生成的单声道副本；可单独保存原文件。</p>
+          {importAudioMessage ? <p role="status">{importAudioMessage}</p> : null}</div>
+        <button type="button" className="ct-action" disabled={importingAudio || storageBlocked}
+          onClick={() => { if (importingAudio) return; setImportingAudio(true); setImportAudioMessage('正在保存并准备音频…');
+            void onImportAudio().then(result => setImportAudioMessage(result ? '音频已保存，可在录音资料中回听和转写。' : '')).
+              catch(error => setImportAudioMessage(`导入未完成：${operationErrorText(error,'save')}`)).finally(() => setImportingAudio(false)); }}>
+          {importingAudio ? '正在导入…' : '选择音频文件'}</button>
+        {importingAudio && onCancelImportAudio ? <button type="button" className="ct-action" onClick={() => { void onCancelImportAudio().then(ok => {if(ok)setImportAudioMessage('正在取消，原文件会保留。');}).catch(() => setImportAudioMessage('暂时无法取消，请稍候。')); }}>取消导入</button> : null}
+      </section> : null}
+
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
         recording={oobeBlockedByRecording} checking={busyAction === 'oobeRunChecks'} onControl={onControl}
         onSettings={openSettings} onWorkflow={openWorkflow} onLibrary={() => {setDetailSessionId(null);navigatePage('library');}} />
@@ -3227,6 +3244,7 @@ function meetingTitle(session: CompanionV1HostSession): string {
 function meetingSource(session: CompanionV1HostSession): string {
   if (session.source === 'deviceFlash' || session.source === 'boardDevice') return 'Companion 录音';
   if (session.source === 'hostMicrophone') return '本机麦克风';
+  if (session.source === 'importedAudio') return '导入音频';
   if (session.source === 'hostMeeting') return '电脑会议与麦克风';
   if (session.source === 'importedTranscript') return '导入文字';
   return '演示记录';

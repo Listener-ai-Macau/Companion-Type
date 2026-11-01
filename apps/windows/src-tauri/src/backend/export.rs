@@ -180,6 +180,7 @@ fn calendar_provenance(session:&CompanionV1HostSession,minutes_source:Option<&st
         "importedTranscript"=>"导入文字",
         "deviceFlash"|"boardDevice"=>"Companion 录音",
         "hostMicrophone"=>"本机麦克风",
+        "importedAudio"=>"导入音频",
         "fixture"=>"演示记录",
         _=>"来源未注明",
     };

@@ -135,6 +135,19 @@ pub async fn save_companion_meeting_edit(
 }
 
 #[tauri::command]
+pub fn cancel_companion_audio_import()->bool { crate::backend::import_audio::cancel() }
+
+#[tauri::command]
+pub async fn import_companion_audio(app:AppHandle,coordinator:CompanionCoordinatorState<'_>)->Result<Option<CompanionV1Snapshot>,String> {
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move || {
+        let Some(selected)=app.dialog().file().add_filter("音频文件",&["wav","mp3","m4a","mp4","aac","flac","ogg"]).blocking_pick_file() else {return Ok(None);};
+        let path=selected.into_path().map_err(|_|"无法读取所选音频的位置。")?;
+        coordinator.import_audio_file(&path).map(Some)
+    }).await.map_err(|e|format!("导入音频任务未完成：{e}"))?
+}
+
+#[tauri::command]
 pub async fn refine_companion_meeting_speakers(coordinator:CompanionCoordinatorState<'_>,session_id:String)->Result<CompanionV1Snapshot,String> {
     let coordinator=coordinator.inner().clone();
     tauri::async_runtime::spawn_blocking(move||coordinator.refine_meeting_speakers(&session_id))
@@ -571,7 +584,9 @@ pub async fn export_companion_audio(
     let (original, name) = crate::backend::audio_export::source(&coordinator.snapshot()?, &session_id)?;
     let chooser=app.dialog().file();
     let meeting=matches!(&original,crate::backend::audio_export::AudioSource::Meeting{..});
-    let chooser=if original.extension()?=="zip" {chooser.add_filter(if meeting {"会议分轨 ZIP"} else {"分段原音 ZIP"}, &["zip"])}
+    let extension=original.extension()?;
+    let chooser=if extension=="zip" {chooser.add_filter(if meeting {"会议分轨 ZIP"} else {"分段原音 ZIP"}, &["zip"])}
+        else if matches!(&original,crate::backend::audio_export::AudioSource::Imported(_)) {chooser.add_filter("导入的原文件", &[extension])}
         else {chooser.add_filter(if meeting {"会议混合录音 WAV"} else {"原始录音 WAV"}, &["wav"])};
     let destination = chooser.set_file_name(&name).blocking_save_file();
     let Some(destination) = destination else { return Ok(None); };

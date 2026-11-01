@@ -250,6 +250,7 @@ export type CompanionV1HostSessionSource =
   | 'boardDevice'
   | 'hostMicrophone'
   | 'hostMeeting'
+  | 'importedAudio'
   | 'importedTranscript';
 
 export type CompanionV1HostSessionStatus =

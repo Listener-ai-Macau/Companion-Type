@@ -6,14 +6,18 @@ use sha2::{Digest, Sha256};
 use crate::companion_v1::CompanionV1Snapshot;
 
 #[derive(Debug,Clone,PartialEq,Eq)]
-pub enum AudioSource { Single(PathBuf), Parts(Vec<(PathBuf,u64)>), Meeting { tracks: crate::companion_v1::CompanionV1MeetingTracks, bytes:u64, duration_ms:u64 } }
+pub enum AudioSource { Single(PathBuf), Imported(PathBuf), Parts(Vec<(PathBuf,u64)>), Meeting { tracks: crate::companion_v1::CompanionV1MeetingTracks, bytes:u64, duration_ms:u64 } }
 impl AudioSource {
     fn data_bytes(&self)->Result<u64,String> {
-        match self { Self::Single(_)=>Ok(0), Self::Parts(parts)=>parts.iter().try_fold(0u64,|sum,(_,samples)|
+        match self { Self::Single(_) | Self::Imported(_)=>Ok(0), Self::Parts(parts)=>parts.iter().try_fold(0u64,|sum,(_,samples)|
             sum.checked_add(samples.checked_mul(2).ok_or("录音容量无效。")?).ok_or_else(||"录音容量无效。".into())),
             Self::Meeting{tracks,..} => [&tracks.microphone,&tracks.system].into_iter().map(|parts|parts.iter().fold(0u64,|sum,p|sum.saturating_add(p.samples))).max().unwrap_or(0).checked_mul(2).ok_or_else(||"录音容量无效。".into()) }
     }
     pub fn extension(&self)->Result<&'static str,String> {
+        if let Self::Imported(path)=self {
+            let extension=path.extension().and_then(|s|s.to_str()).unwrap_or("").to_ascii_lowercase();
+            return match extension.as_str() {"wav"=>Ok("wav"),"mp3"=>Ok("mp3"),"m4a"=>Ok("m4a"),"mp4"=>Ok("mp4"),"aac"=>Ok("aac"),"flac"=>Ok("flac"),"ogg"=>Ok("ogg"),_=>Err("原文件格式不可用。".into())};
+        }
         Ok(if self.data_bytes()? > u64::from(u32::MAX-36) {"zip"} else {"wav"})
     }
 }
@@ -27,6 +31,16 @@ pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(Audio
         let audio=AudioSource::Meeting{tracks,bytes:session.audio_bytes,duration_ms:session.duration_ms};
         let extension=audio.extension()?;
         return Ok((audio,format!("{title}-meeting.{extension}")));
+    }
+    if session.source=="importedAudio" {
+        super::library_lifecycle::require_available(session)?;
+        if !session.audio_stored || !session.retention.audio_cached {return Err("这场录音的本机音频已删除。".into());}
+        let root=super::audio_storage::recording_root()?;
+        let anchor=Path::new(session.audio_path.as_deref().ok_or("录音文件缺失。")?);
+        if !super::audio_storage::owned_recording_reference(anchor,&root) {return Err("录音位置无效。".into());}
+        let original=AudioSource::Imported(super::audio_artifacts::imported_original(&root,anchor)?);
+        let extension=original.extension()?;
+        return Ok((original,format!("{title}-original.{extension}")));
     }
     let path = super::meeting_workspace::local_audio_path(snapshot, session_id)?;
     let audio=if let Some(parts)=super::host_segmented_capture::saved_parts(session)? {
@@ -57,11 +71,18 @@ pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Pa
             }
         }
     }
+    if let Ok(target)=destination.canonicalize() {
+        if snapshot.host.sessions.iter().any(|row|row.source=="importedAudio" && row.audio_stored)
+            && super::audio_storage::owned_recording_reference(&target,&super::audio_storage::recording_root()?) {
+            return Err("请选择新的文件位置，不能覆盖会议库中的原始录音。".into());
+        }
+    }
     copy_source_atomic(&input, destination)
 }
 
 pub fn copy_source_atomic(source:&AudioSource,destination:&Path)->Result<u64,String> {
     match source { AudioSource::Single(path)=>copy_atomic(path,destination),
+        AudioSource::Imported(path)=>copy_atomic_inner(path,destination,false),
         AudioSource::Parts(parts)=>copy_parts_atomic(parts,destination),
         AudioSource::Meeting{tracks,bytes,duration_ms}=>copy_meeting_atomic(tracks,*bytes,*duration_ms,destination) }
 }
@@ -171,7 +192,10 @@ fn copy_parts_as(parts:&[(PathBuf,u64)],destination:&Path,zip:bool)->Result<u64,
 }
 
 pub fn copy_atomic(source: &Path, destination: &Path) -> Result<u64, String> {
-    super::meeting_workspace::validate_wav(source)?;
+    copy_atomic_inner(source,destination,true)
+}
+fn copy_atomic_inner(source: &Path, destination: &Path, validate_wav:bool) -> Result<u64, String> {
+    if validate_wav { super::meeting_workspace::validate_wav(source)?; }
     if source.canonicalize().ok() == destination.canonicalize().ok() {
         return Err("不能用导出覆盖原音，请另选位置。".into());
     }
@@ -196,7 +220,7 @@ pub fn copy_atomic(source: &Path, destination: &Path) -> Result<u64, String> {
         output.sync_all().map_err(|e| format!("原音尚未安全保存：{e}"))?;
         drop(output);
         if copied != expected { return Err("原音读取不完整，已有目标文件保持不变。".into()); }
-        super::meeting_workspace::validate_wav(&temporary)?;
+        if validate_wav {super::meeting_workspace::validate_wav(&temporary)?;}
         // Catch a file replaced/modified while copying, before publishing it.
         let mut current = File::open(source).map_err(|e| e.to_string())?;
         let mut current_hash = Sha256::new();

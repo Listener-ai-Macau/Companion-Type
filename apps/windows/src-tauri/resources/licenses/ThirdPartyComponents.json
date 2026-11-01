@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
-    "apps/windows/src-tauri/Cargo.lock": "007cb8bc6fb1751112fdc05cb6f1c37304643ffdf7003cf87ea618917ee1eb0b",
+    "apps/windows/src-tauri/Cargo.lock": "74c415977f6d38db8ed005ef36ec3db1270776635f7e3003d0a19bada26170b3",
     "package-lock.json": "e799241e1fb23138b1a7df7efdda4792dc08dc2c8928b2047d27cd1721c50a46"
   },
   "components": [
@@ -7548,6 +7548,395 @@
         }
       ],
       "cachedArchiveVerified": false
+    },
+    {
+      "name": "arrayvec",
+      "version": "0.7.8",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/bluss/arrayvec",
+      "crateSha256": "d3fb67a6e08acf24fdeccbac2cb6ac4305825bd1f117462e0e6f2f193345ad56",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/arrayvec/0.7.8/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "4da95ec4ecb65b738d470b7d762894ad9c97da93e6cbfb18b570fc2c96f4b871",
+          "file": "texts/4da95ec4ecb65b738d470b7d762894ad9c97da93e6cbfb18b570fc2c96f4b871.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "bitflags",
+      "version": "1.3.2",
+      "license": "MIT/Apache-2.0",
+      "repository": "https://github.com/bitflags/bitflags",
+      "crateSha256": "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/bitflags/1.3.2/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb",
+          "file": "texts/6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "extended",
+      "version": "0.1.0",
+      "license": "MIT",
+      "repository": "https://github.com/depp/extended-rs",
+      "crateSha256": "af9673d8203fcb076b19dfd17e38b3d4ae9f44959416ea532ce72415a6020365",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/extended/0.1.0/download",
+      "texts": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "25a0874d15e7c834a47c3adc80901edb2219759254992023ef1010c3065413d5",
+          "file": "texts/25a0874d15e7c834a47c3adc80901edb2219759254992023ef1010c3065413d5.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "lazy_static",
+      "version": "1.5.1",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang-nursery/lazy-static.rs",
+      "crateSha256": "20870f649af7073d53e38067b2a84312175d56ea15217e1b15bc83506ec50afb",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/lazy_static/1.5.1/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+          "file": "texts/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "symphonia",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "5773a4c030a19d9bfaa090f49746ff35c75dfddfa700df7a5939d5e076a57039",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-0.5.5.crate",
+        "sha256": "5773a4c030a19d9bfaa090f49746ff35c75dfddfa700df7a5939d5e076a57039",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-bundle-flac",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "c91565e180aea25d9b80a910c546802526ffd0072d0b8974e3ebe59b686c9976",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-bundle-flac/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-bundle-flac-0.5.5.crate",
+        "sha256": "c91565e180aea25d9b80a910c546802526ffd0072d0b8974e3ebe59b686c9976",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-bundle-mp3",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "4872dd6bb56bf5eac799e3e957aa1981086c3e613b27e0ac23b176054f7c57ed",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-bundle-mp3/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-bundle-mp3-0.5.5.crate",
+        "sha256": "4872dd6bb56bf5eac799e3e957aa1981086c3e613b27e0ac23b176054f7c57ed",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-codec-aac",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "4c263845aa86881416849c1729a54c7f55164f8b96111dba59de46849e73a790",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-codec-aac/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-codec-aac-0.5.5.crate",
+        "sha256": "4c263845aa86881416849c1729a54c7f55164f8b96111dba59de46849e73a790",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-codec-alac",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "8413fa754942ac16a73634c9dfd1500ed5c61430956b33728567f667fdd393ab",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-codec-alac/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-codec-alac-0.5.5.crate",
+        "sha256": "8413fa754942ac16a73634c9dfd1500ed5c61430956b33728567f667fdd393ab",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-codec-pcm",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "4e89d716c01541ad3ebe7c91ce4c8d38a7cf266a3f7b2f090b108fb0cb031d95",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-codec-pcm/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-codec-pcm-0.5.5.crate",
+        "sha256": "4e89d716c01541ad3ebe7c91ce4c8d38a7cf266a3f7b2f090b108fb0cb031d95",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-codec-vorbis",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "f025837c309cd69ffef572750b4a2257b59552c5399a5e49707cc5b1b85d1c73",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-codec-vorbis/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-codec-vorbis-0.5.5.crate",
+        "sha256": "f025837c309cd69ffef572750b4a2257b59552c5399a5e49707cc5b1b85d1c73",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-core",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "ea00cc4f79b7f6bb7ff87eddc065a1066f3a43fe1875979056672c9ef948c2af",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-core/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-core-0.5.5.crate",
+        "sha256": "ea00cc4f79b7f6bb7ff87eddc065a1066f3a43fe1875979056672c9ef948c2af",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-format-isomp4",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "243739585d11f81daf8dac8d9f3d18cc7898f6c09a259675fc364b382c30e0a5",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-format-isomp4/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-format-isomp4-0.5.5.crate",
+        "sha256": "243739585d11f81daf8dac8d9f3d18cc7898f6c09a259675fc364b382c30e0a5",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-format-ogg",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "2b4955c67c1ed3aa8ae8428d04ca8397fbef6a19b2b051e73b5da8b1435639cb",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-format-ogg/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-format-ogg-0.5.5.crate",
+        "sha256": "2b4955c67c1ed3aa8ae8428d04ca8397fbef6a19b2b051e73b5da8b1435639cb",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-format-riff",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "c2d7c3df0e7d94efb68401d81906eae73c02b40d5ec1a141962c592d0f11a96f",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-format-riff/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-format-riff-0.5.5.crate",
+        "sha256": "c2d7c3df0e7d94efb68401d81906eae73c02b40d5ec1a141962c592d0f11a96f",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-metadata",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "36306ff42b9ffe6e5afc99d49e121e0bd62fe79b9db7b9681d48e29fa19e6b16",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-metadata/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-metadata-0.5.5.crate",
+        "sha256": "36306ff42b9ffe6e5afc99d49e121e0bd62fe79b9db7b9681d48e29fa19e6b16",
+        "status": "unmodified exact public crate, checksum verified"
+      }
+    },
+    {
+      "name": "symphonia-utils-xiph",
+      "version": "0.5.5",
+      "license": "MPL-2.0",
+      "repository": "https://github.com/pdeljanov/Symphonia",
+      "crateSha256": "ee27c85ab799a338446b68eec77abf42e1a6f1bb490656e121c6e27bfbab9f16",
+      "ecosystem": "cargo",
+      "role": "audio import decoder and associated runtime input",
+      "source": "https://crates.io/api/v1/crates/symphonia-utils-xiph/0.5.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "file": "texts/fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85.txt",
+          "origin": "Symphonia v0.5.5 tagged repository LICENSE (Mozilla Public License 2.0)"
+        }
+      ],
+      "correspondingSource": {
+        "file": "sources/symphonia-utils-xiph-0.5.5.crate",
+        "sha256": "ee27c85ab799a338446b68eec77abf42e1a6f1bb490656e121c6e27bfbab9f16",
+        "status": "unmodified exact public crate, checksum verified"
+      }
     }
   ],
   "localCompanyInputs": [
@@ -7573,5 +7962,5 @@
     }
   ],
   "platformSource": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
-  "licenseTextCount": 232
+  "licenseTextCount": 234
 }

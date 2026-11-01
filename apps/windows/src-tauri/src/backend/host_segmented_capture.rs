@@ -33,7 +33,7 @@ pub(super) fn session_chunks(session_id: &str, parts: &[HostAudioPart]) -> Resul
 pub(crate) fn saved_parts(row:&crate::companion_v1::CompanionV1HostSession)->Result<Option<Vec<(PathBuf,u64)>>,String> {
     let prefix=format!("{}-host-part-",row.id);
     if !row.chunks.iter().any(|c|c.id.starts_with(&prefix)) {return Ok(None);}
-    if row.source!="hostMicrophone" || row.device_recording_key.is_some() || !row.audio_stored || row.chunks.len()<2 {
+    if !matches!(row.source.as_str(),"hostMicrophone" | "importedAudio") || row.device_recording_key.is_some() || !row.audio_stored || row.chunks.len()<2 {
         return Err("录音分段尚未完整保存。".into());
     }
     let primary=Path::new(row.audio_path.as_deref().ok_or("录音路径缺失。")?).canonicalize().map_err(|_|"录音文件缺失。")?;
@@ -216,6 +216,33 @@ impl RollingHostWav {
         Ok(())
     }
 
+
+    /// Efficient conversion of already-preserved imported audio; host capture retains its original write path.
+    pub fn append_bulk(&mut self, samples: &[i16], mut checkpoint: impl FnMut(&Path) -> io::Result<()>) -> io::Result<()> {
+        let mut remaining=samples;
+        while !remaining.is_empty() {
+            if self.current_bytes == self.limit {
+                let part = self.finish_current()?;
+                let next_index = self.completed.len() + 1;
+                let stem = self.anchor.file_stem().and_then(|s| s.to_str())
+                    .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "invalid recording name"))?;
+                let next = self.anchor.with_file_name(format!("{stem}.host-part-{next_index:08}.wav"));
+                checkpoint(&next)?;
+                let file = Self::create_part(&next)?;
+                self.completed.push(part);
+                self.file = file;
+                self.current_bytes = 0;
+            }
+            let take=remaining.len().min(((self.limit-self.current_bytes)/2) as usize);
+            let mut bytes=Vec::with_capacity(take*2);
+            for sample in &remaining[..take] { bytes.extend_from_slice(&sample.to_le_bytes()); }
+            self.file.write_all(&bytes)?;
+            self.current_bytes+=u32::try_from(bytes.len()).map_err(|_|io::Error::other("audio segment too large"))?;
+            remaining=&remaining[take..];
+        }
+        Ok(())
+    }
+
     pub fn finish(mut self) -> io::Result<Vec<HostAudioPart>> {
         let part = self.finish_current()?;
         self.completed.push(part);
@@ -229,6 +256,15 @@ mod tests {
     fn root() -> PathBuf {
         let path=std::env::temp_dir().join(format!("companion-host-parts-{}",uuid::Uuid::new_v4()));
         std::fs::create_dir(&path).unwrap(); path
+    }
+    #[test]
+    fn imported_audio_bulk_writer_rotates_without_losing_samples() {
+        let dir=root();let anchor=dir.join("import.wav");let mut writer=RollingHostWav::create_with_limit(&anchor,6).unwrap();
+        let mut checkpoints=Vec::new();writer.append_bulk(&[1,2,3,4,5,6,7],|p|{checkpoints.push(p.to_owned());Ok(())}).unwrap();
+        let parts=writer.finish().unwrap();assert_eq!(parts.iter().map(|p|p.samples).collect::<Vec<_>>(),vec![3,3,1]);
+        assert_eq!(checkpoints.len(),2);let mut actual=Vec::new();
+        for part in &parts {let bytes=std::fs::read(&part.path).unwrap();actual.extend(bytes[44..].chunks_exact(2).map(|c|i16::from_le_bytes([c[0],c[1]])));}
+        assert_eq!(actual,vec![1,2,3,4,5,6,7]);std::fs::remove_dir_all(dir).unwrap();
     }
     #[test]
     fn rolls_without_losing_samples_or_creating_an_empty_extra_part() {

@@ -108,6 +108,7 @@ mod system_ota;
 mod ota_readiness;
 mod host_recording;
 pub(crate) mod host_segmented_capture;
+pub(crate) mod import_audio;
 mod meeting_audio_timeline;
 mod meeting_audio_tracks;
 mod meeting_audio_recovery;
@@ -726,6 +727,7 @@ pub trait CompanionBackend: Send + Sync {
     fn finish_host_recording_on_exit(&self) -> Result<(), String>;
     fn finish_meeting_processing_on_exit(&self, budget: std::time::Duration) -> Result<(), String>;
     fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String>;
+    fn import_audio_file(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持导入音频。".into())}
     fn restore_library_backup(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持恢复会议备份。".into())}
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
     fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
@@ -1571,6 +1573,29 @@ impl CompanionBackend for FixtureCompanionBackend {
         if cfg!(test)&&std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none(){library_lifecycle::apply(&mut snapshot.host.sessions,&request,&connection_timestamp())?;}
         else{snapshot.host.sessions=library_lifecycle::commit(&persistence::state_file_path(),&request,&connection_timestamp())?;}
         snapshot.updated_at=connection_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
+    }
+    fn import_audio_file(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String> {
+        {
+            let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
+            if snapshot.host.persistence.status!="ready" {return Err("请先恢复或保存会议库，再导入音频。".into());}
+        }
+        let imported=import_audio::import(path)?;
+        let mut snapshot=self.snapshot.lock().map_err(|_|"音频已保存，但会议库暂时不可用。")?;
+        let now=connection_timestamp();
+        let mut request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some(imported.id.clone()));
+        request.title=Some(imported.title);request.prompt_id=Some(crate::companion_v1::CAPTURE_ONLY_PROMPT.into());
+        request.meeting_mode=Some("offlineStore".into());
+        let mut row=crate::companion_v1::create_host_session(&snapshot,&request,&now);
+        row.source="importedAudio".into();row.status="captured".into();row.started_at=None;row.stopped_at=None;
+        row.audio_path=Some(imported.anchor.to_string_lossy().into_owned());row.audio_stored=true;row.retention.audio_cached=true;
+        let samples=imported.parts.iter().try_fold(0u64,|n,p|n.checked_add(p.samples).ok_or("导入音频时长无效。"))?;
+        row.duration_ms=samples/16;
+        row.audio_bytes=imported.parts.iter().try_fold(0u64,|n,p|p.samples.checked_mul(2).and_then(|x|x.checked_add(44)).and_then(|x|n.checked_add(x)).ok_or("导入音频容量无效。"))?;
+        row.chunks=if imported.parts.len()>1 {host_segmented_capture::session_chunks(&row.id,&imported.parts)?}
+            else {seal_companion_v1_session_chunks(&row,&now,row.duration_ms,Some(row.audio_bytes))};
+        if !snapshot.meeting.active && !snapshot.device.recording {snapshot.host.selected_session_id=Some(row.id.clone());}
+        snapshot.host.sessions.insert(0,row);snapshot.updated_at=observation_timestamp();
+        refresh_privacy_counts(&mut snapshot);persistence::save_snapshot(&mut snapshot)?;Ok(snapshot.clone())
     }
     fn restore_library_backup(&self,path:&std::path::Path)->Result<CompanionV1Snapshot,String>{
         let mut snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
