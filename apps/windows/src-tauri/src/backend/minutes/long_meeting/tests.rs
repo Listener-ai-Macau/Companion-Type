@@ -682,6 +682,26 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
 }
 
 #[test]
+fn background_review_keeps_multitopic_meeting_when_most_items_are_flagged() {
+    let source = session("会议先讨论包装，后来讨论售后和发货。");
+    let (mut minutes, _) = response(&source);
+    minutes.summary = (0..16).map(|i| format!("正常议题{i}")).collect();
+    minutes.decisions = vec!["包装确定".into(), "售后确定".into()];
+    minutes.questions = vec!["发货时间？".into()];
+    minutes.action_items = vec![crate::companion_v1::CompanionV1ActionItem {
+        text: "周五发报价".into(), owner: None, due: None,
+    }];
+    minutes.markdown = "> 原会议已完成。\n\n# 正常议题\n\n## 分段原文依据\n\n- 原文。".into();
+    let before = minutes.clone();
+    let review = ActionReview { background: vec![0], background_summary: (0..8).collect(),
+        background_decisions: vec![0,1], background_questions: vec![0], ..Default::default() };
+    apply_action_review(&source, &mut minutes, &[], &review);
+    assert_eq!(minutes.markdown, before.markdown);
+    assert_eq!(minutes.summary, before.summary);
+    assert_eq!(minutes.action_items[0].text, before.action_items[0].text);
+}
+
+#[test]
 fn background_sections_move_only_flagged_reading_items_and_keep_originals() {
     let source = session("包装使用蓝色纸盒。旁人讨论猫粮。\n");
     let (mut minutes, _) = response(&source);

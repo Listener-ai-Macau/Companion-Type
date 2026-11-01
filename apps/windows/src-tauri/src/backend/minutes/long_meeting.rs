@@ -516,6 +516,14 @@ fn apply_action_review(session: &CompanionV1HostSession, minutes: &mut Companion
     let count = minutes.action_items.len();
     let mut background = review.background.clone(); background.sort_unstable(); background.dedup();
     if background.len() != review.background.len() || background.iter().any(|&i| i >= count) { return; }
+    // A real two-hour, multi-topic meeting caused the model to label almost
+    // everything as background. That is not useful evidence of interference:
+    // keep the original reading view when a substantial meeting gets an
+    // overwhelming background classification. Small meetings remain eligible.
+    let total = minutes.summary.len() + minutes.decisions.len() + minutes.questions.len() + count;
+    let flagged = background.len() + review.background_summary.len()
+        + review.background_decisions.len() + review.background_questions.len();
+    if total >= 20 && flagged.saturating_mul(2) >= total { return; }
     let mut remove = HashSet::new();
     let mut in_group = HashSet::new();
     for group in &review.duplicates {
