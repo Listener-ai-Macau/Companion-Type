@@ -1593,6 +1593,11 @@ impl CompanionBackend for FixtureCompanionBackend {
         row.audio_bytes=imported.parts.iter().try_fold(0u64,|n,p|p.samples.checked_mul(2).and_then(|x|x.checked_add(44)).and_then(|x|n.checked_add(x)).ok_or("导入音频容量无效。"))?;
         row.chunks=if imported.parts.len()>1 {host_segmented_capture::session_chunks(&row.id,&imported.parts)?}
             else {seal_companion_v1_session_chunks(&row,&now,row.duration_ms,Some(row.audio_bytes))};
+        row.chunks.push(crate::companion_v1::CompanionV1AudioChunk {
+            id:format!("{}-imported-original-{}",row.id,imported.original_sha256),
+            path:Some(imported.original.to_string_lossy().into_owned()),started_at:None,stopped_at:None,
+            duration_ms:row.duration_ms,bytes:imported.original_bytes,status:"importedOriginal".into(),
+        });
         if !snapshot.meeting.active && !snapshot.device.recording {snapshot.host.selected_session_id=Some(row.id.clone());}
         snapshot.host.sessions.insert(0,row);snapshot.updated_at=observation_timestamp();
         refresh_privacy_counts(&mut snapshot);persistence::save_snapshot(&mut snapshot)?;Ok(snapshot.clone())
@@ -4488,6 +4493,12 @@ fn requested_or_selected_session_mut<'a>(
 }
 
 fn transcription_chunk_paths(session: &CompanionV1HostSession) -> Result<Vec<String>, String> {
+    // The preserved input is a library asset, not another speech segment.
+    let filtered;
+    let session=if session.source=="importedAudio" {
+        filtered={let mut row=session.clone();row.chunks.retain(|chunk|chunk.status!="importedOriginal");row};
+        &filtered
+    } else {session};
     if let Some(parts)=host_segmented_capture::saved_parts(session)? {
         return Ok(parts.into_iter().map(|(path,_)|path.to_string_lossy().into_owned()).collect());
     }
@@ -4782,7 +4793,9 @@ fn refresh_privacy_counts(snapshot: &mut CompanionV1Snapshot) {
         .host
         .sessions
         .iter()
-        .map(|session| session.audio_bytes)
+        .map(|session| session.audio_bytes.saturating_add(session.chunks.iter()
+            .filter(|chunk|session.source=="importedAudio" && chunk.status=="importedOriginal")
+            .fold(0u64,|total,chunk|total.saturating_add(chunk.bytes))))
         .sum();
     snapshot.privacy.transcript_bytes = snapshot
         .host

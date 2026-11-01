@@ -32,14 +32,15 @@ pub(super) fn session_chunks(session_id: &str, parts: &[HostAudioPart]) -> Resul
 /// Legacy single-file host and device sessions use their existing paths.
 pub(crate) fn saved_parts(row:&crate::companion_v1::CompanionV1HostSession)->Result<Option<Vec<(PathBuf,u64)>>,String> {
     let prefix=format!("{}-host-part-",row.id);
-    if !row.chunks.iter().any(|c|c.id.starts_with(&prefix)) {return Ok(None);}
-    if !matches!(row.source.as_str(),"hostMicrophone" | "importedAudio") || row.device_recording_key.is_some() || !row.audio_stored || row.chunks.len()<2 {
+    let chunks=row.chunks.iter().filter(|chunk|row.source!="importedAudio" || chunk.status!="importedOriginal").collect::<Vec<_>>();
+    if !chunks.iter().any(|c|c.id.starts_with(&prefix)) {return Ok(None);}
+    if !matches!(row.source.as_str(),"hostMicrophone" | "importedAudio") || row.device_recording_key.is_some() || !row.audio_stored || chunks.len()<2 {
         return Err("录音分段尚未完整保存。".into());
     }
     let primary=Path::new(row.audio_path.as_deref().ok_or("录音路径缺失。")?).canonicalize().map_err(|_|"录音文件缺失。")?;
     let root=primary.parent().ok_or("录音目录不可用。")?;
     let mut parts=Vec::new();let mut samples=0u64;let mut total_bytes=0u64;
-    for (index,chunk) in row.chunks.iter().enumerate() {
+    for (index,chunk) in chunks.iter().enumerate() {
         if chunk.id!=format!("{}-host-part-{index:08}",row.id) || chunk.status!="sealed" {
             return Err("录音分段不完整。".into());
         }

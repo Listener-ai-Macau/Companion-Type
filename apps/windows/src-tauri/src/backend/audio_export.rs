@@ -36,9 +36,7 @@ pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(Audio
         super::library_lifecycle::require_available(session)?;
         if !session.audio_stored || !session.retention.audio_cached {return Err("这场录音的本机音频已删除。".into());}
         let root=super::audio_storage::recording_root()?;
-        let anchor=Path::new(session.audio_path.as_deref().ok_or("录音文件缺失。")?);
-        if !super::audio_storage::owned_recording_reference(anchor,&root) {return Err("录音位置无效。".into());}
-        let original=AudioSource::Imported(super::audio_artifacts::imported_original(&root,anchor)?);
+        let original=AudioSource::Imported(super::import_audio::verify_original(session,&root)?);
         let extension=original.extension()?;
         return Ok((original,format!("{title}-original.{extension}")));
     }
@@ -69,12 +67,6 @@ pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Pa
                     return Err("请选择新的文件位置，不能覆盖会议库中的原始录音。".into());
                 }
             }
-        }
-    }
-    if let Ok(target)=destination.canonicalize() {
-        if snapshot.host.sessions.iter().any(|row|row.source=="importedAudio" && row.audio_stored)
-            && super::audio_storage::owned_recording_reference(&target,&super::audio_storage::recording_root()?) {
-            return Err("请选择新的文件位置，不能覆盖会议库中的原始录音。".into());
         }
     }
     copy_source_atomic(&input, destination)

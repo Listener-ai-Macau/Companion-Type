@@ -19,6 +19,12 @@ fn cleanup_audio_paths<'a>(sessions: impl Iterator<Item = &'a CompanionV1HostSes
     checkpoint: bool) -> Result<Vec<String>, String> {
     let mut paths = Vec::new();
     for session in sessions {
+        if checkpoint && session.source=="importedAudio" && session.audio_stored {
+            let original=super::import_audio::original_chunk(session)?;
+            if let Some(_path)=original.path.as_deref().filter(|path|std::path::Path::new(path).exists()) {
+                super::import_audio::verify_original(session,&super::audio_storage::recording_root()?)?;
+            }
+        }
         paths.extend(session_audio_paths(session).map(str::to_owned));
         let Some(tracks) = session.meeting_tracks.as_ref() else { continue; };
         if session.source != "hostMeeting" || !matches!(tracks.state.as_str(), "recording" | "needsReview") { continue; }

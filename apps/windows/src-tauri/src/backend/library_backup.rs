@@ -49,8 +49,12 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
     if snapshot.host.persistence.status!="ready"||snapshot.meeting.active||snapshot.device.recording||snapshot.host.sessions.iter().any(|s|s.status=="recording"||matches!(s.recovery.stage.as_str(),"transcribing"|"generatingMinutes")){
         return Err("请先完成录音和正在进行的整理，并保存会议库。".into());
     }
-    let mut rows=snapshot.host.sessions.clone();let mut anchors=Vec::new();
+    let mut rows=snapshot.host.sessions.clone();let mut anchors=Vec::new();let mut imported_names=HashSet::new();
     for row in &rows {
+        if row.source=="importedAudio" && row.audio_stored {
+            let original=super::import_audio::verify_original(row,root)?;
+            imported_names.insert(leaf(&original.to_string_lossy(),root)?.to_lowercase());
+        }
         if !row.audio_stored && row.device_recording_id.is_some() && !row.device_reclaimed {return Err(format!("“{}”的录音还在设备中，请先同步再备份。",row.title));}
         if row.audio_stored && !row.retention.audio_cached{return Err(format!("“{}”的录音状态未完成，请先恢复。",row.title));}
         for raw in row.audio_path.iter().chain(row.chunks.iter().filter_map(|c|c.path.as_ref()))
@@ -75,7 +79,8 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
     // is the authority; no directory scan or inferred sibling is performed.
     for raw in &anchors {let name=leaf(raw,root)?;if names.contains(&name.to_lowercase()){continue;}
         let path=root.join(&name);let (bytes,sha256)=fingerprint(&path)?;
-        let purpose=if name.to_lowercase().ends_with(".wav"){Purpose::Recording}
+        let purpose=if imported_names.contains(&name.to_lowercase()){Purpose::ImportedOriginal}
+            else if name.to_lowercase().ends_with(".wav"){Purpose::Recording}
             else if name.to_lowercase().ends_with(".opus"){Purpose::CompressedOriginal}
             else if name.to_lowercase().ends_with(".json"){Purpose::SessionReceipt}
             else{return Err("录音包含尚不支持备份的文件类型。".into());};
@@ -168,6 +173,14 @@ fn read_manifest(path:&Path)->Result<Manifest,String>{
             .chain(row.meeting_tracks.iter().flat_map(|tracks|tracks.microphone.iter().chain(&tracks.system).map(|part|&part.path))) {
             if !virtual_path(p)&&(!valid_leaf(p)||!names.contains(&p.to_lowercase())) {return Err("备份缺少会议所需的录音文件。".into());}
         }
+        if row.source=="importedAudio" && row.audio_stored {
+            let original=super::import_audio::original_chunk(row)?;
+            let path=original.path.as_deref().ok_or("备份缺少导入原文件。")?;
+            let expected=original.id.rsplit('-').next().ok_or("备份原文件身份无效。")?;
+            if !manifest.files.iter().any(|f|f.file==path && f.purpose==Purpose::ImportedOriginal && f.bytes==original.bytes && f.sha256==expected) {
+                return Err("备份缺少完整的导入原文件。".into());
+            }
+        }
         if let Some(tracks)=&row.meeting_tracks {
             if row.source!="hostMeeting" || !valid_leaf(&tracks.root)
                 || tracks.microphone.iter().chain(&tracks.system).any(|part|virtual_path(&part.path))
@@ -211,12 +224,23 @@ pub(crate) fn restore_files(archive:&Path,root:&Path)->Result<Vec<CompanionV1Hos
             return Err("备份文件缺失或校验失败，未恢复任何会议。".into());
         }
     }
-    audio_artifacts::preflight_backup_targets(&root,&manifest.files)?;
+    let managed=manifest.files.iter().filter(|item|item.purpose!=Purpose::ImportedOriginal).cloned().collect::<Vec<_>>();
+    audio_artifacts::preflight_backup_targets(&root,&managed)?;
+    // Check imported originals too before publishing any restored file.
+    for item in manifest.files.iter().filter(|item|item.purpose==Purpose::ImportedOriginal) {
+        let target=root.join(&item.file);
+        match fs::symlink_metadata(&target) {
+            Ok(meta) if !meta.is_file() || meta.file_type().is_symlink() || fingerprint(&target)?!=(item.bytes,item.sha256.clone()) => {
+                return Err("本机已有不同的录音文件；原文件未覆盖。".into());
+            }
+            Ok(_) => {},
+            Err(error) if error.kind()==std::io::ErrorKind::NotFound => {},
+            Err(error) => return Err(format!("无法核对恢复位置：{error}")),
+        }
+    }
     for (index,item) in manifest.files.iter().enumerate(){
         let source=directory.join(index.to_string());let target=root.join(&item.file);
-        audio_artifacts::retry_absent_backup_file(&root,item)?;
-        let owner=root.join(item.sources.first().ok_or("备份归属无效。")?);
-        audio_artifacts::generated(&owner,&target,item.purpose,||{
+        let write=|| {
             if target.exists(){
                 if fingerprint(&target)?==(item.bytes,item.sha256.clone()){return Ok(());}
                 return Err("本机已有不同的录音文件；原文件未覆盖。".into());
@@ -224,9 +248,14 @@ pub(crate) fn restore_files(archive:&Path,root:&Path)->Result<Vec<CompanionV1Hos
             let temp=root.join(format!(".companion-restore-{}.tmp",uuid::Uuid::new_v4()));
             let result=copy_verified(&source,&temp,&(item.bytes,item.sha256.clone())).and_then(|_|publish_new(&temp,&target));
             if result.is_err(){let _=fs::remove_file(&temp);}result
-        })?;
+        };
+        if item.purpose==Purpose::ImportedOriginal {write()?;} else {
+            audio_artifacts::retry_absent_backup_file(&root,item)?;
+            let owner=root.join(item.sources.first().ok_or("备份归属无效。")?);
+            audio_artifacts::generated(&owner,&target,item.purpose,write)?;
+        }
     }
-    audio_artifacts::attach_backup_sources(&root,&manifest.files)?;
+    audio_artifacts::attach_backup_sources(&root,&managed)?;
     for row in &mut manifest.sessions {
         for path in row.audio_path.iter_mut().chain(row.chunks.iter_mut().filter_map(|c|c.path.as_mut())) {
             if !virtual_path(path){*path=root.join(&*path).to_string_lossy().into_owned();}

@@ -284,7 +284,7 @@ export type CompanionV1SessionPendingReason =
  */
 export type CompanionV1MeetingMode = 'offlineStore' | 'onlineLive';
 
-export type CompanionV1AudioChunkStatus = 'open' | 'sealed' | 'synced' | 'erased';
+export type CompanionV1AudioChunkStatus = 'open' | 'sealed' | 'synced' | 'erased' | 'importedOriginal';
 
 export interface CompanionV1AudioChunk {
   id: string;
@@ -1832,7 +1832,7 @@ function refreshPrivacyState(
   lastEraseAt: string | null,
 ): CompanionV1PrivacyState {
   const encoder = new TextEncoder();
-  const audioCacheBytes = snapshot.host.sessions.reduce((sum, session) => sum + session.audioBytes, 0);
+  const audioCacheBytes = snapshot.host.sessions.reduce((sum, session) => sum + session.audioBytes + (session.source === 'importedAudio' ? session.chunks.filter(chunk => chunk.status === 'importedOriginal').reduce((total, chunk) => total + chunk.bytes, 0) : 0), 0);
   const transcriptBytes = snapshot.host.sessions.reduce(
     (sum, session) => sum + encoder.encode(session.transcriptText).length,
     0,

@@ -972,23 +972,6 @@ fn backup_files_from(root:&Path, data:&Manifest, paths:&[String])->Result<Vec<Ba
     Ok(out)
 }
 
-/// Resolve only the preserved input belonging to this imported recording.
-/// Other derived files do not determine whether the original can be exported.
-pub(crate) fn imported_original(root:&Path,anchor:&Path)->Result<PathBuf,String> {
-    let _guard=lock(root)?;let data=load(root)?;
-    let keys=reachable(root,&data,&[anchor.to_string_lossy().into_owned()])?;
-    let mut found=None;
-    for item in &data.files {
-        let path=root.join(&item.file);
-        if item.purpose!=Purpose::ImportedOriginal || !keys.contains(&reference_key(&path)?) {continue;}
-        if found.is_some() || item.phase!=Phase::Sealed || fingerprint(&path)?!=item.identity {
-            return Err("导入原文件缺失或不完整，未保存；回听副本仍保留。".into());
-        }
-        found=Some(path);
-    }
-    found.ok_or_else(||"导入原文件缺失，未保存；回听副本仍保留。".into())
-}
-
 pub(crate) fn backup_files_at(root:&Path,paths:&[String])->Result<Vec<BackupFile>,String> {
     let _guard=lock(&root)?;
     backup_files_from(&root,&load(&root)?,paths)
