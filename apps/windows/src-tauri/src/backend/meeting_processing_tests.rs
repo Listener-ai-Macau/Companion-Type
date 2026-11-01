@@ -4,7 +4,7 @@ use std::sync::mpsc;
 use std::time::Duration;
 
 fn request(action:CompanionV1ControlAction,id:&str)->CompanionV1ControlRequest {
-    CompanionV1ControlRequest {action,session_id:Some(id.into()),context_note_revision: None, ble_name:None,
+    CompanionV1ControlRequest { recording_source: None,action,session_id:Some(id.into()),context_note_revision: None, ble_name:None,
         prompt_id:None,title:None,transcript_text:None,meeting_mode:None,
         audio_path:None,audio_bytes:None,device_id:None,duration_ms:None}
 }

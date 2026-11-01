@@ -159,6 +159,8 @@ pub struct PreparedAudioTimeline {
     source_identity:String,
     pause_timeline:Option<crate::backend::recording_pause_view::PauseTimeline>,
     parts:Vec<PreparedAudioPart>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    meeting_tracks: Option<crate::backend::meeting_workspace::PreparedMeetingAudioTracks>,
 }
 
 #[derive(Serialize)]
@@ -173,6 +175,13 @@ pub async fn prepare_companion_audio_with_timeline(
     let prepared=tauri::async_runtime::spawn_blocking(move || {
         let _lease=coordinator.begin_audio_export()?;
         let snapshot=coordinator.snapshot()?;
+        let session = snapshot.host.sessions.iter().find(|row| row.id == session_id).ok_or("找不到这场会议")?;
+        if session.source == "hostMeeting" {
+            let tracks = crate::backend::meeting_workspace::local_meeting_audio_tracks(&snapshot, &session_id)?;
+            let first = tracks.microphone.first().or_else(|| tracks.system.first()).ok_or("会议音轨为空。")?;
+            return Ok::<_,String>(PreparedAudioTimeline { path:first.path.clone(), source_identity:tracks.source_identity.clone(),
+                pause_timeline:None, parts:Vec::new(), meeting_tracks:Some(tracks) });
+        }
         let path=crate::backend::meeting_workspace::local_audio_path(&snapshot,&session_id)?;
         let row=snapshot.host.sessions.iter().find(|row|row.id==session_id).ok_or("找不到这场会议")?;
         let (pause_timeline,verified)=if row.device_recording_key.is_some() {
@@ -192,11 +201,34 @@ pub async fn prepare_companion_audio_with_timeline(
             }
             crate::backend::meeting_workspace::playback_parts_identity(&session_id,&verified)?
         } else { crate::backend::meeting_workspace::playback_identity(&session_id,&path)? };
-        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),source_identity,pause_timeline,parts})
+        Ok::<_,String>(PreparedAudioTimeline{path:path.to_string_lossy().into_owned(),source_identity,pause_timeline,parts,meeting_tracks:None})
     }).await.map_err(|e|format!("准备原音任务失败：{e}"))??;
     app.asset_protocol_scope().allow_file(&prepared.path).map_err(|e|format!("无法准备回听：{e}"))?;
     for part in &prepared.parts {
         app.asset_protocol_scope().allow_file(&part.path).map_err(|e|format!("无法准备回听：{e}"))?;
+    }
+    if let Some(tracks) = &prepared.meeting_tracks {
+        for part in tracks.microphone.iter().chain(&tracks.system) {
+            app.asset_protocol_scope().allow_file(&part.path).map_err(|e|format!("无法准备回听：{e}"))?;
+        }
+    }
+    Ok(prepared)
+}
+
+/// Prepare the separately saved computer and microphone files without making
+/// a second copy. This is called only when the two-track player is available.
+#[tauri::command]
+pub async fn prepare_companion_meeting_audio_tracks(
+    app: AppHandle, coordinator: CompanionCoordinatorState<'_>, session_id: String,
+) -> Result<crate::backend::meeting_workspace::PreparedMeetingAudioTracks, String> {
+    let coordinator = coordinator.inner().clone();
+    let prepared = tauri::async_runtime::spawn_blocking(move || {
+        let _lease = coordinator.begin_audio_export()?;
+        let snapshot = coordinator.snapshot()?;
+        crate::backend::meeting_workspace::local_meeting_audio_tracks(&snapshot, &session_id)
+    }).await.map_err(|e| format!("准备会议回听失败：{e}"))??;
+    for part in prepared.microphone.iter().chain(&prepared.system) {
+        app.asset_protocol_scope().allow_file(&part.path).map_err(|e| format!("无法准备会议回听：{e}"))?;
     }
     Ok(prepared)
 }
@@ -538,8 +570,9 @@ pub async fn export_companion_audio(
     let lease = coordinator.begin_audio_export()?;
     let (original, name) = crate::backend::audio_export::source(&coordinator.snapshot()?, &session_id)?;
     let chooser=app.dialog().file();
-    let chooser=if original.extension()?=="zip" {chooser.add_filter("分段原音 ZIP", &["zip"])}
-        else {chooser.add_filter("原始录音 WAV", &["wav"])};
+    let meeting=matches!(&original,crate::backend::audio_export::AudioSource::Meeting{..});
+    let chooser=if original.extension()?=="zip" {chooser.add_filter(if meeting {"会议分轨 ZIP"} else {"分段原音 ZIP"}, &["zip"])}
+        else {chooser.add_filter(if meeting {"会议混合录音 WAV"} else {"原始录音 WAV"}, &["wav"])};
     let destination = chooser.set_file_name(&name).blocking_save_file();
     let Some(destination) = destination else { return Ok(None); };
     let destination = destination.simplified().into_path().map_err(|e| e.to_string())?;
@@ -816,7 +849,7 @@ pub(crate) fn start_board_online_live_owned(coordinator:Arc<CompanionCoordinator
         let mut request=request;request.device_id=device_id;
         return segmented_online_live::start(coordinator,manager,device_operation,request,session_id,title,max_duration_seconds);
     }
-    let prepared = coordinator.apply_control(CompanionV1ControlRequest {
+    let prepared = coordinator.apply_control(CompanionV1ControlRequest { recording_source: None,
         action: CompanionV1ControlAction::MeetingStart,
         context_note_revision: None, ble_name: None,
         session_id: Some(session_id.clone()),
@@ -1205,7 +1238,7 @@ mod board_online_live_tests {
         assert_eq!(active_meeting.host.active_session_id, active_id);
 
         let mut recording_session = idle;
-        let request = CompanionV1ControlRequest {
+        let request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name: None,
             session_id: Some("existing-row".to_string()),

@@ -21,6 +21,8 @@ import { CompanionBookmarks } from './CompanionBookmarks';
 import { CompanionAudioPlayer, type CompanionPauseTimeline } from './CompanionAudioPlayer';
 import { CompanionSegmentedAudioPlayer, type SegmentedPlaybackControl } from './CompanionSegmentedAudioPlayer';
 import type {RecordingPart} from './recordingParts';
+import { CompanionMeetingAudioPlayer, type MeetingAudioControl } from './CompanionMeetingAudioPlayer';
+import type { MeetingPlaybackTracks } from './meetingTrackPlayback';
 import {useListeningQueue} from './useListeningQueue';
 import {CompanionLibraryTools,type LibraryFilters} from './CompanionLibraryTools';
 import {recordingInDates} from './libraryDates';
@@ -117,7 +119,7 @@ export type CompanionProductSettingsPublic = {
 };
 
 const listeningIdentity = (session:CompanionV1HostSession) => JSON.stringify([session.id,session.audioPath??'',
-  session.audioBytes,session.deviceSha256??'',session.deviceRecordingKey??'',session.audioStored,session.retention.audioCached]);
+  session.audioBytes,session.deviceSha256??'',session.deviceRecordingKey??'',session.audioStored,session.retention.audioCached,session.meetingTracks??null]);
 
 function recordingTimeLabel(value?: string | number | null) {
   const date = value !== undefined && value !== null && value !== '' ? new Date(value) : null;
@@ -238,7 +240,7 @@ export interface CompanionDashboardProps {
   onPrepareLocalAsr?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
-  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[] }>;
+  onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>;
   onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
   onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
@@ -511,9 +513,10 @@ export function CompanionDashboard({
   const [noteUnsaved,setNoteUnsaved]=useState(false);
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; part?: 'title' | 'minutes'; message: string; kind: 'saved' | 'error' } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
-  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[] }>>({});
+  const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>>({});
   const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
   const audioElement = useRef<HTMLAudioElement | null>(null);
+  const meetingAudioControl = useRef<MeetingAudioControl | null>(null);
   const segmentedAudio = useRef<SegmentedPlaybackControl|null>(null);
   const audioRequestId = useRef(0);
   const [listeningEpoch,setListeningEpoch]=useState(0);
@@ -791,7 +794,7 @@ export function CompanionDashboard({
     selectedSession
     && selectedSession.status !== 'recording'
     && !['needs_device_sync','needs_segments','needs_local_audio'].includes(selectedSession.pendingReason ?? '')
-    && (selectedSession.source === 'hostMicrophone' ? hostRecordingAudioConfirmed(selectedSession)
+    && (['hostMicrophone','hostMeeting'].includes(selectedSession.source) ? hostRecordingAudioConfirmed(selectedSession)
       : selectedSession.deviceRecordingKey ? selectedSession.audioStored && selectedSession.retention.audioCached
         && selectedSession.audioPath && selectedSession.audioBytes > 0
         : (selectedSession.audioPath || (selectedSession.audioStored && selectedSession.audioBytes > 0))),
@@ -800,7 +803,8 @@ export function CompanionDashboard({
     && transcriptDraft.trim() !== (selectedSession.transcriptText ?? '').trim());
   const canGenerate = finalTranscript && !recoveryView?.isProcessing && !unimportedTranscriptDraft;
   const hasOriginalAudio = Boolean(hasSyncedAudio && selectedSession?.audioStored && selectedSession.retention.audioCached
-    && selectedSession.audioPath && !/^(host|device|board):\/\//i.test(selectedSession.audioPath));
+    && (selectedSession.source === 'hostMeeting' ? hostRecordingAudioConfirmed(selectedSession)
+      : selectedSession.audioPath && !/^(host|device|board):\/\//i.test(selectedSession.audioPath)));
   const textOnlyImport = Boolean(selectedSession && isTextOnlyImport(selectedSession));
   const savedOriginalReady = Boolean(hasOriginalAudio && snapshot?.host.persistence?.status === 'ready'
     && !selectedSession?.captureIncomplete && !selectedSession?.recorderControlUncertain);
@@ -1003,15 +1007,15 @@ export function CompanionDashboard({
   const listeningQueue=useListeningQueue({
     rows:allLibrarySessions.filter(row=>!row.organization?.trashedAt).map(row=>({id:row.id,title:`${meetingTitle(row)} · ${isTextOnlyImport(row)?'导入文字':formatDuration(row.durationMs)} · ${row.deviceRecordingId!=null?`#${row.deviceRecordingId}`:isTextOnlyImport(row)?'文字':'录音'} · ${row.startedAt??row.id.slice(-8)}`,identity:listeningIdentity(row),
       ready:row.status!=='recording'&&row.pendingReason!=='needs_device_sync'&&row.audioStored&&row.retention.audioCached
-        &&Boolean(row.audioPath)&&!describeCompanionMeetingRecovery(row)?.isProcessing})),
+        &&(row.source==='hostMeeting' ? hostRecordingAudioConfirmed(row) : Boolean(row.audioPath))&&!describeCompanionMeetingRecovery(row)?.isProcessing})),
     selectedId:selectedSession?.id??'',
     disabled:controlsBusy||audioBusy||titleDirty||minutesDirty||transcriptReviewUnsaved||bookmarkUnsaved||noteUnsaved||libraryUnsaved,
     hardBlocked:oobeBlockedByRecording||storageBlocked||Boolean(libraryFilters.trash),prepare:onPrepareAudio,
     select:id=>onControl({action:'meetingSelectSession',sessionId:id}),
-    pause:()=>audioElement.current?.pause(),
+    pause:()=>{audioElement.current?.pause();meetingAudioControl.current?.pause();},
     ready:(entry,audio,epoch)=>{
       setAudioSources(sources=>({...sources,[entry.id]:{url:audio.url,identity:entry.identity,
-        sourceIdentity:audio.sourceIdentity,pauseTimeline:audio.pauseTimeline,parts:audio.parts}}));
+        sourceIdentity:audio.sourceIdentity,pauseTimeline:audio.pauseTimeline,parts:audio.parts,meetingTracks:audio.meetingTracks}}));
       setListeningEpoch(epoch); setPlaybackOpen(true);
     },
   });
@@ -1307,10 +1311,10 @@ export function CompanionDashboard({
     if (!selectedSession || !onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id;
     exportActive.current = true; setExportBusy(true);
-    setExportResult({ sessionId, origin: 'audio', kind: 'pending', message: '正在保存原音…' });
+    setExportResult({ sessionId, origin: 'audio', kind: 'pending', message: selectedSession.source === 'hostMeeting' ? '正在保存会议录音…' : '正在保存原音…' });
     try {
       const result = await onExportAudio(sessionId);
-      setExportResult({ sessionId, origin: 'audio', path: result?.path, kind: result ? 'saved' : 'cancelled', message: result ? `原音已保存：${exportFileName(result.path)}` : '已取消保存，原音保持不变。' });
+      setExportResult({ sessionId, origin: 'audio', path: result?.path, kind: result ? 'saved' : 'cancelled', message: result ? `录音已保存：${exportFileName(result.path)}` : '已取消保存，原音保持不变。' });
     } catch (error) {
       setExportResult({ sessionId, origin: 'audio', kind: 'error', message: `原音保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
@@ -1489,12 +1493,23 @@ export function CompanionDashboard({
       const current = audioContext.current;
       if (requestId !== audioRequestId.current || current.sessionId !== sessionId
         || current.identity !== requestedIdentity || current.blocked) return;
-      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline,parts:prepared.parts } }));
+      setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline,parts:prepared.parts,meetingTracks:prepared.meetingTracks } }));
     } catch (prepareError) {
       setAudioResult({ sessionId, message: `无法回听：${operationErrorText(prepareError,'playback')}` });
     } finally {
       setAudioBusy(false);
     }
+  };
+  const seekMeetingAudio = async (positionMs:number, stillCurrent:()=>boolean) => {
+    if (!Number.isSafeInteger(positionMs) || positionMs < 0 || !stillCurrent()) throw new Error('重点或原音身份已变化，请重新核对。');
+    if (!preparedAudio) await prepareAudio();
+    const deadline = Date.now() + 4000;
+    while (stillCurrent() && !meetingAudioControl.current && Date.now() < deadline) await new Promise(resolve=>setTimeout(resolve,40));
+    const player = meetingAudioControl.current;
+    if (!stillCurrent()) throw new Error('已切换会议，未定位其他会议的原音。');
+    if (!player || positionMs / 1000 > player.duration()) throw new Error('会议原音尚未准备完成或位置超出范围。');
+    player.pause(); await player.seek(positionMs / 1000);
+    if (!stillCurrent()) throw new Error('已切换会议，未定位其他会议的原音。');
   };
   const seekBookmark = async (sessionId:string,bookmarkId:string,positionMs:number) => {
     setPlaybackOpen(true);
@@ -1502,9 +1517,10 @@ export function CompanionDashboard({
     if (!selectedSession||selectedSession.id!==sessionId||!point
       ||companionBookmarkAudioPosition(selectedSession,point)!==positionMs) throw new Error('重点所属原音已变化，请重新核对。');
     const identity=audioIdentity;
-    await seekBookmarkAudio(positionMs,async()=>{if(!preparedAudio) await prepareAudio();},()=>audioElement.current,
-      ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked,
-      () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===sessionId?segmentedAudio.current:null);
+    const stillCurrent = ()=>audioContext.current.sessionId===sessionId&&audioContext.current.identity===identity&&!audioContext.current.blocked;
+    if (selectedSession.source === 'hostMeeting') await seekMeetingAudio(positionMs, stillCurrent);
+    else await seekBookmarkAudio(positionMs,async()=>{if(!preparedAudio) await prepareAudio();},()=>audioElement.current,
+      stillCurrent, () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===sessionId?segmentedAudio.current:null);
     setAudioResult({sessionId,message:'已定位到重点。点击原音播放器的播放按钮即可回听。'});
   };
   const resumeTranscriptDraft = (sessionId: string) => {
@@ -1529,9 +1545,11 @@ export function CompanionDashboard({
     if (!valid() || audioBlockedReason || controlsBusy || transcriptReviewUnsaved)
       throw new Error('这段转写或原音尚不可回听，请结束处理并重新核对。');
     const identity = audioIdentity;
-    await seekBookmarkAudio(source.startMs, async () => { if (!preparedAudio) await prepareAudio(); }, () => audioElement.current,
-      () => valid() && audioContext.current.sessionId === source.sessionId
-        && audioContext.current.identity === identity && !audioContext.current.blocked, () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===source.sessionId?segmentedAudio.current:null);
+    const stillCurrent = () => valid() && audioContext.current.sessionId === source.sessionId
+      && audioContext.current.identity === identity && !audioContext.current.blocked;
+    if (selectedSession?.source === 'hostMeeting') await seekMeetingAudio(source.startMs, stillCurrent);
+    else await seekBookmarkAudio(source.startMs, async () => { if (!preparedAudio) await prepareAudio(); }, () => audioElement.current,
+      stillCurrent, () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===source.sessionId?segmentedAudio.current:null);
     setAudioResult({ sessionId: source.sessionId, message: '已定位到这段原音。点击播放器的播放按钮即可回听。' });
   };
   const deleteLibraryKey = allLibrarySessions.map(row => [row.id, Boolean(row.organization?.protected)]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))).map(row=>JSON.stringify(row)).join('|');
@@ -1725,7 +1743,9 @@ export function CompanionDashboard({
       {!boardLiveActive && !controlledRecorder && oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="当前记录">
         <div><strong>{device?.recording ? '设备录音中 · 上次读取' : '正在录音'}</strong>
           {activeHostCaptureError ? <p role="alert">本机录音保存遇到问题，可能没有继续录到声音。请结束录音并检查已保存内容。</p>
-            : <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p>}</div>
+            : <p>{device?.recording && !snapshot?.meeting.active ? '在 Companion 上结束录音后，读取设备状态，再同步到电脑。' : '结束当前录音后，再整理文字与纪要。'}设备检查、提示音和更新暂时停用。</p>}
+          {snapshot?.host.sessions.find(s=>s.id===snapshot.host.activeSessionId && s.source==='hostMeeting')?.meetingTracks?.issue
+            ? <p role="alert">电脑会议录音已中断，正在结束并保留已录内容；如未完成，请点击结束录音后恢复。</p> : null}</div>
         {snapshot?.meeting.active ? <button type="button" className="ct-action" disabled={recordingControlBusy}
           onClick={() => onControl({ action: 'meetingStop', sessionId: snapshot.host.activeSessionId ?? undefined })}><Square size={15} />结束录音</button>
           : <button type="button" className="ct-action" disabled={controlsBusy}
@@ -1903,7 +1923,7 @@ export function CompanionDashboard({
             {!textOnlyImport ? <button type="button" className="ct-action" aria-expanded={playbackOpen} aria-controls="ct-recording-playback"
               disabled={Boolean(audioBlockedReason) || audioBusy} title={audioBlockedReason ?? undefined}
               onClick={() => {
-                if (playbackOpen) {audioElement.current?.pause(); setPlaybackOpen(false); return;}
+                if (playbackOpen) {audioElement.current?.pause(); meetingAudioControl.current?.pause(); setPlaybackOpen(false); return;}
                 setPlaybackOpen(true); if (!preparedAudio) void prepareAudio();
               }}><Headphones size={16}/>{audioBusy?'正在准备…':playbackOpen?'收起回听':'回听'}</button> : null}
           </div>
@@ -1918,7 +1938,14 @@ export function CompanionDashboard({
           <div id="ct-recording-playback" hidden={!playbackOpen}>
           <section className="ct-audio-card" aria-label="本机原音回听">
             <div><strong>原音回听</strong></div>
-            {preparedAudio ? (preparedAudio.parts && preparedAudio.parts.length>1 ? <CompanionSegmentedAudioPlayer
+            {selectedSession.source === 'hostMeeting' && selectedSession.meetingTracks?.state === 'captured' && selectedSession.meetingTracks.issue
+              ? <p role="status">{selectedSession.meetingTracks.issue}</p> : null}
+            {preparedAudio?.meetingTracks ? <CompanionMeetingAudioPlayer key={`${preparedAudio.identity}:${preparedAudio.sourceIdentity}:${listeningEpoch}`}
+              tracks={preparedAudio.meetingTracks} controlRef={meetingAudioControl}
+              sourceIdentity={preparedAudio.sourceIdentity} sessionId={selectedSession.id}
+              autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
+              onFinished={()=>listeningQueue.finished(preparedAudio.sourceIdentity)} />
+                        : preparedAudio ? (preparedAudio.parts && preparedAudio.parts.length>1 ? <CompanionSegmentedAudioPlayer
               key={`${preparedAudio.identity}:${preparedAudio.sourceIdentity}:${listeningEpoch}`} playerRef={audioElement} controlRef={segmentedAudio}
               parts={preparedAudio.parts} pauseTimeline={preparedAudio.pauseTimeline} sourceIdentity={preparedAudio.sourceIdentity} sessionId={selectedSession.id}
               autoPlay={listeningQueue.active?.phase==='playing'&&listeningQueue.active.entry.id===selectedSession.id}
@@ -2206,13 +2233,14 @@ export function CompanionDashboard({
             {savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
             <div className="ct-recording-audio-export">
             <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
-              onClick={() => void exportAudio()}><Download size={15} />保存原音</button>
+              onClick={() => void exportAudio()}><Download size={15} />{selectedSession.source === 'hostMeeting' ? '保存会议录音' : '保存原音'}</button>
             {renderExportFeedback('audio')}
-            <p>保存整场原音到你选择的位置，可单独备份或使用其他播放器打开。超出 WAV 格式容量时会保存为包含分段原音的 ZIP。此副本由你自行保管，删除录音不会删除它。</p>
+            <p>{selectedSession.source === 'hostMeeting' ? '保存电脑声音与麦克风的混合录音；超出 WAV 格式容量时保存为包含两路分段原音的 ZIP。' : '保存整场原音到你选择的位置，可单独备份或使用其他播放器打开。超出 WAV 格式容量时会保存为包含分段原音的 ZIP。'}此副本由你自行保管，删除录音不会删除它。</p>
             </div>
           <CompanionBookmarks session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording}
             persistenceReady={!storageBlocked} onSave={onSaveBookmark} onBusyChange={setBookmarkBusy} onUnsavedChange={setBookmarkUnsaved}
-            playbackPosition={()=>segmentedAudio.current?.sessionId===selectedSession.id?Math.round(segmentedAudio.current.position()*1000):audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
+            playbackPosition={()=>selectedSession.source==='hostMeeting' && meetingAudioControl.current ? Math.round(meetingAudioControl.current.position()*1000)
+              : segmentedAudio.current?.sessionId===selectedSession.id?Math.round(segmentedAudio.current.position()*1000):audioElement.current&&audioElement.current.readyState>=1&&Number.isFinite(audioElement.current.currentTime)
               ? Math.round(audioElement.current.currentTime*1000):null}
             onSeek={seekBookmark} onShowOriginal={()=>setRecordingToolsOpen(true)}
             onExport={onExportMeeting?()=>exportMeeting('json','bookmarks'):undefined}/>
@@ -2280,6 +2308,15 @@ export function CompanionDashboard({
           </button>
           <button type="button" className="ct-action" disabled={controlsBusy} onClick={openWorkflow}>录音与同步</button>
         </div>
+      </section> : null}
+
+      {surface === 'windows' && !oobeBlockedByRecording ? <section className="ct-recording-activity" aria-label="录制电脑会议">
+        <div><strong>录制电脑会议</strong>
+          <p>同时保存电脑播放的声音和本机麦克风，结束后可回听、转文字和整理纪要。电脑播放的其他声音也会录进去。</p></div>
+        <div className="ct-button-row"><button type="button" className="ct-action" disabled={controlsBusy || storageBlocked}
+          onClick={() => onControl({action:'meetingStart',recordingSource:'hostMeeting',meetingMode:'offlineStore',
+            promptId:COMPANION_CAPTURE_ONLY_PROMPT,title:newMeetingTitle.trim() || '电脑会议录音',durationMs:0})}>
+          <Mic size={16}/><span>开始录电脑会议</span></button></div>
       </section> : null}
 
       <CompanionSetup snapshot={snapshot} settings={productSettings} busy={controlsBusy}
@@ -3086,12 +3123,12 @@ export function RecordingSafetyCard({ session, persistence, recoveryProcessing }
   const transferPending = ['needs_device_sync', 'needs_segments', 'needs_pull'].includes(session.pendingReason ?? '');
   const cachedAudio = Boolean(session.audioStored && session.audioPath && session.audioBytes > 0);
   const localAudio = !transferPending
-    && !captureOngoing && (session.source === 'hostMicrophone'
+    && !captureOngoing && (session.source === 'hostMicrophone' || session.source === 'hostMeeting'
       ? hostRecordingAudioConfirmed(session)
       : session.deviceRecordingKey
         ? Boolean(session.audioStored && session.audioPath && session.audioBytes > 0)
         : Boolean(session.audioPath || (session.audioStored && session.audioBytes > 0)));
-  const hostAudioUnconfirmed = session.source === 'hostMicrophone' && !captureOngoing && !localAudio;
+  const hostAudioUnconfirmed = (session.source === 'hostMicrophone' || session.source === 'hostMeeting') && !captureOngoing && !localAudio;
   const partialAudio = !localAudio && (savedSegments > 0 || cachedAudio);
   const deviceCopy = Boolean(session.sourceDeviceId && (session.deviceRecordingId != null||session.deviceRecordingKey) && !wholeReclaimed);
   const growingDeviceCapture = captureOngoing && deviceCopy;
@@ -3190,6 +3227,7 @@ function meetingTitle(session: CompanionV1HostSession): string {
 function meetingSource(session: CompanionV1HostSession): string {
   if (session.source === 'deviceFlash' || session.source === 'boardDevice') return 'Companion 录音';
   if (session.source === 'hostMicrophone') return '本机麦克风';
+  if (session.source === 'hostMeeting') return '电脑会议与麦克风';
   if (session.source === 'importedTranscript') return '导入文字';
   return '演示记录';
 }

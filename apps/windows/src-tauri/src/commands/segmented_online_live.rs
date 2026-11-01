@@ -47,7 +47,7 @@ pub(super) fn start(coordinator:Arc<CompanionCoordinator>,manager:Arc<CompanionB
 
 fn request(action:CompanionV1ControlAction,session:&str,device:Option<String>,title:&str,seconds:u16)
     ->CompanionV1ControlRequest {
-    CompanionV1ControlRequest {action,session_id:Some(session.into()),device_id:device,title:Some(title.into()),
+    CompanionV1ControlRequest { recording_source: None,action,session_id:Some(session.into()),device_id:device,title:Some(title.into()),
         meeting_mode:Some("onlineLive".into()),
         duration_ms:matches!(action,CompanionV1ControlAction::MeetingStart).then_some(u64::from(seconds)*1000),
         context_note_revision: None, ble_name:None,prompt_id:None,transcript_text:None,audio_path:None,audio_bytes:None}

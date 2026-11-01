@@ -52,7 +52,7 @@ pub(super) fn apply(row:&mut CompanionV1HostSession,labels:super::transcription:
     use super::*;
     #[test] fn coarse_asr_windows_are_not_treated_as_single_speakers() {
         let mut s=crate::companion_v1::fixture_snapshot();
-        let r=crate::companion_v1::CompanionV1ControlRequest {action:crate::companion_v1::CompanionV1ControlAction::MeetingLoadDemo,
+        let r=crate::companion_v1::CompanionV1ControlRequest { recording_source: None,action:crate::companion_v1::CompanionV1ControlAction::MeetingLoadDemo,
             session_id:Some("coarse-speakers".into()),context_note_revision:None,ble_name:None,prompt_id:None,title:None,transcript_text:Some("大家讨论。".into()),meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
         s=crate::companion_v1::apply_fixture_control(s,r).unwrap();
         s.host.sessions[0].utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment{text:"大家讨论。".into(),start_ms:0,end_ms:16000,speaker:None,approximate_timing:true}];
@@ -61,7 +61,7 @@ pub(super) fn apply(row:&mut CompanionV1HostSession,labels:super::transcription:
     }
     #[test] fn local_labels_cannot_rewrite_words_and_keep_both_old_documents() {
         let mut s=crate::companion_v1::fixture_snapshot();
-        let mut r=crate::companion_v1::CompanionV1ControlRequest {action:crate::companion_v1::CompanionV1ControlAction::MeetingLoadDemo,
+        let mut r=crate::companion_v1::CompanionV1ControlRequest { recording_source: None,action:crate::companion_v1::CompanionV1ControlAction::MeetingLoadDemo,
             session_id:Some("local-speakers".into()),context_note_revision: None, ble_name:None,prompt_id:None,title:None,transcript_text:Some("原句。".into()),meeting_mode:None,audio_path:None,audio_bytes:None,device_id:None,duration_ms:None};
         s=crate::companion_v1::apply_fixture_control(s,r.clone()).unwrap();
         r.action=crate::companion_v1::CompanionV1ControlAction::MeetingGenerateMinutes;

@@ -19,7 +19,7 @@ pub(super) fn device_control_target(
     let has_audio_path = request.audio_path.as_deref().is_some_and(|path| !path.trim().is_empty());
     match request.action {
         CompanionV1ControlAction::MeetingStart => {
-            return Ok((snapshot.connected && !has_audio_path).then(|| DeviceControlTarget {
+            return Ok((snapshot.connected && !has_audio_path && request.recording_source.as_deref() != Some("hostMeeting")).then(|| DeviceControlTarget {
                 device_id: request.device_id.clone().or_else(|| snapshot.device.device_id.clone()),
                 recording_id: None,
             }));

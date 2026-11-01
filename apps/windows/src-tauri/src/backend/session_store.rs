@@ -215,7 +215,7 @@ fn save_locked(
 /// action began. Reclaimed status may change during cleanup; ownership and
 /// contents must not be substituted by a later write.
 pub(crate) fn privacy_authorization(row: &CompanionV1HostSession) -> Result<(String, String), String> {
-    let value=serde_json::json!({
+    let mut value=serde_json::json!({
         "audioStored":row.audio_stored,"audioCached":row.retention.audio_cached,
         "audioPath":row.audio_path,"audioBytes":row.audio_bytes,"chunks":row.chunks,
         "deviceKey":row.device_recording_key,"deviceLength":row.device_total_length,
@@ -223,6 +223,11 @@ pub(crate) fn privacy_authorization(row: &CompanionV1HostSession) -> Result<(Str
         "liveTranscript":row.live_transcript_text,"notes":row.meeting_notes,
         "minutes":row.minutes,"minutesByMode":row.minutes_by_mode,"organization":row.organization
     });
+    // Preserve the historical authorization digest for ordinary sessions.
+    if let Some(tracks) = &row.meeting_tracks {
+        value.as_object_mut().unwrap().insert("meetingTracks".into(),
+            serde_json::to_value(tracks).map_err(|e| format!("核对录音音轨失败：{e}"))?);
+    }
     let bytes=serde_json::to_vec(&value).map_err(|e|format!("核对录音清理身份失败：{e}"))?;
     Ok((row.id.clone(),format!("{:x}",Sha256::digest(bytes))))
 }
@@ -250,6 +255,16 @@ pub(crate) fn save_snapshot_checked(path: &Path, sessions: &[CompanionV1HostSess
                     || (had_audio && old.audio_path.is_some() && next.audio_path.is_none());
                 if loses_audio && !allowed_audio_clear.contains(&privacy_authorization(old)?) {
                     return Err("这条录音的原音已在磁盘更新；未覆盖资料，请重新载入后重试。".into());
+                }
+                let loses_track_data = old.meeting_tracks.as_ref().is_some_and(|previous| {
+                    next.meeting_tracks.as_ref().is_none_or(|updated| {
+                        previous.root != updated.root
+                            || previous.microphone.iter().any(|part| !updated.microphone.contains(part))
+                            || previous.system.iter().any(|part| !updated.system.contains(part))
+                    })
+                });
+                if loses_track_data && !allowed_audio_clear.contains(&privacy_authorization(old)?) {
+                    return Err("磁盘中的会议音轨已更新；未覆盖原音，请重新载入后重试。".into());
                 }
                 // The receiver may publish another sealed raw segment without
                 // producing a final WAV. A stale same-row snapshot must not
@@ -343,6 +358,38 @@ pub(crate) fn restore_backup(path:&Path,rows:&[CompanionV1HostSession])->Result<
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn stale_snapshot_cannot_remove_or_substitute_meeting_tracks() {
+        use crate::companion_v1::{CompanionV1MeetingTrackPart, CompanionV1MeetingTracks};
+        let path = workspace();
+        let mut row = data("meeting-tracks").remove(0);
+        row.meeting_tracks = Some(CompanionV1MeetingTracks {
+            root: "owned-meeting".into(), state: "captured".into(),
+            microphone: vec![CompanionV1MeetingTrackPart { path: "mic-1.wav".into(), first_sample: 0, samples: 20 }],
+            system: vec![CompanionV1MeetingTrackPart { path: "system-1.wav".into(), first_sample: 0, samples: 20 }],
+            discontinuity: false, issue: None,
+        });
+        save(&path, &[row.clone()]).unwrap();
+        let before = fs::read(&path).unwrap();
+        let mut stale = row.clone(); stale.meeting_tracks = None;
+        assert!(save_snapshot_checked(&path, &[stale.clone()], &[], &[]).is_err());
+        let mut altered = row.clone(); altered.meeting_tracks.as_mut().unwrap().system[0].path = "other.wav".into();
+        assert!(save_snapshot_checked(&path, &[altered], &[], &[]).is_err());
+        assert_eq!(fs::read(&path).unwrap(), before);
+        save_snapshot_checked(&path, &[stale], &[], &[privacy_authorization(&row).unwrap()]).unwrap();
+        fs::remove_dir_all(path.parent().unwrap()).unwrap();
+    }
+
+    #[test]
+    fn old_sessions_deserialize_without_meeting_tracks() {
+        let row = data("legacy").remove(0);
+        let mut value = serde_json::to_value(&row).unwrap();
+        value.as_object_mut().unwrap().remove("meetingTracks");
+        let loaded: CompanionV1HostSession = serde_json::from_value(value).unwrap();
+        assert!(loaded.meeting_tracks.is_none());
+        assert_eq!(privacy_authorization(&row).unwrap(), privacy_authorization(&loaded).unwrap());
+    }
 
     #[test]
     fn stale_snapshot_preserves_same_recording_new_audio() {

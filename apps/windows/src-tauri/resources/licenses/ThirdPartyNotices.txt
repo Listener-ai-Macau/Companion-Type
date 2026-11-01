@@ -206,6 +206,7 @@ Role: active Windows normal dependency input; final linker may remove unused sym
 Declared license: Apache-2.0
 Source: https://crates.io/api/v1/crates/cpal/0.15.3/download
   LICENSE -> TEXT c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4; exact checksum-verified crate
+Local modification: the compiled cpal 0.15.3 source preserves WASAPI packet flags and supplies aligned silence for silent capture packets; see third_party/denzic-platform/third_party/cpal/COMPANION_PATCH.md at platform revision 6f30ab5888e3f603084d71359f3099ab5b8f66fc. The upstream archive is the unmodified basis, not the exact compiled source.
 
 cpufeatures 0.2.17
 Role: active Windows normal dependency input; final linker may remove unused symbols

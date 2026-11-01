@@ -53,12 +53,18 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
     for row in &rows {
         if !row.audio_stored && row.device_recording_id.is_some() && !row.device_reclaimed {return Err(format!("“{}”的录音还在设备中，请先同步再备份。",row.title));}
         if row.audio_stored && !row.retention.audio_cached{return Err(format!("“{}”的录音状态未完成，请先恢复。",row.title));}
-        for raw in row.audio_path.iter().chain(row.chunks.iter().filter_map(|c|c.path.as_ref())) {
+        for raw in row.audio_path.iter().chain(row.chunks.iter().filter_map(|c|c.path.as_ref()))
+            .chain(row.meeting_tracks.iter().flat_map(|tracks| tracks.microphone.iter().chain(&tracks.system).map(|part| &part.path))) {
             if virtual_path(raw){if row.audio_stored{return Err("录音尚未保存到电脑，请先同步。".into());}continue;}
             leaf(raw,root)?;anchors.push(raw.clone());
         }
-        if row.audio_stored && row.audio_path.is_none(){return Err("录音文件缺失，请先恢复。".into());}
-        if row.audio_stored {
+        if let Some(tracks)=&row.meeting_tracks {
+            if row.source!="hostMeeting" {return Err("会议音轨来源无效，请先恢复。".into());}
+            if !row.audio_stored {return Err(format!("“{}”的会议音轨尚未恢复，请先恢复后备份。",row.title));}
+            leaf(&tracks.root,root)?;
+            if row.audio_stored {super::meeting_audio_recovery::verify_tracks(tracks,row.audio_bytes,row.duration_ms)?;}
+        } else if row.source=="hostMeeting" && row.audio_stored {return Err("会议音轨缺失，请先恢复。".into());}
+        if row.audio_stored && row.source!="hostMeeting" {
             let path=row.audio_path.as_deref().ok_or("录音文件缺失，请先恢复。")?;
             super::meeting_workspace::validate_wav(Path::new(path)).map_err(|_|format!("“{}”的回听音频不完整，请先恢复后备份。",row.title))?;
         }
@@ -82,6 +88,10 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
         for path in row.audio_path.iter_mut().chain(row.chunks.iter_mut().filter_map(|c|c.path.as_mut())){
             if !virtual_path(path){*path=leaf(path,root)?;}
         }
+        if let Some(tracks)=&mut row.meeting_tracks {
+            tracks.root=leaf(&tracks.root,root)?;
+            for part in tracks.microphone.iter_mut().chain(&mut tracks.system) {part.path=leaf(&part.path,root)?;}
+        }
     }
     Ok((rows,files))
 }
@@ -102,7 +112,8 @@ pub fn save(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent:&Path)->Re
                 .map_err(|_|format!("“{}”的录音分段不完整，请先恢复或同步后备份。",row.title))?;
         }
     }
-    let mut paths=snapshot.host.sessions.iter().flat_map(|s|s.audio_path.iter().chain(s.chunks.iter().filter_map(|c|c.path.as_ref())))
+    let mut paths=snapshot.host.sessions.iter().flat_map(|s|s.audio_path.iter().chain(s.chunks.iter().filter_map(|c|c.path.as_ref()))
+        .chain(s.meeting_tracks.iter().flat_map(|tracks|tracks.microphone.iter().chain(&tracks.system).map(|part|&part.path))))
         .filter(|p|!virtual_path(p)).cloned().collect::<Vec<_>>();
     paths.sort();paths.dedup();
     let _usage=paths.iter().map(|p|audio_artifacts::usage(Path::new(p))).collect::<Result<Vec<_>,_>>()?;
@@ -153,10 +164,18 @@ fn read_manifest(path:&Path)->Result<Manifest,String>{
     let mut ids=HashSet::new();
     for row in &manifest.sessions {
         if row.id.trim().is_empty()||!ids.insert(&row.id)||row.status=="recording" {return Err("备份的会议身份或状态无效。".into());}
-        for p in row.audio_path.iter().chain(row.chunks.iter().filter_map(|c|c.path.as_ref())) {
+        for p in row.audio_path.iter().chain(row.chunks.iter().filter_map(|c|c.path.as_ref()))
+            .chain(row.meeting_tracks.iter().flat_map(|tracks|tracks.microphone.iter().chain(&tracks.system).map(|part|&part.path))) {
             if !virtual_path(p)&&(!valid_leaf(p)||!names.contains(&p.to_lowercase())) {return Err("备份缺少会议所需的录音文件。".into());}
         }
-        if row.audio_stored&&row.audio_path.as_deref().is_none_or(virtual_path){return Err("备份缺少会议录音。".into());}
+        if let Some(tracks)=&row.meeting_tracks {
+            if row.source!="hostMeeting" || !valid_leaf(&tracks.root)
+                || tracks.microphone.iter().chain(&tracks.system).any(|part|virtual_path(&part.path))
+                || row.audio_stored && tracks.microphone.is_empty() && tracks.system.is_empty() {
+                return Err("备份的会议音轨无效。".into());
+            }
+        } else if row.audio_stored && row.source=="hostMeeting" {return Err("备份缺少会议音轨。".into());}
+        if row.audio_stored&&row.source!="hostMeeting"&&row.audio_path.as_deref().is_none_or(virtual_path){return Err("备份缺少会议录音。".into());}
     }
     Ok(manifest)
 }
@@ -212,6 +231,11 @@ pub(crate) fn restore_files(archive:&Path,root:&Path)->Result<Vec<CompanionV1Hos
         for path in row.audio_path.iter_mut().chain(row.chunks.iter_mut().filter_map(|c|c.path.as_mut())) {
             if !virtual_path(path){*path=root.join(&*path).to_string_lossy().into_owned();}
         }
+        if let Some(tracks)=&mut row.meeting_tracks {
+            tracks.root=root.join(&tracks.root).to_string_lossy().into_owned();
+            for part in tracks.microphone.iter_mut().chain(&mut tracks.system) {part.path=root.join(&part.path).to_string_lossy().into_owned();}
+            if row.audio_stored {super::meeting_audio_recovery::verify_tracks(tracks,row.audio_bytes,row.duration_ms)?;}
+        }
         // Restoring a backup never grants new background processing consent.
         row.recovery=Default::default();row.processing_policy=crate::companion_v1::CompanionV1ProcessingPolicy::Manual;
     }
@@ -225,6 +249,45 @@ pub(crate) fn restore_index(index:&Path,rows:&[CompanionV1HostSession])->Result<
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn dual_track_meeting_backup_restores_both_sources_and_can_be_backed_up_again() {
+        use crate::companion_v1::{CompanionV1MeetingTrackPart,CompanionV1MeetingTracks};
+        use super::super::meeting_audio_tracks::TrackWriter;
+        let base=std::env::temp_dir().join(format!("companion-two-track-backup-{}",uuid::Uuid::new_v4()));
+        let source=base.join("source");let target=base.join("target");let backups=base.join("backups");
+        for p in [&source,&target,&backups] {fs::create_dir_all(p).unwrap();}
+        let source=source.canonicalize().unwrap();let target=target.canonicalize().unwrap();
+        unsafe{std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&source)};
+        let mut mic=TrackWriter::create_flat(&source,"meeting-mic",2).unwrap();mic.append(&[1,2,3]).unwrap();
+        let mut system=TrackWriter::create_flat(&source,"meeting-system",2).unwrap();system.append(&[4,5,6]).unwrap();
+        let convert=|parts:Vec<super::super::meeting_audio_tracks::TrackPart>|parts.into_iter().map(|p| CompanionV1MeetingTrackPart {
+            path:p.path.to_string_lossy().into_owned(),first_sample:p.first_sample,samples:p.samples }).collect::<Vec<_>>();
+        let microphone=convert(mic.finish().unwrap());let system=convert(system.finish().unwrap());
+        let bytes=microphone.iter().chain(&system).map(|p|44+p.samples*2).sum();
+        let mut snapshot=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap()).unwrap();
+        snapshot.host.persistence.status="ready".into();snapshot.meeting.active=false;snapshot.device.recording=false;
+        let row=&mut snapshot.host.sessions[0];row.id="two-track-backup".into();row.source="hostMeeting".into();row.status="captured".into();
+        row.audio_path=None;row.chunks.clear();row.audio_stored=true;row.retention.audio_cached=true;row.audio_bytes=bytes;row.duration_ms=0;
+        row.meeting_tracks=Some(CompanionV1MeetingTracks {root:source.join("meeting").to_string_lossy().into_owned(),state:"captured".into(),microphone,system,discontinuity:true,issue:Some("采集时序提示".into())});
+        let mix=base.join("meeting-mix.wav");
+        assert_eq!(super::super::audio_export::export(&snapshot,"two-track-backup",&mix).unwrap(),50);
+        let mixed=fs::read(&mix).unwrap();assert_eq!(&mixed[44..],&[2,0,3,0,4,0]);
+        let original_path=PathBuf::from(snapshot.host.sessions[0].meeting_tracks.as_ref().unwrap().microphone[0].path.clone());
+        let original=fs::read(&original_path).unwrap();
+        assert!(super::super::audio_export::export(&snapshot,"two-track-backup",&original_path).is_err());assert_eq!(fs::read(original_path).unwrap(),original);
+        let report=save(&snapshot,&source,&backups).unwrap();assert_eq!(report.files,4);
+        let saved=read_manifest(&Path::new(&report.path).join("manifest.json")).unwrap();
+        assert_eq!(saved.sessions[0].meeting_tracks.as_ref().unwrap().root,"meeting");
+        unsafe{std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&target)};
+        let rows=restore_files(Path::new(&report.path),&target).unwrap();let row=&rows[0];let tracks=row.meeting_tracks.as_ref().unwrap();
+        assert_eq!(tracks.microphone.len(),2);assert_eq!(tracks.system.len(),2);assert!(tracks.root.starts_with(target.to_str().unwrap()));
+        assert_eq!(tracks.issue.as_deref(),Some("采集时序提示"));
+        super::super::meeting_audio_recovery::verify_tracks(tracks,row.audio_bytes,row.duration_ms).unwrap();
+        let mut restored=snapshot.clone();restored.host.sessions=rows;
+        assert_eq!(save(&restored,&target,&backups).unwrap().files,4);
+        unsafe{std::env::remove_var("COMPANION_TYPE_RECORDING_DIR")};fs::remove_dir_all(base).unwrap();
+    }
     #[test]
     fn recovered_interrupted_meeting_can_be_backed_up_and_restored() {
         let base=std::env::temp_dir().join(format!("companion-recovered-backup-{}",uuid::Uuid::new_v4()));

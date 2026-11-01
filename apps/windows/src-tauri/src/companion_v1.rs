@@ -343,6 +343,10 @@ pub struct CompanionV1HostSession {
     pub audio_bytes: u64,
     #[serde(default)]
     pub audio_stored: bool,
+    /// Optional separate computer and microphone sources for an online meeting.
+    /// Existing sessions have no such field and retain their original behavior.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub meeting_tracks: Option<CompanionV1MeetingTracks>,
     /// Stable durable-board identity. None for host/imported sessions.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub device_recording_id: Option<u32>,
@@ -422,6 +426,27 @@ pub struct CompanionV1HostSession {
     pub calendar_slot_copies: Vec<crate::backend::calendar_copy::SlotCopy>,
     pub exported_at: Option<String>,
     pub retention: CompanionV1SessionRetention,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MeetingTrackPart {
+    pub path: String,
+    pub first_sample: u64,
+    pub samples: u64,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MeetingTracks {
+    pub root: String,
+    pub state: String,
+    pub microphone: Vec<CompanionV1MeetingTrackPart>,
+    pub system: Vec<CompanionV1MeetingTrackPart>,
+    #[serde(default)]
+    pub discontinuity: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub issue: Option<String>,
 }
 
 pub const CAPTURE_ONLY_PROMPT: &str = "__companion_capture_only__";
@@ -689,6 +714,10 @@ pub enum CompanionV1ControlAction {
 #[serde(rename_all = "camelCase")]
 pub struct CompanionV1ControlRequest {
     pub action: CompanionV1ControlAction,
+    /// An explicit computer-and-microphone source; omitted preserves the
+    /// existing device/microphone source selection.
+    #[serde(default)]
+    pub recording_source: Option<String>,
     /// Explicit one-time inclusion of this exact saved note revision; never recovery consent.
     #[serde(default)]
     pub context_note_revision: Option<u64>,
@@ -1236,7 +1265,7 @@ pub(crate) fn apply_control_at(
             let duration_ms = request.duration_ms.unwrap_or(15_000);
             let mut session = create_host_session(
                 &snapshot,
-                &CompanionV1ControlRequest {
+                &CompanionV1ControlRequest { recording_source: None,
                     action: CompanionV1ControlAction::MeetingStart,
                     context_note_revision: None, ble_name: None,
                     session_id: request.session_id.clone(),
@@ -1327,6 +1356,7 @@ pub(crate) fn apply_control_at(
             snapshot.host.sessions[index].audio_path = None;
             snapshot.host.sessions[index].audio_bytes = 0;
             snapshot.host.sessions[index].audio_stored = false;
+            snapshot.host.sessions[index].meeting_tracks = None;
             snapshot.host.sessions[index].chunks = snapshot.host.sessions[index]
                 .chunks
                 .iter()
@@ -1582,7 +1612,7 @@ pub(crate) fn create_host_session(
     let processing_policy=if request.prompt_id.as_deref()==Some(CAPTURE_ONLY_PROMPT) {
         CompanionV1ProcessingPolicy::Manual
     } else {CompanionV1ProcessingPolicy::Automatic};
-    CompanionV1HostSession {
+    CompanionV1HostSession { meeting_tracks: None,
         note_revision: 0, meeting_notes: vec![],
         bookmark_revision: 0,
         bookmarks: vec![],
@@ -1661,7 +1691,7 @@ pub(crate) fn synced_device_session(
         .unwrap_or_else(|| "device://companion/flash/latest.wav".to_string());
     let mut session = create_host_session(
         snapshot,
-        &CompanionV1ControlRequest {
+        &CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::MeetingStart,
             context_note_revision: None, ble_name: None,
             session_id: request.session_id.clone(),
@@ -2353,7 +2383,7 @@ mod tests {
     fn local_stage_does_not_claim_a_device_write_and_apply_accepts_direct_name() {
         let snapshot = apply_fixture_control(
             fixture_snapshot(),
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::StageBleName,
                 context_note_revision: None, ble_name: Some("companion-v1".to_string()),
                 session_id: None,
@@ -2375,7 +2405,7 @@ mod tests {
         );
         let applied = apply_fixture_control(
             snapshot,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::ApplyBleName,
                 context_note_revision: None, ble_name: Some("Companion Two".to_string()),
                 session_id: None,
@@ -2401,7 +2431,7 @@ mod tests {
     fn meeting_finalize_is_separate_state() {
         let snapshot = apply_fixture_control(
             fixture_snapshot(),
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingFinalize,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("meeting-1".to_string()),
@@ -2442,7 +2472,7 @@ mod tests {
         ] {
             let result = apply_fixture_control(
                 fixture_snapshot(),
-                CompanionV1ControlRequest {
+                CompanionV1ControlRequest { recording_source: None,
                     action,
                     context_note_revision: None, ble_name: None,
                     session_id: None,
@@ -2471,7 +2501,7 @@ mod tests {
         snapshot.speaker.muted = false;
         let updated = apply_fixture_control(
             snapshot,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::SpeakerPrompt,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -2496,7 +2526,7 @@ mod tests {
         let initial = fixture_snapshot();
         let started = apply_fixture_control(
             initial,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStart,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -2513,7 +2543,7 @@ mod tests {
         .unwrap();
         let stopped = apply_fixture_control(
             started,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingStop,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -2551,7 +2581,7 @@ mod tests {
             .all(|chunk| chunk.bytes < COMPANION_V1_ASR_UPLOAD_MAX_BYTES));
         let transcribed = apply_fixture_control(
             stopped,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingImportTranscript,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -2568,7 +2598,7 @@ mod tests {
         .unwrap();
         let generated = apply_fixture_control(
             transcribed,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingGenerateMinutes,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -2585,7 +2615,7 @@ mod tests {
         .unwrap();
         let exported = apply_fixture_control(
             generated,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingExportMarkdown,
                 context_note_revision: None, ble_name: None,
                 session_id: None,
@@ -2611,7 +2641,7 @@ mod tests {
     #[test]
     fn recovery_privacy_erasure_revokes_intent_and_clears_transcript_proof() {
         let mut snapshot = fixture_snapshot();
-        let sync_request = CompanionV1ControlRequest {
+        let sync_request = CompanionV1ControlRequest { recording_source: None,
             action: CompanionV1ControlAction::DeviceSyncRecordings,
             context_note_revision: None, ble_name: None,
             session_id: Some("privacy-session".to_string()),
@@ -2640,7 +2670,7 @@ mod tests {
 
         let erased_text = apply_fixture_control(
             snapshot,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::PrivacyEraseTranscript,
                 session_id: Some("privacy-session".to_string()),
                 context_note_revision: None, ble_name: None,
@@ -2667,9 +2697,13 @@ mod tests {
             CompanionV1MeetingRecovery::armed("offlineStore");
         audio_snapshot.host.sessions[0].pending_reason =
             Some("recovery_processing".to_string());
+        audio_snapshot.host.sessions[0].meeting_tracks = Some(CompanionV1MeetingTracks {
+            root: "meeting-root".into(), state: "recording".into(), microphone: vec![], system: vec![],
+            discontinuity: false, issue: None,
+        });
         let erased_audio = apply_fixture_control(
             audio_snapshot,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::PrivacyEraseAudio,
                 session_id: Some("privacy-session".to_string()),
                 context_note_revision: None, ble_name: None,
@@ -2688,6 +2722,7 @@ mod tests {
         assert_eq!(session.recovery, CompanionV1MeetingRecovery::default());
         assert!(session.pending_reason.is_none());
         assert!(session.audio_path.is_none());
+        assert!(session.meeting_tracks.is_none());
         assert_eq!(session.audio_bytes, 0);
     }
 
@@ -2695,7 +2730,7 @@ mod tests {
     fn legacy_export_never_generates_missing_minutes_or_fake_srt() {
         let mut snapshot = apply_fixture_control(
             fixture_snapshot(),
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingLoadDemo,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("export-existing-only".to_string()),
@@ -2716,7 +2751,7 @@ mod tests {
         missing.host.sessions[0].minutes_by_mode = Default::default();
         assert!(apply_fixture_control(
             missing,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingExportMarkdown,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("export-existing-only".to_string()),
@@ -2734,7 +2769,7 @@ mod tests {
         .contains("completed minutes"));
         assert!(apply_fixture_control(
             snapshot,
-            CompanionV1ControlRequest {
+            CompanionV1ControlRequest { recording_source: None,
                 action: CompanionV1ControlAction::MeetingExportSrt,
                 context_note_revision: None, ble_name: None,
                 session_id: Some("export-existing-only".to_string()),

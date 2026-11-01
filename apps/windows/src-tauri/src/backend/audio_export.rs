@@ -6,11 +6,12 @@ use sha2::{Digest, Sha256};
 use crate::companion_v1::CompanionV1Snapshot;
 
 #[derive(Debug,Clone,PartialEq,Eq)]
-pub enum AudioSource { Single(PathBuf), Parts(Vec<(PathBuf,u64)>) }
+pub enum AudioSource { Single(PathBuf), Parts(Vec<(PathBuf,u64)>), Meeting { tracks: crate::companion_v1::CompanionV1MeetingTracks, bytes:u64, duration_ms:u64 } }
 impl AudioSource {
     fn data_bytes(&self)->Result<u64,String> {
         match self { Self::Single(_)=>Ok(0), Self::Parts(parts)=>parts.iter().try_fold(0u64,|sum,(_,samples)|
-            sum.checked_add(samples.checked_mul(2).ok_or("录音容量无效。")?).ok_or_else(||"录音容量无效。".into())) }
+            sum.checked_add(samples.checked_mul(2).ok_or("录音容量无效。")?).ok_or_else(||"录音容量无效。".into())),
+            Self::Meeting{tracks,..} => [&tracks.microphone,&tracks.system].into_iter().map(|parts|parts.iter().fold(0u64,|sum,p|sum.saturating_add(p.samples))).max().unwrap_or(0).checked_mul(2).ok_or_else(||"录音容量无效。".into()) }
     }
     pub fn extension(&self)->Result<&'static str,String> {
         Ok(if self.data_bytes()? > u64::from(u32::MAX-36) {"zip"} else {"wav"})
@@ -18,9 +19,16 @@ impl AudioSource {
 }
 
 pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(AudioSource, String), String> {
-    let path = super::meeting_workspace::local_audio_path(snapshot, session_id)?;
     let session = snapshot.host.sessions.iter().find(|s| s.id == session_id).ok_or("这场会议已不存在")?;
     let title = super::export::safe_file_stem(&session.title, session_id);
+    if session.source=="hostMeeting" {
+        super::meeting_workspace::local_meeting_audio_tracks(snapshot, session_id)?;
+        let tracks=session.meeting_tracks.clone().ok_or("会议音轨缺失。")?;
+        let audio=AudioSource::Meeting{tracks,bytes:session.audio_bytes,duration_ms:session.duration_ms};
+        let extension=audio.extension()?;
+        return Ok((audio,format!("{title}-meeting.{extension}")));
+    }
+    let path = super::meeting_workspace::local_audio_path(snapshot, session_id)?;
     let audio=if let Some(parts)=super::host_segmented_capture::saved_parts(session)? {
         if parts[0].0!=path {return Err("这场录音的分段尚未完整，未导出。".into());}
         AudioSource::Parts(parts)
@@ -41,7 +49,8 @@ pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Pa
     // this or another retained recording in the current library.
     if let Ok(target) = destination.canonicalize() {
         for session in &snapshot.host.sessions {
-            for raw in session.audio_path.iter().chain(session.chunks.iter().filter_map(|c| c.path.as_ref())) {
+            for raw in session.audio_path.iter().chain(session.chunks.iter().filter_map(|c| c.path.as_ref()))
+                .chain(session.meeting_tracks.iter().flat_map(|t|t.microphone.iter().chain(&t.system).map(|p|&p.path))) {
                 if Path::new(raw).canonicalize().is_ok_and(|p| p == target) {
                     return Err("请选择新的文件位置，不能覆盖会议库中的原始录音。".into());
                 }
@@ -53,7 +62,52 @@ pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Pa
 
 pub fn copy_source_atomic(source:&AudioSource,destination:&Path)->Result<u64,String> {
     match source { AudioSource::Single(path)=>copy_atomic(path,destination),
-        AudioSource::Parts(parts)=>copy_parts_atomic(parts,destination) }
+        AudioSource::Parts(parts)=>copy_parts_atomic(parts,destination),
+        AudioSource::Meeting{tracks,bytes,duration_ms}=>copy_meeting_atomic(tracks,*bytes,*duration_ms,destination) }
+}
+
+fn copy_meeting_atomic(tracks:&crate::companion_v1::CompanionV1MeetingTracks, bytes:u64, duration_ms:u64, destination:&Path)->Result<u64,String> {
+    let all=tracks.microphone.iter().chain(&tracks.system).collect::<Vec<_>>();
+    let _leases=all.iter().map(|part|super::audio_artifacts::usage(Path::new(&part.path))).collect::<Result<Vec<_>,_>>()?;
+    super::meeting_audio_recovery::verify_tracks(tracks,bytes,duration_ms)?;
+    if let Ok(target)=destination.canonicalize() {
+        if all.iter().any(|part|Path::new(&part.path).canonicalize().is_ok_and(|path|path==target)) {
+            return Err("不能用导出覆盖原音，请另选位置。".into());
+        }
+    }
+    let parent=destination.parent().filter(|p|!p.as_os_str().is_empty()).ok_or("请选择完整的保存路径")?;
+    fs::create_dir_all(parent).map_err(|e|format!("无法创建保存目录：{e}"))?;
+    let temporary=parent.join(format!(".companion-meeting-audio-{}.tmp",uuid::Uuid::new_v4()));
+    let result=(||{
+        let source=AudioSource::Meeting{tracks:tracks.clone(),bytes,duration_ms};
+        let file=OpenOptions::new().write(true).create_new(true).open(&temporary).map_err(|e|e.to_string())?;
+        let file=if source.extension()?=="zip" {
+            let mut archive=zip::ZipWriter::new(file);
+            for (label,parts) in [("microphone",&tracks.microphone),("computer",&tracks.system)] {
+                for (index,part) in parts.iter().enumerate() {
+                    archive.start_file(format!("{label}-{:05}.wav",index+1),zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored).large_file(true)).map_err(|e|e.to_string())?;
+                    let mut input=File::open(&part.path).map_err(|e|e.to_string())?;
+                    std::io::copy(&mut input,&mut archive).map_err(|e|e.to_string())?;
+                }
+            }
+            archive.finish().map_err(|e|e.to_string())?
+        } else {
+            let mut output=file;let size=u32::try_from(source.data_bytes()?).map_err(|_|"录音容量超出WAV格式。")?;
+            output.write_all(&denzic_host_audio_v1_core::wav::wav_header(size)).map_err(|e|e.to_string())?;
+            let samples=super::meeting_audio_mix::mix(&tracks.microphone,&tracks.system,|values|{
+                let mut block=Vec::with_capacity(values.len()*2);for sample in values {block.extend_from_slice(&sample.to_le_bytes());}
+                output.write_all(&block).map_err(|e|e.to_string())
+            })?;
+            if samples.checked_mul(2)!=Some(u64::from(size)) {return Err("会议音轨长度已变化。".into());}
+            output
+        };
+        file.sync_all().map_err(|e|e.to_string())?;drop(file);
+        super::meeting_audio_recovery::verify_tracks(tracks,bytes,duration_ms)?;
+        if source.extension()?=="wav" {super::meeting_workspace::validate_wav(&temporary)?;}
+        let length=fs::metadata(&temporary).map_err(|e|e.to_string())?.len();
+        super::export::replace_file(&temporary,destination)?;Ok(length)
+    })();
+    if result.is_err(){let _=fs::remove_file(&temporary);}result
 }
 
 fn copy_parts_atomic(parts:&[(PathBuf,u64)],destination:&Path)->Result<u64,String> {

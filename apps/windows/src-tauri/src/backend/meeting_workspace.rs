@@ -181,6 +181,64 @@ pub fn local_audio_path(snapshot: &CompanionV1Snapshot, session_id: &str) -> Res
     Ok(path)
 }
 
+/// Authorized, time-aligned source files for direct two-track playback. The
+/// browser receives only the paths belonging to this saved session; it does
+/// not create another full-size recording on disk.
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PreparedMeetingAudioPart {
+    pub path: String,
+    pub first_sample: u64,
+    pub samples: u64,
+}
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PreparedMeetingAudioTracks {
+    pub session_id: String,
+    pub source_identity: String,
+    pub microphone: Vec<PreparedMeetingAudioPart>,
+    pub system: Vec<PreparedMeetingAudioPart>,
+}
+
+pub fn local_meeting_audio_tracks(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<PreparedMeetingAudioTracks, String> {
+    if snapshot.meeting.active || snapshot.device.recording || snapshot.host.sessions.iter().any(|s| s.status == "recording") {
+        return Err("录音期间暂不回放，避免把扬声器声音再次录入。".into());
+    }
+    let session = snapshot.host.sessions.iter().find(|s| s.id == session_id).ok_or("找不到这场会议")?;
+    super::library_lifecycle::require_available(session)?;
+    if session.source != "hostMeeting" || !session.audio_stored || !session.retention.audio_cached {
+        return Err("这场会议的双音轨尚未保存在电脑。".into());
+    }
+    let tracks = session.meeting_tracks.as_ref().ok_or("这场会议没有保存双音轨。")?;
+    let mut leases = Vec::new();
+    for part in tracks.microphone.iter().chain(&tracks.system) {
+        if let Some(lease) = super::audio_artifacts::usage(Path::new(&part.path))? { leases.push(lease); }
+    }
+    super::meeting_audio_recovery::verify_tracks(tracks, session.audio_bytes, session.duration_ms)?;
+    let mut hash = Sha256::new();
+    hash.update(b"Companion playback meeting tracks v1\0");
+    hash.update((session_id.len() as u64).to_le_bytes()); hash.update(session_id.as_bytes());
+    let mut collect = |source: u8, parts: &[crate::companion_v1::CompanionV1MeetingTrackPart]| -> Result<Vec<PreparedMeetingAudioPart>, String> {
+        hash.update([source]); hash.update((parts.len() as u64).to_le_bytes());
+        let mut result = Vec::with_capacity(parts.len());
+        for part in parts {
+            let path = Path::new(&part.path).canonicalize().map_err(|_| "会议音轨已移动或删除。")?;
+            if path.to_string_lossy().to_ascii_lowercase().starts_with("\\\\?\\unc\\") {
+                return Err("回听仅支持这场会议的本机录音文件。".into());
+            }
+            let (bytes, digest) = super::audio_storage::fingerprint(&path)?;
+            hash.update(part.first_sample.to_le_bytes()); hash.update(part.samples.to_le_bytes());
+            hash.update(bytes.to_le_bytes()); hash.update(digest.as_bytes());
+            result.push(PreparedMeetingAudioPart { path: path.to_string_lossy().into_owned(),
+                first_sample: part.first_sample, samples: part.samples });
+        }
+        Ok(result)
+    };
+    let microphone = collect(0, &tracks.microphone)?;
+    let system = collect(1, &tracks.system)?;
+    Ok(PreparedMeetingAudioTracks { session_id: session_id.to_owned(), source_identity: format!("{:x}", hash.finalize()), microphone, system })
+}
+
 /// A renderer may remember this opaque original identity, never a path or
 /// caller-provided digest. Same bytes at a new path retain progress; another
 /// session or a replaced same-length WAV never inherits it.
@@ -210,6 +268,36 @@ mod tests {
     use super::*;
     use crate::companion_v1::{apply_fixture_control, fixture_snapshot};
     use super::super::{export::{prepare_meeting_export, MeetingExportFormat}, persistence};
+
+    #[test]
+    #[ignore = "changes recording-directory environment; run in isolation"]
+    fn saved_meeting_tracks_prepare_without_copy_and_detect_changed_source() {
+        use crate::companion_v1::{CompanionV1MeetingTrackPart, CompanionV1MeetingTracks};
+        use super::super::meeting_audio_tracks::TrackWriter;
+        let root = std::env::temp_dir().join(format!("meeting-playback-source-{}", uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap(); std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let mut mic = TrackWriter::create_flat(&root, "source-mic", 2).unwrap(); mic.append(&[1,2,3]).unwrap();
+        let mut system = TrackWriter::create_flat(&root, "source-system", 2).unwrap(); system.append(&[4,5,6]).unwrap();
+        let convert = |parts: Vec<super::super::meeting_audio_tracks::TrackPart>| parts.into_iter().map(|part| CompanionV1MeetingTrackPart {
+            path: part.path.to_string_lossy().into_owned(), first_sample: part.first_sample, samples: part.samples }).collect::<Vec<_>>();
+        let microphone = convert(mic.finish().unwrap()); let system = convert(system.finish().unwrap());
+        let bytes = microphone.iter().chain(&system).map(|part| 44 + part.samples * 2).sum();
+        let request = serde_json::from_value(serde_json::json!({"action":"meetingLoadDemo"})).unwrap();
+        let mut snapshot = apply_fixture_control(fixture_snapshot(), request).unwrap();
+        let session = &mut snapshot.host.sessions[0]; session.id = "meeting-playback".into();
+        session.source = "hostMeeting".into(); session.status = "captured".into(); session.audio_stored = true;
+        session.retention.audio_cached = true; session.audio_bytes = bytes; session.duration_ms = 0;
+        session.meeting_tracks = Some(CompanionV1MeetingTracks { root: root.join("source").to_string_lossy().into_owned(),
+            state: "captured".into(), microphone, system, discontinuity: false, issue: None });
+        let first = local_meeting_audio_tracks(&snapshot, "meeting-playback").unwrap();
+        let second = local_meeting_audio_tracks(&snapshot, "meeting-playback").unwrap();
+        assert_eq!(first.source_identity, second.source_identity);
+        assert_eq!((first.microphone.len(), first.system.len()), (2, 2));
+        assert_eq!(first.system[1].first_sample, 2);
+        std::fs::write(&first.system[0].path, b"replaced").unwrap();
+        assert!(local_meeting_audio_tracks(&snapshot, "meeting-playback").is_err());
+        std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); std::fs::remove_dir_all(root).unwrap();
+    }
 
     #[test]
     fn playback_identity_binds_actual_content_and_session_but_not_path() {

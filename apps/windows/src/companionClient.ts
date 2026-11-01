@@ -136,12 +136,16 @@ export async function exportCompanionMeeting(request: {
   return invoke('export_companion_meeting', { request });
 }
 
-export async function prepareCompanionAudio(sessionId: string): Promise<{sessionId: string; url: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null; parts: import('../../../packages/ui/src/recordingParts').RecordingPart[]}> {
+export async function prepareCompanionAudio(sessionId: string): Promise<{sessionId: string; url: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null; parts: import('../../../packages/ui/src/recordingParts').RecordingPart[]; meetingTracks?: import('../../../packages/ui/src/meetingTrackPlayback').MeetingPlaybackTracks}> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中回听这场会议的本机录音。浏览器演示没有原音。');
-  const prepared = await invoke<{path: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null; parts?: Array<{path:string;firstSample:number;samples:number}>}>('prepare_companion_audio_with_timeline', { sessionId });
+  type Part = {path:string;firstSample:number;samples:number};
+  const prepared = await invoke<{path: string; sourceIdentity: string; pauseTimeline: import('../../../packages/ui/src/CompanionAudioPlayer').CompanionPauseTimeline | null; parts?: Part[]; meetingTracks?: {sessionId:string;sourceIdentity:string;microphone:Part[];system:Part[]}}>('prepare_companion_audio_with_timeline', { sessionId });
   if (!/^[a-f0-9]{64}$/.test(prepared.sourceIdentity)) throw new Error('桌面端未能核对这份原音，请重新准备回听。');
+  const saved = prepared.meetingTracks;
+  if (saved && (saved.sessionId !== sessionId || saved.sourceIdentity !== prepared.sourceIdentity)) throw new Error('会议音轨已变化，请重新准备回听。');
+  const convert = (parts:Part[]) => parts.map(part => ({url:convertFileSrc(part.path),firstSample:part.firstSample,samples:part.samples}));
   return { sessionId, url: convertFileSrc(prepared.path), sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline,
-    parts: (prepared.parts ?? []).map(part => ({url: convertFileSrc(part.path), firstSample: part.firstSample, samples: part.samples})) };
+    parts: convert(prepared.parts ?? []), meetingTracks: saved ? {microphone:convert(saved.microphone),system:convert(saved.system)} : undefined };
 }
 
 export async function previewCompanionDiagnostics():Promise<unknown>{return invoke('preview_companion_diagnostics');}

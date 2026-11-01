@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import type {CompanionPauseTimeline} from './CompanionAudioPlayer';
 import type {RecordingPart} from './recordingParts';
-export interface PreparedListening {sessionId:string;url:string;sourceIdentity?:string;pauseTimeline?:CompanionPauseTimeline|null;parts?:RecordingPart[]}
+export interface PreparedListening {sessionId:string;url:string;sourceIdentity?:string;pauseTimeline?:CompanionPauseTimeline|null;parts?:RecordingPart[];meetingTracks?:import('./meetingTrackPlayback').MeetingPlaybackTracks}
 interface Row {id:string;title:string;identity:string;ready:boolean}
 interface Entry extends Row {sourceIdentity:string}
 interface Active {entry:Entry;from:string;token:number;phase:'selecting'|'preparing'|'playing'}

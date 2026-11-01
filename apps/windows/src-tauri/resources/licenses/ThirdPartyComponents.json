@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
-    "apps/windows/src-tauri/Cargo.lock": "4a30105712dd53f35f76ebb9d3ae50f50f59477cfbd98d3b307713bd4944e96c",
+    "apps/windows/src-tauri/Cargo.lock": "007cb8bc6fb1751112fdc05cb6f1c37304643ffdf7003cf87ea618917ee1eb0b",
     "package-lock.json": "e799241e1fb23138b1a7df7efdda4792dc08dc2c8928b2047d27cd1721c50a46"
   },
   "components": [
@@ -673,7 +673,7 @@
       "repository": "https://github.com/rustaudio/cpal",
       "crateSha256": "873dab07c8f743075e57f524c583985fbaf745602acbe916a01539364369a779",
       "ecosystem": "cargo",
-      "role": "active Windows normal dependency input; final linker may remove unused symbols",
+      "role": "active Windows dependency; locally modified 0.15.3 source preserves WASAPI packet flags and silent packets",
       "source": "https://crates.io/api/v1/crates/cpal/0.15.3/download",
       "texts": [
         {
@@ -682,7 +682,9 @@
           "file": "texts/c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4.txt",
           "origin": "exact checksum-verified crate"
         }
-      ]
+      ],
+      "modifiedSource": "third_party/denzic-platform/third_party/cpal at 6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+      "crateSha256Description": "SHA-256 of unmodified upstream archive used as the basis; the compiled local source is modified."
     },
     {
       "name": "cpufeatures",
@@ -7570,6 +7572,6 @@
       "license": null
     }
   ],
-  "platformSource": "d8cac4bf16dd30ed63fd67a7997a8832d85aed23",
+  "platformSource": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
   "licenseTextCount": 232
 }

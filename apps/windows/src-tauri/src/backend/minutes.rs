@@ -1189,7 +1189,7 @@ mod tests {
     use crate::companion_v1::CompanionV1SessionRetention;
 
     fn session_with_text(text: &str) -> CompanionV1HostSession {
-        CompanionV1HostSession { device_recording_end_reason: None, processing_policy: Default::default(), recorder_control: None, recorder_control_uncertain: false, device_recording_key: None, 
+        CompanionV1HostSession { meeting_tracks: None, device_recording_end_reason: None, processing_policy: Default::default(), recorder_control: None, recorder_control_uncertain: false, device_recording_key: None,
             transcript_review: None,
             bookmark_revision: 0, bookmarks: vec![], organization: Default::default(), device_bookmark_imports: vec![],
             note_revision: 0, meeting_notes: vec![],

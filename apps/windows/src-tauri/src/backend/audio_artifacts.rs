@@ -577,6 +577,100 @@ pub(super) fn interrupted_host_parts(pinned: &WriterLease, anchor: &Path) -> Res
     Ok(result)
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub(super) struct MeetingCapturePart {
+    pub(super) path: PathBuf,
+    pub(super) index: u64,
+    pub(super) sealed: bool,
+}
+
+/// Look up only files previously registered by this product for the exact
+/// session prefix. Never adopt a matching filename found by directory scan.
+#[allow(dead_code)]
+pub(super) fn meeting_capture_parts(anchor: &Path) -> Result<(Vec<MeetingCapturePart>, Vec<MeetingCapturePart>), String> {
+    meeting_capture_parts_inner(anchor, false)
+}
+
+/// Deletion also finds the original of a recovered copy and tolerates a prior
+/// interrupted deletion. It still uses only the recorded session prefix.
+pub(super) fn meeting_capture_parts_for_cleanup(anchor: &Path) -> Result<(Vec<MeetingCapturePart>, Vec<MeetingCapturePart>), String> {
+    meeting_capture_parts_inner(anchor, true)
+}
+
+fn meeting_capture_parts_inner(anchor: &Path, cleanup: bool) -> Result<(Vec<MeetingCapturePart>, Vec<MeetingCapturePart>), String> {
+    let root = managed_root(anchor).ok_or("会议录音位置不可确认，原音保留。")?;
+    let prefix = anchor.file_name().and_then(|s| s.to_str()).filter(|s| !s.is_empty() && s.len() <= 120
+        && s.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_'))
+        .ok_or("会议录音名称不可确认，原音保留。")?;
+    let _guard = lock(&root)?;
+    let data = load(&root)?;
+    let mut mic = Vec::new(); let mut system = Vec::new();
+    for item in &data.files {
+        let (source, suffix) = if let Some(rest) = item.file.strip_prefix(&format!("{prefix}-mic-")) {
+            (&mut mic, rest)
+        } else if let Some(rest) = item.file.strip_prefix(&format!("{prefix}-system-")) {
+            (&mut system, rest)
+        } else { continue; };
+        let Some(digits) = suffix.strip_suffix(".wav") else { continue; };
+        let Ok(index) = digits.parse::<u64>() else { continue; };
+        if digits != format!("{index:08}") { continue; }
+        let path = root.join(&item.file);
+        if cleanup && item.phase == Phase::Gone { continue; }
+        if item.purpose != Purpose::Recording || !item.sources.contains(&reference_key(&path)?)
+            || !(matches!(item.phase, Phase::Prepared | Phase::Interrupted | Phase::Sealed)
+                || cleanup && item.phase == Phase::Deleting) {
+            return Err("会议音轨归属或状态不可确认，原音保留。".into());
+        }
+        let actual = match fingerprint(&path)? {
+            Some(actual) => actual,
+            // A crash between the ownership checkpoint and file creation has
+            // no samples to restore. Later registered parts still trigger the
+            // continuity check; earlier complete parts remain recoverable.
+            None if item.phase == Phase::Prepared && item.identity.is_none() => continue,
+            None if cleanup && item.phase == Phase::Deleting => continue,
+            None => return Err("已登记的会议音轨缺失，原音保留。".into()),
+        };
+        if item.identity.as_ref().is_some_and(|expected| expected != &actual)
+            || (item.phase == Phase::Sealed && item.identity.as_ref() != Some(&actual)) {
+            return Err("会议音轨与保存记录不一致，原音保留。".into());
+        }
+        source.push(MeetingCapturePart { path, index, sealed: matches!(item.phase, Phase::Sealed | Phase::Deleting) });
+    }
+    for track in [&mut mic, &mut system] {
+        track.sort_by_key(|part| part.index);
+        if !cleanup && track.iter().enumerate().any(|(index, part)| part.index != index as u64) {
+            return Err("会议音轨缺少分段，原音保留。".into());
+        }
+    }
+    Ok((mic, system))
+}
+
+/// Make the recorded identity durable before the user deletes an interrupted
+/// part. The exclusive lease rejects an active writer; no bytes are changed.
+pub(super) fn checkpoint_interrupted_meeting_for_cleanup(path: &Path) -> Result<(), String> {
+    let pinned = interrupted_host_writer(path)?;
+    let actual = fingerprint(path)?.ok_or_else(fail)?;
+    let mut digest = [0u8; 32];
+    if actual.sha256.len() != 64 { return Err(fail()); }
+    for (index, byte) in digest.iter_mut().enumerate() {
+        *byte = u8::from_str_radix(&actual.sha256[index * 2..index * 2 + 2], 16).map_err(|_| fail())?;
+    }
+    checkpoint_interrupted_host(&pinned, path, actual.bytes, &digest)
+}
+
+pub(super) fn verify_sealed_meeting_part(path: &Path) -> Result<(), String> {
+    let root = managed_root(path).ok_or("会议音轨不在受管理目录。")?;
+    let _guard = lock(&root)?;
+    let data = load(&root)?;
+    let leaf = path.file_name().and_then(|s| s.to_str()).filter(|s| component(s)).ok_or_else(fail)?;
+    let item = data.files.iter().find(|item| item.file == leaf).ok_or_else(fail)?;
+    let actual = fingerprint(path)?.ok_or_else(fail)?;
+    if item.purpose != Purpose::Recording || item.phase != Phase::Sealed || item.identity.as_ref() != Some(&actual) {
+        return Err("会议音轨与保存记录不一致，原文件保留。".into());
+    }
+    Ok(())
+}
+
 /// Persist the verified raw original identity before producing a recovery
 /// copy, so explicit future privacy erasure can verify and remove the source.
 pub(crate) fn checkpoint_interrupted_host(pinned: &WriterLease, path: &Path, size: u64, digest: &[u8; 32]) -> Result<(), String> {
@@ -1129,3 +1223,36 @@ pub(crate) fn remove_temporary(path: &Path) -> Result<(), String> {
 
 mod probe;
 pub(crate) use probe::verify;
+
+#[cfg(test)]
+mod meeting_recovery_tests {
+    use super::*;
+
+    #[test]
+    #[ignore = "changes recording-directory environment; run in isolation"]
+    fn registered_meeting_parts_exclude_unknown_files_and_detect_changes() {
+        use crate::backend::meeting_audio_tracks::TrackWriter;
+        let root = std::env::temp_dir().join(format!("meeting-owned-parts-{}", uuid::Uuid::new_v4()));
+        fs::create_dir(&root).unwrap();
+        let old = std::env::var_os("COMPANION_TYPE_RECORDING_DIR");
+        std::env::set_var("COMPANION_TYPE_RECORDING_DIR", &root);
+        let anchor = root.join("meeting-unique");
+        let mut mic = TrackWriter::create_flat(&root, "meeting-unique-mic", 2).unwrap();
+        let mut system = TrackWriter::create_flat(&root, "meeting-unique-system", 2).unwrap();
+        mic.append(&[1,2,3]).unwrap(); system.append(&[4,5]).unwrap();
+        let a = mic.finish().unwrap(); let _ = system.finish().unwrap();
+        let unknown = root.join("meeting-unique-mic-00000003.wav"); fs::write(&unknown, b"unknown").unwrap();
+        let pending = root.join("meeting-unique-mic-00000002.wav");
+        let pending_lease = WriteLease::begin(&pending, &pending, Purpose::Recording).unwrap().unwrap();
+        let (found_mic, found_system) = meeting_capture_parts(&anchor).unwrap();
+        assert_eq!(found_mic.len(), 2); assert_eq!(found_system.len(), 1);
+        assert!(found_mic.iter().chain(&found_system).all(|p| p.sealed));
+        fs::write(&a[0].path, b"changed").unwrap();
+        assert!(meeting_capture_parts(&anchor).is_err());
+        assert_eq!(fs::read(&unknown).unwrap(), b"unknown");
+        drop(pending_lease);
+        if let Some(value) = old { std::env::set_var("COMPANION_TYPE_RECORDING_DIR", value); }
+        else { std::env::remove_var("COMPANION_TYPE_RECORDING_DIR"); }
+        fs::remove_dir_all(root).unwrap();
+    }
+}
