@@ -574,7 +574,9 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
                 if operation==12 && (!row.audio_stored || !row.retention.audio_cached
                     || row.status=="recording" || row.recorder_control_uncertain
                     || matches!(row.pending_reason.as_deref(),Some("needs_device_sync"|"needs_segments"|"needs_pull"))
-                    || !row.audio_path.as_deref().is_some_and(|path|Path::new(path).is_file())) {
+                    || if row.source == "hostMeeting" {
+                        backend::meeting_workspace::local_meeting_audio_tracks(&snapshot, &id).is_err()
+                    } else { !row.audio_path.as_deref().is_some_and(|path|Path::new(path).is_file()) }) {
                     return Err("本机原音尚未就绪；这次没有连接设备或提交转写。".into());
                 }
                 let action=if operation==12 {companion_v1::CompanionV1ControlAction::MeetingTranscribeAudio}
