@@ -208,7 +208,7 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
-  onAskMeetings?: (question:string,sessionIds:string[],jobId:string) => Promise<import('@companion-type/core').MeetingQaResult>;
+  onAskMeetings?: (question:string,sessionIds:string[],jobId:string,resume?:import('@companion-type/core').MeetingQaResumeRequest) => Promise<import('@companion-type/core').MeetingQaResult>;
   onCancelMeetingQuestion?: (jobId:string) => Promise<boolean>;
   onReadLicenses?: () => Promise<string>;
   settingsFooter?: ReactNode;
@@ -627,9 +627,21 @@ export function CompanionDashboard({
   const qaSelectedEligible=qaSelected.filter(id=>qaEligibleSessions.some(row=>row.id===id));
   const qaSessionsRef=useRef(allLibrarySessions);qaSessionsRef.current=allLibrarySessions;
   const qaIdentity=(ids:string[])=>JSON.stringify(ids.map(id=>{const row=allLibrarySessions.find(session=>session.id===id);
-    return row?[row.id,row.transcriptText,row.transcriptReview,row.utterances,row.organization?.trashedAt]:null;}));
+    return row?[row.id,row.title,row.transcriptText,row.transcriptReview,row.utterances,row.organization?.trashedAt]:null;}));
   const qaStale=Boolean(qaSourceSnapshot&&qaSourceSnapshot.identity!==qaIdentity(qaSourceSnapshot.ids));
   const qaSourceRemoved=Boolean(qaSourceSnapshot&&qaSourceSnapshot.ids.some(id=>!qaEligibleSessions.some(row=>row.id===id)));
+  const canResumeQa=Boolean(qaResult?.incomplete && qaResult.resume && qaSourceSnapshot && !qaStale && !qaSourceRemoved
+    && qaQuestion.trim()===qaAsked && qaSelectedEligible.length===qaSourceSnapshot.ids.length
+    && qaSelectedEligible.every((id,index)=>id===qaSourceSnapshot.ids[index]));
+  const askSelectedMeetings=async(resumeExisting:boolean)=>{
+    if(!onAskMeetings || (resumeExisting&&!canResumeQa))return;
+    const ids=[...qaSelectedEligible],identity=qaIdentity(ids),question=qaQuestion.trim(),jobId=crypto.randomUUID();
+    const resume=resumeExisting&&qaResult?.resume?{...qaResult.resume,items:qaResult.items}:undefined;
+    setQaJobId(jobId);setQaCancelling(false);setQaAsked(question);setQaSaveMessage(null);setQaRemovedNotice(false);
+    setQaBusy(true);setQaError(null);if(!resume&&!canResumeQa)setQaResult(null);setQaSourceSnapshot({ids,identity});
+    try{const result=await onAskMeetings(question,ids,jobId,resume);if(ids.every(id=>qaSessionsRef.current.some(row=>row.id===id&&!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row))))setQaResult(result);}
+    catch(error){setQaError(operationErrorText(error,'general'));}finally{setQaBusy(false);setQaJobId(null);setQaCancelling(false);}
+  };
   useEffect(()=>{if(qaSourceRemoved){setQaResult(null);setQaSaveMessage(null);setQaSourceSnapshot(null);setQaRemovedNotice(true);}},[qaSourceRemoved]);
   const savedCustomTemplates=useMemo(()=>{
     const fromMeetings=savedCustomMinutesTemplates(allLibrarySessions);
@@ -2344,8 +2356,9 @@ export function CompanionDashboard({
                   onChange={event=>setQaSelected(current=>event.target.checked?[...current,row.id]:current.filter(id=>id!==row.id))}/>{meetingTitle(row)}</label>)}</div>
               <label>问题<textarea aria-label="录音问题" value={qaQuestion} disabled={qaBusy} onChange={event=>setQaQuestion(event.target.value)}/></label>
               <button type="button" className="ct-action" disabled={qaBusy||storageBlocked||!qaQuestion.trim()||!qaSelectedEligible.length}
-                onClick={async()=>{const ids=[...qaSelectedEligible];const identity=qaIdentity(ids);const question=qaQuestion.trim();const jobId=crypto.randomUUID();setQaJobId(jobId);setQaCancelling(false);setQaAsked(question);setQaSaveMessage(null);setQaRemovedNotice(false);setQaBusy(true);setQaError(null);setQaResult(null);setQaSourceSnapshot({ids,identity});
-                  try{const result=await onAskMeetings(question,ids,jobId);if(ids.every(id=>qaSessionsRef.current.some(row=>row.id===id&&!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row))))setQaResult(result);}catch(error){setQaError(operationErrorText(error,'general'));}finally{setQaBusy(false);setQaJobId(null);setQaCancelling(false);}}}>{qaBusy?'正在查询…':'提问'}</button>
+                onClick={()=>void askSelectedMeetings(canResumeQa)}>{qaBusy?'正在查询…':canResumeQa?'继续查询':'提问'}</button>
+              {canResumeQa?<button type="button" className="ct-text-button" disabled={qaBusy||storageBlocked}
+                onClick={()=>void askSelectedMeetings(false)}>重新查询全部</button>:null}
               {qaBusy&&qaJobId&&onCancelMeetingQuestion?<button type="button" className="ct-action" disabled={qaCancelling} onClick={async()=>{
                 try{if(await onCancelMeetingQuestion(qaJobId)){setQaCancelling(true);setQaError(null);}else setQaError('查询刚开始或已结束，请稍后再试。');}
                 catch(error){setQaError(operationErrorText(error,'general'));}}}>{qaCancelling?'正在停止，等当前片段结束…':'停止查询'}</button>:null}
@@ -2353,7 +2366,7 @@ export function CompanionDashboard({
               {qaSourceRemoved||qaRemovedNotice?<p className="ct-step-warn">所选会议已删除或转写已清除，本次问答结果已移除。</p>:null}
               {qaResult&&!qaSourceRemoved?<div aria-label="录音问答结果">
                 {qaStale?<p className="ct-step-warn">会议文字或范围已变化；这是先前文字的结果，请重新提问。</p>:null}
-                {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':qaResult.stopReason?operationErrorText(qaResult.stopReason,'general'):'有片段未完成。'}已查询 {qaResult.completedChunks}/{qaResult.totalChunks} 段，本次答案可能不完整；请重试或缩小会议范围。</p>:null}
+                {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':qaResult.stopReason?operationErrorText(qaResult.stopReason,'general'):'有片段未完成。'}已查询 {qaResult.completedChunks}/{qaResult.totalChunks} 段，本次答案可能不完整；{canResumeQa?'可继续查询未完成的部分。':'可重新提问或缩小会议范围。'}</p>:null}
                 {!qaResult.items.length?<p>{qaResult.incomplete?'已处理的片段中未找到明确相关内容。':'所选文字中未找到明确相关内容；可以换一种问法或查看原文。'}</p>:null}
                 {qaResult.items.map((item,index)=><article key={`${item.citation.sessionId}-${index}`}><p>{item.text}</p>
                   <blockquote>{item.citation.quote}</blockquote><button type="button" className="ct-text-button" disabled={controlsBusy||qaStale}

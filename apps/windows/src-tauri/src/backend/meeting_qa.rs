@@ -1,6 +1,7 @@
 //! Source-backed questions over selected transcripts. Audio never leaves the device.
 use denzic_host_audio_v1_core::http_policy;
 use serde::{Deserialize,Serialize};
+use sha2::{Digest,Sha256};
 use std::{collections::{HashMap,HashSet},sync::{Arc,Mutex,OnceLock,atomic::{AtomicBool,Ordering}},time::Duration};
 
 const CHUNK_BYTES:usize=16*1024;
@@ -15,17 +16,25 @@ const SERVICE_AUTH:&str="AI 服务鉴权失败，请检查配置。";
 pub struct Document {pub id:String,pub title:String,pub text:String}
 #[derive(Clone,Debug,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-pub struct Request {pub question:String,pub documents:Vec<Document>,pub endpoint:String,pub model:String,#[serde(default)] pub job_id:Option<String>}
-#[derive(Clone,Debug,Serialize)]
+pub struct Request {pub question:String,pub documents:Vec<Document>,pub endpoint:String,pub model:String,
+    #[serde(default)] pub job_id:Option<String>,#[serde(default)] pub resume:Option<ResumeRequest>}
+#[derive(Clone,Debug,Deserialize,Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct Citation {pub session_id:String,pub title:String,pub quote:String}
-#[derive(Clone,Debug,Serialize)]
+#[derive(Clone,Debug,Deserialize,Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct AnswerItem {pub text:String,pub citation:Citation}
+#[derive(Clone,Debug,Deserialize)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+pub struct ResumeRequest {pub identity:String,pub completed:Vec<usize>,pub items:Vec<AnswerItem>}
+#[derive(Clone,Debug,Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct ResumePosition {pub identity:String,pub completed:Vec<usize>}
 #[derive(Clone,Debug,Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct ResultView {pub items:Vec<AnswerItem>,pub total_chunks:usize,pub completed_chunks:usize,pub incomplete:bool,pub cancelled:bool,
-    #[serde(skip_serializing_if="Option::is_none")] pub stop_reason:Option<String>}
+    #[serde(skip_serializing_if="Option::is_none")] pub stop_reason:Option<String>,
+    #[serde(skip_serializing_if="Option::is_none")] pub resume:Option<ResumePosition>}
 #[derive(Deserialize)]
 struct Extract {items:Vec<ExtractItem>}
 #[derive(Deserialize)]
@@ -114,16 +123,44 @@ fn stops_remaining_requests(error:&str)->bool {
     matches!(error,SERVICE_AUTH|SERVICE_LIMIT|SERVICE_UNAVAILABLE|SERVICE_CONFIG)
 }
 
+fn request_identity(request:&Request)->Result<String,String> {
+    // Job IDs and credentials may change after a failure. The actual question,
+    // selected text and service/model must still match the partial result.
+    let bytes=serde_json::to_vec(&(&request.question,&request.documents,&request.endpoint,&request.model,CHUNK_BYTES))
+        .map_err(|_|"无法核对上次查询，请重新提问。")?;
+    Ok(format!("{:x}",Sha256::digest(bytes)))
+}
+
+fn resume_progress(request:&Request,total:usize,identity:&str)->Result<(HashSet<usize>,Vec<AnswerItem>),String> {
+    let Some(resume)=&request.resume else {return Ok((HashSet::new(),Vec::new()));};
+    let invalid=||"上次查询内容或服务已变化，请重新查询全部内容。".to_string();
+    if resume.identity!=identity {return Err(invalid());}
+    let completed:HashSet<_>=resume.completed.iter().copied().collect();
+    if completed.len()!=resume.completed.len() || completed.iter().any(|i|*i>=total) {return Err(invalid());}
+    let mut seen=HashSet::new();let mut items=Vec::new();
+    for item in &resume.items {
+        let c=&item.citation;let doc=request.documents.iter().find(|doc|doc.id==c.session_id).ok_or_else(invalid)?;
+        if item.text.trim().is_empty() || c.title!=doc.title || c.quote.chars().count()<4 || !doc.text.contains(&c.quote) {return Err(invalid());}
+        if seen.insert((c.session_id.clone(),item.text.clone(),c.quote.clone())) {items.push(item.clone());}
+    }
+    Ok((completed,items))
+}
+
 fn ask_with<F>(request:&Request,mut extract:F)->Result<ResultView,String>
 where F:FnMut(&str,&str)->Result<Extract,String> {
     ask_with_cancel(request,||false,|q,p|extract(q,p))
 }
 fn ask_with_cancel<F,C>(request:&Request,mut cancelled:C,mut extract:F)->Result<ResultView,String>
 where F:FnMut(&str,&str)->Result<Extract,String>,C:FnMut()->bool {
-    let mut items=Vec::new();let mut completed=0usize;let total=request.documents.iter().map(|doc|slices(&doc.text).len()).sum();let mut seen=HashSet::new();let mut stopped=false;let mut stop_reason=None;
+    let total=request.documents.iter().map(|doc|slices(&doc.text).len()).sum();
+    let identity=request_identity(request)?;let (mut completed,mut items)=resume_progress(request,total,&identity)?;
+    let mut seen:HashSet<_>=items.iter().map(|item|(item.citation.session_id.clone(),item.text.clone(),item.citation.quote.clone())).collect();
+    let mut stopped=false;let mut stop_reason=None;let mut chunk_index=0usize;
     'documents: for document in &request.documents {
         for part in slices(&document.text) {
+            let current=chunk_index;chunk_index+=1;
             if cancelled(){stopped=true;break;}
+            if completed.contains(&current){continue;}
             match extract(&request.question,part) {
                 Ok(answer)=>{
                     let mut invalid=false;
@@ -133,24 +170,34 @@ where F:FnMut(&str,&str)->Result<Extract,String>,C:FnMut()->bool {
                         if !seen.insert((document.id.clone(),text.to_string(),quote.to_string())) {continue;}
                         items.push(AnswerItem{text:text.into(),citation:Citation{session_id:document.id.clone(),title:document.title.clone(),quote:quote.into()}});
                     }
-                    if !invalid {completed+=1;}
+                    if !invalid {completed.insert(current);}
                 }
                 Err(error)=>{if stops_remaining_requests(&error) {
-                    if completed==0 && items.is_empty(){return Err(error);}
+                    if completed.is_empty() && items.is_empty(){return Err(error);}
                     stop_reason=Some(error);break 'documents;
                 }},
             }
         }
         if stopped{break;}
     }
-    if completed==0 && items.is_empty()&&!stopped{return Err("本次资料问答没有完成，所选文字仍保留，请稍后重试。".into());}
-    Ok(ResultView{items,total_chunks:total,completed_chunks:completed,incomplete:completed<total,cancelled:stopped,stop_reason})
+    if completed.is_empty() && items.is_empty()&&!stopped{return Err("本次资料问答没有完成，所选文字仍保留，请稍后重试。".into());}
+    // A failed earlier slice may finish after a later slice on retry. Present
+    // answers in source order while retaining the original citations.
+    items.sort_by_key(|item|request.documents.iter().enumerate()
+        .find(|(_,doc)|doc.id==item.citation.session_id)
+        .map(|(i,doc)|(i,doc.text.find(&item.citation.quote).unwrap_or(usize::MAX)))
+        .unwrap_or((usize::MAX,usize::MAX)));
+    let completed_chunks=completed.len();let incomplete=completed_chunks<total;
+    let resume=if incomplete && (completed_chunks>0 || !items.is_empty()) {
+        let mut done:Vec<_>=completed.into_iter().collect();done.sort_unstable();Some(ResumePosition{identity,completed:done})
+    } else {None};
+    Ok(ResultView{items,total_chunks:total,completed_chunks,incomplete,cancelled:stopped,stop_reason,resume})
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    fn request(texts:&[(&str,&str)])->Request{Request{question:"什么时候交付？".into(),documents:texts.iter().map(|(id,text)|Document{id:(*id).into(),title:format!("会议{id}"),text:(*text).into()}).collect(),endpoint:"http://127.0.0.1:1234".into(),model:"mock".into(),job_id:None}}
+    fn request(texts:&[(&str,&str)])->Request{Request{question:"什么时候交付？".into(),documents:texts.iter().map(|(id,text)|Document{id:(*id).into(),title:format!("会议{id}"),text:(*text).into()}).collect(),endpoint:"http://127.0.0.1:1234".into(),model:"mock".into(),job_id:None,resume:None}}
     #[test]
     fn all_long_text_slices_are_preserved_without_cutting_utf8() {
         let text="中文会议讨论。".repeat(5000);let parts=slices(&text);assert!(parts.len()>2);assert_eq!(parts.concat(),text);
@@ -182,6 +229,57 @@ mod tests {
         assert_eq!(count,2);assert_eq!(result.items.len(),1);assert_eq!(result.items[0].citation.session_id,"a");
         assert_eq!((result.completed_chunks,result.total_chunks),(1,3));assert!(result.incomplete&&!result.cancelled);
         assert_eq!(result.stop_reason.as_deref(),Some(SERVICE_UNAVAILABLE));
+    }
+    #[test]
+    fn retry_only_queries_unfinished_slices_and_keeps_prior_answers() {
+        let mut req=request(&[("a","张三周五发报价。"),("b","李四下周核对交货。"),("c","王五检查样品。")]);let mut first_calls=0;
+        let partial=ask_with(&req,|_,_|{first_calls+=1;if first_calls==1 {
+            Ok(Extract{items:vec![ExtractItem{answer:"张三发报价".into(),quote:"张三周五发报价".into()}]})
+        } else {Err(SERVICE_UNAVAILABLE.into())}}).unwrap();
+        assert_eq!(first_calls,2);let mark=partial.resume.unwrap();assert_eq!(mark.completed,vec![0]);
+        req.resume=Some(ResumeRequest{identity:mark.identity,completed:mark.completed,items:partial.items});
+        let mut retried=Vec::new();let done=ask_with(&req,|_,part|{retried.push(part.to_string());
+            if part.contains("李四") {Ok(Extract{items:vec![ExtractItem{answer:"李四核对交货".into(),quote:"李四下周核对交货".into()}]})}
+            else {Ok(Extract{items:Vec::new()})}}).unwrap();
+        assert_eq!(retried,vec!["李四下周核对交货。","王五检查样品。"]);
+        assert_eq!(done.items.len(),2);assert_eq!(done.items[0].citation.session_id,"a");assert_eq!(done.items[1].citation.session_id,"b");
+        assert_eq!((done.completed_chunks,done.total_chunks),(3,3));assert!(!done.incomplete&&done.resume.is_none());
+    }
+    #[test]
+    fn retry_refuses_changed_source_and_keeps_completed_empty_slice() {
+        let mut req=request(&[("a","张三周五发报价。"),("b","李四下周核对交货。")]);let mut calls=0;
+        let partial=ask_with(&req,|_,_|{calls+=1;if calls==1 {Err("bad slice".into())}
+            else {Ok(Extract{items:Vec::new()})}}).unwrap();
+        let mark=partial.resume.unwrap();assert_eq!(mark.completed,vec![1]);
+        req.resume=Some(ResumeRequest{identity:mark.identity,completed:mark.completed,items:partial.items});
+        let mut changed=req.clone();changed.documents[0].text.push('新');let mut sent=false;
+        assert!(ask_with(&changed,|_,_|{sent=true;Ok(Extract{items:Vec::new()})}).is_err());assert!(!sent);
+        let mut retried=Vec::new();let done=ask_with(&req,|_,part|{retried.push(part.to_string());
+            Ok(Extract{items:vec![ExtractItem{answer:"张三发报价".into(),quote:"张三周五发报价".into()}]})}).unwrap();
+        assert_eq!(retried,vec!["张三周五发报价。"]);assert_eq!(done.items.len(),1);assert!(!done.incomplete);
+    }
+    #[test]
+    fn retry_keeps_partial_slice_answer_without_duplicates() {
+        let mut req=request(&[("a","张三周五发报价。李四检查样品。"),("b","王五核对库存。")]);let mut calls=0;
+        let partial=ask_with(&req,|_,_|{calls+=1;if calls==1 {Ok(Extract{items:vec![
+            ExtractItem{answer:"张三发报价".into(),quote:"张三周五发报价".into()},
+            ExtractItem{answer:"无效结果".into(),quote:"不存在的原文".into()}]})}
+            else {Ok(Extract{items:Vec::new()})}}).unwrap();
+        assert_eq!(partial.items.len(),1);let mark=partial.resume.unwrap();assert_eq!(mark.completed,vec![1]);
+        req.resume=Some(ResumeRequest{identity:mark.identity,completed:mark.completed,items:partial.items});
+        let mut retried=Vec::new();let done=ask_with(&req,|_,part|{retried.push(part.to_string());Ok(Extract{items:vec![
+            ExtractItem{answer:"张三发报价".into(),quote:"张三周五发报价".into()},
+            ExtractItem{answer:"李四检查样品".into(),quote:"李四检查样品".into()}]})}).unwrap();
+        assert_eq!(retried,vec!["张三周五发报价。李四检查样品。"]);assert_eq!(done.items.len(),2);
+        assert_eq!(done.items[0].text,"张三发报价");assert_eq!(done.items[1].text,"李四检查样品");assert!(!done.incomplete);
+    }
+    #[test]
+    fn retry_rejects_invalid_checkpoint_and_unrelated_citation() {
+        let mut req=request(&[("a","张三周五发报价。")]);let identity=request_identity(&req).unwrap();
+        req.resume=Some(ResumeRequest{identity:identity.clone(),completed:vec![0,0],items:Vec::new()});
+        assert!(ask_with(&req,|_,_|unreachable!()).is_err());
+        req.resume=Some(ResumeRequest{identity,completed:Vec::new(),items:vec![AnswerItem{text:"假结果".into(),citation:Citation{session_id:"a".into(),title:"会议a".into(),quote:"不在转写里的原话".into()}}]});
+        assert!(ask_with(&req,|_,_|unreachable!()).is_err());
     }
     #[test]
     fn one_rejected_slice_does_not_hide_answers_from_later_slices() {
@@ -228,7 +326,7 @@ mod tests {
             Document{id:"public-meeting".into(),title:"公开会议".into(),text:transcript.into()},
             Document{id:"fictional-meeting".into(),title:"虚构测试会议".into(),text:"小李：我负责在周五之前整理三种测试方案，整理完发给大家。".into()},
         ],endpoint:format!("{}/chat/completions",std::env::var("DEEPSEEK_BASE_URL").unwrap_or_else(|_|"https://api.deepseek.com/v1".into()).trim_end_matches('/')),
-            model:std::env::var("DEEPSEEK_MODEL").unwrap_or_else(|_|"deepseek-v4-flash".into()),job_id:None};
+            model:std::env::var("DEEPSEEK_MODEL").unwrap_or_else(|_|"deepseek-v4-flash".into()),job_id:None,resume:None};
         let result=ask(&req,&std::env::var("DEEPSEEK_API_KEY").expect("AI service key")).expect("question failed");
         let output=std::env::var("QA_OUTPUT_PATH").expect("result output path");
         std::fs::write(output,serde_json::to_vec_pretty(&result).unwrap()).unwrap();
