@@ -142,6 +142,52 @@ fn literal_conditional_followup_is_added_without_unrelated_or_cancelled_items() 
 }
 
 #[test]
+fn explicit_conditional_assignment_is_recovered_from_a_cached_chapter() {
+    let text="会议讨论报价。\n如果客户提出修改，王芳负责下周一确认产品交货时间。\n假如样品不合格，由李明负责整理问题清单。\n如果客户提出疑问，王芳负责吗？\n如果时间允许，我们负责讨论。\n如果订单更改，之前王芳负责处理。\n如果方案不行，建议王芳负责调整。";
+    let part=session(text); let (minutes,evidence)=response(&part);
+    let mut chapter=Chapter {start:0,end:text.len(),source_hash:hash(text.as_bytes()),
+        result_hash:chapter_digest(&minutes,&evidence,0),minutes,evidence,omitted_items:0};
+    assert!(is_current(&chapter,0,text.len(),text));
+    let original_summary=chapter.minutes.summary.clone();
+    repair_cached_conditionals(&mut chapter,text);
+    assert_eq!(chapter.minutes.summary,original_summary);
+    assert_eq!(chapter.minutes.action_items.len(),2);
+    for (owner,condition) in [("王芳","如果客户提出修改"),("李明","假如样品不合格")] {
+        let action=chapter.minutes.action_items.iter().find(|a|a.owner.as_deref()==Some(owner)).unwrap();
+        assert!(action.text.contains(condition)); assert!(action.due.is_none());
+    }
+    assert!(is_current(&chapter,0,text.len(),text));
+    let first=chapter.result_hash.clone();
+    repair_cached_conditionals(&mut chapter,text);
+    assert_eq!(chapter.result_hash,first);
+    assert!(is_current(&chapter,0,text.len(),text));
+}
+
+#[test]
+#[ignore = "reuses the previously saved public and fictional meeting; no network"]
+fn replay_saved_provider_chapters_repairs_conditional_assignment_without_resending() {
+    let sessions: Vec<CompanionV1HostSession> = serde_json::from_slice(
+        &fs::read(std::env::var_os("COMPANION_REPLAY_SESSIONS").unwrap()).unwrap()).unwrap();
+    let original=&sessions[0];
+    let source=crate::backend::transcript_review::minutes_input(original);
+    let mut checkpoint=read_checkpoint(Path::new(&std::env::var_os("COMPANION_REPLAY_CHECKPOINT").unwrap())).unwrap();
+    let root=root();fs::create_dir_all(&root).unwrap();
+    let identity=Identity::new("https://fixture.invalid","replay","test",&source);
+    let count=checkpoint.chapters.len();checkpoint.identity=identity;
+    let path=root.join(checkpoint.identity.filename());save_checkpoint(&path,&checkpoint).unwrap();
+    let result=run_with(&root,"https://fixture.invalid","replay","test",&source,"replay",|_,_,_,_| {
+        panic!("saved valid provider chapters must not be resent")
+    }).unwrap();
+    assert_eq!(result.processing.as_ref().unwrap().resumed_chunks,count);
+    let action=result.action_items.iter().find(|a|a.text.contains("王芳")&&a.text.contains("交货时间")).unwrap();
+    assert!(action.text.contains("如果客户提出修改"));assert_eq!(action.owner.as_deref(),Some("王芳"));
+    assert!(action.due.is_none());
+    assert!(result.action_items.iter().any(|a|a.text.contains("李明")&&a.text.contains("报价")));
+    assert!(result.action_items.iter().any(|a|a.owner.as_deref()==Some("赵强")&&a.text.contains("风险清单")));
+    assert!(original.transcript_review.is_some());cleanup(root);
+}
+
+#[test]
 fn unrelated_previous_line_is_not_a_condition_for_a_task() {
     let source="如果是参与这个\n请小赵明天下午把费用清单发给我。";
     let part=session(source);let (mut minutes,mut evidence)=response(&part);

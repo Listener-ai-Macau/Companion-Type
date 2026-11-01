@@ -128,8 +128,11 @@ pub fn minutes_input(session: &CompanionV1HostSession) -> CompanionV1HostSession
     input
 }
 
+// Match the long-meeting source capacity. A successful long transcription must
+// not become unusable merely because its review exceeds the former 200 KB cap.
+const MAX_REVIEW_BYTES: usize = 2 * 1024 * 1024;
 fn valid_text(text: &str) -> bool {
-    !text.trim().is_empty() && text.len() <= 200_000
+    !text.trim().is_empty() && text.len() <= MAX_REVIEW_BYTES
         && !text.chars().any(|c| c.is_control() && c != '\n' && c != '\r' && c != '\t')
 }
 
@@ -165,7 +168,7 @@ pub fn prepare_review(session: &CompanionV1HostSession, edit: &TranscriptReviewE
         if !edit.utterance_edits.is_empty() || !edit.speaker_names.is_empty() {
             return Err("整篇替代文字不能同时修改旧时间轴或说话人。".into());
         }
-        if !valid_text(text) { return Err("转写不能为空，且不能超过 200 KB 或包含非法控制字符。".into()); }
+        if !valid_text(text) { return Err("转写不能为空，且不能超过 2 MiB 或包含非法控制字符。".into()); }
         if text.trim() != session.transcript_text.trim() { result.text = Some(text.trim().into()); }
     }
     let mut indices = BTreeSet::new();
@@ -175,7 +178,7 @@ pub fn prepare_review(session: &CompanionV1HostSession, edit: &TranscriptReviewE
         if !indices.insert(item.index) { return Err("同一转写片段不能重复修订。".into()); }
         if !valid_text(&item.text) { return Err("每段转写不能为空，且不能包含非法控制字符。".into()); }
         total_bytes = total_bytes.saturating_add(item.text.len());
-        if total_bytes > 200_000 { return Err("修订文字总量不能超过 200 KB。".into()); }
+        if total_bytes > MAX_REVIEW_BYTES { return Err("修订文字总量不能超过 2 MiB。".into()); }
         let speaker_name = item.speaker_name.as_deref().map(checked_name).transpose()?;
         if item.text.trim() != source.text.trim() || speaker_name.is_some() {
             result.utterance_edits.push(UtteranceEdit { index: item.index, text: item.text.trim().into(), speaker_name });
@@ -276,6 +279,19 @@ mod tests {
         assert_eq!(serde_json::to_value(&saved.meeting_notes).unwrap(),prior_notes);
         assert_eq!(saved.transcript_text,original.transcript_text);assert_eq!(saved.utterances,original.utterances);
         if saved.minutes.is_some() {assert_eq!(saved.pending_reason.as_deref(),Some("minutes_source_changed"));}
+    }
+    #[test]
+    fn long_alternative_transcription_is_not_blocked_at_old_200kb_limit() {
+        let mut session=sample();let original=session.clone();
+        let text="会".repeat(77_000);assert!(text.len()>200_000 && text.len()<MAX_REVIEW_BYTES);
+        let mut edit=TranscriptReviewEdit {expected_transcript_text:session.transcript_text.clone(),
+            expected_utterances:session.utterances.clone(),expected_revision:0,restore_original:false,
+            text:Some(text.clone()),utterance_edits:vec![],speaker_names:vec![]};
+        session.transcript_review=Some(prepare_review(&session,&edit,"now").unwrap());
+        assert_eq!(effective_text(&session),text);assert_eq!(session.transcript_text,original.transcript_text);
+        assert_eq!(session.utterances,original.utterances);assert!(effective_utterances(&session).is_empty());
+        edit.text=Some("a".repeat(MAX_REVIEW_BYTES+1));
+        assert!(prepare_review(&original,&edit,"now").unwrap_err().contains("2 MiB"));
     }
     #[test]
     fn changed_asr_keeps_review_for_recovery_but_never_applies_old_indices() {

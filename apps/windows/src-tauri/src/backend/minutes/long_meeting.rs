@@ -440,10 +440,12 @@ fn request_evidence_only(endpoint: &str, model: &str, key: &str, part: &Companio
 }
 
 // Preserve a clearly stated conditional follow-up that the summary model
-// omitted. Only literal, source-backed clauses are added, with no inferred
-// owner or reminder date. Ordinary discussion stays out of the checklist.
+// omitted. Only literal, source-backed clauses are added; conditional dates
+// never become automatic reminders. Ordinary discussion stays out of the checklist.
 fn append_conditional_source_actions(minutes: &mut CompanionV1MeetingMinutes,
     evidence: &mut Vec<Evidence>, source: &str) {
+    static ASSIGNMENT: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(||
+        regex::Regex::new(r"^\s*(?:那么|则|就)?(?:由)?(?P<owner>[\p{Han}A-Za-z·]{2,4})负责(?P<body>.+)$").unwrap());
     for sentence in source.split(['。','！','？','!','?','\n','\r']) {
         let Some(start)=["如果","假如","若是"].iter().filter_map(|w|sentence.find(w)).min() else {continue;};
         let quote=sentence[start..].trim();
@@ -455,19 +457,41 @@ fn append_conditional_source_actions(minutes: &mut CompanionV1MeetingMinutes,
             None=>continue,
         };
         if ["不再","不要再","无需再","不用再","不需要再","已取消","已经取消"].iter().any(|word|followup.contains(word)) {continue;}
-        if !["再确认","再核对","再讨论","再联系","再检查","再提交","再发送","再安排","再处理","再跟进"].iter().any(|word|followup.contains(word)) {continue;}
+        let named = quote.contains(['，', ',']).then(|| ASSIGNMENT.captures(followup)).flatten()
+            .filter(|c| !["我们","大家","他们","她们","有人","自己","公司","团队"].contains(&&c["owner"]))
+            .filter(|c| !["之前","以前","此前","过去","当时","建议","希望","可能","也许","是否","能否","可否"].iter().any(|word| c["owner"].starts_with(word)))
+            .filter(|c| !["可能","也许","建议","希望","是否","能否","可否","之前","以前","此前","过去","当时","已完成","已经完成","不负责","不必","无需","不用","不能","无法"]
+                .iter().any(|word| c["body"].contains(word)))
+            .filter(|c| !c["body"].trim_end().ends_with(['吗','么','否']))
+            .map(|c| c["owner"].to_string());
+        if named.is_none() && !["再确认","再核对","再讨论","再联系","再检查","再提交","再发送","再安排","再处理","再跟进"].iter().any(|word|followup.contains(word)) {continue;}
         let existing=evidence.iter().filter(|e|e.field=="actionItems" && !e.quote.trim().is_empty())
             .find(|e|quote.contains(e.quote.trim().trim_end_matches(['。','！','？','!','?']))).map(|e|e.index);
         if let Some(index)=existing {
             if let Some(action)=minutes.action_items.get_mut(index) {
                 action.text=quote.to_string(); action.due=None;
-                evidence.push(Evidence {field:"actionItems".into(),index,quote:quote.into()});
+                if action.owner.is_none() { action.owner=named; }
+                if !evidence.iter().any(|e|e.field=="actionItems" && e.index==index && e.quote==quote) {
+                    evidence.push(Evidence {field:"actionItems".into(),index,quote:quote.into()});
+                }
             }
         } else {
             let index=minutes.action_items.len();
-            minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {text:quote.into(),owner:None,due:None});
+            minutes.action_items.push(crate::companion_v1::CompanionV1ActionItem {text:quote.into(),owner:named,due:None});
             evidence.push(Evidence {field:"actionItems".into(),index,quote:quote.into()});
         }
+    }
+}
+
+// Upgrade a valid cached chapter locally rather than requesting it again.
+fn repair_cached_conditionals(chapter: &mut Chapter, source: &str) {
+    let mut updated=chapter.clone();
+    append_conditional_source_actions(&mut updated.minutes,&mut updated.evidence,source);
+    preserve_conditional_actions(&mut updated.minutes,&mut updated.evidence,source);
+    mark_uncertain_items(&mut updated.minutes,&updated.evidence);
+    if validate_chapter(&updated.minutes,&updated.evidence,source).is_ok() {
+        updated.result_hash=chapter_digest(&updated.minutes,&updated.evidence,updated.omitted_items);
+        *chapter=updated;
     }
 }
 
@@ -895,6 +919,9 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
     for (entry, &(start, end)) in checkpoint.chapters.iter_mut().zip(&slices) {
         if entry.as_ref().is_some_and(|e| !is_current(e, start, end, &session.transcript_text[start..end])) {
             *entry = None;
+        }
+        if let Some(chapter)=entry.as_mut() {
+            repair_cached_conditionals(chapter,&session.transcript_text[start..end]);
         }
     }
     let mut resumed = checkpoint.chapters.iter().flatten().count();
