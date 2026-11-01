@@ -622,6 +622,8 @@ export function CompanionDashboard({
   const qaIdentity=(ids:string[])=>JSON.stringify(ids.map(id=>{const row=allLibrarySessions.find(session=>session.id===id);
     return row?[row.id,row.transcriptText,row.transcriptReview,row.utterances,row.organization?.trashedAt]:null;}));
   const qaStale=Boolean(qaSourceSnapshot&&qaSourceSnapshot.identity!==qaIdentity(qaSourceSnapshot.ids));
+  const qaSourceRemoved=Boolean(qaSourceSnapshot&&qaSourceSnapshot.ids.some(id=>!qaEligibleSessions.some(row=>row.id===id)));
+  useEffect(()=>{if(qaSourceRemoved&&qaResult){setQaResult(null);setQaSaveMessage(null);}},[qaSourceRemoved,qaResult]);
   const savedCustomTemplates=useMemo(()=>savedCustomMinutesTemplates(allLibrarySessions),[allLibrarySessions]);
   const localSaveConfirmed = snapshot?.host.persistence?.status === 'ready';
   const recentSavedRecording = useMemo(() => allLibrarySessions
@@ -2277,7 +2279,8 @@ export function CompanionDashboard({
                 try{if(await onCancelMeetingQuestion(qaJobId)){setQaCancelling(true);setQaError(null);}else setQaError('查询刚开始或已结束，请稍后再试。');}
                 catch(error){setQaError(operationErrorText(error,'general'));}}}>{qaCancelling?'正在停止，等当前片段结束…':'停止查询'}</button>:null}
               {qaError?<p className="ct-step-warn" role="alert">{qaError}</p>:null}
-              {qaResult?<div aria-label="录音问答结果">
+              {qaSourceRemoved?<p className="ct-step-warn">所选会议已删除或转写已清除，本次问答结果已移除。</p>:null}
+              {qaResult&&!qaSourceRemoved?<div aria-label="录音问答结果">
                 {qaStale?<p className="ct-step-warn">会议文字或范围已变化；这是先前文字的结果，请重新提问。</p>:null}
                 {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':'有片段未完成。'}本次答案可能不完整；请重试或缩小会议范围。</p>:null}
                 {!qaResult.items.length?<p>{qaResult.incomplete?'已处理的片段中未找到明确相关内容。':'所选文字中未找到明确相关内容；可以换一种问法或查看原文。'}</p>:null}
