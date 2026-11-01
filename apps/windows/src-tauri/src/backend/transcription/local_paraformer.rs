@@ -6,6 +6,8 @@ use std::{
 };
 #[path = "paraformer_shared.rs"]
 mod shared;
+#[path = "model_download.rs"]
+mod model_download;
 use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
 use std::{fs, path::PathBuf, sync::Mutex};
 
@@ -58,20 +60,6 @@ pub(super) fn assets_present() -> bool {
     })
 }
 
-fn download_model(name: &str, size: u64, hash: &str, dest: &Path) -> Result<(), String> {
-    let client = reqwest::blocking::Client::builder()
-        .connect_timeout(std::time::Duration::from_secs(15))
-        .timeout(std::time::Duration::from_secs(600)).build().map_err(|_| "无法创建模型下载连接。")?;
-    let response = client.get(format!("{MODEL_BASE}{name}?download=true"))
-        .send().and_then(|r| r.error_for_status()).map_err(|_| "本地模型下载失败，请检查网络后重试。")?;
-    let mut file = File::create(dest).map_err(|_| "无法保存本地模型。")?;
-    let count = std::io::copy(&mut response.take(size + 1), &mut file).map_err(|_| "本地模型下载未完成。")?;
-    file.flush().and_then(|_| file.sync_all()).map_err(|_| "本地模型保存失败。")?;
-    drop(file);
-    if count != size { return Err("本地模型下载未完成，请重试。".into()); }
-    shared::verified(dest, hash)
-}
-
 // Preserve the existing offline setup path when Listener's verified model is
 // already installed and a fresh network setup is unavailable.
 fn prepare_legacy(dest: &Path, stage: &Path) -> Result<(), String> {
@@ -112,15 +100,34 @@ pub(super) fn prepare() -> Result<(), String> {
     }
     let parent = dest.parent().ok_or("无法准备本地模型目录。")?;
     fs::create_dir_all(parent).map_err(|e| format!("无法创建本地模型目录：{e}"))?;
+    let downloads = parent.join(".companion-local-asr-download-v1");
+    fs::create_dir_all(&downloads).map_err(|_| "无法准备本地模型下载目录。")?;
+    let metadata=fs::symlink_metadata(&downloads).map_err(|_| "无法准备本地模型下载目录。")?;
+    if !metadata.is_dir() || metadata.file_type().is_symlink() {return Err("本地模型下载目录不可用。".into());}
+    let lock=fs::OpenOptions::new().read(true).write(true).create(true).open(downloads.join("download.lock"))
+        .map_err(|_| "无法准备本地模型下载。")?;
+    lock.try_lock().map_err(|_| "本地模型正在准备，请稍候。")?;
     let stage = parent.join(format!("local-asr-{}", uuid::Uuid::new_v4()));
     fs::create_dir(&stage).map_err(|e| format!("无法准备本地模型：{e}"))?;
+    let assets = [("model.int8.onnx",239_233_841,shared::SENSE_MODEL_SHA), ("tokens.txt",315_894,shared::SENSE_TOKENS_SHA)];
     let mut result = (|| {
         super::super::audio_components::prepare_runtime(&stage, &dest)?;
-        for (name, size, hash) in [("model.int8.onnx",239_233_841,shared::SENSE_MODEL_SHA), ("tokens.txt",315_894,shared::SENSE_TOKENS_SHA)] {
-            let target = stage.join(name);
+        let client=reqwest::blocking::Client::builder().connect_timeout(std::time::Duration::from_secs(15))
+            .timeout(std::time::Duration::from_secs(600)).build().map_err(|_| "无法创建模型下载连接。")?;
+        // Keep finished and partial downloads together until both files are
+        // verified; a later failure can then resume without a second copy.
+        for (name, size, hash) in assets {
             if shared::verified(&sense.join(name), hash).is_ok() {
-                fs::copy(sense.join(name), &target).map_err(|_| "复制本地模型失败。")?;
-            } else { download_model(name, size, hash, &target)?; }
+                fs::copy(sense.join(name), stage.join(name)).map_err(|_| "复制本地模型失败。")?;
+            } else {
+                model_download::fetch(&client, &format!("{MODEL_BASE}{name}?download=true"), size, hash,
+                    &downloads.join(format!("{hash}.part")))?;
+            }
+        }
+        for (name, _, hash) in assets {
+            let target=stage.join(name);
+            if !target.exists() { fs::rename(downloads.join(format!("{hash}.part")), &target)
+                .map_err(|_| "无法准备已下载的本地模型。")?; }
             shared::verified(&target, hash)?;
         }
         fs::create_dir_all(&sense).map_err(|e| e.to_string())?;
@@ -152,6 +159,11 @@ pub(super) fn prepare() -> Result<(), String> {
         let existing_verified = ASSETS.iter().all(|(name, hash)|
             shared::verified(&dest.join(name), hash).is_ok());
         if existing_verified || prepare_legacy(&dest, &stage).is_ok() { result = Ok(()); }
+    }
+    if result.is_ok() {
+        // A verified fallback is already usable; do not leave abandoned model
+        // downloads consuming disk space after a successful setup.
+        for (_, _, hash) in assets { let _ = fs::remove_file(downloads.join(format!("{hash}.part"))); }
     }
     if let (Ok(actual), Ok(expected)) = (stage.canonicalize(), parent.canonicalize()) {
         if actual.parent() == Some(expected.as_path()) && actual.file_name() == stage.file_name() {
