@@ -1779,15 +1779,23 @@ impl CompanionBackend for FixtureCompanionBackend {
         if snapshot.host.persistence.status != "ready" {
             return Err("请先重试保存或恢复会议库，再修改会议。".into());
         }
-        if snapshot.meeting.active || snapshot.device.recording || snapshot.host.sessions.iter().any(|s| s.status == "recording") {
-            return Err("请先结束当前录音，再修改会议。".into());
+        let other_recording_active = snapshot.meeting.active || snapshot.device.recording
+            || snapshot.host.sessions.iter().any(|s| s.status == "recording");
+        if other_recording_active && snapshot.host.active_session_id.as_deref() == Some(request.session_id.as_str()) {
+            return Err("这场录音仍在进行，请结束并保存后修改。".into());
         }
         let session = snapshot.host.sessions.iter_mut().find(|s| s.id == request.session_id)
             .ok_or("这场会议已不存在；未修改其他会议。")?;
-        meeting_workspace::edit_session(session, &request, &connection_timestamp())?;
+        if other_recording_active {
+            // A saved row is committed independently; edit_session still rejects
+            // the actual recording or a row undergoing transcription/minutes.
+            meeting_workspace::commit_saved_row(session, &request, &connection_timestamp())?;
+        } else {
+            meeting_workspace::edit_session(session, &request, &connection_timestamp())?;
+        }
         snapshot.updated_at = connection_timestamp();
         refresh_privacy_counts(&mut snapshot);
-        let _ = persistence::save_snapshot(&mut snapshot);
+        if !other_recording_active { let _ = persistence::save_snapshot(&mut snapshot); }
         Ok(snapshot.clone())
     }
 
@@ -6111,6 +6119,70 @@ mod tests {
         std::fs::remove_dir_all(root).unwrap();
         backend.snapshot.lock().unwrap().host.sessions[0].utterances[0].end_ms+=1;
         assert!(backend.apply_control(request).unwrap_err().contains("原始转写已更新"));
+    }
+
+    #[test]
+    fn synthetic_capture_survives_editing_previous_meeting() {
+        let root=std::env::temp_dir().join(format!("companion-concurrent-edit-{}",uuid::Uuid::new_v4()));
+        let recordings=root.join("recordings");std::fs::create_dir_all(&recordings).unwrap();let path=root.join("sessions.json");
+        std::env::set_var("COMPANION_TYPE_STATE_PATH",&path);std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&recordings);
+        std::env::set_var("COMPANION_TYPE_HOST_RECORDING_MODE","synthetic");std::env::set_var("COMPANION_TYPE_DISABLE_AUTO_RECOVERY","1");std::env::set_var("COMPANION_TYPE_BLE_NATIVE_DISABLED","1");
+        let initial=apply_fixture_control(fixture_snapshot(),recovery_request(CompanionV1ControlAction::MeetingLoadDemo,"old-meeting",false)).unwrap();
+        persistence::save_sessions_to(&path,&initial.host.sessions).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        let started=backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingStart,Some("new-recording".into()))).unwrap();
+        assert_eq!(started.host.active_session_id.as_deref(),Some("new-recording"));
+        let selected=backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingSelectSession,Some("old-meeting".into()))).unwrap();
+        let title=selected.host.sessions.iter().find(|r|r.id=="old-meeting").unwrap().title.clone();
+        let edit=meeting_workspace::MeetingEditRequest{session_id:"old-meeting".into(),title:Some("录音时整理旧会议".into()),expected_title:Some(title),
+            meeting_mode:None,markdown:None,expected_markdown:None,create_manual:None,restore_history:None,transcript_review:None};
+        let edited=backend.save_meeting_edit(edit).unwrap();assert!(edited.meeting.active);
+        let finished=backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingStop,Some("new-recording".into()))).unwrap();
+        let new=finished.host.sessions.iter().find(|r|r.id=="new-recording").unwrap();assert!(new.audio_stored&&new.audio_bytes>44);
+        meeting_workspace::validate_wav(std::path::Path::new(new.audio_path.as_deref().unwrap())).unwrap();
+        let saved:Vec<CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+        assert_eq!(saved.iter().find(|r|r.id=="old-meeting").unwrap().title,"录音时整理旧会议");
+        assert!(saved.iter().find(|r|r.id=="new-recording").unwrap().audio_stored);
+        println!("synthetic concurrent capture and edit evidence: {}",root.display());
+    }
+
+    #[test]
+    fn edit_saved_meeting_while_another_recording_continues() {
+        let root=std::env::temp_dir().join(format!("companion-edit-other-recording-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir_all(&root).unwrap();let path=root.join("sessions.json");
+        let prior=std::env::var_os("COMPANION_TYPE_STATE_PATH");std::env::set_var("COMPANION_TYPE_STATE_PATH",&path);
+        let mut snapshot=apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo,"saved-before-recording",false)).unwrap();
+        let mut active=snapshot.host.sessions[0].clone();active.id="separate-active-recording".into();active.status="recording".into();
+        active.transcript_text="正在记录的前缀".into();active.transcript_final=false;
+        snapshot.host.sessions.push(active.clone());snapshot.host.active_session_id=Some(active.id.clone());
+        snapshot.meeting.active=true;snapshot.device.recording=true;
+        persistence::save_sessions_to(&path,&snapshot.host.sessions).unwrap();
+        let backend=FixtureCompanionBackend::new();*backend.snapshot.lock().unwrap()=snapshot;
+        let request=meeting_workspace::MeetingEditRequest {session_id:"saved-before-recording".into(),title:Some("已整理的旧会议".into()),
+            expected_title:Some(active.title.clone()),meeting_mode:None,markdown:None,expected_markdown:None,
+            create_manual:None,restore_history:None,transcript_review:None};
+        let result=backend.save_meeting_edit(request).unwrap();
+        assert_eq!(result.host.sessions[0].title,"已整理的旧会议");
+        assert_eq!(serde_json::to_value(&result.host.sessions[1]).unwrap(),serde_json::to_value(&active).unwrap());
+        let disk:Vec<CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+        assert_eq!(disk[0].title,"已整理的旧会议");assert_eq!(serde_json::to_value(&disk[1]).unwrap(),serde_json::to_value(&active).unwrap());
+        assert!(result.meeting.active && result.device.recording);
+        session_store::update_checked(&path,|rows|{rows[0].title="其他进程的新标题".into();Ok(())}).unwrap();
+        let stale_request=meeting_workspace::MeetingEditRequest {session_id:"saved-before-recording".into(),title:Some("不应覆盖".into()),
+            expected_title:Some("已整理的旧会议".into()),meeting_mode:None,markdown:None,expected_markdown:None,
+            create_manual:None,restore_history:None,transcript_review:None};
+        assert!(backend.save_meeting_edit(stale_request).is_err());
+        let conflict_disk:Vec<CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+        assert_eq!(conflict_disk[0].title,"其他进程的新标题");
+        assert_eq!(serde_json::to_value(&conflict_disk[1]).unwrap(),serde_json::to_value(&active).unwrap());
+        let active_request=meeting_workspace::MeetingEditRequest {session_id:active.id.clone(),title:Some("不应修改".into()),
+            expected_title:Some(active.title.clone()),meeting_mode:None,markdown:None,expected_markdown:None,
+            create_manual:None,restore_history:None,transcript_review:None};
+        assert!(backend.save_meeting_edit(active_request).is_err());
+        let after:Vec<CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+        assert_eq!(serde_json::to_value(&after[1]).unwrap(),serde_json::to_value(&active).unwrap());
+        if let Some(value)=prior{std::env::set_var("COMPANION_TYPE_STATE_PATH",value)}else{std::env::remove_var("COMPANION_TYPE_STATE_PATH")}
     }
 
     #[test]

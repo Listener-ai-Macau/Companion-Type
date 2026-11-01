@@ -185,6 +185,22 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
     Ok(())
 }
 
+/// Edit one saved row against the current disk index, without replacing an
+/// unrelated recording that is being captured or synchronized concurrently.
+pub(crate) fn commit_saved_row(session: &mut CompanionV1HostSession, request: &MeetingEditRequest, now: &str) -> Result<(), String> {
+    if cfg!(test) && std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none() { return edit_session(session, request, now); }
+    let mut saved=None;
+    super::session_store::update_checked(&super::persistence::state_file_path(), |rows| {
+        let row=rows.iter_mut().find(|row|row.id==session.id).ok_or("这场会议已不存在；未修改其他会议。")?;
+        if row.source!=session.source || row.device_recording_id!=session.device_recording_id || row.source_device_id!=session.source_device_id {
+            return Err("会议来源已变化，请刷新后再修改。".into());
+        }
+        edit_session(row,request,now)?;saved=Some(row.clone());Ok(())
+    })?;
+    if let Some(row)=saved { *session=row; }
+    Ok(())
+}
+
 pub fn local_audio_path(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<PathBuf, String> {
     if snapshot.meeting.active || snapshot.device.recording || snapshot.host.sessions.iter().any(|s| s.status == "recording") {
         return Err("录音期间暂不回放，避免把扬声器声音再次录入。".into());

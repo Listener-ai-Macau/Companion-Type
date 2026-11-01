@@ -873,6 +873,9 @@ export function CompanionDashboard({
   // behind a background job. New recordings and unrelated actions stay blocked.
   const recordingControlBusy = busyAction !== null || resourceBusy || boardOnlineBusy || exportBusy || saveMeetingBusy || bookmarkBusy || noteBusy || diagnosticBusy || serviceBusy !== null || discardBusy || libraryBusy;
   const controlsBusy = recordingControlBusy || Boolean(recordingSync?.jobId);
+  // A completed recording can be edited while a different recording continues.
+  const selectedRecordingBeingCaptured = Boolean(selectedSession && (selectedSession.status === 'recording'
+    || (snapshot?.host.activeSessionId === selectedSession.id && oobeBlockedByRecording)));
   const lossBudgetSeconds = Math.ceil(boardMaxDurationSeconds + (meetingMode === 'onlineLive' ? 120 : 0));
   const lossBudgetValid = !unlimitedOffline && !unlimitedOnline && durationValid && lossBudgetSeconds <= 65535 && (meetingMode !== 'onlineLive' || onlineDurationValid);
   const captureBudgetBytes = capacity && lossBudgetValid
@@ -1122,7 +1125,7 @@ export function CompanionDashboard({
                 sourceFallbackLabel={manualMinutes?(selectedSession.meetingNotes?.length?'查看原话与补充':'查看原话'):undefined}
                 savedMarkdown={minutesMarkdown} noteContext={minutesDisplayContext}
                 onToggleAction={onSaveMeeting?(lineIndex,completed)=>void markAction(lineIndex,completed):undefined}
-                actionsBlocked={controlsBusy||oobeBlockedByRecording||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
+                actionsBlocked={recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 blocked={controlsBusy} onOpenSource={openTranscriptSource}
@@ -1368,7 +1371,7 @@ export function CompanionDashboard({
     }));
   };
   const startManualChecklist = () => {
-    if (!selectedSession || !onSaveMeeting || !finalTranscript || hasMinutes || controlsBusy || oobeBlockedByRecording || storageBlocked
+    if (!selectedSession || !onSaveMeeting || !finalTranscript || hasMinutes || recordingControlBusy || selectedRecordingBeingCaptured || storageBlocked
       || selectedSession.captureIncomplete || selectedSession.recorderControlUncertain || transcriptReviewUnsaved || noteUnsaved || unimportedTranscriptDraft) return;
     const sessionId=selectedSession.id, mode=minutesViewMode;
     setMeetingDrafts(current=>({...current,[sessionId]:{...current[sessionId],minutes:{...current[sessionId]?.minutes,
@@ -1412,7 +1415,7 @@ export function CompanionDashboard({
     setSaveMeetingResult(null);
   };
   const saveMeetingDraft = async () => {
-    if (!selectedSession || !onSaveMeeting || saveMeetingBusy || calendarPendingCount>0 || (!titleDirty && !minutesDirty)) return;
+    if (!selectedSession || !onSaveMeeting || saveMeetingBusy || selectedRecordingBeingCaptured || calendarPendingCount>0 || (!titleDirty && !minutesDirty)) return;
     const sessionId = selectedSession.id;
     const mode = minutesViewMode;
     const title = selectedDraft?.title;
@@ -1473,7 +1476,7 @@ export function CompanionDashboard({
     }
   };
   const restoreMinutesHistory = async (index:number, archivedAt:string, markdown:string) => {
-    if(!selectedSession || !onSaveMeeting || saveMeetingBusy || controlsBusy || oobeBlockedByRecording || storageBlocked
+    if(!selectedSession || !onSaveMeeting || saveMeetingBusy || recordingControlBusy || selectedRecordingBeingCaptured || storageBlocked
       || minutesDirty || titleDirty || noteUnsaved || transcriptReviewUnsaved || editingMinutes) return;
     const sessionId=selectedSession.id,mode=minutesViewMode;
     setSaveMeetingBusy(true);setSaveMeetingResult(null);
@@ -1486,7 +1489,7 @@ export function CompanionDashboard({
     finally {setSaveMeetingBusy(false);}
   };
   const markAction = async (lineIndex:number,completed:boolean) => {
-    if(!selectedSession||!onSaveMeeting||actionSaveActive.current||controlsBusy||oobeBlockedByRecording
+    if(!selectedSession||!onSaveMeeting||actionSaveActive.current||recordingControlBusy||selectedRecordingBeingCaptured
       ||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))||editingMinutes||minutesDirty||titleDirty
       ||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft)return;
     const original=minutesMarkdown;
@@ -1916,12 +1919,12 @@ export function CompanionDashboard({
               <p className="ct-section-eyebrow">{textOnlyImport ? '导入文字' : '录音内容'}</p>
               <label className="ct-title-editor"><span className="ct-sr-only">记录标题</span><Pencil size={15} />
                 <input value={titleDraft} maxLength={120} aria-label="记录标题" aria-invalid={!titleDraft.trim()} aria-describedby={!titleDraft.trim() ? "ct-title-error" : undefined}
-                  readOnly={!onSaveMeeting || saveMeetingBusy} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
+                  readOnly={!onSaveMeeting || saveMeetingBusy || selectedRecordingBeingCaptured} title={!onSaveMeeting ? '请在桌面版编辑标题' : undefined}
                   onChange={(event) => updateTitleDraft(event.target.value)} /></label>
               {!titleDraft.trim() ? <p id="ct-title-error" className="ct-step-warn" role="alert">标题不能为空，请填写后保存。</p> : null}
               <p>{recordingTimeLabel(selectedSession.startedAt)}{!textOnlyImport ? ` · ${formatDuration(selectedSession.durationMs)}` : ''}</p>
               {titleDirty ? <div className="ct-inline-edit-actions">
-                <button type="button" className="ct-text-button" disabled={saveMeetingBusy || !titleDraft.trim()} onClick={() => void saveMeetingDraft()} aria-busy={saveMeetingBusy}>{saveMeetingBusy ? '正在保存…' : '保存标题'}</button>
+                <button type="button" className="ct-text-button" disabled={saveMeetingBusy || selectedRecordingBeingCaptured || !titleDraft.trim()} onClick={() => void saveMeetingDraft()} aria-busy={saveMeetingBusy}>{saveMeetingBusy ? '正在保存…' : '保存标题'}</button>
                 <button type="button" className="ct-text-button" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('title')}>取消</button>
               </div> : null}
             </div>
@@ -2029,7 +2032,7 @@ export function CompanionDashboard({
                 {(selectedSession.minutesByMode?.history ?? []).map((item,index)=>({item,index})).reverse().filter(({item})=>item.mode===minutesViewMode).map(({item,index})=><details key={`${item.archivedAt}-${index}`}>
                   <summary>{item.variant.source==='userEdited'||item.variant.source==='userAuthored'?'人工修改':'整理结果'} · {item.variant.generatedAt || item.archivedAt}</summary>
                   <pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{item.variant.markdown}</pre>
-                  <button type="button" className="ct-action" disabled={!onSaveMeeting||saveMeetingBusy||controlsBusy||oobeBlockedByRecording||storageBlocked||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||editingMinutes}
+                  <button type="button" className="ct-action" disabled={!onSaveMeeting||saveMeetingBusy||recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||editingMinutes}
                     onClick={()=>void restoreMinutesHistory(index,item.archivedAt,item.variant.markdown)}>使用这个版本</button>
                 </details>)}
               </details> : null}
@@ -2050,7 +2053,7 @@ export function CompanionDashboard({
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale||minutesIncomplete}
                   title={minutesIncomplete ? '整理完成后才能导出整场待办' : '把未完成事项和已确认时间写成日程文件，导入常用日历后核对提醒'}
                   onClick={()=>void exportMeeting('calendar')}>导出到日历</button> : null}
-                {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || oobeBlockedByRecording}
+                {!editingMinutes ? <button type="button" className="ct-text-button" disabled={!hasMinutes || !onSaveMeeting || selectedRecordingBeingCaptured}
                   title={!onSaveMeeting ? '请在桌面版编辑纪要' : undefined} onClick={() => {setCalendarEditAll(false);setCalendarEditLine(undefined);setCalendarEditRequest(null);setEditingMinutes(true);}}><Pencil size={14} />{savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'}</button> : null}
               </div>
               {phoneResult?.sessionId===selectedSession.id&&phoneResult.sourceKey===copySourceKey&&!editingMinutes
@@ -2120,7 +2123,7 @@ export function CompanionDashboard({
                 <div className="ct-minutes-savebar" aria-label="整理内容保存">
                   <span>{calendarEditAll?`核对各项截止时间${minutesDirty?' · 尚未保存':''}`:calendarEditLine!==undefined?`修改这一项的截止时间${minutesDirty?' · 尚未保存':''}`:selectedDraft?.minutes?.[minutesViewMode]?.createManual?'自己写清单 · 尚未保存':minutesDirty ? '修改尚未保存' : '编辑整理内容'}</span>
                 <div className="ct-button-row"><button type="button" className="ct-action ct-action-primary"
-                  disabled={!minutesDirty || saveMeetingBusy || calendarPendingCount>0 || !minutesDraft.trim() || (!!selectedDraft?.minutes?.[minutesViewMode]?.createManual && !savedActions(minutesDraft).length)} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : selectedDraft?.minutes?.[minutesViewMode]?.createManual?'保存清单':calendarReturn?'保存修改并返回日历预览':'保存修改'}</button>
+                  disabled={!minutesDirty || saveMeetingBusy || selectedRecordingBeingCaptured || calendarPendingCount>0 || !minutesDraft.trim() || (!!selectedDraft?.minutes?.[minutesViewMode]?.createManual && !savedActions(minutesDraft).length)} onClick={() => void saveMeetingDraft()}>{saveMeetingBusy ? '正在保存…' : selectedDraft?.minutes?.[minutesViewMode]?.createManual?'保存清单':calendarReturn?'保存修改并返回日历预览':'保存修改'}</button>
                   <button type="button" className="ct-action" disabled={saveMeetingBusy} onClick={() => cancelMeetingDraft('minutes')}>{calendarReturn?.fromPreview?'取消修改并返回日历预览':'取消'}</button></div>
                   {saveMeetingResult?.sessionId === selectedSession.id && saveMeetingResult.part === 'minutes' ?
                     <p className={saveMeetingResult.kind === 'error' ? 'ct-step-warn' : 'ct-step-ok'}
@@ -2210,7 +2213,7 @@ export function CompanionDashboard({
                     else runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id});
                   }}>{hasMinutes?'重新整理':'整理重点'}</button> : null}
                 {finalTranscript && !hasMinutes && onSaveMeeting ? <button type="button" className="ct-text-button"
-                  disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!!selectedSession.captureIncomplete||!!selectedSession.recorderControlUncertain||transcriptReviewUnsaved||noteUnsaved||unimportedTranscriptDraft}
+                  disabled={recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||!!selectedSession.captureIncomplete||!!selectedSession.recorderControlUncertain||transcriptReviewUnsaved||noteUnsaved||unimportedTranscriptDraft}
                   onClick={startManualChecklist}><Pencil size={14}/>自己写清单</button> : null}
                 {finalTranscript && !hasMinutes ? <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || !onExportMeeting || transcriptReviewUnsaved}
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
@@ -2274,12 +2277,12 @@ export function CompanionDashboard({
           </div> : null}
           <div id="ct-recording-text-review" tabIndex={-1} hidden={!transcriptReviewOpen}>
           <CompanionTranscriptReview session={selectedSession} visible={transcriptReviewOpen}
-            blocked={controlsBusy || oobeBlockedByRecording || storageBlocked}
+            blocked={recordingControlBusy || selectedRecordingBeingCaptured || storageBlocked}
             sourceSelection={sourceSelection} onSeekSource={seekTranscriptSource}
             audioSeekBlocked={Boolean(audioBlockedReason) || audioBusy}
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
-          <CompanionMeetingNotes resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={controlsBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
+          <CompanionMeetingNotes resultEditLabel={hasMinutes?(savedActions(minutesMarkdown).length?'编辑清单':'编辑整理内容'):undefined} compact session={selectedSession} blocked={recordingControlBusy} anyRecording={oobeBlockedByRecording} onHelp={openQuickGuide}
             persistenceReady={!storageBlocked} onSave={onSaveNote} onBusyChange={setNoteBusy} onUnsavedChange={setNoteUnsaved}
             onOrganizeSaved={snapshot?.minutesContextSupported && finalTranscript && Number.isFinite(selectedSession.durationMs)
               && selectedSession.durationMs>=0 && selectedSession.durationMs<=120000 ? ()=>runOrganizationControl({
