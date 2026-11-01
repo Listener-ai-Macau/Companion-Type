@@ -47,7 +47,7 @@ export function companionTranscriptSourceIsCurrent(session: CompanionV1HostSessi
 // Long-meeting evidence replaces the newline between ASR segments with a
 // space when displayed. Link a unique, exact cross-segment quote to its first
 // segment; never bridge a missing segment or pick one of several occurrences.
-function crossSegmentSource(sources: readonly CompanionTranscriptSource[], quote: string): CompanionTranscriptSource | null {
+function crossSegmentSource(sources: readonly CompanionTranscriptSource[], quote: string): [CompanionTranscriptSource | null, number] {
   let found: CompanionTranscriptSource | null = null;
   let matches = 0;
   for (let start = 0; start < sources.length;) {
@@ -69,13 +69,13 @@ function crossSegmentSource(sources: readonly CompanionTranscriptSource[], quote
       while (index > 0 && offsets[index] > position) index--;
       if (position + quote.length > offsets[index] + group[index].text.length) {
         matches++;
-        if (matches > 1) return null;
+        if (matches > 1) return [null, matches];
         found = group[index];
       }
     }
     start = end;
   }
-  return matches === 1 ? found : null;
+  return [found, matches];
 }
 
 /** Match a complete item or quoted original to exactly one timed segment, or
@@ -89,10 +89,11 @@ export function companionMinutesReferencedSources(sources: readonly CompanionTra
   for (const quote of new Set(candidates)) {
     if (Array.from(quote).length < 4) continue;
     const matches = sources.filter((row) => row.text.includes(quote));
-    if (matches.length === 1) result.set(matches[0].index, matches[0]);
-    else if (matches.length === 0) {
-      const first = crossSegmentSource(sources, quote);
-      if (first) result.set(first.index, first);
+    if (matches.length > 1) continue;
+    const [firstCrossSegment, crossCount] = crossSegmentSource(sources, quote);
+    if (matches.length === 1 && crossCount === 0) result.set(matches[0].index, matches[0]);
+    else if (matches.length === 0 && crossCount === 1 && firstCrossSegment) {
+      result.set(firstCrossSegment.index, firstCrossSegment);
     }
   }
   return [...result.values()].sort((a, b) => a.index - b.index);

@@ -17,6 +17,8 @@ assert.equal(companionMinutesReferencedSources(sources,'三点开会。 记得�
 assert.equal(companionMinutesReferencedSources([sources[0],{...sources[1],index:2}],'三点开会。 记得带蓝色').length,0,'must not bridge a missing segment');
 const duplicate=[...sources,{...sources[0],index:2,startMs:32000,endMs:48000}, {...sources[1],index:3,startMs:48000,endMs:64000}];
 assert.equal(companionMinutesReferencedSources(duplicate,'三点开会。 记得带蓝色').length,0,'ambiguous repeated cross-segment quote must not seek');
+const mixed=[...sources,{...sources[1],index:2,text:'三点开会。 记得带蓝色',startMs:32000,endMs:48000}];
+assert.equal(companionMinutesReferencedSources(mixed,'三点开会。 记得带蓝色').length,0,'a single-segment and a cross-segment occurrence are ambiguous');
 assert.equal(companionMinutesReferencedSources(sources,'三点开会。记得带蓝色').length,0,'unmatched spacing must not fabricate an anchor');
 assert.equal(companionTranscriptSourceIsCurrent(session,sources[1]),true);
 const changed=structuredClone(session);changed.utterances[1].approximateTiming=false;
