@@ -1,7 +1,7 @@
 //! Lossless source partitioning, cited chapter minutes and durable retries.
 //! Request bytes are a deliberately conservative budget, not an exact tokenizer.
 //! Completion proves every source slice was submitted, not ASR/minutes accuracy.
-use std::{collections::HashSet, fs::{self, File, OpenOptions}, io::Read,
+use std::{collections::{HashSet, VecDeque}, fs::{self, File, OpenOptions}, io::Read,
     path::{Path, PathBuf}, time::{Duration, Instant}};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -658,14 +658,21 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
     let resumed = checkpoint.chapters.iter().flatten().count();
     save_checkpoint(&path, &checkpoint)?;
     let started = Instant::now(); let mut fresh = 0; let mut failure = None;
-    for (index, &(start, end)) in slices.iter().enumerate() {
+    let mut pending = (0..slices.len()).collect::<VecDeque<_>>();
+    let mut deferred = None;
+    while let Some(index) = pending.pop_front() {
+        let (start, end) = slices[index];
         super::super::meeting_processing_job::check_current()?;
         if checkpoint.chapters[index].is_some() { continue; }
         let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
         // Native HTTP is bounded to 180s. Reserve the entire deadline before
         // starting another request; do not override a caller's shorter limit.
         if fresh == MAX_FRESH_REQUESTS || remaining < Duration::from_secs(180) {
-            failure = Some("本次整理已达到请求或时间预算；成功分段已保存，请继续整理剩余内容。".to_string()); break;
+            let note = "本次整理已达到请求或时间预算；成功分段已保存，请继续整理剩余内容。";
+            failure = Some(match deferred.filter(|&i| checkpoint.chapters[i].is_none()) {
+                Some(i) => format!("第{}段引用尚未完成；{note}", i + 1),
+                None => note.to_string(),
+            }); break;
         }
         let mut part = session.clone(); part.transcript_text = session.transcript_text[start..end].to_string();
         part.utterances.clear(); part.minutes = None; part.minutes_by_mode = Default::default();
@@ -675,7 +682,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
         // successful HTTP request. Retry that response once for this same
         // source slice; never retry authentication or transport failures here.
         // Both attempts count against the existing overall request/time budget.
-        if response.as_ref().is_err_and(|error| *error == MISSING_EVIDENCE
+        if deferred != Some(index) && response.as_ref().is_err_and(|error| *error == MISSING_EVIDENCE
             || *error == super::safe_minutes_http_error(super::http_policy::Failure::InvalidResponse)) {
             super::super::meeting_processing_job::check_current()?;
             let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
@@ -700,7 +707,18 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
                 checkpoint.chapters[index] = Some(chapter);
                 if let Err(error) = save_checkpoint(&path, &checkpoint) { failure = Some(error); break; }
             },
-            Err(error) => { failure = Some(format!("第{}段整理失败：{error}", index + 1)); break; }
+            Err(error) if error == MISSING_EVIDENCE && deferred.is_none() => {
+                // A malformed citation response is isolated to this chapter.
+                // Keep processing later chapters, then try this one once more;
+                // no transport/authentication failures are retried this way.
+                deferred = Some(index);
+                pending.push_back(index);
+            },
+            Err(error) => {
+                let earlier = deferred.filter(|&i| i != index && checkpoint.chapters[i].is_none())
+                    .map(|i| format!("第{}段引用尚未完成；", i + 1)).unwrap_or_default();
+                failure = Some(format!("{earlier}第{}段整理失败：{error}", index + 1)); break;
+            }
         }
     }
     super::super::meeting_processing_job::check_current()?;

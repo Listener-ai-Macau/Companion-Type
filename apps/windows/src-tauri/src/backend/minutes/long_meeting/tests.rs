@@ -194,7 +194,49 @@ fn missing_evidence_retries_once_then_preserves_finished_chapters() {
     let partial=run_with(&root,"https://fixture.invalid","model","key",&other,"now",|_,_,_,_| {
         repeated+=1;Err(MISSING_EVIDENCE.into())
     }).unwrap();
-    assert_eq!(repeated,2);assert_eq!(partial.quality,"draft");assert_eq!(partial.processing.unwrap().completed_chunks,0);
+    // One malformed chapter may be deferred; stop after the next chapter also
+    // fails rather than retrying the whole meeting indefinitely.
+    assert_eq!(repeated,4);assert_eq!(partial.quality,"draft");assert_eq!(partial.processing.unwrap().completed_chunks,0);
+    cleanup(root);
+}
+
+#[test]
+fn missing_evidence_defers_one_chapter_and_completes_without_repeating_others() {
+    let root=root();
+    let text=format!("{}最后结论：保留原音并等待实板验收。", "讨论内容用于分段压力，不包含新的决定或任务。\n".repeat(1400));
+    let source=session(&text);let total=plan(&text).unwrap().len();assert!(total>3);
+    let mut calls=Vec::new();let mut bad_attempts=0;
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
+        calls.push(index);
+        if index==2 && bad_attempts<2 {bad_attempts+=1;Err(MISSING_EVIDENCE.into())}
+        else {Ok(response(part))}
+    }).unwrap();
+    let mut expected=vec![0,1,2,2];expected.extend(3..total);expected.push(2);
+    assert_eq!(calls,expected);assert_eq!(bad_attempts,2);
+    assert_eq!(result.quality,"final");assert!(result.processing.unwrap().is_complete());
+    assert!(result.markdown.contains("最后结论：保留原音并等待实板验收"));
+    assert_eq!(source.transcript_text,text);cleanup(root);
+}
+
+#[test]
+fn deferred_chapter_and_later_service_failure_remain_partial_and_retryable() {
+    let root=root();let source=session(&"公开会议内容。\n".repeat(5000));
+    let total=plan(&source.transcript_text).unwrap().len();assert!(total>3);
+    let mut calls=Vec::new();
+    let partial=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
+        calls.push(index);
+        if index==2 {Err(MISSING_EVIDENCE.into())}
+        else if index==3 {Err("controlled service failure".into())}
+        else {Ok(response(part))}
+    }).unwrap();
+    assert_eq!(calls,vec![0,1,2,2,3]);assert_eq!(partial.quality,"draft");
+    assert_eq!(partial.processing.as_ref().unwrap().completed_chunks,2);
+    let note=partial.llm_note.unwrap();assert!(note.contains("第3段") && note.contains("第4段"));
+    let mut retry=Vec::new();
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"retry",|index,_,part,_| {
+        retry.push(index);Ok(response(part))
+    }).unwrap();
+    assert_eq!(retry,(2..total).collect::<Vec<_>>());assert!(result.processing.unwrap().is_complete());
     cleanup(root);
 }
 
