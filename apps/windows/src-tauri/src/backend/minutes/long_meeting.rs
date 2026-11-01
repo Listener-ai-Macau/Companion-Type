@@ -531,8 +531,14 @@ fn request_background_review(endpoint: &str, model: &str, key: &str,
     quotes: &[Vec<String>], client: &reqwest::blocking::Client) -> Result<ActionReview, String> {
     let actions = minutes.action_items.iter().enumerate().map(|(id, item)|
         serde_json::json!({"id":id,"text":item.text,"owner":item.owner,"due":item.due,"sourceQuotes":quotes.get(id)})).collect::<Vec<_>>();
-    let input = serde_json::json!({"title":session.title,"summary":minutes.summary,"actions":actions}).to_string();
-    let instruction = "你是会议事项核对助手。根据全会摘要、候选行动及其原文引用，只标出有明确依据属于会议范围以外的旁人或背景闲谈的任务。不要仅凭与主要主题不同判为无关：会议可能换题，个人备忘可能有多个主题；身份或关联无法确认时不要标记。另找出确为同一事项、且负责人、期限、条件和原文引用一致的重复项；一个引用可能包含多个不同任务，不确定就不合并。只返回 JSON 对象 {\"possiblyUnrelated\":[候选id],\"duplicateGroups\":[[重复id,重复id]]}；不要改写或添加事实。";
+    // Keep meeting context ahead of individual actions: a real long meeting
+    // showed that action-first input missed background candidates.
+    #[derive(Serialize)]
+    struct ReviewInput<'a> { title: &'a str, summary: &'a [String], actions: &'a [Value] }
+    let input = serde_json::to_string(&ReviewInput {
+        title: &session.title, summary: &minutes.summary, actions: &actions,
+    }).map_err(|_| "会议事项核对未完成。")?;
+    let instruction = "你是会议内容核对助手。下列摘要是整场会议整理结果，行动项附带对应原文。请识别值得人工核对的可能背景闲谈：综合全会讨论脉络和引用，判断该行动是否可能是会议旁人的独立对话或同时进行的其他活动。仅在存在具体语义线索时标为可能，标记只用于提醒核对，不删除内容；会议正常换题、与会者讨论不同议题、多人会议或个人备忘中的不同任务不应标记，缺乏线索则不要标记。另找出确为同一事项、且负责人、期限、条件和原文引用一致的重复项；一个引用可能包含多个不同任务，不确定就不合并。只返回JSON对象 {\"possiblyUnrelated\":[候选id],\"duplicateGroups\":[[重复id,重复id]]}，不要添加事实。";
     if input.len().saturating_add(instruction.len()) > MAX_PROMPT_BYTES {
         return Err("会议事项过多，请自行核对。".into());
     }

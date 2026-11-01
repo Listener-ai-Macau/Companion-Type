@@ -604,6 +604,11 @@ fn overview_provider_response_must_be_valid_unique_indices() {
                     if data.len() >= i + 4 + length { break; }
                 }
             }
+            let start = data.windows(4).position(|w| w == b"\r\n\r\n").unwrap() + 4;
+            let request: Value = serde_json::from_slice(&data[start..]).unwrap();
+            let input = request["messages"][1]["content"].as_str().unwrap();
+            assert!(input.find("\"title\"").unwrap() < input.find("\"summary\"").unwrap());
+            assert!(input.find("\"summary\"").unwrap() < input.find("\"actions\"").unwrap());
             let payload = serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content}}]}).to_string();
             write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: {}\r\n\r\n{}",payload.len(),payload).unwrap();
         }
