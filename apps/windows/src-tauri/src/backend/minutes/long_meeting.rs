@@ -423,11 +423,9 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
         }
     }
     super::super::meeting_processing_job::check_current()?;
-    let path = root.join(Identity::new_with_template(endpoint, model, key, session, template).filename());
-    if let Ok(checkpoint) = read_checkpoint(&path) {
-        append_unverified_chapters(&mut minutes, &checkpoint, &pending_minutes,
-            &pending_evidence, &slices, &session.transcript_text);
-    }
+    let identity = Identity::new_with_template(endpoint, model, key, session, template);
+    append_cached_unverified(&root, &identity, &mut minutes, &pending_minutes,
+        &pending_evidence, &slices, &session.transcript_text);
     Ok(minutes)
 }
 
@@ -441,15 +439,26 @@ fn append_unverified_chapters(minutes: &mut CompanionV1MeetingMinutes, checkpoin
         || pending.len()!=slices.len() { return; }
     let mut sections=Vec::new();
     for (index,(verified,draft)) in checkpoint.chapters.iter().zip(pending).enumerate() {
-        if verified.as_ref().is_some_and(|chapter| chapter.omitted_items == 0) {continue;}
         let Some(draft)=draft else {continue;};
         let Some(part)=source.get(slices[index].0..slices[index].1) else {continue;};
         let mut evidence=pending_evidence[index].clone();
         restore_quote_whitespace(part,&mut evidence);
-        let missing=|field:&str, item_index:usize| {
-            verified.is_none() || !evidence.iter().any(|item| item.field==field
+        let missing=|field:&str, item_index:usize, text:&str| {
+            let already_verified=verified.as_ref().is_some_and(|chapter| {
+                let same=|value:&str| value.trim_start_matches("待核对：")==text;
+                match field {
+                    "summary" => chapter.minutes.summary.iter().any(|s|same(s)),
+                    "decisions" => chapter.minutes.decisions.iter().any(|s|same(s)),
+                    "questions" => chapter.minutes.questions.iter().any(|s|same(s)),
+                    "actionItems" => draft.action_items.get(item_index).is_some_and(|original|
+                        chapter.minutes.action_items.iter().any(|s|same(&s.text)
+                            && s.owner==original.owner && s.due==original.due)),
+                    _ => false,
+                }
+            });
+            !already_verified && (verified.is_none() || !evidence.iter().any(|item| item.field==field
                 && item.index==item_index && cited_item(draft,item).is_some_and(|s|!s.trim().is_empty())
-                && !item.quote.trim().is_empty() && part.contains(&item.quote))
+                && !item.quote.trim().is_empty() && part.contains(&item.quote)))
         };
         let mut lines=Vec::new();
         let mut add=|label:&str,value:&str| {
@@ -466,16 +475,16 @@ fn append_unverified_chapters(minutes: &mut CompanionV1MeetingMinutes, checkpoin
             }
             lines.push(format!("- {label}：{escaped}"));
         };
-        for (i,item) in draft.summary.iter().enumerate() {if missing("summary",i) {add("讨论",item);}}
-        for (i,item) in draft.decisions.iter().enumerate() {if missing("decisions",i) {add("可能的决定",item);}}
+        for (i,item) in draft.summary.iter().enumerate() {if missing("summary",i,item) {add("讨论",item);}}
+        for (i,item) in draft.decisions.iter().enumerate() {if missing("decisions",i,item) {add("可能的决定",item);}}
         for (i,item) in draft.action_items.iter().enumerate() {
-            if !missing("actionItems",i) {continue;}
+            if !missing("actionItems",i,&item.text) {continue;}
             let mut text=item.text.clone();
             if let Some(owner)=item.owner.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的负责人：{owner}）"));}
             if let Some(due)=item.due.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的时间：{due}）"));}
             add("可能的行动",&text);
         }
-        for (i,item) in draft.questions.iter().enumerate() {if missing("questions",i) {add("可能的问题",item);}}
+        for (i,item) in draft.questions.iter().enumerate() {if missing("questions",i,item) {add("可能的问题",item);}}
         if !lines.is_empty() {sections.push(format!("### 第{}段\n\n{}",index+1,lines.join("\n")));}
     }
     if sections.is_empty() {return;}
@@ -485,6 +494,98 @@ fn append_unverified_chapters(minutes: &mut CompanionV1MeetingMinutes, checkpoin
         minutes.markdown.insert_str(index,&format!("\n\n{draft}"));
     } else {
         minutes.markdown.push_str(&format!("\n\n{draft}"));
+    }
+}
+
+// Retain previously returned reference material across failed retries. Store it
+// under a distinct identity using the existing checkpoint format, so existing
+// cache deletion and older installed versions can identify and remove it.
+// It is always rendered as unverified and never reused as a validated chapter.
+fn append_cached_unverified(root: &Path, identity: &Identity, minutes: &mut CompanionV1MeetingMinutes,
+    pending: &[Option<CompanionV1MeetingMinutes>], pending_evidence: &[Vec<Evidence>],
+    slices: &[(usize, usize)], source: &str) {
+    let Ok(_guard)=root_lock(root) else {
+        if let Ok(checkpoint)=read_checkpoint(&root.join(identity.filename())) {
+            append_unverified_chapters(minutes,&checkpoint,pending,pending_evidence,slices,source);
+        }
+        return;
+    };
+    let Ok(checkpoint)=read_checkpoint(&root.join(identity.filename())) else {return;};
+    if checkpoint.identity.filename()!=identity.filename() || checkpoint.chapters.len()!=slices.len()
+        || pending.len()!=slices.len() || pending_evidence.len()!=slices.len() {return;}
+    let mut cache_identity=identity.clone();
+    cache_identity.profile_hash=hash(format!("{}:unverified-reference-v1",identity.profile_hash).as_bytes());
+    let path=root.join(cache_identity.filename());
+    let mut cache=if path.exists() {
+        let cache=read_checkpoint(&path);
+        let Ok(cache)=cache else {
+            append_unverified_chapters(minutes,&checkpoint,pending,pending_evidence,slices,source);
+            return;
+        };
+        if cache.identity.filename()!=cache_identity.filename() || cache.chapters.len()!=slices.len() {
+            append_unverified_chapters(minutes,&checkpoint,pending,pending_evidence,slices,source);
+            return;
+        }
+        cache
+    } else {Checkpoint {identity:cache_identity,chapters:vec![None;slices.len()]}};
+    let mut drafts=pending.to_vec();
+    let mut evidence=pending_evidence.to_vec();
+    for (index,&(start,end)) in slices.iter().enumerate() {
+        let Some(part)=source.get(start..end) else {return;};
+        if let Some(old)=cache.chapters[index].as_ref().filter(|old| old.start==start && old.end==end
+            && old.source_hash==hash(part.as_bytes())
+            && old.result_hash==chapter_digest(&old.minutes,&old.evidence,old.omitted_items)) {
+            if let Some(current)=drafts[index].as_mut() {
+                merge_reference_draft(&old.minutes,&old.evidence,current,&mut evidence[index]);
+            } else {
+                drafts[index]=Some(old.minutes.clone());evidence[index]=old.evidence.clone();
+            }
+        }
+        cache.chapters[index]=drafts[index].as_ref().map(|draft| Chapter {
+            start,end,source_hash:hash(part.as_bytes()),minutes:draft.clone(),
+            evidence:evidence[index].clone(),omitted_items:0,
+            result_hash:chapter_digest(draft,&evidence[index],0),
+        });
+    }
+    let before=minutes.markdown.len();
+    append_unverified_chapters(minutes,&checkpoint,&drafts,&evidence,slices,source);
+    if minutes.markdown.len()!=before {
+        // If saving fails, the returned reading copy still keeps the draft.
+        // The user can continue; no normal chapter or original transcript changes.
+        let _=save_checkpoint(&path,&cache);
+    } else if path.exists() {
+        let _=fs::remove_file(&path);
+    }
+}
+
+// Merge by exact item identity; citations continue to refer to their original
+// item after indices are mapped. A later failed or partial response must not
+// silently erase earlier reference-only information.
+fn merge_reference_draft(old:&CompanionV1MeetingMinutes, old_evidence:&[Evidence],
+    current:&mut CompanionV1MeetingMinutes, evidence:&mut Vec<Evidence>) {
+    fn strings(field:&str, old:&[String], current:&mut Vec<String>, old_evidence:&[Evidence], evidence:&mut Vec<Evidence>) {
+        for (i,value) in old.iter().enumerate() {
+            let index=if let Some(index)=current.iter().position(|item|item==value) {index}
+                else {current.push(value.clone());current.len()-1};
+            for quote in old_evidence.iter().filter(|item|item.field==field && item.index==i) {
+                if !evidence.iter().any(|item|item.field==field && item.index==index && item.quote==quote.quote) {
+                    evidence.push(Evidence {field:field.into(),index,quote:quote.quote.clone()});
+                }
+            }
+        }
+    }
+    strings("summary",&old.summary,&mut current.summary,old_evidence,evidence);
+    strings("decisions",&old.decisions,&mut current.decisions,old_evidence,evidence);
+    strings("questions",&old.questions,&mut current.questions,old_evidence,evidence);
+    for (i,value) in old.action_items.iter().enumerate() {
+        let index=if let Some(index)=current.action_items.iter().position(|item|
+            item.text==value.text && item.owner==value.owner && item.due==value.due) {index}
+            else {current.action_items.push(value.clone());current.action_items.len()-1};
+        for quote in old_evidence.iter().filter(|item|item.field=="actionItems" && item.index==i) {
+            if !evidence.iter().any(|item|item.field=="actionItems" && item.index==index && item.quote==quote.quote) {
+                evidence.push(Evidence {field:"actionItems".into(),index,quote:quote.quote.clone()});
+            }
+        }
     }
 }
 

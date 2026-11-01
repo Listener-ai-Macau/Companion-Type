@@ -61,8 +61,30 @@ fn unverified_chapter_remains_visible_without_becoming_an_action_or_complete() {
     assert!(partially_verified.action_items.is_empty());
     checkpoint.chapters[0].as_mut().unwrap().omitted_items=0;
     let mut complete=assemble(&source,&checkpoint,0,"now",None);
-    append_unverified_chapters(&mut complete,&checkpoint,&[Some(draft)], &[vec![]], &[(0,source.transcript_text.len())], &source.transcript_text);
+    let verified=checkpoint.chapters[0].as_ref().unwrap();
+    append_unverified_chapters(&mut complete,&checkpoint,&[Some(verified.minutes.clone())], &[verified.evidence.clone()], &[(0,source.transcript_text.len())], &source.transcript_text);
     assert!(!complete.markdown.contains("未核对的参考草稿"));
+}
+
+#[test]
+fn reference_cache_uses_existing_erasable_format_and_never_recreates_deleted_session() {
+    let root=root();fs::create_dir_all(&root).unwrap();
+    let source=session("公开会议内容。");
+    let identity=Identity::new("https://fixture.invalid","model","key",&source);
+    let checkpoint=Checkpoint {identity:identity.clone(),chapters:vec![None]};
+    save_checkpoint(&root.join(identity.filename()),&checkpoint).unwrap();
+    let (mut draft,_)=response(&source);draft.summary=vec!["尚待核对".into()];
+    let mut result=assemble(&source,&checkpoint,0,"now",Some("缺少引用".into()));
+    append_cached_unverified(&root,&identity,&mut result,&[Some(draft.clone())],&[vec![]],&[(0,source.transcript_text.len())],&source.transcript_text);
+    assert!(result.markdown.contains("尚待核对"));
+    let cache_files=fs::read_dir(&root).unwrap().filter_map(Result::ok).map(|e|e.path())
+        .filter(|p|p.extension().is_some_and(|s|s=="json")).collect::<Vec<_>>();
+    assert_eq!(cache_files.len(),2);
+    assert!(cache_files.iter().all(|p|read_checkpoint(p).is_ok()));
+    assert_eq!(erase(&root,&[source.id.clone()],false).unwrap(),(2,0));
+    append_cached_unverified(&root,&identity,&mut result,&[Some(draft)],&[vec![]],&[(0,source.transcript_text.len())],&source.transcript_text);
+    assert_eq!(fs::read_dir(&root).unwrap().filter_map(Result::ok).filter(|e|e.path().extension().is_some_and(|s|s=="json")).count(),0);
+    cleanup(root);
 }
 
 #[test]
