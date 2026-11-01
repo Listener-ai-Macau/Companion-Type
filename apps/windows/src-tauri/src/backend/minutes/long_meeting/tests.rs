@@ -67,6 +67,20 @@ fn unverified_chapter_remains_visible_without_becoming_an_action_or_complete() {
 }
 
 #[test]
+fn earlier_reference_survives_retry_without_duplicating_verified_items() {
+    let source=session("公开会议内容。");let checkpoint=Checkpoint {identity:Identity::new("https://fixture.invalid","model","key",&source),chapters:vec![None]};
+    let mut result=assemble(&source,&checkpoint,0,"now",Some("服务失败".into()));
+    result.summary.push("已经核对".into());
+    let previous="## 未核对的参考草稿\n\n> 供核对\n\n### 第1段\n\n- 讨论：已经核对\n- 讨论：旧的讨论\n- 可能的行动：发送报价（可能的负责人：小王）（可能的时间：周五）\n\n## 分段原文依据\n\n来源";
+    append_previous_reference(&mut result,previous);
+    assert!(result.markdown.contains("- 讨论：旧的讨论"));
+    assert!(result.markdown.contains("- 可能的行动：发送报价（可能的负责人：小王）（可能的时间：周五）"));
+    assert!(!result.markdown.contains("- 讨论：已经核对"));
+    assert!(result.action_items.is_empty());
+    let once=result.markdown.clone();append_previous_reference(&mut result,previous);assert_eq!(result.markdown,once);
+}
+
+#[test]
 fn reference_cache_uses_existing_erasable_format_and_never_recreates_deleted_session() {
     let root=root();fs::create_dir_all(&root).unwrap();
     let source=session("公开会议内容。");

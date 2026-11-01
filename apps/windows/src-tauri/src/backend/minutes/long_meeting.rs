@@ -351,6 +351,11 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
     generated_at: &str, client: &reqwest::blocking::Client, template: Option<&crate::companion_v1::MinutesTemplate>) -> Result<CompanionV1MeetingMinutes, String> {
     let root = cache_root().ok_or("纪要分段缓存路径不可用，已有转写保留。")?;
     let slices = plan(&session.transcript_text)?;
+    let identity = Identity::new_with_template(endpoint, model, key, session, template);
+    // An older reference is tied to the same transcript only when this exact
+    // source/profile checkpoint existed before starting the new request.
+    let had_matching_checkpoint=read_checkpoint(&root.join(identity.filename())).is_ok_and(|checkpoint|
+        checkpoint.identity.filename()==identity.filename() && checkpoint.chapters.len()==slices.len());
     let mut attempts = vec![0usize; slices.len()];
     let mut pending_minutes = vec![None; slices.len()];
     let mut pending_evidence = vec![Vec::<Evidence>::new(); slices.len()];
@@ -423,9 +428,17 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
         }
     }
     super::super::meeting_processing_job::check_current()?;
-    let identity = Identity::new_with_template(endpoint, model, key, session, template);
     append_cached_unverified(&root, &identity, &mut minutes, &pending_minutes,
         &pending_evidence, &slices, &session.transcript_text);
+    // Results created before the reference cache existed are already stored
+    // in the session. Carry their remaining reference-only items forward when
+    // regenerating the same mode, template and transcript-review revision.
+    let previous=if session.meeting_mode=="onlineLive" {session.minutes_by_mode.online_live.as_ref()}
+        else {session.minutes_by_mode.offline_store.as_ref()};
+    if let Some(previous)=previous.filter(|previous| had_matching_checkpoint && previous.template.as_ref()==template
+        && super::super::transcript_review::minutes_current(session,previous.source_review_revision)) {
+        append_previous_reference(&mut minutes,&previous.markdown);
+    }
     Ok(minutes)
 }
 
@@ -495,6 +508,62 @@ fn append_unverified_chapters(minutes: &mut CompanionV1MeetingMinutes, checkpoin
     } else {
         minutes.markdown.push_str(&format!("\n\n{draft}"));
     }
+}
+
+// Old installed versions saved this section in the session, but had no
+// separate reference cache. Preserve only its known reference lines; never
+// promote them to structured actions and do not repeat items now verified.
+fn append_previous_reference(minutes:&mut CompanionV1MeetingMinutes, previous:&str) {
+    fn escaped(value:&str)->String {
+        let mut result=String::new();
+        for ch in value.trim().chars() {
+            match ch {
+                '\r'|'\n'=>result.push(' '),
+                '\\'|'`'|'*'|'_'|'['|']'|'#'|'>'=>{result.push('\\');result.push(ch);},
+                c if c.is_control()=>result.push(' '),
+                c=>result.push(c),
+            }
+        }
+        result
+    }
+    let previous=previous.replace("\r\n","\n");
+    let Some((_,section))=previous.split_once("## 未核对的参考草稿\n") else {return;};
+    let section=section.split("\n## ").next().unwrap_or("");
+    let mut seen:HashSet<String>=minutes.markdown.lines().map(str::to_string).collect();
+    for item in &minutes.summary {seen.insert(format!("- 讨论：{}",escaped(item.trim_start_matches("待核对："))));}
+    for item in &minutes.decisions {seen.insert(format!("- 可能的决定：{}",escaped(item.trim_start_matches("待核对："))));}
+    for item in &minutes.questions {seen.insert(format!("- 可能的问题：{}",escaped(item.trim_start_matches("待核对："))));}
+    for item in &minutes.action_items {
+        let mut text=item.text.trim_start_matches("待核对：").to_string();
+        if let Some(owner)=item.owner.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的负责人：{owner}）"));}
+        if let Some(due)=item.due.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的时间：{due}）"));}
+        seen.insert(format!("- 可能的行动：{}",escaped(&text)));
+    }
+    let mut groups:Vec<(String,Vec<String>)>=Vec::new();
+    let mut heading=None;
+    for line in section.lines() {
+        if let Some(number)=line.strip_prefix("### 第").and_then(|s|s.split_once('段')).map(|(n,_)|n)
+            .filter(|n|!n.is_empty() && n.bytes().all(|b|b.is_ascii_digit())) {
+            heading=Some(format!("### 第{number}段（前次参考）"));
+            continue;
+        }
+        if !["- 讨论：","- 可能的决定：","- 可能的行动：","- 可能的问题："].iter().any(|prefix|line.starts_with(prefix))
+            || line.len()>8192 || !seen.insert(line.to_string()) {continue;}
+        let Some(heading)=heading.as_ref() else {continue;};
+        if groups.last().is_none_or(|(name,_)|name!=heading) {groups.push((heading.clone(),Vec::new()));}
+        groups.last_mut().unwrap().1.push(line.to_string());
+    }
+    if groups.is_empty() {return;}
+    let content=groups.into_iter().filter(|(_,lines)|!lines.is_empty())
+        .map(|(name,lines)|format!("{name}\n\n{}",lines.join("\n"))).collect::<Vec<_>>().join("\n\n");
+    if content.is_empty() {return;}
+    let prefix=if minutes.markdown.contains("## 未核对的参考草稿\n") {String::new()} else {
+        "## 未核对的参考草稿\n\n> 以下保留前次未能自动对应原文的内容，仅供回听核对；不作为已确认的决定或待办。\n\n".to_string()
+    };
+    let insertion=format!("\n\n{prefix}{content}");
+    if let Some(index)=minutes.markdown.find("\n\n## 分段原文依据\n\n") {
+        minutes.markdown.insert_str(index,&insertion);
+    } else {minutes.markdown.push_str(&insertion);}
 }
 
 // Retain previously returned reference material across failed retries. Store it
