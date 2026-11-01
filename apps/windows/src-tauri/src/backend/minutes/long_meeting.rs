@@ -427,6 +427,56 @@ fn action_source_quotes(checkpoint: &Checkpoint, minutes: &CompanionV1MeetingMin
 #[derive(Default)]
 struct ActionReview { background: Vec<usize>, duplicates: Vec<Vec<usize>> }
 
+// A keyword is an AI paraphrase, not itself a citation. Only associate it
+// with a flagged action when its own consecutive character pairs cover the
+// whole word in that action's validated quote. Do not infer a background
+// source when the same terms also occur nearby elsewhere in the transcript or
+// in a meeting summary: the meeting may legitimately have changed subject.
+fn keyword_quote_tokens(keyword: &str, quote: &str) -> Option<Vec<String>> {
+    let chars = keyword.chars().collect::<Vec<_>>();
+    if !(4..=64).contains(&chars.len()) || !chars.iter().all(|c| ('\u{4e00}'..='\u{9fff}').contains(c)) { return None; }
+    let mut covered = vec![false; chars.len()];
+    let mut found = Vec::new();
+    let mut positions = Vec::new();
+    for i in 0..chars.len()-1 {
+        let pair = chars[i..i+2].iter().collect::<String>();
+        if quote.contains(&pair) {
+            covered[i] = true; covered[i+1] = true;
+            if !found.contains(&pair) { found.push(pair); }
+            positions.push(i);
+        }
+    }
+    if covered.iter().all(|covered| *covered) && found.len() >= 2
+        && positions.iter().any(|&a| positions.iter().any(|&b| b >= a + 2)) { Some(found) } else { None }
+}
+
+fn tokens_nearby(text: &str, tokens: &[String]) -> bool {
+    let Some(first) = tokens.first() else { return false; };
+    text.match_indices(first).any(|(at, _)| {
+        let start=text[..at].char_indices().rev().nth(120).map(|(i,_)|i).unwrap_or(0);
+        let end=text[at..].char_indices().nth(120).map(|(i,_)|at+i).unwrap_or(text.len());
+        tokens.iter().all(|token|text[start..end].contains(token))
+    })
+}
+
+fn background_keyword_indices(session: &CompanionV1HostSession, minutes: &CompanionV1MeetingMinutes,
+    quotes: &[Vec<String>], background: &[usize]) -> Vec<usize> {
+    let flagged_quotes = background.iter().filter_map(|&i| quotes.get(i)).flatten()
+        .filter(|quote| !quote.trim().is_empty() && session.transcript_text.matches(quote.as_str()).count() == 1)
+        .collect::<Vec<_>>();
+    if flagged_quotes.is_empty() { return Vec::new(); }
+    let mut other_text = session.transcript_text.clone();
+    for quote in &flagged_quotes { other_text = other_text.replace(quote.as_str(), " "); }
+    minutes.keywords.iter().enumerate().filter_map(|(index, keyword)| {
+        flagged_quotes.iter().any(|quote| {
+            let Some(tokens) = keyword_quote_tokens(keyword, quote) else { return false; };
+            !tokens_nearby(&other_text, &tokens)
+                && !minutes.summary.iter().chain(&minutes.decisions).chain(&minutes.questions)
+                    .any(|line| tokens_nearby(line, &tokens))
+        }).then_some(index)
+    }).collect()
+}
+
 // A model suggestion alone is not enough to remove an action: each member
 // must have the same attribution and at least one identical validated quote.
 // Distinct source evidence, conditions, owner or deadline remain reviewable.
@@ -451,6 +501,7 @@ fn apply_action_review(session: &CompanionV1HostSession, minutes: &mut Companion
         remove.extend(ids.into_iter().skip(1));
     }
     if background.is_empty() && remove.is_empty() { return; }
+    let background_keywords = background_keyword_indices(session, minutes, quotes, &background);
     let Some((notice, _)) = minutes.markdown.split_once("\n\n") else { return; };
     let Some((_, evidence)) = minutes.markdown.split_once("\n\n## 分段原文依据\n\n") else { return; };
     let notice = notice.to_string(); let evidence = evidence.to_string();
@@ -461,6 +512,11 @@ fn apply_action_review(session: &CompanionV1HostSession, minutes: &mut Companion
     let mut index = 0usize;
     revised.action_items.retain(|_| { let keep = !remove.contains(&index); index += 1; keep });
     let mut header = revised.clone(); header.processing = None;
+    // Only annotate the reading copy. The original structured keywords and
+    // all quotations remain unchanged for exports and further review.
+    for index in background_keywords {
+        header.keywords[index] = format!("{}（可能来自背景对话，请核对）", header.keywords[index]);
+    }
     let mut source = session.clone(); source.transcript_text.clear(); source.transcript_review = None;
     revised.markdown = format!("{}\n\n{}\n\n## 分段原文依据\n\n{}", notice,
         super::render_minutes_markdown(&source, &header), evidence);

@@ -666,6 +666,63 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
 }
 
 #[test]
+fn background_keyword_review_requires_source_and_preserves_legitimate_topic_changes() {
+    let quote="旁人说要盘点仓库里的库存。";
+    let source=session(&format!("会议讨论发布计划。{quote}会议确认后续工作。"));
+    let (mut minutes,_) = response(&source);
+    minutes.summary=vec!["会议讨论发布计划。".into()];
+    minutes.keywords=vec!["库存盘点".into(),"发布计划".into(),"仓库".into()];
+    minutes.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"盘点仓库库存".into(),owner:None,due:None}];
+    minutes.markdown=format!("> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- {quote}");
+    let quotes=vec![vec![quote.to_string()]];
+    assert_eq!(background_keyword_indices(&source,&minutes,&quotes,&[0]),vec![0]);
+    assert!(background_keyword_indices(&source,&minutes,&quotes,&[]).is_empty());
+    assert!(background_keyword_indices(&source,&minutes,&[vec!["不存在的原话".into()]],&[0]).is_empty());
+    let mut switched=source.clone();
+    switched.transcript_text.push_str(&format!("{}下月会议改为盘点仓库库存。", "会议继续讨论。".repeat(30)));
+    assert!(background_keyword_indices(&switched,&minutes,&quotes,&[0]).is_empty(),"a real later topic change must not be labelled as background");
+    let mut summarized=minutes.clone();summarized.summary.push("会议决定盘点仓库库存。".into());
+    assert!(background_keyword_indices(&source,&summarized,&quotes,&[0]).is_empty(),"a keyword supported by the meeting summary remains ordinary");
+    let mut repeated=source.clone();repeated.transcript_text.push_str(quote);
+    assert!(background_keyword_indices(&repeated,&minutes,&quotes,&[0]).is_empty(),"ambiguous repeated source cannot establish provenance");
+    let original=minutes.keywords.clone();
+    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background:vec![0],duplicates:vec![]});
+    assert_eq!(minutes.keywords,original,"structured keywords are never removed or renamed");
+    assert!(minutes.markdown.contains("库存盘点（可能来自背景对话，请核对）"));
+    assert!(!minutes.markdown.contains("发布计划（可能来自背景"));
+    assert!(minutes.markdown.contains(quote),"the original evidence is retained");
+}
+
+#[test]
+#[ignore = "requires a previously authorized isolated real-meeting result and checkpoint; no network"]
+fn replay_real_background_keyword_against_validated_source() {
+    let input=std::env::var_os("COMPANION_BACKGROUND_REPLAY_RESULT").unwrap();
+    let checkpoint=std::env::var_os("COMPANION_BACKGROUND_REPLAY_CHECKPOINT").unwrap();
+    let target=std::env::var("COMPANION_BACKGROUND_EXPECTED_KEYWORD").unwrap();
+    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(input).unwrap()).unwrap();
+    let mut minutes=source.minutes.clone().unwrap();
+    let mut background=Vec::new();
+    for (index,item) in minutes.action_items.iter_mut().enumerate() {
+        if let Some(text)=item.text.strip_prefix("可能来自背景对话，请核对：") {
+            item.text=text.to_string();background.push(index);
+        }
+    }
+    let quotes=action_source_quotes(&read_checkpoint(Path::new(&checkpoint)).unwrap(),&minutes);
+    let flagged=background_keyword_indices(&source,&minutes,&quotes,&background);
+    let target_index=minutes.keywords.iter().position(|keyword|keyword==&target).expect("known source keyword");
+    assert!(flagged.contains(&target_index));
+    if let Ok(excluded)=std::env::var("COMPANION_BACKGROUND_EXCLUDED_IDS") {
+        for index in excluded.split(',').filter(|v|!v.is_empty()).map(|v|v.parse::<usize>().unwrap()) {
+            assert!(!flagged.contains(&index),"unrelated model-only candidate must not be marked");
+        }
+    }
+    let before=minutes.keywords.clone();
+    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background,duplicates:vec![]});
+    assert_eq!(minutes.keywords,before);
+    assert!(minutes.markdown.contains(&format!("{target}（可能来自背景对话，请核对）")));
+}
+
+#[test]
 fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
     use std::{io::{Read, Write}, net::TcpListener, thread};
     let listener = TcpListener::bind("127.0.0.1:0").unwrap();
