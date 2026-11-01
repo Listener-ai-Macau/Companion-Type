@@ -219,6 +219,22 @@ fn missing_evidence_defers_one_chapter_and_completes_without_repeating_others() 
 }
 
 #[test]
+fn unsupported_source_quotes_retry_then_defer_without_losing_completed_chapters() {
+    let root=root();let text="公开会议内容用于分段整理。\n".repeat(5000);let source=session(&text);
+    let total=plan(&text).unwrap().len();assert!(total>3);
+    let mut calls=Vec::new();let mut invalid=0;
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|index,_,part,_| {
+        calls.push(index);let (minutes,mut evidence)=response(part);
+        if index==2 && invalid<2 {invalid+=1;for item in &mut evidence {item.quote="不在原文的引用".into();}}
+        Ok((minutes,evidence))
+    }).unwrap();
+    let mut expected=vec![0,1,2,2];expected.extend(3..total);expected.push(2);
+    assert_eq!(calls,expected);assert_eq!(invalid,2);
+    assert!(result.processing.unwrap().is_complete());assert_eq!(source.transcript_text,text);
+    cleanup(root);
+}
+
+#[test]
 fn deferred_chapter_and_later_service_failure_remain_partial_and_retryable() {
     let root=root();let source=session(&"公开会议内容。\n".repeat(5000));
     let total=plan(&source.transcript_text).unwrap().len();assert!(total>3);

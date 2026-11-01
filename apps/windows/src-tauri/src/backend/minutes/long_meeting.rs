@@ -738,32 +738,38 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
         }
         let mut part = session.clone(); part.transcript_text = session.transcript_text[start..end].to_string();
         part.utterances.clear(); part.minutes = None; part.minutes_by_mode = Default::default();
-        fresh += 1;
-        let mut response = request(index, slices.len(), &part, remaining.min(Duration::from_secs(180)));
-        // A provider occasionally returns malformed/incomplete JSON despite a
-        // successful HTTP request. Retry that response once for this same
-        // source slice; never retry authentication or transport failures here.
-        // Both attempts count against the existing overall request/time budget.
-        if deferred != Some(index) && response.as_ref().is_err_and(|error| *error == MISSING_EVIDENCE
-            || *error == super::safe_minutes_http_error(super::http_policy::Failure::InvalidResponse)) {
-            super::super::meeting_processing_job::check_current()?;
-            let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
-            if fresh < MAX_FRESH_REQUESTS && remaining >= Duration::from_secs(180) {
-                fresh += 1;
-                response = request(index, slices.len(), &part, remaining.min(Duration::from_secs(180)));
-            }
-        }
-        let result = response
-            .and_then(|(mut minutes, mut evidence)| {
+        // Validate before deciding whether to retry: syntactically valid JSON
+        // can still cite only words absent from the source. In that case there
+        // is no usable chapter yet, so apply the same bounded citation retry.
+        let prepare = |response: Result<(CompanionV1MeetingMinutes, Vec<Evidence>), String>| {
+            response.and_then(|(mut minutes, mut evidence)| {
                 restore_quote_whitespace(&part.transcript_text, &mut evidence);
                 append_conditional_source_actions(&mut minutes, &mut evidence, &part.transcript_text);
                 preserve_conditional_actions(&mut minutes, &mut evidence, &part.transcript_text);
                 let omitted_items=retain_source_backed(&mut minutes,&mut evidence,&part.transcript_text);
                 mark_uncertain_items(&mut minutes, &evidence);
+                if omitted_items > 0 && minutes.summary.is_empty() && minutes.decisions.is_empty()
+                    && minutes.action_items.is_empty() && minutes.questions.is_empty() {
+                    return Err(MISSING_EVIDENCE.to_string());
+                }
                 validate_chapter(&minutes, &evidence, &part.transcript_text)?;
                 let result_hash = chapter_digest(&minutes, &evidence, omitted_items);
                 Ok(Chapter { start, end, source_hash: hash(part.transcript_text.as_bytes()), minutes, evidence, omitted_items, result_hash })
-            });
+            })
+        };
+        fresh += 1;
+        let mut result = prepare(request(index, slices.len(), &part, remaining.min(Duration::from_secs(180))));
+        // Both attempts share the existing overall request/time budget. Never
+        // retry authentication, transport failures or a user's cancellation.
+        if deferred != Some(index) && result.as_ref().is_err_and(|error| *error == MISSING_EVIDENCE
+            || *error == super::safe_minutes_http_error(super::http_policy::Failure::InvalidResponse)) {
+            super::super::meeting_processing_job::check_current()?;
+            let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
+            if fresh < MAX_FRESH_REQUESTS && remaining >= Duration::from_secs(180) {
+                fresh += 1;
+                result = prepare(request(index, slices.len(), &part, remaining.min(Duration::from_secs(180))));
+            }
+        }
         match result {
             Ok(chapter) => {
                 checkpoint.chapters[index] = Some(chapter);
