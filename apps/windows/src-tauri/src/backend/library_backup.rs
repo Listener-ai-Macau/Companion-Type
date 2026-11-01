@@ -9,6 +9,12 @@ const SCHEMA:&str="companion.library.backup.v1";
 #[derive(Serialize,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct Manifest { schema:String, sessions:Vec<CompanionV1HostSession>, files:Vec<BackupFile> }
+#[derive(Clone,Debug,Serialize,Deserialize,PartialEq,Eq)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+pub struct TemplateDraft {pub name:String,pub instructions:String}
+#[derive(Serialize,Deserialize)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+struct TemplateSidecar {schema:String,templates:Vec<TemplateDraft>}
 #[derive(Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct Report {pub path:String,pub sessions:usize,pub files:usize,pub bytes:u64}
@@ -103,6 +109,9 @@ fn pack_rows(snapshot:&CompanionV1Snapshot,root:&Path)->Result<(Vec<CompanionV1H
 
 /// Writes a fresh self-contained directory; it never replaces an existing backup.
 pub fn save(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent:&Path)->Result<Report,String>{
+    save_with_templates(snapshot,recording_root,parent,&[])
+}
+fn save_with_templates(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent:&Path,templates:&[TemplateDraft])->Result<Report,String>{
     if snapshot.host.persistence.status!="ready"||snapshot.meeting.active||snapshot.device.recording||snapshot.host.sessions.iter().any(|s|s.status=="recording"||matches!(s.recovery.stage.as_str(),"transcribing"|"generatingMinutes")){
         return Err("请先完成录音和正在进行的整理，并保存会议库。".into());
     }
@@ -129,6 +138,12 @@ pub fn save(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent:&Path)->Re
     let result=(||{
         let data=pending.join("files");fs::create_dir(&data).map_err(|e|e.to_string())?;let mut bytes=0u64;
         for (i,item) in files.iter().enumerate(){copy_verified(&root.join(&item.file),&data.join(i.to_string()),&(item.bytes,item.sha256.clone()))?;bytes=bytes.checked_add(item.bytes).ok_or("备份容量无效。")?;}
+        if !templates.is_empty() {
+            let contents=serde_json::to_vec_pretty(&TemplateSidecar{schema:"companion.minutes.templates.v1".into(),templates:templates.to_vec()}).map_err(|e|e.to_string())?;
+            if contents.len()>8*1024*1024{return Err("自定义模板过大，无法备份。".into());}
+            let mut file=OpenOptions::new().write(true).create_new(true).open(pending.join("minutes-templates.json")).map_err(|e|e.to_string())?;
+            file.write_all(&contents).and_then(|_|file.sync_all()).map_err(|e|e.to_string())?;bytes+=contents.len() as u64;
+        }
         let manifest=serde_json::to_vec_pretty(&Manifest{schema:SCHEMA.into(),sessions,files}).map_err(|e|e.to_string())?;
         let mut file=OpenOptions::new().write(true).create_new(true).open(pending.join("manifest.json")).map_err(|e|e.to_string())?;
         file.write_all(&manifest).and_then(|_|file.sync_all()).map_err(|e|e.to_string())?;drop(file);bytes+=manifest.len() as u64;
@@ -140,6 +155,19 @@ pub fn save(snapshot:&CompanionV1Snapshot,recording_root:&Path,parent:&Path)->Re
 
 pub(crate) fn save_product(snapshot:&CompanionV1Snapshot,parent:&Path)->Result<Report,String>{
     save(snapshot,&super::audio_storage::recording_root()?,parent)
+}
+pub(crate) fn save_product_with_templates(snapshot:&CompanionV1Snapshot,parent:&Path,templates:&[TemplateDraft])->Result<Report,String>{
+    save_with_templates(snapshot,&super::audio_storage::recording_root()?,parent,templates)
+}
+/// An absent sidecar means an older backup; damaged optional templates do not
+/// prevent the user from recovering the original recordings and meetings.
+pub(crate) fn read_templates(archive:&Path)->Result<Vec<TemplateDraft>,String>{
+    let path=archive.join("minutes-templates.json");
+    let meta=match fs::symlink_metadata(&path){Ok(m)=>m,Err(e) if e.kind()==std::io::ErrorKind::NotFound=>return Ok(vec![]),Err(_)=>return Err("备份中的自定义模板无法读取。".into())};
+    if !meta.is_file()||meta.file_type().is_symlink()||meta.len()>8*1024*1024{return Err("备份中的自定义模板无效。".into());}
+    let sidecar:TemplateSidecar=serde_json::from_reader(File::open(path).map_err(|_|"备份中的自定义模板无法读取。")?).map_err(|_|"备份中的自定义模板无效。")?;
+    if sidecar.schema!="companion.minutes.templates.v1" {return Err("备份中的自定义模板版本不受支持。".into());}
+    Ok(sidecar.templates)
 }
 
 pub(crate) fn check_conflicts(archive:&Path,existing:&[CompanionV1HostSession])->Result<(),String>{
@@ -278,6 +306,24 @@ pub(crate) fn restore_index(index:&Path,rows:&[CompanionV1HostSession])->Result<
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn template_drafts_roundtrip_without_changing_existing_backup_manifest() {
+        let base=std::env::temp_dir().join(format!("companion-template-backup-{}",uuid::Uuid::new_v4()));
+        let source=base.join("source");let target=base.join("target");let backups=base.join("backups");
+        for path in [&source,&target,&backups]{fs::create_dir_all(path).unwrap();}
+        let mut snapshot=crate::companion_v1::fixture_snapshot();snapshot.host.sessions.clear();
+        snapshot.host.persistence.status="ready".into();snapshot.meeting.active=false;snapshot.device.recording=false;
+        let drafts=vec![TemplateDraft{name:"项目会议".into(),instructions:"按项目整理".into()},TemplateDraft{name:"".into(),instructions:"未写完的要求".into()}];
+        let report=save_with_templates(&snapshot,&source,&backups,&drafts).unwrap();let backup=Path::new(&report.path);
+        assert_eq!(read_templates(backup).unwrap(),drafts);
+        assert!(read_manifest(&backup.join("manifest.json")).is_ok(),"old manifest format must remain readable");
+        assert!(restore_files(backup,&target).unwrap().is_empty());
+        fs::write(backup.join("minutes-templates.json"),b"broken").unwrap();
+        assert!(read_templates(backup).is_err());
+        assert!(restore_files(backup,&target).unwrap().is_empty(),"damaged optional drafts must not block recordings");
+        let older=save(&snapshot,&source,&backups).unwrap();assert!(read_templates(Path::new(&older.path)).unwrap().is_empty());
+        fs::remove_dir_all(base).unwrap();
+    }
     #[test]
     fn dual_track_meeting_backup_restores_both_sources_and_can_be_backed_up_again() {
         use crate::companion_v1::{CompanionV1MeetingTrackPart,CompanionV1MeetingTracks};

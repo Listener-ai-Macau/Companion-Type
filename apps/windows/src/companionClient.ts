@@ -1,4 +1,5 @@
 import { invoke, convertFileSrc } from '@tauri-apps/api/core';
+import {templatesForBackup,mergeRestoredCustomTemplates,type CustomTemplateDraft} from '../../../packages/ui/src/customTemplateBackup';
 import type {PetFindRequest,PetFindReport} from '../../../packages/ui/src/CompanionPetFind';
 export const controlCompanionPetFind=(request:PetFindRequest)=>invoke<PetFindReport>('control_companion_pet_find',{request});
 import { listen } from '@tauri-apps/api/event';
@@ -211,13 +212,21 @@ export async function exportCompanionLibrary(request:import('../../../packages/c
   if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中导出本机录音。');
   return invoke('export_companion_library',{request});
 }
-export async function backupCompanionLibrary():Promise<{path:string;sessions:number;files:number;bytes:number}|null>{
+export async function backupCompanionLibrary(draft?:CustomTemplateDraft):Promise<{path:string;sessions:number;files:number;bytes:number;templateWarning?:string}|null>{
  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中备份会议库。');
- return invoke('backup_companion_library');
+ let templates:CustomTemplateDraft[]=[];let templateWarning:string|undefined;
+ try{templates=templatesForBackup(localStorage);}catch{templateWarning='部分已保存的自定义模板无法读取，因此没有包含在备份中。';}
+ if(draft&&(draft.name||draft.instructions)&&!templates.some(item=>item.name===draft.name&&item.instructions===draft.instructions))templates.unshift(draft);
+ const result=await invoke<{path:string;sessions:number;files:number;bytes:number}|null>('backup_companion_library_with_templates',{templates});
+ return result?{...result,templateWarning}:null;
 }
-export async function restoreCompanionLibraryBackup():Promise<CompanionV1Snapshot|null>{
+export async function restoreCompanionLibraryBackup():Promise<(CompanionV1Snapshot&{templateRestoreWarning?:string})|null>{
  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中恢复会议备份。');
- return invoke('restore_companion_library_backup');
+ const result=await invoke<{snapshot:CompanionV1Snapshot;templates:CustomTemplateDraft[];templateWarning:string|null}|null>('restore_companion_library_backup_with_templates');
+ if(!result)return null;
+ let warning=result.templateWarning??undefined;
+ if(result.templates.length)try{mergeRestoredCustomTemplates(localStorage,result.templates);}catch{warning='会议已恢复，但自定义模板未能保存到本机；原备份文件仍保留。';}
+ return {...result.snapshot,templateRestoreWarning:warning};
 }
 export async function saveCompanionLibraryState(request:import('../../../packages/core/src/libraryOrganization').CompanionLibraryStateRequest):Promise<CompanionV1Snapshot>{
  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中操作真实资料库。');

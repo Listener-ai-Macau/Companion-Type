@@ -612,6 +612,35 @@ pub async fn restore_companion_library_backup(app:AppHandle,coordinator:Companio
 }
 
 #[tauri::command]
+pub async fn backup_companion_library_with_templates(app:AppHandle,coordinator:CompanionCoordinatorState<'_>,templates:Vec<crate::backend::library_backup::TemplateDraft>)
+    ->Result<Option<crate::backend::library_backup::Report>,String>{
+    let lease=coordinator.begin_audio_export()?;
+    let Some(destination)=app.dialog().file().blocking_pick_folder() else{return Ok(None)};
+    let destination=destination.simplified().into_path().map_err(|e|e.to_string())?;
+    let snapshot=coordinator.snapshot()?;
+    tauri::async_runtime::spawn_blocking(move||{let _lease=lease;crate::backend::library_backup::save_product_with_templates(&snapshot,&destination,&templates)})
+        .await.map_err(|e|format!("备份任务未完成：{e}"))?.map(Some)
+}
+
+#[derive(serde::Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct LibraryRestoreWithTemplates {snapshot:CompanionV1Snapshot,templates:Vec<crate::backend::library_backup::TemplateDraft>,template_warning:Option<String>}
+
+#[tauri::command]
+pub async fn restore_companion_library_backup_with_templates(app:AppHandle,coordinator:CompanionCoordinatorState<'_>)
+    ->Result<Option<LibraryRestoreWithTemplates>,String>{
+    let Some(source)=app.dialog().file().blocking_pick_folder() else{return Ok(None)};
+    let source=source.simplified().into_path().map_err(|e|e.to_string())?;
+    let coordinator=coordinator.inner().clone();
+    tauri::async_runtime::spawn_blocking(move||{
+        let templates=crate::backend::library_backup::read_templates(&source);
+        let snapshot=coordinator.restore_library_backup(&source)?;
+        let (templates,template_warning)=match templates {Ok(v)=>(v,None),Err(e)=>(vec![],Some(e))};
+        Ok(LibraryRestoreWithTemplates{snapshot,templates,template_warning})
+    }).await.map_err(|e|format!("备份恢复任务未完成：{e}"))?.map(Some)
+}
+
+#[tauri::command]
 pub async fn export_companion_audio(
     app: AppHandle,
     coordinator: CompanionCoordinatorState<'_>,

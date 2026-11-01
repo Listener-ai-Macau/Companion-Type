@@ -340,6 +340,8 @@ pub fn run() {
             commands::export_companion_library,
             commands::backup_companion_library,
             commands::restore_companion_library_backup,
+            commands::backup_companion_library_with_templates,
+            commands::restore_companion_library_backup_with_templates,
             commands::save_companion_library_lifecycle,
             commands::purge_companion_library,
             commands::export_companion_diagnostics,

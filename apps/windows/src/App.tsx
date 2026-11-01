@@ -352,7 +352,7 @@ export function App() {
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}
       onExportAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => exportCompanionAudio(sessionId)) : undefined}
       onExportLibrary={isTauriRuntime()?(request)=>exclusive('refresh',()=>exportCompanionLibrary(request)):undefined}
-      onBackupLibrary={isTauriRuntime()?()=>exclusive('refresh',backupCompanionLibrary):undefined}
+      onBackupLibrary={isTauriRuntime()?(draft)=>exclusive('refresh',()=>backupCompanionLibrary(draft)):undefined}
       onRestoreLibrary={isTauriRuntime()?()=>exclusive('refresh',async()=>{
         const next=await restoreCompanionLibraryBackup();if(next)setSnapshot(next);return next;
       }):undefined}

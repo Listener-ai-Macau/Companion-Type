@@ -1,4 +1,5 @@
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
+import {readRestoredCustomTemplates} from './customTemplateBackup';
 import {CalendarCopyComparison} from './CalendarCopyComparison';
 import {lastSavedCalendarReminders,retainCalendarReminders,carryRelativeReminderAfterSingleDeadlineEdit} from './calendarReminderCarryover';
 import {retainCalendarSlots} from './calendarSlotCarryover';
@@ -262,7 +263,7 @@ export interface CompanionDashboardProps {
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExportLibrary?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
-  onBackupLibrary?:()=>Promise<{path:string;sessions:number;files:number;bytes:number}|null>;
+  onBackupLibrary?:(draft?:{name:string;instructions:string})=>Promise<{path:string;sessions:number;files:number;bytes:number;templateWarning?:string}|null>;
   onRestoreLibrary?:()=>Promise<CompanionV1Snapshot|null>;
   onSaveLibraryLifecycle?:(request:CompanionLibraryStateRequest)=>Promise<CompanionV1Snapshot>;
   onPurgeLibrary?:(request:CompanionLibraryPurgeRequest)=>Promise<CompanionLibraryPurgeResult>;
@@ -631,7 +632,13 @@ export function CompanionDashboard({
   const qaStale=Boolean(qaSourceSnapshot&&qaSourceSnapshot.identity!==qaIdentity(qaSourceSnapshot.ids));
   const qaSourceRemoved=Boolean(qaSourceSnapshot&&qaSourceSnapshot.ids.some(id=>!qaEligibleSessions.some(row=>row.id===id)));
   useEffect(()=>{if(qaSourceRemoved){setQaResult(null);setQaSaveMessage(null);setQaSourceSnapshot(null);setQaRemovedNotice(true);}},[qaSourceRemoved]);
-  const savedCustomTemplates=useMemo(()=>savedCustomMinutesTemplates(allLibrarySessions),[allLibrarySessions]);
+  const savedCustomTemplates=useMemo(()=>{
+    const fromMeetings=savedCustomMinutesTemplates(allLibrarySessions);
+    let restored:typeof fromMeetings=[];
+    try {restored=readRestoredCustomTemplates(localStorage);} catch { /* Existing meeting templates remain usable. */ }
+    const seen=new Set<string>();return [...fromMeetings,...restored].filter(item=>{const key=JSON.stringify([item.name,item.instructions]);
+      if(seen.has(key))return false;seen.add(key);return true;});
+  },[allLibrarySessions]);
   const localSaveConfirmed = snapshot?.host.persistence?.status === 'ready';
   const recentSavedRecording = useMemo(() => allLibrarySessions
     .filter(session => !session.organization?.trashedAt && session.status !== 'recording'
@@ -1894,7 +1901,7 @@ export function CompanionDashboard({
         <CompanionLibraryTools sessions={allLibrarySessions} visible={visibleLibrary} selection={librarySelection} setSelection={setLibrarySelection}
           filters={libraryFilters} setFilters={setLibraryFilters} blocked={controlsBusy||oobeBlockedByRecording||storageBlocked}
           restoreBlocked={controlsBusy||oobeBlockedByRecording||snapshot?.host.persistence?.status==='unsaved'}
-          onSave={onSaveLibraryOrganization} onExport={onExportLibrary} onBackup={onBackupLibrary} onRestore={onRestoreLibrary} onSaveLifecycle={onSaveLibraryLifecycle} onPurge={onPurgeLibrary} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
+          onSave={onSaveLibraryOrganization} onExport={onExportLibrary} onBackup={onBackupLibrary?()=>onBackupLibrary(customTemplate):undefined} onRestore={onRestoreLibrary} onSaveLifecycle={onSaveLibraryLifecycle} onPurge={onPurgeLibrary} onBusyChange={setLibraryBusy} onUnsavedChange={setLibraryUnsaved}/>
         </details>
         {libraryCurrentMessage?<p role="status">{libraryCurrentMessage}</p>:null}
         {visibleLibrary.length===0&&(libraryFilters.folder!=='*'||libraryFilters.tag||libraryFilters.favorites||libraryFilters.from||libraryFilters.to)?<div className="ct-library-empty">
@@ -2370,13 +2377,13 @@ export function CompanionDashboard({
                 } else if(value==='meeting'||value==='interview'||value==='lecture'||value==='custom') setTemplateId(value);
               }}>
                 <option value="meeting">会议</option><option value="interview">访谈</option><option value="lecture">课堂</option><option value="custom">自定义</option>
-                {savedCustomTemplates.length ? <optgroup label="曾用于整理的自定义模板">{savedCustomTemplates.map((saved,index)=>
-                  <option key={JSON.stringify([saved.name,saved.instructions])} value={`saved:${index}`}>{saved.name}{savedCustomTemplates.filter(item=>item.name===saved.name).length>1?` · 同名 ${savedCustomTemplates.slice(0,index+1).filter(item=>item.name===saved.name).length}`:''}</option>)}</optgroup> : null}
+                {savedCustomTemplates.length ? <optgroup label="已保存或恢复的自定义模板">{savedCustomTemplates.map((saved,index)=>
+                  <option key={JSON.stringify([saved.name,saved.instructions])} value={`saved:${index}`}>{saved.name||'未命名模板'}{savedCustomTemplates.filter(item=>item.name===saved.name).length>1?` · 同名 ${savedCustomTemplates.slice(0,index+1).filter(item=>item.name===saved.name).length}`:''}</option>)}</optgroup> : null}
               </select></label>
               {templateId==='custom' ? <div className="ct-field">
                 <label>模板名称<input aria-label="模板名称" value={customTemplate.name} onChange={event=>updateCustomTemplate({...customTemplate,name:event.target.value})}/></label>
                 <label>整理要求<textarea aria-label="整理要求" value={customTemplate.instructions} onChange={event=>updateCustomTemplate({...customTemplate,instructions:event.target.value})}/></label>
-                <p className="ct-step-meta">最近填写的模板保存在这台电脑；已用于整理的模板版本可在此选择，并随对应会议资料备份。</p>
+                <p className="ct-step-meta">最近填写的模板保存在这台电脑，并随会议资料备份；已保存或恢复的模板版本可在此选择。</p>
                 {templateSaveError ? <p role="status">模板未能保存到本机，本次整理仍可继续。</p> : null}
               </div> : null}
               <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!canGenerate||noteUnsaved||minutesDirty||titleDirty||transcriptReviewUnsaved||(templateId==='custom'&&(!customTemplate.name.trim()||!customTemplate.instructions.trim()))}

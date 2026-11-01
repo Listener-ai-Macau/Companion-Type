@@ -11,8 +11,8 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   setSelection:(v:Record<string,number>)=>void;filters:LibraryFilters;setFilters:(v:LibraryFilters)=>void;blocked:boolean;restoreBlocked?:boolean;
   onSave?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExport?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
-  onBackup?:()=>Promise<{path:string;sessions:number;files:number;bytes:number}|null>;
-  onRestore?:()=>Promise<CompanionV1Snapshot|null>;
+  onBackup?:()=>Promise<{path:string;sessions:number;files:number;bytes:number;templateWarning?:string}|null>;
+  onRestore?:()=>Promise<(CompanionV1Snapshot&{templateRestoreWarning?:string})|null>;
   onSaveLifecycle?:(request:CompanionLibraryStateRequest)=>Promise<CompanionV1Snapshot>;
   onPurge?:(request:CompanionLibraryPurgeRequest)=>Promise<CompanionLibraryPurgeResult>;
   onBusyChange?:(v:boolean)=>void;onUnsavedChange?:(v:boolean)=>void;
@@ -50,14 +50,14 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
  const backupLibrary=async()=>{
   if(blocked||active.current||!onBackup||draft)return;
   active.current=true;setBusy(true);onBusyChange?.(true);setMessage('');
-  try{const result=await onBackup();setMessage(result?`已备份 ${result.sessions} 场会议到 ${result.path}。请妥善保管该文件夹。`:'已取消备份。');}
+  try{const result=await onBackup();setMessage(result?`已备份 ${result.sessions} 场会议到 ${result.path}。请妥善保管该文件夹。${result.templateWarning?` ${result.templateWarning}`:''}`:'已取消备份。');}
   catch(e){setMessage(`备份未完成：${operationErrorText(e,'export')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
  const restoreLibrary=async()=>{
   if((restoreBlocked??blocked)||active.current||!onRestore||draft)return;
   active.current=true;setBusy(true);onBusyChange?.(true);setMessage('');
-  try{const result=await onRestore();setMessage(result?'备份已恢复到本机会议库。':'已取消恢复。');}
+  try{const result=await onRestore();setMessage(result?`备份已恢复到本机会议库。${result.templateRestoreWarning?` ${result.templateRestoreWarning}`:''}`:'已取消恢复。');}
   catch(e){setMessage(`恢复未完成：${operationErrorText(e,'save')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };
@@ -76,7 +76,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   </div>
   {filters.from||filters.to?<p role="status">{filters.from&&filters.to&&filters.from>filters.to?'开始日期不能晚于结束日期，请调整日期范围。':'按录音开始的本地日期筛选，包含首尾两天；时间未知的录音在清除日期后可见。'}</p>:null}
   {onBackup||onRestore?<details><summary>备份与恢复会议库</summary>
-    <p>备份包含本机会议文字、纪要和关联录音；文件夹未加密，请保存在可信的位置。换电脑时选择整个备份文件夹恢复，现有同一会议不会被覆盖。</p>
+    <p>备份包含本机会议文字、纪要、关联录音和自定义模板；文件夹未加密，请保存在可信的位置。换电脑时选择整个备份文件夹恢复，现有同一会议不会被覆盖。</p>
     {draft?<p>请先保存或撤销分类修改。</p>:null}
     <div className="ct-button-row">
       {onBackup?<button type="button" className="ct-action" disabled={blocked||busy||draft||!sessions.length} onClick={()=>void backupLibrary()}>{busy?'正在处理…':'备份会议库'}</button>:null}
