@@ -101,7 +101,10 @@ impl CompanionTranscriptionManager {
     pub(crate) fn transcribe_pet_audio(&self,path:&Path)->Result<String,String> {
         let _usage=super::audio_artifacts::usage(path)?;
         let provider=std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default();
-        let text=if provider.eq_ignore_ascii_case("volcengine") && volcengine_provider_configured() {
+        let text=if provider.eq_ignore_ascii_case("local-paraformer") {
+            #[cfg(windows)] { local_paraformer::transcribe_pet_utterance(path)? }
+            #[cfg(not(windows))] { return Err("此平台暂不支持本地语音聊天。".into()); }
+        } else if provider.eq_ignore_ascii_case("volcengine") && volcengine_provider_configured() {
             volcengine_client()?.transcribe_file(path)?.0
         } else if matches!(provider.to_ascii_lowercase().as_str(),"openai"|"openai-compatible") && openai_provider_configured() {
             openai_compatible_transcript(path)?.text
@@ -1482,6 +1485,31 @@ fn split_command_args(value: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[cfg(windows)]
+    #[test]
+    #[ignore = "requires isolated local model, public voice sample, and empty private cache"]
+    fn local_pet_chat_recognizes_voice_without_meeting_cache() {
+        assert_eq!(std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap(),"local-paraformer");
+        let audio=PathBuf::from(std::env::var_os("COMPANION_TEST_PET_PUBLIC_WAV").unwrap());
+        let cache=PathBuf::from(std::env::var_os("COMPANION_TYPE_ASR_CACHE_DIR").unwrap());
+        assert!(!cache.exists());
+        let original=fs::read(&audio).unwrap();
+        let text=CompanionTranscriptionManager::new().transcribe_pet_audio(&audio).unwrap();
+        assert!(!text.trim().is_empty() && text.chars().count()<=400);
+        assert_eq!(fs::read(&audio).unwrap(),original);
+        assert!(!cache.exists(),"pet speech must not create a meeting transcription cache");
+        let silence=audio.parent().unwrap().join("synthetic-silent-pet.wav");
+        write_pcm16k_mono_wav(&silence,&vec![0u8;32_000]).unwrap();
+        assert_eq!(CompanionTranscriptionManager::new().transcribe_pet_audio(&silence).unwrap_err(),"这次没有听清，轻点开聊后再说一次。");
+        assert!(!cache.exists());
+        let original_model=std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR").unwrap();
+        let missing=audio.parent().unwrap().join("missing-model");fs::create_dir_all(&missing).unwrap();
+        std::env::set_var("COMPANION_TYPE_LOCAL_ASR_DIR",&missing);
+        assert!(CompanionTranscriptionManager::new().transcribe_pet_audio(&audio).unwrap_err().contains("准备本地转写模型"));
+        std::env::set_var("COMPANION_TYPE_LOCAL_ASR_DIR",original_model);
+        assert!(!cache.exists());
+    }
 
     #[test]
     fn cancelled_cloud_batch_does_not_start_later_chunks() {

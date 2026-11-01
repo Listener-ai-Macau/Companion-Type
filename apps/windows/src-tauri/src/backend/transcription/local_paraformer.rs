@@ -210,6 +210,31 @@ fn chunk_anchor(text: &str, start_byte: u64, end_byte: u64) -> Option<crate::com
     Some(crate::companion_v1::CompanionV1UtteranceSegment{text,start_ms,end_ms,speaker:None,approximate_timing:true})
 }
 
+/// Explicit short pet-chat utterances are transcribed locally without writing
+/// meeting ASR caches; the chat lifecycle owns the audio and its retention.
+pub(super) fn transcribe_pet_utterance(audio: &Path) -> Result<String, String> {
+    let (runtime, _) = load_preferred(&root()?)
+        .map_err(|_| "本地语音模型尚未准备或不可用，请在设置与工具中准备本地转写模型。")?;
+    let mut file = File::open(audio).map_err(|e| e.to_string())?;
+    let (start, len) = wav_data(&mut file)?;
+    let mut offset=0u64;
+    let mut parts=Vec::new();
+    while offset<len {
+        let count=(len-offset).min((20*RATE*2+2) as u64) as usize;
+        let mut pcm=vec![0;count];
+        file.seek(SeekFrom::Start(start+offset)).map_err(|e|e.to_string())?;
+        file.read_exact(&mut pcm).map_err(|e|e.to_string())?;
+        let cut=cut_samples(&pcm);pcm.truncate(cut*2);
+        if pcm.is_empty(){return Err("本地转写分段失败，请重试聊天。".into());}
+        if !is_digital_silence(&pcm) {
+            let text=super::normalize_transcript(&runtime.transcribe(&pcm)?);
+            if !text.is_empty(){parts.push(text);}
+        }
+        offset+=pcm.len() as u64;
+    }
+    Ok(super::normalize_transcript(&parts.join("\n")))
+}
+
 pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, String> {
     super::super::meeting_processing_job::check_current()?;
     let root = root()?;

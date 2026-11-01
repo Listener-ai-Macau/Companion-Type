@@ -70,6 +70,7 @@ export function PetChat({disabled,deviceUid,onUnsavedChange}:{disabled:boolean;d
     <h2 style={{fontSize:16,margin:'0 0 8px'}}>和宠物聊聊</h2>
     <p style={{margin:'4px 0 10px'}} aria-live="polite">{state?.phase==='cancelled'&&!state.canStart?'正在结束这句聊天':labels[state?.phase??'idle']??'宠物聊天'}</p>
     <p style={{fontSize:13}}>连接宠物后，点“开聊”，对它说一句话。说完点“说完了”，短回复会出现在宠物屏幕底部。</p>
+    <p style={{fontSize:12}}>语音按设置选择本地或云转写；云转写会发送录音，聊天文字会发送给配置的聊天服务。</p>
     <details style={{fontSize:12,margin:'8px 0'}}><summary>聊天怎么用？</summary>
       <p>先在“设备与同步”连接你的宠物。目前需要连接电脑，每句最多12秒；只用宠物麦克风，不会在后台持续收音。</p>
       {!state?.wakeSupported?<p>目前从这里点“开聊”，还不支持语音唤醒。</p>:null}

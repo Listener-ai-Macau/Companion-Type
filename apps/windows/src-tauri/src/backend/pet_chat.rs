@@ -314,6 +314,37 @@ pub(crate) fn display(coordinator:&CompanionCoordinator,request:u32,pixels:Vec<u
 #[cfg(test)]
 mod profile_owner_tests {
     use super::*;
+    #[cfg(windows)]
+    #[test]
+    #[ignore = "requires isolated local model and public short voice sample"]
+    fn local_pet_voice_reaches_existing_chat_service() {
+        use std::io::{Read,Write};
+        use std::net::TcpListener;
+        let audio=std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_PET_PUBLIC_WAV").unwrap());
+        let transcript=super::super::CompanionTranscriptionManager::new().transcribe_pet_audio(&audio).unwrap();
+        let input=question(&transcript);assert!(!input.is_empty());
+        let listener=TcpListener::bind("127.0.0.1:0").unwrap();let port=listener.local_addr().unwrap().port();
+        let expected=input.clone();
+        let worker=std::thread::spawn(move || {
+            let (mut stream,_)=listener.accept().unwrap();stream.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
+            let mut bytes=Vec::new();let mut buffer=[0u8;4096];let header_end=loop {
+                let n=stream.read(&mut buffer).unwrap();assert!(n>0);bytes.extend_from_slice(&buffer[..n]);
+                if let Some(i)=bytes.windows(4).position(|part|part==b"\r\n\r\n"){break i+4;}
+            };
+            let head=String::from_utf8_lossy(&bytes[..header_end]);let size=head.lines().find_map(|line|line.to_ascii_lowercase().strip_prefix("content-length:").and_then(|s|s.trim().parse::<usize>().ok())).unwrap();
+            while bytes.len()-header_end<size {let n=stream.read(&mut buffer).unwrap();assert!(n>0);bytes.extend_from_slice(&buffer[..n]);}
+            let body:Value=serde_json::from_slice(&bytes[header_end..header_end+size]).unwrap();
+            assert_eq!(body["messages"].as_array().unwrap().last().unwrap()["content"].as_str(),Some(expected.as_str()));
+            let response=json!({"choices":[{"finish_reason":"stop","message":{"content":"{\"text\":\"在呢。\"}"}}]}).to_string();
+            write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",response.len(),response).unwrap();
+        });
+        std::env::set_var("DEEPSEEK_API_KEY","synthetic-local-test");std::env::set_var("DEEPSEEK_BASE_URL",format!("http://127.0.0.1:{port}/v1"));std::env::set_var("DEEPSEEK_MODEL","synthetic-test");
+        let profile=super::super::pet_profile_model::Profile{uid:"0102030405060708090a0b0c".into(),generation:1,personality:0,seed:1,pet_name:"小伴".into(),owner_name:String::new(),memory_enabled:false,brief_replies:true,do_not_interrupt:false,memories:Vec::new()};
+        let answer=reply(&input,Vec::new(),&profile,super::super::pet_chat_language::ReplyLanguage::SimplifiedChinese).unwrap();
+        worker.join().unwrap();assert_eq!(answer,"在呢。");
+        assert!(!std::path::PathBuf::from(std::env::var_os("COMPANION_TYPE_ASR_CACHE_DIR").unwrap()).exists());
+        std::env::remove_var("DEEPSEEK_API_KEY");std::env::remove_var("DEEPSEEK_BASE_URL");std::env::remove_var("DEEPSEEK_MODEL");
+    }
     fn job(id:u32)->Arc<Job> {Arc::new(Job{id,device:"sample-device".into(),stop:Arc::new(AtomicBool::new(false)),
         cancel:AtomicBool::new(false),running:AtomicBool::new(true)})}
     fn store(current:Option<Arc<Job>>)->Store {
