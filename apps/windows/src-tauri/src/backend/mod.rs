@@ -373,6 +373,16 @@ where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1Meeti
                 .unwrap_or_else(|| u32::from(!session.live_transcript_text.trim().is_empty()))
         } else { 0 };
         let variant = minutes_variant(&generated, partial_count);
+        let previous = if mode == "onlineLive" { session.minutes_by_mode.online_live.clone() }
+            else { session.minutes_by_mode.offline_store.clone() }
+            .or_else(|| (mode == session.meeting_mode).then(|| session.minutes.as_ref().map(|m| minutes_variant(m, 0))).flatten());
+        if let Some(previous) = previous {
+            if !previous.markdown.trim().is_empty() && previous.markdown != variant.markdown {
+                session.minutes_by_mode.history.push(crate::companion_v1::CompanionV1MinutesHistory {
+                    mode: mode.clone(), archived_at: generated_at.into(), variant: previous,
+                });
+            }
+        }
         if mode == "onlineLive" { session.minutes_by_mode.online_live = Some(variant); }
         else { session.minutes_by_mode.offline_store = Some(variant); }
         if mode == session.meeting_mode {
@@ -4342,6 +4352,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         session.minutes_by_mode = CompanionV1MinutesByMode {
             offline_store: Some(minutes_variant(&offline_minutes, 0)),
             online_live: Some(minutes_variant(&online_minutes, partial_count)),
+            history: std::mem::take(&mut session.minutes_by_mode.history),
         };
         session.export_markdown = online_minutes.markdown;
         session.exported_at = Some(generated_at.to_string());
@@ -6100,6 +6111,36 @@ mod tests {
         std::fs::remove_dir_all(root).unwrap();
         backend.snapshot.lock().unwrap().host.sessions[0].utterances[0].end_ms+=1;
         assert!(backend.apply_control(request).unwrap_err().contains("原始转写已更新"));
+    }
+
+    #[test]
+    fn regenerating_minutes_keeps_saved_user_edits_and_prior_versions() {
+        let snapshot = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "history-test", false)).unwrap();
+        let mut session = snapshot.host.sessions[0].clone();
+        session.meeting_mode = "offlineStore".into();
+        let mut original = minutes::rules_l0_minutes(&session, "first");
+        original.source = "userEdited".into();
+        original.markdown = "用户修改过的纪要和待办".into();
+        session.minutes = Some(original.clone());
+        session.minutes_by_mode.offline_store = Some(minutes_variant(&original, 0));
+        refresh_minutes_products_for_mode(&mut session, "second", Some("offlineStore"), |input| {
+            let mut result = minutes::rules_l0_minutes(input, "second");
+            result.markdown = "第一次重新整理".into(); result
+        });
+        assert_eq!(session.minutes_by_mode.history.len(), 1);
+        assert_eq!(session.minutes_by_mode.history[0].variant.markdown, "用户修改过的纪要和待办");
+        assert_eq!(session.minutes_by_mode.history[0].variant.source, "userEdited");
+        refresh_minutes_products_for_mode(&mut session, "third", Some("offlineStore"), |input| {
+            let mut result = minutes::rules_l0_minutes(input, "third");
+            result.markdown = "服务失败时的草稿".into(); result.llm_note = Some("service unavailable".into()); result
+        });
+        let saved = serde_json::to_vec(&session).unwrap();
+        let reopened: CompanionV1HostSession = serde_json::from_slice(&saved).unwrap();
+        assert_eq!(reopened.minutes_by_mode.history.len(), 2);
+        assert_eq!(reopened.minutes_by_mode.history[0].variant.markdown, "用户修改过的纪要和待办");
+        assert_eq!(reopened.minutes_by_mode.history[1].variant.markdown, "第一次重新整理");
+        assert_eq!(reopened.minutes_by_mode.offline_store.unwrap().markdown, "服务失败时的草稿");
     }
 
     #[test]

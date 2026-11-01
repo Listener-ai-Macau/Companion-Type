@@ -517,6 +517,17 @@ pub struct CompanionV1MinutesByMode {
     pub offline_store: Option<CompanionV1MinutesVariant>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub online_live: Option<CompanionV1MinutesVariant>,
+    /// Previous versions kept when the user regenerates a result.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub history: Vec<CompanionV1MinutesHistory>,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1MinutesHistory {
+    pub mode: String,
+    pub archived_at: String,
+    pub variant: CompanionV1MinutesVariant,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

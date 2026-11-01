@@ -394,6 +394,7 @@ function cacheMinutesForMode(
   const next: CompanionV1MinutesByMode = {
     offlineStore: session.minutesByMode?.offlineStore ?? null,
     onlineLive: session.minutesByMode?.onlineLive ?? null,
+    history: session.minutesByMode?.history ?? [],
   };
   const variant: CompanionV1MinutesVariant = {
     processing: minutes.processing,
@@ -573,6 +574,7 @@ export interface CompanionV1MeetingRecovery {
 export interface CompanionV1MinutesByMode {
   offlineStore: CompanionV1MinutesVariant | null;
   onlineLive: CompanionV1MinutesVariant | null;
+  history?: Array<{mode: string; archivedAt: string; variant: CompanionV1MinutesVariant}>;
 }
 
 export interface CompanionV1HostState {

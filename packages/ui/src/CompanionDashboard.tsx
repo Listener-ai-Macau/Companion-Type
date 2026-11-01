@@ -2009,6 +2009,14 @@ export function CompanionDashboard({
               </div> : selectedMinutesVariant && !manualMinutes ? <p className="ct-minutes-mode-meta">{selectedMinutesVariant.source === 'userEdited' ? '整理已保存' : selectedMinutesVariant.quality === 'final' ? '整理已生成 · 内容请核对' : selectedMinutesVariant.source === 'rules_l0' ? '原句摘录草稿' : '速记草稿'}{companionTranscriptReviewRevision(selectedSession) !== null ? ' · 基于修订文字' : ''}</p> : null}
               {selectedMinutesVariant?.source === 'rules_l0' ? <p className="ct-step-meta">仅摘录已有原句，需你核对并补充；原音和文字已保留。</p> : null}
               {manualMinutes&&!editingMinutes&&hasMinutes?renderSavedReading():null}
+              {(selectedSession.minutesByMode?.history ?? []).some(item=>item.mode===minutesViewMode) ? <details className="ct-minutes-history">
+                <summary>查看以前的整理结果</summary>
+                <p className="ct-step-meta">重新整理前的内容保存在这里，可选择文字复制；旧版本可能基于之前的转写。</p>
+                {[...(selectedSession.minutesByMode?.history ?? [])].reverse().filter(item=>item.mode===minutesViewMode).map((item,index)=><details key={`${item.archivedAt}-${index}`}>
+                  <summary>{item.variant.source==='userEdited'||item.variant.source==='userAuthored'?'人工修改':'整理结果'} · {item.variant.generatedAt || item.archivedAt}</summary>
+                  <pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{item.variant.markdown}</pre>
+                </details>)}
+              </details> : null}
               <div className="ct-inline-edit-actions ct-minutes-export-actions">
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 && onPreviewMeetingExport ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||phoneBusy||copyBusy||exportBusy||selectedMinutesStale||minutesIncomplete}
@@ -2674,7 +2682,7 @@ export function CompanionDashboard({
               </button>
             </div>
             {renderExportFeedback('workflow')}
-            {recordingMinutesUserEdited ? <p className="ct-step-warn">录制模式（{recordingModeLabel}）纪要含人工修改。再次生成会替换这一版，建议先导出保存。</p> : null}
+            {recordingMinutesUserEdited ? <p className="ct-step-warn">录制模式（{recordingModeLabel}）纪要含人工修改。重新整理后可在“以前的整理结果”中查看原内容。</p> : null}
           </div>
         </div>
       </section> : null}
