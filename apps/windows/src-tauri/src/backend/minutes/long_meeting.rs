@@ -298,12 +298,16 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
     let slices = plan(&session.transcript_text)?;
     let mut attempts = vec![0usize; slices.len()];
     let mut pending_minutes = vec![None; slices.len()];
+    let mut pending_evidence = vec![Vec::<Evidence>::new(); slices.len()];
     let mut minutes = run_with(&root, endpoint, model, key, session, generated_at, |index, total, part, _timeout| {
         // A valid set of minutes without usable evidence need not be thrown
         // away: spend the existing retry on a smaller evidence-only request.
         if let Some(minutes) = pending_minutes[index].clone() {
             return request_evidence_only(endpoint, model, key, part, &minutes, client)
-                .map(|evidence| (minutes, evidence));
+                .map(|mut evidence| {
+                    evidence.extend(pending_evidence[index].iter().cloned());
+                    (minutes, evidence)
+                });
         }
         // The generic L0 anchors include the first few transcript lines even
         // when they are filler. Long meetings retain their complete transcript
@@ -324,6 +328,7 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
         pending_minutes[index] = Some(minutes.clone());
         let evidence: Vec<Evidence> = serde_json::from_value(object.get("evidence").cloned().unwrap_or(Value::Null))
             .map_err(|_| MISSING_EVIDENCE)?;
+        pending_evidence[index] = evidence.clone();
         Ok((minutes, evidence))
     })?;
     super::super::meeting_processing_job::check_current()?;
@@ -845,7 +850,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
             *entry = None;
         }
     }
-    let resumed = checkpoint.chapters.iter().flatten().count();
+    let mut resumed = checkpoint.chapters.iter().flatten().count();
     save_checkpoint(&path, &checkpoint)?;
     let started = Instant::now(); let mut fresh = 0; let mut failure = None;
     let mut pending = (0..slices.len()).collect::<VecDeque<_>>();
@@ -853,7 +858,11 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
     while let Some(index) = pending.pop_front() {
         let (start, end) = slices[index];
         super::super::meeting_processing_job::check_current()?;
-        if checkpoint.chapters[index].is_some() { continue; }
+        // A prior run may have retained a chapter while omitting unsupported
+        // items. Revisit only that chapter; keep its old result until a better
+        // replacement is actually saved.
+        let previous = checkpoint.chapters[index].clone();
+        if previous.as_ref().is_some_and(|chapter| chapter.omitted_items == 0) { continue; }
         let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
         // Native HTTP is bounded to 180s. Reserve the entire deadline before
         // starting another request; do not override a caller's shorter limit.
@@ -887,6 +896,7 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
         };
         fresh += 1;
         let mut result = prepare(request(index, slices.len(), &part, remaining.min(Duration::from_secs(180))));
+        let mut retried = false;
         // Both attempts share the existing overall request/time budget. Never
         // retry authentication, transport failures or a user's cancellation.
         if deferred != Some(index) && result.as_ref().is_err_and(|error| *error == MISSING_EVIDENCE
@@ -895,13 +905,30 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
             let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
             if fresh < MAX_FRESH_REQUESTS && remaining >= Duration::from_secs(180) {
                 fresh += 1;
+                retried = true;
                 result = prepare(request(index, slices.len(), &part, remaining.min(Duration::from_secs(180))));
+            }
+        }
+        // If only some citations were missing, try to recover the omitted
+        // items once. Keep the already usable chapter if that attempt fails.
+        if !retried && result.as_ref().is_ok_and(|chapter| chapter.omitted_items > 0) {
+            super::super::meeting_processing_job::check_current()?;
+            let remaining = ATTEMPT_TIME.saturating_sub(started.elapsed());
+            if fresh < MAX_FRESH_REQUESTS && remaining >= Duration::from_secs(180) {
+                fresh += 1;
+                let retried_result = prepare(request(index, slices.len(), &part, remaining.min(Duration::from_secs(180))));
+                super::super::meeting_processing_job::check_current()?;
+                if let (Ok(previous), Ok(candidate)) = (&result, &retried_result) {
+                    if candidate.omitted_items < previous.omitted_items { result = retried_result; }
+                }
             }
         }
         match result {
             Ok(chapter) => {
+                if previous.as_ref().is_some_and(|old| old.omitted_items <= chapter.omitted_items) { continue; }
                 checkpoint.chapters[index] = Some(chapter);
                 if let Err(error) = save_checkpoint(&path, &checkpoint) { failure = Some(error); break; }
+                if previous.is_some() { resumed -= 1; }
             },
             Err(error) if error == MISSING_EVIDENCE && deferred.is_none() => {
                 // A malformed citation response is isolated to this chapter.
@@ -936,8 +963,9 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
         total_chunks: checkpoint.chapters.len(), completed_chunks: completed, resumed_chunks: resumed, complete,
     }), source_note_context: None, source_review_revision: None, generated_at: generated_at.into(), source: "llm_deepseek".into(),
         quality: if complete { "final" } else { "draft" }.into(), summary: vec![], decisions: vec![], action_items: vec![],
-        questions: vec![], keywords: vec![], markdown: String::new(), llm_note: failure.map(|e| format!(
-            "长会议已处理{completed}/{}段；这是部分结果。{e} 已有原文保留，重试只提交未完成片段。", checkpoint.chapters.len())) };
+        questions: vec![], keywords: vec![], markdown: String::new(), llm_note: failure.map(|e| if completed == checkpoint.chapters.len() {
+            format!("本次补充未完成：{e} 已有纪要和原文保留，可再次尝试。")
+        } else { format!("长会议已处理{completed}/{}段；这是部分结果。{e} 已有原文保留，重试只提交未完成片段。", checkpoint.chapters.len()) }) };
     let mut chapters = Vec::new();
     for (index, chapter) in checkpoint.chapters.iter().enumerate() {
         let Some(chapter) = chapter else { chapters.push(format!("### 第{}段\n\n> 尚未整理；原文仍在完整转写中。", index + 1)); continue; };
@@ -967,7 +995,8 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
     minutes.markdown = format!("{}\n\n{}\n\n## 分段原文依据\n\n{}", if complete {
         let warning=if omitted>0 {format!(" 有{omitted}条内容无法对应原文，已略过，请查看原始转写。") } else {String::new()};
         format!("> 长会议已按原文顺序处理全部{}段。分段原文依据见下文，识别和事实准确性仍需核对。{warning}", checkpoint.chapters.len())
-    } else { format!("> 部分纪要：已完成{completed}/{}段。尚未处理的内容未计入完整结果。", checkpoint.chapters.len()) },
+    } else if completed == checkpoint.chapters.len() { "> 本次补充未完成，以下保留已有纪要，请核对原文。".into() }
+    else { format!("> 部分纪要：已完成{completed}/{}段。尚未处理的内容未计入完整结果。", checkpoint.chapters.len()) },
         super::render_minutes_markdown(&overview_session, &header), chapters.join("\n\n"));
     minutes
 }
