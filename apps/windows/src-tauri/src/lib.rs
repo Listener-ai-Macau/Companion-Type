@@ -323,6 +323,7 @@ pub fn run() {
             commands::import_companion_audio,
             commands::cancel_companion_audio_import,
             commands::ask_companion_meetings,
+            commands::cancel_companion_meeting_question,
             commands::prepare_companion_audio,
             commands::prepare_companion_audio_with_timeline,
             commands::prepare_companion_meeting_audio_tracks,

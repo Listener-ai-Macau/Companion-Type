@@ -163,7 +163,7 @@ pub async fn preview_companion_meeting_transcription(coordinator:CompanionCoordi
 
 /// Analyze only the user-selected saved transcripts; recording files are never sent.
 #[tauri::command]
-pub async fn ask_companion_meetings(coordinator:CompanionCoordinatorState<'_>,question:String,session_ids:Vec<String>)
+pub async fn ask_companion_meetings(coordinator:CompanionCoordinatorState<'_>,question:String,session_ids:Vec<String>,job_id:String)
     ->Result<crate::backend::meeting_qa::ResultView,String> {
     let coordinator=coordinator.inner().clone();
     tauri::async_runtime::spawn_blocking(move|| {
@@ -184,9 +184,12 @@ pub async fn ask_companion_meetings(coordinator:CompanionCoordinatorState<'_>,qu
         let key=std::env::var("DEEPSEEK_API_KEY").ok().filter(|key|!key.trim().is_empty()).ok_or("请先配置 AI 整理服务。")?;
         let base=std::env::var("DEEPSEEK_BASE_URL").ok().filter(|s|!s.trim().is_empty()).unwrap_or_else(||"https://api.deepseek.com/v1".into());
         let model=std::env::var("DEEPSEEK_MODEL").ok().filter(|s|!s.trim().is_empty()).unwrap_or_else(||"deepseek-v4-flash".into());
-        crate::backend::meeting_qa::ask(&crate::backend::meeting_qa::Request{question,documents,endpoint:format!("{}/chat/completions",base.trim_end_matches('/')),model},&key)
+        crate::backend::meeting_qa::ask(&crate::backend::meeting_qa::Request{question,documents,endpoint:format!("{}/chat/completions",base.trim_end_matches('/')),model,job_id:Some(job_id)},&key)
     }).await.map_err(|_|"本次问答未完成，请重试。".to_string())?
 }
+
+#[tauri::command]
+pub fn cancel_companion_meeting_question(job_id:String)->bool {crate::backend::meeting_qa::cancel(&job_id)}
 
 #[tauri::command]
 pub fn prepare_companion_audio(

@@ -94,6 +94,7 @@ import {
   companionReviewedUtterances,
   companionTranscriptReviewRevision,
   companionTranscriptReviewIsStale,
+  normalizeCompanionNoteText,
   companionBleNameIsValid,
   companionSessionHasFinalTranscript,
   describeCompanionMeetingRecovery,
@@ -206,7 +207,8 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
-  onAskMeetings?: (question:string,sessionIds:string[]) => Promise<import('@companion-type/core').MeetingQaResult>;
+  onAskMeetings?: (question:string,sessionIds:string[],jobId:string) => Promise<import('@companion-type/core').MeetingQaResult>;
+  onCancelMeetingQuestion?: (jobId:string) => Promise<boolean>;
   onReadLicenses?: () => Promise<string>;
   settingsFooter?: ReactNode;
   onFindPet?: (request:PetFindRequest)=>Promise<PetFindReport>;
@@ -403,6 +405,7 @@ export function CompanionDashboard({
   onExportDiagnostics,
   onPreviewDiagnostics,
   onAskMeetings,
+  onCancelMeetingQuestion,
   onPrepareAudioComponents,
   onPrepareLocalAsr,
   onCheckService,
@@ -499,6 +502,11 @@ export function CompanionDashboard({
   const [qaQuestion,setQaQuestion]=useState('');
   const [qaSelected,setQaSelected]=useState<string[]>([]);
   const [qaBusy,setQaBusy]=useState(false);
+  const [qaJobId,setQaJobId]=useState<string|null>(null);
+  const [qaCancelling,setQaCancelling]=useState(false);
+  const [qaAsked,setQaAsked]=useState('');
+  const [qaSaveBusy,setQaSaveBusy]=useState(false);
+  const [qaSaveMessage,setQaSaveMessage]=useState<string|null>(null);
   const [qaResult,setQaResult]=useState<import('@companion-type/core').MeetingQaResult|null>(null);
   const [qaError,setQaError]=useState<string|null>(null);
   const [qaSourceSnapshot,setQaSourceSnapshot]=useState<{ids:string[];identity:string}|null>(null);
@@ -2260,18 +2268,32 @@ export function CompanionDashboard({
                   onChange={event=>setQaSelected(current=>event.target.checked?[...current,row.id]:current.filter(id=>id!==row.id))}/>{meetingTitle(row)}</label>)}</div>
               <label>问题<textarea aria-label="录音问题" value={qaQuestion} disabled={qaBusy} onChange={event=>setQaQuestion(event.target.value)}/></label>
               <button type="button" className="ct-action" disabled={qaBusy||storageBlocked||!qaQuestion.trim()||!qaSelectedEligible.length}
-                onClick={async()=>{const ids=[...qaSelectedEligible];const identity=qaIdentity(ids);setQaBusy(true);setQaError(null);setQaResult(null);setQaSourceSnapshot({ids,identity});
-                  try{setQaResult(await onAskMeetings(qaQuestion.trim(),ids));}catch(error){setQaError(operationErrorText(error,'general'));}finally{setQaBusy(false);}}}>{qaBusy?'正在查询…':'提问'}</button>
+                onClick={async()=>{const ids=[...qaSelectedEligible];const identity=qaIdentity(ids);const question=qaQuestion.trim();const jobId=crypto.randomUUID();setQaJobId(jobId);setQaCancelling(false);setQaAsked(question);setQaSaveMessage(null);setQaBusy(true);setQaError(null);setQaResult(null);setQaSourceSnapshot({ids,identity});
+                  try{setQaResult(await onAskMeetings(question,ids,jobId));}catch(error){setQaError(operationErrorText(error,'general'));}finally{setQaBusy(false);setQaJobId(null);setQaCancelling(false);}}}>{qaBusy?'正在查询…':'提问'}</button>
+              {qaBusy&&qaJobId&&onCancelMeetingQuestion?<button type="button" className="ct-action" disabled={qaCancelling} onClick={async()=>{
+                try{if(await onCancelMeetingQuestion(qaJobId)){setQaCancelling(true);setQaError(null);}else setQaError('查询刚开始或已结束，请稍后再试。');}
+                catch(error){setQaError(operationErrorText(error,'general'));}}}>{qaCancelling?'正在停止，等当前片段结束…':'停止查询'}</button>:null}
               {qaError?<p className="ct-step-warn" role="alert">{qaError}</p>:null}
               {qaResult?<div aria-label="录音问答结果">
                 {qaStale?<p className="ct-step-warn">会议文字或范围已变化；这是先前文字的结果，请重新提问。</p>:null}
-                {qaResult.incomplete?<p className="ct-step-warn">有片段未完成，本次答案可能不完整；请重试或缩小会议范围。</p>:null}
+                {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':'有片段未完成。'}本次答案可能不完整；请重试或缩小会议范围。</p>:null}
                 {!qaResult.items.length?<p>{qaResult.incomplete?'已处理的片段中未找到明确相关内容。':'所选文字中未找到明确相关内容；可以换一种问法或查看原文。'}</p>:null}
                 {qaResult.items.map((item,index)=><article key={`${item.citation.sessionId}-${index}`}><p>{item.text}</p>
                   <blockquote>{item.citation.quote}</blockquote><button type="button" className="ct-text-button" disabled={controlsBusy||qaStale}
                     onClick={()=>{setQaPendingCitation(item.citation);setOpenSavedRecordingId(item.citation.sessionId);
                       setOpenSavedRecordingTarget('source');if(selectedSession?.id!==item.citation.sessionId)onControl({action:'meetingSelectSession',sessionId:item.citation.sessionId});}}>
-                    查看原文 · {item.citation.title}</button></article>)}
+                    查看原文 · {item.citation.title}</button>
+                  {onSaveNote?<button type="button" className="ct-text-button" disabled={qaSaveBusy||controlsBusy||storageBlocked||qaStale} onClick={async()=>{
+                    const source=allLibrarySessions.find(row=>row.id===item.citation.sessionId);if(!source||!onSaveNote)return;
+                    const note=normalizeCompanionNoteText(`AI 问答（请核对）\n问题：${qaAsked}\n回答：${item.text}\n原文：${item.citation.quote}`);
+                    if([...note].length>4000){setQaSaveMessage('内容超过备注长度，请复制需要的部分保存。');return;}
+                    const noteId=crypto.randomUUID();setQaSaveBusy(true);setQaSaveMessage(null);
+                    try{const saved=await onSaveNote({sessionId:source.id,noteId,expectedRevision:source.noteRevision??0,action:'add',text:note,bookmarkId:null});
+                      if(!saved.host.sessions.find(row=>row.id===source.id)?.meetingNotes?.some(row=>row.id===noteId&&row.text===note))throw new Error('尚未确认备注保存，请重试。');
+                      setQaSaveMessage(`已保存到“${item.citation.title}”的备注。`);
+                    }catch(error){setQaSaveMessage(operationErrorText(error,'save'));}finally{setQaSaveBusy(false);}}}>保存回答到备注</button>:null}
+                </article>)}
+                {qaSaveMessage?<p role="status">{qaSaveMessage}</p>:null}
               </div>:null}
             </details>:null}
             {finalTranscript ? <details className="ct-library-more" aria-label="选择整理视角">

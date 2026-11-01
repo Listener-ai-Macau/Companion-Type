@@ -10,7 +10,7 @@ import {
 } from '@companion-type/core';
 import { CompanionDashboard } from '@companion-type/ui';
 import {clearPlaybackMemory,clearSessionPlaybackMemory} from '../../../packages/ui/src/playbackMemory';
-import { refineCompanionMeetingSpeakers,previewCompanionMeetingTranscription,controlCompanionPetFind,askCompanionMeetings } from './companionClient';
+import { refineCompanionMeetingSpeakers,previewCompanionMeetingTranscription,controlCompanionPetFind,askCompanionMeetings,cancelCompanionMeetingQuestion } from './companionClient';
 import { CompanionDesktopUpdate } from '../../../packages/ui/src/CompanionDesktopUpdate';
 import { PetChat } from './PetChat';
 import {CloseReview} from './CloseReview';
@@ -306,6 +306,7 @@ export function App() {
     </details>:null}
     <CompanionDashboard
       onAskMeetings={isTauriRuntime()?askCompanionMeetings:undefined}
+      onCancelMeetingQuestion={isTauriRuntime()?cancelCompanionMeetingQuestion:undefined}
       onReadLicenses={() => Promise.all([import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw'), import('../src-tauri/resources/licenses/OptionalSpeechModels.txt?raw')]).then(([components, models]) => `${components.default}\n\n${models.default}`)}
       onFindPet={isTauriRuntime()?(request)=>exclusive('refresh',()=>controlCompanionPetFind(request)):undefined}
       settingsFooter={isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active

@@ -27,8 +27,9 @@ import {
   createCompanionV1Fixture,
 } from '@companion-type/core';
 
-export const askCompanionMeetings = (question:string,sessionIds:string[]) =>
-  invoke<import('@companion-type/core').MeetingQaResult>('ask_companion_meetings',{question,sessionIds});
+export const askCompanionMeetings = (question:string,sessionIds:string[],jobId:string) =>
+  invoke<import('@companion-type/core').MeetingQaResult>('ask_companion_meetings',{question,sessionIds,jobId});
+export const cancelCompanionMeetingQuestion = (jobId:string) => invoke<boolean>('cancel_companion_meeting_question',{jobId});
 
 let fixtureSnapshot: CompanionV1Snapshot = createCompanionV1Fixture();
 export const refineCompanionMeetingSpeakers = (sessionId:string) =>
