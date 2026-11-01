@@ -23,6 +23,13 @@ assert.match(meetingJourney(row,context).title,/原音已收齐/);
 assert.equal(describeCompanionMeetingRecovery(row)?.retryAction,null,'local wait never suggests ASR');
 assert.equal(meetingJourney({...row,pendingReason:'needs_segments'},context).request?.action,'deviceConnect');
 assert.throws(()=>applyCompanionV1ControlFixture(snapshot,expected),/本机原音与校验记录/,'fixture cannot pretend to rebuild audio');
+const ready={...row,pendingReason:null,audioStored:true,audioBytes:32044,processingPolicy:'automatic' as const,
+ retention:{...row.retention,audioCached:true}};
+const readyJourney=meetingJourney(ready,context);
+assert.equal(readyJourney.request?.action,'meetingTranscribeAudio');
+assert.match(readyJourney.detail,/本机/,'local transcription must not be described as an upload');
+assert.match(readyJourney.detail,/云端/,'cloud transcription remains visible');
+assert.match(readyJourney.detail,/网络/,'cloud transcription requires network connectivity');
 
 snapshot.host.sessions=[row];snapshot.host.selectedSessionId=row.id;snapshot.host.activeSessionId=null;
 snapshot.host.persistence={status:'ready'};snapshot.connected=false;snapshot.device.connected=false;snapshot.device.recording=false;snapshot.meeting.active=false;

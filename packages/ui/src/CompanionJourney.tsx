@@ -122,7 +122,7 @@ export function meetingJourney(session: CompanionV1HostSession, context: {
     destination: context.asrReady ? undefined : 'settings',
   };
   if (localAudio) return context.asrReady
-    ? { stage: 1, title: '录音已在电脑，开始转写', detail: '转写会将这场录音发送到你配置的服务。设备离线也可以继续处理。', label: recovery ? '继续转写' : '转写这场录音', request: { action: 'meetingTranscribeAudio', sessionId: session.id } }
+    ? { stage: 1, title: '录音已在电脑，开始转写', detail: '按所选方式在本机转写，或发送到配置的云端服务。录音卡离线也可处理；云端转写需要网络。', label: recovery ? '继续转写' : '转写这场录音', request: { action: 'meetingTranscribeAudio', sessionId: session.id } }
     : { stage: 1, title: '录音已保存，先准备转写服务', detail: '不用重新录音。配置服务后，回来继续处理这场会议。', label: '配置转写服务', destination: 'settings' };
   return { stage: 0, title: '还没有可处理的录音', detail: '当前记录没有本机音频或完整文字，请先同步录音，也可以在处理步骤中导入文本。', label: '查看处理步骤', destination: 'workflow' };
 }
