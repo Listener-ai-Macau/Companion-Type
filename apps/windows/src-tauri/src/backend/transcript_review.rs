@@ -271,7 +271,7 @@ mod tests {
         let prior_minutes=serde_json::to_value(&saved.minutes).unwrap();
         let prior_notes=serde_json::to_value(&saved.meeting_notes).unwrap();
         let request=super::super::meeting_workspace::MeetingEditRequest {session_id:saved.id.clone(),title:None,expected_title:None,
-            meeting_mode:None,markdown:None,expected_markdown:None,create_manual:None,transcript_review:Some(TranscriptReviewEdit {
+            meeting_mode:None,markdown:None,expected_markdown:None,create_manual:None,restore_history:None,transcript_review:Some(TranscriptReviewEdit {
                 expected_transcript_text:saved.transcript_text.clone(),expected_utterances:saved.utterances.clone(),expected_revision:0,
                 restore_original:false,text:Some("重新识别的完整会议内容。".into()),utterance_edits:vec![],speaker_names:vec![]})};
         super::super::meeting_workspace::edit_session(&mut saved,&request,"now").unwrap();

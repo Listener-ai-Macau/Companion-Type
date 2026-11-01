@@ -16,7 +16,16 @@ pub struct MeetingEditRequest {
     pub markdown: Option<String>,
     pub expected_markdown: Option<String>,
     pub create_manual: Option<ManualMinutesCreate>,
+    pub restore_history: Option<HistoryRestore>,
     pub transcript_review: Option<super::transcript_review::TranscriptReviewEdit>,
+}
+
+/// A previously saved version, identified against the currently visible history.
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct HistoryRestore {
+    pub index: usize,
+    pub archived_at: String,
 }
 
 /// Explicit first document creation, bound to the material visible when the
@@ -44,6 +53,9 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
             return Err("会议名称已在后台变化。你的草稿仍保留，请重新载入后核对。".into());
         }
     }
+    if request.restore_history.is_some() && (request.markdown.is_none() || request.create_manual.is_some() || request.transcript_review.is_some()) {
+        return Err("请选择一份历史纪要恢复。".into());
+    }
     if request.create_manual.is_some() && request.markdown.is_none() {
         return Err("手写清单请求缺少内容，未保存。".into());
     }
@@ -54,7 +66,7 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
         return Err("请先保存转写修订，再核对这版纪要。".into());
     }
     let updated_variant = if let Some(markdown) = &request.markdown {
-        if markdown.trim().is_empty() || markdown.len() > 200_000 || markdown.contains('\0') {
+        if markdown.trim().is_empty() || (request.restore_history.is_none() && markdown.len() > 200_000) || markdown.contains('\0') {
             return Err("纪要不能为空，且不能超过 200 KB。".into());
         }
         let mode = request.meeting_mode.as_deref().ok_or("请选择要修改的纪要版本")?;
@@ -99,12 +111,21 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
         if request.expected_markdown.as_deref() != Some(variant.markdown.as_str()) {
             return Err("纪要已在后台变化。你的草稿仍保留，请重新载入后核对，避免覆盖新内容。".into());
         }
-        let mut updated = variant;
-        updated.markdown = markdown.trim().to_string();
-        if updated.source != "userAuthored" { updated.source = "userEdited".into(); }
-        updated.source_review_revision = super::transcript_review::active_revision(session);
-        updated.generated_at = Some(now.into());
-        Some((mode.to_string(), updated))
+        let updated = if let Some(history) = &request.restore_history {
+            let saved = session.minutes_by_mode.history.get(history.index)
+                .filter(|item| item.mode == mode && item.archived_at == history.archived_at && item.variant.markdown == *markdown)
+                .ok_or("历史纪要已变化，请刷新后重试。")?;
+            saved.variant.clone()
+        } else {
+            let mut updated = variant.clone();
+            updated.markdown = markdown.trim().to_string();
+            if updated.source != "userAuthored" { updated.source = "userEdited".into(); }
+            updated.source_review_revision = super::transcript_review::active_revision(session);
+            updated.generated_at = Some(now.into());
+            updated
+        };
+        let prior = request.restore_history.as_ref().filter(|_| variant.markdown != updated.markdown).map(|_| variant);
+        Some((mode.to_string(), updated, prior))
     } else { None };
     if let Some(title) = &request.title { session.title = title.trim().to_string(); }
     if let Some(review) = updated_review {
@@ -118,7 +139,12 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
         session.pending_reason = outdated.then(|| "minutes_source_changed".into());
         if outdated { session.status = "transcribed".into(); }
     }
-    if let Some((mode, variant)) = updated_variant {
+    if let Some((mode, variant, prior)) = updated_variant {
+        if let Some(prior) = prior {
+            session.minutes_by_mode.history.push(crate::companion_v1::CompanionV1MinutesHistory {
+                mode: mode.clone(), archived_at: now.into(), variant: prior,
+            });
+        }
         if mode == session.meeting_mode {
             session.export_markdown = variant.markdown.clone();
             if session.minutes.is_none() && variant.source == "userAuthored" {
@@ -133,8 +159,11 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
             }
             if let Some(minutes) = &mut session.minutes {
                 minutes.markdown = variant.markdown.clone(); minutes.source = variant.source.clone();
-                minutes.generated_at = now.into();
+                minutes.generated_at = variant.generated_at.clone().unwrap_or_else(|| now.into());
                 minutes.source_review_revision = variant.source_review_revision;
+                minutes.source_note_context = variant.source_note_context.clone();
+                minutes.quality = variant.quality.clone();
+                minutes.processing = variant.processing.clone();
                 // A freely edited document no longer proves the old structured
                 // extraction. Never export stale action items as the new edit.
                 minutes.summary.clear(); minutes.decisions.clear(); minutes.action_items.clear();
@@ -319,11 +348,36 @@ mod tests {
     }
     fn edit(session: &CompanionV1HostSession) -> MeetingEditRequest {
         MeetingEditRequest {
-            create_manual: None, transcript_review: None,
+            create_manual: None, restore_history: None, transcript_review: None,
             session_id: session.id.clone(), title: Some("我的会议".into()), expected_title: Some(session.title.clone()),
             meeting_mode: Some("offlineStore".into()), markdown: Some("# 人工核对\n\n周五交付。".into()),
             expected_markdown: Some(session.minutes_by_mode.offline_store.as_ref().unwrap().markdown.clone()),
         }
+    }
+
+    #[test]
+    fn restore_previous_minutes_preserves_current_and_original_source_revision() {
+        let mut session=sample();
+        let mut older=session.minutes_by_mode.offline_store.clone().unwrap();
+        older.markdown="用户之前的纪要".into();older.source="userEdited".into();older.source_review_revision=Some(23);
+        session.minutes_by_mode.history.push(crate::companion_v1::CompanionV1MinutesHistory {
+            mode:"offlineStore".into(),archived_at:"earlier".into(),variant:older,
+        });
+        let current=session.minutes_by_mode.offline_store.as_ref().unwrap().markdown.clone();
+        let mut request=edit(&session);request.title=None;request.expected_title=None;
+        request.markdown=Some("用户之前的纪要".into());request.expected_markdown=Some(current.clone());
+        request.restore_history=Some(HistoryRestore{index:0,archived_at:"wrong".into()});
+        assert!(edit_session(&mut session,&request,"now").is_err());
+        assert_eq!(session.minutes_by_mode.offline_store.as_ref().unwrap().markdown,current);
+        request.restore_history=Some(HistoryRestore{index:0,archived_at:"earlier".into()});
+        edit_session(&mut session,&request,"now").unwrap();
+        let restored=session.minutes_by_mode.offline_store.as_ref().unwrap();
+        assert_eq!(restored.markdown,"用户之前的纪要");assert_eq!(restored.source_review_revision,Some(23));
+        assert_eq!(session.minutes_by_mode.history.last().unwrap().variant.markdown,current);
+        assert_eq!(session.status,"transcribed");
+        let reopened:CompanionV1HostSession=serde_json::from_slice(&serde_json::to_vec(&session).unwrap()).unwrap();
+        assert_eq!(reopened.minutes_by_mode.history.last().unwrap().variant.markdown,current);
+        assert_eq!(reopened.minutes_by_mode.offline_store.unwrap().source_review_revision,Some(23));
     }
 
     #[test]
@@ -475,7 +529,7 @@ mod tests {
             session_id:s.id.clone(), title:None,expected_title:None, meeting_mode:Some("offlineStore".into()),
             markdown:Some("## Action Items\n\n- [ ] 带上充电线\n- [ ] 确认车次 (due: 2026-10-29)".into()),
             expected_markdown:Some(String::new()),transcript_review:None,
-            create_manual:Some(ManualMinutesCreate {
+            restore_history:None,create_manual:Some(ManualMinutesCreate {
                 expected_transcript_text:super::super::transcript_review::effective_text(s),
                 expected_review_revision:super::super::transcript_review::active_revision(s),expected_note_revision:s.note_revision,
             }),

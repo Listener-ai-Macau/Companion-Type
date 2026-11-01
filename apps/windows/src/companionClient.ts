@@ -184,6 +184,7 @@ export async function checkCompanionService(service: 'asr' | 'minutes'): Promise
 export async function saveCompanionMeetingEdit(request: {
   sessionId: string; title?: string; expectedTitle?: string;
   meetingMode?: 'offlineStore' | 'onlineLive'; markdown?: string; expectedMarkdown?: string;
+  restoreHistory?: {index:number; archivedAt:string};
 }): Promise<CompanionV1Snapshot> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中保存修改；浏览器演示不写入真实会议库。');
   return invoke('save_companion_meeting_edit', { request });

@@ -59,7 +59,7 @@ mod tests {
             o.lock().unwrap().push((cached.host.sessions[0].title.clone(),disk[0].title.clone()));
         })).is_ok());
         let result=updates.after(||backend.save_meeting_edit(crate::backend::meeting_workspace::MeetingEditRequest {
-            create_manual: None,
+            create_manual: None, restore_history: None,
             session_id:id,title:Some("Published local edit".into()),expected_title:Some(title),
             meeting_mode:None,markdown:None,expected_markdown:None,transcript_review:None,
         }));

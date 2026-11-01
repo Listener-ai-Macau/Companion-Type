@@ -195,6 +195,7 @@ export type CompanionMeetingSaveRequest = {
   meetingMode?: CompanionV1MeetingMode;
   markdown?: string;
   expectedMarkdown?: string;
+  restoreHistory?: {index: number; archivedAt: string};
   createManual?: {
     expectedTranscriptText: string;
     expectedReviewRevision: number | null;
@@ -1471,6 +1472,19 @@ export function CompanionDashboard({
       setSaveMeetingBusy(false);
     }
   };
+  const restoreMinutesHistory = async (index:number, archivedAt:string, markdown:string) => {
+    if(!selectedSession || !onSaveMeeting || saveMeetingBusy || controlsBusy || oobeBlockedByRecording || storageBlocked
+      || minutesDirty || titleDirty || noteUnsaved || transcriptReviewUnsaved || editingMinutes) return;
+    const sessionId=selectedSession.id,mode=minutesViewMode;
+    setSaveMeetingBusy(true);setSaveMeetingResult(null);
+    try {
+      const next=await onSaveMeeting({sessionId,meetingMode:mode,markdown,expectedMarkdown:meetingMinutesMarkdown(selectedSession,mode),restoreHistory:{index,archivedAt}});
+      const saved=next.host.sessions.find(item=>item.id===sessionId);
+      if(next.host.persistence?.status!=='ready'||!saved||meetingMinutesMarkdown(saved,mode)!==markdown)throw new Error('历史版本尚未保存，请重试。');
+      setSaveMeetingResult({sessionId,part:'minutes',kind:'saved',message:'已切回这个版本，切换前的结果仍在历史中。'});
+    } catch(error) {setSaveMeetingResult({sessionId,part:'minutes',kind:'error',message:`恢复未完成：${operationErrorText(error,'save')}`});}
+    finally {setSaveMeetingBusy(false);}
+  };
   const markAction = async (lineIndex:number,completed:boolean) => {
     if(!selectedSession||!onSaveMeeting||actionSaveActive.current||controlsBusy||oobeBlockedByRecording
       ||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))||editingMinutes||minutesDirty||titleDirty
@@ -2011,10 +2025,12 @@ export function CompanionDashboard({
               {manualMinutes&&!editingMinutes&&hasMinutes?renderSavedReading():null}
               {(selectedSession.minutesByMode?.history ?? []).some(item=>item.mode===minutesViewMode) ? <details className="ct-minutes-history">
                 <summary>查看以前的整理结果</summary>
-                <p className="ct-step-meta">重新整理前的内容保存在这里，可选择文字复制；旧版本可能基于之前的转写。</p>
-                {[...(selectedSession.minutesByMode?.history ?? [])].reverse().filter(item=>item.mode===minutesViewMode).map((item,index)=><details key={`${item.archivedAt}-${index}`}>
+                <p className="ct-step-meta">重新整理前的内容保存在这里。切换版本不会删除当前内容；旧版本可能基于之前的转写。</p>
+                {(selectedSession.minutesByMode?.history ?? []).map((item,index)=>({item,index})).reverse().filter(({item})=>item.mode===minutesViewMode).map(({item,index})=><details key={`${item.archivedAt}-${index}`}>
                   <summary>{item.variant.source==='userEdited'||item.variant.source==='userAuthored'?'人工修改':'整理结果'} · {item.variant.generatedAt || item.archivedAt}</summary>
                   <pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{item.variant.markdown}</pre>
+                  <button type="button" className="ct-action" disabled={!onSaveMeeting||saveMeetingBusy||controlsBusy||oobeBlockedByRecording||storageBlocked||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||editingMinutes}
+                    onClick={()=>void restoreMinutesHistory(index,item.archivedAt,item.variant.markdown)}>使用这个版本</button>
                 </details>)}
               </details> : null}
               <div className="ct-inline-edit-actions ct-minutes-export-actions">
