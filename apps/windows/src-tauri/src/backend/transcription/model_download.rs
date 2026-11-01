@@ -169,6 +169,27 @@ mod tests {
     }
 
     #[test]
+    fn range_not_satisfiable_restarts_once() {
+        let data=b"abcdefghij";let (url,requests,worker)=server(vec![
+            response("416 Range Not Satisfiable","Content-Length: 0\r\n",b""),
+            response("200 OK","Content-Length: 10\r\n",data),
+        ]);
+        let dir=root();let part=dir.join("model.part");fs::write(&part,&data[..4]).unwrap();
+        fetch(&client(),&url,10,&hash(data),&part).unwrap();assert_eq!(fs::read(&part).unwrap(),data);
+        worker.join().unwrap();let seen=requests.lock().unwrap();assert!(seen[0].contains("range: bytes=4-"));
+        assert!(!seen[1].contains("range: bytes="));drop(seen);cleanup(&dir);
+    }
+
+    #[test]
+    fn bad_complete_download_is_not_left_as_a_valid_partial() {
+        let expected=b"abcdefghij";let invalid=b"0123456789";
+        let (url,_,worker)=server(vec![response("200 OK","Content-Length: 10\r\n",invalid)]);
+        let dir=root();let part=dir.join("model.part");
+        assert!(fetch(&client(),&url,10,&hash(expected),&part).is_err());
+        assert_eq!(fs::metadata(&part).unwrap().len(),0);worker.join().unwrap();cleanup(&dir);
+    }
+
+    #[test]
     fn completed_corrupt_partial_is_replaced_and_verified() {
         let data=b"abcdefghij";let (url,requests,worker)=server(vec![response("200 OK","Content-Length: 10\r\n",data)]);
         let dir=root();let part=dir.join("model.part");fs::write(&part,b"0123456789").unwrap();
