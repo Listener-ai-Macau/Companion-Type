@@ -102,7 +102,10 @@ fn service_status_error(status:u16)->Option<&'static str> {
         401|403=>Some(SERVICE_AUTH),
         402|429=>Some(SERVICE_LIMIT),
         408|500..=599=>Some(SERVICE_UNAVAILABLE),
-        400..=499=>Some(SERVICE_CONFIG),
+        // A bad request or oversized individual slice can be specific to that
+        // slice. Keep processing later slices; only endpoint/method errors are
+        // known to affect the whole request.
+        404|405|415=>Some(SERVICE_CONFIG),
         _=>None,
     }
 }
@@ -179,6 +182,18 @@ mod tests {
         assert_eq!(count,2);assert_eq!(result.items.len(),1);assert_eq!(result.items[0].citation.session_id,"a");
         assert_eq!((result.completed_chunks,result.total_chunks),(1,3));assert!(result.incomplete&&!result.cancelled);
         assert_eq!(result.stop_reason.as_deref(),Some(SERVICE_UNAVAILABLE));
+    }
+    #[test]
+    fn one_rejected_slice_does_not_hide_answers_from_later_slices() {
+        assert_eq!(service_status_error(413),None);
+        assert_eq!(service_status_error(400),None);
+        assert_eq!(service_status_error(404),Some(SERVICE_CONFIG));
+        let req=request(&[("a","第一场虚构会议。"),("b","李四下周核对交货。")]);let mut count=0;
+        let result=ask_with(&req,|_,_|{count+=1;if count==1 {Err("AI 服务未返回完整结果。".into())}
+            else {Ok(Extract{items:vec![ExtractItem{answer:"李四下周核对交货".into(),quote:"李四下周核对交货".into()}]})}}).unwrap();
+        assert_eq!(count,2);assert_eq!(result.items.len(),1);assert_eq!(result.items[0].citation.session_id,"b");
+        assert_eq!((result.completed_chunks,result.total_chunks),(1,2));assert!(result.incomplete);
+        assert!(result.stop_reason.is_none());
     }
     #[test]
     fn unavailable_service_is_not_called_again_for_every_meeting() {
