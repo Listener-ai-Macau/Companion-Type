@@ -797,8 +797,9 @@ export function CompanionDashboard({
   const minutesDirty = Boolean(selectedSession && minutesEntry && (minutesEntry.value!==minutesEntry.expected || minutesEntry.createManual));
   const hasMinutes = Boolean(minutesMarkdown.trim());
   const hasPdfHighlights=Boolean(selectedSession?.bookmarks?.length || selectedSession?.meetingNotes?.length);
+  const hasReviewedTiming=Boolean(selectedSession && companionReviewedUtterances(selectedSession).length);
   const selectedPdfSections={minutes:pdfSections.minutes&&hasMinutes,transcript:pdfSections.transcript&&finalTranscript,
-    highlights:pdfSections.highlights&&hasPdfHighlights,timeline:pdfSections.timeline&&pdfSections.transcript&&finalTranscript};
+    highlights:pdfSections.highlights&&hasPdfHighlights,timeline:pdfSections.timeline&&pdfSections.transcript&&finalTranscript&&hasReviewedTiming};
   const hasPdfContent=selectedPdfSections.minutes||selectedPdfSections.transcript||selectedPdfSections.highlights;
   const hasSyncedAudio = Boolean(
     selectedSession
@@ -2149,7 +2150,7 @@ export function CompanionDashboard({
               <label><input type="checkbox" checked={selectedPdfSections.minutes} disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,minutes:checked}));}}/>整理结果</label>
               <label><input type="checkbox" checked={selectedPdfSections.transcript} disabled={controlsBusy||oobeBlockedByRecording||!finalTranscript} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,transcript:checked,timeline:checked?v.timeline:false}));}}/>录音文字</label>
               <label><input type="checkbox" checked={selectedPdfSections.highlights} disabled={controlsBusy||oobeBlockedByRecording||!hasPdfHighlights} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,highlights:checked}));}}/>重点与补充</label>
-              <label><input type="checkbox" checked={selectedPdfSections.timeline} disabled={controlsBusy||oobeBlockedByRecording||!selectedPdfSections.transcript||!selectedSession.utterances?.length} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,timeline:checked}));}}/>分段时间与说话人</label>
+              <label><input type="checkbox" checked={selectedPdfSections.timeline} disabled={controlsBusy||oobeBlockedByRecording||!selectedPdfSections.transcript||!hasReviewedTiming} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,timeline:checked}));}}/>分段时间与说话人</label>
             </div>
             <div className="ct-button-row">
               <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onPreviewMeetingExport||!hasPdfContent||previewWaiting} onClick={()=>void previewPdf()}>预览所选内容</button>
@@ -2167,6 +2168,16 @@ export function CompanionDashboard({
                 {companionReviewedTranscript(selectedSession).trim() || selectedSession.transcriptReview ? <button type="button" className="ct-text-button"
                   aria-expanded={transcriptReviewOpen} aria-controls="ct-recording-text-review"
                   onClick={()=>{setSourceSelection(null);setTranscriptReviewOpen(value=>!value);}}>{transcriptReviewOpen?'收起核对':'核对文字'}</button> : null}
+              {onPreviewRetranscription && finalTranscript ? <button type="button" className="ct-text-button"
+                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe || Boolean(retranscriptionPreview)}
+                title="使用当前选择的转写方式生成另一份文字；云端方式会发送录音。"
+                onClick={async()=>{
+                  if (!selectedSession) return;
+                  const sessionId=selectedSession.id;setSaveMeetingResult(null);
+                  const sourceText=selectedSession.transcriptText, sourceUtterances=structuredClone(selectedSession.utterances ?? []), revision=selectedSession.transcriptReview?.revision ?? 0;
+                  try {const text=await onPreviewRetranscription(sessionId);setRetranscriptionPreview({sessionId,text,sourceText,sourceUtterances,revision});}
+                  catch(e) {setSaveMeetingResult({sessionId,kind:'error',message:`重新转写未完成：${operationErrorText(e,'general')}`});}
+                }}>重新转写并对比</button>:null}
                 {finalTranscript ? <button type="button" className="ct-text-button"
                   disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || (!hasMinutes && !canGenerate)}
                   title={hasMinutes?'重新整理，已有结果保留':'整理已保存的文字'}
@@ -2181,6 +2192,26 @@ export function CompanionDashboard({
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
             </div>
+            {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{productSettings?.asrProvider === 'local-paraformer' ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
+            {retranscriptionPreview && retranscriptionPreview.sessionId===selectedSession?.id ? <section aria-label="重新转写结果">
+              <p>这是新生成的文字，尚未替换已保存的转写。采用后保留原始转写、原录音和备注；旧纪要保留，可按新文字重新整理。新文字暂时没有对应的分段时间。</p>
+              <textarea className="ct-textarea ct-step-textarea" readOnly aria-label="新转写结果" value={retranscriptionPreview.text} />
+              <div className="ct-button-row">
+                <button type="button" className="ct-action" disabled={!onSaveMeeting || controlsBusy || transcriptEditor.current.dirty || transcriptReviewUnsaved || Boolean(selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length))}
+                  onClick={async()=>{
+                    if(!onSaveMeeting || !selectedSession || !retranscriptionPreview) return;
+                    const p=retranscriptionPreview;setSaveMeetingBusy(true);setSaveMeetingResult(null);
+                    try {
+                      const saved=await onSaveMeeting({sessionId:p.sessionId,transcriptReview:{expectedTranscriptText:p.sourceText,expectedUtterances:p.sourceUtterances ?? [],expectedRevision:p.revision,restoreOriginal:false,text:p.text,utteranceEdits:[],speakerNames:[]}});
+                      if(saved.host.persistence?.status && saved.host.persistence.status!=='ready') throw new Error('新文字尚未保存到磁盘，请重试。');
+                      setRetranscriptionPreview(null);setSaveMeetingResult({sessionId:p.sessionId,kind:'saved',message:'新文字已保存为修订；原始转写和旧纪要保留，可按需重新整理。'});
+                    } catch(e) {setSaveMeetingResult({sessionId:p.sessionId,kind:'error',message:`新文字未保存：${operationErrorText(e,'save')}`});}
+                    finally {setSaveMeetingBusy(false);}
+                  }}>采用新文字</button>
+                <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={()=>setRetranscriptionPreview(null)}>关闭结果</button>
+              </div>
+              {selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length) ? <p>这场录音已有人工修订，先保留原修订；新结果可复制出来比较。</p> : null}
+            </section>:null}
             {organizationChoiceId===selectedSession.id?<div id="ct-organization-source-choice" className="ct-organization-choice" role="group" aria-label="本次整理内容">
               <strong>这次整理用哪些内容？</strong>
               <p>原话和补充仍分开保留。选择补充时，只将当前已保存的内容用于这次整理；暂支持两分钟内的短备忘。</p>
@@ -2579,16 +2610,6 @@ export function CompanionDashboard({
                 <FileText size={16} />
               <span>{selectedSession?.captureIncomplete ? '转写已保存的片段' : '转写'}</span>
               </button>
-              {onPreviewRetranscription && finalTranscript ? <button type="button" className="ct-action"
-                disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !canTranscribe || Boolean(retranscriptionPreview)}
-                title="使用当前选择的转写方式生成另一份文字；云端方式会发送录音。"
-                onClick={async()=>{
-                  if (!selectedSession) return;
-                  const sessionId=selectedSession.id;setSaveMeetingResult(null);
-                  const sourceText=selectedSession.transcriptText, sourceUtterances=structuredClone(selectedSession.utterances ?? []), revision=selectedSession.transcriptReview?.revision ?? 0;
-                  try {const text=await onPreviewRetranscription(sessionId);setRetranscriptionPreview({sessionId,text,sourceText,sourceUtterances,revision});}
-                  catch(e) {setSaveMeetingResult({sessionId,kind:'error',message:`重新转写未完成：${operationErrorText(e,'general')}`});}
-                }}>重新转写并对比</button>:null}
               {onRefineSpeakers ? <button type="button" className="ct-action"
                 title={selectedSession?.utterances?.some(u=>u.approximateTiming)?'本地转写只有近似分段位置，暂不能据此区分说话人。':'只用已保存原音在电脑本地区分，不重新转写或上传；旧纪要保留为待更新草稿。'}
                 disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !selectedSession?.audioStored
@@ -2616,26 +2637,6 @@ export function CompanionDashboard({
                 <span>导入到这条录音</span>
               </button>
             </div>
-            {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{productSettings?.asrProvider === 'local-paraformer' ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
-            {retranscriptionPreview && retranscriptionPreview.sessionId===selectedSession?.id ? <section aria-label="重新转写结果">
-              <p>这是新生成的文字，尚未替换已保存的转写。采用后保留原始转写、原录音和备注；旧纪要保留，可按新文字重新整理。新文字暂时没有对应的分段时间。</p>
-              <textarea className="ct-textarea ct-step-textarea" readOnly aria-label="新转写结果" value={retranscriptionPreview.text} />
-              <div className="ct-button-row">
-                <button type="button" className="ct-action" disabled={!onSaveMeeting || controlsBusy || transcriptEditor.current.dirty || transcriptReviewUnsaved || Boolean(selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length))}
-                  onClick={async()=>{
-                    if(!onSaveMeeting || !selectedSession || !retranscriptionPreview) return;
-                    const p=retranscriptionPreview;setSaveMeetingBusy(true);setSaveMeetingResult(null);
-                    try {
-                      const saved=await onSaveMeeting({sessionId:p.sessionId,transcriptReview:{expectedTranscriptText:p.sourceText,expectedUtterances:p.sourceUtterances ?? [],expectedRevision:p.revision,restoreOriginal:false,text:p.text,utteranceEdits:[],speakerNames:[]}});
-                      if(saved.host.persistence?.status && saved.host.persistence.status!=='ready') throw new Error('新文字尚未保存到磁盘，请重试。');
-                      setRetranscriptionPreview(null);setSaveMeetingResult({sessionId:p.sessionId,kind:'saved',message:'新文字已保存为修订；原始转写和旧纪要保留，可按需重新整理。'});
-                    } catch(e) {setSaveMeetingResult({sessionId:p.sessionId,kind:'error',message:`新文字未保存：${operationErrorText(e,'save')}`});}
-                    finally {setSaveMeetingBusy(false);}
-                  }}>采用新文字</button>
-                <button type="button" className="ct-text-button" disabled={controlsBusy} onClick={()=>setRetranscriptionPreview(null)}>关闭结果</button>
-              </div>
-              {selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length) ? <p>这场录音已有人工修订，先保留原修订；新结果可复制出来比较。</p> : null}
-            </section>:null}
           </div>
         </div>
 

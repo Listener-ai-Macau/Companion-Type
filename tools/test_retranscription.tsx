@@ -14,8 +14,7 @@ const button=(label:string)=>tree.root.findAllByType('button').find((n:any)=>con
 act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}
  onUnsavedChange={value=>{unsaved=value;}} onPreviewRetranscription={async id=>{assert.equal(id,session.id);previews++;return '第二次识别';}}
  onSaveMeeting={async req=>{captured=req;return snapshot;}}/>);});
-const open=tree.root.findAllByType('button').find((n:any)=>content(n).includes('更多录音与处理操作'));
-act(()=>open.props.onClick());assert.ok(button('重新转写并对比'));assert.equal(button('重新转写并对比').props.disabled,false);
+assert.ok(button('重新转写并对比'),'the action must be available in the main recording view');assert.equal(button('重新转写并对比').props.disabled,false);
 await act(async()=>button('重新转写并对比').props.onClick());assert.equal(previews,1);assert.equal(unsaved,true);
 assert.equal(tree.root.findByProps({'aria-label':'新转写结果'}).props.value,'第二次识别');assert.equal(session.transcriptText,'第一次识别');
 await act(async()=>button('采用新文字').props.onClick());assert.equal(captured.sessionId,session.id);assert.equal(captured.transcriptReview.text,'第二次识别');
@@ -26,7 +25,10 @@ session.transcriptReview={revision:1,editedAt:'now',sourceTranscriptText:session
  sourceUtterances:structuredClone(session.utterances),text:'用户已有修订',utteranceEdits:[],speakerNames:[]};
 act(()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null} onRefresh={()=>{}} onControl={()=>{}}
  onPreviewRetranscription={async()=> '另一份文字'} onSaveMeeting={async req=>{captured=req;return snapshot;}}/>);});
-act(()=>tree.root.findAllByType('button').find((n:any)=>content(n).includes('更多录音与处理操作')).props.onClick());
+const timelineLabel=tree.root.findAllByType('label').find((n:any)=>content(n).includes('分段时间与说话人'));
+const pdfTranscript=tree.root.findAllByType('label').find((n:any)=>content(n)==='录音文字');
+act(()=>pdfTranscript.findByType('input').props.onChange({currentTarget:{checked:true}}));
+assert.equal(timelineLabel.findByType('input').props.disabled,true,'an alternative transcript must not offer the previous timeline');
 await act(async()=>button('重新转写并对比').props.onClick());
 assert.equal(button('采用新文字').props.disabled,true,'existing human corrections cannot be silently replaced');
 assert.ok(content(tree.toJSON()).includes('已有人工修订'));
