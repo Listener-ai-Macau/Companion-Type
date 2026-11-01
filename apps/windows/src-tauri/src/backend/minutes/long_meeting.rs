@@ -194,7 +194,7 @@ fn restore_quote_whitespace(source: &str, evidence: &mut [Evidence]) {
 // only unsupported items and rebuild evidence indices for the retained ones.
 fn retain_source_backed(minutes: &mut CompanionV1MeetingMinutes, evidence: &mut Vec<Evidence>, source: &str) -> usize {
     evidence.retain(|item| cited_item(minutes,item).is_some_and(|text|!text.trim().is_empty())
-        && !item.quote.trim().is_empty() && item.quote.len()<=1024 && source.contains(&item.quote));
+        && !item.quote.trim().is_empty() && source.contains(&item.quote));
     fn retain_field<T>(field:&str, rows:&mut Vec<T>, evidence:&mut [Evidence])->usize {
         let mut mapping=vec![None;rows.len()];
         let mut next=0;
@@ -256,7 +256,7 @@ fn validate_chapter(minutes: &CompanionV1MeetingMinutes, evidence: &[Evidence], 
     let mut cited = HashSet::new();
     for item in evidence {
         if cited_item(minutes, item).is_none_or(|t| t.trim().is_empty()) || item.quote.trim().is_empty()
-            || item.quote.len() > 1024 || !source.contains(&item.quote) {
+            || !source.contains(&item.quote) {
             return Err("分段纪要的原文引用无效，未复用或提升为完整结果。".into());
         }
         cited.insert((item.field.as_str(), item.index));
@@ -477,7 +477,7 @@ fn append_conditional_source_actions(minutes: &mut CompanionV1MeetingMinutes,
 fn preserve_conditional_actions(minutes: &mut CompanionV1MeetingMinutes,
     evidence: &mut [Evidence], source: &str) {
     for item in evidence.iter_mut().filter(|e|e.field=="actionItems") {
-        if item.quote.trim().is_empty() || item.quote.len()>1024 {continue;}
+        if item.quote.trim().is_empty() {continue;}
         let matches=source.match_indices(&item.quote).map(|(i,_)|i).take(2).collect::<Vec<_>>();
         if matches.len()!=1 {continue;}
         let start=matches[0];
@@ -493,12 +493,14 @@ fn preserve_conditional_actions(minutes: &mut CompanionV1MeetingMinutes,
             let condition_start=sentence_start+offset;
             if start-condition_start<=512 {
                 let expanded=source[condition_start..start+item.quote.len()].trim();
-                if expanded.len()<=1024 {quote=expanded.to_string();}
+                quote=expanded.to_string();
             }
         }
         if ["如果","假如","若是","除非","只有"].iter().any(|word|quote.contains(word)) {
             if let Some(action)=minutes.action_items.get_mut(item.index) {
-                action.text=quote.replace(['\r','\n']," "); action.due=None; item.quote=quote;
+                if quote.len()<=1024 {action.text=quote.replace(['\r','\n']," ");}
+                else if !action.text.starts_with("待核对：") {action.text=format!("待核对：{}",action.text);}
+                action.due=None; item.quote=quote;
             }
         }
     }

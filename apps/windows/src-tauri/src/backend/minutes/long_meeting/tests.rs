@@ -418,6 +418,29 @@ fn extra_quote_does_not_erase_an_assignment_already_supported_by_one_excerpt() {
 }
 
 #[test]
+fn long_exact_quote_is_retained_and_fabricated_quote_is_dropped() {
+    let quote="真实会议内容".repeat(220);assert!(quote.len()>1024);
+    let source=session(&quote);let root=root();
+    let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
+        let (mut m,_)=response(p);m.summary=vec!["真实讨论".into(),"不存在的内容".into()];
+        Ok((m,vec![Evidence{field:"summary".into(),index:0,quote:quote.clone()},Evidence{field:"summary".into(),index:1,quote:"不存在的原话".into()}]))
+    }).unwrap();
+    assert!(result.summary.contains(&"真实讨论".into()));assert!(!result.summary.contains(&"不存在的内容".into()));
+    assert!(result.markdown.contains("有1条内容无法对应原文"));cleanup(root);
+}
+
+#[test]
+fn long_conditional_quote_never_becomes_unconditional_deadline() {
+    let quote=format!("{}周五发报价", "会议讨论".repeat(150));assert!(quote.len()>1024);
+    let text=format!("如果客户同意，{quote}");let source=session(&text);let (mut m,_)=response(&source);
+    m.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"周五发报价".into(),owner:None,due:Some("周五".into())}];
+    let mut evidence=vec![Evidence{field:"actionItems".into(),index:0,quote}];
+    preserve_conditional_actions(&mut m,&mut evidence,&text);
+    assert_eq!(m.action_items[0].due,None);assert!(m.action_items[0].text.starts_with("待核对："));
+    assert!(evidence[0].quote.starts_with("如果客户同意"));assert!(text.contains(&evidence[0].quote));
+}
+
+#[test]
 fn one_bad_quote_drops_only_its_item_and_discloses_omission() {
     let source=session("会议讨论招生计划与课程安排。\n");let root=root();
     let result=run_with(&root,"https://fixture.invalid","model","key",&source,"now",|_,_,p,_| {
