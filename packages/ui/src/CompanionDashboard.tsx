@@ -1063,7 +1063,7 @@ export function CompanionDashboard({
   // a seek starts, validate the actual source and recording, not that transient
   // busy flag; otherwise every first seek rejects its own preparation.
   sourceContext.current = { session: selectedSession,
-    blocked: oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved };
+    blocked: oobeBlockedByRecording || storageBlocked };
   const externalAudioSeek = useRef<(() => void) | null>(null);
   const audioContext = useRef({ sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) });
   audioContext.current = { sessionId: selectedSession?.id ?? '', identity: audioIdentity, blocked: Boolean(audioBlockedReason) };
@@ -1621,7 +1621,7 @@ export function CompanionDashboard({
     const valid = () => Boolean(sourceContext.current.session && !sourceContext.current.blocked
       && companionTranscriptSourceIsCurrent(sourceContext.current.session, source));
     setPlaybackOpen(true);
-    if (!valid() || audioBlockedReason || controlsBusy || transcriptReviewUnsaved)
+    if (!valid() || audioBlockedReason || controlsBusy)
       throw new Error('这段转写或原音尚不可回听，请结束处理并重新核对。');
     const identity = audioIdentity;
     const stillCurrent = () => valid() && audioContext.current.sessionId === source.sessionId
@@ -1632,7 +1632,7 @@ export function CompanionDashboard({
     setAudioResult({ sessionId: source.sessionId, message: '已定位到这段原音。点击播放器的播放按钮即可回听。' });
   };
   const seekUnrecognized = async (part:{startMs:number;endMs:number;source?:string|null}) => {
-    if (!selectedSession || audioBlockedReason || controlsBusy || storageBlocked || transcriptReviewUnsaved) return;
+    if (!selectedSession || audioBlockedReason || controlsBusy || storageBlocked) return;
     const sessionId=selectedSession.id, identity=audioIdentity;
     const stillCurrent=()=>{
       const session=sourceContext.current.session;
@@ -2277,7 +2277,7 @@ export function CompanionDashboard({
                   {selectedUnrecognized.map((part,index)=><button type="button" className="ct-text-button"
                     key={`${part.startMs}:${part.endMs}:${part.source??''}:${index}`}
                     aria-label={`定位第 ${index+1} 处未识别原音：${part.source ? `${part.source} ` : ''}${formatDuration(part.startMs)}至${formatDuration(part.endMs)}`}
-                    disabled={Boolean(audioBlockedReason)||audioBusy||controlsBusy||storageBlocked||transcriptReviewUnsaved}
+                    disabled={Boolean(audioBlockedReason)||audioBusy||controlsBusy||storageBlocked}
                     title={audioBlockedReason??'定位原音后点击播放回听'} onClick={()=>void seekUnrecognized(part)}>
                     {part.source ? `${part.source} ` : ''}{formatDuration(part.startMs)}–{formatDuration(part.endMs)}
                   </button>)}

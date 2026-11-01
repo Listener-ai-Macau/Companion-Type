@@ -26,12 +26,21 @@ const changed=structuredClone(session);changed.utterances[1].approximateTiming=f
 assert.equal(companionTranscriptSourceIsCurrent(changed,sources[1]),false,'stale precision must not silently reuse a source link');
 const seeked:any[]=[];let tree:any;
 act(()=>tree=create(<CompanionTranscriptReview session={session} visible={true} blocked={false}
-  onUnsavedChange={()=>{}} onSeekSource={async source=>{seeked.push(source);}}/>));
+  onUnsavedChange={()=>{}} onSave={async()=>snapshot} onSeekSource={async source=>{seeked.push(source);}}/>));
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
 assert.ok(tree.root.findAllByType('time').some((n:any)=>text(n)==='约 0:16–0:32'));
 assert.ok(tree.root.findAllByType('strong').some((n:any)=>text(n)==='本地转写分段'));
 await act(async()=>tree.root.findByProps({'aria-label':'定位第2段原音'}).props.onClick());
 assert.equal(seeked.length,1);assert.equal(seeked[0].startMs,16000);assert.equal(seeked[0].approximateTiming,true);
+act(()=>tree.root.findAllByType('button').find((n:any)=>text(n)==='修正文字').props.onClick());
+act(()=>tree.root.findByProps({'aria-label':'第2段转写'}).props.onChange({target:{value:'记得带蓝色文件夹，周五交付。'}}));
+assert.equal(tree.root.findByProps({'aria-label':'定位第2段原音'}).props.disabled,false);
+await act(async()=>tree.root.findByProps({'aria-label':'定位第2段原音'}).props.onClick());
+assert.equal(seeked.length,2);assert.equal(seeked[1].startMs,16000);
+assert.equal(tree.root.findByProps({'aria-label':'第2段转写'}).props.value,'记得带蓝色文件夹，周五交付。','seeking must retain the draft');
+act(()=>tree.update(<CompanionTranscriptReview session={changed} visible={true} blocked={false}
+  onUnsavedChange={()=>{}} onSave={async()=>snapshot} onSeekSource={async source=>{seeked.push(source);}}/>));
+assert.equal(tree.root.findByProps({'aria-label':'定位第2段原音'}).props.disabled,true,'do not seek if the saved source changed under the draft');
 act(()=>tree.unmount());
 const alternative=structuredClone(session);
 alternative.transcriptReview={revision:1,editedAt:'now',sourceTranscriptText:session.transcriptText,

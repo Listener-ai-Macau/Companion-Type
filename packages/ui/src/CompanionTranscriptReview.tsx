@@ -149,6 +149,9 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
       </div> : null}
       {rows.length ? rows.map((source,index) => <div className="ct-transcript-review-row" key={index}>
         <div className="ct-transcript-review-meta"><time>{source.approximateTiming?'约 ':''}{stamp(source.startMs)}–{stamp(source.endMs)}</time>
+          {onSeekSource && sourcesByIndex.has(index) ? <button type="button" className="ct-text-button"
+            aria-label={`定位第${index + 1}段原音`} disabled={blocked || audioSeekBlocked || seeking || Boolean(changedSource)}
+            onClick={() => seek(sourcesByIndex.get(index)!)}>定位原音</button> : null}
           <input aria-label={`第${index+1}段说话人`} maxLength={32} value={draft.rows[index].speakerName}
             placeholder={source.speaker == null ? '此段说话人（可选）' : draft.names[source.speaker] || `说话人${source.speaker+1}`}
             disabled={Boolean(saving)} onChange={(e) => change((d) => ({ ...d, rows: d.rows.map((row,i) => i===index ? { ...row, speakerName: e.target.value } : row) }))} />
