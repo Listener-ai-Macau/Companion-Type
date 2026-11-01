@@ -448,6 +448,76 @@ mod tests {
         assert!(queue.error.lock().unwrap().as_deref().unwrap().contains("跟不上采集"));
     }
 
+    // Run only against the explicitly provisioned and marked small VHDX volume.
+    #[test]
+    #[ignore]
+    fn actual_full_disk_segmented_capture_preserves_recoverable_samples() {
+        let root=PathBuf::from(std::env::var_os("COMPANION_FULL_DISK_SEGMENTED_TEST_ROOT").expect("test volume required"));
+        assert_eq!(root,PathBuf::from(r"E:\CodexData\Companion\full-disk-segmented-20261101\mount"));
+        assert_eq!(std::fs::read_to_string(root.join("test-volume-marker.txt")).unwrap().trim(),"isolated segmented disk full test");
+        // Verify the mount really belongs to the small disposable disk before filling it.
+        let check=r"$ErrorActionPreference='Stop'; $i=Get-DiskImage -ImagePath 'E:\CodexData\Companion\full-disk-segmented-20261101\segmented-test.vhdx'; if (-not $i.Attached) {exit 1}; $d=$i | Get-Disk; if ($d.Size -ne 67108864 -or $d.IsBoot -or $d.IsSystem -or $d.FriendlyName -ne 'Msft Virtual Disk') {exit 1}; $p=Get-Partition -DiskNumber $d.Number | Where-Object {$_.AccessPaths -contains 'E:\CodexData\Companion\full-disk-segmented-20261101\mount\'}; if (-not $p) {exit 1}";
+        assert!(std::process::Command::new("powershell.exe").args(["-NoProfile","-NonInteractive","-Command",check]).status().unwrap().success(),"test root is not the disposable VHDX");
+        let dir=root.join(format!("case-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&dir).unwrap();
+        let dir=dir.canonicalize().unwrap();
+        unsafe {std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&dir)};
+        let anchor=dir.join("full.wav");
+        let state=PathBuf::from(r"E:\CodexData\Companion\full-disk-segmented-20261101").join(format!("session-{}.json",uuid::Uuid::new_v4()));
+        let mut snapshot=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
+            crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("full-disk".into()))).unwrap();
+        let mut row=snapshot.host.sessions.remove(0);row.id="full-disk".into();row.source="hostMicrophone".into();
+        row.status="recording".into();row.audio_path=Some(anchor.to_string_lossy().into());row.audio_stored=false;row.chunks.clear();
+        super::super::persistence::save_sessions_to(&state,&[row.clone()]).unwrap();
+        let expected=super::super::session_store::privacy_authorization(&row).unwrap();
+        let owner=super::super::audio_artifacts::WriteLease::begin(&anchor,&anchor,super::super::audio_artifacts::Purpose::Recording).unwrap();
+        let archive=CaptureArchive::start_with_limit(&anchor,16*1024).unwrap();let queue=archive.queue();
+        queue.push((0..12000).map(|i|((i%30000) as i16)-15000).collect());
+        let next=dir.join("full.host-part-00000001.wav");
+        let until=std::time::Instant::now()+std::time::Duration::from_secs(15);
+        while std::fs::metadata(&next).map_or(true,|m|m.len()<44+7616) {
+            assert!(archive.error().is_none(),"initial write failed: {:?}",archive.error());
+            assert!(std::time::Instant::now()<until,"initial samples did not reach disk");
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+        let filler_path=dir.join("test-only-filler.bin");
+        let mut filler=OpenOptions::new().write(true).create_new(true).open(&filler_path).unwrap();
+        let mut full_error=None;
+        for size in [65536usize,4096,512,1] {
+            let data=vec![0u8;size];
+            loop { match filler.write_all(&data) {Ok(())=>(),Err(e)=>{full_error=Some(e.to_string());break;}} }
+        }
+        let filled=filler.metadata().unwrap().len();assert!(filled>1024*1024);
+        filler.set_len(filled-128*1024).unwrap();filler.sync_all().unwrap();
+        queue.push(vec![0x1234;262144]);
+        let until=std::time::Instant::now()+std::time::Duration::from_secs(30);
+        while archive.error().is_none() {
+            assert!(std::time::Instant::now()<until,"disk-full write failure was not detected");
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+        drop(queue);let result=archive.finish().unwrap();assert!(result.error.is_some());drop(owner);
+        filler.set_len(0).unwrap();filler.sync_all().unwrap();drop(filler);
+        let mut originals=std::fs::read_dir(&dir).unwrap().map(|entry|entry.unwrap().path())
+            .filter(|p|p.extension().is_some_and(|v|v=="wav")).collect::<Vec<_>>();
+        originals.sort_by_key(|p|if p==&anchor {(0,p.clone())} else {(1,p.clone())});
+        let originals=originals.into_iter().map(|p|{let bytes=std::fs::read(&p).unwrap();(p,bytes)}).collect::<Vec<_>>();
+        let expected_samples=originals.iter().flat_map(|(_,bytes)|bytes.get(44..).unwrap_or_default().chunks_exact(2)
+            .map(|b|i16::from_le_bytes([b[0],b[1]]))).collect::<Vec<_>>();
+        assert!(expected_samples.len()>=12000);
+        assert_eq!(&expected_samples[..12000],&(0..12000).map(|i|((i%30000) as i16)-15000).collect::<Vec<_>>());
+        assert!(expected_samples[12000..].iter().all(|s|*s==0x1234));
+        super::super::host_interrupted_recovery::recover_session_at(&state,&row.id,&expected).unwrap();
+        let row=super::super::persistence::load_sessions_from(&state).unwrap().remove(0);
+        assert!(row.capture_incomplete && row.audio_stored);
+        let parts=saved_parts(&row).unwrap().unwrap();let mut actual=Vec::new();
+        for (path,_) in parts {let bytes=std::fs::read(path).unwrap();actual.extend(bytes[44..].chunks_exact(2).map(|b|i16::from_le_bytes([b[0],b[1]])));}
+        assert_eq!(actual,expected_samples);
+        for (path,bytes) in &originals {assert_eq!(&std::fs::read(path).unwrap(),bytes,"original changed");}
+        eprintln!("real disk-full error: {:?}; writer: {:?}; filled: {}; recovered samples: {}; originals: {}; state: {}; case: {}",
+            full_error,result.error,filled,actual.len(),originals.len(),state.display(),dir.display());
+        unsafe {std::env::remove_var("COMPANION_TYPE_RECORDING_DIR")};
+    }
+
     #[test]
     fn crashed_parts_recover_as_one_session_and_remain_backupable() {
         let base=root();let dir=base.join("recordings");let target=base.join("target");let backups=base.join("backups");
