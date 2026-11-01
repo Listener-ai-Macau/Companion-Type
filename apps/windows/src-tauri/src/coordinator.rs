@@ -138,6 +138,7 @@ impl CompanionCoordinator {
     pub(crate) fn request_shutdown(&self) {
         self.shutdown.request();
         crate::backend::recording_sync::request_process_shutdown();
+        crate::backend::meeting_processing_job::cancel_for_shutdown();
     }
     pub(crate) fn finish_shutdown(&self,budget:std::time::Duration)->Result<usize,String> {
         self.request_shutdown();
@@ -149,6 +150,9 @@ impl CompanionCoordinator {
             std::thread::sleep(std::time::Duration::from_millis(5));
         }
         self.backend.finish_host_recording_on_exit()?;
+        // Wait through backend persistence, not just the external model call.
+        // Any caller already queued on the gate rejects work after shutdown.
+        self.backend.finish_meeting_processing_on_exit(until.saturating_duration_since(std::time::Instant::now()))?;
         crate::backend::release_process_device_links()
     }
     pub fn begin_desktop_update_operation(&self) -> Result<CompanionDeviceOperationLease,String> {

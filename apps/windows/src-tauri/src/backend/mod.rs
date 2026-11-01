@@ -701,6 +701,7 @@ pub struct CompanionServiceBoundary {
 
 pub trait CompanionBackend: Send + Sync {
     fn finish_host_recording_on_exit(&self) -> Result<(), String>;
+    fn finish_meeting_processing_on_exit(&self, budget: std::time::Duration) -> Result<(), String>;
     fn request_manual_disconnect(&self,target:Option<&str>)->Result<(),String>;
     fn restore_library_backup(&self,_path:&std::path::Path)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持恢复会议备份。".into())}
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
@@ -1490,6 +1491,9 @@ mod manual_disconnect_tests {
 }
 
 impl CompanionBackend for FixtureCompanionBackend {
+    fn finish_meeting_processing_on_exit(&self, budget: std::time::Duration) -> Result<(), String> {
+        meeting_processing_job::wait_for_idle(&self.meeting_processing, budget)
+    }
     fn finish_host_recording_on_exit(&self) -> Result<(), String> {
         // Only this process's own microphone is stopped. A board recording is
         // not owned by HostRecordingManager and must continue independently.
@@ -1569,6 +1573,7 @@ impl CompanionBackend for FixtureCompanionBackend {
     }
     fn refine_meeting_speakers(&self,id:&str)->Result<CompanionV1Snapshot,String> {
         let _processing=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
+        if lifecycle::PROCESS.requested() {return Err(lifecycle::CLOSING.into());}
         let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
         if snapshot.host.persistence.status!="ready" {return Err("请先保存或恢复会议库。".into());}
         let input=speaker_refinement::prepare(&snapshot,id)?;
@@ -1783,7 +1788,9 @@ impl CompanionBackend for FixtureCompanionBackend {
         let action=request.action;
         let _processing=if matches!(action,CompanionV1ControlAction::MeetingTranscribeAudio
             | CompanionV1ControlAction::MeetingGenerateMinutes) {
-            Some(self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?)
+            let guard=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
+            if lifecycle::PROCESS.requested() {return Err(lifecycle::CLOSING.into());}
+            Some(guard)
         } else {None};
         let mut snapshot = self
             .snapshot
