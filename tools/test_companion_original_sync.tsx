@@ -12,9 +12,9 @@ row.deviceRecordingId=32;row.deviceRecordingKey={deviceUid:'180010000d5033575436
 snapshot.connected=false;snapshot.device.connected=false;snapshot.device.deviceId=null;
 snapshot.host.persistence={status:'ready'};
 const calls:any[]=[];let renderer:any;
-let pausedDevice=row.sourceDeviceId;let busyAction:any=null;let boardOnlineLive:any=null;
+let pausedDevice:string|null=row.sourceDeviceId;let syncPhase:'paused'|'blocked'='paused';let busyAction:any=null;let boardOnlineLive:any=null;
 const props=()=>({snapshot,surface:'windows' as const,busyAction,error:null,onRefresh:()=>{},onControl:(r:any)=>calls.push(r),boardOnlineLive,
- recordingSync:{phase:'paused' as const,jobId:null,deviceId:pausedDevice,recordingId:32,receivedBytes:0,totalBytes:0,pauseRequested:false}});
+ recordingSync:{phase:syncPhase,jobId:null,deviceId:pausedDevice,recordingId:32,receivedBytes:0,totalBytes:0,pauseRequested:false}});
 const text=(n:any):string=>typeof n==='string'?n:(n.children??[]).map(text).join('');
 const button=(label:string)=>renderer.root.findAllByType('button').find((n:any)=>text(n)===label);
 act(()=>{renderer=create(<CompanionDashboard {...props()} />);});
@@ -23,6 +23,17 @@ act(()=>button('继续同步').props.onClick());
 assert.equal(calls.at(-1).action,'deviceSyncRecordings');assert.equal(calls.at(-1).sessionId,'original-long');
 assert.equal(calls.at(-1).deviceId,row.sourceDeviceId);
 const baseline=snapshot;
+syncPhase='blocked';pausedDevice=null;
+act(()=>renderer.update(<CompanionDashboard {...props()} />));
+assert.equal(button('手动同步录音').props.disabled,false,'a damaged choice file must not strand the known active original');
+act(()=>button('手动同步录音').props.onClick());
+assert.equal(calls.at(-1).action,'deviceSyncRecordings');assert.equal(calls.at(-1).sessionId,'original-long');
+assert.equal(calls.at(-1).deviceId,row.sourceDeviceId);assert.equal(row.status,'recording');
+pausedDevice='00:11:22:33:44:55';
+act(()=>renderer.update(<CompanionDashboard {...props()} />));
+act(()=>button('手动同步录音').props.onClick());
+assert.equal(calls.at(-1).sessionId,'original-long');assert.equal(calls.at(-1).deviceId,row.sourceDeviceId,'a stale pause hint must not redirect an active original');
+syncPhase='paused';pausedDevice=row.sourceDeviceId;
 for(const failure of ['host','missing_key','another_device','multiple','different_paused_device','storage_blocked','busy','online_owner']) {
  snapshot=structuredClone(baseline);pausedDevice=row.sourceDeviceId;busyAction=null;boardOnlineLive=null;
  if(failure==='host')snapshot.host.sessions[0].source='hostMicrophone';

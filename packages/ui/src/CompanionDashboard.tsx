@@ -618,10 +618,9 @@ export function CompanionDashboard({
     && (!device?.deviceId || device.deviceId.replace(/[:-]/g, '').toLowerCase()
       === activeRecorders[0].sourceDeviceId.replace(/[:-]/g, '').toLowerCase())
     ? activeRecorders[0] : null;
-  const pausedSyncRecorder = originalSyncRecorder && recordingSync?.deviceId
-    && recordingSync.deviceId.replace(/[:-]/g, '').toLowerCase()
-      === originalSyncRecorder.sourceDeviceId!.replace(/[:-]/g, '').toLowerCase()
-    ? originalSyncRecorder : null;
+  const pausedSyncRecorder = originalSyncRecorder && (recordingSync?.phase === 'blocked'
+    || Boolean(recordingSync?.deviceId && recordingSync.deviceId.replace(/[:-]/g, '').toLowerCase()
+      === originalSyncRecorder.sourceDeviceId!.replace(/[:-]/g, '').toLowerCase())) ? originalSyncRecorder : null;
   const privacy = snapshot?.privacy;
   const allLibrarySessions = snapshot?.host.sessions ?? [];
   const qaEligibleSessions=allLibrarySessions.filter(row=>!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row));
@@ -1840,6 +1839,7 @@ export function CompanionDashboard({
             onClick={() => onCancelMeetingProcessing(processingSessionId)}>{cancelProcessingPending ? '停止中…' : minutesRunning ? '停止整理' : '停止转写'}</button>
         </section> : null}
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
+        recoveryDeviceId={pausedSyncRecorder?.sourceDeviceId ?? (connected ? device?.deviceId : null)}
         resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync}
         onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle,
           ...(pausedSyncRecorder ? { sessionId: pausedSyncRecorder.id } : {}) })} />

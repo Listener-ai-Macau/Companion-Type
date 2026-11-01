@@ -15,6 +15,9 @@ struct Store {
     last_paused_device: Option<String>,
     preference_path: Option<std::path::PathBuf>,
     storage_error: Option<String>,
+    // An explicit user action may receive one named device even when only
+    // the pause-choice file is unreadable. Automatic sync remains disabled.
+    manual_recovery_devices: HashSet<String>,
 }
 static STORE: std::sync::LazyLock<Mutex<Store>> = std::sync::LazyLock::new(|| Mutex::new(preference::load_product()));
 static OBSERVER: std::sync::OnceLock<Box<dyn Fn(Status) + Send + Sync>> = std::sync::OnceLock::new();
@@ -96,14 +99,13 @@ impl Job {
     fn begin_kind(device: &str, background: bool) -> Result<Arc<Self>, String> {
         if super::lifecycle::PROCESS.requested() {return Err(super::lifecycle::CLOSING.into());}
         let mut store = STORE.lock().map_err(|_| "同步暂停状态暂时不可用")?;
-        if let Some(error) = &store.storage_error { return Err(error.clone()); }
         let active = store.active.as_ref().and_then(Weak::upgrade);
         if active.is_some() {
             drop(store);
             drop(active);
             return Err("已有设备录音正在同步，请先完成或暂停。".into());
         }
-        if store.paused_devices.contains(&key(device)) { return Err(PAUSED.into()); }
+        admit_job(&mut store, device, background)?;
         let job = Self::create_kind(device, background);
         store.active = Some(Arc::downgrade(&job));
         drop(store);
@@ -155,6 +157,15 @@ impl Job {
             error: None,
         }
     }
+}
+
+fn admit_job(store: &mut Store, device: &str, background: bool) -> Result<(), String> {
+    if let Some(error) = &store.storage_error {
+        if !background && store.manual_recovery_devices.remove(&key(device)) { return Ok(()); }
+        return Err(error.clone());
+    }
+    if store.paused_devices.contains(&key(device)) { return Err(PAUSED.into()); }
+    Ok(())
 }
 
 impl Drop for Job {

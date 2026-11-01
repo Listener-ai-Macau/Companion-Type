@@ -4,8 +4,8 @@ use super::{key,Store};
 use serde::{Deserialize,Serialize};
 use std::path::{Path,PathBuf};
 
-const READ_ERROR:&str="录音同步设置暂时不可读取，自动同步已暂停；设备原录音保留。请恢复本机设置文件后重试。";
-const WRITE_ERROR:&str="同步选择未能保存，当前同步保持暂停；请恢复本机存储后再继续。";
+const READ_ERROR:&str="录音同步设置暂时不可读取，自动同步已暂停；可以手动同步当前设备，原录音保留。";
+const WRITE_ERROR:&str="同步选择未能保存，自动同步已暂停；可以手动同步当前设备，原录音保留。";
 
 #[derive(Deserialize,Serialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
@@ -64,18 +64,29 @@ pub(super) fn resume(store:&mut Store,device:Option<&str>)->Result<(),String> {
     let mut next=store.preference_path.as_ref().map(|p|load(p.clone())).unwrap_or_else(||Store {
         paused_devices:store.paused_devices.clone(),last_paused_device:store.last_paused_device.clone(),..Store::default()
     });
-    if let Some(error)=next.storage_error {return Err(error);}
+    if let Some(error)=next.storage_error {return permit_manual(store,device,error);}
     if let Some(device)=device {next.paused_devices.remove(&key(device));}
     else {next.paused_devices.clear();}
     if next.last_paused_device.as_deref().is_some_and(|id|!next.paused_devices.contains(&key(id))) {
         next.last_paused_device=next.paused_devices.iter().min().cloned();
     }
-    commit_resume(store,next)
+    match commit_resume(store,next) {
+        Ok(()) => Ok(()),
+        Err(error) => permit_manual(store,device,error),
+    }
+}
+
+fn permit_manual(store:&mut Store,device:Option<&str>,error:String)->Result<(),String> {
+    let Some(device)=device.filter(|id|super::super::device_connection::stable_device_id(id)) else {return Err(error);};
+    store.storage_error=Some(error);
+    store.manual_recovery_devices.insert(key(device));
+    Ok(())
 }
 
 fn commit_resume(store:&mut Store,next:Store)->Result<(),String> {
     save(&next)?;
     store.paused_devices=next.paused_devices;store.last_paused_device=next.last_paused_device;store.storage_error=None;
+    store.manual_recovery_devices.clear();
     Ok(())
 }
 
@@ -83,14 +94,21 @@ fn commit_resume(store:&mut Store,next:Store)->Result<(),String> {
 mod tests {
     use super::*;
     #[test]
-    fn corrupt_choice_blocks_automatic_receive_and_is_not_replaced_by_resume() {
+    fn corrupt_choice_allows_one_explicit_device_without_automatic_receive_or_replacement() {
         let root=std::env::temp_dir().join(format!("companion-sync-corrupt-{}",uuid::Uuid::new_v4()));
         std::fs::create_dir(&root).unwrap();let path=root.join("recording-sync.json");
         for bytes in [b"{".as_slice(),br#"{"schema":2,"pausedDevices":[],"lastPausedDevice":null}"#,
             br#"{"schema":1,"pausedDevices":["not-a-device"],"lastPausedDevice":"not-a-device"}"#] {
             std::fs::write(&path,bytes).unwrap();let mut store=load(path.clone());
             assert!(!super::super::owned_follow_allowed_for(&store,"AA:BB:CC:DD:EE:01"));
-            assert!(resume(&mut store,Some("AA:BB:CC:DD:EE:01")).is_err());
+            assert!(resume(&mut store,None).is_err());
+            assert!(resume(&mut store,Some("not-a-device")).is_err());
+            assert!(resume(&mut store,Some("AA:BB:CC:DD:EE:01")).is_ok());
+            assert!(!super::super::automatic_allowed_for(&store,"AA:BB:CC:DD:EE:01",false));
+            assert!(super::super::admit_job(&mut store,"AA:BB:CC:DD:EE:01",true).is_err());
+            assert!(super::super::admit_job(&mut store,"AA:BB:CC:DD:EE:02",false).is_err());
+            assert!(super::super::admit_job(&mut store,"AA:BB:CC:DD:EE:01",false).is_ok());
+            assert!(super::super::admit_job(&mut store,"AA:BB:CC:DD:EE:01",false).is_err());
             assert_eq!(std::fs::read(&path).unwrap(),bytes);
         }
         std::fs::remove_dir_all(root).unwrap();
@@ -110,5 +128,24 @@ mod tests {
         assert!(commit_resume(&mut store,next).unwrap_err().contains("未能保存"));
         assert!(store.paused_devices.contains("aabbccddee02"));
         std::fs::remove_dir_all(root).unwrap();
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn occupied_choice_file_still_allows_the_selected_manual_job() {
+        use std::os::windows::fs::OpenOptionsExt;
+        let root=std::env::temp_dir().join(format!("companion-sync-occupied-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let path=root.join("recording-sync.json");
+        let mut store=load(path.clone());store.paused_devices.insert(key("AA:BB:CC:DD:EE:01"));
+        store.paused_devices.insert(key("AA:BB:CC:DD:EE:02"));store.last_paused_device=Some("AA:BB:CC:DD:EE:01".into());
+        save(&store).unwrap();let before=std::fs::read(&path).unwrap();
+        let held=std::fs::OpenOptions::new().read(true).share_mode(1|2).open(&path).unwrap();
+        resume(&mut store,Some("AA:BB:CC:DD:EE:01")).unwrap();
+        assert!(!super::super::automatic_allowed_for(&store,"AA:BB:CC:DD:EE:01",false));
+        assert!(store.paused_devices.contains(&key("AA:BB:CC:DD:EE:02")));
+        assert!(super::super::admit_job(&mut store,"AA:BB:CC:DD:EE:01",false).is_ok());
+        assert!(super::super::admit_job(&mut store,"AA:BB:CC:DD:EE:02",false).is_err());
+        assert_eq!(std::fs::read(&path).unwrap(),before);
+        drop(held);std::fs::remove_dir_all(root).unwrap();
     }
 }

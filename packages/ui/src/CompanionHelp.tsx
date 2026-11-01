@@ -80,6 +80,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
     </details>
     <details><summary>设备说已保存，为什么电脑里还没有？</summary>
       <p>设备先保存录音，Type 连接并同步后才有电脑副本。先看“设备与同步”的状态，再在“我的记录”查找；有搜索或筛选时，也试着清除筛选。</p>
+      <p>如果提示自动同步设置暂时不可用，连接设备后可点“手动同步录音”；录音中会继续收取同一场的已保存片段。</p>
       <p>如果提示只恢复了片段，先保留已有内容，不把它当成完整录音。没有文字时可先查看原音状态；转文字和整理是后续处理。</p>
     </details>
     <details><summary>连不上，或画面一直不动怎么办？</summary>

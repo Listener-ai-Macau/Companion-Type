@@ -12,10 +12,11 @@ export type RecordingSyncStatus = {
   error?: string;
 };
 
-export function CompanionRecordingSync({ status, pauseBusy, resumeBlocked, onPause, onResume }: {
+export function CompanionRecordingSync({ status, pauseBusy, resumeBlocked, recoveryDeviceId, onPause, onResume }: {
   status: RecordingSyncStatus | null;
   pauseBusy: boolean;
   resumeBlocked: boolean;
+  recoveryDeviceId?: string | null;
   onPause?: (jobId: string) => void;
   onResume: (deviceId: string) => void;
 }) {
@@ -23,6 +24,7 @@ export function CompanionRecordingSync({ status, pauseBusy, resumeBlocked, onPau
   const paused = status.phase === 'paused';
   const blocked = status.phase === 'blocked';
   const saving = status.phase === 'saving' || status.phase === 'reclaiming';
+  const resumeDevice = paused ? status.deviceId : blocked ? (recoveryDeviceId || status.deviceId) : null;
   const title = blocked ? '自动同步已暂停' : paused ? '录音同步已暂停' : status.pauseRequested ? '正在暂停同步'
     : status.phase === 'saving' ? '正在保存录音'
       : status.phase === 'reclaiming' ? '正在释放已同步的设备空间' : '正在同步录音';
@@ -37,8 +39,8 @@ export function CompanionRecordingSync({ status, pauseBusy, resumeBlocked, onPau
         <span> {Math.floor(Math.min(status.receivedBytes, status.totalBytes) / status.totalBytes * 100)}%</span>
       </> : null}
     </div>
-    {paused && status.deviceId ? <button type="button" className="ct-action" disabled={resumeBlocked}
-      onClick={() => onResume(status.deviceId!)}><RefreshCw size={15} />继续同步</button>
+    {resumeDevice ? <button type="button" className="ct-action" disabled={resumeBlocked}
+      onClick={() => onResume(resumeDevice)}><RefreshCw size={15} />{blocked ? '手动同步录音' : '继续同步'}</button>
       : status.jobId && onPause ? <button type="button" className="ct-action"
         disabled={pauseBusy || status.pauseRequested} onClick={() => onPause(status.jobId!)}>
         <Pause size={15} />{pauseBusy || status.pauseRequested ? '正在暂停…' : '暂停同步'}</button> : null}
