@@ -507,6 +507,7 @@ export function CompanionDashboard({
   const [qaAsked,setQaAsked]=useState('');
   const [qaSaveBusy,setQaSaveBusy]=useState(false);
   const [qaSaveMessage,setQaSaveMessage]=useState<string|null>(null);
+  const [qaRemovedNotice,setQaRemovedNotice]=useState(false);
   const [qaResult,setQaResult]=useState<import('@companion-type/core').MeetingQaResult|null>(null);
   const [qaError,setQaError]=useState<string|null>(null);
   const [qaSourceSnapshot,setQaSourceSnapshot]=useState<{ids:string[];identity:string}|null>(null);
@@ -619,11 +620,12 @@ export function CompanionDashboard({
   const allLibrarySessions = snapshot?.host.sessions ?? [];
   const qaEligibleSessions=allLibrarySessions.filter(row=>!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row));
   const qaSelectedEligible=qaSelected.filter(id=>qaEligibleSessions.some(row=>row.id===id));
+  const qaSessionsRef=useRef(allLibrarySessions);qaSessionsRef.current=allLibrarySessions;
   const qaIdentity=(ids:string[])=>JSON.stringify(ids.map(id=>{const row=allLibrarySessions.find(session=>session.id===id);
     return row?[row.id,row.transcriptText,row.transcriptReview,row.utterances,row.organization?.trashedAt]:null;}));
   const qaStale=Boolean(qaSourceSnapshot&&qaSourceSnapshot.identity!==qaIdentity(qaSourceSnapshot.ids));
   const qaSourceRemoved=Boolean(qaSourceSnapshot&&qaSourceSnapshot.ids.some(id=>!qaEligibleSessions.some(row=>row.id===id)));
-  useEffect(()=>{if(qaSourceRemoved&&qaResult){setQaResult(null);setQaSaveMessage(null);}},[qaSourceRemoved,qaResult]);
+  useEffect(()=>{if(qaSourceRemoved){setQaResult(null);setQaSaveMessage(null);setQaSourceSnapshot(null);setQaRemovedNotice(true);}},[qaSourceRemoved]);
   const savedCustomTemplates=useMemo(()=>savedCustomMinutesTemplates(allLibrarySessions),[allLibrarySessions]);
   const localSaveConfirmed = snapshot?.host.persistence?.status === 'ready';
   const recentSavedRecording = useMemo(() => allLibrarySessions
@@ -2273,13 +2275,13 @@ export function CompanionDashboard({
                   onChange={event=>setQaSelected(current=>event.target.checked?[...current,row.id]:current.filter(id=>id!==row.id))}/>{meetingTitle(row)}</label>)}</div>
               <label>问题<textarea aria-label="录音问题" value={qaQuestion} disabled={qaBusy} onChange={event=>setQaQuestion(event.target.value)}/></label>
               <button type="button" className="ct-action" disabled={qaBusy||storageBlocked||!qaQuestion.trim()||!qaSelectedEligible.length}
-                onClick={async()=>{const ids=[...qaSelectedEligible];const identity=qaIdentity(ids);const question=qaQuestion.trim();const jobId=crypto.randomUUID();setQaJobId(jobId);setQaCancelling(false);setQaAsked(question);setQaSaveMessage(null);setQaBusy(true);setQaError(null);setQaResult(null);setQaSourceSnapshot({ids,identity});
-                  try{setQaResult(await onAskMeetings(question,ids,jobId));}catch(error){setQaError(operationErrorText(error,'general'));}finally{setQaBusy(false);setQaJobId(null);setQaCancelling(false);}}}>{qaBusy?'正在查询…':'提问'}</button>
+                onClick={async()=>{const ids=[...qaSelectedEligible];const identity=qaIdentity(ids);const question=qaQuestion.trim();const jobId=crypto.randomUUID();setQaJobId(jobId);setQaCancelling(false);setQaAsked(question);setQaSaveMessage(null);setQaRemovedNotice(false);setQaBusy(true);setQaError(null);setQaResult(null);setQaSourceSnapshot({ids,identity});
+                  try{const result=await onAskMeetings(question,ids,jobId);if(ids.every(id=>qaSessionsRef.current.some(row=>row.id===id&&!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row))))setQaResult(result);}catch(error){setQaError(operationErrorText(error,'general'));}finally{setQaBusy(false);setQaJobId(null);setQaCancelling(false);}}}>{qaBusy?'正在查询…':'提问'}</button>
               {qaBusy&&qaJobId&&onCancelMeetingQuestion?<button type="button" className="ct-action" disabled={qaCancelling} onClick={async()=>{
                 try{if(await onCancelMeetingQuestion(qaJobId)){setQaCancelling(true);setQaError(null);}else setQaError('查询刚开始或已结束，请稍后再试。');}
                 catch(error){setQaError(operationErrorText(error,'general'));}}}>{qaCancelling?'正在停止，等当前片段结束…':'停止查询'}</button>:null}
               {qaError?<p className="ct-step-warn" role="alert">{qaError}</p>:null}
-              {qaSourceRemoved?<p className="ct-step-warn">所选会议已删除或转写已清除，本次问答结果已移除。</p>:null}
+              {qaSourceRemoved||qaRemovedNotice?<p className="ct-step-warn">所选会议已删除或转写已清除，本次问答结果已移除。</p>:null}
               {qaResult&&!qaSourceRemoved?<div aria-label="录音问答结果">
                 {qaStale?<p className="ct-step-warn">会议文字或范围已变化；这是先前文字的结果，请重新提问。</p>:null}
                 {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':'有片段未完成。'}本次答案可能不完整；请重试或缩小会议范围。</p>:null}
