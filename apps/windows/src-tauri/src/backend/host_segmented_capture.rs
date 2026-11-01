@@ -463,7 +463,7 @@ mod tests {
         let dir=dir.canonicalize().unwrap();
         unsafe {std::env::set_var("COMPANION_TYPE_RECORDING_DIR",&dir)};
         let anchor=dir.join("full.wav");
-        let state=PathBuf::from(r"E:\CodexData\Companion\full-disk-segmented-20261101").join(format!("session-{}.json",uuid::Uuid::new_v4()));
+        let state=dir.join("session.json");
         let mut snapshot=crate::companion_v1::apply_fixture_control(crate::companion_v1::fixture_snapshot(),
             crate::control_request(crate::companion_v1::CompanionV1ControlAction::MeetingStart,Some("full-disk".into()))).unwrap();
         let mut row=snapshot.host.sessions.remove(0);row.id="full-disk".into();row.source="hostMicrophone".into();
@@ -496,6 +496,12 @@ mod tests {
             std::thread::sleep(std::time::Duration::from_millis(10));
         }
         drop(queue);let result=archive.finish().unwrap();assert!(result.error.is_some());drop(owner);
+        // A stop checkpoint on the same full disk must not destroy the last index.
+        let previous_index=std::fs::read(&state).unwrap();
+        let mut stopped=row.clone();stopped.status="captured".into();
+        let checkpoint=super::super::persistence::save_sessions_to(&state,&[stopped]);
+        assert!(checkpoint.is_err(),"expected same-volume index update to fail while full");
+        assert_eq!(std::fs::read(&state).unwrap(),previous_index,"full disk damaged the previous meeting index");
         filler.set_len(0).unwrap();filler.sync_all().unwrap();drop(filler);
         let mut originals=std::fs::read_dir(&dir).unwrap().map(|entry|entry.unwrap().path())
             .filter(|p|p.extension().is_some_and(|v|v=="wav")).collect::<Vec<_>>();
