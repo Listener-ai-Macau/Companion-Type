@@ -21,7 +21,7 @@ import '../../../packages/ui/src/companionUi.css';
 import {
   getDesktopUpdateStatus, checkDesktopUpdate, downloadDesktopUpdate, cancelDesktopUpdate, installDesktopUpdate,
   applyCompanionControl,
-  getRecordingSyncStatus, pauseRecordingSync, watchRecordingSync, watchCompanionSnapshotUpdates, cancelCompanionMeetingProcessing,
+  getRecordingSyncStatus, pauseRecordingSync, repairRecordingSyncSettings, watchRecordingSync, watchCompanionSnapshotUpdates, cancelCompanionMeetingProcessing,
   discardOldestDeviceRecording,
   exportCompanionMeeting, openCompanionSavedCalendar,
   previewCompanionMeetingExport,
@@ -325,6 +325,7 @@ export function App() {
       recordingSync={recordingSync}
       pauseSyncBusy={pauseSyncBusy}
       onPauseSync={isTauriRuntime() ? (jobId) => void pauseSync(jobId) : undefined}
+      onRepairSync={isTauriRuntime() ? async () => {setRecordingSync(await repairRecordingSyncSettings());} : undefined}
       processingSessionId={processingSessionId}
       cancelProcessingPending={cancelProcessingPending}
       processingNotice={processingNotice}

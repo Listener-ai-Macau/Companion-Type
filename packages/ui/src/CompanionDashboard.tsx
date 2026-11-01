@@ -216,6 +216,7 @@ export interface CompanionDashboardProps {
   recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
   pauseSyncBusy?: boolean;
   onPauseSync?: (jobId: string) => void;
+  onRepairSync?: () => Promise<void>;
   processingSessionId?: string | null;
   cancelProcessingPending?: boolean;
   processingNotice?: string | null;
@@ -384,6 +385,7 @@ export function CompanionDashboard({
   recordingSync = null,
   pauseSyncBusy = false,
   onPauseSync,
+  onRepairSync,
   processingSessionId = null,
   cancelProcessingPending = false,
   processingNotice = null,
@@ -1852,7 +1854,7 @@ export function CompanionDashboard({
         </section> : null}
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
         recoveryDeviceId={pausedSyncRecorder?.sourceDeviceId ?? (connected ? device?.deviceId : null)}
-        resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync}
+        resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync} onRepair={onRepairSync}
         onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle,
           ...(pausedSyncRecorder ? { sessionId: pausedSyncRecorder.id } : {}) })} />
 

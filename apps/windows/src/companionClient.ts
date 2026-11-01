@@ -10,6 +10,7 @@ export const watchCompanionSnapshotUpdates = (changed: () => void) =>
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 export const getRecordingSyncStatus = () => invoke<RecordingSyncStatus>('get_companion_recording_sync_status');
 export const pauseRecordingSync = (jobId: string) => invoke<boolean>('pause_companion_recording_sync', { jobId });
+export const repairRecordingSyncSettings = () => invoke<RecordingSyncStatus>('repair_companion_recording_sync_settings');
 export const watchRecordingSync = (onStatus: (status: RecordingSyncStatus) => void) =>
   listen<RecordingSyncStatus>('companion-recording-sync', (event) => onStatus(event.payload));
 import type { CompanionDesktopUpdateStatus } from '../../../packages/ui/src/CompanionDesktopUpdate';

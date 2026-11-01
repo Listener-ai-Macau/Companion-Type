@@ -332,6 +332,7 @@ pub fn run() {
             commands::cancel_companion_meeting_processing,
             commands::get_companion_recording_sync_status,
             commands::pause_companion_recording_sync,
+            commands::repair_companion_recording_sync_settings,
             commands::discard_oldest_companion_recording,
             commands::export_companion_meeting,
             calendar_handoff::open_companion_saved_calendar,

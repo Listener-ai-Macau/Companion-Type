@@ -523,6 +523,11 @@ pub fn pause_companion_recording_sync(job_id: String) -> Result<bool, String> {
     crate::backend::recording_sync::pause(&job_id)
 }
 
+#[tauri::command]
+pub fn repair_companion_recording_sync_settings() -> Result<crate::backend::recording_sync::Status, String> {
+    crate::backend::recording_sync::repair_choices()
+}
+
 // Independent of the meeting workflow lock held by the active transcription.
 #[tauri::command]
 pub fn cancel_companion_meeting_processing(session_id: String, job_id: String) -> Result<bool, String> {

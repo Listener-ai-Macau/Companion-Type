@@ -1,5 +1,6 @@
 import {operationErrorText} from './operationFailure';
 import { Pause, RefreshCw } from 'lucide-react';
+import {useRef,useState} from 'react';
 
 export type RecordingSyncStatus = {
   jobId: string | null;
@@ -12,15 +13,24 @@ export type RecordingSyncStatus = {
   error?: string;
 };
 
-export function CompanionRecordingSync({ status, pauseBusy, resumeBlocked, recoveryDeviceId, onPause, onResume }: {
+export function CompanionRecordingSync({ status, pauseBusy, resumeBlocked, recoveryDeviceId, onPause, onResume, onRepair }: {
   status: RecordingSyncStatus | null;
   pauseBusy: boolean;
   resumeBlocked: boolean;
   recoveryDeviceId?: string | null;
   onPause?: (jobId: string) => void;
   onResume: (deviceId: string) => void;
+  onRepair?: () => Promise<void>;
 }) {
-  if (!status || status.phase === 'idle') return null;
+  const [repairBusy,setRepairBusy]=useState(false);
+  const repairActive=useRef(false);
+  const [repairError,setRepairError]=useState<string|null>(null);
+  const [repairSuccess,setRepairSuccess]=useState(false);
+  if (!status) return null;
+  if (status.phase === 'idle') return repairSuccess ? <section className="ct-recording-activity" aria-label="同步设置修复结果">
+    <p role="status">自动同步设置已修复，所有设备的暂停选择已清除。若没有开始同步，可手动同步录音。</p>
+    <button type="button" className="ct-text-button" onClick={()=>setRepairSuccess(false)}>知道了</button>
+  </section> : null;
   const paused = status.phase === 'paused';
   const blocked = status.phase === 'blocked';
   const saving = status.phase === 'saving' || status.phase === 'reclaiming';
@@ -38,8 +48,19 @@ export function CompanionRecordingSync({ status, pauseBusy, resumeBlocked, recov
         <progress aria-label="本条录音接收进度" value={Math.min(status.receivedBytes, status.totalBytes)} max={status.totalBytes} />
         <span> {Math.floor(Math.min(status.receivedBytes, status.totalBytes) / status.totalBytes * 100)}%</span>
       </> : null}
+      {blocked && onRepair ? <div>
+        <p>修复会恢复自动同步，并清除所有设备之前的同步暂停选择；原录音保留；如旧设置文件存在，会保留副本。</p>
+        <button type="button" className="ct-text-button" disabled={repairBusy} onClick={async()=>{
+          if(repairActive.current)return;
+          repairActive.current=true;setRepairBusy(true);setRepairError(null);
+          try {await onRepair();setRepairSuccess(true);}
+          catch(error){setRepairError(operationErrorText(error,'device'));}
+          finally {repairActive.current=false;setRepairBusy(false);}
+        }}>{repairBusy?'正在修复…':'修复设置并恢复自动同步'}</button>
+        {repairError?<p role="alert">{repairError}</p>:null}
+      </div>:null}
     </div>
-    {resumeDevice ? <button type="button" className="ct-action" disabled={resumeBlocked}
+    {resumeDevice ? <button type="button" className="ct-action" disabled={resumeBlocked || repairBusy}
       onClick={() => onResume(resumeDevice)}><RefreshCw size={15} />{blocked ? '手动同步录音' : '继续同步'}</button>
       : status.jobId && onPause ? <button type="button" className="ct-action"
         disabled={pauseBusy || status.pauseRequested} onClick={() => onPause(status.jobId!)}>

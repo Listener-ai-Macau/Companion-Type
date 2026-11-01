@@ -128,7 +128,7 @@ Enter chat with the button. “开始录音” and “聊聊天” remain reserv
 | Computer recording save unconfirmed | Open the recording in **我的记录**. If **尝试恢复录音** is offered, use it to recover written audio. The original file remains; the ending may be missing. |
 | Export destination not writable | Release the target file, check directory permissions or choose another local export location. |
 | Device recording cannot play | If **尝试恢复回听文件** is offered, try it when original device segments remain on the computer; recovery cannot be guaranteed without valid segments. |
-| Automatic sync settings unavailable | Connect the original device and choose **手动同步录音**. During recording, this uses the same session identity. Automatic sync remains paused until settings recover; other devices’ pause choices are not silently resumed. |
+| Automatic sync settings unavailable | Connect the original device and choose **手动同步录音**. During recording, this uses the same session identity. Or choose **修复设置并恢复自动同步** to repair settings and resume automatic sync. This clears previous pause choices for all devices; recordings are retained, and the previous settings file is copied if present. |
 | Service configuration, authorization or network failure | Check current settings and service state. If original audio remains, you do not need to record again. Do not include keys in feedback. |
 | Device operation unconfirmed | Read current state in Device and sync before repeating start, stop or profile writes. Do not clear pairing or reset the device first. |
 | Screen stays still | An e-paper screen retains its previous image. It alone does not establish whether recording continues. Retain content and notices, then check device connection and state. |
@@ -177,4 +177,4 @@ Local cleanup cannot retract data already sent to a provider or remove device da
 
 **Device synchronization is not cross-computer cloud backup.** After device space is reclaimed, preserve computer audio and needed text yourself. Export important material to a backup location you control and check that the files open. Disabling a service, disconnecting Bluetooth, restoring a name or uninstalling the application does not establish deletion from every location. Before transferring the device or changing computers, check local data, the device, pet memory, exported copies and data already sent remotely separately.
 
-Updated 2 November 2026 for the Windows 0.1.14 engineering candidate. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.
+Updated 2 November 2026 for the Windows 0.1.15 engineering candidate. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.

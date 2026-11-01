@@ -6,6 +6,7 @@ use std::path::{Path,PathBuf};
 
 const READ_ERROR:&str="录音同步设置暂时不可读取，自动同步已暂停；可以手动同步当前设备，原录音保留。";
 const WRITE_ERROR:&str="同步选择未能保存，自动同步已暂停；可以手动同步当前设备，原录音保留。";
+const REPAIR_ERROR:&str="同步设置尚未修复，请检查本机文件权限或占用后重试；原录音和设置均保留。";
 
 #[derive(Deserialize,Serialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
@@ -90,9 +91,57 @@ fn commit_resume(store:&mut Store,next:Store)->Result<(),String> {
     Ok(())
 }
 
+/// Explicitly reset only the sync-pause choice, after saving the prior file.
+/// The UI tells the user that all per-device pause choices will be cleared.
+pub(super) fn reset_choice(store:&mut Store)->Result<(),String> {
+    if store.storage_error.is_none() {return Err("同步设置已恢复，无需再次修复。".into());}
+    let path=store.preference_path.as_ref().ok_or(REPAIR_ERROR)?;
+    match std::fs::File::open(path) {
+        Ok(mut original)=>{
+            let backup=path.with_file_name(format!("recording-sync-before-repair-{}.json",uuid::Uuid::new_v4()));
+            let mut target=std::fs::OpenOptions::new().write(true).create_new(true).open(backup).map_err(|_|REPAIR_ERROR)?;
+            std::io::copy(&mut original,&mut target).map_err(|_|REPAIR_ERROR)?;
+            target.sync_all().map_err(|_|REPAIR_ERROR)?;
+        }
+        Err(e) if e.kind()==std::io::ErrorKind::NotFound=>(),
+        Err(_)=>return Err(REPAIR_ERROR.into()),
+    }
+    let next=Store{preference_path:Some(path.clone()),..Store::default()};
+    save(&next).map_err(|_|REPAIR_ERROR)?;
+    store.paused_devices.clear();store.last_paused_device=None;
+    store.storage_error=None;store.manual_recovery_devices.clear();
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn explicit_reset_preserves_bad_file_and_restores_auto_sync() {
+        let root=std::env::temp_dir().join(format!("companion-sync-repair-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let path=root.join("recording-sync.json");
+        let bad=b"{incomplete sync choice";std::fs::write(&path,bad).unwrap();
+        let mut store=load(path.clone());assert!(store.storage_error.is_some());
+        reset_choice(&mut store).unwrap();assert!(store.storage_error.is_none());
+        assert!(super::super::automatic_allowed_for(&store,"AA:BB:CC:DD:EE:01",false));
+        assert!(super::super::automatic_allowed_for(&load(path.clone()),"AA:BB:CC:DD:EE:02",false));
+        let backups:Vec<_>=std::fs::read_dir(&root).unwrap().map(|e|e.unwrap().path())
+            .filter(|p|p.file_name().unwrap().to_string_lossy().starts_with("recording-sync-before-repair-")).collect();
+        assert_eq!(backups.len(),1);assert_eq!(std::fs::read(&backups[0]).unwrap(),bad);
+        assert!(reset_choice(&mut store).is_err());
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn reset_failure_does_not_clear_pause_or_enable_sync() {
+        let root=std::env::temp_dir().join(format!("companion-sync-repair-fail-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let path=root.join("recording-sync.json");
+        std::fs::create_dir(&path).unwrap();
+        let mut store=load(path);store.paused_devices.insert(key("AA:BB:CC:DD:EE:01"));
+        assert!(reset_choice(&mut store).is_err());assert!(store.storage_error.is_some());
+        assert!(store.paused_devices.contains(&key("AA:BB:CC:DD:EE:01")));
+        assert!(!super::super::automatic_allowed_for(&store,"AA:BB:CC:DD:EE:01",false));
+        std::fs::remove_dir_all(root).unwrap();
+    }
     #[test]
     fn corrupt_choice_allows_one_explicit_device_without_automatic_receive_or_replacement() {
         let root=std::env::temp_dir().join(format!("companion-sync-corrupt-{}",uuid::Uuid::new_v4()));

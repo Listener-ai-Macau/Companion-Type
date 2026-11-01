@@ -235,6 +235,19 @@ pub(crate) fn resume_explicit(device: Option<&str>) -> Result<(),String> {
     Ok(())
 }
 
+/// Explicit recovery changes only per-device sync pause choices; it does not
+/// connect to a device, start a transfer or touch any recordings.
+pub(crate) fn repair_choices() -> Result<Status,String> {
+    let mut store=STORE.lock().map_err(|_|"同步暂停状态暂时不可用")?;
+    let active=store.active.as_ref().and_then(Weak::upgrade);
+    if active.is_some() {
+        drop(store);drop(active);
+        return Err("请先结束当前同步，再修复同步设置。".into());
+    }
+    preference::reset_choice(&mut store)?;
+    drop(store);emit_status();status()
+}
+
 #[cfg(test)]
 #[path = "recording_sync/restart_tests.rs"]
 mod restart_tests;
