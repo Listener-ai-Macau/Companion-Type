@@ -1631,6 +1631,33 @@ export function CompanionDashboard({
       stillCurrent, () => externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===source.sessionId?segmentedAudio.current:null);
     setAudioResult({ sessionId: source.sessionId, message: '已定位到这段原音。点击播放器的播放按钮即可回听。' });
   };
+  const seekUnrecognized = async (part:{startMs:number;endMs:number;source?:string|null}) => {
+    if (!selectedSession || audioBlockedReason || controlsBusy || storageBlocked || transcriptReviewUnsaved) return;
+    const sessionId=selectedSession.id, identity=audioIdentity;
+    const stillCurrent=()=>{
+      const session=sourceContext.current.session;
+      if (!session || sourceContext.current.blocked || session.id!==sessionId
+        || audioContext.current.sessionId!==sessionId || audioContext.current.identity!==identity || audioContext.current.blocked) return false;
+      const current=session.transcriptReview?.text && !companionTranscriptReviewIsStale(session)
+        ? session.transcriptReview.unrecognized ?? session.transcriptUnrecognized ?? []
+        : session.transcriptUnrecognized ?? [];
+      return current.some(item=>item.startMs===part.startMs && item.endMs===part.endMs && (item.source??null)===(part.source??null));
+    };
+    setPlaybackOpen(true);
+    try {
+      if (selectedSession.source==='hostMeeting') await seekMeetingAudio(part.startMs,stillCurrent);
+      else await seekBookmarkAudio(part.startMs,async()=>{if(!preparedAudio)await prepareAudio();},()=>audioElement.current,
+        stillCurrent,()=>externalAudioSeek.current?.(),()=>segmentedAudio.current?.sessionId===sessionId?segmentedAudio.current:null);
+      if (!stillCurrent()) return;
+      setAudioResult({sessionId,message:'已定位到未识别的时段。点击播放器的播放按钮即可回听。'});
+      document.getElementById('ct-recording-playback')?.scrollIntoView({block:'start'});
+    } catch(error) {
+      if (audioContext.current.sessionId===sessionId) {
+        setAudioResult({sessionId,message:`无法定位回听：${operationErrorText(error,'playback')}`});
+        document.getElementById('ct-recording-playback')?.scrollIntoView({block:'start'});
+      }
+    }
+  };
   const deleteLibraryKey = allLibrarySessions.map(row => [row.id, Boolean(row.organization?.protected)]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))).map(row=>JSON.stringify(row)).join('|');
   const deleteContextValid = Boolean(pendingDelete && pageView === 'settings'
     && pendingDelete.selectedId === (selectedSession?.id ?? null)
@@ -2242,11 +2269,20 @@ export function CompanionDashboard({
             {renderExportFeedback('pdf')}
           </details>:null}
           <section className="ct-recording-text" aria-label="录音文字">
-            {selectedUnrecognized.length ? <div className="ct-step-warn" role="status">
-              部分时段未识别出文字，可能是安静或声音不清晰。已有文字可以继续整理；建议回听原音核对。
-              <span> {selectedUnrecognized.slice(0, 4).map((part) =>
-                `${part.source ? `${part.source} ` : ''}${formatDuration(part.startMs)}–${formatDuration(part.endMs)}`).join('、')}
-                {selectedUnrecognized.length > 4 ? ` 等 ${selectedUnrecognized.length} 处` : ''}</span>
+            {selectedUnrecognized.length ? <div className="ct-step-warn">
+              <p role="status">部分时段未识别出文字，可能是安静或声音不清晰。已有文字可以继续整理；建议回听原音核对。</p>
+              <details>
+                <summary>查看全部 {selectedUnrecognized.length} 处未识别时段</summary>
+                <div className="ct-button-row" aria-label="未识别时段">
+                  {selectedUnrecognized.map((part,index)=><button type="button" className="ct-text-button"
+                    key={`${part.startMs}:${part.endMs}:${part.source??''}:${index}`}
+                    aria-label={`定位第 ${index+1} 处未识别原音：${part.source ? `${part.source} ` : ''}${formatDuration(part.startMs)}至${formatDuration(part.endMs)}`}
+                    disabled={Boolean(audioBlockedReason)||audioBusy||controlsBusy||storageBlocked||transcriptReviewUnsaved}
+                    title={audioBlockedReason??'定位原音后点击播放回听'} onClick={()=>void seekUnrecognized(part)}>
+                    {part.source ? `${part.source} ` : ''}{formatDuration(part.startMs)}–{formatDuration(part.endMs)}
+                  </button>)}
+                </div>
+              </details>
             </div> : null}
             <div className="ct-recording-text-heading"><h3>{hasMinutes?'原话与补充':'文字'}</h3>
               <div className="ct-button-row">
