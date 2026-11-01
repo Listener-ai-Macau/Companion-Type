@@ -625,17 +625,22 @@ fn request_background_review(endpoint: &str, model: &str, key: &str,
         .ok_or("会议事项核对未完成。")?;
     let result: Value = serde_json::from_str(super::strip_code_fences(content).trim())
         .map_err(|_| "会议事项核对格式不正确。")?;
-    let values = result.get("possiblyUnrelated").and_then(Value::as_array)
-        .ok_or("会议事项核对格式不正确。")?;
     let mut indices = Vec::new();
-    for value in values {
-        let index = value.as_u64().and_then(|n| usize::try_from(n).ok())
-            .filter(|&n| n < actions.len()).ok_or("会议事项核对格式不正确。")?;
-        if indices.contains(&index) { return Err("会议事项核对格式不正确。".into()); }
-        indices.push(index);
+    // Some providers echo summary indices as action IDs even when there are
+    // no actions. There is nothing to label or merge in that case; keep the
+    // independently source-checked summary/question review instead.
+    if !actions.is_empty() {
+        let values = result.get("possiblyUnrelated").and_then(Value::as_array)
+            .ok_or("会议事项核对格式不正确。")?;
+        for value in values {
+            let index = value.as_u64().and_then(|n| usize::try_from(n).ok())
+                .filter(|&n| n < actions.len()).ok_or("会议事项核对格式不正确。")?;
+            if indices.contains(&index) { return Err("会议事项核对格式不正确。".into()); }
+            indices.push(index);
+        }
     }
     let mut duplicates = Vec::new();
-    if let Some(groups) = result.get("duplicateGroups") {
+    if let Some(groups) = result.get("duplicateGroups").filter(|_| !actions.is_empty()) {
         for group in groups.as_array().ok_or("会议事项核对格式不正确。")? {
             let mut ids = Vec::new();
             for value in group.as_array().ok_or("会议事项核对格式不正确。")? {

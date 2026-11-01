@@ -796,6 +796,45 @@ fn replay_real_background_keyword_against_validated_source() {
 }
 
 #[test]
+fn background_review_keeps_valid_summary_when_provider_returns_action_ids_without_actions() {
+    use std::{io::{Read, Write}, net::TcpListener, thread};
+    let listener=TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
+    let worker=thread::spawn(move || {
+        let (mut stream,_)=listener.accept().unwrap();stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
+        let mut data=Vec::new();let mut buffer=[0u8;4096];
+        loop {
+            let n=stream.read(&mut buffer).unwrap();if n==0 {break;}data.extend_from_slice(&buffer[..n]);
+            if let Some(i)=data.windows(4).position(|w|w==b"\r\n\r\n") {
+                let headers=String::from_utf8_lossy(&data[..i]);
+                let len:usize=headers.lines().find_map(|line|line.split_once(':')
+                    .filter(|(key,_)|key.eq_ignore_ascii_case("content-length"))
+                    .and_then(|(_,value)|value.trim().parse().ok())).unwrap();
+                if data.len()>=i+4+len {break;}
+            }
+        }
+        let result=serde_json::json!({"possiblyUnrelated":[5,6],"duplicateGroups":[],
+            "backgroundSummary":[1],"backgroundDecisions":[],"backgroundQuestions":[]}).to_string();
+        let payload=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":result}}]}).to_string();
+        write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: {}\r\n\r\n{}",payload.len(),payload).unwrap();
+    });
+    let source=session("会议讨论报价。旁边聊猫粮。");let (mut minutes,_)=response(&source);
+    minutes.summary=vec!["会议讨论报价".into(),"旁边聊猫粮".into()];minutes.action_items.clear();
+    minutes.markdown="> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n- 会议讨论报价。旁边聊猫粮。".into();
+    let evidence=vec![Evidence{field:"summary".into(),index:0,quote:"会议讨论报价".into()},
+        Evidence{field:"summary".into(),index:1,quote:"旁边聊猫粮".into()}];
+    let checkpoint=Checkpoint{identity:Identity::new("https://fixture.invalid","model","key",&source),
+        chapters:vec![Some(Chapter{start:0,end:source.transcript_text.len(),source_hash:String::new(),
+            minutes:minutes.clone(),evidence,omitted_items:0,result_hash:String::new()})]};
+    let endpoint=format!("http://{address}/chat/completions");
+    let client=reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
+    let review=request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],Some(&checkpoint),&client).unwrap();
+    assert!(review.background.is_empty());assert_eq!(review.background_summary,vec![1]);
+    apply_action_review(&source,&mut minutes,&[],&review);
+    assert!(minutes.markdown.contains("## 可能来自背景对话，请核对\n\n- 摘要：旁边聊猫粮"));
+    worker.join().unwrap();
+}
+
+#[test]
 fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
     use std::{io::{Read, Write}, net::TcpListener, thread};
     let listener = TcpListener::bind("127.0.0.1:0").unwrap();
