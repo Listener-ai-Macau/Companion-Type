@@ -780,6 +780,17 @@ fn enforce_source_backed_action_items(
             item.text = format!("待核对：{}", matches[0]);
             changed = true;
         }
+        // A literal task match is stronger than the broad similarity used to
+        // recover paraphrases. Prefer it when sufficiently specific; otherwise
+        // two similar tasks can make each other's correct owner/date ambiguous.
+        let literal = normalized_fact_chars(&item.text);
+        if literal.len() >= 6 {
+            let exact = sources.iter().copied().filter(|source| {
+                let normalized = normalized_fact_chars(source);
+                normalized.windows(literal.len()).any(|window| window == literal.as_slice())
+            }).collect::<Vec<_>>();
+            if !exact.is_empty() { sources = exact; }
+        }
         // Attribution must occur in this action's supporting excerpt. A name
         // or deadline elsewhere in the meeting is not evidence for this task.
         // When several excerpts can match, keep only metadata they agree on.
@@ -1266,6 +1277,21 @@ mod tests {
         assert_eq!(session.transcript_text,text);
         session.source="hostMicrophone".into();
         assert!(!minutes_user_payload(&session,&l0).contains(COMPUTER_MEETING_SOURCE_CONTEXT));
+    }
+
+    #[test]
+    fn distinct_similar_computer_meeting_tasks_keep_their_own_owner_and_date() {
+        let text="【麦克风】\n小王负责周五之前把红色样品寄给客户。小李负责周四之前把蓝色样品寄给客户。\n【电脑声音】\n小王负责周五之前把红色样品寄给客户。";
+        let mut session=session_with_text(text);session.source="hostMeeting".into();
+        let l0=rules_l0_minutes(&session,"now");let mut cloud=l0.clone();cloud.source="llm_deepseek".into();cloud.quality="final".into();
+        cloud.action_items=vec![
+            CompanionV1ActionItem{text:"把红色样品寄给客户".into(),owner:Some("小王".into()),due:Some("周五之前".into())},
+            CompanionV1ActionItem{text:"把蓝色样品寄给客户".into(),owner:Some("小李".into()),due:Some("周四之前".into())}
+        ];
+        let result=finalize_minutes(Ok(cloud),l0,&session);
+        assert!(result.action_items.iter().any(|item|item.text.contains("红色") && item.owner.as_deref()==Some("小王") && item.due.as_deref()==Some("周五之前")));
+        assert!(result.action_items.iter().any(|item|item.text.contains("蓝色") && item.owner.as_deref()==Some("小李") && item.due.as_deref()==Some("周四之前")));
+        assert_eq!(session.transcript_text,text);
     }
 
     #[test]
