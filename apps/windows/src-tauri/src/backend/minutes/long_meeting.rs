@@ -361,6 +361,7 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
             return request_evidence_only(endpoint, model, key, part, &minutes, client)
                 .map(|mut evidence| {
                     evidence.extend(pending_evidence[index].iter().cloned());
+                    pending_evidence[index] = evidence.clone();
                     (minutes, evidence)
                 });
         }
@@ -387,12 +388,6 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
         Ok((minutes, evidence))
     })?;
     super::super::meeting_processing_job::check_current()?;
-    if minutes.processing.as_ref().is_some_and(|p| !p.complete) {
-        let path = root.join(Identity::new_with_template(endpoint, model, key, session, template).filename());
-        if let Ok(checkpoint) = read_checkpoint(&path) {
-            append_unverified_chapters(&mut minutes, &checkpoint, &pending_minutes);
-        }
-    }
     // A nearby conversation can contain genuine instructions but not belong
     // to this meeting. Mark only candidates the model can relate to explicitly
     // described background chat; never delete them or change their attribution.
@@ -428,6 +423,11 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
         }
     }
     super::super::meeting_processing_job::check_current()?;
+    let path = root.join(Identity::new_with_template(endpoint, model, key, session, template).filename());
+    if let Ok(checkpoint) = read_checkpoint(&path) {
+        append_unverified_chapters(&mut minutes, &checkpoint, &pending_minutes,
+            &pending_evidence, &slices, &session.transcript_text);
+    }
     Ok(minutes)
 }
 
@@ -435,12 +435,22 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
 // that content as explicitly unverified reference, separate from the verified
 // summary and task arrays; it must not become a completed chapter or checklist.
 fn append_unverified_chapters(minutes: &mut CompanionV1MeetingMinutes, checkpoint: &Checkpoint,
-    pending: &[Option<CompanionV1MeetingMinutes>]) {
-    if checkpoint.chapters.len()!=pending.len() { return; }
+    pending: &[Option<CompanionV1MeetingMinutes>], pending_evidence: &[Vec<Evidence>],
+    slices: &[(usize, usize)], source: &str) {
+    if checkpoint.chapters.len()!=pending.len() || pending.len()!=pending_evidence.len()
+        || pending.len()!=slices.len() { return; }
     let mut sections=Vec::new();
     for (index,(verified,draft)) in checkpoint.chapters.iter().zip(pending).enumerate() {
-        if verified.is_some() {continue;}
+        if verified.as_ref().is_some_and(|chapter| chapter.omitted_items == 0) {continue;}
         let Some(draft)=draft else {continue;};
+        let Some(part)=source.get(slices[index].0..slices[index].1) else {continue;};
+        let mut evidence=pending_evidence[index].clone();
+        restore_quote_whitespace(part,&mut evidence);
+        let missing=|field:&str, item_index:usize| {
+            verified.is_none() || !evidence.iter().any(|item| item.field==field
+                && item.index==item_index && cited_item(draft,item).is_some_and(|s|!s.trim().is_empty())
+                && !item.quote.trim().is_empty() && part.contains(&item.quote))
+        };
         let mut lines=Vec::new();
         let mut add=|label:&str,value:&str| {
             let value=value.trim();
@@ -456,15 +466,16 @@ fn append_unverified_chapters(minutes: &mut CompanionV1MeetingMinutes, checkpoin
             }
             lines.push(format!("- {label}：{escaped}"));
         };
-        for item in &draft.summary {add("讨论",item);}
-        for item in &draft.decisions {add("可能的决定",item);}
-        for item in &draft.action_items {
+        for (i,item) in draft.summary.iter().enumerate() {if missing("summary",i) {add("讨论",item);}}
+        for (i,item) in draft.decisions.iter().enumerate() {if missing("decisions",i) {add("可能的决定",item);}}
+        for (i,item) in draft.action_items.iter().enumerate() {
+            if !missing("actionItems",i) {continue;}
             let mut text=item.text.clone();
             if let Some(owner)=item.owner.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的负责人：{owner}）"));}
             if let Some(due)=item.due.as_ref().filter(|s|!s.trim().is_empty()) {text.push_str(&format!("（可能的时间：{due}）"));}
             add("可能的行动",&text);
         }
-        for item in &draft.questions {add("可能的问题",item);}
+        for (i,item) in draft.questions.iter().enumerate() {if missing("questions",i) {add("可能的问题",item);}}
         if !lines.is_empty() {sections.push(format!("### 第{}段\n\n{}",index+1,lines.join("\n")));}
     }
     if sections.is_empty() {return;}
@@ -1145,7 +1156,7 @@ fn assemble(session: &CompanionV1HostSession, checkpoint: &Checkpoint, resumed: 
     let mut header = minutes.clone(); header.processing = None;
     let mut overview_session = session.clone(); overview_session.transcript_text.clear(); overview_session.transcript_review = None;
     minutes.markdown = format!("{}\n\n{}\n\n## 分段原文依据\n\n{}", if complete {
-        let warning=if omitted>0 {format!(" 有{omitted}条内容无法对应原文，已略过，请查看原始转写。") } else {String::new()};
+        let warning=if omitted>0 {format!(" 有{omitted}条内容无法对应原文，未加入已核对内容，请查看原始转写。") } else {String::new()};
         format!("> 长会议已按原文顺序处理全部{}段。分段原文依据见下文，识别和事实准确性仍需核对。{warning}", checkpoint.chapters.len())
     } else if completed == checkpoint.chapters.len() { "> 本次补充未完成，以下保留已有纪要，请核对原文。".into() }
     else { format!("> 部分纪要：已完成{completed}/{}段。尚未处理的内容未计入完整结果。", checkpoint.chapters.len()) },

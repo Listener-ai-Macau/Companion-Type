@@ -39,7 +39,7 @@ fn unverified_chapter_remains_visible_without_becoming_an_action_or_complete() {
     draft.action_items=vec![crate::companion_v1::CompanionV1ActionItem {
         text:"发送报价".into(),owner:Some("小王".into()),due:Some("周五".into()) }];
     let mut partial=assemble(&source,&checkpoint,0,"now",Some("缺少原文引用".into()));
-    append_unverified_chapters(&mut partial,&checkpoint,&[Some(draft.clone())]);
+    append_unverified_chapters(&mut partial,&checkpoint,&[Some(draft.clone())], &[vec![]], &[(0,source.transcript_text.len())], &source.transcript_text);
     assert_eq!(partial.quality,"draft");assert!(!partial.processing.as_ref().unwrap().is_complete());
     assert!(partial.action_items.is_empty());assert!(partial.summary.is_empty());
     assert!(partial.markdown.contains("未核对的参考草稿"));assert!(partial.markdown.contains("讨论产品包装"));
@@ -48,8 +48,20 @@ fn unverified_chapter_remains_visible_without_becoming_an_action_or_complete() {
     let (verified,evidence)={let (m,_)=response(&source);(m,evidence)};
     let result_hash=chapter_digest(&verified,&evidence,0);
     checkpoint.chapters[0]=Some(Chapter{start:0,end:source.transcript_text.len(),source_hash:hash(source.transcript_text.as_bytes()),minutes:verified,evidence,omitted_items:0,result_hash});
+    let mut partial_draft=draft.clone();
+    partial_draft.summary.insert(0,"已经核对的内容".into());
+    let cited=vec![Evidence {field:"summary".into(),index:0,quote:"公开会议内容".into()}];
+    checkpoint.chapters[0].as_mut().unwrap().omitted_items=2;
+    let mut partially_verified=assemble(&source,&checkpoint,0,"now",None);
+    append_unverified_chapters(&mut partially_verified,&checkpoint,&[Some(partial_draft)], &[cited], &[(0,source.transcript_text.len())], &source.transcript_text);
+    let section=partially_verified.markdown.split("## 未核对的参考草稿").nth(1).unwrap();
+    assert!(section.contains("讨论产品包装"));
+    assert!(section.contains("可能的行动：发送报价"));
+    assert!(!section.contains("已经核对的内容"));
+    assert!(partially_verified.action_items.is_empty());
+    checkpoint.chapters[0].as_mut().unwrap().omitted_items=0;
     let mut complete=assemble(&source,&checkpoint,0,"now",None);
-    append_unverified_chapters(&mut complete,&checkpoint,&[Some(draft)]);
+    append_unverified_chapters(&mut complete,&checkpoint,&[Some(draft)], &[vec![]], &[(0,source.transcript_text.len())], &source.transcript_text);
     assert!(!complete.markdown.contains("未核对的参考草稿"));
 }
 
