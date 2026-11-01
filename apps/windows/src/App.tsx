@@ -131,10 +131,9 @@ export function App() {
         } catch (controlError) {
           if (['meetingStart', 'meetingStop', 'meetingFinalize', 'meetingPause', 'meetingResume',
             'meetingRecoverControl', 'deviceSyncRecordings', 'meetingRestoreAudio',
-            'meetingTranscribeAudio'].includes(request.action)) {
-            // STOP or a partial sync can commit real state before its transfer
-            // fails. Read that checkpoint while this operation still owns the
-            // UI gate; never infer a STOP or replay a recording command.
+            'meetingTranscribeAudio', 'meetingGenerateMinutes'].includes(request.action)) {
+            // A stop or partial operation can commit state before returning
+            // an error. Read that checkpoint without replaying the operation.
             try { setSnapshot(await getCompanionSnapshot()); }
             catch { /* Retain the last readable state and the original error. */ }
           }
