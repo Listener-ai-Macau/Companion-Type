@@ -95,7 +95,17 @@ pub fn rules_l0_minutes(
     session: &CompanionV1HostSession,
     generated_at: &str,
 ) -> CompanionV1MeetingMinutes {
-    let segments = split_segments(&session.transcript_text);
+    let mut segments = split_segments(&session.transcript_text);
+    // These are product-generated capture-channel labels, not spoken facts.
+    // Remove only the exact prefix on computer-meeting segments, leaving all
+    // spoken text and the original saved transcript untouched.
+    if session.source == "hostMeeting" {
+        segments = segments.into_iter().filter_map(|segment| {
+            let spoken = segment.strip_prefix("【麦克风】").or_else(|| segment.strip_prefix("【电脑声音】"))
+                .unwrap_or(&segment).trim();
+            (!spoken.is_empty()).then(|| spoken.to_string())
+        }).collect();
+    }
     let summary = select_source_fact_anchors(&segments);
     let decisions = segments
         .iter()
@@ -1243,7 +1253,13 @@ mod tests {
     fn computer_capture_context_keeps_both_sources_and_independent_task() {
         let text="【麦克风】\n小王负责整理报价。小李负责明天寄蓝色样品。\n【电脑声音】\n小王负责整理报价。";
         let mut session=session_with_text(text);session.source="hostMeeting".into();
-        let l0=rules_l0_minutes(&session,"now");let payload=minutes_user_payload(&session,&l0);
+        let l0=rules_l0_minutes(&session,"now");
+        assert!(l0.summary.iter().all(|item| !item.contains("【麦克风】") && !item.contains("【电脑声音】")));
+        let mut final_minutes=l0.clone();final_minutes.source="llm_deepseek".into();final_minutes.quality="final".into();
+        final_minutes.summary=vec!["小王负责整理报价".into(),"小李负责明天寄蓝色样品".into()];
+        let result=finalize_minutes(Ok(final_minutes),l0.clone(),&session);
+        assert!(!result.markdown.contains("【麦克风】") && !result.markdown.contains("【电脑声音】"));
+        let payload=minutes_user_payload(&session,&l0);
         assert!(payload.contains("【麦克风】") && payload.contains("【电脑声音】"));
         assert!(payload.contains("小李负责明天寄蓝色样品") && payload.contains("小王负责整理报价"));
         assert!(payload.contains("不代表不同发言人") && payload.contains("保留无法确认重复的内容"));
