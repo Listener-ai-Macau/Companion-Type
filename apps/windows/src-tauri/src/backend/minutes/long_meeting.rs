@@ -277,6 +277,45 @@ fn is_current(chapter: &Chapter, start: usize, end: usize, source: &str) -> bool
         && validate_chapter(&chapter.minutes, &chapter.evidence, source).is_ok()
 }
 
+// Regeneration can phrase or omit previously grounded facts differently.
+// Retain each earlier item with its own source quotes before replacing a
+// partially cited chapter. Exact duplicates share one entry; different
+// owner/date assignments remain separate.
+fn merge_previous_chapter(previous: &Chapter, candidate: &mut Chapter, source: &str) -> Result<(), String> {
+    fn copy_quotes(field: &str, old_index: usize, new_index: usize, old: &[Evidence], target: &mut Vec<Evidence>) {
+        for item in old.iter().filter(|e| e.field == field && e.index == old_index) {
+            if !target.iter().any(|e| e.field == field && e.index == new_index && e.quote == item.quote) {
+                target.push(Evidence { field: field.into(), index: new_index, quote: item.quote.clone() });
+            }
+        }
+    }
+    fn copy_strings(field: &str, old: &[String], target: &mut Vec<String>, old_evidence: &[Evidence], evidence: &mut Vec<Evidence>) {
+        for (i, item) in old.iter().enumerate() {
+            let index = match target.iter().position(|value| value == item) {
+                Some(index) => index,
+                None => { target.push(item.clone()); target.len() - 1 }
+            };
+            copy_quotes(field, i, index, old_evidence, evidence);
+        }
+    }
+    copy_strings("summary", &previous.minutes.summary, &mut candidate.minutes.summary, &previous.evidence, &mut candidate.evidence);
+    copy_strings("decisions", &previous.minutes.decisions, &mut candidate.minutes.decisions, &previous.evidence, &mut candidate.evidence);
+    copy_strings("questions", &previous.minutes.questions, &mut candidate.minutes.questions, &previous.evidence, &mut candidate.evidence);
+    for (i, item) in previous.minutes.action_items.iter().enumerate() {
+        let index = match candidate.minutes.action_items.iter().position(|v| v.text == item.text && v.owner == item.owner && v.due == item.due) {
+            Some(index) => index,
+            None => { candidate.minutes.action_items.push(item.clone()); candidate.minutes.action_items.len() - 1 }
+        };
+        copy_quotes("actionItems", i, index, &previous.evidence, &mut candidate.evidence);
+    }
+    for keyword in &previous.minutes.keywords {
+        if !candidate.minutes.keywords.contains(keyword) { candidate.minutes.keywords.push(keyword.clone()); }
+    }
+    validate_chapter(&candidate.minutes, &candidate.evidence, source)?;
+    candidate.result_hash = chapter_digest(&candidate.minutes, &candidate.evidence, candidate.omitted_items);
+    Ok(())
+}
+
 fn continuation_label(session: &CompanionV1HostSession, start: usize) -> Option<String> {
     if start == 0 || session.transcript_text[..start].ends_with('\n') { return None; }
     let line = session.transcript_text[..start].rsplit('\n').next()?;
@@ -924,8 +963,10 @@ where F: FnMut(usize, usize, &CompanionV1HostSession, Duration) -> Result<(Compa
             }
         }
         match result {
-            Ok(chapter) => {
-                if previous.as_ref().is_some_and(|old| old.omitted_items <= chapter.omitted_items) { continue; }
+            Ok(mut chapter) => {
+                if let Some(old) = previous.as_ref() {
+                    if old.omitted_items <= chapter.omitted_items || merge_previous_chapter(old, &mut chapter, &part.transcript_text).is_err() { continue; }
+                }
                 checkpoint.chapters[index] = Some(chapter);
                 if let Err(error) = save_checkpoint(&path, &checkpoint) { failure = Some(error); break; }
                 if previous.is_some() { resumed -= 1; }

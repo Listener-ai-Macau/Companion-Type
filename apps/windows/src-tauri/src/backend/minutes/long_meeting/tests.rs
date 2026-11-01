@@ -31,6 +31,50 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn regenerated_chapter_keeps_previous_questions_actions_and_quotes() {
+    let text="小王周五发报价。监管如何？额度如何？";
+    let part=session(text);let (mut old,mut old_evidence)=response(&part);
+    old.summary=vec!["原摘要".into()];old.questions=vec!["监管如何？".into()];
+    old.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"发报价".into(),owner:Some("小王".into()),due:Some("周五".into())}];
+    old_evidence.clear();old_evidence.extend([
+        Evidence{field:"summary".into(),index:0,quote:"小王周五发报价".into()},
+        Evidence{field:"questions".into(),index:0,quote:"监管如何".into()},
+        Evidence{field:"actionItems".into(),index:0,quote:"小王周五发报价".into()},
+    ]);
+    let mut newer=old.clone();newer.summary=vec!["新摘要".into()];newer.questions=vec!["额度如何？".into()];newer.action_items.clear();
+    let new_evidence=vec![Evidence{field:"summary".into(),index:0,quote:"额度如何".into()},Evidence{field:"questions".into(),index:0,quote:"额度如何".into()}];
+    let previous=Chapter{start:0,end:text.len(),source_hash:hash(text.as_bytes()),minutes:old,evidence:old_evidence,omitted_items:1,result_hash:String::new()};
+    let mut candidate=Chapter{start:0,end:text.len(),source_hash:hash(text.as_bytes()),minutes:newer,evidence:new_evidence,omitted_items:0,result_hash:String::new()};
+    merge_previous_chapter(&previous,&mut candidate,text).unwrap();
+    assert!(candidate.minutes.summary.contains(&"原摘要".into()));
+    assert!(candidate.minutes.questions.contains(&"监管如何？".into()));
+    assert!(candidate.minutes.questions.contains(&"额度如何？".into()));
+    assert_eq!(candidate.minutes.action_items.len(),1);
+    assert_eq!(candidate.minutes.action_items[0].owner.as_deref(),Some("小王"));
+    assert_eq!(candidate.minutes.action_items[0].due.as_deref(),Some("周五"));
+    assert!(candidate.evidence.iter().any(|e|e.field=="questions"&&e.quote=="监管如何"));
+    assert!(is_current(&candidate,0,text.len(),text));
+}
+
+#[test]
+#[ignore = "checks previously authorized real chapter results without a cloud call"]
+fn replay_real_regenerated_chapters_preserves_all_prior_items() {
+    let previous=read_checkpoint(Path::new(&std::env::var_os("COMPANION_PRIOR_MINUTES_CHECKPOINT").unwrap())).unwrap();
+    let newer=read_checkpoint(Path::new(&std::env::var_os("COMPANION_NEW_MINUTES_CHECKPOINT").unwrap())).unwrap();
+    let source=fs::read_to_string(std::env::var_os("COMPANION_MINUTES_SOURCE").unwrap()).unwrap();
+    for index in [1usize,3] {
+        let old=previous.chapters[index].as_ref().unwrap();let mut candidate=newer.chapters[index].clone().unwrap();
+        let chunk=&source[old.start..old.end];merge_previous_chapter(old,&mut candidate,chunk).unwrap();
+        for item in &old.minutes.summary {assert!(candidate.minutes.summary.contains(item));}
+        for item in &old.minutes.decisions {assert!(candidate.minutes.decisions.contains(item));}
+        for item in &old.minutes.questions {assert!(candidate.minutes.questions.contains(item));}
+        for item in &old.minutes.action_items {assert!(candidate.minutes.action_items.iter().any(|v|v.text==item.text&&v.owner==item.owner&&v.due==item.due));}
+        assert!(is_current(&candidate,old.start,old.end,chunk));
+        if index==3 {assert!(candidate.minutes.questions.len()>=4);}
+    }
+}
+
+#[test]
 #[ignore = "replays the saved real-provider public long meeting without another cloud call"]
 fn replay_long_meeting_conditional_actions() {
     let text=fs::read_to_string(std::env::var_os("COMPANION_MINUTES_PUBLIC_TEXT").unwrap()).unwrap();
