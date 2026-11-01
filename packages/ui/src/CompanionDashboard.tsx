@@ -36,6 +36,7 @@ import { CompanionExportFeedback, exportFileName, type OpenSavedCalendar } from 
 import { CompanionChecklistPhone, type ChecklistPhoneResult } from './CompanionChecklistPhone';
 import { checklistPhoneCode } from './checklistPhone';
 import { briefMinutes, splitLongMinutesEvidence } from './briefMinutes';
+import { savedCustomMinutesTemplates } from './minutesTemplateLibrary';
 import {ActionListEditor} from './ActionListEditor';
 
 type MeetingExportOrigin = 'pdf' | 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
@@ -597,6 +598,7 @@ export function CompanionDashboard({
     ? originalSyncRecorder : null;
   const privacy = snapshot?.privacy;
   const allLibrarySessions = snapshot?.host.sessions ?? [];
+  const savedCustomTemplates=useMemo(()=>savedCustomMinutesTemplates(allLibrarySessions),[allLibrarySessions]);
   const localSaveConfirmed = snapshot?.host.persistence?.status === 'ready';
   const recentSavedRecording = useMemo(() => allLibrarySessions
     .filter(session => !session.organization?.trashedAt && session.status !== 'recording'
@@ -2231,13 +2233,21 @@ export function CompanionDashboard({
             {finalTranscript ? <details className="ct-library-more" aria-label="选择整理视角">
               <summary>按会议、访谈或课堂整理</summary>
               <p className="ct-step-meta">选择整理侧重点；新结果会保留在这场录音中，已有结果可在历史里切回。</p>
-              <label>整理视角 <select aria-label="整理视角" value={templateId} onChange={event=>setTemplateId(event.target.value as typeof templateId)}>
+              <label>整理视角 <select aria-label="整理视角" value={templateId} onChange={event=>{
+                const value=event.target.value;
+                if(value.startsWith('saved:')) {
+                  const saved=savedCustomTemplates[Number(value.slice(6))];
+                  if(saved){setCustomTemplate(saved);setTemplateId('custom');}
+                } else if(value==='meeting'||value==='interview'||value==='lecture'||value==='custom') setTemplateId(value);
+              }}>
                 <option value="meeting">会议</option><option value="interview">访谈</option><option value="lecture">课堂</option><option value="custom">自定义</option>
+                {savedCustomTemplates.length ? <optgroup label="曾用于整理的自定义模板">{savedCustomTemplates.map((saved,index)=>
+                  <option key={JSON.stringify([saved.name,saved.instructions])} value={`saved:${index}`}>{saved.name}{savedCustomTemplates.filter(item=>item.name===saved.name).length>1?` · 同名 ${savedCustomTemplates.slice(0,index+1).filter(item=>item.name===saved.name).length}`:''}</option>)}</optgroup> : null}
               </select></label>
               {templateId==='custom' ? <div className="ct-field">
                 <label>模板名称<input aria-label="模板名称" value={customTemplate.name} onChange={event=>setCustomTemplate({...customTemplate,name:event.target.value})}/></label>
                 <label>整理要求<textarea aria-label="整理要求" value={customTemplate.instructions} onChange={event=>setCustomTemplate({...customTemplate,instructions:event.target.value})}/></label>
-                <p className="ct-step-meta">自定义模板可保存在这台电脑，方便下次使用。</p>
+                <p className="ct-step-meta">最近填写的模板保存在这台电脑；已用于整理的模板版本可在此选择，并随对应会议资料备份。</p>
                 {templateSaveError ? <p role="status">模板未能保存到本机，本次整理仍可继续。</p> : null}
               </div> : null}
               <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!canGenerate||noteUnsaved||minutesDirty||titleDirty||transcriptReviewUnsaved||(templateId==='custom'&&(!customTemplate.name.trim()||!customTemplate.instructions.trim()))}
