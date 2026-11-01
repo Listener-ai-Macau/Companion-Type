@@ -306,6 +306,8 @@ pub(super) fn run_deepseek_request(
         })
 }
 
+const COMPUTER_MEETING_SOURCE_CONTEXT: &str = "这场会议的【麦克风】和【电脑声音】标记只表示采集通道，不代表不同发言人或会议讨论的内容。麦克风可能同时录到电脑扬声器，两个通道中相同或近似的内容可能是同一段话的回声；整理时合并明确重复的事实和任务，不要把回声、通道名称或重复本身写成会议议题，不凭通道推断人数、身份、负责人或发言先后。两路内容可能各有独立发言，保留无法确认重复的内容和各自不同的负责人、日期、条件，不要为了去重删除独有信息。";
+
 fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1MeetingMinutes) -> String {
     let source_fact_anchors = l0
         .summary
@@ -320,6 +322,9 @@ fn minutes_user_payload(session: &CompanionV1HostSession, l0: &CompanionV1Meetin
         anchors = source_fact_anchors,
         transcript = session.transcript_text,
     )};
+    let original = if session.source == "hostMeeting" {
+        format!("{COMPUTER_MEETING_SOURCE_CONTEXT}\n\n{original}")
+    } else { original };
     let original = if has_unresolved_speaker(session) {
         format!("来源归属说明：转写中的“说话人?”或“说话人？”只是系统未能确定该片段归属的占位标签，不是另一位发言者的身份。未知片段可能属于已编号发言者，也可能属于未编号者，不能据此推断人数、另一个人或与前文是否同一人。涉及该片段只整理原话内容，归属写未确认，不猜接收人或负责人。\n\n{original}")
     } else { original };
@@ -1232,6 +1237,19 @@ mod tests {
                 expires_at: None,
             },
         }
+    }
+
+    #[test]
+    fn computer_capture_context_keeps_both_sources_and_independent_task() {
+        let text="【麦克风】\n小王负责整理报价。小李负责明天寄蓝色样品。\n【电脑声音】\n小王负责整理报价。";
+        let mut session=session_with_text(text);session.source="hostMeeting".into();
+        let l0=rules_l0_minutes(&session,"now");let payload=minutes_user_payload(&session,&l0);
+        assert!(payload.contains("【麦克风】") && payload.contains("【电脑声音】"));
+        assert!(payload.contains("小李负责明天寄蓝色样品") && payload.contains("小王负责整理报价"));
+        assert!(payload.contains("不代表不同发言人") && payload.contains("保留无法确认重复的内容"));
+        assert_eq!(session.transcript_text,text);
+        session.source="hostMicrophone".into();
+        assert!(!minutes_user_payload(&session,&l0).contains(COMPUTER_MEETING_SOURCE_CONTEXT));
     }
 
     #[test]

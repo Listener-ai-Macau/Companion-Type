@@ -41,8 +41,14 @@ impl Identity {
         let source = serde_json::to_vec(&(&session.title, &session.transcript_text,
             &session.meeting_mode, super::super::transcript_review::active_revision(session),
             session.transcript_review.as_ref().map(|r| (&r.speaker_names, &r.utterance_edits)))).unwrap();
-        let profile = serde_json::to_vec(&(endpoint, model, key, super::DEEPSEEK_SYSTEM_PROMPT,
-            EVIDENCE_PROMPT, EVIDENCE_REVISION, MAX_PROMPT_BYTES, MAX_OUTPUT_TOKENS, CHUNK_BYTES)).unwrap();
+        let profile = if session.source == "hostMeeting" {
+            serde_json::to_vec(&(endpoint, model, key, super::DEEPSEEK_SYSTEM_PROMPT,
+                EVIDENCE_PROMPT, EVIDENCE_REVISION, MAX_PROMPT_BYTES, MAX_OUTPUT_TOKENS, CHUNK_BYTES,
+                super::COMPUTER_MEETING_SOURCE_CONTEXT)).unwrap()
+        } else {
+            serde_json::to_vec(&(endpoint, model, key, super::DEEPSEEK_SYSTEM_PROMPT,
+                EVIDENCE_PROMPT, EVIDENCE_REVISION, MAX_PROMPT_BYTES, MAX_OUTPUT_TOKENS, CHUNK_BYTES)).unwrap()
+        };
         Self { schema: SCHEMA.into(), session_hash: hash(session.id.as_bytes()),
             source_hash: hash(&source), profile_hash: hash(&profile) }
     }

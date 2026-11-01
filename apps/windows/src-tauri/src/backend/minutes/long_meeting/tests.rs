@@ -31,6 +31,21 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn computer_capture_prompt_invalidates_only_its_own_chapter_cache() {
+    let source=session("【麦克风】小李寄样品。\n【电脑声音】小王整理报价。");
+    let endpoint="https://fixture.invalid";let model="model";let key="private";
+    let regular=Identity::new(endpoint,model,key,&source);
+    let old_profile=serde_json::to_vec(&(endpoint,model,key,super::super::DEEPSEEK_SYSTEM_PROMPT,
+        EVIDENCE_PROMPT,EVIDENCE_REVISION,MAX_PROMPT_BYTES,MAX_OUTPUT_TOKENS,CHUNK_BYTES)).unwrap();
+    assert_eq!(regular.profile_hash,hash(&old_profile));
+    let mut computer=source.clone();computer.source="hostMeeting".into();
+    let dual=Identity::new(endpoint,model,key,&computer);
+    assert_ne!(dual.profile_hash,regular.profile_hash);
+    assert_ne!(dual.filename(),regular.filename());
+    assert_eq!(dual.source_hash,regular.source_hash);
+}
+
+#[test]
 fn regenerated_chapter_keeps_previous_questions_actions_and_quotes() {
     let text="小王周五发报价。监管如何？额度如何？";
     let part=session(text);let (mut old,mut old_evidence)=response(&part);
