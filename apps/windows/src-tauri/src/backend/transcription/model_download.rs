@@ -30,20 +30,26 @@ pub(super) fn fetch(client: &Client, url: &str, size: u64, hash: &str, partial: 
     let mut offset = file.metadata().map_err(|_| "无法读取本地模型下载进度。")?.len();
     if offset == size && super::shared::verified(partial, hash).is_ok() { return Ok(()); }
     if offset >= size { file.set_len(0).map_err(|_| "无法重新准备本地模型。")?; offset = 0; }
+    let mut restart = false;
     for attempt in 0..2 {
+        let requested_offset = if restart { 0 } else { offset };
         let mut request = client.get(url).header(ACCEPT_ENCODING, "identity");
-        if offset > 0 { request = request.header(RANGE, format!("bytes={offset}-")); }
+        if requested_offset > 0 { request = request.header(RANGE, format!("bytes={requested_offset}-")); }
         let response = request.send().map_err(|_| "本地模型下载中断，重试可继续。")?;
-        if response.status() == StatusCode::RANGE_NOT_SATISFIABLE && offset > 0 && attempt == 0 {
-            file.set_len(0).map_err(|_| "无法重新准备本地模型。")?; offset = 0; continue;
+        if response.status() == StatusCode::RANGE_NOT_SATISFIABLE && requested_offset > 0 && attempt == 0 {
+            restart = true; continue;
         }
         if response.status() == StatusCode::OK {
             // A server ignoring Range returned a whole file, not a suffix.
             file.set_len(0).map_err(|_| "无法重新准备本地模型。")?; offset = 0;
         } else if response.status() == StatusCode::PARTIAL_CONTENT {
             let valid = response.headers().get(CONTENT_RANGE).and_then(|v|v.to_str().ok())
-                .is_some_and(|v|valid_range(v, offset, size));
-            if !valid { return Err("模型服务器返回的续传范围不正确，已保留下载进度。".into()); }
+                .is_some_and(|v|valid_range(v, requested_offset, size));
+            if !valid {
+                if requested_offset > 0 && attempt == 0 { restart = true; continue; }
+                return Err("模型服务器返回的续传范围不正确，已保留下载进度。".into());
+            }
+            if restart { file.set_len(0).map_err(|_| "无法重新准备本地模型。")?; offset = 0; }
         } else { return Err("本地模型下载失败，请检查网络后重试。".into()); }
         file.seek(SeekFrom::Start(offset)).map_err(|_| "无法保存本地模型。")?;
         let count = std::io::copy(&mut response.take(size - offset + 1), &mut file);
@@ -152,13 +158,27 @@ mod tests {
     }
 
     #[test]
-    fn wrong_server_range_does_not_damage_saved_prefix() {
-        let data=b"abcdefghij";let (url,_,worker)=server(vec![
+    fn wrong_server_range_preserves_prefix_when_restart_fails() {
+        let data=b"abcdefghij";let (url,requests,worker)=server(vec![
             response("206 Partial Content","Content-Length: 6\r\nContent-Range: bytes 3-8/10\r\n",&data[4..]),
+            response("503 Service Unavailable","Content-Length: 0\r\n",b""),
         ]);
         let dir=root();let part=dir.join("model.part");fs::write(&part,&data[..4]).unwrap();
         assert!(fetch(&client(),&url,10,&hash(data),&part).is_err());assert_eq!(fs::read(&part).unwrap(),&data[..4]);
-        worker.join().unwrap();cleanup(&dir);
+        worker.join().unwrap();let seen=requests.lock().unwrap();assert_eq!(seen.len(),2);
+        assert!(!seen[1].contains("range: bytes="));drop(seen);cleanup(&dir);
+    }
+
+    #[test]
+    fn wrong_range_restarts_with_full_file() {
+        let data=b"abcdefghij";let (url,requests,worker)=server(vec![
+            response("206 Partial Content","Content-Length: 6\r\nContent-Range: bytes 3-8/10\r\n",&data[4..]),
+            response("200 OK","Content-Length: 10\r\n",data),
+        ]);
+        let dir=root();let part=dir.join("model.part");fs::write(&part,&data[..4]).unwrap();
+        fetch(&client(),&url,10,&hash(data),&part).unwrap();assert_eq!(fs::read(&part).unwrap(),data);
+        worker.join().unwrap();let seen=requests.lock().unwrap();assert_eq!(seen.len(),2);
+        assert!(!seen[1].contains("range: bytes="));drop(seen);cleanup(&dir);
     }
 
     #[test]
