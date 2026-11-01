@@ -2,6 +2,14 @@
 use std::{fs::{self, OpenOptions}, io::{Read, Seek, SeekFrom, Write}, path::Path};
 use reqwest::{blocking::Client, header::{ACCEPT_ENCODING, CONTENT_RANGE, RANGE}, StatusCode};
 
+fn download_error(error: &std::io::Error) -> &'static str {
+    if error.kind() == std::io::ErrorKind::StorageFull {
+        "本机磁盘空间不足，释放空间后可继续下载本地模型。"
+    } else {
+        "本地模型下载中断，重试可继续。"
+    }
+}
+
 fn valid_range(value: &str, offset: u64, size: u64) -> bool {
     let Some((span, total)) = value.strip_prefix("bytes ").and_then(|s| s.split_once('/')) else { return false; };
     let Some((start, end)) = span.split_once('-') else { return false; };
@@ -39,8 +47,8 @@ pub(super) fn fetch(client: &Client, url: &str, size: u64, hash: &str, partial: 
         } else { return Err("本地模型下载失败，请检查网络后重试。".into()); }
         file.seek(SeekFrom::Start(offset)).map_err(|_| "无法保存本地模型。")?;
         let count = std::io::copy(&mut response.take(size - offset + 1), &mut file);
-        file.flush().and_then(|_|file.sync_all()).map_err(|_| "本地模型保存失败。")?;
-        let count = count.map_err(|_| "本地模型下载中断，重试可继续。")?;
+        file.flush().and_then(|_|file.sync_all()).map_err(|e| download_error(&e))?;
+        let count = count.map_err(|e| download_error(&e))?;
         if count > size - offset {
             file.set_len(offset).map_err(|_| "无法恢复模型下载进度。")?;
             return Err("模型服务器返回的文件过大，已保留原下载进度。".into());
@@ -113,6 +121,13 @@ mod tests {
     }
     fn client()->Client {Client::builder().no_proxy().timeout(std::time::Duration::from_secs(5)).build().unwrap()}
     fn hash(bytes:&[u8])->String {format!("{:x}",Sha256::digest(bytes))}
+
+    #[test]
+    fn disk_full_explains_how_to_continue() {
+        let error=std::io::Error::from(std::io::ErrorKind::StorageFull);
+        assert!(download_error(&error).contains("磁盘空间不足"));
+        assert!(download_error(&error).contains("继续下载"));
+    }
 
     #[test]
     fn interrupted_download_resumes_without_repeating_completed_bytes() {
