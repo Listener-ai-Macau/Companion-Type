@@ -13,6 +13,11 @@ session.utterances=[{text:'今天下午三点开会。',startMs:0,endMs:16000,sp
 const sources=companionTranscriptSources(session);
 assert.equal(sources.length,2);assert.equal(sources[1].approximateTiming,true);
 assert.equal(companionMinutesReferencedSources(sources,'“带蓝色文件夹”')[0].startMs,16000);
+assert.equal(companionMinutesReferencedSources(sources,'三点开会。 记得带蓝色')[0].startMs,0,'exact adjacent quote should seek to its first segment');
+assert.equal(companionMinutesReferencedSources([sources[0],{...sources[1],index:2}],'三点开会。 记得带蓝色').length,0,'must not bridge a missing segment');
+const duplicate=[...sources,{...sources[0],index:2,startMs:32000,endMs:48000}, {...sources[1],index:3,startMs:48000,endMs:64000}];
+assert.equal(companionMinutesReferencedSources(duplicate,'三点开会。 记得带蓝色').length,0,'ambiguous repeated cross-segment quote must not seek');
+assert.equal(companionMinutesReferencedSources(sources,'三点开会。记得带蓝色').length,0,'unmatched spacing must not fabricate an anchor');
 assert.equal(companionTranscriptSourceIsCurrent(session,sources[1]),true);
 const changed=structuredClone(session);changed.utterances[1].approximateTiming=false;
 assert.equal(companionTranscriptSourceIsCurrent(changed,sources[1]),false,'stale precision must not silently reuse a source link');

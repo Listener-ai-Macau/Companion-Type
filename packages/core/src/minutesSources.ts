@@ -44,9 +44,43 @@ export function companionTranscriptSourceIsCurrent(session: CompanionV1HostSessi
     && Number.isSafeInteger(current.endMs) && current.startMs >= 0 && current.endMs > current.startMs);
 }
 
-/** Match a complete item or quoted original literally to exactly one timed
- * segment. Repeated phrases, paraphrases and cross-segment quotes keep their
- * text but get no fabricated timestamp. No fuzzy/LLM matching or cloud call. */
+// Long-meeting evidence replaces the newline between ASR segments with a
+// space when displayed. Link a unique, exact cross-segment quote to its first
+// segment; never bridge a missing segment or pick one of several occurrences.
+function crossSegmentSource(sources: readonly CompanionTranscriptSource[], quote: string): CompanionTranscriptSource | null {
+  let found: CompanionTranscriptSource | null = null;
+  let matches = 0;
+  for (let start = 0; start < sources.length;) {
+    let end = start + 1;
+    while (end < sources.length && sources[end].sessionId === sources[end - 1].sessionId
+      && sources[end].reviewRevision === sources[end - 1].reviewRevision
+      && sources[end].index === sources[end - 1].index + 1
+      && sources[end].startMs >= sources[end - 1].startMs) end++;
+    const group = sources.slice(start, end);
+    const offsets: number[] = [];
+    let text = '';
+    for (const row of group) {
+      if (offsets.length) text += ' ';
+      offsets.push(text.length);
+      text += row.text;
+    }
+    for (let position = text.indexOf(quote); position !== -1; position = text.indexOf(quote, position + 1)) {
+      let index = offsets.length - 1;
+      while (index > 0 && offsets[index] > position) index--;
+      if (position + quote.length > offsets[index] + group[index].text.length) {
+        matches++;
+        if (matches > 1) return null;
+        found = group[index];
+      }
+    }
+    start = end;
+  }
+  return matches === 1 ? found : null;
+}
+
+/** Match a complete item or quoted original to exactly one timed segment, or
+ * to the first of uniquely matching adjacent segments. Paraphrases, missing
+ * segments and repeated quotes get no fabricated timestamp. */
 export function companionMinutesReferencedSources(sources: readonly CompanionTranscriptSource[],
   item: string): CompanionTranscriptSource[] {
   const candidates = [item.trim(), ...Array.from(item.matchAll(/[“「『]([^”」』]+)[”」』]|"([^"\n]+)"/g),
@@ -56,6 +90,10 @@ export function companionMinutesReferencedSources(sources: readonly CompanionTra
     if (Array.from(quote).length < 4) continue;
     const matches = sources.filter((row) => row.text.includes(quote));
     if (matches.length === 1) result.set(matches[0].index, matches[0]);
+    else if (matches.length === 0) {
+      const first = crossSegmentSource(sources, quote);
+      if (first) result.set(first.index, first);
+    }
   }
   return [...result.values()].sort((a, b) => a.index - b.index);
 }
