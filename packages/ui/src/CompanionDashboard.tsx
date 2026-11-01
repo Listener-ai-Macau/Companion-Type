@@ -558,7 +558,7 @@ export function CompanionDashboard({
   const [saveMeetingResult, setSaveMeetingResult] = useState<{ sessionId: string; part?: 'title' | 'minutes'; message: string; kind: 'saved' | 'error' } | null>(null);
   const [audioBusy, setAudioBusy] = useState(false);
   const [audioSources, setAudioSources] = useState<Record<string, { url: string; identity: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>>({});
-  const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string } | null>(null);
+  const [audioResult, setAudioResult] = useState<{ sessionId: string; message: string; playbackFailure?: boolean } | null>(null);
   const audioElement = useRef<HTMLAudioElement | null>(null);
   const meetingAudioControl = useRef<MeetingAudioControl | null>(null);
   const segmentedAudio = useRef<SegmentedPlaybackControl|null>(null);
@@ -1586,7 +1586,7 @@ export function CompanionDashboard({
         || current.identity !== requestedIdentity || current.blocked) return;
       setAudioSources((sources) => ({ ...sources, [sessionId]: { url: prepared.url, identity: requestedIdentity, sourceIdentity: prepared.sourceIdentity, pauseTimeline: prepared.pauseTimeline,parts:prepared.parts,meetingTracks:prepared.meetingTracks } }));
     } catch (prepareError) {
-      setAudioResult({ sessionId, message: `无法回听：${operationErrorText(prepareError,'playback')}` });
+      setAudioResult({ sessionId, message: `无法回听：${operationErrorText(prepareError,'playback')}`, playbackFailure: true });
     } finally {
       setAudioBusy(false);
     }
@@ -2052,7 +2052,14 @@ export function CompanionDashboard({
           {journey && !journey.optional && !recoveryView?.isProcessing ? <CompanionJourney journey={journey} hideAction={journeyRepeatsPrimaryTranscription}
             blocked={controlsBusy || oobeBlockedByRecording || storageBlocked} onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow}/> : null}
           {selectedSession.recovery?.lastError && !journey?.handlesFailure ? <p className="ct-recording-notice ct-step-warn" role="status">处理未完成：{operationErrorText(selectedSession.recovery.lastError)}</p> : null}
-          {audioResult?.sessionId===selectedSession.id ? <p className="ct-recording-notice ct-step-warn" role="status">{audioResult.message}</p> : null}
+          {audioResult?.sessionId===selectedSession.id ? <div className="ct-recording-notice ct-step-warn" role="status">
+            <span>{audioResult.message}</span>
+            {audioResult.playbackFailure && selectedSession.source==='boardDevice' && selectedSession.deviceRecordingKey ? <>
+              <span> 如果电脑中保留了设备原始分段，可以尝试恢复回听文件。</span>{' '}
+              <button type="button" className="ct-text-button" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || audioBusy}
+                onClick={()=>{setAudioResult({sessionId:selectedSession.id,message:'已请求恢复，完成后请重试回听。'});onControl({action:'meetingRestoreAudio',sessionId:selectedSession.id});}}>尝试恢复回听文件</button>
+            </> : null}
+          </div> : null}
           <div id="ct-recording-playback" hidden={!playbackOpen}>
           <section className="ct-audio-card" aria-label="本机原音回听">
             <div><strong>原音回听</strong></div>
@@ -2087,7 +2094,7 @@ export function CompanionDashboard({
                 setAudioSources((current) => {
                   const next = { ...current }; delete next[selectedSession.id]; return next;
                 });
-                setAudioResult({ sessionId: selectedSession.id, message: '无法回听：音频可能已移动、删除或损坏，请刷新后重试。' });
+                setAudioResult({ sessionId: selectedSession.id, message: '无法回听：音频可能已移动、删除或损坏，请刷新后重试。', playbackFailure: true });
               }} />)
               : <button type="button" className="ct-action" disabled={Boolean(audioBlockedReason) || audioBusy}
                 title={audioBlockedReason ?? undefined} onClick={() => void prepareAudio()}>{audioBusy ? '正在准备…' : '重试回听'}</button>}
