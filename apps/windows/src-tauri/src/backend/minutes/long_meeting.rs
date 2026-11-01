@@ -315,26 +315,33 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
     // A nearby conversation can contain genuine instructions but not belong
     // to this meeting. Mark only candidates the model can relate to explicitly
     // described background chat; never delete them or change their attribution.
+    let mut overview_summary = minutes.summary.clone();
     if minutes.processing.as_ref().is_some_and(|p| p.complete)
-        && !minutes.summary.is_empty() && !minutes.action_items.is_empty() {
+        && !minutes.summary.is_empty() {
         let checkpoint_path = root.join(Identity::new(endpoint, model, key, session).filename());
-        let quotes = read_checkpoint(&checkpoint_path).ok()
-            .map(|checkpoint| action_source_quotes(&checkpoint, &minutes))
+        let checkpoint = read_checkpoint(&checkpoint_path).ok();
+        let quotes = checkpoint.as_ref().map(|value| action_source_quotes(value, &minutes))
             .unwrap_or_else(|| vec![Vec::new(); minutes.action_items.len()]);
         if let Ok(review) = request_background_review(endpoint, model, key, session,
-            &minutes, &quotes, client) {
+            &minutes, &quotes, checkpoint.as_ref(), client) {
+            let before = minutes.markdown.clone();
             apply_action_review(session, &mut minutes, &quotes, &review);
+            if minutes.markdown != before {
+                overview_summary = minutes.summary.iter().enumerate()
+                    .filter(|(i, _)| !review.background_summary.contains(i))
+                    .map(|(_, text)| text.clone()).collect();
+            }
         }
     }
     // An overview is an optional reading aid. Preserve all detailed minutes and
     // never let a failed extra request downgrade or erase a completed meeting.
-    if minutes.processing.as_ref().is_some_and(|p| p.complete) && minutes.summary.len() > 12 {
+    if minutes.processing.as_ref().is_some_and(|p| p.complete) && overview_summary.len() > 12 {
         super::super::meeting_processing_job::check_current()?;
-        if let Ok(points) = request_concise_overview(endpoint, model, key, &minutes.summary, client) {
+        if let Ok(points) = request_concise_overview(endpoint, model, key, &overview_summary, client) {
             prepend_concise_overview(&mut minutes, &points);
         } else {
             super::super::meeting_processing_job::check_current()?;
-            if let Ok(indices) = request_overview(endpoint, model, key, &minutes.summary, client) {
+            if let Ok(indices) = request_overview(endpoint, model, key, &overview_summary, client) {
                 prepend_overview(&mut minutes, &indices);
             }
         }
@@ -425,7 +432,31 @@ fn action_source_quotes(checkpoint: &Checkpoint, minutes: &CompanionV1MeetingMin
 }
 
 #[derive(Default)]
-struct ActionReview { background: Vec<usize>, duplicates: Vec<Vec<usize>> }
+struct ActionReview {
+    background: Vec<usize>, duplicates: Vec<Vec<usize>>,
+    background_summary: Vec<usize>, background_decisions: Vec<usize>, background_questions: Vec<usize>,
+}
+
+// Associate each combined reading item with the chapter quotations that were
+// validated against its original source. Identical items may span chapters.
+fn content_source_quotes(checkpoint: &Checkpoint, values: &[String], field: &str) -> Vec<Vec<String>> {
+    let mut result = vec![Vec::new(); values.len()];
+    for chapter in checkpoint.chapters.iter().flatten() {
+        let items = match field {
+            "summary" => &chapter.minutes.summary,
+            "decisions" => &chapter.minutes.decisions,
+            "questions" => &chapter.minutes.questions,
+            _ => continue,
+        };
+        for evidence in chapter.evidence.iter().filter(|e| e.field == field) {
+            let Some(item) = items.get(evidence.index) else { continue; };
+            if let Some(index) = values.iter().position(|value| value == item) {
+                if !result[index].contains(&evidence.quote) { result[index].push(evidence.quote.clone()); }
+            }
+        }
+    }
+    result
+}
 
 // A keyword is an AI paraphrase, not itself a citation. Only associate it
 // with a flagged action when its own consecutive character pairs cover the
@@ -500,7 +531,8 @@ fn apply_action_review(session: &CompanionV1HostSession, minutes: &mut Companion
         if ids.iter().any(|i| background.contains(i)) && !background.contains(&first) { background.push(first); }
         remove.extend(ids.into_iter().skip(1));
     }
-    if background.is_empty() && remove.is_empty() { return; }
+    if background.is_empty() && remove.is_empty() && review.background_summary.is_empty()
+        && review.background_decisions.is_empty() && review.background_questions.is_empty() { return; }
     let background_keywords = background_keyword_indices(session, minutes, quotes, &background);
     let Some((notice, _)) = minutes.markdown.split_once("\n\n") else { return; };
     let Some((_, evidence)) = minutes.markdown.split_once("\n\n## 分段原文依据\n\n") else { return; };
@@ -512,14 +544,30 @@ fn apply_action_review(session: &CompanionV1HostSession, minutes: &mut Companion
     let mut index = 0usize;
     revised.action_items.retain(|_| { let keep = !remove.contains(&index); index += 1; keep });
     let mut header = revised.clone(); header.processing = None;
+    let mut background_content = Vec::new();
+    for (label, values, indices) in [
+        ("摘要", &mut header.summary, &review.background_summary),
+        ("决定", &mut header.decisions, &review.background_decisions),
+        ("问题", &mut header.questions, &review.background_questions),
+    ] {
+        let mut index = 0usize;
+        values.retain(|text| {
+            let keep = !indices.contains(&index); index += 1;
+            if !keep { background_content.push(format!("- {label}：{text}")); }
+            keep
+        });
+    }
     // Only annotate the reading copy. The original structured keywords and
     // all quotations remain unchanged for exports and further review.
     for index in background_keywords {
         header.keywords[index] = format!("{}（可能来自背景对话，请核对）", header.keywords[index]);
     }
     let mut source = session.clone(); source.transcript_text.clear(); source.transcript_review = None;
-    revised.markdown = format!("{}\n\n{}\n\n## 分段原文依据\n\n{}", notice,
-        super::render_minutes_markdown(&source, &header), evidence);
+    let background_section = if background_content.is_empty() { String::new() } else {
+        format!("\n\n## 可能来自背景对话，请核对\n\n{}", background_content.join("\n"))
+    };
+    revised.markdown = format!("{}\n\n{}{}\n\n## 分段原文依据\n\n{}", notice,
+        super::render_minutes_markdown(&source, &header), background_section, evidence);
     *minutes = revised;
 }
 
@@ -528,17 +576,26 @@ fn apply_action_review(session: &CompanionV1HostSession, minutes: &mut Companion
 // reading cue, not a decision to discard speech or a new speaker identity.
 fn request_background_review(endpoint: &str, model: &str, key: &str,
     session: &CompanionV1HostSession, minutes: &CompanionV1MeetingMinutes,
-    quotes: &[Vec<String>], client: &reqwest::blocking::Client) -> Result<ActionReview, String> {
+    quotes: &[Vec<String>], checkpoint: Option<&Checkpoint>, client: &reqwest::blocking::Client) -> Result<ActionReview, String> {
     let actions = minutes.action_items.iter().enumerate().map(|(id, item)|
         serde_json::json!({"id":id,"text":item.text,"owner":item.owner,"due":item.due,"sourceQuotes":quotes.get(id)})).collect::<Vec<_>>();
     // Keep meeting context ahead of individual actions: a real long meeting
     // showed that action-first input missed background candidates.
+    let content_items = |values: &[String], field: &str| {
+        let sources = checkpoint.map(|c| content_source_quotes(c, values, field))
+            .unwrap_or_else(|| vec![Vec::new(); values.len()]);
+        values.iter().enumerate().map(|(id, text)|
+            serde_json::json!({"id":id,"text":text,"sourceQuotes":sources[id]})).collect::<Vec<_>>()
+    };
+    let summary = content_items(&minutes.summary, "summary");
+    let decisions = content_items(&minutes.decisions, "decisions");
+    let questions = content_items(&minutes.questions, "questions");
     #[derive(Serialize)]
-    struct ReviewInput<'a> { title: &'a str, summary: &'a [String], actions: &'a [Value] }
+    struct ReviewInput<'a> { title: &'a str, summary: &'a [Value], decisions: &'a [Value], questions: &'a [Value], actions: &'a [Value] }
     let input = serde_json::to_string(&ReviewInput {
-        title: &session.title, summary: &minutes.summary, actions: &actions,
+        title: &session.title, summary: &summary, decisions: &decisions, questions: &questions, actions: &actions,
     }).map_err(|_| "会议事项核对未完成。")?;
-    let instruction = "你是会议内容核对助手。下列摘要是整场会议整理结果，行动项附带对应原文。请识别值得人工核对的可能背景闲谈：综合全会讨论脉络和引用，判断该行动是否可能是会议旁人的独立对话或同时进行的其他活动。仅在存在具体语义线索时标为可能，标记只用于提醒核对，不删除内容；会议正常换题、与会者讨论不同议题、多人会议或个人备忘中的不同任务不应标记，缺乏线索则不要标记。另找出确为同一事项、且负责人、期限、条件和原文引用一致的重复项；一个引用可能包含多个不同任务，不确定就不合并。只返回JSON对象 {\"possiblyUnrelated\":[候选id],\"duplicateGroups\":[[重复id,重复id]]}，不要添加事实。";
+    let instruction = "你是会议内容核对助手。下列是整场会议分段纪要及对应原话。识别明显可能为旁人闲谈、录制现场干扰或同时发生的其他活动：结合全会语境和引用，尤其注意摘要明确提及的背景闲谈及其相关的决定、问题和行动项。标记仅用于提醒，不删除内容。正常换题、不同议题、多人会议或个人备忘中的不同任务不应标记，缺乏线索就保留。另找出同一事项且负责人、期限、条件和原文引用一致的重复行动，一个引用可能有不同任务，不确定就不合并。只返回JSON：{\"possiblyUnrelated\":[行动id],\"duplicateGroups\":[[行动id,行动id]],\"backgroundSummary\":[摘要id],\"backgroundDecisions\":[决定id],\"backgroundQuestions\":[问题id]}，不要添加事实。";
     if input.len().saturating_add(instruction.len()) > MAX_PROMPT_BYTES {
         return Err("会议事项过多，请自行核对。".into());
     }
@@ -583,7 +640,26 @@ fn request_background_review(endpoint: &str, model: &str, key: &str,
             duplicates.push(ids);
         }
     }
-    Ok(ActionReview { background: indices, duplicates })
+    let content_indices = |field: &str, items: &[Value]| -> Result<Vec<usize>, String> {
+        let Some(values) = result.get(field) else { return Ok(Vec::new()); };
+        let mut indices = Vec::new();
+        let mut seen = HashSet::new();
+        for value in values.as_array().ok_or("会议事项核对格式不正确。")? {
+            let index = value.as_u64().and_then(|n| usize::try_from(n).ok())
+                .filter(|&n| n < items.len()).ok_or("会议事项核对格式不正确。")?;
+            if !seen.insert(index) { return Err("会议事项核对格式不正确。".into()); }
+            // Do not reorganize a result without a validated original quote.
+            if items[index]["sourceQuotes"].as_array().is_some_and(|quotes| !quotes.is_empty()) {
+                indices.push(index);
+            }
+        }
+        Ok(indices)
+    };
+    Ok(ActionReview { background: indices, duplicates,
+        background_summary: content_indices("backgroundSummary", &summary)?,
+        background_decisions: content_indices("backgroundDecisions", &decisions)?,
+        background_questions: content_indices("backgroundQuestions", &questions)?,
+    })
 }
 
 #[derive(Debug, Deserialize)]

@@ -663,7 +663,7 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
     ];
     minutes.markdown = "> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- 原始引用。".into();
     let before = minutes.clone();
-    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![1],duplicates:vec![]});
+    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![1],duplicates:vec![],..Default::default()});
     assert_eq!(minutes.action_items.len(), 2);
     assert_eq!(minutes.action_items[0].text, "周五发报价");
     assert_eq!(minutes.action_items[0].owner.as_deref(), Some("小王"));
@@ -673,12 +673,36 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
     assert!(minutes.markdown.ends_with("### 第1段\n- 原始引用。"));
     assert_eq!(minutes.summary, before.summary);
     let marked = minutes.markdown.clone();
-    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![0,0],duplicates:vec![]});
-    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![3],duplicates:vec![]});
+    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![0,0],duplicates:vec![],..Default::default()});
+    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![3],duplicates:vec![],..Default::default()});
     assert_eq!(minutes.markdown, marked);
     let mut malformed = before.clone(); malformed.markdown = "unexpected".into();
-    apply_action_review(&source, &mut malformed, &[], &ActionReview {background:vec![0],duplicates:vec![]});
+    apply_action_review(&source, &mut malformed, &[], &ActionReview {background:vec![0],duplicates:vec![],..Default::default()});
     assert_eq!(malformed.action_items[0].text, before.action_items[0].text);
+}
+
+#[test]
+fn background_sections_move_only_flagged_reading_items_and_keep_originals() {
+    let source = session("包装使用蓝色纸盒。旁人讨论猫粮。\n");
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["会议决定蓝色包装。".into(), "旁人讨论猫粮。".into()];
+    minutes.decisions = vec!["使用蓝色纸盒。".into(), "购买猫粮。".into()];
+    minutes.questions = vec!["如何交付？".into(), "猫粮在哪里买？".into()];
+    minutes.markdown = "> 长会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n- 包装使用蓝色纸盒。\n- 旁人讨论猫粮。".into();
+    let before = minutes.clone();
+    let review = ActionReview { background_summary: vec![1], background_decisions: vec![1],
+        background_questions: vec![1], ..Default::default() };
+    apply_action_review(&source, &mut minutes, &[], &review);
+    let (main, background) = minutes.markdown.split_once("## 可能来自背景对话，请核对").unwrap();
+    assert!(main.contains("会议决定蓝色包装。"));
+    assert!(!main.contains("旁人讨论猫粮。"));
+    assert!(background.contains("摘要：旁人讨论猫粮。"));
+    assert!(background.contains("决定：购买猫粮。"));
+    assert!(background.contains("问题：猫粮在哪里买？"));
+    assert!(background.contains("## 分段原文依据\n\n- 包装使用蓝色纸盒。\n- 旁人讨论猫粮。"));
+    assert_eq!(minutes.summary, before.summary);
+    assert_eq!(minutes.decisions, before.decisions);
+    assert_eq!(minutes.questions, before.questions);
 }
 
 #[test]
@@ -702,7 +726,7 @@ fn background_keyword_review_requires_source_and_preserves_legitimate_topic_chan
     let mut repeated=source.clone();repeated.transcript_text.push_str(quote);
     assert!(background_keyword_indices(&repeated,&minutes,&quotes,&[0]).is_empty(),"ambiguous repeated source cannot establish provenance");
     let original=minutes.keywords.clone();
-    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background:vec![0],duplicates:vec![]});
+    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background:vec![0],duplicates:vec![],..Default::default()});
     assert_eq!(minutes.keywords,original,"structured keywords are never removed or renamed");
     assert!(minutes.markdown.contains("库存盘点（可能来自背景对话，请核对）"));
     assert!(!minutes.markdown.contains("发布计划（可能来自背景"));
@@ -733,7 +757,7 @@ fn replay_real_background_keyword_against_validated_source() {
         }
     }
     let before=minutes.keywords.clone();
-    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background,duplicates:vec![]});
+    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background,duplicates:vec![],..Default::default()});
     assert_eq!(minutes.keywords,before);
     assert!(minutes.markdown.contains(&format!("{target}（可能来自背景对话，请核对）")));
 }
@@ -775,9 +799,9 @@ fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
     ];
     let endpoint = format!("http://{address}/chat/completions");
     let client = reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
-    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).unwrap().background, vec![1]);
-    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).is_err());
-    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],&client).is_err());
+    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],None,&client).unwrap().background, vec![1]);
+    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],None,&client).is_err());
+    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],None,&client).is_err());
     worker.join().unwrap();
 }
 
@@ -821,7 +845,7 @@ fn action_review_merges_only_same_source_and_attribution_and_retains_quotes() {
     minutes.markdown = "> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- 客户提出修改，下周一确认交货时间。".into();
     let quotes=vec![vec!["客户提出修改，下周一确认交货时间。".into()],vec!["客户提出修改，下周一确认交货时间。".into()],
         vec!["另一产品的原话".into()],vec!["客户提出修改，下周一确认交货时间。".into()]];
-    let review=ActionReview {background:vec![1],duplicates:vec![vec![0,1],vec![2,3]]};
+    let review=ActionReview {background:vec![1],duplicates:vec![vec![0,1],vec![2,3]],..Default::default()};
     apply_action_review(&source,&mut minutes,&quotes,&review);
     assert_eq!(minutes.action_items.len(),3);
     assert!(minutes.action_items[0].text.starts_with("可能来自背景对话，请核对："));
