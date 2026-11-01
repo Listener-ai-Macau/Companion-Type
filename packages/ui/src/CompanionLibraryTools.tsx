@@ -12,7 +12,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
   onSave?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
   onExport?:(request:CompanionLibraryExportRequest)=>Promise<CompanionLibraryExportResult|null>;
   onBackup?:()=>Promise<{path:string;sessions:number;files:number;bytes:number;templateWarning?:string}|null>;
-  onRestore?:()=>Promise<(CompanionV1Snapshot&{templateRestoreWarning?:string})|null>;
+  onRestore?:()=>Promise<(CompanionV1Snapshot&{templateRestoreWarning?:string;templateRestoreOnly?:boolean})|null>;
   onSaveLifecycle?:(request:CompanionLibraryStateRequest)=>Promise<CompanionV1Snapshot>;
   onPurge?:(request:CompanionLibraryPurgeRequest)=>Promise<CompanionLibraryPurgeResult>;
   onBusyChange?:(v:boolean)=>void;onUnsavedChange?:(v:boolean)=>void;
@@ -57,7 +57,7 @@ export function CompanionLibraryTools({sessions,visible,selection,setSelection,f
  const restoreLibrary=async()=>{
   if((restoreBlocked??blocked)||active.current||!onRestore||draft)return;
   active.current=true;setBusy(true);onBusyChange?.(true);setMessage('');
-  try{const result=await onRestore();setMessage(result?`备份已恢复到本机会议库。${result.templateRestoreWarning?` ${result.templateRestoreWarning}`:''}`:'已取消恢复。');}
+  try{const result=await onRestore();setMessage(result?`${result.templateRestoreOnly?(result.templateRestoreWarning?'会议已存在，未覆盖。':'会议已存在，未覆盖；已恢复模板。'):'备份已恢复到本机会议库。'}${result.templateRestoreWarning?` ${result.templateRestoreWarning}`:''}`:'已取消恢复。');}
   catch(e){setMessage(`恢复未完成：${operationErrorText(e,'save')}`);}
   finally{active.current=false;setBusy(false);onBusyChange?.(false);}
  };

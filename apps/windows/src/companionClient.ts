@@ -220,13 +220,13 @@ export async function backupCompanionLibrary(draft?:CustomTemplateDraft):Promise
  const result=await invoke<{path:string;sessions:number;files:number;bytes:number}|null>('backup_companion_library_with_templates',{templates});
  return result?{...result,templateWarning}:null;
 }
-export async function restoreCompanionLibraryBackup():Promise<(CompanionV1Snapshot&{templateRestoreWarning?:string})|null>{
+export async function restoreCompanionLibraryBackup():Promise<(CompanionV1Snapshot&{templateRestoreWarning?:string;templateRestoreOnly?:boolean})|null>{
  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中恢复会议备份。');
- const result=await invoke<{snapshot:CompanionV1Snapshot;templates:CustomTemplateDraft[];templateWarning:string|null}|null>('restore_companion_library_backup_with_templates');
+ const result=await invoke<{snapshot:CompanionV1Snapshot;templates:CustomTemplateDraft[];templateWarning:string|null;templatesOnly:boolean}|null>('restore_companion_library_backup_with_templates');
  if(!result)return null;
  let warning=result.templateWarning??undefined;
- if(result.templates.length)try{mergeRestoredCustomTemplates(localStorage,result.templates);}catch{warning='会议已恢复，但自定义模板未能保存到本机；原备份文件仍保留。';}
- return {...result.snapshot,templateRestoreWarning:warning};
+ if(result.templates.length)try{mergeRestoredCustomTemplates(localStorage,result.templates);}catch{warning='自定义模板未能保存到本机；原备份文件仍保留，解决本机存储问题后可重新选择该备份。';}
+ return {...result.snapshot,templateRestoreWarning:warning,templateRestoreOnly:result.templatesOnly};
 }
 export async function saveCompanionLibraryState(request:import('../../../packages/core/src/libraryOrganization').CompanionLibraryStateRequest):Promise<CompanionV1Snapshot>{
  if(!isTauriRuntime())throw new Error('请在 Windows Companion Type 中操作真实资料库。');

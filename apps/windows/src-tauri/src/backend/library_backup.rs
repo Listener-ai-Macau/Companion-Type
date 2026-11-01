@@ -178,6 +178,14 @@ pub(crate) fn check_conflicts(archive:&Path,existing:&[CompanionV1HostSession])-
     Ok(())
 }
 
+/// Retry only the optional templates when every meeting in this backup is
+/// already present. Never overwrite or treat a partial collision as restored.
+pub(crate) fn all_sessions_present(archive:&Path,existing:&[CompanionV1HostSession])->Result<bool,String>{
+    let manifest=read_manifest(&archive.join("manifest.json"))?;
+    let ids:HashSet<&str>=existing.iter().map(|row|row.id.as_str()).collect();
+    Ok(!manifest.sessions.is_empty() && manifest.sessions.iter().all(|row|ids.contains(row.id.as_str())))
+}
+
 fn read_manifest(path:&Path)->Result<Manifest,String>{
     let meta=fs::symlink_metadata(path).map_err(|_|"备份清单无法读取。")?;
     if !meta.is_file()||meta.file_type().is_symlink()||meta.len()>64*1024*1024{return Err("备份清单无效。".into());}
@@ -426,6 +434,17 @@ mod tests {
         row.chunks.clear();row.chunks.push(crate::companion_v1::CompanionV1AudioChunk{id:"chunk".into(),path:row.audio_path.clone(),started_at:None,stopped_at:None,duration_ms:1,bytes:sound.len() as u64,status:"sealed".into()});
         row.transcript_text="虚构会议：周五前报价".into();row.transcript_final=true;
         let report=save(&snapshot,&source,&backups).unwrap();assert_eq!(report.files,3);
+        let backup_for_retry=Path::new(&report.path);
+        assert!(all_sessions_present(backup_for_retry,&snapshot.host.sessions).unwrap());
+        assert!(!all_sessions_present(backup_for_retry,&[]).unwrap());
+        let two_dir=base.join("two-session-manifest");fs::create_dir(&two_dir).unwrap();
+        let mut two=read_manifest(&backup_for_retry.join("manifest.json")).unwrap();
+        let mut second=two.sessions[0].clone();second.id="second-session".into();two.sessions.push(second.clone());
+        fs::write(two_dir.join("manifest.json"),serde_json::to_vec(&two).unwrap()).unwrap();
+        assert!(!all_sessions_present(&two_dir,&snapshot.host.sessions).unwrap(),"a partial collision must not silently skip missing meetings");
+        let mut both=snapshot.host.sessions.clone();both.push(second);
+        assert!(all_sessions_present(&two_dir,&both).unwrap());
+        assert!(check_conflicts(&two_dir,&snapshot.host.sessions).is_err(),"partial collisions retain the original no-overwrite behavior");
         let broken=source.join("broken-legacy.wav");fs::write(&broken,b"not a WAV").unwrap();
         let mut malformed=snapshot.clone();malformed.host.sessions[0].audio_path=Some(broken.to_string_lossy().into());malformed.host.sessions[0].chunks.clear();
         let before=fs::read_dir(&backups).unwrap().count();assert!(save(&malformed,&source,&backups).is_err());assert_eq!(fs::read_dir(&backups).unwrap().count(),before);

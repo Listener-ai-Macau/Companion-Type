@@ -624,7 +624,7 @@ pub async fn backup_companion_library_with_templates(app:AppHandle,coordinator:C
 
 #[derive(serde::Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct LibraryRestoreWithTemplates {snapshot:CompanionV1Snapshot,templates:Vec<crate::backend::library_backup::TemplateDraft>,template_warning:Option<String>}
+pub struct LibraryRestoreWithTemplates {snapshot:CompanionV1Snapshot,templates:Vec<crate::backend::library_backup::TemplateDraft>,template_warning:Option<String>,templates_only:bool}
 
 #[tauri::command]
 pub async fn restore_companion_library_backup_with_templates(app:AppHandle,coordinator:CompanionCoordinatorState<'_>)
@@ -634,9 +634,12 @@ pub async fn restore_companion_library_backup_with_templates(app:AppHandle,coord
     let coordinator=coordinator.inner().clone();
     tauri::async_runtime::spawn_blocking(move||{
         let templates=crate::backend::library_backup::read_templates(&source);
-        let snapshot=coordinator.restore_library_backup(&source)?;
+        let current=coordinator.snapshot()?;
+        let templates_only=matches!(&templates,Ok(items) if !items.is_empty())
+            && crate::backend::library_backup::all_sessions_present(&source,&current.host.sessions)?;
+        let snapshot=if templates_only {current} else {coordinator.restore_library_backup(&source)?};
         let (templates,template_warning)=match templates {Ok(v)=>(v,None),Err(e)=>(vec![],Some(e))};
-        Ok(LibraryRestoreWithTemplates{snapshot,templates,template_warning})
+        Ok(LibraryRestoreWithTemplates{snapshot,templates,template_warning,templates_only})
     }).await.map_err(|e|format!("备份恢复任务未完成：{e}"))?.map(Some)
 }
 
