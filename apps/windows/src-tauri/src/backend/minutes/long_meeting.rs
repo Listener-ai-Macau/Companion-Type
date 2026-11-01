@@ -342,7 +342,7 @@ pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1H
         } else {
             super::super::meeting_processing_job::check_current()?;
             if let Ok(indices) = request_overview(endpoint, model, key, &overview_summary, client) {
-                prepend_overview(&mut minutes, &indices);
+                prepend_overview(&mut minutes, &overview_summary, &indices);
             }
         }
     }
@@ -722,13 +722,13 @@ fn request_concise_overview(endpoint: &str, model: &str, key: &str, items: &[Str
 
 // Select existing source-backed chapter items if the concise request fails.
 // set of facts. Full details remain in the original markdown and JSON fields.
-fn prepend_overview(minutes: &mut CompanionV1MeetingMinutes, indices: &[usize]) {
+fn prepend_overview(minutes: &mut CompanionV1MeetingMinutes, items: &[String], indices: &[usize]) {
     if indices.is_empty() || indices.len() > 12 { return; }
     let mut selected = indices.to_vec();
     selected.sort_unstable();
     selected.dedup();
-    if selected.len() != indices.len() || selected.iter().any(|&i| i >= minutes.summary.len()) { return; }
-    let text = selected.iter().map(|&i| format!("- {}", minutes.summary[i])).collect::<Vec<_>>().join("\n");
+    if selected.len() != indices.len() || selected.iter().any(|&i| i >= items.len()) { return; }
+    let text = selected.iter().map(|&i| format!("- {}", items[i])).collect::<Vec<_>>().join("\n");
     minutes.markdown = format!("## 全会重点\n\n{text}\n\n{}", minutes.markdown);
 }
 

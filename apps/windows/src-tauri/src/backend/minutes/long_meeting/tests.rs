@@ -588,15 +588,28 @@ fn overview_keeps_full_minutes_and_uses_only_selected_items_in_original_order() 
     minutes.markdown = "# 原来的完整纪要\n\n## 行动项\n\n- 跟进报价".into();
     let full = minutes.markdown.clone();
     let details = minutes.summary.clone();
-    prepend_overview(&mut minutes, &[12, 1, 8]);
+    prepend_overview(&mut minutes, &details, &[12, 1, 8]);
     assert!(minutes.markdown.starts_with("## 全会重点\n\n- 原有重点1\n- 原有重点8\n- 原有重点12"));
     assert!(minutes.markdown.ends_with(&full));
     assert_eq!(minutes.summary, details);
     for bad in [vec![], vec![1, 1], vec![15], (0..13).collect()] {
         let previous = minutes.markdown.clone();
-        prepend_overview(&mut minutes, &bad);
+        prepend_overview(&mut minutes, &details, &bad);
         assert_eq!(minutes.markdown, previous);
     }
+}
+
+#[test]
+fn fallback_overview_selects_the_filtered_items_not_the_unfiltered_indices() {
+    let source = session("会议原文");
+    let (mut minutes, _) = response(&source);
+    minutes.summary = vec!["背景谈话".into(), "正常议题一".into(), "正常议题二".into()];
+    minutes.markdown = "# 完整纪要".into();
+    let filtered = vec!["正常议题一".into(), "正常议题二".into()];
+    prepend_overview(&mut minutes, &filtered, &[0, 1]);
+    assert!(minutes.markdown.starts_with("## 全会重点\n\n- 正常议题一\n- 正常议题二"));
+    assert!(!minutes.markdown.contains("背景谈话"));
+    assert_eq!(minutes.summary[0], "背景谈话");
 }
 
 #[test]
