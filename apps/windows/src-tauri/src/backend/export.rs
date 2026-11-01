@@ -20,12 +20,15 @@ use super::transcript_review;
 pub use super::action_export::{CalendarPreviewItem,CalendarReminderSelection,CalendarSlotSelection};
 
 fn minutes_source_notice(session: &CompanionV1HostSession, revision: Option<u64>, context: &Option<super::minutes_context::Source>, manual: bool, body: String) -> String {
-    if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session, context) {
+    let body=if !transcript_review::minutes_current(session, revision) || !super::minutes_context::current(session, context) {
         format!("> 整理来源已变化：以下为之前保留的结果，转写或补充已更新，请重新整理后使用。\n\n{body}")
     } else if manual {
         format!("> 用户手写清单，仅本机保存；不是自动整理或录音识别。\n\n{body}")
     } else if revision.is_some() {
         format!("> 基于修订后的转写生成；原始识别结果另行保留。\n\n{body}")
+    } else { body };
+    if !manual && !transcript_review::effective_unrecognized(session).is_empty() {
+        format!("> 部分原音未识别出文字，以下整理仅依据已识别内容；请回听原音核对。\n\n{body}")
     } else { body }
 }
 
@@ -250,6 +253,9 @@ fn pdf_source(session:&CompanionV1HostSession,mode:&str,sections:&PdfSections)->
     if sections.minutes {parts.push(saved_minutes_markdown_for_mode(session,mode)?);}
     if sections.transcript {
         require_final_transcript(session)?;
+        if !sections.minutes && !transcript_review::effective_unrecognized(session).is_empty() {
+            parts.push("部分原音未识别出文字，可能是安静或声音不清晰；请回听原音核对。".into());
+        }
         parts.push(format!("## 录音文字\n\n{}",transcript_review::effective_text(session)));
         if sections.timeline {
             let rows=transcript_review::effective_utterances(session);
@@ -411,6 +417,7 @@ fn render_json_for_mode(
         stopped_at: &'a Option<String>,
         transcript_text: String,
         transcript_final: bool,
+        transcript_unrecognized: &'a [crate::companion_v1::CompanionV1UnrecognizedAudio],
         bookmark_revision: u64,
         bookmarks: &'a [super::recording_bookmarks::Bookmark],
         organization: &'a super::library_organization::Metadata,
@@ -445,6 +452,7 @@ fn render_json_for_mode(
         stopped_at: &session.stopped_at,
         transcript_text: transcript_review::effective_text(session),
         transcript_final: session.transcript_final,
+        transcript_unrecognized: transcript_review::effective_unrecognized(session),
         bookmark_revision: session.bookmark_revision,
         note_revision: session.note_revision,
         user_notes: &session.meeting_notes,
@@ -741,6 +749,7 @@ mod tests {
             chunks: vec![],
             transcript_text: transcript.into(),
             transcript_final: true,
+            transcript_unrecognized: Vec::new(),
             live_transcript_text: String::new(),
             transcript_preview: transcript.into(),
             transcript_segments: 0,

@@ -415,7 +415,7 @@ mod tests {
             device_total_length: None, device_sha256: None, device_reclaimed: false, capture_incomplete: false, source_device_id: None,
             chunks: vec![CompanionV1AudioChunk { id: "legacy-sealed".into(), path: Some(path_text(path)),
                 started_at: None, stopped_at: None, duration_ms: 1, bytes, status: "sealed".into() }],
-            transcript_text: String::new(), transcript_final: false, live_transcript_text: String::new(),
+            transcript_text: String::new(), transcript_final: false, transcript_unrecognized: Vec::new(), live_transcript_text: String::new(),
             transcript_preview: String::new(), transcript_segments: 0, utterances: vec![], minutes: None,
             minutes_by_mode: Default::default(), recovery: Default::default(), export_markdown: String::new(),
             calendar_copy_revision: 0, calendar_copy_epoch: 0, calendar_copies: Vec::new(), calendar_slot_copies: Vec::new(),

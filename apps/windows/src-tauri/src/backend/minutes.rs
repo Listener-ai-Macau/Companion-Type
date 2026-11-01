@@ -1281,6 +1281,7 @@ mod tests {
             chunks: vec![],
             transcript_text: text.to_string(),
             transcript_final: true,
+            transcript_unrecognized: Vec::new(),
             live_transcript_text: String::new(),
             transcript_preview: text.to_string(),
             transcript_segments: 3,

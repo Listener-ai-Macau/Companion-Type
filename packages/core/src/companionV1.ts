@@ -425,6 +425,7 @@ export interface CompanionV1UtteranceSegment {
 
 export interface CompanionSpeakerName { speaker: number; name: string; }
 export interface CompanionUtteranceEdit { index: number; text: string; speakerName?: string | null; }
+export interface CompanionUnrecognizedAudio { startMs:number; endMs:number; source?:string|null; }
 export interface CompanionTranscriptReview {
   revision: number;
   editedAt: string;
@@ -433,6 +434,7 @@ export interface CompanionTranscriptReview {
   text?: string | null;
   utteranceEdits: CompanionUtteranceEdit[];
   speakerNames: CompanionSpeakerName[];
+  unrecognized?: CompanionUnrecognizedAudio[] | null;
 }
 export interface CompanionTranscriptReviewEdit {
   expectedTranscriptText: string;
@@ -442,6 +444,7 @@ export interface CompanionTranscriptReviewEdit {
   text?: string | null;
   utteranceEdits?: CompanionUtteranceEdit[];
   speakerNames?: CompanionSpeakerName[];
+  unrecognized?: CompanionUnrecognizedAudio[] | null;
 }
 
 export const COMPANION_CAPTURE_ONLY_PROMPT = '__companion_capture_only__';
@@ -497,6 +500,8 @@ export interface CompanionV1HostSession {
   transcriptText: string;
   /** False for online-live prefixes; true only after final ASR/import commit. */
   transcriptFinal?: boolean;
+  /** Audio windows for which local ASR returned no words; silence and missed speech are both possible. */
+  transcriptUnrecognized?: CompanionUnrecognizedAudio[];
   /** Cumulative live partials for onlineLive (mirrors into transcriptText while recording). */
   liveTranscriptText: string;
   transcriptPreview: string;
@@ -1301,6 +1306,7 @@ export function applyCompanionV1ControlFixture(
         pendingReason: session.audioPath || session.audioBytes ? 'needs_transcription' : null,
         transcriptText: '',
         transcriptFinal: false,
+        transcriptUnrecognized: [],
         recovery: undefined,
         liveTranscriptText: '',
         transcriptPreview: '',
@@ -1557,6 +1563,7 @@ function applyTranscriptToSession(
     status: 'transcribed',
     pendingReason: null,
     transcriptText,
+    transcriptUnrecognized: [],
     transcriptPreview: previewText(transcriptText),
     transcriptSegments: splitTranscriptSegments(transcriptText).length,
     retention: {

@@ -198,6 +198,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     let mut offset = 0u64;
     let mut parts = Vec::new();
     let mut anchors = Vec::new();
+    let mut unrecognized = Vec::new();
     let profile = super::chunk_cache::Profile::from_configuration(
         &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1"}),
     )?;
@@ -233,7 +234,11 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
                     parts.push(normalized);anchors.push(anchor);
                 }
             },
-            Err(e) if e == "ASR final result is empty or has invalid timing" => {}
+            Err(e) if e == "ASR final result is empty or has invalid timing" => {
+                let first = (offset as u128 / 2) * 1000 / RATE as u128;
+                let last = (((offset + buf.len() as u64) as u128 / 2) * 1000 + RATE as u128 - 1) / RATE as u128;
+                super::push_unrecognized(&mut unrecognized, first as u64, last as u64, None);
+            }
             Err(e) => return Err(format!("本地转写中断，原录音保留，可重试：{e}")),
         }
         offset += buf.len() as u64;
@@ -249,6 +254,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         mode: match kind { ModelKind::Paraformer => "offline:paraformer", ModelKind::SenseVoice => "offline:sensevoice" }.into(),
         evidence_path: None,
         utterances: anchors,
+        unrecognized,
     })
 }
 

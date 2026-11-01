@@ -35,6 +35,9 @@ pub struct TranscriptReview {
     pub utterance_edits: Vec<UtteranceEdit>,
     #[serde(default)]
     pub speaker_names: Vec<SpeakerName>,
+    /// Review derived from a replacement ASR preview may have different gaps.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub unrecognized: Option<Vec<crate::companion_v1::CompanionV1UnrecognizedAudio>>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -50,6 +53,8 @@ pub struct TranscriptReviewEdit {
     pub utterance_edits: Vec<UtteranceEdit>,
     #[serde(default)]
     pub speaker_names: Vec<SpeakerName>,
+    #[serde(default)]
+    pub unrecognized: Option<Vec<crate::companion_v1::CompanionV1UnrecognizedAudio>>,
 }
 
 pub fn review_is_stale(session: &CompanionV1HostSession) -> bool {
@@ -80,6 +85,12 @@ pub fn minutes_current(session: &CompanionV1HostSession, source_revision: Option
 
 fn active_review(session: &CompanionV1HostSession) -> Option<&TranscriptReview> {
     session.transcript_review.as_ref().filter(|_| active_revision(session).is_some())
+}
+
+pub fn effective_unrecognized(session: &CompanionV1HostSession) -> &[crate::companion_v1::CompanionV1UnrecognizedAudio] {
+    active_review(session).filter(|review| review.text.is_some())
+        .and_then(|review| review.unrecognized.as_deref())
+        .unwrap_or(&session.transcript_unrecognized)
 }
 
 pub fn speaker_label(session: &CompanionV1HostSession, index: usize) -> Option<String> {
@@ -156,7 +167,7 @@ pub fn prepare_review(session: &CompanionV1HostSession, edit: &TranscriptReviewE
     let revision = edit.expected_revision.checked_add(1).ok_or("修订编号已达上限，无法保存。")?;
     let mut result = TranscriptReview {
         revision, edited_at: now.into(), source_transcript_text: session.transcript_text.clone(),
-        source_utterances: session.utterances.clone(), text: None, utterance_edits: vec![], speaker_names: vec![],
+        source_utterances: session.utterances.clone(), text: None, utterance_edits: vec![], speaker_names: vec![], unrecognized: None,
     };
     if edit.restore_original {
         if edit.text.is_some() || !edit.utterance_edits.is_empty() || !edit.speaker_names.is_empty() {
@@ -169,7 +180,11 @@ pub fn prepare_review(session: &CompanionV1HostSession, edit: &TranscriptReviewE
             return Err("整篇替代文字不能同时修改旧时间轴或说话人。".into());
         }
         if !valid_text(text) { return Err("转写不能为空，且不能超过 2 MiB 或包含非法控制字符。".into()); }
-        if text.trim() != session.transcript_text.trim() { result.text = Some(text.trim().into()); }
+        if text.trim() != session.transcript_text.trim() || edit.unrecognized.is_some() { result.text = Some(text.trim().into()); }
+        if result.text.is_some() {
+            result.unrecognized = edit.unrecognized.clone().or_else(|| session.transcript_review.as_ref()
+                .filter(|_| !review_is_stale(session)).and_then(|review| review.unrecognized.clone()));
+        }
     }
     let mut indices = BTreeSet::new();
     let mut total_bytes = 0usize;
@@ -197,7 +212,7 @@ pub fn prepare_review(session: &CompanionV1HostSession, edit: &TranscriptReviewE
     if let Some(current) = session.transcript_review.as_ref().filter(|_| !review_is_stale(session)) {
         if current.source_transcript_text == result.source_transcript_text && current.source_utterances == result.source_utterances
             && current.text == result.text && current.utterance_edits == result.utterance_edits
-            && current.speaker_names == result.speaker_names {
+            && current.speaker_names == result.speaker_names && current.unrecognized == result.unrecognized {
             return Ok(current.clone());
         }
     }
@@ -225,6 +240,7 @@ mod tests {
             restore_original: false, text: None,
             utterance_edits: vec![UtteranceEdit { index: 1, text: "周四陈校对。".into(), speaker_name: Some("小陈".into()) }],
             speaker_names: vec![SpeakerName { speaker: 0, name: "小王".into() }],
+            unrecognized: None,
         }
     }
     #[test]
@@ -248,7 +264,7 @@ mod tests {
         let mut session=sample();let original=session.clone();
         let edit=TranscriptReviewEdit {expected_transcript_text:session.transcript_text.clone(),
             expected_utterances:session.utterances.clone(),expected_revision:0,restore_original:false,
-            text:Some("重新识别的完整会议内容。".into()),utterance_edits:vec![],speaker_names:vec![]};
+            text:Some("重新识别的完整会议内容。".into()),utterance_edits:vec![],speaker_names:vec![],unrecognized:None};
         session.transcript_review=Some(prepare_review(&session,&edit,"now").unwrap());
         assert_eq!(session.transcript_text,original.transcript_text);
         assert_eq!(session.utterances,original.utterances);
@@ -273,7 +289,7 @@ mod tests {
         let request=super::super::meeting_workspace::MeetingEditRequest {session_id:saved.id.clone(),title:None,expected_title:None,
             meeting_mode:None,markdown:None,expected_markdown:None,create_manual:None,restore_history:None,transcript_review:Some(TranscriptReviewEdit {
                 expected_transcript_text:saved.transcript_text.clone(),expected_utterances:saved.utterances.clone(),expected_revision:0,
-                restore_original:false,text:Some("重新识别的完整会议内容。".into()),utterance_edits:vec![],speaker_names:vec![]})};
+                restore_original:false,text:Some("重新识别的完整会议内容。".into()),utterance_edits:vec![],speaker_names:vec![],unrecognized:None})};
         super::super::meeting_workspace::edit_session(&mut saved,&request,"now").unwrap();
         assert_eq!(serde_json::to_value(&saved.minutes).unwrap(),prior_minutes);
         assert_eq!(serde_json::to_value(&saved.meeting_notes).unwrap(),prior_notes);
@@ -281,12 +297,28 @@ mod tests {
         if saved.minutes.is_some() {assert_eq!(saved.pending_reason.as_deref(),Some("minutes_source_changed"));}
     }
     #[test]
+    fn alternate_transcription_preserves_its_own_missing_audio_ranges() {
+        let mut session=sample();
+        session.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:1000,end_ms:2000,source:None}];
+        let mut edit=request(&session);edit.utterance_edits.clear();edit.speaker_names.clear();edit.text=Some("新的结果".into());
+        edit.unrecognized=Some(vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:3000,end_ms:4000,source:None}]);
+        session.transcript_review=Some(prepare_review(&session,&edit,"now").unwrap());
+        assert_eq!(effective_unrecognized(&session)[0].start_ms,3000);
+        let reopened:CompanionV1HostSession=serde_json::from_str(&serde_json::to_string(&session).unwrap()).unwrap();
+        assert_eq!(effective_unrecognized(&reopened)[0].start_ms,3000);
+        assert_eq!(reopened.transcript_unrecognized[0].start_ms,1000);
+        assert!(super::super::export::render_json(&reopened).unwrap().contains("3000"));
+        edit.expected_revision=1;edit.restore_original=true;edit.text=None;edit.unrecognized=None;
+        session.transcript_review=Some(prepare_review(&session,&edit,"later").unwrap());
+        assert_eq!(effective_unrecognized(&session)[0].start_ms,1000);
+    }
+    #[test]
     fn long_alternative_transcription_is_not_blocked_at_old_200kb_limit() {
         let mut session=sample();let original=session.clone();
         let text="会".repeat(77_000);assert!(text.len()>200_000 && text.len()<MAX_REVIEW_BYTES);
         let mut edit=TranscriptReviewEdit {expected_transcript_text:session.transcript_text.clone(),
             expected_utterances:session.utterances.clone(),expected_revision:0,restore_original:false,
-            text:Some(text.clone()),utterance_edits:vec![],speaker_names:vec![]};
+            text:Some(text.clone()),utterance_edits:vec![],speaker_names:vec![],unrecognized:None};
         session.transcript_review=Some(prepare_review(&session,&edit,"now").unwrap());
         assert_eq!(effective_text(&session),text);assert_eq!(session.transcript_text,original.transcript_text);
         assert_eq!(session.utterances,original.utterances);assert!(effective_utterances(&session).is_empty());

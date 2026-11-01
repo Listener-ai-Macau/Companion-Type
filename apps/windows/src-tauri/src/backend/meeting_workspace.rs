@@ -471,7 +471,7 @@ mod tests {
         let mut request = edit(&session); request.markdown = None;
         request.transcript_review = Some(super::super::transcript_review::TranscriptReviewEdit {
             expected_transcript_text: "stale".into(), expected_utterances: vec![], expected_revision: 0,
-            restore_original: false, text: Some("owner 小王；周四交录音。".into()), utterance_edits: vec![], speaker_names: vec![],
+            restore_original: false, text: Some("owner 小王；周四交录音。".into()), utterance_edits: vec![], speaker_names: vec![], unrecognized: None,
         });
         assert!(edit_session(&mut session,&request,"now").is_err());
         assert_eq!(serde_json::to_value(&session).unwrap(), original, "invalid text edit cannot partly rename");

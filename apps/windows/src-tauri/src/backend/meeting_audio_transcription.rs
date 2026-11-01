@@ -49,12 +49,20 @@ fn transcribe_track(manager: &CompanionTranscriptionManager, paths: &[String]) -
     match manager.transcribe_session(None, paths) {
         Ok(result) => Ok(Some(result)),
         Err(error) if error == transcription::LOCAL_NO_SPEECH => {
-            // Only exact digital silence can be omitted. Quiet speech or a
-            // provider failure must remain visible and retryable.
+            // A finished recognizer may return no words for nonzero audio.
+            // Preserve other tracks and report the missing source range; do not
+            // claim that background noise or quiet speech was silence.
+            let mut bytes=0u64;let mut nonzero=false;
             for path in paths {
-                if !transcription::wav_is_digital_silence(Path::new(path))? { return Err(error); }
+                let path=Path::new(path);
+                if !transcription::wav_is_digital_silence(path)? { nonzero=true; }
+                bytes=bytes.checked_add(transcription::wav_pcm_bytes(path)?).ok_or("录音时间范围过大。")?;
             }
-            Ok(None)
+            if !nonzero { return Ok(None); }
+            let end_ms=u64::try_from((bytes as u128 * 1000 + 31_999) / 32_000).map_err(|_| "录音时间范围过大。")?;
+            Ok(Some(CompanionTranscript { text:String::new(), provider_id:"companion-type-local-empty".into(),
+                mode:"local-no-words".into(),evidence_path:None,utterances:vec![],
+                unrecognized:vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:0,end_ms,source:None}] }))
         }
         Err(error) => Err(error),
     }
@@ -66,8 +74,12 @@ fn compact(text: &str) -> String { text.chars().filter(|c| !c.is_whitespace()).c
 /// If timings or text coverage are incomplete, retain full text grouped by
 /// source rather than inventing a chronological order or dropping words.
 fn combine(microphone: Option<CompanionTranscript>, system: Option<CompanionTranscript>) -> Result<CompanionTranscript, String> {
-    let tracks = [("麦克风", microphone), ("电脑声音", system)].into_iter()
+    let all_tracks = [("麦克风", microphone), ("电脑声音", system)].into_iter()
         .filter_map(|(label, track)| track.map(|track| (label, track))).collect::<Vec<_>>();
+    let unrecognized = all_tracks.iter().flat_map(|(label, track)| track.unrecognized.iter().cloned().map(|mut range| {
+        range.source=Some((*label).to_string());range
+    })).collect();
+    let tracks = all_tracks.into_iter().filter(|(_,track)| !track.text.trim().is_empty()).collect::<Vec<_>>();
     if tracks.is_empty() { return Err(transcription::LOCAL_NO_SPEECH.into()); }
     let timed = tracks.iter().all(|(_, t)| !t.utterances.is_empty()
         && t.utterances.iter().all(|u| !u.approximate_timing && u.end_ms >= u.start_ms)
@@ -96,7 +108,7 @@ fn combine(microphone: Option<CompanionTranscript>, system: Option<CompanionTran
     let providers = tracks.iter().map(|(_, t)| t.provider_id.as_str()).collect::<Vec<_>>().join("+");
     Ok(CompanionTranscript { text, provider_id: format!("meeting-tracks:{providers}"),
         mode: if timed { "aligned-tracks" } else { "source-grouped-tracks" }.into(),
-        evidence_path: None, utterances })
+        evidence_path: None, utterances, unrecognized })
 }
 
 #[cfg(test)]
@@ -107,7 +119,7 @@ mod tests {
         CompanionV1UtteranceSegment { text: text.into(), start_ms: start, end_ms: end, speaker, approximate_timing: false }
     }
     fn transcript(text: &str, rows: Vec<CompanionV1UtteranceSegment>) -> CompanionTranscript {
-        CompanionTranscript { text: text.into(), provider_id: "test".into(), mode: "test".into(), evidence_path: None, utterances: rows }
+        CompanionTranscript { text: text.into(), provider_id: "test".into(), mode: "test".into(), evidence_path: None, utterances: rows, unrecognized: Vec::new() }
     }
     #[test]
     fn sources_are_interleaved_and_speaker_ids_remain_separate() {
@@ -118,6 +130,18 @@ mod tests {
         assert_eq!(merged.utterances.iter().map(|r|r.start_ms).collect::<Vec<_>>(),[0,2000,4000]);
         assert_ne!(merged.utterances[0].speaker,merged.utterances[1].speaker);
         assert!(merged.text.contains("【电脑声音】远端甲") && merged.text.contains("【麦克风】本地"));
+    }
+    #[test]
+    fn no_words_in_one_track_preserves_other_track_and_reports_source() {
+        let mut mic=transcript("",vec![]);
+        mic.unrecognized.push(crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:0,end_ms:15000,source:None});
+        let output=transcript("远端会议内容",vec![row("远端会议内容",2000,3000,Some(0))]);
+        let merged=combine_results(Ok(Some(mic)),Ok(Some(output))).unwrap();
+        assert!(merged.warnings.is_empty());
+        assert!(merged.transcript.text.contains("远端会议内容"));
+        assert_eq!(merged.transcript.unrecognized.len(),1);
+        assert_eq!(merged.transcript.unrecognized[0].source.as_deref(),Some("麦克风"));
+        assert_eq!(merged.transcript.unrecognized[0].end_ms,15000);
     }
     #[test]
     fn missing_timing_or_words_keeps_full_text_grouped_by_source() {

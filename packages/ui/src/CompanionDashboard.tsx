@@ -257,7 +257,7 @@ export interface CompanionDashboardProps {
   /** Conflict-aware metadata/minutes edit. The host persists before returning its next snapshot. */
   onSaveMeeting?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onRefineSpeakers?: (sessionId:string) => Promise<CompanionV1Snapshot>;
-  onPreviewRetranscription?: (sessionId:string) => Promise<string>;
+  onPreviewRetranscription?: (sessionId:string) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onSaveNote?: (request:CompanionMeetingNoteRequest) => Promise<CompanionV1Snapshot>;
   onSaveLibraryOrganization?:(request:CompanionLibraryOrganizationRequest)=>Promise<CompanionV1Snapshot>;
@@ -433,7 +433,7 @@ export function CompanionDashboard({
   const [newMeetingTitle, setNewMeetingTitle] = useState('');
   const [draftMinutes, setDraftMinutes] = useState('30');
   const [transcriptDraft, setTranscriptDraft] = useState('');
-  const [retranscriptionPreview, setRetranscriptionPreview] = useState<{sessionId:string;text:string;sourceText:string;sourceUtterances:CompanionV1HostSession['utterances'];revision:number}|null>(null);
+  const [retranscriptionPreview, setRetranscriptionPreview] = useState<{sessionId:string;text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[];sourceText:string;sourceUtterances:CompanionV1HostSession['utterances'];revision:number}|null>(null);
   const transcriptEditor = useRef<{ sessionId?: string; dirty: boolean }>({ dirty: false });
   const [pendingDelete, setPendingDelete] = useState<{ request: CompanionV1ControlRequest; title: string; detail: string; targetTitle: string; selectedId: string | null; libraryKey: string } | null>(null);
   const deleteSubmitted = useRef(false);
@@ -827,6 +827,9 @@ export function CompanionDashboard({
   const recordingMinutesUserEdited = ['userEdited','userAuthored'].includes(String(recordingModeMinutes?.source??legacyRecordingMinutes?.source??''));
   const recordingModeLabel = recordingMode === 'onlineLive' ? '在线速记' : '先录后整理';
   const selectedDraft = selectedSession ? meetingDrafts[selectedSession.id] : undefined;
+  const selectedUnrecognized = selectedSession?.transcriptReview?.text && !companionTranscriptReviewIsStale(selectedSession)
+    ? selectedSession.transcriptReview.unrecognized ?? selectedSession.transcriptUnrecognized ?? []
+    : selectedSession?.transcriptUnrecognized ?? [];
   const titleDraft = selectedSession
     ? selectedDraft?.title?.value ?? meetingTitle(selectedSession) : '';
   const minutesDraft = selectedSession
@@ -2054,6 +2057,7 @@ export function CompanionDashboard({
           {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details ref={savedMinutesHeading} id="ct-recording-result" className="ct-recording-result"
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
             <summary>{manualMinutes ? '手写清单' : '整理结果'}{minutesDirty ? ' · 有未保存的修改' : manualMinutes ? storageBlocked ? ' · 保存待确认' : ' · 已保存' : ''}</summary>
+            {selectedUnrecognized.length ? <p className="ct-step-warn" role="status">部分原音没有识别出文字，整理只依据识别到的内容；可在下方查看时段并回听核对。</p> : null}
             <MinutesModeTabs value={minutesViewMode} onChange={setMinutesViewMode} dualMode={Boolean(offlineMinutes && onlineMinutes)}
               labels={{offlineStore:{visible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : ''}`,accessible:`${offlineMinutes?.source === 'userAuthored' ? '手写清单' : selectedSession && isTextOnlyImport(selectedSession) ? '文字整理' : '先录后整理纪要'} ${offlineReady ? '✓' : offlineMinutes ? '草稿' : '未生成'}`},
                 onlineLive:{visible:`在线速记 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 段` : onlineMinutes ? '草稿' : ''}`,accessible:`在线纪要 ${onlineReady ? `✓ · ${onlineMinutes?.partialCount} 次片段` : onlineMinutes ? '草稿' : '未生成'}`}}}>
@@ -2238,6 +2242,12 @@ export function CompanionDashboard({
             {renderExportFeedback('pdf')}
           </details>:null}
           <section className="ct-recording-text" aria-label="录音文字">
+            {selectedUnrecognized.length ? <div className="ct-step-warn" role="status">
+              部分时段未识别出文字，可能是安静或声音不清晰。已有文字可以继续整理；建议回听原音核对。
+              <span> {selectedUnrecognized.slice(0, 4).map((part) =>
+                `${part.source ? `${part.source} ` : ''}${formatDuration(part.startMs)}–${formatDuration(part.endMs)}`).join('、')}
+                {selectedUnrecognized.length > 4 ? ` 等 ${selectedUnrecognized.length} 处` : ''}</span>
+            </div> : null}
             <div className="ct-recording-text-heading"><h3>{hasMinutes?'原话与补充':'文字'}</h3>
               <div className="ct-button-row">
                 {companionReviewedTranscript(selectedSession).trim() || selectedSession.transcriptReview ? <button type="button" className="ct-text-button"
@@ -2250,7 +2260,7 @@ export function CompanionDashboard({
                   if (!selectedSession) return;
                   const sessionId=selectedSession.id;setSaveMeetingResult(null);
                   const sourceText=selectedSession.transcriptText, sourceUtterances=structuredClone(selectedSession.utterances ?? []), revision=selectedSession.transcriptReview?.revision ?? 0;
-                  try {const text=await onPreviewRetranscription(sessionId);setRetranscriptionPreview({sessionId,text,sourceText,sourceUtterances,revision});}
+                  try {const result=await onPreviewRetranscription(sessionId);setRetranscriptionPreview({sessionId,...result,sourceText,sourceUtterances,revision});}
                   catch(e) {setSaveMeetingResult({sessionId,kind:'error',message:`重新转写未完成：${operationErrorText(e,'general')}`});}
                 }}>重新转写并对比</button>:null}
                 {finalTranscript ? <button type="button" className="ct-text-button"
@@ -2334,6 +2344,7 @@ export function CompanionDashboard({
             {onPreviewRetranscription && finalTranscript ? <p className="ct-step-meta">{productSettings?.asrProvider === 'local-paraformer' ? '重新转写使用当前电脑本地模型，录音不会上传。' : '重新转写使用当前选定的云端服务，会发送录音并可能产生费用。'}</p> : null}
             {retranscriptionPreview && retranscriptionPreview.sessionId===selectedSession?.id ? <section aria-label="重新转写结果">
               <p>这是新生成的文字，尚未替换已保存的转写。采用后保留原始转写、原录音和备注；旧纪要保留，可按新文字重新整理。新文字暂时没有对应的分段时间。</p>
+              {retranscriptionPreview.unrecognized.length ? <p className="ct-step-warn">新转写有部分时段没有识别出文字，可能是安静或声音不清晰；采用后可继续整理，请回听核对。</p> : null}
               <textarea className="ct-textarea ct-step-textarea" readOnly aria-label="新转写结果" value={retranscriptionPreview.text} />
               <div className="ct-button-row">
                 <button type="button" className="ct-action" disabled={!onSaveMeeting || controlsBusy || transcriptEditor.current.dirty || transcriptReviewUnsaved || Boolean(selectedSession?.transcriptReview && (selectedSession.transcriptReview.text || selectedSession.transcriptReview.utteranceEdits.length || selectedSession.transcriptReview.speakerNames.length))}
@@ -2341,7 +2352,7 @@ export function CompanionDashboard({
                     if(!onSaveMeeting || !selectedSession || !retranscriptionPreview) return;
                     const p=retranscriptionPreview;setSaveMeetingBusy(true);setSaveMeetingResult(null);
                     try {
-                      const saved=await onSaveMeeting({sessionId:p.sessionId,transcriptReview:{expectedTranscriptText:p.sourceText,expectedUtterances:p.sourceUtterances ?? [],expectedRevision:p.revision,restoreOriginal:false,text:p.text,utteranceEdits:[],speakerNames:[]}});
+                      const saved=await onSaveMeeting({sessionId:p.sessionId,transcriptReview:{expectedTranscriptText:p.sourceText,expectedUtterances:p.sourceUtterances ?? [],expectedRevision:p.revision,restoreOriginal:false,text:p.text,utteranceEdits:[],speakerNames:[],unrecognized:p.unrecognized}});
                       if(saved.host.persistence?.status && saved.host.persistence.status!=='ready') throw new Error('新文字尚未保存到磁盘，请重试。');
                       setRetranscriptionPreview(null);setSaveMeetingResult({sessionId:p.sessionId,kind:'saved',message:'新文字已保存为修订；原始转写和旧纪要保留，可按需重新整理。'});
                     } catch(e) {setSaveMeetingResult({sessionId:p.sessionId,kind:'error',message:`新文字未保存：${operationErrorText(e,'save')}`});}

@@ -69,7 +69,7 @@ pub(super) fn apply(row:&mut CompanionV1HostSession,labels:super::transcription:
         let row=&mut s.host.sessions[0];row.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment{text:"原句。".into(),start_ms:0,end_ms:2000,speaker:Some(0),approximate_timing:false}];
         let old=row.minutes_by_mode.clone();let original=row.clone();
         let make=|word:&str|super::super::transcription::CompanionTranscript {text:format!("说话人2: {word}"),provider_id:"local".into(),mode:"local".into(),evidence_path:None,
-            utterances:vec![crate::companion_v1::CompanionV1UtteranceSegment{text:word.into(),start_ms:0,end_ms:2000,speaker:Some(1),approximate_timing:false}]};
+            utterances:vec![crate::companion_v1::CompanionV1UtteranceSegment{text:word.into(),start_ms:0,end_ms:2000,speaker:Some(1),approximate_timing:false}],unrecognized:Vec::new()};
         assert!(apply(row,make("改了原句")).is_err());assert_eq!(row.utterances,original.utterances);
         assert!(apply(row,make("原句。")).unwrap());
         for (before,after) in [(&old.offline_store,&row.minutes_by_mode.offline_store),(&old.online_live,&row.minutes_by_mode.online_live)] {

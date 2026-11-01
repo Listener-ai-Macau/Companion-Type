@@ -379,6 +379,10 @@ pub struct CompanionV1HostSession {
     /// intentionally false so restart recovery cannot mistake them for final.
     #[serde(default)]
     pub transcript_final: bool,
+    /// Input windows for which the local recognizer returned no words.
+    /// These may be quiet or contain speech the model could not understand.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub transcript_unrecognized: Vec<CompanionV1UnrecognizedAudio>,
     #[serde(default)]
     pub live_transcript_text: String,
     pub transcript_preview: String,
@@ -426,6 +430,15 @@ pub struct CompanionV1HostSession {
     pub calendar_slot_copies: Vec<crate::backend::calendar_copy::SlotCopy>,
     pub exported_at: Option<String>,
     pub retention: CompanionV1SessionRetention,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionV1UnrecognizedAudio {
+    pub start_ms: u64,
+    pub end_ms: u64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source: Option<String>,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -1411,6 +1424,7 @@ pub(crate) fn apply_control_at(
             };
             snapshot.host.sessions[index].transcript_text.clear();
             snapshot.host.sessions[index].transcript_final = false;
+            snapshot.host.sessions[index].transcript_unrecognized.clear();
             snapshot.host.sessions[index].live_transcript_text.clear();
             snapshot.host.sessions[index].transcript_preview.clear();
             snapshot.host.sessions[index].transcript_segments = 0;
@@ -1683,6 +1697,7 @@ pub(crate) fn create_host_session(
         )],
         transcript_text: String::new(),
         transcript_final: false,
+        transcript_unrecognized: Vec::new(),
         live_transcript_text: String::new(),
         transcript_preview: String::new(),
         transcript_segments: 0,
@@ -1776,6 +1791,7 @@ fn apply_transcript(
     snapshot.host.sessions[index].transcript_segments = split_segments(&transcript).len();
     snapshot.host.sessions[index].transcript_text = transcript;
     snapshot.host.sessions[index].transcript_final = true;
+    snapshot.host.sessions[index].transcript_unrecognized.clear();
     snapshot.host.sessions[index].retention.transcript_cached = true;
     snapshot.meeting.active = false;
     snapshot.meeting.status = "transcribed".to_string();

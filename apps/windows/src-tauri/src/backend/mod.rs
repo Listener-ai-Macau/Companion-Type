@@ -133,7 +133,7 @@ pub(crate) use privacy::verify_privacy_delete;
 pub mod product_settings;
 /// In-memory import/fixture coordinator; the board owns physical NOR storage.
 pub mod recording_ring;
-mod transcription;
+pub(crate) mod transcription;
 pub(crate) mod meeting_processing_job;
 pub(crate) use transcription::prepare_local_asr;
 #[cfg(test)]
@@ -748,7 +748,7 @@ pub trait CompanionBackend: Send + Sync {
         -> Result<CompanionV1Snapshot,String>;
     fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String>;
     fn refine_meeting_speakers(&self,_id:&str)->Result<CompanionV1Snapshot,String> {Err("当前环境未提供本地说话人区分。".into())}
-    fn preview_meeting_transcription(&self,_id:&str,_job_id:&str)->Result<String,String> {Err("当前环境不支持重新转写。".into())}
+    fn preview_meeting_transcription(&self,_id:&str,_job_id:&str)->Result<transcription::TranscriptionPreview,String> {Err("当前环境不支持重新转写。".into())}
     fn capabilities(&self) -> CompanionBackendCapabilities;
     fn ble_bridge_status(&self) -> CompanionBleBridgeStatus;
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String>;
@@ -1665,7 +1665,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         snapshot.updated_at=observation_timestamp();persistence::save_snapshot(&mut snapshot)?;
         refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
     }
-    fn preview_meeting_transcription(&self,id:&str,job_id:&str)->Result<String,String> {
+    fn preview_meeting_transcription(&self,id:&str,job_id:&str)->Result<transcription::TranscriptionPreview,String> {
         if id.is_empty() || !job_id.starts_with("__meeting_job__") {return Err("转写任务身份无效。".into());}
         let _processing=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
         if lifecycle::PROCESS.requested() {return Err(lifecycle::CLOSING.into());}
@@ -1696,9 +1696,9 @@ impl CompanionBackend for FixtureCompanionBackend {
                     let system=tracks.system.into_iter().map(|p|p.path).collect::<Vec<_>>();
                     let result=meeting_audio_transcription::transcribe_tracks(&self.transcription,id,&mic,&system)?;
                     if !result.warnings.is_empty() {return Err(result.warnings.join(" "));}
-                    Ok(result.transcript.text)
+                    Ok(result.transcript.into())
                 } else {
-                    self.transcription.transcribe_session_owned(id,audio_path.as_deref(),&paths).map(|r|r.text)
+                    self.transcription.transcribe_session_owned(id,audio_path.as_deref(),&paths).map(Into::into)
                 }
             }))?;
         result
@@ -2440,6 +2440,7 @@ impl CompanionBackend for FixtureCompanionBackend {
         // session after the fixture reducer builds it (enables SRT export +
         // playback sync). None for non-volcengine / failed transcription.
         let mut transcript_utterances: Option<Vec<CompanionV1UtteranceSegment>> = None;
+        let mut transcript_unrecognized = None;
 
         /* STOP keeps the original capture source across disconnections.
          * Fail closed instead of letting the host reducer claim device audio. */
@@ -3054,6 +3055,7 @@ impl CompanionBackend for FixtureCompanionBackend {
                     let mut request = request;
                     request.transcript_text = Some(transcript.text);
                     transcript_utterances = Some(transcript.utterances);
+                    transcript_unrecognized = Some(transcript.unrecognized);
                     if request.audio_path.is_none() {
                         request.audio_path = audio_path;
                     }
@@ -3283,6 +3285,11 @@ impl CompanionBackend for FixtureCompanionBackend {
         if let Some(utterances) = transcript_utterances.take() {
             if let Some(session) = selected_session_mut(&mut next) {
                 session.utterances = utterances;
+            }
+        }
+        if let Some(ranges) = transcript_unrecognized.take() {
+            if let Some(session) = selected_session_mut(&mut next) {
+                session.transcript_unrecognized = ranges;
             }
         }
 
@@ -4918,7 +4925,7 @@ mod tests {
             row.status="transcribed".into();row.transcript_final=true;row.transcript_text="之前的转写".into();
         }
         let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
-        assert_eq!(backend.preview_meeting_transcription("preview-meeting","__meeting_job__one").unwrap(),"本次新转写");
+        assert_eq!(backend.preview_meeting_transcription("preview-meeting","__meeting_job__one").unwrap().text,"本次新转写");
         assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
         assert_eq!(std::fs::read(&audio).unwrap(),wav);
         std::env::remove_var("COMPANION_TYPE_TRANSCRIPT_TEXT");
@@ -4948,10 +4955,10 @@ mod tests {
         }
         let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
         let result=backend.preview_meeting_transcription("public-preview","__meeting_job__local").unwrap();
-        assert!(!result.trim().is_empty());assert_ne!(result,"旧识别结果");
+        assert!(!result.text.trim().is_empty());assert_ne!(result.text,"旧识别结果");
         assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
         assert_eq!(std::fs::read(&audio).unwrap(),bytes);
-        println!("public local-model preview: {} characters, original session and audio unchanged",result.chars().count());
+        println!("public local-model preview: {} characters, original session and audio unchanged",result.text.chars().count());
     }
     #[test]
     #[ignore]
@@ -6121,6 +6128,7 @@ mod tests {
                 restore_original:false,text:None,utterance_edits:vec![transcript_review::UtteranceEdit {
                     index:0,text:"owner 王 due 周四交录音。".into(),speaker_name:None }],
                 speaker_names:vec![transcript_review::SpeakerName {speaker:0,name:"小王".into()}],
+                unrecognized:None,
             }),
         };
         *backend.snapshot.lock().unwrap()=snapshot;

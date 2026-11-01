@@ -58,6 +58,33 @@ pub struct CompanionTranscript {
     /// Empty for env-text / sidecar / command / openai paths and when the
     /// volcengine response carried no utterance timing.
     pub utterances: Vec<CompanionV1UtteranceSegment>,
+    pub unrecognized: Vec<crate::companion_v1::CompanionV1UnrecognizedAudio>,
+}
+
+#[derive(Clone, Debug, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TranscriptionPreview {
+    pub text: String,
+    pub unrecognized: Vec<crate::companion_v1::CompanionV1UnrecognizedAudio>,
+}
+impl From<CompanionTranscript> for TranscriptionPreview {
+    fn from(value: CompanionTranscript) -> Self {
+        Self { text: value.text, unrecognized: value.unrecognized }
+    }
+}
+
+pub(super) fn push_unrecognized(
+    ranges: &mut Vec<crate::companion_v1::CompanionV1UnrecognizedAudio>,
+    start_ms: u64, end_ms: u64, source: Option<String>,
+) {
+    if end_ms <= start_ms { return; }
+    if let Some(last) = ranges.last_mut() {
+        if last.source == source && start_ms <= last.end_ms {
+            last.end_ms = last.end_ms.max(end_ms);
+            return;
+        }
+    }
+    ranges.push(crate::companion_v1::CompanionV1UnrecognizedAudio { start_ms, end_ms, source });
 }
 
 #[derive(Clone, Debug)]
@@ -149,6 +176,7 @@ impl CompanionTranscriptionManager {
                         mode: "env-text".to_string(),
                         evidence_path: None,
                         utterances: Vec::new(),
+                        unrecognized: Vec::new(),
                     });
                 }
             }
@@ -186,20 +214,36 @@ impl CompanionTranscriptionManager {
         let mut parts = Vec::new();
         let mut timed_parts = Vec::new();
         let mut providers = Vec::new();
+        let mut unrecognized = Vec::new();
+        let mut preceding_pcm_bytes = 0u64;
         for path in &real_paths {
             super::meeting_processing_job::check_current()?;
+            let bytes = if local { wav_pcm_bytes(path)? } else { 0 };
+            let offset_ms = u64::try_from(preceding_pcm_bytes as u128 * 1000 / PCM_BYTES_PER_SECOND as u128)
+                .map_err(|_| "录音时间范围过大，原音保留。")?;
             let transcript = match self.transcribe_existing_path(path) {
                 Ok(transcript) => transcript,
-                // A digital-zero file carries no PCM signal. Do not discard a
-                // whole meeting because that independent segment has no words.
-                // Keep its place in the source clock for the later segments.
-                Err(error) if local && error == LOCAL_NO_SPEECH
-                    && wav_is_digital_silence(path)? => {
+                // A successfully processed source can contain no recognized
+                // words. Retain other sources, preserve the clock, and mark
+                // nonzero audio for review without claiming it was silent.
+                Err(error) if local && error == LOCAL_NO_SPEECH => {
+                    if !wav_is_digital_silence(path)? {
+                        let end_bytes=preceding_pcm_bytes.checked_add(bytes).ok_or("录音时间范围过大，原音保留。")?;
+                        let end_ms=u64::try_from((end_bytes as u128 * 1000 + PCM_BYTES_PER_SECOND as u128 - 1) / PCM_BYTES_PER_SECOND as u128)
+                            .map_err(|_| "录音时间范围过大，原音保留。")?;
+                        push_unrecognized(&mut unrecognized,offset_ms,end_ms,None);
+                    }
                     timed_parts.push((String::new(), Vec::new()));
+                    preceding_pcm_bytes=preceding_pcm_bytes.checked_add(bytes).ok_or("录音时间范围过大，原音保留。")?;
                     continue;
                 },
                 Err(error) => return Err(error),
             };
+            for range in &transcript.unrecognized {
+                push_unrecognized(&mut unrecognized, offset_ms.saturating_add(range.start_ms),
+                    offset_ms.saturating_add(range.end_ms), range.source.clone());
+            }
+            preceding_pcm_bytes=preceding_pcm_bytes.checked_add(bytes).ok_or("录音时间范围过大，原音保留。")?;
             providers.push(transcript.provider_id.clone());
             timed_parts.push((transcript.text.clone(), transcript.utterances));
             parts.push(transcript.text);
@@ -222,6 +266,7 @@ impl CompanionTranscriptionManager {
             ),
             evidence_path: None,
             utterances,
+            unrecognized,
         })
     }
 
@@ -281,6 +326,7 @@ impl CompanionTranscriptionManager {
                     mode: "env-text".to_string(),
                     evidence_path: None,
                     utterances: Vec::new(),
+                    unrecognized: Vec::new(),
                 });
             }
         }
@@ -298,6 +344,7 @@ impl CompanionTranscriptionManager {
                 mode: "audio-sidecar".to_string(),
                 evidence_path: Some(path),
                 utterances: Vec::new(),
+                unrecognized: Vec::new(),
             });
         }
 
@@ -368,6 +415,7 @@ pub(super) fn run_command_transcript(command: &str, args: &[String], limits: sup
         mode: "external-command".to_string(),
         evidence_path: None,
         utterances: Vec::new(),
+        unrecognized: Vec::new(),
     })
 }
 
@@ -699,6 +747,7 @@ fn volcengine_transcript_from(
                 mode: "ws-sauc:bigmodel:incomplete-timed-segments".to_string(),
                 evidence_path: None,
                 utterances: Vec::new(),
+                unrecognized: Vec::new(),
             };
         }
     }
@@ -734,6 +783,7 @@ fn volcengine_transcript_from(
         mode,
         evidence_path: None,
         utterances,
+        unrecognized: Vec::new(),
     }
 }
 
@@ -1295,7 +1345,7 @@ fn transcribe_long_meeting_chunk(path: &Path, request: u64) -> Result<(String, V
     Ok((text, embeds))
 }
 
-fn wav_pcm_bytes(path: &Path) -> Result<u64, String> {
+pub(super) fn wav_pcm_bytes(path: &Path) -> Result<u64, String> {
     let mut file = fs::File::open(path).map_err(|e| e.to_string())?;
     let (_, bytes) = diarization::pcm16k_mono_wav_range(&mut file)?;
     Ok(bytes)
@@ -1379,6 +1429,7 @@ fn openai_compatible_transcript(audio: &Path) -> Result<CompanionTranscript, Str
         mode: format!("http-multipart:{model}"),
         evidence_path: None,
         utterances: Vec::new(),
+        unrecognized: Vec::new(),
     })
 }
 
