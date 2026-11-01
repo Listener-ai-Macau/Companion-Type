@@ -1,5 +1,7 @@
 // Exact, existing authored error contracts; dynamic OS/service details are not trusted.
+export const transcriptionStoppedMessage = "已停止转写，原录音保留；重试时可复用已保存的识别结果。";
 export const knownOperationErrors:readonly string[]=[
+  transcriptionStoppedMessage,
   "上次保存位置暂时无法读取，请重新选择保存位置。",
   "上次保存入口已过期，请选择保存新的日历文件。",
   "上次保存位置不属于当前记录或整理方式，请重新选择。",

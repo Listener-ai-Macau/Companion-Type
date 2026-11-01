@@ -193,6 +193,7 @@ fn chunk_anchor(text: &str, start_byte: u64, end_byte: u64) -> Option<crate::com
 }
 
 pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, String> {
+    super::super::transcription_job::check_current()?;
     let root = root()?;
     let (runtime, kind) = load_preferred(&root)?;
     let mut file = File::open(audio).map_err(|e| e.to_string())?;
@@ -204,6 +205,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1"}),
     )?;
     while offset < len {
+        super::super::transcription_job::check_current()?;
         let n = (len - offset).min((20 * RATE * 2 + 2) as u64) as usize;
         let mut buf = vec![0; n];
         file.seek(SeekFrom::Start(start + offset))
@@ -239,6 +241,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         }
         offset += buf.len() as u64;
     }
+    super::super::transcription_job::check_current()?;
     let text = super::normalize_transcript(&parts.join("\n"));
     if text.is_empty() {
         return Err(super::LOCAL_NO_SPEECH.into());
@@ -255,6 +258,43 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    #[ignore = "requires isolated cache, public WAV and locally installed ASR model"]
+    fn real_local_model_can_stop_and_reuse_completed_window() {
+        use std::sync::{Arc, atomic::{AtomicBool, Ordering}};
+        let audio=PathBuf::from(std::env::var_os("COMPANION_TEST_PUBLIC_AUDIO").expect("public WAV"));
+        let cache=PathBuf::from(std::env::var_os("COMPANION_TYPE_ASR_CACHE_DIR").expect("isolated cache"));
+        fs::create_dir_all(&cache).unwrap();
+        assert!(!fs::read_dir(&cache).unwrap().any(|entry|entry.unwrap().file_name().to_string_lossy().starts_with("v2-")));
+        let original=fs::read(&audio).unwrap();
+        let done=Arc::new(AtomicBool::new(false));let observer_done=done.clone();let observer_cache=cache.clone();
+        let observer=std::thread::spawn(move || {
+            for _ in 0..18000 {
+                if observer_done.load(Ordering::Acquire) {return false;}
+                if fs::read_dir(&observer_cache).unwrap().filter_map(Result::ok)
+                    .any(|entry|entry.file_name().to_string_lossy().starts_with("v2-")) {
+                    return super::super::super::transcription_job::cancel("public-meeting","public-job").unwrap();
+                }
+                std::thread::sleep(std::time::Duration::from_millis(10));
+            }
+            false
+        });
+        let stopped=super::super::super::transcription_job::run("public-meeting","public-job",||transcribe(&audio));
+        done.store(true,Ordering::Release);
+        assert!(observer.join().unwrap(),"no completed window was cancelled");
+        assert_eq!(stopped.unwrap_err(),super::super::super::transcription_job::CANCELLED);
+        assert_eq!(fs::read(&audio).unwrap(),original);
+        let saved=fs::read_dir(&cache).unwrap().filter_map(Result::ok)
+            .map(|entry|entry.path()).find(|path|path.file_name().unwrap().to_string_lossy().starts_with("v2-"))
+            .expect("completed window cache");
+        let before=(fs::read(&saved).unwrap(),fs::metadata(&saved).unwrap().modified().unwrap());
+        let resumed=transcribe(&audio).unwrap();
+        assert!(!resumed.text.trim().is_empty());
+        assert_eq!(before,(fs::read(&saved).unwrap(),fs::metadata(&saved).unwrap().modified().unwrap()));
+        assert_eq!(fs::read(&audio).unwrap(),original);
+        println!("PASS real local model cancellation, cache reuse and original preservation");
+    }
 
     #[test]
     fn incomplete_new_model_does_not_override_existing_model() {

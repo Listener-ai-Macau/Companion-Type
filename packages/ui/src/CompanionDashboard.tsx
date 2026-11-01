@@ -207,6 +207,10 @@ export interface CompanionDashboardProps {
   recordingSync?: import('./CompanionRecordingSync').RecordingSyncStatus | null;
   pauseSyncBusy?: boolean;
   onPauseSync?: (jobId: string) => void;
+  transcribingSessionId?: string | null;
+  cancelTranscriptionPending?: boolean;
+  transcriptionNotice?: string | null;
+  onCancelTranscription?: (sessionId: string) => void;
   onUnsavedChange?: (unsaved: boolean) => void;
   snapshot: CompanionV1Snapshot | null;
   busyAction: CompanionV1ControlAction | 'refresh' | null;
@@ -368,6 +372,10 @@ export function CompanionDashboard({
   recordingSync = null,
   pauseSyncBusy = false,
   onPauseSync,
+  transcribingSessionId = null,
+  cancelTranscriptionPending = false,
+  transcriptionNotice = null,
+  onCancelTranscription,
   onUnsavedChange,
   snapshot,
   busyAction,
@@ -1686,6 +1694,13 @@ export function CompanionDashboard({
         <section className="ct-pending-banner" role="alert">{operationErrorText(snapshot.lastControl.message,'device')} <button type="button" className="ct-text-button" onClick={openQuickGuide}>查看恢复方法</button></section>
       ) : null}
 
+      {transcriptionNotice ? <p className="ct-recording-notice ct-step-ok" role="status">{transcriptionNotice}</p> : null}
+      {transcriptionRunning && transcribingSessionId && onCancelTranscription ?
+        <section className="ct-recording-notice" role="status">
+          <span>{cancelTranscriptionPending ? '正在停止转写，等待当前请求或音频片段结束；原录音保留。' : '正在转写，原录音会保留。'}</span>{' '}
+          <button type="button" className="ct-action" disabled={cancelTranscriptionPending}
+            onClick={() => onCancelTranscription(transcribingSessionId)}>{cancelTranscriptionPending ? '停止中…' : '停止转写'}</button>
+        </section> : null}
       <CompanionRecordingSync status={recordingSync} pauseBusy={pauseSyncBusy}
         resumeBlocked={controlsBusy || storageBlocked || boardLiveActive || (oobeBlockedByRecording && !pausedSyncRecorder)} onPause={onPauseSync}
         onResume={(deviceId) => onControl({ action: 'deviceSyncRecordings', deviceId, title: draftTitle,

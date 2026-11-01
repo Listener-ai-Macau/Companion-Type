@@ -124,6 +124,7 @@ impl CompanionTranscriptionManager {
     }
 
     fn transcribe_session_inner(&self, primary_audio: Option<&str>, chunk_paths: &[String]) -> Result<CompanionTranscript, String> {
+        super::transcription_job::check_current()?;
         // Validate the declared sequence before a provider, cache or test source
         // can consume it. Missing segments must never become a shorter meeting.
         let mut declared_paths = Vec::with_capacity(chunk_paths.len());
@@ -186,6 +187,7 @@ impl CompanionTranscriptionManager {
         let mut timed_parts = Vec::new();
         let mut providers = Vec::new();
         for path in &real_paths {
+            super::transcription_job::check_current()?;
             let transcript = match self.transcribe_existing_path(path) {
                 Ok(transcript) => transcript,
                 // A digital-zero file carries no PCM signal. Do not discard a
@@ -202,6 +204,7 @@ impl CompanionTranscriptionManager {
             timed_parts.push((transcript.text.clone(), transcript.utterances));
             parts.push(transcript.text);
         }
+        super::transcription_job::check_current()?;
         if parts.is_empty() { return Err(LOCAL_NO_SPEECH.into()); }
         let utterances = if local { merge_local_timed_parts(&real_paths, timed_parts) } else { Vec::new() };
         Ok(CompanionTranscript {
@@ -892,6 +895,10 @@ pub(super) fn split_long_wav_into_chunks(src: &Path, chunk_seconds: usize) -> Re
     let mut paths: Vec<PathBuf> = Vec::new();
     let mut remaining = pcm_bytes;
     while remaining > 0 {
+        if let Err(error) = super::transcription_job::check_current() {
+            for created in &paths { let _ = super::audio_artifacts::remove_temporary(created); }
+            return Err(error);
+        }
         let count = remaining.min(chunk_bytes as u64) as usize;
         let mut pcm = vec![0u8; count];
         if source.read_exact(&mut pcm).is_err() {
@@ -986,15 +993,21 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
         (0..n).map(|_| None).collect();
     let workers = asr_parallel_worker_count().min(n.max(1));
     for batch_start in (0..n).step_by(workers) {
+        super::transcription_job::check_current()?;
+        let cancellation = super::transcription_job::current();
         let batch_end = (batch_start + workers).min(n);
         std::thread::scope(|scope| {
             let handles: Vec<_> = (batch_start..batch_end)
                 .map(|i| {
                     let path = &paths[i];
+                    let cancellation = cancellation.clone();
                     scope.spawn(move || {
                         let mut last_error = String::new();
                         let chunk_retry_count = retry_count;
                         for attempt in 1..=chunk_retry_count {
+                            if cancellation.as_ref().is_some_and(|job|job.requested()) {
+                                return (i, Err(super::transcription_job::CANCELLED.into()));
+                            }
                             match transcribe(path, i as u64) {
                                 Ok(chunk) => return (i, Ok(chunk)),
                                 Err(error) => {
@@ -1025,6 +1038,7 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
                 }
             }
         });
+        super::transcription_job::check_current()?;
         // All chunks use the same saved credentials. Once a completed batch
         // has an explicit authentication rejection, more batches cannot fix
         // it; preserve the error and let the user correct the configuration.
@@ -1058,6 +1072,7 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
         })
         .collect::<Vec<_>>();
     for i in failed_indices {
+        super::transcription_job::check_current()?;
         let path = &paths[i];
         let mut last_error = match results[i].as_ref() {
             Some(Err(error)) => error.clone(),
@@ -1070,6 +1085,7 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
             deferred_retry_count
         );
         for attempt in 1..=deferred_retry_count {
+            super::transcription_job::check_current()?;
             if attempt > 1 {
                 // Increasing cooldown prevents a temporary provider-side
                 // session throttle from consuming the whole recovery budget.
@@ -1125,6 +1141,7 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
         }
     }
     let completed = complete_chunk_results(results)?;
+    super::transcription_job::check_current()?;
     let (clean_text, mut per_utterance) = merge_chunk_transcriptions(paths, completed)?;
     if let Some(source) = continuous_source {
         recollect_embeddings_from_full_audio(source, &mut per_utterance);
@@ -1414,6 +1431,23 @@ fn split_command_args(value: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn cancelled_cloud_batch_does_not_start_later_chunks() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        let paths=(0..12).map(|i|PathBuf::from(format!("fixture-{i}.wav"))).collect::<Vec<_>>();
+        let calls=AtomicUsize::new(0);
+        let result=super::super::transcription_job::run("session", "test-job", || {
+            volcengine_multi_chunk_transcript_with(&paths,None,&|_,_| {
+                if calls.fetch_add(1,Ordering::SeqCst)==0 {
+                    assert!(super::super::transcription_job::cancel("session", "test-job").unwrap());
+                }
+                Ok(("fixture".into(),Vec::new()))
+            })
+        });
+        assert_eq!(result.unwrap_err(),super::super::transcription_job::CANCELLED);
+        assert!(calls.load(Ordering::SeqCst)<paths.len());
+    }
 
     #[test]
     fn multipart_speaker_windows_keep_global_time_and_clean_temporary_audio() {

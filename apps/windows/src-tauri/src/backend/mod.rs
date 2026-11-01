@@ -125,6 +125,7 @@ pub mod product_settings;
 /// In-memory import/fixture coordinator; the board owns physical NOR storage.
 pub mod recording_ring;
 mod transcription;
+pub(crate) mod transcription_job;
 pub(crate) use transcription::prepare_local_asr;
 #[cfg(test)]
 mod meeting_processing_tests;
@@ -2801,10 +2802,17 @@ impl CompanionBackend for FixtureCompanionBackend {
                 request
             } else {
                 let owner=session.map(|s|s.id.clone()).unwrap_or_default();
-                let (fresh,result)=self.run_meeting_work(snapshot,&request,||
-                    self.transcription.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths))?;
+                let job_id=request.prompt_id.as_deref().filter(|id|id.starts_with("__transcription_job__"))
+                    .map(str::to_owned).unwrap_or_else(||uuid::Uuid::new_v4().to_string());
+                let (fresh,result)=self.run_meeting_work(snapshot,&request,|| {
+                    let work = || self.transcription.transcribe_session_owned(&owner,audio_path.as_deref(),&chunk_paths);
+                    if automatic_recovery { work() } else { transcription_job::run(&owner,&job_id,work) }
+                })?;
                 snapshot=fresh;
                 original_selected_session_id=snapshot.host.selected_session_id.clone();
+                if result.as_ref().err().is_some_and(|error| error==transcription_job::CANCELLED) {
+                    return Err(transcription_job::CANCELLED.into());
+                }
                 match result {
                 Ok(transcript) => {
                     transcription_note = Some(format!(

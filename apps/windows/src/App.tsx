@@ -1,4 +1,5 @@
 import {operationErrorText} from '../../../packages/ui/src/operationFailure';
+import {transcriptionStoppedMessage} from '../../../packages/ui/src/knownOperationErrors';
 import { useEffect, useRef, useState } from 'react';
 import {createCachedRefresh} from './cachedRefresh';
 
@@ -20,7 +21,7 @@ import '../../../packages/ui/src/companionUi.css';
 import {
   getDesktopUpdateStatus, checkDesktopUpdate, downloadDesktopUpdate, cancelDesktopUpdate, installDesktopUpdate,
   applyCompanionControl,
-  getRecordingSyncStatus, pauseRecordingSync, watchRecordingSync, watchCompanionSnapshotUpdates,
+  getRecordingSyncStatus, pauseRecordingSync, watchRecordingSync, watchCompanionSnapshotUpdates, cancelCompanionTranscription,
   discardOldestDeviceRecording,
   exportCompanionMeeting, openCompanionSavedCalendar,
   previewCompanionMeetingExport,
@@ -53,6 +54,7 @@ import {
   type CompanionBoardOnlineLiveStatus,
 } from './companionClient';
 
+let transcriptionSequence=0;
 export function App() {
   const [unsavedEdits, setUnsavedEdits] = useState(false);
   const [petUnsavedEdits,setPetUnsavedEdits]=useState(false);
@@ -65,6 +67,11 @@ export function App() {
   const [boardOnlineBusy, setBoardOnlineBusy] = useState(false);
   const [recordingSync, setRecordingSync] = useState<RecordingSyncStatus | null>(null);
   const [pauseSyncBusy, setPauseSyncBusy] = useState(false);
+  const [transcribingSessionId, setTranscribingSessionId] = useState<string | null>(null);
+  const [cancelTranscriptionPending, setCancelTranscriptionPending] = useState(false);
+  const [transcriptionNotice, setTranscriptionNotice] = useState<string | null>(null);
+  const cancelTranscriptionActive = useRef(false);
+  const transcriptionTicket = useRef<{sessionId:string;jobId:string} | null>(null);
   const pauseSyncActive = useRef(false);
   const operationActive = useRef(false);
   const snapshotEpoch = useRef(0);
@@ -104,6 +111,14 @@ export function App() {
   const runControl = async (request: CompanionV1ControlRequest) => {
     if (operationActive.current) return;
     const cleanupSessionId=request.sessionId??snapshot?.host.selectedSessionId;
+    if (request.action === 'meetingTranscribeAudio') {
+      const jobId=`__transcription_job__${globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${++transcriptionSequence}`}`;
+      transcriptionTicket.current=cleanupSessionId ? {sessionId:cleanupSessionId,jobId} : null;
+      request={...request,promptId:jobId};
+      setTranscribingSessionId(cleanupSessionId ?? null);
+      setCancelTranscriptionPending(false);
+      setTranscriptionNotice(null);
+    }
     setError(null);
     try {
       await exclusive(request.action, async () => {
@@ -127,7 +142,14 @@ export function App() {
         }
       });
     } catch (err) {
-      setError(operationErrorText(err,'general'));
+      const message=operationErrorText(err,'general');
+      if (request.action==='meetingTranscribeAudio' && message===transcriptionStoppedMessage) setTranscriptionNotice(message);
+      else setError(message);
+    } finally {
+      if (request.action === 'meetingTranscribeAudio') {
+        transcriptionTicket.current=null;
+        setTranscribingSessionId(null); setCancelTranscriptionPending(false);
+      }
     }
   };
 
@@ -202,6 +224,26 @@ export function App() {
     } finally { pauseSyncActive.current = false; setPauseSyncBusy(false); }
   };
 
+  const cancelTranscription = async (sessionId: string) => {
+    if (cancelTranscriptionActive.current) return;
+    const ticket=transcriptionTicket.current;
+    if (ticket?.sessionId!==sessionId) return;
+    cancelTranscriptionActive.current = true;
+    setCancelTranscriptionPending(true);
+    try {
+      // The click can precede the native worker's registration. Keep the
+      // same unique ticket and deliver the stop as soon as it starts, without
+      // asking the user to click again or stopping a later transcription.
+      while (transcriptionTicket.current===ticket && operationActive.current) {
+        if (await cancelCompanionTranscription(sessionId,ticket.jobId)) return;
+        await new Promise<void>(resolve=>window.setTimeout(resolve,300));
+      }
+    } catch (err) {
+      if (transcriptionTicket.current===ticket) {setCancelTranscriptionPending(false);setError(operationErrorText(err,'general'));}
+    }
+    finally { cancelTranscriptionActive.current = false; }
+  };
+
   const liveMeeting = Boolean(snapshot?.host?.sessions?.some(
     (session) => session.status === 'recording' && session.meetingMode === 'onlineLive',
   ));
@@ -265,6 +307,10 @@ export function App() {
       recordingSync={recordingSync}
       pauseSyncBusy={pauseSyncBusy}
       onPauseSync={isTauriRuntime() ? (jobId) => void pauseSync(jobId) : undefined}
+      transcribingSessionId={transcribingSessionId}
+      cancelTranscriptionPending={cancelTranscriptionPending}
+      transcriptionNotice={transcriptionNotice}
+      onCancelTranscription={isTauriRuntime() ? (sessionId) => void cancelTranscription(sessionId) : undefined}
       onRefresh={() => void refresh()}
       onControl={(request) => void runControl(request)}
       onExportMeeting={(request) => exclusive('refresh', async () => {
