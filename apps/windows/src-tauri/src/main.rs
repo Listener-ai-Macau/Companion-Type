@@ -1,15 +1,26 @@
 #[cfg(windows)]
 fn recording_cli_requested() -> bool {
     std::env::args_os().skip(1).any(|arg| {
-        arg == "--sync-device-recording" || arg == "--v1-real-meeting"
+        [
+            "--sync-device-recording",
+            "--v1-real-meeting",
+            "--device-connect-request",
+            "--recorder-control",
+            "--system-ota-transfer",
+            "--firmware-ota-transfer",
+            "--resource-ota-transfer",
+        ]
+        .iter()
+        .any(|flag| arg == *flag)
     })
 }
 
 fn main() {
     // Recording's nested BLE futures need more space than the 1 MiB Windows
-    // process-main stack in some release configurations. Keep the native GUI
-    // on its original main thread; only the two affected headless commands run
-    // on a bounded, larger worker. Do not alter any BLE, data or audio policy.
+    // process-main stack in some release configurations. Connecting or starting
+    // an update can also synchronize recordings. Keep the native GUI on its
+    // original thread; run only these headless operations on a larger worker.
+    // Do not alter any BLE, data or audio policy.
     #[cfg(windows)]
     if recording_cli_requested() {
         let worker = std::thread::Builder::new()
