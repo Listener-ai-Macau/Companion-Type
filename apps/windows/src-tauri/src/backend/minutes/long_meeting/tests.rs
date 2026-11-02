@@ -53,6 +53,7 @@ fn long_context_reconciles_later_cancellation_and_keeps_separate_sources() {
     let worker=thread::spawn(move || {
         while !worker_stop.load(Ordering::SeqCst) {
             let (mut stream,_)=match listener.accept() {Ok(v)=>v,Err(e) if e.kind()==std::io::ErrorKind::WouldBlock=>{thread::sleep(Duration::from_millis(10));continue},Err(e)=>panic!("{e}")};
+            stream.set_nonblocking(false).unwrap();
             stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
             let mut data=Vec::new();let mut buf=[0u8;4096];
             loop {let n=stream.read(&mut buf).unwrap();if n==0{break}data.extend_from_slice(&buf[..n]);
