@@ -31,6 +31,17 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn context_merge_retains_unverified_drafts_and_source_evidence() {
+    let original="# 旧分段汇总\n\n## 未核对的参考草稿\n\n可能需要寄样品\n\n## 分段原文依据\n\n样品待确认";
+    let retained=reference_sections(original);
+    assert!(!retained.contains("旧分段汇总"));
+    assert!(retained.contains("未核对的参考草稿"));
+    assert!(retained.contains("可能需要寄样品"));
+    assert!(retained.contains("分段原文依据"));
+    assert_eq!(reference_sections("只剩原始草稿"),"只剩原始草稿");
+}
+
+#[test]
 fn long_context_reconciles_later_cancellation_and_keeps_separate_sources() {
     use std::{io::{Read,Write}, net::TcpListener, sync::{Arc,Mutex,atomic::{AtomicBool,Ordering}}, thread};
     let dir=root();fs::create_dir_all(&dir).unwrap();

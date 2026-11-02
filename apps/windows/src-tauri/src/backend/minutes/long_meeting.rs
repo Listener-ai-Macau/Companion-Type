@@ -360,6 +360,11 @@ pub(super) fn run_with_template(endpoint: &str, model: &str, key: &str, session:
 /// Selected supplements participate as separately labelled source material.
 /// The durable recording/transcript are never modified; the synthetic input is
 /// private to this request and its chapter cache identity includes the notes.
+fn reference_sections(markdown:&str)->&str {
+    markdown.find("## 未核对的参考草稿").or_else(||markdown.find("## 分段原文依据"))
+        .map(|start|&markdown[start..]).unwrap_or(markdown)
+}
+
 pub(super) fn run_with_context(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
     generated_at: &str, client: &reqwest::blocking::Client, template: Option<&crate::companion_v1::MinutesTemplate>) -> Result<CompanionV1MeetingMinutes, String> {
     let mut input=session.clone();
@@ -384,10 +389,11 @@ pub(super) fn run_with_context(endpoint: &str, model: &str, key: &str, session: 
         let prompt=format!("请综合下列全部分段结果和本次选择的补充。补充与录音文字来源分开，存在冲突时保留用户补充表达的变更及条件，不要虚构。\n{payload}");
         match super::run_deepseek_prompt(endpoint,model,key,&input,&result,&prompt,&system,client) {
             Ok((mut merged,_)) => {
-                let references=result.markdown.split_once("## 分段原文依据")
-                    .map(|(_,tail)|tail).unwrap_or("");
+                // Keep unverified reference drafts as well as cited source
+                // excerpts. They can precede the source heading.
+                let references=reference_sections(&result.markdown);
                 let processing=result.processing.clone();
-                merged.markdown=format!("> 已结合录音文字及用户选择的补充整理；内容和来源请核对。\n\n{}\n\n## 分段录音文字与用户补充依据\n{}",
+                merged.markdown=format!("> 已结合录音文字及用户选择的补充整理；内容和来源请核对。\n\n{}\n\n{}",
                     super::render_minutes_markdown(&input,&merged),references);
                 merged.processing=processing;
                 result=merged;
