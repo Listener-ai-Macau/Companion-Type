@@ -376,7 +376,7 @@ impl Drop for TransferPreference {
 pub(super) async fn request_for_sealed_sync(
     address: &str, address_type: Option<AddressType>,
 ) -> Option<TransferPreference> {
-    request_scoped(address, address_type, "sealed_receive_and_reclaim", true).await
+    request_scoped(address, address_type, "sealed_receive_and_reclaim", true, None).await
 }
 
 /// Pairing must finish before this is called. Hold the request through the
@@ -386,7 +386,7 @@ pub(super) async fn request_for_sealed_sync(
 pub(super) async fn request_for_connection_setup(
     address: &str, address_type: Option<AddressType>,
 ) -> Option<TransferPreference> {
-    request_scoped(address, address_type, "connection_setup", false).await
+    request_scoped(address, address_type, "connection_setup", false, None).await
 }
 
 /// A sealed-file connection uses this bootstrap, before the
@@ -396,11 +396,23 @@ pub(super) async fn request_for_connection_setup(
 pub(super) async fn request_for_sealed_connection_setup(
     address: &str, address_type: Option<AddressType>,
 ) -> Option<TransferPreference> {
-    request_scoped(address, address_type, "sealed_connection_bootstrap", true).await
+    request_scoped(address, address_type, "sealed_connection_bootstrap", true, None).await
+}
+
+/// During an active, verified recorder follow the firmware cannot take its
+/// stopped-recording batch interval. Keep the host's throughput request for
+/// this one follow operation, including live-prefix pulls. The guard drops on
+/// completion, cancellation or disconnect; idle and stopped sync are unchanged.
+pub(super) async fn request_for_active_recording_follow(
+    address: &str, address_type: Option<AddressType>,
+) -> Option<TransferPreference> {
+    request_scoped(address, address_type, "active_recording_follow", true,
+        Some(SealedBootstrapProfile::ThroughputHold)).await
 }
 
 async fn request_scoped(
     address: &str, address_type: Option<AddressType>, scope: &'static str, sealed_bootstrap: bool,
+    profile_override: Option<SealedBootstrapProfile>,
 ) -> Option<TransferPreference> {
     if std::env::var("COMPANION_TYPE_SKIP_WINRT_CONN_PARAMS")
         .map(|v| matches!(v.trim().to_ascii_lowercase().as_str(), "1" | "true" | "on"))
@@ -412,7 +424,7 @@ async fn request_scoped(
     let _cancel_on_drop = CancelOnDrop(cancel.clone());
     let worker = tokio::task::spawn_blocking(move || {
         let cancel = BleCancel::new(cancel, "cancelled recording throughput preference");
-        open_preference(address, address_type, scope, sealed_bootstrap, &cancel)
+        open_preference(address, address_type, scope, sealed_bootstrap, profile_override, &cancel)
     });
     match tokio::time::timeout(WORKER_TIMEOUT, worker).await {
         Ok(Ok(Ok(preference))) => Some(preference),
@@ -422,22 +434,24 @@ async fn request_scoped(
     }
 }
 
-fn open_preference(address: u64, address_type: Option<AddressType>, scope: &'static str, sealed_bootstrap: bool, cancel: &BleCancel)
+fn open_preference(address: u64, address_type: Option<AddressType>, scope: &'static str, sealed_bootstrap: bool, profile_override: Option<SealedBootstrapProfile>, cancel: &BleCancel)
     -> Result<TransferPreference, String>
 {
     if cancel.requested() { return Err(cancel.cancelled_error("throughput preference")); }
     // Separate initial-controller scheduling from the previously failed held
     // profile. Bootstrap releases at the existing verified peer ownership
     // exchange (or first verified payload), before sustained receive. Normal
-    // products still default to Balanced; all guards/cancellation stay intact.
-    let profile = if sealed_bootstrap {
+    // Stopped sync defaults to Balanced; a verified active follow explicitly
+    // holds ThroughputOptimized. Guards and cancellation stay intact.
+    let profile = if let Some(profile)=profile_override { profile }
+    else if sealed_bootstrap {
         let value=match std::env::var("COMPANION_TYPE_BLE_SEALED_BOOTSTRAP_PROFILE") {
             Ok(v)=>Some(v), Err(std::env::VarError::NotPresent)=>None,
             Err(_)=>return Err("invalid sealed connection diagnostic profile".into()),
         };
         SealedBootstrapProfile::parse(value.as_deref())?
     } else { SealedBootstrapProfile::ThroughputHold };
-    let diagnostic=sealed_bootstrap && profile!=SealedBootstrapProfile::Balanced;
+    let diagnostic=sealed_bootstrap && profile_override.is_none() && profile!=SealedBootstrapProfile::Balanced;
     let held=sealed_bootstrap && !profile.release_at_peer_handoff();
     let parameters = if sealed_bootstrap && profile==SealedBootstrapProfile::Balanced { BluetoothLEPreferredConnectionParameters::Balanced() }
         else { BluetoothLEPreferredConnectionParameters::ThroughputOptimized() }
@@ -495,7 +509,7 @@ fn open_preference(address: u64, address_type: Option<AddressType>, scope: &'sta
     let interval = preference.device.GetConnectionParameters().ok()
         .and_then(|p| p.ConnectionInterval().ok());
     eprintln!("recording native throughput preference scope={scope} request_status={status:?} current_interval_units={interval:?} held_until_sync_end={} held_until_setup_end={}",
-        u8::from(scope == "sealed_receive_and_reclaim"), u8::from(scope == "connection_setup"));
+        u8::from(matches!(scope, "sealed_receive_and_reclaim" | "active_recording_follow")), u8::from(scope == "connection_setup"));
     Ok(preference)
 }
 

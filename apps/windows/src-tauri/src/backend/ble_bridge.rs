@@ -1400,6 +1400,23 @@ struct SealedLinkPolicy {
     budget_observed: bool,
 }
 impl SealedLinkPolicy {
+    // An active recording cannot use the device's stopped-only batch mode.
+    // Scope the faster host preference to this verified follow, and retain it
+    // across both sealed backlog and the current growing prefix.
+    async fn initialize_active_recording(&mut self, device: &NativeDevice) {
+        #[cfg(windows)]
+        if !self.initialized {
+            self.preference = super::ble_throughput::request_for_active_recording_follow(
+                &device.address, device.address_type,
+            ).await;
+            // A failed preference remains optional; the existing sealed path
+            // may still try its normal Balanced request.
+            self.initialized = self.preference.is_some();
+        }
+        #[cfg(not(windows))]
+        let _ = device;
+    }
+
     async fn initialize(&mut self, device: &NativeDevice) {
         if !self.budget_observed {
             self.budget_observed=true;
@@ -1600,6 +1617,12 @@ pub(crate) struct FollowObservation {
     pub(super) connection_reusable: bool,
 }
 
+// Only an observed, verified original recording qualifies. A missing or
+// finalized state keeps the ordinary stopped/automatic sync policy.
+fn use_active_follow_preference(verified_recorder_state: Option<u8>) -> bool {
+    verified_recorder_state == Some(MEETING_STATE_RECORDING)
+}
+
 pub(crate) fn follow_prepared_recording_once(device_id: &str,
     original_scope: Option<&super::recording_wire::SessionKey>,
     mut live: Option<&mut super::recording_wire::receiver::LiveCursor>) -> Result<Option<FollowObservation>, String> {
@@ -1630,6 +1653,7 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
         let link = NativeLinkGuard::capture(&device);
         let result = link.run(async {
             let mut original_finalized = false;
+            let mut verified_recorder_state = None;
             let peer = device.recording_peer.clone().ok_or("连续录音连接身份不可用。")?;
             let chars = device.peripheral.characteristics();
             if let Some(lease) = owned.as_ref() {
@@ -1642,6 +1666,7 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
                 let status = parse_meeting_status(&status)?;
                 lease.verify_observation(device.verified_uid.as_deref(),&device.device_id(),&current,&status,lease.start_token)?;
                 original_finalized = status.state == MEETING_STATE_FINALIZED;
+                verified_recorder_state = Some(status.state);
                 if let Some(cursor) = live.as_deref_mut() { cursor.observe_verified_recorder_state(status.state); }
                 identity = Some(current);
             }
@@ -1655,6 +1680,9 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
                 return Ok(None);
             }
             let mut policy = SealedLinkPolicy::default();
+            if use_active_follow_preference(verified_recorder_state) {
+                policy.initialize_active_recording(&device).await;
+            }
             let (mut batch, deferred) = segmented::sync_catalog_limited(&device, &chars, peer.clone(), catalog.entries,
                 &job, &mut policy, Some(1), owned.as_ref().and_then(|lease| lease.logical_key.as_ref())).await?;
             if let Some(live)=live.as_deref_mut() {live.sealed(&native_recording_root()?,device_id);}
@@ -6387,6 +6415,14 @@ fn hex_lower(bytes: &[u8]) -> String {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn faster_follow_requires_verified_active_original() {
+        use super::*;
+        assert!(use_active_follow_preference(Some(MEETING_STATE_RECORDING)));
+        assert!(!use_active_follow_preference(Some(MEETING_STATE_FINALIZED)));
+        assert!(!use_active_follow_preference(None));
+        assert!(!use_active_follow_preference(Some(255)));
+    }
     fn connect_transport_operation()->CompanionBleOperation {
         CompanionBleOperation{provider_id:"companion-type-windows-ble".into(),mode:"windows-native-connect-auto-upload-segmented".into(),
             ready:true,sync_paused:false,device_id:Some("C8:92:FF:DD:3B:CA".into()),recording_path:None,recordings:Vec::new(),
