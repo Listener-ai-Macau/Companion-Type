@@ -31,6 +31,55 @@ fn response(part: &CompanionV1HostSession) -> (CompanionV1MeetingMinutes, Vec<Ev
 }
 
 #[test]
+fn long_context_reconciles_later_cancellation_and_keeps_separate_sources() {
+    use std::{io::{Read,Write}, net::TcpListener, sync::{Arc,Mutex,atomic::{AtomicBool,Ordering}}, thread};
+    let dir=root();fs::create_dir_all(&dir).unwrap();
+    std::env::set_var("COMPANION_TYPE_STATE_PATH",dir.join("state.json"));
+    let listener=TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
+    listener.set_nonblocking(true).unwrap();
+    let stop=Arc::new(AtomicBool::new(false));let seen=Arc::new(Mutex::new(Vec::<String>::new()));
+    let worker_stop=stop.clone();let worker_seen=seen.clone();
+    let worker=thread::spawn(move || {
+        while !worker_stop.load(Ordering::SeqCst) {
+            let (mut stream,_)=match listener.accept() {Ok(v)=>v,Err(e) if e.kind()==std::io::ErrorKind::WouldBlock=>{thread::sleep(Duration::from_millis(10));continue},Err(e)=>panic!("{e}")};
+            stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
+            let mut data=Vec::new();let mut buf=[0u8;4096];
+            loop {let n=stream.read(&mut buf).unwrap();if n==0{break}data.extend_from_slice(&buf[..n]);
+                if let Some(i)=data.windows(4).position(|w|w==b"\r\n\r\n") {
+                    let h=String::from_utf8_lossy(&data[..i]);let len:usize=h.lines().find_map(|l|l.split_once(':')
+                        .filter(|(k,_)|k.eq_ignore_ascii_case("content-length")).and_then(|(_,v)|v.trim().parse().ok())).unwrap();
+                    if data.len()>=i+4+len {break}
+                }}
+            let start=data.windows(4).position(|w|w==b"\r\n\r\n").unwrap()+4;
+            let request:Value=serde_json::from_slice(&data[start..]).unwrap();
+            let prompt=request["messages"][1]["content"].as_str().unwrap().to_string();
+            worker_seen.lock().unwrap().push(prompt.clone());
+            let reconciles=prompt.contains("请综合下列全部分段结果");
+            let quote=if prompt.contains("小王周五发送报价") {"小王周五发送报价"} else {"取消发送报价"};
+            let answer=if reconciles {serde_json::json!({"summary":["报价已取消"],"decisions":["取消发送报价"],"actionItems":[],"questions":[],"keywords":[],"markdown":"# 当前纪要"})}
+              else {serde_json::json!({"summary":[quote],"decisions":[],"actionItems":[],"questions":[],"keywords":[],"markdown":"# 分段","evidence":[{"field":"summary","index":0,"quote":quote}]})};
+            let payload=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":answer.to_string()}}]}).to_string();
+            write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: {}\r\n\r\n{}",payload.len(),payload).unwrap();
+        }
+    });
+    let mut s=session(&"小王周五发送报价。".repeat(1300));s.duration_ms=7_200_000;s.note_revision=1;
+    s.meeting_notes.push(super::super::super::meeting_notes::Note{id:"n".into(),text:"取消发送报价".into(),bookmark_id:None,created_at:"now".into(),updated_at:"now".into()});
+    let original=s.transcript_text.clone();let endpoint=format!("http://{address}/chat/completions");
+    let client=reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
+    assert!(super::super::super::minutes_context::validate(&s,1).is_ok());
+    let result=run_with_context(&endpoint,"fixture","key",&s,"now",&client,None).unwrap();
+    assert_eq!(result.quality,"final");assert!(result.processing.as_ref().unwrap().is_complete());
+    assert!(result.summary.iter().any(|s|s.contains("已取消")));assert!(result.action_items.is_empty());
+    assert!(result.markdown.contains("用户补充依据"));assert_eq!(s.transcript_text,original);
+    let requests=seen.lock().unwrap().clone();assert!(requests.iter().filter(|p|p.contains("第1段")).count()>=1);
+    assert!(requests.iter().any(|p|p.contains("用户明确选择的补充")));
+    assert!(requests.iter().any(|p|p.contains("请综合下列全部分段结果") && p.contains("取消发送报价")));
+    let original_id=Identity::new(&endpoint,"fixture","key",&session(&original));
+    let with_context=Identity::new(&endpoint,"fixture","key",&s);assert_ne!(original_id.filename(),with_context.filename());
+    stop.store(true,Ordering::SeqCst);worker.join().unwrap();std::env::remove_var("COMPANION_TYPE_STATE_PATH");cleanup(dir);
+}
+
+#[test]
 fn unverified_chapter_remains_visible_without_becoming_an_action_or_complete() {
     let source=session("公开会议内容。");
     let mut checkpoint=Checkpoint {identity:Identity::new("https://fixture.invalid","model","key",&source),chapters:vec![None]};

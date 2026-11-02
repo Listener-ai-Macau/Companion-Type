@@ -2350,7 +2350,7 @@ export function CompanionDashboard({
               </details>
               {gapMessage?.sessionId===selectedSession.id?<p role="status">{gapMessage.text}</p>:null}
               {gapPreview?.sessionId===selectedSession.id ? <section aria-label="单段重新转写结果">
-                <p>{formatDuration(gapPreview.startMs)}–{formatDuration(gapPreview.endMs)} 的新结果，可编辑后复制或保存为备注；请回听核对，原文字不会自动改变。长会议整理时，如需把内容纳入纪要，请在核对文字中补充后重新整理。</p>
+                <p>{formatDuration(gapPreview.startMs)}–{formatDuration(gapPreview.endMs)} 的新结果，请回听核对后保存为备注。重新整理时可选择一并参考已保存的补充；原始转写不会自动改变。</p>
                 {gapPreview.partial?<p>这一时段仍有部分音频未识别出文字，请回听核对。</p>:null}
                 <textarea className="ct-textarea ct-step-textarea" aria-label="单段转写文字" value={gapPreview.text}
                   onChange={event=>setGapPreview(current=>current?{...current,text:event.target.value}:current)}/>
@@ -2491,7 +2491,7 @@ export function CompanionDashboard({
             </section>:null}
             {organizationChoiceId===selectedSession.id?<div id="ct-organization-source-choice" className="ct-organization-choice" role="group" aria-label="本次整理内容">
               <strong>这次整理用哪些内容？</strong>
-              <p>原话和补充仍分开保留。选择补充时，只将当前已保存的内容用于这次整理；暂支持两分钟内的短备忘。</p>
+              <p>原话和补充仍分开保留。选择补充时，将当前已保存的内容一起用于这次整理。</p>
               <div className="ct-button-row">
                 <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||noteUnsaved||minutesDirty||transcriptReviewUnsaved}
                   onClick={()=>{setOrganizationChoiceId(null);runOrganizationControl({action:'meetingGenerateMinutes',sessionId:selectedSession.id,meetingMode:minutesViewMode,minutesTemplate:pendingMinutesTemplate},'original');setPendingMinutesTemplate(undefined);}}>仅原话</button>

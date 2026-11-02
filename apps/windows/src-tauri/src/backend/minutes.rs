@@ -343,6 +343,13 @@ fn run_deepseek_request_with_evidence(
     template: Option<&crate::companion_v1::MinutesTemplate>,
 ) -> Result<NativeMinutesResult, String> {
     long_meeting::validate_input(session)?;
+    // Long meetings use the same resumable chapter pipeline for the selected
+    // notes and the recording text, with an explicit source boundary.
+    if !session.meeting_notes.is_empty()
+        && (session.duration_ms > 120_000 || session.transcript_text.chars().count() > 4000) {
+        return long_meeting::run_with_context(endpoint, model, api_key, session, &l0.generated_at, client, template)
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new()});
+    }
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
@@ -355,7 +362,8 @@ fn run_deepseek_request_with_evidence(
     if system.len().saturating_add(user_payload.len()) > long_meeting::MAX_PROMPT_BYTES
         || question_sources.as_ref().is_some_and(|contract| !contract.fits_single_request()) {
         if !session.meeting_notes.is_empty() {
-            return Err("本次补充与转写超出单次整理范围；原话和补充已保留，未截断或分段冒充完整整理。".into());
+            return long_meeting::run_with_context(endpoint, model, api_key, session, &l0.generated_at, client, template)
+                .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new()});
         }
         return long_meeting::run_with_template(endpoint, model, api_key, session, &l0.generated_at, client, template)
             .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new()});

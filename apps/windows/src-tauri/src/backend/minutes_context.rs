@@ -18,13 +18,6 @@ pub(crate) fn validate(session: &CompanionV1HostSession, revision: u64) -> Resul
     if session.meeting_notes.is_empty() {
         return Err("还没有已保存的补充，本次未提交。".into());
     }
-    // Keep this first integration on the existing single-request short memo
-    // route. Long-meeting chapter caches do not yet carry context provenance.
-    let text = super::transcript_review::effective_text(session);
-    let notes_chars: usize = session.meeting_notes.iter().map(|n| n.text.chars().count()).sum();
-    if session.duration_ms > 120_000 || text.chars().count() > 4000 || notes_chars > 4000 {
-        return Err("本次参考补充暂用于两分钟内的短备忘（原话和补充各不超过4000字）；内容已保留，可先仅按原话整理。".into());
-    }
     if std::env::var("COMPANION_TYPE_MINUTES_COMMAND").ok().is_some_and(|v| !v.trim().is_empty()) {
         return Err("当前自定义整理命令尚未支持补充来源，本次未提交；可先仅按原话整理。".into());
     }

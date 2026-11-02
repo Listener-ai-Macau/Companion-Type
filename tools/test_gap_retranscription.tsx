@@ -9,8 +9,8 @@ snapshot.host.persistence={status:'ready'};snapshot.meeting.active=false;
 let row=snapshot.host.sessions[0];snapshot.host.selectedSessionId=row.id;
 Object.assign(row,{status:'transcribed',source:'importedAudio',audioPath:'C:/test/card.wav',audioStored:true,audioBytes:10000,transcriptText:'原始会议文字',transcriptFinal:true});
 row.retention.audioCached=true;row.transcriptUnrecognized=[{startMs:20000,endMs:35000},{startMs:70000,endMs:80000}];
-let captured:any,request:any;let tree:any;
-const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{},
+let captured:any,request:any,control:any;let tree:any;
+const props=()=>({snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:(value:any)=>{control=value;},
  onPreviewGap:async(id:string,range:any)=>{captured={id,range};return {text:'小王周五发报价',unrecognized:[]};},
  onSaveNote:async(note:any)=>{request=note;const saved=structuredClone(snapshot);saved.host.sessions[0].meetingNotes=[{id:note.noteId,text:note.text,bookmarkId:null,createdAt:'now',updatedAt:'now'}];return saved;}});
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
@@ -32,6 +32,16 @@ act(()=>tree.update(<CompanionDashboard {...props()}/>));
 await act(async()=>{await button('保存为备注').props.onClick();});
 assert.equal(request.sessionId,row.id);assert.match(request.text,/单段重新转写参考/);assert.match(request.text,/小王周五发报价（待核）/);
 assert.equal(row.transcriptText,'原始会议文字');assert.match(text(tree.toJSON()),/已保存为本机备注/);
+snapshot=structuredClone(snapshot);snapshot.minutesContextSupported=true;
+snapshot.host.sessions[0].durationMs=7_200_000;snapshot.host.sessions[0].noteRevision=1;
+snapshot.host.sessions[0].meetingNotes=[{id:request.noteId,text:request.text,bookmarkId:null,createdAt:'now',updatedAt:'now'}];
+act(()=>tree.update(<CompanionDashboard {...props()}/>));
+await act(async()=>{(button('重新整理')??button('整理重点')).props.onClick();});
+assert.match(text(tree.toJSON()),/原话和补充仍分开保留/);
+assert.doesNotMatch(text(tree.toJSON()),/暂支持两分钟内/);
+(globalThis as any).window={requestAnimationFrame:()=>0,cancelAnimationFrame:()=>{}};
+await act(async()=>{button('原话＋已保存补充').props.onClick();});
+assert.equal(control.action,'meetingGenerateMinutes');assert.equal(control.contextNoteRevision,1);
 snapshot=structuredClone(snapshot);snapshot.host.sessions[0].source='hostMeeting';
 act(()=>tree.update(<CompanionDashboard {...props()}/>));
 assert.equal(tree.root.findAllByType('button').filter((n:any)=>String(n.props['aria-label']??'').startsWith('重新转写第 ')).length,0);
