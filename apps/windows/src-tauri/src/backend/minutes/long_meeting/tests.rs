@@ -970,7 +970,7 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
     ];
     minutes.markdown = "> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n### 第1段\n- 原始引用。".into();
     let before = minutes.clone();
-    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![1],duplicates:vec![],..Default::default()});
+    apply_action_review(&source, &mut minutes, &[], &[], &ActionReview {background:vec![1],duplicates:vec![],..Default::default()});
     assert_eq!(minutes.action_items.len(), 2);
     assert_eq!(minutes.action_items[0].text, "周五发报价");
     assert_eq!(minutes.action_items[0].owner.as_deref(), Some("小王"));
@@ -980,11 +980,11 @@ fn background_review_marks_only_selected_tasks_and_preserves_full_evidence() {
     assert!(minutes.markdown.ends_with("### 第1段\n- 原始引用。"));
     assert_eq!(minutes.summary, before.summary);
     let marked = minutes.markdown.clone();
-    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![0,0],duplicates:vec![],..Default::default()});
-    apply_action_review(&source, &mut minutes, &[], &ActionReview {background:vec![3],duplicates:vec![],..Default::default()});
+    apply_action_review(&source, &mut minutes, &[], &[], &ActionReview {background:vec![0,0],duplicates:vec![],..Default::default()});
+    apply_action_review(&source, &mut minutes, &[], &[], &ActionReview {background:vec![3],duplicates:vec![],..Default::default()});
     assert_eq!(minutes.markdown, marked);
     let mut malformed = before.clone(); malformed.markdown = "unexpected".into();
-    apply_action_review(&source, &mut malformed, &[], &ActionReview {background:vec![0],duplicates:vec![],..Default::default()});
+    apply_action_review(&source, &mut malformed, &[], &[], &ActionReview {background:vec![0],duplicates:vec![],..Default::default()});
     assert_eq!(malformed.action_items[0].text, before.action_items[0].text);
 }
 
@@ -1002,7 +1002,7 @@ fn background_review_keeps_multitopic_meeting_when_most_items_are_flagged() {
     let before = minutes.clone();
     let review = ActionReview { background: vec![0], background_summary: (0..8).collect(),
         background_decisions: vec![0,1], background_questions: vec![0], ..Default::default() };
-    apply_action_review(&source, &mut minutes, &[], &review);
+    apply_action_review(&source, &mut minutes, &[], &[], &review);
     assert_eq!(minutes.markdown, before.markdown);
     assert_eq!(minutes.summary, before.summary);
     assert_eq!(minutes.action_items[0].text, before.action_items[0].text);
@@ -1019,7 +1019,7 @@ fn background_sections_move_only_flagged_reading_items_and_keep_originals() {
     let before = minutes.clone();
     let review = ActionReview { background_summary: vec![1], background_decisions: vec![1],
         background_questions: vec![1], ..Default::default() };
-    apply_action_review(&source, &mut minutes, &[], &review);
+    apply_action_review(&source, &mut minutes, &[], &[], &review);
     let (main, background) = minutes.markdown.split_once("## 可能来自背景对话，请核对").unwrap();
     assert!(main.contains("会议决定蓝色包装。"));
     assert!(!main.contains("旁人讨论猫粮。"));
@@ -1030,6 +1030,30 @@ fn background_sections_move_only_flagged_reading_items_and_keep_originals() {
     assert_eq!(minutes.summary, before.summary);
     assert_eq!(minutes.decisions, before.decisions);
     assert_eq!(minutes.questions, before.questions);
+}
+
+#[test]
+fn mixed_background_summary_is_annotated_without_removing_meeting_content() {
+    let quote="旁边说先更新软件并确保安装都是最新版本";
+    let source=session(&format!("会议讨论正常报价。{quote}会议继续讨论价格。"));
+    let (mut minutes,_)=response(&source);
+    minutes.summary=vec!["会议讨论正常报价，旁边说确保安装都是最新版本。".into(),
+        "另一段也提到确保安装都是最新版本。".into()];
+    minutes.action_items=vec![crate::companion_v1::CompanionV1ActionItem{text:"更新软件".into(),owner:None,due:None}];
+    minutes.markdown=format!("> 原会议已完成。\n\n# 原纪要\n\n## 分段原文依据\n\n- {quote}");
+    let actions=vec![vec![quote.to_string()]];
+    let sources=vec![vec![quote.to_string()],vec!["另一段完全不同的原话内容".into()]];
+    let mixed=mixed_background_summary_indices(&source,&minutes,&actions,&sources,&[0]);
+    assert_eq!(mixed,vec![0]);
+    assert!(mixed_background_summary_indices(&source,&minutes,&actions,&sources,&[]).is_empty());
+    let mut repeated=source.clone();repeated.transcript_text.push_str(quote);
+    assert!(mixed_background_summary_indices(&repeated,&minutes,&actions,&sources,&[0]).is_empty());
+    let before=minutes.summary.clone();
+    apply_action_review(&source,&mut minutes,&actions,&mixed,&ActionReview{background:vec![0],..Default::default()});
+    assert_eq!(minutes.summary,before,"structured summary must remain unchanged");
+    assert!(minutes.markdown.contains("会议讨论正常报价"));
+    assert!(minutes.markdown.contains("部分内容可能来自背景对话，请核对"));
+    assert!(minutes.markdown.contains(quote));
 }
 
 #[test]
@@ -1053,7 +1077,7 @@ fn background_keyword_review_requires_source_and_preserves_legitimate_topic_chan
     let mut repeated=source.clone();repeated.transcript_text.push_str(quote);
     assert!(background_keyword_indices(&repeated,&minutes,&quotes,&[0]).is_empty(),"ambiguous repeated source cannot establish provenance");
     let original=minutes.keywords.clone();
-    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background:vec![0],duplicates:vec![],..Default::default()});
+    apply_action_review(&source,&mut minutes,&quotes, &[], &ActionReview{background:vec![0],duplicates:vec![],..Default::default()});
     assert_eq!(minutes.keywords,original,"structured keywords are never removed or renamed");
     assert!(minutes.markdown.contains("库存盘点（可能来自背景对话，请核对）"));
     assert!(!minutes.markdown.contains("发布计划（可能来自背景"));
@@ -1084,7 +1108,7 @@ fn replay_real_background_keyword_against_validated_source() {
         }
     }
     let before=minutes.keywords.clone();
-    apply_action_review(&source,&mut minutes,&quotes,&ActionReview{background,duplicates:vec![],..Default::default()});
+    apply_action_review(&source,&mut minutes,&quotes, &[], &ActionReview{background,duplicates:vec![],..Default::default()});
     assert_eq!(minutes.keywords,before);
     assert!(minutes.markdown.contains(&format!("{target}（可能来自背景对话，请核对）")));
 }
@@ -1123,9 +1147,46 @@ fn background_review_keeps_valid_summary_when_provider_returns_action_ids_withou
     let client=reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
     let review=request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],Some(&checkpoint),&client).unwrap();
     assert!(review.background.is_empty());assert_eq!(review.background_summary,vec![1]);
-    apply_action_review(&source,&mut minutes,&[],&review);
+    apply_action_review(&source,&mut minutes,&[], &[], &review);
     assert!(minutes.markdown.contains("## 可能来自背景对话，请核对\n\n- 摘要：旁边聊猫粮"));
     worker.join().unwrap();
+}
+
+#[test]
+#[ignore = "uses an isolated checkpoint and previously authorized real-card transcript with the configured AI service"]
+fn real_card_complete_mixed_background_review() {
+    let input=std::env::var_os("COMPANION_MIXED_BACKGROUND_RESULT").unwrap();
+    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(input).unwrap()).unwrap();
+    let base=std::env::var("DEEPSEEK_BASE_URL").unwrap();
+    let endpoint=format!("{}/chat/completions",base.trim_end_matches('/'));
+    let client=reqwest::blocking::Client::builder().timeout(Duration::from_secs(90)).build().unwrap();
+    let result=run_with_boundary(&endpoint,&std::env::var("DEEPSEEK_MODEL").unwrap(),
+        &std::env::var("DEEPSEEK_API_KEY").unwrap(),&source,"now",&client,None,None).unwrap();
+    let flagged=result.action_items.iter().filter(|a|a.text.contains("可能来自背景对话")).count();
+    let mixed=result.markdown.matches("部分内容可能来自背景对话，请核对").count();
+    println!("real-card review: {flagged} background actions, {mixed} mixed summary warnings");
+    assert_eq!(flagged,2);assert!(mixed>=2);assert_eq!(result.quality,"final");
+    assert!(result.markdown.contains("原文依据"));
+}
+
+#[test]
+#[ignore = "uses previously authorized isolated real-card result; no network"]
+fn replay_real_mixed_background_summaries() {
+    let result=std::env::var_os("COMPANION_MIXED_BACKGROUND_RESULT").unwrap();
+    let checkpoint=std::env::var_os("COMPANION_MIXED_BACKGROUND_CHECKPOINT").unwrap();
+    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(result).unwrap()).unwrap();
+    let mut minutes=source.minutes.clone().unwrap();let mut background=Vec::new();
+    for (index,item) in minutes.action_items.iter_mut().enumerate() {
+        if let Some(text)=item.text.strip_prefix("可能来自背景对话，请核对：") {
+            item.text=text.to_string();background.push(index);
+        }
+    }
+    let checkpoint=read_checkpoint(Path::new(&checkpoint)).unwrap();
+    let actions=action_source_quotes(&checkpoint,&minutes);
+    let summaries=content_source_quotes(&checkpoint,&minutes.summary,"summary");
+    let mixed=mixed_background_summary_indices(&source,&minutes,&actions,&summaries,&background);
+    assert_eq!(mixed,vec![47,48]);
+    println!("real-card mixed paragraphs identified for review: {}",mixed.len());
 }
 
 #[test]
@@ -1144,8 +1205,9 @@ fn real_card_background_review_with_context() {
     let review=request_background_review(&endpoint,&std::env::var("DEEPSEEK_MODEL").unwrap(),
         &std::env::var("DEEPSEEK_API_KEY").unwrap(),&source,minutes,&quotes,Some(&checkpoint),&client).unwrap();
     assert_eq!(review.background,vec![0,1]);
-    assert!(review.background_summary.is_empty() && review.background_decisions.is_empty()
-        && review.background_questions.is_empty(),"long input omitted content evidence; do not relabel those sections");
+    assert!(review.background_summary.iter().all(|i|*i==54));
+    assert!(review.background_decisions.is_empty());
+    assert!(review.background_questions.iter().all(|i|*i==2||*i==7));
     println!("real-card actions marked for review: {}; no original removed",review.background.len());
 }
 
@@ -1250,7 +1312,7 @@ fn action_review_merges_only_same_source_and_attribution_and_retains_quotes() {
     let quotes=vec![vec!["客户提出修改，下周一确认交货时间。".into()],vec!["客户提出修改，下周一确认交货时间。".into()],
         vec!["另一产品的原话".into()],vec!["客户提出修改，下周一确认交货时间。".into()]];
     let review=ActionReview {background:vec![1],duplicates:vec![vec![0,1],vec![2,3]],..Default::default()};
-    apply_action_review(&source,&mut minutes,&quotes,&review);
+    apply_action_review(&source,&mut minutes,&quotes, &[], &review);
     assert_eq!(minutes.action_items.len(),3);
     assert!(minutes.action_items[0].text.starts_with("可能来自背景对话，请核对："));
     assert!(minutes.action_items[1].text.contains("其他产品"));
