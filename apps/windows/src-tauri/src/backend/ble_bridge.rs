@@ -4595,6 +4595,89 @@ async fn sync_native_recordings_original(original: &OwnedRecorder) -> Result<Nat
     sync_native_recordings_scoped(Some(&original.device_id),&[],Some(original.recording_id),Some(key),false).await
 }
 
+// A deliberately narrow recovery operation for one already verified, sealed
+// original. Never pass unrelated catalogue entries to the sync/consume path.
+fn exact_saved_segment_entry(
+    expected: &super::recording_wire::Descriptor,
+    entries: Vec<RecordingEntry>,
+) -> Result<RecordingEntry,String> {
+    if expected.segment_index != 0 || expected.total_segments != 1 || expected.source_mode != RECORDING_SOURCE_MIC_SAI {
+        return Err("授权范围不是单段完整麦克风录音，未释放。".into());
+    }
+    let mut same_session=entries.into_iter().filter(|e| e.segment.as_ref().is_some_and(|d|d.key==expected.key));
+    let entry=same_session.next().ok_or("原录音不在设备目录，未释放。")?;
+    if same_session.next().is_some() || !entry.segment.as_ref().is_some_and(|d|d.same_content(expected)) {
+        return Err("设备上的原录音身份或内容已变化，未释放。".into());
+    }
+    Ok(entry)
+}
+
+#[cfg(test)]
+mod exact_saved_segment_scope_tests {
+    use super::*;
+    use crate::backend::recording_wire::{Descriptor,SessionKey};
+    fn descriptor(session:u64,id:u32)->Descriptor {
+        Descriptor {key:SessionKey{device_uid:[7;12],format_epoch:9,session_id:session},recording_id:id,
+            segment_index:0,sample_offset:0,sample_count:320,encoded_length:20,content_crc32:11,
+            sha256:[5;32],total_segments:1,flags:3,codec:3,source_mode:RECORDING_SOURCE_MIC_SAI,sync_state:0}
+    }
+    fn entry(d:Descriptor)->RecordingEntry {
+        RecordingEntry {capture_incomplete:false,recording_id:d.recording_id,started_unix_s:0,duration_ms:20,
+            codec:d.codec,sync_state:d.sync_state,source_mode:d.source_mode,total_length:d.encoded_length,
+            sha256_prefix:d.sha256[..8].try_into().unwrap(),content_crc32:d.content_crc32,segment:Some(d),tail:None}
+    }
+    #[test]
+    fn only_the_authorized_original_is_selected() {
+        let expected=descriptor(12,131655);let other=descriptor(13,131656);
+        let selected=exact_saved_segment_entry(&expected,vec![entry(other),entry(expected.clone())]).unwrap();
+        assert_eq!(selected.recording_id,expected.recording_id);
+        assert!(exact_saved_segment_entry(&expected,vec![]).is_err());
+        let mut changed=expected.clone();changed.sha256=[8;32];
+        assert!(exact_saved_segment_entry(&expected,vec![entry(changed)]).is_err());
+        let mut extra=expected.clone();extra.recording_id+=1;extra.segment_index=1;extra.total_segments=2;
+        assert!(exact_saved_segment_entry(&expected,vec![entry(expected.clone()),entry(extra)]).is_err());
+        let mut multi=expected.clone();multi.total_segments=2;
+        assert!(exact_saved_segment_entry(&multi,vec![entry(multi.clone())]).is_err());
+    }
+}
+
+pub(crate) fn release_one_saved_segment(device_id:&str, expected:&super::recording_wire::Descriptor) -> Result<(),String> {
+    if !native_ble_available() || !super::device_connection::stable_device_id(device_id) {
+        return Err("原设备蓝牙不可用或身份无效，未释放。".into());
+    }
+    if !delete_after_sync_enabled() {return Err("本次未启用明确的设备释放操作。".into());}
+    recording_sync::resume_explicit(Some(device_id))?;
+    run_native_blocking(async {
+        let setup=connect_native_device_setup_with_intent(Some(device_id),false,ConnectionIntent::SealedSync).await?;
+        let device=setup.device;
+        #[cfg(windows)]
+        let mut setup_preference=setup.preference;
+        #[cfg(windows)]
+        if let Some(preference)=setup_preference.as_mut(){preference.handoff_to_sealed_sync();}
+        let mut policy=SealedLinkPolicy {
+            #[cfg(windows)] preference:setup_preference,
+            #[cfg(windows)] initialized:true,
+            budget_observed:false,
+        };
+        let result=async {
+            let job=RecordingSyncJob::begin(&device.device_id())?;
+            let chars=device.peripheral.characteristics();
+            let catalog=job.receive(on_native_link(&device,read_recording_catalog(&device,&chars))).await?;
+            let peer=catalog.peer.ok_or("设备不支持原录音身份校验，未释放。")?;
+            if peer.uid!=expected.key.device_uid || peer.epoch!=expected.key.format_epoch {
+                return Err("设备身份或录音格式已变化，未释放。".into());
+            }
+            let entry=exact_saved_segment_entry(expected,catalog.entries)?;
+            let (batch,_)=segmented::sync_catalog_limited(&device,&chars,peer,vec![entry],&job,&mut policy,Some(1),Some(&expected.key)).await?;
+            require_original_sync_outcome(batch)?;
+            Ok(())
+        }.await;
+        drop(policy);
+        let cleanup=finish_native_device_operation(device,false).await;
+        combine_operation_and_cleanup(result,cleanup)
+    })
+}
+
 async fn sync_native_recordings_scoped(requested_device_id: Option<&str>,known_recording_ids: &[u32],
     recording_id: Option<u32>,logical_key: Option<&super::recording_wire::SessionKey>,ota_barrier:bool) -> Result<NativeRecordingBatch,String> {
     // Downloading sealed recordings cannot change their capture timestamps.

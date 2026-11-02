@@ -237,6 +237,10 @@ pub fn run() {
         if let Err(error) = &result { eprintln!("recording_upload_benchmark_error={error}"); }
         exit_after_device_cleanup(if result.is_ok() { 0 } else { 1 });
     }
+    if let Some(result) = run_release_one_saved_segment_cli(&args) {
+        if let Err(err)=&result {eprintln!("release_one_saved_segment_error={err}");}
+        exit_after_device_cleanup(if result.is_ok(){0}else{1});
+    }
     if let Some(result) = run_sync_device_recording_cli(&args) {
         if let Err(err) = &result {
             eprintln!("sync_device_recording_error={err}");
@@ -1911,6 +1915,57 @@ fn run_recording_upload_benchmark_cli(args: &[String]) -> Option<Result<(), Stri
             Path::new(required("--benchmark-sample")?), Path::new(required("--benchmark-output")?),
             profiles.as_deref(), args.iter().any(|a|a=="--benchmark-capture-setup"))?;
         println!("recording_upload_benchmark_json={report}");
+        Ok(())
+    })())
+}
+
+// Explicit diagnostic operation: release one already verified single-segment
+// recording. It cannot select other device sessions or erase local audio.
+fn run_release_one_saved_segment_cli(args:&[String])->Option<Result<(),String>> {
+    let position=args.iter().position(|s|s=="--release-one-saved-segment")?;
+    Some((|| {
+        let value=|flag:&str| -> Result<&str,String> {
+            let indexes=args.iter().enumerate().filter(|(_,s)|s.as_str()==flag).map(|(i,_)|i).collect::<Vec<_>>();
+            if indexes.len()!=1 {return Err(format!("需要明确且唯一的{flag}。"));}
+            args.get(indexes[0]+1).filter(|v|!v.starts_with("--")).map(String::as_str).ok_or_else(||format!("{flag}缺少值。"))
+        };
+        if args.iter().filter(|s|s.as_str()=="--release-one-saved-segment").count()!=1 {return Err("释放请求不唯一。".into());}
+        let receipt=Path::new(args.get(position+1).filter(|v|!v.starts_with("--")).ok_or("缺少本机原录音回执。")?);
+        let encoded=Path::new(value("--encoded-path")?);
+        let device=value("--device-id")?;
+        let id=value("--recording-id")?.parse::<u32>().map_err(|_|"录音编号无效。")?;
+        let expected_sha=value("--expected-sha256")?.to_ascii_lowercase();
+        let root=PathBuf::from(std::env::var_os("COMPANION_TYPE_RECORDING_DIR").ok_or("必须指定隔离本机录音目录。")?);
+        let root=fs::canonicalize(root).map_err(|_|"本机录音目录不存在。")?;
+        for path in [receipt,encoded] {
+            let meta=fs::symlink_metadata(path).map_err(|_|"本机备份文件不可读。")?;
+            if !meta.is_file() || meta.file_type().is_symlink() || !fs::canonicalize(path).map_err(|_|"备份路径不可核对。")?.starts_with(&root) {
+                return Err("回执和原始数据必须是指定本机录音目录中的普通文件。".into());
+            }
+        }
+        let receipt_bytes=fs::read(receipt).map_err(|_|"无法读取本机原录音回执。")?;
+        if receipt_bytes.len()>1024*1024 {return Err("本机回执过大。".into());}
+        let saved:serde_json::Value=serde_json::from_slice(&receipt_bytes).map_err(|_|"本机回执格式无效。")?;
+        let segments=saved.get("segments").and_then(|v|v.as_array()).ok_or("本机回执缺少录音段。")?;
+        if segments.len()!=1 || segments[0].get("received").and_then(|v|v.as_bool())!=Some(true)
+            || segments[0].get("acked").and_then(|v|v.as_bool())!=Some(false) {return Err("本机回执不是一段已保存未释放的原录音。".into());}
+        let wire:Vec<u8>=serde_json::from_value(segments[0].get("wire").cloned().ok_or("缺少原录音描述。")?).map_err(|_|"原录音描述无效。")?;
+        let descriptor=backend::recording_wire::Descriptor::decode(&wire)?;
+        let payload=fs::read(encoded).map_err(|_|"无法读取本机原始压缩数据。")?;
+        descriptor.verify_payload(&payload)?;
+        if descriptor.recording_id!=id || format!("{:x}",Sha256::digest(&payload))!=expected_sha {
+            return Err("指定编号或摘要与已备份原录音不一致，未释放。".into());
+        }
+        let snapshot=CompanionCoordinator::new_fixture().snapshot()?;
+        let rows=snapshot.host.sessions.iter().filter(|row|row.device_recording_key.as_ref()
+            .and_then(|key|backend::recording_wire::SessionKey::from_public(key).ok()).as_ref()==Some(&descriptor.key)).collect::<Vec<_>>();
+        if rows.len()!=1 || !verified_synced_audio(rows[0]) || rows[0].device_reclaimed || rows[0].capture_incomplete
+            || !rows[0].source_device_id.as_deref().is_some_and(|saved|backend::same_device_id(saved,device)) {
+            return Err("本机完整备份或原设备身份未核对，未释放。".into());
+        }
+        backend::release_one_saved_segment(device,&descriptor)?;
+        descriptor.verify_payload(&fs::read(encoded).map_err(|_|"释放后本机原始文件不可读。")?)?;
+        println!("release_one_saved_segment_result=EXACT_ORIGINAL_RELEASED_LOCAL_RAW_REVERIFIED recording_id={id}");
         Ok(())
     })())
 }

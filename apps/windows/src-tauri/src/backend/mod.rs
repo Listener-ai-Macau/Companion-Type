@@ -5,6 +5,7 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+pub(crate) use ble_bridge::release_one_saved_segment;
 
 /// Read-only engineering admission check; never starts a firmware update.
 pub(crate) fn inspect_engineering_ota_preservation(device_id: &str) -> Result<(), String> {
