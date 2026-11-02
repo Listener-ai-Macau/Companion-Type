@@ -301,6 +301,16 @@ fn mark_recovery_complete(session: &mut CompanionV1HostSession) {
         session.recovery.next_retry_at_unix_ms = None;
         session.recovery.last_error = None;
         session.pending_reason = None;
+    } else if session.recovery.intent == "none"
+        && session.processing_policy == crate::companion_v1::CompanionV1ProcessingPolicy::Manual
+        && !session.capture_incomplete && !session.recorder_control_uncertain {
+        // A manual retry can fail without arming automatic recovery. Once it
+        // succeeds, that old processing error must not remain on the session.
+        session.recovery.stage = "idle".to_string();
+        session.recovery.retry_stage.clear();
+        session.recovery.attempt_count = 0;
+        session.recovery.next_retry_at_unix_ms = None;
+        session.recovery.last_error = None;
     }
 }
 
@@ -6089,6 +6099,30 @@ mod tests {
     }
 
     #[test]
+    fn manual_minutes_retry_clears_old_error_after_success() {
+        let mut snapshot = apply_fixture_control(fixture_snapshot(),
+            recovery_request(CompanionV1ControlAction::MeetingLoadDemo, "manual-retry", false)).unwrap();
+        let session = &mut snapshot.host.sessions[0];
+        session.processing_policy = crate::companion_v1::CompanionV1ProcessingPolicy::Manual;
+        session.recovery = Default::default();
+        session.recovery.stage = "paused".into();
+        session.recovery.last_error = Some("纪要缺少问题来源分类".into());
+        session.pending_reason = Some("recovery_paused".into());
+        let mut minutes = session.minutes.clone().unwrap();
+        minutes.quality = "final".into(); minutes.llm_note = None;
+        assert!(refresh_minutes_products(session, "retry-succeeded", |_| minutes.clone()).is_none());
+        assert_eq!(session.status, "minutesReady");
+        assert_eq!(session.recovery.intent, "none");
+        assert_eq!(session.recovery.stage, "idle");
+        assert!(session.recovery.last_error.is_none());
+        assert!(session.pending_reason.is_none());
+        session.capture_incomplete = true;
+        session.recovery.last_error = Some("录音不完整".into());
+        mark_recovery_complete(session);
+        assert_eq!(session.recovery.last_error.as_deref(), Some("录音不完整"));
+    }
+
+    #[test]
     fn paired_minutes_retry_only_failed_variant_and_preserve_capture_route() {
         for failed_mode in ["offlineStore", "onlineLive"] {
             let mut snapshot = apply_fixture_control(fixture_snapshot(),
@@ -6114,6 +6148,9 @@ mod tests {
                 &session.minutes_by_mode.online_live
             } else { &session.minutes_by_mode.offline_store }).unwrap();
             let original_text = session.transcript_text.clone();
+            session.processing_policy = crate::companion_v1::CompanionV1ProcessingPolicy::Automatic;
+            session.transcript_final = true;
+            session.recovery = Default::default();
             arm_meeting_recovery(session);
             session.recovery.stage = "retryBackoff".into();
             session.recovery.retry_stage = "minutes".into();
