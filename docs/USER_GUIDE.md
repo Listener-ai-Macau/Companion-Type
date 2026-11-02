@@ -14,6 +14,10 @@ This is a development release. Use the matching Windows installer supplied with 
 4. Wait for the original audio to arrive and be saved locally. Open **我的记录** (My recordings). The latest item has **打开这条录音** (Open this recording); you can also search by title, date, duration or a remembered phrase.
 5. Read existing text immediately. An audio-only item offers **转文字** (Transcribe); use **整理重点** (Organize key points) when needed. **回听** (Playback) is optional, not a prerequisite to reading text.
 
+For an important meeting, record a few seconds and listen back first. Place the device near the main speaker and away from other conversations and noise. If background sound masks the original voice, transcription and AI summaries may not recover it.
+
+For a meeting on this computer, you can instead open **设备与同步** (Device and sync) and choose **开始录电脑会议** (Start recording the computer meeting). Computer playback and the microphone are saved separately; other computer sounds and nearby conversations may also be recorded.
+
 **Device saved and computer received are separate steps.** A device save notice does not mean the computer has the complete file. Retain device audio while transfer is incomplete.
 
 ![My recordings with an example memo](assets/usage/windows-library.png)
