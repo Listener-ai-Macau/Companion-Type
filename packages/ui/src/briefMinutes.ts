@@ -2,6 +2,27 @@
 // the complete original document; this never derives tasks from a transcript.
 import {emptyActionNotice} from './savedActions';
 
+// Fold only the known generated overview format. Decisions and tasks remain
+// visible, while saved markdown and the complete original transcript stay intact.
+export function splitShortMinutesOverview(markdown: string): {overview: string; detail: string; hasSources: boolean} | null {
+  const prefix=/^## 会议概览\r?\n\r?\n> AI根据详细纪要整理，请结合原文核对。\r?\n\r?\n(?:- [^\r\n]+\r?\n){1,6}\r?\n/.exec(markdown);
+  if (!prefix || markdown.includes('```') || markdown.includes('~~~')) return null;
+  const headings=[...markdown.matchAll(/^## ([^\r\n]+)\r?$/gm)];
+  const summary=headings.filter(h=>h[1]==='Summary'||h[1]==='摘要');
+  const actions=headings.filter(h=>['Action Items','行动项','待办'].includes(h[1]));
+  const sources=headings.filter(h=>h[1]==='补充原文（供核对）');
+  if(summary.length!==1||actions.length!==1||sources.length>1||summary[0].index===undefined
+      ||summary[0].index<prefix[0].length) return null;
+  const blocks=[summary[0],...sources].map(h=>{
+    const index=headings.indexOf(h);
+    return {start:h.index!,end:headings[index+1]?.index??markdown.length};
+  }).sort((a,b)=>a.start-b.start);
+  let visible='',cursor=0;
+  for(const block of blocks){visible+=markdown.slice(cursor,block.start);cursor=block.end;}
+  visible+=markdown.slice(cursor);
+  return {overview:visible.trimEnd(),detail:blocks.map(b=>markdown.slice(b.start,b.end).trim()).join('\n\n'),hasSources:sources.length>0};
+}
+
 // The native single-request result adds optional, validated verbatim excerpts.
 // Leave ambiguous/custom documents untouched and keep the complete saved text.
 export function splitShortMinutesEvidence(markdown: string, transcript: string): {overview: string; evidence: string} | null {

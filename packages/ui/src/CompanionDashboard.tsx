@@ -36,7 +36,7 @@ import { CompanionMeetingNotes } from './CompanionMeetingNotes';
 import { CompanionExportFeedback, exportFileName, type OpenSavedCalendar } from './CompanionExportFeedback';
 import { CompanionChecklistPhone, type ChecklistPhoneResult } from './CompanionChecklistPhone';
 import { checklistPhoneCode } from './checklistPhone';
-import { briefMinutes, splitLongMinutesEvidence, splitShortMinutesEvidence } from './briefMinutes';
+import { briefMinutes, splitLongMinutesEvidence, splitShortMinutesEvidence, splitShortMinutesOverview } from './briefMinutes';
 import { savedCustomMinutesTemplates } from './minutesTemplateLibrary';
 import {ActionListEditor} from './ActionListEditor';
 
@@ -3626,6 +3626,14 @@ function MinutesReadingView({ markdown, savedMarkdown=markdown, transcript, dura
   const shortSource=shortEvidence?<details className="ct-full-minutes"><summary>查看原话依据</summary>
     <p>以下原话由 AI 整理时关联，仅供核对；关联和转写可能有误，编辑后请重新核对。</p><MarkdownMinutes markdown={shortEvidence.evidence} {...sourceProps}/>
   </details>:null;
+  const shortOverview=compactAllowed&&!noteContext?splitShortMinutesOverview(shortReading):null;
+  if(shortOverview)return <div className="ct-brief-minutes">
+    <MarkdownMinutes markdown={shortOverview.overview} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
+    <details className="ct-full-minutes"><summary>{shortOverview.hasSources?'查看完整摘要和补充原文':'查看完整摘要'}</summary>
+      <MarkdownMinutes markdown={shortOverview.detail} {...sourceProps}/>
+    </details>
+    {shortSource}
+  </div>;
   const brief = compactAllowed ? briefMinutes(shortReading, transcript, durationMs, !!noteContext) : null;
   if (!brief) return <div className="ct-brief-minutes">
     
