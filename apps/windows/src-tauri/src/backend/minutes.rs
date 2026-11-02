@@ -384,8 +384,7 @@ fn run_deepseek_request_with_evidence(
                 // free-form suggested interpretations are not source content.
                 minutes.questions = match contract.project(&object) {
                     Ok(questions)=>questions,
-                    Err(_) if template.is_some()=>contract.literal_questions(),
-                    Err(error)=>return Err(error),
+                    Err(_)=>contract.literal_questions(),
                 };
                 minutes.markdown.clear();
             }
@@ -1366,6 +1365,42 @@ mod tests {
         let mut result=finalize_minutes(Ok(native.minutes),l0,&session);short_evidence::append(&mut result,&native.evidence);
         assert!(result.markdown.contains("## 原话核对"));assert!(result.markdown.contains("原话：“明天下午讨论产品包装。”"));
         assert_eq!(result.quality,"final");server.join().unwrap();
+    }
+
+    #[test]
+    fn missing_question_classification_keeps_other_minutes_and_marks_questions() {
+        use std::io::{Read,Write};
+        let listener=std::net::TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
+        let server=std::thread::spawn(move||{
+            let (mut socket,_)=listener.accept().unwrap();socket.set_read_timeout(Some(std::time::Duration::from_secs(10))).unwrap();
+            let mut request=Vec::new();let mut block=[0u8;8192];
+            loop {let n=socket.read(&mut block).unwrap();assert!(n>0);request.extend_from_slice(&block[..n]);
+                if let Some(i)=request.windows(4).position(|v|v==b"\r\n\r\n") {
+                    let header=String::from_utf8_lossy(&request[..i]);let length=header.lines().find_map(|line|line.split_once(':')
+                        .filter(|(key,_)|key.eq_ignore_ascii_case("content-length"))
+                        .map(|(_,value)|value.trim().parse::<usize>().unwrap())).unwrap();
+                    if request.len()>=i+4+length{break;}
+                }
+            }
+            // Valid minutes with unusable question classification, as in the
+            // real seven-minute device recording. Free-form questions
+            // must not become a replacement for source-bound questions.
+            let content=serde_json::json!({"summary":["明天下午讨论产品包装。"],"decisions":[],"actionItems":[],
+                "questions":["未经原话支持的推测问题"],"keywords":["包装"],
+                "evidence":[{"field":"summary","index":0,"quote":"明天下午讨论产品包装。"}],
+                "markdown":"# 包装会议\n\n## Summary\n- 明天下午讨论产品包装。"});
+            let response=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content.to_string()}}]}).to_string();
+            write!(socket,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",response.len(),response).unwrap();
+        });
+        let session=session_with_text("明天下午讨论产品包装。谁负责报价？");let l0=rules_l0_minutes(&session,"now");
+        let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),None).unwrap();
+        let mut result=finalize_minutes(Ok(native.minutes),l0,&session);short_evidence::append(&mut result,&native.evidence);
+        assert_eq!(result.quality,"final");assert!(result.summary.iter().any(|s|s.contains("产品包装")));
+        assert!(result.questions.iter().any(|q|q.contains("问题来源分类未完成")));
+        assert!(result.questions.iter().any(|q|q.contains("谁负责报价？")));
+        assert!(!result.questions.iter().any(|q|q.contains("未经原话支持")));
+        assert!(result.markdown.contains("问题来源分类未完成"));assert!(result.markdown.contains("原话核对"));
+        server.join().unwrap();
     }
 
     #[test]
