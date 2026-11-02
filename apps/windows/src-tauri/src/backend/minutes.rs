@@ -363,7 +363,9 @@ fn run_deepseek_request_with_evidence(
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
     if let Some(template)=template {system.push_str(&template.prompt());}
-    if template.is_none() && session.meeting_notes.is_empty() {
+    let overview_requested=template.is_none() && session.meeting_notes.is_empty()
+        && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500);
+    if overview_requested {
         system.push_str(SHORT_OVERVIEW_PROMPT);
     }
     if let Some(contract) = &question_sources {
@@ -383,7 +385,7 @@ fn run_deepseek_request_with_evidence(
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {
             let evidence=if session.meeting_notes.is_empty() {short_evidence::capture(&object,&minutes,&session.transcript_text)} else {Vec::new()};
-            let overview=if template.is_none() && session.meeting_notes.is_empty() && minutes.summary.len()>8 {
+            let overview=if overview_requested && minutes.summary.len()>8 {
                 long_meeting::parse_concise_overview(&object.to_string(),minutes.summary.len()).ok()
             } else {None};
             if context_plan::eligible(session) {
@@ -407,7 +409,7 @@ fn run_deepseek_request_with_evidence(
         })
 }
 
-const SHORT_OVERVIEW_PROMPT: &str = "\n如果详细 summary 超过8条，请在同一 JSON 中另给 overview 数组，用3至5条简短句子概括会议主题、主要讨论和结论；不要添加新事实。每项格式为 {\"text\":\"概览句子\",\"sources\":[对应 summary 的零起始下标]}。完整 summary、决定、待办、问题和原文依据仍按原要求保留。若不需要概览可省略 overview。";
+const SHORT_OVERVIEW_PROMPT: &str = "\n请在同一 JSON 中同时输出 overview 数组，用3至5条简短句子概括会议主题、主要讨论和结论；不要添加新事实。每项格式为 {\"text\":\"概览句子\",\"sources\":[对应 summary 的零起始下标]}。完整 summary、决定、待办、问题和原文依据仍按原要求保留。";
 
 const COMPUTER_MEETING_SOURCE_CONTEXT: &str = "这场会议的【麦克风】和【电脑声音】标记只表示采集通道，不代表不同发言人或会议讨论的内容。麦克风可能同时录到电脑扬声器，两个通道中相同或近似的内容可能是同一段话的回声；整理时合并明确重复的事实和任务，不要把回声、通道名称或重复本身写成会议议题，不凭通道推断人数、身份、负责人或发言先后。两路内容可能各有独立发言，保留无法确认重复的内容和各自不同的负责人、日期、条件，不要为了去重删除独有信息。";
 
@@ -1378,7 +1380,8 @@ mod tests {
             let response=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content.to_string()}}]}).to_string();
             write!(socket,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",response.len(),response).unwrap();
         });
-        let session=session_with_text("明天下午讨论产品包装。");let l0=rules_l0_minutes(&session,"now");
+        let mut session=session_with_text("明天下午讨论产品包装。");session.duration_ms=420_000;
+        let l0=rules_l0_minutes(&session,"now");
         let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),None).unwrap();
         let result=finalize_native_result(native,l0,&session);
         assert_eq!(result.quality,"final");assert_eq!(result.summary.len(),10);
