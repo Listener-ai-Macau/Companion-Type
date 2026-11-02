@@ -57,3 +57,10 @@ export const saveCompanionLibraryState = (...args:unknown[])=>required('saveLibr
 export const purgeCompanionLibrary = (...args:unknown[])=>required('purgeLibrary',...args);
 export const saveCompanionLibraryOrganization = (...args:unknown[])=>required('saveLibraryOrganization',...args);
 export const saveCompanionLibraryLifecycle = (...args:unknown[])=>required('saveLibraryLifecycle',...args);
+export const previewCompanionMeetingTranscription = (...args:unknown[])=>required('previewMeetingTranscription',...args);
+export const previewCompanionMeetingGap = (...args:unknown[])=>required('previewMeetingGap',...args);
+export const askCompanionMeetings = (...args:unknown[])=>required('askMeetings',...args);
+export const cancelCompanionMeetingQuestion = (...args:unknown[])=>required('cancelMeetingQuestion',...args);
+export const repairRecordingSyncSettings = (...args:unknown[])=>required('repairSyncSettings',...args);
+export const importCompanionAudio = (...args:unknown[])=>required('importAudio',...args);
+export const cancelCompanionAudioImport = (...args:unknown[])=>required('cancelAudioImport',...args);

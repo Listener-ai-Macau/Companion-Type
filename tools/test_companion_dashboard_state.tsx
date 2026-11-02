@@ -173,8 +173,8 @@ assert.equal(calls.at(-1).action, 'meetingStart');
 assert.equal(calls.at(-1).durationMs, 30 * 60 * 1000,
   'the displayed thirty-minute board limit must reach the backend start request');
 const offlineDuration = () => renderer.root.findAllByType('label').find((n: any) => text(n) === '最长录音(分)')!.findByType('input');
-assert.match(text(renderer.root.findByProps({'aria-label':'设备录音容量'})),/尚未取得设备容量/);
-assert.doesNotMatch(text(renderer.root.findByProps({'aria-label':'设备录音容量'})),/14.*MB/);
+assert.match(text(renderer.root.findByProps({className:'ct-readiness-capacity'})),/尚未取得设备容量/);
+assert.doesNotMatch(text(renderer.root.findByProps({className:'ct-readiness-capacity'})),/14.*MB/);
 act(() => offlineDuration().props.onChange({target:{value:'60'}}));
 click('板端开始录音');assert.equal(calls.at(-1).durationMs,3600000,'offline must not inherit 43-minute live cap');
 act(() => offlineDuration().props.onChange({target:{value:''}}));
@@ -198,7 +198,7 @@ assert.equal(onlineStarts.at(-1).maxDurationSeconds, 1800);
 const liveDuration = () => renderer.root.findAllByType('label').find((n: any) => text(n) === '最长录音(分)')!.findByType('input');
 act(() => liveDuration().props.onChange({target:{value:'60'}}));
 assert.equal(button('板端开始录音').props.disabled,true);
-assert.match(text(renderer.toJSON()),/请修改时长；不会自动截短/);
+assert.match(text(renderer.toJSON()),/当前设备在线转写单次最多 43 分钟，请修改时长/);
 act(() => liveDuration().props.onChange({target:{value:'30'}}));
 snapshot.device.recordingCapacity={layoutVersion:1,busy:false,usedEntries:3,maxEntries:7,
   catalogGeneration:9,dataBytes:57344,freeBytes:32768,largestFreeExtent:24576,
@@ -208,7 +208,7 @@ act(() => renderer.update(<CompanionDashboard {...connectedOnlineProps()} boardO
   state:'recording',sessionId:'limit-test',deviceId:snapshot.device.deviceId,recordingId:1,
   partialCount:1,durationMs:1200000,maxDurationSeconds:1500,disconnectResume:false,finalRecordingPath:null,error:null,
 }} />));
-assert.match(text(renderer.root.findByProps({'aria-label':'设备录音容量'})),/目录 3\/7/);
+assert.match(text(renderer.root.findByProps({className:'ct-readiness-capacity'})),/目录 3\/7/);
 assert.match(text(renderer.root.findByProps({'aria-label':'当前记录'})),/距本次设定结束约 5:00/);
 assert.doesNotMatch(text(renderer.root.findByProps({'aria-label':'当前记录'})),/距 43 分钟/);
 act(() => renderer.update(<CompanionDashboard {...connectedOnlineProps()} productSettings={settings} />));
@@ -262,7 +262,7 @@ async function testProductPolish() {
     audioNodes.push(node); return node;
   } }); });
   click('更多录音与处理操作');
-  assert.match(text(renderer.toJSON()), /录制模式（先录后整理）纪要含人工修改。再次生成会替换这一版，建议先导出保存/);
+  assert.match(text(renderer.toJSON()), /录制模式（先录后整理）纪要含人工修改。重新整理后可在“以前的整理结果”中查看原内容/);
   const titleInput = () => renderer.root.findByProps({ 'aria-label': '记录标题' });
   act(() => titleInput().props.onChange({ target: { value: '  用户标题草稿  ' } }));
   snapshot = structuredClone(snapshot); snapshot.host.sessions[0].title = '后台标题';
@@ -370,7 +370,7 @@ async function testProductPolish() {
   assert.deepEqual(lossCalls,[1800],'double-click asks for one concrete loss proposal');
   assert.equal(button('重新读取设备容量').props.disabled,true,'pending native decision holds device controls');
   await act(async () => {resolveLoss({status:'cancelled',message:'已取消，未发送删除确认。'});});
-  assert.match(text(renderer.root.findByProps({'aria-label':'设备录音容量'})),/已取消，未发送删除确认/);
+  assert.match(text(renderer.root.findByProps({className:'ct-readiness-capacity'})),/已取消，未发送删除确认/);
   assert.equal(calls.length,controlsBeforeLoss,'preview/cancel must not dispatch clear-all, ACK or recording START');
   act(() => button('查看可释放的最旧录音').props.onClick());
   snapshot=structuredClone(snapshot);snapshot.device.deviceId='loss-device-b';
