@@ -64,7 +64,7 @@ export function CompanionHelp({ onClose, onDevice, onLibrary, onDiagnostics, onR
     </details>
 
     <details><summary>文字不对，或有一句话看不懂，怎么办？</summary>
-      <p>文字由语音识别生成，显示“文字已生成”不代表每句话都正确。先回到这条录音，点“回听”核对原音；需要改字时，点“核对文字”，修改后保存修订。</p>
+      <p>文字由语音识别生成，显示“文字已生成”不代表每句话都正确。先回到这条录音，点“回听”核对原音；需要改字时，点“核对文字”，修改后保存修订；同一个错词出现多次时，可用“批量替换文字”。</p>
       <p>原始识别文字和原音会保留。听不清的地方先保留待核对，不替录音猜出意思；确认文字后再整理重点。没有识别出文字时，也先查看原音，再决定是否重试。</p>
       {onRecording ? <button type="button" className="ct-action" onClick={onRecording}>返回当前记录</button> : null}
     </details>

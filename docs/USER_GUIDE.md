@@ -56,7 +56,7 @@ Speech recognition and organized results are different layers. Check important n
 
 | What to change | Entry |
 | --- | --- |
-| A recognition error or speaker label | Expand **原话与补充**, select **核对文字** and **修正文字**, then save the revision. Original recognition and audio remain. |
+| A recognition error or speaker label | Expand **原话与补充**, select **核对文字** and **修正文字**. To fix a repeated term, expand **批量替换文字**, then save the revision. Original recognition and audio remain. |
 | An organized action or statement | Select **编辑清单** or **编辑整理内容** in the result, then **保存修改**. |
 | Background not spoken in the recording | Open **补充一句（背景备注）**, write it and select **保存备注**. It is stored separately, not presented as original speech or silently added to existing results. |
 

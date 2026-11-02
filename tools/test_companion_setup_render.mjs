@@ -10,7 +10,7 @@ const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const names=['test_companion_setup_render','test_companion_dashboard_state','test_companion_journey',
   'test_companion_diagnostics','test_companion_service_actions','test_companion_credentials',
   'test_companion_recovery_center','test_companion_desktop_update','test_recording_readiness',
-  'test_companion_app_state'];
+  'test_companion_app_state','test_transcript_bulk_replace'];
 const cache=path.join(root,'.cache','ui-acceptance');
 await mkdir(cache,{recursive:true});
 const out=await mkdtemp(path.join(cache,'run-'));

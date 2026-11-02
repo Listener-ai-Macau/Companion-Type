@@ -1428,6 +1428,9 @@ button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus
 @media (max-width: 600px) { .ct-recovery-center { padding: 16px; } .ct-recovery-center li { align-items: flex-start; flex-direction: column; gap: 6px; } }
 .ct-transcript-document[hidden] { display: none; }
 .ct-transcript-review-editor { display: grid; gap: 18px; }
+.ct-transcript-replace-fields { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; }
+.ct-transcript-replace-fields label { display: grid; gap: 6px; }
+.ct-transcript-replace-fields input { width: 170px; max-width: 100%; padding: 8px 10px; border: 1px solid #dce3eb; border-radius: 8px; font: inherit; }
 .ct-speaker-name-fields { display: flex; flex-wrap: wrap; gap: 14px; padding: 16px; background: #f6f8fa; border-radius: 14px; }
 .ct-speaker-name-fields label { display: grid; gap: 6px; color: #526174; font-size: 12px; }
 .ct-speaker-name-fields input, .ct-transcript-review-meta input { width: 170px; max-width: 100%; padding: 8px 10px; border: 1px solid #dce3eb; border-radius: 8px; background: white; color: #17283c; font: inherit; }

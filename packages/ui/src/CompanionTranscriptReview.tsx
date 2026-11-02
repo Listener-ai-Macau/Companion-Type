@@ -45,11 +45,17 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   const [saving, setSaving] = useState<string | null>(null);
   const [result, setResult] = useState<{ id: string; message: string } | null>(null);
   const [seeking, setSeeking] = useState(false);
+  const [findText, setFindText] = useState('');
+  const [replacementText, setReplacementText] = useState('');
+  const [replacementMessage, setReplacementMessage] = useState('');
   const seekInFlight = useRef(false);
   const selectedElement = useRef<HTMLDivElement | null>(null);
   const importedText = session.source === 'importedTranscript';
   const originalLabel = importedText ? '导入原文' : '原始识别结果';
   const draft = drafts[session.id];
+  useEffect(() => { setFindText(''); setReplacementText(''); setReplacementMessage(''); }, [session.id]);
+  const replacementCount = !draft || !findText ? 0 : (draft.rows.length ? draft.rows.map((row) => row.text) : [draft.text])
+    .reduce((count, text) => count + text.split(findText).length - 1, 0);
   const stale = companionTranscriptReviewIsStale(session);
   const revision = companionTranscriptReviewRevision(session);
   const rows = draft ? (draft.rows.length ? draft.sourceUtterances : []) : companionReviewedUtterances(session);
@@ -89,12 +95,21 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
 
   function start() {
     setDrafts((previous) => ({ ...previous, [session.id]: draftFrom(session) })); setResult(null);
+    setFindText(''); setReplacementText(''); setReplacementMessage('');
   }
   function cancel(id: string) {
     setDrafts((previous) => { const next = { ...previous }; delete next[id]; return next; });
   }
   function change(update: (draft: Draft) => Draft) {
     setDrafts((previous) => ({ ...previous, [session.id]: update(previous[session.id]) }));
+  }
+  function replaceInDraft() {
+    if (!draft || !findText || !replacementCount || !canEdit || changedSource) return;
+    const replace = (text: string) => text.split(findText).join(replacementText);
+    setReplacementMessage(`已替换 ${replacementCount} 处，请保存转写修订。`);
+    change((value) => value.rows.length
+      ? { ...value, rows: value.rows.map((row) => ({ ...row, text: replace(row.text) })) }
+      : { ...value, text: replace(value.text) });
   }
   async function save(restoreOriginal = false) {
     if (!onSave || saving || blocked) return;
@@ -140,6 +155,18 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
     {draft ? <div className="ct-transcript-review-editor">
       {changedSource ? <p className="ct-step-warn" role="status">后台内容已变化，当前草稿仍保留。请复制需要保留的修改，再载入最新内容核对。
         <button type="button" className="ct-text-button" disabled={Boolean(saving)} onClick={start}>载入最新内容</button></p> : null}
+      <details className="ct-transcript-replace"><summary>批量替换文字</summary>
+        <p className="ct-step-meta">只修改当前草稿中的匹配文字；保存后可用于重新整理，原始识别和录音保留。</p>
+        <div className="ct-transcript-replace-fields">
+          <label>查找<input aria-label="查找文字" value={findText} disabled={Boolean(saving)}
+            onChange={(e) => { setFindText(e.target.value); setReplacementMessage(''); }} /></label>
+          <label>替换为<input aria-label="替换文字" value={replacementText} disabled={Boolean(saving)}
+            onChange={(e) => { setReplacementText(e.target.value); setReplacementMessage(''); }} /></label>
+          <button type="button" className="ct-action" disabled={!canEdit || Boolean(changedSource) || !findText || replacementCount === 0}
+            onClick={replaceInDraft}>替换 {replacementCount} 处</button>
+        </div>
+        {replacementMessage ? <p className="ct-step-meta" role="status">{replacementMessage}</p> : null}
+      </details>
       {speakers.length ? <div className="ct-speaker-name-fields" aria-label="说话人名称">
         {speakers.map((speaker) => <label key={speaker}>说话人{speaker+1}
           <input aria-label={`说话人${speaker+1}名称`} maxLength={32} placeholder={`说话人${speaker+1}`}
