@@ -54,6 +54,62 @@ async fn native_overrun_reopens_the_real_durable_cursor_and_receives_only_missin
     std::fs::remove_dir_all(root).unwrap();
 }
 
+struct RepeatedLinkLoss {
+    root: PathBuf,
+    source: Source,
+    body: Vec<u8>,
+    starts: Vec<usize>,
+    attempted_ends: Vec<usize>,
+}
+impl Attempt for RepeatedLinkLoss {
+    fn receive(&mut self) -> BoxFuture<'_, Result<Vec<u8>, String>> {
+        Box::pin(async move {
+            let (mut cursor, mut saved) = ReceiveCursor::open(&self.root, self.source.clone()).await?;
+            let offset = saved.len();
+            self.starts.push(offset);
+            assert_eq!(saved, self.body[..offset]);
+            let end = if self.starts.len() <= 3 { (offset + 55_000).min(self.body.len()) }
+                else { self.body.len() };
+            self.attempted_ends.push(end);
+            for packet in self.body[offset..end].chunks(224) { cursor.append(packet).await?; }
+            if self.starts.len() <= 3 {
+                return Err("BLE session disconnected: GattSessionStatus(0); original recording retained".into());
+            }
+            saved.extend_from_slice(&self.body[offset..end]);
+            cursor.finish(saved.len(), Sha256::digest(&saved).into(), crc32fast::hash(&saved)).await?;
+            Ok(saved)
+        })
+    }
+}
+
+#[tokio::test]
+async fn repeated_link_losses_resume_same_durable_recording_without_gaps_or_duplicates() {
+    let root = std::env::temp_dir().join(format!("companion-repeated-link-loss-{}", uuid::Uuid::new_v4()));
+    std::fs::create_dir(&root).unwrap();
+    let body: Vec<u8> = (0..180_000).map(|n| (n % 239) as u8).collect();
+    let digest = Sha256::digest(&body);
+    let mut prefix = [0; 8]; prefix.copy_from_slice(&digest[..8]);
+    let source = Source { device: "same-sealed-device".into(), recording_id: 81, codec: 3,
+        source_mode: 1, duration_ms: 90_000, total_length: body.len() as u32,
+        sha256_prefix: prefix, content_crc32: crc32fast::hash(&body) };
+    let mut port = RepeatedLinkLoss { root: root.clone(), source: source.clone(), body: body.clone(),
+        starts: vec![], attempted_ends: vec![] };
+    for _ in 0..3 {
+        let error = receive(&mut port, true, 81).await.unwrap_err();
+        assert!(error.contains("BLE session disconnected"));
+    }
+    assert_eq!(receive(&mut port, true, 81).await.unwrap(), body);
+    assert_eq!(port.starts.len(), 4);
+    for index in 1..port.starts.len() {
+        assert!(port.starts[index] > port.starts[index - 1], "the verified prefix must advance");
+        assert!(port.starts[index] <= port.attempted_ends[index - 1], "never skip unwritten bytes");
+    }
+    let (cursor, persisted) = Cursor::open(&root, source).unwrap();
+    assert_eq!(persisted, body);
+    drop(cursor);
+    // Retain the small isolated fixture under the caller's E: test directory.
+}
+
 struct FailedPort { error: &'static str, attempts: usize }
 impl Attempt for FailedPort {
     fn receive(&mut self) -> BoxFuture<'_, Result<Vec<u8>, String>> {
