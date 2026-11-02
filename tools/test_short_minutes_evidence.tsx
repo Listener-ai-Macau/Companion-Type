@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import React from 'react';
 import {act,create} from 'react-test-renderer';
 import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
@@ -51,4 +52,15 @@ assert.equal(overviewTasks.length,1);
 await act(async()=>overviewTasks[0].props.onChange({target:{checked:true}}));
 assert.ok(saves[0].markdown.includes(prefix.trim()));assert.ok(saves[0].markdown.includes('## Summary'));
 assert.ok(saves[0].markdown.includes('补充原文'));assert.ok(saves[0].markdown.includes(evidence.trim()));
-act(()=>tree.unmount());console.log('PASS short overview keeps details accessible and tasks editable');process.exit(0);
+act(()=>tree.unmount());
+if(process.env.COMPANION_TEST_ACTUAL_SHORT_SESSION){
+  const actual=JSON.parse(readFileSync(process.env.COMPANION_TEST_ACTUAL_SHORT_SESSION,'utf8'))[0];
+  const saved=actual.minutes.markdown as string;
+  const sourceSplit=splitShortMinutesEvidence(saved,actual.transcriptText);
+  const real=splitShortMinutesOverview(sourceSplit?.overview??saved);
+  assert.ok(real&&real.overview.startsWith('## 会议概览'));
+  assert.ok(!real.overview.includes('## Summary')&&real.overview.includes('## Action Items'));
+  assert.ok(real.detail.includes(actual.minutes.summary[0]));
+  console.log('PASS real saved short-meeting overview retains its detailed summary and actions');
+}
+console.log('PASS short overview keeps details accessible and tasks editable');process.exit(0);
