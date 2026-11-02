@@ -415,6 +415,44 @@ mod gatt_tests {
     }
 
     #[test]
+    fn fresh_host_start_can_follow_a_different_completed_local_recording() {
+        // The device still reports its real prior local recording after it
+        // has ended. A new host START is a different durable intent.
+        let (old,anchor,ms,_)=local_fixture(15,None);
+        assert_eq!(old.state,2);
+        let peer=PausePeer::from_verified_peer(&crate::backend::recording_wire::transport::Peer {
+            uid:old.device_uid,epoch:old.format_epoch,capacity:64,max_value_bytes:248,
+            logical_control:true,growing_tail:true,pause_control:true,batch_interval:true}).unwrap();
+        let original=Journal::start(&peer,"new-host-session","C8:92:FF:DD:3B:CA",0x1234_5678,0).unwrap();
+        let mut journal=original.clone();
+        let disposition=journal.observe_with_peer(&peer,&old,anchor,ms).unwrap();
+        assert_eq!(disposition,Observation::Previous);
+        assert_eq!(journal,original,"old local status must not confirm or replace the new intent");
+        let mut floor=None;
+        assert!(matches!(settlement_action(&journal,disposition,true,true,&mut floor),Ok(SettlementAction::Write(_))));
+        assert!(settlement_action(&journal,disposition,true,false,&mut None).is_err(),
+            "automatic recovery must not start a new capture");
+        for state in [0,1,3,4,5,6] {
+            let mut not_closed=old.clone();not_closed.state=state;
+            let mut attempt=original.clone();
+            assert!(attempt.observe_with_peer(&peer,&not_closed,anchor,ms).is_err());
+            assert_eq!(attempt,original);
+        }
+        let mut same_start=old.clone();same_start.local_start=Some(original.start_request);
+        same_start.request=original.start_request;same_start.command=1;same_start.sequence=0;
+        let mut attempt=original.clone();
+        assert!(attempt.observe_with_peer(&peer,&same_start,anchor,ms).is_err(),
+            "a potentially already executed START must never be replayed as an unrelated recording");
+        for field in 0..3 {
+            let mut bad=old.clone();
+            match field {0=>bad.device_uid[0]^=1,1=>bad.format_epoch+=1,_=>bad.last_error=1}
+            let mut attempt=original.clone();
+            assert!(attempt.observe_with_peer(&peer,&bad,anchor,ms).is_err());
+            assert_eq!(attempt,original);
+        }
+    }
+
+    #[test]
     fn physical_transitions_wait_without_host_intent_and_ignore_previous_stable_notification() {
         let (peer,mut journal)=fixture_original(true);let start=journal.start_request;
         for (transient,stable,old) in [(9,10,8),(11,12,10)] {

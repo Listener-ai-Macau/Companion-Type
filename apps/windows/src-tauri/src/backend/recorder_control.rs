@@ -310,6 +310,19 @@ impl Journal {
         anchor:u32,duration:u32)->Result<Observation,String> {
         if status.local_start.is_none() {return self.observe(status,anchor,duration);}
         self.matches(peer,&self.host_session,&self.device_id)?;
+        // A finished local recording may remain the device's latest status
+        // when the user explicitly starts a different host recording. It is
+        // neither an ACK for that new intent nor an active recording. Keep
+        // the durable START untouched; the settlement layer separately
+        // decides whether this caller is allowed to issue it.
+        if !self.local_origin && self.unconfirmed_start_retry() && status.state==2
+            && status.last_error==0 && status.timeline && anchor!=0
+            && (status.device_uid,status.format_epoch)==(self.uid,self.epoch)
+            && status.local_start!=Some(self.start_request) && status.request!=self.start_request
+            && status.key.as_ref().is_some_and(|key| key.session_id!=0 &&
+                (key.device_uid,key.format_epoch)==(self.uid,self.epoch)) {
+            return Ok(Observation::Previous);
+        }
         self.check_local_scope(status,anchor,duration)?;
         let previous=self.confirmed.as_ref().ok_or_else(||failure("原开始尚未确认"))?;
         let stable=stable_state(status.command).ok_or_else(||failure("未知本地操作"))?;
