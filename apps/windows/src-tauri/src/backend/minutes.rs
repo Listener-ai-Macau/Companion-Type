@@ -98,9 +98,7 @@ impl CompanionMinutesManager {
             return match result {
                 Ok(native)=>{
                     let base=if session.meeting_notes.is_empty(){l0}else{rules_l0_minutes(session,generated_at)};
-                    let mut minutes=finalize_minutes(Ok(native.minutes),base,session);
-                    short_evidence::append(&mut minutes, &native.evidence);
-                    minutes
+                    finalize_native_result(native,base,session)
                 },
                 Err(reason)=>{l0.llm_note=Some(reason);l0},
             };
@@ -295,6 +293,17 @@ fn run_deepseek_native_with_template(
 struct NativeMinutesResult {
     minutes: CompanionV1MeetingMinutes,
     evidence: Vec<short_evidence::Entry>,
+    overview: Option<Vec<long_meeting::ConcisePoint>>,
+}
+
+fn finalize_native_result(native:NativeMinutesResult, draft:CompanionV1MeetingMinutes,
+    session:&CompanionV1HostSession)->CompanionV1MeetingMinutes {
+    let mut minutes=finalize_minutes(Ok(native.minutes),draft,session);
+    short_evidence::append(&mut minutes,&native.evidence);
+    if let Some(overview)=native.overview {
+        long_meeting::prepend_concise_overview(&mut minutes,&overview);
+    }
+    minutes
 }
 
 fn run_deepseek_native_result(
@@ -348,12 +357,15 @@ fn run_deepseek_request_with_evidence(
     if !session.meeting_notes.is_empty()
         && (session.duration_ms > 120_000 || session.transcript_text.chars().count() > 4000) {
         return long_meeting::run_with_context(endpoint, model, api_key, session, &l0.generated_at, client, template)
-            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new()});
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
     }
     let question_sources = session.meeting_notes.is_empty().then(|| question_sources::Contract::new(session));
     let mut user_payload = minutes_user_payload(session, l0);
     let mut system = DEEPSEEK_SYSTEM_PROMPT.to_string();
     if let Some(template)=template {system.push_str(&template.prompt());}
+    if template.is_none() && session.meeting_notes.is_empty() {
+        system.push_str(SHORT_OVERVIEW_PROMPT);
+    }
     if let Some(contract) = &question_sources {
         user_payload.push_str(&contract.instruction());
         system.push_str(question_sources::SYSTEM_CONTRACT);
@@ -363,14 +375,17 @@ fn run_deepseek_request_with_evidence(
         || question_sources.as_ref().is_some_and(|contract| !contract.fits_single_request()) {
         if !session.meeting_notes.is_empty() {
             return long_meeting::run_with_context(endpoint, model, api_key, session, &l0.generated_at, client, template)
-                .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new()});
+                .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
         }
         return long_meeting::run_with_template(endpoint, model, api_key, session, &l0.generated_at, client, template)
-            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new()});
+            .map(|minutes|NativeMinutesResult{minutes,evidence:Vec::new(),overview:None});
     }
     run_deepseek_prompt(endpoint, model, api_key, session, l0, &user_payload,
         &system, client).and_then(|(mut minutes, object)| {
             let evidence=if session.meeting_notes.is_empty() {short_evidence::capture(&object,&minutes,&session.transcript_text)} else {Vec::new()};
+            let overview=if template.is_none() && session.meeting_notes.is_empty() && minutes.summary.len()>8 {
+                long_meeting::parse_concise_overview(&object.to_string(),minutes.summary.len()).ok()
+            } else {None};
             if context_plan::eligible(session) {
                 let plan=context_plan::validate(&object,session)?;
                 minutes.action_items=plan.action_items;
@@ -388,9 +403,11 @@ fn run_deepseek_request_with_evidence(
                 };
                 minutes.markdown.clear();
             }
-            Ok(NativeMinutesResult{minutes,evidence})
+            Ok(NativeMinutesResult{minutes,evidence,overview})
         })
 }
+
+const SHORT_OVERVIEW_PROMPT: &str = "\n如果详细 summary 超过8条，请在同一 JSON 中另给 overview 数组，用3至5条简短句子概括会议主题、主要讨论和结论；不要添加新事实。每项格式为 {\"text\":\"概览句子\",\"sources\":[对应 summary 的零起始下标]}。完整 summary、决定、待办、问题和原文依据仍按原要求保留。若不需要概览可省略 overview。";
 
 const COMPUTER_MEETING_SOURCE_CONTEXT: &str = "这场会议的【麦克风】和【电脑声音】标记只表示采集通道，不代表不同发言人或会议讨论的内容。麦克风可能同时录到电脑扬声器，两个通道中相同或近似的内容可能是同一段话的回声；整理时合并明确重复的事实和任务，不要把回声、通道名称或重复本身写成会议议题，不凭通道推断人数、身份、负责人或发言先后。两路内容可能各有独立发言，保留无法确认重复的内容和各自不同的负责人、日期、条件，不要为了去重删除独有信息。";
 
@@ -1335,6 +1352,39 @@ mod tests {
                 expires_at: None,
             },
         }
+    }
+
+    #[test]
+    fn verbose_short_minutes_add_overview_in_the_same_request_and_keep_details() {
+        use std::io::{Read,Write};
+        let listener=std::net::TcpListener::bind("127.0.0.1:0").unwrap();let address=listener.local_addr().unwrap();
+        let server=std::thread::spawn(move||{
+            let (mut socket,_)=listener.accept().unwrap();socket.set_read_timeout(Some(std::time::Duration::from_secs(10))).unwrap();
+            let mut request=Vec::new();let mut block=[0u8;8192];
+            loop {let n=socket.read(&mut block).unwrap();assert!(n>0);request.extend_from_slice(&block[..n]);
+                if let Some(i)=request.windows(4).position(|v|v==b"\r\n\r\n") {
+                    let header=String::from_utf8_lossy(&request[..i]);let length=header.lines().find_map(|line|line.split_once(':')
+                        .filter(|(key,_)|key.eq_ignore_ascii_case("content-length"))
+                        .map(|(_,value)|value.trim().parse::<usize>().unwrap())).unwrap();
+                    if request.len()>=i+4+length{break;}
+                }
+            }
+            assert!(String::from_utf8(request).unwrap().contains("同一 JSON"));
+            let summary=(0..10).map(|i|format!("产品包装讨论重点{i}")).collect::<Vec<_>>();
+            let content=serde_json::json!({"summary":summary,"decisions":[],"actionItems":[],"questions":[],"keywords":[],
+                "questionClassification":[{"sourceId":1,"kind":"statement"}],
+                "overview":[{"text":"讨论产品包装方案。","sources":[0,1]},
+                    {"text":"比较包装细节。","sources":[3,4]},{"text":"明确后续方向。","sources":[8,9]}],"markdown":"# 会议"});
+            let response=serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content.to_string()}}]}).to_string();
+            write!(socket,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",response.len(),response).unwrap();
+        });
+        let session=session_with_text("明天下午讨论产品包装。");let l0=rules_l0_minutes(&session,"now");
+        let native=run_deepseek_request_with_evidence(&format!("http://{address}/chat/completions"),"fixture-model","fixture-key",&session,&l0,&reqwest::blocking::Client::new(),None).unwrap();
+        let result=finalize_native_result(native,l0,&session);
+        assert_eq!(result.quality,"final");assert_eq!(result.summary.len(),10);
+        assert!(result.markdown.starts_with("## 会议概览"));
+        assert!(result.markdown.contains("产品包装讨论重点9"));
+        server.join().unwrap();
     }
 
     #[test]

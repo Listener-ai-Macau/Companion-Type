@@ -1228,17 +1228,17 @@ fn request_background_review(endpoint: &str, model: &str, key: &str,
 }
 
 #[derive(Debug, Deserialize)]
-struct ConcisePoint { text: String, sources: Vec<usize> }
+pub(super) struct ConcisePoint { text: String, sources: Vec<usize> }
 
 // A short AI overview makes a long meeting scannable. The model must identify
 // detailed source items; the full minutes and original quotes stay intact.
-fn prepend_concise_overview(minutes: &mut CompanionV1MeetingMinutes, points: &[ConcisePoint]) {
+pub(super) fn prepend_concise_overview(minutes: &mut CompanionV1MeetingMinutes, points: &[ConcisePoint]) {
     if points.is_empty() { return; }
     let text = points.iter().map(|point| format!("- {}", point.text.trim())).collect::<Vec<_>>().join("\n");
     minutes.markdown = format!("## 会议概览\n\n> AI根据详细纪要整理，请结合原文核对。\n\n{text}\n\n{}", minutes.markdown);
 }
 
-fn parse_concise_overview(content: &str, item_count: usize) -> Result<Vec<ConcisePoint>, String> {
+pub(super) fn parse_concise_overview(content: &str, item_count: usize) -> Result<Vec<ConcisePoint>, String> {
     let object: Value = serde_json::from_str(super::strip_code_fences(content).trim())
         .map_err(|_| "会议概览格式不正确。")?;
     let points: Vec<ConcisePoint> = serde_json::from_value(object.get("overview").cloned().unwrap_or(Value::Null))
