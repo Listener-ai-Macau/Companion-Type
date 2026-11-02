@@ -839,6 +839,10 @@ export function CompanionDashboard({
     ? {...describedRecovery, message: describedRecovery.message.replace(recoveryError, operationErrorText(recoveryError))}
     : describedRecovery;
   const finalTranscript = selectedSession ? companionSessionHasFinalTranscript(selectedSession) : false;
+  useEffect(() => {
+    if (gapPreview && gapPreview.sessionId === selectedSession?.id && typeof document !== 'undefined')
+      document.getElementById('ct-gap-preview')?.scrollIntoView({block:'nearest'});
+  }, [gapPreview?.sessionId, gapPreview?.startMs, gapPreview?.endMs, selectedSession?.id]);
   const transcriptUnmappedEdges = selectedSession ? companionTranscriptUnmappedEdges(selectedSession) : [];
   const offlineReady = offlineMinutes?.status === 'minutesReady' && offlineMinutes.quality === 'final'
     && companionMinutesProcessingComplete(offlineMinutes.processing)
@@ -2126,6 +2130,28 @@ export function CompanionDashboard({
               }} />)
               : <button type="button" className="ct-action" disabled={Boolean(audioBlockedReason) || audioBusy}
                 title={audioBlockedReason ?? undefined} onClick={() => void prepareAudio()}>{audioBusy ? '正在准备…' : '重试回听'}</button>}
+            {onPreviewGap && !finalTranscript && selectedSession.source!=='hostMeeting' && preparedAudio
+              && !(preparedAudio.parts && preparedAudio.parts.length>1) ? <div className="ct-audio-tools">
+              <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!canTranscribe||!hasOriginalAudio||Boolean(gapPreview)}
+                onClick={async()=>{
+                  const player=audioElement.current, sessionId=selectedSession.id;
+                  if(!player || player.readyState<1 || !Number.isFinite(player.currentTime) || !Number.isFinite(player.duration)) {
+                    setGapMessage({sessionId,text:'请先等原音加载完成，再定位要重试的位置。'});return;
+                  }
+                  const startMs=Math.max(0,Math.floor(player.currentTime*1000));
+                  const endMs=Math.min(startMs+15_000,Math.floor(player.duration*1000));
+                  if(endMs<=startMs){setGapMessage({sessionId,text:'已到录音末尾，请先移动回听位置。'});return;}
+                  const sourceText=selectedSession.transcriptText,sourceReview=JSON.stringify(selectedSession.transcriptReview??null);
+                  setGapMessage(null);
+                  try {const result=await onPreviewGap(sessionId,{startMs,endMs});
+                    setGapPreview({sessionId,startMs,endMs,text:result.text,partial:result.unrecognized.length>0,sourceText,sourceReview});}
+                  catch(error){setGapMessage({sessionId,text:`单段转写未完成：${operationErrorText(error,'general')}`});}
+                }}>转写当前位置起最多 15 秒</button>
+              <p className="ct-step-meta">{productSettings?.asrProvider==='local-paraformer'
+                ? '使用当前本地模型，不上传录音。相同音频可能得到相同结果。'
+                : '使用当前转写服务，仅发送所选片段，可能产生费用。'}结果供回听核对，不覆盖原文字。</p>
+              {gapMessage?.sessionId===selectedSession.id?<p role="status">{gapMessage.text}</p>:null}
+            </div>:null}
           </section>
           </div>
           {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details ref={savedMinutesHeading} id="ct-recording-result" className="ct-recording-result"
@@ -2348,9 +2374,12 @@ export function CompanionDashboard({
                   {productSettings?.asrProvider==='local-paraformer'?'重试使用当前本地模型，只处理所选时段，不上传录音。相同模型和音频可能得到相同结果；可在设置中切换已配置的转写方式。':'重试使用当前转写服务，仅发送所选音频时段，可能产生费用。'}结果供核对，不会自动覆盖原文字。
                 </p>:null}
               </details>
+            </div> : null}
               {gapMessage?.sessionId===selectedSession.id?<p role="status">{gapMessage.text}</p>:null}
-              {gapPreview?.sessionId===selectedSession.id ? <section aria-label="单段重新转写结果">
-                <p>{formatDuration(gapPreview.startMs)}–{formatDuration(gapPreview.endMs)} 的新结果，请回听核对后保存为备注。重新整理时可选择一并参考已保存的补充；原始转写不会自动改变。</p>
+              {gapPreview?.sessionId===selectedSession.id ? <section id="ct-gap-preview" aria-label="单段重新转写结果">
+                <p>{formatDuration(gapPreview.startMs)}–{formatDuration(gapPreview.endMs)} 的新结果，请回听核对后保存为备注。{finalTranscript
+                  ? '重新整理时可选择一并参考已保存的补充；原始转写不会自动改变。'
+                  : '这只是所选片段的参考，并非整场转写；原音和已有文字不会改变。'}</p>
                 {gapPreview.partial?<p>这一时段仍有部分音频未识别出文字，请回听核对。</p>:null}
                 <textarea className="ct-textarea ct-step-textarea" aria-label="单段转写文字" value={gapPreview.text}
                   onChange={event=>setGapPreview(current=>current?{...current,text:event.target.value}:current)}/>
@@ -2371,7 +2400,6 @@ export function CompanionDashboard({
                   <button type="button" className="ct-text-button" onClick={()=>setGapPreview(null)}>关闭结果</button>
                 </div>
               </section>:null}
-            </div> : null}
             <div className="ct-recording-text-heading"><h3>{hasMinutes?'原话与补充':'文字'}</h3>
               <div className="ct-button-row">
                 {companionReviewedTranscript(selectedSession).trim() || selectedSession.transcriptReview ? <button type="button" className="ct-text-button"
