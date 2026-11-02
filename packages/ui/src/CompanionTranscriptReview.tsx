@@ -106,7 +106,9 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   function replaceInDraft() {
     if (!draft || !findText || !replacementCount || !canEdit || changedSource) return;
     const replace = (text: string) => text.split(findText).join(replacementText);
-    setReplacementMessage(`已替换 ${replacementCount} 处，请保存转写修订。`);
+    const emptyAfter = (draft.rows.length ? draft.rows.map((row) => row.text) : [draft.text])
+      .some((text) => !replace(text).trim());
+    setReplacementMessage(`已替换 ${replacementCount} 处；${emptyAfter ? '部分文字为空，请补充后保存。' : '请保存转写修订。'}`);
     change((value) => value.rows.length
       ? { ...value, rows: value.rows.map((row) => ({ ...row, text: replace(row.text) })) }
       : { ...value, text: replace(value.text) });
