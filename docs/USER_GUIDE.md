@@ -185,4 +185,4 @@ Local cleanup cannot retract data already sent to a provider or remove device da
 
 **Device synchronization is not cross-computer cloud backup.** After device space is reclaimed, preserve computer audio and needed text yourself. Export important material to a backup location you control and check that the files open. Disabling a service, disconnecting Bluetooth, restoring a name or uninstalling the application does not establish deletion from every location. Before transferring the device or changing computers, check local data, the device, pet memory, exported copies and data already sent remotely separately.
 
-Updated 2 November 2026 for the Windows 0.1.22 engineering candidate. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.
+Updated 2 November 2026 for the Windows 0.1.23 engineering candidate. Images are actual Windows interface captures with isolated example material. Other systems, account entitlements, real audio and optical behavior follow their respective deliveries.
