@@ -1129,12 +1129,45 @@ fn background_review_keeps_valid_summary_when_provider_returns_action_ids_withou
 }
 
 #[test]
-fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
+#[ignore = "uses previously authorized real-card transcript-derived material and the configured AI service"]
+fn real_card_background_review_with_context() {
+    let result=std::env::var_os("COMPANION_REAL_BACKGROUND_RESULT").unwrap();
+    let checkpoint=std::env::var_os("COMPANION_REAL_BACKGROUND_CHECKPOINT").unwrap();
+    let source:CompanionV1HostSession=serde_json::from_slice(&fs::read(result).unwrap()).unwrap();
+    let minutes=source.minutes.as_ref().unwrap();
+    let checkpoint=read_checkpoint(Path::new(&checkpoint)).unwrap();
+    let quotes=action_source_quotes(&checkpoint,minutes);
+    assert_eq!(minutes.action_items.len(),2);assert!(quotes.iter().all(|q|!q.is_empty()));
+    let base=std::env::var("DEEPSEEK_BASE_URL").unwrap();
+    let endpoint=format!("{}/chat/completions",base.trim_end_matches('/'));
+    let client=reqwest::blocking::Client::builder().timeout(Duration::from_secs(45)).build().unwrap();
+    let review=request_background_review(&endpoint,&std::env::var("DEEPSEEK_MODEL").unwrap(),
+        &std::env::var("DEEPSEEK_API_KEY").unwrap(),&source,minutes,&quotes,Some(&checkpoint),&client).unwrap();
+    assert_eq!(review.background,vec![0,1]);
+    assert!(review.background_summary.is_empty() && review.background_decisions.is_empty()
+        && review.background_questions.is_empty(),"long input omitted content evidence; do not relabel those sections");
+    println!("real-card actions marked for review: {}; no original removed",review.background.len());
+}
+
+#[test]
+fn action_context_requires_unique_source_and_respects_unicode_boundaries() {
+    let transcript=format!("{}说话人在这里说话。{}", "前".repeat(200), "后".repeat(200));
+    let result=action_quote_context(&transcript,&["这里说话".into()]);
+    assert_eq!(result.len(),1);assert!(result[0].contains("这里说话"));
+    assert_eq!(result[0].chars().count(),160+4+160);
+    assert!(action_quote_context("重复内容重复内容",&["重复".into()]).is_empty());
+    assert!(action_quote_context("短原文",&["不存在".into(),"".into()]).is_empty());
+    assert_eq!(review_index(&serde_json::json!("a1"),'a',2),Some(1));
+    assert_eq!(review_index(&serde_json::json!("s1"),'a',2),None);
+}
+
+#[test]
+fn background_review_keeps_valid_typed_ids_and_ignores_mixed_fields() {
     use std::{io::{Read, Write}, net::TcpListener, thread};
     let listener = TcpListener::bind("127.0.0.1:0").unwrap();
     let address = listener.local_addr().unwrap();
     let worker = thread::spawn(move || {
-        for content in [r#"{"possiblyUnrelated":[1]}"#, r#"{"possiblyUnrelated":[1,1]}"#, r#"{"possiblyUnrelated":[2]}"#] {
+        for content in [r#"{"possiblyUnrelated":["a1","q1"],"duplicateGroups":[["a0","d0"]]}"#, r#"{"possiblyUnrelated":[1,1]}"#, r#"{"possiblyUnrelated":[2]}"#] {
             let (mut stream, _) = listener.accept().unwrap();
             stream.set_read_timeout(Some(Duration::from_secs(5))).unwrap();
             let mut data = Vec::new(); let mut buffer = [0u8; 4096];
@@ -1154,6 +1187,9 @@ fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
             let input = request["messages"][1]["content"].as_str().unwrap();
             assert!(input.find("\"title\"").unwrap() < input.find("\"summary\"").unwrap());
             assert!(input.find("\"summary\"").unwrap() < input.find("\"actions\"").unwrap());
+            let parsed: Value=serde_json::from_str(input).unwrap();
+            assert_eq!(parsed["actions"][1]["id"],"a1");
+            assert_eq!(parsed["actions"][1]["sourceContext"][0],"会议原文");
             let payload = serde_json::json!({"choices":[{"finish_reason":"stop","message":{"content":content}}]}).to_string();
             write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: {}\r\n\r\n{}",payload.len(),payload).unwrap();
         }
@@ -1165,9 +1201,11 @@ fn background_review_accepts_valid_ids_and_rejects_invalid_responses() {
     ];
     let endpoint = format!("http://{address}/chat/completions");
     let client = reqwest::blocking::Client::builder().no_proxy().timeout(Duration::from_secs(5)).build().unwrap();
-    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],None,&client).unwrap().background, vec![1]);
-    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],None,&client).is_err());
-    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&[],None,&client).is_err());
+    let quotes=vec![vec![],vec!["原文".to_string()]];
+    let first=request_background_review(&endpoint,"test","test-key",&source,&minutes,&quotes,None,&client).unwrap();
+    assert_eq!(first.background,vec![1]);assert!(first.duplicates.is_empty());
+    assert_eq!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&quotes,None,&client).unwrap().background, vec![1]);
+    assert!(request_background_review(&endpoint,"test","test-key",&source,&minutes,&quotes,None,&client).unwrap().background.is_empty());
     worker.join().unwrap();
 }
 
