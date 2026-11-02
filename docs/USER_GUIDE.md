@@ -62,7 +62,7 @@ Speech recognition and organized results are different layers. Check important n
 
 When regenerating, explicitly choose **原话＋已保存补充** to include saved notes, or **仅原话** to use only the transcript. Regeneration can replace manual edits in the selected result; export important edits first.
 
-For a long meeting, read the short **会议概览** if present, then expand the full summary and source excerpts. Check important names, numbers and actions against the recording. No extracted action does not establish that there was no action.
+For a meeting with many points, read the short **会议概览** if present, then expand the full summary and available source excerpts. Check important names, numbers and actions against the recording. No extracted action does not establish that there was no action.
 
 When no transcription choice has been saved or separately configured, Type defaults to **电脑本地转写（中文）** (computer-local Chinese transcription); a previously saved cloud selection remains in effect. For first use, open **设置与工具 → 转写与纪要服务** and select **准备本地转写模型**. This needs internet and downloads about 240 MB; if the official site is unavailable, a mirror is tried and the file is verified. After the recording is finished and synchronized, select **转文字**. Local transcription does not upload audio. Cloud transcription sends audio to the selected service; intelligent minutes send selected text to the configured service and may incur charges. For long meetings, minutes review may also use nearby transcribed words to flag possible background conversation. This is a prompt for review, not reliable speaker separation or a guarantee of accuracy. A summary containing both meeting content and possible background speech is kept with a review notice.
 
