@@ -86,7 +86,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
             : !capacity ? '尚未读到容量，不能预估可录时长。'
               : capacity.busy ? '上次读取时设备正在忙，结束后可重新读取。'
                 : full ? '空间或录音目录已满，请先同步并确认原音已保存。'
-                  : `${fragmented ? '一块连续空间' : ''}约可录 ${recordingRoomLabel(seconds)}（上次读取）${capacity.localLimitSeconds ? `；实体键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''}。${fragmented ? '分散空间能否合用由开始时核对。' : ''}`}
+                  : `${fragmented ? '一块连续空间' : '仅靠设备空间'}约可录 ${recordingRoomLabel(seconds)}（上次读取）${capacity.localLimitSeconds ? `；实体键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''}。${fragmented ? '分散空间能否合用由开始时核对。' : ''}连接电脑并完成同步后，设备空间可能增加。`}
             {short && !full ? <span>{fragmentedMaybe ? `一块连续空间不足本次 ${recordingRoomLabel(durationSeconds!)}；开始时会核对分散空间，设备不支持或空间不足时会拒绝开录。` : `不足本次 ${recordingRoomLabel(durationSeconds!)}，请先同步或在“录音与同步”缩短时长。`}</span> : null}
             {connected ? <button type="button" className="ct-text-button" disabled={blocked} onClick={onCheck}>重新检查设备</button> : null}</dd></div>
           <div><dt>电量与供电</dt><dd>当前设备没有可靠电量读数，无法估计续航。长时间录音前请先充电或接稳定电源。</dd></div>

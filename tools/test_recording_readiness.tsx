@@ -21,6 +21,8 @@ const render=(s:any=snapshot,recording=false,duration=600,settings:any=null)=><C
 act(()=>{tree=create(render());});
 assert.deepEqual(calls,[],'opening advice has no automatic device, recording or service activity');
 assert.match(text(tree.toJSON()),/空间不够本次时长/);assert.match(text(tree.toJSON()),/约可录 5分钟/);
+assert.match(text(tree.toJSON()),/仅靠设备空间约可录 5分钟（上次读取）/);
+assert.match(text(tree.toJSON()),/连接电脑并完成同步后，设备空间可能增加/);
 assert.match(text(tree.toJSON()),/实体键单次上限 2分钟/);assert.match(text(tree.toJSON()),/没有可靠电量读数/);
 assert.match(text(tree.toJSON()),/不需要转写服务或离线识别模型/);
 assert.match(text(tree.toJSON()),/电脑本地转写不上传录音；选择云端转写时会发送录音/);

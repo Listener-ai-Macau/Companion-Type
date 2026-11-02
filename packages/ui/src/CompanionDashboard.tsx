@@ -937,7 +937,7 @@ export function CompanionDashboard({
   const capacityHint = !capacity ? '尚未取得设备容量，无法预估剩余时长；开始时由设备检查空间。'
     : capacity.busy ? '设备上次报告正在录音、回收或升级；开始前会重新检查。'
       : capacity.usedEntries >= capacity.maxEntries ? '设备录音目录已满，请同步并回收录音。'
-        : `${formatBytes(capacity.freeBytes)} 空闲 · 连续可用约 ${formatDuration(capacitySeconds * 1000)} · 目录 ${capacity.usedEntries}/${capacity.maxEntries}`;
+        : `${formatBytes(capacity.freeBytes)} 空闲 · 仅靠设备空间约可录 ${formatDuration(capacitySeconds * 1000)}（上次读取） · 目录 ${capacity.usedEntries}/${capacity.maxEntries}`;
   const boardLiveActive = Boolean(
     boardOnlineLive
     && ['starting', 'recording', 'stopping', 'finalizing'].includes(boardOnlineLive.state),
@@ -1751,7 +1751,7 @@ export function CompanionDashboard({
       : !connected ? '设备不在身边也能查看本机内容'
         : !capacity || capacity.busy ? `剩余可录时长待读取 · ${configuredTranscription}`
           : capacityUnavailable ? `同步并确认保存后，设备才会复用空间 · ${configuredTranscription}`
-            : `${fragmentedCapacity ? '一块连续空间' : '本地空间'}约可录 ${recordingRoomLabel(capacitySeconds)}（上次读取）${fragmentedCapacity ? ' · 分散空间能否合用由开始时核对' : ''}${capacity.localLimitSeconds ? ` · 按键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''} · ${configuredTranscription}`;
+            : `${fragmentedCapacity ? '一块连续空间' : '仅靠设备空间'}约可录 ${recordingRoomLabel(capacitySeconds)}（上次读取）${fragmentedCapacity ? ' · 分散空间能否合用由开始时核对' : ''}${capacity.localLimitSeconds ? ` · 按键单次上限 ${recordingRoomLabel(capacity.localLimitSeconds)}` : ''} · ${configuredTranscription}`;
   useEffect(()=>{
     if(!savedMinutesReveal)return;
     if(savedMinutesReveal.sessionId!==selectedSession?.id||savedMinutesReveal.mode!==minutesViewMode||pageView!=='library'||!savedDetailOpen){setSavedMinutesReveal(null);return;}
