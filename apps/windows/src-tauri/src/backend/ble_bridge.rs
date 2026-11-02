@@ -1623,6 +1623,10 @@ fn use_active_follow_preference(verified_recorder_state: Option<u8>) -> bool {
     verified_recorder_state == Some(MEETING_STATE_RECORDING)
 }
 
+fn use_early_active_follow_preference(state: Option<u8>, growing_tail: bool, original_scope: bool) -> bool {
+    use_active_follow_preference(state) && growing_tail && original_scope
+}
+
 pub(crate) fn follow_prepared_recording_once(device_id: &str,
     original_scope: Option<&super::recording_wire::SessionKey>,
     mut live: Option<&mut super::recording_wire::receiver::LiveCursor>) -> Result<Option<FollowObservation>, String> {
@@ -1671,16 +1675,23 @@ pub(crate) fn follow_prepared_recording_once(device_id: &str,
                 identity = Some(current);
             }
             let job = RecordingSyncJob::begin_background(device_id)?;
+            let tail_scope=owned.as_ref().and_then(|lease| lease.logical_key.as_ref());
+            let mut policy = SealedLinkPolicy::default();
+            // A verified growing recording will need its live tail even if
+            // the sealed catalog has not changed. Start the existing scoped
+            // preference before that read so Windows can negotiate while the
+            // same authenticated link retrieves its directory.
+            let early_active = use_early_active_follow_preference(
+                verified_recorder_state, peer.growing_tail, tail_scope.is_some());
+            if early_active { policy.initialize_active_recording(&device).await; }
             // Finish the bounded control exchange/CCCD cleanup before handoff;
             // do not drop a subscription-owning future midway through an ACK.
             let catalog = on_native_link(&device, segmented::read_catalog(&device, &chars, peer.clone())).await?;
-            let tail_scope=owned.as_ref().and_then(|lease| lease.logical_key.as_ref());
             if catalog.generation.is_some() && device.follow_generation == catalog.generation
                 && !(peer.growing_tail&&tail_scope.is_some()) {
                 return Ok(None);
             }
-            let mut policy = SealedLinkPolicy::default();
-            if use_active_follow_preference(verified_recorder_state) {
+            if use_active_follow_preference(verified_recorder_state) && !early_active {
                 policy.initialize_active_recording(&device).await;
             }
             let (mut batch, deferred) = segmented::sync_catalog_limited(&device, &chars, peer.clone(), catalog.entries,
@@ -6422,6 +6433,11 @@ mod tests {
         assert!(!use_active_follow_preference(Some(MEETING_STATE_FINALIZED)));
         assert!(!use_active_follow_preference(None));
         assert!(!use_active_follow_preference(Some(255)));
+        assert!(use_early_active_follow_preference(Some(MEETING_STATE_RECORDING), true, true));
+        assert!(!use_early_active_follow_preference(Some(MEETING_STATE_FINALIZED), true, true));
+        assert!(!use_early_active_follow_preference(None, true, true));
+        assert!(!use_early_active_follow_preference(Some(MEETING_STATE_RECORDING), false, true));
+        assert!(!use_early_active_follow_preference(Some(MEETING_STATE_RECORDING), true, false));
     }
     fn connect_transport_operation()->CompanionBleOperation {
         CompanionBleOperation{provider_id:"companion-type-windows-ble".into(),mode:"windows-native-connect-auto-upload-segmented".into(),
