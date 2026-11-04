@@ -1,3 +1,5 @@
+> Current packaged Android backend source (2026-11-04): the app's `libs/companion-android-backend.provenance.json` identifies the complete backend source commit, its workspace and the exact AAR hash. This older directory is retained for history and is not the current app's backend build input. Use the complete source workspace from that receipt, including its frozen shared-engine inputs. The Android pre-build check rejects an AAR that does not match the receipt. Frontend-only work can reuse the matching AAR.
+
 # Companion Android recording backend — integration candidate
 
 This library is the first Android backend for a future mobile UI. It follows the

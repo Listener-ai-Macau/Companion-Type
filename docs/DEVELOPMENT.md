@@ -165,3 +165,10 @@ The Windows Tauri shell keeps state behind a Type-style commands/coordinator/bac
 `npm run verify:installed-ui-sync` launches the installed app, clicks the visible Scan -> Sync chain, and captures screenshots under `docs/validation/companion-type-installed-ui-sync-*.png`. The summary JSON is `docs/validation/companion-type-installed-ui-sync.json`; final PASS for item 2 still requires visual review of the after-Sync screenshot.
 
 `npm run verify:final-human-signoff` opens a Chinese popup for the final local human gate. It writes `docs/validation/companion-type-final-human-signoff.json`; only an explicit "确认通过" with all checklist items checked can clear the item 1/2 human confirmation gate.
+
+
+## Current Android candidate source and frontend work
+
+The Android app and its backend have separate source identities. For the current candidate, read `apps/android/app/libs/companion-android-backend.provenance.json`: it records the complete backend workspace/commit and the exact AAR hash. The legacy `apps/android-backend` directory in this UI checkout is incomplete relative to that candidate; rebuilding it would omit shipped Java/JNI capabilities. Do not use it to replace the current AAR.
+
+Frontend-only edits use `apps/mobile/src` and `packages/ui`, then `npm run build:mobile` and the existing Android Gradle build. Keep the matching AAR and provenance file together. Backend edits start from the receipt's complete backend source repository (with its frozen shared engine and common transcript crate), use its `build_android_native.py` and `package_android_candidate.py`, and refresh the source commit and AAR hash together. The Gradle pre-build task checks the pair before packaging. This receipt is a build identity, not phone or hardware acceptance.

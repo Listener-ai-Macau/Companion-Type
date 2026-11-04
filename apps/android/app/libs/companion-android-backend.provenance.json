@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "aarSha256": "b7647c0695ab8e75b60237c787c33040e011f98980f43345eaafa01101ace534",
+  "backendSourceCommit": "6cc7055dc75ab9876d9378f79c9055980c675f5c",
+  "backendSourceWorkspace": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\android-backend-source",
+  "priorVerifiedBackendCommit": "f69d8ca53e74a66872a60e4e11d75cf1f0e34730",
+  "scope": "Complete Android backend; document presentation changed only. This source workspace includes its frozen shared Windows engine inputs and common transcript crate. The older apps/android-backend in the UI worktree is not this build input.",
+  "features": [
+    "mobile-asr",
+    "mobile-local-asr",
+    "mobile-calendar",
+    "mobile-control"
+  ]
+}
