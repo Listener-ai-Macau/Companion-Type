@@ -21,15 +21,17 @@ function excerpt(body:string):{first:string;remaining:string;count:number}|null 
  if(starts.length<=5)return null;
  const split=starts[4];return {first:lines.slice(0,split).join('\n'),remaining:lines.slice(split).join('\n'),count:starts.length-4};
 }
-export function MinutesDocument({markdown,renderText,renderSource}:{markdown:string;renderText:(text:string,section?:string)=>React.ReactNode;renderSource?:(text:string)=>React.ReactNode}) {
- const display=splitGeneratedMeetingMetadata(markdown);const sections=splitMinutesSections(display.body);
+export function MinutesDocument({markdown,renderText,renderSource,generationNote,manualReview=false}:{markdown:string;renderText:(text:string,section?:string,position?:{sectionOccurrence:number;itemOffset:number})=>React.ReactNode;renderSource?:(text:string)=>React.ReactNode;generationNote?:string;manualReview?:boolean}) {
+ const manualNotice='> 人工修订：此版本包含使用者的核对或修改，不代表重新生成的 AI 结果；新增负责人和时间请按实际安排确认。\n\n';
+ const display=splitGeneratedMeetingMetadata(manualReview&&markdown.startsWith(manualNotice)?markdown.slice(manualNotice.length):markdown);const sections=splitMinutesSections(display.body);
  const headings=sections.map((s,i)=>({s,i})).filter(({s})=>s.title!==null);
- if(headings.length<2)return <>{renderText(markdown)}</>;
- return <MeetingReadingFrame markdown={markdown} sections={headings.map(({s})=>s.title!)}><div className="minutes-document">{sections.map((section,index)=>{
+ if(!headings.length)return <>{renderText(display.body)}</>;
+ return <MeetingReadingFrame markdown={markdown} sections={headings.map(({s})=>s.title!)}><div className="minutes-document">{manualReview&&<p className="manual-minutes-note">含人工修订 · 负责人和时间请按实际安排确认</p>}{sections.map((section,index)=>{
   const title=section.title?meetingHeadingForDisplay(section.title):null;
   if(!title)return <div key={index} className="minutes-preamble">{renderText(section.body)}</div>;
   if(/^(分段原文依据|原文依据)$/.test(section.title!))return <details key={index} className="minutes-source-section"><summary data-meeting-heading={section.title}><span>{title}</span><span>展开核对</span></summary>{renderSource?renderSource(section.body):renderText(section.body)}</details>;
   const remaining=excerpt(section.body);
-  return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{section.title==='Decisions'&&<p className="hint">可能包含建议或现行做法；是否已决定，请结合原话核对。</p>}{section.title==='Action Items'&&<p className="hint">请核对事项、负责人和时间；未明确的信息不会自动补全。</p>}{section.title==='会议概览'&&<p className="hint">概览可能遗漏细节。整段录音会一起整理；处理分段不代表会议场次，请结合完整纪要和原话查看。</p>}{renderText(remaining?remaining.first:section.body,section.title!)}{remaining&&<details className="minutes-more"><summary>查看其余 {remaining.count} 项</summary>{renderText(remaining.remaining,section.title!)}</details>}</section>;
- })}{display.metadata&&<details className="minutes-more"><summary>查看生成信息</summary><pre>{display.metadata}</pre></details>}</div></MeetingReadingFrame>;
+  const sectionOccurrence=sections.slice(0,index).filter(previous=>previous.title===section.title).length;
+  return <section className="minutes-section" key={index}><h3 data-meeting-heading={section.title}>{title}</h3>{section.title==='Decisions'&&<p className="hint">可能包含建议或现行做法；是否已决定，请结合原话核对。</p>}{section.title==='Action Items'&&<p className="hint">请核对事项、负责人和时间；未明确的信息不会自动补全。</p>}{section.title==='会议概览'&&<p className="hint">概览可能遗漏细节。整段录音会一起整理；处理分段不代表会议场次，请结合完整纪要和原话查看。</p>}{renderText(remaining?remaining.first:section.body,section.title!,{sectionOccurrence,itemOffset:0})}{remaining&&<details className="minutes-more"><summary>查看其余 {remaining.count} 项</summary>{renderText(remaining.remaining,section.title!,{sectionOccurrence,itemOffset:4})}</details>}</section>;
+ })}{display.metadata&&<details className="minutes-more minutes-generation"><summary>查看生成说明</summary><p>{generationNote||'这是已保存的整理结果，内容请结合转写核对。人工修改会单独标示；生成说明不代表转写或事实准确性已经验证。'}</p></details>}</div></MeetingReadingFrame>;
 }

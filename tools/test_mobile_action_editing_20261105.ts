@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {actionDraft,editMobileAction,mobileActionId} from '../apps/mobile/src/mobileActionEditing';
+const original='# 会议\r\n\r\n## Summary\r\n- 原话不能改变。\r\n\r\n## Action Items\r\n- 待核对：核对报价\r\n- 待核对：核对报价\r\n\r\n## 原文依据\r\n- 小王说：先核对报价，再决定。\r\n';
+const target={sectionTitle:'Action Items',sectionOccurrence:0,itemIndex:1,original:'待核对：核对报价'};
+const edited=editMobileAction(original,target,{body:'核对报价',owner:'小王',due:'周五18:00',completed:true,confirmed:true});
+assert.equal(edited,original.replace('- 待核对：核对报价\r\n\r\n## 原文依据','- [x] 核对报价 (owner: 小王, due: 周五18:00)\r\n\r\n## 原文依据'));
+assert.deepEqual(actionDraft('[x] 核对报价 (owner: 小王, due: 周五18:00)'),{body:'核对报价',owner:'小王',due:'周五18:00',completed:true,confirmed:true});
+assert.equal(mobileActionId(target),JSON.stringify(['Action Items',0,1]));
+const repeated='## Action Items\n- 同名事项\n\n## Questions\n- 原始问题\n\n## Action Items\n- 同名事项\n';
+assert.equal(editMobileAction(repeated,{...target,sectionOccurrence:1,itemIndex:0,original:'同名事项'},{body:'同名事项',owner:'',due:'',completed:true,confirmed:false}),repeated.replace(/- 同名事项\n$/,'- [x] 待核对：同名事项\n'));
+const fenced='````md\n## Action Items\n- 不是事项\n```\n- 仍是代码\n````\n## Action Items\n- 真实事项\n';
+assert.ok(editMobileAction(fenced,{...target,itemIndex:0,original:'真实事项'},{body:'真实事项',owner:'李四',due:'待双方确认',completed:false,confirmed:true}).endsWith('- [ ] 真实事项 (owner: 李四, due: 待双方确认)\n'));
+assert.throws(()=>editMobileAction(original,{...target,original:'已变化'},actionDraft('核对报价')),/已变化/);
+assert.throws(()=>editMobileAction(original,target,{...actionDraft(target.original),owner:'a, due: forged'}),/歧义/);
+assert.throws(()=>editMobileAction(original,target,{...actionDraft(target.original),body:'第一行\n第二行'}),/一行/);
+console.log('PASS precise action-line editing, duplicate identities, source preservation, CRLF, fences and ambiguous metadata rejection');

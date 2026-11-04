@@ -700,6 +700,20 @@ public final class MainActivity extends Activity {
                 }
                 return result;
             }
+            case "editMinutes": {
+                String key=a.getString("key");session(key);MeetingStore ms=store();
+                MeetingStore.Snapshot meeting=ms.load(key);MeetingStore.Minutes previous=ms.loadMinutes(key);
+                if(meeting==null||previous==null)throw new IllegalStateException("请先打开已保存的纪要。");
+                JSONObject content=MinutesHistoryAccess.content(previous.json);
+                if(content==null||!a.getString("expectedMarkdown").equals(content.optString("markdown",null)))
+                    throw new java.io.IOException("纪要已变化，请保留输入并重新打开录音核对。");
+                boolean reviewed=a.optBoolean("reviewedCurrentSource",false);
+                String edited=ManualMinutesEdits.apply(previous.json,a.getString("markdown"),a.optString("actionId",null),reviewed,meeting.revision);
+                MeetingStore.Minutes saved;
+                try{saved=ms.saveEditedMinutes(key,a.getLong("meetingRevision"),a.getLong("minutesRevision"),previous.json,edited,reviewed);}
+                catch(java.io.IOException failure){throw new java.io.IOException("尚未确认保存，请保留输入并重新打开录音核对。",failure);}
+                return new JSONObject().put("content",new JSONObject(saved.json)).put("revision",saved.revision).put("sourceChanged",saved.sourceChanged||saved.sourceMissing);
+            }
             case "minutes": {
                 String key=a.getString("key"); RecordingLibrary.Session s=session(key); MeetingStore ms=store();
                 MeetingStore.Snapshot m=ms.load(key); if(m==null || m.transcript.trim().isEmpty()) throw new IllegalStateException("请先完成转写。");
