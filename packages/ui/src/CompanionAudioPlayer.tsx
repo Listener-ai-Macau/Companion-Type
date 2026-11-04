@@ -163,14 +163,6 @@ function SourcePlayer({ src, sourceIdentity,sessionId, playerRef, onError, pause
           savedSpeed.current = value; player.preservesPitch = true; player.playbackRate = value; setSpeed(value);
           remember(player, true);
         }}>{playbackSpeeds.map((value) => <option key={value} value={value}>{value}×</option>)}</select></label>
-      <span>{time(position)} / {time(duration)}</span>
-      <button type="button" className="ct-action" disabled={!ready} aria-pressed={repeat} onClick={()=>{
-        setLoop(false);setRepeat(value=>!value);setMessage('');
-      }}>{repeat?'关闭单场循环':'开启单场循环'}</button>
-      <button type="button" className="ct-action" disabled={!ready} onClick={() => {
-        const player=playerRef.current; if (!player) return;
-        completed.current=false; setLoop(false); player.currentTime=0; setPosition(0); remember(player,true);
-      }}>从头回听</button>
     </div>
     {pauseTimeline && pauseTimeline.gaps.length > 0 ? <section aria-label="录音暂停记录">
       <strong>暂停记录</strong>
@@ -187,6 +179,18 @@ function SourcePlayer({ src, sourceIdentity,sessionId, playerRef, onError, pause
           : `暂停 ${(Math.round(gap.durationMs / 10) / 100).toFixed(2)} 秒${gap.endedDuringPause ? '后结束' : '后继续'}`}
       </button>)}</div>
     </section> : null}
+    <details className="ct-audio-advanced">
+      <summary>循环与片段{repeat?' · 单场循环中':loop?' · 片段循环中':''}</summary>
+      <div className="ct-audio-tools">
+        <span>{time(position)} / {time(duration)}</span>
+        <button type="button" className="ct-action" disabled={!ready} aria-pressed={repeat} onClick={()=>{
+          setLoop(false);setRepeat(value=>!value);setMessage('');
+        }}>{repeat?'关闭单场循环':'开启单场循环'}</button>
+        <button type="button" className="ct-action" disabled={!ready} onClick={() => {
+          const player=playerRef.current; if (!player) return;
+          completed.current=false; setLoop(false); player.currentTime=0; setPosition(0); remember(player,true);
+        }}>从头回听</button>
+      </div>
     <div className="ct-audio-tools" aria-label="片段循环回听">
       <button type="button" className="ct-action" disabled={!ready} onClick={() => mark('start')}>设为起点 A</button>
       <button type="button" className="ct-action" disabled={!ready || start == null} onClick={() => mark('end')}>设为终点 B</button>
@@ -202,6 +206,7 @@ function SourcePlayer({ src, sourceIdentity,sessionId, playerRef, onError, pause
       }}>清除片段</button>
       {start != null ? <span>A {time(start)} · B {end == null ? '未设置' : time(end)}</span> : null}
     </div>
+    </details>
     {message ? <p role="status">{message}</p> : null}
     {memoryFailed ? <p role="status">本机未能保存回听位置；仍可播放，下次可能需要重新定位。</p> : null}
   </div>;

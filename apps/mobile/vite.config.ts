@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: fileURLToPath(new URL('.', import.meta.url)),
+  base: './',
   plugins: [react()],
   resolve: {
     alias: {
@@ -12,6 +13,10 @@ export default defineConfig({
     },
   },
   build: {
+    // Vite's normal browser target is newer than many Android WebViews.
+    // Chrome 64 is the minimum supported by Vite's module-loading runtime.
+    target: 'chrome64',
+    cssTarget: 'chrome64',
     outDir: 'dist',
     emptyOutDir: true,
   },

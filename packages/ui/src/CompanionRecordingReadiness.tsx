@@ -22,7 +22,7 @@ export function fragmentedSpaceMayFit(c: CompanionV1RecordingCapacity, seconds: 
 
 /** The last device report is advice, not a replacement for START's space check. */
 export function CompanionRecordingReadiness({ snapshot, settings, recording, busy, durationSeconds,
-  onConnect, onCheck, onSettings, onRefresh, capacityDetails }: {
+  onConnect, onCheck, onSettings, onRefresh, capacityDetails, actionsAbove = false }: {
   snapshot: CompanionV1Snapshot | null;
   settings: CompanionProductSettingsPublic | null;
   recording: boolean;
@@ -33,6 +33,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   onSettings: () => void;
   onRefresh: () => void;
   capacityDetails?: ReactNode;
+  actionsAbove?: boolean;
 }) {
   const device = snapshot?.device;
   const preview = snapshot?.source === 'fixture' || device?.mode === 'fixture';
@@ -71,7 +72,7 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
     <div className="ct-readiness-grid">
       <section aria-label="录音与保存准备">
         <h3>先录下并保存原音</h3>
-        <p className="ct-readiness-note">不需要转写服务或离线识别模型。下方“开始录音”只保存原音。</p>
+        <p className="ct-readiness-note">不需要转写服务或离线识别模型。{actionsAbove?'':'下方'}“开始录音”只保存原音。</p>
         <dl>
           <div><dt>设备连接</dt><dd>{connected ? '已连接' : device?.connectionPhase === 'pairingRequired'
             ? 'Windows 配对未完成；先完成系统配对，再点击连接。'

@@ -1,5 +1,17 @@
 use super::*;
 
+#[test]
+fn correcting_model_timing_invalidates_minutes_even_when_words_match() {
+    let mut source=session("同意周五检查。");
+    source.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment {
+        text:"同意周五检查。".into(),start_ms:1000,end_ms:2000,speaker:Some(0),approximate_timing:false
+    }];
+    let first=Identity::new("https://fixture.invalid","model","key",&source);
+    source.utterances[0].start_ms=1100;
+    let corrected=Identity::new("https://fixture.invalid","model","key",&source);
+    assert_ne!(first.filename(),corrected.filename());
+}
+
 fn root() -> PathBuf {
     std::env::temp_dir().join(format!("companion-minutes-chapters-{}", uuid::Uuid::new_v4()))
 }
@@ -876,6 +888,16 @@ fn concise_overview_preserves_complete_minutes_and_checks_sources() {
 }
 
 #[test]
+fn concise_long_overview_requires_sources_across_the_meeting() {
+    // A real 25-item meeting generated an opening-only overview; valid IDs
+    // alone do not reveal that all later topics were missed.
+    let opening_only = r#"{"overview":[{"text":"只覆盖前段","sources":[0,1,5,7]}]}"#;
+    assert!(parse_concise_overview(opening_only, 25).is_err());
+    let all_sections = r#"{"overview":[{"text":"前段","sources":[0]},{"text":"中段","sources":[8]},{"text":"后段","sources":[24]}]}"#;
+    assert!(parse_concise_overview(all_sections, 25).is_ok());
+}
+
+#[test]
 fn overview_keeps_full_minutes_and_uses_only_selected_items_in_original_order() {
     let source = session("会议原文");
     let (mut minutes, _) = response(&source);
@@ -1319,4 +1341,28 @@ fn action_review_merges_only_same_source_and_attribution_and_retains_quotes() {
     assert!(minutes.action_items[1].text.contains("其他产品"));
     assert_eq!(minutes.action_items[2].owner.as_deref(),Some("小李"));
     assert!(minutes.markdown.ends_with("### 第1段\n- 客户提出修改，下周一确认交货时间。"));
+}
+
+#[test]
+#[ignore = "live public benchmark and configured DeepSeek service"]
+fn real_public_long_meeting_fallback() {
+    let input = std::env::var("COMPANION_PUBLIC_MINUTES_RESULT").unwrap();
+    let output = std::env::var("COMPANION_PUBLIC_FALLBACK_RESULT").unwrap();
+    let value: Value = serde_json::from_slice(&fs::read(input).unwrap()).unwrap();
+    let mut minutes: CompanionV1MeetingMinutes = serde_json::from_value(value["minutes"].clone()).unwrap();
+    let original = minutes.markdown.clone();
+    let key = std::env::var("DEEPSEEK_API_KEY").unwrap();
+    let model = std::env::var("DEEPSEEK_MODEL").unwrap_or_else(|_| "deepseek-chat".into());
+    let base = std::env::var("DEEPSEEK_BASE_URL").unwrap_or_else(|_| "https://api.deepseek.com".into());
+    let endpoint = format!("{}/chat/completions", base.trim_end_matches('/'));
+    let client = super::super::deepseek_http_client(&endpoint).unwrap();
+    let items = minutes.summary.clone();
+    let indices = request_overview(&endpoint, &model, &key, &items, &client).unwrap();
+    let selected: Vec<_> = indices.iter().map(|&i| &items[i]).collect();
+    fs::write(output, serde_json::to_vec_pretty(&serde_json::json!({"indices":indices,"selected":selected})).unwrap()).unwrap();
+    prepend_overview(&mut minutes, &items, &indices);
+    assert!(minutes.markdown.ends_with(&original));
+    assert!(indices.iter().any(|&i| i < items.len()/3));
+    assert!(indices.iter().any(|&i| i >= items.len()/3 && i < items.len()*2/3));
+    assert!(indices.iter().any(|&i| i >= items.len()*2/3));
 }

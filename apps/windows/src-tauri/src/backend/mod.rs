@@ -19,6 +19,7 @@ pub(crate) use ble_bridge::pet_find;
 pub(crate) mod lifecycle;
 pub(crate) use ble_bridge::release_process_device_links;
 pub(crate) mod speaker_refinement;
+pub(crate) mod meeting_transcript;
 pub(crate) use ble_bridge::benchmark_recording_upload;
 pub(crate) use ble_bridge::known_segmented_peer;
 mod ble_mtu;

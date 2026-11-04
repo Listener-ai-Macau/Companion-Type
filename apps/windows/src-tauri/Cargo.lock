@@ -530,13 +530,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "companion-meeting-transcript"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "companion-type"
-version = "0.1.25"
+version = "0.1.36"
 dependencies = [
  "base64 0.22.1",
  "btleplug",
  "bzip2",
  "chrono",
+ "companion-meeting-transcript",
  "crc32fast",
  "denzic-ble-windows",
  "denzic-host-audio-v1-core",

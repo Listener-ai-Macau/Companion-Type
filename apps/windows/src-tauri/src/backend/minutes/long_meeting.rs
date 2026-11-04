@@ -47,6 +47,11 @@ impl Identity {
             session.transcript_review.as_ref().map(|r| (&r.speaker_names, &r.utterance_edits)))).unwrap();
         // Keep existing original-only cache identities stable. Selected notes
         // get a distinct identity, including the exact saved note revision.
+        // A model may correct attribution or timing without changing words.
+        // Such a meeting must not reuse the previous speaker-bound minutes.
+        let source = if session.utterances.is_empty() { source } else {
+            serde_json::to_vec(&(source, &session.utterances)).unwrap()
+        };
         let source = if session.meeting_notes.is_empty() { source } else {
             serde_json::to_vec(&(source, session.note_revision, &session.meeting_notes)).unwrap()
         };
@@ -140,6 +145,24 @@ fn root_lock(root: &Path) -> Result<File, String> {
     if path.exists() && !regular(&path) { return Err("纪要缓存锁文件不可用。".into()); }
     let guard = OpenOptions::new().read(true).write(true).create(true).truncate(false).open(path)
         .map_err(|_| "无法打开纪要缓存锁；已有转写保留。")?;
+    // Android Rust std currently reports File::try_lock as unsupported.
+    // Bionic flock supplies the same nonblocking, process-wide file lock;
+    // closing the returned File releases it, including after a crash.
+    #[cfg(target_os="android")]
+    {
+        use std::os::fd::AsRawFd;
+        unsafe extern "C" { fn flock(fd: i32, operation: i32) -> i32; }
+        const LOCK_EX: i32 = 2;
+        const LOCK_NB: i32 = 4;
+        if unsafe { flock(guard.as_raw_fd(), LOCK_EX | LOCK_NB) } != 0 {
+            let error = std::io::Error::last_os_error();
+            if error.kind() == std::io::ErrorKind::WouldBlock {
+                return Err("长会议正在另一处理任务中整理；请完成后重试。".into());
+            }
+            return Err(format!("无法锁定纪要缓存（系统错误 {:?}）；原转写保留。", error.raw_os_error()));
+        }
+    }
+    #[cfg(not(target_os="android"))]
     guard.try_lock().map_err(|_| "长会议正在另一处理任务中整理；请完成后重试。")?;
     Ok(guard)
 }
@@ -1250,6 +1273,21 @@ pub(super) fn parse_concise_overview(content: &str, item_count: usize) -> Result
             || point.sources.is_empty() || point.sources.iter().any(|&i| i >= item_count)
             || point.sources.iter().collect::<HashSet<_>>().len() != point.sources.len() {
             return Err("会议概览格式不正确。".into());
+        }
+    }
+    // Source IDs only establish that references exist, not that the model
+    // covered the whole recording. For long summaries require representation
+    // from the beginning, middle and end; otherwise use the section-based
+    // fallback below. Even this cannot guarantee semantic completeness.
+    if item_count > 12 {
+        let boundaries = [item_count / 3, item_count * 2 / 3];
+        let mut covered = [false; 3];
+        for source in points.iter().flat_map(|point| point.sources.iter().copied()) {
+            let bucket = if source < boundaries[0] { 0 } else if source < boundaries[1] { 1 } else { 2 };
+            covered[bucket] = true;
+        }
+        if covered.iter().any(|present| !present) {
+            return Err("会议概览未覆盖前、中、后段，请查看完整纪要。".into());
         }
     }
     Ok(points)

@@ -82,7 +82,7 @@ const FIXTURE_SETTINGS_KEY = 'companion-type.product-settings.v1';
 function defaultSettingsPublic(): CompanionProductSettingsPublic {
   return {
     defaultMeetingMode: 'offlineStore',
-    asrProvider: 'volcengine',
+    asrProvider: 'local-paraformer',
     volcAppKeySet: false,
     volcAccessKeySet: false,
     volcResourceId: 'volc.bigasr.sauc.duration',

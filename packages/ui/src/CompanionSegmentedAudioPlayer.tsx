@@ -87,11 +87,15 @@ export function CompanionSegmentedAudioPlayer({parts,sourceIdentity,sessionId,pl
       <label>回听速度 <select aria-label="回听速度" value={speed} onChange={event=>{const value=Number(event.target.value);if(!playbackSpeeds.includes(value))return;
         speedRef.current=value;setSpeed(value);if(playerRef.current)playerRef.current.playbackRate=value;remember(true);}}>{playbackSpeeds.map(value=><option key={value} value={value}>{value}×</option>)}</select></label>
       <span>{time(position)} / {time(duration)}</span>
-      <button type="button" className="ct-action" aria-pressed={repeat} onClick={()=>{setLoop(false);setRepeat(!repeat);}}>{repeat?'关闭单场循环':'开启单场循环'}</button>
-      <button type="button" className="ct-action" onClick={()=>{setLoop(false);go(0);}}>从头回听</button>
     </div>
     <label>回听位置 <input aria-label="回听位置" type="range" min={0} max={duration} step={0.01} value={position} onChange={event=>{setLoop(false);go(Number(event.target.value));}} /></label>
     {pauseTimeline?.gaps.length ? <section aria-label="录音暂停记录"><strong>暂停记录</strong><div className="ct-audio-tools">{pauseTimeline.gaps.map((gap,index)=><button type="button" className="ct-action" key={`${gap.pausedAtMs}:${index}`} onClick={()=>{setLoop(false);go(gap.audioPositionMs/1000,false);}}>{time(gap.audioPositionMs/1000)} · {gap.durationMs==null?'暂停后未确认继续':`暂停 ${(gap.durationMs/1000).toFixed(2)} 秒`}</button>)}</div></section>:null}
+    <details className="ct-audio-advanced">
+      <summary>循环与片段{repeat?' · 单场循环中':loop?' · 片段循环中':''}</summary>
+      <div className="ct-audio-tools">
+        <button type="button" className="ct-action" aria-pressed={repeat} onClick={()=>{setLoop(false);setRepeat(!repeat);}}>{repeat?'关闭单场循环':'开启单场循环'}</button>
+        <button type="button" className="ct-action" onClick={()=>{setLoop(false);go(0);}}>从头回听</button>
+      </div>
     <div className="ct-audio-tools" aria-label="片段循环回听">
       <button type="button" className="ct-action" onClick={()=>{setStart(positionRef.current);setEnd(null);setLoop(false);setMessage('已设起点，定位到片段末尾后设置终点。');}}>设为起点 A</button>
       <button type="button" className="ct-action" disabled={start==null} onClick={()=>{if(start==null||positionRef.current-start<0.2){setMessage('终点须比起点至少晚 0.2 秒。');return;}setEnd(positionRef.current);setMessage('片段已选好，可开启循环。');}}>设为终点 B</button>
@@ -99,6 +103,7 @@ export function CompanionSegmentedAudioPlayer({parts,sourceIdentity,sessionId,pl
       <button type="button" className="ct-action" disabled={start==null} onClick={()=>{setLoop(false);setStart(null);setEnd(null);setMessage('');}}>清除片段</button>
       {start!=null?<span>A {time(start)} · B {end==null?'未设置':time(end)}</span>:null}
     </div>
+    </details>
     {message?<p role="status">{message}</p>:null}{memoryFailed?<p role="status">本机未能保存回听位置；仍可播放。</p>:null}
   </div>;
 }

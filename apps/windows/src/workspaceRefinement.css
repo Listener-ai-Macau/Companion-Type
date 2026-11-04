@@ -1,0 +1,55 @@
+/* Desktop visual refinement: calm surfaces and clearer hierarchy across existing pages. */
+.ct-shell.ct-windows{font-family:"Segoe UI","Microsoft YaHei UI","Microsoft YaHei",sans-serif}
+.ct-windows .ct-topbar h1{font-size:30px;line-height:1.2;letter-spacing:-.045em}
+.ct-windows .ct-kicker{letter-spacing:.11em}
+.ct-windows .ct-brand-mark{width:40px;height:40px;border-radius:13px}
+.ct-windows .ct-brand strong{font-size:16px}
+.ct-windows .ct-page-navigation button{min-height:46px;border-radius:12px}
+.ct-windows .ct-simple-status{border-radius:14px;padding:12px 16px}
+.ct-windows :is(.ct-library,.ct-meeting-workspace,.ct-readiness,.ct-setup,.ct-advanced>.ct-panel,.ct-desktop-update){border-radius:20px}
+.ct-windows .ct-library{padding:28px}
+.ct-windows .ct-library-head strong{font-size:21px}
+.ct-windows .ct-library-search{min-height:48px;border-radius:13px}
+.ct-windows .ct-library-card{border-radius:16px}
+.ct-windows .ct-library-list{gap:12px}
+.ct-windows .ct-library-empty{padding-block:38px 30px;gap:12px}
+.ct-windows .ct-library-empty>svg{padding:16px;border-radius:18px}
+.ct-windows .ct-device-actions{gap:14px}
+.ct-windows .ct-device-actions .ct-recording-activity{padding:22px;border-radius:18px}
+.ct-windows .ct-advanced>.ct-panel{padding:28px;margin-top:18px}
+.ct-windows .ct-panel-title{font-size:17px;letter-spacing:-.025em}
+.ct-windows .ct-settings-grid{gap:18px 22px}
+.ct-windows .ct-service-guide{padding:16px 18px;margin:16px 0;border:1px solid #e8e4f2;border-radius:14px;background:#f7f5fb;color:#34303e}
+.ct-windows .ct-service-guide strong{font-size:14px}.ct-windows .ct-service-guide p{margin:7px 0 0;font-size:13px;line-height:1.65;color:#686473}
+.ct-windows.ct-theme-dark .ct-service-guide{background:#292534;border-color:#484157;color:#eeeaf4}
+.ct-windows.ct-theme-dark .ct-service-guide p{color:#c3bdcc}
+.ct-windows .ct-service-privacy{margin:0 0 18px;color:#686473;font-size:13px;line-height:1.7}
+.ct-windows .ct-service-privacy summary{width:fit-content;cursor:pointer;color:#5750aa;font-weight:600}
+.ct-windows .ct-service-privacy p{max-width:760px;margin:10px 0 0}
+.ct-windows.ct-theme-dark .ct-service-privacy{color:#c3bdcc}
+.ct-windows.ct-theme-dark .ct-service-privacy summary{color:#c2b6ff}
+.ct-windows .ct-settings-grid :is(input,select){min-height:46px;border-radius:11px}
+.ct-windows .ct-action,.ct-windows .ct-icon-button{border-radius:11px}
+.ct-windows .ct-meeting-hero{padding-top:26px;padding-bottom:26px}
+.ct-windows .ct-audio-card{border-radius:16px;padding:22px 24px}
+.ct-windows .ct-recording-transcript{line-height:1.95}
+@media(max-width:560px){.ct-windows .ct-library,.ct-windows .ct-advanced>.ct-panel{padding:18px}.ct-windows .ct-device-actions .ct-recording-activity{padding:18px}}
+@media(prefers-reduced-motion:no-preference){.ct-windows .ct-library-card{transition:border-color .16s ease,box-shadow .16s ease}.ct-windows .ct-action{transition:background-color .16s ease,border-color .16s ease}}
+.ct-transcript-reading-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 12px}.ct-transcript-reading-tools[hidden]{display:none}.ct-transcript-reading-tools button{padding:6px 10px;border-radius:8px}.ct-transcript-reading-tools button[aria-pressed=true]{background:var(--accent-soft,#eeeaf6);font-weight:700}.ct-transcript-reading-tools span{color:var(--muted,#706b78);font-size:12px;line-height:1.5}
+
+/* The meeting owns its everyday actions; opening a tool never starts AI work. */
+.ct-windows .ct-meeting-dock{display:flex;flex-wrap:wrap;gap:8px;margin:0 28px 22px;padding:14px 0;border-top:1px solid #eeecef;border-bottom:1px solid #eeecef}
+.ct-windows .ct-meeting-dock:empty{display:none}
+.ct-windows .ct-meeting-dock button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 13px;border:1px solid #e8e4ed;border-radius:10px;background:#faf9fc;color:#4e475f;font-size:12px;font-weight:600;cursor:pointer}
+.ct-windows .ct-meeting-dock button:first-child{background:#302c3b;border-color:#302c3b;color:#fff}
+.ct-windows .ct-meeting-dock button:hover{border-color:#9d8cbb}.ct-windows .ct-meeting-dock button:disabled{opacity:.5;cursor:default}
+.ct-windows .ct-meeting-dock button:focus-visible{outline:2px solid #8067a9;outline-offset:3px}
+.ct-windows.ct-theme-dark .ct-meeting-dock{border-color:#423d4c}
+.ct-windows.ct-theme-dark .ct-meeting-dock button{background:#2d2836;color:#e6deef;border-color:#494052}
+.ct-windows.ct-theme-dark .ct-meeting-dock button:first-child{background:#d6c5ed;color:#251d30;border-color:#d6c5ed}
+.ct-windows.ct-theme-dark .ct-imported-save-status{color:#bcb4ca}
+.ct-windows .meeting-reading-content .ct-minutes-article>h4{margin-top:28px;margin-bottom:14px;padding-top:16px;border-top:1px solid #ece8f0;font-size:16px;letter-spacing:.01em}
+.ct-windows .meeting-reading-content .ct-minutes-article>h4:first-child{margin-top:0}
+.ct-windows .meeting-reading-content .ct-minutes-item{line-height:1.9}
+.ct-windows.ct-theme-dark .meeting-reading-content .ct-minutes-article>h4{border-color:#423c4c}
+@media(max-width:560px){.ct-windows .ct-meeting-dock{margin-inline:19px}.ct-windows .ct-meeting-dock button{flex:1 0 auto}}

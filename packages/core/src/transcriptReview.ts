@@ -26,11 +26,15 @@ export function companionTranscriptReviewRevision(session: CompanionV1HostSessio
 export function companionMinutesMatchTranscript(session: CompanionV1HostSession, revision?: number | null): boolean {
   return !companionTranscriptReviewIsStale(session) && companionTranscriptReviewRevision(session) === (revision ?? null);
 }
-export function companionTranscriptSpeakerLabel(session: CompanionV1HostSession, index: number): string {
+export function companionTranscriptReviewedSpeakerName(session: CompanionV1HostSession, index: number): string | undefined {
   const speaker = session.utterances?.[index]?.speaker;
   const review = companionTranscriptReviewRevision(session) !== null ? session.transcriptReview : null;
   return review?.utteranceEdits.find((e) => e.index === index)?.speakerName
-    || review?.speakerNames.find((n) => n.speaker === speaker)?.name
+    || review?.speakerNames.find((n) => n.speaker === speaker)?.name;
+}
+export function companionTranscriptSpeakerLabel(session: CompanionV1HostSession, index: number): string {
+  const speaker = session.utterances?.[index]?.speaker;
+  return companionTranscriptReviewedSpeakerName(session, index)
     || (speaker == null ? '未分配说话人' : `说话人${speaker + 1}`);
 }
 export function companionReviewedUtterances(session: CompanionV1HostSession): CompanionV1UtteranceSegment[] {

@@ -17,6 +17,9 @@ import {CloseReview} from './CloseReview';
 import {nativeCloseReview} from './closeReviewClient';
 import type { RecordingSyncStatus } from '../../../packages/ui/src/CompanionRecordingSync';
 import '../../../packages/ui/src/companionUi.css';
+import '../../../packages/ui/src/companionDesign.css';
+import '../../../packages/ui/src/companionDark.css';
+import './workspaceRefinement.css';
 
 import {
   getDesktopUpdateStatus, checkDesktopUpdate, downloadDesktopUpdate, cancelDesktopUpdate, installDesktopUpdate,
@@ -299,15 +302,12 @@ export function App() {
   return (
     <div className="ct-window-shell">
     {isTauriRuntime()?<CloseReview unsaved={hasUnsavedEdits} client={nativeCloseReview}/>:null}
-    {isTauriRuntime()?<details className="ct-pet-chat-disclosure">
-      <summary>我的宠物</summary>
-      <PetChat onUnsavedChange={setPetUnsavedEdits} deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
-        disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>
-    </details>:null}
     <CompanionDashboard
+      petPanel={isTauriRuntime()?<PetChat onUnsavedChange={setPetUnsavedEdits} connected={Boolean(snapshot?.device.connected)} deviceUid={snapshot?.device.connected?snapshot.device.mcuUid:null}
+        disabled={busyAction!==null||boardOnlineBusy||!!snapshot?.device.recording||!!snapshot?.meeting.active}/>:null}
       onAskMeetings={isTauriRuntime()?askCompanionMeetings:undefined}
       onCancelMeetingQuestion={isTauriRuntime()?cancelCompanionMeetingQuestion:undefined}
-      onReadLicenses={() => Promise.all([import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw'), import('../src-tauri/resources/licenses/OptionalSpeechModels.txt?raw')]).then(([components, models]) => `${components.default}\n\n${models.default}`)}
+      onReadLicenses={() => Promise.all([import('../src-tauri/resources/licenses/ThirdPartyNotices.txt?raw'), import('../src-tauri/resources/licenses/OptionalSpeechModels.txt?raw'), import('../src-tauri/resources/licenses/ShadcnDashboardMIT.txt?raw')]).then(([components, models, template]) => `${components.default}\n\n${models.default}\n\nShadcn Dashboard — https://github.com/shadcndashboard/shadcndashboard\n${template.default}`)}
       onFindPet={isTauriRuntime()?(request)=>exclusive('refresh',()=>controlCompanionPetFind(request)):undefined}
       settingsFooter={isTauriRuntime() ? <CompanionDesktopUpdate blocked={busyAction!==null || boardOnlineBusy || Boolean(snapshot?.device.recording || snapshot?.meeting.active
         || snapshot?.host.sessions.some(session=>session.status==='recording') || (snapshot?.host.persistence && snapshot.host.persistence.status!=='ready'))}

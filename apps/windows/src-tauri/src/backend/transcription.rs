@@ -265,9 +265,18 @@ impl CompanionTranscriptionManager {
         }
         super::meeting_processing_job::check_current()?;
         if parts.is_empty() { return Err(LOCAL_NO_SPEECH.into()); }
-        let utterances = if local { merge_local_timed_parts(&real_paths, timed_parts) } else { Vec::new() };
+        let has_timing = timed_parts.iter().any(|(_, rows)| !rows.is_empty());
+        let mut utterances = if local || has_timing { merge_local_timed_parts(&real_paths, timed_parts) } else { Vec::new() };
+        if !local && has_timing && utterances.is_empty() {
+            return Err("分段模型结果的完整文字或时间轴不一致，原录音保留。".into());
+        }
+        // Independent command invocations have independent anonymous speaker
+        // IDs. Keep their clocks and words, but never equate each chunk's 0.
+        if !local { for row in &mut utterances { row.speaker = None; } }
+        let text = if !local && !utterances.is_empty() { super::meeting_transcript::source_text(&utterances) }
+            else { parts.join("\n") };
         Ok(CompanionTranscript {
-            text: normalize_transcript(&parts.join("\n")),
+            text: normalize_transcript(&text),
             provider_id: "companion-type-chunk-merge".to_string(),
             mode: format!(
                 "merged-{}-chunks:{}",
@@ -413,14 +422,25 @@ fn command_transcript(audio: &Path) -> Result<CompanionTranscript, String> {
     let args = std::env::var("COMPANION_TYPE_ASR_ARGS").unwrap_or_else(|_| "{audio}".to_string());
     let args = split_command_args(&args).into_iter()
         .map(|arg| arg.replace("{audio}", &audio.to_string_lossy())).collect::<Vec<_>>();
-    run_command_transcript(&command, &args, super::external_command::Limits::for_timeout(super::external_command::ASR_TIMEOUT))
+    let transcript = run_command_transcript(&command, &args, super::external_command::Limits::for_timeout(super::external_command::ASR_TIMEOUT))?;
+    if !transcript.utterances.is_empty() {
+        let bytes = wav_pcm_bytes(audio)?;
+        let end = u64::try_from((bytes as u128 * 1000 + PCM_BYTES_PER_SECOND as u128 - 1) / PCM_BYTES_PER_SECOND as u128)
+            .map_err(|_| "录音时间范围过大，原音保留。")?;
+        super::meeting_transcript::Document { text: transcript.text.clone(), utterances: transcript.utterances.clone() }
+            .validate(Some(end))?;
+    }
+    Ok(transcript)
 }
 
 pub(super) fn run_command_transcript(command: &str, args: &[String], limits: super::external_command::Limits) -> Result<CompanionTranscript, String> {
     if command.to_ascii_lowercase().contains("listener-type") { return Err("Companion-Type ASR command must not call listener-type".into()); }
     let stdout = super::external_command::run(command, args, limits, None)
         .map_err(|error| format!("Companion-Type ASR {error}; existing audio retained"))?;
-    let text = normalize_transcript(&extract_transcript_from_stdout(&stdout)?);
+    let document = super::meeting_transcript::parse_command_output(&stdout)?;
+    let text = if document.utterances.is_empty() { document.text }
+        else { super::meeting_transcript::source_text(&document.utterances) };
+    let text = normalize_transcript(&text);
     if text.is_empty() {
         return Err("Companion-Type ASR command did not print a transcript".to_string());
     }
@@ -429,7 +449,7 @@ pub(super) fn run_command_transcript(command: &str, args: &[String], limits: sup
         provider_id: "companion-type-command-asr".to_string(),
         mode: "external-command".to_string(),
         evidence_path: None,
-        utterances: Vec::new(),
+        utterances: document.utterances,
         unrecognized: Vec::new(),
     })
 }
@@ -1226,9 +1246,8 @@ fn merge_local_timed_parts(
     let mut merged=Vec::new();
     for (path,(text,mut anchors)) in paths.iter().zip(completed) {
         let bytes=match wav_pcm_bytes(path) { Ok(bytes)=>bytes, Err(_)=>return Vec::new() };
-        let full:String=text.chars().filter(|c|!c.is_whitespace()).collect();
-        let covered:String=anchors.iter().flat_map(|a|a.text.chars()).filter(|c|!c.is_whitespace()).collect();
-        if full!=covered {return Vec::new();}
+        if anchors.is_empty() && !text.trim().is_empty() {return Vec::new();}
+        if !anchors.is_empty() && (super::meeting_transcript::Document {text,utterances:anchors.clone()}).validate(None).is_err() {return Vec::new();}
         let offset=match u64::try_from(preceding_bytes as u128 * 1000 / PCM_BYTES_PER_SECOND as u128) {
             Ok(value)=>value, Err(_)=>return Vec::new()
         };
@@ -1449,26 +1468,7 @@ fn openai_compatible_transcript(audio: &Path) -> Result<CompanionTranscript, Str
 }
 
 fn extract_transcript_from_stdout(stdout: &str) -> Result<String, String> {
-    let trimmed = stdout.trim();
-    if trimmed.starts_with(['{', '[']) {
-        let invalid = || "ASR command output is invalid or incomplete; existing audio retained".to_string();
-        let value: serde_json::Value = serde_json::from_str(trimmed).map_err(|_| invalid())?;
-        if value.get("error").is_some() || value.get("is_final").or_else(|| value.get("isFinal"))
-            .is_some_and(|flag| flag.as_bool() != Some(true)) { return Err(invalid()); }
-        let text = value.get("text").or_else(|| value.get("transcript")).and_then(serde_json::Value::as_str)
-            .or_else(|| value.pointer("/transcript/text").and_then(serde_json::Value::as_str)).ok_or_else(invalid)?;
-        return Ok(text.to_string());
-    }
-    for line in stdout.lines() {
-        let trimmed = line.trim();
-        if let Some(value) = trimmed.strip_prefix("transcript=") {
-            return Ok(value.trim().to_string());
-        }
-        if let Some(value) = trimmed.strip_prefix("text=") {
-            return Ok(value.trim().to_string());
-        }
-    }
-    Ok(trimmed.to_string())
+    super::meeting_transcript::parse_command_output(stdout).map(|document| document.text)
 }
 
 fn split_command_args(value: &str) -> Vec<String> {
@@ -1497,6 +1497,54 @@ fn split_command_args(value: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    #[ignore = "requires isolated state, public model-output adapter and configured minutes service"]
+    fn public_model_output_survives_saved_meeting_and_native_minutes() {
+        use super::super::{CompanionBackend, FixtureCompanionBackend};
+        use crate::companion_v1::CompanionV1ControlAction;
+        let audio=PathBuf::from(std::env::var_os("COMPANION_PUBLIC_CHAIN_AUDIO").unwrap());
+        let output=PathBuf::from(std::env::var_os("COMPANION_PUBLIC_CHAIN_OUTPUT").unwrap());
+        let state=PathBuf::from(std::env::var_os("COMPANION_TYPE_STATE_PATH").unwrap());
+        assert!(!state.exists(),"public chain must start in an empty isolated library");
+        assert!(std::env::var("DEEPSEEK_API_KEY").is_ok_and(|key|!key.trim().is_empty()));
+        let mut snapshot=crate::companion_v1::fixture_snapshot();
+        let request=crate::control_request(CompanionV1ControlAction::MeetingStart,Some("public-full-meeting-chain".into()));
+        let mut row=crate::companion_v1::create_host_session(&snapshot,&request,"public-audio-input");
+        row.source="importedAudio".into();row.title="公开真实会议：原文与纪要链路验证".into();
+        row.status="captured".into();row.audio_path=Some(audio.to_string_lossy().into_owned());
+        row.audio_stored=true;row.retention.audio_cached=true;row.duration_ms=wav_pcm_bytes(&audio).unwrap()/32;
+        row.chunks.clear();
+        snapshot.host.sessions=vec![row];snapshot.host.selected_session_id=Some("public-full-meeting-chain".into());
+        snapshot.meeting.active=false;snapshot.device.recording=false;
+        super::super::persistence::save_snapshot(&mut snapshot).unwrap();
+        let backend=FixtureCompanionBackend::new();
+        let start=std::time::Instant::now();
+        let transcribed=backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingTranscribeAudio,
+            Some("public-full-meeting-chain".into()))).unwrap();
+        let transcript_seconds=start.elapsed().as_secs_f64();
+        let input=transcribed.host.sessions.iter().find(|r|r.id=="public-full-meeting-chain").unwrap();
+        assert!(input.transcript_final && !input.utterances.is_empty());
+        let utterances=input.utterances.clone();let words=input.transcript_text.clone();
+        let start=std::time::Instant::now();
+        let generated=backend.apply_control(crate::control_request(CompanionV1ControlAction::MeetingGenerateMinutes,
+            Some("public-full-meeting-chain".into()))).unwrap();
+        let minutes_seconds=start.elapsed().as_secs_f64();
+        let row=generated.host.sessions.iter().find(|r|r.id=="public-full-meeting-chain").unwrap();
+        assert_eq!(row.utterances,utterances);assert_eq!(row.transcript_text,words);
+        let restored=FixtureCompanionBackend::new().snapshot().unwrap();
+        let restored=restored.host.sessions.iter().find(|r|r.id==row.id).unwrap();
+        assert_eq!(restored.utterances,utterances);assert_eq!(restored.transcript_text,words);
+        fs::write(output,serde_json::to_vec_pretty(&serde_json::json!({
+            "session":row,"transcriptReplayAndSaveSeconds":transcript_seconds,"minutesAndSaveSeconds":minutes_seconds,
+            "restoredWithoutLosingUtterances":true,
+            "scope":"Replayed actual public-meeting model output through application backend and persistence; no new ASR inference or UI/device acceptance."
+        })).unwrap()).unwrap();
+        let minutes=row.minutes.as_ref().unwrap();
+        assert_eq!(minutes.quality,"final","{:?}",minutes.llm_note);
+        assert!(minutes.processing.as_ref().unwrap().is_complete());
+        assert!(minutes.markdown.contains("分段原文依据"));
+    }
 
     #[cfg(windows)]
     #[test]

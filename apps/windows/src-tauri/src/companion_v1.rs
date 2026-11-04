@@ -668,17 +668,7 @@ impl CompanionV1MinutesProcessing {
 /// diarization-aware transcription path so exports can render timed formats
 /// (SRT subtitles) and the UI can show per-utterance speaker/timing. `speaker`
 /// is a 0-based diarization id; `None` when diarization could not attribute it.
-#[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
-#[serde(rename_all = "camelCase")]
-pub struct CompanionV1UtteranceSegment {
-    pub text: String,
-    pub start_ms: u64,
-    pub end_ms: u64,
-    pub speaker: Option<usize>,
-    /// True when the time covers an ASR input chunk, rather than a spoken utterance.
-    #[serde(default)]
-    pub approximate_timing: bool,
-}
+pub use crate::backend::meeting_transcript::Utterance as CompanionV1UtteranceSegment;
 
 #[derive(Clone, Debug, Serialize)]
 #[serde(rename_all = "camelCase")]

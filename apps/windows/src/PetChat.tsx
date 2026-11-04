@@ -30,7 +30,7 @@ function raster(text:string):number[]{
   }
   return result;
 }
-export function PetChat({disabled,deviceUid,onUnsavedChange}:{disabled:boolean;deviceUid?:string|null;onUnsavedChange?:(unsaved:boolean)=>void}){
+export function PetChat({disabled,connected,deviceUid,onUnsavedChange}:{disabled:boolean;connected:boolean;deviceUid?:string|null;onUnsavedChange?:(unsaved:boolean)=>void}){
   const [state,setState]=useState<ChatStatus|null>(null),[error,setError]=useState<string|null>(null);
   const [busy,setBusy]=useState(false);
   const action=useRef(false),sent=useRef(0),cancelling=useRef(false),cancelledRequest=useRef(0);
@@ -68,7 +68,7 @@ export function PetChat({disabled,deviceUid,onUnsavedChange}:{disabled:boolean;d
   };
   return <section aria-label="宠物聊天" style={{maxWidth:920,margin:'12px auto',padding:'16px 20px',border:'1px solid #d8ded8',borderRadius:12}}>
     <h2 style={{fontSize:16,margin:'0 0 8px'}}>和宠物聊聊</h2>
-    <p style={{margin:'4px 0 10px'}} aria-live="polite">{state?.phase==='cancelled'&&!state.canStart?'正在结束这句聊天':labels[state?.phase??'idle']??'宠物聊天'}</p>
+    <p style={{margin:'4px 0 10px'}} aria-live="polite">{state?.phase==='cancelled'&&!state.canStart?'正在结束这句聊天':!connected&&!active?'连接 Companion 后即可开始聊天':labels[state?.phase??'idle']??'宠物聊天'}</p>
     <p style={{fontSize:13}}>连接宠物后，点“开聊”，对它说一句话。说完点“说完了”，短回复会出现在宠物屏幕底部。</p>
     <p style={{fontSize:12}}>语音按设置选择本地或云转写；云转写会发送录音，聊天文字会发送给配置的聊天服务。</p>
     <details style={{fontSize:12,margin:'8px 0'}}><summary>聊天怎么用？</summary>
@@ -80,7 +80,7 @@ export function PetChat({disabled,deviceUid,onUnsavedChange}:{disabled:boolean;d
     {state?.reply?<p>宠物：{state.reply}</p>:null}
     {error||state?.error?<p role="alert">{readableError(error??state?.error??'')}</p>:null}
     <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
-      <button disabled={disabled||busy||active||(!!state&&!state.canStart)||state?.phase==='displayFailed'} onClick={()=>void control('start_companion_pet_chat')}>开聊</button>
+      <button disabled={disabled||!connected||busy||active||(!!state&&!state.canStart)||state?.phase==='displayFailed'} onClick={()=>void control('start_companion_pet_chat')}>开聊</button>
       {state?.phase==='listening'?<button disabled={busy} onClick={()=>void control('finish_companion_pet_chat',{requestId:state.requestId,cancel:false})}>说完了</button>:null}
       {state?.phase==='displayFailed'||(state?.phase==='replyReady'&&error)?<button disabled={disabled||busy} onClick={()=>void display(state!)}>重试上屏</button>:null}
       {active||state?.phase==='displayFailed'?<button onClick={()=>void cancel(state!)}>取消</button>:null}
