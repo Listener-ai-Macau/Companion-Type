@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {createCompanionV1Fixture} from '../packages/core/src/companionV1';
+import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
+const snapshot=createCompanionV1Fixture();const props={snapshot,surface:'windows' as const,busyAction:null,error:null,onRefresh:()=>{},onControl:()=>{}};
+const text=(n:any):string=>n==null||typeof n==='boolean'?'':typeof n==='string'||typeof n==='number'?String(n):(n.children??[]).map(text).join('');
+let tree:any;act(()=>{tree=create(<CompanionDashboard {...props}/>)});
+const nav=()=>tree.root.findByProps({'aria-label':'主要功能'});
+const click=(node:any,label:string)=>{const b=node.findAllByType('button').find((item:any)=>text(item)===label);assert.ok(b,label);act(()=>b.props.onClick());};
+const page=(label:string)=>tree.root.findByProps({'aria-label':label});
+click(nav(),'设置与工具');const settings=()=>page('设置与工具内容');
+assert.equal(settings().props.hidden,false);assert.equal(settings().findAllByProps({className:'ct-return-recording'}).length,0,'sidebar entry has no unrelated return');
+assert.equal(settings().findAllByProps({className:'ct-advanced-toggle'}).length,0,'desktop does not require another expand step');
+click(nav(),'设备与同步');const device=()=>page('设备与同步内容');click(device(),'查看服务设置');
+assert.equal(settings().props.hidden,false);click(settings(),'← 返回设备与同步');assert.equal(device().props.hidden,false,'contextual return restores device page');
+click(nav(),'设置与工具');assert.equal(settings().findAllByProps({className:'ct-return-recording'}).length,0,'sidebar entry clears prior return context');
+act(()=>tree.unmount());console.log('PASS Windows settings: direct entry and return to the initiating device page');

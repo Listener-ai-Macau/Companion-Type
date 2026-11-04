@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import React from 'react';import {act,create} from 'react-test-renderer';import {renderToStaticMarkup} from 'react-dom/server';import {PetProfile} from '../apps/windows/src/PetProfile';import {CompanionHelp} from '../packages/ui/src/CompanionHelp';
+import React from 'react';import {act,create} from 'react-test-renderer';import {renderToStaticMarkup} from 'react-dom/server';import {PetProfile} from '../apps/windows/src/PetProfile';import {PetChat} from '../apps/windows/src/PetChat';import {CompanionHelp} from '../packages/ui/src/CompanionHelp';
 const uid='120011000d50335754363720',now=1793318400,old=now-86400*8;Date.now=()=>now*1000;
 const saved:any={uid,generation:1,personality:0,seed:1,petName:'Companion',ownerName:'',memoryEnabled:true,briefReplies:true,doNotInterrupt:true,memories:[{id:7,createdUtc:old,expiresUtc:0,kind:0,text:'以前的内容'}]};let writes:any[]=[];
 (globalThis as any).__petInvoke=async(command:string,args:any)=>{if(command==='get_companion_pet_profile')return {profile:saved,persisted:true,cleanupPending:false,presets:[]};if(command==='save_companion_pet_profile'){writes.push(args.profile);return {profile:args.profile,persisted:true,cleanupPending:false,presets:[]};}throw Error(command)};
@@ -31,3 +31,24 @@ console.log('PASS edited confirmation date, unchanged content retention, expired
 const noop=()=>{};const help=renderToStaticMarkup(<CompanionHelp onClose={noop} onDevice={noop} onLibrary={noop} onDiagnostics={noop}/>);
 assert.match(help,/宠物怎么玩/);assert.match(help,/id="ct-help-play"/);assert.match(help,/眼神小游戏/);assert.match(help,/向右滑/);assert.match(help,/录音时以录音状态为准/);
 console.log('PASS pet interaction help is reachable and describes supported gestures');
+
+(globalThis as any).__petInvoke=async(command:string)=>{if(command==='get_companion_pet_chat')return {requestId:0,phase:'idle',transcript:'',reply:'',screenVisible:false,canStart:true,wakeSupported:false,recordPhrase:'',chatPhrase:''};throw Error(command)};
+await act(async()=>{tree=create(<PetChat disabled={false} connected={false} deviceUid={null}/>)});
+assert.match(JSON.stringify(tree.toJSON()),/连接 Companion 后即可开始聊天/);
+assert.equal(button('开聊').props.disabled,true,'disconnected device cannot start chat');
+await act(async()=>tree.update(<PetChat disabled={false} connected={true} deviceUid={uid}/>));
+assert.equal(button('开聊').props.disabled,false,'connected and idle device may start chat');
+tree.unmount();
+console.log('PASS pet chat start reflects actual connection without blocking profile drafts');
+
+(globalThis as any).__petInvoke=async(command:string,args:any)=>{if(command==='get_companion_pet_profile')return {profile:saved,persisted:true,cleanupPending:false,presets:[]};if(command==='save_companion_pet_profile'){writes.push(args.profile);return {profile:args.profile,persisted:true,cleanupPending:false,presets:[]};}throw Error(command)};
+writes=[];await act(async()=>{tree=create(<PetProfile disabled={false} deviceUid={uid}/>)});
+await act(async()=>tree.root.findByType('details').props.onToggle({currentTarget:{open:true}}));
+await act(async()=>button('查看这只宠物').props.onClick());await act(async()=>button('修改').props.onClick());
+await act(async()=>tree.root.findByType('textarea').props.onChange({target:{value:'断线时保留的草稿'}}));
+await act(async()=>tree.update(<PetProfile disabled={false} deviceUid={null}/>));
+assert.equal(tree.root.findByType('textarea').props.value,'断线时保留的草稿');
+assert.equal(Boolean(tree.root.findByType('textarea').props.readOnly),false,'local draft stays editable when disconnected');
+assert.equal(button('保存这条记忆').props.disabled,true,'device writes remain blocked while disconnected');
+assert.equal(writes.length,0);tree.unmount();
+console.log('PASS disconnected pet keeps editable draft and prevents device writes');

@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {meetingOutline} from '../packages/ui/src/meetingOutline';
+const markdown='## 全会重点\n- 已保存的概览\n\n## Summary\n- 完整摘要1\n- 完整摘要2\n\n## Decisions\n- 这是建议，仍需核对\n\n## Action Items\n- 待核对：准备报价 (owner: 未指定)\n\n## Questions\n- None captured\n';
+const before=markdown;
+const outline=meetingOutline(markdown);
+assert.deepEqual(outline.map(x=>[x.kind,x.title,x.count]),[['summary','全会重点',1],['decisions','Decisions',1],['actions','Action Items',1]]);
+assert.equal(markdown,before);assert.equal(outline[1].hint,'结合原话确认');
+assert.deepEqual(meetingOutline('#### Summary\n- 自定义内容\n\n## 不是会议结构\n- 原文'),[]);
+assert.equal(meetingOutline('````js\n## Action Items\n- 不应当显示\n```\n## Decisions\n- 仍在代码里\n````\n## Action Items\n- 真实事项')[0].count,1);
+assert.deepEqual(meetingOutline('## Questions\n- None captured.\n\n## Action Items\n- 暂无'),[]);
+assert.equal(meetingOutline('## Action Items\r\n- 第一条\r\n- 第二条')[0].count,2);
+console.log('Meeting outline indexes saved sections without inventing outcomes or changing source.');

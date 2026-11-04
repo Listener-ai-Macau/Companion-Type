@@ -13,7 +13,7 @@ void (async () => {
   let renderer:any; act(()=>{renderer=create(<CompanionDashboard {...props()}/>);});
   const text=(node:any):string=>typeof node==='string'?node:(node?.children??[]).map(text).join('');
   const button=(label:string)=>{const node=renderer.root.findAllByType('button').find((n:any)=>text(n).includes(label));assert.ok(node,label);return node;};
-  act(()=>button('展开设置与工具').props.onClick());
+  act(()=>button('设置与工具').props.onClick());
   const exportButton=button('读取设备并导出日志');
   act(()=>{exportButton.props.onClick();exportButton.props.onClick();});
   assert.deepEqual(calls,[true], 'double click must create one device request');

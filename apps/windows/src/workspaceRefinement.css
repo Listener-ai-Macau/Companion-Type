@@ -53,3 +53,29 @@
 .ct-windows .meeting-reading-content .ct-minutes-item{line-height:1.9}
 .ct-windows.ct-theme-dark .meeting-reading-content .ct-minutes-article>h4{border-color:#423c4c}
 @media(max-width:560px){.ct-windows .ct-meeting-dock{margin-inline:19px}.ct-windows .ct-meeting-dock button{flex:1 0 auto}}
+
+/* Put the saved meeting on the first screen; its tools support the document. */
+.ct-windows.ct-meeting-detail .ct-topbar{min-height:44px;margin-bottom:16px}
+.ct-windows.ct-meeting-detail .ct-topbar h1{font-size:22px;letter-spacing:-.03em}
+.ct-windows.ct-meeting-detail .ct-simple-status{padding:8px 14px;margin-bottom:16px;font-size:12px;box-shadow:none}
+.ct-windows.ct-meeting-detail .ct-recording-back{margin-top:12px;font-size:12px}
+.ct-windows.ct-meeting-detail .ct-meeting-hero{padding-top:16px;padding-bottom:18px}
+.ct-windows.ct-meeting-detail .ct-title-editor input{font-size:27px;letter-spacing:-.035em}
+.ct-windows.ct-meeting-detail .ct-meeting-dock{margin-bottom:12px;padding:10px 0;gap:6px;border-top:0}
+.ct-windows.ct-meeting-detail .ct-meeting-dock button{min-height:38px;font-size:12px;background:transparent;border-color:transparent}
+.ct-windows.ct-meeting-detail .ct-meeting-dock button:first-child{color:#5d457c;background:#f1ebf8;border-color:#e4d9ef}
+.ct-windows.ct-theme-dark.ct-meeting-detail .ct-meeting-dock button:first-child{color:#decaef;background:#3a2d48;border-color:#5b456e}
+.ct-windows .ct-recording-primary-actions:empty{display:none}
+.ct-windows.ct-meeting-detail .ct-imported-save-status{margin:0 28px 16px;color:#777080;font-size:12px}
+.ct-windows.ct-meeting-detail .ct-recording-result>summary{padding:15px 0 12px;font-size:17px;letter-spacing:-.025em}
+.ct-windows.ct-meeting-detail .ct-recording-result .ct-minutes-mode-meta{margin:0 0 8px;font-size:11px;font-weight:400}
+.ct-windows.ct-meeting-detail .ct-recording-result .ct-meeting-document{padding-top:8px}
+.ct-windows.ct-meeting-detail .meeting-reading-content .ct-minutes-article{margin-top:0}
+.ct-windows.ct-meeting-detail .meeting-reading-content .ct-minutes-article>h4:first-child{margin-top:0;padding-top:0;border-top:0}
+.ct-windows.ct-meeting-detail .meeting-reading-content .ct-minutes-item{background:transparent;border:0;border-bottom:1px solid #eee9f2;border-radius:0;padding:14px 0;margin:0;line-height:1.95}
+.ct-windows.ct-theme-dark.ct-meeting-detail .meeting-reading-content .ct-minutes-item{border-color:#433b4f}
+.ct-windows.ct-meeting-detail .ct-reviewed-utterance{padding:18px 20px;border:1px solid #e8e1ef;border-radius:12px;background:#fcfbfd}
+.ct-windows.ct-meeting-detail .ct-reviewed-utterance p{line-height:1.95}
+.ct-windows.ct-theme-dark.ct-meeting-detail .ct-reviewed-utterance{background:#28232f;border-color:#44394f}
+.ct-windows.ct-meeting-detail .ct-transcript-review-meta{gap:12px;font-size:12px}
+@media(max-width:560px){.ct-windows.ct-meeting-detail .ct-imported-save-status{margin-inline:19px}.ct-windows.ct-meeting-detail .ct-title-editor input{font-size:22px}}

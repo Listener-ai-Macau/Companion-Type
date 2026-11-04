@@ -4595,6 +4595,19 @@ async fn sync_native_recordings_original(original: &OwnedRecorder) -> Result<Nat
     sync_native_recordings_scoped(Some(&original.device_id),&[],Some(original.recording_id),Some(key),false).await
 }
 
+/// Explicit selection uses the ordinary protected catalogue, receiver,
+/// checkpoints and publication. No microphone control or unscoped fallback.
+pub(crate) fn sync_selected_recording_key(device:&str,
+    public:&crate::companion_v1::CompanionV1RecordingKey)->Result<(),String> {
+    let key=super::recording_wire::SessionKey::from_public(public)?;
+    if !native_ble_available(){return Err("指定会话收取需要真实Windows蓝牙。".into());}
+    recording_sync::resume_explicit(Some(device))?;
+    let batch=run_native_blocking(sync_native_recordings_scoped(Some(device),&[],None,Some(&key),false))?;
+    require_original_sync_outcome(batch)?;
+    Ok(())
+}
+
+
 // A deliberately narrow recovery operation for one already verified, sealed
 // original. Never pass unrelated catalogue entries to the sync/consume path.
 fn exact_saved_segment_entry(

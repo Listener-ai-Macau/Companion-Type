@@ -27,7 +27,7 @@ void (async () => {
     assert.ok(node, label); return node;
   };
   const key = (kind: string) => renderer.root.findByProps({id: `ct-key-${kind}`});
-  act(() => button('展开设置与工具').props.onClick());
+  act(() => button('设置与工具').props.onClick());
   assert.equal(key('deepseekApiKey').props.value, '', 'stored secrets are never echoed');
   act(() => key('deepseekApiKey').props.onChange({target: {value: 'draft-private'}}));
   act(() => button('清空DeepSeek Key').props.onClick());

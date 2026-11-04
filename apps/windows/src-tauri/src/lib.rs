@@ -1983,6 +1983,24 @@ fn run_sync_device_recording_cli(args: &[String]) -> Option<Result<(), String>> 
             .position(|arg| arg == "--device-id")
             .and_then(|position| args.get(position + 1))
             .cloned();
+        if let Some(index)=args.iter().position(|arg|arg=="--recording-key") {
+            let path=args.get(index+1).filter(|value|!value.starts_with("--"))
+                .ok_or("--recording-key requires an exact saved logical key JSON file")?;
+            let device=device_id.as_deref().ok_or("Exact-session sync requires --device-id; no scan was started")?;
+            let file=fs::File::open(path).map_err(|e|e.to_string())?;
+            if file.metadata().map_err(|e|e.to_string())?.len()>1024 {return Err("Recording key file is too large".into());}
+            let mut key:companion_v1::CompanionV1RecordingKey=serde_json::from_reader(file).map_err(|e|e.to_string())?;
+            key.device_uid.make_ascii_lowercase();key.format_epoch.make_ascii_lowercase();key.session_id.make_ascii_lowercase();
+            backend::sync_selected_recording_key(device,&key)?;
+            let snap=CompanionCoordinator::new_fixture().snapshot()?;
+            let row=snap.host.sessions.iter().find(|row|row.device_recording_key.as_ref()==Some(&key))
+                .ok_or("The selected recording did not publish a durable library row")?;
+            if !verified_synced_audio(row) {return Err("The selected recording is still partial; saved progress was retained".into());}
+            let payload=serde_json::json!({"result":"EXACT_SESSION_RECEIVE_COMPLETED","session":row,
+                "deviceId":device,"logicalKey":key,"microphoneCommands":0});
+            println!("sync_device_recording_result_json={payload}");
+            return Ok(());
+        }
         if device_id.is_none() {
             if let Ok(scan) = coordinator.apply_control(companion_v1::CompanionV1ControlRequest { minutes_template: None, recording_source: None,
                 action: companion_v1::CompanionV1ControlAction::DeviceScan,

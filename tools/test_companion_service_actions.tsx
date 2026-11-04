@@ -21,7 +21,7 @@ void (async () => {
   let renderer:any; act(()=>{renderer=create(<CompanionDashboard {...props()}/>);});
   const text=(node:any):string=>typeof node==='string'?node:(node?.children??[]).map(text).join('');
   const button=(label:string)=>{const n=renderer.root.findAllByType('button').find((n:any)=>text(n).includes(label));assert.ok(n,label);return n;};
-  act(()=>button('展开设置与工具').props.onClick());
+  act(()=>button('设置与工具').props.onClick());
   const check=button('测试转写服务'); assert.equal(check.props.disabled,false);
   act(()=>{check.props.onClick();check.props.onClick();}); assert.deepEqual(checks,['asr']);
   assert.equal(button('测试纪要服务').props.disabled,true);

@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {transcriptMatches} from '../packages/ui/src/transcriptMatching';
+const rows=['嗯，周五交付。周五再核对。','预算 .* [1] 不变。','İ 计划 🎙️ i'];
+const source=JSON.stringify(rows);
+assert.deepEqual(transcriptMatches(rows,'周五'),[{row:0,start:2,end:4},{row:0,start:7,end:9}]);
+assert.equal(transcriptMatches(rows,'.*').length,1,'regex metacharacters must be literal');
+assert.equal(transcriptMatches(rows,'[1]').length,1);
+assert.deepEqual(transcriptMatches(rows,'不存在'),[]);
+assert.deepEqual(transcriptMatches(rows,'  '),[]);
+assert.deepEqual(transcriptMatches(['aAAa'],'aa'),[{row:0,start:0,end:2},{row:0,start:2,end:4}]);
+for(const term of ['İ','🎙️','i'])for(const match of transcriptMatches(rows,term))assert.equal(rows[match.row].slice(match.start,match.end).toLocaleLowerCase(),term.toLocaleLowerCase());
+assert.equal(JSON.stringify(rows),source,'reading must never change saved text');
+console.log('PASS literal, Unicode, multi-row and source-preserving transcript matching');

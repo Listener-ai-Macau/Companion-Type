@@ -1843,7 +1843,7 @@ export function CompanionDashboard({
         </>} />);
 
   return (
-    <main className={`ct-shell ct-simple ct-${surface}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}`}>
+    <main className={`ct-shell ct-simple ct-${surface}${surface==='windows'&&desktopTheme==='dark'?' ct-theme-dark':''}${pageView==='library'&&!savedDetailOpen?' ct-library-overview':''}${pageView==='library'&&savedDetailOpen?' ct-meeting-detail':''}`}>
       {previewWaiting?<div className="ct-status-banner" role="status">
         <p>正在核对已保存的内容，尚未开始保存或复制。</p>
         <button type="button" className="ct-action" onClick={()=>previewTask.current?.cancel()}>取消等待</button>
@@ -2242,7 +2242,7 @@ export function CompanionDashboard({
           </div>
           {hasMinutes || editingMinutes || busyAction === 'meetingGenerateMinutes' ? <details ref={savedMinutesHeading} id="ct-recording-result" className="ct-recording-result"
             open={recordingResultOpen} onToggle={event=>setRecordingResultOpen(event.currentTarget.open)}>
-            <summary>{manualMinutes ? '手写清单' : '整理结果'}{minutesDirty ? ' · 有未保存的修改' : manualMinutes ? storageBlocked ? ' · 保存待确认' : ' · 已保存' : ''}</summary>
+            <summary>{manualMinutes ? '手写清单' : '会议纪要'}{minutesDirty ? ' · 有未保存的修改' : manualMinutes ? storageBlocked ? ' · 保存待确认' : ' · 已保存' : ''}</summary>
             {selectedUnrecognized.length ? <p className="ct-step-warn" role="status">{selectedUnrecognized.some(part=>part.source?.includes('转写失败'))
               ? '部分音轨转写失败，整理只依据已有文字；可在下方查看音轨并重新转写。'
               : '部分原音没有识别出文字，整理只依据识别到的内容；可在下方查看时段并回听核对。'}</p> : null}

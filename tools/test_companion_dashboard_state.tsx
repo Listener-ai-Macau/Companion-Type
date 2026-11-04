@@ -151,7 +151,7 @@ const settings: any = { defaultMeetingMode: 'offlineStore', asrProvider: 'volcen
   deepseekModel: 'existing-model', deepseekMinutesEnabled: true, bleCompress: false };
 act(() => { renderer = create(<CompanionDashboard {...props()} productSettings={settings} />); });
 act(()=>renderer.root.findAllByType('button').find((n:any)=>text(n)==='设置与工具').props.onClick());
-const providerSelect = renderer.root.findAllByType('label').find((label: any) => text(label).includes('ASR 提供商'))!.findByType('select');
+const providerSelect = renderer.root.findAllByType('label').find((label: any) => text(label).includes('转写方式'))!.findByType('select');
 assert.equal(renderer.root.findAllByType('label').some((label: any) => text(label).includes('兼容服务 Endpoint')), false,
   'inactive provider fields must stay hidden');
 act(() => providerSelect.props.onChange({ target: { value: 'openai-compatible' } }));

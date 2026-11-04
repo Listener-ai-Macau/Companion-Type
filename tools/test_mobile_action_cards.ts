@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {mobileActionCards} from '../apps/mobile/src/mobileActionReading';
+const original='- 待核对：准备报价 (owner: 小王, due: 周五)\n- 主任说可以再考虑\n- [x] 已人工标记的事项';
+const result=mobileActionCards(original)!;
+assert.deepEqual(result[0],{original:'待核对：准备报价 (owner: 小王, due: 周五)',body:'准备报价',owner:'小王',due:'周五',checked:false,pending:true});
+assert.equal(result[1].owner,null,'must not infer a responsible person from prose');assert.equal(result[1].body,'主任说可以再考虑');
+assert.equal(result[2].checked,true);assert.ok(original.includes('(owner: 小王, due: 周五)'));
+assert.equal(mobileActionCards('- 事项 (owner: 小王, risk: 高)')![0].body,'事项 (owner: 小王, risk: 高)');
+assert.equal(mobileActionCards('- 事项 (owner: 甲, owner: 乙)')![0].owner,null);
+assert.equal(mobileActionCards('```\n- 不是行动事项\n```'),null);
+assert.deepEqual(mobileActionCards('- None captured'),[]);
+console.log('Mobile action reading preserves original text, missing assignments, unknown metadata and saved status.');

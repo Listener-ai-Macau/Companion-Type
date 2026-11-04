@@ -1,6 +1,7 @@
 import {operationErrorText} from './operationFailure';
 import { useEffect, useRef, useState } from 'react';
 import { Pencil, RotateCcw } from 'lucide-react';
+import {TranscriptFind} from './TranscriptFind';
 import {
   companionReviewedTranscript, companionReviewedUtterances, companionSessionHasFinalTranscript,
   companionTranscriptReviewIsStale, companionTranscriptReviewRevision, companionTranscriptSpeakerLabel,
@@ -196,7 +197,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
         <button type="button" className="ct-action" disabled={Boolean(saving)} onClick={() => cancel(session.id)}>取消修订</button>
       </div>
     </div> : <>
-      <div className="ct-transcript-lines">
+      <TranscriptFind key={session.id} texts={rows.length?rows.map(row=>row.text):companionReviewedTranscript(session).split('\n')}>{highlight=><div className="ct-transcript-lines">
         {rows.length ? rows.map((u,index) => <div className="ct-reviewed-utterance" key={index}
           data-source-selected={selection?.index === index ? 'true' : undefined}
           tabIndex={selection?.index === index ? -1 : undefined}
@@ -206,9 +207,9 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
               className="ct-text-button" disabled={blocked || audioSeekBlocked || seeking}
               aria-label={`定位第${index + 1}段原音`} onClick={() => seek(sourcesByIndex.get(index)!)}>定位原音</button> : null}
           </div>
-          <p>{u.text}</p>
-        </div>) : companionReviewedTranscript(session).split('\n').map((line,i) => <p key={i}>{line || '\u00a0'}</p>)}
-      </div>
+          <p>{highlight(u.text,index)}</p>
+        </div>) : companionReviewedTranscript(session).split('\n').map((line,i) => <p key={i}>{highlight(line,i)||'\u00a0'}</p>)}
+      </div>}</TranscriptFind>
       <div className="ct-inline-edit-actions"><button type="button" className="ct-text-button" disabled={!canEdit}
         title={!onSave ? '请在桌面版修订转写' : undefined} onClick={start}><Pencil size={14} />修正文字</button>
         {revision !== null || stale ? <button type="button" className="ct-text-button" disabled={!canEdit} onClick={() => void save(true)}><RotateCcw size={14} />{importedText ? '恢复导入原文' : '恢复原始转写'}</button> : null}

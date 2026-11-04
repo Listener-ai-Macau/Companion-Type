@@ -6,7 +6,7 @@ const categories:ReadonlyArray<{kind:MeetingOutlineItem['kind'];titles:readonly 
  {kind:'questions',titles:['Questions','待解问题'],label:'待解问题',hint:'留待下次跟进'},
 ];
 /** Reading index only. Never derives decisions, commitments or people from prose. */
-export function meetingOutline(markdown:string):MeetingOutlineItem[] {
+function savedSections(markdown:string) {
  const sections:Array<{title:string;items:string[]}>=[];let current:typeof sections[number]|null=null;
  let fence:{character:string;length:number}|null=null;
  for(const line of markdown.split(/\r?\n/)){
@@ -20,6 +20,13 @@ export function meetingOutline(markdown:string):MeetingOutlineItem[] {
   const item=/^\s*(?:[-*+]\s+|\d+[.)]\s+)(.+)$/.exec(line);
   if(current&&item&&!/^(?:None captured[.。]?|暂无[。]?|无[。]?)$/i.test(item[1].trim()))current.items.push(item[1]);
  }
+ return sections;
+}
+export function meetingSectionTitles(markdown:string):string[] {
+ return [...new Set(savedSections(markdown).map(section=>section.title))];
+}
+export function meetingOutline(markdown:string):MeetingOutlineItem[] {
+ const sections=savedSections(markdown);
  return categories.flatMap(category=>{
   // Prefer the saved concise overview when both it and a detailed summary exist.
   const section=category.titles.map(title=>sections.find(s=>s.title===title)).find(s=>s?.items.length);

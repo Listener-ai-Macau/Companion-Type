@@ -18,6 +18,7 @@ pub(crate) fn inspect_engineering_ota_preservation(device_id: &str) -> Result<()
 pub(crate) use ble_bridge::pet_find;
 pub(crate) mod lifecycle;
 pub(crate) use ble_bridge::release_process_device_links;
+pub(crate) use ble_bridge::sync_selected_recording_key;
 pub(crate) mod speaker_refinement;
 pub(crate) mod meeting_transcript;
 pub(crate) use ble_bridge::benchmark_recording_upload;
