@@ -2,4 +2,4 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {App} from '../apps/mobile/src/App';
-createRoot(document.getElementById('root')!).render(<App/>);
+createRoot(document.getElementById('root')!).render(<App readingPreview={new URLSearchParams(location.search).get('mode')==='reading'}/>);

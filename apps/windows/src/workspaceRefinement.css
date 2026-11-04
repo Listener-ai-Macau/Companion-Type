@@ -79,3 +79,4 @@
 .ct-windows.ct-theme-dark.ct-meeting-detail .ct-reviewed-utterance{background:#28232f;border-color:#44394f}
 .ct-windows.ct-meeting-detail .ct-transcript-review-meta{gap:12px;font-size:12px}
 @media(max-width:560px){.ct-windows.ct-meeting-detail .ct-imported-save-status{margin-inline:19px}.ct-windows.ct-meeting-detail .ct-title-editor input{font-size:22px}}
+.ct-windows .ct-overview-expand{display:inline-flex;align-items:center;min-height:38px;margin:10px 0 18px;padding:7px 12px;border:1px solid #e3daed;border-radius:9px;background:#f8f4fc;color:#72528d;font-size:12px}.ct-windows.ct-theme-dark .ct-overview-expand{background:#352a40;border-color:#584368;color:#d7bdea}

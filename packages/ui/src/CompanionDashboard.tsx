@@ -9,7 +9,8 @@ import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
+import {splitGeneratedMeetingMetadata} from './meetingReading';
 import { CompanionSetup } from './CompanionSetup';
 import { CompanionRecordingReadiness, fragmentedSpaceMayFit, recordingRoomLabel } from './CompanionRecordingReadiness';
 import { CompanionHelp } from './CompanionHelp';
@@ -214,6 +215,7 @@ export type CompanionMeetingSaveRequest = {
 };
 
 export interface CompanionDashboardProps {
+  readingPreview?:boolean;
   onAskMeetings?: (question:string,sessionIds:string[],jobId:string,resume?:import('@companion-type/core').MeetingQaResumeRequest) => Promise<import('@companion-type/core').MeetingQaResult>;
   onCancelMeetingQuestion?: (jobId:string) => Promise<boolean>;
   onReadLicenses?: () => Promise<string>;
@@ -387,6 +389,7 @@ function MinutesContentEditor({ markdown, onChange, disabled, label, noteContext
 }
 
 export function CompanionDashboard({
+  readingPreview=false,
   onReadLicenses,
   settingsFooter,
   petPanel,
@@ -918,7 +921,7 @@ export function CompanionDashboard({
   );
   const unimportedTranscriptDraft = Boolean(transcriptEditor.current.dirty && selectedSession
     && transcriptDraft.trim() !== (selectedSession.transcriptText ?? '').trim());
-  const canGenerate = finalTranscript && !recoveryView?.isProcessing && !unimportedTranscriptDraft;
+  const canGenerate = !readingPreview && finalTranscript && !recoveryView?.isProcessing && !unimportedTranscriptDraft;
   const hasOriginalAudio = Boolean(hasSyncedAudio && selectedSession?.audioStored && selectedSession.retention.audioCached
     && (selectedSession.source === 'hostMeeting' ? hostRecordingAudioConfirmed(selectedSession)
       : selectedSession.audioPath && !/^(host|device|board):\/\//i.test(selectedSession.audioPath)));
@@ -1126,6 +1129,9 @@ export function CompanionDashboard({
             : null;
   const audioIdentity = selectedSession ? listeningIdentity(selectedSession) : '';
   const [sourceSelection, setSourceSelection] = useState<CompanionTranscriptSource | null>(null);
+  const [transcriptLookup,setTranscriptLookup]=useState<{id:string;text:string;sessionId:string;returnId?:string}|null>(null);
+  const lookupSequence=useRef(0);
+  useEffect(()=>setTranscriptLookup(null),[selectedSession?.id]);
   useEffect(()=>{
     if(!qaPendingCitation || selectedSession?.id!==qaPendingCitation.sessionId)return;
     const matches=companionMinutesReferencedSources(companionTranscriptSources(selectedSession),qaPendingCitation.quote);
@@ -1254,8 +1260,10 @@ export function CompanionDashboard({
                 actionsBlocked={recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
-                blocked={controlsBusy} onOpenSource={openTranscriptSource}
-                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?()=>{
+                blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
+                onShowTranscript={!selectedMinutesStale&&!transcriptReviewUnsaved&&companionReviewedTranscript(selectedSession).trim()?(text,returnId)=>{
+                  setSourceSelection(null);
+                  setTranscriptLookup(text?{id:String(++lookupSequence.current),text,sessionId:selectedSession.id,returnId}:null);
                   resumeTranscriptDraft(selectedSession.id);
                   window.requestAnimationFrame(()=>{const region=document.getElementById('ct-recording-text-review');
                     if(region&&!region.hidden){region.scrollIntoView({block:'start'});region.focus({preventScroll:true});}});
@@ -2141,7 +2149,7 @@ export function CompanionDashboard({
             {hasMinutes?<button type="button" onClick={()=>{setRecordingResultOpen(true);revealMeetingTool('ct-recording-result');}}><FileText size={16}/>会议纪要</button>:null}
             {finalTranscript?<button type="button" onClick={()=>{setTranscriptReviewOpen(true);revealMeetingTool('ct-recording-text-review');}}><Headphones size={16}/>转写原文</button>:null}
             {onAskMeetings&&finalTranscript?<button type="button" disabled={controlsBusy||qaBusy} onClick={()=>{setQaSelected([selectedSession.id]);revealMeetingTool('ct-meeting-qa');}}><Search size={16}/>问这场会议</button>:null}
-            {finalTranscript?<button type="button" disabled={controlsBusy} onClick={()=>revealMeetingTool('ct-meeting-templates')}><Pencil size={16}/>纪要模板</button>:null}
+            {finalTranscript&&!readingPreview?<button type="button" disabled={controlsBusy} onClick={()=>revealMeetingTool('ct-meeting-templates')}><Pencil size={16}/>纪要模板</button>:null}
             {hasMinutes?<button type="button" onClick={()=>{setRecordingResultOpen(true);revealMeetingTool('ct-meeting-export');}}><Download size={16}/>导出分享</button>:null}
           </nav>
           {deviceStorageFullNotice(selectedSession) ? <p className="ct-recording-notice ct-step-warn" role="status">{deviceStorageFullNotice(selectedSession)}</p> : null}
@@ -2552,7 +2560,7 @@ export function CompanionDashboard({
                 {qaSaveMessage?<p role="status">{qaSaveMessage}</p>:null}
               </div>:null}
             </details>:null}
-            {finalTranscript ? <details id="ct-meeting-templates" className="ct-library-more" aria-label="选择整理视角">
+            {finalTranscript&&!readingPreview ? <details id="ct-meeting-templates" className="ct-library-more" aria-label="选择整理视角">
               <summary>按会议、访谈或课堂整理</summary>
               <p className="ct-step-meta">选择整理侧重点；新结果会保留在这场录音中，已有结果可在历史里切回。</p>
               <label>整理视角 <select aria-label="整理视角" value={templateId} onChange={event=>{
@@ -2642,6 +2650,8 @@ export function CompanionDashboard({
           <CompanionTranscriptReview session={selectedSession} visible={transcriptReviewOpen}
             blocked={recordingControlBusy || selectedRecordingBeingCaptured || storageBlocked}
             sourceSelection={sourceSelection} onSeekSource={seekTranscriptSource}
+            lookup={transcriptLookup?.sessionId===selectedSession.id?transcriptLookup:null}
+            onReturnLookup={()=>{setRecordingResultOpen(true);window.requestAnimationFrame(()=>{const target=transcriptLookup?.returnId?document.getElementById(transcriptLookup.returnId):document.getElementById('ct-recording-result');target?.scrollIntoView({block:'center'});target?.focus({preventScroll:true});});}}
             audioSeekBlocked={Boolean(audioBlockedReason) || audioBusy}
             onSave={onSaveMeeting} onUnsavedChange={setTranscriptReviewUnsaved} onDraftSessionsChange={setTranscriptDraftSessions} />
           </div>
@@ -3675,7 +3685,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   onToggleAction?:(lineIndex:number,completed:boolean)=>void;actionsBlocked?:boolean;savedMarkdown?:string;
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;sourceFallbackLabel?:string;
   onOpenSource?: (source: CompanionTranscriptSource) => void;
-  onShowTranscript?: () => void;
+  onShowTranscript?: (text?:string,returnId?:string) => void;
 }) {
   // Only fold the exact native provenance envelope represented by the saved
   // typed source snapshot. Complete saved output remains available below.
@@ -3684,6 +3694,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
     const envelope = minutesSourceEnvelope(noteContext);
     if(markdown.startsWith(envelope))reading=markdown.slice(envelope.length);
   }
+  reading=splitGeneratedMeetingMetadata(reading).body;
   // The detail page already owns the current recording title. Hide only its
   // duplicated leading document heading while reading; saved markdown, editor,
   // exports, source-note provenance and later authored headings remain intact.
@@ -3717,7 +3728,7 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
     
       <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps} />
     {shortSource}
-    {reading!==markdown?<details className="ct-full-minutes"><summary>查看本次补充来源与完整整理</summary>
+    {noteContext&&reading!==markdown?<details className="ct-full-minutes"><summary>查看本次补充来源与完整整理</summary>
       
       <MarkdownMinutes markdown={shortReading} hideDocumentTitle={Boolean(recordingTitle)} actionChecklist={actionChecklist} {...sourceProps}/>
       {noteContext?<details className="ct-full-minutes"><summary>核对本次补充来源</summary>
@@ -3745,10 +3756,12 @@ function MinutesReadingBody({ markdown, savedMarkdown=markdown, transcript, dura
   </div>;
 }
 
-function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查看原话（未匹配到准确定位）", actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
+function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShowTranscript, sourceFallbackLabel="查找原文核对（未定位）", actionChecklist, hideDocumentTitle=false }: { markdown: string;hideDocumentTitle?:boolean;
   actionChecklist?:{items:SavedAction[];onToggle:(lineIndex:number,completed:boolean)=>void;blocked?:boolean;compactSources?:boolean;recordingTime?:string};
   sources?: readonly CompanionTranscriptSource[]; blocked?: boolean;
-  onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:()=>void;sourceFallbackLabel?:string }) {
+  onOpenSource?: (source: CompanionTranscriptSource) => void; onShowTranscript?:(text?:string,returnId?:string)=>void;sourceFallbackLabel?:string }) {
+  const lookupId=useId();
+  const [overviewState,setOverviewState]=useState({source:markdown,expanded:false});
   if (!markdown.trim()) return <p className="ct-document-empty">这条录音还没有整理结果。</p>;
   const actionRows=new Map(savedActions(markdown).flatMap((row,index)=>{
     const saved=actionChecklist?.items[index];
@@ -3784,9 +3797,17 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
     return parts.metadata.some(field=>field.key==='due'&&readableCalendarTime(field.value)===field.value)
       || /今[天早晚]|明[天早晚]|后天|昨天|前天|(?:本|这|下|上)(?:周|星期|个?月)|周[一二三四五六日天]|星期[一二三四五六日天]/u.test(parts.body);
   });
+  const overviewStart=visibleBlocks.findIndex(block=>block.type==='heading'&&['全会重点','会议概览'].includes(block.text));
+  let overviewEnd=overviewStart+1;
+  while(overviewEnd<visibleBlocks.length&&visibleBlocks[overviewEnd].type==='item'&&!visibleBlocks[overviewEnd].action)overviewEnd++;
+  const overviewCount=overviewStart<0?0:overviewEnd-overviewStart-1;
+  const canFoldOverview=overviewCount>5&&visibleBlocks.slice(overviewStart+1,overviewEnd).every(block=>block.type==='item'&&!block.action);
+  const foldAt=overviewStart+4;
+  const overviewExpanded=overviewState.source===markdown&&overviewState.expanded;
   return (
     <article className="ct-minutes-article">
       {visibleBlocks.map((block, index) => {
+        if(canFoldOverview&&!overviewExpanded&&index>=foldAt&&index<overviewEnd)return index===foldAt?<button key="overview-expand" type="button" className="ct-text-button ct-overview-expand" aria-expanded="false" onClick={()=>setOverviewState({source:markdown,expanded:true})}>查看其余 {overviewCount-3} 条重点</button>:null;
         if (block.type === 'title') return hideDocumentTitle&&index===0?null:<h3 key={index}>{formatMinutesTitle(block.text)}</h3>;
         if (block.type === 'heading') return <h4 key={index} data-meeting-heading={block.text}>{translateMinutesHeading(block.text)}</h4>;
         const sourceParts=block.action?nativeActionParts(block.action.text):null;
@@ -3804,7 +3825,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
             onClick={() => onOpenSource(source)}>{comparisonOnly?'对照事项原文':'核对原文'} · {source.approximateTiming?'约 ':''}{Math.floor(source.startMs / 60000)}:{String(Math.floor(source.startMs / 1000) % 60).padStart(2, '0')}</button>)}
           {comparisonOnly?<small>此处对照事项原话；{unverifiedNames}请按实际安排确认。</small>:null}
         </span> : block.action&&onShowTranscript?<span className="ct-minutes-source-links"><button type="button" className="ct-text-button" disabled={blocked}
-          onClick={onShowTranscript}>{sourceFallbackLabel}</button></span>:null;
+          id={`${lookupId}-source-${index}`} onClick={()=>onShowTranscript(sourceParts?.body??block.text,`${lookupId}-source-${index}`)}>{sourceFallbackLabel}</button></span>:null;
         if(block.action&&actionChecklist){const action=block.action;
           const actionIndex=visibleActions.indexOf(action);
           const shownText=commonSupplement?commonSupplement.displayTexts[actionIndex]:action.text;
@@ -3826,7 +3847,7 @@ function MarkdownMinutes({ markdown, sources = [], blocked, onOpenSource, onShow
               {shown.metadata.map(field=><span className="ct-action-supplement" key={field.key}><span className="ct-action-supplement-label">{field.key==='due'?((field.value.endsWith('前')||readableCalendarTime(field.value)!==field.value)?'截止':'注明时间'):'负责人'}</span>{field.key==='due'?readableCalendarTime(field.value):field.value}</span>)}
               {parts?<span className="ct-action-supplement"><span className="ct-action-supplement-label">补充</span>{parts.context}</span>:null}
             </span></label>{links}</div></div>;}
-        if (block.type === 'item') return <div key={index} className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>;
+        if (block.type === 'item') return <Fragment key={index}><div className="ct-minutes-item"><span className="ct-minutes-bullet" aria-hidden="true">•</span><span>{minutesInlineText(block.text)}{links}</span></div>{canFoldOverview&&overviewExpanded&&index===overviewEnd-1?<button type="button" className="ct-text-button ct-overview-expand" aria-expanded="true" onClick={()=>setOverviewState({source:markdown,expanded:false})}>收起扩展重点</button>:null}</Fragment>;
         return <p key={index}>{minutesInlineText(block.text)}{links}</p>;
       })}
       {actionChecklist?.compactSources&&visibleBlocks.some(block=>block.action&&compactActionSource(block.action.text).supplementary)?

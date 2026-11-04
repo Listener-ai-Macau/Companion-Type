@@ -2,6 +2,7 @@ import {operationErrorText} from './operationFailure';
 import { useEffect, useRef, useState } from 'react';
 import { Pencil, RotateCcw } from 'lucide-react';
 import {TranscriptFind} from './TranscriptFind';
+import type {TranscriptLookup} from './transcriptMatching';
 import {
   companionReviewedTranscript, companionReviewedUtterances, companionSessionHasFinalTranscript,
   companionTranscriptReviewIsStale, companionTranscriptReviewRevision, companionTranscriptSpeakerLabel,
@@ -33,7 +34,7 @@ function stamp(ms: number) {
 }
 
 export function CompanionTranscriptReview({ session, visible, blocked, onSave, onUnsavedChange, onDraftSessionsChange,
-  sourceSelection, onSeekSource, audioSeekBlocked = false }: {
+  sourceSelection, onSeekSource, audioSeekBlocked = false, lookup, onReturnLookup }: {
   session: CompanionV1HostSession; visible: boolean; blocked: boolean;
   onSave?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onUnsavedChange: (unsaved: boolean) => void;
@@ -41,6 +42,8 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
   sourceSelection?: CompanionTranscriptSource | null;
   onSeekSource?: (source: CompanionTranscriptSource) => Promise<void>;
   audioSeekBlocked?: boolean;
+  lookup?:TranscriptLookup|null;
+  onReturnLookup?:()=>void;
 }) {
   // Keep per-meeting drafts mounted even when the user switches content tabs.
   const [drafts, setDrafts] = useState<Record<string, Draft>>({});
@@ -197,7 +200,7 @@ export function CompanionTranscriptReview({ session, visible, blocked, onSave, o
         <button type="button" className="ct-action" disabled={Boolean(saving)} onClick={() => cancel(session.id)}>取消修订</button>
       </div>
     </div> : <>
-      <TranscriptFind key={session.id} texts={rows.length?rows.map(row=>row.text):companionReviewedTranscript(session).split('\n')}>{highlight=><div className="ct-transcript-lines">
+      <TranscriptFind key={session.id} texts={rows.length?rows.map(row=>row.text):companionReviewedTranscript(session).split('\n')} lookup={lookup} onReturn={onReturnLookup}>{highlight=><div className="ct-transcript-lines">
         {rows.length ? rows.map((u,index) => <div className="ct-reviewed-utterance" key={index}
           data-source-selected={selection?.index === index ? 'true' : undefined}
           tabIndex={selection?.index === index ? -1 : undefined}

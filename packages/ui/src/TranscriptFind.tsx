@@ -1,13 +1,19 @@
 import {useEffect,useMemo,useRef,useState,type ReactNode} from 'react';
 import {ChevronDown,ChevronUp,Search,X} from 'lucide-react';
-import {transcriptMatches} from './transcriptMatching';
+import {transcriptMatches,transcriptLookupTerms,type TranscriptLookup} from './transcriptMatching';
 import './transcriptFind.css';
 
 /** Search is a reading projection; callbacks, source objects and saved text are untouched. */
-export function TranscriptFind({texts,children}:{texts:readonly string[];children:(highlight:(text:string,row:number)=>ReactNode)=>ReactNode}) {
+export function TranscriptFind({texts,children,lookup,onReturn}:{texts:readonly string[];children:(highlight:(text:string,row:number)=>ReactNode)=>ReactNode;lookup?:TranscriptLookup|null;onReturn?:()=>void}) {
  const [query,setQuery]=useState('');const [index,setIndex]=useState(0);
  const root=useRef<HTMLDivElement>(null);const input=useRef<HTMLInputElement>(null);
  const matches=useMemo(()=>transcriptMatches(texts,query),[texts,query]);
+ const suggestions=useMemo(()=>lookup?transcriptLookupTerms(texts,lookup.text):[],[texts,lookup?.id]);
+ useEffect(()=>{
+  if(!lookup)return;setQuery('');setIndex(0);
+  const frame=window.requestAnimationFrame(()=>{root.current?.scrollIntoView({block:'start',behavior:'instant'});input.current?.focus({preventScroll:true});});
+  return()=>window.cancelAnimationFrame(frame);
+ },[lookup?.id]);
  const current=matches.length?Math.min(index,matches.length-1):-1;
  const byRow=useMemo(()=>{
   const result=new Map<number,Array<{start:number;end:number;index:number}>>();
@@ -27,6 +33,7 @@ export function TranscriptFind({texts,children}:{texts:readonly string[];childre
   pieces.push(text.slice(offset));return pieces;
  }
  return <div className="transcript-find" ref={root}>
+  {lookup&&<section className="transcript-lookup" aria-label="待核对的纪要内容"><div className="transcript-lookup-heading"><strong>这条纪要尚未匹配到原话</strong>{onReturn&&<button type="button" onClick={onReturn}>返回这条纪要</button>}</div><blockquote>{lookup.text}</blockquote><p>下面只做文字查找，不代表已核实这条纪要或定位到准确录音位置。请选择关键词，再结合上下文核对。</p>{suggestions.length>0?<div className="transcript-lookup-terms" role="group" aria-label="原文中出现的关键词">{suggestions.map(item=><button type="button" key={item.term} aria-pressed={query===item.term} onClick={()=>{setQuery(item.term);setIndex(0);}}>{item.term}<small>{item.count} 处</small></button>)}</div>:<p>没有可直接匹配的关键词，可在下方输入你记得的词句。</p>}</section>}
   <div className="transcript-find-toolbar" role="search" aria-label="查找转写内容">
    <label className="transcript-find-field"><Search size={16} aria-hidden="true"/><span className="transcript-find-sr">查找转写关键词</span><input ref={input} type="search" placeholder="查找这场会议的原文" maxLength={120} value={query} onChange={e=>{setQuery(e.target.value);setIndex(0);}} onKeyDown={e=>{
     if(e.key==='Enter'){e.preventDefault();move(e.shiftKey?-1:1);}
