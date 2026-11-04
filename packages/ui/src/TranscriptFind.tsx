@@ -4,11 +4,12 @@ import {transcriptMatches,transcriptLookupTerms,type TranscriptLookup} from './t
 import './transcriptFind.css';
 
 /** Search is a reading projection; callbacks, source objects and saved text are untouched. */
-export function TranscriptFind({texts,children,lookup,onReturn}:{texts:readonly string[];children:(highlight:(text:string,row:number)=>ReactNode)=>ReactNode;lookup?:TranscriptLookup|null;onReturn?:()=>void}) {
+export function TranscriptFind({texts,children,lookup,onReturn,searchRequest}:{texts:readonly string[];children:(highlight:(text:string,row:number)=>ReactNode)=>ReactNode;lookup?:TranscriptLookup|null;onReturn?:()=>void;searchRequest?:TranscriptLookup|null}) {
  const [query,setQuery]=useState('');const [index,setIndex]=useState(0);
  const root=useRef<HTMLDivElement>(null);const input=useRef<HTMLInputElement>(null);
  const matches=useMemo(()=>transcriptMatches(texts,query),[texts,query]);
  const suggestions=useMemo(()=>lookup?transcriptLookupTerms(texts,lookup.text):[],[texts,lookup?.id]);
+ useEffect(()=>{if(searchRequest){setQuery(searchRequest.text);setIndex(0);}},[searchRequest?.id]);
  useEffect(()=>{
   if(!lookup)return;setQuery('');setIndex(0);
   const frame=window.requestAnimationFrame(()=>{root.current?.scrollIntoView({block:'start',behavior:'instant'});input.current?.focus({preventScroll:true});});

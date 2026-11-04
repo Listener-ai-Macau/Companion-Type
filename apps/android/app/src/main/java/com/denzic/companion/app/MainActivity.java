@@ -518,18 +518,36 @@ public final class MainActivity extends Activity {
                 }
             }
             case "library": {
-                RecordingLibrary.Inventory inv = RecordingLibrary.inspect(recordings()); JSONArray rows = new JSONArray(); int titleProblems=0;
+                RecordingLibrary.Inventory inv = RecordingLibrary.inspect(recordings()); JSONArray rows = new JSONArray(); int titleProblems=0,searchProblems=0;
+                String query=a.optString("query","").trim();
+                MeetingLibrarySearch search=query.isEmpty()?null:new MeetingLibrarySearch(query,!"title".equals(a.optString("scope","all")));
+                MeetingLibrarySearch.Reader reader=(key,source)->{
+                    if("transcript".equals(source)){
+                        MeetingStore.Snapshot saved=store().load(key);
+                        return saved==null?null:new MeetingLibrarySearch.SavedText(saved.transcript,false);
+                    }
+                    MeetingStore.Minutes saved=store().loadMinutes(key);if(saved==null)return null;
+                    JSONObject content=MinutesHistoryAccess.content(saved.json);
+                    Object markdown=content==null?null:content.opt("markdown");
+                    if(!(markdown instanceof String))throw new java.io.IOException("保存的纪要无法读取");
+                    return new MeetingLibrarySearch.SavedText((String)markdown,saved.sourceChanged||saved.sourceMissing);
+                };
                 for (RecordingLibrary.Session s : inv.sessions) {
                     if (s.segments.isEmpty()) continue;
                     RecorderWire.Descriptor d = s.segments.get(0).descriptor;
                     String key=MeetingStore.sessionKey(d);
                     String title;try { title=recordingTitle(key,s); } catch (java.io.IOException error) {title=defaultRecordingTitle(d.sessionId,true);titleProblems++;}
+                    MeetingLibrarySearch.Result found=search==null?null:search.find(key,title,reader);
+                    if(found!=null){searchProblems+=found.unreadable;if(found.match==null)continue;}
                     JSONObject row=new JSONObject().put("key", key).put("title",title).put("session", Long.toUnsignedString(d.sessionId))
                             .put("state", s.state.name()).put("segments", s.segments.size());
                     long duration=completeAudioDurationMs(s);if(duration>0)row.put("durationMs",duration);
+                    if(found!=null)row.put("matchSource",found.match.source).put("matchSnippet",found.match.snippet)
+                        .put("matchStart",found.match.start).put("matchEnd",found.match.end).put("matchStale",found.match.stale);
                     rows.put(row);
                 }
-                return new JSONObject().put("rows", rows).put("problems", inv.problems.size()+titleProblems);
+                return new JSONObject().put("rows", rows).put("problems", inv.problems.size()+titleProblems).put("searchProblems",searchProblems)
+                    .put("searchQuery",query).put("searchScope","title".equals(a.optString("scope","all"))?"title":"all");
             }
             case "detail": {
                 String key = a.getString("key"); session(key);
