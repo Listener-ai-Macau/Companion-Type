@@ -47,6 +47,7 @@ public final class MainActivity extends Activity {
     private Path root() { return getFilesDir().toPath(); }
     private Path recordings() { return root().resolve("companion-recordings"); }
     private MeetingStore store() { return new MeetingStore(root().resolve("companion-meetings")); }
+    private TranslationStore translations() { return new TranslationStore(root().resolve("companion-meetings").resolve("translations")); }
     private android.util.AtomicFile titleFile(String key) throws Exception {
         byte[] digest=java.security.MessageDigest.getInstance("SHA-256").digest(key.getBytes(java.nio.charset.StandardCharsets.UTF_8));
         StringBuilder name=new StringBuilder();for(byte value:digest)name.append(String.format(java.util.Locale.ROOT,"%02x",value&255));
@@ -532,7 +533,7 @@ public final class MainActivity extends Activity {
             }
             case "detail": {
                 String key = a.getString("key"); session(key);
-                return MeetingDetailAccess.read(store(),key);
+                return MeetingDetailAccess.read(store(),key,translations());
             }
             case "minutesHistory": {
                 String key=a.getString("key");session(key);
@@ -668,7 +669,18 @@ public final class MainActivity extends Activity {
                     String response=TranslationTransport.post(endpoint,apiKey,request.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
                     return TranslationProtocol.response(response);
                 },(done,total)->progress("正在翻译 "+done+"/"+total));
-                return new JSONObject().put("text",translated).put("language",language);
+                TranslationStore.Entry entry=new TranslationStore.Entry(key,language,m.transcript,m.revision,translated);
+                JSONObject result=MeetingDetailAccess.translation(entry);
+                try {
+                    MeetingStore.Snapshot latest=store().load(key);
+                    if(latest==null||!latest.transcript.equals(m.transcript))
+                        throw new java.io.IOException("原文已变化，未覆盖已保存的译文；当前结果仍可复制。");
+                    translations().save(entry);
+                    result.put("saved",true);
+                } catch(java.io.IOException error) {
+                    result.put("saved",false).put("saveError","译文已生成，但尚未保存到本机；请先复制保留。" );
+                }
+                return result;
             }
             case "minutes": {
                 String key=a.getString("key"); RecordingLibrary.Session s=session(key); MeetingStore ms=store();
