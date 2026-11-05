@@ -49,9 +49,9 @@ public final class MainActivity extends Activity {
     private boolean libraryRequestRestored;
     private Path root() { return getFilesDir().toPath(); }
     private LocalLibraryBackups libraries(){return new LocalLibraryBackups(root());}
-    private Path recordings() throws Exception { return libraries().recordings(); }
-    private MeetingStore store() throws Exception { return new MeetingStore(libraries().meetings()); }
-    private TranslationStore translations() throws Exception { return new TranslationStore(libraries().meetings().resolve("translations")); }
+    private Path recordings() throws java.io.IOException { return libraries().recordings(); }
+    private MeetingStore store() throws java.io.IOException { return new MeetingStore(libraries().meetings()); }
+    private TranslationStore translations() throws java.io.IOException { return new TranslationStore(libraries().meetings().resolve("translations")); }
     private android.util.AtomicFile titleFile(String key) throws Exception {
         byte[] digest=java.security.MessageDigest.getInstance("SHA-256").digest(key.getBytes(java.nio.charset.StandardCharsets.UTF_8));
         StringBuilder name=new StringBuilder();for(byte value:digest)name.append(String.format(java.util.Locale.ROOT,"%02x",value&255));

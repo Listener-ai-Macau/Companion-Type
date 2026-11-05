@@ -40,8 +40,9 @@ final class LocalLibraryBackups {
         }catch(Exception error){throw new IOException("资料库索引无法读取，原文件已保留，请保留现有资料后重试。",error);}
     }
     String token()throws Exception{return hash(read().toString().getBytes(StandardCharsets.UTF_8));}
-    Path recordings()throws Exception{return path("recordings",read().getString("activeId"));}
-    Path meetings()throws Exception{return path("meetings",read().getString("activeId"));}
+    private Path selectedPath(String kind)throws IOException{try{return path(kind,read().getString("activeId"));}catch(IOException error){throw error;}catch(Exception error){throw new IOException("资料库索引无法读取，原文件已保留。",error);}}
+    Path recordings()throws IOException{return selectedPath("recordings");}
+    Path meetings()throws IOException{return selectedPath("meetings");}
     JSONObject status()throws Exception{JSONObject v=read();v.put("token",hash(v.toString().getBytes(StandardCharsets.UTF_8)));return v;}
     private void expected(String token)throws Exception{if(token==null||!token.equals(token()))throw new IOException("资料已变化，请刷新备份页面后重试；原资料未被覆盖。");}
     private void publish(JSONObject value)throws Exception{
