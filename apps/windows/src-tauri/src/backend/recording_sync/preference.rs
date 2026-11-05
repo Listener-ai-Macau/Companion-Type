@@ -1,0 +1,114 @@
+//! Only the user's per-device sync choice is durable. Jobs, cursors, recorder
+//! controls and temporary foreground handoff remain owned by their own paths.
+use super::{key,Store};
+use serde::{Deserialize,Serialize};
+use std::path::{Path,PathBuf};
+
+const READ_ERROR:&str="录音同步设置暂时不可读取，自动同步已暂停；设备原录音保留。请恢复本机设置文件后重试。";
+const WRITE_ERROR:&str="同步选择未能保存，当前同步保持暂停；请恢复本机存储后再继续。";
+
+#[derive(Deserialize,Serialize)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+struct Preference { schema:u8, paused_devices:Vec<String>, last_paused_device:Option<String> }
+
+fn path()->PathBuf {
+    super::super::persistence::state_file_path().parent().unwrap_or_else(||Path::new(".")).join("recording-sync.json")
+}
+
+pub(super) fn load_product()->Store {
+    // Unit tests without an explicit isolated profile never touch user data.
+    if cfg!(test) && std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none() {return Store::default();}
+    load(path())
+}
+
+fn load(path:PathBuf)->Store {
+    let mut store=Store {preference_path:Some(path.clone()),..Store::default()};
+    let result=(|| {
+        let bytes=match std::fs::read(&path) {
+            Ok(bytes)=>bytes,
+            Err(error) if error.kind()==std::io::ErrorKind::NotFound=>return Ok(()),
+            Err(_)=>return Err(READ_ERROR.to_string()),
+        };
+        if bytes.len()>65536 {return Err(READ_ERROR.into());}
+        let saved:Preference=serde_json::from_slice(&bytes).map_err(|_|READ_ERROR.to_string())?;
+        if saved.schema!=1 || saved.paused_devices.len()>256
+            || saved.paused_devices.iter().any(|id|!super::super::device_connection::stable_device_id(id))
+            || saved.last_paused_device.as_deref().is_some_and(|id|!super::super::device_connection::stable_device_id(id)) {
+            return Err(READ_ERROR.into());
+        }
+        store.paused_devices=saved.paused_devices.iter().map(|id|key(id)).collect();
+        if store.paused_devices.len()!=saved.paused_devices.len()
+            || saved.last_paused_device.as_deref().is_some_and(|id|!store.paused_devices.contains(&key(id)))
+            || (!store.paused_devices.is_empty() && saved.last_paused_device.is_none()) {return Err(READ_ERROR.into());}
+        store.last_paused_device=saved.last_paused_device;
+        Ok(())
+    })();
+    store.storage_error=result.err();store
+}
+
+pub(super) fn save(store:&Store)->Result<(),String> {
+    let Some(path)=store.preference_path.as_deref() else {return Ok(());};
+    if store.storage_error.is_some() {return Err(READ_ERROR.into());}
+    if store.paused_devices.len()>256 || store.paused_devices.iter().any(|id|!super::super::device_connection::stable_device_id(id)) {
+        return Err(WRITE_ERROR.into());
+    }
+    let mut devices=store.paused_devices.iter().cloned().collect::<Vec<_>>();devices.sort();
+    let bytes=serde_json::to_vec(&Preference {schema:1,paused_devices:devices,last_paused_device:store.last_paused_device.clone()})
+        .map_err(|_|WRITE_ERROR.to_string())?;
+    super::super::export::write_atomic(path,&bytes).map(|_|()).map_err(|_|WRITE_ERROR.into())
+}
+
+pub(super) fn resume(store:&mut Store,device:Option<&str>)->Result<(),String> {
+    // Refresh the file for an explicit action. A repaired file can recover;
+    // unreadable/corrupt settings cannot be silently replaced with defaults.
+    let mut next=store.preference_path.as_ref().map(|p|load(p.clone())).unwrap_or_else(||Store {
+        paused_devices:store.paused_devices.clone(),last_paused_device:store.last_paused_device.clone(),..Store::default()
+    });
+    if let Some(error)=next.storage_error {return Err(error);}
+    if let Some(device)=device {next.paused_devices.remove(&key(device));}
+    else {next.paused_devices.clear();}
+    if next.last_paused_device.as_deref().is_some_and(|id|!next.paused_devices.contains(&key(id))) {
+        next.last_paused_device=next.paused_devices.iter().min().cloned();
+    }
+    commit_resume(store,next)
+}
+
+fn commit_resume(store:&mut Store,next:Store)->Result<(),String> {
+    save(&next)?;
+    store.paused_devices=next.paused_devices;store.last_paused_device=next.last_paused_device;store.storage_error=None;
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn corrupt_choice_blocks_automatic_receive_and_is_not_replaced_by_resume() {
+        let root=std::env::temp_dir().join(format!("companion-sync-corrupt-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let path=root.join("recording-sync.json");
+        for bytes in [b"{".as_slice(),br#"{"schema":2,"pausedDevices":[],"lastPausedDevice":null}"#,
+            br#"{"schema":1,"pausedDevices":["not-a-device"],"lastPausedDevice":"not-a-device"}"#] {
+            std::fs::write(&path,bytes).unwrap();let mut store=load(path.clone());
+            assert!(!super::super::owned_follow_allowed_for(&store,"AA:BB:CC:DD:EE:01"));
+            assert!(resume(&mut store,Some("AA:BB:CC:DD:EE:01")).is_err());
+            assert_eq!(std::fs::read(&path).unwrap(),bytes);
+        }
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]
+    fn failed_resume_write_keeps_pause_and_other_devices() {
+        let root=std::env::temp_dir().join(format!("companion-sync-write-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let path=root.join("recording-sync.json");
+        let mut store=load(path.clone());store.paused_devices.insert(key("AA:BB:CC:DD:EE:01"));
+        store.paused_devices.insert(key("AA:BB:CC:DD:EE:02"));store.last_paused_device=Some("AA:BB:CC:DD:EE:01".into());
+        save(&store).unwrap();resume(&mut store,Some("aabbccddee01")).unwrap();
+        assert!(!store.paused_devices.contains("aabbccddee01"));assert!(store.paused_devices.contains("aabbccddee02"));
+        // Fail the durable publication of a valid resumed choice, without
+        // relying on platform-specific read-only attributes or permissions.
+        let blocker=root.join("file");std::fs::write(&blocker,b"x").unwrap();
+        let next=Store {preference_path:Some(blocker.join("recording-sync.json")),..Store::default()};
+        assert!(commit_resume(&mut store,next).unwrap_err().contains("未能保存"));
+        assert!(store.paused_devices.contains("aabbccddee02"));
+        std::fs::remove_dir_all(root).unwrap();
+    }
+}

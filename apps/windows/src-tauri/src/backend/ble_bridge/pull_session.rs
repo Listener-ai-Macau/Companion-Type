@@ -1,0 +1,395 @@
+//! A notification lease reused by prefixes and retained backlog entries.
+//! Completed receive streams are released before a physical consume command.
+
+use std::time::Duration;
+
+use btleplug::{api::{CharPropFlags, Characteristic}, platform::Peripheral};
+#[cfg(not(windows))]
+use btleplug::api::Peripheral as _;
+use futures::future::BoxFuture;
+use tokio::time::timeout;
+
+use super::{find_characteristic, RECORDING_CHUNK_PULL_UUID, RECORDING_CHUNK_PULL_B_UUID};
+use super::pull_receiver::{NotificationReceiver, ReceivedNotification};
+
+pub(super) trait SubscriptionPort: Clone + Send + Sync + 'static {
+    fn subscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>>;
+    fn unsubscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>>;
+}
+
+#[derive(Clone)]
+pub(super) struct NativeSubscriptions {
+    pub(super) peripheral: Peripheral,
+    pub(super) lanes: Vec<Characteristic>,
+    #[cfg(windows)]
+    generation:u64,
+}
+impl NativeSubscriptions {
+    pub(super) fn new(peripheral:Peripheral,lanes:Vec<Characteristic>)->Self {
+        Self { #[cfg(windows)] generation:peripheral.notification_generation(),peripheral,lanes }
+    }
+}
+impl SubscriptionPort for NativeSubscriptions {
+    fn subscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
+        Box::pin(async move {
+            #[cfg(windows)]
+            let result=self.peripheral.subscribe_for_generation(&self.lanes[lane],self.generation).await;
+            #[cfg(not(windows))]
+            let result=self.peripheral.subscribe(&self.lanes[lane]).await;
+            result
+                .map_err(|e| format!("subscribe recording lane {}: {e}", lane + 1))
+        })
+    }
+    fn unsubscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
+        Box::pin(async move {
+            #[cfg(windows)]
+            let result=self.peripheral.unsubscribe_for_generation(&self.lanes[lane],self.generation).await;
+            #[cfg(not(windows))]
+            let result=self.peripheral.unsubscribe(&self.lanes[lane]).await;
+            result
+                .map_err(|e| format!("unsubscribe recording lane {}: {e}", lane + 1))
+        })
+    }
+}
+
+pub(super) struct SubscriptionLease<P: SubscriptionPort> {
+    port: P,
+    active: [bool; 2],
+    cleanup_timeout: Duration,
+}
+impl<P: SubscriptionPort> SubscriptionLease<P> {
+    pub(super) fn pending(port: P, read_timeout: Duration) -> Self {
+        Self { port, active: [false; 2], cleanup_timeout: read_timeout.min(Duration::from_secs(1)) }
+    }
+
+    pub(super) async fn open(port: P, lanes: usize, read_timeout: Duration) -> Result<Self, String> {
+        let mut lease = Self::pending(port, read_timeout);
+        lease.subscribe_lanes(lanes, read_timeout).await?;
+        Ok(lease)
+    }
+
+    // A caller that races native link loss keeps this lease outside the
+    // cancelled future, then awaits close before retiring the connection.
+    pub(super) async fn subscribe_lanes(&mut self, lanes: usize, read_timeout: Duration) -> Result<(), String> {
+        for lane in 0..lanes {
+            // A timed-out/cancelled CCCD write may still have reached Windows.
+            // Record intent before awaiting so its cleanup is never skipped.
+            self.active[lane] = true;
+            let result = timeout(read_timeout, self.port.subscribe(lane)).await
+                .map_err(|_| format!("subscribe recording lane {} timed out", lane + 1))
+                .and_then(|r| r);
+            if let Err(error) = result {
+                let cleanup=self.quiesce_for_control().await;
+                return finish_receive(Err(error),cleanup);
+            }
+        }
+        Ok(())
+    }
+
+    pub(super) async fn subscribe_for_job(&mut self,lanes:usize,read_timeout:Duration,
+        job:Option<&crate::backend::recording_sync::Job>)->Result<(),String> {
+        // The prepared pull session owns this lease outside the cancellable
+        // future. Its caller awaits retirement on every failed/cancelled open.
+        let opening=self.subscribe_lanes(lanes,read_timeout);
+        if let Some(job)=job {job.receive(opening).await} else {opening.await}
+    }
+
+    pub(super) async fn close(&mut self) {
+        for lane in 0..self.active.len() {
+            if self.active[lane] {
+                cleanup_lane(&self.port, lane, self.cleanup_timeout).await;
+                self.active[lane] = false;
+            }
+        }
+    }
+
+    pub(super) async fn quiesce_for_control(&mut self) -> Result<(), String> {
+        let mut failures = Vec::new();
+        for lane in 0..self.active.len() {
+            if !self.active[lane] { continue; }
+            let result = timeout(self.cleanup_timeout, self.port.unsubscribe(lane)).await;
+            // Every owned lane gets one bounded close attempt even if another
+            // fails. A failed close retires the connection; it cannot authorize
+            // an exact consume or trigger a second cleanup from Drop.
+            self.active[lane] = false;
+            match result {
+                Ok(Ok(())) => {},
+                Ok(Err(error)) => failures.push(error),
+                Err(_) => failures.push(format!("recording lane {} release timed out", lane + 1)),
+            }
+        }
+        if failures.is_empty() { Ok(()) }
+        else { Err(format!("sealed stream release failed before reclaim: {}", failures.join("; "))) }
+    }
+}
+async fn cleanup_lane<P: SubscriptionPort>(port: &P, lane: usize, deadline: Duration) {
+    match timeout(deadline, port.unsubscribe(lane)).await {
+        Ok(Ok(())) => {},
+        Ok(Err(e)) => eprintln!("recording session cleanup: {e}"),
+        Err(_) => eprintln!("recording session cleanup lane {} timed out", lane + 1),
+    }
+}
+impl<P: SubscriptionPort> Drop for SubscriptionLease<P> {
+    fn drop(&mut self) {
+        if !self.active.iter().any(|v| *v) { return; }
+        let active = std::mem::replace(&mut self.active, [false; 2]);
+        let port = self.port.clone();
+        let deadline = self.cleanup_timeout;
+        // Normal exits await close. A cancelled async operation still schedules
+        // bounded cleanup; no blocking wait or permanent parameter override.
+        if let Ok(runtime) = tokio::runtime::Handle::try_current() {
+            runtime.spawn(async move {
+                for (lane, active) in active.into_iter().enumerate() {
+                    if active { cleanup_lane(&port, lane, deadline).await; }
+                }
+            });
+        } else {
+            eprintln!("recording session cleanup requires the BLE runtime; connection owner must disconnect");
+        }
+    }
+}
+
+pub(super) struct PullSession {
+    pub chunk: Characteristic,
+    pub dual_lane: bool,
+    pub notifications: NotificationReceiver,
+    lease: SubscriptionLease<NativeSubscriptions>,
+}
+impl PullSession {
+    pub async fn prepare(peripheral: &Peripheral, characteristics: &std::collections::BTreeSet<Characteristic>, read_timeout: Duration)
+        -> Result<Self, String>
+    {
+        let chunk = find_characteristic(characteristics, RECORDING_CHUNK_PULL_UUID)?;
+        if !chunk.properties.intersects(CharPropFlags::WRITE | CharPropFlags::WRITE_WITHOUT_RESPONSE)
+            || !chunk.properties.contains(CharPropFlags::NOTIFY) {
+            return Err("recording_chunk_pull must support WRITE+NOTIFY".into());
+        }
+        let second = find_characteristic(characteristics, RECORDING_CHUNK_PULL_B_UUID).ok();
+        if second.as_ref().is_some_and(|c| !c.properties.contains(CharPropFlags::NOTIFY)) {
+            return Err("recording_chunk_pull_b (3004) present but not notifiable; dual-lane required".into());
+        }
+        // Register the receiver before either CCCD can enable notifications.
+        #[cfg(not(windows))]
+        let notifications = timeout(read_timeout, peripheral.notifications()).await
+            .map_err(|_| "open BLE notification stream timed out".to_string())?
+            .map_err(|e| format!("open BLE notification stream: {e}"))?;
+        #[cfg(not(windows))]
+        let notifications = Box::pin(futures::StreamExt::map(notifications, |notification|
+            Ok(ReceivedNotification { notification, received_at: std::time::Instant::now() })));
+        #[cfg(windows)]
+        let notifications = Box::pin(futures::StreamExt::map(peripheral.checked_notifications(),
+            |value| value.map(|(notification, received_at)| ReceivedNotification { notification, received_at })
+                .map_err(|e| format!("recording native receive: {e}"))));
+        let notifications = NotificationReceiver::start(notifications)?;
+        let dual_lane = second.is_some();
+        let mut lanes = vec![chunk.clone()];
+        if let Some(second) = second { lanes.push(second); }
+        // No CCCD write until this owner is in the caller's session slot.
+        let lease = SubscriptionLease::pending(NativeSubscriptions::new(peripheral.clone(),lanes), read_timeout);
+        Ok(Self { chunk, dual_lane, notifications, lease })
+    }
+
+    pub async fn subscribe(&mut self,read_timeout:Duration,job:Option<&crate::backend::recording_sync::Job>)
+        ->Result<(),String> {
+        self.lease.subscribe_for_job(if self.dual_lane {2}else{1},read_timeout,job).await?;
+        eprintln!("recording pull session opened dual_lane={} reused_until_connection_end=1",self.dual_lane);
+        Ok(())
+    }
+
+    pub async fn close(session: &mut Option<Self>) {
+        if let Some(mut current) = session.take() {
+            current.notifications.close();
+            current.lease.close().await;
+        }
+    }
+
+    pub async fn quiesce_for_control(session: &mut Option<Self>) -> Result<(), String> {
+        let Some(mut current) = session.take() else { return Ok(()); };
+        current.notifications.close();
+        current.lease.quiesce_for_control().await
+    }
+}
+
+/// Preserve the original receive/storage error while making an uncertain
+/// cleanup unambiguously terminal to the same-connection retry policy.
+pub(super) const RETIRED_CLEANUP:&str="recording connection retired after cleanup failure:";
+pub(super) fn finish_receive<T>(operation:Result<T,String>,cleanup:Result<(),String>)->Result<T,String> {
+    match (operation,cleanup) {
+        (result,Ok(()))=>result,
+        (Ok(_),Err(error))=>Err(format!("{RETIRED_CLEANUP} {error}")),
+        (Err(original),Err(error))=>Err(format!("{original}\n{RETIRED_CLEANUP} {error}")),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::{Arc, Mutex};
+
+    #[derive(Clone, Default)]
+    struct Port {
+        calls: Arc<Mutex<Vec<(bool, usize)>>>,
+        fail_second: bool,
+        pending_second: bool,
+        fail_first_release: bool,
+        pending_first_release: bool,
+    }
+    impl SubscriptionPort for Port {
+        fn subscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
+            Box::pin(async move {
+                self.calls.lock().unwrap().push((true, lane));
+                if lane == 1 && self.pending_second { futures::future::pending::<()>().await; }
+                if lane == 1 && self.fail_second { Err("second lane failed".into()) } else { Ok(()) }
+            })
+        }
+        fn unsubscribe(&self, lane: usize) -> BoxFuture<'_, Result<(), String>> {
+            Box::pin(async move {
+                self.calls.lock().unwrap().push((false, lane));
+                if lane == 0 && self.pending_first_release { futures::future::pending::<()>().await; }
+                if lane == 0 && self.fail_first_release { Err("native first lane release failed".into()) } else { Ok(()) }
+            })
+        }
+    }
+
+    #[tokio::test]
+    async fn one_lease_keeps_both_lanes_until_explicit_connection_close() {
+        let port = Port::default();
+        let mut lease = SubscriptionLease::open(port.clone(), 2, Duration::from_secs(1)).await.unwrap();
+        assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1)]);
+        // Several prefix/window consumers reuse the lease; none re-arm CCCD.
+        assert_eq!(lease.active, [true, true]);
+        lease.close().await;
+        lease.close().await;
+        drop(lease);
+        assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
+    }
+
+    #[tokio::test]
+    async fn second_lane_failure_rolls_back_the_first_and_uncertain_second_write() {
+        let port = Port { fail_second: true, ..Default::default() };
+        assert!(SubscriptionLease::open(port.clone(), 2, Duration::from_secs(1)).await.is_err());
+        assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
+    }
+
+    #[tokio::test]
+    async fn cancelled_open_cleans_already_subscribed_and_inflight_lanes() {
+        let port = Port { pending_second: true, ..Default::default() };
+        let worker_port = port.clone();
+        let worker = tokio::spawn(async move { SubscriptionLease::open(worker_port, 2, Duration::from_secs(1)).await });
+        while port.calls.lock().unwrap().len() < 2 { tokio::task::yield_now().await; }
+        worker.abort();
+        let _ = worker.await;
+        timeout(Duration::from_secs(1), async {
+            while port.calls.lock().unwrap().len() < 4 { tokio::task::yield_now().await; }
+        }).await.unwrap();
+        assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
+    }
+
+    #[tokio::test]
+    async fn r53_control_subscription_is_drained_before_a_fresh_owner_after_cancel() {
+        // The CMC3 caller owns the lease outside its guarded future. Exercise
+        // cancellation both inside a CCCD write and after notification setup.
+        for during_subscribe in [true,false] {
+            let port=Port {pending_second:during_subscribe,..Default::default()};
+            let mut lease=SubscriptionLease::pending(port.clone(),Duration::from_secs(8));
+            let (cancel,mut cancelled)=tokio::sync::oneshot::channel();
+            let calls=port.calls.clone();
+            let signaller=tokio::spawn(async move {
+                loop {
+                    if calls.lock().unwrap().len()==2 {let _=cancel.send(());break;}
+                    tokio::task::yield_now().await;
+                }
+            });
+            {
+                let work=async {
+                    lease.subscribe_lanes(2,Duration::from_secs(8)).await.unwrap();
+                    std::future::pending::<()>().await;
+                };
+                tokio::pin!(work);
+                tokio::select! { _=&mut cancelled=>{}, _=&mut work=>unreachable!() }
+            }
+            signaller.await.unwrap();
+            // No detached Drop cleanup: await both intended lanes while the
+            // original connection is still the only owner of this port.
+            lease.close().await;
+            assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1)]);
+            let fresh=Port {calls:port.calls.clone(),..Default::default()};
+            let mut fresh=SubscriptionLease::open(fresh,1,Duration::from_secs(1)).await.unwrap();
+            assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1),(true,0)]);
+            fresh.close().await;
+        }
+    }
+
+    #[tokio::test]
+    async fn control_handoff_requires_both_releases_and_failure_still_closes_other_lane() {
+        for port in [Port::default(), Port { fail_first_release: true, ..Default::default() },
+                     Port { pending_first_release: true, ..Default::default() }] {
+            let success = !port.fail_first_release && !port.pending_first_release;
+            let mut lease = SubscriptionLease::open(port.clone(), 2, Duration::from_millis(10)).await.unwrap();
+            assert_eq!(lease.quiesce_for_control().await.is_ok(), success);
+            drop(lease);
+            assert_eq!(*port.calls.lock().unwrap(), [(true, 0), (true, 1), (false, 0), (false, 1)]);
+        }
+    }
+
+    #[tokio::test]
+    async fn r67_pause_during_owned_subscription_awaits_both_lanes_before_next_owner() {
+        use crate::backend::recording_sync::{self,Job};
+        const DEVICE:&str="AA:BB:CC:DD:EE:67";
+        let job=Job::begin(DEVICE).unwrap();
+        let id=recording_sync::status().unwrap().job_id.unwrap();
+        let port=Port{pending_second:true,..Default::default()};
+        let mut owned=SubscriptionLease::pending(port.clone(),Duration::from_millis(20));
+        let calls=port.calls.clone();
+        let pause=tokio::spawn(async move {
+            while calls.lock().unwrap().len()<2 {tokio::task::yield_now().await;}
+            assert!(recording_sync::pause(&id).unwrap());
+        });
+        let result=owned.subscribe_for_job(2,Duration::from_secs(1),Some(&job)).await;
+        pause.await.unwrap();assert_eq!(result.unwrap_err(),recording_sync::PAUSED);
+        assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1)],"lease remains in original owner, no detached Drop cleanup");
+        let cleanup=owned.quiesce_for_control().await;
+        assert_eq!(finish_receive::<()>(Err(recording_sync::PAUSED.into()),cleanup).unwrap_err(),recording_sync::PAUSED);
+        drop(owned);drop(job);recording_sync::resume_explicit(Some(DEVICE)).unwrap();
+        let mut fresh=SubscriptionLease::open(port.clone(),1,Duration::from_millis(20)).await.unwrap();
+        fresh.close().await;drop(fresh);
+        tokio::task::yield_now().await;
+        assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1),(true,0),(false,0)]);
+    }
+
+    #[tokio::test]
+    async fn r67_failed_receive_cleanup_preserves_first_error_and_blocks_same_link_retry() {
+        struct Attempt {port:Port,count:usize}
+        impl super::super::pull_recovery::Attempt for Attempt {
+            fn receive(&mut self)->BoxFuture<'_,Result<Vec<u8>,String>> {
+                Box::pin(async move {
+                    self.count+=1;
+                    let mut owner=SubscriptionLease::open(self.port.clone(),2,Duration::from_millis(10)).await?;
+                    let result=Err("recording receive queue overflow; original recording not consumed".into());
+                    finish_receive(result,owner.quiesce_for_control().await)
+                })
+            }
+        }
+        for pending in [false,true] {
+            let port=Port{fail_first_release:!pending,pending_first_release:pending,..Default::default()};
+            let mut attempt=Attempt{port:port.clone(),count:0};
+            let error=super::super::pull_recovery::receive(&mut attempt,true,67).await.unwrap_err();
+            assert!(error.starts_with("recording receive queue overflow; original recording not consumed\n"));
+            assert!(error.contains(RETIRED_CLEANUP));
+            assert!(super::super::pull_recovery::retire_connection(&error));
+            assert_eq!(attempt.count,1,"uncertain CCCDs cannot be re-armed by overrun retries");
+            assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1)]);
+        }
+    }
+
+    #[tokio::test]
+    async fn r67_failed_subscribe_and_cleanup_report_both_causes_without_drop_retry() {
+        let port=Port{fail_second:true,fail_first_release:true,..Default::default()};
+        let error=match SubscriptionLease::open(port.clone(),2,Duration::from_millis(10)).await {
+            Ok(_)=>panic!("failed native subscription must not open"),Err(error)=>error,
+        };
+        assert!(error.starts_with("second lane failed\n"));assert!(error.contains("native first lane release failed"));
+        assert!(super::super::pull_recovery::retire_connection(&error));
+        assert_eq!(*port.calls.lock().unwrap(),[(true,0),(true,1),(false,0),(false,1)]);
+    }
+}

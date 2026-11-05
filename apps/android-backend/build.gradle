@@ -1,0 +1,20 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.denzic.companion.mobile'
+    compileSdk 35
+    defaultConfig {
+        minSdk 26
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    def suppliedNativeLibraries = providers.gradleProperty('companionAndroidJniLibs').orNull
+    if (suppliedNativeLibraries != null) {
+        sourceSets.main.jniLibs.srcDir suppliedNativeLibraries
+    }
+}

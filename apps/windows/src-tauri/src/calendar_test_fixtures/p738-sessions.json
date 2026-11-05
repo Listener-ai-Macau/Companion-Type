@@ -1,0 +1,72 @@
+[
+  {
+    "id": "p719-presale-sample",
+    "title": "明确虚构·样品日历交接",
+    "source": "importedTranscript",
+    "status": "minutesReady",
+    "meetingMode": "offlineStore",
+    "processingPolicy": "manual",
+    "startedAt": "2026-10-26T03:40:00Z",
+    "stoppedAt": null,
+    "durationMs": 0,
+    "audioPath": null,
+    "audioBytes": 0,
+    "audioStored": false,
+    "deviceReclaimed": false,
+    "captureIncomplete": false,
+    "recorderControlUncertain": false,
+    "chunks": [],
+    "transcriptText": "2026年11月8日15:00前确认样品尺寸，未测完不要写通过；11月7日再核对包装。",
+    "transcriptFinal": true,
+    "liveTranscriptText": "",
+    "transcriptPreview": "2026年11月8日15:00前确认样品尺寸，未测完不要写通过；11月7日再核对包装。",
+    "transcriptSegments": 0,
+    "utterances": [],
+    "bookmarkRevision": 0,
+    "noteRevision": 0,
+    "minutes": {
+      "generatedAt": "1793256920441",
+      "source": "userAuthored",
+      "quality": "final",
+      "summary": [],
+      "decisions": [],
+      "actionItems": [],
+      "questions": [],
+      "keywords": [],
+      "markdown": "## Summary\n虚构样品交接，仅用于本机日历副本对照。\n\n## Action Items\n- [ ] 确认样品尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 再核对包装 (due: 2026-11-07T09:00:00+08:00)"
+    },
+    "minutesByMode": {
+      "offlineStore": {
+        "status": "minutesReady",
+        "markdown": "## Summary\n虚构样品交接，仅用于本机日历副本对照。\n\n## Action Items\n- [ ] 确认样品尺寸，未测完不要写通过 (due: 2026-11-08T16:00:00+08:00前)\n- [ ] 再核对包装 (due: 2026-11-07T09:00:00+08:00)",
+        "source": "userAuthored",
+        "quality": "final",
+        "generatedAt": "1793256920441",
+        "partialCount": 0
+      }
+    },
+    "recovery": {
+      "intent": "none",
+      "requestedMeetingMode": "",
+      "stage": "idle",
+      "attemptCount": 0,
+      "maxAttempts": 3,
+      "retryStage": "",
+      "captureReviewConfirmed": false
+    },
+    "exportMarkdown": "## Summary\n虚构样品交接，仅用于本机日历副本对照。\n\n## Action Items\n- [ ] 确认样品尺寸，未测完不要写通过 (due: 2026-11-08T15:00:00+08:00前)\n- [ ] 再核对包装 (due: 2026-11-07T09:00:00+08:00)",
+    "calendarCopyRevision": 1,
+    "calendarCopyEpoch": 0,
+    "calendarCopies": [],
+    "exportedAt": "2026-10-29T06:55:39.492370+00:00",
+    "retention": {
+      "audioCached": false,
+      "transcriptCached": true,
+      "minutesCached": true,
+      "consentRequired": true,
+      "retentionLabel": "Local until manually deleted",
+      "expiresAt": null
+    },
+    "calendarSlotCopies": []
+  }
+]

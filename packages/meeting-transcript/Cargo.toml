@@ -1,0 +1,10 @@
+[package]
+name = "companion-meeting-transcript"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Model-independent meeting text, anonymous speakers and source timing"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
