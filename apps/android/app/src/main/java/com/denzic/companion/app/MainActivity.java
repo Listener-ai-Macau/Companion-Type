@@ -44,14 +44,18 @@ public final class MainActivity extends Activity {
     private String documentKey, documentFormat;
     // A restored Activity has a new WebView, so its old JavaScript request ID is no longer valid.
     private boolean documentRequestRestored;
+    private long libraryRequestId;
+    private String libraryRequestKind,libraryRequestToken,documentLibraryToken;
+    private boolean libraryRequestRestored;
     private Path root() { return getFilesDir().toPath(); }
-    private Path recordings() { return root().resolve("companion-recordings"); }
-    private MeetingStore store() { return new MeetingStore(root().resolve("companion-meetings")); }
-    private TranslationStore translations() { return new TranslationStore(root().resolve("companion-meetings").resolve("translations")); }
+    private LocalLibraryBackups libraries(){return new LocalLibraryBackups(root());}
+    private Path recordings() throws Exception { return libraries().recordings(); }
+    private MeetingStore store() throws Exception { return new MeetingStore(libraries().meetings()); }
+    private TranslationStore translations() throws Exception { return new TranslationStore(libraries().meetings().resolve("translations")); }
     private android.util.AtomicFile titleFile(String key) throws Exception {
         byte[] digest=java.security.MessageDigest.getInstance("SHA-256").digest(key.getBytes(java.nio.charset.StandardCharsets.UTF_8));
         StringBuilder name=new StringBuilder();for(byte value:digest)name.append(String.format(java.util.Locale.ROOT,"%02x",value&255));
-        return new android.util.AtomicFile(root().resolve("companion-meetings").resolve(name+".title").toFile());
+        return new android.util.AtomicFile(libraries().meetings().resolve(name+".title").toFile());
     }
     private String recordingTitle(String key, RecordingLibrary.Session session) throws Exception {
         android.util.AtomicFile file=titleFile(key);
@@ -91,6 +95,8 @@ public final class MainActivity extends Activity {
     @SuppressLint("SetJavaScriptEnabled") @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         if (state != null) {
+            libraryRequestId=state.getLong("libraryRequestId",0);libraryRequestKind=state.getString("libraryRequestKind");libraryRequestToken=state.getString("libraryRequestToken");
+            libraryRequestRestored=libraryRequestId!=0;documentLibraryToken=state.getString("documentLibraryToken");
             long pendingId=state.getLong("documentRequestId",0);
             String pendingKey=state.getString("documentKey"), pendingFormat=state.getString("documentFormat");
             if (pendingId!=0 && pendingKey!=null && DocumentRecovery.isPickerFormat(pendingFormat)) {
@@ -160,6 +166,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
+        state.putLong("libraryRequestId",libraryRequestId);state.putString("libraryRequestKind",libraryRequestKind);state.putString("libraryRequestToken",libraryRequestToken);state.putString("documentLibraryToken",documentLibraryToken);
         if (documentRequestId!=0) {
             state.putLong("documentRequestId",documentRequestId);
             state.putString("documentKey",documentKey);
@@ -168,6 +175,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onResume() {
         super.onResume();
+        if(libraryRequestRestored&&libraryRequestId!=0){libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;libraryRequestRestored=false;android.widget.Toast.makeText(this,"备份文件选择已中断，原资料仍保留，请重新操作。",android.widget.Toast.LENGTH_LONG).show();}
         // If a restored picker never delivers a result, do not block future exports.
         // Android delivers an activity result before the following onResume.
         if (documentRequestRestored && documentRequestId!=0) {
@@ -184,15 +192,18 @@ public final class MainActivity extends Activity {
     @Override public void onBackPressed() { web.evaluateJavascript("window.companionBack()", null); }
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==32){finishLibraryPicker(resultCode,data);return;}
         if (requestCode != 31) return;
         final long id=documentRequestId; final String key=documentKey, format=documentFormat;
         final boolean restored=documentRequestRestored;
+        final String libraryToken=documentLibraryToken;documentLibraryToken=null;
         documentRequestId=0; documentKey=null; documentFormat=null;documentRequestRestored=false;
         if (id==0 || key==null || !DocumentRecovery.isPickerFormat(format)) return;
         if (resultCode!=RESULT_OK || data==null || data.getData()==null) { replyDocument(id,false,null,restored); return; }
         android.net.Uri destination=data.getData();
         worker.execute(() -> {
             try {
+                if(LocalLibraryBackups.BUSY.get()||libraryToken==null||!libraryToken.equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新选择要导出的录音。");
                 RecordingLibrary.Session original=session(key);
                 if ("audio".equals(format) || "audioZip".equals(format)) {
                     NativeAudio.PartsResult parts=ManagedAudioParts.prepare(original,root().resolve("companion-decoded-audio"));
@@ -224,6 +235,34 @@ public final class MainActivity extends Activity {
             } catch(Exception e) { replyDocument(id,null,"导出未完成；所选位置可能留有不完整文件。"+(e.getMessage()==null?"":e.getMessage()),restored); }
         });
     }
+    private void requireLibraryIdle() throws Exception {
+        if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成或暂停接收后再操作资料备份。");
+    }
+    private void libraryReply(long id,Object value,String error,boolean restored){
+        if(!restored){reply(id,value,error);return;}
+        String message=error!=null?error:Boolean.FALSE.equals(value)?"已取消，原资料仍保留。":"备份操作已完成，请刷新录音库查看。";
+        runOnUiThread(()->android.widget.Toast.makeText(this,message,android.widget.Toast.LENGTH_LONG).show());
+    }
+    private void finishLibraryPicker(int resultCode,Intent data){
+        final long id=libraryRequestId;final String kind=libraryRequestKind,token=libraryRequestToken;final boolean restored=libraryRequestRestored;
+        libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;libraryRequestRestored=false;
+        if(id==0||token==null||!("backup".equals(kind)||"restore".equals(kind)))return;
+        if(resultCode!=RESULT_OK||data==null||data.getData()==null){libraryReply(id,false,null,restored);return;}
+        final android.net.Uri uri=data.getData();worker.execute(()->{
+            if(!LocalLibraryBackups.BUSY.compareAndSet(false,true)){libraryReply(id,null,"另一个资料操作正在进行，请稍后重试。",restored);return;}
+            try{
+                requireLibraryIdle();stopPlayback();progress("backup".equals(kind)?"正在备份本机资料":"正在校验并恢复资料");
+                if("backup".equals(kind)){
+                    try(java.io.OutputStream out=getContentResolver().openOutputStream(uri,"w")){if(out==null)throw new java.io.IOException("无法写入所选位置。");libraries().write(out,token);}
+                    libraryReply(id,new JSONObject().put("saved",true).put("kind","backup"),null,restored);
+                }else{
+                    JSONObject result;try(java.io.InputStream in=getContentResolver().openInputStream(uri)){if(in==null)throw new java.io.IOException("无法读取所选备份。");result=libraries().restore(in,token);}
+                    selectedDevice=null;segments=new ArrayList<>();libraryReply(id,new JSONObject().put("saved",true).put("kind","restore").put("library",result),null,restored);
+                }
+            }catch(Exception error){libraryReply(id,null,("backup".equals(kind)?"备份未完成，所选位置可能留有不完整文件；":"恢复未完成，原资料仍保留；")+(error.getMessage()==null?"请重试。":error.getMessage()),restored);}
+            finally{LocalLibraryBackups.BUSY.set(false);}
+        });
+    }
     private void replyDocument(long id,Object result,String error,boolean restored) {
         if (!restored) { reply(id,result,error);return; }
         boolean saved=Boolean.TRUE.equals(result) || result instanceof JSONObject;
@@ -243,6 +282,25 @@ public final class MainActivity extends Activity {
         return true;
     }
     private final class Bridge {
+        @JavascriptInterface public void libraryArchive(long id,String kind,String token){
+            worker.execute(()->{
+                try{
+                    requireLibraryIdle();if(LocalLibraryBackups.BUSY.get())throw new java.io.IOException("资料操作正在进行，请稍后重试。");
+                    if(!token.equals(libraries().token()))throw new java.io.IOException("资料已变化，请刷新备份页面后重试。");
+                    if(!("backup".equals(kind)||"restore".equals(kind)))throw new java.io.IOException("不支持的资料操作。");
+                    runOnUiThread(()->{
+                        if(isFinishing()||isDestroyed())return;
+                        if(documentRequestId!=0||libraryRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
+                        libraryRequestId=id;libraryRequestKind=kind;libraryRequestToken=token;libraryRequestRestored=false;
+                        try{
+                            Intent intent=new Intent("backup".equals(kind)?Intent.ACTION_CREATE_DOCUMENT:Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/zip");
+                            if("backup".equals(kind))intent.putExtra(Intent.EXTRA_TITLE,"Companion-本机资料备份-"+java.time.LocalDate.now()+".zip");
+                            startActivityForResult(intent,32);
+                        }catch(Exception error){libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;reply(id,null,"无法打开系统文件选择器，原资料仍保留。");}
+                    });
+                }catch(Exception error){reply(id,null,error.getMessage()==null?"暂时无法操作备份，请重试。":error.getMessage());}
+            });
+        }
         @JavascriptInterface public void setAppearance(String theme) {
             boolean dark = "dark".equals(theme);
             runOnUiThread(() -> {
@@ -276,7 +334,7 @@ public final class MainActivity extends Activity {
         }
         @JavascriptInterface public void exportDocument(long id, String key, String format) {
             runOnUiThread(() -> {
-                if (documentRequestId!=0) { reply(id,null,"已有文件选择操作正在进行。"); return; }
+                if (documentRequestId!=0||libraryRequestId!=0||LocalLibraryBackups.BUSY.get()) { reply(id,null,"已有文件选择或资料操作正在进行。"); return; }
                 String mime, extension;
                 if ("pdf".equals(format)) { mime="application/pdf";extension="pdf"; }
                 else if ("word".equals(format)) { mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";extension="docx"; }
@@ -284,6 +342,7 @@ public final class MainActivity extends Activity {
                 else { reply(id,null,"不支持的导出格式。");return; }
                 documentRequestId=id;documentKey=key;documentFormat=format;documentRequestRestored=false;
                 try {
+                    documentLibraryToken=libraries().token();
                     Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(mime).putExtra(Intent.EXTRA_TITLE,"Companion-录音."+extension);
                     startActivityForResult(intent,31);
                 } catch (Exception error) {documentRequestId=0;documentKey=null;documentFormat=null;reply(id,null,"无法打开文件选择器。");}
@@ -291,10 +350,11 @@ public final class MainActivity extends Activity {
         }
         @JavascriptInterface public void exportAudio(long id,String key) {
             runOnUiThread(() -> {
-                if (documentRequestId!=0) { reply(id,null,"已有文件选择操作正在进行。");return; }
+                if (documentRequestId!=0||libraryRequestId!=0||LocalLibraryBackups.BUSY.get()) { reply(id,null,"已有文件选择或资料操作正在进行。");return; }
                 documentRequestId=id;documentKey=key;documentFormat="audioPreparing";documentRequestRestored=false;
                 worker.execute(() -> {
                     try {
+                        documentLibraryToken=libraries().token();
                         RecordingLibrary.Session original=session(key);
                         NativeAudio.PartsResult parts=ManagedAudioParts.prepare(original,root().resolve("companion-decoded-audio"));
                         if(parts.parts.isEmpty())throw new IllegalStateException("没有可导出的音频。");
@@ -364,6 +424,8 @@ public final class MainActivity extends Activity {
     }
     private JSONObject syncStatus() throws Exception {
         RecordingSyncStatus s = RecordingSyncService.status(this);
+        String saved=getSharedPreferences("companion_recording_sync",MODE_PRIVATE).getString("directory",null);
+        if(!s.running&&saved!=null&&!saved.equals(recordings().getFileName().toString()))return new JSONObject().put("state","idle").put("detail","原接收任务保留在另一份资料中；切回该资料后可继续。").put("running",false).put("hasSavedTask",false);
         return new JSONObject().put("state", s.state).put("detail", s.detail).put("running", s.running).put("hasSavedTask", s.hasSavedTask);
     }
     private void playbackEvent(String state, String message) {
@@ -400,7 +462,13 @@ public final class MainActivity extends Activity {
         } catch (Exception error) { next.release(); throw error; }
     }
     private Object execute(String method, JSONObject a) throws Exception {
+        if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method))throw new IllegalStateException("正在备份或恢复资料，请等待完成。");
         switch (method) {
+            case "libraryStatus":return libraries().status();
+            case "libraryActivate":{
+                requireLibraryIdle();if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("资料操作正在进行。");
+                try{stopPlayback();JSONObject result=libraries().activate(a.getString("id"),a.getString("token"));selectedDevice=null;segments=new ArrayList<>();return result;}finally{LocalLibraryBackups.BUSY.set(false);}
+            }
             case "devices": {
                 if (!bluetoothGranted()) throw new IllegalStateException("请先允许附近设备权限，再重新读取。");
                 devices = CompanionAndroidBackend.pairedDevices(this); segments = new ArrayList<>(); selectedDevice = null;
@@ -430,7 +498,11 @@ public final class MainActivity extends Activity {
                 RecordingSyncService.start(this, selectedDevice, segments.get(a.getInt("index")), dir);
                 return syncStatus();
             }
-            case "resume": RecordingSyncService.resume(this); return syncStatus();
+            case "resume": {
+                String saved=getSharedPreferences("companion_recording_sync",MODE_PRIVATE).getString("directory",null);
+                if(saved==null||!saved.equals(recordings().getFileName().toString()))throw new java.io.IOException("原接收任务属于另一份资料，请先切回原资料。");
+                RecordingSyncService.resume(this);return syncStatus();
+            }
             case "pendingConfirmation": {
                 boolean invalid=false; RecorderWire.Descriptor pending=null;
                 try { pending=RecordingLibrary.pendingConfirmation(recordings()); } catch (java.io.IOException unreadable) { invalid=true; }
@@ -566,7 +638,7 @@ public final class MainActivity extends Activity {
                 String title=a.getString("title").trim();
                 if (title.isEmpty() || title.length()>100) throw new IllegalArgumentException("请输入不超过100个字符的名称。");
                 recordingTitle(key,original);
-                java.nio.file.Files.createDirectories(root().resolve("companion-meetings"));
+                java.nio.file.Files.createDirectories(libraries().meetings());
                 android.util.AtomicFile file=titleFile(key);java.io.FileOutputStream out=null;
                 try {out=file.startWrite();out.write(title.getBytes(java.nio.charset.StandardCharsets.UTF_8));file.finishWrite(out);}
                 catch(java.io.IOException error){if(out!=null)file.failWrite(out);throw new java.io.IOException("名称未能保存，原名称已保留。",error);}

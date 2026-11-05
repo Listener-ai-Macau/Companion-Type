@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "aarSha256": "f1699a67a7faa748db1bfa4cb0d3faa11a9b2a16c7a2fd1ef20899e8abe8658c",
-  "backendSourceCommit": "79a53a3aeddb066bd9b22c3a61f0df5ded03d621",
+  "aarSha256": "ee1259f7fffba118e80851e4640e687e85a74da9c3c38c92e8e52e4170b7468a",
+  "backendSourceCommit": "0d0b3f66bc1b84d9b14e586c6febd7ba07eeeabc",
   "backendSourceWorkspace": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\android-backend-source",
   "priorVerifiedBackendCommit": "6cc7055dc75ab9876d9378f79c9055980c675f5c",
   "scope": "Complete backend Java store adds source-preserving manual minutes edits/history. All three native libraries exactly reused from verified Android041; no model/native engine build.",
@@ -10,5 +10,7 @@
     "mobile-local-asr",
     "mobile-calendar",
     "mobile-control"
-  ]
+  ],
+  "changeScope": "Java streaming backup restore disk/file budgets only; prior native runtime bytes unchanged",
+  "previousBackendReceipt": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel043\\previous-backend-provenance.json"
 }
