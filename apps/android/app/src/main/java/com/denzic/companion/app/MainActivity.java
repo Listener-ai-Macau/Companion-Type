@@ -241,7 +241,10 @@ public final class MainActivity extends Activity {
     private void libraryReply(long id,Object value,String error,boolean restored){
         if(!restored){reply(id,value,error);return;}
         String message=error!=null?error:Boolean.FALSE.equals(value)?"已取消，原资料仍保留。":"备份操作已完成，请刷新录音库查看。";
-        runOnUiThread(()->android.widget.Toast.makeText(this,message,android.widget.Toast.LENGTH_LONG).show());
+        runOnUiThread(()->{
+            if(!isFinishing()&&!isDestroyed())web.evaluateJavascript("window.companionProgress?.('');window.companionLibraryChanged?.();",null);
+            android.widget.Toast.makeText(this,message,android.widget.Toast.LENGTH_LONG).show();
+        });
     }
     private void finishLibraryPicker(int resultCode,Intent data){
         final long id=libraryRequestId;final String kind=libraryRequestKind,token=libraryRequestToken;final boolean restored=libraryRequestRestored;
