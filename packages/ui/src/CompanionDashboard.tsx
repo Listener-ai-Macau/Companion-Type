@@ -565,6 +565,9 @@ export function CompanionDashboard({
   const [calendarSaveTargets,setCalendarSaveTargets]=useState<Record<string,{token:string;name:string}>>({});
   const [pdfSections,setPdfSections]=useState({minutes:true,transcript:false,highlights:true,timeline:false});
   const [pdfPreview,setPdfPreview]=useState<{key:string;text?:string;hash?:string;error?:string;pending?:boolean}|null>(null);
+  const [selectedCopy,setSelectedCopy]=useState<{key:string;kind:'pending'|'copied'|'ready'|'error';message:string;text?:string}|null>(null);
+  const selectedCopyMounted=useRef(true);
+  useEffect(()=>{selectedCopyMounted.current=true;return()=>{selectedCopyMounted.current=false;};},[]);
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; calendarOpenToken?:string;calendarFileUri?:string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
@@ -1293,6 +1296,34 @@ export function CompanionDashboard({
       if(!result.textContent||!/^[a-f0-9]{64}$/.test(result.contentHash))throw new Error('无法读取已保存内容。');
       setPdfPreview({key,text:result.textContent,hash:result.contentHash});
     }catch(error){if(pdfPreviewKeyRef.current===key)setPdfPreview({key,error:error instanceof Error?error.message:'预览未完成，请重试。'});}
+  };
+  const copySelectedContent = async () => {
+    if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||!hasPdfContent||exportActive.current||previewWaiting)return;
+    const key=pdfPreviewKey;
+    const current=()=>selectedCopyMounted.current&&pdfPreviewKeyRef.current===key;
+    if(titleDirty||transcriptReviewUnsaved||(selectedPdfSections.minutes&&minutesDirty)||
+        (selectedPdfSections.highlights&&(noteUnsaved||bookmarkUnsaved))) {
+      setSelectedCopy({key,kind:'error',message:'所选内容有未保存的修改，请先保存或取消。'});return;
+    }
+    exportActive.current=true;
+    setSelectedCopy({key,kind:'pending',message:'正在准备所选内容…'});
+    try {
+      // The native read uses the same saved-source selection as the PDF. Never
+      // copy a rendered excerpt, unsaved editor, or a previously cached preview.
+      const preview=await readExportPreview({sessionId:selectedSession.id,meetingMode:minutesViewMode,format:'pdf',pdfSections:selectedPdfSections});
+      if(!current())return;
+      if(!/^[a-f0-9]{64}$/.test(preview.contentHash)||typeof preview.textContent!=='string'||!preview.textContent.trim())throw Error('没有可复制的已保存内容。');
+      const text=preview.textContent;
+      try {
+        if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');
+        await navigator.clipboard.writeText(text);
+        if(current())setSelectedCopy({key,kind:'copied',message:'已复制所选内容，可粘贴到常用应用。'});
+      } catch {
+        if(current())setSelectedCopy({key,kind:'ready',text,message:'自动复制未完成。可选择下方文字后复制。'});
+      }
+    } catch(error) {
+      if(current())setSelectedCopy({key,kind:'error',message:error instanceof SavedPreviewInterrupted?error.message:`复制未完成：${operationErrorText(error,'export')}`});
+    } finally {exportActive.current=false;if(selectedCopyMounted.current)setSelectedCopy(value=>value?.key===key&&value.kind==='pending'?null:value);}
   };
   const copyChecklist = async () => {
     if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||exportActive.current||selectedMinutesStale||minutesIncomplete)return;
@@ -2420,8 +2451,8 @@ export function CompanionDashboard({
             </details>
           </details> : null}
           {hasMinutes||finalTranscript||hasPdfHighlights?<details className="ct-result-tools">
-            <summary>PDF 导出与分享</summary>
-            <p className="ct-step-meta">选择要放入文件的内容；保存后可自行分享。</p>
+            <summary>按内容复制与 PDF 导出</summary>
+            <p className="ct-step-meta">选择已保存的内容，复制后粘贴到常用应用，或保存为 PDF 分享。</p>
             <div className="ct-button-row" aria-label="PDF 内容选择">
               <label><input type="checkbox" checked={selectedPdfSections.minutes} disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,minutes:checked}));}}/>整理结果</label>
               <label><input type="checkbox" checked={selectedPdfSections.transcript} disabled={controlsBusy||oobeBlockedByRecording||!finalTranscript} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,transcript:checked,timeline:checked?v.timeline:false}));}}/>录音文字</label>
@@ -2430,12 +2461,17 @@ export function CompanionDashboard({
             </div>
             <div className="ct-button-row">
               <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onPreviewMeetingExport||!hasPdfContent||previewWaiting} onClick={()=>void previewPdf()}>预览所选内容</button>
+              <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onPreviewMeetingExport||!hasPdfContent||previewWaiting||(selectedCopy?.key===pdfPreviewKey&&selectedCopy.kind==='pending')} onClick={()=>void copySelectedContent()}>复制所选内容</button>
               <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||!hasPdfContent}
                 onClick={()=>void exportMeeting('pdf','pdf',pdfPreview?.key===pdfPreviewKey?pdfPreview.hash:undefined)}>{exportBusy?'正在生成…':'保存 PDF…'}</button>
             </div>
             {pdfPreview?.key===pdfPreviewKey&&pdfPreview.pending?<p role="status">正在准备预览…</p>:null}
             {pdfPreview?.key===pdfPreviewKey&&pdfPreview.error?<p role="alert" className="ct-step-warn">{pdfPreview.error}</p>:null}
             {pdfPreview?.key===pdfPreviewKey&&pdfPreview.text?<div><strong>{meetingTitle(selectedSession)}</strong><pre aria-label="PDF 内容预览" style={{whiteSpace:'pre-wrap',maxHeight:300,overflow:'auto'}}>{pdfPreview.text}</pre></div>:null}
+            {selectedCopy?.key===pdfPreviewKey?<div aria-label="所选内容复制结果">
+              <p role={selectedCopy.kind==='error'?'alert':'status'} className={selectedCopy.kind==='error'?'ct-step-warn':'ct-step-meta'}>{selectedCopy.message}</p>
+              {selectedCopy.kind==='ready'&&selectedCopy.text?<textarea readOnly aria-label="手动复制所选内容" value={selectedCopy.text} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:160}}/>:null}
+            </div>:null}
             {renderExportFeedback('pdf')}
           </details>:null}
           <section className="ct-recording-text" aria-label="录音文字">

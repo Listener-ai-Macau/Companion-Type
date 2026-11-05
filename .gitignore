@@ -23,3 +23,8 @@ test-results/
 # Local-only Cargo mirror workaround (e.g. .cargo/config.toml pointing at a
 # domestic mirror when static.crates.io is unreachable). Environment-specific.
 .cargo/
+
+# Reproducible Android outputs are not source.
+/apps/android/.gradle/
+/apps/android/build/
+/apps/android/app/build/
