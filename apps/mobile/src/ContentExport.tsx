@@ -11,8 +11,8 @@ const captions:Record<Content,string>={minutes:'讨论结论、行动事项与�
 export function ContentExport({recordingKey,busy,readingPreview,panelRef,initialContent,onCall,onRun,onSave,onAudioSave,onMindmap}:{recordingKey:string;busy:boolean;readingPreview:boolean;panelRef:RefObject<HTMLDetailsElement>;initialContent:Content;onCall:Call;onRun:Run;onSave:(id:string)=>Promise<boolean>;onAudioSave:()=>Promise<unknown>;onMindmap:()=>Promise<unknown>}){
  const [info,setInfo]=useState<ExportInfo|null>(null),[selected,setSelected]=useState<Content[]>([]),[format,setFormat]=useState('pdf'),[loading,setLoading]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[prepared,setPrepared]=useState<PreparedExport|null>(null);
  const alive=useRef(true),epoch=useRef(0),working=useRef(false),initial=useRef(initialContent);
- useEffect(()=>()=>{alive.current=false;epoch.current++;},[]);
- useEffect(()=>{if(initial.current!==initialContent){initial.current=initialContent;setInfo(null);setSelected([]);setPrepared(null);setNotice('');}},[initialContent]);
+ useEffect(()=>{alive.current=true;return()=>{alive.current=false;epoch.current++;};},[]);
+ useEffect(()=>{if(initial.current!==initialContent){initial.current=initialContent;epoch.current++;setLoading(false);setInfo(null);setSelected([]);setPrepared(null);setNotice('');setError('');}},[initialContent]);
  const load=async()=>{if(busy||working.current||readingPreview)return;const generation=++epoch.current;setLoading(true);setError('');setNotice('');setPrepared(null);try{
   const v=await onCall<ExportInfo>('exportInfo',{key:recordingKey});if(v.key!==recordingKey||!v.binding||!v.libraryToken||!v.available||!Array.isArray(v.problems))throw new Error('当前内容尚未确认，请重新读取。');if(!alive.current||generation!==epoch.current)return;
   setInfo(v);setSelected(old=>{const retained=old.filter(x=>v.available[x]);if(retained.length)return retained;const preferred=v.available[initialContent]?initialContent:v.available.minutes?'minutes':v.available.transcript?'transcript':v.available.translation?'translation':v.available.notes?'notes':null;return preferred?[preferred]:[];});
