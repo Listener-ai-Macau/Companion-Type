@@ -1,0 +1,7 @@
+# Companion isolated model research
+
+This directory preserves research source independently of the installed app. It does not register an application backend, change a product default, or require the application to import PyTorch. Canonical tasks and the full development timeline remain in ../docs; no separate task tree is maintained here.
+
+Pinned public model: OpenMOSS-Team/MOSS-Transcribe-Diarize @ 10304d926740cf5a5cee05a268086e3265197910. Author source: OpenMOSS/MOSS-Transcribe-Diarize @ 79c675f0670cc2f824bcbcdd98263704f40f1f7e. Upstream licensing is preserved with upstream source and model configuration. Large public weights/runtime/audio are reconstructible E-drive caches; this C-drive source/Git and safe provenance must be retained.
+
+Previous R15 completed all 28 full-context prefill layers then stopped on Windows actual low-RAM notification after 224 generated tokens. No complete long-meeting quality result exists. Scripts are recovered from surviving work files, not claimed byte-identical to deleted original commit 8651630f. Restore the same weights/source before testing compatibility, retain the 2GiB model-family private-commit limit and low-memory signal, one model at a time. Do not raise memory budgets or blindly repeat the failed full input. Native Windows AMD runtime is isolated; exact Python/transitive dependencies may differ after cleanup and require a new compatibility receipt. No speaker-reference text/count/hotwords go into inference. The final holdout L_R003S03C02 stays unopened.

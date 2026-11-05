@@ -1,0 +1,10 @@
+{
+  "processor_class": "MossTranscribeDiarizeProcessor",
+  "auto_map": {
+    "AutoProcessor": "processing_moss_transcribe_diarize.MossTranscribeDiarizeProcessor"
+  },
+  "audio_tokens_per_second": 12.5,
+  "audio_merge_size": 4,
+  "time_marker_every_seconds": 5,
+  "enable_time_marker": true
+}

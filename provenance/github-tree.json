@@ -1,0 +1,455 @@
+{
+  "sha": "79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "tree": [
+    {
+      "path": ".gitattributes",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f9e9c8dc12050dc98fc99de5137472453e13fde",
+      "size": 175,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/1f9e9c8dc12050dc98fc99de5137472453e13fde"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "59d5339ea0ad61ef41e1475b70e734df02b97ed9",
+      "size": 230,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/59d5339ea0ad61ef41e1475b70e734df02b97ed9"
+    },
+    {
+      "path": "FINETUNING.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "187c1bd926f202ddde5b99fc55e277841d707a54",
+      "size": 1683,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/187c1bd926f202ddde5b99fc55e277841d707a54"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "size": 11357,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f77fb2895439f1ceb6bb39cbd91030582d86b42",
+      "size": 20152,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/4f77fb2895439f1ceb6bb39cbd91030582d86b42"
+    },
+    {
+      "path": "README_zh.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "44d32a45ae63f69ce37c0006326e489812557bbb",
+      "size": 19661,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/44d32a45ae63f69ce37c0006326e489812557bbb"
+    },
+    {
+      "path": "assets",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5eaaf961920d37776c82561e84c1fdb27e49234c",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/5eaaf961920d37776c82561e84c1fdb27e49234c"
+    },
+    {
+      "path": "assets/Model_Architecture.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "890411661b2084acfb585407e8630383fd6538a2",
+      "size": 59860,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/890411661b2084acfb585407e8630383fd6538a2"
+    },
+    {
+      "path": "assets/OpenMOSS_Logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1d75c8cc49b004b315dffe621a84c95bfec8b60",
+      "size": 31912,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/d1d75c8cc49b004b315dffe621a84c95bfec8b60"
+    },
+    {
+      "path": "assets/OpenMOSS_Logo.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5bde06aa5b62dcee2ae4f6c2f85e8f72b087466a",
+      "size": 11459,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/5bde06aa5b62dcee2ae4f6c2f85e8f72b087466a"
+    },
+    {
+      "path": "assets/mosi-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2cce10b29d2a9f3f0cde989a51896e366b42b75c",
+      "size": 25248,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/2cce10b29d2a9f3f0cde989a51896e366b42b75c"
+    },
+    {
+      "path": "examples",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e8464b8cd8e5b82450c0b15455ce7a96490e56f3",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/e8464b8cd8e5b82450c0b15455ce7a96490e56f3"
+    },
+    {
+      "path": "examples/prompts.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f31d6639ba96021405e79ca57e86caab46c3c59",
+      "size": 1419,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/7f31d6639ba96021405e79ca57e86caab46c3c59"
+    },
+    {
+      "path": "finetune.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe94110d41ab8851d2afd24089236b1f493cbaad",
+      "size": 5947,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/fe94110d41ab8851d2afd24089236b1f493cbaad"
+    },
+    {
+      "path": "moss_transcribe_diarize",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a19282539b3692e6deeac4b648ff78b3a7e4d43f",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/a19282539b3692e6deeac4b648ff78b3a7e4d43f"
+    },
+    {
+      "path": "moss_transcribe_diarize/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "60872a684202479fececb73c47b82c88c397ebe6",
+      "size": 1293,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/60872a684202479fececb73c47b82c88c397ebe6"
+    },
+    {
+      "path": "moss_transcribe_diarize/app",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8aa0802d29dba18d356c698a5e92a68e61e72ff8",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/8aa0802d29dba18d356c698a5e92a68e61e72ff8"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a440a3785177b9e05cb4e19d29386b23f8c71481",
+      "size": 57,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/a440a3785177b9e05cb4e19d29386b23f8c71481"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/cli.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6dea38e968faf6a1a8d2481a4d9f86ac0490ac19",
+      "size": 4215,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/6dea38e968faf6a1a8d2481a4d9f86ac0490ac19"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/ffmpeg.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "839f644bfc66f8290d7f45fc99580810357e3d14",
+      "size": 2591,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/839f644bfc66f8290d7f45fc99580810357e3d14"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/jobs.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e1c7f7f3bb3a74474f6fd6f5daa9783debf7bdb0",
+      "size": 19344,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/e1c7f7f3bb3a74474f6fd6f5daa9783debf7bdb0"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/model_runner.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "45aec26183f1dd9f75b6189d7246527af2f3d982",
+      "size": 6856,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/45aec26183f1dd9f75b6189d7246527af2f3d982"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/server.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76214d22a8941456c233c58ab74c653e73ca2509",
+      "size": 10003,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/76214d22a8941456c233c58ab74c653e73ca2509"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b7b2d65c07aec1b584c48e134cfe10ccc03a7165",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/b7b2d65c07aec1b584c48e134cfe10ccc03a7165"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/app.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce6f784ec4b8b196362c9fba3595c7ddf0dffd00",
+      "size": 41315,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/ce6f784ec4b8b196362c9fba3595c7ddf0dffd00"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/favicon.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e36b1333ff40f5392023e8a3fddf8e53f65b2b2",
+      "size": 454,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/8e36b1333ff40f5392023e8a3fddf8e53f65b2b2"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/i18n.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1251860e6f82df4a7c2bf9c9bf73dfc6fe82510a",
+      "size": 3571,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/1251860e6f82df4a7c2bf9c9bf73dfc6fe82510a"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74bc3ea0e96d13c16b1bf718f5849918dd4bd2c3",
+      "size": 8685,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/74bc3ea0e96d13c16b1bf718f5849918dd4bd2c3"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/locales",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d35f47a1b889d2bef6871f94fe3f60d0c7e4de02",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/d35f47a1b889d2bef6871f94fe3f60d0c7e4de02"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/locales/en.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7f97228a727659cc007d5cca4991a13b0dc9b0e",
+      "size": 4159,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/e7f97228a727659cc007d5cca4991a13b0dc9b0e"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/locales/zh-CN.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aaca3eccd7e3003a63ec1392cc9dd7ab47c81452",
+      "size": 4040,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/aaca3eccd7e3003a63ec1392cc9dd7ab47c81452"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/static/styles.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f0bf929afec3edfa7cab9a2362043bddb239f62",
+      "size": 16969,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/4f0bf929afec3edfa7cab9a2362043bddb239f62"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/vllm_runner.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7984f0842543413412f196104f6faf52e8cae242",
+      "size": 8887,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/7984f0842543413412f196104f6faf52e8cae242"
+    },
+    {
+      "path": "moss_transcribe_diarize/app/web_cli.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0cf36ab26ecbc8a88bd968b098366116c4ee72da",
+      "size": 2312,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/0cf36ab26ecbc8a88bd968b098366116c4ee72da"
+    },
+    {
+      "path": "moss_transcribe_diarize/configuration_moss_transcribe_diarize.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d82c5c6fdfdd408a408c8ad06b8d7149312e32c8",
+      "size": 2663,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/d82c5c6fdfdd408a408c8ad06b8d7149312e32c8"
+    },
+    {
+      "path": "moss_transcribe_diarize/inference_utils.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f59091c6521b0b5606b35e9f789213056ce155ec",
+      "size": 8784,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/f59091c6521b0b5606b35e9f789213056ce155ec"
+    },
+    {
+      "path": "moss_transcribe_diarize/modeling_moss_transcribe_diarize.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f3ffbf0ed37dc37a73be31368a8d6af94fc84ee",
+      "size": 15334,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/9f3ffbf0ed37dc37a73be31368a8d6af94fc84ee"
+    },
+    {
+      "path": "moss_transcribe_diarize/processing_moss_transcribe_diarize.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06c0dfcf1e37685c2c65c16e91b764e4e06699e5",
+      "size": 11055,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/06c0dfcf1e37685c2c65c16e91b764e4e06699e5"
+    },
+    {
+      "path": "moss_transcribe_diarize/subtitle",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "491375dabf21a75a54c66af316f74456843833ed",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/491375dabf21a75a54c66af316f74456843833ed"
+    },
+    {
+      "path": "moss_transcribe_diarize/subtitle/__init__.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "24e34c4f171073f63c0e50c75229dd380ebafa5c",
+      "size": 639,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/24e34c4f171073f63c0e50c75229dd380ebafa5c"
+    },
+    {
+      "path": "moss_transcribe_diarize/subtitle/export.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1b08fe91630c8b3f1f68644e30a9e01f04eea436",
+      "size": 5106,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/1b08fe91630c8b3f1f68644e30a9e01f04eea436"
+    },
+    {
+      "path": "moss_transcribe_diarize/subtitle/layout.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c610fe88f93c24a33acc106df9ae72e6fc283787",
+      "size": 1089,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/c610fe88f93c24a33acc106df9ae72e6fc283787"
+    },
+    {
+      "path": "moss_transcribe_diarize/subtitle/models.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "682eba4145293b519245ecc770f9fcc990221874",
+      "size": 2171,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/682eba4145293b519245ecc770f9fcc990221874"
+    },
+    {
+      "path": "moss_transcribe_diarize/subtitle/postprocess.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "92dfcc815258905403530ca1e4f508c7fb7c46e9",
+      "size": 8113,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/92dfcc815258905403530ca1e4f508c7fb7c46e9"
+    },
+    {
+      "path": "moss_transcribe_diarize/transcript_parser.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4bcca68ad0f4ec9c18a441c95cb5e2fafb655bc5",
+      "size": 8862,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/4bcca68ad0f4ec9c18a441c95cb5e2fafb655bc5"
+    },
+    {
+      "path": "pyproject.toml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b219629cfd14319a39a7116ed52aade6dcc5c5a8",
+      "size": 1091,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/b219629cfd14319a39a7116ed52aade6dcc5c5a8"
+    },
+    {
+      "path": "tests",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "049da4f8f73d304afe8f4fd7a938108295ec938d",
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/trees/049da4f8f73d304afe8f4fd7a938108295ec938d"
+    },
+    {
+      "path": "tests/test_app_api.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc78b2a3a3a10b7944bc1298a0087b7bc90aebd0",
+      "size": 8843,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/dc78b2a3a3a10b7944bc1298a0087b7bc90aebd0"
+    },
+    {
+      "path": "tests/test_app_ffmpeg.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3f7b93990aa5e9bcc058749a82abaffd2ba52944",
+      "size": 800,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/3f7b93990aa5e9bcc058749a82abaffd2ba52944"
+    },
+    {
+      "path": "tests/test_app_i18n.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a47822906173e26c38400f83f041ae3199c31d9",
+      "size": 5859,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/9a47822906173e26c38400f83f041ae3199c31d9"
+    },
+    {
+      "path": "tests/test_model_runner.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "79bf1c93d96e91d04eabb7ee306ff43eb49008cc",
+      "size": 2823,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/79bf1c93d96e91d04eabb7ee306ff43eb49008cc"
+    },
+    {
+      "path": "tests/test_progress_streamer.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29c6df40bdefb1031d78cbcc3ba0f516d872e5cf",
+      "size": 1023,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/29c6df40bdefb1031d78cbcc3ba0f516d872e5cf"
+    },
+    {
+      "path": "tests/test_subtitle_export.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ec02d60d747ed56eaca04ce9a768942ec91b4ffc",
+      "size": 2814,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/ec02d60d747ed56eaca04ce9a768942ec91b4ffc"
+    },
+    {
+      "path": "tests/test_subtitle_layout.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f841be6a5e24b28ea902ccb6492d3cc9db59af3",
+      "size": 1541,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/9f841be6a5e24b28ea902ccb6492d3cc9db59af3"
+    },
+    {
+      "path": "tests/test_subtitle_postprocess.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d00783137ef44aacbdc950b219b974c50980cde6",
+      "size": 2970,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/d00783137ef44aacbdc950b219b974c50980cde6"
+    },
+    {
+      "path": "tests/test_transcript_parser.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "03178e0675e60564ff639900f844d5d9daeb917f",
+      "size": 2431,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/03178e0675e60564ff639900f844d5d9daeb917f"
+    },
+    {
+      "path": "tests/test_vllm_runner.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "829fae4d591b41f78106b4ade6f22789f2dc5285",
+      "size": 2988,
+      "url": "https://api.github.com/repos/OpenMOSS/MOSS-Transcribe-Diarize/git/blobs/829fae4d591b41f78106b4ade6f22789f2dc5285"
+    }
+  ],
+  "truncated": false
+}

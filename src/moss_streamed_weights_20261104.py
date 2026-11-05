@@ -1,0 +1,58 @@
+"""Bounded-RAM loading of a hash-pinned safetensors file, without mmap.
+
+The public format is an8-byte header length, JSON tensor metadata, then tensor
+bytes. Copy bounded byte ranges to the fixed device and verify their roundtrip
+hash. No training, quantization, dtype conversion or CPU parameter offload.
+"""
+from pathlib import Path
+import hashlib,json,math,struct,time
+
+
+def load_streamed_weights(path, *, torch, device, expected_sha256, chunk_bytes=16*1024**2):
+    started=time.perf_counter();path=Path(path)
+    assert 64<=chunk_bytes<=16*1024**2
+    dtypes={'BF16':(torch.bfloat16,2),'F16':(torch.float16,2),'F32':(torch.float32,4),
+            'F64':(torch.float64,8),'I64':(torch.int64,8),'I32':(torch.int32,4),
+            'I16':(torch.int16,2),'I8':(torch.int8,1),'U8':(torch.uint8,1),'BOOL':(torch.bool,1)}
+    source_hash=hashlib.sha256();roundtrip_hash=hashlib.sha256();result={};copied=0;largest=0
+    with path.open('rb',buffering=0) as stream:
+        prefix=stream.read(8);assert len(prefix)==8
+        header_size=struct.unpack('<Q',prefix)[0];assert 0<header_size<=100*1024**2
+        raw_header=stream.read(header_size);assert len(raw_header)==header_size
+        header=json.loads(raw_header);items=[(key,value) for key,value in header.items() if key!='__metadata__']
+        assert 0<len(items)<10000
+        source_hash.update(prefix+raw_header);roundtrip_hash.update(prefix+raw_header)
+        items.sort(key=lambda pair:pair[1]['data_offsets'][0]);offset=0
+        scratch=bytearray(chunk_bytes)
+        for name,meta in items:
+            start,end=meta['data_offsets'];shape=meta['shape'];dtype,size=dtypes[meta['dtype']]
+            assert isinstance(name,str) and all(isinstance(n,int) and n>=0 for n in shape)
+            assert start==offset and end>=start and end-start==math.prod(shape)*size
+            assert end<=path.stat().st_size-8-header_size
+            value=torch.empty(shape,dtype=dtype,device=device);flat=value.reshape(-1)
+            within=0
+            while start+within<end:
+                take=min(chunk_bytes-chunk_bytes%size,end-start-within)
+                view=memoryview(scratch)[:take]
+                assert stream.readinto(view)==take,'Truncated pinned checkpoint'
+                source_hash.update(view)
+                cpu_view=torch.frombuffer(view,dtype=dtype)
+                target=flat[within//size:(within+take)//size]
+                target.copy_(cpu_view,non_blocking=False)
+                # A bitwise roundtrip is cheap compared with inference and
+                # proves the published bytes survived the transfer unchanged.
+                payload=target.view(torch.uint8).cpu().numpy().tobytes()
+                assert payload==view
+                roundtrip_hash.update(payload)
+                del cpu_view,target,payload,view
+                within+=take;copied+=take;largest=max(largest,take)
+            result[name]=value;offset=end
+        assert stream.tell()==path.stat().st_size,'Unaccounted checkpoint bytes'
+    assert source_hash.hexdigest()==expected_sha256,'Pinned file changed; do not infer'
+    assert roundtrip_hash.hexdigest()==expected_sha256,'Device tensors differ from pinned bytes'
+    receipt={'state':'PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED','tensorCount':len(result),
+      'dataBytesCopied':copied,'maximumTransferChunkBytes':largest,'scratchBytes':chunk_bytes,
+      'fileSha256':source_hash.hexdigest(),'deviceRoundtripSha256':roundtrip_hash.hexdigest(),
+      'targetDevice':str(device),'mmapUsed':False,'wholeCpuStateDictCreated':False,
+      'seconds':time.perf_counter()-started}
+    return result,receipt

@@ -1,0 +1,168 @@
+{
+  "_id": "6a0c1d0b4bbdd3b465441005",
+  "id": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+  "private": false,
+  "pipeline_tag": "audio-text-to-text",
+  "library_name": "transformers",
+  "tags": [
+    "transformers",
+    "safetensors",
+    "moss_transcribe_diarize",
+    "text2text-generation",
+    "moss",
+    "audio",
+    "speech",
+    "asr",
+    "diarization",
+    "timestamp-asr",
+    "long-form-audio",
+    "multimodal",
+    "multilingual",
+    "custom_code",
+    "audio-text-to-text",
+    "en",
+    "zh",
+    "arxiv:2601.01554",
+    "license:apache-2.0",
+    "eval-results",
+    "endpoints_compatible",
+    "region:us"
+  ],
+  "downloads": 132974,
+  "likes": 513,
+  "modelId": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+  "author": "OpenMOSS-Team",
+  "sha": "10304d926740cf5a5cee05a268086e3265197910",
+  "lastModified": "2026-10-31T07:25:28.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {
+    "architectures": [
+      "MossTranscribeDiarizeForConditionalGeneration"
+    ],
+    "auto_map": {
+      "AutoConfig": "configuration_moss_transcribe_diarize.MossTranscribeDiarizeConfig",
+      "AutoModel": "modeling_moss_transcribe_diarize.MossTranscribeDiarizeModel",
+      "AutoModelForCausalLM": "modeling_moss_transcribe_diarize.MossTranscribeDiarizeForConditionalGeneration",
+      "AutoProcessor": "processing_moss_transcribe_diarize.MossTranscribeDiarizeProcessor"
+    },
+    "model_type": "moss_transcribe_diarize",
+    "tokenizer_config": {
+      "bos_token": null,
+      "eos_token": "<|im_end|>",
+      "unk_token": null,
+      "pad_token": "<|endoftext|>"
+    },
+    "chat_template_jinja": "{%- macro render_content(content) -%}\n    {%- if content is string -%}\n        {{- content -}}\n    {%- else -%}\n        {%- for item in content -%}\n            {%- if item.type == 'audio' or 'audio' in item or 'audio_url' in item -%}\n                {{- '<|audio_start|><|audio_pad|><|audio_end|>\\n' -}}\n            {%- elif item.type == 'text' -%}\n                {{- item.text -}}\n            {%- endif -%}\n        {%- endfor -%}\n    {%- endif -%}\n{%- endmacro -%}\n{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0].role == 'system' %}\n        {{- render_content(messages[0].content) + '\\n\\n' }}\n    {%- else %}\n        {{- 'You are a helpful assistant.\\n\\n' }}\n    {%- endif %}\n    {{- \"# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0].role == 'system' %}\n        {{- '<|im_start|>system\\n' + render_content(messages[0].content) + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- set ns = namespace(multi_step_tool=true, last_query_index=messages|length - 1) %}\n{%- for message in messages[::-1] %}\n    {%- set index = (messages|length - 1) - loop.index0 %}\n    {%- set content = render_content(message.content) %}\n    {%- if ns.multi_step_tool and message.role == \"user\" and content is string and not(content.startswith('<tool_response>') and content.endswith('</tool_response>')) %}\n        {%- set ns.multi_step_tool = false %}\n        {%- set ns.last_query_index = index %}\n    {%- endif %}\n{%- endfor %}\n{%- for message in messages %}\n    {%- set content = render_content(message.content) %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) %}\n        {{- '<|im_start|>' + message.role + '\\n' + content + '<|im_end|>\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {%- set reasoning_content = '' %}\n        {%- if message.reasoning_content is string %}\n            {%- set reasoning_content = message.reasoning_content %}\n        {%- else %}\n            {%- if '</think>' in content %}\n                {%- set reasoning_content = content.split('</think>')[0].rstrip('\\n').split('<think>')[-1].lstrip('\\n') %}\n                {%- set content = content.split('</think>')[-1].lstrip('\\n') %}\n            {%- endif %}\n        {%- endif %}\n        {%- if loop.index0 > ns.last_query_index %}\n            {%- if loop.last or (not loop.last and reasoning_content) %}\n                {{- '<|im_start|>' + message.role + '\\n<think>\\n' + reasoning_content.strip('\\n') + '\\n</think>\\n\\n' + content.lstrip('\\n') }}\n            {%- else %}\n                {{- '<|im_start|>' + message.role + '\\n' + content }}\n            {%- endif %}\n        {%- else %}\n            {{- '<|im_start|>' + message.role + '\\n' + content }}\n        {%- endif %}\n        {%- if message.tool_calls %}\n            {%- for tool_call in message.tool_calls %}\n                {%- if (loop.first and content) or (not loop.first) %}\n                    {{- '\\n' }}\n                {%- endif %}\n                {%- if tool_call.function %}\n                    {%- set tool_call = tool_call.function %}\n                {%- endif %}\n                {{- '<tool_call>\\n{\"name\": \"' }}\n                {{- tool_call.name }}\n                {{- '\", \"arguments\": ' }}\n                {%- if tool_call.arguments is string %}\n                    {{- tool_call.arguments }}\n                {%- else %}\n                    {{- tool_call.arguments | tojson }}\n                {%- endif %}\n                {{- '}\\n</tool_call>' }}\n            {%- endfor %}\n        {%- endif %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if loop.first or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n    {%- if enable_thinking is defined and enable_thinking is false %}\n        {{- '<think>\\n\\n</think>\\n\\n' }}\n    {%- endif %}\n{%- endif %}"
+  },
+  "cardData": {
+    "license": "apache-2.0",
+    "library_name": "transformers",
+    "language": [
+      "en",
+      "zh"
+    ],
+    "tags": [
+      "moss",
+      "audio",
+      "speech",
+      "asr",
+      "diarization",
+      "timestamp-asr",
+      "long-form-audio",
+      "multimodal",
+      "multilingual",
+      "custom_code"
+    ],
+    "pipeline_tag": "audio-text-to-text"
+  },
+  "transformersInfo": {
+    "auto_model": "AutoModelForMultimodalLM",
+    "pipeline_tag": "text2text-generation",
+    "processor": "AutoProcessor"
+  },
+  "siblings": [
+    {
+      "rfilename": ".eval_results/open_asr_leaderboard.yaml"
+    },
+    {
+      "rfilename": ".gitattributes"
+    },
+    {
+      "rfilename": "Model_Architecture.png"
+    },
+    {
+      "rfilename": "README.md"
+    },
+    {
+      "rfilename": "added_tokens.json"
+    },
+    {
+      "rfilename": "chat_template.jinja"
+    },
+    {
+      "rfilename": "config.json"
+    },
+    {
+      "rfilename": "configuration_moss_transcribe_diarize.py"
+    },
+    {
+      "rfilename": "generation_config.json"
+    },
+    {
+      "rfilename": "merges.txt"
+    },
+    {
+      "rfilename": "model-00000-of-00001.safetensors"
+    },
+    {
+      "rfilename": "model.safetensors.index.json"
+    },
+    {
+      "rfilename": "modeling_moss_transcribe_diarize.py"
+    },
+    {
+      "rfilename": "preprocessor_config.json"
+    },
+    {
+      "rfilename": "processing_moss_transcribe_diarize.py"
+    },
+    {
+      "rfilename": "processor_config.json"
+    },
+    {
+      "rfilename": "special_tokens_map.json"
+    },
+    {
+      "rfilename": "tokenizer.json"
+    },
+    {
+      "rfilename": "tokenizer_config.json"
+    },
+    {
+      "rfilename": "vocab.json"
+    }
+  ],
+  "spaces": [
+    "hf-audio/open_asr_leaderboard",
+    "quantid/huggingface-official-benchmark-leaderboards",
+    "ankandrew/MOSS-Transcribe-Diarize",
+    "davanstrien/apollo-11-search",
+    "Luigi/moss-transcribe-diarize-litert",
+    "Marc50000/MOSS-Transcribe-Diarize",
+    "mocomoco-inc/AudioDecisionModel",
+    "Cb1ock/open-asr-leaderboard-moss-transcribe-diarize",
+    "hf-audio/open-asr-leaderboard-moss-transcribe-diarize",
+    "eustlb/audio-text-to-text-models-on-the-hub",
+    "maeeveee/moss-transcribe-diarize"
+  ],
+  "createdAt": "2026-05-19T08:19:23.000Z",
+  "safetensors": {
+    "parameters": {
+      "BF16": 908513280
+    },
+    "total": 908513280
+  },
+  "usedStorage": 3657073722
+}
