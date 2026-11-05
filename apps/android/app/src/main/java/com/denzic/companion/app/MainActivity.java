@@ -41,7 +41,7 @@ public final class MainActivity extends Activity {
     private final AtomicBoolean cancelTranscription = new AtomicBoolean();
     private final AtomicBoolean cancelMinutes = new AtomicBoolean();
     private long documentRequestId;
-    private String documentKey, documentFormat;
+    private String documentKey, documentFormat, documentPreparedId;
     // A restored Activity has a new WebView, so its old JavaScript request ID is no longer valid.
     private boolean documentRequestRestored;
     private long libraryRequestId;
@@ -96,11 +96,13 @@ public final class MainActivity extends Activity {
         super.onCreate(state);
         if (state != null) {
             libraryRequestId=state.getLong("libraryRequestId",0);libraryRequestKind=state.getString("libraryRequestKind");libraryRequestToken=state.getString("libraryRequestToken");
-            libraryRequestRestored=libraryRequestId!=0;documentLibraryToken=state.getString("documentLibraryToken");
+            libraryRequestRestored=libraryRequestId!=0;documentLibraryToken=state.getString("documentLibraryToken");documentPreparedId=state.getString("documentPreparedId");
             long pendingId=state.getLong("documentRequestId",0);
             String pendingKey=state.getString("documentKey"), pendingFormat=state.getString("documentFormat");
             if (pendingId!=0 && pendingKey!=null && DocumentRecovery.isPickerFormat(pendingFormat)) {
                 documentRequestId=pendingId;documentKey=pendingKey;documentFormat=pendingFormat;documentRequestRestored=true;
+            } else if(pendingId!=0&&"preparedPreparing".equals(pendingFormat)){
+                android.widget.Toast.makeText(this,"文件准备已中断，请重新操作。",android.widget.Toast.LENGTH_LONG).show();
             } else if (pendingId!=0 && "audioPreparing".equals(pendingFormat)) {
                 android.widget.Toast.makeText(this,"录音准备已中断，请重新导出。",android.widget.Toast.LENGTH_LONG).show();
             }
@@ -166,7 +168,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
-        state.putLong("libraryRequestId",libraryRequestId);state.putString("libraryRequestKind",libraryRequestKind);state.putString("libraryRequestToken",libraryRequestToken);state.putString("documentLibraryToken",documentLibraryToken);
+        state.putLong("libraryRequestId",libraryRequestId);state.putString("libraryRequestKind",libraryRequestKind);state.putString("libraryRequestToken",libraryRequestToken);state.putString("documentLibraryToken",documentLibraryToken);state.putString("documentPreparedId",documentPreparedId);
         if (documentRequestId!=0) {
             state.putLong("documentRequestId",documentRequestId);
             state.putString("documentKey",documentKey);
@@ -196,7 +198,7 @@ public final class MainActivity extends Activity {
         if (requestCode != 31) return;
         final long id=documentRequestId; final String key=documentKey, format=documentFormat;
         final boolean restored=documentRequestRestored;
-        final String libraryToken=documentLibraryToken;documentLibraryToken=null;
+        final String libraryToken=documentLibraryToken;documentLibraryToken=null;final String preparedId=documentPreparedId;documentPreparedId=null;
         documentRequestId=0; documentKey=null; documentFormat=null;documentRequestRestored=false;
         if (id==0 || key==null || !DocumentRecovery.isPickerFormat(format)) return;
         if (resultCode!=RESULT_OK || data==null || data.getData()==null) { replyDocument(id,false,null,restored); return; }
@@ -204,6 +206,11 @@ public final class MainActivity extends Activity {
         worker.execute(() -> {
             try {
                 if(LocalLibraryBackups.BUSY.get()||libraryToken==null||!libraryToken.equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新选择要导出的录音。");
+                if("prepared".equals(format)){
+                    PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(preparedId,true);exports.requireLibrary(entry,libraryToken);if(!key.equals(entry.meta.getString("key")))throw new java.io.IOException("文件来源已变化，请重新操作。");
+                    try(java.io.OutputStream out=getContentResolver().openOutputStream(destination,"w")){if(out==null)throw new java.io.IOException("无法写入所选位置。");exports.write(entry,out);}
+                    replyDocument(id,true,null,restored);return;
+                }
                 RecordingLibrary.Session original=session(key);
                 if("marks".equals(format)){
                     NativeAudio.VerifiedPrefix prefix=NativeAudio.inspectPrefix(original);
@@ -360,6 +367,19 @@ public final class MainActivity extends Activity {
                 } catch (Exception error) {documentRequestId=0;documentKey=null;documentFormat=null;reply(id,null,"无法打开文件选择器。");}
             });
         }
+        @JavascriptInterface public void exportPrepared(long id,String preparedId){
+            runOnUiThread(()->{
+                if(documentRequestId!=0||libraryRequestId!=0||LocalLibraryBackups.BUSY.get()){reply(id,null,"已有文件选择或资料操作正在进行。");return;}
+                documentRequestId=id;documentFormat="preparedPreparing";documentPreparedId=preparedId;documentRequestRestored=false;
+                worker.execute(()->{try{
+                    PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(preparedId,true);exports.requireLibrary(entry,libraries().token());
+                    String key=entry.meta.getString("key"),token=entry.meta.getString("libraryToken"),mime=entry.meta.getString("mime"),filename=entry.meta.getString("filename");
+                    runOnUiThread(()->{if(isFinishing()||isDestroyed())return;documentKey=key;documentLibraryToken=token;documentFormat="prepared";
+                        try{startActivityForResult(new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(mime).putExtra(Intent.EXTRA_TITLE,filename),31);}
+                        catch(Exception error){documentRequestId=0;documentPreparedId=null;documentKey=null;documentFormat=null;reply(id,null,"无法打开文件选择器。");}});
+                }catch(Exception error){runOnUiThread(()->{documentRequestId=0;documentPreparedId=null;documentKey=null;documentFormat=null;reply(id,null,error.getMessage()==null?"文件准备失败，请重新操作。":error.getMessage());});}});
+            });
+        }
         @JavascriptInterface public void exportAudio(long id,String key) {
             runOnUiThread(() -> {
                 if (documentRequestId!=0||libraryRequestId!=0||LocalLibraryBackups.BUSY.get()) { reply(id,null,"已有文件选择或资料操作正在进行。");return; }
@@ -473,10 +493,58 @@ public final class MainActivity extends Activity {
             if (startImmediately) next.start();
         } catch (Exception error) { next.release(); throw error; }
     }
+    private PreparedExports preparedExports(){return new PreparedExports(getCacheDir().toPath());}
+    private ExportContents.Source exportSource(String key)throws Exception{
+        RecordingLibrary.Session recording=session(key);MeetingStore ms=store();MeetingStore.Snapshot meeting=null;MeetingStore.Minutes minutes=null;TranslationStore.Entry translation=null;JSONArray problems=new JSONArray();
+        try{meeting=ms.load(key);}catch(java.io.IOException error){problems.put("原文或补充暂不可读取，原文件保留。");}
+        try{minutes=ms.loadMinutes(key);}catch(java.io.IOException error){problems.put("纪要暂不可读取，原文件保留。");}
+        try{translation=translations().load(key);}catch(java.io.IOException error){problems.put("译文暂不可读取，原文件保留。");}
+        return new ExportContents.Source(key,recordingTitle(key,recording),libraries().token(),meeting,minutes,translation,problems);
+    }
+    private Object onUi(java.util.concurrent.Callable<Object> action)throws Exception{
+        java.util.concurrent.CompletableFuture<Object> result=new java.util.concurrent.CompletableFuture<>();
+        runOnUiThread(()->{try{if(result.isCancelled())return;if(isFinishing()||isDestroyed())throw new java.io.IOException("界面已关闭，请重新操作。");result.complete(action.call());}catch(Exception e){result.completeExceptionally(e);}});
+        try{return result.get(30,java.util.concurrent.TimeUnit.SECONDS);}catch(java.util.concurrent.TimeoutException e){result.cancel(false);throw new java.io.IOException("界面暂时没有响应，请重新操作。",e);}catch(java.util.concurrent.ExecutionException e){throw new java.io.IOException(e.getCause().getMessage(),e.getCause());}
+    }
+    private PreparedExports.Entry prepareContent(JSONObject a)throws Exception{
+        ExportContents.Source source=exportSource(a.getString("key"));JSONObject info=source.info();
+        if(!info.getString("binding").equals(a.getString("binding"))||!source.token.equals(a.getString("libraryToken")))throw new java.io.IOException("资料内容已更新，请重新读取导出选项后再操作。");
+        JSONArray selected=a.getJSONArray("sections");List<MeetingDocumentSections.Section> sections=source.select(selected);String format=a.getString("format"),extension,mime;
+        switch(format){case "txt":extension="txt";mime="text/plain";break;case "markdown":extension="md";mime="text/markdown";break;case "pdf":extension="pdf";mime="application/pdf";break;case "word":extension="docx";mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";break;case "srt":extension="srt";mime="application/x-subrip";break;default:throw new java.io.IOException("不支持的文件格式。");}
+        String plain=MeetingDocumentSections.plain(sections);JSONArray warnings=ExportContents.warnings(info,selected);String subtitle=null;
+        if("srt".equals(format)){
+            if(selected.length()!=1||!"transcript".equals(selected.getString(0)))throw new java.io.IOException("SRT只用于有分段时间的当前原文，请只选择会议转写。");
+            RecordingLibrary.Session recording=session(source.key);NativeAudio.PartsResult parts=ManagedAudioParts.prepare(recording,root().resolve("companion-decoded-audio"));
+            subtitle=ExportContents.srt(store().loadTranscriptTimingParts(source.key,recording,parts.directory));warnings.put("字幕使用识别分段的近似时间，不是逐字时间。");
+        }
+        final String srt=subtitle;String suffix=selected.length()==1?sections.get(0).title:"会议资料";if("srt".equals(format))suffix+="-分段时间";
+        JSONObject meta=new JSONObject().put("key",source.key).put("title",source.title).put("libraryToken",source.token).put("binding",info.getString("binding")).put("warnings",warnings).put("sections",selected);
+        return preparedExports().create(meta,PreparedExports.filename(source.title,suffix,extension),mime,plain,out->{
+            if("pdf".equals(format))MeetingPdf.writeSelected(source.title,sections,out,android.graphics.Typeface.createFromAsset(getAssets(),"companion-documents/CompanionPDFSans-Regular.ttf"));
+            else if("word".equals(format))out.write(MeetingDocumentSections.word(source.title,sections));
+            else {String content="srt".equals(format)?srt:"markdown".equals(format)?"# "+source.title+"\n\n"+MeetingDocumentSections.markdown(sections):source.title+"\n\n"+plain;out.write(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));}
+        });
+    }
     private Object execute(String method, JSONObject a) throws Exception {
         if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method))throw new IllegalStateException("正在备份或恢复资料，请等待完成。");
         switch (method) {
             case "libraryStatus":return libraries().status();
+            case "exportInfo":return exportSource(a.getString("key")).info();
+            case "prepareExport":return prepareContent(a).dto();
+            case "copyExport":{
+                PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(a.getString("id"),true);exports.requireLibrary(entry,libraries().token());String text=exports.copyText(entry);
+                return onUi(()->{android.content.ClipboardManager clipboard=(android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);if(clipboard==null)throw new java.io.IOException("暂时无法复制，请保存文件。");clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Companion 会议资料",text));return true;});
+            }
+            case "shareExport":{
+                PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(a.getString("id"),true);exports.requireLibrary(entry,libraries().token());
+                return onUi(()->{Intent send=ExportFileProvider.shareIntent(this,entry);Intent chooser=Intent.createChooser(send,"分享会议资料");chooser.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).setClipData(send.getClipData());startActivity(chooser);return new JSONObject().put("opened",true);});
+            }
+            case "prepareAudioShare":{
+                ExportContents.Source source=exportSource(a.getString("key"));JSONObject info=source.info();if(!source.token.equals(a.getString("libraryToken"))||!info.getString("binding").equals(a.getString("binding")))throw new java.io.IOException("资料已变化，请重新读取。");
+                NativeAudio.PartsResult parts=ManagedAudioParts.prepare(session(source.key),root().resolve("companion-decoded-audio"));if(parts.parts.isEmpty())throw new java.io.IOException("没有可分享的音频。");
+                List<Path> audio=new ArrayList<>();for(NativeAudio.Part part:parts.parts)audio.add(part.path);boolean multiple=audio.size()>1;JSONArray warnings=new JSONArray();if(!parts.captureComplete)warnings.put("这是当前已接收的部分音频，原录音仍保留。");
+                return preparedExports().create(new JSONObject().put("key",source.key).put("title",source.title).put("libraryToken",source.token).put("warnings",warnings),DocumentNames.audio(source.title,multiple),multiple?"application/zip":"audio/wav",null,out->AudioExport.write(audio,out,multiple)).dto();
+            }
             case "minutesTemplates":return new MinutesTemplateLibrary(libraries().meetings()).load().put("libraryToken",libraries().token());
             case "minutesTemplateChange":{
                 if(!a.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新读取模板。");
