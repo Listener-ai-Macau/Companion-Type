@@ -477,6 +477,11 @@ public final class MainActivity extends Activity {
         if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method))throw new IllegalStateException("正在备份或恢复资料，请等待完成。");
         switch (method) {
             case "libraryStatus":return libraries().status();
+            case "minutesTemplates":return new MinutesTemplateLibrary(libraries().meetings()).load().put("libraryToken",libraries().token());
+            case "minutesTemplateChange":{
+                if(!a.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新读取模板。");
+                return new MinutesTemplateLibrary(libraries().meetings()).change(a.getString("etag"),a.getString("action"),a.optJSONObject("template"),a.optString("key","")).put("libraryToken",libraries().token());
+            }
             case "libraryActivate":{
                 requireLibraryIdle();if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("资料操作正在进行。");
                 try{stopPlayback();JSONObject result=libraries().activate(a.getString("id"),a.getString("token"));selectedDevice=null;segments=new ArrayList<>();return result;}finally{LocalLibraryBackups.BUSY.set(false);}
@@ -818,6 +823,11 @@ public final class MainActivity extends Activity {
                 String key=a.getString("key"); RecordingLibrary.Session s=session(key); MeetingStore ms=store();
                 MeetingStore.Snapshot m=ms.load(key); if(m==null || m.transcript.trim().isEmpty()) throw new IllegalStateException("请先完成转写。");
                 MeetingStore.Minutes old=ms.loadMinutes(key); long oldRevision=old==null?0:old.revision;
+                JSONObject template=null;
+                if(a.has("template")){
+                    if(!a.getString("libraryToken").equals(libraries().token())||a.getLong("revision")!=m.revision||a.getLong("minutesRevision")!=oldRevision)throw new java.io.IOException("录音资料已更新，请重新打开后再整理；已有纪要仍保留。");
+                    template=MinutesTemplateLibrary.template(a.getJSONObject("template"));
+                }
                 if(cancelMinutes.get()) throw new java.util.concurrent.CancellationException("已停止整理，未发送文字。");
                 long samples=ManagedAudioParts.prepare(s, root().resolve("companion-decoded-audio")).samples;
                 java.net.URI endpoint=new java.net.URI(a.getString("endpoint"));
@@ -826,6 +836,7 @@ public final class MainActivity extends Activity {
                 JSONObject request=new JSONObject().put("sessionKey",key).put("title",recordingTitle(key,s))
                     .put("transcript",m.transcript).put("durationMillis",samples/16).put("endpoint",a.getString("endpoint")).put("model",a.getString("model"));
                 if(cancelMinutes.get()) throw new java.util.concurrent.CancellationException("已停止整理，未发送文字。");
+                if(template!=null)request.put("template",template);
                 final long[] lastProgress={-1};
                 String result=NativeMinutes.generateWithProgress(request.toString(),a.getString("apiKey"),root().resolve("companion-minutes-cache"),(done,total)->{
                     long percent=total>0?done*100/total:-1;

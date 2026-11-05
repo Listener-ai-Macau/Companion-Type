@@ -11,7 +11,7 @@ export function LibraryBackups({busy,receiving,onLoad,onArchive,onActivate}:{bus
  const archive=async(kind:'backup'|'restore')=>{if(!state||disabled)return;const result=await onArchive(kind,state.token);if(result)setState(valid(result));};
  const activate=async(id:string)=>{if(!state||disabled)return;const result=await onActivate(id,state.token);if(result)setState(valid(result));};
  return <section className="library-backups" aria-label="本机资料备份与恢复"><div className="library-backups-heading"><span className="library-backups-icon"><Archive size={19}/></span><div><h2>让资料留在你手里</h2><p>本机备份与恢复</p></div></div>
-  <p className="library-backups-intro">备份原录音、转写、纪要、人工事项、译文及历史版本。不包含模型、服务密钥和设备配对信息。</p>
+  <p className="library-backups-intro">备份原录音、转写、纪要、人工事项、译文、自定义纪要模板及历史版本。不包含模型、服务密钥和设备配对信息。</p>
   {loading&&<p role="status">正在读取本机资料…</p>}{error&&<div className="library-backups-error" role="alert"><p>{error}</p><button type="button" disabled={busy||loading} onClick={()=>void load()}>重新读取资料信息</button></div>}
   {state&&!error&&<p className="library-backups-current">当前：{label(state.libraries.find(x=>x.id===state.activeId)!)}</p>}
   {receiving&&<p className="library-backups-wait" role="status">正在接收录音。请等接收完成或暂停后再备份、恢复或切换资料。</p>}
