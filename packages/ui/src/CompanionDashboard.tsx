@@ -41,6 +41,8 @@ import { CompanionChecklistPhone, type ChecklistPhoneResult } from './CompanionC
 import { checklistPhoneCode } from './checklistPhone';
 import { briefMinutes, splitLongMinutesEvidence, splitShortMinutesEvidence, splitShortMinutesOverview } from './briefMinutes';
 import { savedCustomMinutesTemplates } from './minutesTemplateLibrary';
+import {MeetingAiWorkbench} from './MeetingAiWorkbench';
+import {materialNote,readMaterialNote} from './aiMaterialNote';
 import {ActionListEditor} from './ActionListEditor';
 
 type MeetingExportOrigin = 'pdf' | 'text' | 'notes' | 'document' | 'documentTools' | 'bookmarks' | 'recordingTools' | 'audio' | 'workflow' | 'settings';
@@ -2149,7 +2151,7 @@ export function CompanionDashboard({
             {hasMinutes?<button type="button" onClick={()=>{setRecordingResultOpen(true);revealMeetingTool('ct-recording-result');}}><FileText size={16}/>会议纪要</button>:null}
             {finalTranscript?<button type="button" onClick={()=>{setTranscriptReviewOpen(true);revealMeetingTool('ct-recording-text-review');}}><Headphones size={16}/>转写原文</button>:null}
             {onAskMeetings&&finalTranscript?<button type="button" disabled={controlsBusy||qaBusy} onClick={()=>{setQaSelected([selectedSession.id]);revealMeetingTool('ct-meeting-qa');}}><Search size={16}/>问这场会议</button>:null}
-            {finalTranscript&&!readingPreview?<button type="button" disabled={controlsBusy} onClick={()=>revealMeetingTool('ct-meeting-templates')}><Pencil size={16}/>纪要模板</button>:null}
+            {finalTranscript&&!readingPreview?<button type="button" disabled={controlsBusy} onClick={()=>revealMeetingTool('ct-meeting-templates')}><Pencil size={16}/>整理方式：{templateId==='custom'?(customTemplate.name||'自定义'):({meeting:'会议',interview:'访谈',lecture:'课堂'}[templateId])}</button>:null}
             {hasMinutes?<button type="button" onClick={()=>{setRecordingResultOpen(true);revealMeetingTool('ct-meeting-export');}}><Download size={16}/>导出分享</button>:null}
           </nav>
           {deviceStorageFullNotice(selectedSession) ? <p className="ct-recording-notice ct-step-warn" role="status">{deviceStorageFullNotice(selectedSession)}</p> : null}
@@ -2522,46 +2524,23 @@ export function CompanionDashboard({
                   onClick={() => void exportMeeting('txt','text')}><Download size={15} />{exportBusy ? '正在导出…' : '导出文字'}</button> : null}
               </div>
             </div>
-            {onAskMeetings ? <details id="ct-meeting-qa" className="ct-library-more" aria-label="向录音提问">
-              <summary>向录音提问</summary>
-              <p className="ct-step-meta">选择一场或多场已转写会议。会将已保存的转写发送到已配置的 AI 服务，录音不会上传；长会议可能需要几分钟。</p>
-              <div role="group" aria-label="选择要查询的会议">{qaEligibleSessions
-                .map(row=><label key={row.id}><input type="checkbox" checked={qaSelected.includes(row.id)} disabled={qaBusy}
-                  onChange={event=>setQaSelected(current=>event.target.checked?[...current,row.id]:current.filter(id=>id!==row.id))}/>{meetingTitle(row)}</label>)}</div>
-              <label>问题<textarea aria-label="录音问题" value={qaQuestion} disabled={qaBusy} onChange={event=>setQaQuestion(event.target.value)}/></label>
-              <button type="button" className="ct-action" disabled={qaBusy||storageBlocked||!qaQuestion.trim()||!qaSelectedEligible.length}
-                onClick={()=>void askSelectedMeetings(canResumeQa)}>{qaBusy?'正在查询…':canResumeQa?'继续查询':'提问'}</button>
-              {canResumeQa?<button type="button" className="ct-text-button" disabled={qaBusy||storageBlocked}
-                onClick={()=>void askSelectedMeetings(false)}>重新查询全部</button>:null}
-              {qaBusy&&qaJobId&&onCancelMeetingQuestion?<button type="button" className="ct-action" disabled={qaCancelling} onClick={async()=>{
-                try{if(await onCancelMeetingQuestion(qaJobId)){setQaCancelling(true);setQaError(null);}else setQaError('查询刚开始或已结束，请稍后再试。');}
-                catch(error){setQaError(operationErrorText(error,'general'));}}}>{qaCancelling?'正在停止，等当前片段结束…':'停止查询'}</button>:null}
-              {qaError?<p className="ct-step-warn" role="alert">{qaError}</p>:null}
-              {qaSourceRemoved||qaRemovedNotice?<p className="ct-step-warn">所选会议已删除或转写已清除，本次问答结果已移除。</p>:null}
-              {qaResult&&!qaSourceRemoved?<div aria-label="录音问答结果">
-                {qaStale?<p className="ct-step-warn">会议文字或范围已变化；这是先前文字的结果，请重新提问。</p>:null}
-                {qaResult.incomplete?<p className="ct-step-warn">{qaResult.cancelled?'查询已停止。':qaResult.stopReason?operationErrorText(qaResult.stopReason,'general'):'有片段未完成。'}已查询 {qaResult.completedChunks}/{qaResult.totalChunks} 段，本次答案可能不完整；{canResumeQa?'可继续查询未完成的部分。':'可重新提问或缩小会议范围。'}</p>:null}
-                {!qaResult.items.length?<p>{qaResult.incomplete?'已处理的片段中未找到明确相关内容。':'所选文字中未找到明确相关内容；可以换一种问法或查看原文。'}</p>:null}
-                {qaResult.items.map((item,index)=><article key={`${item.citation.sessionId}-${index}`}><p>{item.text}</p>
-                  <blockquote>{item.citation.quote}</blockquote><button type="button" className="ct-text-button" disabled={controlsBusy||qaStale}
-                    onClick={()=>{setQaPendingCitation(item.citation);setOpenSavedRecordingId(item.citation.sessionId);
-                      setOpenSavedRecordingTarget('source');if(selectedSession?.id!==item.citation.sessionId)onControl({action:'meetingSelectSession',sessionId:item.citation.sessionId});}}>
-                    查看原文 · {item.citation.title}</button>
-                  {onSaveNote?<button type="button" className="ct-text-button" disabled={qaSaveBusy||controlsBusy||storageBlocked||qaStale} onClick={async()=>{
-                    const source=allLibrarySessions.find(row=>row.id===item.citation.sessionId);if(!source||!onSaveNote)return;
-                    const note=normalizeCompanionNoteText(`AI 问答（请核对）\n问题：${qaAsked}\n回答：${item.text}\n原文：${item.citation.quote}`);
-                    if([...note].length>4000){setQaSaveMessage('内容超过备注长度，请复制需要的部分保存。');return;}
-                    const noteId=crypto.randomUUID();setQaSaveBusy(true);setQaSaveMessage(null);
-                    try{const saved=await onSaveNote({sessionId:source.id,noteId,expectedRevision:source.noteRevision??0,action:'add',text:note,bookmarkId:null});
-                      if(!saved.host.sessions.find(row=>row.id===source.id)?.meetingNotes?.some(row=>row.id===noteId&&row.text===note))throw new Error('尚未确认备注保存，请重试。');
-                      setQaSaveMessage(`已保存到“${item.citation.title}”的备注。`);
-                    }catch(error){setQaSaveMessage(operationErrorText(error,'save'));}finally{setQaSaveBusy(false);}}}>保存回答到备注</button>:null}
-                </article>)}
-                {qaSaveMessage?<p role="status">{qaSaveMessage}</p>:null}
-              </div>:null}
-            </details>:null}
-            {finalTranscript&&!readingPreview ? <details id="ct-meeting-templates" className="ct-library-more" aria-label="选择整理视角">
-              <summary>按会议、访谈或课堂整理</summary>
+            {onAskMeetings&&selectedSession ? <div id="ct-meeting-qa"><MeetingAiWorkbench key={selectedSession.id}
+              contextId={selectedSession.id} contextVersion={selectedSession.id} title={meetingTitle(selectedSession)}
+              scopes={qaEligibleSessions.map(row=>({id:row.id,title:meetingTitle(row),binding:qaIdentity([row.id])}))}
+              serviceReady={!!productSettings?.deepseekMinutesEnabled&&!!productSettings?.deepseekApiKeySet} busy={controlsBusy||storageBlocked} preview={readingPreview}
+              onSetup={()=>{setShowAdvanced(true);setSettingsReturn('recording');navigatePage('settings','ct-service-settings');}}
+              onAsk={async(question,ids,jobId,resume)=>{const source=qaIdentity(ids);setQaBusy(true);try{const result=await onAskMeetings(question,ids,jobId,resume?.resume?{...resume.resume,items:resume.items}:undefined);
+                if(ids.some(id=>!qaSessionsRef.current.some(row=>row.id===id&&!row.organization?.trashedAt&&companionSessionHasFinalTranscript(row))))throw Error('来源会议已移除，请重新选择。');
+                return {...result,jobId};}finally{setQaBusy(false);}}}
+              onCancel={onCancelMeetingQuestion}
+              onOpenSource={(id,quote)=>{setQaPendingCitation({sessionId:id,title:meetingTitle(allLibrarySessions.find(row=>row.id===id)??selectedSession),quote});setOpenSavedRecordingId(id);setOpenSavedRecordingTarget('source');if(selectedSession.id!==id)onControl({action:'meetingSelectSession',sessionId:id});}}
+              onLoadSaved={async()=> (selectedSession.meetingNotes??[]).map(readMaterialNote).filter((value):value is NonNullable<typeof value>=>value!==null)}
+              onSave={async value=>{if(!onSaveNote)throw Error('当前环境未提供材料保存，请复制文字保留。');const source=qaSessionsRef.current.find(row=>row.id===selectedSession.id&&!row.organization?.trashedAt);if(!source)throw Error('当前会议已移除，未保存到其他会议。');
+                const note=materialNote(value),saved=await onSaveNote({sessionId:source.id,noteId:value.id,expectedRevision:source.noteRevision??0,action:'add',text:note,bookmarkId:null});
+                const row=saved.host.sessions.find(row=>row.id===source.id)?.meetingNotes?.find(n=>n.id===value.id&&n.text===note);if(!row)throw Error('材料尚未确认保存，请保留输入后重试。');return readMaterialNote(row)??undefined;}}
+            /></div>:null}
+            {finalTranscript&&!readingPreview ? <details id="ct-meeting-templates" className="ct-library-more ct-template-picker" aria-label="选择整理视角">
+              <summary>整理方式 · {templateId==='custom'?(customTemplate.name||'自定义'):({meeting:'会议',interview:'访谈',lecture:'课堂'}[templateId])} <span>切换模板</span></summary>
               <p className="ct-step-meta">选择整理侧重点；新结果会保留在这场录音中，已有结果可在历史里切回。</p>
               <label>整理视角 <select aria-label="整理视角" value={templateId} onChange={event=>{
                 const value=event.target.value;
@@ -3137,16 +3116,15 @@ export function CompanionDashboard({
                 {credentialField('openaiAsrApiKey', '兼容服务 Key', formOpenAiKey, setFormOpenAiKey, productSettings?.openaiAsrApiKeySet)}
                 <label className="ct-field"><span>兼容服务模型</span><input value={formOpenAiModel} onChange={(e) => setFormOpenAiModel(e.target.value)} spellCheck={false} /></label>
               </>}
-              {formDeepseekEnabled ? <>
-                {credentialField('deepseekApiKey', 'DeepSeek Key', formDeepseekKey, setFormDeepseekKey, productSettings?.deepseekApiKeySet)}
+              <details className="ct-ai-service-fields"><summary>AI文字服务 · {formDeepseekEnabled&&productSettings?.deepseekApiKeySet?'已配置':formDeepseekKey?'待保存':'尚未配置'}</summary>
+                <p className="ct-step-meta">纪要、会议问答与材料整理共用此服务。密钥由系统凭据管理器保存，服务连接参数集中在这里。</p>
+                {credentialField('deepseekApiKey', '服务密钥', formDeepseekKey, value=>{setFormDeepseekKey(value);if(value.trim())setFormDeepseekEnabled(true);}, productSettings?.deepseekApiKeySet)}
                 <label className="ct-field"><span>DeepSeek Base URL</span><input value={formDeepseekBase} onChange={(e) => setFormDeepseekBase(e.target.value)} spellCheck={false} /></label>
                 <label className="ct-field"><span>DeepSeek 模型</span><input value={formDeepseekModel} onChange={(e) => setFormDeepseekModel(e.target.value)} spellCheck={false} /></label>
-              </> : null}
+                <div className="ct-button-row"><button type="button" className="ct-text-button" onClick={()=>setFormDeepseekEnabled(true)} disabled={controlsBusy||settingsBusy||formDeepseekEnabled}>使用已配置的AI服务</button><button type="button" className="ct-text-button" onClick={()=>setFormDeepseekEnabled(false)} disabled={controlsBusy||settingsBusy||!formDeepseekEnabled}>暂不使用AI服务</button></div>
+              </details>
             </div>
-            <label className="ct-field-check">
-              <input type="checkbox" checked={formDeepseekEnabled} onChange={(e) => setFormDeepseekEnabled(e.target.checked)} />
-              启用 DeepSeek 智能纪要，整理摘要、决定与行动项
-            </label>
+            <p className="ct-step-meta" role="status">{formDeepseekEnabled?(productSettings?.deepseekApiKeySet?'AI文字服务已配置；实际连接状态见下方服务检查。':'保存服务密钥后，可回到会议生成纪要或提问。'):'当前暂不使用AI文字服务；原音、转写和已有材料仍可使用。'}</p>
             <label className="ct-field-check">
               <input type="checkbox" checked={formBleCompress} onChange={(e) => setFormBleCompress(e.target.checked)} />
               旧设备的节省流量模式（可能降低音质）

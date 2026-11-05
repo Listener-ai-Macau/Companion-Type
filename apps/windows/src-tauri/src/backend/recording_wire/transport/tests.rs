@@ -31,6 +31,39 @@ fn status(peer: &Peer) -> Vec<u8> {
 }
 
 #[test]
+fn calendar_directory_and_published_date_survive_receiver_restart() {
+    let (peer,ds,raw)=fixture();let date=1_793_856_001u32;
+    let mut directory=Directory::new(&peer,17).unwrap();directory.calendar(true);
+    assert_eq!(directory.request()[2],1);
+    for (start,entries) in [(0u32,&ds[..2]),(2u32,&ds[2..])] {
+        let mut p=vec![0u8;24+entries.len()*116];p[0]=2;p[1]=entries.len() as u8;
+        p[2..4].copy_from_slice(&116u16.to_le_bytes());p[4..8].copy_from_slice(&1u32.to_le_bytes());
+        p[8..12].copy_from_slice(&start.to_le_bytes());p[12..16].copy_from_slice(&3u32.to_le_bytes());
+        p[16..20].copy_from_slice(&17u32.to_le_bytes());
+        for (i,d) in entries.iter().enumerate() {
+            p[24+i*116..136+i*116].copy_from_slice(&d.encode().unwrap());
+            p[136+i*116..140+i*116].copy_from_slice(&date.to_le_bytes());
+        }
+        let mut crc=crc32fast::Hasher::new();crc.update(&p[..20]);crc.update(&p[24..]);
+        p[20..24].copy_from_slice(&crc.finalize().to_le_bytes());
+        assert!(directory.accept(&p).unwrap());
+    }
+    assert!(directory.finished());assert_eq!(directory.dates().len(),3);
+    assert_eq!(directory.dates().get(&ds[0].recording_id),Some(&date));
+    let root=std::env::temp_dir().join(format!("companion-calendar-{}",uuid::Uuid::new_v4()));
+    std::fs::create_dir(&root).unwrap();let index=root.join("sessions.json");
+    let mut receiver=Receiver::open(&root,&ds[0].encode().unwrap()).unwrap();
+    for d in &ds {receiver.accept_segment(&d.encode().unwrap(),&raw).unwrap();}
+    receiver.assemble().unwrap();receiver.publish_with_date(&index,"A1:B2:C3:D4:E5:F6",Some(date)).unwrap();
+    drop(receiver);
+    let mut reopened=Receiver::open(&root,&ds[0].encode().unwrap()).unwrap();
+    reopened.publish(&index,"A1:B2:C3:D4:E5:F6").unwrap();drop(reopened);
+    let rows:Vec<crate::companion_v1::CompanionV1HostSession>=serde_json::from_slice(&std::fs::read(&index).unwrap()).unwrap();
+    assert_eq!(rows[0].started_at.as_deref(),Some("2026-11-05T05:20:01Z"));
+    std::fs::remove_dir_all(root).unwrap();
+}
+
+#[test]
 fn product_transcription_paths_use_verified_v2_wav_and_refuse_bad_raw_original() {
     let (_, ds, raw) = fixture();
     let root = std::env::temp_dir().join(format!("companion-v2-asr-input-{}", uuid::Uuid::new_v4()));

@@ -1,16 +1,16 @@
 {
   "schema": 1,
-  "aarSha256": "c6bc28d6f690b986105ffce18bc13a236bb140413b5b9715e544c9e9fcc81738",
-  "backendSourceCommit": "c608dc954405598067bad62f6b74d55108120e78",
-  "backendSourceWorkspace": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\android-backend-source",
-  "priorVerifiedBackendCommit": "47add8cb0cea644a7a23904e9ed521a1c985d102",
-  "scope": "Selected saved-content PDF/Word/plain/Markdown adapter; original24 JNI and three runtime libraries unchanged; no model calls.",
+  "aarSha256": "a16c29c96ede57dbce0fba009a06640df17d531594a491ef07f97e414549d3c8",
+  "backendSourceCommit": "1fc276e2ad16f1cb881c03a54f6d0137c54f40a6",
+  "backendSourceWorkspace": "E:\\CodexData\\Companion\\capture-usability-20261105\\calendar-backend-r2\\source",
+  "priorVerifiedBackendCommit": "c608dc954405598067bad62f6b74d55108120e78",
+  "scope": "Capture full UTC clock synchronization, optional dated directory and durable local recording date; installed 0.1.48 JNI/runtime and original data retained.",
   "features": [
     "mobile-asr",
     "mobile-local-asr",
     "mobile-calendar",
     "mobile-control"
   ],
-  "changeScope": "Java streaming backup restore disk/file budgets only; prior native runtime bytes unchanged",
+  "changeScope": "Recording calendar and clock only; no model calls",
   "previousBackendReceipt": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel043\\previous-backend-provenance.json"
 }

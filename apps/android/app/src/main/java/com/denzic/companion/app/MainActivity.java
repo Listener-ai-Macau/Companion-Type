@@ -186,6 +186,7 @@ public final class MainActivity extends Activity {
         }
     }
     @Override protected void onDestroy() {
+        meetingAi.cancelAll();
         worker.execute(this::stopPlayback);
         web.removeJavascriptInterface("CompanionNative");
         worker.shutdown();
@@ -435,10 +436,13 @@ public final class MainActivity extends Activity {
             });
         }
         @JavascriptInterface public void call(long id, String method, String json) {
+            if("cancelMeetingQuestion".equals(method)){try{reply(id,meetingAi.cancel(new JSONObject(json).getString("jobId")),null);}catch(Exception e){reply(id,null,"停止查询未确认，请重试。");}return;}
             if ("transcribe".equals(method) || "transcribeCloud".equals(method)) cancelTranscription.set(false);
             if ("minutes".equals(method)) cancelMinutes.set(false);
             worker.execute(() -> {
-                try { reply(id, execute(method, new JSONObject(json)), null); }
+                try { Object value=execute(method,new JSONObject(json));
+                    if(("minutes".equals(method)||"translate".equals(method))&&new JSONObject(json).optString("apiKey","").isEmpty())aiServices().verified();
+                    reply(id,value,null); }
                 catch (java.util.concurrent.CancellationException stopped) {
                     String message="transcribeCloud".equals(method)?"已停止云端转写。已发送的音频无法撤回，原录音保留。"
                         : "minutes".equals(method)?"已停止整理。已发送的文字无法撤回，原录音和已保存内容保留。"
@@ -525,8 +529,24 @@ public final class MainActivity extends Activity {
             else {String content="srt".equals(format)?srt:"markdown".equals(format)?"# "+source.title+"\n\n"+MeetingDocumentSections.markdown(sections):source.title+"\n\n"+plain;out.write(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));}
         });
     }
+    private AiServiceVault aiServices;
+    private final MeetingAiAccess meetingAi=new MeetingAiAccess();
+    private AiServiceVault aiServices(){if(aiServices==null)aiServices=new AiServiceVault(this);return aiServices;}
+    private JSONObject aiDocument(String key) throws Exception {
+        RecordingLibrary.Session recording=session(key);MeetingStore.Snapshot meeting=store().load(key);
+        if(meeting==null||meeting.transcript.trim().isEmpty())throw new java.io.IOException("请先完成这场会议的转写。");
+        return new JSONObject().put("id",key).put("title",recordingTitle(key,recording)).put("text",meeting.transcript).put("revision",meeting.revision)
+            .put("binding",AiMaterialStore.hash(key+":"+meeting.revision+":"+meeting.transcript));
+    }
+    private void requireAiSources(JSONArray docs,String token) throws Exception {
+        if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新打开会议。");
+        for(int i=0;i<docs.length();i++){JSONObject d=docs.getJSONObject(i);if(!d.getString("binding").equals(aiDocument(d.getString("id")).getString("binding")))throw new java.io.IOException("会议文字已变化，请重新提问，原内容仍保留。");}
+    }
     private Object execute(String method, JSONObject a) throws Exception {
         if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method))throw new IllegalStateException("正在备份或恢复资料，请等待完成。");
+        if(("minutes".equals(method)||"translate".equals(method))&&a.optString("apiKey","").isEmpty()){
+            JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
+        }
         switch (method) {
             case "libraryStatus":return libraries().status();
             case "exportInfo":return exportSource(a.getString("key")).info();
@@ -544,6 +564,29 @@ public final class MainActivity extends Activity {
                 NativeAudio.PartsResult parts=ManagedAudioParts.prepare(session(source.key),root().resolve("companion-decoded-audio"));if(parts.parts.isEmpty())throw new java.io.IOException("没有可分享的音频。");
                 List<Path> audio=new ArrayList<>();for(NativeAudio.Part part:parts.parts)audio.add(part.path);boolean multiple=audio.size()>1;JSONArray warnings=new JSONArray();if(!parts.captureComplete)warnings.put("这是当前已接收的部分音频，原录音仍保留。");
                 return preparedExports().create(new JSONObject().put("key",source.key).put("title",source.title).put("libraryToken",source.token).put("warnings",warnings),DocumentNames.audio(source.title,multiple),multiple?"application/zip":"audio/wav",null,out->AudioExport.write(audio,out,multiple)).dto();
+            }
+            case "aiServiceStatus":return aiServices().status();
+            case "aiServiceSave":return aiServices().save(a);
+            case "aiServiceClear":return aiServices().clear();
+            case "aiContext":{
+                JSONArray available=new JSONArray();int problems=0;StringBuilder identity=new StringBuilder();
+                for(RecordingLibrary.Session row:RecordingLibrary.inspect(recordings()).sessions){if(row.segments.isEmpty())continue;String key=MeetingStore.sessionKey(row.segments.get(0).descriptor);
+                    try{MeetingStore.Snapshot value=store().load(key);if(value==null||value.transcript.trim().isEmpty())continue;JSONObject doc=aiDocument(key);identity.append(doc.getString("binding"));doc.remove("text");available.put(doc);}catch(Exception unavailable){problems++;}}
+                return new JSONObject().put("libraryToken",libraries().token()).put("available",available).put("sourceVersion",AiMaterialStore.hash(identity.toString())).put("problems",problems);
+            }
+            case "askMeeting":{
+                String token=a.getString("libraryToken"),owner=a.getString("ownerKey");session(owner);
+                if(!token.equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新选择会议。");
+                JSONArray selection=a.getJSONArray("sources"),docs=new JSONArray();java.util.Set<String> seen=new java.util.HashSet<>();
+                if(selection.length()<1||selection.length()>12)throw new java.io.IOException("请选择1到12场会议。");
+                for(int i=0;i<selection.length();i++){JSONObject selected=selection.getJSONObject(i),doc=aiDocument(selected.getString("id"));if(!seen.add(doc.getString("id"))||!doc.getString("binding").equals(selected.getString("binding")))throw new java.io.IOException("会议范围或文字已变化，请重新读取。");docs.put(doc);}
+                JSONObject result=meetingAi.ask(a.getString("jobId"),token,owner,a.getString("question"),docs,aiServices().credentials(),a.optJSONObject("resume"),this::requireAiSources,a.optString("purpose","会议问答"));aiServices().verified();return result;
+            }
+            case "aiMaterials":{String key=a.getString("key");session(key);return new AiMaterialStore(libraries().meetings()).list(key);}
+            case "saveAiMaterial":return meetingAi.save(a,new AiMaterialStore(libraries().meetings()),this::requireAiSources);
+            case "copyAiText":{
+                String value=a.getString("text");if(value.getBytes(java.nio.charset.StandardCharsets.UTF_8).length>256*1024)throw new java.io.IOException("文字较长，请保存文件。");
+                return onUi(()->{android.content.ClipboardManager clipboard=(android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);if(clipboard==null)throw new java.io.IOException("剪贴板暂不可用。");clipboard.setPrimaryClip(android.content.ClipData.newPlainText("会议材料",value));return true;});
             }
             case "minutesTemplates":return new MinutesTemplateLibrary(libraries().meetings()).load().put("libraryToken",libraries().token());
             case "minutesTemplateChange":{
@@ -697,7 +740,8 @@ public final class MainActivity extends Activity {
                     MeetingLibrarySearch.Result found=search==null?null:search.find(key,title,reader);
                     if(found!=null){searchProblems+=found.unreadable;if(found.match==null)continue;}
                     JSONObject row=new JSONObject().put("key", key).put("title",title).put("session", Long.toUnsignedString(d.sessionId))
-                            .put("state", s.state.name()).put("segments", s.segments.size());
+                            .put("state", s.state.name()).put("segments", s.segments.size())
+                            .put("recordedAtUnixSeconds",s.startedUnixSeconds>0?Long.valueOf(s.startedUnixSeconds):JSONObject.NULL);
                     long duration=completeAudioDurationMs(s);if(duration>0)row.put("durationMs",duration);
                     if(found!=null)row.put("matchSource",found.match.source).put("matchSnippet",found.match.snippet)
                         .put("matchStart",found.match.start).put("matchEnd",found.match.end).put("matchStale",found.match.stale);

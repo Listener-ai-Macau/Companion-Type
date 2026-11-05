@@ -108,13 +108,19 @@ impl Peer {
 pub(crate) struct Directory {
     peer: Peer,
     catalog: Catalog,
+    calendar: bool,
+    dates: std::collections::BTreeMap<u32,u32>,
 }
 impl Directory {
     pub(crate) fn new(peer: &Peer, nonce: u32) -> Result<Self, String> {
-        Ok(Self { peer: peer.clone(), catalog: Catalog::new(nonce)? })
+        Ok(Self { peer: peer.clone(), catalog: Catalog::new(nonce)?, calendar:false,
+            dates:Default::default() })
     }
+    pub(crate) fn calendar(&mut self, enabled: bool) { self.calendar=enabled; }
+    pub(crate) fn dates(&self)->std::collections::BTreeMap<u32,u32> { self.dates.clone() }
     pub(crate) fn request(&self) -> [u8; 16] {
         let mut p = [0; 16]; p[0] = 2; p[1] = 0x20;
+        p[2]=u8::from(self.calendar);
         p[4..8].copy_from_slice(&self.catalog.identity.map(|(s, _)| s).unwrap_or(0).to_le_bytes());
         p[8..12].copy_from_slice(&self.catalog.nonce.to_le_bytes());
         p[12..16].copy_from_slice(&(self.catalog.entries.len() as u32).to_le_bytes());
@@ -135,12 +141,21 @@ impl Directory {
         if payload.len() < 20 || payload[0] != 2 { return Ok(false); }
         if u32le(payload, 16) != self.catalog.nonce { return Ok(false); }
         let page = Page::decode(payload)?;
+        if (u16le(payload,2)==116)!=self.calendar {return Err(fail("calendar directory framing mismatch"));}
         if page.total > u32::from(self.peer.capacity) {
             return Err(fail("directory exceeds actual device capacity"));
         }
         for d in &page.entries { self.peer.validate(d)?; }
         let previous = self.catalog.entries.len();
         self.catalog.accept(page)?;
+        if self.calendar {
+            for row in payload[24..].chunks_exact(116) {
+                let id=u32le(row,8);let date=u32le(row,112);
+                if self.dates.insert(id,date).is_some_and(|old|old!=date) {
+                    return Err(fail("recording date changed within directory snapshot"));
+                }
+            }
+        }
         Ok(self.catalog.finished() || self.catalog.entries.len() > previous)
     }
     pub(crate) fn finished(&self) -> bool { self.catalog.finished() }

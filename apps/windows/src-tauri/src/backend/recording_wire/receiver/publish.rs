@@ -122,6 +122,10 @@ impl Receiver {
     /// segments are discoverable after restart before any device consumption;
     /// incomplete rows never arm ASR or claim a playable final WAV.
     pub(crate) fn publish(&mut self, index: &Path, device: &str) -> Result<String, String> {
+        self.publish_with_date(index,device,None)
+    }
+    pub(crate) fn publish_with_date(&mut self, index: &Path, device: &str,
+        recorded_date: Option<u32>) -> Result<String, String> {
         if !crate::backend::device_connection::stable_device_id(device) {
             return Err(fail());
         }
@@ -246,6 +250,8 @@ impl Receiver {
                 // run paid meeting processing. Saving/consuming is independent
                 // of ASR. Existing rows keep their explicit processing choice.
                 row.processing_policy=crate::companion_v1::CompanionV1ProcessingPolicy::Manual;
+                // Receiving an old date-unknown original does not date it now.
+                row.started_at=None;
                 row.recovery=Default::default();
                 next.insert(0,row);
             }
@@ -256,6 +262,10 @@ impl Receiver {
             // V1 exact-ID bookkeeping must never reinterpret a V2 session as
             // one of its independent physical recordings.
             s.device_recording_key = Some(logical_key.clone());
+            if let Some(seconds)=recorded_date.filter(|s|*s!=0) {
+                s.started_at=chrono::DateTime::from_timestamp(i64::from(seconds),0)
+                    .map(|date|date.to_rfc3339_opts(chrono::SecondsFormat::Secs,true));
+            }
             s.device_total_length = None;
             s.device_sha256 = None;
             s.device_reclaimed = reclaimed;

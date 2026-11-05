@@ -27,6 +27,7 @@ use uuid::Uuid;
 use super::recording_sync::{self, Job as RecordingSyncJob};
 
 mod offline_connection;
+mod device_clock;
 pub(crate) use offline_connection::original_follow_scope;
 mod pull_session;
 mod pull_progress;
@@ -2785,10 +2786,12 @@ async fn sync_device_utc_clock_verified(peripheral: &Peripheral) -> Result<Strin
             )
         })?
         .map_err(|err| format!("read settings clock readback: {err}"))?;
-    verify_clock_readback(expected, &payload)
+    let evidence = verify_clock_readback(expected.0, &payload)?;
+    device_clock::verify_date(expected.1, &payload)?;
+    Ok(if expected.1.is_some() { format!("{evidence}; full UTC date verified") } else { evidence })
 }
 
-async fn write_device_utc_clock(peripheral: &Peripheral) -> Result<[u8; 3], String> {
+async fn write_device_utc_clock(peripheral: &Peripheral) -> Result<([u8; 3], Option<u32>), String> {
     let characteristics = peripheral.characteristics();
     let settings = find_characteristic(&characteristics, SETTINGS_UUID)?;
     if !settings.properties.contains(CharPropFlags::READ)
@@ -2797,7 +2800,7 @@ async fn write_device_utc_clock(peripheral: &Peripheral) -> Result<[u8; 3], Stri
         return Err("settings must support READ+WRITE for clock sync".to_string());
     }
     let read_timeout = env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS", 8_000);
-    let mut payload = timeout(read_timeout, peripheral.read(&settings))
+    let current = timeout(read_timeout, peripheral.read(&settings))
         .await
         .map_err(|_| {
             format!(
@@ -2806,21 +2809,11 @@ async fn write_device_utc_clock(peripheral: &Peripheral) -> Result<[u8; 3], Stri
             )
         })?
         .map_err(|err| format!("read settings for clock sync: {err}"))?;
-    if payload.len() < 10 {
-        return Err("settings payload too short for clock sync".to_string());
-    }
-    payload.truncate(10);
     let utc_seconds = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .map_err(|err| format!("system clock before unix epoch: {err}"))?
-        .as_secs()
-        % 86_400;
-    let expected = [
-        (utc_seconds / 3_600) as u8,
-        ((utc_seconds / 60) % 60) as u8,
-        (utc_seconds % 60) as u8,
-    ];
-    payload.extend_from_slice(&expected);
+        .as_secs();
+    let (payload, expected, calendar) = device_clock::payload(&current, utc_seconds)?;
     let write_timeout = env_timeout("COMPANION_TYPE_BLE_WRITE_TIMEOUT_MS", 8_000);
     timeout(
         write_timeout,
@@ -2834,7 +2827,7 @@ async fn write_device_utc_clock(peripheral: &Peripheral) -> Result<[u8; 3], Stri
             )
         })?
         .map_err(|err| format!("write settings clock sync: {err}"))?;
-    Ok(expected)
+    Ok((expected, calendar))
 }
 
 fn verify_clock_readback(expected: [u8; 3], payload: &[u8]) -> Result<String, String> {

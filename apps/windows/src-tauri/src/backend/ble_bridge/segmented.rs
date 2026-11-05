@@ -46,6 +46,9 @@ pub(super) async fn read_catalog_with_profile(device: &NativeDevice,
     }
     let budget = env_timeout("COMPANION_TYPE_BLE_READ_TIMEOUT_MS", 8_000);
     let deadline = StdInstant::now() + budget;
+    let settings=find_characteristic(chars,SETTINGS_UUID)?;
+    let clock=bounded_ble_result("read calendar capability",budget,peripheral.read(&settings)).await?;
+    let calendar=clock.len()>=17 && clock[0]==1;
     #[cfg(windows)]
     let actual_mtu=device.connection_session.as_ref()
         .ok_or("V2 recording has no owned GATT session; no protocol write was sent")?
@@ -73,6 +76,7 @@ pub(super) async fn read_catalog_with_profile(device: &NativeDevice,
         }
         for _ in 0..3 {
             let mut directory = Directory::new(&peer, nonce())?;
+            directory.calendar(calendar);
             let mut stale = false;
             while !directory.finished() {
                 let request = directory.request();
@@ -92,7 +96,11 @@ pub(super) async fn read_catalog_with_profile(device: &NativeDevice,
             }
             if !stale {
                 let generation = directory.generation();
-                return Ok(RecordingCatalog { entries: directory.entries().into_iter().map(entry).collect(),
+                let dates=directory.dates();
+                return Ok(RecordingCatalog { entries: directory.entries().into_iter().map(|d| {
+                    let date=dates.get(&d.recording_id).copied().unwrap_or(0);
+                    let mut e=entry(d);e.started_unix_s=date;e
+                }).collect(),
                     peer: Some(peer.clone()), generation });
             }
         }
@@ -352,6 +360,14 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
     // Lost final replies can leave NO device entry. Only exact local manifests
     // for this UID+epoch+receiver reopen that durable session, no blind scan.
     let scan = Receiver::pending_initials(&root, &peer, &device.device_id(), scope)?;
+    let mut dates=BTreeMap::new();
+    for e in &entries {
+        if let Some(d)=e.segment.as_ref().filter(|_|e.started_unix_s!=0) {
+            if dates.insert(d.key.clone(),e.started_unix_s).is_some_and(|old|old!=e.started_unix_s) {
+                return Err("同一场录音的开录日期不一致，原音保留。".into());
+            }
+        }
+    }
     let all_groups = microphone_groups(&peer, scan.initials.clone(), entries, scope)?;
     let (groups, failures) = isolate_blocked_groups(&scan, all_groups)?;
     let mut batch = NativeRecordingBatch { device_id: device.device_id(), recordings: Vec::new(),
@@ -368,6 +384,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
     let delete = std::env::var("COMPANION_TYPE_DELETE_AFTER_SYNC")
         .map(|s| !matches!(s.trim().to_ascii_lowercase().as_str(), "0" | "false" | "off")).unwrap_or(true);
     for (key, (initial, mut entries)) in groups {
+        let recorded_date=dates.get(&key).copied();
         if limit.is_some_and(|limit| admitted.len() >= limit) { deferred = true; break; }
         entries.sort_by_key(|e| e.segment.as_ref().unwrap().segment_index);
         let work = async {
@@ -417,7 +434,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
                 }
                 let local_started = local_started.unwrap_or_else(StdInstant::now);
                 let publish_started = StdInstant::now();
-                let published_id = receiver.publish(&index, &device.device_id())?;
+                let published_id = receiver.publish_with_date(&index, &device.device_id(),recorded_date)?;
                 let publish_us = publish_started.elapsed().as_micros();
                 let prefix_started = StdInstant::now();
                 if peer.growing_tail { Prefix::release(&root,d,&peer)?; }
@@ -437,7 +454,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
                         consume(device, chars, &peer, &ack).await?;
                         receiver.confirm_acked(&ack)?;
                     }
-                    receiver.publish(&index, &device.device_id())?;
+                    receiver.publish_with_date(&index, &device.device_id(),recorded_date)?;
                 }
                 let reclaim_us = reclaim_started.elapsed().as_micros();
                 let cursor_started = StdInstant::now();
@@ -454,7 +471,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
             // Also cover interrupted host work with no matching live directory
             // entry. Reverification and publish precede the replay command.
             if job.is_paused() { return Err(recording_sync::PAUSED.into()); }
-            receiver.publish(&index, &device.device_id())?;
+            receiver.publish_with_date(&index, &device.device_id(),recorded_date)?;
             if delete {
                 PullSession::quiesce_for_control(&mut pull_session).await?;
                 for ack in receiver.ack_candidates(&index)? {
@@ -467,7 +484,7 @@ pub(super) async fn sync_catalog_limited(device: &NativeDevice,
                 }
             }
             if receiver.plan()?.payloads_complete { receiver.assemble_session()?; }
-            let published_id = receiver.publish(&index, &device.device_id())?;
+            let published_id = receiver.publish_with_date(&index, &device.device_id(),recorded_date)?;
             let ids = batch.segmented.as_mut().unwrap();
             if !ids.contains(&published_id) { ids.push(published_id); }
             Ok::<(), String>(())

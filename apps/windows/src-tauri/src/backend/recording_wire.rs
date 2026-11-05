@@ -233,8 +233,8 @@ impl Page {
         if p.len() < PAGE_HEADER_BYTES
             || p[0] != 2
             || p[1] > 2
-            || u16le(p, 2) != DESCRIPTOR_BYTES as u16
-            || p.len() != PAGE_HEADER_BYTES + usize::from(p[1]) * DESCRIPTOR_BYTES
+            || ![DESCRIPTOR_BYTES as u16, 116].contains(&u16le(p, 2))
+            || p.len() != PAGE_HEADER_BYTES + usize::from(p[1]) * usize::from(u16le(p, 2))
         {
             return Err(fail("invalid V2 page framing"));
         }
@@ -250,8 +250,8 @@ impl Page {
             total: u32le(p, 12),
             nonce: u32le(p, 16),
             entries: p[24..]
-                .chunks_exact(DESCRIPTOR_BYTES)
-                .map(Descriptor::decode)
+                .chunks_exact(usize::from(u16le(p, 2)))
+                .map(|row| Descriptor::decode(&row[..DESCRIPTOR_BYTES]))
                 .collect::<Result<_, _>>()?,
         };
         if page.snapshot == 0
