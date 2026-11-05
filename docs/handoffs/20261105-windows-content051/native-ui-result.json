@@ -1,0 +1,37 @@
+{
+  "state": "ACTUAL_NATIVE_UI_AND_OS_COPY_PASSED_WITH_TEST_CLEANUP_FAILURE_RETAINED",
+  "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-windows-content051\\native-ui-1793882137664932800",
+  "nativeUI": {
+    "status": "ACTUAL_NATIVE_WINDOW_UI_PREVIEW_AND_COPY_PASSED",
+    "nativeAssetsMatched": 2,
+    "allSixFormatsNativePreview": true,
+    "sourceTextExact": true,
+    "clipboardSuccessReported": true,
+    "shareButtonEnabled": true,
+    "shareSheetOpened": false,
+    "systemSaveDialogOpened": false,
+    "pageErrors": [],
+    "modelsRun": false,
+    "deviceIo": false
+  },
+  "osClipboardExact": true,
+  "osClipboardEvidence": "Original helper reached the later byte-level state assertion after checking exact OS text; failure trace and original helper retained.",
+  "protectedPublicSourceFieldsUnchanged": true,
+  "comparedFields": [
+    "transcriptText",
+    "utterances",
+    "transcriptReview",
+    "meetingNotes",
+    "noteRevision",
+    "minutes",
+    "minutesByMode",
+    "bookmarks",
+    "bookmarkRevision"
+  ],
+  "stateBytesChangedOnNormalOpen": true,
+  "ownerDataUsed": false,
+  "clipboardRestoration": "First opaque OLE restore returned CLIPBRD_E_CANT_CLOSE; original clipboard recovery is not confirmed. No additional clipboard overwrite for retesting.",
+  "isolatedTestAppClosed": true,
+  "modelsRun": false,
+  "deviceIo": false
+}

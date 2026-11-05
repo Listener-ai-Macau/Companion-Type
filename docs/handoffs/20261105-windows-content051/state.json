@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-05T21:02:48+08:00",
+  "status": "WINDOWS051_INSTALLED_SELECTED_CONTENT_AND_AUDIO_EXPORT_VERIFIED_MODAL_ACCEPTANCE_OPEN",
+  "ownerRequest": "继续按照待办把 Windows 的内容导出、复制和分享补全，做好以后测试，及时上传远端。",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "sourceCommit": "15fd54ee874cf3b82230c80b18819f65f14bdd2f",
+  "branch": "work/content-exports051-20261105",
+  "remoteSourceVerified": true,
+  "deliveredBaseline": "Windows0.1.51 / Android050r2 code51 unchanged",
+  "installed": true,
+  "ownerAccepted": false,
+  "modelsRun": false,
+  "deviceIo": false,
+  "scope": "Windows同套已保存内容选择，TXT/MD/DOCX/PDF/XLSX/mm/SRT、所选材料、系统剪贴板与原生分享，MP3兼容音频；独立AI填表/演示不在普通文件转换中冒充完成。",
+  "currentWork": "本批已交付：同套已保存内容/逐条材料选择，TXT/MD/DOCX/PDF/XLSX/mm/SRT、系统复制、原生文件分享接口及原音/真实MP3。完整原生App预览、OS复制、外部文件读取与浅深色UI已验；静默升级245个原资料文件哈希不变。",
+  "ownerReportedBoardConnected": {
+    "reportedAt": "2026-11-05T20:28:10+08:00",
+    "raw": "接了板子",
+    "hardwareCheckedThisBatch": false,
+    "boardIoThisBatch": false
+  },
+  "releaseJob": {
+    "status": "COMPLETE",
+    "binaryOnlySeconds": 1208.85,
+    "allTargetsSeconds": 526.92,
+    "initialPackagingFailure": "First release --bin emitted no DLL; retained failure, built all targets without source change, then MSI succeeded."
+  },
+  "checks": {
+    "native": "cargo-tests.json",
+    "documents": "document-verification.json",
+    "originalAudio": "original-audio-regression.log",
+    "nativeUi": "native-ui-result.json",
+    "readonlyUi": "native-readonly-ui-result.json",
+    "msi": "windows-verification.json",
+    "upgrade": "windows-upgrade/result.json"
+  },
+  "boundaries": [
+    "实际原生系统分享选择器、收件应用及Save As交互本轮未打开，不能称整链已验。",
+    "第一次OS复制成功且文本精确，但测试工具恢复原OLE剪贴板失败；原剪贴板是否恢复未确认。失败证据保留，随后只读复验未触碰剪贴板。",
+    "当前Windows无独立保存译文对象；已存译文材料可逐条选择，不冒充译文生成已验。",
+    "普通XLSX导出不等于AI智能填表，PPTX/PNG材料及安卓余项沿原25保持开放。",
+    "视觉检查可读且无裁切；原生复选框/下拉框的精致度仍可打磨，不称已通过新客户或Owner审美验收。"
+  ],
+  "installer": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-windows-content051\\Companion-Windows-0.1.51-内容导出复制分享.msi",
+  "msiSha256": "0850645f9e9b64cc3263b61a0efda21d586e4b39ee482d20174b777dd6a143b8",
+  "customerResult": null
+}
