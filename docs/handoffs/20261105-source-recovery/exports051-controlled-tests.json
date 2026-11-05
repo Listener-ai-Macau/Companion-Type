@@ -1,0 +1,17 @@
+{
+  "scope": "controlled shared UI, no native/OS clipboard or owner data",
+  "rows": [
+    {
+      "name": "test_selected_content_copy.tsx",
+      "status": 0,
+      "stdout": "PASS selected saved content, exact clipboard text, source change, denied clipboard fallback, stop/retry, empty selection and unmount\n",
+      "stderr": ""
+    },
+    {
+      "name": "test_pdf_export_selection.tsx",
+      "status": 0,
+      "stdout": "PASS PDF selection, saved-source preview/hash and transcript-only use\n",
+      "stderr": ""
+    }
+  ]
+}

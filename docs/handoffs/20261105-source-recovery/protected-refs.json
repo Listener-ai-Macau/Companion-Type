@@ -1,0 +1,21 @@
+{
+  "state": "RECOVERED_SOURCE_REMOTE_BACKUP_VERIFIED",
+  "mainBranch": "recovery/meeting-ai050-20261105",
+  "mainCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
+  "exactOriginalPayloadCommit": "d8b7d827916c10c253096acd0672f8d9ee1cf163",
+  "exactOriginalTree": "49f075c591021831a7d2f1a2697f8e36192d91db",
+  "backendBranch": "recovery/android-backend049-20261105",
+  "backendCommit": "d7d560b8e78b575c0af59f4d6d48ebb45bd5ceea",
+  "backendTree": "ad1a3130fcac672e05cabe5fb2fd9e228898c2e8",
+  "mainSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "backendSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-android-backend",
+  "remote": "git@github.com:Listener-ai-Macau/Companion-Type.git",
+  "remoteVerified": true,
+  "ownerAccepted": false,
+  "remoteRefs": {
+    "refs/heads/recovery/android-backend049-20261105": "d7d560b8e78b575c0af59f4d6d48ebb45bd5ceea",
+    "refs/heads/recovery/meeting-ai050-20261105": "79b3df827c2cfbd5605178d22da010559a8956bb"
+  },
+  "pushWallSeconds": 36.08,
+  "mainBranchUnchanged": true
+}

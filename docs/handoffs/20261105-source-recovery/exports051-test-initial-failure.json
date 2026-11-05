@@ -1,0 +1,17 @@
+{
+  "scope": "controlled shared UI, no native/OS clipboard or owner data",
+  "rows": [
+    {
+      "name": "test_selected_content_copy.tsx",
+      "status": 1,
+      "stdout": "",
+      "stderr": "AssertionError [ERR_ASSERTION]: missing 停止等待\n    at button (file:///C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050/.cache/exports051/test_selected_content_copy.tsx.mjs:13690:12)\n    at file:///C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050/.cache/exports051/test_selected_content_copy.tsx.mjs:13731:25\n    at act (C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050\\node_modules\\react\\cjs\\react.development.js:2512:16)\n    at main (file:///C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050/.cache/exports051/test_selected_content_copy.tsx.mjs:13731:9) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: undefined,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n"
+    },
+    {
+      "name": "test_pdf_export_selection.tsx",
+      "status": 0,
+      "stdout": "PASS PDF selection, saved-source preview/hash and transcript-only use\n",
+      "stderr": ""
+    }
+  ]
+}

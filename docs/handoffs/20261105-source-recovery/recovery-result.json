@@ -1,0 +1,50 @@
+{
+  "at": "2026-11-05T18:11:23+08:00",
+  "status": "DELIVERED050_SOURCE_RESTORED_EXACT_PAYLOAD_REBUILT_REMOTE_VERIFIED",
+  "mainSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "mainCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
+  "originalMainTree": "49f075c591021831a7d2f1a2697f8e36192d91db",
+  "backendSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-android-backend",
+  "backendCommit": "d7d560b8e78b575c0af59f4d6d48ebb45bd5ceea",
+  "originalBackendTree": "ad1a3130fcac672e05cabe5fb2fd9e228898c2e8",
+  "remote": "git@github.com:Listener-ai-Macau/Companion-Type.git",
+  "remoteRefs": {
+    "refs/heads/recovery/android-backend049-20261105": "d7d560b8e78b575c0af59f4d6d48ebb45bd5ceea",
+    "refs/heads/recovery/meeting-ai050-20261105": "79b3df827c2cfbd5605178d22da010559a8956bb"
+  },
+  "remoteVerified": true,
+  "mainPayloadFiles": 1046,
+  "backendPayloadFiles": 313,
+  "backendJavaClassesByteIdentical": 118,
+  "androidApkSha256": "8301ce400cab0fd95bf84f22ba0c7173fcfe9029c2eac635ee3a0a057a83efe4",
+  "androidApkExactOriginalBytes": true,
+  "apk16KiBZipAlignment": true,
+  "apkSignatureVerified": true,
+  "windowsWebBuildPassed": true,
+  "mobileWebBuildPassed": true,
+  "mobileWebAssetsExactInstalled": true,
+  "sourceArchives": [
+    {
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-ai-workspace050-preserved\\Companion-Type-050-source.zip",
+      "sha256": "0294e3258ee4bac5cd7805d7f1687900f070e8d5a77ffe13dde5c1d11c372531"
+    },
+    {
+      "path": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-ai-workspace050-preserved\\Companion-Android-backend049-source.zip",
+      "sha256": "1066400ed0af6518a671587e9f787b6ccba58aa9d47f7fd9cd746172fdf072cd"
+    }
+  ],
+  "installedVersionUnchanged": true,
+  "ownerAccepted": false,
+  "newCustomerResult": false,
+  "modelOrAsrRun": false,
+  "boardIo": false,
+  "phoneIo": false,
+  "cacheDirectory": "E:\\CodexData\\Companion\\.build-cache",
+  "protectedSigningKeyOutsideGit": true,
+  "remaining": [
+    "原050首个试验提交所用已被r2替换的AAR二进制未找回；最终交付AAR与源码完整。",
+    "旧E盘原始测试收据/模型实验权重与缓存未全面恢复；保留删除事实，不把重建收据冒充历史原件。",
+    "固件由嵌软模块沿原任务树恢复，不能据前端恢复称固件已可重建。",
+    "真实AI内容质量、050手机普通前台与真实客户体验、原36项Owner验收及售卖资格继续开放。"
+  ]
+}

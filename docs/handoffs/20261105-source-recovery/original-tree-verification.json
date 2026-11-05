@@ -1,0 +1,164 @@
+{
+  "state": "RECONSTRUCTED_TREE_CHECK",
+  "expectedFinal050Tree": "49f075c591021831a7d2f1a2697f8e36192d91db",
+  "reconstructedTree": "49f075c591021831a7d2f1a2697f8e36192d91db",
+  "treeIdentical": true,
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "changedFiles": [
+    {
+      "path": "apps/android/app/build.gradle",
+      "gitBlob": "9db752dd16f6b140fca3f76daf15d012070e7b03",
+      "sha256": "1567ad5e6fed75d026ce964513456cef0d3f16eb7066660872aca3d9e8cd3b6e"
+    },
+    {
+      "path": "apps/android/app/libs/companion-android-backend.aar",
+      "gitBlob": "53a5b6c0f48acdbde10d47faca0b471c867e042e",
+      "sha256": "a16c29c96ede57dbce0fba009a06640df17d531594a491ef07f97e414549d3c8"
+    },
+    {
+      "path": "apps/android/app/libs/companion-android-backend.provenance.json",
+      "gitBlob": "c264cd9bd11ac9133b47c68a990c77c4e882982c",
+      "sha256": "52c0a9bdc9cf6a0b8f499776ec11fefc5272ceae3d311a202cc8711ddcd31d51"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AiMaterialStore.java",
+      "gitBlob": "dcb348492e2c3c61099ef6a8ded9c1fb76d19deb",
+      "sha256": "099b3223ac759e8a8269d433faeb04de9c9589d2d2915e88d1d28bedf9711d4b"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AiServiceVault.java",
+      "gitBlob": "3ad8789d59d7eea7590e9296913b041c74b9ca04",
+      "sha256": "1d9bbf778883ce9d89f314c92165035beb9736f1f22a0f14e94353b4aaa573be"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MainActivity.java",
+      "gitBlob": "715c66aaf7144197ad818155652527a8d9276589",
+      "sha256": "802e31a8ed4ed2da05db3a518ada54e802fcab8291b1366ea2d3ff97b5c23a32"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MeetingAiAccess.java",
+      "gitBlob": "ce9317e5156d20a1f3fe5536b626fa3f423d5c8d",
+      "sha256": "75e29458c15d6a5f42a41044166f607c0658c50ba873d67b95a18a8e45afb527"
+    },
+    {
+      "path": "apps/mobile/src/AiServiceSettings.tsx",
+      "gitBlob": "b958aaa24a0af687b5c42231f86a08211a6a00ec",
+      "sha256": "5f2c3f64f9b3c82f75f2c0599c7bdf9fea836462771ec6d1fdd543bf361bde34"
+    },
+    {
+      "path": "apps/mobile/src/App.tsx",
+      "gitBlob": "91f27421daaee7c7022cf670bb7d4232ce4f1941",
+      "sha256": "b4eade3aeec6a467221abb856f035e1dd40c6fedcaa8c0a50c41fee721ac1158"
+    },
+    {
+      "path": "apps/mobile/src/MeetingAssistant.tsx",
+      "gitBlob": "3c4a9c93cd0e2efd8d386f97e57c4e3b9b036fae",
+      "sha256": "e881685ac397371cc15e59284ebbf5d6a06a8eda6ee8f0ddb76d4c02d6d89c02"
+    },
+    {
+      "path": "apps/mobile/src/MinutesTemplates.tsx",
+      "gitBlob": "107c695839882f5ea9d424d4e6a7b3e005555468",
+      "sha256": "47e09feb32d5ac80cfbbd9d4422b62895bc97a258f45273cf047321ecaaab9d3"
+    },
+    {
+      "path": "apps/mobile/src/aiWorkspace.css",
+      "gitBlob": "452518f3aa94bd73033d7fbe26e731cb014a6e68",
+      "sha256": "eef7bf83ed5d484e6cf4e6525ff406cd5fb22251ba2566460737df196024f133"
+    },
+    {
+      "path": "apps/windows/src-tauri/Cargo.lock",
+      "gitBlob": "4bdce2b478418aea85aa145943589ac15c42dd82",
+      "sha256": "5f3dbb32ae68538467db9821e3f5967dd764f1a32675ee3c9e276db04ac4a1ad"
+    },
+    {
+      "path": "apps/windows/src-tauri/Cargo.toml",
+      "gitBlob": "25cc9f9f1ec66494562d89777370d017c2460c29",
+      "sha256": "433f4a137f2333f53853001809f13ae50eae5cfae3aa99faf284a83c45da1bf4"
+    },
+    {
+      "path": "apps/windows/src-tauri/resources/licenses/ThirdPartyComponents.json",
+      "gitBlob": "ef2d109d5f18a32b21285e0da62e2d26d4715954",
+      "sha256": "63c4248c4d04df4072cd4fb302c805924946d96c3d49b1c6e3a0381cc42fe79b"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge.rs",
+      "gitBlob": "495021528574ef06bbe5487c48ea45352fe6ee73",
+      "sha256": "2a8377fac96282bf6409d88c9d8b8d2136f09cafd1dd98a5b0ee06827b47e51d"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/device_clock.rs",
+      "gitBlob": "31a99a6de9e81448d47bc7805cbc606c74097a23",
+      "sha256": "0283dd13e93c6d8ab9b99ca3cea0f4f0f53523f9ed8b92a1e361806dcd916e71"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/ble_bridge/segmented.rs",
+      "gitBlob": "a867d42979b47bbe090281dcb0a169bcb4256d0d",
+      "sha256": "4e607c16a6ade63a79497fad44c2b64e7bca8f864e76ffc297a489c2ef64c345"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire.rs",
+      "gitBlob": "022a4e7d74faf4f286339d138643fd88257147a9",
+      "sha256": "4fd95ab351bac00869655f990a44ea3a62e5d8546ee289ff8337154052a30552"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/receiver/publish.rs",
+      "gitBlob": "c725f8bc4273fd7a48eae9722b6c25086676464a",
+      "sha256": "c4098250d655f6d3e3559ec705d8e08ac601286952bb24e83d4af8e2c8c0a6c6"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/transport.rs",
+      "gitBlob": "054393bf8211b18a998551b1a7fb439e12896237",
+      "sha256": "861c685238840286d19948753dcc7959e767d56f79700131fa8f8a6f072c7c81"
+    },
+    {
+      "path": "apps/windows/src-tauri/src/backend/recording_wire/transport/tests.rs",
+      "gitBlob": "239850c30f28ba84902ae805e8aa96477290ceba",
+      "sha256": "8dad759e3eb13c8dc01476db97869904a5348170c148ccd3f55c1f42490f8930"
+    },
+    {
+      "path": "apps/windows/src-tauri/tauri.conf.json",
+      "gitBlob": "259d5a77c84ff088d2555409eb2e5397d086915d",
+      "sha256": "d0cba04a4fea5ea7ad9e4b67129e53cbf08bf5f470b157cfcd9d846f95449506"
+    },
+    {
+      "path": "apps/windows/src/workspaceRefinement.css",
+      "gitBlob": "9706fde402ecb0e75c964341813f8bf6b45d753f",
+      "sha256": "046fdbdc4229a6a2de6ca3044611e64132b0093ea3e603fac9479ad46dad362e"
+    },
+    {
+      "path": "package-lock.json",
+      "gitBlob": "604d26225fddb3eb52b8b55b4a05c8f7d181744c",
+      "sha256": "ad4960910697e240b8100d1f65fdf6f4342cd19268eae9143e36bb21b53b21ef"
+    },
+    {
+      "path": "package.json",
+      "gitBlob": "c1a6e63181b181224c757b98aae4f3d573184420",
+      "sha256": "d67981b645938274716da5791c16e95126f900022fd52327c7edea462cc8374e"
+    },
+    {
+      "path": "packages/ui/src/CompanionDashboard.tsx",
+      "gitBlob": "0bf6b8785a90f0b2ba25787781c9acf2c910f1ac",
+      "sha256": "18791d70a02c1c401cbdde5fd418eb5cec76cdf9f62ab614954b33ed819fb4f6"
+    },
+    {
+      "path": "packages/ui/src/MeetingAiWorkbench.tsx",
+      "gitBlob": "d2cb88fddac1f8c65752ee1debe950206cdd550d",
+      "sha256": "4122b4f770a39b87ed9ebf3e70c60123f118ca95acf941e9a53989bd783171eb"
+    },
+    {
+      "path": "packages/ui/src/aiMaterialNote.ts",
+      "gitBlob": "7be5b1b84ce0c8dd97f1cbaa4cfd0f7c339f6f13",
+      "sha256": "0d19d9594851dd8170a1723c3e2ea1459c1668819a30466a6d3c9c92a31725c6"
+    },
+    {
+      "path": "packages/ui/src/meetingAiWorkbench.css",
+      "gitBlob": "ef5993154312689beb3737990c5bd2016d6df628",
+      "sha256": "af431fab5095506fca47af935a79d1ba5b9eca31932867ecd88495cf1b6e4678"
+    },
+    {
+      "path": "tools/ai-workspace-preview050.tsx",
+      "gitBlob": "7eb23595fbaef61f6d39e20fc07f3f40c77928a0",
+      "sha256": "381f276363219d7128a9cbd2de9544118648f8ae2824f25e38f78c52367f70c0"
+    }
+  ]
+}

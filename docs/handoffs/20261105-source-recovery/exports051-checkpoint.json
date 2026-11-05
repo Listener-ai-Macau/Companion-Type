@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-05T19:12:22+08:00",
+  "status": "SOURCE_CHECKPOINT_NOT_PACKAGED_OR_INSTALLED",
+  "userBenefit": "Windows按当前所选的已保存纪要、录音文字、重点/补充和时间/说话人内容复制，沿既有PDF内容选择。",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "branch": "work/content-exports051-20261105",
+  "sourceCommit": "d3d6e27edeb2b3cf44ab2e8d30a4a087913a9a71",
+  "baseDeliveredCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
+  "deliveredVersionUnchanged": "Windows050 / Android050r2 code51",
+  "controlledUiPassed": true,
+  "windowsProductionWebBuildPassed": true,
+  "actualWindowsClipboardVerified": false,
+  "installed": false,
+  "ownerAccepted": false,
+  "scope": "read existing native PDF selected-source preview, validate hash/text, copy full saved text with exact selection, guard source changes/unmount, cancellation and denied clipboard fallback",
+  "generatedBuildFilesRemovedFromContinuingSourceIndex": 7,
+  "failure": "First focused test used the nonexistent label 停止等待; actual existing control is 取消等待. Corrected test locator, product unaffected; failure retained.",
+  "remaining": "Windows其它内容格式/保存译文选择及实际原生/OS交付仍待同批完成；MP3/XLSX和智能填表/演示另沿25原完整范围。",
+  "modelOrAsrRun": false,
+  "deviceIo": false,
+  "customerResult": null,
+  "remoteSourceVerified": false
+}
