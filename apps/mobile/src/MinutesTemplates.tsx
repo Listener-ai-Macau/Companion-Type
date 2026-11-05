@@ -12,7 +12,7 @@ export function MinutesTemplates({busy,savedTemplate,initialSelection,onLoad,onC
  const [editing,setEditing]=useState(false),[name,setName]=useState(''),[instructions,setInstructions]=useState('');
  const validate=(v:TemplateLibrary)=>{if(v.version!==1||!v.libraryToken||!v.etag||!Array.isArray(v.items)||!v.selected?.id)throw new Error('模板资料未能确认，请重新读取。');return v;};
  const adopt=(v:TemplateLibrary,t:MinutesTemplate=v.selected)=>{setLibrary(v);setSelected(t);onSelect({template:t,libraryToken:v.libraryToken});};
- useEffect(()=>{let active=true;onSelect(null);void onLoad().then(v=>{if(active){validate(v);adopt(v,initialSelection?.libraryToken===v.libraryToken?initialSelection.template:savedTemplate||v.selected);}}).catch(e=>{if(active)setError(e instanceof Error?e.message:String(e));}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
+ useEffect(()=>{let active=true;onSelect(null);void onLoad().then(v=>{if(active){validate(v);adopt(v,initialSelection?.libraryToken===v.libraryToken?initialSelection.template:v.etag==='empty'&&savedTemplate?savedTemplate:v.selected);}}).catch(e=>{if(active)setError(e instanceof Error?e.message:String(e));}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
  const reload=async()=>{setLoading(true);setError('');setNotice('');onSelect(null);try{adopt(validate(await onLoad()));setEditing(false);onPending(false);}catch(e){setError(e instanceof Error?e.message:String(e));}finally{setLoading(false);}};
  const change=async(action:string,template?:MinutesTemplate,key?:string)=>{
   if(!library||busy||working||loading)return;setWorking(true);setError('');setNotice('');
