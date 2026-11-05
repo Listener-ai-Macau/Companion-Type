@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "aarSha256": "ee1259f7fffba118e80851e4640e687e85a74da9c3c38c92e8e52e4170b7468a",
-  "backendSourceCommit": "0d0b3f66bc1b84d9b14e586c6febd7ba07eeeabc",
+  "aarSha256": "de6dc85a039e9c9323004007735fe81f2f0a6c73cb2f1adbfeb984f04b729e58",
+  "backendSourceCommit": "48b4b212a709c41fc0564c73d1186903d2921303",
   "backendSourceWorkspace": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\android-backend-source",
-  "priorVerifiedBackendCommit": "6cc7055dc75ab9876d9378f79c9055980c675f5c",
-  "scope": "Complete backend Java store adds source-preserving manual minutes edits/history. All three native libraries exactly reused from verified Android041; no model/native engine build.",
+  "priorVerifiedBackendCommit": "0d0b3f66bc1b84d9b14e586c6febd7ba07eeeabc",
+  "scope": "Complete verified backend plus Android PDF Java presentation only; all native libraries and model paths unchanged.",
   "features": [
     "mobile-asr",
     "mobile-local-asr",
