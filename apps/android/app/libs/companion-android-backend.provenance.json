@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "aarSha256": "de6dc85a039e9c9323004007735fe81f2f0a6c73cb2f1adbfeb984f04b729e58",
-  "backendSourceCommit": "48b4b212a709c41fc0564c73d1186903d2921303",
+  "aarSha256": "50bd53436b523f09e476be10c5d15e0ab3bae3042c5602044ae63265e78826d1",
+  "backendSourceCommit": "691061763e6247a34cf81009e0b0bdd068bfdf57",
   "backendSourceWorkspace": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\android-backend-source",
-  "priorVerifiedBackendCommit": "0d0b3f66bc1b84d9b14e586c6febd7ba07eeeabc",
-  "scope": "Complete verified backend plus Android PDF Java presentation only; all native libraries and model paths unchanged.",
+  "priorVerifiedBackendCommit": "48b4b212a709c41fc0564c73d1186903d2921303",
+  "scope": "Complete backend plus PDF-only Unicode-safe document font/rendering; three speech runtime binaries unchanged; no model run.",
   "features": [
     "mobile-asr",
     "mobile-local-asr",

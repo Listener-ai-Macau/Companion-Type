@@ -235,7 +235,8 @@ public final class MainActivity extends Activity {
                 if ("mindmap".equals(format)) bytes=NativeMeetingDocuments.mindmap(title,minutes,meeting);
                 try (java.io.OutputStream out=getContentResolver().openOutputStream(destination,"w")) {
                     if (out==null) throw new java.io.IOException("无法写入所选位置。");
-                    if ("pdf".equals(format)) MeetingPdf.write(title,minutes,meeting,new MeetingPdf.Sections(minutes!=null,hasText,hasNotes),out);
+                    if ("pdf".equals(format)) MeetingPdf.write(title,minutes,meeting,new MeetingPdf.Sections(minutes!=null,hasText,hasNotes),out,
+                        android.graphics.Typeface.createFromAsset(getAssets(),"companion-documents/CompanionPDFSans-Regular.ttf"));
                     else out.write(bytes);
                 }
                 replyDocument(id,true,null,restored);
@@ -548,7 +549,7 @@ public final class MainActivity extends Activity {
             case "stopSync": RecordingSyncService.stop(this); return syncStatus();
             case "status": return syncStatus();
             case "licenses": {
-                String[] files = {"ShadcnDashboardMIT.txt", "companion-android-native-notices.txt", "companion-asr-runtime-notices.txt", "companion-local-model-notices.txt", "companion-document-export-notices.txt", "companion-asr-runtime/onnxruntime-LICENSE.txt", "companion-asr-runtime/onnxruntime-ThirdPartyNotices.txt", "companion-asr-runtime/sherpa-onnx-LICENSE.txt"};
+                String[] files = {"ShadcnDashboardMIT.txt", "companion-android-native-notices.txt", "companion-asr-runtime-notices.txt", "companion-local-model-notices.txt", "companion-document-export-notices.txt", "companion-document-font-OFL.txt", "companion-asr-runtime/onnxruntime-LICENSE.txt", "companion-asr-runtime/onnxruntime-ThirdPartyNotices.txt", "companion-asr-runtime/sherpa-onnx-LICENSE.txt"};
                 StringBuilder text = new StringBuilder();
                 for (String file : files) {
                     text.append("\n\n--- ").append(file).append(" ---\n");
