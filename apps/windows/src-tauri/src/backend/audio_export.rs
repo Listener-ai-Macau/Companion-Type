@@ -55,8 +55,7 @@ pub fn source(snapshot: &CompanionV1Snapshot, session_id: &str) -> Result<(Audio
     Ok((audio, format!("{title}-original.{extension}")))
 }
 
-pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Path) -> Result<u64, String> {
-    let (input, _) = source(snapshot, session_id)?;
+pub fn guard_destination(snapshot:&CompanionV1Snapshot,destination:&Path)->Result<(),String>{
     // The native chooser authorizes an output location, never destruction of
     // this or another retained recording in the current library.
     if let Ok(target) = destination.canonicalize() {
@@ -69,6 +68,12 @@ pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Pa
             }
         }
     }
+    Ok(())
+}
+
+pub fn export(snapshot: &CompanionV1Snapshot, session_id: &str, destination: &Path) -> Result<u64, String> {
+    let (input, _) = source(snapshot, session_id)?;
+    guard_destination(snapshot,destination)?;
     copy_source_atomic(&input, destination)
 }
 

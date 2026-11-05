@@ -48,6 +48,7 @@ pub enum MeetingExportFormat {
     Txt,
     Json,
     Srt,
+    Xlsx,
     Todo,
     TodoText,
     Ics,
@@ -67,6 +68,7 @@ impl MeetingExportFormat {
             Self::Txt => "txt",
             Self::Json => "json",
             Self::Srt => "srt",
+            Self::Xlsx => "xlsx",
             Self::Todo => "md",
             Self::TodoText => "txt",
             Self::Ics | Self::Calendar | Self::CalendarReminder | Self::CalendarReminder30 | Self::CalendarReminder60 => "ics",
@@ -82,6 +84,7 @@ impl MeetingExportFormat {
             Self::Txt => "Plain text",
             Self::Json => "JSON",
             Self::Srt => "SubRip subtitles",
+            Self::Xlsx => "Excel 工作簿",
             Self::Todo => "待办清单 Markdown",
             Self::TodoText => "待办清单普通文本",
             Self::Ics => "iCalendar 待办事项",
@@ -143,7 +146,7 @@ fn minutes_variant_for_mode<'a>(
     }
 }
 
-fn saved_minutes_markdown_for_mode(
+pub(super) fn saved_minutes_markdown_for_mode(
     session: &CompanionV1HostSession,
     meeting_mode: &str,
 ) -> Result<String, String> {
@@ -202,7 +205,7 @@ fn session_has_final_transcript(session: &CompanionV1HostSession) -> bool {
     transcript_review::final_transcript_available(session)
 }
 
-fn require_final_transcript(session: &CompanionV1HostSession) -> Result<(), String> {
+pub(super) fn require_final_transcript(session: &CompanionV1HostSession) -> Result<(), String> {
     if !session_has_final_transcript(session) {
         return Err("会议文字尚未整理完成，暂时不能导出".to_string());
     }
@@ -284,7 +287,7 @@ fn pdf_source(session:&CompanionV1HostSession,mode:&str,sections:&PdfSections)->
     if parts.is_empty(){return Err("所选内容为空，请选择其他内容。".into());}
     Ok(parts.join("\n\n"))
 }
-fn pdf_time(ms:u64)->String {format!("{:02}:{:02}:{:02}",ms/3_600_000,(ms/60_000)%60,(ms/1_000)%60)}
+pub(super) fn pdf_time(ms:u64)->String {format!("{:02}:{:02}:{:02}",ms/3_600_000,(ms/60_000)%60,(ms/1_000)%60)}
 
 pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_mode:&str,format:MeetingExportFormat,calendar_reminders:Option<&[CalendarReminderSelection]>,calendar_slots:Option<&[CalendarSlotSelection]>,pdf_sections:Option<&PdfSections>)->Result<PreparedMeetingExport,String>{
     if pdf_sections.is_some() && format!=MeetingExportFormat::Pdf {return Err("内容选择只适用于 PDF 导出。".into());}
@@ -352,7 +355,7 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
             }
         }
         MeetingExportFormat::Pdf => pdf_source(session,meeting_mode,pdf_sections.unwrap_or(&PdfSections::default()))?,
-        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
+        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Xlsx => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
         MeetingExportFormat::Txt => {
             if session.bookmarks.is_empty() && session.meeting_notes.is_empty() { require_final_transcript(session)?; }
             render_txt(session)
@@ -380,7 +383,7 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
     };
     let file_stem = safe_file_stem(&session.title, &session.id);
     let purpose = match format {
-        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Pdf => "整理结果",
+        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Pdf | MeetingExportFormat::Xlsx => "整理结果",
         MeetingExportFormat::Txt => "文字与补充",
         MeetingExportFormat::Json => "完整资料",
         MeetingExportFormat::Srt => "字幕",
@@ -397,6 +400,7 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
     Ok(PreparedMeetingExport {
         bytes: match format {
             MeetingExportFormat::Docx => super::meeting_document_export::word(&session.title, &content)?,
+            MeetingExportFormat::Xlsx => super::spreadsheet_export::render(&session.title,&content)?,
             MeetingExportFormat::Mindmap => super::meeting_document_export::mindmap(&session.title, &content),
             _ => content.into_bytes(),
         },
@@ -613,7 +617,7 @@ pub fn render_txt(session: &CompanionV1HostSession) -> String {
     format!("# {title}\n\n{pending}{notice}{}{}{}", transcript_review::effective_text(session),render_bookmarks(session),super::meeting_notes::render(session))
 }
 
-fn render_bookmarks(session:&CompanionV1HostSession)->String {
+pub(super) fn render_bookmarks(session:&CompanionV1HostSession)->String {
     if session.bookmarks.is_empty() { return String::new(); }
     let mut text="\n\n## 用户重点\n\n".to_string();
     for point in &session.bookmarks {

@@ -300,6 +300,7 @@ pub enum CompanionMeetingExportFormat {
     Txt,
     Json,
     Srt,
+    Xlsx,
     Todo,
     #[serde(rename = "todotxt")]
     TodoText,
@@ -320,6 +321,7 @@ impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExpor
             CompanionMeetingExportFormat::Txt => Self::Txt,
             CompanionMeetingExportFormat::Json => Self::Json,
             CompanionMeetingExportFormat::Srt => Self::Srt,
+            CompanionMeetingExportFormat::Xlsx => Self::Xlsx,
             CompanionMeetingExportFormat::Todo => Self::Todo,
             CompanionMeetingExportFormat::TodoText => Self::TodoText,
             CompanionMeetingExportFormat::Ics => Self::Ics,
@@ -341,6 +343,8 @@ pub struct CompanionMeetingExportRequest {
     pub expected_content_hash: Option<String>,
     #[serde(default)]
     pub pdf_sections: Option<crate::backend::export::PdfSections>,
+    #[serde(default)]
+    pub content_sections: Option<crate::backend::content_export::Selection>,
     #[serde(default)]
     pub calendar_reminders: Option<Vec<crate::backend::export::CalendarReminderSelection>>,
     #[serde(default)]
@@ -664,15 +668,18 @@ pub async fn export_companion_audio(
     app: AppHandle,
     coordinator: CompanionCoordinatorState<'_>,
     session_id: String,
+    format: Option<String>,
 ) -> Result<Option<CompanionMeetingExportResult>, String> {
+    let mp3=match format.as_deref(){None|Some("original")=>false,Some("mp3")=>true,_=>return Err("不支持的音频导出格式。".into())};
     let lease = coordinator.begin_audio_export()?;
     let (original, name) = crate::backend::audio_export::source(&coordinator.snapshot()?, &session_id)?;
     let chooser=app.dialog().file();
     let meeting=matches!(&original,crate::backend::audio_export::AudioSource::Meeting{..});
-    let extension=original.extension()?;
-    let chooser=if extension=="zip" {chooser.add_filter(if meeting {"会议分轨 ZIP"} else {"分段原音 ZIP"}, &["zip"])}
+    let extension=if mp3{"mp3"}else{original.extension()?};
+    let chooser=if mp3 {chooser.add_filter("MP3 音频（有损转换）", &["mp3"])} else if extension=="zip" {chooser.add_filter(if meeting {"会议分轨 ZIP"} else {"分段原音 ZIP"}, &["zip"])}
         else if matches!(&original,crate::backend::audio_export::AudioSource::Imported(_)) {chooser.add_filter("导入的原文件", &[extension])}
         else {chooser.add_filter(if meeting {"会议混合录音 WAV"} else {"原始录音 WAV"}, &["wav"])};
+    let name=if mp3{format!("{}-兼容音频.mp3",std::path::Path::new(&name).file_stem().and_then(|x|x.to_str()).unwrap_or("Companion"))}else{name};
     let destination = chooser.set_file_name(&name).blocking_save_file();
     let Some(destination) = destination else { return Ok(None); };
     let destination = destination.simplified().into_path().map_err(|e| e.to_string())?;
@@ -682,9 +689,10 @@ pub async fn export_companion_audio(
         return Err("这场会议的原音已变化，请重新选择保存。".into());
     }
     let path = destination.clone();
+    let cache=app.path().app_cache_dir().map_err(|_|"无法读取音频缓存目录。")?.join("audio-export");
     let bytes = tauri::async_runtime::spawn_blocking(move || {
         let _lease = lease;
-        crate::backend::audio_export::export(&snapshot, &session_id, &path)
+        if mp3{crate::backend::mp3_export::export(&snapshot,&session_id,&path,&cache)}else{crate::backend::audio_export::export(&snapshot, &session_id, &path)}
     }).await.map_err(|e| format!("原音保存任务未完成：{e}"))??;
     Ok(Some(CompanionMeetingExportResult { path: destination.to_string_lossy().into(), bytes, warning: None,calendar_open_token:None,calendar_file_uri:None }))
 }
@@ -700,6 +708,15 @@ pub struct CompanionMeetingExportPreview {
     pub calendar_items: Option<Vec<crate::backend::export::CalendarPreviewItem>>,
 }
 
+pub(crate) fn prepare_requested_export(session:&crate::companion_v1::CompanionV1HostSession,request:&CompanionMeetingExportRequest)->Result<crate::backend::export::PreparedMeetingExport,String>{
+    if let Some(choice)=&request.content_sections {
+        if request.pdf_sections.is_some()||request.calendar_reminders.is_some()||request.calendar_slots.is_some()||request.calendar_save_token.is_some()||request.calendar_saved_name {
+            return Err("内容选择不能与其他导出选项混用，请重新选择。".into());
+        }
+        crate::backend::content_export::prepare(session,&request.meeting_mode,request.format.into(),choice)
+    }else{crate::backend::export::prepare_meeting_export_selected(session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref(),request.pdf_sections.as_ref())}
+}
+
 /// Same saved-source checks and calendar parser as export; no file dialog,
 /// disk write, exported marker, device access or provider request.
 #[tauri::command]
@@ -712,13 +729,63 @@ pub fn preview_companion_meeting_export(
         .ok_or("找不到要导出的记录，请刷新后重试。")?;
     let plain_checklist=matches!(&request.format,CompanionMeetingExportFormat::TodoText);
     let copyable=matches!(&request.format,CompanionMeetingExportFormat::Todo);
-    let prepared=crate::backend::export::prepare_meeting_export_selected(session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref(),request.pdf_sections.as_ref())?;
-    let text_content=if matches!(&request.format,CompanionMeetingExportFormat::Pdf) {
+    let prepared=prepare_requested_export(session,&request)?;
+    let text_content=if let Some(choice)=&request.content_sections {
+        Some(crate::backend::content_export::source(session,&request.meeting_mode,choice)?)
+    } else if matches!(&request.format,CompanionMeetingExportFormat::Pdf) {
         Some(std::str::from_utf8(&prepared.bytes).map_err(|_|"PDF 内容无法读取，请保留已保存内容。")?.to_owned())
     } else if plain_checklist {
         Some(std::str::from_utf8(&prepared.bytes).map_err(|_|"清单文字无法读取，请保留已保存内容。")?.to_owned())
     } else if copyable {Some(crate::backend::export::checklist_copy_text(&prepared)?)} else {None};
     Ok(CompanionMeetingExportPreview{content_hash:crate::backend::export::content_hash(&prepared),warning:prepared.warning,text_content,calendar_items:prepared.calendar_items})
+}
+
+#[derive(Clone,Debug,Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct ContentHandoffResult {pub status:String,pub file_name:Option<String>,pub bytes:u64}
+
+fn checked_content_handoff(coordinator:&crate::backend::CompanionCoordinator,request:&CompanionMeetingExportRequest)->Result<(crate::companion_v1::CompanionV1HostSession,crate::backend::export::PreparedMeetingExport),String>{
+    if request.content_sections.is_none()||request.expected_content_hash.as_ref().is_none_or(|hash|hash.len()!=64||!hash.bytes().all(|b|b.is_ascii_hexdigit())){return Err("请先核对所选内容，再复制或分享。".into());}
+    let snapshot=coordinator.snapshot()?;
+    let row=snapshot.host.sessions.iter().find(|row|row.id==request.session_id).ok_or("原会议已不存在，请重新选择。")?.clone();
+    let prepared=prepare_requested_export(&row,request)?;
+    crate::backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
+    Ok((row,prepared))
+}
+
+#[tauri::command]
+pub fn copy_companion_meeting_content(window:tauri::Window,coordinator:CompanionCoordinatorState<'_>,request:CompanionMeetingExportRequest)->Result<ContentHandoffResult,String>{
+    let (row,_)=checked_content_handoff(&coordinator,&request)?;
+    let text=crate::backend::content_export::source(&row,&request.meeting_mode,request.content_sections.as_ref().unwrap())?;
+    #[cfg(windows)]let owner=window.hwnd().map_err(|_|"窗口已关闭，请重新打开记录。")?.0 as usize;
+    #[cfg(not(windows))]let owner={let _=window;0};
+    crate::content_handoff::write_clipboard(owner,&text)?;
+    Ok(ContentHandoffResult{status:"copied".into(),file_name:None,bytes:text.len() as u64})
+}
+
+#[tauri::command]
+pub async fn share_companion_meeting_content(app:AppHandle,window:tauri::Window,coordinator:CompanionCoordinatorState<'_>,request:CompanionMeetingExportRequest)->Result<ContentHandoffResult,String>{
+    let (row,prepared)=checked_content_handoff(&coordinator,&request)?;
+    let title=row.title.clone();let name=prepared.suggested_name.clone();
+    let cache=app.path().app_cache_dir().map_err(|_|"无法准备本机分享文件，请改用保存。")?.join("content-share");
+    let path=tauri::async_runtime::spawn_blocking(move||{
+        let bytes=crate::backend::content_export::materialize(&title,prepared)?;
+        crate::content_handoff::prepare_shared_file(&cache,&name,&bytes)
+    }).await.map_err(|_|"分享文件准备未完成，请重试。")??;
+    checked_content_handoff(&coordinator,&request)?;
+    let bytes=std::fs::metadata(&path).map_err(|_|"分享文件已不可用。")?.len();
+    let name=path.file_name().and_then(|n|n.to_str()).unwrap_or("Companion").to_owned();
+    #[cfg(windows)]{
+        let file=crate::content_handoff::ShareFile{path,title:row.title};
+        let package=tauri::async_runtime::spawn_blocking(move||crate::content_handoff::prepare_share(file)).await.map_err(|_|"分享准备未完成。")??;
+        checked_content_handoff(&coordinator,&request)?;
+        let owner=window.hwnd().map_err(|_|"窗口已关闭，未打开分享面板。")?.0 as usize;
+        let (send,receive)=tokio::sync::oneshot::channel();
+        app.run_on_main_thread(move||{let _=send.send(crate::content_handoff::open_share(owner,package));}).map_err(|_|"窗口已关闭，未打开分享面板。")?;
+        receive.await.map_err(|_|"分享面板未打开，请改用保存。")??;
+        return Ok(ContentHandoffResult{status:"opened".into(),file_name:Some(name),bytes});
+    }
+    #[cfg(not(windows))]{let _=(window,bytes,name);Err("当前系统不支持Windows分享面板，请保存后自行分享。".into())}
 }
 
 #[tauri::command]
@@ -737,16 +804,11 @@ pub async fn export_companion_meeting(
         .cloned()
         .ok_or_else(|| format!("meeting export target {} is missing", request.session_id))?;
     let format: crate::backend::export::MeetingExportFormat = request.format.into();
-    let prepared = crate::backend::export::prepare_meeting_export_selected(
-        &session,
-        &request.meeting_mode,
-        format,
-        request.calendar_reminders.as_deref(),
-        request.calendar_slots.as_deref(),
-        request.pdf_sections.as_ref(),
-    )?;
+    let prepared = prepare_requested_export(&session,&request)?;
 
     crate::backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
+    let mut request=request;
+    if request.content_sections.is_some(){request.expected_content_hash=Some(crate::backend::export::content_hash(&prepared));}
 
     // The snapshot/session clone above deliberately releases backend state
     // before opening the native dialog or performing disk I/O.
@@ -778,7 +840,7 @@ pub async fn export_companion_meeting(
         let current=coordinator.snapshot()?;
         let session=current.host.sessions.iter().find(|row|row.id==request.session_id)
             .ok_or("找不到要导出的记录，请刷新后重试。")?;
-        let latest=crate::backend::export::prepare_meeting_export_selected(session,&request.meeting_mode,format,request.calendar_reminders.as_deref(),request.calendar_slots.as_deref(),request.pdf_sections.as_ref())?;
+        let latest=prepare_requested_export(session,&request)?;
         crate::backend::export::require_unchanged(&latest,Some(expected))?;
     }
     // The hint never bypasses the public Save As/overwrite confirmation. A

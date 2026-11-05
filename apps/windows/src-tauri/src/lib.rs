@@ -6,6 +6,7 @@
 mod backend;
 mod cli_fallback;
 mod commands;
+mod content_handoff;
 mod calendar_handoff;
 mod close_review;
 mod cache_updates;
@@ -340,6 +341,8 @@ pub fn run() {
             commands::repair_companion_recording_sync_settings,
             commands::discard_oldest_companion_recording,
             commands::export_companion_meeting,
+            commands::copy_companion_meeting_content,
+            commands::share_companion_meeting_content,
             calendar_handoff::open_companion_saved_calendar,
             commands::preview_companion_meeting_export,
             commands::export_companion_audio,
@@ -456,9 +459,7 @@ fn prepare_headless_meeting_export(
     if (request.calendar_reminders.is_some() || request.calendar_slots.is_some()) && request.expected_content_hash.is_none() {
         return Err("请先核对本次逐项提醒和执行时段，再保存日历文件。".into());
     }
-    let prepared=backend::export::prepare_meeting_export_selected(
-        session,&request.meeting_mode,request.format.into(),request.calendar_reminders.as_deref(),request.calendar_slots.as_deref(),request.pdf_sections.as_ref()
-    )?;
+    let prepared=commands::prepare_requested_export(session,request)?;
     backend::export::require_unchanged(&prepared,request.expected_content_hash.as_deref())?;
     Ok(prepared)
 }
