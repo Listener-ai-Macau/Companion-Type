@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-05T22:25:58+08:00",
+  "state": "AUDIO_RANGE_RESTORE_FAILURE_RETAINED",
+  "pid": 1144,
+  "cases": [],
+  "finalHoldoutPayloadExtracted": false,
+  "modelLoaded": false,
+  "workers": 4,
+  "activeMeeting": "S_R004S03C01",
+  "expectedBytes": 235113956,
+  "reusedPrefixBytes": 73400320,
+  "downloadedBytes": 235113956,
+  "error": "AssertionError('Recovered mono is not byte-identical to pre-cleanup audio')",
+  "finishedAt": "2026-11-05T22:30:31+08:00",
+  "wallSeconds": 273.494
+}

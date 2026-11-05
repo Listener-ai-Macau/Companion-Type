@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-05T21:20:18+08:00",
+  "state": "PUBLISHED_PINNED_WEIGHTS_RESTORED_FULL_SHA_VERIFIED",
+  "pid": 15916,
+  "expectedBytes": 1817113576,
+  "reusedPrefixBytes": 62914560,
+  "downloadedBytes": 1817113576,
+  "completedRanges": 210,
+  "downloadWorkers": 6,
+  "bufferBytesPerWorker": 1048576,
+  "modelLoaded": false,
+  "systemMemoryStart": 921853952,
+  "failures": [],
+  "availableSystemMemory": 5602537472,
+  "sha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "bytes": 1817113576,
+  "finishedAt": "2026-11-05T22:07:35+08:00",
+  "wallSeconds": 2837.74,
+  "systemMemoryEnd": 5556301824
+}

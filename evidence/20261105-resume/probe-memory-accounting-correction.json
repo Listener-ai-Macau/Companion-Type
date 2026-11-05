@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-05T22:38:52+08:00",
+  "firstSupervisorRootOnlySamplingUnderReported": true,
+  "launcherPid": 18272,
+  "actualWorkerPid": 29492,
+  "authoritativeJobPeakPrivateCommitBytes": 741699584,
+  "reason": "Windows venv launcher created the actual worker child; root-only sampled RSS/private is not the model family. Use worker Windows-job peak; do not rerun a passed GPU operation to replace the receipt."
+}

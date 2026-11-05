@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-05T21:05:30+08:00",
+  "step": "runtime",
+  "state": "INSTALLING_ISOLATED_RUNTIME",
+  "speechModelLoaded": false,
+  "modelRevision": "10304d926740cf5a5cee05a268086e3265197910",
+  "officialSourceCommit": "79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "referenceOpened": false,
+  "ownerAppsChanged": false,
+  "activeStep": "install-amd-torch",
+  "ownedInstallerPid": 1568,
+  "steps": [
+    {
+      "step": "create-runtime",
+      "exitCode": 0,
+      "seconds": 11.903
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-05T22:25:05+08:00",
+  "state": "LOCAL_WHEEL_RUNTIME_FAILURE_RETAINED",
+  "modelLoaded": false,
+  "steps": [
+    {
+      "step": "install-amd-torch-r3",
+      "seconds": 362.48,
+      "exitCode": 0
+    },
+    {
+      "step": "install-model-frontend-r3",
+      "seconds": 14.204,
+      "exitCode": 1
+    }
+  ],
+  "pid": 12324,
+  "activeStep": "install-model-frontend-r3",
+  "ownedInstallerPid": 8688,
+  "error": "AssertionError(('install-model-frontend-r3', 1))",
+  "finishedAt": "2026-11-05T22:31:22+08:00",
+  "wallSeconds": 376.689
+}

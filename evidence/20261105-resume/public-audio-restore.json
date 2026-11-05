@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-05T21:15:16+08:00",
+  "state": "PUBLIC_AUDIO_RESTORE_FAILURE_RETAINED",
+  "dataset": "AISHELL/AISHELL-4",
+  "mirrorRevision": "aada72727856313b19d4a030383c426364931dbf",
+  "referencePassedToInference": false,
+  "finalHoldoutPayloadExtracted": false,
+  "modelLoaded": false,
+  "cases": [],
+  "license": "Upstream OpenSLR111 CC BY-SA4.0 retained; HF metadata Apache2 is inconsistent and not used to relicense upstream data.",
+  "error": "AssertionError()",
+  "finishedAt": "2026-11-05T21:15:16+08:00",
+  "wallSeconds": 0.011
+}

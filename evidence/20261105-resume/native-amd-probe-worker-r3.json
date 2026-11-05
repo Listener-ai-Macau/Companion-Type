@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-05T22:33:58+08:00",
+  "state": "NATIVE_RX6800XT_FP32_BF16_TINY_GPU_OPERATORS_PASSED_MODEL_UNTESTED",
+  "speechModelLoaded": false,
+  "trainingRun": false,
+  "resourceLimits": {
+    "pid": 29492,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 10248192,
+    "cpuPriorityClass": 64,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "hipVersion": "7.15.26333",
+  "devices": [
+    {
+      "index": 0,
+      "name": "AMD Radeon 780M Graphics",
+      "architecture": "gfx1103",
+      "reportedMemoryBytes": 9875259392
+    },
+    {
+      "index": 1,
+      "name": "AMD Radeon RX 6800 XT",
+      "architecture": "gfx1030",
+      "reportedMemoryBytes": 17163091968
+    }
+  ],
+  "chosen": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "reportedMemoryBytes": 17163091968
+  },
+  "checks": [
+    {
+      "dtype": "torch.float32",
+      "shape": [
+        64,
+        64
+      ],
+      "knownExactResult": 64,
+      "seconds": 2.465474099997664
+    },
+    {
+      "dtype": "torch.bfloat16",
+      "shape": [
+        64,
+        64
+      ],
+      "knownExactResult": 64,
+      "seconds": 0.018434400000842288
+    }
+  ],
+  "limitsAfterGpu": {
+    "pid": 29492,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 741699584,
+    "cpuPriorityClass": 64,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpuPeakAllocatedBytes": 33591808,
+  "gpuPeakReservedBytes": 35651584,
+  "finishedAt": "2026-11-05T22:34:05+08:00",
+  "wallSeconds": 7.403894699993543
+}

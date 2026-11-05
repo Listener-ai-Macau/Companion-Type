@@ -1,0 +1,55 @@
+{
+  "at": "2026-11-05T21:28:56+08:00",
+  "state": "AMD_RUNTIME_RESTORE_FAILURE_RETAINED",
+  "pid": 31412,
+  "modelLoaded": false,
+  "retainedFirstInstallerExit": "Original installer and parent disappeared without a final receipt; cause unknown, preserve logs/partials. Not a model failure.",
+  "wheels": [
+    {
+      "file": "torch-2.11.0+rocm10.0.0-cp311-cp311-win_amd64.whl",
+      "sha256": "43e5a55bd657580918b01079911663e95c290bb713b1ea67a64733e00acbb6e6",
+      "bytes": 114056398,
+      "origin": "Completed official AMD-index wheel retained from first pip attempt"
+    },
+    {
+      "file": "amd_torch_device_gfx1030-2.11.0+rocm10.0.0-cp311-cp311-win_amd64.whl",
+      "sha256": "f7522ad9ff8ad41f9793bf3f6c79cf4e5f00b1f0ddfa70a74348b1ce55f86b08",
+      "bytes": 45365059,
+      "origin": "Completed official AMD-index wheel retained from first pip attempt"
+    },
+    {
+      "file": "rocm_sdk_device_gfx1030-10.0.0-py3-none-win_amd64.whl",
+      "sha256": "19ada0359b499c19c1ecb1cba21b067fce89b4f0b0de6f0f7b76cbef85dcb85b",
+      "bytes": 52153384,
+      "origin": "Completed official AMD-index wheel retained from first pip attempt"
+    },
+    {
+      "file": "networkx-3.7-py3-none-any.whl",
+      "sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0",
+      "bytes": 2142205,
+      "origin": "Completed official AMD-index wheel retained from first pip attempt"
+    },
+    {
+      "file": "rocm_sdk_core-10.0.0-py3-none-win_amd64.whl",
+      "bytes": 758050981,
+      "sha256": "066195cb0f7df02e6009facb17652dd992d13fae44d87652e5ab928d5b4f0851",
+      "origin": "Official pinned AMD HTTPS object, exact ranges plus complete ZIP CRC checked; SHA locally observed, no published SHA claimed."
+    }
+  ],
+  "reusedPrefixBytes": 286218240,
+  "downloadedCoreBytes": 758050981,
+  "expectedCoreBytes": 758050981,
+  "workers": 4,
+  "activeStep": "install-amd-torch-r2",
+  "ownedInstallerPid": 29864,
+  "steps": [
+    {
+      "step": "install-amd-torch-r2",
+      "exitCode": 1,
+      "seconds": 1230.142
+    }
+  ],
+  "error": "AssertionError(('install-amd-torch-r2', 1))",
+  "finishedAt": "2026-11-05T22:03:01+08:00",
+  "wallSeconds": 2044.591
+}

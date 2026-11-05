@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-05T20:43:34+08:00",
+  "adapters": [
+    {
+      "name": "AMD Radeon RX 6800 XT",
+      "vendorId": "0x1002",
+      "dedicatedVideoGB": 15.95,
+      "sharedSystemGB": 11.6,
+      "softwareAdapter": false
+    },
+    {
+      "name": "AMD Radeon 780M Graphics",
+      "vendorId": "0x1002",
+      "dedicatedVideoGB": 0.4,
+      "sharedSystemGB": 11.6,
+      "softwareAdapter": false
+    },
+    {
+      "name": "Microsoft Basic Render Driver",
+      "vendorId": "0x1414",
+      "dedicatedVideoGB": 0.0,
+      "sharedSystemGB": 11.6,
+      "softwareAdapter": true
+    }
+  ],
+  "systemAvailableGB": 1.4,
+  "readOnlyEnumeration": true,
+  "modelLoaded": false,
+  "driverChanged": false
+}

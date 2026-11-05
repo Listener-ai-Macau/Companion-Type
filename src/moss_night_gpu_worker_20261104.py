@@ -83,6 +83,14 @@ try:
         # Restore the author's actual EOS/pad/bos settings, not generic defaults.
         model.generation_config=transformers.GenerationConfig.from_pretrained(assets/'model',local_files_only=True)
         state['publishedGenerationConfigRestored']=True
+    # Record the actual projection width; never assume a long prefix emits
+    # only last-token logits when investigating WDDM/system-memory pressure.
+    def observe_projection(module, values):
+        width=int(values[0].shape[-2])
+        if 'firstProjectionTokenCount' not in state:
+            state['firstProjectionTokenCount']=width
+        state['maximumProjectionTokenCount']=max(width,state.get('maximumProjectionTokenCount',0))
+    model.lm_head.register_forward_pre_hook(observe_projection)
     state['directGpuWeightLoading']=bool(load_options)
     state['deviceMap']={str(k):str(v) for k,v in getattr(model,'hf_device_map',{}).items()}
     torch.cuda.synchronize(device)
