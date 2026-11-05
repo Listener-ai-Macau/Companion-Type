@@ -1,3 +1,4 @@
+import {ContentExportPanel} from './ContentExportPanel';
 import { cleanHesitations } from './transcriptReading';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {readRestoredCustomTemplates} from './customTemplateBackup';
@@ -191,8 +192,9 @@ export type CompanionBoardOnlineLiveUiStatus = {
 export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
-  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'xlsx' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   pdfSections?: {minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean};
+  contentSections?: import('./ContentExportPanel').ContentSelection;
   expectedContentHash?:string;
   calendarReminders?:CalendarReminderChoice['calendarReminders'];
   calendarSlots?:CalendarReminderChoice['calendarSlots'];
@@ -253,6 +255,8 @@ export interface CompanionDashboardProps {
   onOpenSavedCalendar?: OpenSavedCalendar;
   onExportMeeting?: (request: CompanionMeetingExportRequest) => Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string;calendarFileUri?:string } | null>;
   onPreviewMeetingExport?:(request:CompanionMeetingExportRequest)=>Promise<{contentHash:string;warning?:string|null;textContent?:string|null;calendarItems?:CalendarExportItem[]|null}>;
+  onCopyMeetingContent?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
+  onShareMeetingContent?:(request:CompanionMeetingExportRequest)=>Promise<{status:string;fileName?:string|null;bytes:number}>;
   onPreviewDiagnostics?:()=>Promise<unknown>;
   onExportDiagnostics?: (includeDevice: boolean) => Promise<{path:string;bytes:number;warning?:string|null}|null>;
   onPrepareAudioComponents?: () => Promise<void>;
@@ -260,7 +264,8 @@ export interface CompanionDashboardProps {
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
   onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>;
-  onExportAudio?: (sessionId: string) => Promise<{ path: string; bytes: number } | null>;
+  onExportAudio?: (sessionId: string,format?:'original'|'mp3') => Promise<{ path: string; bytes: number } | null>;
+  onShareAudio?: (sessionId:string,format?:'original'|'mp3')=>Promise<{status:string;fileName?:string|null;bytes:number}>;
   onImportAudio?: () => Promise<CompanionV1Snapshot | null>;
   onCancelImportAudio?: () => Promise<boolean>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
@@ -417,7 +422,7 @@ export function CompanionDashboard({
   onStartBoardOnlineLive,
   onStopBoardOnlineLive,
   onSaveProductSettings,
-  onExportMeeting, onOpenSavedCalendar,
+  onExportMeeting, onOpenSavedCalendar, onCopyMeetingContent, onShareMeetingContent,
   onPreviewMeetingExport,
   onExportDiagnostics,
   onPreviewDiagnostics,
@@ -427,7 +432,7 @@ export function CompanionDashboard({
   onPrepareLocalAsr,
   onCheckService,
   onPrepareAudio,
-  onExportAudio,
+  onExportAudio, onShareAudio,
   onImportAudio,
   onCancelImportAudio,
   onDiscardOldestRecording,
@@ -563,11 +568,9 @@ export function CompanionDashboard({
     catch {setTemplateSaveError(true);}
   };
   const [calendarSaveTargets,setCalendarSaveTargets]=useState<Record<string,{token:string;name:string}>>({});
-  const [pdfSections,setPdfSections]=useState({minutes:true,transcript:false,highlights:true,timeline:false});
+  const [audioExportFormat,setAudioExportFormat]=useState<'original'|'mp3'>('original');
+  const [pdfSections]=useState({minutes:true,transcript:false,highlights:true,timeline:false});
   const [pdfPreview,setPdfPreview]=useState<{key:string;text?:string;hash?:string;error?:string;pending?:boolean}|null>(null);
-  const [selectedCopy,setSelectedCopy]=useState<{key:string;kind:'pending'|'copied'|'ready'|'error';message:string;text?:string}|null>(null);
-  const selectedCopyMounted=useRef(true);
-  useEffect(()=>{selectedCopyMounted.current=true;return()=>{selectedCopyMounted.current=false;};},[]);
   const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; calendarOpenToken?:string;calendarFileUri?:string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
@@ -1282,49 +1285,6 @@ export function CompanionDashboard({
     try{return await task.result;}
     finally{if(previewTask.current===task){previewTask.current=null;setPreviewWaiting(false);}}
   };
-  const previewPdf = async () => {
-    if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||!hasPdfContent)return;
-    const key=pdfPreviewKey;
-    if(titleDirty||transcriptReviewUnsaved||(selectedPdfSections.minutes&&minutesDirty)||
-       (selectedPdfSections.highlights&&(noteUnsaved||bookmarkUnsaved))) {
-      setPdfPreview({key,error:'所选内容有未保存的修改，请先保存或取消。'});return;
-    }
-    setPdfPreview({key,pending:true});
-    try {
-      const result=await readExportPreview({sessionId:selectedSession.id,meetingMode:minutesViewMode,format:'pdf',pdfSections:selectedPdfSections});
-      if(pdfPreviewKeyRef.current!==key)return;
-      if(!result.textContent||!/^[a-f0-9]{64}$/.test(result.contentHash))throw new Error('无法读取已保存内容。');
-      setPdfPreview({key,text:result.textContent,hash:result.contentHash});
-    }catch(error){if(pdfPreviewKeyRef.current===key)setPdfPreview({key,error:error instanceof Error?error.message:'预览未完成，请重试。'});}
-  };
-  const copySelectedContent = async () => {
-    if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||!hasPdfContent||exportActive.current||previewWaiting)return;
-    const key=pdfPreviewKey;
-    const current=()=>selectedCopyMounted.current&&pdfPreviewKeyRef.current===key;
-    if(titleDirty||transcriptReviewUnsaved||(selectedPdfSections.minutes&&minutesDirty)||
-        (selectedPdfSections.highlights&&(noteUnsaved||bookmarkUnsaved))) {
-      setSelectedCopy({key,kind:'error',message:'所选内容有未保存的修改，请先保存或取消。'});return;
-    }
-    exportActive.current=true;
-    setSelectedCopy({key,kind:'pending',message:'正在准备所选内容…'});
-    try {
-      // The native read uses the same saved-source selection as the PDF. Never
-      // copy a rendered excerpt, unsaved editor, or a previously cached preview.
-      const preview=await readExportPreview({sessionId:selectedSession.id,meetingMode:minutesViewMode,format:'pdf',pdfSections:selectedPdfSections});
-      if(!current())return;
-      if(!/^[a-f0-9]{64}$/.test(preview.contentHash)||typeof preview.textContent!=='string'||!preview.textContent.trim())throw Error('没有可复制的已保存内容。');
-      const text=preview.textContent;
-      try {
-        if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');
-        await navigator.clipboard.writeText(text);
-        if(current())setSelectedCopy({key,kind:'copied',message:'已复制所选内容，可粘贴到常用应用。'});
-      } catch {
-        if(current())setSelectedCopy({key,kind:'ready',text,message:'自动复制未完成。可选择下方文字后复制。'});
-      }
-    } catch(error) {
-      if(current())setSelectedCopy({key,kind:'error',message:error instanceof SavedPreviewInterrupted?error.message:`复制未完成：${operationErrorText(error,'export')}`});
-    } finally {exportActive.current=false;if(selectedCopyMounted.current)setSelectedCopy(value=>value?.key===key&&value.kind==='pending'?null:value);}
-  };
   const copyChecklist = async () => {
     if(!selectedSession||!onPreviewMeetingExport||controlsBusy||oobeBlockedByRecording||exportActive.current||selectedMinutesStale||minutesIncomplete)return;
     const sessionId=selectedSession.id,sourceKey=copySourceKey;
@@ -1489,17 +1449,26 @@ export function CompanionDashboard({
     setCalendarExportReview(null);setRecordingResultOpen(true);setEditingMinutes(true);
     setCalendarEditRequest(index===undefined?null:`${selectedSession.id}:${minutesViewMode}:${++calendarEditSequence.current}`);
   };
-  const exportAudio = async () => {
+  const exportAudio = async (format:'original'|'mp3'='original') => {
     if (!selectedSession || !onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording || exportActive.current) return;
     const sessionId = selectedSession.id;
     exportActive.current = true; setExportBusy(true);
-    setExportResult({ sessionId, origin: 'audio', kind: 'pending', message: selectedSession.source === 'hostMeeting' ? '正在保存会议录音…' : '正在保存原音…' });
+    setExportResult({ sessionId, origin: 'audio', kind: 'pending', message: format==='mp3'?'正在生成并保存MP3副本…':selectedSession.source === 'hostMeeting' ? '正在保存会议录音…' : '正在保存原音…' });
     try {
-      const result = await onExportAudio(sessionId);
+      const result = await onExportAudio(sessionId,format);
       setExportResult({ sessionId, origin: 'audio', path: result?.path, kind: result ? 'saved' : 'cancelled', message: result ? `录音已保存：${exportFileName(result.path)}` : '已取消保存，原音保持不变。' });
     } catch (error) {
-      setExportResult({ sessionId, origin: 'audio', kind: 'error', message: `原音保存未完成：${operationErrorText(error,'export')}` });
+      setExportResult({ sessionId, origin: 'audio', kind: 'error', message: `${format==='mp3'?'MP3副本':'原音'}保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
+  };
+  const shareAudio=async()=>{
+    if(!selectedSession||!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording||exportActive.current)return;
+    const sessionId=selectedSession.id;exportActive.current=true;setExportBusy(true);
+    setExportResult({sessionId,origin:'audio',kind:'pending',message:'正在准备音频分享文件…'});
+    try{const result=await onShareAudio(sessionId,audioExportFormat);if(result.status!=='opened')throw Error('分享面板未打开。');
+      setExportResult({sessionId,origin:'audio',kind:'saved',message:'已打开Windows分享面板。请选择接收应用；是否发送以接收应用为准。'});
+    }catch(error){setExportResult({sessionId,origin:'audio',kind:'error',message:`分享未完成：${operationErrorText(error,'export')}`});}
+    finally{exportActive.current=false;setExportBusy(false);}
   };
   const changeCurrentLibraryState=async(action:'protect'|'unprotect'|'trash')=>{
     if(!selectedSession||!onSaveLibraryLifecycle||controlsBusy||oobeBlockedByRecording||storageBlocked||libraryUnsaved||exportActive.current)return;
@@ -2450,30 +2419,15 @@ export function CompanionDashboard({
             onControl={runOrganizationControl} onSettings={openSettings} onWorkflow={openWorkflow} /> : null}
             </details>
           </details> : null}
-          {hasMinutes||finalTranscript||hasPdfHighlights?<details className="ct-result-tools">
-            <summary>按内容复制与 PDF 导出</summary>
-            <p className="ct-step-meta">选择已保存的内容，复制后粘贴到常用应用，或保存为 PDF 分享。</p>
-            <div className="ct-button-row" aria-label="PDF 内容选择">
-              <label><input type="checkbox" checked={selectedPdfSections.minutes} disabled={controlsBusy||oobeBlockedByRecording||!hasMinutes} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,minutes:checked}));}}/>整理结果</label>
-              <label><input type="checkbox" checked={selectedPdfSections.transcript} disabled={controlsBusy||oobeBlockedByRecording||!finalTranscript} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,transcript:checked,timeline:checked?v.timeline:false}));}}/>录音文字</label>
-              <label><input type="checkbox" checked={selectedPdfSections.highlights} disabled={controlsBusy||oobeBlockedByRecording||!hasPdfHighlights} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,highlights:checked}));}}/>重点与补充</label>
-              <label><input type="checkbox" checked={selectedPdfSections.timeline} disabled={controlsBusy||oobeBlockedByRecording||!selectedPdfSections.transcript||!hasReviewedTiming} onChange={e=>{const checked=e.currentTarget.checked;setPdfSections(v=>({...v,timeline:checked}));}}/>分段时间与说话人</label>
-            </div>
-            <div className="ct-button-row">
-              <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onPreviewMeetingExport||!hasPdfContent||previewWaiting} onClick={()=>void previewPdf()}>预览所选内容</button>
-              <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||!onPreviewMeetingExport||!hasPdfContent||previewWaiting||(selectedCopy?.key===pdfPreviewKey&&selectedCopy.kind==='pending')} onClick={()=>void copySelectedContent()}>复制所选内容</button>
-              <button type="button" className="ct-action ct-action-primary" disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||!hasPdfContent}
-                onClick={()=>void exportMeeting('pdf','pdf',pdfPreview?.key===pdfPreviewKey?pdfPreview.hash:undefined)}>{exportBusy?'正在生成…':'保存 PDF…'}</button>
-            </div>
-            {pdfPreview?.key===pdfPreviewKey&&pdfPreview.pending?<p role="status">正在准备预览…</p>:null}
-            {pdfPreview?.key===pdfPreviewKey&&pdfPreview.error?<p role="alert" className="ct-step-warn">{pdfPreview.error}</p>:null}
-            {pdfPreview?.key===pdfPreviewKey&&pdfPreview.text?<div><strong>{meetingTitle(selectedSession)}</strong><pre aria-label="PDF 内容预览" style={{whiteSpace:'pre-wrap',maxHeight:300,overflow:'auto'}}>{pdfPreview.text}</pre></div>:null}
-            {selectedCopy?.key===pdfPreviewKey?<div aria-label="所选内容复制结果">
-              <p role={selectedCopy.kind==='error'?'alert':'status'} className={selectedCopy.kind==='error'?'ct-step-warn':'ct-step-meta'}>{selectedCopy.message}</p>
-              {selectedCopy.kind==='ready'&&selectedCopy.text?<textarea readOnly aria-label="手动复制所选内容" value={selectedCopy.text} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:160}}/>:null}
-            </div>:null}
-            {renderExportFeedback('pdf')}
-          </details>:null}
+          {hasMinutes||finalTranscript||hasPdfHighlights||selectedSession.meetingNotes?.length?<ContentExportPanel
+            key={`${selectedSession.id}:${minutesViewMode}`}
+            sessionId={selectedSession.id} meetingMode={minutesViewMode}
+            sourceVersion={JSON.stringify([copySourceKey,selectedSession.transcriptText,selectedSession.noteRevision,selectedSession.bookmarkRevision,selectedSession.transcriptReview?.revision,bookmarkUnsaved])}
+            minutes={hasMinutes} transcript={finalTranscript} highlights={Boolean(selectedSession.bookmarks?.length)} timing={hasReviewedTiming}
+            exactTiming={Boolean(finalTranscript&&companionReviewedUtterances(selectedSession).length&&!companionReviewedUtterances(selectedSession).some(row=>row.approximateTiming||row.endMs<=row.startMs))}
+            notes={selectedSession.meetingNotes??[]} blocked={controlsBusy||oobeBlockedByRecording}
+            unsaved={{title:titleDirty,minutes:minutesDirty,transcript:transcriptReviewUnsaved,highlights:bookmarkUnsaved,notes:noteUnsaved}}
+            onPreview={onPreviewMeetingExport} onSave={onExportMeeting} onCopy={onCopyMeetingContent} onShare={onShareMeetingContent}/>:null}
           <section className="ct-recording-text" aria-label="录音文字">
             {selectedUnrecognized.length ? <div className="ct-step-warn">
               <p role="status">{selectedUnrecognized.some(part=>part.source?.includes('转写失败'))
@@ -2688,8 +2642,10 @@ export function CompanionDashboard({
             <summary>更多{titleDirty||minutesDirty||bookmarkUnsaved||noteUnsaved?' · 有未保存的修改':''}</summary>
             {savedOriginalReady ? <RecordingSafetyCard session={selectedSession} persistence={snapshot?.host.persistence} recoveryProcessing={Boolean(recoveryView?.isProcessing)} /> : null}
             <div className="ct-recording-audio-export">
+            <label>音频格式 <select aria-label="音频副本格式" value={audioExportFormat} disabled={controlsBusy||oobeBlockedByRecording} onChange={e=>setAudioExportFormat(e.currentTarget.value as 'original'|'mp3')}><option value="original">原文件 / WAV / 分段ZIP</option><option value="mp3">MP3 兼容副本（有损）</option></select></label>
             <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
-              onClick={() => void exportAudio()}><Download size={15} />{selectedSession.source === 'hostMeeting' ? '保存会议录音' : '保存原音'}</button>
+              onClick={() => void exportAudio(audioExportFormat)}><Download size={15} />{audioExportFormat==='mp3'?'保存 MP3 副本':selectedSession.source === 'hostMeeting' ? '保存会议录音' : '保存原音'}</button>
+            <button type="button" className="ct-action" disabled={!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio()}>分享录音…</button>
             {renderExportFeedback('audio')}
             <p>{selectedSession.source === 'hostMeeting' ? '保存电脑声音与麦克风的混合录音；超出 WAV 格式容量时保存为包含两路分段原音的 ZIP。' : '保存整场原音到你选择的位置，可单独备份或使用其他播放器打开。超出 WAV 格式容量时会保存为包含分段原音的 ZIP。'}此副本由你自行保管，删除录音不会删除它。</p>
             </div>

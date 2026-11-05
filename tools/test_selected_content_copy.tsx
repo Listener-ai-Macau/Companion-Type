@@ -26,7 +26,7 @@ async function main(){
  const preview=(r:any):Promise<Preview>=>{
    requests.push(r);
    if(delayed)return delayed.promise;
-   return Promise.resolve({contentHash:'a'.repeat(64),textContent:r.pdfSections.transcript?'录音文字\n李明：11月8日前核对20%差额，尚未确认采购。':'会议纪要\n等待采购核对，不表示已批准。'});
+   return Promise.resolve({contentHash:'a'.repeat(64),textContent:r.contentSections.transcript?'录音文字\n李明：11月8日前核对20%差额，尚未确认采购。':'会议纪要\n等待采购核对，不表示已批准。'});
  };
  let tree:any;
  await act(async()=>{tree=create(<CompanionDashboard snapshot={snapshot} surface="windows" busyAction={null} error={null}
@@ -40,8 +40,8 @@ async function main(){
  await act(async()=>button('复制所选内容').props.onClick());
  assert.equal(copied.length,1);
  assert.equal(copied[0],'录音文字\n李明：11月8日前核对20%差额，尚未确认采购。');
- assert.deepEqual(requests.at(-1).pdfSections,{minutes:false,transcript:true,highlights:false,timeline:false});
- assert.match(text(tree.root.findByProps({'aria-label':'所选内容复制结果'})),/已复制所选内容/);
+ assert.deepEqual(requests.at(-1).contentSections,{minutes:false,transcript:true,highlights:false,timeline:false,noteIds:[]});
+ assert.match(text(tree.root.findByProps({'aria-label':'所选内容操作结果'})),/已复制所选内容/);
 
  // A source selection change while the native read is pending must not copy
  // the old result or show a success banner for the new selection.
@@ -51,7 +51,7 @@ async function main(){
  await act(async()=>delayed!.resolve({contentHash:'b'.repeat(64),textContent:'旧选择：不应进入剪贴板'}));
  delayed=null;
  assert.equal(copied.length,1);
- assert.equal(tree.root.findAllByProps({'aria-label':'所选内容复制结果'}).length,0);
+ assert.equal(tree.root.findAllByProps({'aria-label':'所选内容操作结果'}).length,0);
 
  // Clipboard denial still offers exactly the saved selected content, without
  // reporting success or exporting any file.
@@ -60,7 +60,7 @@ async function main(){
  const manual=tree.root.findByProps({'aria-label':'手动复制所选内容'});
  assert.equal(manual.props.value,'会议纪要\n等待采购核对，不表示已批准。');
  assert.equal(copied.length,1);
- assert.match(text(tree.root.findByProps({'aria-label':'所选内容复制结果'})),/自动复制未完成/);
+ assert.match(text(tree.root.findByProps({'aria-label':'所选内容操作结果'})),/自动复制未完成/);
  denyClipboard=false;
 
  // The existing stop-waiting action prevents any late native response from

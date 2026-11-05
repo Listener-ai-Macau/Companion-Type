@@ -20,13 +20,31 @@ pub fn write_clipboard(owner:usize,text:&str)->Result<(),String>{
     #[cfg(not(windows))]{let _=(owner,text);Err("当前系统不支持Windows剪贴板。".into())}
 }
 
-pub fn prepare_shared_file(directory:&Path,name:&str,bytes:&[u8])->Result<PathBuf,String>{
+pub fn reserve_shared_file(directory:&Path,name:&str)->Result<PathBuf,String>{
     let file_name=Path::new(name);
     if file_name.components().count()!=1||file_name.file_name().and_then(|s|s.to_str())!=Some(name){return Err("分享文件名无效。".into());}
     std::fs::create_dir_all(directory).map_err(|_|"无法准备本机分享文件，请改用保存。")?;
+    cleanup_expired(directory);
     let slot=directory.join(uuid::Uuid::new_v4().to_string());
     std::fs::create_dir(&slot).map_err(|_|"无法准备本机分享文件，请改用保存。")?;
-    let path=slot.join(name);
+    Ok(slot.join(name))
+}
+
+fn cleanup_expired(directory:&Path){
+    // Only bounded, UUID-named directories created by this cache; no recursive
+    // delete, symlink traversal, recording/library scan or current-file removal.
+    let Ok(entries)=std::fs::read_dir(directory)else{return};
+    for entry in entries.take(512).flatten(){
+        if uuid::Uuid::parse_str(&entry.file_name().to_string_lossy()).is_err()||!entry.file_type().is_ok_and(|t|t.is_dir()&&!t.is_symlink()){continue;}
+        let Ok(files)=std::fs::read_dir(entry.path())else{continue};let files=files.take(5).collect::<Result<Vec<_>,_>>();
+        let Ok(files)=files else{continue};if files.len()>4{continue;}
+        if !files.iter().all(|file|file.file_type().is_ok_and(|t|t.is_file()&&!t.is_symlink())&&file.metadata().ok().and_then(|m|m.modified().ok()).and_then(|t|t.elapsed().ok()).is_some_and(|age|age.as_secs()>7*24*3600)){continue;}
+        for file in files{let _=std::fs::remove_file(file.path());}let _=std::fs::remove_dir(entry.path());
+    }
+}
+pub fn prepare_shared_file(directory:&Path,name:&str,bytes:&[u8])->Result<PathBuf,String>{
+    let path=reserve_shared_file(directory,name)?;
+    let slot=path.parent().ok_or("分享位置无效。")?;
     if let Err(error)=crate::backend::export::write_atomic(&path,bytes){let _=std::fs::remove_dir(&slot);return Err(error);}
     Ok(path)
 }
@@ -92,6 +110,17 @@ mod native {
         assert!(prepare_shared_file(&root,"../escape.txt",b"no").is_err());
         let next=prepare_shared_file(&root,"会议-所选内容.txt",b"another").unwrap();assert_ne!(file,next);
         assert_eq!(std::fs::read(&file).unwrap(),"尚未确认采购".as_bytes());
+        std::fs::remove_dir_all(root).unwrap();
+    }
+    #[test]fn content051_expired_share_cleanup_keeps_recent_and_non_owned_files(){
+        let root=std::env::temp_dir().join(format!("content-cache-test-{}",uuid::Uuid::new_v4()));
+        let old=prepare_shared_file(&root,"old.txt",b"old").unwrap();
+        let recent=prepare_shared_file(&root,"recent.txt",b"recent").unwrap();
+        let foreign=root.join("not-a-share-uuid");std::fs::create_dir(&foreign).unwrap();let foreign=foreign.join("keep.txt");std::fs::write(&foreign,b"keep").unwrap();
+        let time=std::time::SystemTime::now()-std::time::Duration::from_secs(8*24*3600);
+        std::fs::OpenOptions::new().write(true).open(&old).unwrap().set_modified(time).unwrap();
+        std::fs::OpenOptions::new().write(true).open(&foreign).unwrap().set_modified(time).unwrap();
+        cleanup_expired(&root);assert!(!old.exists());assert!(recent.exists());assert!(foreign.exists());
         std::fs::remove_dir_all(root).unwrap();
     }
     #[cfg(windows)]#[test]fn content051_real_share_package_has_one_read_only_file_and_copy_operation(){

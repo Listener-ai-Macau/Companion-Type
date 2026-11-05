@@ -343,6 +343,7 @@ pub fn run() {
             commands::export_companion_meeting,
             commands::copy_companion_meeting_content,
             commands::share_companion_meeting_content,
+            commands::share_companion_audio,
             calendar_handoff::open_companion_saved_calendar,
             commands::preview_companion_meeting_export,
             commands::export_companion_audio,
@@ -381,6 +382,13 @@ pub fn run() {
             .title("Companion Type")
             .inner_size(980.0, 720.0)
             .min_inner_size(420.0, 560.0);
+
+            // Background integration checks must use an explicitly isolated
+            // library; ordinary launches retain the normal visible window.
+            if std::env::var("COMPANION_TYPE_BACKGROUND_WINDOW").as_deref()==Ok("1") {
+                if std::env::var_os("COMPANION_TYPE_STATE_PATH").is_none(){return Err("后台验证需要明确的独立资料库。".into());}
+                builder=builder.visible(false).focused(false);
+            }
 
             // Acceptance-test hook: only when COMPANION_TYPE_WEBVIEW_ARGS is set (e.g.
             // "--remote-debugging-port=9223"). wry overrides its default browser args when this

@@ -133,18 +133,14 @@ export async function previewCompanionMeetingExport(request: import('../../../pa
 import type {CalendarOpenResult} from '../../../packages/ui/src/CompanionExportFeedback';
 export const openCompanionSavedCalendar=(token:string,choiceId?:string,chooseApplication=false)=>invoke<CalendarOpenResult>('open_companion_saved_calendar',{token,choiceId:choiceId??null,chooseApplication});
 
-export async function exportCompanionMeeting(request: {
-  sessionId: string;
-  meetingMode: 'offlineStore' | 'onlineLive';
-  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
-  pdfSections?: {minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean};
-  expectedContentHash?:string;
-  calendarSaveToken?:string;
-  calendarSavedName?:boolean;
-}): Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string;calendarFileUri?:string } | null> {
+export async function exportCompanionMeeting(request: import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest): Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string;calendarFileUri?:string } | null> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中选择位置并保存会议文件。');
   return invoke('export_companion_meeting', { request });
 }
+
+export const shareCompanionAudio=(sessionId:string,format?:'original'|'mp3')=>invoke<{status:string;fileName?:string|null;bytes:number}>('share_companion_audio',{sessionId,format:format??'original'});
+export const copyCompanionMeetingContent=(request:import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest)=>invoke<{status:string}>('copy_companion_meeting_content',{request});
+export const shareCompanionMeetingContent=(request:import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest)=>invoke<{status:string;fileName?:string|null;bytes:number}>('share_companion_meeting_content',{request});
 
 export const importCompanionAudio = () => invoke<CompanionV1Snapshot | null>('import_companion_audio');
 export const cancelCompanionAudioImport = () => invoke<boolean>('cancel_companion_audio_import');
@@ -177,9 +173,9 @@ export async function prepareCompanionLocalAsr():Promise<void> {
   return invoke('prepare_companion_local_asr');
 }
 
-export async function exportCompanionAudio(sessionId: string): Promise<{path: string; bytes: number} | null> {
+export async function exportCompanionAudio(sessionId: string, format?:'original'|'mp3'): Promise<{path: string; bytes: number} | null> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中保存真实原音；浏览器演示不能导出录音。');
-  return invoke('export_companion_audio', { sessionId });
+  return invoke('export_companion_audio', { sessionId, format:format??'original' });
 }
 
 export async function checkCompanionService(service: 'asr' | 'minutes'): Promise<{

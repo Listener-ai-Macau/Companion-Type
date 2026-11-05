@@ -116,4 +116,26 @@ mod tests {
         for f in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap]{assert!(prepare(&row,"offlineStore",f,&choice).is_ok());}
         assert!(prepare(&row,"offlineStore",Format::Srt,&choice).is_err());
     }
+    #[test]
+    fn content051_generate_files_for_external_reader_checks(){
+        let Some(root)=std::env::var_os("COMPANION_CONTENT_EXPORT_FIXTURE_DIR") else{return};
+        let root=std::path::PathBuf::from(root);assert!(!root.exists(),"use a fresh explicit artifact folder");std::fs::create_dir_all(&root).unwrap();
+        let mut row=sample();row.title="公开示例·采购与交付复盘".into();row.source="importedTranscript".into();row.transcript_review=None;
+        row.utterances=vec![crate::companion_v1::CompanionV1UtteranceSegment{text:row.transcript_text.clone(),start_ms:0,end_ms:4000,speaker:Some(0),approximate_timing:false}];
+        std::fs::write(root.join("public-session.json"),serde_json::to_vec_pretty(&vec![row.clone()]).unwrap()).unwrap();
+        let mut manifest=Vec::new();
+        for (label,choice) in [("transcript",Selection{minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![]}),
+            ("material",Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]})]{
+            let expected=source(&row,"offlineStore",&choice).unwrap();
+            for format in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap]{
+                let prepared=prepare(&row,"offlineStore",format,&choice).unwrap();let file=format!("{label}.{}",format.extension());
+                let bytes=materialize(&row.title,prepared).unwrap();std::fs::write(root.join(&file),&bytes).unwrap();
+                manifest.push(serde_json::json!({"file":file,"selectedText":expected,"title":row.title,"bytes":bytes.len()}));
+            }
+        }
+        let srt=prepare(&row,"offlineStore",Format::Srt,&Selection{minutes:false,transcript:true,highlights:false,timeline:true,note_ids:vec![]}).unwrap();
+        std::fs::write(root.join("transcript.srt"),srt.bytes).unwrap();
+        std::fs::write(root.join("manifest.json"),serde_json::to_vec_pretty(&manifest).unwrap()).unwrap();
+        println!("CONTENT051_EXTERNAL_FILES={}",root.display());
+    }
 }

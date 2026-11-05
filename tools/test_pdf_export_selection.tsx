@@ -20,10 +20,10 @@ async function main(){
  await act(async()=>input('整理结果').props.onChange({currentTarget:{checked:false}}));
  await act(async()=>input('录音文字').props.onChange({currentTarget:{checked:true}}));
  await act(async()=>button('预览所选内容').props.onClick());
- assert.deepEqual(previews.at(-1).pdfSections,{minutes:false,transcript:true,highlights:false,timeline:false});
- assert.equal(tree.root.findByProps({'aria-label':'PDF 内容预览'}).props.children,'已保存的原文预览');
+ assert.deepEqual(previews.at(-1).contentSections,{minutes:false,transcript:true,highlights:false,timeline:false,noteIds:[]});
+ assert.equal(tree.root.findByProps({'aria-label':'所选内容预览'}).props.children,'已保存的原文预览');
  await act(async()=>button('保存 PDF…').props.onClick());
- assert.deepEqual(exports.at(-1).pdfSections,previews.at(-1).pdfSections);assert.equal(exports.at(-1).expectedContentHash,'a'.repeat(64));
+ assert.deepEqual(exports.at(-1).contentSections,previews.at(-1).contentSections);assert.equal(exports.at(-1).expectedContentHash,'a'.repeat(64));
  // Saved transcript remains exportable even before AI minutes exist.
  const noMinutes=structuredClone(snapshot);noMinutes.host.sessions[0].minutes=null;noMinutes.host.sessions[0].minutesByMode={offlineStore:null,onlineLive:null};noMinutes.host.sessions[0].exportMarkdown='';
  await act(async()=>tree.update(<CompanionDashboard {...props()} snapshot={noMinutes}/>));

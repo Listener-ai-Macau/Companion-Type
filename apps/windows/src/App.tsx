@@ -26,9 +26,9 @@ import {
   applyCompanionControl,
   getRecordingSyncStatus, pauseRecordingSync, repairRecordingSyncSettings, watchRecordingSync, watchCompanionSnapshotUpdates, cancelCompanionMeetingProcessing,
   discardOldestDeviceRecording,
-  exportCompanionMeeting, openCompanionSavedCalendar,
+  exportCompanionMeeting, openCompanionSavedCalendar, copyCompanionMeetingContent, shareCompanionMeetingContent,
   previewCompanionMeetingExport,
-  exportCompanionAudio,
+  exportCompanionAudio, shareCompanionAudio,
   importCompanionAudio,
   cancelCompanionAudioImport,
   exportCompanionLibrary,
@@ -341,6 +341,8 @@ export function App() {
         }
         return result;
       })}
+      onCopyMeetingContent={isTauriRuntime()?copyCompanionMeetingContent:undefined}
+      onShareMeetingContent={isTauriRuntime()?(request)=>exclusive('refresh',()=>shareCompanionMeetingContent(request)):undefined}
       onOpenSavedCalendar={isTauriRuntime()?openCompanionSavedCalendar:undefined}
       onPreviewMeetingExport={(request)=>previewCompanionMeetingExport(request)}
       onExportDiagnostics={isTauriRuntime() ? (includeDevice) => exclusive('refresh', () => exportCompanionDiagnostics(includeDevice)) : undefined}
@@ -351,7 +353,8 @@ export function App() {
       onCancelImportAudio={isTauriRuntime() ? cancelCompanionAudioImport : undefined}
       onImportAudio={isTauriRuntime() ? async () => { const epoch=snapshotEpoch.current; const next=await importCompanionAudio(); if(next) { if(!operationActive.current && snapshotEpoch.current===epoch) { snapshotEpoch.current+=1; setSnapshot(next); } else void cachedReader.current?.request(); } return next; } : undefined}
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}
-      onExportAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => exportCompanionAudio(sessionId)) : undefined}
+      onExportAudio={isTauriRuntime() ? (sessionId,format) => exclusive('refresh', () => exportCompanionAudio(sessionId,format)) : undefined}
+      onShareAudio={isTauriRuntime() ? (sessionId,format) => exclusive('refresh',()=>shareCompanionAudio(sessionId,format)):undefined}
       onExportLibrary={isTauriRuntime()?(request)=>exclusive('refresh',()=>exportCompanionLibrary(request)):undefined}
       onBackupLibrary={isTauriRuntime()?(draft)=>exclusive('refresh',()=>backupCompanionLibrary(draft)):undefined}
       onRestoreLibrary={isTauriRuntime()?()=>exclusive('refresh',async()=>{

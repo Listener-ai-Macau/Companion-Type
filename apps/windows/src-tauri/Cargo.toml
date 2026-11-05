@@ -51,6 +51,7 @@ symphonia = { version = "=0.5.5", default-features = false, features = ["aac", "
 
 [target.'cfg(windows)'.dependencies]
 windows = { version = "0.58", features = [
+    "implement",
     "Devices_Bluetooth",
     "Devices_Bluetooth_Advertisement",
     "Devices_Bluetooth_GenericAttributeProfile",
