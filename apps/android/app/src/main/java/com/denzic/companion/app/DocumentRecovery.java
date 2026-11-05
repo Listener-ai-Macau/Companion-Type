@@ -5,7 +5,7 @@ final class DocumentRecovery {
     private DocumentRecovery() {}
     static boolean isPickerFormat(String format) {
         return "pdf".equals(format) || "word".equals(format) || "mindmap".equals(format)
-            || "audio".equals(format) || "audioZip".equals(format);
+            || "audio".equals(format) || "audioZip".equals(format) || "marks".equals(format);
     }
     static String notice(boolean saved,boolean complete,String error) {
         if(error!=null && !error.isEmpty())return error;

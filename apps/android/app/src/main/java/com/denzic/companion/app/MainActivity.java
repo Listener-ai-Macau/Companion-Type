@@ -205,6 +205,13 @@ public final class MainActivity extends Activity {
             try {
                 if(LocalLibraryBackups.BUSY.get()||libraryToken==null||!libraryToken.equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新选择要导出的录音。");
                 RecordingLibrary.Session original=session(key);
+                if("marks".equals(format)){
+                    NativeAudio.VerifiedPrefix prefix=NativeAudio.inspectPrefix(original);
+                    JSONObject marks=RecordingBookmarkAccess.describe(key,libraries().token(),RecordingBookmarkAccess.binding(original),prefix);
+                    byte[] text=RecordingBookmarkAccess.text(recordingTitle(key,original),marks);
+                    try(java.io.OutputStream out=getContentResolver().openOutputStream(destination,"w")){if(out==null)throw new java.io.IOException("无法写入所选位置。");out.write(text);}
+                    replyDocument(id,true,null,restored);return;
+                }
                 if ("audio".equals(format) || "audioZip".equals(format)) {
                     NativeAudio.PartsResult parts=ManagedAudioParts.prepare(original,root().resolve("companion-decoded-audio"));
                     if (parts.parts.isEmpty() || ("audio".equals(format) && parts.parts.size()!=1))
@@ -342,6 +349,7 @@ public final class MainActivity extends Activity {
                 if ("pdf".equals(format)) { mime="application/pdf";extension="pdf"; }
                 else if ("word".equals(format)) { mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";extension="docx"; }
                 else if ("mindmap".equals(format)) { mime="application/x-freemind";extension="mm"; }
+                else if ("marks".equals(format)) { mime="text/plain";extension="txt"; }
                 else { reply(id,null,"不支持的导出格式。");return; }
                 documentRequestId=id;documentKey=key;documentFormat=format;documentRequestRestored=false;
                 try {
@@ -702,6 +710,22 @@ public final class MainActivity extends Activity {
                 if (parts.parts.isEmpty()) throw new IllegalStateException("没有可回听的音频。");
                 playingParts = parts.parts; playingIndex = 0; playPart();
                 return new JSONObject().put("complete", parts.captureComplete).put("durationMs", parts.samples / 16);
+            }
+            case "bookmarks":{
+                String key=a.getString("key");RecordingLibrary.Session selected=session(key);
+                NativeAudio.VerifiedPrefix prefix;
+                try{prefix=NativeAudio.inspectPrefix(selected);}catch(java.io.IOException error){throw new java.io.IOException("当前已保存分段暂不能读取重点，请完成接收后重试；原录音已保留。",error);}
+                return RecordingBookmarkAccess.describe(key,libraries().token(),RecordingBookmarkAccess.binding(selected),prefix);
+            }
+            case "playBookmark":{
+                if(!a.getString("libraryToken").equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新打开这条录音。");
+                RecordingLibrary.Session selected=session(a.getString("key"));
+                if(!a.getString("binding").equals(RecordingBookmarkAccess.binding(selected)))throw new java.io.IOException("已保存的录音分段已更新，请重新读取重点后回听。");
+                NativeAudio.PartsResult parts=ManagedAudioParts.prepare(selected,root().resolve("companion-decoded-audio"));
+                RecordingBookmarkAccess.Playback target=RecordingBookmarkAccess.playback(parts,a.getString("sequence"),a.getLong("sourceSamples"),a.getLong("elapsedMs"));
+                stopPlayback();playingParts=parts.parts;playingIndex=target.part;
+                try{playPart(target.offsetMs);}catch(Exception error){stopPlayback();throw error;}
+                return new JSONObject().put("complete",parts.captureComplete).put("durationMs",parts.samples/16).put("positionMs",target.positionMs);
             }
             case "stopPlayback": stopPlayback(); return JSONObject.NULL;
             case "pausePlayback": {
