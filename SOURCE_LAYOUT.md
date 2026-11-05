@@ -9,3 +9,5 @@ Windows／Android 当前界面和应用壳位于本分支。恢复基线为最�
 当前可编辑源码与 Git 放在桌面项目目录，独立恢复包和远端分支用于回退。E盘 `.build-cache`、`node_modules`、Rust `target`、Gradle缓存和旧编译输出均属于可重新生成的缓存；清理它们不等于删除当前源码、未提交修改和唯一交付凭证。模型权重／数据须区分公开可下载资源与自研唯一训练产物。
 
 本次恢复未运行模型、未接板，也不代表售卖或客户验收完成。原始恢复证据和缺失的旧试验产物记录保留在项目交接目录。
+
+本机恢复工作目录的Git历史借用`C:/Users/Billy/Desktop/Denzic/Companion/Companion-Type/.git/objects`，请保留原Type仓库，不按旧缓存删除；远端恢复分支及源码ZIP是另外的保全来源。完整Android后端工作目录使用独立Git。当前work/content-exports051-20261105在恢复基线后增加Windows所选内容复制的源码检查点，尚未打包/安装，日用交付仍050。

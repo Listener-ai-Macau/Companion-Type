@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\tools\render_product_backlog.py", line 676, in <module>
+    main()
+  File "C:\Users\Billy\Desktop\Denzic\Companion\tools\render_product_backlog.py", line 662, in main
+    tasks = validate(data) if args.check else {t['id']:t for g in data['groups'] for t in g['tasks']}
+            ^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\tools\render_product_backlog.py", line 33, in validate
+    assert (ROOT / source["path"]).exists(), f"missing source {sid}: {source['path']}"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: missing source FH_AUDIT: .cache/product-research-20261005/firmware-hardware-audit.json
