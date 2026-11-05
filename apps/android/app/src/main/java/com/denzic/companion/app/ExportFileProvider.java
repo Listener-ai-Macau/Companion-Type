@@ -16,8 +16,8 @@ public final class ExportFileProvider extends ContentProvider {
     }
     static Uri uri(Context context,PreparedExports.Entry entry)throws Exception{return new Uri.Builder().scheme("content").authority(context.getPackageName()+".exports").appendPath(entry.id()).appendPath(entry.meta.getString("filename")).build();}
     static Intent shareIntent(Context context,PreparedExports.Entry entry)throws Exception{
-        Uri uri=uri(context,entry);return new Intent(Intent.ACTION_SEND).setType(entry.meta.getString("mime")).putExtra(Intent.EXTRA_STREAM,uri).putExtra(Intent.EXTRA_SUBJECT,entry.meta.optString("title","Companion"))
-            .setClipData(ClipData.newUri(context.getContentResolver(),entry.meta.getString("filename"),uri)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Uri uri=uri(context,entry);Intent intent=new Intent(Intent.ACTION_SEND).setType(entry.meta.getString("mime")).putExtra(Intent.EXTRA_STREAM,uri).putExtra(Intent.EXTRA_SUBJECT,entry.meta.optString("title","Companion")).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setClipData(ClipData.newUri(context.getContentResolver(),entry.meta.getString("filename"),uri));return intent;
     }
     @Override public String getType(Uri uri){try{return entry(uri,false).meta.getString("mime");}catch(Exception e){return null;}}
     @Override public Cursor query(Uri uri,String[] projection,String selection,String[] args,String sort){
