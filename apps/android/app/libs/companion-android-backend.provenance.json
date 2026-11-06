@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T01:25:04+08:00",
-  "aarSha256": "94abcbb2222a941e174d7da2e8fd93942d98c1be80d681effb62789fbdd99138",
-  "backendSourceCommit": "6b01d52f76f54cada65572365512ece2e2875d8f",
+  "at": "2026-11-07T01:56:06+08:00",
+  "aarSha256": "25057f76be6a7eac8ab55ca65dda9f871f7350c3c63377f9fb1bd7c0fed97a5a",
+  "backendSourceCommit": "8534c7ddb785efb682c50f6e16c99ce96720e335",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Exactly one retry after initial connection status133; closed first GATT client and1000ms cooldown before any recording command exists. Other errors and OTA opening unchanged. Preserve071 catalog recovery and070 local-library fix; native audio/control, Word, models and firmware unchanged.",
-  "javaSourceCommit": "6b01d52f76f54cada65572365512ece2e2875d8f",
+  "scope": "Request HIGH only while new sealed segments are transferred/confirmed; restore BALANCED on success or failure and keep following idle balanced. Best-effort SDK preference, not a throughput claim. Preserve072 connection retry,071 catalog recovery,070 library fix. All non-class AAR/native/UI/firmware unchanged.",
+  "javaSourceCommit": "8534c7ddb785efb682c50f6e16c99ce96720e335",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -45,5 +45,17 @@
   ],
   "allNonClassAarEntriesByteIdenticalTo071": true,
   "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
-  "buildPreparationCorrection": "Initial class-diff allowlist did not expect RecordingClient inner-class final flag metadata to change after LinkFailure became extensible. javap -p -c -s instructions identical; verbose diff confirms only LinkFailure InnerClasses flag. Compilation itself passed; first candidate retained and checked, not blindly rebuilt."
+  "buildPreparationCorrection": "Initial class-diff allowlist did not expect RecordingClient inner-class final flag metadata to change after LinkFailure became extensible. javap -p -c -s instructions identical; verbose diff confirms only LinkFailure InnerClasses flag. Compilation itself passed; first candidate retained and checked, not blindly rebuilt.",
+  "javaClassesChangedFrom072": [
+    "com/denzic/companion/mobile/AndroidGattLink$1.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/RecordingClient$DeviceStatus.class",
+    "com/denzic/companion/mobile/RecordingClient$Link.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingSyncService$2.class",
+    "com/denzic/companion/mobile/RecordingSyncService$3.class",
+    "com/denzic/companion/mobile/RecordingSyncService.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo072": true,
+  "inherited072Receipt": "E:\\CodexData\\Companion\\.build-cache\\priority073\\inherited-provenance072.json"
 }
