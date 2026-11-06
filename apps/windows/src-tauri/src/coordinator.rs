@@ -396,7 +396,7 @@ impl CompanionCoordinator {
         crate::backend::delete_device_recording(&self.management_device()?,key,confirm)
     }
     pub(crate) fn sync_device_recording(&self,key:&crate::companion_v1::CompanionV1RecordingKey)->Result<CompanionV1Snapshot,String> {
-        let _lease=self.begin_device_operation_kind(3)?;
+        let _lease=self.begin_board_recording_operation()?;
         crate::backend::sync_selected_recording_key(&self.management_device()?,key)?;
         self.backend.refresh_device_recording_library()
     }

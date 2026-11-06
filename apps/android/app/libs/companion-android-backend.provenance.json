@@ -1,13 +1,15 @@
 {
-  "aarSha256": "e5e5150accbafb1bbdb15c2aac82774d72d92847007084f3eca61be83c1c4823",
-  "backendSourceCommit": "d7e543b318a08291b445b2d9e809123e1866cdea",
+  "aarSha256": "92ce33c1eb0bb873dcdf7508ec038003c5bfe5e2f025849bd19b9f5af20f81dc",
+  "backendSourceCommit": "7247985138abb4f6fa7a980fb20bc6547ad4e21a",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\capture-android-device-management",
-  "scope": "Android recording control lock compatibility fix, preserving the integrated055 discovery, exact management, CRM1 and signed full-file OTA.",
-  "nativeChanges": true,
+  "scope": "Retain the working056 Android recording control; await the device full-file retention receipt before closing the normal OTA link. No native runtime or UI feature changes.",
+  "nativeChanges": false,
   "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\phone055-lock-fix\\native-build-r3\\result.json",
   "newNativeLibrarySha256": "e3d6ad244eb9e32ca97121e3e12bd176b29c3ffb3b5a26fbe2b7035e1da3fb52",
   "asrRuntimeLibrariesUnchanged": true,
   "androidLockRegression": "E:/CodexData/Companion/.build-cache/phone055-lock-fix/android-regression.log",
   "physicalOrdinaryAppAcceptance": false,
-  "remoteSourceVerified": false
+  "remoteSourceVerified": false,
+  "nativeSourceCommit": "d7e543b318a08291b445b2d9e809123e1866cdea",
+  "allNonClassAarEntriesByteIdenticalTo056": true
 }
