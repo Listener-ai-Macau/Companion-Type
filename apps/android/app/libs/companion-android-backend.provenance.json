@@ -1,9 +1,9 @@
 {
-  "at": "2026-11-06T16:12:46+08:00",
-  "aarSha256": "71db439c32dddcef0a9f84c6ffbf79489b377886873ec416574c195f3bfb7b5f",
-  "backendSourceCommit": "561708a9ab0e5c7415b6c19b601b592bfae062ac",
+  "at": "2026-11-07T01:04:45+08:00",
+  "aarSha256": "631e13061271ab92b96c636e0dff18ad15dd50f63d4a4fd52dcfbb922dd10bc3",
+  "backendSourceCommit": "0d9cd297ca6fba1984e947705e7350c7958761a2",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
-  "remoteSourceVerified": true,
+  "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
   "nativeLibrarySha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
   "nativeLibrary16KiBElfAligned": true,
@@ -22,5 +22,14 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Exact Java source equals tested c542833; retain Word062 native212ec44d with correct footer. This batch changes Java transport only, not native model code or weights. Prior062 provenance with inherited historical flags retained separately."
+  "scope": "Only explicit CRE2 stale snapshot result8 restarts the entire catalog with a fresh nonce, at most twice and within24s. All other device codes are reported exactly and fail; CRC/identity/order protections remain. Native audio/control, Word, model weights and firmware unchanged.",
+  "javaSourceCommit": "0d9cd297ca6fba1984e947705e7350c7958761a2",
+  "javaClassesChangedFrom070": [
+    "com/denzic/companion/mobile/RecorderWire$Catalog.class",
+    "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
+    "com/denzic/companion/mobile/RecorderWire.class",
+    "com/denzic/companion/mobile/RecordingClient.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo070": true,
+  "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json"
 }
