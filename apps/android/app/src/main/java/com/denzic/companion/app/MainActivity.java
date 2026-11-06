@@ -316,7 +316,7 @@ public final class MainActivity extends Activity {
                     if(!("backup".equals(kind)||"restore".equals(kind)))throw new java.io.IOException("不支持的资料操作。");
                     runOnUiThread(()->{
                         if(isFinishing()||isDestroyed())return;
-                        if(documentRequestId!=0||libraryRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
+                        if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0){reply(id,null,"已有文件选择操作正在进行。");return;}
                         libraryRequestId=id;libraryRequestKind=kind;libraryRequestToken=token;libraryRequestRestored=false;
                         try{
                             Intent intent=new Intent("backup".equals(kind)?Intent.ACTION_CREATE_DOCUMENT:Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/zip");
@@ -521,23 +521,22 @@ public final class MainActivity extends Activity {
         }catch(Exception e){reply(id,null,e.getMessage()==null?"升级包读取失败；未发送任何升级内容。":e.getMessage());}});
     }
     private boolean confirmDeviceUpdate(String name,SystemUpdatePackage pack)throws Exception{
-        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
-        final android.app.AlertDialog[] shown=new android.app.AlertDialog[1];
-        onUi(()->{shown[0]=new android.app.AlertDialog.Builder(this).setTitle("升级录音卡？")
-            .setMessage("设备："+name+"\n程序版本："+pack.firmwareVersion+"\n资源版本："+pack.resourceVersion+"\n\n升级时请保持录音卡供电与手机蓝牙连接。设备会在安装前验证签名；原录音保留。")
-            .setNegativeButton("取消",(dialog,which)->answer.complete(false)).setPositiveButton("开始升级",(dialog,which)->answer.complete(true)).setOnCancelListener(dialog->answer.complete(false)).create();shown[0].show();return null;});
-        try{return answer.get(90,java.util.concurrent.TimeUnit.SECONDS);}finally{answer.cancel(false);runOnUiThread(()->{if(shown[0]!=null)shown[0].dismiss();});}
+        return confirmDeviceAction("升级录音卡？","设备："+name+"\n程序版本："+pack.firmwareVersion+"\n资源版本："+pack.resourceVersion+"\n\n升级时请保持录音卡供电与手机蓝牙连接。设备会在安装前验证签名；原录音保留。","开始升级");
     }
     private boolean confirmDeviceMaintenance(String operation,String name)throws Exception{
-        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
         boolean clear="clearPairings".equals(operation);
-        onUi(()->{new android.app.AlertDialog.Builder(this)
-            .setTitle(clear?"清除录音卡配对？":"恢复录音卡设置？")
-            .setMessage((clear?"将清除 "+name+" 上全部已保存的蓝牙配对。之后请在手机系统蓝牙中忘记旧配对，再重新连接。":"将恢复 "+name+" 的设备设置。")+"\n\n设备原录音和手机里已保存的资料保留。")
-            .setNegativeButton("取消",(dialog,which)->answer.complete(false))
-            .setPositiveButton(clear?"清除配对":"恢复设置",(dialog,which)->answer.complete(true))
-            .setOnCancelListener(dialog->answer.complete(false)).show();return null;});
-        try{return answer.get(90,java.util.concurrent.TimeUnit.SECONDS);}finally{answer.cancel(false);}
+        return confirmDeviceAction(clear?"清除录音卡配对？":"恢复录音卡设置？",
+            (clear?"将清除 "+name+" 上全部已保存的蓝牙配对。之后请在手机系统蓝牙中忘记旧配对，再重新连接。":"将恢复 "+name+" 的设备设置。")+"\n\n设备原录音和手机里已保存的资料保留。",clear?"清除配对":"恢复设置");
+    }
+    private boolean confirmDeviceAction(String title,String message,String positive)throws Exception{
+        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
+        java.util.concurrent.atomic.AtomicReference<android.app.AlertDialog> shown=new java.util.concurrent.atomic.AtomicReference<>();
+        onUi(()->{if(answer.isDone())return null;android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle(title).setMessage(message)
+            .setNegativeButton("取消",(d,w)->answer.complete(false)).setPositiveButton(positive,(d,w)->answer.complete(true)).setOnCancelListener(d->answer.complete(false)).create();
+            shown.set(dialog);dialog.setOnDismissListener(d->answer.complete(false));dialog.show();return null;});
+        try{return answer.get(90,java.util.concurrent.TimeUnit.SECONDS);}
+        catch(java.util.concurrent.TimeoutException expired){return false;}
+        finally{answer.cancel(false);runOnUiThread(()->{android.app.AlertDialog dialog=shown.get();if(dialog!=null)dialog.dismiss();});}
     }
     private JSONObject maintainDevice(JSONObject args)throws Exception{
         if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成或停止接收后再维护设备。");
