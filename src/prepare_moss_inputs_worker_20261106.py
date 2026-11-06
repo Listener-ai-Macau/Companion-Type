@@ -1,7 +1,6 @@
 """One reference-free audio input, original processor only, no model weights."""
 from pathlib import Path
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from datetime import datetime,timezone,timedelta
 import argparse,json,sys,traceback,time
 from moss_windows_resource_limits_20261104 import WorkerLimits
 from moss_prepared_inputs_20261106 import publish,file_sha
@@ -12,7 +11,7 @@ assert not any('reference' in k.lower() for k in case)
 control=Path(args.protocol).parent
 assert not (control/'stop.request').exists()
 limits=WorkerLimits(cpu_percent=protocol['runtime']['workerCpuHardCapPercent'],memory_bytes=protocol['runtime']['systemPrivateMemoryBudgetBytes'])
-state={'state':'IMPORTING_PROCESSOR_ONLY','startedAt':datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds'),'modelLoaded':False,'audioSha256':case['audioSha256'],'resourceLimits':limits.receipt}
+state={'state':'IMPORTING_PROCESSOR_ONLY','startedAt':datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds'),'modelLoaded':False,'audioSha256':case['audioSha256'],'resourceLimits':limits.receipt}
 def save():
     p=control/'input-preparation-state.tmp';p.write_text(json.dumps(state,indent=2),encoding='utf8');p.replace(control/'input-preparation-state.json')
 save();start=time.perf_counter()

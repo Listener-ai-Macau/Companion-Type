@@ -2,17 +2,19 @@
 from pathlib import Path
 from datetime import datetime
 from zoneinfo import ZoneInfo
-import hashlib,json,os,subprocess,time,psutil,sys
+import argparse,hashlib,json,os,subprocess,time,psutil,sys
 from moss_windows_resource_limits_20261104 import SystemRamPressure
 
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');Q=R/'model-research'
-control=R/'docs/handoffs/20261105-model-resume/full-L-prepared-inputs-20261106-r19';control.mkdir(exist_ok=False)
+parser=argparse.ArgumentParser();parser.add_argument('--run-id',default='r19');args=parser.parse_args()
+assert args.run_id and all(c.isalnum() or c in '._-' for c in args.run_id)
+control=R/('docs/handoffs/20261105-model-resume/full-L-prepared-inputs-20261106-'+args.run_id);control.mkdir(exist_ok=False)
 prior=R/'docs/handoffs/20261105-model-resume/full-L-gpu-reconnected-20261106-r18'
 protocol=json.loads((prior/'frozen-protocol.json').read_text(encoding='utf8'))
 protocol['scope']='Exact original full-meeting author preprocessing in a separate process before model weights; same batch shape/math/device/runtime, no ASR, transcript, reference, tuning or audio truncation.'
 (control/'frozen-protocol.json').write_text(json.dumps(protocol,indent=2),encoding='utf8')
 (control/'audio-only.json').write_bytes((prior/'audio-only.json').read_bytes())
-cache=Path('E:/CodexData/Companion/.model-cache/moss-prepared-full-L-20261106-r19');cache.mkdir(exist_ok=False)
+cache=Path('E:/CodexData/Companion/.model-cache')/('moss-prepared-full-L-20261106-'+args.run_id);cache.mkdir(exist_ok=False)
 env={k:v for k,v in os.environ.items() if not k.startswith(('COMPANION_','LISTENER_','OPENAI_','DEEPSEEK_','VOLC_','HF_TOKEN','HUGGING_FACE_HUB_TOKEN','PYTHONPATH'))}
 env.update(HF_HOME=str(cache/'hf-cache'),HF_MODULES_CACHE=str(cache/'hf-modules'),HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',HF_HUB_DISABLE_TELEMETRY='1',HF_HUB_DISABLE_IMPLICIT_TOKEN='1',HF_HUB_DISABLE_PROGRESS_BARS='1',OMP_NUM_THREADS='2',MKL_NUM_THREADS='2',OPENBLAS_NUM_THREADS='2',NUMBA_NUM_THREADS='2',TOKENIZERS_PARALLELISM='false',PYTHONUNBUFFERED='1',HIP_CACHE_DIR=str(cache/'hip-cache'),TRITON_CACHE_DIR=str(cache/'triton-cache'))
 state={'state':'PREPARING_INPUTS_ONLY_NO_MODEL','startedAt':datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds'),'referencePassedToWorker':False,'automaticRetries':0,'sourceCommit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=Q,text=True).strip(),'peakPrivateBytes':0,'peakRssBytes':0,'output':str(cache/'packet')}
