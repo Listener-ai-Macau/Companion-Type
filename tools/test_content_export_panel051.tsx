@@ -20,12 +20,12 @@ async function main(){
  await check('整理结果',false);await check('录音文字',true);
  await act(async()=>tree.root.findByProps({'aria-label':'选择材料：AI 材料（请核对）｜英语译文'}).props.onChange({currentTarget:{checked:true}}));
  const choice={minutes:false,transcript:true,highlights:false,timeline:false,noteIds:['translation']};
- for(const [format,label] of [['txt','TXT'],['markdown','Markdown'],['docx','Word'],['pdf','PDF'],['xlsx','Excel'],['mindmap','思维导图']]){
+ for(const [format,label] of [['txt','TXT'],['markdown','Markdown'],['docx','Word'],['pdf','PDF'],['xlsx','Excel'],['mindmap','思维导图（可编辑）'],['pptx','PowerPoint'],['png','思维导图 PNG']]){
    await act(async()=>tree.root.findByProps({'aria-label':'所选内容文件格式'}).props.onChange({currentTarget:{value:format}}));
    await act(async()=>button(`保存 ${label}…`).props.onClick());
    assert.deepEqual(calls.save.at(-1).contentSections,choice);assert.equal(calls.save.at(-1).expectedContentHash,'f'.repeat(64));assert.equal(calls.save.at(-1).format,format);
  }
- cancelSave=true;await act(async()=>button('保存 思维导图…').props.onClick());assert.match(text(tree.root),/已取消保存/);
+ cancelSave=true;await act(async()=>button('保存 思维导图 PNG…').props.onClick());assert.match(text(tree.root),/已取消保存/);
  await act(async()=>button('复制所选内容').props.onClick());assert.deepEqual(calls.copy.at(-1).contentSections,choice);assert.match(text(tree.root),/已复制所选内容/);
  staleCopy=true;await act(async()=>button('复制所选内容').props.onClick());assert.match(text(tree.root),/内容已变化/);assert.equal(tree.root.findAllByProps({'aria-label':'手动复制所选内容'}).length,0);
  await act(async()=>button('分享所选文件…').props.onClick());assert.match(text(tree.root),/以接收应用为准/);assert.deepEqual(calls.share.at(-1).contentSections,choice);

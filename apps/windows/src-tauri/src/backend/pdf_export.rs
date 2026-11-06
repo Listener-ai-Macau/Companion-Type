@@ -25,7 +25,7 @@ pub(super) fn html(title:&str, content:&str)->String {
 }
 
 #[cfg(windows)]
-fn browser()->Option<PathBuf>{
+pub(super) fn browser()->Option<PathBuf>{
     let mut roots=Vec::new();
     for key in ["PROGRAMFILES(X86)","PROGRAMFILES","LOCALAPPDATA"] {if let Some(value)=std::env::var_os(key){roots.push(PathBuf::from(value));}}
     roots.push(PathBuf::from(r"C:\Program Files (x86)"));roots.push(PathBuf::from(r"C:\Program Files"));

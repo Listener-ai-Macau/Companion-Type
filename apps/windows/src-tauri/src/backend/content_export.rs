@@ -58,7 +58,7 @@ pub fn source(session:&CompanionV1HostSession,mode:&str,choice:&Selection)->Resu
 }
 
 pub fn prepare(session:&CompanionV1HostSession,mode:&str,format:Format,choice:&Selection)->Result<PreparedMeetingExport,String>{
-    if !matches!(format,Format::Markdown|Format::Txt|Format::Docx|Format::Pdf|Format::Mindmap|Format::Xlsx|Format::Srt){
+    if !matches!(format,Format::Markdown|Format::Txt|Format::Docx|Format::Pdf|Format::Mindmap|Format::Xlsx|Format::Srt|Format::Pptx|Format::Png){
         return Err("此格式不支持内容选择，请使用对应的完整数据或日历入口。".into());
     }
     if format==Format::Srt {
@@ -70,16 +70,24 @@ pub fn prepare(session:&CompanionV1HostSession,mode:&str,format:Format,choice:&S
         Format::Docx=>super::meeting_document_export::word(&session.title,&content)?,
         Format::Mindmap=>super::meeting_document_export::mindmap(&session.title,&content),
         Format::Xlsx=>super::spreadsheet_export::render(&session.title,&content)?,
+        Format::Pptx=>super::presentation_export::render(&session.title,&content)?,
+        Format::Png=>{super::mindmap_image_export::page(&session.title,&content)?;content.into_bytes()},
         _=>content.into_bytes(),
     };
     Ok(PreparedMeetingExport{bytes,suggested_name:format!("{}-所选内容.{}",super::export::safe_file_stem(&session.title,&session.id),format.extension()),format,warning:None,calendar_items:None})
 }
 
 pub fn materialize(title:&str,prepared:PreparedMeetingExport)->Result<Vec<u8>,String>{
-    if prepared.format==Format::Pdf {
-        let text=std::str::from_utf8(&prepared.bytes).map_err(|_|"无法读取PDF正文。")?;
-        super::pdf_export::render(title,text)
-    }else{Ok(prepared.bytes)}
+    materialize_bytes(title,prepared.format,prepared.bytes)
+}
+pub(crate) fn materialize_bytes(title:&str,format:Format,bytes:Vec<u8>)->Result<Vec<u8>,String>{
+    match format {
+        Format::Pdf|Format::Png=>{
+            let text=std::str::from_utf8(&bytes).map_err(|_|"无法读取所选正文。")?;
+            if format==Format::Pdf{super::pdf_export::render(title,text)}else{super::mindmap_image_export::render(title,text)}
+        },
+        _=>Ok(bytes),
+    }
 }
 
 #[cfg(test)]
@@ -113,7 +121,7 @@ mod tests {
     fn content051_can_export_a_saved_material_without_ai_minutes_or_audio(){
         let mut row=sample();row.minutes=None;row.minutes_by_mode.offline_store=None;row.minutes_by_mode.online_live=None;row.transcript_text.clear();row.transcript_final=false;
         let choice=Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]};
-        for f in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap]{assert!(prepare(&row,"offlineStore",f,&choice).is_ok());}
+        for f in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap,Format::Pptx,Format::Png]{assert!(prepare(&row,"offlineStore",f,&choice).is_ok());}
         assert!(prepare(&row,"offlineStore",Format::Srt,&choice).is_err());
     }
     #[test]
@@ -127,7 +135,7 @@ mod tests {
         for (label,choice) in [("transcript",Selection{minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![]}),
             ("material",Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]})]{
             let expected=source(&row,"offlineStore",&choice).unwrap();
-            for format in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap]{
+            for format in [Format::Txt,Format::Markdown,Format::Docx,Format::Pdf,Format::Xlsx,Format::Mindmap,Format::Pptx,Format::Png]{
                 let prepared=prepare(&row,"offlineStore",format,&choice).unwrap();let file=format!("{label}.{}",format.extension());
                 let bytes=materialize(&row.title,prepared).unwrap();std::fs::write(root.join(&file),&bytes).unwrap();
                 manifest.push(serde_json::json!({"file":file,"selectedText":expected,"title":row.title,"bytes":bytes.len()}));

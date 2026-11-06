@@ -301,6 +301,8 @@ pub enum CompanionMeetingExportFormat {
     Json,
     Srt,
     Xlsx,
+    Pptx,
+    Png,
     Todo,
     #[serde(rename = "todotxt")]
     TodoText,
@@ -322,6 +324,8 @@ impl From<CompanionMeetingExportFormat> for crate::backend::export::MeetingExpor
             CompanionMeetingExportFormat::Json => Self::Json,
             CompanionMeetingExportFormat::Srt => Self::Srt,
             CompanionMeetingExportFormat::Xlsx => Self::Xlsx,
+            CompanionMeetingExportFormat::Pptx => Self::Pptx,
+            CompanionMeetingExportFormat::Png => Self::Png,
             CompanionMeetingExportFormat::Todo => Self::Todo,
             CompanionMeetingExportFormat::TodoText => Self::TodoText,
             CompanionMeetingExportFormat::Ics => Self::Ics,
@@ -928,11 +932,10 @@ pub async fn export_companion_meeting(
     let bytes = prepared.bytes;
     let write_path = destination.clone();
     let title=session.title.clone();
+    let final_source_check=if request.content_sections.is_some(){Some((coordinator.inner().clone(),request.clone()))}else{None};
     let written = tauri::async_runtime::spawn_blocking(move || {
-        let output=if format==crate::backend::export::MeetingExportFormat::Pdf {
-            let content=std::str::from_utf8(&bytes).map_err(|_|"PDF 内容无法读取。")?;
-            crate::backend::pdf_export::render(&title,content)?
-        }else{bytes};
+        let output=crate::backend::content_export::materialize_bytes(&title,format,bytes)?;
+        if let Some((coordinator,request))=final_source_check {checked_content_handoff(&coordinator,&request)?;}
         crate::backend::export::write_atomic(&write_path, &output)
     })
     .await

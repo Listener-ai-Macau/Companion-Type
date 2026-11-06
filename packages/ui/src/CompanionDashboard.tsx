@@ -192,7 +192,7 @@ export type CompanionBoardOnlineLiveUiStatus = {
 export type CompanionMeetingExportRequest = {
   sessionId: string;
   meetingMode: CompanionV1MeetingMode;
-  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'xlsx' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
+  format: 'markdown' | 'docx' | 'mindmap' | 'pdf' | 'txt' | 'json' | 'srt' | 'xlsx' | 'pptx' | 'png' | 'todo' | 'todotxt' | 'ics' | 'calendar' | 'calendarreminder' | 'calendarreminder30' | 'calendarreminder60';
   pdfSections?: {minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean};
   contentSections?: import('./ContentExportPanel').ContentSelection;
   expectedContentHash?:string;

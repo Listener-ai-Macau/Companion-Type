@@ -1,0 +1,42 @@
+//! Conservative CJK/Latin line wrapping, preserving every non-format character.
+pub(super) fn visual_line(text:&str)->&str {
+    let trimmed=text.trim_start();trimmed.strip_prefix("> ").unwrap_or(text)
+}
+fn units(c:char)->usize {
+    match c {
+        '\t'=>16,
+        'W'|'M'|'w'|'m'|'@'|'#'|'%'=>4,
+        _=>match c as u32 {
+            0x0300..=0x036f|0xfe00..=0xfe0f|0x200d=>0,
+            0..=0x7f=>if c.is_whitespace()||"ilI.,:;!'`|".contains(c){2}else{3},
+            0x80..=0x024f=>3,
+            _=>4,
+        }
+    }
+}
+pub(super) fn wrap(text:&str,limit:usize)->Vec<String>{
+    let chars=text.chars().collect::<Vec<_>>();
+    if chars.is_empty(){return vec![String::new()];}
+    let mut result=Vec::new();let mut start=0;
+    while start<chars.len(){
+        let mut end=start;let mut width=0;let mut last_space=None;
+        while end<chars.len()&&(width+units(chars[end])<=limit||end==start){
+            width+=units(chars[end]);end+=1;
+            if chars[end-1].is_whitespace()&&chars[start..end].iter().any(|c|!c.is_whitespace()){last_space=Some(end);}
+        }
+        if end<chars.len(){if let Some(space)=last_space{end=space;}}
+        result.push(chars[start..end].iter().collect());start=end;
+    }
+    result
+}
+#[cfg(test)]mod tests{
+    use super::*;
+    #[test]fn content052_wrapping_keeps_words_and_all_source_characters(){
+        let source="The purchase has not been approved. 尚未批准20%的追加费用。";
+        let rows=wrap(source,34);assert_eq!(rows.concat(),source);
+        assert!(rows.iter().any(|s|s.contains("approved.")));
+        assert!(wrap("先核对开发内容与引用出处。",16).len()>1);
+        let wide="W".repeat(60);let rows=wrap(&wide,68);
+        assert!(rows.iter().all(|row|row.len()<=17));assert_eq!(rows.concat(),wide);
+    }
+}

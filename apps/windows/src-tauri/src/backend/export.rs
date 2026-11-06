@@ -49,6 +49,8 @@ pub enum MeetingExportFormat {
     Json,
     Srt,
     Xlsx,
+    Pptx,
+    Png,
     Todo,
     TodoText,
     Ics,
@@ -69,6 +71,8 @@ impl MeetingExportFormat {
             Self::Json => "json",
             Self::Srt => "srt",
             Self::Xlsx => "xlsx",
+            Self::Pptx => "pptx",
+            Self::Png => "png",
             Self::Todo => "md",
             Self::TodoText => "txt",
             Self::Ics | Self::Calendar | Self::CalendarReminder | Self::CalendarReminder30 | Self::CalendarReminder60 => "ics",
@@ -85,6 +89,8 @@ impl MeetingExportFormat {
             Self::Json => "JSON",
             Self::Srt => "SubRip subtitles",
             Self::Xlsx => "Excel 工作簿",
+            Self::Pptx => "PowerPoint 演示文稿",
+            Self::Png => "思维导图 PNG",
             Self::Todo => "待办清单 Markdown",
             Self::TodoText => "待办清单普通文本",
             Self::Ics => "iCalendar 待办事项",
@@ -355,7 +361,7 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
             }
         }
         MeetingExportFormat::Pdf => pdf_source(session,meeting_mode,pdf_sections.unwrap_or(&PdfSections::default()))?,
-        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Xlsx => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
+        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Xlsx | MeetingExportFormat::Pptx | MeetingExportFormat::Png => format!("{}{}{}",saved_minutes_markdown_for_mode(session, meeting_mode)?,render_bookmarks(session),super::meeting_notes::render(session)),
         MeetingExportFormat::Txt => {
             if session.bookmarks.is_empty() && session.meeting_notes.is_empty() { require_final_transcript(session)?; }
             render_txt(session)
@@ -383,7 +389,7 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
     };
     let file_stem = safe_file_stem(&session.title, &session.id);
     let purpose = match format {
-        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Pdf | MeetingExportFormat::Xlsx => "整理结果",
+        MeetingExportFormat::Markdown | MeetingExportFormat::Docx | MeetingExportFormat::Mindmap | MeetingExportFormat::Pdf | MeetingExportFormat::Xlsx | MeetingExportFormat::Pptx | MeetingExportFormat::Png => "整理结果",
         MeetingExportFormat::Txt => "文字与补充",
         MeetingExportFormat::Json => "完整资料",
         MeetingExportFormat::Srt => "字幕",
@@ -402,6 +408,8 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
             MeetingExportFormat::Docx => super::meeting_document_export::word(&session.title, &content)?,
             MeetingExportFormat::Xlsx => super::spreadsheet_export::render(&session.title,&content)?,
             MeetingExportFormat::Mindmap => super::meeting_document_export::mindmap(&session.title, &content),
+            MeetingExportFormat::Pptx => super::presentation_export::render(&session.title,&content)?,
+            MeetingExportFormat::Png => {super::mindmap_image_export::page(&session.title,&content)?;content.into_bytes()},
             _ => content.into_bytes(),
         },
         suggested_name: format!(

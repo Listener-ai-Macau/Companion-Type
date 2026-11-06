@@ -7,7 +7,7 @@ pub(crate) use presentation::readable_lines;
 use std::io::{Cursor, Write};
 use zip::{write::SimpleFileOptions, CompressionMethod, ZipWriter};
 
-fn xml(value: &str) -> String {
+pub(super) fn xml(value: &str) -> String {
     let mut out = String::with_capacity(value.len());
     for c in value.chars() {
         match c {
@@ -22,7 +22,7 @@ fn xml(value: &str) -> String {
     out
 }
 
-fn heading(line: &str) -> Option<(usize, &str)> {
+pub(super) fn heading(line: &str) -> Option<(usize, &str)> {
     let clean = line.trim_start();
     let n = clean.bytes().take_while(|b| *b == b'#').count();
     if (1..=6).contains(&n) && clean.as_bytes().get(n) == Some(&b' ') {
@@ -72,15 +72,15 @@ pub fn word(title: &str, markdown: &str) -> Result<Vec<u8>, String> {
 }
 
 #[derive(Default)]
-struct Node { text: String, children: Vec<usize> }
+pub(super) struct Node { pub text: String, pub children: Vec<usize> }
 
 /// FreeMind-compatible XML: section headings form branches; every nonblank
 /// line remains a node, including source quotes and user notes.
-pub fn mindmap(title: &str, markdown: &str) -> Vec<u8> {
+pub(super) fn mindmap_nodes(title: &str, markdown: &str) -> Vec<Node> {
     let mut nodes=vec![Node{text:title.to_owned(),children:Vec::new()}];
     let mut headings=vec![(0usize,0usize)];
     for line in readable_lines(title,markdown).iter().filter(|line| !line.trim().is_empty()) {
-        let (level,text,is_heading)=match heading(line) {
+        let (level,text,is_heading)=match heading(super::export_text_layout::visual_line(line)) {
             Some((depth,text))=>(depth,text,true),
             None=>(usize::MAX,line.trim(),false),
         };
@@ -89,6 +89,11 @@ pub fn mindmap(title: &str, markdown: &str) -> Vec<u8> {
         let index=nodes.len();nodes.push(Node{text:text.to_owned(),children:Vec::new()});nodes[parent].children.push(index);
         if is_heading {headings.push((level,index));}
     }
+    nodes
+}
+
+pub fn mindmap(title: &str, markdown: &str) -> Vec<u8> {
+    let nodes=mindmap_nodes(title,markdown);
     // Iterative rendering avoids a recursive stack proportional to input size.
     let mut out=String::from("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<map version=\"1.0.1\">");
     let mut stack=vec![(0usize,false)];

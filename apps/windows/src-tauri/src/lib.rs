@@ -679,10 +679,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
             }
             let session = snapshot.host.sessions.iter().find(|s| s.id == request.session_id).ok_or("找不到这场会议。")?;
             let export = prepare_headless_meeting_export(session,&request)?;
-            let data=if export.format==backend::export::MeetingExportFormat::Pdf {
-                let content=std::str::from_utf8(&export.bytes).map_err(|_|"PDF 内容无法读取。")?;
-                backend::pdf_export::render(&session.title,content)?
-            }else{export.bytes};
+            let data=backend::content_export::materialize(&session.title,export)?;
             backend::export::write_atomic(Path::new(destination), &data)?;
             println!("meeting_workspace_result=EXPORTED_LOCAL_MEETING");
         } else if operation == 4 {
@@ -793,6 +790,8 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
             let format = match args.get(index+3).map(String::as_str) {
                 Some("pdf") => backend::export::MeetingExportFormat::Pdf,
                 Some("docx") => backend::export::MeetingExportFormat::Docx,
+                Some("pptx") => backend::export::MeetingExportFormat::Pptx,
+                Some("png") => backend::export::MeetingExportFormat::Png,
                 Some("mindmap") => backend::export::MeetingExportFormat::Mindmap,
                 Some("todo") => backend::export::MeetingExportFormat::Todo,
                 Some("ics") => backend::export::MeetingExportFormat::Ics,
@@ -814,10 +813,7 @@ fn run_diagnostics_cli(args:&[String])->Option<Result<(),String>> {
                 args.get(index+5).map(|value|serde_json::from_str::<backend::export::PdfSections>(value).map_err(|e|e.to_string())).transpose()?
             } else {None};
             let prepared = backend::export::prepare_meeting_export_selected(&session,mode,format,None,slots,sections.as_ref())?;
-            let data=if format==backend::export::MeetingExportFormat::Pdf {
-                let content=std::str::from_utf8(&prepared.bytes).map_err(|_|"PDF 内容无法读取。")?;
-                backend::pdf_export::render(&session.title,content)?
-            }else{prepared.bytes};
+            let data=backend::content_export::materialize_bytes(&session.title,format,prepared.bytes)?;
             let bytes = backend::export::write_atomic(Path::new(output),&data)?;
             println!("meeting_export_json={}",serde_json::json!({"status":"EXPORTED_SAVED_DOCUMENT","bytes":bytes,"warning":prepared.warning,"networkAccess":false,"deviceAccess":false,"fullChainAcceptance":"NOT_RUN"}));
             Ok(())
