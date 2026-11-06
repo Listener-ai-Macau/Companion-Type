@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-06T22:50:30+08:00",
+  "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
+  "ownerDirective": "重启的问题应该不用查了，你就继续吧。把整那东西跑好就行了。",
+  "work": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
+  "pid": 27196,
+  "processCreatedAt": 1793976629.8691993,
+  "bootTime": 1793890675.9475114,
+  "previousSourceCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
+  "skipRebootInvestigationByOwner": true,
+  "automaticInferenceRetries": 0,
+  "referencePassedToInference": false,
+  "startedAt": "2026-11-06T22:50:31+08:00",
+  "audioSeconds": 2362.945,
+  "hostAvailableBytes": 3794767872,
+  "supervisorPid": 30268,
+  "supervisorCreatedAt": 1793976631.2048075,
+  "inferenceSupervisorExitCode": 0,
+  "inferenceState": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+  "inferenceFinishedAt": "2026-11-07T02:13:44+08:00",
+  "finishedAt": "2026-11-07T02:13:44+08:00"
+}

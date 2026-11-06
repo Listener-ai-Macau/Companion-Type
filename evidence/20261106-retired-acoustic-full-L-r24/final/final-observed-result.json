@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-07T02:13:47+08:00",
+  "state": "FULL_MEETING_INCOMPLETE_OR_SCORING_FAILED_EVIDENCE_RETAINED",
+  "batchState": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
+  "inferenceState": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+  "workerState": null,
+  "review": null,
+  "overlapContextReview": null,
+  "allOriginalFrozenSourceHashesStillMatch": true,
+  "workerRunning": false,
+  "automaticInferenceRetries": 0,
+  "productQualified": false,
+  "crossMeetingUnder5PercentQualified": false,
+  "productModelChanged": false
+}

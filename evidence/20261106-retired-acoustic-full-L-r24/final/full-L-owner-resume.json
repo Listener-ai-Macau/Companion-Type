@@ -1,0 +1,21 @@
+{
+  "state": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+  "startedAt": "2026-11-06T22:50:31+08:00",
+  "protocolSha256": "bf93fe445376b2b9e94306b22304dbcade46dab6ae9d1571c11e6c822a36551b",
+  "inputManifestSha256": "53a7fe03471af0b095317af13d18e5dbc407c76e48de9e0f66d0316508de03a7",
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 3221225477,
+      "workerState": "FAILED_BEFORE_RECEIPT",
+      "wholeProcessFamilySeconds": 12192.729083,
+      "observedProcessFamilyPeakRssBytes": 1215250432,
+      "observedProcessFamilyPeakPrivateBytes": 1480654848,
+      "processFamilyCpuSeconds": 1362.71875,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24\\results\\L_R003S01C02-20261106-r24\\completed-state.json",
+      "smokeOnly": false
+    }
+  ],
+  "referencePassedToWorker": false,
+  "finishedAt": "2026-11-07T02:13:44+08:00"
+}
