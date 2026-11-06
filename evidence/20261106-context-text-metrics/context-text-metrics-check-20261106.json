@@ -1,0 +1,27 @@
+{
+  "state": "PASS_SYNTHETIC_CONTEXT_TEXT_METRICS_AND_SYNTAX",
+  "tests": 6,
+  "testSeconds": 0.008,
+  "realMeetingReferenceOpened": false,
+  "newModelRun": false,
+  "caseCoverage": [
+    "perfect overlap activity cannot hide wrong words",
+    "extra stream insertions retained",
+    "missing person deletions retained",
+    "same-person overlap not counted as two people",
+    "adjacent speech and absent short category",
+    "boundary insertions retained"
+  ],
+  "limits": {
+    "workerCpuPercent": 5,
+    "privateMemoryMiB": 512,
+    "observedPrivatePeakBytes": 50081792,
+    "memoryPagePriority": 1
+  },
+  "sourceSha256": {
+    "overlap_context_text_metrics_20261106.py": "213f054b5d53c98addf2d02bd0d0a6f2954990fbdbe64743197d30f4cdc0c91d",
+    "test_overlap_context_text_metrics_20261106.py": "99de70ad3a31bc29d0014306af27082944f6d84a4f77dc7559b5b61e9591e68c",
+    "score_overlap_context_20261106.py": "9cea4370406ef4933646952cd75c3a273b02177d007adbfce7345e258f532918",
+    "finalize_tonight_model_r24_20261106.py": "c94f5b258040540e94c9dd7da62c29f682f6c37f346f54c3b2c719d0a44227ce"
+  }
+}
