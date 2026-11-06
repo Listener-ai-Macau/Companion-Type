@@ -130645,18 +130645,18 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-06T21:25:06+08:00",
+      "updatedAt": "2026-11-06T22:30:52+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP27-18",
       "baseline": {
-        "firmwareVersion": 66691,
+        "firmwareVersion": 66692,
         "uiGeneration": 85,
         "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
-        "sourceCommit": "7fc040d1006d889eadfce96f8f03d22a45879532",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\candidate.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\windows067-ota66691.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\final-idle.json",
+        "sourceCommit": "308a005bc39b18e249a6a511c04f4c5a913c908e",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66692\\candidate.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66692\\windows068-ota66692.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66692\\final-idle.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
@@ -130710,11 +130710,11 @@
             "CP07-11",
             "CP09-08"
           ],
-          "current": "66690真实35m11s自然满空间、17段CRC/SHA/WAV10ms及回收后无复位再录通过。66691实装后17场短录占满容量，拒绝15/31ms通过，18场均精确收取并回收；原34段/4608000B/17完整段恢复。实板开录1.344–3.219s、停录1.797–4.485s仍FAIL，16步/1ms模型不能替代实测。",
+          "current": "66692实板STOP三次188/187/344ms均通过500ms，原音CRC/SHA/WAV及精确回收通过，34原段/4608000B/17完整段恢复。START2.532/2.641/1.328s两次FAIL。原满盘拒绝15/31ms、66690自然35m11s满盘证据保留。",
           "remaining": [
-            "修未使用未来预留区STOP仍完成整区准备并再次扫描的冗余等待；原恢复检查和未知写入所有者不能被跳过。",
-            "减少首次分配的重复目录扫描，保持全部原有占用/代际校验。",
-            "66691普通Windows自动选择215包型，本次OTA37.032KiB/s低于50，保留FAIL；与66690的466包型/58.812差异有据，须沿现有传输策略定位。"
+            "交付be602e8候选66693：原低功耗入口漏掉准备/收尾存储工作，仍在有界片段间WFI；只在无麦/无编码/无物理擦除等待时继续完整产品轮询。复测原2s/500ms，不降低指标。",
+            "OTA自动215包型36.380KiB/s仍低于50；原100K字面错误和工程保留模式汇总错误已交共享发现，未关闭。",
+            "新接小米d6bd213d已实装069，目标板旧配对清除后系统/App配对未完成；先以真正LE链路对照定位。此前native connectDevice诊断在BOND_NONE检查前即返回，未产生LE链路，不能称LE实测失败。"
           ],
           "next": "沿embedded.next执行。",
           "doneWhen": "独立容量0证明真实满盘，原音完整耐久保存后精确回收，原目录不变，回收后普通开始能再录。",
@@ -131078,7 +131078,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "板卡66691，所有本轮18场已收回；句柄关闭、共享板已release。先离线修未使用未来区取消与空闲区搜索源头，不再重复无变化35分钟满盘或盲加轮询批量；原500ms停录/2s首PCM不降低。OTA37.032KiB/s、138.507s/87.075s、app409564B较原409372预算+192B：速度和资源旧预算仍FAIL，新guard未知。分析同61.44MHz实际2M/965us下自动215与旧2120us/466策略，正常入口合格才关闭。",
+      "next": "先完成66693存储前台调度修复实测，再查新小米手机重配。069已由工程自行确认安装，原配对133、重配无弹窗失败保留；不再让Owner重复按键，已有受保护CRM1开配对窗可作工程辅助，已验证Windows正常/板卡空闲/34原录音不变。手机真实录音/接收/OTA尚未通过。61.44MHz、50KiB/s、首PCM2s/停录500ms和原资源预算保持，电源/声学/屏幕/生产明确block继续保留。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131385,12 +131385,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-06T21:25:06+08:00",
-        "firmware": 66691,
+        "at": "2026-11-06T22:30:52+08:00",
+        "firmware": 66692,
         "coreDelivery": "FW66685_AND_WINDOWS053_SELECTED_DELETE_SPACE_AND_SYNC_ACCEPTED_SCOPED",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "板卡66691，所有本轮18场已收回；句柄关闭、共享板已release。先离线修未使用未来区取消与空闲区搜索源头，不再重复无变化35分钟满盘或盲加轮询批量；原500ms停录/2s首PCM不降低。OTA37.032KiB/s、138.507s/87.075s、app409564B较原409372预算+192B：速度和资源旧预算仍FAIL，新guard未知。分析同61.44MHz实际2M/965us下自动215与旧2120us/466策略，正常入口合格才关闭。",
+        "openSoftware": "先完成66693存储前台调度修复实测，再查新小米手机重配。069已由工程自行确认安装，原配对133、重配无弹窗失败保留；不再让Owner重复按键，已有受保护CRM1开配对窗可作工程辅助，已验证Windows正常/板卡空闲/34原录音不变。手机真实录音/接收/OTA尚未通过。61.44MHz、50KiB/s、首PCM2s/停录500ms和原资源预算保持，电源/声学/屏幕/生产明确block继续保留。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -132471,33 +132471,25 @@
         "fullWavAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-e8-full-wav-verification.json"
       },
       "metricAcceptance": {
-        "at": "2026-11-06T17:37:13+08:00",
+        "at": "2026-11-06T22:30:52+08:00",
         "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
-        "currentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone065-ota66689-metric-baseline.json",
-        "verdict": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone065-ota66689-revised-resource-verdict.json",
-        "result": "PASS_EXPLICIT_RESOURCE_BASELINE_REVISION",
-        "functionalOtaResult": "PASS_ORDINARY_ANDROID065_OTA66689_EXACT_IDENTITY_AND_INDEPENDENT_UART",
+        "currentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66692\\ota-measurements.json",
+        "verdict": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66692\\ota-verdict-original-resource-budget.json",
+        "result": "FAIL",
+        "functionalOtaResult": "PASS_SIGNED_ENGINEERING_PRESERVATION_OTA_ONLY",
         "ownerQuotes": [
           "然后你测手机的时候，你 OTA 同时要测一下那些指标，不要说测。过了就算了，你有记录下之前那些指标吗？就欠软这个东西主要是根据指标去做优化。",
           "是的，让像嵌入式这样的功能，它虽然说可以，但是如果是。那个要求的指标不及格的话，你也是报失败。之前指标好像都有列吧，如果没有列的话就列一个合适"
         ],
-        "next": "本轮手机OTA、分段录音接收和维护已收尾；不重复已过50KiB/s，回原售卖缺口和对应责任模块。",
+        "next": "沿embedded.next，不复用旧手机065的PASS。",
         "latestValues": {
           "payload_rate_kib_s": {
-            "value": 56.47003318137854,
-            "status": "PASS"
-          },
-          "total_seconds": {
-            "value": 118.64870546899999,
-            "status": "PASS"
-          },
-          "post_finish_verify_seconds": {
-            "value": 91.99400054399999,
-            "status": "PASS"
+            "value": 36.37981102969322,
+            "status": "FAIL"
           },
           "application_bytes": {
-            "value": 409268,
-            "status": "PASS"
+            "value": 410188,
+            "status": "FAIL_ORIGINAL409372_BUDGET"
           },
           "static_data_bss_bytes": {
             "value": 69328,
@@ -132508,20 +132500,8 @@
             "status": "PASS"
           },
           "stack_guard_faults": {
-            "value": 0,
-            "status": "PASS"
-          },
-          "old_catalog_changed_count": {
-            "value": 0,
-            "status": "PASS"
-          },
-          "pending_ota_claimed_bytes": {
-            "value": 0,
-            "status": "PASS"
-          },
-          "installed_identity_mismatch_count": {
-            "value": 0,
-            "status": "PASS"
+            "value": null,
+            "status": "NOT_EVALUATED"
           }
         },
         "existingRequirementsReview": "原QM01/02/03/10/12/14/15保留；编码P95≤5ms/峰≤6ms、PDM峰≤3ms、最长未服务≤8ms、正常冷连接≤8s、同保留连接控制ACK≤500ms、首PCM≤2s、重连≤15s、CPU峰值<95%等须按当前适用证据验，不能用OTA功能成功代替。",
@@ -132563,12 +132543,15 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-06T21:25:06+08:00",
-        "state": "ALL_OWN_CLIPS_RECLAIMED_BOARD_RELEASED_OFFLINE_LATENCY_ROOT_FIX",
-        "sourceCommit": "7fc040d1006d889eadfce96f8f03d22a45879532",
-        "liveDeviceHandles": 0,
-        "boardLease": false,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\control-metric-verdict.json"
+        "at": "2026-11-06T22:30:52+08:00",
+        "state": "FW66692_INSTALLED_STOP_PASS_START_FAIL_66693_BUILT_PHONE069_PAIRING_UNRESOLVED",
+        "boardItem": "Companion66692开停录响应及OTA指标",
+        "boardLease": true,
+        "liveRecording": false,
+        "sourceCommitInstalled": "308a005bc39b18e249a6a511c04f4c5a913c908e",
+        "candidateCommit": "be602e8",
+        "phoneSerial": "d6bd213d",
+        "phoneVersion": "0.1.69"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -132616,7 +132599,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。",
+        "next": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -132887,7 +132870,7 @@
           },
           "actualNewPhoneChecksPassed": false,
           "wholeProductQualified": false,
-          "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。",
+          "next": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。",
           "actualProgress": {
             "at": "2026-11-06T14:45:43+08:00",
             "ordinaryUi": "Actual Android App on isolated display2; primary display remained with owner or locked, no main-screen input.",
@@ -133037,7 +133020,7 @@
             "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
           },
           "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
-          "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。",
+          "next": "共享手机/板仍由FW66692配对/OTA流程占用。本侧已准备无界面、独立UID的虚构文件回收站真Android验收包，等释放后核真实APK身份再执行；不得盲装同号069。Word、普通界面与原库切回以及Windows068实际文件夹收件仍开放。R22因实际Windows低RAM停止且无活模型，不在相同条件下盲重跑。",
           "modelsRun": false,
           "customerResult": null,
           "ownerAccepted": false,
@@ -133739,7 +133722,34 @@
           ],
           "ownerAccepted": false,
           "wholeProductQualified": false,
-          "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。"
+          "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。",
+          "nativeQaPrepared": {
+            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\Companion-Local-Lifecycle-QA071.apk",
+            "apkSha256": "ea3ffe05cc594cfb0b130797819e6c85bfde8b38ceec56d5de5517532c170e5a",
+            "productionLifecycleSourceSha256": "29e98c17613558c7c1883641c0e0e259548ba198ece538db5b542654be5c248a",
+            "selfTargetPackage": "com.denzic.companion.lifecycleqa071",
+            "internetPermission": false,
+            "bluetoothPermission": false,
+            "ownerCompanionDataAccessible": false,
+            "hasActivityOrUi": false,
+            "builtOnly": true,
+            "installed": false,
+            "stages": [
+              "create",
+              "reopen",
+              "interrupt",
+              "retry"
+            ],
+            "scope": "Same production lifecycle class plus source-pinned backup; separate app UID, tiny synthetic fixtures only. This is Android filesystem acceptance, not Companion UI acceptance.",
+            "at": "2026-11-06T22:34:42+08:00",
+            "actualAndroidFilesystemQualified": false
+          },
+          "otherPhoneFlowObservation": {
+            "at": "2026-11-06T22:34:42+08:00",
+            "reportedVersion": "0.1.69",
+            "sourceApkMatchUnknown": true,
+            "state": "Other embedded chat reports installation; this work did not query or replace the phone. Verify exact APK/source after lease release, no blind same-version overwrite."
+          }
         },
         "latestAndroidCandidate": {
           "version": "0.1.69",
@@ -137583,10 +137593,12 @@
             "at": "2026-11-06T08:12:56+08:00",
             "ownerQuote": "重启的问题应该不用查了，你就继续吧。把整那东西跑好就行了。",
             "decision": "Owner supersedes prior engineering deferral for reboot investigation; continue original full real meeting using exact post-restart-tested duty0.1 and original resource guards. Historical reboot remains unresolved evidence, not a prerequisite.",
-            "state": "FULL_L_STAGED_INPUTS_PROTECTED_RUNNING",
+            "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
             "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22",
-            "next": "Finish complete real meeting, require EOS/parsed whole output, then isolated cpCER/DER/overlap/timing scoring. No outcome or sale qualification yet.",
-            "previousFunctionalCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24"
+            "next": "不在相同全局低内存条件下盲重跑R22，不放宽既有保护。保留已验证独立输入准备及完整上下文/权重；下一次须有可区分的内存条件或实现变化后再整会验证，完整输出退出后才独立评分。当前推进原安卓回收站/Word受影响验收及Windows文件夹实际分享，等待共享手机占用释放。",
+            "previousFunctionalCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
+            "activeWorkerPid": null,
+            "finishedAt": "2026-11-06T22:16:20+08:00"
           },
           "restoredSpeechResult20261106": {
             "at": "2026-11-06T08:06:10+08:00",
@@ -137634,7 +137646,7 @@
             "newWholeMeetingAccuracy": null,
             "productQualified": false,
             "highestPriorityNext": "Owner confirms no external card in morning; connection wait exited, no model process. Continue nonmodel exports052 now. Reconnect RX6800XT later, then invoke protected full-meeting wrapper in a new namespace and score only complete output. Reboot investigation not prerequisite.",
-            "longGpuValidationState": "R22_PROTECTED_STAGED_INPUT_FULL_L_RUNNING_NOT_QUALIFIED",
+            "longGpuValidationState": "R22_STOPPED_LOW_SYSTEM_RAM_NO_COMPLETE_OUTPUT_NO_NEW_SCORE",
             "mainAppBaseline": "Windows0.1.51 installed and remotely protected; research has no app dependency/default-model change.",
             "phoneOrBoardIo": false,
             "activeModelPids": [],
@@ -137826,11 +137838,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "FULL_L_R22_RUNNING_AFTER_EXACT_AUTHOR_PREPROCESSING_SEPARATION",
+          "status": "FULL_L_R22_STOPPED_LOW_SYSTEM_RAM_EXACT_INPUT_STAGING_RETAINED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "Finish complete real meeting, require EOS/parsed whole output, then isolated cpCER/DER/overlap/timing scoring. No outcome or sale qualification yet. Original Android069/Windows068 actual handoff and library restoration gaps retained; shared phone/board test not interrupted.",
+          "next": "不在相同全局低内存条件下盲重跑R22，不放宽既有保护。保留已验证独立输入准备及完整上下文/权重；下一次须有可区分的内存条件或实现变化后再整会验证，完整输出退出后才独立评分。当前推进原安卓回收站/Word受影响验收及Windows文件夹实际分享，等待共享手机占用释放。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -137848,7 +137860,7 @@
             ],
             "computeRunThisStage": false,
             "decision": "Night GPU resume condition met. Read original complete-L wrapper/previous failure; retain exact resource policy, no installed product model change.",
-            "state": "EXACT_FULL_INPUT_PREPARATION_PASSED_R22_PAST_PREVIOUS_MEMORY_STOP_RUNNING",
+            "state": "R22_STOPPED_ACTUAL_WINDOWS_LOW_SYSTEM_RAM_AFTER_79_CHUNKS_NO_OUTPUT",
             "actualNativeGpu": "RX6800XT/gfx1030",
             "inferenceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-gpu-reconnected-20261106-r18",
             "peakPrivateBytes": 1448017920,
@@ -137875,21 +137887,91 @@
               },
               "modelLoadSeconds": 16.982697300001746
             },
-            "newAccuracyScore": null
+            "newAccuracyScore": null,
+            "r22FinalResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22\\final-observed-result.json",
+            "r22Final": {
+              "at": "2026-11-06T22:34:42+08:00",
+              "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+              "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22",
+              "ownerQuote": "另外现在显卡重新可以用了",
+              "activeWorkerPid": null,
+              "startedAt": "2026-11-06T22:05:54+08:00",
+              "finishedAt": "2026-11-06T22:16:20+08:00",
+              "actualGpu": "AMD Radeon RX 6800 XT",
+              "audioSeconds": 2362.945,
+              "completeExactAuthorInputStagingPassed": true,
+              "completedAcousticChunks": 79,
+              "totalAcousticChunks": 79,
+              "decoderPrefillLayersCompleted": 3,
+              "decoderPrefillLayerTotal": 28,
+              "generatedTokens": 0,
+              "newWholeMeetingQualityScore": null,
+              "supervisorResult": {
+                "meeting": "L_R003S01C02",
+                "exitCode": 15,
+                "workerState": "FAILED_BEFORE_RECEIPT",
+                "wholeProcessFamilySeconds": 626.090464,
+                "observedProcessFamilyPeakRssBytes": 1322315776,
+                "observedProcessFamilyPeakPrivateBytes": 1401982976,
+                "processFamilyCpuSeconds": 86.484375,
+                "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22\\results\\L_R003S01C02-20261106-r22\\completed-state.json",
+                "smokeOnly": false
+              },
+              "lastResourceSample": {
+                "at": "2026-11-06T22:16:19+08:00",
+                "meeting": "L_R003S01C02",
+                "processFamilyRssBytes": 1322315776,
+                "processFamilyPrivateBytes": 1401962496,
+                "processFamilyCpuSeconds": 86.484375,
+                "systemCpuPercent": 46.6,
+                "availableMemoryBytes": 837869568
+              },
+              "gpuAllocatorSnapshot": {
+                "gpuAllocatedBytes": 2520237568,
+                "gpuReservedBytes": 3636461568,
+                "gpuPeakAllocatedBytes": 3626883072,
+                "gpuPeakReservedBytes": 3772776448
+              },
+              "preparedInputCache": {
+                "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+                "manifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432",
+                "allTensorBytesChecked": true,
+                "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+                "source": "Exact original author processor in previous exited process"
+              },
+              "reason": "Windows LowMemoryResourceNotification signaled; release only this experiment family",
+              "automaticInferenceRetries": 0,
+              "interpretation": "Exact author preprocessing separation passed the previous PREPARING_COMPLETE_AUDIO stop and all 79 acoustic chunks. The separate whole-context decoder did not finish; low system RAM is observed, its global root cause is not established. FAILED_BEFORE_RECEIPT means the stopped worker could not write its final receipt, not a newly diagnosed model-math failure.",
+              "unchangedGuards": {
+                "cpuPercentMaximum": 5,
+                "privateMemoryGiB": 2,
+                "gpuPriority": "IDLE",
+                "cooperativeDuty": 0.1,
+                "actualWindowsLowMemoryStop": true,
+                "oneModelAtATime": true
+              },
+              "otherAppsClosed": false,
+              "driverSettingsChanged": false,
+              "productModelChanged": false,
+              "computerUse": false,
+              "phoneIo": false,
+              "next": "不在相同全局低内存条件下盲重跑R22，不放宽既有保护。保留已验证独立输入准备及完整上下文/权重；下一次须有可区分的内存条件或实现变化后再整会验证，完整输出退出后才独立评分。当前推进原安卓回收站/Word受影响验收及Windows文件夹实际分享，等待共享手机占用释放。"
+            }
           },
           "inputStagingR19": {
             "at": "2026-11-06T21:59:30+08:00",
             "sourceCommit": "2bbda701b2c66dbaae62247736c4de67cd4f2ace",
-            "state": "COMPLETE_EXACT_FULL_AUDIO_INPUT_PREPARATION_R21_R22_RUNNING",
+            "state": "EXACT_FULL_INPUT_PREPARATION_R21_PASSED_R22_STOPPED_LOW_SYSTEM_RAM",
             "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-prepared-inputs-20261106-r19",
             "modelMathChanged": false,
             "weightsChanged": false,
             "resourcePolicyUnchanged": true,
             "newWholeMeetingQuality": null,
-            "latestResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22\\first-progress-result.json",
+            "latestResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22\\final-observed-result.json",
             "preparedInputManifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
             "preparedInputManifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432",
-            "evidenceCommit": "4f3857e2544c831a89014df810e2105ec4b9169b"
+            "evidenceCommit": "4f3857e2544c831a89014df810e2105ec4b9169b",
+            "finalEvidenceCommit": "faa7f7ceea1fb6d5f5203119a4603b2e23dd8830"
           }
         },
         "ownerRx6800xtConnected20261104": {
