@@ -60,6 +60,19 @@ public final class SystemUpdateClient {
         while(System.nanoTime()<deadline){Status s=new Status(link.read(STATUS));s.sameCapacity(begin);s.receiving((int)expected);if(s.generation!=generation||s.accepted<lower||s.accepted>upper)throw new IOException("设备接收位置或本次升级编号不一致，未继续发送");if(s.accepted==upper)return s;sleep(50);}
         throw new IOException("尚未确认本轮升级数据已保存，停止传入；请重新连接后从头重试。");
     }
+    static void waitRetained(RecordingClient.Link link,Status begin)throws IOException{
+        long deadline=System.nanoTime()+30_000_000_000L;
+        while(System.nanoTime()<deadline){
+            Status s=new Status(link.read(STATUS));s.sameCapacity(begin);
+            if(s.generation!=begin.generation||s.total!=begin.total||s.accepted!=begin.total)
+                throw new IOException("设备尚未确认本次完整升级文件，不能将传输完成当作安装成功");
+            if(s.error!=0||s.state==4)throw new IOException("设备未能提交完整升级文件，请重新连接核对状态");
+            if(s.state==3)return;
+            if(s.state!=1&&s.state!=2)throw new IOException("设备升级提交状态无效，请重新连接核对实际版本");
+            sleep(50);
+        }
+        throw new IOException("设备尚未确认完整升级文件已保留，请重新连接核对实际版本");
+    }
     public static void transfer(Connector connector,SystemUpdatePackage pack,AtomicBoolean cancel,Progress progress)throws IOException{
         RecordingClient.Link link=null;boolean beginSent=false,finishAttempted=false;String identity;IOException finishError=null;
         try{
@@ -81,7 +94,13 @@ public final class SystemUpdateClient {
             // only exact new running identity may subsequently prove success.
             if(cancel.get())throw new IOException("已停止传入，未要求设备安装；下一次从头传入。");
             progress.update("installing",accepted,pack.image.length);finishAttempted=true;
-            try{link.write(CONTROL,control(3,pack.image.length,chunk,window,imageCrc));}catch(IOException error){finishError=error;}
+            try{
+                link.write(CONTROL,control(3,pack.image.length,chunk,window,imageCrc));
+                // ATT completion only acknowledges the queued control write.
+                // The foreground CRC/read-back may still be using this link;
+                // disconnecting now aborts it before the pending install exists.
+                waitRetained(link,start);
+            }catch(IOException error){finishError=error;}
         }catch(IOException error){if(link!=null&&beginSent&&!finishAttempted)try{link.write(CONTROL,control(4,0,0,0,0));}catch(IOException ignored){}throw error;}
         finally{if(link!=null)link.close();}
         progress.update("verifying",pack.image.length,pack.image.length);sleep(10000);long deadline=System.nanoTime()+180_000_000_000L;String last=finishError==null?"":finishError.getMessage();
