@@ -599,6 +599,27 @@ pub async fn discard_oldest_companion_recording(
 }
 
 #[tauri::command]
+pub async fn list_companion_device_recordings(coordinator:CompanionCoordinatorState<'_>)
+ ->Result<Vec<crate::backend::DeviceRecording>,String> {
+    let c=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||c.list_device_recordings()).await.map_err(|e|e.to_string())?
+}
+#[tauri::command]
+pub async fn sync_companion_device_recording(coordinator:CompanionCoordinatorState<'_>,key:crate::companion_v1::CompanionV1RecordingKey)
+ ->Result<CompanionV1Snapshot,String> {
+    let c=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||c.sync_device_recording(&key)).await.map_err(|e|e.to_string())?
+}
+#[tauri::command]
+pub async fn delete_companion_device_recording(app:AppHandle,coordinator:CompanionCoordinatorState<'_>,key:crate::companion_v1::CompanionV1RecordingKey)
+ ->Result<crate::backend::recording_discard::RecordingDiscardReport,String> {
+    let c=coordinator.inner().clone();tauri::async_runtime::spawn_blocking(move||c.delete_device_recording(&key,|info| {
+        let date=if info.started_at_unix_seconds==0 {"日期未知".into()}else{chrono::DateTime::from_timestamp(i64::from(info.started_at_unix_seconds),0).map(|d|d.with_timezone(&chrono::Local).format("%Y-%m-%d %H:%M").to_string()).unwrap_or_else(||"日期未知".into())};
+        app.dialog().message(format!("删除设备上的这场录音？\n{date}，设备剩余音频约{}秒，可释放{:.1} KiB。\n未同步的设备原音将永久删除。本机已保存的副本保留。",info.duration_ms/1000,f64::from(info.releasable_bytes)/1024.0))
+            .title("删除设备录音").kind(MessageDialogKind::Warning)
+            .buttons(MessageDialogButtons::OkCancelCustom("删除这场录音".into(),"取消".into())).blocking_show()
+    })).await.map_err(|e|e.to_string())?
+}
+
+#[tauri::command]
 pub async fn export_companion_library(app:AppHandle,coordinator:CompanionCoordinatorState<'_>,request:crate::backend::library_export::Request)
     ->Result<Option<crate::backend::library_export::Report>,String> {
     let lease=coordinator.begin_audio_export()?;

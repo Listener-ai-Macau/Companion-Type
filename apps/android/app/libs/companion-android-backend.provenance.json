@@ -1,19 +1,20 @@
 {
   "schema": 1,
-  "aarSha256": "a16c29c96ede57dbce0fba009a06640df17d531594a491ef07f97e414549d3c8",
-  "backendSourceCommit": "d7d560b8e78b575c0af59f4d6d48ebb45bd5ceea",
-  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-android-backend",
+  "aarSha256": "e71478a71093786910eee549e629b0572a86d5ae1f1878bbc15c4da492de36bd",
+  "backendSourceCommit": "d43ef35eb49e2647875fbcd953e718eb96e3dc20",
+  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\capture-android-device-management",
   "priorVerifiedBackendCommit": "c608dc954405598067bad62f6b74d55108120e78",
-  "scope": "Capture full UTC clock synchronization, optional dated directory and durable local recording date; installed 0.1.48 JNI/runtime and original data retained.",
+  "scope": "Logical device recording inventory and CDS3 exact-session deletion; existing JNI and ASR runtime retained.",
   "features": [
     "mobile-asr",
     "mobile-local-asr",
     "mobile-calendar",
     "mobile-control"
   ],
-  "changeScope": "Recording calendar and clock only; no model calls",
+  "changeScope": "Java device management only; no JNI or model changes",
   "previousBackendReceipt": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel043\\previous-backend-provenance.json",
   "recoveredOriginalBackendCommit": "1fc276e2ad16f1cb881c03a54f6d0137c54f40a6",
-  "backendSourceTree": "ad1a3130fcac672e05cabe5fb2fd9e228898c2e8",
-  "sourceRecoveryScope": "Exact original backend source payload. New independent recovery commit; native runtime and AAR bytes unchanged."
+  "backendSourceTree": "00404808294dcd270ec92fa8cc059ce6db970748",
+  "sourceRecoveryScope": "Exact original backend source payload. New independent recovery commit; native runtime and AAR bytes unchanged.",
+  "nativeInputReceipt": "E:\\CodexData\\Companion\\.build-cache\\android053-device-management\\native-input.json"
 }

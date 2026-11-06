@@ -19,6 +19,7 @@ pub(crate) use ble_bridge::pet_find;
 pub(crate) mod lifecycle;
 pub(crate) use ble_bridge::release_process_device_links;
 pub(crate) use ble_bridge::sync_selected_recording_key;
+pub(crate) use ble_bridge::{DeviceRecording,list_device_recordings,delete_device_recording};
 pub(crate) mod speaker_refinement;
 pub(crate) mod meeting_transcript;
 pub(crate) use ble_bridge::benchmark_recording_upload;
@@ -762,6 +763,7 @@ pub trait CompanionBackend: Send + Sync {
     fn save_library_lifecycle(&self,_request:library_lifecycle::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持录音保护与回收站。".into())}
     fn save_library_organization(&self,_request:library_organization::Request)->Result<CompanionV1Snapshot,String>{Err("当前环境不支持保存资料分类。".into())}
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport, String>;
+    fn refresh_device_recording_library(&self)->Result<CompanionV1Snapshot,String> {self.snapshot()}
     fn save_meeting_note(&self, request: meeting_notes::Request) -> Result<CompanionV1Snapshot, String>;
     fn save_bookmark(&self, request: recording_bookmarks::Request, stamp: Option<recording_bookmarks::LiveStamp>)
         -> Result<CompanionV1Snapshot,String>;
@@ -1753,6 +1755,11 @@ impl CompanionBackend for FixtureCompanionBackend {
         let (_snapshot,result)=self.run_meeting_work(snapshot,&request,||meeting_processing_job::run(id,job_id,
             meeting_processing_job::Kind::Transcription,||self.transcription.preview_gap(id,&path,&range)))?;
         result
+    }
+    fn refresh_device_recording_library(&self)->Result<CompanionV1Snapshot,String> {
+        let mut snapshot=self.snapshot.lock().map_err(|_|"记录库暂时不可读取。")?;
+        reload_segmented_library(&mut snapshot,&persistence::state_file_path())?;
+        snapshot.updated_at=observation_timestamp();refresh_privacy_counts(&mut snapshot);Ok(snapshot.clone())
     }
     fn restore_local_recordings(&self) -> Result<recording_wire::receiver::LocalRestoreReport,String> {
         let report=recording_wire::receiver::restore_local_product()?;

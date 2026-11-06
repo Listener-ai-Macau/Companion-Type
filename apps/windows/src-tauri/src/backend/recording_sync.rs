@@ -91,12 +91,15 @@ impl Job {
         })
     }
     pub fn begin(device: &str) -> Result<Arc<Self>, String> {
-        Self::begin_kind(device, false)
+        Self::begin_kind(device, false, false)
     }
     pub fn begin_background(device: &str) -> Result<Arc<Self>, String> {
-        Self::begin_kind(device, true)
+        Self::begin_kind(device, true, false)
     }
-    fn begin_kind(device: &str, background: bool) -> Result<Arc<Self>, String> {
+    pub(crate) fn begin_selected(device:&str)->Result<Arc<Self>,String> {
+        Self::begin_kind(device,false,true)
+    }
+    fn begin_kind(device: &str, background: bool, selected:bool) -> Result<Arc<Self>, String> {
         if super::lifecycle::PROCESS.requested() {return Err(super::lifecycle::CLOSING.into());}
         let mut store = STORE.lock().map_err(|_| "同步暂停状态暂时不可用")?;
         let active = store.active.as_ref().and_then(Weak::upgrade);
@@ -105,7 +108,9 @@ impl Job {
             drop(active);
             return Err("已有设备录音正在同步，请先完成或暂停。".into());
         }
-        admit_job(&mut store, device, background)?;
+        // A one-session request must not clear the user's persistent pause
+        // and silently start receiving every other device recording afterward.
+        if !selected {admit_job(&mut store, device, background)?;}
         let job = Self::create_kind(device, background);
         store.active = Some(Arc::downgrade(&job));
         drop(store);

@@ -10,6 +10,7 @@ import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
 import {nativeActionParts,actionReadingParts} from './actionMetadata';
 import {readableCalendarTime} from './calendarTime';
 import { recordingCapacityAvailableSeconds, recordingCapacityRequiredBytes, recordingCapacityCanFit } from '@companion-type/core';
+import {CompanionDeviceRecordings,type DeviceRecordingActions} from './CompanionDeviceRecordings';
 import { Fragment, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import {splitGeneratedMeetingMetadata} from './meetingReading';
 import { CompanionSetup } from './CompanionSetup';
@@ -272,6 +273,7 @@ export interface CompanionDashboardProps {
   onDiscardOldestRecording?: (requiredSeconds: number) => Promise<{
     status: 'deleted' | 'cancelled' | 'noCandidate'; message: string;
   }>;
+  deviceRecordingActions?:DeviceRecordingActions;
   /** Conflict-aware metadata/minutes edit. The host persists before returning its next snapshot. */
   onSaveMeeting?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onRefineSpeakers?: (sessionId:string) => Promise<CompanionV1Snapshot>;
@@ -436,6 +438,7 @@ export function CompanionDashboard({
   onImportAudio,
   onCancelImportAudio,
   onDiscardOldestRecording,
+  deviceRecordingActions,
   onSaveMeeting,
   onRefineSpeakers,
   onPreviewRetranscription,
@@ -1831,6 +1834,7 @@ export function CompanionDashboard({
         onConnect={() => onControl({action:'deviceConnect',deviceId:device?.deviceId??undefined})}
         onCheck={() => onControl({action:'oobeRunChecks',deviceId:device?.deviceId??undefined})}
         onSettings={openSettings} onRefresh={onRefresh} capacityDetails={<>
+      {devicePageConnected && device?.deviceId && deviceRecordingActions ? <CompanionDeviceRecordings deviceId={device.deviceId} busy={controlsBusy||oobeBlockedByRecording} actions={deviceRecordingActions}/>:null}
       {devicePageConnected ? <details className="ct-readiness-capacity">
         <summary>设备空间详情与同步建议</summary>
         <strong>设备录音空间 · 上次读取</strong><p>{capacityHint}</p>
