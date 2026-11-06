@@ -104,3 +104,12 @@
 .mindmap-tree details>ul{margin:0;padding:20px 0 0}.mindmap-body{width:190px;margin:7px 0 0;padding:11px 12px;text-align:left;border:1px solid var(--line);border-radius:12px;background:var(--surface);white-space:pre-wrap}.mindmap-preamble{max-width:220px;padding:12px 0 0;text-align:left}
 
 .translation-heading h2{margin:6px 0 0;font-size:21px;letter-spacing:-.035em}.translation-panel>.hint{margin:12px 0 20px}.translation-card,.translation-result,.translation-empty{margin:20px 0 0;padding:20px;border:1px solid var(--line);border-radius:20px;background:var(--surface)}.translation-card label{margin:0 0 14px}.translation-card select{display:block;width:100%;min-height:48px;margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);font:inherit}.translation-card .secondary,.translation-card .translation-action{width:100%;margin-top:10px}.translation-result h3{margin:0;font-size:15px}.translation-result>p:last-child{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink);font-size:14px;line-height:1.85}.translation-empty{color:var(--muted);font-size:13px;line-height:1.7}
+
+/* Local recording lifecycle follows the existing light/dark surface tokens. */
+.recording-management,.recording-recycle-bin{margin:16px 0;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);}
+.recording-management summary,.recording-recycle-bin summary{font-weight:600;cursor:pointer;}
+.recording-recycle-bin summary svg{vertical-align:-3px;margin-right:8px;}
+.recording-management .buttons,.recording-recycle-bin .buttons{flex-wrap:wrap;}
+.recording-management button svg,.recording-recycle-bin button svg{vertical-align:-3px;margin-right:6px;}
+.recycle-item{padding:16px 0;border-top:1px solid var(--line);overflow-wrap:anywhere;}
+.recycle-item:first-of-type{margin-top:12px;}

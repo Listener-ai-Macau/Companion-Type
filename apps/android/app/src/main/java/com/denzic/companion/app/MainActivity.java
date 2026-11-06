@@ -53,6 +53,16 @@ public final class MainActivity extends Activity {
     private LocalLibraryBackups libraries(){return new LocalLibraryBackups(root());}
     private Path recordings() throws java.io.IOException { return libraries().recordings(); }
     private MeetingStore store() throws java.io.IOException { return new MeetingStore(libraries().meetings()); }
+    private LocalRecordingLifecycle lifecycle()throws Exception{return new LocalRecordingLifecycle(recordings(),libraries().meetings(),MainActivity::syncLifecycleDirectory);}
+    private static void syncLifecycleDirectory(Path directory)throws java.io.IOException{
+        java.io.FileDescriptor fd=null;
+        try{
+            fd=android.system.Os.open(directory.toString(),android.system.OsConstants.O_RDONLY|android.system.OsConstants.O_CLOEXEC|android.system.OsConstants.O_NOFOLLOW,0);
+            if(!android.system.OsConstants.S_ISDIR(android.system.Os.fstat(fd).st_mode))throw new java.io.IOException("管理资料目录无效。");
+            android.system.Os.fsync(fd);
+        }catch(android.system.ErrnoException e){throw new java.io.IOException("管理资料尚未安全保存，原文件保留，请重试。",e);}
+        finally{if(fd!=null)try{android.system.Os.close(fd);}catch(android.system.ErrnoException ignored){}}
+    }
     private TranslationStore translations() throws java.io.IOException { return new TranslationStore(libraries().meetings().resolve("translations")); }
     private android.util.AtomicFile titleFile(String key) throws Exception {
         byte[] digest=java.security.MessageDigest.getInstance("SHA-256").digest(key.getBytes(java.nio.charset.StandardCharsets.UTF_8));
@@ -214,7 +224,7 @@ public final class MainActivity extends Activity {
             try {
                 if(LocalLibraryBackups.BUSY.get()||libraryToken==null||!libraryToken.equals(libraries().token()))throw new java.io.IOException("资料已切换，请重新选择要导出的录音。");
                 if("prepared".equals(format)){
-                    PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(preparedId,true);exports.requireLibrary(entry,libraryToken);if(!key.equals(entry.meta.getString("key")))throw new java.io.IOException("文件来源已变化，请重新操作。");
+                    PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(preparedId,true);exports.requireLibrary(entry,libraryToken);lifecycle().requireVisible(entry.meta.getString("key"));if(!key.equals(entry.meta.getString("key")))throw new java.io.IOException("文件来源已变化，请重新操作。");
                     try(java.io.OutputStream out=getContentResolver().openOutputStream(destination,"w")){if(out==null)throw new java.io.IOException("无法写入所选位置。");exports.write(entry,out);}
                     replyDocument(id,true,null,restored);return;
                 }
@@ -386,7 +396,7 @@ public final class MainActivity extends Activity {
                 if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||LocalLibraryBackups.BUSY.get()){reply(id,null,"已有文件选择或资料操作正在进行。");return;}
                 documentRequestId=id;documentFormat="preparedPreparing";documentPreparedId=preparedId;documentRequestRestored=false;
                 worker.execute(()->{try{
-                    PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(preparedId,true);exports.requireLibrary(entry,libraries().token());
+                    PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(preparedId,true);exports.requireLibrary(entry,libraries().token());lifecycle().requireVisible(entry.meta.getString("key"));
                     String key=entry.meta.getString("key"),token=entry.meta.getString("libraryToken"),mime=entry.meta.getString("mime"),filename=entry.meta.getString("filename");
                     runOnUiThread(()->{if(isFinishing()||isDestroyed())return;documentKey=key;documentLibraryToken=token;documentFormat="prepared";
                         try{startActivityForResult(new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(mime).putExtra(Intent.EXTRA_TITLE,filename),31);}
@@ -467,9 +477,59 @@ public final class MainActivity extends Activity {
         }
     }
     private RecordingLibrary.Session session(String key) throws Exception {
+        lifecycle().requireVisible(key);return storedSession(key);
+    }
+    private RecordingLibrary.Session storedSession(String key) throws Exception {
         for (RecordingLibrary.Session s : RecordingLibrary.inspect(recordings()).sessions)
             if (!s.segments.isEmpty() && MeetingStore.sessionKey(s.segments.get(0).descriptor).equals(key)) return s;
         throw new IllegalStateException("找不到这条本机录音，请刷新列表。");
+    }
+    private void requireLifecycleIdle()throws Exception{
+        requireLibraryIdle();
+        if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0)throw new java.io.IOException("请先完成当前文件选择，再管理录音。");
+    }
+    private void requirePurgeReceiptsResolved(String key)throws Exception{
+        RecorderWire.Descriptor pending=RecordingLibrary.pendingConfirmation(recordings());
+        if(pending!=null&&key.equals(MeetingStore.sessionKey(pending)))throw new java.io.IOException("这条录音还有未完成的设备接收确认，请先恢复并处理原确认。");
+        for(RecordingLibrary.DeferredConfirmation row:RecordingLibrary.deferredConfirmations(recordings()))
+            if(key.equals(MeetingStore.sessionKey(row.descriptor)))throw new java.io.IOException("这条录音有暂缓的设备接收确认，请先恢复并处理原确认。");
+        if(!RecordingLibrary.unreadableConfirmations(recordings()).isEmpty())throw new java.io.IOException("有无法辨认的设备确认资料，请先备份并检查；本次未开始永久清除。");
+    }
+    private boolean confirmLocalPurge(JSONObject offer)throws Exception{
+        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
+        java.util.concurrent.atomic.AtomicReference<android.app.AlertDialog> shown=new java.util.concurrent.atomic.AtomicReference<>();
+        runOnUiThread(()->{
+            if(answer.isDone())return;if(isFinishing()||isDestroyed()){answer.complete(false);return;}
+            String extra=offer.optInt("retainedUnassigned")>0?"\n另有"+offer.optInt("retainedUnassigned")+"份损坏副本无法确认归属，本次保留。":"";
+            android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("永久清除这条本机录音？")
+                .setMessage(offer.optString("title")+"\n将清除当前资料库中可确认归属的原音、转写、纪要、译文与AI材料，共"+offer.optInt("files")+"个文件（约"+offer.optLong("bytes")/1024+" KiB），无法恢复。\n录音卡、其他资料库、已导出副本和应用临时缓存不在本次范围。"+extra)
+                .setNegativeButton("取消",(d,w)->answer.complete(false)).setPositiveButton("永久清除",(d,w)->answer.complete(true))
+                .setOnCancelListener(d->answer.complete(false)).create();
+            shown.set(dialog);dialog.setOnDismissListener(d->answer.complete(false));dialog.show();
+        });
+        try{return answer.get(45,java.util.concurrent.TimeUnit.SECONDS);}
+        finally{answer.cancel(false);runOnUiThread(()->{android.app.AlertDialog dialog=shown.get();if(dialog!=null)dialog.dismiss();});}
+    }
+    private JSONObject changeLocalRecording(JSONObject a)throws Exception{
+        requireLifecycleIdle();String token=a.getString("libraryToken"),key=a.getString("key"),action=a.getString("action");
+        if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，请重新选择录音。");
+        if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("资料操作正在进行。");
+        try{
+            LocalRecordingLifecycle lifecycle=lifecycle();long revision=a.getLong("revision");
+            if(action.equals("purge")){
+                requirePurgeReceiptsResolved(key);JSONObject state=lifecycle.get(key);
+                if(!state.getBoolean("purging")&&storedSession(key).state!=RecordingLibrary.SessionState.COMPLETE)throw new java.io.IOException("录音尚未完整结束或接收，不能永久清除。可先恢复并补齐。");
+                JSONObject offer;
+                synchronized(RecordingSyncService.class){requireLifecycleIdle();offer=lifecycle.preparePurge(key,revision);}
+                // No service monitor is held while waiting for the user's dialog.
+                if(!confirmLocalPurge(offer))return new JSONObject().put("cancelled",true);
+                synchronized(RecordingSyncService.class){requireLifecycleIdle();if(!token.equals(libraries().token()))throw new java.io.IOException("资料库已切换，本次未清除。");requirePurgeReceiptsResolved(key);return lifecycle.purge(key,revision,offer.getString("token"));}
+            }
+            RecordingLibrary.Session original=storedSession(key);
+            String title="";if(action.equals("trash"))title=recordingTitle(key,original);
+            if(action.equals("trash"))onUi(()->{stopPlayback();playbackEvent("stopped","");return true;});
+            synchronized(RecordingSyncService.class){requireLifecycleIdle();return lifecycle.change(key,revision,action,title).put("libraryToken",token);}
+        }finally{LocalLibraryBackups.BUSY.set(false);}
     }
     private JSONObject syncStatus() throws Exception {
         RecordingSyncStatus s = RecordingSyncService.status(this);
@@ -659,14 +719,16 @@ public final class MainActivity extends Activity {
                 return onUi(()->DeviceUpdateService.start(this,requested,name,id,verify));
             }
             case "libraryStatus":return libraries().status();
+            case "recordingTrash":return lifecycle().trash().put("libraryToken",libraries().token());
+            case "recordingLifecycle":return changeLocalRecording(a);
             case "exportInfo":return exportSource(a.getString("key")).info();
             case "prepareExport":return prepareContent(a).dto();
             case "copyExport":{
-                PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(a.getString("id"),true);exports.requireLibrary(entry,libraries().token());String text=exports.copyText(entry);
+                PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(a.getString("id"),true);exports.requireLibrary(entry,libraries().token());lifecycle().requireVisible(entry.meta.getString("key"));String text=exports.copyText(entry);
                 return onUi(()->{android.content.ClipboardManager clipboard=(android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);if(clipboard==null)throw new java.io.IOException("暂时无法复制，请保存文件。");clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Companion 会议资料",text));return true;});
             }
             case "shareExport":{
-                PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(a.getString("id"),true);exports.requireLibrary(entry,libraries().token());
+                PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(a.getString("id"),true);exports.requireLibrary(entry,libraries().token());lifecycle().requireVisible(entry.meta.getString("key"));
                 return onUi(()->{Intent send=ExportFileProvider.shareIntent(this,entry);Intent chooser=Intent.createChooser(send,"分享会议资料");chooser.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION).setClipData(send.getClipData());startActivity(chooser);return new JSONObject().put("opened",true);});
             }
             case "prepareAudioShare":{
@@ -681,7 +743,7 @@ public final class MainActivity extends Activity {
             case "aiContext":{
                 JSONArray available=new JSONArray();int problems=0;StringBuilder identity=new StringBuilder();
                 for(RecordingLibrary.Session row:RecordingLibrary.inspect(recordings()).sessions){if(row.segments.isEmpty())continue;String key=MeetingStore.sessionKey(row.segments.get(0).descriptor);
-                    try{MeetingStore.Snapshot value=store().load(key);if(value==null||value.transcript.trim().isEmpty())continue;JSONObject doc=aiDocument(key);identity.append(doc.getString("binding"));doc.remove("text");available.put(doc);}catch(Exception unavailable){problems++;}}
+                    try{lifecycle().requireVisible(key);MeetingStore.Snapshot value=store().load(key);if(value==null||value.transcript.trim().isEmpty())continue;JSONObject doc=aiDocument(key);identity.append(doc.getString("binding"));doc.remove("text");available.put(doc);}catch(Exception unavailable){problems++;}}
                 return new JSONObject().put("libraryToken",libraries().token()).put("available",available).put("sourceVersion",AiMaterialStore.hash(identity.toString())).put("problems",problems);
             }
             case "askMeeting":{
@@ -693,7 +755,7 @@ public final class MainActivity extends Activity {
                 JSONObject result=meetingAi.ask(a.getString("jobId"),token,owner,a.getString("question"),docs,aiServices().credentials(),a.optJSONObject("resume"),this::requireAiSources,a.optString("purpose","会议问答"));aiServices().verified();return result;
             }
             case "aiMaterials":{String key=a.getString("key");session(key);return new AiMaterialStore(libraries().meetings()).list(key);}
-            case "saveAiMaterial":return meetingAi.save(a,new AiMaterialStore(libraries().meetings()),this::requireAiSources);
+            case "saveAiMaterial":session(a.getString("ownerKey"));return meetingAi.save(a,new AiMaterialStore(libraries().meetings()),this::requireAiSources);
             case "copyAiText":{
                 String value=a.getString("text");if(value.getBytes(java.nio.charset.StandardCharsets.UTF_8).length>256*1024)throw new java.io.IOException("文字较长，请保存文件。");
                 return onUi(()->{android.content.ClipboardManager clipboard=(android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);if(clipboard==null)throw new java.io.IOException("剪贴板暂不可用。");clipboard.setPrimaryClip(android.content.ClipData.newPlainText("会议材料",value));return true;});
@@ -871,11 +933,13 @@ public final class MainActivity extends Activity {
                     if (s.segments.isEmpty()) continue;
                     RecorderWire.Descriptor d = s.segments.get(0).descriptor;
                     String key=MeetingStore.sessionKey(d);
+                    JSONObject life;try{life=lifecycle().get(key);}catch(Exception unreadable){titleProblems++;continue;}
+                    if(life.getLong("trashedAt")!=0)continue;
                     String title;try { title=recordingTitle(key,s); } catch (java.io.IOException error) {title=defaultRecordingTitle(d.sessionId,true);titleProblems++;}
                     MeetingLibrarySearch.Result found=search==null?null:search.find(key,title,reader);
                     if(found!=null){searchProblems+=found.unreadable;if(found.match==null)continue;}
                     JSONObject row=new JSONObject().put("key", key).put("title",title).put("session", Long.toUnsignedString(d.sessionId))
-                            .put("state", s.state.name()).put("segments", s.segments.size())
+                            .put("state", s.state.name()).put("segments", s.segments.size()).put("lifecycle",life).put("libraryToken",libraries().token())
                             .put("recordedAtUnixSeconds",s.startedUnixSeconds>0?Long.valueOf(s.startedUnixSeconds):JSONObject.NULL);
                     long duration=completeAudioDurationMs(s);if(duration>0)row.put("durationMs",duration);
                     if(found!=null)row.put("matchSource",found.match.source).put("matchSnippet",found.match.snippet)
@@ -887,7 +951,7 @@ public final class MainActivity extends Activity {
             }
             case "detail": {
                 String key = a.getString("key"); session(key);
-                return MeetingDetailAccess.read(store(),key,translations());
+                return MeetingDetailAccess.read(store(),key,translations()).put("lifecycle",lifecycle().get(key)).put("libraryToken",libraries().token());
             }
             case "minutesHistory": {
                 String key=a.getString("key");session(key);

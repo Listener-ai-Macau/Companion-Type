@@ -1,0 +1,11 @@
+import {build} from 'esbuild';
+import {spawnSync} from 'node:child_process';
+import {mkdir,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+const root=path.dirname(path.dirname(fileURLToPath(import.meta.url))),out=path.join(root,'.cache','lifecycle071');await mkdir(out,{recursive:true});
+const file=path.join(out,'mobile-lifecycle.mjs');
+await build({entryPoints:[path.join(root,'tools/test_mobile_lifecycle071.tsx')],outfile:file,bundle:true,platform:'node',format:'esm',jsx:'automatic',packages:'external',tsconfig:path.join(root,'apps/mobile/tsconfig.json')});
+const run=spawnSync(process.execPath,['--import',pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href,file],{cwd:root,encoding:'utf8',windowsHide:true});
+await writeFile(path.join(out,'result.json'),JSON.stringify({scope:'Synthetic isolated UI component only; no device or OS UI',exitCode:run.status,stdout:run.stdout,stderr:run.stderr},null,2));
+process.stdout.write(run.stdout??'');process.stderr.write(run.stderr??'');process.exitCode=run.status??1;

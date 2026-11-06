@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import React from 'react';
+import {act,create} from 'react-test-renderer';
+import {RecordingManagement,RecordingRecycleBin,type RecordingLife,type RecordingLifeRequest,type RecordingTrash} from '../apps/mobile/src/RecordingLifecycle';
+const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
+async function main(){
+ let tree:any,allow=false;const calls:RecordingLifeRequest[]=[];
+ const initial:RecordingLife={key:'public-a',revision:0,protected:false,trashedAt:0,purging:false};
+ window.confirm=()=>allow;
+ const props={life:initial,libraryToken:'library-a',title:'公开虚构会议',busy:false,onChange:async(r:RecordingLifeRequest)=>{calls.push(r);return{...initial,revision:r.revision+1,protected:r.action==='protect'};}};
+ await act(async()=>{tree=create(<RecordingManagement {...props}/>);});
+ const button=(name:string)=>{const node=tree.root.findAllByType('button').find((n:any)=>text(n)===name);assert.ok(node,name);return node;};
+ await act(async()=>button('移入本机回收站').props.onClick());assert.equal(calls.length,0,'cancel must not mutate');
+ await act(async()=>button('保护录音').props.onClick());assert.deepEqual(calls.at(-1),{key:'public-a',revision:0,libraryToken:'library-a',action:'protect'});
+ await act(async()=>tree.update(<RecordingManagement {...props} life={{...initial,revision:1,protected:true}}/>));assert.equal(button('移入本机回收站').props.disabled,true);
+ await act(async()=>button('解除保护').props.onClick());assert.equal(calls.at(-1)?.revision,1);
+ allow=true;await act(async()=>tree.update(<RecordingManagement {...props} life={{...initial,revision:2}}/>));
+ await act(async()=>button('移入本机回收站').props.onClick());assert.equal(calls.at(-1)?.action,'trash');assert.equal(calls.at(-1)?.revision,2);
+ await act(async()=>tree.unmount());
+ let rows:RecordingLife[]=[{...initial,revision:3,title:'公开虚构会议',trashedAt:Date.now()}],cancel=true,fail=false;
+ const trash=():RecordingTrash=>({rows:rows.map(r=>({...r})),libraryToken:'library-b',problems:0});
+ const load=async()=>trash();
+ const change=async(r:RecordingLifeRequest)=>{calls.push(r);if(cancel)return{cancelled:true};if(fail){rows=[{...rows[0],revision:4,purging:true}];throw Error('本次清除中断，原记录保留。');}rows=[];return{purged:true,retainedUnassigned:1};};
+ await act(async()=>{tree=create(<RecordingRecycleBin busy={false} revision={1} onLoad={load} onChange={change}/>);});
+ await act(async()=>tree.root.findByType('details').props.onToggle({currentTarget:{open:true}}));
+ await act(async()=>button('永久清除…').props.onClick());assert.match(text(tree.root),/已取消/);assert.equal(calls.at(-1)?.libraryToken,'library-b');assert.equal(rows.length,1);
+ cancel=false;fail=true;await act(async()=>button('永久清除…').props.onClick());assert.match(text(tree.root),/清除中断/);assert.equal(button('恢复录音').props.disabled,true);
+ fail=false;await act(async()=>button('继续核对清除').props.onClick());assert.equal(calls.at(-1)?.revision,4,'retry must use reloaded partial state');assert.match(text(tree.root),/回收站为空/);assert.match(text(tree.root),/损坏副本仍保留/);
+ await act(async()=>tree.unmount());
+ // A late response from a previous library must not provide an actionable row.
+ let resolveOld:(value:RecordingTrash)=>void=()=>{};let old=true;
+ const delayed=()=>old?new Promise<RecordingTrash>(resolve=>{resolveOld=resolve;}):Promise.resolve({rows:[],libraryToken:'new-library',problems:0});
+ await act(async()=>{tree=create(<RecordingRecycleBin busy={false} revision={1} onLoad={delayed} onChange={change}/>);});
+ await act(async()=>tree.root.findByType('details').props.onToggle({currentTarget:{open:true}}));old=false;
+ await act(async()=>tree.update(<RecordingRecycleBin busy={false} revision={2} onLoad={delayed} onChange={change}/>));
+ await act(async()=>resolveOld({rows:[{...initial,title:'旧库数据',trashedAt:1}],libraryToken:'old-library',problems:0}));assert.doesNotMatch(text(tree.root),/旧库数据/);
+ await act(async()=>tree.unmount());
+ console.log('PASS lifecycle UI: cancel/protect/revision/library binding, interrupted purge refresh/retry, truthful retained-copy feedback and late-library response exclusion. No device or OS UI.');
+}
+main().then(()=>process.exit(0),error=>{console.error(error);process.exit(1);});
