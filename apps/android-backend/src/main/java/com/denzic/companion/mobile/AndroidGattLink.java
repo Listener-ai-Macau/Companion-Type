@@ -86,7 +86,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
         failure="Bluetooth "+kind+" timed out";throw new java.net.SocketTimeoutException(failure);
     }
     private BluetoothGattCharacteristic characteristic(UUID id) throws IOException {
-        UUID service=id.equals(DeviceClock.SETTINGS)?SETTINGS_SERVICE:id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:id.equals(RecordingClient.RECORDING_CONSUME)?PRIVACY_SERVICE:
+        UUID service=(id.equals(DeviceClock.SETTINGS)||id.equals(DeviceMaintenance.CONTROL))?SETTINGS_SERVICE:id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:id.equals(RecordingClient.RECORDING_CONSUME)?PRIVACY_SERVICE:
             (id.equals(RecordingClient.MEETING_CONTROL)||id.equals(RecordingClient.MEETING_STATUS)?MEETING_SERVICE:RECORDING_SERVICE);
         BluetoothGattService s=gatt.getService(service);BluetoothGattCharacteristic c=s==null?null:s.getCharacteristic(id);
         if(c==null)throw new IOException("Companion Bluetooth characteristic unavailable: "+id);return c;

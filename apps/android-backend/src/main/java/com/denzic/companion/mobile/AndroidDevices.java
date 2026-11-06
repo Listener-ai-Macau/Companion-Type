@@ -55,7 +55,7 @@ public final class AndroidDevices {
                 try{
                     ScanRecord record=result.getScanRecord();String name=record==null?null:record.getDeviceName();
                     boolean service=record!=null&&record.getServiceUuids()!=null&&record.getServiceUuids().contains(RECORDING_SERVICE);
-                    if(!service&&(name==null||!name.toLowerCase(Locale.ROOT).contains("companion")))return;
+                    if(!DeviceNames.candidate(name,service))return;
                     synchronized(Scan.this){if(closed||!seen.add(result.getDevice().getAddress()))return;}
                     listener.onDevice(result.getDevice(),name==null?"Companion":name);
                 }catch(SecurityException error){finish("Bluetooth permission is required");}
