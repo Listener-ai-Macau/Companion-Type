@@ -137597,8 +137597,7 @@
             "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
             "next": "等R24完整EOS/解析输出退出后，独立评分文字CER/cpCER、人物归属、重叠漏听、等待与资源。实际低RAM触发则仅停止自身、不自动重试。此模型官方复杂AISHELL4 CER14.84%，不是普遍<5%的证据；完整基线后按实际残差决定保留哪项能力，不因能分人直接替换产品转写。",
             "previousFunctionalCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
-            "activeWorkerPid": 23148,
-            "finishedAt": "2026-11-06T22:16:20+08:00"
+            "activeWorkerPid": 23148
           },
           "restoredSpeechResult20261106": {
             "at": "2026-11-06T08:06:10+08:00",
@@ -137974,7 +137973,7 @@
             "finalEvidenceCommit": "faa7f7ceea1fb6d5f5203119a4603b2e23dd8830"
           },
           "ownerTonightModelContinuation20261106": {
-            "at": "2026-11-06T22:53:21+08:00",
+            "at": "2026-11-06T23:07:44+08:00",
             "ownerQuote": "继续把模型端的任务做一下, 今晚",
             "state": "FULL_L_R24_RUNNING_AFTER_EXACT_TOKEN_ACOUSTIC_RETIREMENT_CONTROL",
             "sourceCommit": "8b6aa98d69bda3cc2c15aa8ecbfec0f1086082c9",
@@ -138008,7 +138007,7 @@
               "evidenceCommit": "cb01a7156eada7689eea4376a29b4a0513c2bf30"
             },
             "fullMeeting": {
-              "observedAt": "2026-11-06T22:53:21+08:00",
+              "observedAt": "2026-11-06T23:07:44+08:00",
               "executionSourceCommit": "cb01a7156eada7689eea4376a29b4a0513c2bf30",
               "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
               "batch": {
@@ -138030,17 +138029,27 @@
                 "supervisorCreatedAt": 1793976631.2048075
               },
               "workerSnapshot": {
-                "state": "ENCODING_COMPLETE_AUDIO",
+                "state": "DECODER_PREFILL",
                 "pid": 23148,
                 "actualGpu": "AMD Radeon RX 6800 XT",
-                "completedAcousticChunks": 49,
+                "completedAcousticChunks": 79,
                 "totalAcousticChunks": 79,
-                "decoderPrefillLayersCompleted": null,
-                "decoderPrefillLayerTotal": null,
+                "decoderPrefillLayersCompleted": 11,
+                "decoderPrefillLayerTotal": 28,
                 "generatedTokens": 0,
                 "completedSegments": null,
                 "lastCompletedSegmentEndSeconds": null,
-                "acousticRetirement": null,
+                "acousticRetirement": {
+                  "state": "COMPLETED_ACOUSTIC_STORAGE_RETIRED_LANGUAGE_WEIGHTS_PRESERVED",
+                  "retiredStorageBytes": 624926720,
+                  "gpuAllocatedBytesBefore": 2052019712,
+                  "gpuAllocatedBytesAfter": 1427092992,
+                  "retainedLanguageParameterIdentityChecked": true,
+                  "outputEmbeddingStillTied": true,
+                  "acousticReuseRefused": true,
+                  "offloadedToCpu": false,
+                  "scope": "Execution lifetime only. System-RAM reduction and complete-meeting quality require measurement."
+                },
                 "resourceLimits": {
                   "pid": 23148,
                   "cpuRate": 500,
@@ -138064,13 +138073,35 @@
               "productModelChanged": false,
               "automaticRetries": 0
             },
-            "remoteEvidenceCommit": "0dbfbd9fec080432954d98d31bab8f3d54571ca9",
+            "remoteEvidenceCommit": "3ebe806d1efd42d11564a0f70122a6b6e801339a",
             "next": "等R24完整EOS/解析输出退出后，独立评分文字CER/cpCER、人物归属、重叠漏听、等待与资源。实际低RAM触发则仅停止自身、不自动重试。此模型官方复杂AISHELL4 CER14.84%，不是普遍<5%的证据；完整基线后按实际残差决定保留哪项能力，不因能分人直接替换产品转写。",
             "officialBenchmarkScope": {
               "source": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize/blob/79c675f0670cc2f824bcbcdd98263704f40f1f7e/README.md#objective-evaluation",
               "AISHELL4CERPercent": 14.84,
               "AISHELL4CpCERPercent": 15.83,
               "scope": "Author benchmark, not our new score; no guarantee of universal CER<5%. Do not fit to the single development meeting or conflate diarization and transcription quality."
+            },
+            "oneShotFinalProcessing": {
+              "at": "2026-11-06T23:06:57+08:00",
+              "state": "WAITING_FOR_EXISTING_FULL_MEETING_ONLY",
+              "pid": 19800,
+              "processCreatedAt": 1793977616.9558315,
+              "parentPid": 27196,
+              "parentCreatedAt": 1793976629.8691993,
+              "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
+              "inferenceStartedHere": false,
+              "automaticInferenceRetries": 0,
+              "productModelChanged": false,
+              "remoteReadbackConfirmed": false,
+              "sourceCommit": "78693b80d940b676047c1770e4b00200c8c9d1e7",
+              "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24\\finalizer-state.json"
+            },
+            "contextTextMetrics": {
+              "sourceCommit": "78693b80d940b676047c1770e4b00200c8c9d1e7",
+              "syntheticCasesPassed": 6,
+              "newRealScore": null,
+              "realReferenceOpenedDuringInference": false,
+              "meaning": "全局cpCER编辑向含重叠完整句/普通句/短句/逐人归因，额外声轨插入保留，不将含重叠句指标当纯重叠字准确率"
             }
           }
         },
