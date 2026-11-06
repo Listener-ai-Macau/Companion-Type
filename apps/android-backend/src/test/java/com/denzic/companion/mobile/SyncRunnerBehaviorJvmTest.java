@@ -39,6 +39,23 @@ public final class SyncRunnerBehaviorJvmTest {
             public boolean disconnected(){return true;}public void close(){permissionClosed.set(true);}
         };},listener,millis->{throw new AssertionError("transfer permission error was retried");}).run();
         if(permissionSyncAttempts[0]!=1||!permissionClosed.get()||!states.contains("error")||states.contains("reconnecting"))throw new AssertionError("transfer permission failure not reported");
+        // Adapter availability is not an accumulated GATT failure. A user
+        // turns Bluetooth on at36s, just after the old35s poll; old30s
+        // backoff then delays recovery until65s despite an available card.
+        states.clear();long[] adapterClock={0},restoredAt={-1};
+        new RecordingSyncRunner(()->{
+            if(adapterClock[0]<36000)throw new RecordingSyncRunner.BluetoothOff();
+            restoredAt[0]=adapterClock[0];throw new RecordingSyncRunner.ActionRequired("availability fixture complete");
+        },listener,millis->{adapterClock[0]+=millis;}).run();
+        if(restoredAt[0]<36000||restoredAt[0]-36000>15000)
+            throw new AssertionError("Bluetooth on waited beyond15s: restoredAt="+restoredAt[0]+" availableAt=36000");
+        states.clear();long[] afterOffClock={0},realLinkWait={-1};boolean[] realLinkFailed={false};
+        new RecordingSyncRunner(()->{
+            if(afterOffClock[0]<36000)throw new RecordingSyncRunner.BluetoothOff();
+            if(!realLinkFailed[0]){realLinkFailed[0]=true;throw new RecordingSyncRunner.LinkFailure("first real GATT failure");}
+            throw new RecordingSyncRunner.ActionRequired("backoff fixture complete");
+        },listener,millis->{if(realLinkFailed[0])realLinkWait[0]=millis;afterOffClock[0]+=millis;}).run();
+        if(realLinkWait[0]!=5000)throw new AssertionError("Adapter-off time inflated real GATT backoff: "+realLinkWait[0]);
         states.clear();int[] bluetoothAttempts={0};
         new RecordingSyncRunner(()->{
             if(bluetoothAttempts[0]++<2)throw new RecordingSyncRunner.BluetoothOff();

@@ -74,9 +74,15 @@ final class RecordingSyncRunner {
                         listener.status("error","无法读取录音卡信息，请检查设备兼容性及连接后重试；已保存的录音保留");
                         return;
                     }
+                    if(e instanceof BluetoothOff){
+                        // Adapter-off time is not a failed GATT attempt. Keep
+                        // a bounded availability check without increasing the
+                        // radio-failure backoff to30s after Bluetooth returns.
+                        listener.status("waiting_bluetooth","请开启手机蓝牙，已保存的录音会保留；开启后自动继续接收");
+                        delay.waitMillis(1000);continue;
+                    }
                     failures=nextFailure(failures);
-                    if(e instanceof BluetoothOff)listener.status("waiting_bluetooth","请开启手机蓝牙，已保存的录音会保留；开启后自动继续接收");
-                    else listener.status("reconnecting","等待录音卡重新连接，已保存的录音会保留");
+                    listener.status("reconnecting","等待录音卡重新连接，已保存的录音会保留");
                     delay.waitMillis(retryDelay(failures));continue;
                 }
                 active=c;
