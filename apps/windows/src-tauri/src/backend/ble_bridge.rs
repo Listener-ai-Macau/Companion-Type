@@ -1098,7 +1098,7 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
                 return Err("设备正在录音、回收或升级，请等待并先同步录音。".into());
             }
             if &payload[36..40]==b"CCQ2" {
-                return discard_segmented_recording(&device, &characteristics, &payload, &capacity, seconds, None, confirm).await;
+                return discard_segmented_recording(&device, &characteristics, &payload, Some(&capacity), seconds, None, confirm).await;
             }
             if !capacity.confirmed_discard_supported {
                 return Err("当前设备不支持单条删除，请先同步录音。".into());
@@ -1158,7 +1158,7 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
 // characteristic. An older peer may not reply; never reinterpret it as V1.
 async fn discard_segmented_recording<F>(device: &NativeDevice,
     chars: &std::collections::BTreeSet<Characteristic>, payload: &[u8],
-    capacity: &crate::companion_v1::CompanionV1RecordingCapacity, seconds: u16,
+    capacity: Option<&crate::companion_v1::CompanionV1RecordingCapacity>, seconds: u16,
     selected:Option<&super::recording_wire::SessionKey>, confirm: F)
     -> Result<super::recording_discard::RecordingDiscardReport, String>
 where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
@@ -1205,9 +1205,9 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
         let issued=StdInstant::now();
         let bytes=discard_segmented_exchange(device,&privacy,&mut notifications,&request,false).await?;
         let offer=v3::parse_offer(&bytes,id).map_err(str::to_string)?;
-        if selected.is_some_and(|key|key.session_id!=offer.session) ||
-            offer.uid!=peer.uid || offer.epoch!=peer.epoch || offer.generation!=capacity.catalog_generation ||
-            offer.reserved_bytes>capacity.protected_bytes || offer.segments>capacity.unsynced_entries {
+        if selected.is_some_and(|key|key.session_id!=offer.session) || offer.uid!=peer.uid || offer.epoch!=peer.epoch ||
+            capacity.is_some_and(|c|offer.generation!=c.catalog_generation ||
+                offer.reserved_bytes>c.protected_bytes || offer.segments>c.unsynced_entries) {
             return Err("设备录音候选与当前身份或容量不一致，未发送删除确认。".into());
         }
         let duration_ms=u32::try_from(offer.samples/16).map_err(|_|"设备录音时长超出支持范围，未删除。")?;

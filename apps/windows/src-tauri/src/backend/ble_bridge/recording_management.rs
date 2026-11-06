@@ -35,26 +35,12 @@ fn group(entries:Vec<RecordingEntry>)->Vec<DeviceRecording> {
     }).rev().collect()
 }
 
-async fn ready_capacity(device:&NativeDevice,chars:&std::collections::BTreeSet<Characteristic>)
- ->Result<(Vec<u8>,crate::companion_v1::CompanionV1RecordingCapacity),String> {
-    let deadline=StdInstant::now()+StdDuration::from_secs(20);
-    loop {
-        let bytes=read_optional_status(&device.peripheral,chars,DEVICE_STATUS_UUID,84).await
-            .ok_or("没有读到设备容量，请重新连接。")?;
-        if let Some(cap)=super::super::recording_capacity::parse(&bytes) {
-            if !cap.busy {return Ok((bytes,cap));}
-        }
-        if StdInstant::now()>=deadline {return Err("设备正在录音或整理存储，请稍后刷新设备录音。".into());}
-        tokio::time::sleep(StdDuration::from_millis(250)).await;
-    }
-}
-
 pub(crate) fn list_device_recordings(device_id:&str)->Result<Vec<DeviceRecording>,String> {
     run_native_blocking(async {
         let setup=connect_native_device_setup_with_intent(Some(device_id),false,ConnectionIntent::Normal).await?;
         let device=setup.device;
         let result=on_native_link(&device,async {
-            let chars=device.peripheral.characteristics();ready_capacity(&device,&chars).await?;
+            let chars=device.peripheral.characteristics();
             let catalog=read_recording_catalog(&device,&chars).await?;
             if catalog.peer.is_none(){return Err("请先升级设备固件以查看按场录音。".into());}
             Ok(group(catalog.entries))
@@ -73,8 +59,8 @@ where F:FnOnce(&super::super::recording_discard::RecordingLossInfo)->bool {
         let device=setup.device;
         let result=on_native_link(&device,async {
             let chars=device.peripheral.characteristics();
-            let (payload,capacity)=ready_capacity(&device,&chars).await?;
-            discard_segmented_recording(&device,&chars,&payload,&capacity,0,Some(&selected),confirm).await
+            let payload=read_recording_protocol_identity(&device.peripheral,&chars).await?;
+            discard_segmented_recording(&device,&chars,&payload,None,0,Some(&selected),confirm).await
         }).await;
         let cleanup=finish_native_device_operation(device,result.is_ok()).await;
         combine_operation_and_cleanup(result,cleanup)
