@@ -2432,7 +2432,7 @@ async fn scan_native_device(requested_device_id: Option<&str>) -> Result<NativeD
         }
         eprintln!("BLE scan window elapsed_ms={} exact_device=0", started.elapsed().as_millis());
         best.map(|(_, device)| device).ok_or_else(|| format!(
-            "no Companion candidate found with name containing '{COMPANION_DEVICE_NAME_FILTER}', recording service {RECORDING_SERVICE_UUID}, or OTA service {COMPANION_OTA_V1_SERVICE_UUID}"
+            "no Capture/Companion candidate found by product name, recording service {RECORDING_SERVICE_UUID}, or OTA service {COMPANION_OTA_V1_SERVICE_UUID}"
         ))
     }.await;
     // Early success, partial start failure and discovery errors all stop every
@@ -2538,7 +2538,7 @@ fn companion_candidate_score(
     let has_ota_service = device
         .service_uuids
         .contains(&COMPANION_OTA_V1_SERVICE_UUID);
-    let name_match = name.contains(COMPANION_DEVICE_NAME_FILTER);
+    let name_match = super::device_discovery::product_name(&name);
     let requested_match = requested.as_ref().map(|value| {
         normalize_device_id(value) == address
             || name.contains(value)

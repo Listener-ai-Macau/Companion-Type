@@ -5,6 +5,7 @@
 //! the same IPC contract.
 
 mod ble_bridge;
+mod device_discovery;
 pub(crate) use ble_bridge::release_one_saved_segment;
 
 /// Read-only engineering admission check; never starts a firmware update.
