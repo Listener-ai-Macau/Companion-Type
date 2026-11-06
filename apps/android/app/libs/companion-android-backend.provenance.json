@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T01:56:06+08:00",
-  "aarSha256": "25057f76be6a7eac8ab55ca65dda9f871f7350c3c63377f9fb1bd7c0fed97a5a",
-  "backendSourceCommit": "8534c7ddb785efb682c50f6e16c99ce96720e335",
+  "at": "2026-11-07T02:50:34+08:00",
+  "aarSha256": "a23aeae44f0868ebde84b477c793431898e213ee6e03c571e28676634b46f166",
+  "backendSourceCommit": "41a70b2aa1c87ae124f33b9e5d7873a30e2c93e6",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Request HIGH only while new sealed segments are transferred/confirmed; restore BALANCED on success or failure and keep following idle balanced. Best-effort SDK preference, not a throughput claim. Preserve072 connection retry,071 catalog recovery,070 library fix. All non-class AAR/native/UI/firmware unchanged.",
-  "javaSourceCommit": "8534c7ddb785efb682c50f6e16c99ce96720e335",
+  "scope": "Explicit FW66697+ opt-in to copy the next sealed segment while the prior exact physical receipt remains pending. One pending consume, durable proof and directory lock, exact legacy fallback. Remove unhelpful073 priority experiment. Preserve072/071/070 fixes. All non-class AAR/native/UI unchanged; not yet installed or physically qualified.",
+  "javaSourceCommit": "41a70b2aa1c87ae124f33b9e5d7873a30e2c93e6",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -57,5 +57,25 @@
     "com/denzic/companion/mobile/RecordingSyncService.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo072": true,
-  "inherited072Receipt": "E:\\CodexData\\Companion\\.build-cache\\priority073\\inherited-provenance072.json"
+  "inherited072Receipt": "E:\\CodexData\\Companion\\.build-cache\\priority073\\inherited-provenance072.json",
+  "javaClassesChangedFrom073": [
+    "com/denzic/companion/mobile/AndroidGattLink$1.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/DurableConsume$Pending.class",
+    "com/denzic/companion/mobile/DurableConsume.class",
+    "com/denzic/companion/mobile/RecorderWire$Catalog.class",
+    "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
+    "com/denzic/companion/mobile/RecorderWire$Descriptor.class",
+    "com/denzic/companion/mobile/RecorderWire$Peer.class",
+    "com/denzic/companion/mobile/RecorderWire.class",
+    "com/denzic/companion/mobile/RecordingClient$DeviceStatus.class",
+    "com/denzic/companion/mobile/RecordingClient$Link.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingSyncService$1.class",
+    "com/denzic/companion/mobile/RecordingSyncService$2.class",
+    "com/denzic/companion/mobile/RecordingSyncService$3.class",
+    "com/denzic/companion/mobile/RecordingSyncService.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo073": true,
+  "inherited073Receipt": "E:\\CodexData\\Companion\\.build-cache\\overlap074\\inherited-provenance073.json"
 }
