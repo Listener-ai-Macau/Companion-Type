@@ -2056,16 +2056,6 @@ fn require_ota_sync_outcome(batch:NativeRecordingBatch)->Result<NativeRecordingB
     Ok(batch)
 }
 
-// Engineering delivery must never turn the normal OTA drain into implicit
-// consumption of somebody else's recording. Normal product OTA is unchanged.
-fn require_engineering_empty_microphone_catalog(sources: impl IntoIterator<Item=u8>) -> Result<(), String> {
-    let count=sources.into_iter().filter(|source|*source==RECORDING_SOURCE_MIC_SAI).count();
-    if count != 0 {
-        return Err(format!("设备有{count}段已有麦克风录音；工程升级未读取或消费录音，未开始升级。"));
-    }
-    Ok(())
-}
-
 fn require_ota_idle_identity(cached_uid:Option<&str>,identity:&CompanionDeviceIdentity,
     peer:&super::recording_wire::transport::Peer)->Result<(),String> {
     let actual=hex_lower(&peer.uid);
@@ -4717,12 +4707,15 @@ async fn sync_native_recordings_scoped(requested_device_id: Option<&str>,known_r
         if ota_barrier && std::env::var("COMPANION_TYPE_ENGINEERING_PRESERVE_RECORDINGS").as_deref()==Ok("1") {
             let peer=initial_peer.as_ref().ok_or("设备身份不可核对，未开始升级。")?.clone();
             let catalog=segmented::read_catalog(&device,&device.peripheral.characteristics(),peer).await?;
-            require_engineering_empty_microphone_catalog(catalog.entries.iter().map(|e|e.source_mode))?;
+            let preserved_microphone_segments=catalog.entries.iter()
+                .filter(|e|e.source_mode==RECORDING_SOURCE_MIC_SAI).count();
             let fresh_peer=require_idle_recorder_for_ota(&device).await?;
             require_same_recorder(initial_peer.as_ref(),Some(&fresh_peer))?;
             // Deliberately do not call the recording sync path in this mode:
             // even a recording arriving after the catalogue read cannot be consumed.
-            eprintln!("[companion-ota] engineering_recordings_preserved sync_not_started=1 microphone_entries=0");
+            // Existing recordings do not prevent a signed update. The device
+            // allocates its OTA workspace from the actual free extents.
+            eprintln!("[companion-ota] engineering_recordings_preserved sync_not_started=1 microphone_entries={preserved_microphone_segments}");
             return Ok(NativeRecordingBatch {device_id:device.device_id().to_string(),recordings:Vec::new(),
                 failures:Vec::new(),paused:false,connection_reusable:true,segmented:Some(Vec::new())});
         }
@@ -7581,13 +7574,6 @@ mod tests {
 #[cfg(test)]
 mod ota_recording_drain_tests {
     use super::*;
-    #[test]
-    fn engineering_ota_preserves_existing_microphone_recordings() {
-        assert!(require_engineering_empty_microphone_catalog([]).is_ok());
-        assert!(require_engineering_empty_microphone_catalog([0xfe]).is_ok());
-        let error=require_engineering_empty_microphone_catalog([0xfe,RECORDING_SOURCE_MIC_SAI]).unwrap_err();
-        assert!(error.contains("未读取或消费录音"));
-    }
     fn batch()->NativeRecordingBatch { NativeRecordingBatch {device_id:"A1:B2:C3:D4:E5:F6".into(),recordings:vec![],failures:vec![],paused:false,connection_reusable:true,segmented:Some(vec![])} }
     #[test] fn fresh_sealed_connection_binds_actual_identity_without_prepared_user_cache() {
         let peer=super::super::recording_wire::transport::Peer {uid:[7;12],epoch:9,capacity:64,max_value_bytes:509,logical_control:true,growing_tail:true,batch_interval:true,pause_control:true};
