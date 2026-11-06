@@ -47,20 +47,17 @@ final class RecordingSyncRunner {
     RecordingSyncRunner(Connector connector, Listener listener, Delay delay) {
         this.connector=connector;this.listener=listener;this.delay=delay;
     }
-    private static long retryDelay(int failures) {
-        if(failures<=2)return 5000;
-        if(failures==3)return 10000;
-        if(failures==4)return 15000;
-        return 30000;
-    }
-    private static int nextFailure(int failures) {return Math.min(failures+1,5);}
+    // A card can become available just after a failed attempt. Keep the
+    // next attempt within the normal15s recovery budget, including GATT
+    // setup; a30s sleep alone cannot meet it. User stop still interrupts.
+    private static final long LINK_RETRY_MILLIS=5000,ADAPTER_WAIT_MILLIS=1000;
     void stop() {
         stopped.set(true);
         Connection c=active;if(c!=null)try{c.close();}catch(IOException ignored){}
         Thread t=worker;if(t!=null)t.interrupt();
     }
     void run() {
-        worker=Thread.currentThread();int failures=0;
+        worker=Thread.currentThread();
         try {
             while(!stopped.get()) {
                 listener.status("connecting", "正在连接录音卡");
@@ -79,11 +76,10 @@ final class RecordingSyncRunner {
                         // a bounded availability check without increasing the
                         // radio-failure backoff to30s after Bluetooth returns.
                         listener.status("waiting_bluetooth","请开启手机蓝牙，已保存的录音会保留；开启后自动继续接收");
-                        delay.waitMillis(1000);continue;
+                        delay.waitMillis(ADAPTER_WAIT_MILLIS);continue;
                     }
-                    failures=nextFailure(failures);
                     listener.status("reconnecting","等待录音卡重新连接，已保存的录音会保留");
-                    delay.waitMillis(retryDelay(failures));continue;
+                    delay.waitMillis(LINK_RETRY_MILLIS);continue;
                 }
                 active=c;
                 if(stopped.get()){try{c.close();}catch(IOException ignored){}break;}
@@ -91,7 +87,7 @@ final class RecordingSyncRunner {
                 try {
                     while(!stopped.get()) {
                         listener.status("syncing","正在保存录音");
-                        RecordingLibrary.Session session=c.sync();failures=0;
+                        RecordingLibrary.Session session=c.sync();
                         RecorderWire.Descriptor last=session.segments.get(session.segments.size()-1).descriptor;
                         if((last.flags&2)!=0){listener.finished(session);return;}
                         listener.status("following","录音进行中，等待下一段");
@@ -107,11 +103,10 @@ final class RecordingSyncRunner {
                     // protocol failure. Retry only a classified link error;
                     // AndroidGattLink tags actual disconnects and timeouts.
                     if(!linkFailure(e)){listener.status("error",e.getMessage()==null?"接收未完成，可稍后继续":e.getMessage());return;}
-                    failures=nextFailure(failures);
                     listener.status("reconnecting","等待录音卡重新连接，已保存的录音会保留");
                     reconnect=true;
                 } finally {active=null;try{c.close();}catch(IOException ignored){}}
-                if(reconnect)delay.waitMillis(retryDelay(failures));
+                if(reconnect)delay.waitMillis(LINK_RETRY_MILLIS);
             }
         } catch(InterruptedException e) {Thread.currentThread().interrupt();}
         finally {worker=null;if(stopped.get())listener.status("stopped","已停止接收，已保存的录音保留在手机中");}

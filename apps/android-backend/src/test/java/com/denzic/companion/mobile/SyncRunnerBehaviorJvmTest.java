@@ -17,15 +17,15 @@ public final class SyncRunnerBehaviorJvmTest {
         long[] elapsed={0};
         new RecordingSyncRunner(()->{
             attempts[0]++;
-            if(attempts[0]<=10)throw new RecordingSyncRunner.LinkFailure("temporarily offline");
+            if(elapsed[0]<156000)throw new RecordingSyncRunner.LinkFailure("temporarily offline");
             return new RecordingSyncRunner.Connection(){
                 public RecordingLibrary.Session sync()throws IOException{throw new IOException("local file error");}
                 public boolean disconnected(){return false;}
                 public void close(){}
             };
         },listener,millis->{elapsed[0]+=millis;}).run();
-        if(attempts[0]!=11||elapsed[0]<174034||!states.contains("reconnecting")||!states.contains("error"))
-            throw new AssertionError("reception stopped before a long temporary disconnect could recover: attempts="+attempts[0]+" elapsed="+elapsed[0]);
+        if(attempts[0]<=10||elapsed[0]<156000||elapsed[0]-156000>15000||!states.contains("reconnecting")||!states.contains("error"))
+            throw new AssertionError("long gap recovery exceeded15s after card availableAt156000: attempts="+attempts[0]+" elapsed="+elapsed[0]);
         states.clear();int[] fatalAttempts={0};
         new RecordingSyncRunner(()->{fatalAttempts[0]++;throw new RecordingSyncRunner.ActionRequired("pairing removed");},listener,millis->{throw new AssertionError("actionable error was retried");}).run();
         if(fatalAttempts[0]!=1||!states.contains("error")||states.contains("reconnecting"))throw new AssertionError("pairing error not reported");
