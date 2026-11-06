@@ -39,8 +39,6 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private volatile int initialConnectionStatus=-1;
     private volatile boolean connectedOnce;
     private boolean calendarSupported;
-    private boolean bulkPriorityRequested;
-    private boolean lastHighPriorityAccepted,lastBalancedPriorityAccepted;
     private void operation(Event e){if(!closed.get()&&!operations.offer(e))failure="Bluetooth operation queue overflow";}
     private void notification(UUID id,byte[] value){if(closed.get())return;ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q!=null&&(value==null||!q.offer(value.clone())))failure="Bluetooth notification queue overflow";}
     private final BluetoothGattCallback callbacks=new BluetoothGattCallback(){
@@ -117,19 +115,6 @@ public final class AndroidGattLink implements RecordingClient.Link {
         if(c==null)throw new IOException("Companion Bluetooth characteristic unavailable: "+id);return c;
     }
     boolean wasDisconnected(){return disconnected;}
-    /** A transfer-only preference; request acceptance is not measured throughput. */
-    @Override public void setTransferPriority(boolean bulk) {
-        if(closed.get()||!connected)return;
-        if(!bulk&&!bulkPriorityRequested)return;
-        try {
-            boolean accepted=gatt.requestConnectionPriority(bulk?BluetoothGatt.CONNECTION_PRIORITY_HIGH:BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
-            if(bulk){lastHighPriorityAccepted=accepted;bulkPriorityRequested=accepted;}
-            else {lastBalancedPriorityAccepted=accepted;if(accepted)bulkPriorityRequested=false;}
-            android.util.Log.i("CompanionBle","Recording priority bulk="+bulk+" request accepted="+accepted);
-        } catch(SecurityException denied){/* The next real GATT operation reports the missing permission. */}
-    }
-    boolean highPriorityRequestAccepted(){return lastHighPriorityAccepted;}
-    boolean balancedPriorityRequestAccepted(){return lastBalancedPriorityAccepted;}
     @Override public int mtu(){return mtu;}
     @Override public boolean calendarSupported(){return calendarSupported;}
     @Override public String deviceAddress() throws IOException {
@@ -168,8 +153,5 @@ public final class AndroidGattLink implements RecordingClient.Link {
         try{while(System.nanoTime()<deadline){check();byte[] p=q.poll(100,TimeUnit.MILLISECONDS);if(p!=null)return p;}}
         catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException("Bluetooth wait interrupted",e);}throw new java.net.SocketTimeoutException("Bluetooth notification timed out");
     }
-    @Override public void close() {if(!closed.compareAndSet(false,true))return;BluetoothGatt g=gatt;if(g!=null){
-        if(bulkPriorityRequested)try{g.requestConnectionPriority(BluetoothGatt.CONNECTION_PRIORITY_BALANCED);}catch(SecurityException ignored){}
-        try{g.disconnect();}catch(SecurityException ignored){}try{g.close();}catch(SecurityException ignored){}
-    }}
+    @Override public void close() {if(!closed.compareAndSet(false,true))return;BluetoothGatt g=gatt;if(g!=null){try{g.disconnect();}catch(SecurityException ignored){}try{g.close();}catch(SecurityException ignored){}}}
 }
