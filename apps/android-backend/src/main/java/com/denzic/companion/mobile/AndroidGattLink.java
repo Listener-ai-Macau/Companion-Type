@@ -54,6 +54,12 @@ public final class AndroidGattLink implements RecordingClient.Link {
 
     /** Connect only a device the user has already selected and paired. Call off the main thread. */
     public static AndroidGattLink connect(Context context,BluetoothDevice device) throws IOException {
+        return connect(context,device,139,true);
+    }
+    /** Upgrade uses the same bonded GATT owner with no recording negotiation or
+     * clock write. Read-back verification must not modify the new application. */
+    public static AndroidGattLink connectForUpdate(Context context,BluetoothDevice device)throws IOException{return connect(context,device,23,false);}
+    private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock) throws IOException {
         if(context==null||device==null)throw new IllegalArgumentException("context and selected device required");
         if(Build.VERSION.SDK_INT<26)throw new RecordingSyncRunner.ActionRequired("需要 Android 8 或更新的系统才能接收录音");
         AndroidGattLink link=new AndroidGattLink();boolean ready=false;
@@ -63,10 +69,10 @@ public final class AndroidGattLink implements RecordingClient.Link {
             if(link.gatt==null)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection could not start");
             Event connection=link.waitOperation("connection",null,15_000);if(connection.state!=BluetoothProfile.STATE_CONNECTED)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection not established");
             if(!link.gatt.requestMtu(517))throw new RecordingSyncRunner.LinkFailure("Bluetooth MTU request refused");link.waitOperation("mtu",null,15_000);
-            if(link.mtu<139)throw new RecordingSyncRunner.ActionRequired("蓝牙连接容量不足，请重新连接或换用兼容的手机；原录音仍保留");
+            if(link.mtu<minimumMtu)throw new RecordingSyncRunner.ActionRequired("蓝牙连接容量不足，请重新连接或换用兼容的手机；原录音仍保留");
             if(!link.gatt.discoverServices())throw new RecordingSyncRunner.LinkFailure("Bluetooth service discovery refused");link.waitOperation("services",null,15_000);
             BluetoothGattService settings=link.gatt.getService(SETTINGS_SERVICE);
-            if(settings!=null&&settings.getCharacteristic(DeviceClock.SETTINGS)!=null){
+            if(synchronizeClock&&settings!=null&&settings.getCharacteristic(DeviceClock.SETTINGS)!=null){
                 byte[] clock=DeviceClock.payload(link.read(DeviceClock.SETTINGS),System.currentTimeMillis()/1000L);
                 link.calendarSupported=clock.length==17;
                 link.write(DeviceClock.SETTINGS,clock);
@@ -86,7 +92,8 @@ public final class AndroidGattLink implements RecordingClient.Link {
         failure="Bluetooth "+kind+" timed out";throw new java.net.SocketTimeoutException(failure);
     }
     private BluetoothGattCharacteristic characteristic(UUID id) throws IOException {
-        UUID service=(id.equals(DeviceClock.SETTINGS)||id.equals(DeviceMaintenance.CONTROL))?SETTINGS_SERVICE:id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:id.equals(RecordingClient.RECORDING_CONSUME)?PRIVACY_SERVICE:
+        UUID service=(id.equals(SystemUpdateClient.CONTROL)||id.equals(SystemUpdateClient.DATA)||id.equals(SystemUpdateClient.STATUS)||id.equals(SystemUpdateClient.IDENTITY))?SystemUpdateClient.SERVICE:id.equals(SystemUpdateClient.READINESS)?SystemUpdateClient.READINESS_SERVICE:
+            (id.equals(DeviceClock.SETTINGS)||id.equals(DeviceMaintenance.CONTROL))?SETTINGS_SERVICE:id.equals(RecordingClient.DEVICE_STATUS)?STATUS_SERVICE:id.equals(RecordingClient.RECORDING_CONSUME)?PRIVACY_SERVICE:
             (id.equals(RecordingClient.MEETING_CONTROL)||id.equals(RecordingClient.MEETING_STATUS)?MEETING_SERVICE:RECORDING_SERVICE);
         BluetoothGattService s=gatt.getService(service);BluetoothGattCharacteristic c=s==null?null:s.getCharacteristic(id);
         if(c==null)throw new IOException("Companion Bluetooth characteristic unavailable: "+id);return c;
