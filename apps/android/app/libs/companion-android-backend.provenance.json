@@ -1,15 +1,24 @@
 {
-  "aarSha256": "718a6b3f268d0ad5691fb257b78b0eeced69e32d5a15634e42286b4f9c52e842",
-  "backendSourceCommit": "5ef7e695479af5ef39afe2099bee2b595657ad88",
-  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\capture-android-device-management",
-  "scope": "Retain recording control and exact durable/full-retention/install receipts. Use advertised OTA DATA write-without-response with acknowledged fallback; keep control writes acknowledged. Record bounded host-monotonic per-phase, link, submission and receipt metrics. Native runtime unchanged.",
-  "nativeChanges": false,
-  "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\phone055-lock-fix\\native-build-r3\\result.json",
-  "newNativeLibrarySha256": "e3d6ad244eb9e32ca97121e3e12bd176b29c3ffb3b5a26fbe2b7035e1da3fb52",
-  "asrRuntimeLibrariesUnchanged": true,
-  "androidLockRegression": "E:/CodexData/Companion/.build-cache/phone055-lock-fix/android-regression.log",
-  "physicalOrdinaryAppAcceptance": false,
+  "at": "2026-11-06T13:31:54+08:00",
+  "aarSha256": "4d9971d898beaeafb362629ff6ef83ddb143bd85c7e486ff60b1eef74814b0ec",
+  "backendSourceCommit": "cc828eb31da49a8b9355676be7de6926dbaa0ea0",
+  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
-  "nativeSourceCommit": "d7e543b318a08291b445b2d9e809123e1866cdea",
-  "allNonClassAarEntriesByteIdenticalTo056": true
+  "nativeChanges": true,
+  "nativeSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+  "nativeProductionSourceIdenticalToIntegratedBackend": true,
+  "nativeLibrarySha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+  "nativeLibrary16KiBElfAligned": true,
+  "inheritedNativeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\native-final-library.json",
+  "javaClassesChangedFrom057": [
+    "com/denzic/companion/mobile/NativeRecordingControl$Callbacks.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/SystemUpdateClient.class"
+  ],
+  "allOtherAarEntriesIdenticalTo057": true,
+  "speechRuntimeBinariesAndWeightsChanged": false,
+  "scope": "Integrate the verified dated112/120 metadata and real Android flock native library from5197, preserving current OTA retention/publication and playback fixes. Add advertised DATA no-response mode and bounded monotonic phase/link/counter metrics; control/receipts remain acknowledged. No firmware runtime growth.",
+  "ordinaryPhoneAcceptance": false,
+  "allNonClassAarEntriesByteIdenticalToIntegrated059": true,
+  "physicalOrdinaryAppAcceptance": false
 }
