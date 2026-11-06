@@ -36,7 +36,7 @@ public final class SystemUpdateClient {
         void receiving(int bytes)throws IOException{if(state!=2||error!=0||total!=bytes||accepted>total)throw new IOException("设备尚未确认本次完整升级文件的接收状态");}
         void sameCapacity(Status previous)throws IOException{if(!Arrays.equals(Arrays.copyOfRange(raw,24,Math.min(raw.length,40)),Arrays.copyOfRange(previous.raw,24,Math.min(previous.raw.length,40))))throw new IOException("设备升级能力在传输期间发生变化");}
     }
-    static String uid(RecordingClient.Link link)throws IOException{return hex(RecorderWire.Peer.fromStatus(link.read(RecordingClient.DEVICE_STATUS)).uid());}
+    static String uid(RecordingClient.Link link)throws IOException{return hex(RecordingClient.readPublishedPeer(link).uid());}
     private static String hex(byte[] value){StringBuilder text=new StringBuilder();for(byte b:value)text.append(String.format(Locale.ROOT,"%02x",b&255));return text.toString();}
     static int readiness(RecordingClient.Link link)throws IOException{
         byte[] b=link.read(READINESS);if(b==null||b.length!=24||b[0]!=1||b[1]<0||b[1]>1||((b[3]&255)>100&&(b[3]&255)!=255))throw new IOException("无法确认设备升级条件，未发送内容");

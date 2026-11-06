@@ -52,7 +52,7 @@ public final class RecordingClient implements Closeable {
             ready=true;
         } finally {if(!ready)link.close();}
     }
-    private static RecorderWire.Peer readPublishedPeer(Link link) throws IOException {
+    static RecorderWire.Peer readPublishedPeer(Link link) throws IOException {
         long deadline=System.nanoTime()+2_500_000_000L;byte[] uid=null;
         while(System.nanoTime()<deadline){
             byte[] status=link.read(DEVICE_STATUS);
