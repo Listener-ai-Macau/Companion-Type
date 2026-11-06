@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-11-06T22:53:21+08:00",
+  "observedAt": "2026-11-06T23:07:44+08:00",
   "executionSourceCommit": "cb01a7156eada7689eea4376a29b4a0513c2bf30",
   "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
   "batch": {
@@ -21,17 +21,27 @@
     "supervisorCreatedAt": 1793976631.2048075
   },
   "workerSnapshot": {
-    "state": "ENCODING_COMPLETE_AUDIO",
+    "state": "DECODER_PREFILL",
     "pid": 23148,
     "actualGpu": "AMD Radeon RX 6800 XT",
-    "completedAcousticChunks": 49,
+    "completedAcousticChunks": 79,
     "totalAcousticChunks": 79,
-    "decoderPrefillLayersCompleted": null,
-    "decoderPrefillLayerTotal": null,
+    "decoderPrefillLayersCompleted": 11,
+    "decoderPrefillLayerTotal": 28,
     "generatedTokens": 0,
     "completedSegments": null,
     "lastCompletedSegmentEndSeconds": null,
-    "acousticRetirement": null,
+    "acousticRetirement": {
+      "state": "COMPLETED_ACOUSTIC_STORAGE_RETIRED_LANGUAGE_WEIGHTS_PRESERVED",
+      "retiredStorageBytes": 624926720,
+      "gpuAllocatedBytesBefore": 2052019712,
+      "gpuAllocatedBytesAfter": 1427092992,
+      "retainedLanguageParameterIdentityChecked": true,
+      "outputEmbeddingStillTied": true,
+      "acousticReuseRefused": true,
+      "offloadedToCpu": false,
+      "scope": "Execution lifetime only. System-RAM reduction and complete-meeting quality require measurement."
+    },
     "resourceLimits": {
       "pid": 23148,
       "cpuRate": 500,
