@@ -1,0 +1,649 @@
+{
+  "sourceCommit": "fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea",
+  "files": [
+    {
+      "path": "apps/android/app/build.gradle",
+      "sha256": "971ba4ef6631cff6456650e9032e370626e84a4e970d410d961f6601350a2ded"
+    },
+    {
+      "path": "apps/android/app/libs/companion-android-backend.aar",
+      "sha256": "71db439c32dddcef0a9f84c6ffbf79489b377886873ec416574c195f3bfb7b5f"
+    },
+    {
+      "path": "apps/android/app/libs/companion-android-backend.provenance.json",
+      "sha256": "aa327ef4536a42e47dd7194b50552aba43bef1d3eb67330872660c6c25c48056"
+    },
+    {
+      "path": "apps/android/app/src/main/AndroidManifest.xml",
+      "sha256": "397c6e1352a1e78fac242e027e0cfe7c276b15961d2da9cba8cea66b8d1a1bb7"
+    },
+    {
+      "path": "apps/android/app/src/main/assets/ShadcnDashboardMIT.txt",
+      "sha256": "559fc2ce493ee61b4e72523c14bf23681183a136f505b8afbb0c822d56ba5725"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AiMaterialStore.java",
+      "sha256": "099b3223ac759e8a8269d433faeb04de9c9589d2d2915e88d1d28bedf9711d4b"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AiServiceVault.java",
+      "sha256": "1d9bbf778883ce9d89f314c92165035beb9736f1f22a0f14e94353b4aaa573be"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AudioExport.java",
+      "sha256": "bc1b91e4a7295b6ded08c82ba41c8a38cabcf050f83db3645cd4175bcc176eab"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/DeviceUpdateService.java",
+      "sha256": "745d629c151a4690c0073794b00cc9d02480841fa6c7aba558ed5873a4c33c09"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/DocumentNames.java",
+      "sha256": "26c2a0fe410ab8c6284f57b0f262b4cbc39a9cbde47ff7df7ab3c4b46213d3a2"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/DocumentRecovery.java",
+      "sha256": "9be7698790deea9d6c6f0a53064b923cf55b1277460cd9e812786f04004bc4a5"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/ExportContents.java",
+      "sha256": "826d9d6120e474e124eb25b887eeccab46f5cb011d14d7609aed8cd6fa5f91bd"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/ExportFileProvider.java",
+      "sha256": "4ab5b21870a3f15b970bbfd0291081a4cfc1d7298687771f413f12c6b2382b9a"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/LocalLibraryBackups.java",
+      "sha256": "fbda99b02b291b1d2f30571cea0fcc681028b0b173bd12bec274122cad66265f"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/LocalRecordingLifecycle.java",
+      "sha256": "29e98c17613558c7c1883641c0e0e259548ba198ece538db5b542654be5c248a"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MainActivity.java",
+      "sha256": "a988fb6a63907cdb7ccfb643a752e16a799609eb8403608269e095a34639e1d9"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/ManualMinutesEdits.java",
+      "sha256": "bde8ae6226fc38a843c13802c2f1d349eaddaa5e5a73d2e4193cbd14fd6c8b89"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MaterialLayout.java",
+      "sha256": "b7fc59c71d785d1a28e2c5b0c05705d8b0f2d9fb729d4c5874edb56b7f29fa89"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MeetingAiAccess.java",
+      "sha256": "75e29458c15d6a5f42a41044166f607c0658c50ba873d67b95a18a8e45afb527"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MeetingDetailAccess.java",
+      "sha256": "5438cff4ba1c4ac8168160c7190356a65dc19da1fa540a98eb3628c6e5064c82"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MeetingLibrarySearch.java",
+      "sha256": "fa1a344333a78b0f4286e3e7483b1ad206dae0e5d7392c3248866f8c418cfbe1"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MindmapImage.java",
+      "sha256": "631977027661165b6901b98768506c3233ceeb1fabd2ac4d5423e57ec91d688d"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MindmapLayout.java",
+      "sha256": "66853019c1970b63858ca030d7860eaf58702a657580145d2156c7d01da28797"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MinutesHistoryAccess.java",
+      "sha256": "e7336e9e1c89fd99a7a9d31a3e6c618be2aeee1b2f97bea6e9ac9298bfac4669"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MinutesTemplateLibrary.java",
+      "sha256": "83a8171d2e0e8ecde16c92d05a10b73789a7dd902d413f0226cd15ca08c46370"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/PreparedExports.java",
+      "sha256": "12e56720fa06dfcbd98a7b3feda035359151e44fcacd3c331fd301a089645713"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/Presentation054Base.java",
+      "sha256": "928b594b27323055f25809800a28986fa3ed03955bcf132064b089603afd21e0"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/PresentationDocuments.java",
+      "sha256": "09c667082c4ed0767341c28ffef6eb0422e37fd9c3508cbcb2903a4dacf967bf"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/RecordingBookmarkAccess.java",
+      "sha256": "3767a9fe5d25d6ba1c2cea15ccbfd5384dea9c77a31207aea4f773637216ba02"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/StructuredWorkbook.java",
+      "sha256": "4bf8f5fe620530d5c24ec5abdd8ec93f09fdbb595efcebbf390a1ed8c1dd5016"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationChunks.java",
+      "sha256": "22a21e843f444f2ffdff3fa68263623601f99ace0d6b2417c3abc976c29bfedf"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationProtocol.java",
+      "sha256": "e4178fffe258856438c9ecb9fc84fc5e032de72b51c7aaa18659e054311f3f11"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationStore.java",
+      "sha256": "2c7368dee6d303154294acddaa33c2037c71ad28c179d6d7d6ac73caef0379a2"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationTransport.java",
+      "sha256": "2e407188a3f15f5f290770c6d20c9ec4e8e345b661cc6d104f38fcd3d635da5c"
+    },
+    {
+      "path": "apps/android/app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "sha256": "6c13103cb1a3f92f2649ed4c4eebe749f03b85d3320c2f2111bc15fa77de892c"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": "58a573fd230af0532c0f386ef03949c5fd04a5fd6014f9e22a4163642d91c22e"
+    },
+    {
+      "path": "apps/android/app/src/main/res/values/colors.xml",
+      "sha256": "75c33d49129a9ed48570696033bade341023c1ad7fba8c8763e2444551946e0f"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/ContentExportTest.java",
+      "sha256": "b91e0b89027e6f9bd27fcb9d14d1e2104d765a103a745a75d7cdab12f2c894a1"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/LocalLibraryBackupsTest.java",
+      "sha256": "40df051ed528ae9893b3b6c1421b13fc930a7e5e6936e9aeeacb047ea4ceaa48"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/ManualMinutesEditsTest.java",
+      "sha256": "ae1f5276ff7a7accaf96ddbe91c4e35491767ab041e5546c393b91652ec26a63"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MaterialFormatsTest.java",
+      "sha256": "fa4ac23a6a211f1c577fac1e13273c0f15c5b805a99b09dbb9317435f86a7fc2"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MeetingLibrarySearchFixtures.java",
+      "sha256": "300c8579bef42bed94ea38fe128be71aac070c6b3b01d7d882823a0569ca9fb5"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MeetingLibrarySearchTest.java",
+      "sha256": "335ffce8c236371e588df6f302393894c3f05980eb3e6143e3f644a887d60da8"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MinutesTemplateLibraryTest.java",
+      "sha256": "07989ef16d1d0c55b1ba7a7a53d652303a6f915e900440a5bca5bc612c88b762"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/RecordingBookmarkAccessTest.java",
+      "sha256": "32cd053a362da50edd51e72b2ebe42f1ef6b7312016c48ea88f4412451743f10"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/TranslationStoreTest.java",
+      "sha256": "e9727e82e93dd66a49009b83e2e9f490abaad1f1acf0ff235386a0906c0e6dd2"
+    },
+    {
+      "path": "apps/android/build.gradle",
+      "sha256": "c67a38b1900478d47960c2a89545cf6645b50a0b91ac213c2cba38a0761e4ac6"
+    },
+    {
+      "path": "apps/android/gradle.properties",
+      "sha256": "abb76696af864d1d17d847c7b41d8d62a5d2e2410dd3e8e12749d7cfbfd5f7f2"
+    },
+    {
+      "path": "apps/android/settings.gradle",
+      "sha256": "4ddda582c333c4976a6836cc8ee09b44376fb9d709abd97a926f3ad475c1cb07"
+    },
+    {
+      "path": "apps/mobile/index.html",
+      "sha256": "66198ba2333b33d8a23ce2341144b6ccefe7e76604efbeeb3f5acca11f23d54f"
+    },
+    {
+      "path": "apps/mobile/public/manifest.webmanifest",
+      "sha256": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2"
+    },
+    {
+      "path": "apps/mobile/src/ActionReviewDialog.tsx",
+      "sha256": "316d48086181e02ae296b12f4fb1f9498a20ee5051ced69aa099ce8558a17246"
+    },
+    {
+      "path": "apps/mobile/src/AiServiceSettings.tsx",
+      "sha256": "5f2c3f64f9b3c82f75f2c0599c7bdf9fea836462771ec6d1fdd543bf361bde34"
+    },
+    {
+      "path": "apps/mobile/src/App.tsx",
+      "sha256": "6938bbadbdf0043dc07065de26b4788ee25f805b4b87f8dafb156b4001def611"
+    },
+    {
+      "path": "apps/mobile/src/ContentExport.tsx",
+      "sha256": "ff3105379284122985f8861a52b9b7b59fd39625d628cfcceef3a8f6f1aad2ef"
+    },
+    {
+      "path": "apps/mobile/src/DeviceBookmarks.tsx",
+      "sha256": "7c2a0431bd50275fddc77fecced1825a06f271268ae9ab90546e1af3e4b211ec"
+    },
+    {
+      "path": "apps/mobile/src/DeviceMaintenance.tsx",
+      "sha256": "a6c6dfe8fbce7b700166230773adf7593704ad0a5f209961b1722844cf5ddfd1"
+    },
+    {
+      "path": "apps/mobile/src/DeviceRecordingList.tsx",
+      "sha256": "ab17b9a9e1d712dbf7e99ec6bf573babeb340a0a552706141578979fa541d688"
+    },
+    {
+      "path": "apps/mobile/src/DeviceUpdate.tsx",
+      "sha256": "b4b933e3d287bc1f80e3b9de5af00655141f882ab5b1ed076a1fbd20d9a8d554"
+    },
+    {
+      "path": "apps/mobile/src/LibraryBackups.tsx",
+      "sha256": "2b164062aef2a46bef4296082f5ff3244786b75b78d26537270ebcad4f91f1c9"
+    },
+    {
+      "path": "apps/mobile/src/MeetingAssistant.tsx",
+      "sha256": "e881685ac397371cc15e59284ebbf5d6a06a8eda6ee8f0ddb76d4c02d6d89c02"
+    },
+    {
+      "path": "apps/mobile/src/MindMapView.tsx",
+      "sha256": "9dfe7f98bfddc4c2302f98dd6965d94afa28113097677e3213d380e90b4acbbe"
+    },
+    {
+      "path": "apps/mobile/src/MinutesDocument.tsx",
+      "sha256": "1c7bfd86d93e616a1d022772a6400697ec9f01f9f8d5580843a99b018d37545c"
+    },
+    {
+      "path": "apps/mobile/src/MinutesTemplates.tsx",
+      "sha256": "47e09feb32d5ac80cfbbd9d4422b62895bc97a258f45273cf047321ecaaab9d3"
+    },
+    {
+      "path": "apps/mobile/src/MobileActionCards.tsx",
+      "sha256": "992657913894f05189308d52f532cbeaf238410b327864f959e43858dd38bd82"
+    },
+    {
+      "path": "apps/mobile/src/RecordingLifecycle.tsx",
+      "sha256": "bb383655a8f22589e66e7343814a6cd564dec87e68f039463760586b9e6e9857"
+    },
+    {
+      "path": "apps/mobile/src/TranscriptReader.tsx",
+      "sha256": "44e8a792c5d785e41ba7e12d2f14ddf7ceedca1fe9e55792dac87b1e9e6ba34e"
+    },
+    {
+      "path": "apps/mobile/src/aiWorkspace.css",
+      "sha256": "eef7bf83ed5d484e6cf4e6525ff406cd5fb22251ba2566460737df196024f133"
+    },
+    {
+      "path": "apps/mobile/src/contentExport.css",
+      "sha256": "49f6e32bb8b36825c0a0ed895864604cbb31290ef4ac89adb1e2700a96de0c3a"
+    },
+    {
+      "path": "apps/mobile/src/deviceMaintenance.css",
+      "sha256": "f23931eca9f30c1c51daa19601a6bf3c1d151dc1a3bd7afa4a892b6295fcff5d"
+    },
+    {
+      "path": "apps/mobile/src/deviceUpdate.css",
+      "sha256": "3402b8d33a4fe047c4ba96a72ec32ab87b43470df1d67e8dbfdb55bc021786c7"
+    },
+    {
+      "path": "apps/mobile/src/main.tsx",
+      "sha256": "233328f9f4466ff6a4f9fdcb1318e6475efda2b6d9dd666c8a0eea813db47726"
+    },
+    {
+      "path": "apps/mobile/src/minutesTemplates.css",
+      "sha256": "358dc09442538939a347ac55c63739451b11f3dfb09265c94d52a350a6c31f31"
+    },
+    {
+      "path": "apps/mobile/src/mobile.css",
+      "sha256": "59fb848ee639b40d3f99eaf2c66a83908c63e741e9b13feb55526f97d0f9adfe"
+    },
+    {
+      "path": "apps/mobile/src/mobileActionEditing.ts",
+      "sha256": "949aa1703c99a55d25ba097693b1f7e76622ecbe118353d5a995a4b8de9a1ee9"
+    },
+    {
+      "path": "apps/mobile/src/mobileActionReading.ts",
+      "sha256": "61a619474e4d00e12c16f62f2f09fae551dae13cb066705d2ebd87208775ee04"
+    },
+    {
+      "path": "apps/mobile/src/mobileMindMap.ts",
+      "sha256": "b9596b978d525e2555a16b01f22caeedaf3d1109d839987bb44e1b6e5d1461b6"
+    },
+    {
+      "path": "apps/mobile/src/mobilePremium.css",
+      "sha256": "d3b2173ef540b273ad13b77853d1c598f2aca12a34dc57cf0c23389b66b79e5e"
+    },
+    {
+      "path": "apps/mobile/src/mobileRefinement.css",
+      "sha256": "f01105b993c5ca4c8858f5bf74f3a180366f40bd125d17b4cbb69b5b45273a17"
+    },
+    {
+      "path": "apps/mobile/src/mobileSourceReview.ts",
+      "sha256": "59ea6a6675fe98566a6a7508199f641676788be8f4826c24e61039bd5316eb7e"
+    },
+    {
+      "path": "apps/mobile/tsconfig.json",
+      "sha256": "9e4a180968c24889fbaa3f23baa5f859cf38e48589970ca58a48add1caa902eb"
+    },
+    {
+      "path": "apps/mobile/vite.config.ts",
+      "sha256": "8427edeaecac5fc710e4ca01344fc5f574d47bc4c5af31946f5d59558651c4b6"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "898c7bb7222a7d53efce592c9ca8b6c3f4ea2d749c0012d22bcf65af1d382d4e"
+    },
+    {
+      "path": "package.json",
+      "sha256": "54f20da5a20f6555b0debee9e360c7deb464dff41464b664cf907e1ec5a34cdf"
+    },
+    {
+      "path": "packages/ui/src/ActionListCommonFields.tsx",
+      "sha256": "d8bc89c35971154c96af5127f92e3ef0f689adc792c50b68718109fec4cb869c"
+    },
+    {
+      "path": "packages/ui/src/ActionListEditor.tsx",
+      "sha256": "e16730e5be3e93c067cc49115b384706b38ae700f525a2dfd70a794d33d73690"
+    },
+    {
+      "path": "packages/ui/src/CalendarAllDayReminders.tsx",
+      "sha256": "c09fa6bb6560f67cc1c4ae9dc173cb837c7797e0aa1ce569e2db4743489c5b50"
+    },
+    {
+      "path": "packages/ui/src/CalendarCopyComparison.tsx",
+      "sha256": "119239b0de74c57aebfa7f6803c22b975cfe84427e7aad91a206d1dfad2dc970"
+    },
+    {
+      "path": "packages/ui/src/CalendarExecutionSlotEditor.tsx",
+      "sha256": "4702eb1730e4fc5e0070fa068135dc5746d272c5f9b54d0d95f9a6f34767aa5e"
+    },
+    {
+      "path": "packages/ui/src/CalendarExportItems.tsx",
+      "sha256": "46f0d24106c13946f06b01c3c015ea08f0686f7816f6d1c9b202f580b9f13617"
+    },
+    {
+      "path": "packages/ui/src/CalendarFileLink.tsx",
+      "sha256": "fd5689c14f07220c192aacb0b517d94b7b59d1ebfc2e90b03e515d56bfbb848c"
+    },
+    {
+      "path": "packages/ui/src/CalendarReminderEditor.tsx",
+      "sha256": "de251f5fa48a3d152d3f10c6ba28e76044f9669da3da49e31a99fdf4ec1f9fc5"
+    },
+    {
+      "path": "packages/ui/src/CalendarTimeEditor.tsx",
+      "sha256": "01d50d0164bae442ffb8d1bb45e97b71b335985c19c06f809186e7c91f78ba2e"
+    },
+    {
+      "path": "packages/ui/src/CompanionAudioPlayer.tsx",
+      "sha256": "ec4e9628c6f39d52d461959a9526aae8816bc27a77d001aed8f6c85becbe38a3"
+    },
+    {
+      "path": "packages/ui/src/CompanionBehaviorPreview.tsx",
+      "sha256": "6a8edd23e9ab47cf7a6b1ffda572ab12136d13d69910c117c22b6c0668e45a02"
+    },
+    {
+      "path": "packages/ui/src/CompanionBookmarks.tsx",
+      "sha256": "657dbe09135419814e60d9394d166131b48610bada4110856505b110519ddf74"
+    },
+    {
+      "path": "packages/ui/src/CompanionCalendarCopies.tsx",
+      "sha256": "762c01946f288c6e972286cd9727f272889816e9627bb401f12563513a52aa6d"
+    },
+    {
+      "path": "packages/ui/src/CompanionCalendarUpdateHelp.tsx",
+      "sha256": "df74c4c7c2bd65041d0ac9aef58210177903cc95f14303db41a9f63faf67438b"
+    },
+    {
+      "path": "packages/ui/src/CompanionCard.tsx",
+      "sha256": "5f0bbb1adf528fd606e86e7ad517cafb3bac29d866b784fddfd8a36c7a42ed46"
+    },
+    {
+      "path": "packages/ui/src/CompanionChecklistHandoff.tsx",
+      "sha256": "17e47be0da99c339a53da503f4240a3b925d5cec52c29790408f9fa2f926824a"
+    },
+    {
+      "path": "packages/ui/src/CompanionChecklistPhone.tsx",
+      "sha256": "0e726f1cdc58d9ef355d1c98dc0b8e9dec28a0263ac4ea7daabfcba9120859bd"
+    },
+    {
+      "path": "packages/ui/src/CompanionDashboard.tsx",
+      "sha256": "ce1b2724a357893fc4c518d6f483128ce8f443c196dd76700fddf2418901617c"
+    },
+    {
+      "path": "packages/ui/src/CompanionDesktopUpdate.tsx",
+      "sha256": "3a01f7eb509412310c51a3f81bd578c81cecb980806ace94e99605f3b928dbc9"
+    },
+    {
+      "path": "packages/ui/src/CompanionDeviceRecordings.tsx",
+      "sha256": "3d1006ddeb5d5c1eaf9bf1fd8984127be29a676f6701881572b3544cb983edd2"
+    },
+    {
+      "path": "packages/ui/src/CompanionDiagnosticsPreview.tsx",
+      "sha256": "43c0025f157e3e2da7145ed9c3dbd41394428596e50c3b802c4c49c00eeb0d24"
+    },
+    {
+      "path": "packages/ui/src/CompanionExportFeedback.tsx",
+      "sha256": "80ddac064c4afbc946132e48f15f17d2689d408b05625391452ee3c25a3064a4"
+    },
+    {
+      "path": "packages/ui/src/CompanionHelp.tsx",
+      "sha256": "6123e0becdde45b1a67da451396c1d0ad3354f5897a50917e63d21fb34e43765"
+    },
+    {
+      "path": "packages/ui/src/CompanionJourney.tsx",
+      "sha256": "24dc82da4acdf6500172cb56358a883e8205e7bfb28d45ddae65493940476653"
+    },
+    {
+      "path": "packages/ui/src/CompanionLibraryLifeActions.tsx",
+      "sha256": "463093575b3b2e9f039327240872ae29478c769ccb4ad99be614e09abda8ea32"
+    },
+    {
+      "path": "packages/ui/src/CompanionLibraryTools.tsx",
+      "sha256": "f299c83504a9a86ff8ff7b19e049fc026fa1551132000cfdb70ef4d8fcddb7c0"
+    },
+    {
+      "path": "packages/ui/src/CompanionLicenses.tsx",
+      "sha256": "b24f926aeff3d4409f876be9d68661ebdc7982481b36ac21e051e04daed3316f"
+    },
+    {
+      "path": "packages/ui/src/CompanionMeetingAudioPlayer.tsx",
+      "sha256": "026b6eaf0753ce72e9f59cdb5e600296a133c46b4cd0808e19e025299d8cee01"
+    },
+    {
+      "path": "packages/ui/src/CompanionMeetingNotes.tsx",
+      "sha256": "b0a3a6369d515eaf19c676c81585c3c23c1dc622e6bab7ebeb183429a46a500e"
+    },
+    {
+      "path": "packages/ui/src/CompanionPetFind.tsx",
+      "sha256": "44ea5c7b81d29c204cac5ad41db487e578e13040c7e2e57594af654671297458"
+    },
+    {
+      "path": "packages/ui/src/CompanionPrivacyCleanup.tsx",
+      "sha256": "5dbf6fdd32bd195f10be9f0e53a9e91dd59ae8d69858a321eef35cc3ca22c1b1"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecorderControl.tsx",
+      "sha256": "107c1e9b1108d1262abbb37ae344cb9e4f0a93204e7ffab110b96f5ec1b61a79"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecordingReadiness.tsx",
+      "sha256": "1a311487a04e0c951dd6c44a41b99b57fa1b407325412cfdb28ba9b2f2f79623"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecordingSync.tsx",
+      "sha256": "170726953221be6fd425089f6e1f7d726cf771694641d1da5e5cef362963d4a3"
+    },
+    {
+      "path": "packages/ui/src/CompanionRecoveryCenter.tsx",
+      "sha256": "e08a0cb3f119df8ab9791b6b60482e514e4267e46e738bd9a8d0d62cfaa45293"
+    },
+    {
+      "path": "packages/ui/src/CompanionSegmentedAudioPlayer.tsx",
+      "sha256": "1a0f7f45707f1181551c3acbbf236b0f7f4ac5f5a6da004959197e75fafb2cdd"
+    },
+    {
+      "path": "packages/ui/src/CompanionSetup.tsx",
+      "sha256": "2fb1063d7e44f5af063febaabca76d4bbe231c39678a7704e860bedd06c82397"
+    },
+    {
+      "path": "packages/ui/src/CompanionTranscriptReview.tsx",
+      "sha256": "aca520c8d917899066f00823f1c3bf35447716bd7dcd99f04bcf56380542a81f"
+    },
+    {
+      "path": "packages/ui/src/ContentExportPanel.tsx",
+      "sha256": "e39d7039b7807ef641ed5f6b44bc1da6a1aa4ebf2e325e1e368a86e6db1dd41c"
+    },
+    {
+      "path": "packages/ui/src/DeleteConfirmation.tsx",
+      "sha256": "571939a0a4d450061bee63dd7e89fdc51dad7f6f4621a59761670592a674bb79"
+    },
+    {
+      "path": "packages/ui/src/MeetingAiWorkbench.tsx",
+      "sha256": "4122b4f770a39b87ed9ebf3e70c60123f118ca95acf941e9a53989bd783171eb"
+    },
+    {
+      "path": "packages/ui/src/MeetingReadingFrame.tsx",
+      "sha256": "4c6ed97d6a7deb48093d69eef3c390cd8c9f9d994a9a34cd3354202dffa3d873"
+    },
+    {
+      "path": "packages/ui/src/MinutesModeTabs.tsx",
+      "sha256": "fcd13300e7da08f8f54c2ebcdaec703cf063b2578d4a1ac9d821c33c35861194"
+    },
+    {
+      "path": "packages/ui/src/TranscriptFind.tsx",
+      "sha256": "5f50690483ba4922208af4517f3be25c07fbec92fed1b10461e91f8065398461"
+    },
+    {
+      "path": "packages/ui/src/actionMetadata.ts",
+      "sha256": "f7c2e6a906fe87275db9fb4e731c2245213e81efa9fe6f3cb1dc16b79e742770"
+    },
+    {
+      "path": "packages/ui/src/aiMaterialNote.ts",
+      "sha256": "0d19d9594851dd8170a1723c3e2ea1459c1668819a30466a6d3c9c92a31725c6"
+    },
+    {
+      "path": "packages/ui/src/bookmarkAudio.ts",
+      "sha256": "19f1ac96708fa3c987b5007d570d4b656b99f1272720badc66229ee1ddd9a98b"
+    },
+    {
+      "path": "packages/ui/src/briefMinutes.ts",
+      "sha256": "5a900049d22f9634d00662fe82bf7aec26ddf745711abff2ffe670acef63868b"
+    },
+    {
+      "path": "packages/ui/src/calendarReminderCarryover.ts",
+      "sha256": "9f105f676513e4c8221fe2e527fa7860ea5fed3b18fbe07d8b87ac2cc7d8db6d"
+    },
+    {
+      "path": "packages/ui/src/calendarSavedSlot.ts",
+      "sha256": "c5efc6fe9e5e678fd8de3e22db676f36399aeafb39bf197260d0a012025df346"
+    },
+    {
+      "path": "packages/ui/src/calendarSlotCarryover.ts",
+      "sha256": "970cebe4329a4bc8c9353f8a97cdff947f015559f9117e4bff11fa239565874b"
+    },
+    {
+      "path": "packages/ui/src/calendarTime.ts",
+      "sha256": "19d482a8ac0399099ea116ddef4f2c162a8d88d8c7508b01bbefb7b14b09b3f4"
+    },
+    {
+      "path": "packages/ui/src/checklistPhone.ts",
+      "sha256": "9b0fa567fbc7630baa11fa4015c16d6b61492c5b1dcd345f410299e2372913d2"
+    },
+    {
+      "path": "packages/ui/src/companionDark.css",
+      "sha256": "6e85ef16ab3406e4e1324332fae4e54e4af5220a9ad5cd7f7e16d4d8f6a8f120"
+    },
+    {
+      "path": "packages/ui/src/companionDesign.css",
+      "sha256": "a258839029c2bea11108aae86d8cc7bb447c0d6785a1f327ef2eb1c518fa6192"
+    },
+    {
+      "path": "packages/ui/src/companionUi.css",
+      "sha256": "c2ef907bc6e1ccbea905cf7b3a57c8bfd4d82c064df6781dac6a53af0cd1de8b"
+    },
+    {
+      "path": "packages/ui/src/customTemplateBackup.ts",
+      "sha256": "77ae8c7742ea23d9ad5a558d9667c203fa29f40196d16db403c22a710beb974d"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "sha256": "c51bd51d7805fa117b897325af7872a6cceca08bf173ca6af69765d5144df2ac"
+    },
+    {
+      "path": "packages/ui/src/knownOperationErrors.ts",
+      "sha256": "ef6ef3f732497a27a97b7ac76ef42ceec8638cd6c3d973758c3b8bd1d654e198"
+    },
+    {
+      "path": "packages/ui/src/libraryDates.ts",
+      "sha256": "f0f2d7e260db99f2d7aa4a1d3bce1c6c2de1df404b651ba58bb80872c76796af"
+    },
+    {
+      "path": "packages/ui/src/libraryPreview.ts",
+      "sha256": "38d96d27c70cc1871a112ac83b0f6c7765dfbebcdcdf59ab2320b1a096155e2d"
+    },
+    {
+      "path": "packages/ui/src/meetingAiWorkbench.css",
+      "sha256": "af431fab5095506fca47af935a79d1ba5b9eca31932867ecd88495cf1b6e4678"
+    },
+    {
+      "path": "packages/ui/src/meetingOutline.ts",
+      "sha256": "1cb5e4952147533c61662953b99459d2ed35b1113da6e1ed75026b3b6ddd92e5"
+    },
+    {
+      "path": "packages/ui/src/meetingReading.ts",
+      "sha256": "81cc807d3443c040409b47f7d8519144629dc84519d72c402839919df8728ff3"
+    },
+    {
+      "path": "packages/ui/src/meetingReadingFrame.css",
+      "sha256": "d447bc6d151fd8bf2f939cba2c99726bdf4054e8c4314c67259bae152033e956"
+    },
+    {
+      "path": "packages/ui/src/meetingTrackPlayback.ts",
+      "sha256": "1242bde85795ee8350c186b3d4f0d4d21a522f94ee356c70349116407d97243b"
+    },
+    {
+      "path": "packages/ui/src/minutesTemplateLibrary.ts",
+      "sha256": "1454e96aa13bbe3ef19649261bb8b75146a99565c77f6485a031a5bf7626a092"
+    },
+    {
+      "path": "packages/ui/src/operationFailure.ts",
+      "sha256": "59da8989f47191777b8947ba68db6583ab12fe162b420f7cb5d344d9da8012a6"
+    },
+    {
+      "path": "packages/ui/src/playbackMemory.ts",
+      "sha256": "c4814b4544744a068161f35deb51f7e13c0a210fb9cd1648d654a5c9254b01c4"
+    },
+    {
+      "path": "packages/ui/src/recordingParts.ts",
+      "sha256": "362cdecbda247c1b070e4d079b90e5b81c5e06ad46b7a0b9ecc099a1ee1f8da9"
+    },
+    {
+      "path": "packages/ui/src/savedActions.ts",
+      "sha256": "f2146212c99434b2bfe678aed2e18b838583ba1b3477d0b19c05bb209de4dc1d"
+    },
+    {
+      "path": "packages/ui/src/savedExportPreview.ts",
+      "sha256": "5bcf9fa531ec76ddf7faef3184ad975f34aac72d113a7b1c6ee33b39ab1d7c38"
+    },
+    {
+      "path": "packages/ui/src/shareHandoff.ts",
+      "sha256": "4fd923ce8ebd9bc1fae980dcf4ffb9463a91c1e7ba6c28e041f0a4d11dda340c"
+    },
+    {
+      "path": "packages/ui/src/transcriptFind.css",
+      "sha256": "23f7d969a09c94eb003228b471c12cf971d7cf302e36690b410ddf925a4b2396"
+    },
+    {
+      "path": "packages/ui/src/transcriptMatching.ts",
+      "sha256": "308a4afb58e9e5c1bdc9577b11a164332f72d0d9ea77ba0f1083d2eb6a949287"
+    },
+    {
+      "path": "packages/ui/src/transcriptReading.ts",
+      "sha256": "874cdabf3515b22807872a10eb5ed6c35358e6040dbfb4afb923d5d77bc5acb9"
+    },
+    {
+      "path": "packages/ui/src/useListeningQueue.ts",
+      "sha256": "ce37f7ff342dd6999bb49e92c85b07890d9995025fd746f448c292acef75635f"
+    }
+  ]
+}

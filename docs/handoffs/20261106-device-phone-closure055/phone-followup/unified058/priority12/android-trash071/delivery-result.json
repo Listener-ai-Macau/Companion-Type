@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-06T21:44:06+08:00",
+  "state": "ANDROID069_LOCAL_PROTECTION_TRASH_RECOVERY_CANDIDATE_BUILT_BACKGROUND_CHECKED_UNINSTALLED",
+  "ownerQuote": "继续吧",
+  "latestOwnerInputs": [
+    "现在是插上手机了",
+    "另外现在显卡重新可以用了"
+  ],
+  "candidate": {
+    "at": "2026-11-06T21:41:12+08:00",
+    "state": "ANDROID069_LOCAL_PROTECTION_TRASH_RECOVERY_CANDIDATE_BUILT_BACKGROUND_CHECKED_UNINSTALLED",
+    "sourceCommit": "fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea",
+    "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\Companion-Android-0.1.69-本机保护与回收站.apk",
+    "apkSha256": "23cdacd6def76e5f02776a90c75fc6f410013d1ada043c6fa3e4e6a52cf6ca09",
+    "versionName": "0.1.69",
+    "versionCode": 69,
+    "wallSeconds": 98.888,
+    "workers": 1,
+    "cpuSlots": [
+      12,
+      13
+    ],
+    "javaHeapMiB": 768,
+    "assetsMatched": 4,
+    "nativeLibrarySha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+    "nativeSpeechRebuilt": false,
+    "aarSha256": "71db439c32dddcef0a9f84c6ffbf79489b377886873ec416574c195f3bfb7b5f",
+    "inheritedBackendSourceCommit": "561708a9ab0e5c7415b6c19b601b592bfae062ac",
+    "installed": false,
+    "computerUse": false,
+    "phoneIo": false,
+    "modelsRun": false,
+    "actualPhoneLifecycleQualified": false,
+    "wholeProductQualified": false
+  },
+  "implemented": [
+    "详情内保护/解除保护和移入本机回收站",
+    "回收站列表、恢复、明确范围的永久清除",
+    "移入不改原音/会议资料；回收站内容从普通列表、搜索、AI会议范围和旧分享入口排除",
+    "绑定库身份/修订及原文件清单；确认前全量核文件，清除中断可持久化续作",
+    "回收站与保护随现有整库备份保留，清除后留无正文的递增身份状态以拒绝陈旧操作"
+  ],
+  "checks": [
+    {
+      "name": "full-app-java-compile",
+      "exitCode": 0,
+      "seconds": 5.501
+    },
+    {
+      "name": "local-lifecycle-data-safety",
+      "exitCode": 0,
+      "seconds": 0.733
+    },
+    {
+      "name": "mobile-types",
+      "exitCode": 0,
+      "seconds": 8.505
+    }
+  ],
+  "uiComponents": {
+    "scope": "Synthetic isolated UI component only; no device or OS UI",
+    "exitCode": 0,
+    "stdout": "PASS lifecycle UI: cancel/protect/revision/library binding, interrupted purge refresh/retry, truthful retained-copy feedback and late-library response exclusion. No device or OS UI.\n",
+    "stderr": ""
+  },
+  "nativeLibraryUnchanged": true,
+  "computerUse": false,
+  "phoneIo": false,
+  "modelsRun": false,
+  "installed": false,
+  "scopeLimitations": [
+    "真实手机保护/移入/进程重开/恢复/取消和永久清除尚未验收，host故障注入不代表实机或断电合格。",
+    "永久清除仅当前库可确认归属的原音和会议资料；录音卡、其他库、已导出/分享副本、应用临时缓存与无法归属的旧损坏副本保留并明确提示，不宣称全局隐私擦除。",
+    "不完整/未结束录音及未解决的设备接收确认不进入永久清除；仅在无接收/升级/文件选择时修改。",
+    "当前共享占用是FW66692开停录与OTA，原手机验证继续；本侧不插入安装或抢手机/板，也不把旧066候选直接降级装回。"
+  ],
+  "ownerAccepted": false,
+  "wholeProductQualified": false,
+  "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。"
+}

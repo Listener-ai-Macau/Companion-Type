@@ -130645,18 +130645,18 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-06T20:42:36+08:00",
+      "updatedAt": "2026-11-06T21:25:06+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP27-18",
       "baseline": {
-        "firmwareVersion": 66690,
+        "firmwareVersion": 66691,
         "uiGeneration": 85,
         "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
-        "sourceCommit": "4ec9ef4",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66690\\candidate.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66690\\windows067-ota66690.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66690\\after-ota66690.json",
+        "sourceCommit": "7fc040d1006d889eadfce96f8f03d22a45879532",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\candidate.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\windows067-ota66691.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\final-idle.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
@@ -130710,9 +130710,11 @@
             "CP07-11",
             "CP09-08"
           ],
-          "current": "66690真实35m11s自然FULL、17段CRC/SHA/WAV10ms、满盘拒绝/回收后无复位再录240及精确收取通过；控制指标FAIL：拒绝1.734s、首PCM2.047s、封口1.375s。正常Windows同连接策略复测241写入31ms，但首PCM2.187s/封口2.468s仍FAIL。已定位未采音准备/收尾每轮一页导致上千轮等待。",
+          "current": "66690真实35m11s自然满空间、17段CRC/SHA/WAV10ms及回收后无复位再录通过。66691实装后17场短录占满容量，拒绝15/31ms通过，18场均精确收取并回收；原34段/4608000B/17完整段恢复。实板开录1.344–3.219s、停录1.797–4.485s仍FAIL，16步/1ms模型不能替代实测。",
           "remaining": [
-            "交付7fc040d候选66691：已知满容量直接拒绝；仅无麦/无编码所有者的准备和收尾采用16步/1ms有界片段，活跃/暂停/排空仍一步。实际控制指标合格后才能关闭。"
+            "修未使用未来预留区STOP仍完成整区准备并再次扫描的冗余等待；原恢复检查和未知写入所有者不能被跳过。",
+            "减少首次分配的重复目录扫描，保持全部原有占用/代际校验。",
+            "66691普通Windows自动选择215包型，本次OTA37.032KiB/s低于50，保留FAIL；与66690的466包型/58.812差异有据，须沿现有传输策略定位。"
           ],
           "next": "沿embedded.next执行。",
           "doneWhen": "独立容量0证明真实满盘，原音完整耐久保存后精确回收，原目录不变，回收后普通开始能再录。",
@@ -131076,7 +131078,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "7fc040d已提交，FW66691完整构建通过，应用409564B，静态RAM/栈仍不增，准备签名OTA。旧2268ms模型失败、8步版本STOP596ms失败保留；16步/1ms模型准备158ms/提前停录342ms、完整schema5满盘/碎片容量/暂停控制通过。普通签名OTA后实测原2s/500ms指标；用实际短录占用剩余完整存储段快速触发真实满容量，验拒绝并精确收取本轮数据，不重复无变化的35分钟生产链。旧34段不读不消费；241已完整收取，末次只读CSN1准备时超时保留，未再发开录。",
+      "next": "板卡66691，所有本轮18场已收回；句柄关闭、共享板已release。先离线修未使用未来区取消与空闲区搜索源头，不再重复无变化35分钟满盘或盲加轮询批量；原500ms停录/2s首PCM不降低。OTA37.032KiB/s、138.507s/87.075s、app409564B较原409372预算+192B：速度和资源旧预算仍FAIL，新guard未知。分析同61.44MHz实际2M/965us下自动215与旧2120us/466策略，正常入口合格才关闭。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131383,12 +131385,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-06T20:42:36+08:00",
-        "firmware": 66690,
+        "at": "2026-11-06T21:25:06+08:00",
+        "firmware": 66691,
         "coreDelivery": "FW66685_AND_WINDOWS053_SELECTED_DELETE_SPACE_AND_SYNC_ACCEPTED_SCOPED",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "7fc040d已提交，FW66691完整构建通过，应用409564B，静态RAM/栈仍不增，准备签名OTA。旧2268ms模型失败、8步版本STOP596ms失败保留；16步/1ms模型准备158ms/提前停录342ms、完整schema5满盘/碎片容量/暂停控制通过。普通签名OTA后实测原2s/500ms指标；用实际短录占用剩余完整存储段快速触发真实满容量，验拒绝并精确收取本轮数据，不重复无变化的35分钟生产链。旧34段不读不消费；241已完整收取，末次只读CSN1准备时超时保留，未再发开录。",
+        "openSoftware": "板卡66691，所有本轮18场已收回；句柄关闭、共享板已release。先离线修未使用未来区取消与空闲区搜索源头，不再重复无变化35分钟满盘或盲加轮询批量；原500ms停录/2s首PCM不降低。OTA37.032KiB/s、138.507s/87.075s、app409564B较原409372预算+192B：速度和资源旧预算仍FAIL，新guard未知。分析同61.44MHz实际2M/965us下自动215与旧2120us/466策略，正常入口合格才关闭。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -132561,17 +132563,19 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-06T20:42:36+08:00",
-        "state": "FW66690_FULL_FUNCTIONAL_PASS_CONTROL_METRICS_FAIL_CANDIDATE66691_BUILT_NOT_INSTALLED",
-        "sourceCommit": "7fc040d",
-        "boardItem": "Companion66689真实满空间收尾与回收后再录验收"
+        "at": "2026-11-06T21:25:06+08:00",
+        "state": "ALL_OWN_CLIPS_RECLAIMED_BOARD_RELEASED_OFFLINE_LATENCY_ROOT_FIX",
+        "sourceCommit": "7fc040d1006d889eadfce96f8f03d22a45879532",
+        "liveDeviceHandles": 0,
+        "boardLease": false,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66691\\control-metric-verdict.json"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "WINDOWS068_FOLDER_SHARE_INSTALLED_BACKGROUND_CHECKED_ACTUAL_RECIPIENT_PENDING",
+        "state": "ANDROID069_LOCAL_PROTECTION_TRASH_RECOVERY_CANDIDATE_BUILT_BACKGROUND_CHECKED_UNINSTALLED",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -132612,7 +132616,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。",
+        "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -132836,7 +132840,7 @@
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
           "ownerQuote": "先，那你优先把那个前两项给搞了，然后的话。继续做这个事情，然后做完这些事情就可以说。我们只剩下模型能力没做了，对吧？这个时间进度大概还要多久？",
-          "state": "WINDOWS068_FOLDER_SHARE_INSTALLED_BACKGROUND_CHECKED_ACTUAL_RECIPIENT_PENDING",
+          "state": "ANDROID069_LOCAL_PROTECTION_TRASH_RECOVERY_CANDIDATE_BUILT_BACKGROUND_CHECKED_UNINSTALLED",
           "priority": [
             "Ordinary phone/device recording control, only own-new sample receive/playback/delete/recovery and OTA/maintenance final receipts.",
             "Installed ordinary App selected-content SAF save, clipboard paste and ACTION_SEND recipient bytes/grants, then original-library return."
@@ -132883,7 +132887,7 @@
           },
           "actualNewPhoneChecksPassed": false,
           "wholeProductQualified": false,
-          "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。",
+          "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。",
           "actualProgress": {
             "at": "2026-11-06T14:45:43+08:00",
             "ordinaryUi": "Actual Android App on isolated display2; primary display remained with owner or locked, no main-screen input.",
@@ -133033,7 +133037,7 @@
             "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
           },
           "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
-          "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。",
+          "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。",
           "modelsRun": false,
           "customerResult": null,
           "ownerAccepted": false,
@@ -133656,6 +133660,95 @@
             "Shared firmware/phone lease remains with original embedded flow. No phone/board query, install, downgrade or library switch was done here. Android066 Word and affected ordinary flow plus return to original library remain pending."
           ],
           "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。"
+        },
+        "androidTrash071": {
+          "at": "2026-11-06T21:44:06+08:00",
+          "state": "ANDROID069_LOCAL_PROTECTION_TRASH_RECOVERY_CANDIDATE_BUILT_BACKGROUND_CHECKED_UNINSTALLED",
+          "ownerQuote": "继续吧",
+          "latestOwnerInputs": [
+            "现在是插上手机了",
+            "另外现在显卡重新可以用了"
+          ],
+          "candidate": {
+            "at": "2026-11-06T21:41:12+08:00",
+            "state": "ANDROID069_LOCAL_PROTECTION_TRASH_RECOVERY_CANDIDATE_BUILT_BACKGROUND_CHECKED_UNINSTALLED",
+            "sourceCommit": "fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea",
+            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\Companion-Android-0.1.69-本机保护与回收站.apk",
+            "apkSha256": "23cdacd6def76e5f02776a90c75fc6f410013d1ada043c6fa3e4e6a52cf6ca09",
+            "versionName": "0.1.69",
+            "versionCode": 69,
+            "wallSeconds": 98.888,
+            "workers": 1,
+            "cpuSlots": [
+              12,
+              13
+            ],
+            "javaHeapMiB": 768,
+            "assetsMatched": 4,
+            "nativeLibrarySha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+            "nativeSpeechRebuilt": false,
+            "aarSha256": "71db439c32dddcef0a9f84c6ffbf79489b377886873ec416574c195f3bfb7b5f",
+            "inheritedBackendSourceCommit": "561708a9ab0e5c7415b6c19b601b592bfae062ac",
+            "installed": false,
+            "computerUse": false,
+            "phoneIo": false,
+            "modelsRun": false,
+            "actualPhoneLifecycleQualified": false,
+            "wholeProductQualified": false
+          },
+          "implemented": [
+            "详情内保护/解除保护和移入本机回收站",
+            "回收站列表、恢复、明确范围的永久清除",
+            "移入不改原音/会议资料；回收站内容从普通列表、搜索、AI会议范围和旧分享入口排除",
+            "绑定库身份/修订及原文件清单；确认前全量核文件，清除中断可持久化续作",
+            "回收站与保护随现有整库备份保留，清除后留无正文的递增身份状态以拒绝陈旧操作"
+          ],
+          "checks": [
+            {
+              "name": "full-app-java-compile",
+              "exitCode": 0,
+              "seconds": 5.501
+            },
+            {
+              "name": "local-lifecycle-data-safety",
+              "exitCode": 0,
+              "seconds": 0.733
+            },
+            {
+              "name": "mobile-types",
+              "exitCode": 0,
+              "seconds": 8.505
+            }
+          ],
+          "uiComponents": {
+            "scope": "Synthetic isolated UI component only; no device or OS UI",
+            "exitCode": 0,
+            "stdout": "PASS lifecycle UI: cancel/protect/revision/library binding, interrupted purge refresh/retry, truthful retained-copy feedback and late-library response exclusion. No device or OS UI.\n",
+            "stderr": ""
+          },
+          "nativeLibraryUnchanged": true,
+          "computerUse": false,
+          "phoneIo": false,
+          "modelsRun": false,
+          "installed": false,
+          "scopeLimitations": [
+            "真实手机保护/移入/进程重开/恢复/取消和永久清除尚未验收，host故障注入不代表实机或断电合格。",
+            "永久清除仅当前库可确认归属的原音和会议资料；录音卡、其他库、已导出/分享副本、应用临时缓存与无法归属的旧损坏副本保留并明确提示，不宣称全局隐私擦除。",
+            "不完整/未结束录音及未解决的设备接收确认不进入永久清除；仅在无接收/升级/文件选择时修改。",
+            "当前共享占用是FW66692开停录与OTA，原手机验证继续；本侧不插入安装或抢手机/板，也不把旧066候选直接降级装回。"
+          ],
+          "ownerAccepted": false,
+          "wholeProductQualified": false,
+          "next": "按共享记录等待原手机/板流程释放，随后核真实包身份和原资料，再安装069集中验Word与回收站等受影响链；Windows068真实收件与原库切回仍开放。Owner已恢复RX6800XT连接，非模型候选保护后从原受控整场L模型工作点续作，保CPU5%/私有内存2GiB/低内存停止/单模型，不调参、不重跑无变化短门、不改产品默认模型。"
+        },
+        "latestAndroidCandidate": {
+          "version": "0.1.69",
+          "code": 69,
+          "sourceCommit": "fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea",
+          "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\Companion-Android-0.1.69-本机保护与回收站.apk",
+          "apkSha256": "23cdacd6def76e5f02776a90c75fc6f410013d1ada043c6fa3e4e6a52cf6ca09",
+          "installed": false,
+          "containsUnified066WordAndTransport": true
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -135835,7 +135928,7 @@
                 "plaud_manage",
                 "notta"
               ],
-              "current": "Windows有实装/GUI及锁文件失败依据；当前Android恢复整库不等于可恢复删除，入口待补。",
+              "current": "Windows原已交付；Android069新增保护/回收站/恢复及明确范围清除，候选已生成与后台核对，未装手机/未实际验收。",
               "acceptance": "普通删除可恢复原内容，永久清除范围/确认清楚；共享原件、活动录音和保护项不误删。",
               "order": "P0",
               "dependency": "software",
@@ -135844,11 +135937,21 @@
               "acceptanceNumber": 24,
               "acceptanceKey": "CP27-01/trash",
               "engineering": {
-                "status": "PARTIAL_NOT_READY",
-                "label": "工程待完成（已有部分成果）",
+                "status": "CANDIDATE_READY_DEVICE_PENDING",
+                "label": "Android069回收站候选已准备，真实手机与资料保留验收待完成",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": null,
-                "evidence": []
+                "evidence": [
+                  "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\delivery-result.json"
+                ],
+                "candidateVersion": "Android0.1.69/code69",
+                "androidTrash071": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\android-trash071\\delivery-result.json",
+                  "sourceCommit": "fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea",
+                  "candidateBuilt": true,
+                  "installed": false,
+                  "actualPhoneQualified": false
+                }
               },
               "ownerAcceptance": {
                 "status": "PENDING",
@@ -137728,7 +137831,24 @@
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
           "next": "恢复固定MOSS公开权重/作者源码与隔离AMD运行环境；先用原资源保护做短输入兼容和主内存观测，解决R15低内存中断后再单个真实整会。产品应用与实验依赖隔离，Owner日用内存优先。",
-          "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104"
+          "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
+          "ownerGpuReconnected20261106": {
+            "at": "2026-11-06T21:44:06+08:00",
+            "ownerQuote": "另外现在显卡重新可以用了",
+            "windowsInventory": [
+              {
+                "name": "AMD Radeon RX 6800 XT",
+                "status": "OK",
+                "driverVersion": "32.0.21043.19003"
+              },
+              {
+                "name": "AMD Radeon 780M Graphics",
+                "status": "OK"
+              }
+            ],
+            "computeRunThisStage": false,
+            "decision": "Night GPU resume condition met. Read original complete-L wrapper/previous failure; retain exact resource policy, no installed product model change."
+          }
         },
         "ownerRx6800xtConnected20261104": {
           "at": "2026-11-04T19:10:06+08:00",

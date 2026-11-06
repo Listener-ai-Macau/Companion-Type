@@ -1,0 +1,7 @@
+PASS protection, stale revision, soft delete, direct-access refusal, reopen/restore and original bytes
+PASS full-set preflight and expired confirmation cannot delete a file
+PASS partial purge restart/retry; other UID, AI material and unassigned copies retained
+PASS existing full backup retains lifecycle, corrupt state fails closed, other library and path traversal protection
+PASS simulated directory-publication failure refuses data deletion; real Android fsync remains device acceptance
+Synthetic artifacts retained at E:\CodexData\Companion\.build-cache\device-phone055\trash071\trash071-4830596311879468255
+Picked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2 -Xmx384m
