@@ -1,0 +1,28 @@
+{
+  "readOnly": true,
+  "os": "Windows-10-10.0.26200-SP0",
+  "adapters": [
+    {
+      "DriverDesc": "AMD Radeon 780M Graphics",
+      "ProviderName": "Advanced Micro Devices, Inc.",
+      "DriverVersion": "32.0.31021.5001",
+      "DriverDate": "6-28-2026",
+      "MatchingDeviceId": "PCI\\VEN_1002&DEV_15BF&REV_C2"
+    },
+    {
+      "DriverDesc": "AMD Radeon RX 6800 XT",
+      "ProviderName": "Advanced Micro Devices, Inc.",
+      "DriverVersion": "32.0.21043.19003",
+      "DriverDate": "6-26-2026",
+      "MatchingDeviceId": "PCI\\VEN_1002&DEV_73BF&REV_C1"
+    },
+    {
+      "DriverDesc": "AMD Radeon RX 6800 XT",
+      "ProviderName": "Advanced Micro Devices, Inc.",
+      "DriverVersion": "32.0.21043.19003",
+      "DriverDate": "6-26-2026",
+      "MatchingDeviceId": "PCI\\VEN_1002&DEV_73BF&REV_C1"
+    }
+  ],
+  "driverChanged": false
+}

@@ -12,10 +12,11 @@ from full_meeting_transcript_metrics_20261103 import speaker_cer,normalize,group
 from reference_textgrid_20261104 import read_reference_intervals,PARSER_ID
 
 parser=argparse.ArgumentParser();parser.add_argument('--meeting',required=True);parser.add_argument('--run',default='whole-meetings-run.json')
+parser.add_argument('--control-root',help='Isolated experiment control directory; defaults to the original night batch')
 parser.add_argument('--diagnose-complete-text-with-invalid-time',action='store_true')
 parser.add_argument('--score-label',default='')
 args=parser.parse_args()
-root=Path('E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104')
+root=Path(args.control_root) if args.control_root else Path('E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104')
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'))
 run=read(root/args.run)
 assert args.meeting!=run.get('activeMeeting'),'Do not score a meeting while its inference is active'

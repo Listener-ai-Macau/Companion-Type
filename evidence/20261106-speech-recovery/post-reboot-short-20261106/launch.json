@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-06T07:58:42+08:00",
+  "supervisorPid": 4080,
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_night_moss_gpu_20261104.py",
+    "--inputs",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\post-reboot-short-20261106\\audio-only.json",
+    "--run-name",
+    "post-reboot-short",
+    "--protocol",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\post-reboot-short-20261106\\frozen-protocol.json",
+    "--control-root",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\post-reboot-short-20261106",
+    "--output-suffix=-post-reboot-20261106"
+  ],
+  "hostAvailableBytes": 3945521152,
+  "automaticLongRunAfterwards": false
+}

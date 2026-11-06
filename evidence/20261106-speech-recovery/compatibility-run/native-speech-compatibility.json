@@ -1,0 +1,21 @@
+{
+  "state": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+  "startedAt": "2026-11-05T22:39:41+08:00",
+  "protocolSha256": "37f1f48cf3e765af471ef24c28ad09d6224e072dc28e69d78e80d748df6a928b",
+  "inputManifestSha256": "7b7427c089df8ba77b70a57d5e3067cbaf3b54aa459f619e7c34f7adeefb94ee",
+  "results": [
+    {
+      "meeting": "engine-smoke30s-restored-20261105",
+      "exitCode": 1,
+      "workerState": "FAILED_RETAINED",
+      "wholeProcessFamilySeconds": 31.400348,
+      "observedProcessFamilyPeakRssBytes": 649568256,
+      "observedProcessFamilyPeakPrivateBytes": 661475328,
+      "processFamilyCpuSeconds": 19.46875,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\compatibility-run\\results\\engine-smoke30s-restored-20261105-r1\\completed-state.json",
+      "smokeOnly": true
+    }
+  ],
+  "referencePassedToWorker": false,
+  "finishedAt": "2026-11-05T22:40:13+08:00"
+}

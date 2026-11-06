@@ -22,7 +22,12 @@ state={'state':'IMPORTING','startedAt':now(),'pid':os.getpid(),'meeting':case['m
 def save():
     try:
         if 'gpu_stats' in globals():state.update(gpu_stats())
-        target=out/'state.tmp';target.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf8');target.replace(out/'state.json')
+        target=out/'state.tmp'
+        with target.open('w',encoding='utf8') as stream:
+            stream.write(json.dumps(state,ensure_ascii=False,indent=2))
+            if protocol['runtime'].get('durableProgressWrites'):
+                stream.flush();os.fsync(stream.fileno())
+        target.replace(out/'state.json')
     except OSError:state['progressWriteDeferrals']+=1
 save();started=time.perf_counter()
 try:
@@ -128,7 +133,15 @@ try:
             # encoder, with synthetic features. This is not an accuracy sample.
             features=torch.randn(3,80,3000,device=device,dtype=selected_dtype)
             with torch.inference_mode():reference_encoder=model.model.whisper_encoder(features,return_dict=True).last_hidden_state
-        execution_stats=install_execution_adapters(model,query_block=protocol['runtime']['queryBlock'],encoder_batch=protocol['runtime']['encoderBatch'],pacer=pacer,key_block=protocol['runtime'].get('keyBlock'))
+        def encoder_progress(completed,total):
+            # Observation only: retain the actual last completed independent
+            # chunk after an external system interruption, without resetting
+            # the global decoder context or changing any model calculation.
+            torch.cuda.synchronize(device)
+            state.update(completedAcousticChunks=completed,totalAcousticChunks=total,
+                lastAcousticChunkAt=now(),resourceLimitsAtEncoderProgress=worker_limits.query())
+            save()
+        execution_stats=install_execution_adapters(model,query_block=protocol['runtime']['queryBlock'],encoder_batch=protocol['runtime']['encoderBatch'],pacer=pacer,key_block=protocol['runtime'].get('keyBlock'),encoder_progress=encoder_progress if protocol['runtime'].get('durableProgressWrites') else None)
         state['executionAdapters']=execution_stats
         if case.get('verifyExecution'):
             with torch.inference_mode():actual_encoder=model.model.whisper_encoder(features,return_dict=True).last_hidden_state

@@ -1,0 +1,131 @@
+{
+  "at": "2026-11-06T07:57:02+08:00",
+  "state": "INCOMPLETE_WHOLE_MEETING_INTERRUPTED_BY_UNEXPECTED_SYSTEM_RESTART_NO_QUALITY_RESULT",
+  "bootTime": "2026-11-05T22:57:57.215675+08:00",
+  "events": [
+    {
+      "id": 41,
+      "utc": "2026-11-05T14:58:00.3234913Z",
+      "provider": "Microsoft-Windows-Kernel-Power",
+      "data": {
+        "BugcheckCode": "0",
+        "BugcheckParameter1": "0x0",
+        "BugcheckParameter2": "0x0",
+        "BugcheckParameter3": "0x0",
+        "BugcheckParameter4": "0x0",
+        "SleepInProgress": "0",
+        "PowerButtonTimestamp": "0",
+        "BootAppStatus": "0",
+        "Checkpoint": "0",
+        "ConnectedStandbyInProgress": "false",
+        "SystemSleepTransitionsToOn": "0",
+        "CsEntryScenarioInstanceId": "1",
+        "BugcheckInfoFromEFI": "false",
+        "CheckpointStatus": "0",
+        "CsEntryScenarioInstanceIdV2": "1",
+        "LongPowerButtonPressDetected": "false",
+        "LidReliability": "false",
+        "InputSuppressionState": "0",
+        "PowerButtonSuppressionState": "0",
+        "LidState": "1",
+        "WHEABootErrorCount": "0"
+      }
+    },
+    {
+      "id": 6005,
+      "utc": "2026-11-05T14:58:09.7413021Z",
+      "provider": "EventLog",
+      "data": {}
+    },
+    {
+      "id": 6008,
+      "utc": "2026-11-05T14:58:09.7284587Z",
+      "provider": "EventLog",
+      "data": {
+        "0": "22:57:41",
+        "1": "‎2026/‎11/‎5",
+        "2": null,
+        "3": null,
+        "4": "119187",
+        "5": null,
+        "6": null
+      }
+    },
+    {
+      "id": 6005,
+      "utc": "2026-11-04T05:51:22.4743267Z",
+      "provider": "EventLog",
+      "data": {}
+    },
+    {
+      "id": 6006,
+      "utc": "2026-11-04T05:51:04.6132656Z",
+      "provider": "EventLog",
+      "data": {}
+    },
+    {
+      "id": 1074,
+      "utc": "2026-11-04T05:50:54.2142772Z",
+      "provider": "User32",
+      "data": {
+        "param1": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe (DESKTOP-GRMMUN3)",
+        "param2": "DESKTOP-GRMMUN3",
+        "param3": "其他(计划外)",
+        "param4": "0x0",
+        "param5": "重启",
+        "param6": null,
+        "param7": "DESKTOP-GRMMUN3\\Billy"
+      }
+    },
+    {
+      "id": 6005,
+      "utc": "2026-11-02T13:33:14.0029432Z",
+      "provider": "EventLog",
+      "data": {}
+    },
+    {
+      "id": 6006,
+      "utc": "2026-11-02T13:32:36.6278431Z",
+      "provider": "EventLog",
+      "data": {}
+    },
+    {
+      "id": 1074,
+      "utc": "2026-11-02T13:32:28.9221888Z",
+      "provider": "User32",
+      "data": {
+        "param1": "C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe (DESKTOP-GRMMUN3)",
+        "param2": "DESKTOP-GRMMUN3",
+        "param3": "其他(计划外)",
+        "param4": "0x0",
+        "param5": "重启",
+        "param6": null,
+        "param7": "DESKTOP-GRMMUN3\\Billy"
+      }
+    },
+    {
+      "id": 6005,
+      "utc": "2026-10-30T02:38:04.6600290Z",
+      "provider": "EventLog",
+      "data": {}
+    }
+  ],
+  "lastCompleteResourceSample": {
+    "at": "2026-11-05T22:57:46+08:00",
+    "meeting": "L_R003S01C02",
+    "processFamilyRssBytes": 1341751296,
+    "processFamilyPrivateBytes": 1414758400,
+    "processFamilyCpuSeconds": 43.4375,
+    "systemCpuPercent": 25.3,
+    "availableMemoryBytes": 2973536256
+  },
+  "observedPreRestartPeakPrivateBytes": 1542369280,
+  "lastDurableWorkerPhase": "ENCODING_COMPLETE_AUDIO",
+  "generatedTokens": 0,
+  "resourceLogNulBytes": 242,
+  "rawRunReceiptRetainedUnedited": true,
+  "cause": "Kernel-Power41 and EventLog6008 confirm unexpected system restart; bugcheck0/no dump does not identify cause. Last sampled RAM is not proof that hardware/driver/RAM was healthy at failure.",
+  "eosCompleted": false,
+  "accuracyResult": null,
+  "sameConditionsAutomaticRetry": false
+}

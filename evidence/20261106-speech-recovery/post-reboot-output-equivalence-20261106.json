@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-06T08:06:10+08:00",
+  "state": "LOWER_DUTY_SAME_COMPLETE_OUTPUT_ON_COMPATIBILITY_CLIP",
+  "first": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\compatibility-run\\results\\engine-smoke30s-restored-20261105-r2",
+  "second": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\post-reboot-short-20261106\\results\\engine-smoke30s-restored-20261105-post-reboot-20261106",
+  "sameGeneratedIds": true,
+  "generatedTokens": 173,
+  "generatedIdsSha256": "8e94f6907ab153d970b051f243f2a6718a00d642e6baf687c5f2dced5d3b839b",
+  "sameModelOutputSha256": "ee615cddd259170d8fa96aa3a2ce9f1e124194515aebb626ae18588704dd996b",
+  "firstDuty": 0.25,
+  "secondDuty": 0.1,
+  "firstFamilySeconds": 98.900968,
+  "secondFamilySeconds": 241.064512,
+  "secondPeakPrivateBytes": 1498894336,
+  "unchangedModelMath": true,
+  "observationChanges": "Optional durable state flush, synchronized encoder-chunk completion observation; no waveform, model, decoding or global-context change.",
+  "fullMeetingReliabilityProven": false,
+  "reason": "One short completed sample cannot rule out cause of the unexpected whole-system restart during full-L encoding."
+}

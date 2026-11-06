@@ -43,7 +43,7 @@ def bounded_sdpa(original, query, key, value, attn_mask=None, dropout_p=0.0,
     return torch.cat(answers, dim=-2)
 
 
-def install_execution_adapters(model, *, query_block=256, encoder_batch=2, pacer=None, key_block=None):
+def install_execution_adapters(model, *, query_block=256, encoder_batch=2, pacer=None, key_block=None, encoder_progress=None):
     assert not model.training and query_block > 0 and encoder_batch > 0
     from transformers.modeling_outputs import BaseModelOutput
     stats = {'sdpaCalls': 0, 'blockedCalls': 0, 'maxQueryTokens': 0,
@@ -93,7 +93,9 @@ def install_execution_adapters(model, *, query_block=256, encoder_batch=2, pacer
         try:
             if count <= encoder_batch:
                 stats['encoderMicrobatches'] += 1
-                return original_encoder(input_features, *args, **kwargs)
+                result = original_encoder(input_features, *args, **kwargs)
+                if encoder_progress is not None:encoder_progress(count,count)
+                return result
             if args or kwargs != {'return_dict': True}:
                 raise ValueError('Unexpected Whisper encoder call; cannot microbatch it safely')
             values = []
@@ -102,6 +104,7 @@ def install_execution_adapters(model, *, query_block=256, encoder_batch=2, pacer
                 assert result.hidden_states is None and result.attentions is None
                 values.append(result.last_hidden_state)
                 stats['encoderMicrobatches'] += 1
+                if encoder_progress is not None:encoder_progress(min(count,start+encoder_batch),count)
             return BaseModelOutput(last_hidden_state=torch.cat(values, dim=0))
         finally:
             encoder_active = False

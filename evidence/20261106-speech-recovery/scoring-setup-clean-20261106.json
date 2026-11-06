@@ -1,0 +1,24 @@
+{
+  "state": "CLEAN_CPU_SCORER_DEPENDENCIES_VERIFIED",
+  "modelLoaded": false,
+  "inferenceEnvironmentChanged": false,
+  "systemSitePackages": false,
+  "previousFailure": "Previous CPU-only venv inherited unrelated global Gradio/Transformers constraints; retain failed pip check and create clean venv, no global edits.",
+  "steps": [
+    {
+      "step": "create-scoring-clean",
+      "exitCode": 0,
+      "seconds": 10.766
+    },
+    {
+      "step": "install-scoring-clean",
+      "exitCode": 0,
+      "seconds": 128.046
+    },
+    {
+      "step": "check-scoring-clean",
+      "exitCode": 0,
+      "seconds": 1.315
+    }
+  ]
+}

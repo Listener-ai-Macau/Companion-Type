@@ -1,0 +1,10 @@
+{
+  "exitCode": 1,
+  "state": "INHERITED_GLOBAL_DEPENDENCIES_CONFLICT",
+  "issues": [
+    "gradio4.8.0 requires numpy~=1.0; inherited scoring numpy2.4.6",
+    "global transformers4.35.0 incompatible inherited hub1.25.1/tokenizers0.23.1"
+  ],
+  "scoringParserAlreadyPassed": true,
+  "resolution": "Create separate clean venv without system-site-packages; no edits to global or inference runtime."
+}

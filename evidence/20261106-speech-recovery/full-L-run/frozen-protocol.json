@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-05T22:55:50+08:00",
+  "model": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+  "modelRevision": "10304d926740cf5a5cee05a268086e3265197910",
+  "officialSourceCommit": "79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "weightSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "runtime": {
+    "python": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1",
+    "gpuIndex": 1,
+    "dtype": "bfloat16",
+    "boundedMathAttention": true,
+    "queryBlock": 128,
+    "keyBlock": 256,
+    "encoderBatch": 1,
+    "streamedWeightLoading": true,
+    "directGpuWeightLoading": true,
+    "nativePcm16RamLoading": true,
+    "releaseUnusedModelAllocations": true,
+    "systemPrivateMemoryBudgetBytes": 2147483648,
+    "workerCpuHardCapPercent": 5,
+    "workerGpuScheduling": "IDLE",
+    "cooperativeGpuDuty": 0.25,
+    "affinity": [
+      14,
+      15
+    ],
+    "threads": 2,
+    "maxLength": 131072,
+    "maxNewTokensSmoke": 2048,
+    "maxNewTokensFull": 65536,
+    "doSample": false,
+    "seed": 0
+  },
+  "scope": "One complete real 2362.945-second development meeting. Exact original audio/reference hashes, published model/source pins, unchanged complete context/prompt. Reference retained in scoring-only manifest, not passed to inference. Reconstructed environment and explicit bounded temporary attention tiles query128/key256, CPU5%, private commit2GiB, GPU IDLE/cooperative duty0.25. No parameter tuning, no qualification or heldout claim."
+}

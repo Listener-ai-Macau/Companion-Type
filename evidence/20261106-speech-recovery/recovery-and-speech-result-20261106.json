@@ -1,0 +1,52 @@
+{
+  "at": "2026-11-06T08:06:10+08:00",
+  "state": "PINNED_GPU_SPEECH_REPRODUCED_FULL_REAL_MEETING_INTERRUPTED_SYSTEM_RESTART_UNQUALIFIED",
+  "ownerQuote": "目前是有显卡, 可以继续搞模型相关的内容",
+  "latestClarification": "电脑自行重启或不清楚",
+  "researchSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research",
+  "weightsAndTwoPublicMeetingsRestoredExactly": true,
+  "preRestart30s": {
+    "wholeFamilySeconds": 98.900968,
+    "peakPrivateBytes": 1487437824
+  },
+  "postRestart30s": {
+    "wholeFamilySeconds": 241.064512,
+    "peakPrivateBytes": 1498894336,
+    "sameAll173GeneratedIds": true,
+    "cooperativeActiveTimeFraction": 0.1
+  },
+  "shortTemporalDiagnostic": {
+    "referenceSpeakers": 5,
+    "predictedSpeakers": 5,
+    "sentenceBoundaryDer": 0.2275483649369336,
+    "speakerConfusionSeconds": 0.0,
+    "missedReferenceSpeakerSeconds": 3.687610000000004,
+    "cer": null,
+    "scope": "Opening introductions only; one reference utterance crosses30s cut. Not full-meeting ASR, overlapping speech, stable long speaker identity or qualification."
+  },
+  "fullL": {
+    "audioSeconds": 2362.945,
+    "state": "INCOMPLETE_WHOLE_MEETING_INTERRUPTED_BY_UNEXPECTED_SYSTEM_RESTART_NO_QUALITY_RESULT",
+    "lastDurablePhase": "ENCODING_COMPLETE_AUDIO",
+    "generatedTokens": 0,
+    "newQualityScore": null,
+    "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-run\\interruption-observed-20261106.json"
+  },
+  "systemRestart": {
+    "at": "2026-11-05T22:57:57+08:00",
+    "kernelPower41": true,
+    "bugcheckCode": 0,
+    "cause": "Unknown; Owner confirms spontaneous or uncertain. Last sampled RAM does not prove cause or safety."
+  },
+  "resourcePolicy": "One model; CPU5%, own-family private commit2GiB, GPU IDLE and cooperative pacing; actual Windows low-memory stop. No global clocks/driver changes, no owner-app termination. Cooperative fraction is not a hardware-utilization cap.",
+  "cleanCpuScoringReady": true,
+  "qualifiedArchitectureChosen": false,
+  "newWholeMeetingAccuracy": null,
+  "productQualified": false,
+  "highestPriorityNext": "Resolve full-GPU system-stability uncertainty before another long run; use existing short completed output/clean CPU scorer in the meantime. After cause/conditions are distinguishable, run frozen fullL once, then cpCER/DER/overlap/short spans/facts with references isolated. Do not train or tune thresholds on current sample.",
+  "longGpuValidationState": "DEFERRED_AFTER_CONFIRMED_UNEXPECTED_SYSTEM_RESTART_NOT_OWNER_PAUSE",
+  "mainAppBaseline": "Windows0.1.51 installed and remotely protected; research has no app dependency/default-model change.",
+  "phoneOrBoardIo": false,
+  "activeModelPids": [],
+  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\recovery-and-speech-result-20261106.json"
+}

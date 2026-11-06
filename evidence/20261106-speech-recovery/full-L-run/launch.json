@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-05T22:55:50+08:00",
+  "state": "ONE_FULL_MEETING_SUPERVISOR_LAUNCHED",
+  "pid": 20220,
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_night_moss_gpu_20261104.py",
+    "--inputs",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-run\\audio-only.json",
+    "--run-name",
+    "full-L-native-20261105",
+    "--protocol",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-run\\frozen-protocol.json",
+    "--control-root",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-run",
+    "--output-suffix=-20261105-r16"
+  ],
+  "hostAvailableMemoryBytes": 4104433664,
+  "smokeCompletedReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\compatibility-run\\native-speech-compatibility-r2.json",
+  "conditionsChangedFromHistoricalR15": [
+    "Restored Python/transitive dependency environment explicitly frozen",
+    "Bounded attention key tile256 instead of historical1024; all keys retained"
+  ],
+  "noAutomaticRetry": true,
+  "referencePassedToWorker": false,
+  "heldoutOpened": false
+}

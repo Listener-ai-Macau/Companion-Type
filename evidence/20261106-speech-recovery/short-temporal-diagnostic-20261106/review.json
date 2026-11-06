@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-06T08:02:04+08:00",
+  "state": "COMPLETED_COMPATIBILITY_CLIP_TEMPORAL_DIAGNOSTIC_ONLY_NOT_WHOLE_MEETING_QUALIFICATION",
+  "audioSeconds": 30,
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "sourceMeeting": "S_R004S03C01",
+  "fullSourceReferenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "sourceModelOutputSha256": "ee615cddd259170d8fa96aa3a2ce9f1e124194515aebb626ae18588704dd996b",
+  "referenceSpeakersInClip": 5,
+  "predictedSpeakersInClip": 5,
+  "sentenceBoundaryDer": 0.2275483649369336,
+  "derComponents": {
+    "confusion": 0.0,
+    "false alarm": 0.03555000000000064,
+    "missed detection": 3.687610000000004,
+    "correct": 12.67445,
+    "total": 16.362060000000003,
+    "diarization error rate": 0.2275483649369336
+  },
+  "macroAttributionRecall": 0.7903747213412601,
+  "uncoveredReferenceSpeakers": [],
+  "cer": null,
+  "cerNotComputedReason": "One original annotated utterance crosses the30s audio cut and ends at39.93091s; character reference cannot be clipped by time without word alignment. Do not count its missing out-of-clip words, silently omit it, or hand-edit to claim CER.",
+  "crossingReferenceIntervals": [
+    {
+      "start": 27.34688,
+      "end": 39.93091,
+      "speaker": "001-M"
+    }
+  ],
+  "overlapChallengeEvaluated": false,
+  "sourceScope": "Opening speaker introductions only, not the later noisy/overlapping meeting.",
+  "analyticOverlapMissAndFalseAlarmScorerFixturePassed": true,
+  "analyticFixtureComponents": {
+    "false alarm": 1.0,
+    "confusion": 0.0,
+    "correct": 3.0,
+    "total": 4.0,
+    "missed detection": 1.0,
+    "diarization error rate": 0.5
+  },
+  "referenceEnteredModel": false,
+  "productQualified": false,
+  "newWholeMeetingAccuracy": null,
+  "resources": {
+    "meeting": "engine-smoke30s-restored-20261105",
+    "exitCode": 0,
+    "workerState": "COMPLETE_JOINT_CANDIDATE_UNQUALIFIED",
+    "wholeProcessFamilySeconds": 98.900968,
+    "observedProcessFamilyPeakRssBytes": 1408188416,
+    "observedProcessFamilyPeakPrivateBytes": 1487437824,
+    "processFamilyCpuSeconds": 41.046875,
+    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\compatibility-run\\results\\engine-smoke30s-restored-20261105-r2\\completed-state.json",
+    "smokeOnly": true
+  }
+}

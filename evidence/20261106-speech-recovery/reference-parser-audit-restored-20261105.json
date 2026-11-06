@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-05T22:56:35+08:00",
+  "state": "REFERENCE_PARSER_SOURCE_FIX_VERIFIED",
+  "parser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "corpusAudit": [
+    {
+      "meeting": "S_R004S03C01",
+      "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+      "oldIntervals": 433,
+      "newIntervals": 433,
+      "recoveredIntervals": [],
+      "prefixOldLexicalSpeakers": 5,
+      "prefixNewLexicalSpeakers": 5,
+      "affected": false
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+      "oldIntervals": 1036,
+      "newIntervals": 1036,
+      "recoveredIntervals": [],
+      "prefixOldLexicalSpeakers": 6,
+      "prefixNewLexicalSpeakers": 6,
+      "affected": false
+    }
+  ],
+  "multilineEscapedQuoteAndEmptyRegressionPassed": true,
+  "declaredCountMismatchRejected": true,
+  "sourceReferencesModified": false,
+  "modelInferenceRepeated": false,
+  "oldScoresRetainedButAffectedReportsNotForDirectionDecisions": true
+}
