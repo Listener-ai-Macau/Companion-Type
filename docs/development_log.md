@@ -23904,3 +23904,12 @@ R22按显式manifest SHA dc2bd919…读取全部核过输入，确实越过R18 P
 Owner接回6800XT后的原完整2362.945秒L会议，独立原作者输入预处理R21已通过并退出释放临时数组；R22真实选择RX6800XT/gfx1030、全部权重回读哈希一致，跨过R18音频准备内存阻断，79/79声学块实际编码完成。22:05:54至22:16:20（族626.090464秒）在完整上下文第3/28层时Windows实际LowMemoryResourceNotification触发，仅结束本实验族，private峰1401982976B、RSS峰1322315776B、末样本可用837869568B。GPU allocator peak reserved3772776448B并非物理显存测量，也没有证据说16GB显存已满。无完整转写、0生成标记、无新准确率或说话人分数；worker被停止前无法写final receipt而显示FAILED_BEFORE_RECEIPT，不据此另诊断模型数学失败。输入分阶段实际有效范围与整会未完分开；真实原因仅确认系统低RAM，来源未定。当前worker不存在，CPU5%/private2GiB/IDLE+duty.1与低RAM保护未放宽、无其它应用关闭、无自动重试。研究终态证据faa7f7ceea1fb6d5f5203119a4603b2e23dd8830已上传并读回，原运行快照保留为历史，当前原待办已纠正为停止。
 
 Android069本机保护/回收站可恢复删除源码fb4d80e与候选23cdacd6已保留。新准备独立包com.denzic.companion.lifecycleqa071，SHAea3ffe05cc594cfb0b130797819e6c85bfde8b38ceec56d5de5517532c170e5a，同生产生命周期类及原pin备份class，在自己的UID/私有虚构目录分create/reopen/interrupt/retry阶段验真实目录fsync、跨进程恢复、中断清除继续及另一UID录音不受影响；无Activity/蓝牙/网络，不访问Companion原资料。仅编译验包，未安装或执行，不代替普通App界面/确认取消/原资料保护验收。准备器首编译因IOException回调签名失败已修，rawbytes哈希校验保持，不计作用户功能进展。共享手机仍在FW66692配对路径工作，原聊天报告已装Android069但source/APK匹配未知，本侧未查询/覆盖，不冒充本候选已装，也不盲同号升级。Windows068实际文件夹选中/本机收件、手机Word/回收站普通流程及原资料库切回仍留未完成。本批无Computer Use或手机/板IO。
+
+
+## 2026-11-06T22:53:21+08:00｜R23声学完成后退休权重逐token一致；R24完整会议受控继续
+
+Owner“继续把模型端的任务做一下, 今晚”。保留R22低系统RAM中断及Android069/Windows068原受影响验收工作点，本轮专注独立模型研发。具体变化是声学编码/原适配器结果计算完成后，用官方to_empty(meta)退役后续不再使用的声学权重，保语言模型参数指针/版本、共享输出embedding与完整音频上下文；再次调用声学明确拒绝，未将权重挪到CPU。R23在相同公开30秒输入生成全部173个token，与原已验证结果完全一致，退休624926720B（约596MiB）；族211.657945秒、private峰1499418624B。运行一致性不当准确率或系统RAM改善；无需重新测试无关UI/实板。源码8b6aa98/83779ae及完整证明cb01a715已远端保护。
+
+另以Windows正式SetProcessInformation将本worker内存页优先级设VERY_LOW=1，真实读回1，父进程前后仍5；微小检查不导入torch。它仅是系统回收顺序提示，不强制裁工作集、不改页文件/其它应用/驱动，不保证节省多少RAM。CPU5%、private2GiB、GPU IDLE+duty.1及实际Windows低RAM停止不放宽。R24 22:50:31启动原完整2362.945秒L，复用R21逐字节核过的原作者输入，单模型、无训练/调参/原文/人数提示。具体活状态见C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261105-model-resume\full-L-retired-acoustic-20261106-r24\observed-result.json，运行/终态不得由本条历史时间判断。
+
+方向边界重新核作者固定commit README：MOSS0.9B在作者AISHELL4基准CER14.84%、cpCER15.83%，与本地单样本历史3.61%不是同一输入/口径，不能据此承诺普遍<5%。本轮先取一个完整联合模型基线，分别判断文字、人物归属、重叠和成本；若完整结果未达门，不以继续调样例或无止境优化运行冒充识别质量改善，成熟强ASR与人物/重叠能力仍按独立组件选择，产品默认后端保持。现研究运行证据0dbfbd9fec080432954d98d31bab8f3d54571ca9远端读回；所有原售卖缺口继续开放。
