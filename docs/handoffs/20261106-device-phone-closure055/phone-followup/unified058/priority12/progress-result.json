@@ -1,0 +1,119 @@
+{
+  "at": "2026-11-06T15:32:51+08:00",
+  "state": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
+  "installedLastProven": {
+    "version": "0.1.61/code61",
+    "installed": true,
+    "exactInstalledApkSha256": "fca337f04b990fb377b9a752668141cb9d417b26e043ff5bb8422b7c5c83d1c1",
+    "source": "0aebac91f319f1b66530129ac0debcdec9199040",
+    "backendSource": "34dee9ff3c7fbc80577bae522c87c8a8883a1096",
+    "originalAppFilesByteIdentical": 571,
+    "physicalMainActivityStayedUnchanged": null,
+    "mainDisplayInputInjected": false,
+    "virtualDisplayId": 2,
+    "observerFailureRetained": "Initial installer stopped after successful installation because physical-main resumed activity differed before/after. Subsequent actual state: physical display has no resumed activity and keyguard/screen off; own QA receiver is resumed only on display2. Cause of the transition is not established; not a failed App update or permission bypass.",
+    "ordinaryAppAcceptanceComplete": false,
+    "snapshotFilesLocalOnly": true
+  },
+  "candidate": {
+    "result": "ANDROID62_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+    "versionName": "0.1.62",
+    "versionCode": 62,
+    "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\word062\\Companion-Android-0.1.62-录音与内容修复候选.apk",
+    "sha256": "bbc414e1581e9b4fc404eadfe9653f68a5999f2c1945b188fdbed8f978afbf77",
+    "bytes": 48765668,
+    "frontendSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
+    "backendSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+    "signerMatches050r2And055": true,
+    "zip16KiBAligned": true,
+    "nativeLibraries": [
+      {
+        "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+        "sha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libonnxruntime.so",
+        "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+        "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+        "elf16KiBAligned": true
+      }
+    ],
+    "webAssetsExact": [
+      "index.html",
+      "manifest.webmanifest",
+      "assets/index-BeLbnNsw.css",
+      "assets/index-QaVRx1Hi.js"
+    ],
+    "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\word062\\apk62-build-1793949358355010600.log",
+    "buildWallSeconds": 20.29,
+    "installed": false,
+    "reasonNotInstalled": "Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.",
+    "actualOrdinaryControlButtonsAccepted": false,
+    "modelsRun": false,
+    "nativeRebuilt": false
+  },
+  "candidateSource": {
+    "at": "2026-11-06T15:13:30+08:00",
+    "versionName": "0.1.62",
+    "versionCode": 62,
+    "frontendSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
+    "frontendBranch": "work/device-phone-closure055-20261106",
+    "backendSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+    "backendBranch": "work/device-phone-closure055-android-20261106",
+    "remoteReadback": true,
+    "installed": false,
+    "nativeRebuilt": true,
+    "modelsRun": false,
+    "wordPhoneAcceptancePending": true,
+    "windowsFooterSourceCorrectedButNotPackaged": true
+  },
+  "actualSavedFormats": [
+    "txt",
+    "markdown",
+    "word",
+    "pdf",
+    "pptx",
+    "xlsx",
+    "mindmap",
+    "png"
+  ],
+  "actualSharedFormats": [
+    "markdown",
+    "mindmap",
+    "pdf",
+    "png",
+    "pptx",
+    "txt",
+    "word",
+    "xlsx"
+  ],
+  "actualSharedHashMatchesProducer": true,
+  "actualReadOnlyAndUngrantDenial": true,
+  "actualPublicClipboardPasted": true,
+  "contentQualifiedOtherSevenFormats": true,
+  "wordUnicodeFixedAndActual061Observed": true,
+  "wordFinalContentQualified": false,
+  "wordRemaining": "Install062 or merge into newer candidate after current OTA holder releases, then actual normal Word save/share and Microsoft schema0.",
+  "originalLibraryStillRetained": true,
+  "originalLibraryReturnPending": true,
+  "newRecordingControlAndFullPlaybackThisTurn": false,
+  "oldBoardAudioPayloadReads": 0,
+  "oldBoardDeletes": 0,
+  "sharedHandoff": {
+    "at": "2026-11-06T15:13:01+08:00",
+    "newItem": "Companion手机060真实OTA66687指标验收",
+    "recordedReason": "Owner确认前项已做完，授权本轮接续OTA；本侧未关闭他方进程，按明确交接更新记录",
+    "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
+  },
+  "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
+  "next": "After shared66687 OTA final receipt/release, verify actual installed version; install062 only if no newer candidate, else merge. Retest Word affected route, return original library, then only self-created actual-card pause/resume/stop/receive/playback/delete and original-audio save/share. Inherit completed OTA evidence without needless repeat.",
+  "modelsRun": false,
+  "customerResult": null,
+  "ownerAccepted": false,
+  "wholeProductQualified": false
+}

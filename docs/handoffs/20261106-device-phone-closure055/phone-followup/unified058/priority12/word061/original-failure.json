@@ -1,0 +1,8 @@
+{
+  "actualAndroidVersion": "0.1.59",
+  "fileSha256": "9cb3db921c3f45d6c8756697ef47119a14cd2cf7430e70db5947749af641ceff",
+  "bytes": 3831,
+  "error": "word/document.xml invalid XML1.0 numeric character references: &#55357;&#56832; instead of one supplementary scalar. Actual system save and real recipient file both retained these bytes.",
+  "ordinaryTransferPassedButContentQualified": false,
+  "scope": "Android selected-content Word uses DOM Transformer; other seven formats did not have this XML failure."
+}

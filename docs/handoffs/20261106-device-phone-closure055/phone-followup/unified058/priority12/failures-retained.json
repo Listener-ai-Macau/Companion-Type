@@ -1,0 +1,46 @@
+[
+  {
+    "kind": "PRODUCT_ANDROID059_WORD_XML_INVALID",
+    "detail": "Android DOM Transformer emitted separate surrogate references. Original actual file retained in word061; custom scalar-preserving serializer independently roundtripped and actual061 body became valid."
+  },
+  {
+    "kind": "PRODUCT_SHARED_WORD_FOOTER_SCHEMA",
+    "detail": "After Unicode fix, Microsoft OpenXML found one footer w:rPr color/size ordering violation in actual061. Shared Rust source corrected in both repositories; native062 compiled and exact footer bytes found; controlled host diagnostic0 schema errors. Actual062 UI export still pending."
+  },
+  {
+    "kind": "QA_INSTALL_CANCELLED",
+    "detail": "First local share recipient install ended INSTALL_FAILED_USER_RESTRICTED/cancelled. Later explicit no-incremental install succeeded. No security setting disabled or account credentials used."
+  },
+  {
+    "kind": "QA_PRIVATE_CLIPBOARD_PANEL_LAYOUT",
+    "detail": "Long public paste pushed verify button outside view. Test recipient capped EditText at8 lines; actual paste and visible verify then succeeded. No product UI defect attributed."
+  },
+  {
+    "kind": "QA_ADB_BINARY_READBACK",
+    "detail": "Initial adb shell binary pull transformed bytes/line endings. Raw exec-out and on-device SHA matched receiver and producer exactly; no product payload corruption."
+  },
+  {
+    "kind": "QA_ASYNC_SHARE_RECEIPT",
+    "detail": "A chooser tap returned before receiver durable receipt. Bounded wait reused actual completed Word receipt; no unchanged share route rerun."
+  },
+  {
+    "kind": "QA_PNG_CHOOSER_OFFSCREEN",
+    "detail": "Image handler list placed local receiver below visible rows. Guard refused offscreen tap; ordinary vertical scroll exposed it, then actual PNG received/hash/grants verified."
+  },
+  {
+    "kind": "QA_BROWSER_CONFIRM_ASSISTANCE",
+    "detail": "Fixture setup used normal restore entry, CDP accepted browser confirm, real Android file picker selected public archive; native leftover prompt later cancelled. This assisted fixture setup is not a new complete backup/restore acceptance."
+  },
+  {
+    "kind": "QA_INSTALL_MAIN_ACTIVITY_OBSERVER",
+    "detail": "061 installed successfully but initial observer asserted on physical main resumed activity transition. Post-check proved exact installed bytes and571 original app files unchanged; no cause for physical transition asserted."
+  },
+  {
+    "kind": "QA_PACKAGING_CLASS_SET",
+    "detail": "Unicode source import/line changes also changed Section debug class bytes; bounded expected family corrected. Reused successful Java tests/compiled classes rather than repeat native compile."
+  },
+  {
+    "kind": "QA_RESUME_SCRIPT",
+    "detail": "First packaging resume omitted test_names and stopped before archive write. Added existing test class exclusions and completed source push."
+  }
+]

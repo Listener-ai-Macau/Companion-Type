@@ -1,0 +1,16 @@
+{
+  "displayId": 2,
+  "serverPid": 22092,
+  "newDisplayOnly": true,
+  "ownContentOnlyAndOwnFocusFlagsObserved": true,
+  "noAudioForwarding": true,
+  "noClipboardAutosync": true,
+  "noPhysicalScreenCapture": true,
+  "physicalDisplayInputInjected": false,
+  "nativeOpenDocumentAndCreateDocumentAndChooserOnDisplay2Observed": true,
+  "physicalOwnerAppsOrLockStateChangedDuringRun": true,
+  "audioPlaybackIsolation": false,
+  "currentLifecycle": "Shared OTA flow currently uses this display after recorded owner handoff. Do not destroy while its OTA/verification is active; finish it and return original library before final cleanup.",
+  "mainAppVersionLastProven": "0.1.61/code61",
+  "ordinaryPhysicalPhoneDisplayAcceptanceNotClaimed": true
+}

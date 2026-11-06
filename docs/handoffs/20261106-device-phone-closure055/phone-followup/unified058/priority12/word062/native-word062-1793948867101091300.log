@@ -1,0 +1,469 @@
+   Compiling companion-mobile-audio v0.1.0 (C:\Users\Billy\Desktop\Denzic\Companion\companion-android-device-closure055\apps\android-backend\native)
+warning: unused imports: `File`, `OpenOptions`, `PathBuf`, `Path`, `io::ErrorKind`, and `self`
+ --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_control_journal.rs:1:16
+  |
+1 | use std::{fs::{self, File, OpenOptions}, io::ErrorKind, path::{Path, PathBuf}};
+  |                ^^^^  ^^^^  ^^^^^^^^^^^   ^^^^^^^^^^^^^         ^^^^  ^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `closed_pause_ms` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\cop1.rs:106:19
+    |
+ 45 | impl Timeline {
+    | ------------- method in this implementation
+...
+106 |     pub(crate) fn closed_pause_ms(&self) -> u64 {
+    |                   ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `position` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\cop1.rs:141:19
+    |
+140 | impl<R: Read> Reader<R> {
+    | ----------------------- method in this implementation
+141 |     pub(crate) fn position(&self)->u64 {self.summary.encoded_bytes}
+    |                   ^^^^^^^^
+
+warning: associated function `default_resource_id` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/volcengine_shared.rs:271:12
+    |
+270 | impl VolcengineCredentials {
+    | -------------------------- associated function in this implementation
+271 |     pub fn default_resource_id() -> &'static str {
+    |            ^^^^^^^^^^^^^^^^^^^
+
+warning: function `credentials_from_env` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/volcengine_shared.rs:277:8
+    |
+277 | pub fn credentials_from_env() -> Option<VolcengineCredentials> {
+    |        ^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `probe_silent_audio` and `transcribe_file` are never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/volcengine_shared.rs:307:19
+    |
+304 | impl VolcengineSaucAsr {
+    | ---------------------- methods in this implementation
+...
+307 |     pub(crate) fn probe_silent_audio(&self) -> Result<(), String> {
+    |                   ^^^^^^^^^^^^^^^^^^
+...
+563 |     pub fn transcribe_file(&self, wav_path: &Path) -> Result<(String, Vec<Utterance>), String> {
+    |            ^^^^^^^^^^^^^^^
+
+warning: function `read_pcm16k_mono_wav` is never used
+    --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/volcengine_shared.rs:1176:4
+     |
+1176 | fn read_pcm16k_mono_wav(path: &Path) -> Result<Vec<u8>, String> {
+     |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `load` is never used
+   --> src\paraformer_shared.rs:264:19
+    |
+263 | impl Runtime {
+    | ------------ associated function in this implementation
+264 |     pub(super) fn load(root: &Path, runtime_root: &Path) -> Result<Self, String> {
+    |                   ^^^^
+
+warning: struct `Entry` is never constructed
+  --> src\lib.rs:24:16
+   |
+24 |     pub struct Entry {pub uid:String,pub title:String,pub deadline:String,pub reminder_minutes:Option<u16>,pub reminder_at:Option<St...
+   |                ^^^^^
+
+warning: function `empty_action_notice` is never used
+ --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:9:4
+  |
+9 | fn empty_action_notice(text:&str)->bool {
+  |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `parse_saved_actions` is never used
+  --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:48:8
+   |
+48 | pub fn parse_saved_actions(markdown: &str) -> Vec<Action> {
+   |        ^^^^^^^^^^^^^^^^^^^
+
+warning: struct `CommonSupplement` is never constructed
+  --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:97:8
+   |
+97 | struct CommonSupplement { text:String, display_texts:Vec<String> }
+   |        ^^^^^^^^^^^^^^^^
+
+warning: function `common_supplement` is never used
+  --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:98:4
+   |
+98 | fn common_supplement(actions: &[Action]) -> Option<CommonSupplement> {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: function `todo` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:184:8
+    |
+184 | pub fn todo(title: &str, actions: &[Action], draft: bool) -> String {
+    |        ^^^^
+
+warning: function `due_property` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:205:4
+    |
+205 | fn due_property(value: &str) -> Option<String> {
+    |    ^^^^^^^^^^^^
+
+warning: function `calendar_time_notice` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:217:15
+    |
+217 | pub(crate) fn calendar_time_notice(actions: &[Action]) -> Option<String> {
+    |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:235:8
+    |
+235 | pub fn calendar(session_id: &str, mode: &str, title: &str, actions: &[Action], draft: bool, stamp: &str) -> String {
+    |        ^^^^^^^^
+
+warning: function `calendar_with_provenance` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:239:15
+    |
+239 | pub(crate) fn calendar_with_provenance(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,provenance:Opti...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_event_notice` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:286:15
+    |
+286 | pub(crate) fn calendar_event_notice(actions:&[Action])->Option<String> {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:297:8
+    |
+297 | pub fn calendar_events(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str)->Result<String,String> {
+    |        ^^^^^^^^^^^^^^^
+
+warning: function `calendar_event_reminder_notice` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:301:15
+    |
+301 | pub(crate) fn calendar_event_reminder_notice(actions:&[Action])->Option<String> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_reminder` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:311:8
+    |
+311 | pub fn calendar_events_with_reminder(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,remind_at_time:bo...
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_copy_entries` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:388:15
+    |
+388 | pub(crate) fn calendar_copy_entries(session_id:&str,mode:&str,actions:&[Action],lead:Option<u16>)->Vec<super::calendar_copy::Entry> {
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_reminder_lead` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:398:15
+    |
+398 | pub(crate) fn calendar_events_with_reminder_lead(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_selections` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:402:15
+    |
+402 | pub(crate) fn calendar_events_with_selections(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_min...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_selections_and_provenance` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:406:15
+    |
+406 | pub(crate) fn calendar_events_with_selections_and_provenance(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stam...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `calendar_events_with_slots` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\action_export.rs:410:15
+    |
+410 | pub(crate) fn calendar_events_with_slots(session_id:&str,mode:&str,title:&str,actions:&[Action],draft:bool,stamp:&str,lead_minutes:...
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `audio_path` is never read
+  --> src\lib.rs:44:217
+   |
+44 | ...ct CompanionV1HostSession {pub id:String,pub title:String,pub source:String,pub transcript_text:String,pub duration_ms:u64,pub meeting_notes:Vec<Note>,pub meeting_mode:String,pub audio_path:Op...
+   |       ---------------------- field in this struct                                                                                                                                     ^^^^^^^^^^
+   |
+   = note: `CompanionV1HostSession` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: function `restore_literal_actions` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\minutes\short_memo.rs:159:15
+    |
+159 | pub(super) fn restore_literal_actions(minutes: &mut super::CompanionV1MeetingMinutes,
+    |               ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `supplemental_clauses` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\minutes\short_memo.rs:178:4
+    |
+178 | fn supplemental_clauses(text: &str) -> Option<Vec<(String,String)>> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `metadata_clause` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\minutes\short_memo.rs:201:4
+    |
+201 | fn metadata_clause(text:&str)->bool {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `context_actions` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\minutes\short_memo.rs:222:15
+    |
+222 | pub(super) fn context_actions(session:&CompanionV1HostSession)->Option<Vec<CompanionV1ActionItem>> {
+    |               ^^^^^^^^^^^^^^^
+
+warning: function `ask_with` is never used
+   --> src\..\..\..\windows\src-tauri\src\backend\meeting_qa.rs:149:4
+    |
+149 | fn ask_with<F>(request:&Request,mut extract:F)->Result<ResultView,String>
+    |    ^^^^^^^^
+
+warning: function `generate` is never used
+  --> src\backend.rs:84:8
+   |
+84 | pub fn generate(session:&CompanionV1HostSession,endpoint:&str,model:&str,key:&str,root:&Path)->Result<crate::companion_v1::Companion...
+   |        ^^^^^^^^
+
+warning: function `generate_observed` is never used
+  --> src\backend.rs:99:8
+   |
+99 | pub fn generate_observed(session:&CompanionV1HostSession,endpoint:&str,model:&str,key:&str,root:&Path,
+   |        ^^^^^^^^^^^^^^^^^
+
+warning: enum `Operation` is never used
+ --> src\backend.rs:6:14
+  |
+6 |     pub enum Operation {Minutes}
+  |              ^^^^^^^^^
+
+warning: struct `RecordingScope` is never constructed
+ --> src\backend.rs:7:16
+  |
+7 |     pub struct RecordingScope; impl RecordingScope {pub fn enter(_: &str)->Self{Self}}
+  |                ^^^^^^^^^^^^^^
+
+warning: associated function `enter` is never used
+ --> src\backend.rs:7:60
+  |
+7 |     pub struct RecordingScope; impl RecordingScope {pub fn enter(_: &str)->Self{Self}}
+  |                                -------------------         ^^^^^
+  |                                |
+  |                                associated function in this implementation
+
+warning: struct `Span` is never constructed
+ --> src\backend.rs:8:16
+  |
+8 |     pub struct Span; impl Span {pub fn start(_:Operation)->Self{Self} pub fn finish(&self,_:Option<&str>){}}
+  |                ^^^^
+
+warning: associated items `start` and `finish` are never used
+ --> src\backend.rs:8:40
+  |
+8 |     pub struct Span; impl Span {pub fn start(_:Operation)->Self{Self} pub fn finish(&self,_:Option<&str>){}}
+  |                      ---------         ^^^^^                                 ^^^^^^
+  |                      |
+  |                      associated items in this implementation
+
+warning: function `minutes_input` is never used
+  --> src\backend.rs:12:12
+   |
+12 |     pub fn minutes_input(session:&CompanionV1HostSession)->CompanionV1HostSession{session.clone()}
+   |            ^^^^^^^^^^^^^
+
+warning: function `source` is never used
+  --> src\backend.rs:17:12
+   |
+17 |     pub fn source(_: &CompanionV1HostSession) {}
+   |            ^^^^^^
+
+warning: function `notice` is never used
+  --> src\backend.rs:18:12
+   |
+18 |     pub fn notice(_: &())->String {String::new()}
+   |            ^^^^^^
+
+warning: constant `MINUTES_TIMEOUT` is never used
+  --> src\backend.rs:22:15
+   |
+22 |     pub const MINUTES_TIMEOUT:Duration=Duration::from_secs(180);
+   |               ^^^^^^^^^^^^^^^
+
+warning: struct `Limits` is never constructed
+  --> src\backend.rs:23:16
+   |
+23 |     pub struct Limits;impl Limits {pub fn for_timeout(_:Duration)->Self{Self}}
+   |                ^^^^^^
+
+warning: associated function `for_timeout` is never used
+  --> src\backend.rs:23:43
+   |
+23 |     pub struct Limits;impl Limits {pub fn for_timeout(_:Duration)->Self{Self}}
+   |                       -----------         ^^^^^^^^^^^
+   |                       |
+   |                       associated function in this implementation
+
+warning: function `run` is never used
+  --> src\backend.rs:24:12
+   |
+24 |     pub fn run(_: &str,_:&[String],_:Limits,_:Option<&str>)->Result<String,String>{Err("external commands unavailable on mobile".int...
+   |            ^^^
+
+warning: struct `CompanionMinutesManager` is never constructed
+  --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:21:12
+   |
+21 | pub struct CompanionMinutesManager;
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `generate`, `generate_with_context`, and `generate_inner` are never used
+  --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:24:12
+   |
+23 | impl CompanionMinutesManager {
+   | ---------------------------- associated items in this implementation
+24 |     pub fn new() -> Self {
+   |            ^^^
+...
+28 |     pub fn generate(
+   |            ^^^^^^^^
+...
+44 |     pub fn generate_with_context(&self, session: &CompanionV1HostSession, generated_at: &str) -> CompanionV1MeetingMinutes {
+   |            ^^^^^^^^^^^^^^^^^^^^^
+...
+57 |     fn generate_inner(&self, session: &CompanionV1HostSession, generated_at: &str) -> CompanionV1MeetingMinutes {
+   |        ^^^^^^^^^^^^^^
+
+warning: function `deepseek_native_minutes` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:221:4
+    |
+221 | fn deepseek_native_minutes(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `deepseek_http_client` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:237:4
+    |
+237 | fn deepseek_http_client(endpoint: &str) -> Result<reqwest::blocking::Client, String> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_deepseek_native` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:246:4
+    |
+246 | fn run_deepseek_native(
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_deepseek_request` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:268:15
+    |
+268 | pub(super) fn run_deepseek_request(
+    |               ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_deepseek_request_with_template` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:279:15
+    |
+279 | pub(super) fn run_deepseek_request_with_template(endpoint:&str,model:&str,api_key:&str,
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `external_minutes_command` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:480:4
+    |
+480 | fn external_minutes_command(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_external_minutes` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:491:4
+    |
+491 | fn run_external_minutes(
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run_minutes_command` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:511:15
+    |
+511 | pub(super) fn run_minutes_command(command: &str, args: &[String], session: &CompanionV1HostSession,
+    |               ^^^^^^^^^^^^^^^^^^^
+
+warning: function `render_speaker_section` is never used
+    --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:1096:4
+     |
+1096 | fn render_speaker_section(transcript_text: &str) -> Option<String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `split_args` is never used
+    --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_minutes_shared.rs:1207:4
+     |
+1207 | fn split_args(value: &str) -> Vec<String> {
+     |    ^^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out\mobile_long_minutes.rs:38:8
+   |
+37 | impl Identity {
+   | ------------- associated function in this implementation
+38 |     fn new(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession) -> Self {
+   |        ^^^
+
+warning: function `run` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out\mobile_long_minutes.rs:359:15
+    |
+359 | pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+    |               ^^^
+
+warning: function `run_with` is never used
+    --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out\mobile_long_minutes.rs:1279:4
+     |
+1279 | fn run_with<F>(root: &Path, endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+     |    ^^^^^^^^
+
+warning: function `erase` is never used
+    --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out\mobile_long_minutes.rs:1460:27
+     |
+1460 | pub(in crate::backend) fn erase(root: &Path, session_ids: &[String], all: bool) -> Result<(usize, usize), String> {
+     |                           ^^^^^
+
+warning: constant `PAGE_HEADER_BYTES` is never used
+ --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_control_wire.rs:5:7
+  |
+5 | const PAGE_HEADER_BYTES: usize = 24;
+  |       ^^^^^^^^^^^^^^^^^
+
+warning: constant `MAX_SEGMENTS` is never used
+ --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_control_wire.rs:6:7
+  |
+6 | const MAX_SEGMENTS: u32 = 1024;
+  |       ^^^^^^^^^^^^
+
+warning: method `encode` is never used
+   --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out/mobile_control_wire.rs:144:19
+    |
+ 77 | impl Descriptor {
+    | --------------- method in this implementation
+...
+144 |     pub(crate) fn encode(&self) -> Result<Vec<u8>, String> {
+    |                   ^^^^^^
+
+warning: constant `STALE_SNAPSHOT` is never used
+ --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out\mobile_control_transport.rs:5:18
+  |
+5 | pub(crate) const STALE_SNAPSHOT: u32 = 8; // comp_segment_result_t
+  |                  ^^^^^^^^^^^^^^
+
+warning: associated function `from_verified_peer` is never used
+  --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out\mobile_control_protocol.rs:26:19
+   |
+24 | impl PausePeer {
+   | -------------- associated function in this implementation
+25 |     pub(crate) fn identity(&self) -> ([u8;12], u64) { (self.peer.uid, self.peer.epoch) }
+26 |     pub(crate) fn from_verified_peer(peer:&Peer)->Result<Self,String> {
+   |                   ^^^^^^^^^^^^^^^^^^
+
+warning: function `request` is never used
+  --> E:\CodexData\Companion\.build-cache\device-phone055\native056\target\aarch64-linux-android\release\build\companion-mobile-audio-69c744aae0c92a92\out\mobile_control_protocol.rs:92:15
+   |
+92 | pub(crate) fn request(peer: &Peer, key: Option<&SessionKey>, command: u8, request: u32,
+   |               ^^^^^^^
+
+warning: function `check` is never used
+  --> src\..\..\..\windows\src-tauri\src\backend\recording_capacity.rs:47:15
+   |
+47 | pub(super) fn check(c:&CompanionV1RecordingCapacity,seconds:u16)->Result<(),String> {
+   |               ^^^^^
+
+warning: `companion-mobile-audio` (lib) generated 70 warnings (run `cargo fix --lib -p companion-mobile-audio` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 1m 32s

@@ -42815,7 +42815,165 @@
         }
       }
     ],
-    "scope_history_before_owner_three_lower_20261025": "当前Codex实板录音/会议/蓝牙/OTA/低功耗完整目标；QM01–QM09保持功能与内容质量门，QM10–QM14覆盖性能与能量，QM15–QM16补齐蓝牙稳定性和签名OTA恢复。所有数值为工程目标，交付门和冲刺门分别判定；Owner最新分工由本聊天负责录音及其它非屏幕功能（含IMU/提示音），屏幕另一聊天；真实并发资格不能用失败画面替代。Android/底座仍后置，Type发布保留原计划。"
+    "scope_history_before_owner_three_lower_20261025": "当前Codex实板录音/会议/蓝牙/OTA/低功耗完整目标；QM01–QM09保持功能与内容质量门，QM10–QM14覆盖性能与能量，QM15–QM16补齐蓝牙稳定性和签名OTA恢复。所有数值为工程目标，交付门和冲刺门分别判定；Owner最新分工由本聊天负责录音及其它非屏幕功能（含IMU/提示音），屏幕另一聊天；真实并发资格不能用失败画面替代。Android/底座仍后置，Type发布保留原计划。",
+    "embedded_current_20261106": {
+      "schema": "companion.embedded.acceptance-metrics.v1",
+      "effectiveAt": "2026-11-06",
+      "ownerRequirement": "功能可执行但必需指标不及格，整项报失败；缺少指标则补合适指标，不按实测低值倒推及格线。",
+      "scope": "Companion WBA55 当前无屏共用核心；正常开发签名完整OTA，约1.36MB包。不是整机售卖资格。",
+      "conditions": [
+        "记录固件/应用不可变提交、板UID、接收端、包大小、计时起止与测量分辨率。",
+        "记录实际MTU、数据块/窗口及设备提供的PHY/DLE/连接间隔；没有采到就写未知。",
+        "保留现场其它蓝牙使用条件；故障注入、用户暂停和硬件不可用单独说明，不能混入正常速度统计。",
+        "计时用单调时钟；历史5秒状态采样只作近似基线，不能冒充精确底层计时。",
+        "旧录音与版本校验必须完整；传完100%不能代表安装或指标通过。"
+      ],
+      "thresholdBasis": {
+        "ota": "Owner2026-11-06：既有100K能力已在满频/独占连接条件达到，保留其快传实现；当前运行主频明确保持61.44MHz，不需要满频。正常多设备蓝牙共存最低50KiB/s验收，不限速50、不关闭其它设备凑数。约1.36MB完整包总180秒/传后核对120秒为补充工程要求。",
+        "resources": "本批仅修改手机/电脑实现，没有新增固件运行功能：应用409252B，data+bss69328B，预留栈21504B作为本批不可静默回退的基线。今后真实固件功能若需预算增量，应连同实际功能/余量记录更新；不得为让失败变通过而放宽。没有新增固定空闲RAM门槛。"
+      },
+      "profiles": {
+        "normal_full_ota": [
+          {
+            "id": "payload_rate_kib_s",
+            "title": "设备确认有效载荷速度",
+            "unit": "KiB/s",
+            "minimum": 50,
+            "basis": "固件+资源有效字节，从首个DATA窗口开始到最后设备确认保存；不计本地写入为设备保存"
+          },
+          {
+            "id": "total_seconds",
+            "title": "正常完整升级总耗时",
+            "unit": "s",
+            "maximum": 180,
+            "basis": "开始核对设备到同UID新版本/资源/签名payload哈希和临时空间释放确认"
+          },
+          {
+            "id": "post_finish_verify_seconds",
+            "title": "传完至安装后核对耗时",
+            "unit": "s",
+            "maximum": 120,
+            "basis": "全部字节设备确认后到实际新版本确认；包括设备提交、安装和重连，不把它全称为设备安装时间"
+          },
+          {
+            "id": "application_bytes",
+            "title": "本批固件应用大小",
+            "unit": "B",
+            "maximum": 409252
+          },
+          {
+            "id": "static_data_bss_bytes",
+            "title": "本批data+bss",
+            "unit": "B",
+            "maximum": 69328
+          },
+          {
+            "id": "stack_reserved_bytes",
+            "title": "本批预留栈",
+            "unit": "B",
+            "maximum": 21504
+          },
+          {
+            "id": "stack_guard_faults",
+            "title": "观测范围内栈防护/低栈告警",
+            "unit": "count",
+            "maximum": 0
+          },
+          {
+            "id": "old_catalog_changed_count",
+            "title": "旧录音目录非预期变化",
+            "unit": "count",
+            "maximum": 0
+          },
+          {
+            "id": "pending_ota_claimed_bytes",
+            "title": "升级后未释放临时空间",
+            "unit": "B",
+            "maximum": 0
+          },
+          {
+            "id": "installed_identity_mismatch_count",
+            "title": "UID/版本/资源/有效载荷校验不匹配",
+            "unit": "count",
+            "maximum": 0
+          }
+        ]
+      },
+      "aggregation": "任一必需指标超限即FAIL，功能通过不能抵消；必需证据缺失记NOT_EVALUATED，不能记PASS。明确block的电源/屏幕/声学/生产项沿原任务，不补造测量或关闭整机资格。",
+      "runtimeChanges": false,
+      "numericSourceOfTruth": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
+      "relatedQualityTargets": [
+        "QM01",
+        "QM02",
+        "QM03",
+        "QM10",
+        "QM12",
+        "QM14",
+        "QM15",
+        "QM16"
+      ],
+      "thresholdAuthority": "Owner2026-11-06明确要求按指标报失败，并授权缺项补合适要求；50KiB/s/180s/120s为本轮工程选定的正常OTA线，不伪称Owner曾逐字指定这些数值。",
+      "existingRequirementsRetained": [
+        {
+          "id": "QM01",
+          "area": "连续录音",
+          "target": "正常宠物界面及BLE工作时连续30分钟为中间门、两小时为最终长录门；离线录音及录中上传分别满足采音overflow/stale/reject/deadline均0，完整录音解码时长与设备目录差≤40ms。",
+          "currentEvidence": "原测量与新构建的适用范围分别保留；本次OTA结果不关闭该项。"
+        },
+        {
+          "id": "QM02",
+          "area": "原音与恢复",
+          "target": "正常链音频帧丢失0、最终CRC/SHA一致100%；已成功落盘完整帧可恢复；本机原音/WAV/索引耐久前消费次数0。",
+          "currentEvidence": "原测量与新构建的适用范围分别保留；本次OTA结果不关闭该项。"
+        },
+        {
+          "id": "QM03",
+          "area": "传输与重连",
+          "target": "5分钟同编码录音停止后≤60秒收齐；持续有效负载速率≥录音生产率4倍；正常已配对重连≤15秒，不重录。",
+          "currentEvidence": "原测量与新构建的适用范围分别保留；本次OTA结果不关闭该项。"
+        },
+        {
+          "id": "QM10",
+          "area": "实时采音、编码与调度余量",
+          "target": "每20ms音频包Opus编码P95≤5ms、峰值≤6ms；每10ms麦克风块转换峰值≤3ms；正常界面/蓝牙并发最长未服务采音间隔≤8ms，保留原10ms硬保护。",
+          "currentEvidence": "原测量与新构建的适用范围分别保留；本次OTA结果不关闭该项。"
+        },
+        {
+          "id": "QM12",
+          "area": "连接等待与录音操作响应",
+          "target": "正常已配对指定设备冷连接至私有目录可用≤8秒；同一保留连接START/STOP/重点实际ACK≤500ms，正常工作区START到首个真实PCM≤2秒；结束收取后只读再次连接不超过QM03的15秒底线。首次配对/布局初始化及系统无线故障单列。",
+          "currentEvidence": "原测量与新构建的适用范围分别保留；本次OTA结果不关闭该项。"
+        },
+        {
+          "id": "QM14",
+          "area": "MCU与内存余量",
+          "target": "正常录音/界面/BLE并发稳态1秒窗口CPU忙碌比例峰值<95%；24KiB预留栈最低剩余≥2KiB，stack_low/guard=0；不新增全帧缓存或以扩容掩盖未服务采音。",
+          "currentEvidence": "原测量与新构建的适用范围分别保留；本次OTA结果不关闭该项。",
+          "currentScope": "CPU峰值<95%保留。栈按当前已验21504B布局/动态上界和防护观测，不恢复已撤回的固定空闲内存/旧24KiB扩栈要求；原目标文字留历史。屏幕暂停，仅评当前无屏配置，不能称有屏并发通过。"
+        },
+        {
+          "id": "QM15",
+          "area": "蓝牙基础与稳定恢复",
+          "target": "已配对同设备正常两小时录音会话非预期断链0；主动断链后≤15秒恢复同一录音并从耐久校验游标续传，重复开录0、未耐久消费0、坏CRC/SHA接受0。未加密读取私有音频/未确认重绑放行0，人工断开保持优先。",
+          "currentEvidence": "原测量与新构建的适用范围分别保留；本次OTA结果不关闭该项。"
+        }
+      ],
+      "latestOwnerClarification": {
+        "at": "2026-11-06",
+        "quote": "实际上那个旧的100K 冲刺，我们它已经达到了，但是 这个达到的条件就是首先它是要跑满频率，然后跑满频率同时还要什么东西，就是只有它的蓝牙连接才可以达到。我的意思就是真实场景它不可能只有 companion 连接，就是。能达到个50K，然后用100K的那个代码去写就好了。",
+        "implementation": "保持当前61.44MHz时钟，不恢复98MHz/满频。保留已达100K的快传算法能力；真实蓝牙共存以至少50KiB/s验收，不限速50。",
+        "normalAcceptance": "真实其它蓝牙共存最低50KiB/s；记录单位和现场条件，不通过关闭其它设备制造成绩。"
+      },
+      "currentClockDecision": {
+        "at": "2026-11-06T14:50:30+08:00",
+        "ownerQuote": "是的, 现在就是**61.44 MHz**, 不需要满频运行",
+        "nominalCoreHz": 61440000,
+        "observedSoftwareCoreHz": 61439820,
+        "operatingPolicy": "保持当前61.44MHz时钟，不恢复98MHz/满频。保留已达100K的快传算法能力；真实蓝牙共存以至少50KiB/s验收，不限速50。",
+        "evidence": "E:/CodexData/Companion/.build-cache/android058-ota-real/after-ota-uart/uart.log",
+        "firmwareClockCodeChanged": false
+      }
+    }
   },
   "recorder_core": {
     "lower_layer_sale_readiness_20261029": {
@@ -130406,18 +130564,18 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-06T13:07:20+08:00",
+      "updatedAt": "2026-11-06T15:06:30+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-01",
       "baseline": {
-        "firmwareVersion": 66685,
+        "firmwareVersion": 66686,
         "uiGeneration": 85,
         "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
         "sourceCommit": "cfedd31dc6d10078d2848b7101ff195797988f5e",
         "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\selected-delete\\build-result.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\selected-delete\\ota-result.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\final-idle.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone058-ota-complete.xml",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone058-ota-independent-uart.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
@@ -130550,7 +130708,7 @@
         {
           "id": "CP04-01",
           "title": "Companion录音核心与当前无屏使用配置补全",
-          "category": "录音管理/精确同步/手机控制与完整软件解码已验；普通手机升级维护待闭环",
+          "category": "手机OTA功能通过但指标失败；按量化门槛继续修复",
           "owner": "本侧",
           "status": "open",
           "tasks": [
@@ -130576,13 +130734,13 @@
             "CP27-11",
             "CP23-08"
           ],
-          "current": "FW66685，普通Windows053/Android055按场管理及056远程开停录/日期/精确收取已验；e8完整31820ms/509120采样WAV核对通过。普通手机OTA056首轮实际未安装，源7247985已修FINISH提前断链并装057，待解锁复验。Windows057完整候选MSI已生成核验，日用未替换；重复重点源码72a38c4b已修未随手机交付。",
+          "current": "手机058功能OTA已完成但指标FAIL；060延迟通知/连续队列/进度开销修复已构建保存，未安装，真机结论未更新。",
           "remaining": [
-            "手机057普通OTA实际确认、恢复设置与清配对：待手机安全解锁，已有一次失败和修复证据，不把100%传输冒充安装成功。",
-            "原生单WAV接口在shell/run-as硬链接权限失败，实际App域独立探针待安装；普通App分段完整WAV已核对通过。",
-            "重复重点修复已后台真实复现并验证，待随相关手机批次交付；Windows057候选MSI已核验，日用安装待原前端交付衔接。实体首字及原硬件block不关闭。"
+            "手机OTA有效载荷≥50KiB/s、总时长≤180秒、传后核对≤120秒；补精确阶段和链路指标，当前058失败。",
+            "普通手机清配对/重新连接与旧录音目录/空间最终核对待做；查询、恢复设置和原恢复取消已通过。",
+            "058已含重复重点修复，真实回听页复验与原生单WAV真实App域探针未完成；Windows057候选日用安装沿原批次。原实物block保持。"
           ],
-          "next": "手机057已装，等待安全解锁后继续普通App66685→66686正常OTA及维护；USB接入期间临时保持亮屏、验完恢复。无手机后台已完成Windows057候选MSI及回听重复重点源码修复；不重复已验删除/收取/开停录，原硬件block与首句体验后置保留。",
+          "next": "沿owner_module_execution.embedded.next接续。",
           "doneWhen": "在已验录音核心上，录音日期可追溯，无屏恢复入口和状态反馈可用，首录/标记成功时机明确；原实物block保持未完成。",
           "evidence": [
             "E:/CodexData/Companion/capture-closeout-20261105/owner-session-r1/after-cleanup/result.json",
@@ -130818,7 +130976,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "手机057已装，等待安全解锁后继续普通App66685→66686正常OTA及维护；USB接入期间临时保持亮屏、验完恢复。无手机后台已完成Windows057候选MSI及回听重复重点源码修复；不重复已验删除/收取/开停录，原硬件block与首句体验后置保留。",
+      "next": "以一个工作日为当前非block软件收尾目标，保持61.44MHz和正常蓝牙共存。060已补延迟通知后的耐久游标处理并减少逐回执磁盘/系统通知开销，已构建核验/远端保存，未安装；058指标仍FAIL。另一059控制/公开导出项释放后先核当前实装身份/资料，再用060做66687普通OTA并取精确指标，随后普通清配对/重连、当前回听及旧目录/空间/空闲收尾；原实物block和暂停范围不变。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131125,12 +131283,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-06T12:21:59+08:00",
-        "firmware": 66685,
+        "at": "2026-11-06T15:06:30+08:00",
+        "firmware": 66686,
         "coreDelivery": "FW66685_AND_WINDOWS053_SELECTED_DELETE_SPACE_AND_SYNC_ACCEPTED_SCOPED",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "设备/普通双端管理和手机远程开停录本轮通过。普通手机维护/OTA与完整回听因Owner暂缓未完成，Windows合并日用发布未完；原生单WAV测试权限失败保留。",
+        "openSoftware": "沿owner_module_execution.embedded.next及deliveryEstimate；当前非block软件未全部关闭。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -131142,7 +131300,7 @@
           "当前结论仅覆盖嵌软已有证据，不替代前后端整机交付结果",
           "blocked仅表示暂时不能推进，不代表完成或免除售卖缺口"
         ],
-        "completionScope": "Companion板当前无屏配置；FW66685/UI85，应用409252B、静态RAM不增。Windows053隔离候选已验，未覆盖日用安装；Capture新板不在验收范围。",
+        "completionScope": "Companion FW66686/UI85及Android058；安装功能通过，指标FAIL，不代表软件包或售卖合格。",
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。"
@@ -131764,8 +131922,8 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "at": "2026-11-06T12:51:11+08:00",
-        "text": "现在你看一下除了手机以外的东西还能做吗？现在又把手机给接回来然后你继续把那个手机的东西做一下吧。继续推进。"
+        "at": "2026-11-06T15:06:30+08:00",
+        "text": "那你看一下继续吧，然后的话切转端。看一下，尽快达到这个售卖标准，你先说一个工作日内做完的。"
       },
       "calendarProgress": {
         "at": "2026-11-05T15:14:33+08:00",
@@ -131987,8 +132145,8 @@
         "busyRefusalAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66683\\hardware-acceptance.json"
       },
       "deviceManagementProgress": {
-        "at": "2026-11-06T13:07:20+08:00",
-        "state": "android057_installed_ota_finish_fix_waiting_secure_unlock_windows057_candidate_ready",
+        "at": "2026-11-06T13:51:07+08:00",
+        "state": "METRIC_FAIL_058_DELAYED_CREDIT_FIXED_060_READY_WAIT_SHARED_DEVICE",
         "firmwareSource": "cfedd31",
         "candidateFirmware": 66685,
         "installedFirmwareAtStart": 66684,
@@ -132012,7 +132170,7 @@
         "oldRecordingDeletion": false,
         "wholeUserFeatureAccepted": false,
         "firmwareAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\selected-delete\\acceptance.json",
-        "installedFirmware": 66685,
+        "installedFirmware": 66686,
         "firmwareUserBenefit": "可只删指定逻辑录音、取消不删、空间实际回收后可再录；新e1/e2各释放270336B，旧34目录未变。",
         "androidAuditCorrection": "正式Android原有物理段列表和按所属逻辑会话同步；本批合并为按场列表、日期/剩余时长/完整状态和选场删除，不重写同步底层。",
         "realFailures": "初轮在录后收尾未完成时预览收到CDX3 BAD_STATE，追加轮删除成功后读到容量重算busy，最终UART仍linked；原失败文件保留，前三者不伪称完整用户链或断连空闲通过。",
@@ -132021,14 +132179,14 @@
         "discoveryCorrection": "实际Windows扫描已看到UID对应MAC广播Capture且服务UUID列表空；普通前端旧筛选漏掉。e46f4769修复产品名识别，未改固件或放宽实际GATT身份验证。",
         "frontendSource": "2ba08c564e7795532718c97c82e1d329b4d28361",
         "frontendBuildState": "RELEASE_BUILT_ORDINARY_WINDOWS_USER_PATH_ACCEPTED",
-        "phoneState": "First056 attempt transferred1359700B, did not install; actualFW66685/receiver0/claimed0. New057 installed but actual retry awaits secure unlock.",
+        "phoneState": "手机058/FW66686正常OTA功能已真实通过，但本次约12.76KiB/s、284秒总耗时、177秒传后核对，按50KiB/s/180秒/120秒要求判FAIL，不关闭CP04-01。先完成手机OTA传输优化与精确指标补齐，做同机前后对照；随后清配对/重连和旧34目录/空间收尾。原硬件block与首句体验保持，板卡已释放。",
         "captureWorkspace": "C:/Users/Billy/Desktop/Denzic/Capture",
-        "firmware": 66685,
+        "firmware": 66686,
         "windowsAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\acceptance.json",
         "windowsUserOutcome": "实际Cancel保留e5；普通删除完成回收；只收e5原音2040ms/32640样本并耐久校验后精确消费；暂停自动同步选择保持。最终34原目录逐条一致、空闲空间4608000B、UART正常空闲且linked0；全部句柄已关闭、板卡已release。",
         "captureRepository": "https://github.com/Listener-ai-Macau/Capture",
         "captureState": "Private repository main396b0d8; hardware not received; no Capture hardware acceptance.",
-        "nextOwner": "手机057已装，等待安全解锁后继续普通App66685→66686正常OTA及维护；USB接入期间临时保持亮屏、验完恢复。无手机后台已完成Windows057候选MSI及回听重复重点源码修复；不重复已验删除/收取/开停录，原硬件block与首句体验后置保留。",
+        "nextOwner": "沿owner_module_execution.embedded.next接续。",
         "phoneOtaCandidateReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66686.json",
         "phoneOtaCandidate": {
           "at": "2026-11-06T11:26:59+08:00",
@@ -132073,8 +132231,8 @@
           "durationMs": 31820,
           "sourceBackedUp": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-remote-source.json"
         },
-        "installedAndroidVersion": "0.1.57",
-        "installedAndroidReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone057-installation.json",
+        "installedAndroidVersion": "0.1.59",
+        "installedAndroidReceipt": "E:\\CodexData\\Companion\\.build-cache\\android059-ota-metrics\\installation.json",
         "ordinaryPhoneControlAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-ordinary-control-acceptance.json",
         "phoneDeferredByOwner": {
           "state": "resumed_by_owner",
@@ -132109,18 +132267,89 @@
           "state": "SOURCE_FIXED_SYNTHETIC_REGRESSION_PASS_NOT_INSTALLED",
           "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-bookmark-dom-after.json"
         },
-        "currentWorkpoint": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\companion057-current-workpoint.json"
+        "currentWorkpoint": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\companion057-current-workpoint.json",
+        "ordinaryPhoneOtaFunctionalReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone058-ota-complete.xml",
+        "ordinaryPhoneMaintenanceCurrent": "普通查询成功：默认设置、2个保存配对；恢复设置真实取消保持、真实确认返回已保存默认设置。清配对放在OTA指标对照之后，未关闭。",
+        "androidMetricCandidate": {
+          "at": "2026-11-06T15:06:30+08:00",
+          "result": "ANDROID060_DELAYED_CREDIT_AND_PROGRESS_CANDIDATE_READY_NOT_INSTALLED",
+          "apk": "E:\\CodexData\\Companion\\.build-cache\\android060-integrated-metrics\\android-build\\app\\outputs\\apk\\debug\\app-debug.apk",
+          "sha256": "e782efc2de74c7ac271e5fa966e6f7f0ddd80d8a06789e80a559e01ff516274d",
+          "frontendSource": "b763b901485628effde19c954de0ee73e96ed2e7",
+          "backendSource": "a688c28eabf86c7e4d71f7d64ab112e21bca96fb",
+          "signerUnchanged": true,
+          "zip16KiBAligned": true,
+          "nativeLibraries": {
+            "libcompanion_mobile_audio.so": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+            "libonnxruntime.so": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+            "libsherpa-onnx-c-api.so": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278"
+          },
+          "androidGoldenTests": "2/7 passed in adb shell and run-as contexts;5 output-hardlink permission errors retained. Ordinary app decode/control acceptance still required; no blanket native pass claimed.",
+          "installed": false,
+          "forwardFirmware": 66687,
+          "firmwarePackage": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66687.json",
+          "firmwareApplicationBytes": 409252,
+          "firmwareStaticDataBssBytes": 69328,
+          "firmwareStackReservedBytes": 21504,
+          "firmwareCodeChanged": false,
+          "transport": "Existing continuous215/WOC5 durable-credit strategy adapted for Android:64-chunk window, physical pipeline<=16, single final DATA fence, local completion never returns device credit.",
+          "metricDecision": "保持当前61.44MHz时钟，不恢复98MHz/满频。保留已达100K的快传算法能力；真实蓝牙共存以至少50KiB/s验收，不限速50。",
+          "codeChecks": "Before fix, a delayed notification arriving after newer fallback READ reproduces an erroneous transfer abort. After fix, the signed full-file host scenario passes without replay, progress rollback or added queue credit; malformed late offset still refused. Full affected protocol checks pass; not hardware speed proof.",
+          "integration": "Native production sources byte-identical to the previously rebuilt dated-metadata/flock library156acc23; current OTA/publication/retention/playback and ordinary UI kept.",
+          "knownProcessFailure": "This flow installed own059 before checking another Codex control/export lease. Stopped further phone use, merged the committed dated metadata fix and reserved060; will verify actual installed bytes before next owner item.",
+          "boardLeaseOwned": false,
+          "next": "After current shared control/export item is released, claim this metric item, verify actual installed source/package and UID, then install the unified060 and measure ordinary signed66687 OTA; continue clear/re-pair, own playback and original catalogue/free/idle checks.",
+          "currentClockDecision": {
+            "at": "2026-11-06T14:50:30+08:00",
+            "ownerQuote": "是的, 现在就是**61.44 MHz**, 不需要满频运行",
+            "nominalCoreHz": 61440000,
+            "observedSoftwareCoreHz": 61439820,
+            "operatingPolicy": "保持当前61.44MHz时钟，不恢复98MHz/满频。保留已达100K的快传算法能力；真实蓝牙共存以至少50KiB/s验收，不限速50。",
+            "evidence": "E:/CodexData/Companion/.build-cache/android058-ota-real/after-ota-uart/uart.log",
+            "firmwareClockCodeChanged": false
+          },
+          "previousCandidate": {
+            "at": "2026-11-06T14:41:51+08:00",
+            "sha256": "b24c4a4cf0e099e0626cd50cd1f818f9d7c1f4544d4ec56fa70474a889ef923f",
+            "frontendSource": "420cd6a17818f4b478abe0d670a27bfd9f7c1789",
+            "backendSource": "a4820a08b07f4480952d9e8548fb4f07999bc445",
+            "installed": false
+          },
+          "hostRegression": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone060-delayed-credit-after.json",
+          "phoneProgressPolicy": "Progress preferences and notification are refreshed at most every250ms during transfer. Phase transitions and exact final bytes are persisted immediately. Sender durable-credit decisions remain independent; no DATA delay or rate cap.",
+          "monitor": "Prepared existing monitor to capture same-bundle/version monotonic final metrics, wait for final publication and reject prior-run measurements. Not run against phone while other board item is held.",
+          "firmwareClockCodeChanged": false
+        },
+        "installedAndroidObservationScope": "This flow last installed059; not a live identity claim while another lease controls the phone.060 candidate not installed."
       },
       "deliveryEstimate": {
-        "at": "2026-11-06T11:26:59+08:00",
-        "scope": "Current executable Companion software closure; display/power/production blocks excluded.",
+        "at": "2026-11-06T15:06:30+08:00",
+        "ownerRaw": "那你看一下继续吧，然后的话切转端。看一下，尽快达到这个售卖标准，你先说一个工作日内做完的。",
+        "target": "一个工作日内完成当前非block的软件收尾，交付可核对的Companion候选和真实指标结论；不是整机正式开售承诺。",
         "estimatedEngineeringHours": [
-          2,
-          4
+          4,
+          8
         ],
-        "contingency": "Up to one working day if ordinary Android pairing or physical OTA needs a substantive fix; not a whole-product sale date.",
-        "basis": "Firmware/ordinary Windows accepted; Android055 maintenance/OTA sources and host checks exist, physical phone qualification and integration remain.",
-        "ownerRaw": "好的, 继续推进, 你看看还有多久才能推进完"
+        "scope": [
+          "普通手机完整签名OTA、精确阶段/链路指标及当前quality_targets判定；保持61.44MHz和正常蓝牙共存。",
+          "普通手机清配对/取消/确认与重新配对连接，核对原录音目录和空间；已有查询/恢复设置证据复用。",
+          "合入修复后的普通回听与重点显示确认；未受影响的录音/按场收取/删除证据直接复用。",
+          "保存匹配源码、签名候选、真实通过/失败和剩余项；Windows候选沿既有交付，不覆盖其它模块的日用版本。"
+        ],
+        "dependencies": "共享手机/板卡需可连续使用；当前记录13:53:52的另一059控制/公开导出项尚未释放。真实新故障可能改变估时，不能以期限代替通过。",
+        "excluded": "原电源/实测耗电/生产签名等block、Owner暂停的屏幕、Owner延后的实体首句回听及后置声学资格继续未完成；不是免除售卖门槛。",
+        "previousEstimate": {
+          "at": "2026-11-06T11:26:59+08:00",
+          "scope": "Current executable Companion software closure; display/power/production blocks excluded.",
+          "estimatedEngineeringHours": [
+            2,
+            4
+          ],
+          "contingency": "Up to one working day if ordinary Android pairing or physical OTA needs a substantive fix; not a whole-product sale date.",
+          "basis": "Firmware/ordinary Windows accepted; Android055 maintenance/OTA sources and host checks exist, physical phone qualification and integration remain.",
+          "ownerRaw": "好的, 继续推进, 你看看还有多久才能推进完"
+        },
+        "currentDelivery": "060修复候选已构建/同签名校验/私有远端保存；未安装，当前真实OTA指标仍沿058 FAIL。"
       },
       "previousCandidateFirmware": {
         "version": 66684,
@@ -132157,13 +132386,86 @@
           "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-bookmark-dom-after.json"
         },
         "fullWavAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-e8-full-wav-verification.json"
+      },
+      "metricAcceptance": {
+        "at": "2026-11-06T13:51:07+08:00",
+        "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
+        "currentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone058-metric-baseline.json",
+        "verdict": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone058-metric-verdict.json",
+        "result": "FAIL",
+        "functionalOtaResult": "PASS_ORDINARY_ANDROID058_SIGNED_OTA66686_EXACT_RUNNING_IDENTITY",
+        "ownerQuotes": [
+          "然后你测手机的时候，你 OTA 同时要测一下那些指标，不要说测。过了就算了，你有记录下之前那些指标吗？就欠软这个东西主要是根据指标去做优化。",
+          "是的，让像嵌入式这样的功能，它虽然说可以，但是如果是。那个要求的指标不及格的话，你也是报失败。之前指标好像都有列吧，如果没有列的话就列一个合适"
+        ],
+        "next": "沿owner_module_execution.embedded.next进行真实测量；代码检查和构建不替代normal_full_ota指标。",
+        "latestValues": {
+          "payload_rate_kib_s": {
+            "value": 12.756226794554456,
+            "status": "FAIL"
+          },
+          "total_seconds": {
+            "value": 284.0,
+            "status": "FAIL"
+          },
+          "post_finish_verify_seconds": {
+            "value": 177.0,
+            "status": "FAIL"
+          },
+          "application_bytes": {
+            "value": 409252,
+            "status": "PASS"
+          },
+          "static_data_bss_bytes": {
+            "value": 69328,
+            "status": "PASS"
+          },
+          "stack_reserved_bytes": {
+            "value": 21504,
+            "status": "PASS"
+          },
+          "stack_guard_faults": {
+            "value": 0,
+            "status": "PASS"
+          },
+          "old_catalog_changed_count": {
+            "value": null,
+            "status": "NOT_EVALUATED"
+          },
+          "pending_ota_claimed_bytes": {
+            "value": 0,
+            "status": "PASS"
+          },
+          "installed_identity_mismatch_count": {
+            "value": 0,
+            "status": "PASS"
+          }
+        },
+        "existingRequirementsReview": "原QM01/02/03/10/12/14/15保留；编码P95≤5ms/峰≤6ms、PDM峰≤3ms、最长未服务≤8ms、正常冷连接≤8s、同保留连接控制ACK≤500ms、首PCM≤2s、重连≤15s、CPU峰值<95%等须按当前适用证据验，不能用OTA功能成功代替。",
+        "latestOwnerClarification": {
+          "at": "2026-11-06",
+          "quote": "实际上那个旧的100K 冲刺，我们它已经达到了，但是 这个达到的条件就是首先它是要跑满频率，然后跑满频率同时还要什么东西，就是只有它的蓝牙连接才可以达到。我的意思就是真实场景它不可能只有 companion 连接，就是。能达到个50K，然后用100K的那个代码去写就好了。",
+          "implementation": "保持当前61.44MHz时钟，不恢复98MHz/满频。保留已达100K的快传算法能力；真实蓝牙共存以至少50KiB/s验收，不限速50。",
+          "normalAcceptance": "真实其它蓝牙共存最低50KiB/s；记录单位和现场条件，不通过关闭其它设备制造成绩。"
+        },
+        "candidate": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone060-current-candidate.json",
+        "candidateValidation": "Before fix, a delayed notification arriving after newer fallback READ reproduces an erroneous transfer abort. After fix, the signed full-file host scenario passes without replay, progress rollback or added queue credit; malformed late offset still refused. Full affected protocol checks pass; not hardware speed proof.",
+        "currentClockDecision": {
+          "at": "2026-11-06T14:50:30+08:00",
+          "ownerQuote": "是的, 现在就是**61.44 MHz**, 不需要满频运行",
+          "nominalCoreHz": 61440000,
+          "observedSoftwareCoreHz": 61439820,
+          "operatingPolicy": "保持当前61.44MHz时钟，不恢复98MHz/满频。保留已达100K的快传算法能力；真实蓝牙共存以至少50KiB/s验收，不限速50。",
+          "evidence": "E:/CodexData/Companion/.build-cache/android058-ota-real/after-ota-uart/uart.log",
+          "firmwareClockCodeChanged": false
+        }
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "ANDROID059_INTEGRATED_CANDIDATE_READY_SHARED_PHONE_ACCEPTANCE_BUSY",
+        "state": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -132204,7 +132506,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing.",
+        "next": "After shared66687 OTA final receipt/release, verify actual installed version; install062 only if no newer candidate, else merge. Retest Word affected route, return original library, then only self-created actual-card pause/resume/stop/receive/playback/delete and original-audio save/share. Inherit completed OTA evidence without needless repeat.",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -132320,8 +132622,8 @@
           "wholeProductQualified": false,
           "modelsRun": false
         },
-        "candidateVersion": "0.1.59/code59, not installed",
-        "currentCandidateSourceCommit": "69c58e38acf12e370479a4881763e928f864e291",
+        "candidateVersion": "0.1.62/code62, not installed",
+        "currentCandidateSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
         "continuation058": {
           "at": "2026-11-06T13:37:36+08:00",
           "state": "ANDROID059_INTEGRATED_CANDIDATE_READY_SHARED_PHONE_ACCEPTANCE_BUSY",
@@ -132421,14 +132723,14 @@
           "wholeProductQualified": false
         },
         "latestInstalledVersionObservation": {
-          "version": "0.1.58/code58",
-          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\inherited058-installation.json",
-          "at": "2026-11-06T13:28:27+08:00"
+          "version": "0.1.61/code61",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\installation061.json",
+          "source": "0aebac91f319f1b66530129ac0debcdec9199040"
         },
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
           "ownerQuote": "先，那你优先把那个前两项给搞了，然后的话。继续做这个事情，然后做完这些事情就可以说。我们只剩下模型能力没做了，对吧？这个时间进度大概还要多久？",
-          "state": "PRIORITY12_READY_FOR_PHONE_OTHER_EXISTING_LEASE_ACTIVE",
+          "state": "ANDROID059_INSTALLED_ACTUAL_EXPORT_TRANSPORT_PASSED_WORD_UNICODE_CONTENT_FIX_ACTIVE",
           "priority": [
             "Ordinary phone/device recording control, only own-new sample receive/playback/delete/recovery and OTA/maintenance final receipts.",
             "Installed ordinary App selected-content SAF save, clipboard paste and ACTION_SEND recipient bytes/grants, then original-library return."
@@ -132475,7 +132777,145 @@
           },
           "actualNewPhoneChecksPassed": false,
           "wholeProductQualified": false,
-          "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing."
+          "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing.",
+          "actualProgress": {
+            "at": "2026-11-06T14:45:43+08:00",
+            "ordinaryUi": "Actual Android App on isolated display2; primary display remained with owner or locked, no main-screen input.",
+            "savedFormats": [
+              "txt",
+              "markdown",
+              "word",
+              "pdf",
+              "pptx",
+              "xlsx",
+              "mindmap",
+              "png"
+            ],
+            "actualShareReceipts": 8,
+            "actualPublicClipboardPastedAndVerified": true,
+            "wordContentQualification": "FAILED_INVALID_SURROGATE_XML_FIX_IN_PROGRESS",
+            "allOtherContentQualification": "UNDER_INDEPENDENT_CHECK",
+            "originalLibraryReturnPending": true
+          }
+        },
+        "priority12Actual": {
+          "at": "2026-11-06T15:32:51+08:00",
+          "state": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
+          "installedLastProven": {
+            "version": "0.1.61/code61",
+            "installed": true,
+            "exactInstalledApkSha256": "fca337f04b990fb377b9a752668141cb9d417b26e043ff5bb8422b7c5c83d1c1",
+            "source": "0aebac91f319f1b66530129ac0debcdec9199040",
+            "backendSource": "34dee9ff3c7fbc80577bae522c87c8a8883a1096",
+            "originalAppFilesByteIdentical": 571,
+            "physicalMainActivityStayedUnchanged": null,
+            "mainDisplayInputInjected": false,
+            "virtualDisplayId": 2,
+            "observerFailureRetained": "Initial installer stopped after successful installation because physical-main resumed activity differed before/after. Subsequent actual state: physical display has no resumed activity and keyguard/screen off; own QA receiver is resumed only on display2. Cause of the transition is not established; not a failed App update or permission bypass.",
+            "ordinaryAppAcceptanceComplete": false,
+            "snapshotFilesLocalOnly": true
+          },
+          "candidate": {
+            "result": "ANDROID62_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+            "versionName": "0.1.62",
+            "versionCode": 62,
+            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\word062\\Companion-Android-0.1.62-录音与内容修复候选.apk",
+            "sha256": "bbc414e1581e9b4fc404eadfe9653f68a5999f2c1945b188fdbed8f978afbf77",
+            "bytes": 48765668,
+            "frontendSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
+            "backendSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+            "signerMatches050r2And055": true,
+            "zip16KiBAligned": true,
+            "nativeLibraries": [
+              {
+                "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+                "sha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+                "elf16KiBAligned": true
+              },
+              {
+                "name": "jni/arm64-v8a/libonnxruntime.so",
+                "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+                "elf16KiBAligned": true
+              },
+              {
+                "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+                "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+                "elf16KiBAligned": true
+              }
+            ],
+            "webAssetsExact": [
+              "index.html",
+              "manifest.webmanifest",
+              "assets/index-BeLbnNsw.css",
+              "assets/index-QaVRx1Hi.js"
+            ],
+            "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\word062\\apk62-build-1793949358355010600.log",
+            "buildWallSeconds": 20.29,
+            "installed": false,
+            "reasonNotInstalled": "Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.",
+            "actualOrdinaryControlButtonsAccepted": false,
+            "modelsRun": false,
+            "nativeRebuilt": false
+          },
+          "candidateSource": {
+            "at": "2026-11-06T15:13:30+08:00",
+            "versionName": "0.1.62",
+            "versionCode": 62,
+            "frontendSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
+            "frontendBranch": "work/device-phone-closure055-20261106",
+            "backendSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+            "backendBranch": "work/device-phone-closure055-android-20261106",
+            "remoteReadback": true,
+            "installed": false,
+            "nativeRebuilt": true,
+            "modelsRun": false,
+            "wordPhoneAcceptancePending": true,
+            "windowsFooterSourceCorrectedButNotPackaged": true
+          },
+          "actualSavedFormats": [
+            "txt",
+            "markdown",
+            "word",
+            "pdf",
+            "pptx",
+            "xlsx",
+            "mindmap",
+            "png"
+          ],
+          "actualSharedFormats": [
+            "markdown",
+            "mindmap",
+            "pdf",
+            "png",
+            "pptx",
+            "txt",
+            "word",
+            "xlsx"
+          ],
+          "actualSharedHashMatchesProducer": true,
+          "actualReadOnlyAndUngrantDenial": true,
+          "actualPublicClipboardPasted": true,
+          "contentQualifiedOtherSevenFormats": true,
+          "wordUnicodeFixedAndActual061Observed": true,
+          "wordFinalContentQualified": false,
+          "wordRemaining": "Install062 or merge into newer candidate after current OTA holder releases, then actual normal Word save/share and Microsoft schema0.",
+          "originalLibraryStillRetained": true,
+          "originalLibraryReturnPending": true,
+          "newRecordingControlAndFullPlaybackThisTurn": false,
+          "oldBoardAudioPayloadReads": 0,
+          "oldBoardDeletes": 0,
+          "sharedHandoff": {
+            "at": "2026-11-06T15:13:01+08:00",
+            "newItem": "Companion手机060真实OTA66687指标验收",
+            "recordedReason": "Owner确认前项已做完，授权本轮接续OTA；本侧未关闭他方进程，按明确交接更新记录",
+            "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
+          },
+          "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
+          "next": "After shared66687 OTA final receipt/release, verify actual installed version; install062 only if no newer candidate, else merge. Retest Word affected route, return original library, then only self-created actual-card pause/resume/stop/receive/playback/delete and original-audio save/share. Inherit completed OTA evidence without needless repeat.",
+          "modelsRun": false,
+          "customerResult": null,
+          "ownerAccepted": false,
+          "wholeProductQualified": false
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -134281,7 +134721,7 @@
                 "plaud_export",
                 "notta_map"
               ],
-              "current": "两端已有导图结构；Windows052完整PNG与可编辑mm已安装。Android054新增同选内容PPTX/XLSX/mm/PNG和独立AI材料候选，实际手机独立生产Java/Canvas图片与文稿结构通过；主App未替换053，普通保存分享、长图交互与全项实际使用仍开。",
+              "current": "Windows052完整PNG/mm已交付；Android059在实际系统保存、普通分享接收端验证PNG/mm完整文件，文字源/图像已检查；当前061，062源头Word修复不改导图实现。长图交互及完整真实会后用途仍待。",
               "acceptance": "同一已保存纪要生成可阅读结构，长图缩放/定位/文字不遮挡，格式可在外部正常打开，不把导图当新事实。",
               "order": "P1",
               "dependency": "software",
@@ -134709,7 +135149,7 @@
                 "notta_fill",
                 "notta_brain"
               ],
-              "current": "Windows052已安装，统一选择已存内容/材料，保留TXT/MD/DOCX/PDF/XLSX/mm/SRT、原音/MP3及新增PPTX/PNG；实际文稿/预览/升级资料保留已验，系统Save As/分享接收仍开。Android048r3的原普通保存/复制/分享实机范围保留，050问答/材料已接入；当前手机053，054新格式/AI材料选择候选未替换，独立原生渲染与文件检查通过。普通新版升级/系统分享、Word多材料新组合、AI按表样填字段与完整对标仍待。",
+              "current": "Android061实装：实际系统保存及本机分享接收覆盖TXT/MD/DOCX/PDF/PPTX/XLSX/mm/PNG，复制文字实际粘贴；Word查出并修了Unicode和共享页脚结构，062待真机最终复验。原音/SRT等剩余实际范围、Windows系统SaveAs/分享与AI外部表样填字段仍开。原Windows052功能与旧Android048证据保留。",
               "acceptance": "原音/原文/纪要/译文可分别选，所需MP3/WAV/TXT/MD/DOCX/PDF/SRT/XLSX/导图格式逐项核内容与外部打开；PDF中文复制/搜索须正确。 11-05 AI增强对标补充：另区分普通转写文件导出与AI材料交付：按既有Word/Excel表样填字段、演示提纲PDF/PPTX及生成图PNG；未接AI/附件/格式真实链就保留未完成，不把普通DOCX或XLSX导出当智能填表已完成。",
               "order": "P0",
               "dependency": "software",
@@ -134810,6 +135250,16 @@
                   "receipt": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel048\\delivery-result.json",
                   "phoneProof": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel048\\phone-front\\result.json",
                   "androidSubscopeReadyForOwnerAcceptance": true,
+                  "ownerAccepted": false
+                },
+                "androidActualPriority12": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\progress-result.json",
+                  "installed": "0.1.61 last proven",
+                  "candidate": "0.1.62 uninstalled",
+                  "actualDocumentSaveShareFormats": 8,
+                  "actualCopyPasted": true,
+                  "wordFinalContentQualified": false,
+                  "audioAndRemainingOrdinaryFlowPending": true,
                   "ownerAccepted": false
                 }
               },
@@ -135244,7 +135694,7 @@
                 "notta",
                 "granola"
               ],
-              "current": "本轮核对Windows安装版本0.1.52；手机最近实读0.1.53/code53，054/code54为已签名核验候选未替换。固件最近66685正常OTA及指定删除实板证据保留；普通App发现/配对/设备管理、Android维护/OTA仍在收尾。现有工程签名/Android debug与正式发布签名、生产密钥/渠道、故障升级恢复资格分开，商业发布仍未齐。",
+              "current": "Android061实装及原位升级资料校验已验，062 Word修复候选已编译签名，未装；Windows052为本侧最后安装证明。共享66686手机OTA功能已记录、速度目标未通过；新66687指标由现占用流程继续。正式发行签名/渠道和整机升级恢复资格仍未齐。",
               "acceptance": "正式身份、升级/失败恢复、数据保留与下载渠道可供普通用户完成；工程包不当正式售卖包。",
               "order": "P0",
               "dependency": "signing_service",
@@ -136815,7 +137265,7 @@
         "scope": "Four-point AI UX installed050 retained. Exact current source and APK restored, remote backup verified. Original foreground/real AI/full parity/customer/owner acceptance boundaries remain open."
       },
       "at": "2026-11-05T18:11:23+08:00",
-      "state": "ANDROID059_INTEGRATED_CANDIDATE_READY_SHARED_PHONE_ACCEPTANCE_BUSY",
+      "state": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
       "scope": "Owner澄清：Companion Windows与手机功能尽量一致，平台差异按实际能力处理；本会话负责两端前端、相关后端功能和模型接入，模型本身由Grok负责。Listener会话仅负责Listener电脑端。",
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
@@ -141698,11 +142148,11 @@
         "reference": "E:/CodexData/Companion/current-device-meeting-20261102/offline-long-retry/run/offline-transfer-recount-20261102.json",
         "baseline": "单场32段新接收8191682字节，首到末507.455秒、15.764 KiB/s；逐段收包耗时加权17.490 KiB/s，前四段3.701、后28段34.075 KiB/s；旧Type dc0016d8/FW858，非新0.1.24实测。"
       },
-      "at": "2026-11-06T13:50:38+08:00",
-      "status": "PRIORITY12_READY_FOR_PHONE_OTHER_EXISTING_LEASE_ACTIVE",
+      "at": "2026-11-06T15:32:51+08:00",
+      "status": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
       "goal": "沿原36项售卖标准推进；Windows052已交付，手机/系统交互/AI材料和真实使用范围继续收敛。模型待实际外置卡接回后按原整会指标验证。",
       "scope": "保留原音、录音保存与同步恢复；普通识别准确率优先，双人重叠整段分离再逐路转写，未知身份/角色待确认，纪要可核原话；Android与Windows整链实测仍待，前端原任务后置保留。",
-      "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing.",
+      "next": "After shared66687 OTA final receipt/release, verify actual installed version; install062 only if no newer candidate, else merge. Retest Word affected route, return original library, then only self-created actual-card pause/resume/stop/receive/playback/delete and original-audio save/share. Inherit completed OTA evidence without needless repeat.",
       "baseline": "新MOSS只有四场120秒筛查；DER7.69%/5.38%/12.02%/4.37%，人数6/7、5/5、7/7、4/4；非整会/最终准确率。旧R002整会cpCER33.89%纠正24.77%，为读取修正非模型增益。",
       "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json",
       "interruptedWork": "手机修订原文对应录音位置接口已包含在当前手机后端候选交付中；真实手机和同事前端联调仍待完成。",

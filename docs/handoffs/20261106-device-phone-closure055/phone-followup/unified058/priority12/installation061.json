@@ -1,0 +1,14 @@
+{
+  "version": "0.1.61/code61",
+  "installed": true,
+  "exactInstalledApkSha256": "fca337f04b990fb377b9a752668141cb9d417b26e043ff5bb8422b7c5c83d1c1",
+  "source": "0aebac91f319f1b66530129ac0debcdec9199040",
+  "backendSource": "34dee9ff3c7fbc80577bae522c87c8a8883a1096",
+  "originalAppFilesByteIdentical": 571,
+  "physicalMainActivityStayedUnchanged": null,
+  "mainDisplayInputInjected": false,
+  "virtualDisplayId": 2,
+  "observerFailureRetained": "Initial installer stopped after successful installation because physical-main resumed activity differed before/after. Subsequent actual state: physical display has no resumed activity and keyguard/screen off; own QA receiver is resumed only on display2. Cause of the transition is not established; not a failed App update or permission bypass.",
+  "ordinaryAppAcceptanceComplete": false,
+  "snapshotFilesLocalOnly": true
+}

@@ -43,7 +43,7 @@ public final class ShareReceiver056 extends Activity {
     private void clipboardPanel(){
         LinearLayout column=new LinearLayout(this);column.setOrientation(LinearLayout.VERTICAL);column.setPadding(32,80,32,32);
         TextView heading=new TextView(this);heading.setText("公开测试文字粘贴验收");heading.setTextSize(19);column.addView(heading);
-        EditText field=new EditText(this);field.setHint("这里只粘贴明确标注的公开虚构验收文字");field.setMinLines(5);column.addView(field);
+        EditText field=new EditText(this);field.setHint("这里只粘贴明确标注的公开虚构验收文字");field.setMinLines(5);field.setMaxLines(8);column.addView(field);
         Button paste=new Button(this);paste.setText("粘贴公开测试文字");column.addView(paste);
         Button verify=new Button(this);verify.setText("核对公开文字");column.addView(verify);
         TextView result=new TextView(this);column.addView(result);setContentView(column);

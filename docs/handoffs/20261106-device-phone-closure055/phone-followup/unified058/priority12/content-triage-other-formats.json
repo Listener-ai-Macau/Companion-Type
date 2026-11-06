@@ -1,0 +1,61 @@
+{
+  "result": "PASS_OTHER_FORMATS_WORD_FAILED_SEPARATELY",
+  "formats": [
+    {
+      "format": "txt",
+      "requiredContentPreserved": true,
+      "normalizedTextCharacters": 594
+    },
+    {
+      "format": "markdown",
+      "requiredContentPreserved": true,
+      "normalizedTextCharacters": 653
+    },
+    {
+      "format": "pdf",
+      "requiredContentPreserved": true,
+      "normalizedTextCharacters": 668
+    },
+    {
+      "format": "pptx",
+      "requiredContentPreserved": true,
+      "normalizedTextCharacters": 649
+    },
+    {
+      "format": "xlsx",
+      "requiredContentPreserved": true,
+      "normalizedTextCharacters": 1028
+    },
+    {
+      "format": "mindmap",
+      "requiredContentPreserved": true,
+      "normalizedTextCharacters": 603
+    },
+    {
+      "format": "png",
+      "pixels": [
+        1784,
+        2178
+      ],
+      "fullFileDecodes": true,
+      "visualReview": "Full public map inspected; no clipped final node or unreadable/missing glyph observed. Not OCR-based accuracy."
+    }
+  ],
+  "microsoftOpenXml": [
+    {
+      "file": "E:\\CodexData\\Companion\\.build-cache\\device-phone055\\acceptance059\\saved\\QA059-all.xlsx",
+      "errors": 0,
+      "details": []
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.build-cache\\device-phone055\\acceptance059\\saved\\QA059-all.pptx",
+      "errors": 0,
+      "details": []
+    }
+  ],
+  "pdfPages": 2,
+  "pdfVisualReview": "Both rendered pages inspected: headings, negation, source notices, Unicode, page breaks/footer legible; no clipping/overlap observed.",
+  "realMeeting": false,
+  "modelQualityClaim": false,
+  "actualExternalOfficeViewerOpened": false
+}
