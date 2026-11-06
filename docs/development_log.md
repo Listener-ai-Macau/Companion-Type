@@ -23881,3 +23881,19 @@ Owner明确授权本机分享窗口和本机验收应用的小范围操作。冻
 完整App Java编译、mobile类型与隔离组件检查通过；仅本轮E内虚构文件验证保护/取消/陈旧revision、完整软删与重开恢复字节不变、清除前文件变化拒绝、确认token失效、模拟删除中断与重开续作、另一UID同会话及AI材料保留、整库备份保留保护和回收站、损坏管理文件拒绝、路径越界与目录发布失败前不删原文件。真Android目录fsync已接入，但未拿host回调冒充实机/断电通过。源码fb4d80e0a26b1bfbdc986041b8f0655cbc24b4ea远端确认，Android069/code69候选23cdacd6def76e5f02776a90c75fc6f410013d1ada043c6fa3e4e6a52cf6ca09生成，包内全部4个web资源匹配，签名/版本检查通过，native212ec44d与原AAR逐字节保留；98.888秒、单工/两CPU/Java堆768MiB，无语音重编、模型、手机、板或桌面操作。
 
 Owner随后“现在是插上手机了”“另外现在显卡重新可以用了”。只读Windows确认RX6800XT状态OK，780M另在；不沿旧ordinal盲选。共享当前FW66692开停录/OTA占用未释放，原聊天明确将用手机继续，因此本侧未插入安装。原资料库切回/Word真机/Android069生命周期/Windows068实际收件仍开放；夜间模型从原完整L受控方案接续，不重放原R15失败或更改已安装默认模型。
+
+
+## 2026-11-06T21:59:30+08:00｜Owner接回6800XT后R18真实加载通过、低RAM保护停止；改验证原输入预处理与权重加载分阶段
+
+安卓069源码/APK已远端保护，本轮手机仍归FW66692实际测试占用。Owner“另外现在显卡重新可以用了”恢复原夜间模型任务；R18唯一39m23s整会按原源码f7b8744/固定MOSS公开权重运行，实际按RX6800XT/gfx1030选择cuda1，683权重张量流式搬运/设备回读哈希与原文件9a0ceb4a一致，权重加载18.520秒。之后PREPARING_COMPLETE_AUDIO时Windows实际低内存通知停止只此进程族；80.985秒、峰值private1448017920B、最后可用823484416B，0生成token/0新质量成绩。不是又选到780M、不是未经证实的显卡故障，也不放宽原2GiB/CPU5%保护或关闭Owner应用。完整失败和最后状态保留。
+
+代码核对发现原流程先驻留模型，再调用作者完整音频预处理，作者会同时形成原浮点波形和np.stack分段等临时大数组；此为可验证的峰值重叠假设，不凭源码断言实际唯一根因。改验证分离的原作者prepare_inputs：同一音频、batch形状、特征计算/GPU/版本/种子，全字段tensor在E保存、逐字节回读，前一进程退出后模型再读取，所有上下文及时间标记保留，无模型输出缓存/截短/参数或注意力改动。缓存绑定音频SHA、模型/作者pin、runtime、长度、文件和每tensor shape/dtype/hash，weights_only读取，路径限制。小型CPU缓存往返与错误绑定拒绝通过；首个模拟损坏测试被Windows拒绝截断仍映射文件，修测试映射生命周期后通过，生产语义未放宽。模型研究源2bbda701b2c66dbaae62247736c4de67cd4f2ace远端核验。下一只跑一次完整输入预处理观测，成功才重开缓存输入整会，不追加不同模型并发，不拿准备通过当准确率改善。
+
+
+## 2026-11-06T22:10:11+08:00｜完整原音输入独立预处理R21通过，R22已越过原低内存阶段并实际编码
+
+R19在音频/模型前因隔离AMD环境无tzdata退出；沿既有worker固定UTC+8时间记录修正，不增加环境依赖。R20处理器自动配置重解析撞adaptor_input_dim只读属性，未加载权重/未处理音频；改用已有已验证worker完全相同的显式作者config参数，不改模型配置值。两次启动失败及日志已远端保留，不当模型质量结果。
+
+R21在同一RX6800XT、同一原作者prepare_inputs函数/原batch形状/同一完整2362.945秒输入上完成，79×80×3000特征、31,292输入标记；全5字段tensor保存与mmap回读逐字节相同，音频/模型/作者/runtime/字段shape+dtypes+hash绑定，缓存只在E，未上传张量或原音。独立进程15.175秒结束，private峰1513033728B、退出后再加载模型，不同时持有模型驻留与音频临时数组。未改特征计算、注意力、上下文、身份或任何权重。
+
+R22按显式manifest SHA dc2bd919…读取全部核过输入，确实越过R18 PREPARING_COMPLETE_AUDIO中断点，当前快照{"state": "ENCODING_COMPLETE_AUDIO", "pid": 15956, "actualGpu": "AMD Radeon RX 6800 XT", "gpuIndex": 1, "completedAcousticChunks": 62, "totalAcousticChunks": 79, "decoderPrefillLayersCompleted": null, "decoderPrefillLayerTotal": null, "generatedTokens": 0, "lastCompletedSegmentEndSeconds": null, "inputTokens": 31292, "preparedInputCache": {"manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json", "manifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432", "allTensorBytesChecked": true, "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a", "source": "Exact original author processor in previous exited process"}, "modelLoadSeconds": 16.982697300001746}。CPU5%/private2GiB/GPU IDLE+duty.1/Windows实际低RAM停止保持，进程族与exec session37085已记录。当前是实际编码进展，不是完整转写/准确率改善；只在完整EOS输出退出后评分。研究证据4f3857e2544c831a89014df810e2105ec4b9169b远端核验，主工程Android069候选c897c76及Windows068安装仍保留，未插入手机/板或更换产品模型。
