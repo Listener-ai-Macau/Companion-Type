@@ -124,14 +124,14 @@ mod tests {
         assert!(!m.full_chain_acceptance);
     }
     #[test]
-    fn ota_floor_inclusive_100_and_full_cache_or_small_tail_is_not_a_speed_sample() {
+    fn ota_floor_inclusive_50_and_full_cache_or_small_tail_is_not_a_speed_sample() {
         let mut w = PayloadWindow::default();
-        w.observe(0,614_400,Duration::ZERO);w.observe(614_400,614_400,Duration::from_secs(6));
+        w.observe(0,614_400,Duration::ZERO);w.observe(614_400,614_400,Duration::from_secs(12));
         assert_eq!(w.finish(&report(614_400,0),true).payload_gate,"met");
-        assert_eq!(w.finish(&report(614_400,0),true).floor_kib_s,100.0);
+        assert_eq!(w.finish(&report(614_400,0),true).floor_kib_s,50.0);
         assert_eq!(w.finish(&report(614_400,0),true).comparison,"ge");
         let mut w = PayloadWindow::default();
-        w.observe(0,614_400,Duration::ZERO);w.observe(614_400,614_400,Duration::from_micros(5_999_999));
+        w.observe(0,614_400,Duration::ZERO);w.observe(614_400,614_400,Duration::from_micros(11_999_999));
         assert_eq!(w.finish(&report(614_400,0),true).payload_gate,"met");
         assert_eq!(w.finish(&report(614_400,0),false).payload_gate,"not_evaluated");
         for initial in [614_400,614_399] {
@@ -143,18 +143,18 @@ mod tests {
         }
     }
     #[test]
-    fn ota_rounding_cannot_promote_below_100_to_pass() {
+    fn ota_rounding_cannot_promote_below_50_to_pass() {
         let mut w=PayloadWindow::default();
         w.observe(0,614_400,Duration::ZERO);
-        w.observe(614_400,614_400,Duration::from_micros(6_000_001));
+        w.observe(614_400,614_400,Duration::from_micros(12_000_001));
         let m=w.finish(&report(614_400,0),true);
-        assert_eq!(format!("{:.2}",m.actual_payload_kib_s.unwrap()),"100.00");
+        assert_eq!(format!("{:.2}",m.actual_payload_kib_s.unwrap()),"50.00");
         assert_eq!(m.payload_gate,"not_met");
-        assert_eq!(m.floor_kib_s,100.0);
+        assert_eq!(m.floor_kib_s,50.0);
     }
     #[test]
     fn single_package_metadata_does_not_inflate_the_frozen_image_rate() {
-        for us in [3_000_000,3_000_001] {
+        for us in [6_000_000,6_000_001] {
             let total=307_200+176;
             let mut w=PayloadWindow::default();w.observe(0,total,Duration::ZERO);
             w.observe(total,total,Duration::from_micros(us));
@@ -162,18 +162,18 @@ mod tests {
             m.exclude_package_header(176);
             assert_eq!(m.new_payload_bytes,307_200);
             assert_eq!(m.payload_elapsed_us,Some(u128::from(us)));
-            assert_eq!(m.payload_gate,if us==3_000_000 {"met"} else {"not_met"});
+            assert_eq!(m.payload_gate,if us==6_000_000 {"met"} else {"not_met"});
         }
     }
     #[test]
-    fn ota_old_60_gate_cannot_qualify_the_current_contract() {
+    fn normal_coexistence_sample_does_not_require_the_old_100_floor() {
         for elapsed_us in [10_000_000,9_999_999,7_500_000] {
             let mut w=PayloadWindow::default();
             w.observe(0,614_400,Duration::ZERO);
             w.observe(614_400,614_400,Duration::from_micros(elapsed_us));
             let m=w.finish(&report(614_400,0),true);
-            assert_eq!(m.payload_gate,"not_met");
-            assert_eq!(m.target_version,"companion.transfer.contract.20261026.v9-dual100-bounded-stop");
+            assert_eq!(m.payload_gate,"met");
+            assert_eq!(m.target_version,"companion.transfer.contract.20261106.v11-coexist50-clock61m44");
             assert!(!m.full_chain_acceptance);
         }
     }
