@@ -379,6 +379,28 @@ impl CompanionCoordinator {
         self.backend.restore_library_backup(path)
     }
 
+    fn management_device(&self)->Result<String,String> {
+        let s=self.backend.snapshot()?;
+        if snapshot_has_active_recording(&s)||s.device.recording {return Err("请先停止并保存录音。".into());}
+        if !s.device.connected||s.device.mode!="windowsNative" {return Err("请先连接录音卡。".into());}
+        s.device.device_id.filter(|id|!id.is_empty()).ok_or("未取得设备身份，请重新连接。".into())
+    }
+    pub(crate) fn list_device_recordings(&self)->Result<Vec<crate::backend::DeviceRecording>,String> {
+        let _lease=self.begin_device_operation_kind(9)?;
+        crate::backend::list_device_recordings(&self.management_device()?)
+    }
+    pub(crate) fn delete_device_recording<F>(&self,key:&crate::companion_v1::CompanionV1RecordingKey,confirm:F)
+      ->Result<crate::backend::recording_discard::RecordingDiscardReport,String>
+    where F:FnOnce(&crate::backend::recording_discard::RecordingLossInfo)->bool {
+        let _lease=self.begin_device_operation_kind(9)?;
+        crate::backend::delete_device_recording(&self.management_device()?,key,confirm)
+    }
+    pub(crate) fn sync_device_recording(&self,key:&crate::companion_v1::CompanionV1RecordingKey)->Result<CompanionV1Snapshot,String> {
+        let _lease=self.begin_device_operation_kind(3)?;
+        crate::backend::sync_selected_recording_key(&self.management_device()?,key)?;
+        self.backend.refresh_device_recording_library()
+    }
+
     pub fn discard_oldest_recording<F>(&self, seconds: u16, confirm: F)
         -> Result<crate::backend::recording_discard::RecordingDiscardReport, String>
     where F: FnOnce(&crate::backend::recording_discard::RecordingLossInfo) -> bool {

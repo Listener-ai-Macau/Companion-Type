@@ -25,7 +25,7 @@ import {
   getDesktopUpdateStatus, checkDesktopUpdate, downloadDesktopUpdate, cancelDesktopUpdate, installDesktopUpdate,
   applyCompanionControl,
   getRecordingSyncStatus, pauseRecordingSync, repairRecordingSyncSettings, watchRecordingSync, watchCompanionSnapshotUpdates, cancelCompanionMeetingProcessing,
-  discardOldestDeviceRecording,
+  discardOldestDeviceRecording,listDeviceRecordings,syncDeviceRecording,deleteDeviceRecording,
   exportCompanionMeeting, openCompanionSavedCalendar, copyCompanionMeetingContent, shareCompanionMeetingContent,
   previewCompanionMeetingExport,
   exportCompanionAudio, shareCompanionAudio,
@@ -369,6 +369,11 @@ export function App() {
         if(memoryFailed)result.warning='部分回听位置未清除，请检查本机存储权限。';
         return result;
       }):undefined}
+      deviceRecordingActions={isTauriRuntime()?{
+        list:()=>exclusive('refresh',listDeviceRecordings),
+        sync:(key)=>exclusive('refresh',async()=>{setSnapshot(await syncDeviceRecording(key));}),
+        delete:(key)=>exclusive('refresh',()=>deleteDeviceRecording(key)),
+      }:undefined}
       onDiscardOldestRecording={isTauriRuntime() ? (seconds) => exclusive('refresh', async () => {
         const result = await discardOldestDeviceRecording(seconds);
         if (result.status === 'deleted') {

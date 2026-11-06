@@ -523,6 +523,23 @@ public final class MainActivity extends Activity {
         catch(Exception e){answer.cancel(false);throw new java.io.IOException("删除确认已取消或过期，请重新选择。",e);}
         finally{runOnUiThread(()->{android.app.AlertDialog dialog=shown.get();if(dialog!=null)dialog.dismiss();});}
     }
+    private boolean confirmDeviceRecordingDelete(com.denzic.companion.mobile.DeviceRecordings.Offer offer)throws java.io.IOException {
+        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
+        java.util.concurrent.atomic.AtomicReference<android.app.AlertDialog> shown=new java.util.concurrent.atomic.AtomicReference<>();
+        runOnUiThread(()->{
+            if(answer.isDone())return;
+            if(isFinishing()||isDestroyed()){answer.complete(false);return;}
+            String date=offer.startedUnixSeconds==0?"日期未知":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm",java.util.Locale.getDefault()).format(new java.util.Date(offer.startedUnixSeconds*1000));
+            android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("删除设备录音")
+                .setMessage(date+"，设备剩余音频约"+offer.durationMillis/1000+"秒，可释放"+offer.releasableBytes/1024+" KiB。\n未同步的设备原音将永久删除。本机已保存的副本保留。")
+                .setNegativeButton("取消",(d,w)->answer.complete(false)).setPositiveButton("删除这场录音",(d,w)->answer.complete(true))
+                .setOnCancelListener(d->answer.complete(false)).create();
+            shown.set(dialog);dialog.setOnDismissListener(d->answer.complete(false));dialog.show();
+        });
+        try{return answer.get(45,java.util.concurrent.TimeUnit.SECONDS);}
+        catch(Exception e){answer.cancel(false);throw new java.io.IOException("删除确认已取消或过期，请重新选择。",e);}
+        finally{runOnUiThread(()->{android.app.AlertDialog dialog=shown.get();if(dialog!=null)dialog.dismiss();});}
+    }
     private Object onUi(java.util.concurrent.Callable<Object> action)throws Exception{
         java.util.concurrent.CompletableFuture<Object> result=new java.util.concurrent.CompletableFuture<>();
         runOnUiThread(()->{try{if(result.isCancelled())return;if(isFinishing()||isDestroyed())throw new java.io.IOException("界面已关闭，请重新操作。");result.complete(action.call());}catch(Exception e){result.completeExceptionally(e);}});

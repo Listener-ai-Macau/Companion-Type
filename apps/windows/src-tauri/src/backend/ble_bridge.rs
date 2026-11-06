@@ -1076,6 +1076,9 @@ fn run_native_blocking<T>(
         .block_on(future)
 }
 
+mod recording_management;
+pub(crate) use recording_management::{DeviceRecording,list_device_recordings,delete_device_recording};
+
 pub(crate) fn discard_oldest_recording<F>(device_id: &str, seconds: u16, confirm: F)
     -> Result<super::recording_discard::RecordingDiscardReport, String>
 where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
@@ -1095,7 +1098,7 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
                 return Err("设备正在录音、回收或升级，请等待并先同步录音。".into());
             }
             if &payload[36..40]==b"CCQ2" {
-                return discard_segmented_recording(&device, &characteristics, &payload, &capacity, seconds, confirm).await;
+                return discard_segmented_recording(&device, &characteristics, &payload, Some(&capacity), seconds, None, confirm).await;
             }
             if !capacity.confirmed_discard_supported {
                 return Err("当前设备不支持单条删除，请先同步录音。".into());
@@ -1155,7 +1158,8 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
 // characteristic. An older peer may not reply; never reinterpret it as V1.
 async fn discard_segmented_recording<F>(device: &NativeDevice,
     chars: &std::collections::BTreeSet<Characteristic>, payload: &[u8],
-    capacity: &crate::companion_v1::CompanionV1RecordingCapacity, seconds: u16, confirm: F)
+    capacity: Option<&crate::companion_v1::CompanionV1RecordingCapacity>, seconds: u16,
+    selected:Option<&super::recording_wire::SessionKey>, confirm: F)
     -> Result<super::recording_discard::RecordingDiscardReport, String>
 where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
     use super::recording_discard as legacy;
@@ -1191,12 +1195,19 @@ where F: FnOnce(&super::recording_discard::RecordingLossInfo) -> bool {
             }
         }).await.map_err(|_|"分段录音身份协商超时，未发送删除确认。".to_string())??;
         let id=segmented::nonce();
-        let request=v3::preview_request(id).map_err(str::to_string)?;
+        if selected.is_some_and(|key|key.device_uid!=peer.uid||key.format_epoch!=peer.epoch) {
+            return Err("所选录音来自另一台设备或设备已初始化，请刷新目录。".into());
+        }
+        let request=match selected {
+            Some(key)=>v3::selected_preview_request(id,key.device_uid,key.format_epoch,key.session_id),
+            None=>v3::preview_request(id),
+        }.map_err(str::to_string)?;
         let issued=StdInstant::now();
         let bytes=discard_segmented_exchange(device,&privacy,&mut notifications,&request,false).await?;
         let offer=v3::parse_offer(&bytes,id).map_err(str::to_string)?;
-        if offer.uid!=peer.uid || offer.epoch!=peer.epoch || offer.generation!=capacity.catalog_generation ||
-            offer.reserved_bytes>capacity.protected_bytes || offer.segments>capacity.unsynced_entries {
+        if selected.is_some_and(|key|key.session_id!=offer.session) || offer.uid!=peer.uid || offer.epoch!=peer.epoch ||
+            capacity.is_some_and(|c|offer.generation!=c.catalog_generation ||
+                offer.reserved_bytes>c.protected_bytes || offer.segments>c.unsynced_entries) {
             return Err("设备录音候选与当前身份或容量不一致，未发送删除确认。".into());
         }
         let duration_ms=u32::try_from(offer.samples/16).map_err(|_|"设备录音时长超出支持范围，未删除。")?;
@@ -2421,7 +2432,7 @@ async fn scan_native_device(requested_device_id: Option<&str>) -> Result<NativeD
         }
         eprintln!("BLE scan window elapsed_ms={} exact_device=0", started.elapsed().as_millis());
         best.map(|(_, device)| device).ok_or_else(|| format!(
-            "no Companion candidate found with name containing '{COMPANION_DEVICE_NAME_FILTER}', recording service {RECORDING_SERVICE_UUID}, or OTA service {COMPANION_OTA_V1_SERVICE_UUID}"
+            "no Capture/Companion candidate found by product name, recording service {RECORDING_SERVICE_UUID}, or OTA service {COMPANION_OTA_V1_SERVICE_UUID}"
         ))
     }.await;
     // Early success, partial start failure and discovery errors all stop every
@@ -2527,7 +2538,7 @@ fn companion_candidate_score(
     let has_ota_service = device
         .service_uuids
         .contains(&COMPANION_OTA_V1_SERVICE_UUID);
-    let name_match = name.contains(COMPANION_DEVICE_NAME_FILTER);
+    let name_match = super::device_discovery::product_name(&name);
     let requested_match = requested.as_ref().map(|value| {
         normalize_device_id(value) == address
             || name.contains(value)
@@ -4594,7 +4605,6 @@ pub(crate) fn sync_selected_recording_key(device:&str,
     public:&crate::companion_v1::CompanionV1RecordingKey)->Result<(),String> {
     let key=super::recording_wire::SessionKey::from_public(public)?;
     if !native_ble_available(){return Err("指定会话收取需要真实Windows蓝牙。".into());}
-    recording_sync::resume_explicit(Some(device))?;
     let batch=run_native_blocking(sync_native_recordings_scoped(Some(device),&[],None,Some(&key),false))?;
     require_original_sync_outcome(batch)?;
     Ok(())
@@ -4996,7 +5006,8 @@ async fn sync_native_recordings_with_link_policy(
     link_policy: &mut SealedLinkPolicy,
     logical_key: Option<&super::recording_wire::SessionKey>,
 ) -> Result<NativeRecordingBatch, String> {
-    let job = RecordingSyncJob::begin(&device.device_id())?;
+    let job = if logical_key.is_some() {RecordingSyncJob::begin_selected(&device.device_id())?}
+        else {RecordingSyncJob::begin(&device.device_id())?};
     let characteristics = device.peripheral.characteristics();
     let started = StdInstant::now();
     let catalog = match job.receive(on_native_link(device, read_recording_catalog(&device, &characteristics))).await {

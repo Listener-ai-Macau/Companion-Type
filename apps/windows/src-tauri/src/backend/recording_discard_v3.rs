@@ -17,6 +17,11 @@ pub fn preview_request(request_id:u32)->Result<[u8;BYTES], &'static str> {
     if request_id==0{return Err("request id is zero")}
     let mut p=[0;BYTES];p[..4].copy_from_slice(b"CDS3");p[4]=PREVIEW;p[8..12].copy_from_slice(&request_id.to_le_bytes());finish(&mut p);Ok(p)
 }
+pub fn selected_preview_request(request_id:u32,uid:[u8;12],epoch:u64,session:u64)->Result<[u8;BYTES],&'static str> {
+    if uid==[0;12]||uid==[255;12]||epoch==0||session==0{return Err("invalid recording identity")}
+    let mut p=preview_request(request_id)?;p[16..28].copy_from_slice(&uid);
+    p[28..36].copy_from_slice(&epoch.to_le_bytes());p[36..44].copy_from_slice(&session.to_le_bytes());finish(&mut p);Ok(p)
+}
 pub fn parse_offer(p:&[u8],expected_request:u32)->Result<Offer,&'static str> {
     if p.len()!=BYTES||&p[..4]!=b"CDS3"||p[4]!=PREVIEW||p[5]!=0||u32le(p,8)!=expected_request||expected_request==0||u32le(p,92)!=crc(&p[..92]) {return Err("invalid offer frame")}
     let a=p[6];let n=p[7];let generation=u32le(p,12);let uid:[u8;12]=p[16..28].try_into().unwrap();

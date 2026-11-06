@@ -115,6 +115,15 @@ export async function applyCompanionControl(
   return fixtureSnapshot;
 }
 
+export async function listDeviceRecordings():Promise<import('../../../packages/ui/src/CompanionDeviceRecordings').DeviceRecording[]> {
+  return invoke('list_companion_device_recordings');
+}
+export async function syncDeviceRecording(key:import('../../../packages/ui/src/CompanionDeviceRecordings').DeviceRecordingKey):Promise<CompanionV1Snapshot> {
+  return invoke('sync_companion_device_recording',{key});
+}
+export async function deleteDeviceRecording(key:import('../../../packages/ui/src/CompanionDeviceRecordings').DeviceRecordingKey):Promise<{status:string;message:string}> {
+  return invoke('delete_companion_device_recording',{key});
+}
 export async function discardOldestDeviceRecording(requiredSeconds: number): Promise<{
   status: 'deleted' | 'cancelled' | 'noCandidate'; message: string;
 }> {
