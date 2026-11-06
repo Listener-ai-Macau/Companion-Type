@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-06T11:18:13+08:00",
+  "frontend": {
+    "commit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
+    "branch": "work/device-phone-closure055-20261106",
+    "remoteReadback": true,
+    "initialCheckpoint": "3fc02bd3f4605104af5e8ff866d92b10720add2b"
+  },
+  "backend": {
+    "commit": "8e8a82c58090aac97d5e8023cafdf9bcbe277eaa",
+    "branch": "work/device-phone-closure055-android-20261106",
+    "remoteReadback": true
+  },
+  "physicalAcceptance": false
+}

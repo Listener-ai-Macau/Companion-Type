@@ -1,0 +1,131 @@
+{
+  "result": "PASS_CONTROLLED_ACTUAL_APP_UI",
+  "scope": "Production App and components, synthetic native bridge; no OS pairing dialog, clipboard, real radio or physical OTA.",
+  "cases": [
+    "Pair cancellation never connects",
+    "Verified selection remains maintainable when catalog fails",
+    "Catalog retry",
+    "Maintenance exact device/cancel/clear reset",
+    "Package choice and explicit start cancellation",
+    "Update start blocks device operations",
+    "Stop transfer releases device controls",
+    "360/393/430 no horizontal overflow",
+    "light/dark production CSS"
+  ],
+  "widths": [
+    {
+      "width": 360,
+      "scroll": 360
+    },
+    {
+      "width": 393,
+      "scroll": 393
+    },
+    {
+      "width": 430,
+      "scroll": 430
+    }
+  ],
+  "pageErrors": [],
+  "calls": [
+    {
+      "method": "aiServiceStatus",
+      "args": {}
+    },
+    {
+      "method": "library",
+      "args": {}
+    },
+    {
+      "method": "status",
+      "args": {}
+    },
+    {
+      "method": "deviceUpdateStatus",
+      "args": {}
+    },
+    {
+      "method": "discoverDevices",
+      "args": {}
+    },
+    {
+      "method": "pairDevice",
+      "args": {
+        "index": 0,
+        "address": "C8:ED:45:EB:95:B4"
+      }
+    },
+    {
+      "method": "pairDevice",
+      "args": {
+        "index": 0,
+        "address": "C8:ED:45:EB:95:B4"
+      }
+    },
+    {
+      "method": "connectDevice",
+      "args": {
+        "index": 0,
+        "address": "C8:ED:45:EB:95:B4"
+      }
+    },
+    {
+      "method": "catalog",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4"
+      }
+    },
+    {
+      "method": "deviceMaintenance",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4",
+        "operation": "query"
+      }
+    },
+    {
+      "method": "deviceMaintenance",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4",
+        "operation": "clearPairings"
+      }
+    },
+    {
+      "method": "catalog",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4"
+      }
+    },
+    {
+      "method": "deviceUpdateStatus",
+      "args": {}
+    },
+    {
+      "method": "startDeviceUpdate",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4",
+        "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "method": "startDeviceUpdate",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4",
+        "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "method": "cancelDeviceUpdate",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4",
+        "id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "method": "deviceMaintenance",
+      "args": {
+        "address": "C8:ED:45:EB:95:B4",
+        "operation": "clearPairings"
+      }
+    }
+  ]
+}

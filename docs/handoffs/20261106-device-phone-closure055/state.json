@@ -1,0 +1,50 @@
+{
+  "at": "2026-11-06T11:34:22+08:00",
+  "state": "ANDROID055_INSTALLED_546_FILES_RETAINED_SOFTWARE_CHECKS_PASSED_ORDINARY_PHONE_HARDWARE_ACCEPTANCE_OPEN",
+  "ownerRaw": "1 做一下",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+  "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
+  "branch": "work/device-phone-closure055-20261106",
+  "backendSourceCommit": "8e8a82c58090aac97d5e8023cafdf9bcbe277eaa",
+  "backendBranch": "work/device-phone-closure055-android-20261106",
+  "remoteCodeReadback": true,
+  "versionName": "0.1.55",
+  "versionCode": 55,
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\Companion-Android-0.1.55-设备连接维护与升级.apk",
+  "apkSha256": "87e8c138c3ed77c9cbc39a2b2a7912878e6fd282d40999010aeda1cddfb91949",
+  "installed": true,
+  "installedExactApkBytesVerified": true,
+  "originalAppFilesByteIdentical": 546,
+  "scope": [
+    "普通搜索识别Companion/Capture候选；显式选择后系统配对并验证协议/设备身份",
+    "按场清单/选收/精确删除整合原已提交053修复；连接和清单失败分开，保留重试维护入口",
+    "手机设备维护：状态/连接另一手机/恢复设置/清配对；破坏性操作原生精确确认且取消/超时清理",
+    "手机正常完整签名OTA：原CUP3/DOV1/WSI4目标布局/哈希/版本/电源门、设备持久接收回执、FINISH只发一次、重连同UID实际运行版本/摘要/空间释放才成功",
+    "前台服务和私有升级包/身份/进度；进程死后只显示中断待核对，不自动重复升级；官方原文件ZIP封装工具",
+    "保留054按内容导出PPTX/XLSX/mm/PNG和AI材料及Windows052源"
+  ],
+  "engineering": {
+    "packageAndProtocol": "ota-java-verification.json: actual signed66685 producer package plus simulated peripheral, durable receipts/failure/cancel/target/UID guards; NO hardware OTA",
+    "interface": "device-ui-verification.json: actual App/components with controlled native bridge; pair cancel, catalog failure/retry, maintenance cancel/reset, upgrade start/cancel/device busy,360/393/430 light/dark",
+    "apk": "apk-verification.json: same signer050r2,16KiB alignment, exact web assets,3 native speech libraries unchanged",
+    "phone": "phone-native-result.json: actual installed055 bytes and546 original files identical; separate no-Activity/no-Bluetooth QA actual Android package parser and13 interruption/identity/retained-file assertions; QA removed"
+  },
+  "failuresRetained": [
+    "Merged device branches duplicated an identical deletion-confirmation method; removed exact duplicate before successful native compile.",
+    "Three APK builds (first complete plus two incremental) occurred while final verification exposed pairing badge/file-picker guard and confirmation-lifetime fixes; no intermediate candidate was installed. Future same-batch preparation should finish native confirmations before first packaging.",
+    "No-Activity QA first omitted Instrumentation.start; stopped only own QA process, removed package, retained failure, fixed harness and reran same product classes. No product connection/upgrade action ran in failed harness.",
+    "First phone UI tap helper chose duplicate caption, then actual phone moved to unrelated apps; guard stopped before real scan."
+  ],
+  "remaining": [
+    "普通手机系统配对→真实按场列表→仅本轮新录音指定接收/回听/指定删除/中断恢复，不能用受控桥或旧固件验收代替",
+    "手机普通维护确认/取消与设备实际返回；完整手机OTA/后台/断连/进程恢复需同一真实链验证",
+    "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
+    "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
+  ],
+  "next": "新版055已安装。手机可稳定前台时，从设备页搜索/系统配对和协议验证继续，仅新建测试录音完成按场收取/回听/指定删除，再集中验维护/正常OTA和保存分享；板卡重新按共享记录领取一项，不重新构建、重复源研究或重问已有授权。手机前台被占用期间继续原可执行软件工作，AI表样原工作点保留。",
+  "ownerAccepted": false,
+  "wholeProductQualified": false,
+  "modelsRun": false,
+  "currentBoardLeaseHeld": false,
+  "customerResult": null
+}

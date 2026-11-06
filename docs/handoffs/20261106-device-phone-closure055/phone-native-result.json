@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-06T11:28:53+08:00",
+  "phoneSerial": "6LCAPVHE9PBE45DU",
+  "mainInstalled": true,
+  "installedVersion": [
+    "versionCode=55 minSdk=26 targetSdk=35",
+    "versionName=0.1.55"
+  ],
+  "mainApkSha256": "87e8c138c3ed77c9cbc39a2b2a7912878e6fd282d40999010aeda1cddfb91949",
+  "mainApkExactInstalledBytes": true,
+  "originalFileCount": 546,
+  "originalFilesByteIdentical": true,
+  "newFileCount": 0,
+  "privateFileHashesRetainedLocallyOnly": true,
+  "mainAppUiStarted": false,
+  "boardUsed": false,
+  "modelsRun": false,
+  "previousVersion": "Not persisted by the first harness; latest previous observation053 is historical only",
+  "nativeQa": "PASS_ANDROID_NATIVE_PACKAGE_AND_INTERRUPTION_STATE_ONLY",
+  "ownQaPackageRemoved": true,
+  "foregroundBefore": [
+    "topResumedActivity=ActivityRecord{20616649 u0 com.xingin.xhs/com.xingin.dots.page.DotsAgentPageActivity t12500}",
+    "ResumedActivity: ActivityRecord{20616649 u0 com.xingin.xhs/com.xingin.dots.page.DotsAgentPageActivity t12500}"
+  ],
+  "foregroundAfter": [
+    "topResumedActivity=ActivityRecord{20616649 u0 com.xingin.xhs/com.xingin.dots.page.DotsAgentPageActivity t12500}",
+    "ResumedActivity: ActivityRecord{20616649 u0 com.xingin.xhs/com.xingin.dots.page.DotsAgentPageActivity t12500}"
+  ],
+  "observedResumedActivitySame": true,
+  "foregroundObservationScope": "Actual resumed records immediately around final no-Activity QA only, not an all-session foreground claim.",
+  "firstQaFailure": "Harness initially omitted Instrumentation.start() so onStart did not run; own QA process stopped and package removed. No product Bluetooth/service/Activity action ran; actual first failure retained.",
+  "remaining": [
+    "Ordinary main App real system pairing/list/select receive/delete/maintenance",
+    "Main App SAF save and real share recipient grant",
+    "Physical Android OTA, background/disconnect and process recovery; native state checks are not these passes"
+  ]
+}

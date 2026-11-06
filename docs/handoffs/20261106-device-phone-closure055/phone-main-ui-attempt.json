@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-06T11:34:22+08:00",
+  "state": "MAIN_APP_OPENED_DEVICE_PAGE_OBSERVED_PHONE_FOREGROUND_CHANGED_BEFORE_REAL_SCAN",
+  "ownerAvailabilityReply": "已打开 Companion 并放好，可以测试",
+  "actual": "Fresh reply observed XHS as resumed; explicitly opened only authorized Companion. MainActivity055 and ordinary library/device UI rendered. Initial intended search tap hit same-label instructional step; helper corrected to prefer buttons. Before retry the resumed record was Launcher+Companion transient then Bilibili, so guard refused input. No new availability question or repeated relaunch.",
+  "physicalBluetooth": false,
+  "pairingDialogTested": false,
+  "recordingsCreated": 0,
+  "oldAudioPayloadReads": 0,
+  "recordingsDeleted": 0,
+  "firmwareChanged": false,
+  "leaseReleased": true,
+  "ordinaryHardwareAcceptance": false,
+  "ownerAcceptanceChanged": false,
+  "boardLease": {
+    "claimedAt": "2026-11-06T11:30:33+08:00",
+    "releasedAt": "2026-11-06T11:32:04+08:00",
+    "source": "docs/board_operations.md released Companion055 item; docs/board_turn.json.lastRelease",
+    "physicalDeviceCalls": 0
+  }
+}

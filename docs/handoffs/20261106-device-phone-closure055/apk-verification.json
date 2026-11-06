@@ -1,0 +1,49 @@
+{
+  "status": "ANDROID055_APK_VERSION_SIGNATURE_WEB_ASSETS_NATIVE_PAYLOAD_AND_16K_ALIGNMENT_VERIFIED",
+  "versionName": "0.1.55",
+  "versionCode": 55,
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\Companion-Android-0.1.55-设备连接维护与升级.apk",
+  "sha256": "87e8c138c3ed77c9cbc39a2b2a7912878e6fd282d40999010aeda1cddfb91949",
+  "bytes": 48873867,
+  "signerMatches050r2": true,
+  "certificateSha256": "ecebce83705d3336731610451cd1685cadb2d87fba29e41a471b2b44d46c45da",
+  "zip16KiBAligned": true,
+  "webAssets": [
+    {
+      "path": "index.html",
+      "sha256": "df53a7eb90959af85124c1ec0963b9eab9012c4ebb0129f5d45feac4e2623301"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "sha256": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2"
+    },
+    {
+      "path": "assets/index-BeLbnNsw.css",
+      "sha256": "6239d71a64773393426a0512e6654cd041c7c20ca8e954df1840833d006a8c9e"
+    },
+    {
+      "path": "assets/index-DjHrbBIS.js",
+      "sha256": "61d6e83cd248aeb443c5d3fbd0ca921a0d571cf254da8cd8db1855a208225c7a"
+    }
+  ],
+  "nativeLibrariesUnchanged": [
+    {
+      "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+      "sha256": "3be7ac79fec8a987d85ec03d94b7957fcff1c5bfbf870069ccd21dcabcf1669e"
+    },
+    {
+      "name": "jni/arm64-v8a/libonnxruntime.so",
+      "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad"
+    },
+    {
+      "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+      "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278"
+    }
+  ],
+  "backendSourceCommit": "8e8a82c58090aac97d5e8023cafdf9bcbe277eaa",
+  "ownerAppInstalledThisBatch": true,
+  "windowsInstalledThisBatch": false,
+  "modelsRun": false,
+  "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
+  "installedExactApkVerified": true
+}

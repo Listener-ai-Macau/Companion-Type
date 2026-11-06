@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-06T11:34:22+08:00",
+  "files": [
+    {
+      "path": "docs/product_backlog.json",
+      "sha256": "c9cb14ba04339a79ef268b2531ce097a70ce3eb72babb2cc75c3f3e6a01b41db"
+    },
+    {
+      "path": "docs/development_log.md",
+      "sha256": "6d20495b4e4b7d101d535d30cb67a433a0d7696bea7c522c363899b841f91a98"
+    }
+  ],
+  "archive": "canonical-backlog-and-log.zip",
+  "sha256": "56f0b3ce351013f632308b698a6f1314f7c9915e671d2ade264fcec6cb47fb48",
+  "containsPrivateAppHashList": false,
+  "sourceAndBackendPins": {
+    "at": "2026-11-06T11:18:13+08:00",
+    "frontend": {
+      "commit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
+      "branch": "work/device-phone-closure055-20261106",
+      "remoteReadback": true,
+      "initialCheckpoint": "3fc02bd3f4605104af5e8ff866d92b10720add2b"
+    },
+    "backend": {
+      "commit": "8e8a82c58090aac97d5e8023cafdf9bcbe277eaa",
+      "branch": "work/device-phone-closure055-android-20261106",
+      "remoteReadback": true
+    },
+    "physicalAcceptance": false
+  }
+}
