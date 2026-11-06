@@ -1,0 +1,20 @@
+{
+  "cpuSlots": [
+    12,
+    13,
+    14,
+    15
+  ],
+  "affectedOwnBuildOnly": [
+    {
+      "pid": 18132,
+      "name": "cargo.exe"
+    },
+    {
+      "pid": 11084,
+      "name": "rustc.exe"
+    }
+  ],
+  "availableGiB": 2.61,
+  "modelsRun": false
+}

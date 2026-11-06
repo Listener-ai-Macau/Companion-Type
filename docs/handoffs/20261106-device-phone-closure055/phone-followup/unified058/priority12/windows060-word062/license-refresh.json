@@ -1,0 +1,16 @@
+{
+  "externalCargoDependenciesUnchangedFrom052": true,
+  "changedInputDigests": [
+    {
+      "path": "apps/windows/src-tauri/Cargo.lock",
+      "before": "3469a9af5f9d510e762939cc65e9a80fb045fe0b643f933d2895d650d8ed459c",
+      "after": "be1f2c5d6fda1391c1eff8e6531d560b88c49f0ba53036f2a8bd7bd8c5adf1ba"
+    },
+    {
+      "path": "package-lock.json",
+      "before": "09845f22878a534a67842e4b24d71392b61e28cab8fcd720cb7088512ebb7270",
+      "after": "a4aab98073a85dad88a23926b400ce9b94e7c22fe828fd818620114f816e5c61"
+    }
+  ],
+  "scope": "Local product version inventory refreshed for actual committed060 Windows source; no external package/license substitution."
+}

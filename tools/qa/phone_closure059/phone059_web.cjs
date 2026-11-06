@@ -72,6 +72,11 @@ let browser,port;
   guard();await page.locator(`[data-device-session="${arg}"]`).getByRole('button',{name:arg2,exact:true}).click();
  }else if(action==='scroll-backups'){
   guard();await page.locator('.library-backups').scrollIntoViewIfNeeded();
+ }else if(action==='scroll-original'){
+  const retained=page.locator('.library-backups-retained');assert.equal(await retained.count(),1);
+  guard();if(!await retained.evaluate(node=>node.open))await retained.locator('summary').click();
+  const original=retained.locator(':scope > div').filter({has:page.locator('span').filter({hasText:/^原有资料$/})});assert.equal(await original.count(),1);
+  guard();await original.scrollIntoViewIfNeeded();
  }else if(action==='copy-public'){
   assert.ok(await page.getByRole('heading',{name:'公开虚构导出验收056 · 非真实会议',exact:true}).isVisible());
   guard();await page.getByRole('button',{name:'复制所选文字',exact:true}).click();
@@ -90,7 +95,8 @@ let browser,port;
   player:await playerField.count()?await playerField.innerText():null};
  // Suppress original-library title buttons in persisted state, retaining app
  // controls and only this batch's explicitly public/new-test rows.
- result.buttons=result.buttons.filter(t=>!t.includes('未命名录音')||/未命名录音\s*·\s*(?:23\d|24\d)\b/.test(t));
+ const allowedSessions=fs.existsSync(cache+'/allowed-sessions.json')?JSON.parse(fs.readFileSync(cache+'/allowed-sessions.json','utf8')):[];
+ result.buttons=result.buttons.filter(t=>!t.includes('未命名录音')||allowedSessions.some(s=>new RegExp('未命名录音\\s*·\\s*'+String(s.session)+'\\b').test(t)));
  fs.writeFileSync(cache+`/web-${Date.now()}-${action}.json`,JSON.stringify(result,null,2));
  console.log(JSON.stringify(result,null,2));
 })().catch(e=>{console.error(e.stack||String(e));process.exitCode=1;}).finally(async()=>{

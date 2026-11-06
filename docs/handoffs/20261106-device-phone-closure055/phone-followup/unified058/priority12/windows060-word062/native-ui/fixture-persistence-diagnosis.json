@@ -1,0 +1,73 @@
+{
+  "comparison": "Parsed persisted JSON values vs exact public seed; independent of whitespace/key-order normalization",
+  "semanticEqual": false,
+  "differences": [
+    {
+      "path": "/0/recorderControl",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/deviceRecordingId",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/recovery/nextRetryAtUnixMs",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/sourceDeviceId",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/deviceTotalLength",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/pendingReason",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/deviceRecordingKey",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/meetingTracks",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    },
+    {
+      "path": "/0/deviceSha256",
+      "beforePresent": true,
+      "afterPresent": false,
+      "before": null,
+      "after": null
+    }
+  ],
+  "originalUserDataUsed": false,
+  "repeatNativeUiRun": false,
+  "publicContentPreserved": true,
+  "explanation": "All nine differences are null optional properties omitted by the existing explicit serde skip_serializing_if=Option::is_none contract. Transcript, saved minutes, AI material, citations and other values are unchanged. Initial byte-identity assertion was unsuitable for a synthetic seed with explicit nulls; no product repair or repeat UI run required."
+}

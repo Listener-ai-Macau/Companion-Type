@@ -67,6 +67,7 @@ record={'result':f'ANDROID{VERSION}_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE
     'signerMatches050r2And055':True,'zip16KiBAligned':True,'nativeLibraries':native,'webAssetsExact':assets,
     'buildLog':str(log),'buildWallSeconds':round(time.perf_counter()-start,3),'installed':False,
     'reasonNotInstalled':'Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.',
-    'actualOrdinaryControlButtonsAccepted':False,'modelsRun':False,'nativeRebuilt':False}
+    'actualOrdinaryControlButtonsAccepted':False,'modelsRun':False,
+    'nativeRebuilt':source.get('nativeRebuilt',False),'nativeRebuiltByApkBuildStep':False}
 (F/('apk'+str(VERSION)+'-verification.json')).write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 print(json.dumps({k:v for k,v in record.items() if k not in ['nativeLibraries','webAssetsExact']},ensure_ascii=False))

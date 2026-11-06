@@ -38,5 +38,8 @@
   "reasonNotInstalled": "Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.",
   "actualOrdinaryControlButtonsAccepted": false,
   "modelsRun": false,
-  "nativeRebuilt": false
+  "nativeRebuilt": true,
+  "nativeRebuiltByApkBuildStep": false,
+  "nativeRebuildReceipt": "native-word062.json",
+  "receiptCorrection": "Original generic APK packager hardcoded nativeRebuilt=false. Native source was actually rebuilt upstream in92.641sec; this packaging step reused that rebuilt library. Original receipt retained."
 }

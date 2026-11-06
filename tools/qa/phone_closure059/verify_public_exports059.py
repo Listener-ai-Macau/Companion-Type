@@ -5,10 +5,12 @@ from PIL import Image
 C=Path('E:/CodexData/Companion/.build-cache/device-phone055/acceptance059');D=C/'saved';W=Path(__file__).parent
 def norm(value):return ''.join(value.split())
 required=['追加20%的费用尚未批准。','小陈在11月8日前核对报价','公开虚构补充','公开虚构跟进材料','保存时的原文依据','未完成','<A&B>','😀','# literal **keep**']
+word_version=next(version for version in [62,61,59] if (D/f'QA{version:03d}-all.docx').exists())
+word_path=D/f'QA{word_version:03d}-all.docx'
 texts={'txt':(D/'QA059-all.txt').read_text(encoding='utf8'),'markdown':(D/'QA059-all.md').read_text(encoding='utf8'),
     'pdf':'\n'.join(p.extract_text() for p in pypdf.PdfReader(D/'QA059-all.pdf').pages)}
 for extension,kind,pattern in [('docx','word',r'word/document.xml'),('pptx','pptx',r'ppt/slides/slide\d+.xml'),('xlsx','xlsx',r'xl/worksheets/sheet\d+.xml')]:
-    path=D/('QA061-all.docx' if extension=='docx' and (D/'QA061-all.docx').exists() else 'QA059-all.'+extension)
+    path=word_path if extension=='docx' else D/('QA059-all.'+extension)
     with zipfile.ZipFile(path) as z:
         assert z.testzip() is None
         roots=[ET.fromstring(z.read(n)) for n in z.namelist() if re.fullmatch(pattern,n)]
@@ -26,9 +28,9 @@ rows.append({'format':'png','pixels':size,'fullFileDecodes':True,'visualReview':
 framework=Path('C:/Windows/Microsoft.NET/Framework64/v4.0.30319');qa=Path('E:/CodexData/Companion/.build-cache/exports052-qa')
 cmd=[str(framework/'csc.exe'),'/nologo','/target:exe','/out:'+str(qa/'ValidateDocuments059.exe'),'/reference:'+str(qa/'DocumentFormat.OpenXml.dll'),'/reference:'+str(framework/'WPF/WindowsBase.dll'),'/reference:'+str(framework/'System.Web.Extensions.dll'),str(W/'ValidateDocuments059.cs')]
 p=subprocess.run(cmd,capture_output=True,text=True,creationflags=subprocess.CREATE_NO_WINDOW);assert p.returncode==0,p.stdout+p.stderr
-p=subprocess.run([str(qa/'ValidateDocuments059.exe'),*[str(D/('QA061-all.docx' if x=='docx' and (D/'QA061-all.docx').exists() else 'QA059-all.'+x)) for x in ['docx','xlsx','pptx']]],capture_output=True,text=True,encoding='utf8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW)
+p=subprocess.run([str(qa/'ValidateDocuments059.exe'),*[str(word_path if x=='docx' else D/('QA059-all.'+x)) for x in ['docx','xlsx','pptx']]],capture_output=True,text=True,encoding='utf8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW)
 (C/'openxml-validation.json').write_text(p.stdout,encoding='utf8');assert p.returncode==0,p.stdout+p.stderr
-record={'result':'PASS_ACTUAL_PUBLIC_CONTENT_AND_OPENXML_SCHEMA','wordAndroidVersion':61 if (D/'QA061-all.docx').exists() else 59,'otherFormatsAndroidVersion':59,'formats':rows,'microsoftOpenXml':json.loads(p.stdout),
+record={'result':'PASS_ACTUAL_PUBLIC_CONTENT_AND_OPENXML_SCHEMA','wordAndroidVersion':word_version,'otherFormatsAndroidVersion':59,'formats':rows,'microsoftOpenXml':json.loads(p.stdout),
     'pdfPages':len(pypdf.PdfReader(D/'QA059-all.pdf').pages),'pdfVisualReview':'Both rendered pages inspected: headings, negation, source notices, Unicode, page breaks/footer legible; no clipping/overlap observed.',
     'realMeeting':False,'modelQualityClaim':False,'actualExternalOfficeViewerOpened':False}
 (C/'content-verification.json').write_text(json.dumps(record,ensure_ascii=False,indent=2),encoding='utf8');print(json.dumps(record,ensure_ascii=False))

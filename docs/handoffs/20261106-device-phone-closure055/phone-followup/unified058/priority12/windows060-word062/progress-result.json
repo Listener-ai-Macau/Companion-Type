@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-06T16:06:15+08:00",
+  "state": "WINDOWS060_CANDIDATE_PACKAGED_EIGHT_FORMAT_NATIVE_PREVIEW_PASSED_SYSTEM_HANDOFF_PENDING",
+  "package": {
+    "at": "2026-11-06T16:00:57+08:00",
+    "status": "WINDOWS060_WORD062_MSI_SOURCE_PAYLOAD_AND_UPGRADE_VERIFIED",
+    "version": "0.1.60",
+    "sourceCommit": "2b5f352907ff49ec334f1b906c6b6921931f0622",
+    "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\Companion-Windows-0.1.60-录音与Word兼容修复.msi",
+    "msiSha256": "2a1ddda20287e0d9d973647bbac29cdf02069bc8f0e61578e8bea820469ac77b",
+    "embeddedExeSha256": "9da28961fc5b8f82bfc35bd1a502711c5e71fc0b45054e12f5065cdf7a5ba569",
+    "dllSha256": "6589a071741081cb6209e4db62ccc1e0c46775a25840042d9667f58c2e58b951",
+    "licenseFilesMatched": 256,
+    "sameUpgradeIdentity": true,
+    "newerVersionGuard": true,
+    "installed": false,
+    "modelsRun": false,
+    "ordinarySaveAsShareVerified": false,
+    "wholeProductQualified": false
+  },
+  "nativeUi": {
+    "sourceCommit": "2b5f352907ff49ec334f1b906c6b6921931f0622",
+    "exeSha256": "8555655fb2bc6f565f6c9c90a78c574da67a3afb8f5002ccd43bb3c80a2ab775",
+    "windowHidden": true,
+    "ownerDataUsed": false,
+    "modelsRun": false,
+    "deviceIo": false,
+    "clipboardTouched": false,
+    "systemSaveAsOrShareOpened": false,
+    "installed": false,
+    "status": "ACTUAL_PRIVATE_NATIVE060_EIGHT_FORMAT_PREVIEW_PASSED",
+    "isolatedPublicSourceUnchanged": false,
+    "clipboardSequenceUnchanged": true,
+    "isolatedPublicContentPreserved": true,
+    "persistenceDiagnosis": "fixture-persistence-diagnosis.json",
+    "byteIdentityAssertionFailedButDataChangeNotObserved": true
+  },
+  "source": "2b5f352907ff49ec334f1b906c6b6921931f0622",
+  "scope": "Shared Word footer correction now compiled into actual Windows060 native binary and matched MSI; eight selected formats previewed through real private hidden native App using synthetic imported text, both themes. Source text, saved material and citations preserved; no owner data, clipboard, model, BLE or primary desktop interaction.",
+  "notYetVerified": [
+    "Installed Windows060 upgrade and actual native SaveAs dialog",
+    "Windows share sheet and actual local recipient",
+    "Actual new phone/card pause/resume/full playback/controlled delete and original audio export",
+    "Actual latest unified Android Word export/schema after current shared owner releases;062 must not downgrade065",
+    "Return original phone library after active shared test ends"
+  ],
+  "android062CandidateIsNotCurrentInstalled": true,
+  "candidate062MustNotDowngradeNewerVersion": true,
+  "latestSharedObservation": "Existing OTA flow reports actual0.1.65 installation for reception2M comparison. Do not install062. Re-read final receipt and merge shared Word062 footer plus newer reception changes before next affected acceptance.",
+  "nativeBuild": {
+    "exitCode": 0,
+    "sourceCommit": "2b5f352907ff49ec334f1b906c6b6921931f0622",
+    "wallSeconds": 511.266,
+    "jobs": 1,
+    "priority": "below-normal",
+    "modelsRun": false,
+    "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\cargo-release-1793951499414343800.log",
+    "installed": false,
+    "privateNative": [
+      {
+        "name": "companion-type.exe",
+        "sha256": "8555655fb2bc6f565f6c9c90a78c574da67a3afb8f5002ccd43bb3c80a2ab775",
+        "bytes": 35114496
+      },
+      {
+        "name": "companion_type_lib.dll",
+        "sha256": "6589a071741081cb6209e4db62ccc1e0c46775a25840042d9667f58c2e58b951",
+        "bytes": 467968
+      }
+    ]
+  },
+  "modelsRun": false,
+  "fullPriority12Complete": false,
+  "wholeProductQualified": false
+}

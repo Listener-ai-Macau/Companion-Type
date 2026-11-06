@@ -1,0 +1,22 @@
+{
+  "exitCode": 0,
+  "sourceCommit": "2b5f352907ff49ec334f1b906c6b6921931f0622",
+  "wallSeconds": 511.266,
+  "jobs": 1,
+  "priority": "below-normal",
+  "modelsRun": false,
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\cargo-release-1793951499414343800.log",
+  "installed": false,
+  "privateNative": [
+    {
+      "name": "companion-type.exe",
+      "sha256": "8555655fb2bc6f565f6c9c90a78c574da67a3afb8f5002ccd43bb3c80a2ab775",
+      "bytes": 35114496
+    },
+    {
+      "name": "companion_type_lib.dll",
+      "sha256": "6589a071741081cb6209e4db62ccc1e0c46775a25840042d9667f58c2e58b951",
+      "bytes": 467968
+    }
+  ]
+}
