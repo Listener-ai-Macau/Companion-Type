@@ -23851,3 +23851,12 @@ Windows先确认原0.1.52且无Companion进程；按已授权前两项静默升�
 按微软官方Windows-classic-samples WPF及Windows-universal-samples ShareFiles共同模式改content_handoff：预先取得文件，实际DataRequested填系统已有request.Data，而非替换整个DataPackage；保已有Windows来源上下文，复制/只读文件语义和失败保存回退保留。首次StorageFile裸跨线程编译被Send约束拒绝，改用windows-core AgileReference正常代理，不增加unsafe Send；失败编译原件保留。针对产品源码检查通过，含请求对象身份/已有ApplicationName上下文/准确单文件与Copy语义。独立进程再确认原方案和新候选都能拿到完整72558B，新候选来源上下文也完整保留。该结果支持源改写保信息，不证明已修复Picker枚举。源码e6a3f63548720b8273841fea4ff2276b91380cd4远端核对，仍未产品原生构建/安装，日用保持067。
 
 同一最小原生窗口已备两个普通按钮，分别冻结旧方式/实际新候选，让手工对照能区分Tauri窗口路径与DataRequest填充；仅本机公开资料，不运行新窗口。已异步给Owner“我来手动点/暂时不方便”选择，等待回复时不打开桌面；后台继续可独立原事项。手机原嵌软工作当前FW66690真实满空间238、后续回收再录在途，本侧不抢占。原SharePicker接收、Android066Word/录控回听与原库切回、其它非模型售卖缺口继续未完成，source/tests/IPC准备不计实际销售交付。
+
+
+## 2026-11-06T20:35:14+08:00｜Owner“你来吧”后真实对照：两种WinRT方式均失败，ModernShare窗口站点补齐仍失败；候选回到067源码
+
+Owner明确授权本机分享窗口和本机验收应用的小范围操作。冻结旧方式与request.Data候选的普通按钮各自真实打开SharePicker，均显示“重试／无法为你显示所有共享方法”，所以之前通过源码检查和独立进程原文件字节核对不能视作修复。未构建、未安装069，日用仍067。失败源码e6a3f635及测试与IPC原证据保留，content_handoff.rs仅按精确c5f26b…哈希防覆盖后回到60166已安装版本的同一文件，不将候选留作默认交付。
+
+为区别资源管理器已能枚举目标的路径，对同一公开PDF只读查询系统IContextMenu。Windows.ModernShare未设站点时0x80070578；补IObjectWithSite/IOleWindow实际有效HWND后InvokeCommand返回S_OK，但真实面板仍为同一Retry失败，没有收到文件。保留此失败，不写“系统接受调用”等于通过。只读CommandStore另有Windows.ModernShareFlyout，其处理器与ModernShare不同，尚未调用。Windows.Share是另一Share With类，不盲调用或更改文件权限。只读EnableLUA=0的观察保留，未证明因果，未改UAC、安全或隐私设置。
+
+恢复下一次观察时Computer Use明确报告实体Esc由用户中止，立即停止所有UI调用；仅后台核实并关闭有精确PID/创建时间/路径匹配的自建验证程序，保存当前点。没有向联系人或外部应用发送文件，没有模型、训练、手机或板IO。下步优先后台核对真实Shell入口区别，若直开系统面板短期无法修复，改为明确命名的文件夹分享路径并以本机QA真实收件核验，不能重复无改善打包。原手机/板在另一嵌软占用中，原资料库切回及其它售卖缺口继续未完成。

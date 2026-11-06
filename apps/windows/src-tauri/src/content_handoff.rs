@@ -55,34 +55,27 @@ pub struct ShareFile {pub path:PathBuf,pub title:String}
 #[cfg(windows)]
 mod native {
     use super::*;
-    use windows::{core::{AgileReference,Interface,HSTRING},ApplicationModel::DataTransfer::{DataPackage,DataPackageOperation,DataTransferManager,DataRequestedEventArgs},Foundation::{TypedEventHandler,EventRegistrationToken},Foundation::Collections::IIterable,Storage::{StorageFile,IStorageItem},Win32::{Foundation::HWND,UI::Shell::IDataTransferManagerInterop}};
-    // Resolve the file through an agile reference on the callback's apartment,
-    // and fill the DataPackage owned by the real DataRequest. Keep the source
-    // context that Windows supplies on that request instead of replacing it.
-    pub struct PreparedShare {storage:AgileReference<StorageFile>,title:HSTRING}
+    use windows::{core::{Interface,HSTRING},ApplicationModel::DataTransfer::{DataPackage,DataPackageOperation,DataTransferManager,DataRequestedEventArgs},Foundation::{TypedEventHandler,EventRegistrationToken},Foundation::Collections::IIterable,Storage::{StorageFile,IStorageItem},Win32::{Foundation::HWND,UI::Shell::IDataTransferManagerInterop}};
     struct Registration {manager:DataTransferManager,token:EventRegistrationToken}
     impl Drop for Registration{fn drop(&mut self){let _=self.manager.RemoveDataRequested(self.token);}}
     thread_local! {static ACTIVE:std::cell::RefCell<Option<Registration>>=const{std::cell::RefCell::new(None)};}
-    fn prepared_file(file:&ShareFile)->windows::core::Result<PreparedShare>{
+    pub fn package(file:&ShareFile)->windows::core::Result<DataPackage>{
         let storage=StorageFile::GetFileFromPathAsync(&HSTRING::from(file.path.to_string_lossy().as_ref()))?.get()?;
-        Ok(PreparedShare{storage:AgileReference::new(&storage)?,title:HSTRING::from(&file.title)})
-    }
-    fn populate_existing(data:&DataPackage,file:&PreparedShare)->windows::core::Result<()>{
-        let item:IStorageItem=file.storage.resolve()?.cast()?;
+        let item:IStorageItem=storage.cast()?;
         let items:IIterable<IStorageItem>=vec![Some(item)].try_into()?;
-        data.Properties()?.SetTitle(&file.title)?;
+        let data=DataPackage::new()?;data.Properties()?.SetTitle(&HSTRING::from(&file.title))?;
         data.SetRequestedOperation(DataPackageOperation::Copy)?;data.SetStorageItems(&items,true)?;
-        Ok(())
+        Ok(data)
     }
-    pub fn prepare(file:ShareFile)->Result<PreparedShare,String>{
+    pub fn prepare(file:ShareFile)->Result<DataPackage,String>{
         std::thread::spawn(move||{
             use windows::Win32::System::WinRT::{RoInitialize,RoUninitialize,RO_INIT_MULTITHREADED};
             unsafe{RoInitialize(RO_INIT_MULTITHREADED).map_err(|_|"Windows分享服务暂不可用。")?;}
-            let result=prepared_file(&file).map_err(|_|"无法读取本机分享文件，请保存后分享。".to_string());
+            let result=package(&file).map_err(|_|"无法读取本机分享文件，请保存后分享。".to_string());
             unsafe{RoUninitialize();}result
         }).join().map_err(|_|"分享文件准备未完成，请重试。".to_string())?
     }
-    pub fn open(owner:usize,file:PreparedShare)->Result<(),String>{
+    pub fn open(owner:usize,package:DataPackage)->Result<(),String>{
         let result=(||->windows::core::Result<()>{
             // Called on the application's UI thread, with a real owner HWND.
             let interop:IDataTransferManagerInterop=windows::core::factory::<DataTransferManager,IDataTransferManagerInterop>()?;
@@ -90,11 +83,7 @@ mod native {
             ACTIVE.with(|slot|{slot.borrow_mut().take();});
             let handler=TypedEventHandler::<DataTransferManager,DataRequestedEventArgs>::new(move|_,args|{
                 let args=args.as_ref().ok_or_else(windows::core::Error::from_win32)?;
-                let request=args.Request()?;
-                match populate_existing(&request.Data()?,&file){
-                    Ok(())=>Ok(()),
-                    Err(_)=>request.FailWithDisplayText(&HSTRING::from("分享文件暂不可用。请先保存到本机，再从文件位置分享。")),
-                }
+                args.Request()?.SetData(&package)
             });
             let token=manager.DataRequested(&handler)?;
             ACTIVE.with(|slot|*slot.borrow_mut()=Some(Registration{manager,token}));
@@ -105,25 +94,8 @@ mod native {
     }
     #[cfg(test)]
     pub fn inspect_package(file:&ShareFile)->windows::core::Result<(String,bool,u32)>{
-        let data=DataPackage::new()?;populate_existing(&data,&prepared_file(file)?)?;
-        let view=data.GetView()?;let items=view.GetStorageItemsAsync()?.get()?;
+        let data=package(file)?;let view=data.GetView()?;let items=view.GetStorageItemsAsync()?.get()?;
         Ok((view.Properties()?.Title()?.to_string(),view.RequestedOperation()?==DataPackageOperation::Copy,items.Size()?))
-    }
-    #[cfg(test)]
-    pub fn preserves_request_context(file:&ShareFile)->windows::core::Result<()>{
-        let request_data=DataPackage::new()?;
-        request_data.Properties()?.SetApplicationName(&HSTRING::from("Windows source context"))?;
-        let original_identity=request_data.cast::<windows::core::IUnknown>()?;
-        let prepared=prepare(ShareFile{path:file.path.clone(),title:file.title.clone()}).map_err(|_|windows::core::Error::from_win32())?;
-        populate_existing(&request_data,&prepared)?;
-        assert_eq!(request_data.cast::<windows::core::IUnknown>()?,original_identity);
-        let view=request_data.GetView()?;
-        assert_eq!(view.Properties()?.ApplicationName()?.to_string(),"Windows source context");
-        assert_eq!(view.Properties()?.Title()?.to_string(),file.title);
-        assert_eq!(view.RequestedOperation()?,DataPackageOperation::Copy);
-        let items=view.GetStorageItemsAsync()?.get()?;assert_eq!(items.Size()?,1);
-        assert_eq!(items.GetAt(0)?.Path()?.to_string(),file.path.to_string_lossy());
-        Ok(())
     }
 }
 #[cfg(windows)]pub use native::open as open_share;
@@ -158,14 +130,6 @@ mod native {
         let path=prepare_shared_file(&root,"公开测试.txt",b"public fixture").unwrap();
         let (title,copy,count)=native::inspect_package(&ShareFile{path,title:"公开测试，不发送".into()}).unwrap();
         assert_eq!(title,"公开测试，不发送");assert!(copy);assert_eq!(count,1);
-        std::fs::remove_dir_all(root).unwrap();unsafe{RoUninitialize();}
-    }
-    #[cfg(windows)]#[test]fn content069_share_keeps_request_owned_source_context_and_exact_file(){
-        use windows::Win32::System::WinRT::{RoInitialize,RoUninitialize,RO_INIT_MULTITHREADED};
-        unsafe{RoInitialize(RO_INIT_MULTITHREADED).unwrap();}
-        let root=std::env::temp_dir().join(format!("content-share-context-{}",uuid::Uuid::new_v4()));
-        let path=prepare_shared_file(&root,"公开测试.docx",b"public fixture").unwrap();
-        native::preserves_request_context(&ShareFile{path,title:"公开测试，不发送".into()}).unwrap();
         std::fs::remove_dir_all(root).unwrap();unsafe{RoUninitialize();}
     }
 }

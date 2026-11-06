@@ -1,0 +1,60 @@
+{
+  "at": "2026-11-06T20:35:14+08:00",
+  "state": "SHARE069_ACTUAL_PICKER_FAILED_CANDIDATE_REVERTED_NO_PRODUCT_REPLACEMENT",
+  "ownerQuote": "你来吧",
+  "manualReplyPending": false,
+  "actualDualPicker": {
+    "oldMethod": "FAIL_RETRY_CANNOT_SHOW_SHARING_METHODS",
+    "requestOwnedCandidate": "FAIL_SAME_PANEL",
+    "installedProductChanged": false,
+    "sourceRepairResolvedSystemPicker": false,
+    "next": "Stop packaging this unproven candidate. Determine whether native WinRT callback is invoked / legacy ShareAPI runtime condition."
+  },
+  "shellModernShare": {
+    "withoutSite": "0x80070578 invalid window handle",
+    "withWindowSite": "InvokeCommand S_OK, actual SharePicker still Retry/cannot show sharing methods",
+    "actualRecipientReceived": false,
+    "WindowsShareVerbInvoked": false,
+    "WindowsModernShareFlyoutInvoked": false,
+    "readOnlyCommandStore": {
+      "Windows.ModernShare": {
+        "CommandStateSync": "",
+        "ExplorerCommandHandler": "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}",
+        "Icon": "ntshrui.dll,-123",
+        "ImpliedSelectionModel": 0
+      },
+      "Windows.ModernShareFlyout": {
+        "CommandStateSync": "",
+        "ExplorerCommandHandler": "{9ad244df-e071-4b65-b741-2a4c5f52bf32}",
+        "Icon": "ntshrui.dll,-123",
+        "ImpliedSelectionModel": 0
+      },
+      "Windows.Share": {
+        "CommandStateSync": "",
+        "ExplorerCommandHandler": "{99D353BC-C813-41ec-8F28-EAE61E702E57}"
+      }
+    }
+  },
+  "failedCandidateCommit": "e6a3f63548720b8273841fea4ff2276b91380cd4",
+  "failedCandidateSourceSha256": "c5f26bdf995c994c33d7d86869ffd09207c31769141eca2c00491bdb7ea10ec2",
+  "restoredSourceCommit": "60166fa3bd22cc277d4a6c69962d39fa3c13e9e0",
+  "restoredSourceSha256": "380e40091d44eb4d9948194bb46fae15c7351a406de44b0292cb58c8ae12ab60",
+  "rollbackReason": "Source tests and background IPC pass, but the actual system picker remains broken in both minimal methods; do not ship candidate as a fix.",
+  "knownWorkingBoundary": "The same public PDF shows targets from File Explorer toolbar; recipient selection/actual receive not yet performed.",
+  "ruledOutThisBatch": [
+    "Normal user-profile environment does not fix it",
+    "Simple process elevation difference not observed",
+    "Independent process reads original public PDF byte-identically from both DataPackages"
+  ],
+  "systemObservation": "EnableLUA=0 was read only; causality not established. No UAC/security/privacy settings changed.",
+  "interruption": "Computer Use reported physical Escape user stop; no further Computer Use calls or app input.",
+  "ownProbeCleanup": "ALREADY_EXITED",
+  "computerUseThisBatch": true,
+  "modelsRun": false,
+  "deviceIo": false,
+  "installedProduct": "Windows0.1.67",
+  "productBuildOrInstallThisBatch": false,
+  "actualSystemShareQualified": false,
+  "wholeProductQualified": false,
+  "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn."
+}

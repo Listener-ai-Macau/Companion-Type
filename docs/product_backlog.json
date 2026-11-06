@@ -42830,7 +42830,7 @@
       ],
       "thresholdBasis": {
         "ota": "Owner2026-11-06：既有100K能力已在满频/独占连接条件达到，保留其快传实现；当前运行主频明确保持61.44MHz，不需要满频。正常多设备蓝牙共存最低50KiB/s验收，不限速50、不关闭其它设备凑数。约1.36MB完整包总180秒/传后核对120秒为补充工程要求。",
-        "resources": "本批仅修改手机/电脑实现，没有新增固件运行功能：应用409252B，data+bss69328B，预留栈21504B作为本批不可静默回退的基线。今后真实固件功能若需预算增量，应连同实际功能/余量记录更新；不得为让失败变通过而放宽。没有新增固定空闲RAM门槛。"
+        "resources": "FW66690必要满盘异步失败/拒绝回执修复与独立产品身份配置，源073ae00/d5c4d24/4ec9ef4；应用较66689增加104B，实际product_link1008B、data+bss69328B和预留栈21504B均不变，外部UI85不变。原409268零增长FAIL保留，不改变传输/响应指标，不为一般镜像增长放宽。"
       },
       "profiles": {
         "normal_full_ota": [
@@ -42859,8 +42859,8 @@
             "id": "application_bytes",
             "title": "本批固件应用大小",
             "unit": "B",
-            "maximum": 409268,
-            "basis": "上一实装66688为409252B；本次ed94249必要跨页读取修复增加16B，只有该生产C文件改变、无新增状态/RAM/栈/资源/救援模块。旧409252零增长比较FAIL保留；本批经源码和真实功能核对明确前移16B基线，不改变50KiB/s、时钟或其它资源要求。"
+            "maximum": 409372,
+            "basis": "FW66690必要满盘异步失败/拒绝回执修复与独立产品身份配置，源073ae00/d5c4d24/4ec9ef4；应用较66689增加104B，实际product_link1008B、data+bss69328B和预留栈21504B均不变，外部UI85不变。原409268零增长FAIL保留，不改变传输/响应指标，不为一般镜像增长放宽。"
           },
           {
             "id": "static_data_bss_bytes",
@@ -42932,10 +42932,33 @@
             "unit": "count",
             "maximum": 0
           }
+        ],
+        "normal_recorder_control": [
+          {
+            "id": "rejected_start_reply_seconds",
+            "title": "同一保留连接满空间开录拒绝回执",
+            "unit": "s",
+            "maximum": 0.5,
+            "basis": "沿原QM12控制实际ACK≤500ms；先订阅，再从实际CMC3写入至同请求拒绝回执，用单调时钟计时。"
+          },
+          {
+            "id": "start_first_pcm_seconds",
+            "title": "回收后正常开录至首个实际PCM确认",
+            "unit": "s",
+            "maximum": 2,
+            "basis": "沿原QM12正常START到首个真实PCM≤2秒；不把准备回执算成功。"
+          },
+          {
+            "id": "stop_finalize_seconds",
+            "title": "同一保留连接停止至实际封口确认",
+            "unit": "s",
+            "maximum": 0.5,
+            "basis": "沿原QM12正常控制实际ACK≤500ms；计到封口终态，不把停止请求已收到算完成。"
+          }
         ]
       },
       "aggregation": "任一必需指标超限即FAIL，功能通过不能抵消；必需证据缺失记NOT_EVALUATED，不能记PASS。明确block的电源/屏幕/声学/生产项沿原任务，不补造测量或关闭整机资格。",
-      "runtimeChanges": false,
+      "runtimeChanges": true,
       "numericSourceOfTruth": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
       "relatedQualityTargets": [
         "QM01",
@@ -43018,6 +43041,16 @@
           "reason": "Necessary verified partial-NOR-read reliability fix ed94249; +16B only. No general allowance for image growth.",
           "reviewedCandidate": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66689.json",
           "previousGateActualFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone065-ota66689-metric-verdict.json",
+          "decidedBy": "engineering_resource_assessment_not_new_owner_approval"
+        },
+        {
+          "at": "2026-11-06T20:11:00+08:00",
+          "metric": "application_bytes",
+          "previousMaximum": 409268,
+          "currentMaximum": 409372,
+          "reason": "Necessary actual full-START rejection/restart fix and bounded rejected-reply retry. Exact ELF review: zero total static-RAM/stack growth,90,340B app headroom. No logs/rescue/image additions.",
+          "reviewedCandidate": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66690\\candidate.json",
+          "previousGateActualFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66690\\ota-verdict-previous-resource-baseline.json",
           "decidedBy": "engineering_resource_assessment_not_new_owner_approval"
         }
       ]
@@ -132541,7 +132574,7 @@
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "SHARE069_SOURCE_CONTEXT_REPAIR_AND_BACKGROUND_IPC_PASSED_SYSTEM_PICKER_UNVERIFIED",
+        "state": "SHARE069_ACTUAL_PICKER_FAILED_CANDIDATE_REVERTED_NO_PRODUCT_REPLACEMENT",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -132582,7 +132615,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "Windows分享069源与针对检查/跨进程原文件核对已远端；真实Picker未验，暂不构建/替换067。已备同窗口原方式/修复候选手工对照，不用Computer Use；等Owner选择是否亲点，未答不打开桌面。并行推进不依赖该动作的原非模型项。手机/板沿现占用（当前FW66690满空间238/回收再录）等待释放，不安装066或抢设备。",
+        "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn. 手机/板继续尊重现有嵌软占用，不安装候选066、不降级当前手机、不抢板；原库切回与未完成真机流程仍保留。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -132806,7 +132839,7 @@
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
           "ownerQuote": "先，那你优先把那个前两项给搞了，然后的话。继续做这个事情，然后做完这些事情就可以说。我们只剩下模型能力没做了，对吧？这个时间进度大概还要多久？",
-          "state": "SHARE069_SOURCE_CONTEXT_REPAIR_AND_BACKGROUND_IPC_PASSED_SYSTEM_PICKER_UNVERIFIED",
+          "state": "SHARE069_ACTUAL_PICKER_FAILED_CANDIDATE_REVERTED_NO_PRODUCT_REPLACEMENT",
           "priority": [
             "Ordinary phone/device recording control, only own-new sample receive/playback/delete/recovery and OTA/maintenance final receipts.",
             "Installed ordinary App selected-content SAF save, clipboard paste and ACTION_SEND recipient bytes/grants, then original-library return."
@@ -132853,7 +132886,7 @@
           },
           "actualNewPhoneChecksPassed": false,
           "wholeProductQualified": false,
-          "next": "Windows分享069源与针对检查/跨进程原文件核对已远端；真实Picker未验，暂不构建/替换067。已备同窗口原方式/修复候选手工对照，不用Computer Use；等Owner选择是否亲点，未答不打开桌面。并行推进不依赖该动作的原非模型项。手机/板沿现占用（当前FW66690满空间238/回收再录）等待释放，不安装066或抢设备。",
+          "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn. 手机/板继续尊重现有嵌软占用，不安装候选066、不降级当前手机、不抢板；原库切回与未完成真机流程仍保留。",
           "actualProgress": {
             "at": "2026-11-06T14:45:43+08:00",
             "ordinaryUi": "Actual Android App on isolated display2; primary display remained with owner or locked, no main-screen input.",
@@ -132874,9 +132907,9 @@
             "originalLibraryReturnPending": true
           },
           "latestContinuation": {
-            "at": "2026-11-06T20:04:34+08:00",
-            "ownerQuote": "继续推进吧, 尽量不要computeruse",
-            "meaning": "Resume original sale target; prefer background work and avoid Computer Use."
+            "at": "2026-11-06T20:35:14+08:00",
+            "ownerQuote": "你来吧",
+            "meaning": "Authorized limited local sharing UI comparison; stopped when Computer Use reported physical Escape."
           },
           "latestWindows067": {
             "at": "2026-11-06T18:18:32+08:00",
@@ -133003,7 +133036,7 @@
             "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
           },
           "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
-          "next": "Windows分享069源与针对检查/跨进程原文件核对已远端；真实Picker未验，暂不构建/替换067。已备同窗口原方式/修复候选手工对照，不用Computer Use；等Owner选择是否亲点，未答不打开桌面。并行推进不依赖该动作的原非模型项。手机/板沿现占用（当前FW66690满空间238/回收再录）等待释放，不安装066或抢设备。",
+          "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn. 手机/板继续尊重现有嵌软占用，不安装候选066、不降级当前手机、不抢板；原库切回与未完成真机流程仍保留。",
           "modelsRun": false,
           "customerResult": null,
           "ownerAccepted": false,
@@ -133410,7 +133443,7 @@
         },
         "windowsShare069": {
           "at": "2026-11-06T20:04:34+08:00",
-          "state": "SHARE069_SOURCE_CONTEXT_REPAIR_AND_BACKGROUND_IPC_PASSED_SYSTEM_PICKER_UNVERIFIED",
+          "state": "SHARE069_ACTUAL_PICKER_FAILED_CANDIDATE_REVERTED_NO_PRODUCT_REPLACEMENT",
           "ownerQuote": "继续推进吧, 尽量不要computeruse",
           "sourceCommit": "e6a3f63548720b8273841fea4ff2276b91380cd4",
           "remoteSourceConfirmed": true,
@@ -133462,12 +133495,75 @@
             "stopCondition": "Keep source candidate pending until real picker/receiver path is observed; compare frozen old/current native methods before expensive product release. Do not call backend IPC a system-share fix."
           },
           "manualTwoButtonProbeReady": true,
-          "manualReplyPending": true,
-          "computerUseThisBatch": false,
+          "manualReplyPending": false,
+          "computerUseThisBatch": true,
           "modelsRun": false,
           "productBuildOrInstallThisBatch": false,
           "installedProduct": "Windows0.1.67",
-          "wholeProductQualified": false
+          "wholeProductQualified": false,
+          "backgroundChecksPreserved": true,
+          "actualContinuation": {
+            "at": "2026-11-06T20:35:14+08:00",
+            "state": "SHARE069_ACTUAL_PICKER_FAILED_CANDIDATE_REVERTED_NO_PRODUCT_REPLACEMENT",
+            "ownerQuote": "你来吧",
+            "manualReplyPending": false,
+            "actualDualPicker": {
+              "oldMethod": "FAIL_RETRY_CANNOT_SHOW_SHARING_METHODS",
+              "requestOwnedCandidate": "FAIL_SAME_PANEL",
+              "installedProductChanged": false,
+              "sourceRepairResolvedSystemPicker": false,
+              "next": "Stop packaging this unproven candidate. Determine whether native WinRT callback is invoked / legacy ShareAPI runtime condition."
+            },
+            "shellModernShare": {
+              "withoutSite": "0x80070578 invalid window handle",
+              "withWindowSite": "InvokeCommand S_OK, actual SharePicker still Retry/cannot show sharing methods",
+              "actualRecipientReceived": false,
+              "WindowsShareVerbInvoked": false,
+              "WindowsModernShareFlyoutInvoked": false,
+              "readOnlyCommandStore": {
+                "Windows.ModernShare": {
+                  "CommandStateSync": "",
+                  "ExplorerCommandHandler": "{e2bf9676-5f8f-435c-97eb-11607a5bedf7}",
+                  "Icon": "ntshrui.dll,-123",
+                  "ImpliedSelectionModel": 0
+                },
+                "Windows.ModernShareFlyout": {
+                  "CommandStateSync": "",
+                  "ExplorerCommandHandler": "{9ad244df-e071-4b65-b741-2a4c5f52bf32}",
+                  "Icon": "ntshrui.dll,-123",
+                  "ImpliedSelectionModel": 0
+                },
+                "Windows.Share": {
+                  "CommandStateSync": "",
+                  "ExplorerCommandHandler": "{99D353BC-C813-41ec-8F28-EAE61E702E57}"
+                }
+              }
+            },
+            "failedCandidateCommit": "e6a3f63548720b8273841fea4ff2276b91380cd4",
+            "failedCandidateSourceSha256": "c5f26bdf995c994c33d7d86869ffd09207c31769141eca2c00491bdb7ea10ec2",
+            "restoredSourceCommit": "60166fa3bd22cc277d4a6c69962d39fa3c13e9e0",
+            "restoredSourceSha256": "380e40091d44eb4d9948194bb46fae15c7351a406de44b0292cb58c8ae12ab60",
+            "rollbackReason": "Source tests and background IPC pass, but the actual system picker remains broken in both minimal methods; do not ship candidate as a fix.",
+            "knownWorkingBoundary": "The same public PDF shows targets from File Explorer toolbar; recipient selection/actual receive not yet performed.",
+            "ruledOutThisBatch": [
+              "Normal user-profile environment does not fix it",
+              "Simple process elevation difference not observed",
+              "Independent process reads original public PDF byte-identically from both DataPackages"
+            ],
+            "systemObservation": "EnableLUA=0 was read only; causality not established. No UAC/security/privacy settings changed.",
+            "interruption": "Computer Use reported physical Escape user stop; no further Computer Use calls or app input.",
+            "ownProbeCleanup": "ALREADY_EXITED",
+            "computerUseThisBatch": true,
+            "modelsRun": false,
+            "deviceIo": false,
+            "installedProduct": "Windows0.1.67",
+            "productBuildOrInstallThisBatch": false,
+            "actualSystemShareQualified": false,
+            "wholeProductQualified": false,
+            "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn."
+          },
+          "actualSystemShareQualified": false,
+          "candidateRestoredTo067Source": true
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -135845,6 +135941,12 @@
                   "sourceCommit": "e6a3f63548720b8273841fea4ff2276b91380cd4",
                   "backgroundSourceAndIpcChecked": true,
                   "actualSystemShareQualified": false,
+                  "installedVersion": "0.1.67"
+                },
+                "windowsShare069Actual": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows-share069\\actual-continuation-result.json",
+                  "actualSystemShareQualified": false,
+                  "failedCandidateReverted": true,
                   "installedVersion": "0.1.67"
                 }
               },

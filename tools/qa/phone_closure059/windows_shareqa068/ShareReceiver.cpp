@@ -26,6 +26,14 @@ using namespace Windows::Storage;
 using namespace Windows::UI::Core;
 
 constexpr wchar_t PublicTitle[] = L"公开虚构Windows内容验收 · 非真实会议";
+bool IsPublicTitle(hstring const& title) {
+    const std::wstring value(title);
+    if (value == PublicTitle || value == L"Windows067-public-transcript" || value == L"Windows067-public-transcript.pdf") return true;
+    for (auto ext : {L".txt",L".md",L".docx",L".pdf",L".pptx",L".xlsx",L".mm",L".png",L".srt",L".wav",L".mp3"}) {
+        if (value == std::wstring(PublicTitle) + ext || value == std::wstring(PublicTitle) + L"-所选内容" + ext) return true;
+    }
+    return value == std::wstring(PublicTitle) + L"-所选内容";
+}
 
 struct App : implements<App, IFrameworkViewSource, IFrameworkView> {
     CoreWindow window{nullptr};
@@ -44,7 +52,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView> {
         try {
             auto data = operation.Data();
             // Reject other shares before requesting any file or text payload.
-            publicRequest = data.Properties().Title() == PublicTitle;
+            publicRequest = IsPublicTitle(data.Properties().Title());
             if (!publicRequest || !data.Contains(StandardDataFormats::StorageItems())) {
                 operation.ReportError(L"这里只接受本轮公开虚构验收文件；未读取分享正文。");
                 co_return;
