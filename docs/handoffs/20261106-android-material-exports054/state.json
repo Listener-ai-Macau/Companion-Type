@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-06T10:24:17+08:00",
+  "state": "ANDROID054_APK_AND_NATIVE_FORMATS_VERIFIED_MAIN_APP_INSTALL_UI_ACCEPTANCE_PENDING",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "branch": "work/android-material-exports054-20261106",
+  "baseline": "Windows052 installed/e684fa73; Android050r2 installed; include committed Android device-management source57af37b0 and exact corresponding AAR only",
+  "importedDeviceSource": "57af37b0",
+  "importedPaths": [
+    "apps/android/app/src/main/java/com/denzic/companion/app/MainActivity.java",
+    "apps/android/app/libs/companion-android-backend.aar",
+    "apps/android/app/libs/companion-android-backend.provenance.json",
+    "apps/mobile/src/App.tsx",
+    "apps/mobile/src/DeviceRecordingList.tsx"
+  ],
+  "existingTasks": "CP27-01 acceptance25/17",
+  "userOutcome": "安卓同一保存内容选择新增PPTX/XLSX/mm/PNG，并可逐份选择独立AI材料；保留人工编辑/未完成/原话引用提示，同一准备副本供复制、保存和分享。",
+  "boundaries": [
+    "为保留另一批053手机设备配对/联调现场，未安装/启动主App054；普通App系统保存、分享接收及真实升级资料保留未验。独立渲染QA不能替代该范围。",
+    "当前手机观察到053，外置6800XT白天未接；本批无语音推理/训练、板卡BLE/I/O或用户录音读取。",
+    "真实PowerPoint/Excel应用实开、完整客户目的体验、36项Owner验收与整机售卖资格未关闭。",
+    "普通XLSX保留已存正文，不等于按外部Word/Excel表样AI填字段；PNG为已存结构，非AI生图。",
+    "多份Markdown材料联动Word：第一份沿原生样式，后续按可读原文段落完整保留；引用独立为原样文字，不转成Markdown命令。新组合的实际手机Word生成与Office显示仍待。",
+    "初次Gradle不接受SourceSet Provider导致8.772s失败，改显式目录后成功；失败日志保留。",
+    "首个后台QA焦点收据把缺失mCurrentFocus字段默认写false，纠正为未知，原收据保留；没有可用前后焦点观测，不声称焦点不变。QA清单无Activity、未启动主App/未输入键鼠。"
+  ],
+  "ownerAccepted": false,
+  "customerResult": null,
+  "sourceCommit": "c9f624bbf5c9c7ab2c48af00bf359edafc28cc3e",
+  "remoteSourceVerified": true,
+  "backendSourceCommit": "d43ef35eb49e2647875fbcd953e718eb96e3dc20",
+  "backendRemoteVerified": true,
+  "versionName": "0.1.54",
+  "versionCode": 54,
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\Companion-Android-0.1.54-材料导出与导图.apk",
+  "apkSha256": "f831df89cc47fb3ca723d5f3baaa038cfeba665dfec80c1b3558e816b8943e8f",
+  "installed": false,
+  "observedPhoneVersion": "0.1.53/code53",
+  "windowsUnchanged": "Windows052本批不安装；保留052最终格式修复源",
+  "engineering": {
+    "jvm": "java-formats-result.json: compiled production Java; 12-slide PPTX, XLSX/MM, full text/negation/deadline/citation/Unicode, source change/deletion/order/duplicate and immutable publication guards",
+    "documents": "document-verification.json, openxml-schema.json and phone-openxml-schema.json: actual exported PPTX/XLSX zero Microsoft Open XML SDK schema errors",
+    "phone": "phone-native-result.json: separate no-Activity QA package executed actual product Java writers; Android Canvas PNG1430x716/11nodes, package removed, main app package version unchanged",
+    "layout": "JVM full1430x5780 graph measured; >180nodes/>12000chars/>12MP refused before allocation",
+    "ui": "ui-controlled-result.json and mobile-visual-result.json: exact shared selection/binding; 360/393/430 layouts, long title, light/dark no horizontal overflow",
+    "apk": "apk-verification.json: 0.1.54/code54, same signer as050r2,16KiB native alignment, all web resources and three native libraries matched exact inputs"
+  },
+  "next": "沿owner_module_execution.nextBatch.next续作；054日用升级需待原053手机现场收尾，再验系统保存/分享与资料保留。",
+  "remoteReceiptVerification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\remote-verification.json"
+}

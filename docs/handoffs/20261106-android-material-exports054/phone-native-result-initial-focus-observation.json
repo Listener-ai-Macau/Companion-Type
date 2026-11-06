@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-06T10:12:52+08:00",
+  "status": "ANDROID_NATIVE_CANVAS_PNG_AND_FILE_EXPORTS_PASSED",
+  "ownerDataUsed": false,
+  "ownerAppLaunched": false,
+  "deviceBleIo": false,
+  "modelInference": false,
+  "separateNoActivityPackage": "com.denzic.companion.materialqa054",
+  "publicFiles": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\phone-native-files-1793931176725139800",
+  "render": {
+    "status": "ANDROID_NATIVE_CANVAS_PNG_AND_FILE_EXPORTS_PASSED",
+    "width": 1430,
+    "height": 716,
+    "nodes": 11,
+    "pngBytes": 104386,
+    "ownerDataUsed": false,
+    "deviceIo": false,
+    "modelInference": false,
+    "activityOpened": false
+  },
+  "ownQaPackageRemoved": true,
+  "ownerForegroundUnchanged": false,
+  "companionPackageMetadataUnchanged": true,
+  "companionVersionObserved": [
+    "versionCode=53 minSdk=26 targetSdk=35",
+    "versionName=0.1.53"
+  ]
+}

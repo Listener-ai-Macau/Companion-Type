@@ -1,0 +1,319 @@
+{
+  "at": "2026-11-06T10:21:40+08:00",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "branch": "work/android-material-exports054-20261106",
+  "sourceCommit": "c9f624bbf5c9c7ab2c48af00bf359edafc28cc3e",
+  "remoteSourceVerified": true,
+  "sourceFiles": [
+    {
+      "path": "apps/android/app/build.gradle",
+      "sha256": "c1fc802df9f51e14dee2940f9b49154286c8a9794f84d6166ec64773610a92da"
+    },
+    {
+      "path": "apps/android/app/libs/companion-android-backend.aar",
+      "sha256": "e71478a71093786910eee549e629b0572a86d5ae1f1878bbc15c4da492de36bd"
+    },
+    {
+      "path": "apps/android/app/libs/companion-android-backend.provenance.json",
+      "sha256": "664d03f3a29f030f775da021db51444df0095a78b4f5bd9bc49662caace2453c"
+    },
+    {
+      "path": "apps/android/app/src/main/AndroidManifest.xml",
+      "sha256": "fe8d152dded861dc0a8d4f46c1b185cbf03cd85c6a96e203e6f87480174b1649"
+    },
+    {
+      "path": "apps/android/app/src/main/assets/ShadcnDashboardMIT.txt",
+      "sha256": "559fc2ce493ee61b4e72523c14bf23681183a136f505b8afbb0c822d56ba5725"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AiMaterialStore.java",
+      "sha256": "099b3223ac759e8a8269d433faeb04de9c9589d2d2915e88d1d28bedf9711d4b"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AiServiceVault.java",
+      "sha256": "1d9bbf778883ce9d89f314c92165035beb9736f1f22a0f14e94353b4aaa573be"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/AudioExport.java",
+      "sha256": "bc1b91e4a7295b6ded08c82ba41c8a38cabcf050f83db3645cd4175bcc176eab"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/DocumentNames.java",
+      "sha256": "26c2a0fe410ab8c6284f57b0f262b4cbc39a9cbde47ff7df7ab3c4b46213d3a2"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/DocumentRecovery.java",
+      "sha256": "9be7698790deea9d6c6f0a53064b923cf55b1277460cd9e812786f04004bc4a5"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/ExportContents.java",
+      "sha256": "826d9d6120e474e124eb25b887eeccab46f5cb011d14d7609aed8cd6fa5f91bd"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/ExportFileProvider.java",
+      "sha256": "c369c511986bb874e231184d09f964d86ebdea0df67ecf3c177bae6d51a0a4e2"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/LocalLibraryBackups.java",
+      "sha256": "3cc136808ea1f9e3e6a247b8d8ea1f0b55604325f776103cb8e01dad2d38129f"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MainActivity.java",
+      "sha256": "485cb322c995563e1b1f77e3cb4cdecca421f15220a0a787905150855a7c6705"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/ManualMinutesEdits.java",
+      "sha256": "5d029032873ba387417c1199256b5b2f91bafa614329877f8ca234214be03498"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MaterialLayout.java",
+      "sha256": "b7fc59c71d785d1a28e2c5b0c05705d8b0f2d9fb729d4c5874edb56b7f29fa89"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MeetingAiAccess.java",
+      "sha256": "75e29458c15d6a5f42a41044166f607c0658c50ba873d67b95a18a8e45afb527"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MeetingDetailAccess.java",
+      "sha256": "25ca3074788d6745bfa2d9e582c4399813a7b971f76196255f2b4520b5531637"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MeetingLibrarySearch.java",
+      "sha256": "9d1adafa664ad9983f073bddf21c96d141a6ead793c6e3e8cc0b151b4ce9ebfe"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MindmapImage.java",
+      "sha256": "631977027661165b6901b98768506c3233ceeb1fabd2ac4d5423e57ec91d688d"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MindmapLayout.java",
+      "sha256": "66853019c1970b63858ca030d7860eaf58702a657580145d2156c7d01da28797"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MinutesHistoryAccess.java",
+      "sha256": "aaa33f1ce5e914e7829b7440c67a11f0c58b2e4f2af17721dd97d776c46027d9"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/MinutesTemplateLibrary.java",
+      "sha256": "9d2bd1c34c744aa0c049f82db0ccb90840716bd52a0a2330422ce6a5707f34df"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/PreparedExports.java",
+      "sha256": "7c22782e628fa194272d1902e412353dbdc01de3e51daf0c9f48c0fa13715e27"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/Presentation054Base.java",
+      "sha256": "928b594b27323055f25809800a28986fa3ed03955bcf132064b089603afd21e0"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/PresentationDocuments.java",
+      "sha256": "09c667082c4ed0767341c28ffef6eb0422e37fd9c3508cbcb2903a4dacf967bf"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/RecordingBookmarkAccess.java",
+      "sha256": "a5663ec9f343a1e516f2c60a1d5f2e8ea4d89446d10cc98dd1f5a0f6fda06250"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/StructuredWorkbook.java",
+      "sha256": "4bf8f5fe620530d5c24ec5abdd8ec93f09fdbb595efcebbf390a1ed8c1dd5016"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationChunks.java",
+      "sha256": "22a21e843f444f2ffdff3fa68263623601f99ace0d6b2417c3abc976c29bfedf"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationProtocol.java",
+      "sha256": "e4178fffe258856438c9ecb9fc84fc5e032de72b51c7aaa18659e054311f3f11"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationStore.java",
+      "sha256": "b7705bcf63afd6f354b97d844bf08388fa50cf9f1afc12aa01489f854e7982c4"
+    },
+    {
+      "path": "apps/android/app/src/main/java/com/denzic/companion/app/TranslationTransport.java",
+      "sha256": "2e407188a3f15f5f290770c6d20c9ec4e8e345b661cc6d104f38fcd3d635da5c"
+    },
+    {
+      "path": "apps/android/app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "sha256": "21dc9188866a754c4dd8f47fb6fb883005023d4e57f892de5864607cdf391017"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": "daaf6c70a6a44b3eb2807a7e1b7c3747b35d95ae1cf6cd0a3c0672c021979789"
+    },
+    {
+      "path": "apps/android/app/src/main/res/values/colors.xml",
+      "sha256": "275c7121250a301d2ad60f7b22916f7490a5913669b15845e0ae6afc8517b335"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/ContentExportTest.java",
+      "sha256": "18275355446697efb88fde0cf1d794e1535f931ef1161fb61d0977fc80f50be9"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/LocalLibraryBackupsTest.java",
+      "sha256": "40df051ed528ae9893b3b6c1421b13fc930a7e5e6936e9aeeacb047ea4ceaa48"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/ManualMinutesEditsTest.java",
+      "sha256": "8da7dffcfceb08ee0d267dc659f65127a1139dda4cfb52f06e42923778073f0f"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MaterialFormatsTest.java",
+      "sha256": "fa4ac23a6a211f1c577fac1e13273c0f15c5b805a99b09dbb9317435f86a7fc2"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MeetingLibrarySearchFixtures.java",
+      "sha256": "384f662cc2cadf9d3ef3ccc6a2b9c3aa1031533951bba10601ff8a71b522018c"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MeetingLibrarySearchTest.java",
+      "sha256": "c1d21d9d080fd9dda66b1e37e8324f49b125e36203b95773a3bc4c3d00d59de3"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/MinutesTemplateLibraryTest.java",
+      "sha256": "dac1d2ea5b2b9474dcdf8062c03cccfbc86f5a1b0873132fefbc00309c63fac4"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/RecordingBookmarkAccessTest.java",
+      "sha256": "12065288cff1869c3b1953638a54f304069325979cbea814333c6aba7560ace0"
+    },
+    {
+      "path": "apps/android/app/src/test/java/com/denzic/companion/app/TranslationStoreTest.java",
+      "sha256": "9c79dcbd0e8fc1059a6b684a7b147e86fd80ad02c2902dde4b28feb0291ec253"
+    },
+    {
+      "path": "apps/android/build.gradle",
+      "sha256": "3bf014e4e3eedcd574a124144727e68131549962ed364bc61f2e377bb595b715"
+    },
+    {
+      "path": "apps/android/gradle.properties",
+      "sha256": "142225acf65439947479108e474e0a99ee0aa64eafa7f7002da8a508a1c16774"
+    },
+    {
+      "path": "apps/android/settings.gradle",
+      "sha256": "310a088736744b398c9657629a027669cdfd03e451b69c64d1981d9dddcd722d"
+    },
+    {
+      "path": "apps/mobile/index.html",
+      "sha256": "66198ba2333b33d8a23ce2341144b6ccefe7e76604efbeeb3f5acca11f23d54f"
+    },
+    {
+      "path": "apps/mobile/public/manifest.webmanifest",
+      "sha256": "2c459759ee6a41528dfd59071d61e55c51af39fd46a830ec6d64c4f4bd0d33f2"
+    },
+    {
+      "path": "apps/mobile/src/ActionReviewDialog.tsx",
+      "sha256": "7171fc2d64ff27e969beaf573ccf353799458e823125728b6f3fd00dfac05b82"
+    },
+    {
+      "path": "apps/mobile/src/AiServiceSettings.tsx",
+      "sha256": "5f2c3f64f9b3c82f75f2c0599c7bdf9fea836462771ec6d1fdd543bf361bde34"
+    },
+    {
+      "path": "apps/mobile/src/App.tsx",
+      "sha256": "9eae29816567f672b4f99a6df9c843a3f2fdddd687a35b3053431bc595095d23"
+    },
+    {
+      "path": "apps/mobile/src/ContentExport.tsx",
+      "sha256": "ff3105379284122985f8861a52b9b7b59fd39625d628cfcceef3a8f6f1aad2ef"
+    },
+    {
+      "path": "apps/mobile/src/DeviceBookmarks.tsx",
+      "sha256": "78bd6236d02791b924d54aa23bd008ab9ea8543aa4b23628fb23cf167e891f22"
+    },
+    {
+      "path": "apps/mobile/src/DeviceRecordingList.tsx",
+      "sha256": "ab17b9a9e1d712dbf7e99ec6bf573babeb340a0a552706141578979fa541d688"
+    },
+    {
+      "path": "apps/mobile/src/LibraryBackups.tsx",
+      "sha256": "2b164062aef2a46bef4296082f5ff3244786b75b78d26537270ebcad4f91f1c9"
+    },
+    {
+      "path": "apps/mobile/src/MeetingAssistant.tsx",
+      "sha256": "e881685ac397371cc15e59284ebbf5d6a06a8eda6ee8f0ddb76d4c02d6d89c02"
+    },
+    {
+      "path": "apps/mobile/src/MindMapView.tsx",
+      "sha256": "9dfe7f98bfddc4c2302f98dd6965d94afa28113097677e3213d380e90b4acbbe"
+    },
+    {
+      "path": "apps/mobile/src/MinutesDocument.tsx",
+      "sha256": "1c7bfd86d93e616a1d022772a6400697ec9f01f9f8d5580843a99b018d37545c"
+    },
+    {
+      "path": "apps/mobile/src/MinutesTemplates.tsx",
+      "sha256": "47e09feb32d5ac80cfbbd9d4422b62895bc97a258f45273cf047321ecaaab9d3"
+    },
+    {
+      "path": "apps/mobile/src/MobileActionCards.tsx",
+      "sha256": "992657913894f05189308d52f532cbeaf238410b327864f959e43858dd38bd82"
+    },
+    {
+      "path": "apps/mobile/src/TranscriptReader.tsx",
+      "sha256": "44e8a792c5d785e41ba7e12d2f14ddf7ceedca1fe9e55792dac87b1e9e6ba34e"
+    },
+    {
+      "path": "apps/mobile/src/aiWorkspace.css",
+      "sha256": "eef7bf83ed5d484e6cf4e6525ff406cd5fb22251ba2566460737df196024f133"
+    },
+    {
+      "path": "apps/mobile/src/contentExport.css",
+      "sha256": "49f6e32bb8b36825c0a0ed895864604cbb31290ef4ac89adb1e2700a96de0c3a"
+    },
+    {
+      "path": "apps/mobile/src/main.tsx",
+      "sha256": "233328f9f4466ff6a4f9fdcb1318e6475efda2b6d9dd666c8a0eea813db47726"
+    },
+    {
+      "path": "apps/mobile/src/minutesTemplates.css",
+      "sha256": "358dc09442538939a347ac55c63739451b11f3dfb09265c94d52a350a6c31f31"
+    },
+    {
+      "path": "apps/mobile/src/mobile.css",
+      "sha256": "59fb848ee639b40d3f99eaf2c66a83908c63e741e9b13feb55526f97d0f9adfe"
+    },
+    {
+      "path": "apps/mobile/src/mobileActionEditing.ts",
+      "sha256": "949aa1703c99a55d25ba097693b1f7e76622ecbe118353d5a995a4b8de9a1ee9"
+    },
+    {
+      "path": "apps/mobile/src/mobileActionReading.ts",
+      "sha256": "61a619474e4d00e12c16f62f2f09fae551dae13cb066705d2ebd87208775ee04"
+    },
+    {
+      "path": "apps/mobile/src/mobileMindMap.ts",
+      "sha256": "b9596b978d525e2555a16b01f22caeedaf3d1109d839987bb44e1b6e5d1461b6"
+    },
+    {
+      "path": "apps/mobile/src/mobilePremium.css",
+      "sha256": "d3b2173ef540b273ad13b77853d1c598f2aca12a34dc57cf0c23389b66b79e5e"
+    },
+    {
+      "path": "apps/mobile/src/mobileRefinement.css",
+      "sha256": "f6fa0648e119692f00da018782f7bd2cce7d083589379ba71d05a76346db967a"
+    },
+    {
+      "path": "apps/mobile/src/mobileSourceReview.ts",
+      "sha256": "59ea6a6675fe98566a6a7508199f641676788be8f4826c24e61039bd5316eb7e"
+    },
+    {
+      "path": "apps/mobile/tsconfig.json",
+      "sha256": "9e4a180968c24889fbaa3f23baa5f859cf38e48589970ca58a48add1caa902eb"
+    },
+    {
+      "path": "apps/mobile/vite.config.ts",
+      "sha256": "8427edeaecac5fc710e4ca01344fc5f574d47bc4c5af31946f5d59558651c4b6"
+    }
+  ],
+  "backendSourceCommit": "d43ef35eb49e2647875fbcd953e718eb96e3dc20",
+  "backendRemoteRef": "recovery/android054-backend-d43ef",
+  "backendRemoteVerified": true,
+  "versionName": "0.1.54",
+  "versionCode": 54,
+  "windows052FinalFixesAncestor": "e684fa73b3c14423c0f62cd961af6732470b3a02",
+  "androidDeviceManagementImportedFrom": "57af37b0",
+  "apkVerification": "apk-verification.json",
+  "ownerAppInstalled": false,
+  "modelsRun": false
+}

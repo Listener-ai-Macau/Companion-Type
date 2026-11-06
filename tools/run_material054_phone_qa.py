@@ -35,5 +35,7 @@ except Exception as error:
 finally:
  if installed:
   cleanup=text(prefix+['uninstall',pkg]);record['ownQaPackageRemoved']='Success' in cleanup
- record['ownerForegroundUnchanged']=beforeFocus is not None and beforeFocus==focus();record['companionPackageMetadataUnchanged']=beforeVersion==version();record['companionVersionObserved']=beforeVersion
+ afterFocus=focus();record['ownerForegroundUnchanged']=None if beforeFocus is None or afterFocus is None else beforeFocus==afterFocus
+ record['focusObservation']='Unknown when the requested dumpsys view has no focus field; missing observations must never be recorded as a measured foreground change.'
+ record['companionPackageMetadataUnchanged']=beforeVersion==version();record['companionVersionObserved']=beforeVersion
  (b/'phone-native-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print(json.dumps(record,ensure_ascii=False),flush=True)
