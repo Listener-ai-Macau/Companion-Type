@@ -19,6 +19,7 @@ public final class DeviceUpdateService extends Service {
     private static final AtomicBoolean cancel=new AtomicBoolean();
     private static volatile String livePhase="idle";
     private Thread task;
+    private long lastProgressPublishedMs=-1;
     private static SharedPreferences prefs(Context c){return c.getSharedPreferences(PREFS,MODE_PRIVATE);}
     public static synchronized boolean isRunning(){return running;}
     static File directory(Context c)throws IOException{File d=new File(c.getFilesDir(),"device-updates");if(!d.isDirectory()&&!d.mkdirs())throw new IOException("无法保存升级包。");return d;}
@@ -53,7 +54,7 @@ public final class DeviceUpdateService extends Service {
         SystemUpdatePackage pack=load(c,id);
         if(device.getBondState()!=BluetoothDevice.BOND_BONDED)throw new IOException("请先完成系统蓝牙配对。");
         SharedPreferences.Editor save=p.edit().putString("phase",verify?"verifying":"checking").putString("address",address).putString("name",name).putString("transactionId",id).putString("message","正在连接并核对设备");
-        if(!verify)save.putString("uid","").putLong("accepted",0).putLong("total",pack.info().getLong("bytes"));
+        if(!verify)save.remove("metrics").putString("uid","").putLong("accepted",0).putLong("total",pack.info().getLong("bytes"));
         if(!save.commit())throw new IOException("升级任务未保存，未连接设备。");
         running=true;cancel.set(false);livePhase=verify?"verifying":"checking";
         try{c.startForegroundService(new Intent(c,DeviceUpdateService.class).putExtra("verify",verify));}
@@ -68,7 +69,13 @@ public final class DeviceUpdateService extends Service {
     private void record(String phase,long accepted,long total)throws IOException{
         synchronized(DeviceUpdateService.class){
             if(phase.equals("installing")&&cancel.get())throw new IOException("已停止传入，未要求设备安装；下一次从头传入。");
+            long now=SystemClock.elapsedRealtime();
+            // Durable credits drive the sender independently. Avoid a disk
+            // commit and system notification for every small credit receipt;
+            // phase changes and the exact final byte count remain immediate.
+            if(phase.equals("transferring")&&phase.equals(livePhase)&&accepted<total&&lastProgressPublishedMs>=0&&now-lastProgressPublishedMs<250)return;
             if(!prefs(this).edit().putString("phase",phase).putLong("accepted",accepted).putLong("total",total).putString("message",message(phase)).commit())throw new IOException("升级进度无法保存，已停止继续发送。");livePhase=phase;
+            lastProgressPublishedMs=now;
         }
         NotificationManager n=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);n.notify(NOTIFICATION,notification(message(phase),accepted,total));
     }
