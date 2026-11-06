@@ -61,7 +61,8 @@ public final class NativeRecordingControl {
             if(!java.nio.file.Files.exists(recordingDirectory))return new String[0];
             try(java.nio.file.DirectoryStream<Path> metadata=java.nio.file.Files.newDirectoryStream(recordingDirectory,"*.meta")){
                 for(Path item:metadata){
-                    if(java.nio.file.Files.size(item)!=112)throw new IOException("invalid local recording metadata");
+                    long metadataBytes=java.nio.file.Files.size(item);
+                    if(metadataBytes!=112&&metadataBytes!=120)throw new IOException("invalid local recording metadata");
                     RecorderWire.Descriptor descriptor=RecorderWire.Descriptor.decode(java.nio.file.Files.readAllBytes(item));
                     String name=SegmentReceiver.key(descriptor);if(!item.getFileName().toString().equals(name+".meta"))throw new IOException("recording metadata filename mismatch");
                     Path file=recordingDirectory.resolve(name+".cop1");if(java.nio.file.Files.exists(file))files.add(file.toAbsolutePath().toString());

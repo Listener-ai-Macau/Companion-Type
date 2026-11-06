@@ -108,6 +108,18 @@ fn catalogue_report(journal:&Journal)->Result<Report,String> {
         duration_ms:proof.duration_ms,finished_locally:false,confirmed_by_catalogue:true,capture_incomplete:proof.capture_incomplete})
 }
 
+/// Local Java metadata may append the recorded date and an outer CRC. Keep the
+/// original file intact and validate both envelopes before using its V2 wire.
+pub(crate) fn local_descriptor(bytes:&[u8])->Result<Descriptor,String> {
+    let wire=if bytes.len()==120 {
+        if crc32fast::hash(&bytes[..116])!=u32::from_le_bytes(bytes[116..120].try_into().unwrap()) {
+            return Err("本地录音日期元数据校验失败；原文件保留。".into());
+        }
+        &bytes[..112]
+    } else {bytes};
+    Descriptor::decode(wire)
+}
+
 /// Check the original complete sealed directory while the device is idle, without sending recording commands.
 pub(crate) fn reconcile_catalogue<T:Transport>(root:&Path,host:&str,device:&str,transport:&mut T)->Result<Report,String> {
     if host.trim().is_empty()||host.len()>256{return Err("录音会话无效。".into());}
@@ -132,8 +144,8 @@ pub(crate) fn reconcile_catalogue<T:Transport>(root:&Path,host:&str,device:&str,
     for file in local {
         if !file.is_absolute()||file.extension().is_none_or(|e|e!="cop1"){return Err("本地录音副本路径无效。".into());}
         let meta=file.with_extension("meta");let meta_info=fs::symlink_metadata(&meta).map_err(|_|"本地录音元数据不可读取。")?;
-        if !meta_info.is_file()||meta_info.file_type().is_symlink()||meta_info.len()!=112{return Err("本地录音元数据无效。".into());}
-        let d=Descriptor::decode(&fs::read(meta).map_err(|_|"本地录音元数据不可读取。")?)?;
+        if !meta_info.is_file()||meta_info.file_type().is_symlink()||!matches!(meta_info.len(),112|120){return Err("本地录音元数据无效。".into());}
+        let d=local_descriptor(&fs::read(meta).map_err(|_|"本地录音元数据不可读取。")?)?;
         if d.key!=key{continue;}
         let info=fs::symlink_metadata(&file).map_err(|_|"本地录音副本不可读取。")?;
         if !info.is_file()||info.file_type().is_symlink()||info.len()!=u64::from(d.encoded_length){return Err("本地原录音副本无效。".into());}

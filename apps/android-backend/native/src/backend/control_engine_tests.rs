@@ -1,5 +1,18 @@
 use super::{recorder_control::{Journal,Observation,SettlementAction,settlement_action},recording_wire::control::{PausePeer,PauseStatus}};
 
+#[test]
+fn local_calendar_metadata_preserves_descriptor_and_checks_both_crcs() {
+    use super::{control_runtime::local_descriptor,recording_wire::{Descriptor,SessionKey}};
+    let descriptor=Descriptor{key:SessionKey{device_uid:[1;12],format_epoch:7,session_id:231},recording_id:123,segment_index:0,sample_offset:0,sample_count:320,encoded_length:15,content_crc32:1,sha256:[2;32],total_segments:1,flags:3,codec:3,source_mode:1,sync_state:0};
+    let legacy=descriptor.encode().unwrap();assert_eq!(local_descriptor(&legacy).unwrap(),descriptor);
+    let mut calendar=legacy.to_vec();calendar.extend_from_slice(&1_793_936_640u32.to_le_bytes());calendar.extend_from_slice(&crc32fast::hash(&calendar).to_le_bytes());
+    assert_eq!(local_descriptor(&calendar).unwrap(),descriptor);
+    let before=calendar.clone();
+    calendar[112]^=1;assert!(local_descriptor(&calendar).is_err());
+    calendar=before;calendar[40]^=1;let outer=crc32fast::hash(&calendar[..116]);calendar[116..].copy_from_slice(&outer.to_le_bytes());assert!(local_descriptor(&calendar).is_err());
+    for n in [0,111,113,116,119,121]{let mut bad=legacy.to_vec();bad.resize(n,0);assert!(local_descriptor(&bad).is_err());}
+}
+
 fn capability()->Vec<u8> {
     let mut s=vec![0;116];s[0]=1;s[12..16].copy_from_slice(&0x5742_4155u32.to_le_bytes());
     for(i,b)in s[20..32].iter_mut().enumerate(){*b=(i+1) as u8;}
