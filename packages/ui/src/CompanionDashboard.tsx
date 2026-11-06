@@ -1,4 +1,5 @@
 import {ContentExportPanel} from './ContentExportPanel';
+import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import { cleanHesitations } from './transcriptReading';
 import { CompanionCalendarCopies } from './CompanionCalendarCopies';
 import {readRestoredCustomTemplates} from './customTemplateBackup';
@@ -257,7 +258,7 @@ export interface CompanionDashboardProps {
   onExportMeeting?: (request: CompanionMeetingExportRequest) => Promise<{ path: string; bytes: number; warning?: string | null; calendarOpenToken?:string;calendarFileUri?:string } | null>;
   onPreviewMeetingExport?:(request:CompanionMeetingExportRequest)=>Promise<{contentHash:string;warning?:string|null;textContent?:string|null;calendarItems?:CalendarExportItem[]|null}>;
   onCopyMeetingContent?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
-  onShareMeetingContent?:(request:CompanionMeetingExportRequest)=>Promise<{status:string;fileName?:string|null;bytes:number}>;
+  onShareMeetingContent?:(request:CompanionMeetingExportRequest,destination?:ShareDestination)=>Promise<ShareHandoffResult>;
   onPreviewDiagnostics?:()=>Promise<unknown>;
   onExportDiagnostics?: (includeDevice: boolean) => Promise<{path:string;bytes:number;warning?:string|null}|null>;
   onPrepareAudioComponents?: () => Promise<void>;
@@ -266,7 +267,7 @@ export interface CompanionDashboardProps {
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
   onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>;
   onExportAudio?: (sessionId: string,format?:'original'|'mp3') => Promise<{ path: string; bytes: number } | null>;
-  onShareAudio?: (sessionId:string,format?:'original'|'mp3')=>Promise<{status:string;fileName?:string|null;bytes:number}>;
+  onShareAudio?: (sessionId:string,format?:'original'|'mp3',destination?:ShareDestination)=>Promise<ShareHandoffResult>;
   onImportAudio?: () => Promise<CompanionV1Snapshot | null>;
   onCancelImportAudio?: () => Promise<boolean>;
   /** Native host obtains a concrete device proposal and its confirmation dialog. */
@@ -574,7 +575,7 @@ export function CompanionDashboard({
   const [audioExportFormat,setAudioExportFormat]=useState<'original'|'mp3'>('original');
   const [pdfSections]=useState({minutes:true,transcript:false,highlights:true,timeline:false});
   const [pdfPreview,setPdfPreview]=useState<{key:string;text?:string;hash?:string;error?:string;pending?:boolean}|null>(null);
-  const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; calendarOpenToken?:string;calendarFileUri?:string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
+  const [exportResult, setExportResult] = useState<{ sessionId: string; message: string; path?: string; calendarOpenToken?:string;calendarFileUri?:string; format?: CompanionMeetingExportRequest['format']; kind?: 'saved' | 'opened' | 'cancelled' | 'pending' | 'error'; hasWarning?:boolean; origin: MeetingExportOrigin } | null>(null);
   const [meetingDrafts, setMeetingDrafts] = useState<Record<string, {
     title?: { value: string; expected: string };
     minutes?: Partial<Record<CompanionV1MeetingMode, { value: string; expected: string; createManual?: CompanionMeetingSaveRequest['createManual'];calendarContext?:CompanionMinutesNoteContext|null }>>;
@@ -1464,12 +1465,12 @@ export function CompanionDashboard({
       setExportResult({ sessionId, origin: 'audio', kind: 'error', message: `${format==='mp3'?'MP3副本':'原音'}保存未完成：${operationErrorText(error,'export')}` });
     } finally { exportActive.current = false; setExportBusy(false); }
   };
-  const shareAudio=async()=>{
+  const shareAudio=async(destination:ShareDestination='system')=>{
     if(!selectedSession||!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording||exportActive.current)return;
     const sessionId=selectedSession.id;exportActive.current=true;setExportBusy(true);
     setExportResult({sessionId,origin:'audio',kind:'pending',message:'正在准备音频分享文件…'});
-    try{const result=await onShareAudio(sessionId,audioExportFormat);if(result.status!=='opened')throw Error('分享面板未打开。');
-      setExportResult({sessionId,origin:'audio',kind:'saved',message:'已打开Windows分享面板。请选择接收应用；是否发送以接收应用为准。'});
+    try{const result=await onShareAudio(sessionId,audioExportFormat,destination);
+      setExportResult({sessionId,origin:'audio',kind:'opened',message:shareHandoffMessage(result,destination)});
     }catch(error){setExportResult({sessionId,origin:'audio',kind:'error',message:`分享未完成：${operationErrorText(error,'export')}`});}
     finally{exportActive.current=false;setExportBusy(false);}
   };
@@ -2650,6 +2651,9 @@ export function CompanionDashboard({
             <button type="button" className="ct-action" disabled={!onExportAudio || !hasOriginalAudio || controlsBusy || oobeBlockedByRecording}
               onClick={() => void exportAudio(audioExportFormat)}><Download size={15} />{audioExportFormat==='mp3'?'保存 MP3 副本':selectedSession.source === 'hostMeeting' ? '保存会议录音' : '保存原音'}</button>
             <button type="button" className="ct-action" disabled={!onShareAudio||!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio()}>分享录音…</button>
+            {onShareAudio?<details><summary>其他录音分享方式</summary>
+              <button type="button" className="ct-action" disabled={!hasOriginalAudio||controlsBusy||oobeBlockedByRecording} onClick={()=>void shareAudio('folder')}>在文件夹中分享录音…</button>
+            </details>:null}
             {renderExportFeedback('audio')}
             <p>{selectedSession.source === 'hostMeeting' ? '保存电脑声音与麦克风的混合录音；超出 WAV 格式容量时保存为包含两路分段原音的 ZIP。' : '保存整场原音到你选择的位置，可单独备份或使用其他播放器打开。超出 WAV 格式容量时会保存为包含分段原音的 ZIP。'}此副本由你自行保管，删除录音不会删除它。</p>
             </div>

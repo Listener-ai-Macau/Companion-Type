@@ -342,7 +342,7 @@ export function App() {
         return result;
       })}
       onCopyMeetingContent={isTauriRuntime()?copyCompanionMeetingContent:undefined}
-      onShareMeetingContent={isTauriRuntime()?(request)=>exclusive('refresh',()=>shareCompanionMeetingContent(request)):undefined}
+      onShareMeetingContent={isTauriRuntime()?(request,destination)=>exclusive('refresh',()=>shareCompanionMeetingContent(request,destination)):undefined}
       onOpenSavedCalendar={isTauriRuntime()?openCompanionSavedCalendar:undefined}
       onPreviewMeetingExport={(request)=>previewCompanionMeetingExport(request)}
       onExportDiagnostics={isTauriRuntime() ? (includeDevice) => exclusive('refresh', () => exportCompanionDiagnostics(includeDevice)) : undefined}
@@ -354,7 +354,7 @@ export function App() {
       onImportAudio={isTauriRuntime() ? async () => { const epoch=snapshotEpoch.current; const next=await importCompanionAudio(); if(next) { if(!operationActive.current && snapshotEpoch.current===epoch) { snapshotEpoch.current+=1; setSnapshot(next); } else void cachedReader.current?.request(); } return next; } : undefined}
       onPrepareAudio={isTauriRuntime() ? (sessionId) => exclusive('refresh', () => prepareCompanionAudio(sessionId)) : undefined}
       onExportAudio={isTauriRuntime() ? (sessionId,format) => exclusive('refresh', () => exportCompanionAudio(sessionId,format)) : undefined}
-      onShareAudio={isTauriRuntime() ? (sessionId,format) => exclusive('refresh',()=>shareCompanionAudio(sessionId,format)):undefined}
+      onShareAudio={isTauriRuntime() ? (sessionId,format,destination) => exclusive('refresh',()=>shareCompanionAudio(sessionId,format,destination)):undefined}
       onExportLibrary={isTauriRuntime()?(request)=>exclusive('refresh',()=>exportCompanionLibrary(request)):undefined}
       onBackupLibrary={isTauriRuntime()?(draft)=>exclusive('refresh',()=>backupCompanionLibrary(draft)):undefined}
       onRestoreLibrary={isTauriRuntime()?()=>exclusive('refresh',async()=>{

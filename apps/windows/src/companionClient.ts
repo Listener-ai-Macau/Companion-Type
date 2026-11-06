@@ -147,9 +147,9 @@ export async function exportCompanionMeeting(request: import('../../../packages/
   return invoke('export_companion_meeting', { request });
 }
 
-export const shareCompanionAudio=(sessionId:string,format?:'original'|'mp3')=>invoke<{status:string;fileName?:string|null;bytes:number}>('share_companion_audio',{sessionId,format:format??'original'});
+export const shareCompanionAudio=(sessionId:string,format?:'original'|'mp3',destination?:import('../../../packages/ui/src/shareHandoff').ShareDestination)=>invoke<import('../../../packages/ui/src/shareHandoff').ShareHandoffResult>('share_companion_audio',{sessionId,format:format??'original',destination});
 export const copyCompanionMeetingContent=(request:import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest)=>invoke<{status:string}>('copy_companion_meeting_content',{request});
-export const shareCompanionMeetingContent=(request:import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest)=>invoke<{status:string;fileName?:string|null;bytes:number}>('share_companion_meeting_content',{request});
+export const shareCompanionMeetingContent=(request:import('../../../packages/ui/src/CompanionDashboard').CompanionMeetingExportRequest,destination?:import('../../../packages/ui/src/shareHandoff').ShareDestination)=>invoke<import('../../../packages/ui/src/shareHandoff').ShareHandoffResult>('share_companion_meeting_content',{request,destination});
 
 export const importCompanionAudio = () => invoke<CompanionV1Snapshot | null>('import_companion_audio');
 export const cancelCompanionAudioImport = () => invoke<boolean>('cancel_companion_audio_import');

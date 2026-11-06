@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
 import {Download,Copy,Share2} from 'lucide-react';
 import {savedExportPreview,SavedPreviewInterrupted} from './savedExportPreview';
+import {shareHandoffMessage,type ShareDestination,type ShareHandoffResult} from './shareHandoff';
 import type {CompanionMeetingExportRequest} from './CompanionDashboard';
 export type ContentSelection={minutes:boolean;transcript:boolean;highlights:boolean;timeline:boolean;noteIds:string[]};
 type Format='pdf'|'docx'|'txt'|'markdown'|'xlsx'|'mindmap'|'srt'|'pptx'|'png';
@@ -10,12 +11,12 @@ type Props={sessionId:string;meetingMode:'offlineStore'|'onlineLive';sourceVersi
  onPreview?:(request:CompanionMeetingExportRequest)=>Promise<Preview>;
  onSave?:(request:CompanionMeetingExportRequest)=>Promise<{path:string;bytes:number;warning?:string|null}|null>;
  onCopy?:(request:CompanionMeetingExportRequest)=>Promise<{status:string}>;
- onShare?:(request:CompanionMeetingExportRequest)=>Promise<{status:string;fileName?:string|null;bytes:number}>;
+ onShare?:(request:CompanionMeetingExportRequest,destination?:ShareDestination)=>Promise<ShareHandoffResult>;
 };
 export function ContentExportPanel(props:Props){
  const [selection,setSelection]=useState<ContentSelection>({minutes:props.minutes,transcript:!props.minutes&&props.transcript,highlights:false,timeline:false,noteIds:[]});
  const [format,setFormat]=useState<Format>('pdf');
- const [phase,setPhase]=useState<'preview'|'save'|'copy'|'share'|null>(null);
+ const [phase,setPhase]=useState<'preview'|'save'|'copy'|'share'|'folder'|null>(null);
  const [preview,setPreview]=useState<{key:string;text:string}|null>(null);
  const [feedback,setFeedback]=useState<{key:string;kind:'saved'|'copied'|'opened'|'cancelled'|'error';text:string;manual?:string}|null>(null);
  const task=useRef<ReturnType<typeof savedExportPreview<Preview>>|null>(null),active=useRef(false),mounted=useRef(true);
@@ -28,7 +29,7 @@ export function ContentExportPanel(props:Props){
  const any=choice.minutes||choice.transcript||choice.highlights||choice.noteIds.length>0;
  const dirty=props.unsaved.title||(choice.minutes&&props.unsaved.minutes)||(choice.transcript&&props.unsaved.transcript)||(choice.highlights&&props.unsaved.highlights)||(choice.noteIds.length>0&&props.unsaved.notes);
  const request=():CompanionMeetingExportRequest=>({sessionId:props.sessionId,meetingMode:props.meetingMode,format,contentSections:choice});
- const run=async(action:'preview'|'save'|'copy'|'share')=>{
+ const run=async(action:'preview'|'save'|'copy'|'share'|'folder')=>{
    if(active.current||props.blocked||!props.onPreview||!any)return;
    const operationKey=key,current=()=>mounted.current&&currentKey.current===operationKey;
    if(dirty){setFeedback({key,kind:'error',text:'所选内容有未保存的修改，请先保存或取消。'});return;}
@@ -58,9 +59,9 @@ export function ContentExportPanel(props:Props){
        }
      }else{
        if(!props.onShare)throw Error('当前环境不能打开系统分享，请先保存文件。');
-       const result=await props.onShare(checked);if(!current())return;
-       if(result.status!=='opened')throw Error('分享面板未打开，请保存后分享。');
-       setFeedback({key:operationKey,kind:'opened',text:`已打开Windows分享面板${result.fileName?`：${result.fileName}`:''}。请选择接收应用；是否发送以接收应用为准。`});
+       const destination=action==='folder'?'folder':'system';
+       const result=await props.onShare(checked,destination);if(!current())return;
+       setFeedback({key:operationKey,kind:'opened',text:shareHandoffMessage(result,destination)});
      }
    }catch(error){if(current())setFeedback({key:operationKey,kind:'error',text:error instanceof SavedPreviewInterrupted?error.message:error instanceof Error?error.message:String(error)});}
    finally{active.current=false;if(mounted.current)setPhase(null);}
@@ -92,7 +93,11 @@ export function ContentExportPanel(props:Props){
      <button type="button" className="ct-action ct-action-primary" disabled={disabled||!props.onSave||!any} onClick={()=>void run('save')}><Download size={14}/>保存 {formats.find(([value])=>value===format)?.[1]}…</button>
      <button type="button" className="ct-action" disabled={disabled||!props.onShare||!any} onClick={()=>void run('share')}><Share2 size={14}/>分享所选文件…</button>
    </div>
-   {phase?<p role="status">{phase==='preview'?'正在核对所选内容…':phase==='save'?'正在保存所选文件…':phase==='copy'?'正在复制所选内容…':'正在准备系统分享…'} {phase==='preview'?<button type="button" className="ct-text-button" onClick={()=>task.current?.cancel()}>取消等待</button>:null}</p>:null}
+   {props.onShare?<details className="ct-content-share-alternative"><summary>面板无法使用？其他分享方式</summary>
+     <p className="ct-step-meta">在文件夹中准备相同选择的临时副本，再通过资源管理器分享。接收应用由你选择。</p>
+     <button type="button" className="ct-action" disabled={disabled||!any} onClick={()=>void run('folder')}>在文件夹中分享所选文件…</button>
+   </details>:null}
+   {phase?<p role="status">{phase==='preview'?'正在核对所选内容…':phase==='save'?'正在保存所选文件…':phase==='copy'?'正在复制所选内容…':phase==='folder'?'正在准备文件夹分享…':'正在准备系统分享…'} {phase==='preview'?<button type="button" className="ct-text-button" onClick={()=>task.current?.cancel()}>取消等待</button>:null}</p>:null}
    {feedback?.key===key?<div aria-label="所选内容操作结果"><p role={feedback.kind==='error'?'alert':'status'} className={feedback.kind==='error'?'ct-step-warn':'ct-step-meta'}>{feedback.text}</p>
      {feedback.manual?<textarea readOnly aria-label="手动复制所选内容" value={feedback.manual} onFocus={event=>event.currentTarget.select()} style={{width:'100%',minHeight:160}}/>:null}
    </div>:null}

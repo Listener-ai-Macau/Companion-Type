@@ -1,6 +1,15 @@
 //! Windows clipboard and system share sheet. No recipient is ever selected here.
 use std::path::{Path,PathBuf};
 
+#[derive(Clone,Copy,Debug,PartialEq,Eq)]
+pub enum ShareDestination {SystemPanel,FileLocation}
+impl ShareDestination {
+    pub fn parse(value:Option<&str>)->Result<Self,String>{
+        match value {None|Some("system")=>Ok(Self::SystemPanel),Some("folder")=>Ok(Self::FileLocation),_=>Err("不支持的分享方式，请重新选择。".into())}
+    }
+    pub fn status(self)->&'static str{match self{Self::SystemPanel=>"opened",Self::FileLocation=>"folderOpened"}}
+}
+
 pub fn write_clipboard(owner:usize,text:&str)->Result<(),String>{
     if text.contains('\0'){return Err("所选内容含无效空字符，请保存文件后核对。".into());}
     #[cfg(windows)] unsafe {
@@ -59,6 +68,40 @@ mod native {
     struct Registration {manager:DataTransferManager,token:EventRegistrationToken}
     impl Drop for Registration{fn drop(&mut self){let _=self.manager.RemoveDataRequested(self.token);}}
     thread_local! {static ACTIVE:std::cell::RefCell<Option<Registration>>=const{std::cell::RefCell::new(None)};}
+
+    struct FileLocation(*mut windows::Win32::UI::Shell::Common::ITEMIDLIST);
+    impl Drop for FileLocation{fn drop(&mut self){unsafe{windows::Win32::System::Com::CoTaskMemFree(Some(self.0.cast()));}}}
+    impl FileLocation{
+        fn prepare(path:&Path)->Result<Self,String>{
+            use std::os::windows::ffi::OsStrExt;
+            use windows::{core::PCWSTR,Win32::UI::Shell::SHParseDisplayName};
+            if !path.is_absolute()||!path.is_file(){return Err("分享副本已不可用，请重新准备或保存文件。".into());}
+            let mut wide:Vec<u16>=path.as_os_str().encode_wide().collect();
+            if wide.contains(&0){return Err("分享文件位置无效，请改用保存。".into());}
+            wide.push(0);
+            let mut location=Self(std::ptr::null_mut());
+            unsafe{SHParseDisplayName(PCWSTR(wide.as_ptr()),None,&mut location.0,0,None)}
+                .map_err(|_|"Windows无法定位分享副本，请改用保存。")?;
+            if location.0.is_null(){return Err("Windows无法定位分享副本，请改用保存。".into());}
+            Ok(location)
+        }
+    }
+    pub fn open_file_location(path:&Path)->Result<(),String>{
+        // The explicit user action runs on Tauri's initialized UI thread. A PIDL
+        // avoids shell command strings, quoting, executable/verb injection and
+        // changes to network sharing permissions. Select exactly this one copy.
+        let location=FileLocation::prepare(path)?;
+        unsafe{windows::Win32::UI::Shell::SHOpenFolderAndSelectItems(location.0,None,0)}
+            .map_err(|_|"Windows未能打开分享文件夹，请改用保存后分享。".into())
+    }
+    #[cfg(test)]
+    pub fn inspect_file_location(path:&Path)->Result<PathBuf,String>{
+        use windows::Win32::{System::Com::CoTaskMemFree,UI::Shell::{SHGetNameFromIDList,SIGDN_FILESYSPATH}};
+        let location=FileLocation::prepare(path)?;
+        let value=unsafe{SHGetNameFromIDList(location.0,SIGDN_FILESYSPATH)}.map_err(|e|e.to_string())?;
+        let result=unsafe{value.to_string()}.map(PathBuf::from).map_err(|e|e.to_string());
+        unsafe{CoTaskMemFree(Some(value.0.cast()));}result
+    }
     pub fn package(file:&ShareFile)->windows::core::Result<DataPackage>{
         let storage=StorageFile::GetFileFromPathAsync(&HSTRING::from(file.path.to_string_lossy().as_ref()))?.get()?;
         let item:IStorageItem=storage.cast()?;
@@ -100,9 +143,31 @@ mod native {
 }
 #[cfg(windows)]pub use native::open as open_share;
 #[cfg(windows)]pub use native::prepare as prepare_share;
+#[cfg(windows)]pub use native::open_file_location;
 
 #[cfg(test)]mod tests{
     use super::*;
+    #[test]fn content070_share_destination_is_explicit_and_never_accepts_a_shell_verb(){
+        assert_eq!(ShareDestination::parse(None).unwrap(),ShareDestination::SystemPanel);
+        assert_eq!(ShareDestination::parse(Some("folder")).unwrap().status(),"folderOpened");
+        for input in ["Windows.Share","delete","../escape","folder & calc.exe",""]{assert!(ShareDestination::parse(Some(input)).is_err());}
+    }
+    #[cfg(windows)]#[test]fn content070_file_location_resolves_only_existing_exact_file_without_opening_explorer(){
+        use windows::Win32::System::Com::{CoInitializeEx,CoUninitialize,COINIT_APARTMENTTHREADED};
+        unsafe{CoInitializeEx(None,COINIT_APARTMENTTHREADED).ok().unwrap();}
+        struct Com;impl Drop for Com{fn drop(&mut self){unsafe{CoUninitialize();}}}let _com=Com;
+        let root=std::env::temp_dir().join(format!("content-location-test-{}",uuid::Uuid::new_v4()));
+        let name="公开会议 # 20% & 中文 😀.txt";
+        let file=prepare_shared_file(&root,name,"尚未确认采购".as_bytes()).unwrap();
+        let before=std::fs::read(&file).unwrap();
+        let actual=native::inspect_file_location(&file).unwrap();
+        assert_eq!(std::fs::canonicalize(actual).unwrap(),std::fs::canonicalize(&file).unwrap());
+        assert_eq!(std::fs::read(&file).unwrap(),before);
+        assert!(native::inspect_file_location(Path::new(name)).is_err());
+        assert!(native::inspect_file_location(&root).is_err());
+        std::fs::remove_file(&file).unwrap();assert!(native::inspect_file_location(&file).is_err());
+        std::fs::remove_dir_all(root).unwrap();
+    }
     #[test]fn content051_share_file_is_exact_immutable_and_cannot_escape_its_cache(){
         let root=std::env::temp_dir().join(format!("content-share-test-{}",uuid::Uuid::new_v4()));
         let file=prepare_shared_file(&root,"会议-所选内容.txt","尚未确认采购".as_bytes()).unwrap();

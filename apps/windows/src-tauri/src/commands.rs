@@ -789,7 +789,8 @@ pub fn copy_companion_meeting_content(window:tauri::Window,coordinator:Companion
 }
 
 #[tauri::command]
-pub async fn share_companion_meeting_content(app:AppHandle,window:tauri::Window,coordinator:CompanionCoordinatorState<'_>,request:CompanionMeetingExportRequest)->Result<ContentHandoffResult,String>{
+pub async fn share_companion_meeting_content(app:AppHandle,window:tauri::Window,coordinator:CompanionCoordinatorState<'_>,request:CompanionMeetingExportRequest,destination:Option<String>)->Result<ContentHandoffResult,String>{
+    let destination=crate::content_handoff::ShareDestination::parse(destination.as_deref())?;
     let (row,prepared)=checked_content_handoff(&coordinator,&request)?;
     let title=row.title.clone();let name=prepared.suggested_name.clone();
     let cache=app.path().app_cache_dir().map_err(|_|"无法准备本机分享文件，请改用保存。")?.join("content-share");
@@ -801,22 +802,25 @@ pub async fn share_companion_meeting_content(app:AppHandle,window:tauri::Window,
     let bytes=std::fs::metadata(&path).map_err(|_|"分享文件已不可用。")?.len();
     let name=path.file_name().and_then(|n|n.to_str()).unwrap_or("Companion").to_owned();
     #[cfg(windows)]{
-        let file=crate::content_handoff::ShareFile{path,title:row.title};
-        let package=tauri::async_runtime::spawn_blocking(move||crate::content_handoff::prepare_share(file)).await.map_err(|_|"分享准备未完成。")??;
+        let package=if destination==crate::content_handoff::ShareDestination::SystemPanel{
+            let file=crate::content_handoff::ShareFile{path:path.clone(),title:row.title};
+            Some(tauri::async_runtime::spawn_blocking(move||crate::content_handoff::prepare_share(file)).await.map_err(|_|"分享准备未完成。")??)
+        }else{None};
         checked_content_handoff(&coordinator,&request)?;
         let owner=window.hwnd().map_err(|_|"窗口已关闭，未打开分享面板。")?.0 as usize;
         let (send,receive)=tokio::sync::oneshot::channel();
         let final_coordinator=coordinator.inner().clone();let final_request=request.clone();
         app.run_on_main_thread(move||{let result=checked_content_handoff(&final_coordinator,&final_request)
-            .and_then(|_|crate::content_handoff::open_share(owner,package));let _=send.send(result);}).map_err(|_|"窗口已关闭，未打开分享面板。")?;
+            .and_then(|_|match package{Some(package)=>crate::content_handoff::open_share(owner,package),None=>crate::content_handoff::open_file_location(&path)});let _=send.send(result);}).map_err(|_|"窗口已关闭，未打开分享。")?;
         receive.await.map_err(|_|"分享面板未打开，请改用保存。")??;
-        return Ok(ContentHandoffResult{status:"opened".into(),file_name:Some(name),bytes});
+        return Ok(ContentHandoffResult{status:destination.status().into(),file_name:Some(name),bytes});
     }
     #[cfg(not(windows))]{let _=(window,bytes,name);Err("当前系统不支持Windows分享面板，请保存后自行分享。".into())}
 }
 
 #[tauri::command]
-pub async fn share_companion_audio(app:AppHandle,window:tauri::Window,coordinator:CompanionCoordinatorState<'_>,session_id:String,format:Option<String>)->Result<ContentHandoffResult,String>{
+pub async fn share_companion_audio(app:AppHandle,window:tauri::Window,coordinator:CompanionCoordinatorState<'_>,session_id:String,format:Option<String>,destination:Option<String>)->Result<ContentHandoffResult,String>{
+    let destination=crate::content_handoff::ShareDestination::parse(destination.as_deref())?;
     let mp3=match format.as_deref(){None|Some("original")=>false,Some("mp3")=>true,_=>return Err("不支持的音频分享格式。".into())};
     let lease=coordinator.begin_audio_export()?;let snapshot=coordinator.snapshot()?;
     let (original,name)=crate::backend::audio_export::source(&snapshot,&session_id)?;
@@ -832,16 +836,19 @@ pub async fn share_companion_audio(app:AppHandle,window:tauri::Window,coordinato
     }).await.map_err(|_|"音频分享文件准备未完成。")??;
     if crate::backend::audio_export::source(&coordinator.snapshot()?,&session_id)?.0!=original{return Err("录音来源已变化，请重新选择分享。".into());}
     #[cfg(windows)]{
-        let package=tauri::async_runtime::spawn_blocking(move||crate::content_handoff::prepare_share(crate::content_handoff::ShareFile{path,title})).await.map_err(|_|"音频分享准备未完成。")??;
+        let package=if destination==crate::content_handoff::ShareDestination::SystemPanel{
+            let file=crate::content_handoff::ShareFile{path:path.clone(),title};
+            Some(tauri::async_runtime::spawn_blocking(move||crate::content_handoff::prepare_share(file)).await.map_err(|_|"音频分享准备未完成。")??)
+        }else{None};
         if crate::backend::audio_export::source(&coordinator.snapshot()?,&session_id)?.0!=original{return Err("录音来源已变化，请重新选择分享。".into());}
         let owner=window.hwnd().map_err(|_|"窗口已关闭，未打开分享面板。")?.0 as usize;
         let (send,receive)=tokio::sync::oneshot::channel();
         let final_coordinator=coordinator.inner().clone();
         app.run_on_main_thread(move||{let result=final_coordinator.snapshot()
             .and_then(|snapshot|crate::backend::audio_export::source(&snapshot,&session_id))
-            .and_then(|(source,_)|if source==original{crate::content_handoff::open_share(owner,package)}else{Err("录音来源已变化，未打开分享面板。".into())});let _=send.send(result);}).map_err(|_|"分享面板未打开。")?;
+            .and_then(|(source,_)|if source==original{match package{Some(package)=>crate::content_handoff::open_share(owner,package),None=>crate::content_handoff::open_file_location(&path)}}else{Err("录音来源已变化，未打开分享。".into())});let _=send.send(result);}).map_err(|_|"分享未打开。")?;
         receive.await.map_err(|_|"分享面板未打开，请保存后分享。")??;
-        return Ok(ContentHandoffResult{status:"opened".into(),file_name:Some(name),bytes});
+        return Ok(ContentHandoffResult{status:destination.status().into(),file_name:Some(name),bytes});
     }
     #[cfg(not(windows))]{let _=(window,title,bytes,path);Err("当前系统不支持Windows分享面板。".into())}
 }

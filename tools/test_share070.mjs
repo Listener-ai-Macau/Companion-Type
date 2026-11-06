@@ -1,0 +1,13 @@
+import {build} from 'esbuild';
+import {spawnSync} from 'node:child_process';
+import {mkdir,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+const out=path.join(root,'.cache','share070');await mkdir(out,{recursive:true});
+const file=path.join(out,'content-export.mjs');
+await build({entryPoints:[path.join(root,'tools/test_content_export_panel051.tsx')],outfile:file,bundle:true,platform:'node',format:'esm',jsx:'automatic',packages:'external',tsconfig:path.join(root,'apps/windows/tsconfig.json')});
+const run=spawnSync(process.execPath,['--import',pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href,file],{cwd:root,encoding:'utf8',windowsHide:true});
+const result={scope:'Isolated component and host response semantics only; no browser, OS panel, clipboard or device',exitCode:run.status,stdout:run.stdout,stderr:run.stderr};
+await writeFile(path.join(out,'result.json'),JSON.stringify(result,null,2));
+process.stdout.write(run.stdout??'');process.stderr.write(run.stderr??'');process.exitCode=run.status??1;

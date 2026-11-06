@@ -6,7 +6,7 @@ export interface CompanionExportFeedbackValue {
   message: string;
   format?: string;
   hasWarning?: boolean;
-  kind?: 'saved' | 'cancelled' | 'pending' | 'error';
+  kind?: 'saved' | 'opened' | 'cancelled' | 'pending' | 'error';
   path?: string;
   calendarOpenToken?: string;
   calendarFileUri?:string;
