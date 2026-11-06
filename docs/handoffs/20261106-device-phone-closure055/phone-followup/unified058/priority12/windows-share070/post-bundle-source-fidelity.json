@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-06T21:09:58+08:00",
+  "cause": "Tauri bundle rewrote Cargo.toml CRLF to LF after native compilation. No semantic difference.",
+  "sourceCommit": "571c577fbf546a1e157f5b2cf46e68cc45955440",
+  "postBundleSha256": "721409f4afa03a140832704575760d2560ea1536ca8e66e281a32cd255cb0e14",
+  "restoredFrozenSha256": "2c692a2c61139f2feb2a7caa85f77da7b8dfecc0195003d4866b7897369e2d37",
+  "allFrozenSourceFilesByteIdentical": true,
+  "newBuildNeeded": false,
+  "actualRecipientVerified": false
+}
