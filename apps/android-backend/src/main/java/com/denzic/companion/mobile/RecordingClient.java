@@ -110,13 +110,27 @@ public final class RecordingClient implements Closeable {
     }
 
     public synchronized List<RecorderWire.Descriptor> listRecordings() throws IOException {
-        ensureOpen();current=null;RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,nonce());
-        catalog.calendar(link.calendarSupported());
-        while(!catalog.complete()){
-            link.write(RECORDING_CONTROL,catalog.request());long deadline=System.nanoTime()+8_000_000_000L;
-            while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording directory timed out");if(catalog.accept(link.await(RECORDING_LIST,remaining)))break;}
+        ensureOpen();current=null;
+        // Sealing or reclaiming a segment can retire an otherwise valid page
+        // snapshot. Discard every page and change nonce; never mix generations.
+        // Other device refusals and malformed/CRC/identity errors still fail.
+        long overallDeadline=System.nanoTime()+24_000_000_000L;
+        for(int refresh=0;;refresh++){
+            RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,nonce());
+            catalog.calendar(link.calendarSupported());
+            try {
+                while(!catalog.complete()){
+                    ensureOpen();
+                    if(Thread.currentThread().isInterrupted())throw new IOException("recording directory interrupted");
+                    link.write(RECORDING_CONTROL,catalog.request());
+                    long deadline=Math.min(overallDeadline,System.nanoTime()+8_000_000_000L);
+                    while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording directory timed out");if(catalog.accept(link.await(RECORDING_LIST,remaining)))break;}
+                }
+                current=catalog.entries();return current;
+            } catch(RecorderWire.CatalogChanged changed) {
+                if(refresh>=2||System.nanoTime()>=overallDeadline)throw changed;
+            }
         }
-        current=catalog.entries();return current;
     }
 
     public synchronized List<DeviceRecordings.Session> listDeviceSessions() throws IOException {

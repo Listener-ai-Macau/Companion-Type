@@ -124,6 +124,11 @@ public final class RecorderWire {
         }
     }
 
+    /** Only the explicit device STALE_SNAPSHOT result permits a fresh directory request. */
+    public static final class CatalogChanged extends IOException {
+        CatalogChanged(){super("recording directory snapshot changed (device result 8)");}
+    }
+
     /** One immutable paginated directory snapshot; callers start a fresh one after a stale response. */
     public static final class Catalog {
         private final Peer peer; private final long nonce; private long snapshot,total=-1;
@@ -135,7 +140,13 @@ public final class RecorderWire {
         /** Returns false for an unrelated nonce, otherwise accepts exactly the next page. */
         public boolean accept(byte[] p) throws IOException {
             if(p==null)throw invalid("missing directory response");
-            if(magic(p,0,"CRE2")) {if(p.length<12)throw invalid("invalid directory error");if(u32(p,8)!=nonce)return false;throw invalid("device refused or directory changed; refresh catalog");}
+            if(magic(p,0,"CRE2")) {
+                if(p.length!=16||u16(p,4)!=2||u16(p,6)!=16)throw invalid("invalid directory error");
+                if(u32(p,8)!=nonce)return false;
+                long result=u32(p,12);
+                if(result==8)throw new CatalogChanged();
+                throw invalid("device refused directory (result "+result+")");
+            }
             if(p.length<20||u8(p,0)!=2)return false;
             if(u32(p,16)!=nonce)return false;
             int stride=calendar?116:112;

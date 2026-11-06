@@ -19,12 +19,29 @@ public final class RecorderWireTest {
     private static final class FakeLink implements RecordingClient.Link {
         final byte[] status,page0,page1,packet;byte[] control,list,pull,resumedPacket,multiAudio,consumeReply;boolean closed,partialOnce,failOnNextPull,loseConsumeReply,timeoutConsumeReply;int pullCount,consumeWrites;
         final java.util.Map<Long,RecorderWire.Descriptor> segments=new java.util.HashMap<>();
+        int directoryRequests,directoryRestarts,staleAt=-1,staleRemaining,refusalResult=8;
+        boolean malformedRefusal;long lastDirectoryNonce;
         FakeLink(byte[] s,byte[] a,byte[] b,byte[] p){status=s;page0=a;page1=b;packet=p;}
         public int mtu(){return 247;} public byte[] read(UUID id){return status.clone();}
         public void subscribe(UUID id){} public void close(){closed=true;}
         public void write(UUID id,byte[] value){
             if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x22) control=value.clone();
-            else if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x20){list=(value[12]==0?page0:page1).clone();System.arraycopy(value,8,list,16,4);CRC32 crc=new CRC32();crc.update(list,0,20);crc.update(list,24,list.length-24);put32(list,20,crc.getValue());}
+            else if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x20){
+                directoryRequests++;
+                if(value[12]==0){
+                    long fresh=RecorderWire.u32(value,8);
+                    if(RecorderWire.u32(value,4)!=0||fresh==lastDirectoryNonce)throw new AssertionError("restart must discard snapshot and nonce");
+                    lastDirectoryNonce=fresh;directoryRestarts++;
+                }
+                if((value[12]&255)==staleAt&&staleRemaining>0){
+                    staleRemaining--;list=directoryError(lastDirectoryNonce,refusalResult);
+                    if(malformedRefusal)list=Arrays.copyOf(list,12);
+                }else{
+                    list=(value[12]==0?page0:page1).clone();System.arraycopy(value,8,list,16,4);
+                    put32(list,4,directoryRestarts);
+                    CRC32 crc=new CRC32();crc.update(list,0,20);crc.update(list,24,list.length-24);put32(list,20,crc.getValue());
+                }
+            }
             else if(id.equals(RecordingClient.RECORDING_PULL)){if(value[2]!=4)throw new AssertionError("pull must stream the whole segment");pullCount++;
                 if(multiAudio!=null){long recording=0,offset=0;for(int i=0;i<4;i++){recording|=(value[4+i]&255L)<<(8*i);offset|=(value[28+i]&255L)<<(8*i);}
                     RecorderWire.Descriptor d=segments.get(recording);if(d==null)throw new AssertionError("unknown requested segment");
@@ -37,6 +54,9 @@ public final class RecorderWireTest {
             if(pull==null&&failOnNextPull){failOnNextPull=false;throw new java.io.IOException("synthetic disconnect");}byte[] result=pull;if(failOnNextPull)pull=null;return result;}
             if(id.equals(RecordingClient.RECORDING_CONSUME)){if(timeoutConsumeReply)throw new java.net.SocketTimeoutException("synthetic lost receipt without disconnect");if(loseConsumeReply)throw new java.io.IOException("synthetic lost receipt");return consumeReply.clone();}
             throw new AssertionError("unexpected notification");}
+    }
+    private static byte[] directoryError(long nonce,int result){
+        byte[] p={'C','R','E','2',2,0,16,0,0,0,0,0,0,0,0,0};put32(p,8,nonce);put32(p,12,result);return p;
     }
     private static byte[] page(RecorderWire.Descriptor a,RecorderWire.Descriptor b){
         byte[] p=new byte[24+224];p[0]=2;p[1]=2;put16(p,2,112);put32(p,4,1);put32(p,8,0);put32(p,12,2);put32(p,16,17);
@@ -54,6 +74,29 @@ public final class RecorderWireTest {
         RecorderWire.Peer peer=RecorderWire.Peer.fromStatus(status);byte[] negotiation=peer.negotiate(23,247);if(negotiation.length!=32||negotiation[1]!=0x22)throw new AssertionError("negotiation");
         RecorderWire.Catalog catalog=new RecorderWire.Catalog(peer,17);if(!catalog.accept(page0)||catalog.complete()||catalog.accept(page0)||!catalog.accept(page1)||!catalog.complete())throw new AssertionError("golden directory or duplicate page");
         if(catalog.entries().size()!=3)throw new AssertionError("missing segments");RecorderWire.Descriptor d=catalog.entries().get(0);if(d.recordingId!=41||d.segmentIndex!=0||d.encodedLength!=audio.length)throw new AssertionError("golden descriptor");
+        RecorderWire.Catalog refusal=new RecorderWire.Catalog(peer,17);
+        if(refusal.accept(directoryError(18,8)))throw new AssertionError("unrelated stale nonce accepted");
+        try{refusal.accept(directoryError(17,8));throw new AssertionError("stale response accepted");}catch(RecorderWire.CatalogChanged expected){}
+        for(int reason:new int[]{1,3,4,5,6,9,99}){
+            try{refusal.accept(directoryError(17,reason));throw new AssertionError("refusal accepted");}
+            catch(RecorderWire.CatalogChanged unsafe){throw new AssertionError("non-stale refusal became retryable",unsafe);}
+            catch(java.io.IOException expected){if(!expected.getMessage().contains("result "+reason))throw new AssertionError("device reason lost");}
+        }
+        expectFailure(()->refusal.accept(Arrays.copyOf(directoryError(17,8),12)));
+        byte[] wrongVersion=directoryError(17,8);wrongVersion[4]=1;expectFailure(()->refusal.accept(wrongVersion));
+        FakeLink staleLink=new FakeLink(status,page0,page1,null);staleLink.staleAt=2;staleLink.staleRemaining=1;
+        try(RecordingClient client=new RecordingClient(staleLink)){
+            if(client.listRecordings().size()!=3||staleLink.directoryRestarts!=2||staleLink.directoryRequests!=4)
+                throw new AssertionError("stale later page must restart a complete fresh snapshot");
+        }
+        FakeLink alwaysStale=new FakeLink(status,page0,page1,null);alwaysStale.staleAt=2;alwaysStale.staleRemaining=9;
+        try(RecordingClient client=new RecordingClient(alwaysStale)){expectFailure(client::listRecordings);}
+        if(alwaysStale.directoryRestarts!=3||alwaysStale.directoryRequests!=6)throw new AssertionError("directory refresh must be bounded");
+        for(boolean malformed:new boolean[]{false,true}){
+            FakeLink hardFailure=new FakeLink(status,page0,page1,null);hardFailure.staleAt=2;hardFailure.staleRemaining=1;hardFailure.refusalResult=6;hardFailure.malformedRefusal=malformed;
+            try(RecordingClient client=new RecordingClient(hardFailure)){expectFailure(client::listRecordings);}
+            if(hardFailure.directoryRestarts!=1||hardFailure.consumeWrites!=0)throw new AssertionError("corruption must not refresh or consume");
+        }
         long recordingDate=1793856001L;
         RecorderWire.Catalog datedCatalog=new RecorderWire.Catalog(peer,17);datedCatalog.calendar(true);
         if(datedCatalog.request()[2]!=1)throw new AssertionError("calendar request missing");
@@ -85,10 +128,12 @@ public final class RecorderWireTest {
         String[] otherKey=SegmentReceiver.key(d).split("-");otherKey[2]="ffffffff";
         Path unrelated=isolated.resolve(String.join("-",otherKey)+".meta");byte[] brokenMetadata={1,2,3};Files.write(unrelated,brokenMetadata);
         FakeLink isolatedLink=new FakeLink(status,page0,page1,null);isolatedLink.multiAudio=audio;
+        isolatedLink.staleAt=2;isolatedLink.staleRemaining=1;
         for(RecorderWire.Descriptor item:catalog.entries())isolatedLink.segments.put(item.recordingId,item);
         try(RecordingClient client=new RecordingClient(isolatedLink,dir->{},prefix->{checkPrefix(prefix);})){
             RecordingLibrary.Session received=client.syncAvailableAndReclaim(d,isolated,null);
             if(received.state!=RecordingLibrary.SessionState.COMPLETE||received.segments.size()!=3)throw new AssertionError("unrelated damaged metadata stopped an intact recording");
+            if(isolatedLink.consumeWrites!=3||isolatedLink.directoryRestarts!=2)throw new AssertionError("catalog refresh repeated consumption or lost selected session");
             if(client.receiveSession(d,isolated,null).state!=RecordingLibrary.SessionState.COMPLETE)throw new AssertionError("unrelated damage stopped a non-reclaiming receive");
         }
         if(!Arrays.equals(Files.readAllBytes(unrelated),brokenMetadata))throw new AssertionError("unrelated damaged metadata was not preserved");
