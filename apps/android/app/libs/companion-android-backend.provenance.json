@@ -1,8 +1,8 @@
 {
-  "aarSha256": "92ce33c1eb0bb873dcdf7508ec038003c5bfe5e2f025849bd19b9f5af20f81dc",
-  "backendSourceCommit": "7247985138abb4f6fa7a980fb20bc6547ad4e21a",
+  "aarSha256": "3228645a76f1a55471d10961b5662721d74724440f50de7302e55a4c0b2914a9",
+  "backendSourceCommit": "9f518bf016d0a268201a27041658d3b33fcb2cf8",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\capture-android-device-management",
-  "scope": "Retain the working056 Android recording control; await the device full-file retention receipt before closing the normal OTA link. No native runtime or UI feature changes.",
+  "scope": "Retain the working056 Android recording control; await the device full-file retention receipt and reuse the existing bounded publication wait for OTA identity, including reconnect. Include the verified mobile bookmark sibling-key fix. No native runtime changes.",
   "nativeChanges": false,
   "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\phone055-lock-fix\\native-build-r3\\result.json",
   "newNativeLibrarySha256": "e3d6ad244eb9e32ca97121e3e12bd176b29c3ffb3b5a26fbe2b7035e1da3fb52",
