@@ -32,6 +32,7 @@ fn pages(title:&str,content:&str)->Result<Vec<Slide>,String>{
                 current.body.push(value);
             }
         }else{
+            if line.trim().is_empty()&&(current.body.is_empty()||current.body.last().is_some_and(|s|s.is_empty())){continue;}
             for value in wrap(line,144){
                 if current.body.len()==BODY_LINES {slides.push(current.clone());current.body.clear();}
                 current.body.push(value);
@@ -55,7 +56,8 @@ fn slide_xml(slide:&Slide,index:usize,total:usize)->String{
     let cover=index==0;
     let title_lines=wrap(&slide.title,if cover{72}else{96});
     let header=textbox(2,"标题",(680000,if cover{1800000}else{500000},10800000,if cover{2200000}else{1500000}),&title_lines,if cover{4200}else{3200},true,"172B40");
-    let body=textbox(3,"保存的正文",(710000,1750000,10700000,4200000),&slide.body,2000,false,"27364A");
+    let body_y=1750000u32.max(500000+title_lines.len() as u32*38*12700+160000);
+    let body=textbox(3,"保存的正文",(710000,body_y,10700000,6350000-body_y-180000),&slide.body,2000,false,"27364A");
     let footer=textbox(4,"页码",(680000,6350000,10800000,220000),&[format!("{} / {}",index+1,total)],1000,false,"667589");
     format!(r#"<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:cSld><p:bg><p:bgPr><a:solidFill><a:srgbClr val="F8FAFC"/></a:solidFill><a:effectLst/></p:bgPr></p:bg><p:spTree>{}{header}{body}{footer}</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>"#,group())
 }

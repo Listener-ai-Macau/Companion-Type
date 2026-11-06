@@ -5,7 +5,7 @@ b=Path('C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261106-material-
 framework=Path('C:/Windows/Microsoft.NET/Framework64/v4.0.30319')
 args=[str(framework/'csc.exe'),'/nologo','/target:exe','/out:'+str(qa/'ValidatePresentation052.exe'),
       '/reference:'+str(qa/'DocumentFormat.OpenXml.dll'),'/reference:'+str(framework/'WPF/WindowsBase.dll'),
-      '/reference:'+str(framework/'System.Web.Extensions.dll'),str(Path('work/ValidatePresentation052.cs').resolve())]
+      '/reference:'+str(framework/'System.Web.Extensions.dll'),str(Path(__file__).with_name('ValidatePresentation052.cs').resolve())]
 p=subprocess.run(args,capture_output=True,text=True,creationflags=subprocess.CREATE_NO_WINDOW)
 (b/'openxml-compiler.log').write_text(p.stdout+p.stderr,encoding='utf8');assert p.returncode==0,p.stdout+p.stderr
 files=sorted(sorted(b.glob('native-files-*'))[-1].glob('*.pptx'))
