@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-06T22:05:54+08:00",
+  "model": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+  "modelRevision": "10304d926740cf5a5cee05a268086e3265197910",
+  "officialSourceCommit": "79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "weightSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "runtime": {
+    "python": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1",
+    "gpuIndex": 1,
+    "dtype": "bfloat16",
+    "boundedMathAttention": true,
+    "queryBlock": 128,
+    "keyBlock": 256,
+    "encoderBatch": 1,
+    "streamedWeightLoading": true,
+    "directGpuWeightLoading": true,
+    "nativePcm16RamLoading": true,
+    "releaseUnusedModelAllocations": true,
+    "systemPrivateMemoryBudgetBytes": 2147483648,
+    "workerCpuHardCapPercent": 5,
+    "workerGpuScheduling": "IDLE",
+    "cooperativeGpuDuty": 0.1,
+    "affinity": [
+      14,
+      15
+    ],
+    "threads": 2,
+    "maxLength": 131072,
+    "maxNewTokensSmoke": 2048,
+    "maxNewTokensFull": 65536,
+    "doSample": false,
+    "seed": 0,
+    "durableProgressWrites": true,
+    "preparedInputs": {
+      "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+      "sha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432"
+    }
+  },
+  "scope": "Owner explicitly resumes full real meeting and skips reboot-cause investigation. Same pinned published model, complete context, query128/key256, BF16, CPU5%, private-memory2GiB, GPU IDLE and cooperative duty0.1 with durable encoder/token/layer progress. No reference/count/hotwords in inference, no tuning/training. Full output scored only after worker exit. This changes duty from interrupted r16 .25 to post-restart-tested .1 and retains earlier failure evidence. Exact original author processor tensors staged in a separate exited process, byte-bound to audio/pins. Model input values, shapes, context and generation unchanged."
+}

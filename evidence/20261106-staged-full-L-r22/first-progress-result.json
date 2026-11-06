@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-06T22:10:11+08:00",
+  "state": "EXACT_FULL_INPUT_PREPARATION_PASSED_R22_PAST_PREVIOUS_MEMORY_STOP_RUNNING",
+  "ownerQuote": "另外现在显卡重新可以用了",
+  "prepared": {
+    "state": "COMPLETE_EXACT_FULL_AUDIO_INPUT_PREPARATION_ONLY",
+    "startedAt": "2026-11-06T22:04:08+08:00",
+    "referencePassedToWorker": false,
+    "automaticRetries": 0,
+    "sourceCommit": "5cf1087349cc9cfe5c0966de2bcd90d69323776f",
+    "peakPrivateBytes": 1513033728,
+    "peakRssBytes": 1494548480,
+    "output": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet",
+    "pid": 23392,
+    "processCreatedAt": 1793973848.3860643,
+    "exitCode": 0,
+    "workerState": "COMPLETE_AUTHOR_INPUT_PREPARATION_NO_MODEL_LOADED",
+    "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+    "manifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432",
+    "finishedAt": "2026-11-06T22:04:23+08:00",
+    "wallSeconds": 15.174993699998595
+  },
+  "authorInput": {
+    "inputTokens": 31292,
+    "shape": [
+      79,
+      80,
+      3000
+    ],
+    "roundtripAllTensorsBitwiseIdentical": true,
+    "noModelLoadedInPreprocessing": true
+  },
+  "runningSnapshot": {
+    "state": "ENCODING_COMPLETE_AUDIO",
+    "pid": 15956,
+    "actualGpu": "AMD Radeon RX 6800 XT",
+    "gpuIndex": 1,
+    "completedAcousticChunks": 62,
+    "totalAcousticChunks": 79,
+    "decoderPrefillLayersCompleted": null,
+    "decoderPrefillLayerTotal": null,
+    "generatedTokens": 0,
+    "lastCompletedSegmentEndSeconds": null,
+    "inputTokens": 31292,
+    "preparedInputCache": {
+      "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+      "manifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432",
+      "allTensorBytesChecked": true,
+      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+      "source": "Exact original author processor in previous exited process"
+    },
+    "modelLoadSeconds": 16.982697300001746
+  },
+  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22",
+  "execSessionId": 37085,
+  "batchPid": 2316,
+  "batchProcessCreatedAt": 1793973953.090124,
+  "supervisorPid": 28512,
+  "supervisorCreatedAt": 1793973954.3938823,
+  "newAccuracyScore": null,
+  "referencePassedToInference": false,
+  "unchangedLimits": {
+    "cpuPercentMaximum": 5,
+    "privateMemoryGiB": 2,
+    "gpuPriority": "IDLE",
+    "cooperativeDuty": 0.1,
+    "lowSystemMemoryStop": true,
+    "oneModelAtATime": true
+  },
+  "productModelChanged": false,
+  "computerUse": false,
+  "phoneIo": false,
+  "remaining": "Finish complete real meeting, require EOS/parsed whole output, then isolated cpCER/DER/overlap/timing scoring. No outcome or sale qualification yet."
+}

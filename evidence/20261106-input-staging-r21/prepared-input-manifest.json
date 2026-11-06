@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "state": "EXACT_AUTHOR_INPUT_TENSORS_PREPARED_NO_MODEL_LOADED",
+  "meeting": "L_R003S01C02",
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "audioSeconds": 2362.945,
+  "modelRevision": "10304d926740cf5a5cee05a268086e3265197910",
+  "officialSourceCommit": "79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "weightSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "torch": "2.11.0+rocm10.0.0",
+  "transformers": "5.22.1",
+  "maxLength": 131072,
+  "tensorFile": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\author-inputs.pt",
+  "tensorFileSha256": "b292b32ea3cd67172cafe423ee0a38bca99af0740453f341e77c127cbf874283",
+  "tensors": {
+    "attention_mask": {
+      "shape": [
+        1,
+        31292
+      ],
+      "dtype": "torch.int64",
+      "sha256": "8801e400178cb3a9a6290b390fe19f2a55b3255913def90073dcdb9cf89b4c38"
+    },
+    "audio_chunk_mapping": {
+      "shape": [
+        79
+      ],
+      "dtype": "torch.int64",
+      "sha256": "a8fe888f287d6d55df301aca05239c44f27e29d1ea4023657a641984de969026"
+    },
+    "audio_feature_lengths": {
+      "shape": [
+        79
+      ],
+      "dtype": "torch.int64",
+      "sha256": "b948201f89cf589790759e88be6befecc4294904b61c805fb1f6ffd2317b7b3f"
+    },
+    "input_features": {
+      "shape": [
+        79,
+        80,
+        3000
+      ],
+      "dtype": "torch.float32",
+      "sha256": "d71f058803d2a72fc4f8a8ea35c8939ac9f622e91b224e0bf2aec068be328732"
+    },
+    "input_ids": {
+      "shape": [
+        1,
+        31292
+      ],
+      "dtype": "torch.int64",
+      "sha256": "8605637ffb8ec6b9a5a7d12ee8f553b2069cd93d41f405126ac124dee5e35e0a"
+    }
+  },
+  "roundtripAllTensorsBitwiseIdentical": true,
+  "modelLoaded": false,
+  "referenceUsed": false,
+  "scope": "Only original author prepare_inputs output; no model state, transcript, speaker count, reference, hotwords or labels."
+}

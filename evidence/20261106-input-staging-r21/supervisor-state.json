@@ -1,0 +1,18 @@
+{
+  "state": "COMPLETE_EXACT_FULL_AUDIO_INPUT_PREPARATION_ONLY",
+  "startedAt": "2026-11-06T22:04:08+08:00",
+  "referencePassedToWorker": false,
+  "automaticRetries": 0,
+  "sourceCommit": "5cf1087349cc9cfe5c0966de2bcd90d69323776f",
+  "peakPrivateBytes": 1513033728,
+  "peakRssBytes": 1494548480,
+  "output": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet",
+  "pid": 23392,
+  "processCreatedAt": 1793973848.3860643,
+  "exitCode": 0,
+  "workerState": "COMPLETE_AUTHOR_INPUT_PREPARATION_NO_MODEL_LOADED",
+  "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+  "manifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432",
+  "finishedAt": "2026-11-06T22:04:23+08:00",
+  "wallSeconds": 15.174993699998595
+}

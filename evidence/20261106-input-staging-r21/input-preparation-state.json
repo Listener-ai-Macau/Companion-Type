@@ -1,0 +1,46 @@
+{
+  "state": "COMPLETE_AUTHOR_INPUT_PREPARATION_NO_MODEL_LOADED",
+  "startedAt": "2026-11-06T22:04:08+08:00",
+  "modelLoaded": false,
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "resourceLimits": {
+    "pid": 16432,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 10547200,
+    "cpuPriorityClass": 64,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "pcm16RamLoader": {
+    "nativePcm16Loads": 1,
+    "fallbackLoads": 0,
+    "resamplingSkippedOnlyWhenAlreadyExactFormat": true
+  },
+  "actualGpu": "AMD Radeon RX 6800 XT",
+  "gpuIdentitySelection": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "reportedMemoryBytes": 17163091968,
+    "requestedIndexHint": 1,
+    "indexChangedFromHint": false,
+    "selectionPolicy": "Unique RX 6800 XT and gfx1030 identity; never substitute integrated graphics"
+  },
+  "inputTokens": 31292,
+  "inputFeatureShape": [
+    79,
+    80,
+    3000
+  ],
+  "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+  "manifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432",
+  "tensorFileSha256": "b292b32ea3cd67172cafe423ee0a38bca99af0740453f341e77c127cbf874283",
+  "roundtripAllTensorsBitwiseIdentical": true,
+  "seconds": 13.102945399994496
+}
