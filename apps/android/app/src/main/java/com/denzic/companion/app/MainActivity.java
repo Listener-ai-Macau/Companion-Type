@@ -53,7 +53,7 @@ public final class MainActivity extends Activity {
     private LocalLibraryBackups libraries(){return new LocalLibraryBackups(root());}
     private Path recordings() throws java.io.IOException { return libraries().recordings(); }
     private MeetingStore store() throws java.io.IOException { return new MeetingStore(libraries().meetings()); }
-    private LocalRecordingLifecycle lifecycle()throws Exception{return new LocalRecordingLifecycle(recordings(),libraries().meetings(),MainActivity::syncLifecycleDirectory);}
+    private LocalRecordingLifecycle lifecycle()throws Exception{return new LocalRecordingLifecycle(root(),recordings(),libraries().meetings(),MainActivity::syncLifecycleDirectory);}
     private static void syncLifecycleDirectory(Path directory)throws java.io.IOException{
         java.io.FileDescriptor fd=null;
         try{

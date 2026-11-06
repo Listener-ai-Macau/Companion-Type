@@ -37,20 +37,20 @@ public final class LifecycleQa071 extends Instrumentation {
    if(stage.equals("create")){
     check(!Files.exists(base),"preserve previous synthetic fixture");Files.createDirectories(r);Files.createDirectories(m);writeFixtures(r,m,KEY);writeFixtures(r,m,OTHER);
     JSONObject hashes=new JSONObject();for(Path p:files(r,m,KEY))hashes.put(base.relativize(p).toString(),sha(p));for(Path p:files(r,m,OTHER))hashes.put(base.relativize(p).toString(),sha(p));Files.write(base.resolve("before.json"),hashes.toString().getBytes("UTF-8"));
-    LocalRecordingLifecycle life=new LocalRecordingLifecycle(r,m,LifecycleQa071::sync);
+    LocalRecordingLifecycle life=new LocalRecordingLifecycle(r.getParent(),r,m,LifecycleQa071::sync);
     life.change(KEY,0,"protect","");expectRefusal(()->life.change(KEY,1,"trash","公开测试"));life.change(KEY,1,"unprotect","");life.change(KEY,2,"trash","公开虚构会议");expectRefusal(()->life.requireVisible(KEY));
     check(life.trash().getJSONArray("rows").length()==1,"trash missing");receipt.put("result","PROTECTION_AND_DURABLE_TRASH_CREATED");
    }else{
-    check(Files.isRegularFile(base.resolve("before.json")),"synthetic fixture missing");LocalRecordingLifecycle life=new LocalRecordingLifecycle(r,m,LifecycleQa071::sync);
+    check(Files.isRegularFile(base.resolve("before.json")),"synthetic fixture missing");LocalRecordingLifecycle life=new LocalRecordingLifecycle(r.getParent(),r,m,LifecycleQa071::sync);
     JSONObject hashes=new JSONObject(new String(Files.readAllBytes(base.resolve("before.json")),"UTF-8"));
     if(stage.equals("reopen")){
      check(life.get(KEY).getLong("revision")==3&&life.get(KEY).getLong("trashedAt")>0,"trash lost across process");life.change(KEY,3,"restore","");life.requireVisible(KEY);
      for(Iterator<String> it=hashes.keys();it.hasNext();){String path=it.next();check(sha(base.resolve(path)).equals(hashes.getString(path)),"restore changed original bytes");}
      life.change(KEY,4,"trash","公开虚构会议");life.change(OTHER,0,"protect","");ByteArrayOutputStream bytes=new ByteArrayOutputStream();LibraryBackup.write(bytes,r,m,null);Path restored=base.resolve("backup-reopened");LibraryBackup.restore(new ByteArrayInputStream(bytes.toByteArray()),restored);
-     LocalRecordingLifecycle copy=new LocalRecordingLifecycle(restored.resolve("recordings"),restored.resolve("meetings"),LifecycleQa071::sync);check(copy.get(OTHER).getBoolean("protected")&&copy.get(KEY).getLong("trashedAt")>0,"backup lost lifecycle");
+     LocalRecordingLifecycle copy=new LocalRecordingLifecycle(restored,restored.resolve("recordings"),restored.resolve("meetings"),LifecycleQa071::sync);check(copy.get(OTHER).getBoolean("protected")&&copy.get(KEY).getLong("trashedAt")>0,"backup lost lifecycle");
      receipt.put("result","NEW_PROCESS_RESTORE_BYTES_AND_ANDROID_BACKUP_PASSED");
     }else if(stage.equals("interrupt")){
-     JSONObject plan=life.preparePurge(KEY,5);final int[] calls={0};LocalRecordingLifecycle partial=new LocalRecordingLifecycle(r,m,LifecycleQa071::sync,path->{if(++calls[0]==2)throw new IOException("synthetic interruption");return Files.deleteIfExists(path);});
+     JSONObject plan=life.preparePurge(KEY,5);final int[] calls={0};LocalRecordingLifecycle partial=new LocalRecordingLifecycle(r.getParent(),r,m,LifecycleQa071::sync,path->{if(++calls[0]==2)throw new IOException("synthetic interruption");return Files.deleteIfExists(path);});
      expectRefusal(()->partial.purge(KEY,5,plan.getString("token")));check(life.get(KEY).getBoolean("purging")&&life.get(KEY).getLong("revision")==6,"partial deletion status not durable");expectRefusal(()->life.change(KEY,6,"restore",""));
      receipt.put("result","PARTIAL_CLEAR_RETAINED_FOR_NEXT_PROCESS_RETRY");
     }else if(stage.equals("retry")){

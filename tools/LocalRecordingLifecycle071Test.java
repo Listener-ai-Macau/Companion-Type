@@ -19,7 +19,7 @@ public final class LocalRecordingLifecycle071Test {
         Path material=meetings.resolve("ai-materials").resolve(LocalRecordingLifecycle.hash(key).substring(0,8)+"-1111-2222-3333-444444444444.json");Files.createDirectories(material.getParent());
         Files.write(material,new JSONObject().put("ownerKey",key).put("body","公开虚构AI材料").toString().getBytes("UTF-8"));files.add(material);return files;
     }
-    static LocalRecordingLifecycle lifecycle(Path r,Path m){return new LocalRecordingLifecycle(r,m,path->{});}
+    static LocalRecordingLifecycle lifecycle(Path r,Path m){return new LocalRecordingLifecycle(r.getParent(),r,m,path->{});}
     public static void main(String[] args)throws Exception{
         Path base=Files.createTempDirectory(Paths.get(args[0]),"trash071-"),r=Files.createDirectory(base.resolve("recordings")),m=Files.createDirectory(base.resolve("meetings"));
         List<Path> a=fixture(r,m,A),b=fixture(r,m,B);Map<Path,byte[]> original=new HashMap<>();for(Path p:a)original.put(p,Files.readAllBytes(p));for(Path p:b)original.put(p,Files.readAllBytes(p));
@@ -39,7 +39,7 @@ public final class LocalRecordingLifecycle071Test {
 
         Path damaged=Files.write(m.resolve("damaged-meeting-public-fixture.bin"),"unassigned damaged fixture".getBytes("UTF-8"));
         JSONObject prepared=life.preparePurge(A,5);final int[] calls={0};
-        LocalRecordingLifecycle interrupted=new LocalRecordingLifecycle(r,m,path->{},path->{if(++calls[0]==2)throw new IOException("injected interruption");return Files.deleteIfExists(path);});
+        LocalRecordingLifecycle interrupted=new LocalRecordingLifecycle(r.getParent(),r,m,path->{},path->{if(++calls[0]==2)throw new IOException("injected interruption");return Files.deleteIfExists(path);});
         refused(()->interrupted.purge(A,5,prepared.getString("token")),"interrupted deletion reported complete");
         JSONObject interruptedState=life.get(A);check(interruptedState.getBoolean("purging")&&interruptedState.getLong("revision")==6,"partial purge not persisted");
         refused(()->same.change(A,6,"restore",""),"partial purge restored as complete");
@@ -59,8 +59,9 @@ public final class LocalRecordingLifecycle071Test {
         LocalRecordingLifecycle broken=life;refused(()->broken.get(B),"corrupt state became unprotected");check(life.trash().getInt("problems")==1,"unreadable state not reported");Files.write(state,good);
         Path sibling=Files.createDirectory(base.resolve("sibling-library"));Path keep=Files.write(sibling.resolve("keep.txt"),"other library".getBytes("UTF-8"));
         refused(()->same.get("../../sibling-library"),"path escaped");check(Files.exists(keep),"other library touched");
+        refused(()->new LocalRecordingLifecycle(base.resolve("other-app"),r,m,path->{}).get(B),"managed directory outside trusted app root accepted");
         JSONObject next=life.preparePurge(c,1);
-        LocalRecordingLifecycle syncFailure=new LocalRecordingLifecycle(r,m,path->{throw new IOException("injected directory publication failure");});
+        LocalRecordingLifecycle syncFailure=new LocalRecordingLifecycle(r.getParent(),r,m,path->{throw new IOException("injected directory publication failure");});
         refused(()->syncFailure.purge(c,1,next.getString("token")),"publication failure ignored");
         for(Path p:extra)check(Files.exists(p),"a file deleted before durable purge state");
         check(life.get(c).getBoolean("purging"),"failure state cannot be resumed");

@@ -10,23 +10,29 @@ import java.util.*;
 
 /** Local-library metadata only. No Bluetooth, model, network or device deletion. */
 final class LocalRecordingLifecycle {
-    private final Path recordings,meetings,directory;
+    private final Path appRoot,recordings,meetings,directory;
     interface Deleter{boolean remove(Path path)throws IOException;}
     interface DirectorySync{void sync(Path path)throws IOException;}
     private final Deleter delete;
     private final DirectorySync sync;
-    LocalRecordingLifecycle(Path recordings,Path meetings,DirectorySync sync){
-        this(recordings,meetings,sync,Files::deleteIfExists);
+    LocalRecordingLifecycle(Path appRoot,Path recordings,Path meetings,DirectorySync sync){
+        this(appRoot,recordings,meetings,sync,Files::deleteIfExists);
     }
-    LocalRecordingLifecycle(Path recordings,Path meetings,DirectorySync sync,Deleter delete){
+    LocalRecordingLifecycle(Path appRoot,Path recordings,Path meetings,DirectorySync sync,Deleter delete){
+        this.appRoot=appRoot.toAbsolutePath().normalize();
         this.recordings=recordings.toAbsolutePath().normalize();this.meetings=meetings.toAbsolutePath().normalize();
         directory=this.meetings.resolve("recording-lifecycle");this.delete=delete;this.sync=sync;
     }
     private interface Action<T>{T run()throws Exception;}
-    private static void safeDirectory(Path p)throws IOException{
-        Files.createDirectories(p);
-        // Also check ancestors: a forged subdirectory cannot escape an app library.
-        for(Path part=p;part!=null;part=part.getParent())if(Files.isSymbolicLink(part))throw new IOException("资料目录含链接，已保留原文件，请先检查。");
+    private void managedPath(Path p)throws IOException{
+        if(!p.startsWith(appRoot)||p.equals(appRoot))throw new IOException("资料路径越界，原文件保留。");
+        // Context supplies the trusted app root. Android may itself alias an
+        // ancestor (/data/user/0); only links within our app can redirect data.
+        for(Path part=p;part!=null&&part.startsWith(appRoot);part=part.getParent())
+            if(Files.isSymbolicLink(part))throw new IOException("资料目录含链接，已保留原文件，请先检查。");
+    }
+    private void safeDirectory(Path p)throws IOException{
+        managedPath(p);Files.createDirectories(p);managedPath(p);
         if(!Files.isDirectory(p,LinkOption.NOFOLLOW_LINKS))throw new IOException("资料目录无法读取。");
     }
     private <T>T locked(Action<T> action)throws Exception{
@@ -108,7 +114,7 @@ final class LocalRecordingLifecycle {
         for(String part:name.split("/",-1))if(part.isEmpty()||part.equals(".")||part.equals(".."))throw new IOException("清除路径无效。");
         Path root=scope.equals("recordings")?recordings:meetings;Path p=root.resolve(name).normalize();
         if(!p.startsWith(root)||p.equals(root))throw new IOException("清除路径越界。");
-        for(Path part=p;part!=null;part=part.getParent())if(Files.isSymbolicLink(part))throw new IOException("清除范围含链接，原文件保留。");
+        managedPath(p);
         return p;
     }
     private static String fileHash(Path path)throws Exception{
