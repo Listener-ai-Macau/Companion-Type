@@ -26,7 +26,7 @@ with fixture as tmp:
     source = backend / "src/main/java/com/denzic/companion/mobile"
     test = backend / "src/test/java/com/denzic/companion/mobile"
     files = [source / (name + ".java") for name in ("RecorderWire", "DeviceRecordings", "DeviceMaintenance", "SegmentReceiver", "RecordingLibrary", "RecordingClient", "NativeRecordingControl", "DurableConsume", "MeetingStore", "NativeAudio", "DecodedAudioParts", "DeviceBookmarkCache", "RecordingSyncRunner")]
-    files += [source / "InitialConnectionRetry.java", test / "InitialConnectionRetryTest.java", test / "RecorderWireTest.java", test / "SavedSyntheticWireReplay.java", test / "MeetingStoreTest.java"]
+    files += [source / "InitialConnectionRetry.java", source / "RecordingTransferMetrics.java", test / "InitialConnectionRetryTest.java", test / "RecorderWireTest.java", test / "SavedSyntheticWireReplay.java", test / "MeetingStoreTest.java"]
     stub = tmp / "AndroidDirectorySync.java"
     stub.write_text("package com.denzic.companion.mobile; final class AndroidDirectorySync { "
                     "static void sync(java.nio.file.Path p) throws java.io.IOException { "

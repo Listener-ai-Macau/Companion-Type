@@ -63,14 +63,17 @@ public final class AndroidGattLink implements RecordingClient.Link {
 
     /** Connect only a device the user has already selected and paired. Call off the main thread. */
     public static AndroidGattLink connect(Context context,BluetoothDevice device) throws IOException {
-        return InitialConnectionRetry.open(()->connect(context,device,139,true),millis->{
+        return connectWithInitialRetry(context,device,139,true);
+    }
+    private static AndroidGattLink connectWithInitialRetry(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock)throws IOException {
+        return InitialConnectionRetry.open(()->connect(context,device,minimumMtu,synchronizeClock),millis->{
             android.util.Log.w("CompanionBle","Initial GATT133 refused before connection; closed client, retrying once");
             Thread.sleep(millis);
         });
     }
     /** Upgrade uses the same bonded GATT owner with no recording negotiation or
      * clock write. Read-back verification must not modify the new application. */
-    public static AndroidGattLink connectForUpdate(Context context,BluetoothDevice device)throws IOException{return connect(context,device,23,false);}
+    public static AndroidGattLink connectForUpdate(Context context,BluetoothDevice device)throws IOException{return connectWithInitialRetry(context,device,23,false);}
     private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock) throws IOException {
         if(context==null||device==null)throw new IllegalArgumentException("context and selected device required");
         if(Build.VERSION.SDK_INT<26)throw new RecordingSyncRunner.ActionRequired("需要 Android 8 或更新的系统才能接收录音");

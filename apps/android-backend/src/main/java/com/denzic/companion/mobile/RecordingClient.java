@@ -36,12 +36,18 @@ public final class RecordingClient implements Closeable {
     private final Link link;private final RecorderWire.Peer peer;private final DurableConsume durableConsume;private final SecureRandom random=new SecureRandom();private final Object liveControlLock=new Object();
     private List<RecorderWire.Descriptor> current;private final AtomicBoolean closed=new AtomicBoolean();
     private final boolean consumePullOverlap;
+    private final RecordingTransferMetrics transferMetrics;
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
 
     /** The caller first establishes the user's selected, bonded device link. */
-    public RecordingClient(Link link) throws IOException {this(link,null,null);}
+    public RecordingClient(Link link) throws IOException {this(link,null,null,null);}
     RecordingClient(Link link,DurableConsume.DirectorySync directorySync,DurableConsume.PrefixCheck prefixCheck) throws IOException {
+        this(link,directorySync,prefixCheck,null);
+    }
+    RecordingClient(Link link,RecordingTransferMetrics metrics) throws IOException {this(link,null,null,metrics);}
+    RecordingClient(Link link,DurableConsume.DirectorySync directorySync,DurableConsume.PrefixCheck prefixCheck,RecordingTransferMetrics metrics) throws IOException {
         if(link==null)throw new IllegalArgumentException("link required");this.link=link;
+        this.transferMetrics=metrics;
         if((directorySync==null)!=(prefixCheck==null))throw new IllegalArgumentException("both test dependencies are required");
         boolean ready=false;
         try {
@@ -195,7 +201,7 @@ public final class RecordingClient implements Closeable {
      */
     public synchronized RecordingLibrary.Session syncAvailableAndReclaim(RecorderWire.Descriptor selected,Path privateDirectory,SessionProgress progress) throws IOException {
         ensureOpen();if(selected==null||privateDirectory==null)throw new IllegalArgumentException("recording and private directory required");
-        peer.validate(selected);durableConsume.reconcilePending(privateDirectory,selected);
+        peer.validate(selected);boolean recovered=durableConsume.reconcilePending(privateDirectory,selected);
         List<RecorderWire.Descriptor> entries=listRecordings();java.util.ArrayList<RecorderWire.Descriptor> matches=new java.util.ArrayList<>();
         for(RecorderWire.Descriptor d:entries)if(d.sessionId==selected.sessionId)matches.add(d);
         matches.sort(java.util.Comparator.comparingLong(d->d.segmentIndex));
@@ -209,6 +215,8 @@ public final class RecordingClient implements Closeable {
                 throw new IOException("recording session has conflicting segments; originals retained");
             previous=d;
         }
+        if(transferMetrics!=null)transferMetrics.initialSync(!recovered&&selectedOnDevice&&selected.segmentIndex==0,
+            !matches.isEmpty()&&(matches.get(matches.size()-1).flags&2)!=0);
         if(!selectedOnDevice)RecordingLibrary.verifiedPrefix(privateDirectory,selected);
         if(consumePullOverlap&&!matches.isEmpty()){
             download(matches.get(0).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,matches.size(),received,total));
@@ -234,6 +242,7 @@ public final class RecordingClient implements Closeable {
             if(first.sessionId==selected.sessionId&&first.epoch==selected.epoch&&Arrays.equals(first.uid(),selected.uid())){
                 if(session.state==RecordingLibrary.SessionState.DAMAGED)throw new IOException("local recording is damaged; originals retained");
                 RecordingLibrary.verifiedPrefix(privateDirectory,selected);
+                if(transferMetrics!=null&&session.state==RecordingLibrary.SessionState.COMPLETE)transferMetrics.completed();
                 return session;
             }
         }
@@ -258,16 +267,19 @@ public final class RecordingClient implements Closeable {
         for(int attempt=0;;attempt++) {
             ensureOpen();
             try(SegmentReceiver receiver=new SegmentReceiver(privateDirectory,found)){
+                RecordingTransferMetrics.Segment measured=transferMetrics==null?null:transferMetrics.segment(found,receiver.resumeOffset());
                 if(!receiver.completeBytesReceived()){
+                    if(transferMetrics!=null)transferMetrics.window();
                     link.write(RECORDING_PULL,peer.pull(found,receiver.resumeOffset()));
                     while(!receiver.completeBytesReceived()){
                         if(Thread.currentThread().isInterrupted())throw new IOException("transfer interrupted; partial copy retained");
                         receiver.accept(link.await(RECORDING_PULL,15_000));
+                        if(measured!=null)measured.accepted(receiver.resumeOffset());
                         if(progress!=null)progress.onBytes(receiver.resumeOffset(),found.encodedLength);
                     }
                 }
-                return receiver.finish();
-            } catch(SegmentReceiver.IntegrityMismatch error) {if(attempt!=0)throw error;}
+                Path finished=receiver.finish();if(measured!=null)measured.verified();return finished;
+            } catch(SegmentReceiver.IntegrityMismatch error) {if(transferMetrics!=null)transferMetrics.integrityRetry();if(attempt!=0)throw error;}
         }
     }
     /** May be called from another thread to interrupt a pending link operation. */

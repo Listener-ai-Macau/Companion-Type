@@ -23,6 +23,7 @@ public final class RecorderWireTest {
         boolean malformedRefusal;long lastDirectoryNonce;
         boolean declineOverlap,strictConsumeOrder;int receiptReads;long partialRecord;
         final java.util.ArrayList<String> flow=new java.util.ArrayList<>();
+        long[] metricClock;
         FakeLink(byte[] s,byte[] a,byte[] b,byte[] p){status=s;page0=a;page1=b;packet=p;}
         public int mtu(){return 247;} public byte[] read(UUID id){return status.clone();}
         public void subscribe(UUID id){} public void close(){closed=true;}
@@ -45,6 +46,7 @@ public final class RecorderWireTest {
                 }
             }
             else if(id.equals(RecordingClient.RECORDING_PULL)){if(value[2]!=4)throw new AssertionError("pull must stream the whole segment");pullCount++;
+                if(metricClock!=null)metricClock[0]+=10_000_000L;
                 flow.add("P"+RecorderWire.u32(value,4));
                 if(multiAudio!=null){long recording=0,offset=0;for(int i=0;i<4;i++){recording|=(value[4+i]&255L)<<(8*i);offset|=(value[28+i]&255L)<<(8*i);}
                     RecorderWire.Descriptor d=segments.get(recording);if(d==null)throw new AssertionError("unknown requested segment");
@@ -57,8 +59,9 @@ public final class RecorderWireTest {
             else throw new AssertionError("unexpected command");
         }
         public byte[] await(UUID id,long timeout)throws java.io.IOException {if(id.equals(RecordingClient.RECORDING_CONTROL))return control;if(id.equals(RecordingClient.RECORDING_LIST))return list;if(id.equals(RecordingClient.RECORDING_PULL)){
+            if(metricClock!=null)metricClock[0]+=20_000_000L;
             if(pull==null&&failOnNextPull){failOnNextPull=false;throw new java.io.IOException("synthetic disconnect");}byte[] result=pull;if(failOnNextPull)pull=null;return result;}
-            if(id.equals(RecordingClient.RECORDING_CONSUME)){if(timeoutConsumeReply)throw new java.net.SocketTimeoutException("synthetic lost receipt without disconnect");if(loseConsumeReply)throw new java.io.IOException("synthetic lost receipt");flow.add("A"+RecorderWire.u32(consumeReply,40));receiptReads++;return consumeReply.clone();}
+            if(id.equals(RecordingClient.RECORDING_CONSUME)){if(metricClock!=null)metricClock[0]+=1_500_000_000L;if(timeoutConsumeReply)throw new java.net.SocketTimeoutException("synthetic lost receipt without disconnect");if(loseConsumeReply)throw new java.io.IOException("synthetic lost receipt");flow.add("A"+RecorderWire.u32(consumeReply,40));receiptReads++;return consumeReply.clone();}
             throw new AssertionError("unexpected notification");}
     }
     private static byte[] directoryError(long nonce,int result){
@@ -108,7 +111,8 @@ public final class RecorderWireTest {
             Path folder=Files.createTempDirectory(root,"overlap-negotiation-");FakeLink transport=new FakeLink(overlapStatus,page0,page1,null);
             transport.declineOverlap=decline;transport.strictConsumeOrder=true;transport.multiAudio=audio;
             for(RecorderWire.Descriptor item:catalog.entries())transport.segments.put(item.recordingId,item);
-            try(RecordingClient client=new RecordingClient(transport,dir->{},prefix->{checkPrefix(prefix);})){
+            long[] metricClock={0};transport.metricClock=metricClock;RecordingTransferMetrics observed=new RecordingTransferMetrics(()->metricClock[0]);
+            try(RecordingClient client=new RecordingClient(transport,dir->{},prefix->{checkPrefix(prefix);},observed)){
                 if(client.consumePullOverlapNegotiated()==decline)throw new AssertionError("mode not determined by exact peer echo");
                 RecordingLibrary.Session received=client.syncAvailableAndReclaim(d,folder,null);
                 if(received.state!=RecordingLibrary.SessionState.COMPLETE)throw new AssertionError("overlap lost complete original");
@@ -116,23 +120,40 @@ public final class RecorderWireTest {
             java.util.List<String> expected=decline?Arrays.asList("P41","C41","A41","P42","C42","A42","P43","C43","A43"):
                 Arrays.asList("P41","C41","P42","A41","C42","P43","A42","C43","A43");
             if(!transport.flow.equals(expected)||Files.exists(folder.resolve(".consume-pending")))throw new AssertionError("incorrect copy/physical receipt order: "+transport.flow);
+            String measured=observed.json();
+            if(!measured.contains("\"durationNanos\":4590000000")||!measured.contains("\"complete\":true")||
+               !measured.contains("\"verifiedNewBytes\":"+(audio.length*3))||!measured.contains("\"initialCachedBytes\":0")||!measured.contains("\"freshSelection\":true"))
+                throw new AssertionError("native metric omitted physical receipts or counted duplicate/cache bytes: "+measured);
+            RecordingTransferMetrics cached=new RecordingTransferMetrics(()->metricClock[0]);
+            try(RecordingClient client=new RecordingClient(transport,dir->{},prefix->{checkPrefix(prefix);},cached)){client.syncAvailableAndReclaim(d,folder,null);}
+            String reused=cached.json();if(!reused.contains("\"verifiedNewBytes\":0")||!reused.contains("\"confirmedKiBps\":null")||!reused.contains("\"freshSelection\":false"))throw new AssertionError("cached originals became new throughput: "+reused);
         }
         Path interruptedOverlap=Files.createTempDirectory(root,"overlap-interrupted-");
         FakeLink failedOverlap=new FakeLink(overlapStatus,page0,page1,null);failedOverlap.strictConsumeOrder=true;failedOverlap.multiAudio=audio;failedOverlap.partialOnce=true;failedOverlap.partialRecord=42;
         for(RecorderWire.Descriptor item:catalog.entries())failedOverlap.segments.put(item.recordingId,item);
-        try(RecordingClient client=new RecordingClient(failedOverlap,dir->{},prefix->{checkPrefix(prefix);})){
+        long[] interruptedClock={0};failedOverlap.metricClock=interruptedClock;RecordingTransferMetrics interruptedMetrics=new RecordingTransferMetrics(()->interruptedClock[0]);
+        try(RecordingClient client=new RecordingClient(failedOverlap,dir->{},prefix->{checkPrefix(prefix);},interruptedMetrics)){
             expectFailure(()->client.syncAvailableAndReclaim(d,interruptedOverlap,null));
         }
         if(failedOverlap.consumeWrites!=1||failedOverlap.receiptReads!=0||!Files.exists(interruptedOverlap.resolve(".consume-pending"))||
             !Arrays.equals(Files.readAllBytes(interruptedOverlap.resolve(".consume-pending")),d.wireBytes()))throw new AssertionError("failed next copy lost original pending confirmation");
+        if(!interruptedMetrics.json().contains("\"confirmedKiBps\":null")||interruptedMetrics.json().contains("\"complete\":true"))throw new AssertionError("partial copy reported confirmed rate");
+        interruptedClock[0]+=5_000_000_000L;
         FakeLink resumedOverlap=new FakeLink(overlapStatus,page0,page1,null);resumedOverlap.strictConsumeOrder=true;resumedOverlap.multiAudio=audio;
         for(RecorderWire.Descriptor item:catalog.entries())resumedOverlap.segments.put(item.recordingId,item);
-        try(RecordingClient client=new RecordingClient(resumedOverlap,dir->{},prefix->{checkPrefix(prefix);})){
+        resumedOverlap.metricClock=interruptedClock;
+        try(RecordingClient client=new RecordingClient(resumedOverlap,dir->{},prefix->{checkPrefix(prefix);},interruptedMetrics)){
             if(client.syncAvailableAndReclaim(d,interruptedOverlap,null).state!=RecordingLibrary.SessionState.COMPLETE)throw new AssertionError("overlap resume incomplete");
         }
         if(resumedOverlap.consumeWrites!=3||resumedOverlap.pullCount!=2||Files.exists(interruptedOverlap.resolve(".consume-pending"))||
             !resumedOverlap.flow.equals(Arrays.asList("C41","A41","P42","C42","P43","A42","C43","A43")))
             throw new AssertionError("same-session recovery redownloaded old prefix or consumed out of order: "+resumedOverlap.flow);
+        String restored=interruptedMetrics.json();
+        // Four writes, five notification waits (including the failed wait),
+        // three physical receipts and the explicit five-second reconnect gap.
+        long fullWait=4*10_000_000L+5*20_000_000L+3*1_500_000_000L+5_000_000_000L;
+        if(!restored.contains("\"durationNanos\":"+fullWait)||!restored.contains("\"verifiedNewBytes\":"+(audio.length*3))||!restored.contains("\"initialCachedBytes\":0"))
+            throw new AssertionError("reconnect wait excluded or resumed bytes counted twice: "+restored);
         long recordingDate=1793856001L;
         RecorderWire.Catalog datedCatalog=new RecorderWire.Catalog(peer,17);datedCatalog.calendar(true);
         if(datedCatalog.request()[2]!=1)throw new AssertionError("calendar request missing");

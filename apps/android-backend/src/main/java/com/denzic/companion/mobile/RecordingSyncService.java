@@ -27,6 +27,7 @@ public final class RecordingSyncService extends Service {
     private static boolean startingOrRunning;
     private static volatile RecordingClient activeClient;
     private RecordingSyncRunner runner;
+    private volatile RecordingTransferMetrics transferMetrics;
     private volatile int runningStartId;
     private boolean workerDone;
     private volatile boolean destroyed;
@@ -51,7 +52,7 @@ public final class RecordingSyncService extends Service {
                 public boolean saveSelection(){return prefs.edit().putString(ADDRESS,address)
                     .putString(DESCRIPTOR,Base64.encodeToString(wire,Base64.NO_WRAP))
                     .putString(DIRECTORY,directory.getName()).putString("state","starting")
-                    .putBoolean("consumePullOverlapNegotiated",false)
+                    .putBoolean("consumePullOverlapNegotiated",false).remove("nativeTransferMetrics")
                     .putString("detail","正在准备接收").commit();}
                 public void saveLaunchFailure(){prefs.edit().putString("state","error")
                     .putString("detail","无法启动后台接收，请检查蓝牙权限并在应用中重试").commit();}
@@ -132,6 +133,8 @@ public final class RecordingSyncService extends Service {
             final BluetoothDevice device=adapter.getRemoteDevice(address);final Path path=directory.toPath();
             if(!getSharedPreferences(PREFS,MODE_PRIVATE).edit().putString(ADDRESS,address).putString(DESCRIPTOR,Base64.encodeToString(wire,Base64.NO_WRAP)).putString(DIRECTORY,name).commit())throw new IOException("无法保存接收任务");
             runningStartId=startId;
+            transferMetrics=new RecordingTransferMetrics();
+            final RecordingTransferMetrics measured=transferMetrics;
             runner=new RecordingSyncRunner(()->{
                 try {
                     if(!adapter.isEnabled())throw new RecordingSyncRunner.BluetoothOff();
@@ -141,7 +144,7 @@ public final class RecordingSyncService extends Service {
                     throw new RecordingSyncRunner.ActionRequired("请允许蓝牙连接后继续接收",denied);
                 }
                 AndroidGattLink link=AndroidGattLink.connect(getApplicationContext(),device);
-                RecordingClient client=new RecordingClient(link);activeClient=client;
+                RecordingClient client=new RecordingClient(link,measured);activeClient=client;
                 getSharedPreferences(PREFS,MODE_PRIVATE).edit().putBoolean("consumePullOverlapNegotiated",client.consumePullOverlapNegotiated()).commit();
                 return new RecordingSyncRunner.Connection(){
                     public RecordingLibrary.Session sync() throws IOException {return client.syncAvailableAndReclaim(selected,path,null);}
@@ -159,7 +162,11 @@ public final class RecordingSyncService extends Service {
             return START_REDELIVER_INTENT;
         } catch(IOException|IllegalArgumentException|SecurityException e){update("error",e.getMessage()==null?"无法开始接收录音":e.getMessage());stopSelf(startId);return START_NOT_STICKY;}
     }
-    private void update(String state,String text){getSharedPreferences(PREFS,MODE_PRIVATE).edit().putString("state",state).putString("detail",text).commit();
+    private void update(String state,String text){
+        SharedPreferences.Editor edit=getSharedPreferences(PREFS,MODE_PRIVATE).edit().putString("state",state).putString("detail",text);
+        RecordingTransferMetrics observed=transferMetrics;
+        if(observed!=null)edit.putString("nativeTransferMetrics",observed.json());
+        edit.commit();
         if(!destroyed){NotificationManager manager=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);manager.notify(NOTIFICATION,notification(text));}}
     private Notification notification(String text){
         Intent stop=new Intent(this,RecordingSyncService.class).setAction(STOP);
