@@ -1,0 +1,22 @@
+{
+  "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+  "startedAt": "2026-11-06T22:05:54+08:00",
+  "protocolSha256": "0af6978158c859848023d75efc18151098725668ea9d409d7831e907525e7511",
+  "inputManifestSha256": "53a7fe03471af0b095317af13d18e5dbc407c76e48de9e0f66d0316508de03a7",
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 15,
+      "workerState": "FAILED_BEFORE_RECEIPT",
+      "wholeProcessFamilySeconds": 626.090464,
+      "observedProcessFamilyPeakRssBytes": 1322315776,
+      "observedProcessFamilyPeakPrivateBytes": 1401982976,
+      "processFamilyCpuSeconds": 86.484375,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22\\results\\L_R003S01C02-20261106-r22\\completed-state.json",
+      "smokeOnly": false
+    }
+  ],
+  "referencePassedToWorker": false,
+  "stopReason": "Windows LowMemoryResourceNotification signaled; release only this experiment family",
+  "finishedAt": "2026-11-06T22:16:20+08:00"
+}

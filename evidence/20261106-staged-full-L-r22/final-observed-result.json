@@ -1,0 +1,68 @@
+{
+  "at": "2026-11-06T22:34:42+08:00",
+  "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22",
+  "ownerQuote": "另外现在显卡重新可以用了",
+  "activeWorkerPid": null,
+  "startedAt": "2026-11-06T22:05:54+08:00",
+  "finishedAt": "2026-11-06T22:16:20+08:00",
+  "actualGpu": "AMD Radeon RX 6800 XT",
+  "audioSeconds": 2362.945,
+  "completeExactAuthorInputStagingPassed": true,
+  "completedAcousticChunks": 79,
+  "totalAcousticChunks": 79,
+  "decoderPrefillLayersCompleted": 3,
+  "decoderPrefillLayerTotal": 28,
+  "generatedTokens": 0,
+  "newWholeMeetingQualityScore": null,
+  "supervisorResult": {
+    "meeting": "L_R003S01C02",
+    "exitCode": 15,
+    "workerState": "FAILED_BEFORE_RECEIPT",
+    "wholeProcessFamilySeconds": 626.090464,
+    "observedProcessFamilyPeakRssBytes": 1322315776,
+    "observedProcessFamilyPeakPrivateBytes": 1401982976,
+    "processFamilyCpuSeconds": 86.484375,
+    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-staged-inputs-20261106-r22\\results\\L_R003S01C02-20261106-r22\\completed-state.json",
+    "smokeOnly": false
+  },
+  "lastResourceSample": {
+    "at": "2026-11-06T22:16:19+08:00",
+    "meeting": "L_R003S01C02",
+    "processFamilyRssBytes": 1322315776,
+    "processFamilyPrivateBytes": 1401962496,
+    "processFamilyCpuSeconds": 86.484375,
+    "systemCpuPercent": 46.6,
+    "availableMemoryBytes": 837869568
+  },
+  "gpuAllocatorSnapshot": {
+    "gpuAllocatedBytes": 2520237568,
+    "gpuReservedBytes": 3636461568,
+    "gpuPeakAllocatedBytes": 3626883072,
+    "gpuPeakReservedBytes": 3772776448
+  },
+  "preparedInputCache": {
+    "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+    "manifestSha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432",
+    "allTensorBytesChecked": true,
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "source": "Exact original author processor in previous exited process"
+  },
+  "reason": "Windows LowMemoryResourceNotification signaled; release only this experiment family",
+  "automaticInferenceRetries": 0,
+  "interpretation": "Exact author preprocessing separation passed the previous PREPARING_COMPLETE_AUDIO stop and all 79 acoustic chunks. The separate whole-context decoder did not finish; low system RAM is observed, its global root cause is not established. FAILED_BEFORE_RECEIPT means the stopped worker could not write its final receipt, not a newly diagnosed model-math failure.",
+  "unchangedGuards": {
+    "cpuPercentMaximum": 5,
+    "privateMemoryGiB": 2,
+    "gpuPriority": "IDLE",
+    "cooperativeDuty": 0.1,
+    "actualWindowsLowMemoryStop": true,
+    "oneModelAtATime": true
+  },
+  "otherAppsClosed": false,
+  "driverSettingsChanged": false,
+  "productModelChanged": false,
+  "computerUse": false,
+  "phoneIo": false,
+  "next": "不在相同全局低内存条件下盲重跑R22，不放宽既有保护。保留已验证独立输入准备及完整上下文/权重；下一次须有可区分的内存条件或实现变化后再整会验证，完整输出退出后才独立评分。当前推进原安卓回收站/Word受影响验收及Windows文件夹实际分享，等待共享手机占用释放。"
+}
