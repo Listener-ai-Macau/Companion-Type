@@ -1,0 +1,10 @@
+{
+  "package": "com.denzic.companion.shareqa056",
+  "apk": "E:\\CodexData\\Companion\\.build-cache\\device-phone055\\share-receiver056\\Companion-Share-Receiver056-QA.apk",
+  "sha256": "01e7d84b57b1b4e726339b032e2ff245293b79d03346dae990a405f543fb303c",
+  "internetPermission": false,
+  "contactsPermission": false,
+  "broadStoragePermission": false,
+  "installed": false,
+  "purpose": "Actual ACTION_SEND recipient to validate only explicitly shared public export bytes and exact read-only URI grants; no network or messaging contacts"
+}

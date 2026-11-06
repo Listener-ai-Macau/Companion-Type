@@ -1,0 +1,16 @@
+from pathlib import Path
+import subprocess,os,zipfile,json,hashlib
+r=Path('C:/Users/Billy/Desktop/Denzic/Companion');b=r/'docs/handoffs/20261106-device-phone-closure055/phone-followup';b.mkdir(exist_ok=True);c=Path('E:/CodexData/Companion/.build-cache/device-phone055/share-receiver056');c.mkdir(exist_ok=True);j=Path('C:/Program Files/Eclipse Adoptium/jdk-25.0.0.36-hotspot');sdk=Path('E:/CodexData/Companion/.build-cache/android-sdk');bt=sdk/'build-tools/36.0.0';android=sdk/'platforms/android-35/android.jar'
+env={**os.environ,'JAVA_HOME':str(j),'PATH':str(j/'bin')+os.pathsep+os.environ['PATH'],'JAVA_TOOL_OPTIONS':'-XX:ActiveProcessorCount=2'}
+def run(args):
+ p=subprocess.run([str(x) for x in args],env=env,capture_output=True,text=True,encoding='utf8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS);assert p.returncode==0,p.stdout+p.stderr;return p.stdout+p.stderr
+manifest=c/'AndroidManifest.xml';manifest.write_text('''<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.denzic.companion.shareqa056" android:versionCode="1" android:versionName="056-qa"><uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/><application android:label="Companion 本机分享验收" android:debuggable="true" android:testOnly="true"><activity android:name=".ShareReceiver056" android:exported="true" android:launchMode="singleTop"><intent-filter><action android:name="android.intent.action.SEND"/><category android:name="android.intent.category.DEFAULT"/><data android:mimeType="*/*"/></intent-filter></activity></application></manifest>''',encoding='utf8');classes=c/'classes';classes.mkdir(exist_ok=True)
+run([j/'bin/javac.exe','--release','8','-encoding','UTF-8','-cp',android,'-d',classes,Path(__file__).parent/'ShareReceiver056.java']);jar=c/'receiver.jar'
+with zipfile.ZipFile(jar,'w',zipfile.ZIP_DEFLATED) as z:
+ for p in classes.rglob('*.class'):z.write(p,p.relative_to(classes).as_posix())
+dex=c/'dex';dex.mkdir(exist_ok=True);run([os.environ['COMSPEC'],'/d','/c',bt/'d8.bat','--min-api','26','--lib',android,'--output',dex,jar]);unsigned=c/'unsigned.apk';run([bt/'aapt2.exe','link','-I',android,'--manifest',manifest,'-o',unsigned])
+with zipfile.ZipFile(unsigned,'a',zipfile.ZIP_DEFLATED) as z:
+ for p in dex.glob('*.dex'):z.write(p,p.name)
+aligned=c/'aligned.apk';run([bt/'zipalign.exe','-f','4',unsigned,aligned]);apk=c/'Companion-Share-Receiver056-QA.apk';run([os.environ['COMSPEC'],'/d','/c',bt/'apksigner.bat','sign','--ks','C:/Users/Billy/.android/debug.keystore','--ks-key-alias','androiddebugkey','--ks-pass','pass:android','--key-pass','pass:android','--out',apk,aligned]);run([os.environ['COMSPEC'],'/d','/c',bt/'apksigner.bat','verify','--verbose',apk])
+record={'package':'com.denzic.companion.shareqa056','apk':str(apk),'sha256':hashlib.sha256(apk.read_bytes()).hexdigest(),'internetPermission':False,'contactsPermission':False,'broadStoragePermission':False,'installed':False,'purpose':'Actual ACTION_SEND recipient to validate only explicitly shared public export bytes and exact read-only URI grants; no network or messaging contacts'}
+(b/'share-receiver-build.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print(json.dumps(record,ensure_ascii=False))
