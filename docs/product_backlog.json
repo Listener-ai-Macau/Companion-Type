@@ -132480,7 +132480,7 @@
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
+        "state": "WINDOWS060_INSTALLED_PROTECTED_ANDROID066_UNIFIED_CANDIDATE_READY_ACTUAL_PHONE_STILL_PENDING",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -132521,7 +132521,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "当前嵌软收取065实测占用期间不安装/点击手机；释放后读取实际版本与终态，合并062共享Word页脚到最新候选而非降级。再验实际Word保存分享、仅新录音暂停续录/回听/受控删除/原音导出，最后切回原有资料。Windows060已匹配打包并跑实际独立原生八格式预览，系统保存/分享及安装未验。",
+        "next": "当前手机锁屏且065收取实测占用尚未交回，不抢占/不降级。释放后重查实际版本；若无更新者，用已合并Word062原生212ec44d与最新Java传输的066，先实际Word保存/分享及SDK核验，再仅新录音控制/回听/受控删除/原音交付，最后切原库。Windows060已原位静默更新及隔离公开资料启动/八格式预览通过，系统SaveAs/分享接收端仍开。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -132637,8 +132637,8 @@
           "wholeProductQualified": false,
           "modelsRun": false
         },
-        "candidateVersion": "0.1.62/code62, not installed",
-        "currentCandidateSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
+        "candidateVersion": "0.1.66/code66, unified, not installed",
+        "currentCandidateSourceCommit": "2e093cc8f62d8553e6f706d9c203ec2962e63973",
         "continuation058": {
           "at": "2026-11-06T13:37:36+08:00",
           "state": "ANDROID059_INTEGRATED_CANDIDATE_READY_SHARED_PHONE_ACCEPTANCE_BUSY",
@@ -132745,7 +132745,7 @@
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
           "ownerQuote": "先，那你优先把那个前两项给搞了，然后的话。继续做这个事情，然后做完这些事情就可以说。我们只剩下模型能力没做了，对吧？这个时间进度大概还要多久？",
-          "state": "ANDROID059_INSTALLED_ACTUAL_EXPORT_TRANSPORT_PASSED_WORD_UNICODE_CONTENT_FIX_ACTIVE",
+          "state": "WINDOWS060_INSTALLED_PROTECTED_ANDROID066_UNIFIED_CANDIDATE_READY_ACTUAL_PHONE_STILL_PENDING",
           "priority": [
             "Ordinary phone/device recording control, only own-new sample receive/playback/delete/recovery and OTA/maintenance final receipts.",
             "Installed ordinary App selected-content SAF save, clipboard paste and ACTION_SEND recipient bytes/grants, then original-library return."
@@ -132814,8 +132814,8 @@
           }
         },
         "priority12Actual": {
-          "at": "2026-11-06T15:32:51+08:00",
-          "state": "ACTUAL_ANDROID_DOCUMENT_TRANSPORT_VERIFIED_WORD062_READY_FINAL_PHONE_AND_RECORDING_PENDING",
+          "at": "2026-11-06T16:22:01+08:00",
+          "state": "WINDOWS060_INSTALLED_PROTECTED_ANDROID066_UNIFIED_CANDIDATE_READY_ACTUAL_PHONE_STILL_PENDING",
           "installedLastProven": {
             "version": "0.1.61/code61",
             "installed": true,
@@ -132831,14 +132831,14 @@
             "snapshotFilesLocalOnly": true
           },
           "candidate": {
-            "result": "ANDROID62_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
-            "versionName": "0.1.62",
-            "versionCode": 62,
-            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\word062\\Companion-Android-0.1.62-录音与内容修复候选.apk",
-            "sha256": "bbc414e1581e9b4fc404eadfe9653f68a5999f2c1945b188fdbed8f978afbf77",
-            "bytes": 48765668,
-            "frontendSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
-            "backendSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+            "result": "ANDROID66_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+            "versionName": "0.1.66",
+            "versionCode": 66,
+            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\unified066\\Companion-Android-0.1.66-录音与内容修复候选.apk",
+            "sha256": "67302494fe5c42e542fefe3e26ec6636edbef3b68bb51b2974c3446d8aa5a1c8",
+            "bytes": 48765664,
+            "frontendSourceCommit": "2e093cc8f62d8553e6f706d9c203ec2962e63973",
+            "backendSourceCommit": "561708a9ab0e5c7415b6c19b601b592bfae062ac",
             "signerMatches050r2And055": true,
             "zip16KiBAligned": true,
             "nativeLibraries": [
@@ -132864,31 +132864,29 @@
               "assets/index-BeLbnNsw.css",
               "assets/index-QaVRx1Hi.js"
             ],
-            "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\word062\\apk62-build-1793949358355010600.log",
-            "buildWallSeconds": 20.29,
+            "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\unified066\\apk66-build-1793952825082365800.log",
+            "buildWallSeconds": 25.086,
             "installed": false,
             "reasonNotInstalled": "Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.",
             "actualOrdinaryControlButtonsAccepted": false,
             "modelsRun": false,
-            "nativeRebuilt": true,
-            "nativeRebuiltByApkBuildStep": false,
-            "nativeRebuildReceipt": "native-word062.json",
-            "receiptCorrection": "Original generic APK packager hardcoded nativeRebuilt=false. Native source was actually rebuilt upstream in92.641sec; this packaging step reused that rebuilt library. Original receipt retained."
+            "nativeRebuilt": false,
+            "nativeRebuiltByApkBuildStep": false
           },
           "candidateSource": {
-            "at": "2026-11-06T15:13:30+08:00",
-            "versionName": "0.1.62",
-            "versionCode": 62,
-            "frontendSourceCommit": "80b34fcd6659f050724cedf93f4b8269ba05743e",
+            "at": "2026-11-06T16:12:56+08:00",
+            "versionName": "0.1.66",
+            "versionCode": 66,
+            "frontendSourceCommit": "2e093cc8f62d8553e6f706d9c203ec2962e63973",
             "frontendBranch": "work/device-phone-closure055-20261106",
-            "backendSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+            "backendSourceCommit": "561708a9ab0e5c7415b6c19b601b592bfae062ac",
             "backendBranch": "work/device-phone-closure055-android-20261106",
             "remoteReadback": true,
             "installed": false,
-            "nativeRebuilt": true,
+            "nativeRebuilt": false,
+            "nativeReusedFromWord062": true,
             "modelsRun": false,
-            "wordPhoneAcceptancePending": true,
-            "windowsFooterSourceCorrectedButNotPackaged": true
+            "scope": "Combine062 actual Word source repair and latest065 Java transport; recheck actual installed identity and current lease before any installation. Never replace a newer unrelated candidate."
           },
           "actualSavedFormats": [
             "txt",
@@ -132929,7 +132927,7 @@
             "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
           },
           "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
-          "next": "当前嵌软收取065实测占用期间不安装/点击手机；释放后读取实际版本与终态，合并062共享Word页脚到最新候选而非降级。再验实际Word保存分享、仅新录音暂停续录/回听/受控删除/原音导出，最后切回原有资料。Windows060已匹配打包并跑实际独立原生八格式预览，系统保存/分享及安装未验。",
+          "next": "当前手机锁屏且065收取实测占用尚未交回，不抢占/不降级。释放后重查实际版本；若无更新者，用已合并Word062原生212ec44d与最新Java传输的066，先实际Word保存/分享及SDK核验，再仅新录音控制/回听/受控删除/原音交付，最后切原库。Windows060已原位静默更新及隔离公开资料启动/八格式预览通过，系统SaveAs/分享接收端仍开。",
           "modelsRun": false,
           "customerResult": null,
           "ownerAccepted": false,
@@ -133009,7 +133007,156 @@
             "fullPriority12Complete": false,
             "wholeProductQualified": false
           },
-          "latestSharedObservation": "Existing OTA flow reports actual0.1.65 installation for reception2M comparison. Do not install062. Re-read final receipt and merge shared Word062 footer plus newer reception changes before next affected acceptance."
+          "latestSharedObservation": "Existing OTA flow reports actual0.1.65 installation for reception2M comparison. Do not install062. Re-read final receipt and merge shared Word062 footer plus newer reception changes before next affected acceptance.",
+          "latestResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\latest-result.json",
+          "windowsInstalled060": {
+            "state": "WINDOWS060_INSTALLED_EXISTING_DATA_IDENTICAL",
+            "startedAt": "2026-11-06T16:17:02+08:00",
+            "candidateVersion": "0.1.60",
+            "previousInstalledVersion": "0.1.52",
+            "sourceCommit": "2b5f352907ff49ec334f1b906c6b6921931f0622",
+            "msiSha256": "2a1ddda20287e0d9d973647bbac29cdf02069bc8f0e61578e8bea820469ac77b",
+            "existingDataFiles": 245,
+            "dataContentsPrinted": false,
+            "installerExitCode": 0,
+            "finishedAt": "2026-11-06T16:17:05+08:00",
+            "dataManifestIdentical": true,
+            "installedExeSha256": "9da28961fc5b8f82bfc35bd1a502711c5e71fc0b45054e12f5065cdf7a5ba569",
+            "installedDllSha256": "6589a071741081cb6209e4db62ccc1e0c46775a25840042d9667f58c2e58b951",
+            "limitations": "No owner app launch, foreground interaction, actual share/save modal, device operation or model inference."
+          },
+          "windowsInstalledNativeUi060": {
+            "sourceCommit": "2b5f352907ff49ec334f1b906c6b6921931f0622",
+            "exeSha256": "9da28961fc5b8f82bfc35bd1a502711c5e71fc0b45054e12f5065cdf7a5ba569",
+            "windowHidden": true,
+            "ownerDataUsed": false,
+            "modelsRun": false,
+            "deviceIo": false,
+            "clipboardTouched": false,
+            "systemSaveAsOrShareOpened": false,
+            "installed": true,
+            "status": "ACTUAL_INSTALLED_NATIVE060_EIGHT_FORMAT_PREVIEW_PASSED",
+            "isolatedPublicSourceUnchanged": false,
+            "clipboardSequenceUnchanged": true,
+            "persistenceRequiresScopedComparison": true,
+            "publicContentPreserved": true
+          },
+          "inheritedActualOta064": {
+            "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-metric-verdict.json",
+            "functionalResult": "PASS_ORDINARY_ANDROID064_OTA66688_EXACT_IDENTITY_AND_INDEPENDENT_UART",
+            "metrics": [
+              {
+                "id": "payload_rate_kib_s",
+                "title": "设备确认有效载荷速度",
+                "unit": "KiB/s",
+                "minimum": 50,
+                "basis": "固件+资源有效字节，从首个DATA窗口开始到最后设备确认保存；不计本地写入为设备保存",
+                "value": 55.46623638859937,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+                "measurementNote": ""
+              },
+              {
+                "id": "total_seconds",
+                "title": "正常完整升级总耗时",
+                "unit": "s",
+                "maximum": 180,
+                "basis": "开始核对设备到同UID新版本/资源/签名payload哈希和临时空间释放确认",
+                "value": 118.76411777700001,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+                "measurementNote": ""
+              },
+              {
+                "id": "post_finish_verify_seconds",
+                "title": "传完至安装后核对耗时",
+                "unit": "s",
+                "maximum": 120,
+                "basis": "全部字节设备确认后到实际新版本确认；包括设备提交、安装和重连，不把它全称为设备安装时间",
+                "value": 92.25937539,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+                "measurementNote": "Includes retention, Boot installation and reconnect/exact proof; not pure flash installation time."
+              },
+              {
+                "id": "application_bytes",
+                "title": "本批固件应用大小",
+                "unit": "B",
+                "maximum": 409252,
+                "value": 409252,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66688.json",
+                "measurementNote": ""
+              },
+              {
+                "id": "static_data_bss_bytes",
+                "title": "本批data+bss",
+                "unit": "B",
+                "maximum": 69328,
+                "value": 69328,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66688.json",
+                "measurementNote": "Same compiled runtime inputs and identical memory layout to previous measured66686; version only."
+              },
+              {
+                "id": "stack_reserved_bytes",
+                "title": "本批预留栈",
+                "unit": "B",
+                "maximum": 21504,
+                "value": 21504,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66688.json",
+                "measurementNote": ""
+              },
+              {
+                "id": "stack_guard_faults",
+                "title": "观测范围内栈防护/低栈告警",
+                "unit": "count",
+                "maximum": 0,
+                "value": 0,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-independent-uart.json",
+                "measurementNote": "Observed pre/post and passive boot snapshots only; not continuous pre-reset stack high-water."
+              },
+              {
+                "id": "old_catalog_changed_count",
+                "title": "旧录音目录非预期变化",
+                "unit": "count",
+                "maximum": 0,
+                "value": 0,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-after-catalog.json",
+                "measurementNote": "All34 original physical descriptors identical; whole catalogue and4608000B free unchanged."
+              },
+              {
+                "id": "pending_ota_claimed_bytes",
+                "title": "升级后未释放临时空间",
+                "unit": "B",
+                "maximum": 0,
+                "value": 0,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+                "measurementNote": "Actual installed=true requires production exact WSI4 payload SHA/layout and claimed bytes0."
+              },
+              {
+                "id": "installed_identity_mismatch_count",
+                "title": "UID/版本/资源/有效载荷校验不匹配",
+                "unit": "count",
+                "maximum": 0,
+                "value": 0,
+                "status": "PASS",
+                "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-independent-uart.json",
+                "measurementNote": "Ordinary app exact UID/version/UI85/payload/layout gate plus independent UART actualFW66688."
+              }
+            ],
+            "scope": "Inherited completed ordinary064/FW66688 upgrade evidence. Do not repeat unchanged OTA; this is not pause/playback/delete or066 actual Word qualification."
+          }
+        },
+        "latestWindowsInstalled": {
+          "version": "0.1.60",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\installation.json",
+          "existingFilesByteIdentical": 245,
+          "source": "2b5f352907ff49ec334f1b906c6b6921931f0622"
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -135243,7 +135390,7 @@
                 "notta_fill",
                 "notta_brain"
               ],
-              "current": "Android061实装：实际系统保存及本机分享接收覆盖TXT/MD/DOCX/PDF/PPTX/XLSX/mm/PNG，复制文字实际粘贴；Word查出并修了Unicode和共享页脚结构，062待真机最终复验。原音/SRT等剩余实际范围、Windows系统SaveAs/分享与AI外部表样填字段仍开。原Windows052功能与旧Android048证据保留。",
+              "current": "Windows060已原位安装：原245资料文件一致，实际安装程序隔离公开库八格式预览/浅深色通过，系统保存与分享接收未验。Android普通保存/本机分享八格式、实际粘贴已验；Word Unicode与共享页脚修复合入066同签名候选，保最新2M/升级回执修复，待当前065实测交回后实际复验。原音/SRT及AI外部表样填字段和完整交付仍开。",
               "acceptance": "原音/原文/纪要/译文可分别选，所需MP3/WAV/TXT/MD/DOCX/PDF/SRT/XLSX/导图格式逐项核内容与外部打开；PDF中文复制/搜索须正确。 11-05 AI增强对标补充：另区分普通转写文件导出与AI材料交付：按既有Word/Excel表样填字段、演示提纲PDF/PPTX及生成图PNG；未接AI/附件/格式真实链就保留未完成，不把普通DOCX或XLSX导出当智能填表已完成。",
               "order": "P0",
               "dependency": "software",
@@ -135347,9 +135494,9 @@
                   "ownerAccepted": false
                 },
                 "androidActualPriority12": {
-                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\progress-result.json",
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\latest-result.json",
                   "installed": "0.1.61 last proven",
-                  "candidate": "0.1.62 uninstalled",
+                  "candidate": "0.1.66 unified, uninstalled",
                   "actualDocumentSaveShareFormats": 8,
                   "actualCopyPasted": true,
                   "wordFinalContentQualified": false,
@@ -135360,8 +135507,11 @@
                   "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\progress-result.json",
                   "matchedMsi": true,
                   "privateNativeEightFormatPreview": true,
-                  "installed": false,
-                  "ordinarySaveAsOrShare": false
+                  "installed": true,
+                  "ordinarySaveAsOrShare": false,
+                  "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\installation.json",
+                  "originalFilesIdentical": 245,
+                  "installedNativeEightFormatPreview": true
                 }
               },
               "ownerAcceptance": {
@@ -135795,7 +135945,7 @@
                 "notta",
                 "granola"
               ],
-              "current": "Android061实装及原位升级资料校验已验，062 Word修复候选已编译签名，未装；Windows052为本侧最后安装证明。共享66686手机OTA功能已记录、速度目标未通过；新66687指标由现占用流程继续。正式发行签名/渠道和整机升级恢复资格仍未齐。",
+              "current": "Windows060实装及原245文件一致；Android最新共享观察065，066合并候选未装。本侧复用064/FW66688普通OTA指标与原34目录保持通过证据，不重复升级；最新收取速度、恢复资格、清配对和正式签名等原范围仍沿原待办。",
               "acceptance": "正式身份、升级/失败恢复、数据保留与下载渠道可供普通用户完成；工程包不当正式售卖包。",
               "order": "P0",
               "dependency": "signing_service",
@@ -135812,7 +135962,8 @@
                 "windows060Candidate": {
                   "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\windows-verification.json",
                   "sameUpgradeIdentityAndDowngradeGuard": true,
-                  "installed": false
+                  "installed": true,
+                  "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\installation.json"
                 }
               },
               "ownerAcceptance": {

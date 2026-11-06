@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-06T13:31:54+08:00",
+  "aarSha256": "e1eb24a9795a8a68be287a235c852f27ea9cee8be3abbf30458a8e5e06403f76",
+  "backendSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
+  "remoteSourceVerified": true,
+  "nativeChanges": true,
+  "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
+  "nativeProductionSourceIdenticalToIntegratedBackend": true,
+  "nativeLibrarySha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+  "nativeLibrary16KiBElfAligned": true,
+  "inheritedNativeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\native-final-library.json",
+  "javaClassesChangedFrom057": [
+    "com/denzic/companion/mobile/NativeRecordingControl$Callbacks.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/SystemUpdateClient.class"
+  ],
+  "allOtherAarEntriesIdenticalTo057": true,
+  "speechRuntimeBinariesAndWeightsChanged": false,
+  "scope": "061 Unicode-safe selected Word plus shared native Word footer property sequence. Retain060 continuous OTA/control; no ASR/model source or weight change.",
+  "ordinaryPhoneAcceptance": false,
+  "allNonClassAarEntriesByteIdenticalToIntegrated059": true,
+  "physicalOrdinaryAppAcceptance": false,
+  "wordUnicodeFixed": true,
+  "javaClassesChangedFrom060": [
+    "com/denzic/companion/mobile/MeetingDocumentSections$Section.class",
+    "com/denzic/companion/mobile/MeetingDocumentSections.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo060": true,
+  "nativeProductionSourceIdenticalTo5197a7b": false,
+  "nativeProductionSourceDiffFrom5197a7b": [
+    "apps/windows/src-tauri/src/backend/meeting_document_export.rs"
+  ],
+  "javaClassesIdenticalTo061": true,
+  "allOtherAarEntriesByteIdenticalTo061": true
+}

@@ -1,0 +1,43 @@
+{
+  "result": "ANDROID66_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+  "versionName": "0.1.66",
+  "versionCode": 66,
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\unified066\\Companion-Android-0.1.66-录音与内容修复候选.apk",
+  "sha256": "67302494fe5c42e542fefe3e26ec6636edbef3b68bb51b2974c3446d8aa5a1c8",
+  "bytes": 48765664,
+  "frontendSourceCommit": "2e093cc8f62d8553e6f706d9c203ec2962e63973",
+  "backendSourceCommit": "561708a9ab0e5c7415b6c19b601b592bfae062ac",
+  "signerMatches050r2And055": true,
+  "zip16KiBAligned": true,
+  "nativeLibraries": [
+    {
+      "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+      "sha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libonnxruntime.so",
+      "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+      "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+      "elf16KiBAligned": true
+    }
+  ],
+  "webAssetsExact": [
+    "index.html",
+    "manifest.webmanifest",
+    "assets/index-BeLbnNsw.css",
+    "assets/index-QaVRx1Hi.js"
+  ],
+  "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\unified066\\apk66-build-1793952825082365800.log",
+  "buildWallSeconds": 25.086,
+  "installed": false,
+  "reasonNotInstalled": "Build receipt only; actual ordinary-phone installation and affected-path acceptance are separate steps.",
+  "actualOrdinaryControlButtonsAccepted": false,
+  "modelsRun": false,
+  "nativeRebuilt": false,
+  "nativeRebuiltByApkBuildStep": false
+}

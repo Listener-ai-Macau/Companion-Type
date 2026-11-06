@@ -1,0 +1,110 @@
+{
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-metric-verdict.json",
+  "functionalResult": "PASS_ORDINARY_ANDROID064_OTA66688_EXACT_IDENTITY_AND_INDEPENDENT_UART",
+  "metrics": [
+    {
+      "id": "payload_rate_kib_s",
+      "title": "设备确认有效载荷速度",
+      "unit": "KiB/s",
+      "minimum": 50,
+      "basis": "固件+资源有效字节，从首个DATA窗口开始到最后设备确认保存；不计本地写入为设备保存",
+      "value": 55.46623638859937,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+      "measurementNote": ""
+    },
+    {
+      "id": "total_seconds",
+      "title": "正常完整升级总耗时",
+      "unit": "s",
+      "maximum": 180,
+      "basis": "开始核对设备到同UID新版本/资源/签名payload哈希和临时空间释放确认",
+      "value": 118.76411777700001,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+      "measurementNote": ""
+    },
+    {
+      "id": "post_finish_verify_seconds",
+      "title": "传完至安装后核对耗时",
+      "unit": "s",
+      "maximum": 120,
+      "basis": "全部字节设备确认后到实际新版本确认；包括设备提交、安装和重连，不把它全称为设备安装时间",
+      "value": 92.25937539,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+      "measurementNote": "Includes retention, Boot installation and reconnect/exact proof; not pure flash installation time."
+    },
+    {
+      "id": "application_bytes",
+      "title": "本批固件应用大小",
+      "unit": "B",
+      "maximum": 409252,
+      "value": 409252,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66688.json",
+      "measurementNote": ""
+    },
+    {
+      "id": "static_data_bss_bytes",
+      "title": "本批data+bss",
+      "unit": "B",
+      "maximum": 69328,
+      "value": 69328,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66688.json",
+      "measurementNote": "Same compiled runtime inputs and identical memory layout to previous measured66686; version only."
+    },
+    {
+      "id": "stack_reserved_bytes",
+      "title": "本批预留栈",
+      "unit": "B",
+      "maximum": 21504,
+      "value": 21504,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66688.json",
+      "measurementNote": ""
+    },
+    {
+      "id": "stack_guard_faults",
+      "title": "观测范围内栈防护/低栈告警",
+      "unit": "count",
+      "maximum": 0,
+      "value": 0,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-independent-uart.json",
+      "measurementNote": "Observed pre/post and passive boot snapshots only; not continuous pre-reset stack high-water."
+    },
+    {
+      "id": "old_catalog_changed_count",
+      "title": "旧录音目录非预期变化",
+      "unit": "count",
+      "maximum": 0,
+      "value": 0,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-after-catalog.json",
+      "measurementNote": "All34 original physical descriptors identical; whole catalogue and4608000B free unchanged."
+    },
+    {
+      "id": "pending_ota_claimed_bytes",
+      "title": "升级后未释放临时空间",
+      "unit": "B",
+      "maximum": 0,
+      "value": 0,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-ota-metrics.json",
+      "measurementNote": "Actual installed=true requires production exact WSI4 payload SHA/layout and claimed bytes0."
+    },
+    {
+      "id": "installed_identity_mismatch_count",
+      "title": "UID/版本/资源/有效载荷校验不匹配",
+      "unit": "count",
+      "maximum": 0,
+      "value": 0,
+      "status": "PASS",
+      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone064-independent-uart.json",
+      "measurementNote": "Ordinary app exact UID/version/UI85/payload/layout gate plus independent UART actualFW66688."
+    }
+  ],
+  "scope": "Inherited completed ordinary064/FW66688 upgrade evidence. Do not repeat unchanged OTA; this is not pause/playback/delete or066 actual Word qualification."
+}
