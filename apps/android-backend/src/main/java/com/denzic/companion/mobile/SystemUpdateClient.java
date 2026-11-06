@@ -136,7 +136,11 @@ public final class SystemUpdateClient {
                 s.sameCapacity(begin);
                 if(notice&&s.generation==begin.generation&&s.state==1&&s.error==0&&s.accepted==0&&s.total==begin.total){metrics.staleNotices++;continue;}
                 s.receiving(pack.image.length);
-                if(s.generation!=begin.generation||s.accepted<accepted||s.accepted>submitted||(s.accepted!=pack.image.length&&s.accepted%chunk!=0))throw new IOException("设备升级队列游标或编号不一致，未继续发送");
+                if(s.generation!=begin.generation||s.accepted>submitted||(s.accepted!=pack.image.length&&s.accepted%chunk!=0))throw new IOException("设备升级队列游标或编号不一致，未继续发送");
+                // A fallback READ can overtake an already queued notification.
+                // Its validated older prefix grants no credit and cannot undo
+                // the newer durable receipt. A regressing READ is still invalid.
+                if(s.accepted<accepted){if(notice){metrics.staleNotices++;continue;}throw new IOException("设备升级耐久位置回退，未继续发送");}
                 if(s.accepted>accepted){accepted=(int)s.accepted;break;}
             }
             metrics.receiptNs+=System.nanoTime()-receiptAt;progress.update("transferring",accepted,pack.image.length);
