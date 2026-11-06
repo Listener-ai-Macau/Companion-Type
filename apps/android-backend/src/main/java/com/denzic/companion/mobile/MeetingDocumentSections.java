@@ -5,9 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.*;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.*;
 
 /** Selected saved content. Literals never become Markdown instructions or headings. */
@@ -45,6 +42,38 @@ public final class MeetingDocumentSections {
         StringBuilder safe=new StringBuilder();for(int i=0;i<text.length();i++){char c=text.charAt(i);safe.append((c<32&&c!='\n'&&c!='\r'&&c!='\t')||c=='\ufffe'||c=='\uffff'?'\ufffd':c);}
         t.appendChild(d.createTextNode(safe.toString()));r.appendChild(t);p.appendChild(r);return p;
     }
+    // Android's DOM Transformer serializes supplementary characters in appended
+    // text as separate UTF-16 surrogate references (e.g. &#55357;&#56832;).
+    // Those are illegal XML1.0 and make an otherwise valid Word archive unreadable.
+    // Preserve the owned native document DOM and encode Unicode scalar values.
+    static byte[] serializeWordXml(Document document)throws IOException{
+        StringBuilder out=new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        appendXmlNode(out,document);return out.toString().getBytes(StandardCharsets.UTF_8);
+    }
+    private static void appendXmlValue(StringBuilder out,String value,boolean attribute){
+        for(int i=0;i<value.length();){int cp=value.codePointAt(i);i+=Character.charCount(cp);
+            if(!(cp==9||cp==10||cp==13||cp>=32&&cp<=0xd7ff||cp>=0xe000&&cp<=0xfffd||cp>=0x10000&&cp<=0x10ffff))cp=0xfffd;
+            if(cp=='&')out.append("&amp;");else if(cp=='<')out.append("&lt;");else if(cp=='>')out.append("&gt;");
+            else if(attribute&&cp=='\"')out.append("&quot;");
+            else if(cp==13||attribute&&(cp==9||cp==10))out.append("&#").append(cp).append(';');
+            else out.appendCodePoint(cp);
+        }
+    }
+    private static void appendXmlNode(StringBuilder out,Node node)throws IOException{
+        switch(node.getNodeType()){
+            case Node.DOCUMENT_NODE:
+                for(Node child=node.getFirstChild();child!=null;child=child.getNextSibling())appendXmlNode(out,child);return;
+            case Node.ELEMENT_NODE:
+                out.append('<').append(node.getNodeName());NamedNodeMap attributes=node.getAttributes();
+                for(int i=0;i<attributes.getLength();i++){Node a=attributes.item(i);out.append(' ').append(a.getNodeName()).append("=\"");appendXmlValue(out,a.getNodeValue(),true);out.append('\"');}
+                if(!node.hasChildNodes()){out.append("/>");return;}out.append('>');
+                for(Node child=node.getFirstChild();child!=null;child=child.getNextSibling())appendXmlNode(out,child);
+                out.append("</").append(node.getNodeName()).append('>');return;
+            case Node.TEXT_NODE:case Node.CDATA_SECTION_NODE:appendXmlValue(out,node.getNodeValue(),false);return;
+            case Node.COMMENT_NODE:return; // Non-content comments in the owned template.
+            default:throw new IOException("Word模板包含不支持的XML节点。");
+        }
+    }
     /** Reuse the shared native Word writer's styles, numbered lists, footer and
      * minutes formatting; append literal source sections as escaped XML text. */
     public static byte[] word(String title,List<Section> sections)throws IOException{
@@ -62,7 +91,7 @@ public final class MeetingDocumentSections {
                 String[] lines=s.text.split("\\r?\\n",-1);boolean compact=s.text.length()<=1500&&lines.length<=8;
                 for(int i=0;i<lines.length;i++){Element p=paragraph(document,lines[i],null);if(compact&&i<lines.length-1){Element properties=element(document,"pPr");properties.appendChild(element(document,"keepNext"));p.insertBefore(properties,p.getFirstChild());}body.appendChild(p);}
             }}
-            if(settings!=null)body.appendChild(settings);ByteArrayOutputStream xml=new ByteArrayOutputStream();Transformer transformer=TransformerFactory.newInstance().newTransformer();transformer.setOutputProperty(OutputKeys.ENCODING,"UTF-8");transformer.transform(new DOMSource(document),new StreamResult(xml));files.put("word/document.xml",xml.toByteArray());
+            if(settings!=null)body.appendChild(settings);files.put("word/document.xml",serializeWordXml(document));
             ByteArrayOutputStream bytes=new ByteArrayOutputStream();try(ZipOutputStream zip=new ZipOutputStream(bytes)){for(Map.Entry<String,byte[]> f:files.entrySet()){zip.putNextEntry(new ZipEntry(f.getKey()));zip.write(f.getValue());zip.closeEntry();}}return bytes.toByteArray();
         }catch(Exception e){throw new IOException("Word文档生成失败；已保存资料保持不变。",e);}
     }
