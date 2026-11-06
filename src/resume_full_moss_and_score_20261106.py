@@ -51,7 +51,9 @@ try:
             assert hashlib.sha256((q/'src'/name).read_bytes()).hexdigest()==frozen[name],'Verified execution source changed'
         assert verified['acousticRetirement']['acousticReuseRefused']
         protocol['runtime']['retireAcousticModulesAfterEncoding']=True
+        protocol['runtime']['workerMemoryPagePriority']=1
         protocol['scope']+=' Completed acoustic encoder/adaptor storage retired after original features are computed; same173 generated IDs in affected short control. All language weights, full audio context and generation remain unchanged. Low-RAM protections retained; system-RAM effect must be measured.'
+        protocol['scope']+=' This worker alone uses Windows VERY_LOW memory-page reclaim priority (real readback); no forced working-set trim or changes to other processes. Reclaim hint, not a guaranteed RAM saving.'
     assert protocol['runtime']['cooperativeGpuDuty']==.1 and protocol['runtime']['durableProgressWrites']
     case=next(c for c in read(m/'public-audio-restore-r5.json')['cases'] if c['meeting']=='L_R003S01C02')
     for field,checksum in [('audio','audioSha256'),('reference','referenceSha256')]:

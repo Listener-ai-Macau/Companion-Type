@@ -1,0 +1,20 @@
+{
+  "supervisorExitCode": 0,
+  "state": "COMPLETE_GPU_INFERENCE_SCORING_REQUIRED",
+  "sameGeneratedIds": true,
+  "qualityEvidence": false,
+  "generatedTokenCount": 173,
+  "previousTokenCount": 173,
+  "acousticRetirement": {
+    "state": "COMPLETED_ACOUSTIC_STORAGE_RETIRED_LANGUAGE_WEIGHTS_PRESERVED",
+    "retiredStorageBytes": 624926720,
+    "gpuAllocatedBytesBefore": 1853310464,
+    "gpuAllocatedBytesAfter": 1228383744,
+    "retainedLanguageParameterIdentityChecked": true,
+    "outputEmbeddingStillTied": true,
+    "acousticReuseRefused": true,
+    "offloadedToCpu": false,
+    "scope": "Execution lifetime only. System-RAM reduction and complete-meeting quality require measurement."
+  },
+  "baseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\post-reboot-short-20261106\\results\\engine-smoke30s-restored-20261105-post-reboot-20261106\\generated-ids.json"
+}

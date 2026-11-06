@@ -1,0 +1,20 @@
+{
+  "phase": "DECODING",
+  "generatedTokens": 32,
+  "pid": 29248,
+  "windowsGpuProcessMemoryCounters": [
+    {
+      "Name": "pid_29248_luid_0x00000000_0x1D59401E_phys_0",
+      "DedicatedUsage": 4105543680,
+      "SharedUsage": 131149824,
+      "TotalCommitted": 4236693504
+    },
+    {
+      "Name": "pid_29248_luid_0x00000000_0x0000E5B1_phys_0",
+      "DedicatedUsage": 15921152,
+      "SharedUsage": 209645568,
+      "TotalCommitted": 225566720
+    }
+  ],
+  "limitation": "OS performance counter snapshot only; not a physical VRAM or system-RAM root-cause proof."
+}

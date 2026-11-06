@@ -1,0 +1,25 @@
+{
+  "state": "PASS_SELF_WORKER_MEMORY_PAGE_PRIORITY_READBACK",
+  "worker": {
+    "pid": 30240,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 100663296,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 9584640,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "parentMemoryPriorityBefore": 5,
+  "parentMemoryPriorityAfter": 5,
+  "parentUnchanged": true,
+  "modelOrTorchImported": false,
+  "globalOrOtherProcessSettingChanged": false,
+  "limitations": "OS reclaim hint only; not a fixed working-set/RAM guarantee or a measured improvement in the full meeting."
+}

@@ -35,6 +35,10 @@ class CpuRate(ctypes.Structure):
     _fields_ = [('ControlFlags', w.DWORD), ('CpuRate', w.DWORD)]
 
 
+class MemoryPriority(ctypes.Structure):
+    _fields_ = [('MemoryPriority', w.ULONG)]
+
+
 class BasicLimits(ctypes.Structure):
     _fields_ = [('PerProcessUserTimeLimit', ctypes.c_longlong),
                 ('PerJobUserTimeLimit', ctypes.c_longlong), ('LimitFlags', w.DWORD),
@@ -74,6 +78,8 @@ class WorkerLimits:
             'IsProcessInJob': ([w.HANDLE, w.HANDLE, ctypes.POINTER(w.BOOL)], w.BOOL),
             'SetPriorityClass': ([w.HANDLE, w.DWORD], w.BOOL),
             'GetPriorityClass': ([w.HANDLE], w.DWORD),
+            'SetProcessInformation': ([w.HANDLE, ctypes.c_int, ctypes.c_void_p, w.DWORD], w.BOOL),
+            'GetProcessInformation': ([w.HANDLE, ctypes.c_int, ctypes.c_void_p, w.DWORD], w.BOOL),
             'CloseHandle': ([w.HANDLE], w.BOOL),
         }
         for name, (args, result) in signatures.items():
@@ -98,6 +104,11 @@ class WorkerLimits:
             self._check(self.kernel.SetInformationJobObject(self.job, 15, ctypes.byref(rate), ctypes.sizeof(rate)))
             process = self.kernel.GetCurrentProcess()
             self._check(self.kernel.SetPriorityClass(process, 0x40))  # IDLE_PRIORITY_CLASS
+            # Only this background worker's pages receive the lowest reclaim
+            # priority. Windows decides what to trim; no forced working-set
+            # size, empty-working-set call, page-file or other-process change.
+            memory_priority = MemoryPriority(1)  # MEMORY_PRIORITY_VERY_LOW
+            self._check(self.kernel.SetProcessInformation(process, 0, ctypes.byref(memory_priority), ctypes.sizeof(memory_priority)))
             status = self.gdi.D3DKMTSetProcessSchedulingPriorityClass(process, 0)  # GPU IDLE
             if status != 0:
                 raise RuntimeError(f'GPU idle scheduling failed: NTSTATUS 0x{status & 0xffffffff:08x}')
@@ -106,6 +117,7 @@ class WorkerLimits:
             self.receipt = self.query()
             assert self.receipt['cpuControlFlags'] == 5 and self.receipt['cpuRate'] == rate.CpuRate
             assert self.receipt['cpuPriorityClass'] == 0x40 and self.receipt['gpuPriorityClass'] == 0
+            assert self.receipt['memoryPagePriority'] == 1
         except BaseException:
             # Before assignment it is safe to release; after assignment this
             # worker exits on failure and Windows closes the handle itself.
@@ -125,6 +137,8 @@ class WorkerLimits:
         self._check(self.kernel.QueryInformationJobObject(self.job, 15, ctypes.byref(rate), ctypes.sizeof(rate), None))
         self._check(self.kernel.QueryInformationJobObject(self.job, 9, ctypes.byref(memory), ctypes.sizeof(memory), None))
         process = self.kernel.GetCurrentProcess()
+        memory_priority = MemoryPriority()
+        self._check(self.kernel.GetProcessInformation(process, 0, ctypes.byref(memory_priority), ctypes.sizeof(memory_priority)))
         self._check(self.kernel.IsProcessInJob(process, self.job, ctypes.byref(member)))
         status = self.gdi.D3DKMTGetProcessSchedulingPriorityClass(process, ctypes.byref(priority))
         if status != 0:
@@ -134,5 +148,7 @@ class WorkerLimits:
                 'jobPrivateCommitLimitBytes':memory.JobMemoryLimit,'jobMemoryLimitEnabled':bool(memory.BasicLimitInformation.LimitFlags & 0x200),
                 'jobPeakPrivateCommitBytes':memory.PeakJobMemoryUsed,
                 'cpuPriorityClass': self.kernel.GetPriorityClass(process),
+                'memoryPagePriority': memory_priority.MemoryPriority,
+                'memoryPagePriorityIsReclaimHintNotRamCap': True,
                 'gpuPriorityClass': priority.value, 'gpuUtilizationHardCapped': False,
                 'scope': 'This worker and its descendants only; no global or other-app changes.'}

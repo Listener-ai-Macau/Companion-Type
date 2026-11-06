@@ -1,0 +1,21 @@
+{
+  "state": "COMPLETE_GPU_INFERENCE_SCORING_REQUIRED",
+  "startedAt": "2026-11-06T22:44:37+08:00",
+  "protocolSha256": "830b0d3cce43db9a55b1e2cebc7d333966bf05ba3316a3046cc1bd06576c43ea",
+  "inputManifestSha256": "7b7427c089df8ba77b70a57d5e3067cbaf3b54aa459f619e7c34f7adeefb94ee",
+  "results": [
+    {
+      "meeting": "engine-smoke30s-restored-20261105",
+      "exitCode": 0,
+      "workerState": "COMPLETE_JOINT_CANDIDATE_UNQUALIFIED",
+      "wholeProcessFamilySeconds": 211.657945,
+      "observedProcessFamilyPeakRssBytes": 1418469376,
+      "observedProcessFamilyPeakPrivateBytes": 1499418624,
+      "processFamilyCpuSeconds": 40.875,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\acoustic-retirement-short-20261106-r23\\results\\engine-smoke30s-restored-20261105-retirement-r23\\completed-state.json",
+      "smokeOnly": true
+    }
+  ],
+  "referencePassedToWorker": false,
+  "finishedAt": "2026-11-06T22:48:09+08:00"
+}
