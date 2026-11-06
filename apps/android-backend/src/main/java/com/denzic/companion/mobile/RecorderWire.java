@@ -17,16 +17,16 @@ import java.util.zip.CRC32;
 public final class RecorderWire {
     private RecorderWire() {}
     private static IOException invalid(String why) { return new IOException("recording protocol: " + why); }
-    private static int u8(byte[] p, int i) { return p[i] & 255; }
+    static int u8(byte[] p, int i) { return p[i] & 255; }
     private static int u16(byte[] p, int i) { return u8(p,i) | (u8(p,i+1) << 8); }
-    private static long u32(byte[] p, int i) { return (u16(p,i) | ((long)u16(p,i+2) << 16)); }
-    private static long u64(byte[] p, int i) { return ByteBuffer.wrap(p,i,8).order(ByteOrder.LITTLE_ENDIAN).getLong(); }
+    static long u32(byte[] p, int i) { return (u16(p,i) | ((long)u16(p,i+2) << 16)); }
+    static long u64(byte[] p, int i) { return ByteBuffer.wrap(p,i,8).order(ByteOrder.LITTLE_ENDIAN).getLong(); }
     private static void put16(byte[] p,int i,int v) { p[i]=(byte)v;p[i+1]=(byte)(v>>>8); }
-    private static void put32(byte[] p,int i,long v) { for(int n=0;n<4;n++)p[i+n]=(byte)(v>>>(8*n)); }
-    private static void put64(byte[] p,int i,long v) { for(int n=0;n<8;n++)p[i+n]=(byte)(v>>>(8*n)); }
-    private static long crc(byte[] p,int start,int length) { CRC32 c=new CRC32();c.update(p,start,length);return c.getValue(); }
+    static void put32(byte[] p,int i,long v) { for(int n=0;n<4;n++)p[i+n]=(byte)(v>>>(8*n)); }
+    static void put64(byte[] p,int i,long v) { for(int n=0;n<8;n++)p[i+n]=(byte)(v>>>(8*n)); }
+    static long crc(byte[] p,int start,int length) { CRC32 c=new CRC32();c.update(p,start,length);return c.getValue(); }
     private static boolean uniform(byte[] p,int value) { for(byte b:p)if((b&255)!=value)return false;return true; }
-    private static boolean magic(byte[] p,int offset,String value) { if(p.length<offset+value.length())return false;for(int i=0;i<value.length();i++)if(p[offset+i]!=(byte)value.charAt(i))return false;return true; }
+    static boolean magic(byte[] p,int offset,String value) { if(p.length<offset+value.length())return false;for(int i=0;i<value.length();i++)if(p[offset+i]!=(byte)value.charAt(i))return false;return true; }
 
     public static final class Peer {
         private final byte[] uid;

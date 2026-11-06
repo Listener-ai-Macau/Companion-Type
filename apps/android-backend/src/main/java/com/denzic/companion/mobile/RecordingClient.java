@@ -118,6 +118,15 @@ public final class RecordingClient implements Closeable {
         current=catalog.entries();return current;
     }
 
+    public synchronized List<DeviceRecordings.Session> listDeviceSessions() throws IOException {
+        ensureOpen();DeviceRecordings.ready(link);return DeviceRecordings.group(listRecordings());
+    }
+    public synchronized boolean deleteDeviceSession(RecorderWire.Descriptor selected,DeviceRecordings.Confirm confirm) throws IOException {
+        ensureOpen();peer.validate(selected);
+        if(confirm==null)throw new IllegalArgumentException("confirmation required");
+        return DeviceRecordings.delete(link,selected,nonce(),confirm);
+    }
+
     /** Receive every currently sealed segment of the selected original session.
      * Reconnect and call again with the same descriptor to resume partial files.
      * A live session without its terminal segment remains INCOMPLETE. */
