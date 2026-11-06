@@ -503,7 +503,25 @@ public final class MainActivity extends Activity {
         try{meeting=ms.load(key);}catch(java.io.IOException error){problems.put("原文或补充暂不可读取，原文件保留。");}
         try{minutes=ms.loadMinutes(key);}catch(java.io.IOException error){problems.put("纪要暂不可读取，原文件保留。");}
         try{translation=translations().load(key);}catch(java.io.IOException error){problems.put("译文暂不可读取，原文件保留。");}
-        return new ExportContents.Source(key,recordingTitle(key,recording),libraries().token(),meeting,minutes,translation,problems);
+        JSONArray materials=new JSONArray();try{materials=new AiMaterialStore(libraries().meetings()).list(key);}catch(Exception error){problems.put("部分AI材料暂不可读取，原文件保留；可先导出其它内容。");}
+        return new ExportContents.Source(key,recordingTitle(key,recording),libraries().token(),meeting,minutes,translation,problems,materials);
+    }
+    private boolean confirmDeviceRecordingDelete(com.denzic.companion.mobile.DeviceRecordings.Offer offer)throws java.io.IOException {
+        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
+        java.util.concurrent.atomic.AtomicReference<android.app.AlertDialog> shown=new java.util.concurrent.atomic.AtomicReference<>();
+        runOnUiThread(()->{
+            if(answer.isDone())return;
+            if(isFinishing()||isDestroyed()){answer.complete(false);return;}
+            String date=offer.startedUnixSeconds==0?"日期未知":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm",java.util.Locale.getDefault()).format(new java.util.Date(offer.startedUnixSeconds*1000));
+            android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("删除设备录音")
+                .setMessage(date+"，设备剩余音频约"+offer.durationMillis/1000+"秒，可释放"+offer.releasableBytes/1024+" KiB。\n未同步的设备原音将永久删除。本机已保存的副本保留。")
+                .setNegativeButton("取消",(d,w)->answer.complete(false)).setPositiveButton("删除这场录音",(d,w)->answer.complete(true))
+                .setOnCancelListener(d->answer.complete(false)).create();
+            shown.set(dialog);dialog.setOnDismissListener(d->answer.complete(false));dialog.show();
+        });
+        try{return answer.get(45,java.util.concurrent.TimeUnit.SECONDS);}
+        catch(Exception e){answer.cancel(false);throw new java.io.IOException("删除确认已取消或过期，请重新选择。",e);}
+        finally{runOnUiThread(()->{android.app.AlertDialog dialog=shown.get();if(dialog!=null)dialog.dismiss();});}
     }
     private Object onUi(java.util.concurrent.Callable<Object> action)throws Exception{
         java.util.concurrent.CompletableFuture<Object> result=new java.util.concurrent.CompletableFuture<>();
@@ -514,7 +532,7 @@ public final class MainActivity extends Activity {
         ExportContents.Source source=exportSource(a.getString("key"));JSONObject info=source.info();
         if(!info.getString("binding").equals(a.getString("binding"))||!source.token.equals(a.getString("libraryToken")))throw new java.io.IOException("资料内容已更新，请重新读取导出选项后再操作。");
         JSONArray selected=a.getJSONArray("sections");List<MeetingDocumentSections.Section> sections=source.select(selected);String format=a.getString("format"),extension,mime;
-        switch(format){case "txt":extension="txt";mime="text/plain";break;case "markdown":extension="md";mime="text/markdown";break;case "pdf":extension="pdf";mime="application/pdf";break;case "word":extension="docx";mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";break;case "srt":extension="srt";mime="application/x-subrip";break;default:throw new java.io.IOException("不支持的文件格式。");}
+        switch(format){case "txt":extension="txt";mime="text/plain";break;case "markdown":extension="md";mime="text/markdown";break;case "pdf":extension="pdf";mime="application/pdf";break;case "word":extension="docx";mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";break;case "srt":extension="srt";mime="application/x-subrip";break;case "pptx":extension="pptx";mime="application/vnd.openxmlformats-officedocument.presentationml.presentation";break;case "png":extension="png";mime="image/png";break;case "mindmap":extension="mm";mime="application/x-freemind";break;case "xlsx":extension="xlsx";mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";break;default:throw new java.io.IOException("不支持的文件格式。");}
         String plain=MeetingDocumentSections.plain(sections);JSONArray warnings=ExportContents.warnings(info,selected);String subtitle=null;
         if("srt".equals(format)){
             if(selected.length()!=1||!"transcript".equals(selected.getString(0)))throw new java.io.IOException("SRT只用于有分段时间的当前原文，请只选择会议转写。");
@@ -525,8 +543,14 @@ public final class MainActivity extends Activity {
         JSONObject meta=new JSONObject().put("key",source.key).put("title",source.title).put("libraryToken",source.token).put("binding",info.getString("binding")).put("warnings",warnings).put("sections",selected);
         return preparedExports().create(meta,PreparedExports.filename(source.title,suffix,extension),mime,plain,out->{
             if("pdf".equals(format))MeetingPdf.writeSelected(source.title,sections,out,android.graphics.Typeface.createFromAsset(getAssets(),"companion-documents/CompanionPDFSans-Regular.ttf"));
-            else if("word".equals(format))out.write(MeetingDocumentSections.word(source.title,sections));
+            else if("word".equals(format))out.write(MeetingDocumentSections.word(source.title,MaterialLayout.wordSections(sections)));
+            else if("pptx".equals(format))PresentationDocuments.write(source.title,sections,out);
+            else if("png".equals(format))MindmapImage.write(source.title,sections,out);
+            else if("mindmap".equals(format))out.write(MaterialLayout.mindmap(source.title,sections).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            else if("xlsx".equals(format))StructuredWorkbook.write(source.title,sections,out);
             else {String content="srt".equals(format)?srt:"markdown".equals(format)?"# "+source.title+"\n\n"+MeetingDocumentSections.markdown(sections):source.title+"\n\n"+plain;out.write(content.getBytes(java.nio.charset.StandardCharsets.UTF_8));}
+            ExportContents.Source current=exportSource(source.key);
+            if(!source.token.equals(current.token)||!info.getString("binding").equals(current.info().getString("binding")))throw new java.io.IOException("资料在准备文件期间发生变化，请重新读取后再操作。");
         });
     }
     private AiServiceVault aiServices;
@@ -609,15 +633,31 @@ public final class MainActivity extends Activity {
             }
             case "catalog": {
                 if (RecordingSyncService.isRunning()) throw new IllegalStateException("正在接收录音，请先等待接收结束。");
-                selectedDevice = devices.get(a.getInt("index")); segments = new ArrayList<>();
-                try (RecordingClient client = CompanionAndroidBackend.connect(this, selectedDevice)) { segments = client.listRecordings(); }
+                if(a.has("index"))selectedDevice=devices.get(a.getInt("index"));
+                if(selectedDevice==null)throw new IllegalStateException("请先选择录音卡。");
+                segments = new ArrayList<>();
+                java.util.List<com.denzic.companion.mobile.DeviceRecordings.Session> sessions;
+                try (RecordingClient client = CompanionAndroidBackend.connect(this, selectedDevice)) { sessions = client.listDeviceSessions(); }
                 JSONArray out = new JSONArray();
-                for (int i = 0; i < segments.size(); i++) {
-                    RecorderWire.Descriptor d = segments.get(i);
+                for (int i = 0; i < sessions.size(); i++) {
+                    com.denzic.companion.mobile.DeviceRecordings.Session row=sessions.get(i);
+                    RecorderWire.Descriptor d = row.representative;segments.add(d);
                     out.put(new JSONObject().put("index", i).put("session", Long.toUnsignedString(d.sessionId))
-                            .put("segment", d.segmentIndex).put("bytes", d.encodedLength));
+                            .put("segment", d.segmentIndex).put("bytes", row.bytes).put("segments",row.segments)
+                            .put("startedAtUnixSeconds",row.startedUnixSeconds==0?JSONObject.NULL:row.startedUnixSeconds)
+                            .put("durationMs",row.durationMillis).put("complete",row.complete));
                 }
                 return out;
+            }
+            case "deleteDeviceRecording": {
+                if(RecordingSyncService.isRunning())throw new IllegalStateException("请先等待录音接收结束。");
+                if(selectedDevice==null)throw new IllegalStateException("请重新选择设备。");
+                RecorderWire.Descriptor selected=segments.get(a.getInt("index"));
+                boolean deleted;
+                try(RecordingClient client=CompanionAndroidBackend.connect(this,selectedDevice)) {
+                    deleted=client.deleteDeviceSession(selected,this::confirmDeviceRecordingDelete);
+                }
+                return new JSONObject().put("deleted",deleted).put("message",deleted?"设备副本已删除，空间已回收。本机已保存的录音保留。":"已取消删除。");
             }
             case "sync": {
                 if (selectedDevice == null) throw new IllegalStateException("请重新选择设备和录音。");
