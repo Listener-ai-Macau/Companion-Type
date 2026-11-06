@@ -1,0 +1,52 @@
+{
+  "result": "TARGET_IDLE_AT_OBSERVATION",
+  "target": "E:\\CodexData\\Companion\\.build-cache\\windows051\\target",
+  "writers": [],
+  "uncertain": [],
+  "artifacts": [
+    {
+      "name": "companion-type.exe",
+      "exists": true,
+      "match": true
+    },
+    {
+      "name": "companion_type_lib.dll",
+      "exists": true,
+      "match": true
+    }
+  ],
+  "source": {
+    "result": "SOURCE_PREREQUISITES_READY",
+    "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
+    "checks": [
+      {
+        "input": "apps/windows/src-tauri/Cargo.toml",
+        "ready": true
+      },
+      {
+        "input": "apps/windows/src-tauri/Cargo.lock",
+        "ready": true
+      },
+      {
+        "input": "apps/windows/src-tauri/tauri.conf.json",
+        "ready": true
+      },
+      {
+        "input": "apps/windows/dist/index.html",
+        "ready": true
+      }
+    ],
+    "error": null,
+    "readOnly": true,
+    "scope": "Presence check only; exact frozen input/asset binding and all compiler dependencies still require the build receipt."
+  },
+  "readOnly": true,
+  "exclusiveLockAcquired": false,
+  "scope": "Preflight only. A pass does not replace shared ownership, private copies or post-bundle/MSI checks.",
+  "deliveryBatch": {
+    "goal": "沿原36项售卖标准推进；Windows052已交付，手机/系统交互/AI材料和真实使用范围继续收敛。模型待实际外置卡接回后按原整会指标验证。",
+    "scope": "保留原音、录音保存与同步恢复；普通识别准确率优先，双人重叠整段分离再逐路转写，未知身份/角色待确认，纪要可核原话；Android与Windows整链实测仍待，前端原任务后置保留。",
+    "next": "After shared66687 OTA final receipt/release, verify actual installed version; install062 only if no newer candidate, else merge. Retest Word affected route, return original library, then only self-created actual-card pause/resume/stop/receive/playback/delete and original-audio save/share. Inherit completed OTA evidence without needless repeat.",
+    "deliveryDecision": "基于实际瓶颈集中修复和验证；保持原录音及断链恢复，不重复无差异实验。"
+  }
+}

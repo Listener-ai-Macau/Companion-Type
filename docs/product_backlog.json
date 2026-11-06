@@ -130645,7 +130645,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-06T19:48:41+08:00",
+      "updatedAt": "2026-11-06T20:42:36+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP27-18",
@@ -130710,11 +130710,11 @@
             "CP07-11",
             "CP09-08"
           ],
-          "current": "FW66689真实35m11s满空间停录、17段CRC/SHA、WAV10ms差及回收恢复17段容量已过；回收后再录实板FAIL，已定位空FULL异步失败状态丢失，源4ec9ef4修好，66690候选正无线安装。",
+          "current": "66690真实35m11s自然FULL、17段CRC/SHA/WAV10ms、满盘拒绝/回收后无复位再录240及精确收取通过；控制指标FAIL：拒绝1.734s、首PCM2.047s、封口1.375s。正常Windows同连接策略复测241写入31ms，但首PCM2.187s/封口2.468s仍FAIL。已定位未采音准备/收尾每轮一页导致上千轮等待。",
           "remaining": [
-            "66690实板确认FULL拒绝状态与空间回收后再次开录；不得用复位恢复代替本项。"
+            "交付7fc040d候选66691：已知满容量直接拒绝；仅无麦/无编码所有者的准备和收尾采用16步/1ms有界片段，活跃/暂停/排空仍一步。实际控制指标合格后才能关闭。"
           ],
-          "next": "确认当前无线升级完成及原34段不变，复验真实FULL拒绝/回收后再录；手机不在线用Windows后台，不需Owner重复接线。",
+          "next": "沿embedded.next执行。",
           "doneWhen": "独立容量0证明真实满盘，原音完整耐久保存后精确回收，原目录不变，回收后普通开始能再录。",
           "evidence": [
             "docs/product_backlog.json#CP07-02",
@@ -131076,7 +131076,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "FW66690已由Windows067普通原生签名OTA装好（工程保留旧录音模式；不冒充正常手机drain复验）。当前新场238真实采音至满空间；随后自动验证满盘START明确error3、只收238并校验、回收后不重启直接再录并收取。旧34段保持不读不消费；原电源/实体首字/声学/生产和暂停屏幕缺口不变。",
+      "next": "7fc040d已提交，FW66691完整构建通过，应用409564B，静态RAM/栈仍不增，准备签名OTA。旧2268ms模型失败、8步版本STOP596ms失败保留；16步/1ms模型准备158ms/提前停录342ms、完整schema5满盘/碎片容量/暂停控制通过。普通签名OTA后实测原2s/500ms指标；用实际短录占用剩余完整存储段快速触发真实满容量，验拒绝并精确收取本轮数据，不重复无变化的35分钟生产链。旧34段不读不消费；241已完整收取，末次只读CSN1准备时超时保留，未再发开录。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131383,12 +131383,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-06T19:48:41+08:00",
+        "at": "2026-11-06T20:42:36+08:00",
         "firmware": 66690,
         "coreDelivery": "FW66685_AND_WINDOWS053_SELECTED_DELETE_SPACE_AND_SYNC_ACCEPTED_SCOPED",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "FW66690已由Windows067普通原生签名OTA装好（工程保留旧录音模式；不冒充正常手机drain复验）。当前新场238真实采音至满空间；随后自动验证满盘START明确error3、只收238并校验、回收后不重启直接再录并收取。旧34段保持不读不消费；原电源/实体首字/声学/生产和暂停屏幕缺口不变。",
+        "openSoftware": "7fc040d已提交，FW66691完整构建通过，应用409564B，静态RAM/栈仍不增，准备签名OTA。旧2268ms模型失败、8步版本STOP596ms失败保留；16步/1ms模型准备158ms/提前停录342ms、完整schema5满盘/碎片容量/暂停控制通过。普通签名OTA后实测原2s/500ms指标；用实际短录占用剩余完整存储段快速触发真实满容量，验拒绝并精确收取本轮数据，不重复无变化的35分钟生产链。旧34段不读不消费；241已完整收取，末次只读CSN1准备时超时保留，未再发开录。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -132561,20 +132561,17 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-06T19:48:41+08:00",
-        "fullCaptureSession": 238,
-        "fullWatcherExecSession": 25381,
-        "closeFlowSupervisorExecSession": 76675,
-        "privateCache": "E:\\CodexData\\Companion\\.build-cache\\full-media66690",
-        "boardItem": "Companion66689真实满空间收尾与回收后再录验收",
-        "state": "ACTUAL_RECORDING_NO_OFFLOAD_UNTIL_REAL_FULL"
+        "at": "2026-11-06T20:42:36+08:00",
+        "state": "FW66690_FULL_FUNCTIONAL_PASS_CONTROL_METRICS_FAIL_CANDIDATE66691_BUILT_NOT_INSTALLED",
+        "sourceCommit": "7fc040d",
+        "boardItem": "Companion66689真实满空间收尾与回收后再录验收"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "SHARE069_ACTUAL_PICKER_FAILED_CANDIDATE_REVERTED_NO_PRODUCT_REPLACEMENT",
+        "state": "WINDOWS068_FOLDER_SHARE_INSTALLED_BACKGROUND_CHECKED_ACTUAL_RECIPIENT_PENDING",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -132615,7 +132612,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn. 手机/板继续尊重现有嵌软占用，不安装候选066、不降级当前手机、不抢板；原库切回与未完成真机流程仍保留。",
+        "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -132839,7 +132836,7 @@
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
           "ownerQuote": "先，那你优先把那个前两项给搞了，然后的话。继续做这个事情，然后做完这些事情就可以说。我们只剩下模型能力没做了，对吧？这个时间进度大概还要多久？",
-          "state": "SHARE069_ACTUAL_PICKER_FAILED_CANDIDATE_REVERTED_NO_PRODUCT_REPLACEMENT",
+          "state": "WINDOWS068_FOLDER_SHARE_INSTALLED_BACKGROUND_CHECKED_ACTUAL_RECIPIENT_PENDING",
           "priority": [
             "Ordinary phone/device recording control, only own-new sample receive/playback/delete/recovery and OTA/maintenance final receipts.",
             "Installed ordinary App selected-content SAF save, clipboard paste and ACTION_SEND recipient bytes/grants, then original-library return."
@@ -132886,7 +132883,7 @@
           },
           "actualNewPhoneChecksPassed": false,
           "wholeProductQualified": false,
-          "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn. 手机/板继续尊重现有嵌软占用，不安装候选066、不降级当前手机、不抢板；原库切回与未完成真机流程仍保留。",
+          "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。",
           "actualProgress": {
             "at": "2026-11-06T14:45:43+08:00",
             "ordinaryUi": "Actual Android App on isolated display2; primary display remained with owner or locked, no main-screen input.",
@@ -132907,9 +132904,9 @@
             "originalLibraryReturnPending": true
           },
           "latestContinuation": {
-            "at": "2026-11-06T20:35:14+08:00",
-            "ownerQuote": "你来吧",
-            "meaning": "Authorized limited local sharing UI comparison; stopped when Computer Use reported physical Escape."
+            "at": "2026-11-06T21:04:51+08:00",
+            "ownerQuote": "继续吧, 你看看能不能不用computeruse方式处理",
+            "meaning": "Continue original sale backlog, implement and verify without Computer Use or occupying daily desktop."
           },
           "latestWindows067": {
             "at": "2026-11-06T18:18:32+08:00",
@@ -133036,7 +133033,7 @@
             "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
           },
           "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
-          "next": "Prefer background investigation of observed Windows.ModernShareFlyout versus old ModernShare, using official supported APIs; Windows.Share is a different Share With command and must not be blindly invoked or change ACLs. If direct system picker cannot be repaired promptly, provide a clearly named Explorer file-sharing route and prove receipt in local QA target. No repeated profile/elevation/IPC checks, no unproven release. UI input stays stopped this turn. 手机/板继续尊重现有嵌软占用，不安装候选066、不降级当前手机、不抢板；原库切回与未完成真机流程仍保留。",
+          "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。",
           "modelsRun": false,
           "customerResult": null,
           "ownerAccepted": false,
@@ -133321,10 +133318,10 @@
           }
         },
         "latestWindowsInstalled": {
-          "version": "0.1.60",
-          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows060-word062\\installation.json",
+          "version": "0.1.68",
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows-share070\\installation.json",
           "existingFilesByteIdentical": 245,
-          "source": "2b5f352907ff49ec334f1b906c6b6921931f0622"
+          "source": "571c577fbf546a1e157f5b2cf46e68cc45955440"
         },
         "windows067Issues": {
           "at": "2026-11-06T17:31:02+08:00",
@@ -133564,6 +133561,101 @@
           },
           "actualSystemShareQualified": false,
           "candidateRestoredTo067Source": true
+        },
+        "windowsShare070": {
+          "at": "2026-11-06T21:04:51+08:00",
+          "state": "WINDOWS068_FOLDER_SHARE_INSTALLED_BACKGROUND_CHECKED_ACTUAL_RECIPIENT_PENDING",
+          "ownerQuote": "继续吧, 你看看能不能不用computeruse方式处理",
+          "userBenefit": "Windows所选内容和原音/MP3均有明确的文件夹分享入口，系统面板失败后可自行选择另一条路径；请求面板/文件夹不再显示为文件已保存或已发送。",
+          "version": "0.1.68",
+          "sourceCommit": "571c577fbf546a1e157f5b2cf46e68cc45955440",
+          "sourceRemoteConfirmed": true,
+          "msi": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows-share070\\Companion-Windows-0.1.68-文件夹分享与状态修复.msi",
+          "msiSha256": "e4cfab7346bdb99658504969a24f1c4843dc6171e264450421e7b7376802e138",
+          "embeddedExeSha256": "ca7bc25147b49b6988d5607d6f8533389b0d6131c7156ece6ba1b9742338865a",
+          "dllSha256": "08af335584e5af71bf8e27f531fe3791eadc8e532ade6f252bc3ff04f3c1a3d9",
+          "installed": true,
+          "installation": {
+            "state": "WINDOWS068_INSTALLED_EXISTING_DATA_IDENTICAL",
+            "startedAt": "2026-11-06T21:04:22+08:00",
+            "candidateVersion": "0.1.68",
+            "previousInstalledVersion": "0.1.67",
+            "sourceCommit": "571c577fbf546a1e157f5b2cf46e68cc45955440",
+            "msiSha256": "e4cfab7346bdb99658504969a24f1c4843dc6171e264450421e7b7376802e138",
+            "existingDataFiles": 245,
+            "dataContentsPrinted": false,
+            "installerExitCode": 0,
+            "finishedAt": "2026-11-06T21:04:26+08:00",
+            "dataManifestIdentical": true,
+            "installedExeSha256": "ca7bc25147b49b6988d5607d6f8533389b0d6131c7156ece6ba1b9742338865a",
+            "installedDllSha256": "08af335584e5af71bf8e27f531fe3791eadc8e532ade6f252bc3ff04f3c1a3d9",
+            "limitations": "No owner app launch, foreground interaction, actual share/save modal, device operation or model inference."
+          },
+          "nativeTests": {
+            "state": "FOLDER_SHARE_SOURCE_AND_SHELL_PATH_TESTS_PASSED_NO_UI_OPENED",
+            "wallSeconds": 190.537,
+            "sourceSha256": "1d1da547dd9265d1b1b963d6fce3780e1ae1ca68ce508bb45c7318a30d8f453a",
+            "testExeSha256": "a15fec1865b13a666e59317ef609393fa54eadc8ea4d99d7cca20c2ed0f2b479",
+            "jobs": 1,
+            "cpuSlots": [
+              12,
+              13,
+              14,
+              15
+            ],
+            "modelsRun": false,
+            "computerUse": false,
+            "uiOpened": false,
+            "actualShareRecipientVerified": false,
+            "installedVersionUnchanged": "0.1.67"
+          },
+          "frontendAndCompileChecks": [
+            {
+              "name": "component",
+              "exitCode": 0,
+              "seconds": 0.669
+            },
+            {
+              "name": "windows-types",
+              "exitCode": 0,
+              "seconds": 10.399
+            },
+            {
+              "name": "mobile-types",
+              "exitCode": 0,
+              "seconds": 11.946
+            },
+            {
+              "name": "native-check",
+              "exitCode": 0,
+              "seconds": 145.723
+            }
+          ],
+          "releaseSeconds": 624.9,
+          "releasePeakOwnRssMiB": 2515,
+          "releaseCpuSlots": [
+            12,
+            13
+          ],
+          "jobs": 1,
+          "computerUse": false,
+          "uiOpened": false,
+          "clipboardTouched": false,
+          "modelsRun": false,
+          "deviceIo": false,
+          "ordinarySystemShareFixed": false,
+          "actualExplorerSelectionObserved": false,
+          "actualRecipientReceived": false,
+          "fullPriority12Complete": false,
+          "wholeProductQualified": false,
+          "boundaries": [
+            "Native tests actually resolve the exact existing public Unicode/symbol/emoji file through Shell PIDL and check it is unchanged; reject relative path, directory and deleted file. Tests intentionally never invoke Explorer or SharePicker.",
+            "Explicit folder route reuses frozen content selection/hash or original-audio copy checks, prepares only its own new immutable cache file, and calls documented SHOpenFolderAndSelectItems on the existing UI thread. No cmd/ShellExecute strings, undocumented CLSID route, ACL changes, recipient selection or automatic fallback.",
+            "Actual Explorer opening/selection and QA recipient byte receipt are still pending. A documented API, passing tests, matching installer and successful installation do not qualify the unseen ordinary system handoff.",
+            "Old 068/069 WinRT picker failures remain open; request-owned candidate was reverted, not shipped. No repeat profile/elevation/IPC trials or UAC/security/privacy changes.",
+            "Shared firmware/phone lease remains with original embedded flow. No phone/board query, install, downgrade or library switch was done here. Android066 Word and affected ordinary flow plus return to original library remain pending."
+          ],
+          "next": "优先在不占日用前台的可用条件下完成Windows068文件夹真实选中文件及本机QA收件；未提供条件则保留未完成，推进原待办P0安卓可恢复删除等可独立软件工作。手机/板等待现占用释放后先核最新实际版本，不能降级或直接套旧066；把原库切回及受影响真机流程收齐。"
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -135875,7 +135967,7 @@
                   "customerResult": null
                 },
                 "status": "PARTIAL_DELIVERED",
-                "label": "Windows052新增PPTX/PNG已交付；安卓新格式、系统交互、AI填表与完整对标待完成",
+                "label": "Windows068文件夹分享与状态修复已安装、后台核对；真实收件及安卓Word/录控等余项未齐",
                 "readyForOwnerAcceptance": false,
                 "deliveredVersion": "Windows0.1.52 installed / Android0.1.53 observed; 0.1.54 candidate not installed",
                 "evidence": [
@@ -135948,6 +136040,15 @@
                   "actualSystemShareQualified": false,
                   "failedCandidateReverted": true,
                   "installedVersion": "0.1.67"
+                },
+                "windowsShare070": {
+                  "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows-share070\\delivery-result.json",
+                  "version": "0.1.68",
+                  "installed": true,
+                  "selectedContentAndAudioFolderSharingImplemented": true,
+                  "backgroundShellPathVerified": true,
+                  "actualRecipientVerified": false,
+                  "computerUse": false
                 }
               },
               "ownerAcceptance": {

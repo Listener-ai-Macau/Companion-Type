@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "tools/test_share070.mjs"
+    ],
+    "exitCode": 0,
+    "seconds": 1.89
+  },
+  {
+    "command": [
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/windows/tsconfig.json",
+      "--noEmit"
+    ],
+    "exitCode": 2,
+    "seconds": 12.52
+  },
+  {
+    "command": [
+      "node_modules/typescript/bin/tsc",
+      "-p",
+      "apps/mobile/tsconfig.json",
+      "--noEmit"
+    ],
+    "exitCode": 2,
+    "seconds": 12.246
+  }
+]

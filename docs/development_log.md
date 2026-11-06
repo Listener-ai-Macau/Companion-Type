@@ -23860,3 +23860,12 @@ Owner明确授权本机分享窗口和本机验收应用的小范围操作。冻
 为区别资源管理器已能枚举目标的路径，对同一公开PDF只读查询系统IContextMenu。Windows.ModernShare未设站点时0x80070578；补IObjectWithSite/IOleWindow实际有效HWND后InvokeCommand返回S_OK，但真实面板仍为同一Retry失败，没有收到文件。保留此失败，不写“系统接受调用”等于通过。只读CommandStore另有Windows.ModernShareFlyout，其处理器与ModernShare不同，尚未调用。Windows.Share是另一Share With类，不盲调用或更改文件权限。只读EnableLUA=0的观察保留，未证明因果，未改UAC、安全或隐私设置。
 
 恢复下一次观察时Computer Use明确报告实体Esc由用户中止，立即停止所有UI调用；仅后台核实并关闭有精确PID/创建时间/路径匹配的自建验证程序，保存当前点。没有向联系人或外部应用发送文件，没有模型、训练、手机或板IO。下步优先后台核对真实Shell入口区别，若直开系统面板短期无法修复，改为明确命名的文件夹分享路径并以本机QA真实收件核验，不能重复无改善打包。原手机/板在另一嵌软占用中，原资料库切回及其它售卖缺口继续未完成。
+
+
+## 2026-11-06T21:04:51+08:00｜按Owner不用Computer Use接续：Windows068明确文件夹分享与请求状态完成，实际收件仍待验
+
+承接Owner“继续吧, 你看看能不能不用computeruse方式处理”。本轮没有Computer Use、键鼠/桌面自动化、窗口启动、剪贴板、模型或设备IO。沿原优先1/2修Windows分享阻断，不再重复068/069失败对照，也不调用私有Windows.ModernShareFlyout或Share With。参考微软公开SHOpenFolderAndSelectItems文档，新增显式文件夹分享；所选内容与原音/MP3均复用已冻结选择/来源校验和本机新副本，通过PIDL定位准确文件，避免命令字符串或更改网络共享权限。正常系统分享失败不自动打开别的应用，用户需自己选择备用路径。UI把分享请求与保存/发送分开，录音分享状态不再记saved。
+
+首次类型检查发现通用导出反馈类型漏加opened，已补后Windows与mobile均通过；原失败保留。原生完整测试编译190.537秒，5项针对检查通过，新增实际Shell文件路径往返覆盖中文、#、%、&、emoji，拒绝相对/目录/已删文件，原文件字节未变，未打开资源管理器。组件检查验证准确内容选择/hash、显式folder参数、错误状态不报成功且不自动备用；生产Windows前端构建与许可证校验通过。整机曾97%内存、原测试编译RSS约2.3GiB，准备停止时进程已经完成，没有实际终止；退出后可用内存回到约4.2GiB。后续顺序检查，release单作业/两CPU/低优先级，有实际持续内存压力则只停止本轮自有进程，不动Owner程序。
+
+源码571c577fbf546a1e157f5b2cf46e68cc45955440已远端核验，release 624.9秒、峰值本轮进程RSS 2515MiB。MSI版本、同源EXE/DLL、许可证、升级身份和禁止降级核对完成。实际安装=True；用户资料保持结果以installation.json为准。未实际打开Explorer或选择本机QA，系统直开面板原缺陷仍开放，不能把这批后台结果写成分享已通过或整机可售。手机和板仍由原嵌软流程占用，Android新版本/原库切回/其余普通流程沿原待办继续。下一步见windowsShare070，不另建任务树、不再催Owner重复确认。

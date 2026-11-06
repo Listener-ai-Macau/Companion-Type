@@ -1,0 +1,10 @@
+
+running 5 tests
+test content_handoff::tests::content051_expired_share_cleanup_keeps_recent_and_non_owned_files ... ok
+test content_handoff::tests::content051_real_share_package_has_one_read_only_file_and_copy_operation ... ok
+test content_handoff::tests::content051_share_file_is_exact_immutable_and_cannot_escape_its_cache ... ok
+test content_handoff::tests::content070_file_location_resolves_only_existing_exact_file_without_opening_explorer ... ok
+test content_handoff::tests::content070_share_destination_is_explicit_and_never_accepts_a_shell_verb ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 1201 filtered out; finished in 0.09s
+

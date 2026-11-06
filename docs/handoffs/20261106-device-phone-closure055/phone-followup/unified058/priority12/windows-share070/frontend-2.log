@@ -1,0 +1,9 @@
+packages/ui/src/CompanionDashboard.tsx(1285,131): error TS2322: Type '{ sessionId: string; message: string; path?: string | undefined; calendarOpenToken?: string | undefined; calendarFileUri?: string | undefined; format?: "markdown" | "pdf" | "pptx" | "png" | ... 13 more ... | undefined; kind?: "error" | ... 4 more ... | undefined; hasWarning?: boolean | undefined; origin: MeetingExpo...' is not assignable to type 'CompanionExportFeedbackValue'.
+  Types of property 'kind' are incompatible.
+    Type '"error" | "saved" | "cancelled" | "pending" | "opened" | undefined' is not assignable to type '"error" | "saved" | "cancelled" | "pending" | undefined'.
+      Type '"opened"' is not assignable to type '"error" | "saved" | "cancelled" | "pending" | undefined'.
+packages/ui/src/CompanionDashboard.tsx(2641,13): error TS2322: Type '{ sessionId: string; message: string; path?: string | undefined; calendarOpenToken?: string | undefined; calendarFileUri?: string | undefined; format?: "markdown" | "pdf" | "pptx" | ... 14 more ... | undefined; kind?: "error" | ... 4 more ... | undefined; hasWarning?: boolean | undefined; origin: MeetingExportOrigin...' is not assignable to type 'CompanionExportFeedbackValue | null | undefined'.
+  Type '{ sessionId: string; message: string; path?: string | undefined; calendarOpenToken?: string | undefined; calendarFileUri?: string | undefined; format?: "markdown" | "pdf" | "pptx" | "png" | ... 13 more ... | undefined; kind?: "error" | ... 4 more ... | undefined; hasWarning?: boolean | undefined; origin: MeetingExpo...' is not assignable to type 'CompanionExportFeedbackValue'.
+    Types of property 'kind' are incompatible.
+      Type '"error" | "saved" | "cancelled" | "pending" | "opened" | undefined' is not assignable to type '"error" | "saved" | "cancelled" | "pending" | undefined'.
+        Type '"opened"' is not assignable to type '"error" | "saved" | "cancelled" | "pending" | undefined'.
