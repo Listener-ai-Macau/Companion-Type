@@ -1,10 +1,13 @@
 {
-  "aarSha256": "163b6e77abbc268ea83c71e8ac440dd1a06858717213b7278c98c82f3391bead",
-  "backendSourceCommit": "8e8a82c58090aac97d5e8023cafdf9bcbe277eaa",
-  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
-  "scope": "Ordinary discovery, system pairing, CRM1 maintenance service routing, existing signed DOV1/CUP3 full-file OTA and exact WSI4 post-boot verification. Host protocol/package checks passed; physical Android OTA not yet tested.",
-  "nativeChanges": false,
-  "allNonClassAarEntriesByteIdentical": true,
-  "nativeInputReceipt": "E:/CodexData/Companion/.build-cache/android053-device-management/native-input.json",
-  "remoteSourceVerified": true
+  "aarSha256": "e5e5150accbafb1bbdb15c2aac82774d72d92847007084f3eca61be83c1c4823",
+  "backendSourceCommit": "d7e543b318a08291b445b2d9e809123e1866cdea",
+  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\capture-android-device-management",
+  "scope": "Android recording control lock compatibility fix, preserving the integrated055 discovery, exact management, CRM1 and signed full-file OTA.",
+  "nativeChanges": true,
+  "nativeBuildReceipt": "E:\\CodexData\\Companion\\.build-cache\\phone055-lock-fix\\native-build-r3\\result.json",
+  "newNativeLibrarySha256": "e3d6ad244eb9e32ca97121e3e12bd176b29c3ffb3b5a26fbe2b7035e1da3fb52",
+  "asrRuntimeLibrariesUnchanged": true,
+  "androidLockRegression": "E:/CodexData/Companion/.build-cache/phone055-lock-fix/android-regression.log",
+  "physicalOrdinaryAppAcceptance": false,
+  "remoteSourceVerified": false
 }
