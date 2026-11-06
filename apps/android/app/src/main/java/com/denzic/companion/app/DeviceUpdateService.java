@@ -93,6 +93,7 @@ public final class DeviceUpdateService extends Service {
                 else SystemUpdateClient.transfer(connector,pack,cancel,new SystemUpdateClient.Progress(){
                     public void update(String phase,long accepted,long total)throws IOException{record(phase,accepted,total);}
                     public void identity(String uid)throws IOException{if(!p.edit().putString("uid",uid).commit())throw new IOException("设备身份无法保存，未开始传入。");}
+                    public void metrics(String json){p.edit().putString("metrics",json).apply();}
                 });
             }catch(Exception error){String detail=error.getMessage()==null?"升级结果待确认，请重新连接原设备核对。":error.getMessage();String phase=livePhase.equals("installing")||livePhase.equals("verifying")?"unconfirmed":cancel.get()?"cancelled":"error";prefs(this).edit().putString("phase",phase).putString("message",detail).commit();}
             finally{new Handler(getMainLooper()).post(()->{synchronized(DeviceUpdateService.class){task=null;stopForeground(STOP_FOREGROUND_REMOVE);stopSelf(startId);running=false;}});}
