@@ -78,6 +78,10 @@ public final class AndroidGattLink implements RecordingClient.Link {
                 link.write(DeviceClock.SETTINGS,clock);
                 DeviceClock.verify(clock,link.read(DeviceClock.SETTINGS));
             }
+            // Ask for the existing fast radio mode on this OTA connection.
+            // Android/controller coexistence policy decides the actual PHY;
+            // WOC5 readback records what was negotiated, not this preference.
+            if(!synchronizeClock)link.gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_NO_PREFERRED);
             ready=true;return link;
         } catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
         finally{if(!ready)link.close();}
