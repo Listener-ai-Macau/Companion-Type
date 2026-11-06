@@ -143,7 +143,7 @@ public final class RecordingClient implements Closeable {
                     long deadline=Math.min(overallDeadline,System.nanoTime()+8_000_000_000L);
                     while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording directory timed out");if(catalog.accept(link.await(RECORDING_LIST,remaining)))break;}
                 }
-                current=catalog.entries();return current;
+                current=catalog.entries();if(transferMetrics!=null)transferMetrics.directoryAvailable();return current;
             } catch(RecorderWire.CatalogChanged changed) {
                 if(refresh>=2||System.nanoTime()>=overallDeadline)throw changed;
             }
@@ -227,6 +227,7 @@ public final class RecordingClient implements Closeable {
                         download(matches.get(next).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(next,matches.size(),received,total));
                     }
                     pending.finish(); // exact physical receipt before the NEXT consume
+                    if(transferMetrics!=null)transferMetrics.confirmed(matches.get(i));
                 }
             }
         }else{
@@ -234,6 +235,7 @@ public final class RecordingClient implements Closeable {
                 final int index=i;RecorderWire.Descriptor d=matches.get(i);
                 download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
                 durableConsume.consume(privateDirectory,d);
+                if(transferMetrics!=null)transferMetrics.confirmed(d);
             }
         }
         for(RecordingLibrary.Session session:RecordingLibrary.sessions(privateDirectory,selected)){
@@ -269,7 +271,7 @@ public final class RecordingClient implements Closeable {
             try(SegmentReceiver receiver=new SegmentReceiver(privateDirectory,found)){
                 RecordingTransferMetrics.Segment measured=transferMetrics==null?null:transferMetrics.segment(found,receiver.resumeOffset());
                 if(!receiver.completeBytesReceived()){
-                    if(transferMetrics!=null)transferMetrics.window();
+                    if(transferMetrics!=null)transferMetrics.window(measured);
                     link.write(RECORDING_PULL,peer.pull(found,receiver.resumeOffset()));
                     while(!receiver.completeBytesReceived()){
                         if(Thread.currentThread().isInterrupted())throw new IOException("transfer interrupted; partial copy retained");

@@ -11,19 +11,23 @@ final class RecordingTransferMetrics {
     private final Map<String,Segment> segments=new LinkedHashMap<>();
     private boolean initialSync,started,complete,valid=true,fresh=true,liveFollow,integrityRetry;
     private long firstWindowNanos,completedNanos,windows;
+    private long firstConnectNanos,firstDirectoryDelayNanos=-1,reconnectStartedNanos,maxReconnectDirectoryDelayNanos=-1;
+    private int connectionAttempts,connectionsEstablished,reconnectSequences,unexpectedDisconnections;
+    private boolean reconnectPending;
     RecordingTransferMetrics(){this(System::nanoTime);}
     RecordingTransferMetrics(Clock clock){this.clock=clock;}
 
     final class Segment {
-        final long length,initialOffset;
+        final long length,initialOffset,recordingId,index;
         long highOffset;
-        boolean verified;
-        Segment(long length,long initialOffset){this.length=length;this.initialOffset=initialOffset;this.highOffset=initialOffset;}
+        long firstWindow,verifiedAt,receiptAt;
+        boolean verified,windowStarted,receiptConfirmed;
+        Segment(RecorderWire.Descriptor d,long initialOffset){this.length=d.encodedLength;this.initialOffset=initialOffset;this.highOffset=initialOffset;this.recordingId=d.recordingId;this.index=d.segmentIndex;}
         void accepted(long offset){synchronized(RecordingTransferMetrics.this){
             if(offset<0||offset>length){valid=false;return;}
             highOffset=Math.max(highOffset,offset);
         }}
-        void verified(){synchronized(RecordingTransferMetrics.this){verified=true;highOffset=length;}}
+        void verified(){synchronized(RecordingTransferMetrics.this){if(!verified)verifiedAt=clock.nanoTime();verified=true;highOffset=length;}}
     }
     synchronized void initialSync(boolean freshSelection,boolean terminalAvailable){
         if(initialSync)return;
@@ -31,13 +35,28 @@ final class RecordingTransferMetrics {
     }
     synchronized Segment segment(RecorderWire.Descriptor d,long offset){
         String key=SegmentReceiver.key(d);Segment s=segments.get(key);
-        if(s==null){s=new Segment(d.encodedLength,offset);segments.put(key,s);if(offset>0)fresh=false;}
+        if(s==null){s=new Segment(d,offset);segments.put(key,s);if(offset>0)fresh=false;}
         if(offset<0||offset>d.encodedLength||s.length!=d.encodedLength)valid=false;
         return s;
     }
-    synchronized void window(){
-        if(!started){firstWindowNanos=clock.nanoTime();started=true;}
+    synchronized void window(Segment segment){
+        long now=clock.nanoTime();
+        if(!started){firstWindowNanos=now;started=true;}
+        if(!segment.windowStarted){segment.firstWindow=now;segment.windowStarted=true;}
         windows++;
+    }
+    synchronized void confirmed(RecorderWire.Descriptor d){
+        Segment segment=segments.get(SegmentReceiver.key(d));
+        if(segment!=null&&!segment.receiptConfirmed){segment.receiptAt=clock.nanoTime();segment.receiptConfirmed=true;}
+    }
+    synchronized void connecting(){if(connectionAttempts++==0)firstConnectNanos=clock.nanoTime();}
+    synchronized void connected(){connectionsEstablished++;}
+    synchronized void connectionClosed(boolean unexpected){if(unexpected)unexpectedDisconnections++;}
+    synchronized void reconnecting(){if(!reconnectPending){reconnectPending=true;reconnectStartedNanos=clock.nanoTime();reconnectSequences++;}}
+    synchronized void directoryAvailable(){
+        long now=clock.nanoTime();
+        if(firstDirectoryDelayNanos<0&&connectionAttempts>0){firstDirectoryDelayNanos=now-firstConnectNanos;if(firstDirectoryDelayNanos<0)valid=false;}
+        if(reconnectPending){long elapsed=now-reconnectStartedNanos;if(elapsed<0)valid=false;else maxReconnectDirectoryDelayNanos=Math.max(maxReconnectDirectoryDelayNanos,elapsed);reconnectPending=false;}
     }
     synchronized void integrityRetry(){integrityRetry=true;}
     synchronized void completed(){
@@ -54,6 +73,18 @@ final class RecordingTransferMetrics {
         }
         Long nanos=started&&complete&&valid?completedNanos-firstWindowNanos:null;
         Double rate=nanos!=null&&verified>0?verified/1024.0/(nanos/1_000_000_000.0):null;
+        StringBuilder trace=new StringBuilder("[");
+        for(Segment s:segments.values()){
+            if(trace.length()>1)trace.append(',');
+            trace.append("{\"recordingId\":").append(s.recordingId).append(",\"index\":").append(s.index)
+                .append(",\"windowExpectedNewBytes\":").append(Math.max(0,s.length-s.initialOffset))
+                .append(",\"windowVerifiedNewBytes\":").append(s.verified?Math.max(0,s.length-s.initialOffset):0)
+                .append(",\"windowAcceptedNewBytes\":").append(Math.max(0,s.highOffset-s.initialOffset))
+                .append(",\"windowStartedNanos\":").append(s.windowStarted?Long.toString(s.firstWindow):"null")
+                .append(",\"originalVerifiedNanos\":").append(s.verified?Long.toString(s.verifiedAt):"null")
+                .append(",\"receiptDurableNanos\":").append(s.receiptConfirmed?Long.toString(s.receiptAt):"null").append('}');
+        }
+        trace.append(']');
         return "{\"schema\":\"companion.android.recording-transfer-metrics.v1\",\"timingBasis\":\"host_monotonic_nanos\",\"mode\":\""+
             (liveFollow?"live_follow":"stopped_batch")+"\",\"complete\":"+complete+",\"valid\":"+valid+
             ",\"freshSelection\":"+fresh+",\"integrityRetry\":"+integrityRetry+",\"dataWindows\":"+windows+
@@ -62,6 +93,11 @@ final class RecordingTransferMetrics {
             ",\"durationNanos\":"+(nanos==null?"null":nanos.toString())+
             ",\"verifiedNewBytes\":"+verified+",\"acceptedNewBytes\":"+accepted+",\"initialCachedBytes\":"+cached+
             ",\"confirmedKiBps\":"+(rate==null?"null":Double.toString(rate))+
+            ",\"connectionAttempts\":"+connectionAttempts+",\"connectionsEstablished\":"+connectionsEstablished+
+            ",\"reconnectSequences\":"+reconnectSequences+",\"unexpectedDisconnections\":"+unexpectedDisconnections+
+            ",\"firstPrivateDirectoryDelayNanos\":"+(firstDirectoryDelayNanos<0?"null":Long.toString(firstDirectoryDelayNanos))+
+            ",\"maxReconnectDirectoryDelayNanos\":"+(maxReconnectDirectoryDelayNanos<0?"null":Long.toString(maxReconnectDirectoryDelayNanos))+
+            ",\"segments\":"+trace+
             ",\"endpoint\":\"Before first actual PULL write through terminal session with all exact device receipts and local durable originals verified; no reclaim/backpressure/reconnect wait removed\"}";
     }
 }

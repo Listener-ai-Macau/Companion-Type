@@ -143,13 +143,16 @@ public final class RecordingSyncService extends Service {
                 } catch(SecurityException denied) {
                     throw new RecordingSyncRunner.ActionRequired("请允许蓝牙连接后继续接收",denied);
                 }
+                measured.connecting();
                 AndroidGattLink link=AndroidGattLink.connect(getApplicationContext(),device);
                 RecordingClient client=new RecordingClient(link,measured);activeClient=client;
+                measured.connected();
                 getSharedPreferences(PREFS,MODE_PRIVATE).edit().putBoolean("consumePullOverlapNegotiated",client.consumePullOverlapNegotiated()).commit();
                 return new RecordingSyncRunner.Connection(){
+                    private boolean retired;
                     public RecordingLibrary.Session sync() throws IOException {return client.syncAvailableAndReclaim(selected,path,null);}
                     public boolean disconnected(){return link.wasDisconnected();}
-                    public void close() throws IOException {if(activeClient==client)activeClient=null;client.close();}
+                    public synchronized void close() throws IOException {if(retired)return;retired=true;if(activeClient==client)activeClient=null;measured.connectionClosed(link.wasDisconnected());client.close();}
                 };
             },new RecordingSyncRunner.Listener(){
                 public void status(String state,String detail){update(state,detail);}
@@ -165,7 +168,7 @@ public final class RecordingSyncService extends Service {
     private void update(String state,String text){
         SharedPreferences.Editor edit=getSharedPreferences(PREFS,MODE_PRIVATE).edit().putString("state",state).putString("detail",text);
         RecordingTransferMetrics observed=transferMetrics;
-        if(observed!=null)edit.putString("nativeTransferMetrics",observed.json());
+        if(observed!=null){if(state.equals("reconnecting"))observed.reconnecting();edit.putString("nativeTransferMetrics",observed.json());}
         edit.commit();
         if(!destroyed){NotificationManager manager=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);manager.notify(NOTIFICATION,notification(text));}}
     private Notification notification(String text){

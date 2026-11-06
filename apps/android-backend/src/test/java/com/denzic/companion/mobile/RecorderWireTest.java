@@ -16,6 +16,11 @@ public final class RecorderWireTest {
     }
     private static void expectFailure(Checked c)throws Exception{try{c.run();throw new AssertionError("corrupt data was accepted");}catch(java.io.IOException expected){}}
     private interface Checked{void run()throws Exception;}
+    private static long metricNumber(String json,String key){
+        java.util.regex.Matcher m=java.util.regex.Pattern.compile("\\\""+java.util.regex.Pattern.quote(key)+"\\\":(-?[0-9]+)").matcher(json);
+        if(!m.find())throw new AssertionError("missing metric "+key+": "+json);return Long.parseLong(m.group(1));
+    }
+    private static String metricSegment(String json,long id){int at=json.indexOf("{\"recordingId\":"+id+",");if(at<0)throw new AssertionError("missing segment metric");return json.substring(at,json.indexOf('}',at)+1);}
     private static final class FakeLink implements RecordingClient.Link {
         final byte[] status,page0,page1,packet;byte[] control,list,pull,resumedPacket,multiAudio,consumeReply;boolean closed,partialOnce,failOnNextPull,loseConsumeReply,timeoutConsumeReply;int pullCount,consumeWrites;
         final java.util.Map<Long,RecorderWire.Descriptor> segments=new java.util.HashMap<>();
@@ -124,6 +129,14 @@ public final class RecorderWireTest {
             if(!measured.contains("\"durationNanos\":4590000000")||!measured.contains("\"complete\":true")||
                !measured.contains("\"verifiedNewBytes\":"+(audio.length*3))||!measured.contains("\"initialCachedBytes\":0")||!measured.contains("\"freshSelection\":true"))
                 throw new AssertionError("native metric omitted physical receipts or counted duplicate/cache bytes: "+measured);
+            String firstTrace=metricSegment(measured,41);
+            long firstReceipt=decline?1_530_000_000L:1_560_000_000L;
+            if(metricNumber(firstTrace,"windowStartedNanos")!=0||metricNumber(firstTrace,"originalVerifiedNanos")!=30_000_000L||
+               metricNumber(firstTrace,"receiptDurableNanos")!=firstReceipt||metricNumber(firstTrace,"windowVerifiedNewBytes")!=audio.length)
+                throw new AssertionError("per-segment metric finished before exact receipt: "+firstTrace);
+            metricClock[0]+=5_000_000_000L;observed.confirmed(d);
+            if(metricNumber(metricSegment(observed.json(),41),"receiptDurableNanos")!=firstReceipt||metricNumber(observed.json(),"durationNanos")!=4_590_000_000L)
+                throw new AssertionError("later cached replay changed a completed metric");
             RecordingTransferMetrics cached=new RecordingTransferMetrics(()->metricClock[0]);
             try(RecordingClient client=new RecordingClient(transport,dir->{},prefix->{checkPrefix(prefix);},cached)){client.syncAvailableAndReclaim(d,folder,null);}
             String reused=cached.json();if(!reused.contains("\"verifiedNewBytes\":0")||!reused.contains("\"confirmedKiBps\":null")||!reused.contains("\"freshSelection\":false"))throw new AssertionError("cached originals became new throughput: "+reused);
@@ -154,6 +167,15 @@ public final class RecorderWireTest {
         long fullWait=4*10_000_000L+5*20_000_000L+3*1_500_000_000L+5_000_000_000L;
         if(!restored.contains("\"durationNanos\":"+fullWait)||!restored.contains("\"verifiedNewBytes\":"+(audio.length*3))||!restored.contains("\"initialCachedBytes\":0"))
             throw new AssertionError("reconnect wait excluded or resumed bytes counted twice: "+restored);
+        long[] linkClock={0};RecordingTransferMetrics linkTimes=new RecordingTransferMetrics(()->linkClock[0]);
+        linkTimes.connecting();linkClock[0]=500_000_000L;linkTimes.connected();linkClock[0]=1_500_000_000L;linkTimes.directoryAvailable();
+        linkClock[0]=2_000_000_000L;linkTimes.connectionClosed(true);linkTimes.reconnecting();
+        linkClock[0]=7_000_000_000L;linkTimes.connecting();linkTimes.reconnecting();
+        linkClock[0]=8_000_000_000L;linkTimes.connected();linkClock[0]=9_000_000_000L;linkTimes.directoryAvailable();
+        String linkReport=linkTimes.json();
+        if(metricNumber(linkReport,"firstPrivateDirectoryDelayNanos")!=1_500_000_000L||metricNumber(linkReport,"maxReconnectDirectoryDelayNanos")!=7_000_000_000L||
+           metricNumber(linkReport,"connectionAttempts")!=2||metricNumber(linkReport,"connectionsEstablished")!=2||metricNumber(linkReport,"unexpectedDisconnections")!=1||metricNumber(linkReport,"reconnectSequences")!=1)
+            throw new AssertionError("connection measurement omitted protocol directory or reconnect cooldown: "+linkReport);
         long recordingDate=1793856001L;
         RecorderWire.Catalog datedCatalog=new RecorderWire.Catalog(peer,17);datedCatalog.calendar(true);
         if(datedCatalog.request()[2]!=1)throw new AssertionError("calendar request missing");
