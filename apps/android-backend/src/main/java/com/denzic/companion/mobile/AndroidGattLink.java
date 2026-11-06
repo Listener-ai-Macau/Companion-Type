@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -39,14 +40,21 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private volatile int initialConnectionStatus=-1;
     private volatile boolean connectedOnce;
     private boolean calendarSupported;
+    private final CountDownLatch disconnectAcknowledged=new CountDownLatch(1);
+    private final long traceStartedNanos=System.nanoTime();
+    private Context traceContext;
+    private volatile String traceStage="construct",connectError="";
+    private volatile int callbackStatus=-1,callbackState=-1;
+    private long closeElapsedNanos;
     private void operation(Event e){if(!closed.get()&&!operations.offer(e))failure="Bluetooth operation queue overflow";}
     private void notification(UUID id,byte[] value){if(closed.get())return;ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q!=null&&(value==null||!q.offer(value.clone())))failure="Bluetooth notification queue overflow";}
     private final BluetoothGattCallback callbacks=new BluetoothGattCallback(){
         @Override public void onConnectionStateChange(BluetoothGatt g,int status,int state){
+            callbackStatus=status;callbackState=state;
             if(status!=BluetoothGatt.GATT_SUCCESS&&!connectedOnce)initialConnectionStatus=status;
             connected=status==BluetoothGatt.GATT_SUCCESS&&state==BluetoothProfile.STATE_CONNECTED;
             if(connected)connectedOnce=true;
-            if(state==BluetoothProfile.STATE_DISCONNECTED){disconnected=true;failure="Bluetooth disconnected";}
+            if(state==BluetoothProfile.STATE_DISCONNECTED){disconnected=true;failure="Bluetooth disconnected";disconnectAcknowledged.countDown();}
             operation(new Event("connection",null,status,state,null));
         }
         @Override public void onServicesDiscovered(BluetoothGatt g,int status){operation(new Event("services",null,status,0,null));}
@@ -78,16 +86,22 @@ public final class AndroidGattLink implements RecordingClient.Link {
         if(context==null||device==null)throw new IllegalArgumentException("context and selected device required");
         if(Build.VERSION.SDK_INT<26)throw new RecordingSyncRunner.ActionRequired("需要 Android 8 或更新的系统才能接收录音");
         AndroidGattLink link=new AndroidGattLink();boolean ready=false;
+        link.traceContext=context.getApplicationContext();
         try {
             if(device.getBondState()!=BluetoothDevice.BOND_BONDED)throw new RecordingSyncRunner.ActionRequired("录音卡已取消配对，请重新配对后继续接收");
+            link.traceStage="connect";
             link.gatt=device.connectGatt(context.getApplicationContext(),false,link.callbacks,BluetoothDevice.TRANSPORT_LE);
             if(link.gatt==null)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection could not start");
+            link.traceStage="wait_connection";
             Event connection=link.waitOperation("connection",null,15_000);if(connection.state!=BluetoothProfile.STATE_CONNECTED)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection not established");
+            link.traceStage="mtu";
             if(!link.gatt.requestMtu(517))throw new RecordingSyncRunner.LinkFailure("Bluetooth MTU request refused");link.waitOperation("mtu",null,15_000);
             if(link.mtu<minimumMtu)throw new RecordingSyncRunner.ActionRequired("蓝牙连接容量不足，请重新连接或换用兼容的手机；原录音仍保留");
+            link.traceStage="services";
             if(!link.gatt.discoverServices())throw new RecordingSyncRunner.LinkFailure("Bluetooth service discovery refused");link.waitOperation("services",null,15_000);
             BluetoothGattService settings=link.gatt.getService(SETTINGS_SERVICE);
             if(synchronizeClock&&settings!=null&&settings.getCharacteristic(DeviceClock.SETTINGS)!=null){
+                link.traceStage="clock";
                 byte[] clock=DeviceClock.payload(link.read(DeviceClock.SETTINGS),System.currentTimeMillis()/1000L);
                 link.calendarSupported=clock.length==17;
                 link.write(DeviceClock.SETTINGS,clock);
@@ -97,8 +111,9 @@ public final class AndroidGattLink implements RecordingClient.Link {
             // Android/controller coexistence policy decides the actual PHY;
             // WOC5 readback records what was negotiated, not this preference.
             link.gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_NO_PREFERRED);
-            ready=true;return link;
-        } catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
+            link.traceStage="ready";ready=true;return link;
+        } catch(IOException e){link.connectError=e.getMessage()==null?e.getClass().getSimpleName():e.getMessage();throw e;}
+        catch(SecurityException e){link.connectError="Bluetooth permission is required";throw new IOException("Bluetooth permission is required",e);}
         finally{if(!ready)link.close();}
     }
     private void check() throws IOException {if(closed.get())throw new RecordingSyncRunner.LinkFailure("Bluetooth link closed");if(failure!=null)throw new RecordingSyncRunner.LinkFailure(failure);if(!connected)throw new RecordingSyncRunner.LinkFailure("Bluetooth not connected");}
@@ -156,5 +171,31 @@ public final class AndroidGattLink implements RecordingClient.Link {
         try{while(System.nanoTime()<deadline){check();byte[] p=q.poll(100,TimeUnit.MILLISECONDS);if(p!=null)return p;}}
         catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException("Bluetooth wait interrupted",e);}throw new java.net.SocketTimeoutException("Bluetooth notification timed out");
     }
-    @Override public void close() {if(!closed.compareAndSet(false,true))return;BluetoothGatt g=gatt;if(g!=null){try{g.disconnect();}catch(SecurityException ignored){}try{g.close();}catch(SecurityException ignored){}}}
+    private void saveCloseTrace(){
+        // Two overwritten, app-private metadata records; no payload or
+        // per-packet logging. Keep the last failure even after cleanup works.
+        if(traceContext==null)return;
+        try{
+            String error=connectError.length()>240?connectError.substring(0,240):connectError;
+            org.json.JSONObject trace=new org.json.JSONObject().put("schema",1).put("stage",traceStage)
+                .put("startedNanos",traceStartedNanos).put("closedNanos",System.nanoTime())
+                .put("connectedOnce",connectedOnce).put("initialConnectionStatus",initialConnectionStatus)
+                .put("callbackStatus",callbackStatus).put("callbackState",callbackState).put("mtu",mtu)
+                .put("disconnectAcknowledged",disconnectAcknowledged.getCount()==0)
+                .put("closeElapsedNanos",closeElapsedNanos).put("connectError",error);
+            android.content.SharedPreferences.Editor editor=traceContext.getSharedPreferences("companion_ble_diagnostics",Context.MODE_PRIVATE).edit().putString("last",trace.toString());
+            if(!error.isEmpty())editor.putString("lastConnectionFailure",trace.toString());
+            editor.apply();
+        }catch(Exception diagnosticUnavailable){/* Metadata must not block client release. */}
+    }
+    @Override public void close() {
+        if(!closed.compareAndSet(false,true))return;
+        final BluetoothGatt g=gatt;long started=System.nanoTime();
+        try{
+            if(g!=null)GattCloseAwait.close(new GattCloseAwait.Port(){
+                public boolean disconnect(){try{g.disconnect();return true;}catch(SecurityException denied){return false;}}
+                public void close(){try{g.close();}catch(SecurityException ignored){}}
+            },disconnectAcknowledged);
+        }finally{closeElapsedNanos=System.nanoTime()-started;saveCloseTrace();}
+    }
 }
