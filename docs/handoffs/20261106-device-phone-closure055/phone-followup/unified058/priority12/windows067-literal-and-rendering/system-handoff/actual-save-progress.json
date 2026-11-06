@@ -1,0 +1,153 @@
+[
+  {
+    "format": "docx",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 6302,
+    "sha256": "381fd967618b8f401c4ca2d6739497bb4db58af83b714d0334c280f0eb7ea7b2",
+    "wallSeconds": 6.864,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_22bf62ae71f0",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.docx",
+      "bytes": 6302
+    }
+  },
+  {
+    "format": "pdf",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 72558,
+    "sha256": "35200e960967347a3727003d1ac96027a6eccde7701c72f3cd7ba3da1e78b594",
+    "wallSeconds": 10.155,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_10b21a9915cb",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.pdf",
+      "bytes": 72558
+    },
+    "freshPrivateDesktopBecauseSelectAfterModalNotObservable": true
+  },
+  {
+    "format": "pptx",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 17358,
+    "sha256": "221d6b3f3050158fe7d43075cd0bc920e1fe4b44d83280cff3ca5f770ae06cee",
+    "wallSeconds": 6.839,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_4e305ac8fc3e",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.pptx",
+      "bytes": 17358
+    },
+    "freshPrivateDesktopBecauseSelectAfterModalNotObservable": true
+  },
+  {
+    "format": "txt",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 246,
+    "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d",
+    "wallSeconds": 6.851,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_c4cc7e0115b8",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.txt",
+      "bytes": 246
+    },
+    "freshPrivateDesktopBecauseSelectAfterModalNotObservable": true
+  },
+  {
+    "format": "md",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 246,
+    "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d",
+    "wallSeconds": 6.915,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_b168ded7e918",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.md",
+      "bytes": 246
+    },
+    "freshPrivateDesktopBecauseSelectAfterModalNotObservable": true
+  },
+  {
+    "format": "xlsx",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 5021,
+    "sha256": "4f75c6c48c1e80ac1db6ae948ac47a1986aaf924724356e928cbd896322c2c2b",
+    "wallSeconds": 9.013,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_d3b822865469",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.xlsx",
+      "bytes": 5021
+    },
+    "freshPrivateDesktopBecauseSelectAfterModalNotObservable": true
+  },
+  {
+    "format": "mm",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 511,
+    "sha256": "1a12496441bb36ae825d6643dbf80ba255b6e182d0682be363fc0bc23838aef7",
+    "wallSeconds": 6.996,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_c68f0bfb5e9b",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.mm",
+      "bytes": 511
+    },
+    "freshPrivateDesktopBecauseSelectAfterModalNotObservable": true
+  },
+  {
+    "format": "png",
+    "ordinaryNativeSaveAs": true,
+    "bytes": 44752,
+    "sha256": "ae2334cd2490246578dd7e516e6252a71e7c5faa8821a6456ccc677980f82347",
+    "wallSeconds": 7.808,
+    "publicFixture": true,
+    "modelsRun": false,
+    "receipt": {
+      "action": "save-path",
+      "desktop": "CompanionExportQA_d53af2be2c4f",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+      "filename": "Windows067-public-transcript.png",
+      "bytes": 44752
+    },
+    "freshPrivateDesktopBecauseSelectAfterModalNotObservable": true
+  }
+]

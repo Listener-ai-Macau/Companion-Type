@@ -1,0 +1,46 @@
+{
+  "at": "2026-11-06T18:15:11+08:00",
+  "state": "WINDOWS067_INSTALLED_EIGHT_SYSTEM_SAVE_AS_AND_COPY_PASSED_SHARE_AND_PHONE_FINAL_PENDING",
+  "version": "0.1.67",
+  "sourceCommit": "60166fa3bd22cc277d4a6c69962d39fa3c13e9e0",
+  "msiSha256": "259cd7c3dfd8af79d843d78fdb7c1762a84436b320a6ad6fa096e1d9a2ebfc94",
+  "actualInstalled": true,
+  "originalDataFilesIdentical": 245,
+  "actualSaveAsFormats": [
+    "Word",
+    "PDF",
+    "PowerPoint",
+    "TXT",
+    "Markdown",
+    "Excel",
+    "editableMindmap",
+    "PNG"
+  ],
+  "actualCancelProducedNoNewFile": true,
+  "actualContentResult": "system-handoff/actual-content-result.json",
+  "actualCopy": "ACTUAL_COPY_EXACT_PUBLIC_TEXT_MATCHED_CLIPBOARD_RESTORE_UNCONFIRMED",
+  "clipboardRestorationQualified": false,
+  "publicSyntheticFixture": true,
+  "modelsRun": false,
+  "ordinaryShareRecipientVerified": false,
+  "fullPriority12Complete": false,
+  "wholeProductQualified": false,
+  "fixedBehavior": [
+    "Raw transcript literal prefixes, indentation, XML/emoji and formula-looking text are preserved through selected rich documents; source/copy/TXT/MD remain unchanged.",
+    "PDF/PNG wait for complete closed output while owned child renderers still run, bounded by original timeout/cancellation and job cleanup; generic ASR wrapper parent-exit behavior retained.",
+    "Document-only UUID cache cleanup tolerates brief Windows file-sharing locks, bounded2sec and constrained to own temp subtree."
+  ],
+  "inspection": "Actual saved PDF page and mindmap PNG visually inspected; both legible and unclipped for this synthetic fixture. No real long-meeting model quality claim.",
+  "qaLimitations": [
+    "Non-input desktop select popup not consistently observable after native modal. Fresh private App desktop per remaining format completed all8 actual SaveAs; this does not qualify foreground focus behavior.",
+    "Copy text matched exactly. OLE original-clipboard restore raised CLIPBRD_E_CANT_CLOSE; original restoration unknown, subsequent observation public test text absent/Unicode format absent. No original clipboard data inspected/recorded. Do not reuse this preservation method.",
+    "Initial content checker expected raw text without the intentional ## 录音文字 section header; adjusted to retain exact source after that system header, no product change.",
+    "Current phone/board lease is held by existing embedded power/long-record flow since17:32; no claim, install or phone input performed in this batch."
+  ],
+  "remaining": [
+    "Windows actual ShareSheet and intended local-recipient handoff; current data-package checks are not recipient delivery.",
+    "After shared lease release, re-read latest Android/FW; unified066 candidate must not downgrade any newer installed app. Verify actual corrected Word and current own-new recording pause/resume/playback/delete/audio as affected.",
+    "Return phone from public test library to original retained library after existing shared flow releases.",
+    "Other existing non-model/physical sale gaps remain; these two scopes are not the entire product."
+  ]
+}

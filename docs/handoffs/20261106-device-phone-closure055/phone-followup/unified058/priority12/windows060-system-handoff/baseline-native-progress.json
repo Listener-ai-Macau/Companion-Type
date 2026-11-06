@@ -1,0 +1,63 @@
+[
+  {
+    "format": "txt",
+    "exitCode": 0,
+    "wallSeconds": 0.055,
+    "actualSystemSaveAs": false,
+    "bytes": 246,
+    "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d"
+  },
+  {
+    "format": "markdown",
+    "exitCode": 0,
+    "wallSeconds": 0.05,
+    "actualSystemSaveAs": false,
+    "bytes": 246,
+    "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d"
+  },
+  {
+    "format": "docx",
+    "exitCode": 0,
+    "wallSeconds": 0.052,
+    "actualSystemSaveAs": false,
+    "bytes": 6183,
+    "sha256": "85b866aa4a69ca047dba225e26e0408b1c79805f0cb89f34b0e5e7a86ed8b3d7"
+  },
+  {
+    "format": "pdf",
+    "exitCode": 1,
+    "wallSeconds": 0.126,
+    "actualSystemSaveAs": false
+  },
+  {
+    "format": "pptx",
+    "exitCode": 0,
+    "wallSeconds": 0.058,
+    "actualSystemSaveAs": false,
+    "bytes": 20521,
+    "sha256": "0abd1ae1a950a51d06e9d236bc7cd949f81e73937b429445a75a501fe572d944"
+  },
+  {
+    "format": "xlsx",
+    "exitCode": 0,
+    "wallSeconds": 0.057,
+    "actualSystemSaveAs": false,
+    "bytes": 5021,
+    "sha256": "4f75c6c48c1e80ac1db6ae948ac47a1986aaf924724356e928cbd896322c2c2b"
+  },
+  {
+    "format": "mindmap",
+    "exitCode": 0,
+    "wallSeconds": 0.054,
+    "actualSystemSaveAs": false,
+    "bytes": 509,
+    "sha256": "baf8dd7db82a9d1916324b26ca4b57c6c01e1b28450071a875da565fe71c6389"
+  },
+  {
+    "format": "png",
+    "exitCode": 1,
+    "wallSeconds": 0.089,
+    "actualSystemSaveAs": false,
+    "retainedError": "meeting_workspace_error=PNG导图生成未完成。\ndevice_process_exit cleanup=complete released_owner_records=0 board_stop_commands=0 saved_preferences_changed=0\n"
+  }
+]

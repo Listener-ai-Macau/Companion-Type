@@ -1,0 +1,87 @@
+[
+  {
+    "name": "backend::content_export::tests::content051_can_export_a_saved_material_without_ai_minutes_or_audio",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::content_export::tests::content051_can_export_a_saved_material_without_ai_minutes_or_audio ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::content_export::tests::content051_generate_files_for_external_reader_checks",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::content_export::tests::content051_generate_files_for_external_reader_checks ... CONTENT051_EXTERNAL_FILES=C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows067-literal-and-rendering\\native-files-1793957708815118400\nok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 3.41s\n\n"
+  },
+  {
+    "name": "backend::content_export::tests::content051_selection_is_identical_across_text_and_document_routes_without_unselected_data",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::content_export::tests::content051_selection_is_identical_across_text_and_document_routes_without_unselected_data ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::content_export::tests::content067_literal_transcript_prefixes_are_not_document_structure",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::content_export::tests::content067_literal_transcript_prefixes_are_not_document_structure ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::export_text_layout::tests::content052_wrapping_keeps_words_and_all_source_characters",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::export_text_layout::tests::content052_wrapping_keeps_words_and_all_source_characters ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::external_command::windows::tests::actual_windows_process_captures_output_and_redacts_failed_stderr",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::external_command::windows::tests::actual_windows_process_captures_output_and_redacts_failed_stderr ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.09s\n\n"
+  },
+  {
+    "name": "backend::external_command::windows::tests::document_completion_waits_for_owned_child_after_launcher_exits",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::external_command::windows::tests::document_completion_waits_for_owned_child_after_launcher_exits ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 1.11s\n\n"
+  },
+  {
+    "name": "backend::external_command::windows::tests::large_output_is_rejected_while_process_is_still_running",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::external_command::windows::tests::large_output_is_rejected_while_process_is_still_running ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.04s\n\n"
+  },
+  {
+    "name": "backend::external_command::windows::tests::missing_document_with_no_remaining_child_is_rejected",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::external_command::windows::tests::missing_document_with_no_remaining_child_is_rejected ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.05s\n\n"
+  },
+  {
+    "name": "backend::external_command::windows::tests::nul_and_oversized_arguments_are_rejected_before_process_start",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::external_command::windows::tests::nul_and_oversized_arguments_are_rejected_before_process_start ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::meeting_document_export::tests::mindmap_keeps_every_saved_line_and_groups_sections",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::meeting_document_export::tests::mindmap_keeps_every_saved_line_and_groups_sections ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::meeting_document_export::tests::word_preserves_chinese_citations_and_xml_characters",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::meeting_document_export::tests::word_preserves_chinese_citations_and_xml_characters ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::mindmap_image_export::tests::content052_mindmap_keeps_all_nodes_and_escapes_saved_content",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::mindmap_image_export::tests::content052_mindmap_keeps_all_nodes_and_escapes_saved_content ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::pdf_export::tests::generated_header_is_readable_without_changing_unrelated_content",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::pdf_export::tests::generated_header_is_readable_without_changing_unrelated_content ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::pdf_export::tests::page_escapes_meeting_content_and_has_no_external_loads",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::pdf_export::tests::page_escapes_meeting_content_and_has_no_external_loads ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::pdf_export::tests::render_cache_waits_for_transient_writer_close_and_refuses_other_roots",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::pdf_export::tests::render_cache_waits_for_transient_writer_close_and_refuses_other_roots ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.11s\n\n"
+  },
+  {
+    "name": "backend::presentation_export::tests::content052_presentation_paginates_without_omitting_saved_text_or_citations",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::presentation_export::tests::content052_presentation_paginates_without_omitting_saved_text_or_citations ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1203 filtered out; finished in 0.00s\n\n"
+  }
+]

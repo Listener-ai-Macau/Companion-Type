@@ -1,0 +1,268 @@
+{
+  "actualSaveAsReceipt": {
+    "action": "save-path",
+    "desktop": "CompanionExportQA_9ba7b941e7d5",
+    "inputDesktop": "Default",
+    "ownWindows": [
+      {
+        "hwnd": 2492048,
+        "pid": 29116,
+        "title": "",
+        "class": "UAC_InputIndicatorOverlayWnd"
+      },
+      {
+        "hwnd": 1574600,
+        "pid": 29116,
+        "title": "",
+        "class": "UAC Input Indicator"
+      },
+      {
+        "hwnd": 393246,
+        "pid": 29116,
+        "title": "另存为",
+        "class": "#32770"
+      },
+      {
+        "hwnd": 22217872,
+        "pid": 29116,
+        "title": "Companion Type",
+        "class": "Tauri Window"
+      },
+      {
+        "hwnd": 5440832,
+        "pid": 29116,
+        "title": "",
+        "class": "Tao Thread Event Target"
+      }
+    ],
+    "desktopSwitched": false,
+    "controls": [
+      {
+        "name": "帮助(&H)",
+        "type": 50000,
+        "id": "HelpButton",
+        "enabled": true
+      },
+      {
+        "name": "视图滑块",
+        "type": 50000,
+        "id": "SplitMenuButton",
+        "enabled": true
+      },
+      {
+        "name": "组织​​",
+        "type": 50000,
+        "id": "{7DDC1264-7E4D-4F74-BBC0-D191987C8D0F}",
+        "enabled": true
+      },
+      {
+        "name": "新建​​文件夹​​",
+        "type": 50000,
+        "id": "{E44616AD-6DF1-4B94-85A4-E465AE8A19DB}",
+        "enabled": true
+      },
+      {
+        "name": "上一行",
+        "type": 50000,
+        "id": "UpButton",
+        "enabled": true
+      },
+      {
+        "name": "向下翻页",
+        "type": 50000,
+        "id": "DownPageButton",
+        "enabled": true
+      },
+      {
+        "name": "下一行",
+        "type": 50000,
+        "id": "DownButton",
+        "enabled": true
+      },
+      {
+        "name": "上一行",
+        "type": 50000,
+        "id": "UpButton",
+        "enabled": true
+      },
+      {
+        "name": "向下翻页",
+        "type": 50000,
+        "id": "DownPageButton",
+        "enabled": true
+      },
+      {
+        "name": "下一行",
+        "type": 50000,
+        "id": "DownButton",
+        "enabled": true
+      },
+      {
+        "name": "打开",
+        "type": 50000,
+        "id": "DropDown",
+        "enabled": true
+      },
+      {
+        "name": "打开",
+        "type": 50000,
+        "id": "DropDown",
+        "enabled": true
+      },
+      {
+        "name": "隐藏文件夹",
+        "type": 50000,
+        "id": "",
+        "enabled": true
+      },
+      {
+        "name": "保存(S)",
+        "type": 50000,
+        "id": "1",
+        "enabled": true
+      },
+      {
+        "name": "取消",
+        "type": 50000,
+        "id": "2",
+        "enabled": true
+      },
+      {
+        "name": "后退 (Alt + 向左键)",
+        "type": 50000,
+        "id": "",
+        "enabled": false
+      },
+      {
+        "name": "前进 (Alt + 向右键)",
+        "type": 50000,
+        "id": "",
+        "enabled": false
+      },
+      {
+        "name": "最近浏览的位置",
+        "type": 50000,
+        "id": "",
+        "enabled": false
+      },
+      {
+        "name": "向上一级(Alt + 向上键)",
+        "type": 50000,
+        "id": "",
+        "enabled": false
+      },
+      {
+        "name": "所有位置",
+        "type": 50000,
+        "id": "",
+        "enabled": true
+      },
+      {
+        "name": "上一个位置",
+        "type": 50000,
+        "id": "",
+        "enabled": true
+      },
+      {
+        "name": "刷新“桌面”(F5)",
+        "type": 50000,
+        "id": "",
+        "enabled": true
+      },
+      {
+        "name": "搜索",
+        "type": 50000,
+        "id": "SearchBoxSearchButton",
+        "enabled": true
+      },
+      {
+        "name": "关闭",
+        "type": 50000,
+        "id": "",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "名称",
+        "type": 50004,
+        "id": "System.ItemNameDisplay",
+        "enabled": true
+      },
+      {
+        "name": "文件名:",
+        "type": 50004,
+        "id": "1001",
+        "enabled": true
+      },
+      {
+        "name": "搜索框",
+        "type": 50004,
+        "id": "SearchEditBox",
+        "enabled": true
+      },
+      {
+        "name": "文件名:",
+        "type": 50003,
+        "id": "FileNameControlHost",
+        "enabled": true
+      },
+      {
+        "name": "保存类型:",
+        "type": 50003,
+        "id": "FileTypeControlHost",
+        "enabled": true
+      }
+    ],
+    "result": "ACTUAL_NATIVE_SAVE_AS_FILE_CREATED",
+    "filename": "Windows060-public-transcript.docx",
+    "bytes": 6183
+  },
+  "sha256": "85b866aa4a69ca047dba225e26e0408b1c79805f0cb89f34b0e5e7a86ed8b3d7",
+  "bytes": 6183,
+  "microsoftOpenXmlErrorsObserved": 0,
+  "sourceLiteralHeadingMarkerPreserved": false,
+  "contentQualified": false,
+  "publicSyntheticFixture": true,
+  "modelsRun": false
+}

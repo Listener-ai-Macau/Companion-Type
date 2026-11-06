@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-06T17:31:02+08:00",
+  "state": "ACTUAL_WINDOWS_SAVE_AS_REACHED_LITERAL_AND_RENDER_LIFETIME_DEFECTS_FIXED_IN_SOURCE_TESTING",
+  "sourceCheckpoint": "329af946",
+  "actualSaveAsTransportPassed": true,
+  "actualWordContentQualified": false,
+  "literalFailure": "Raw transcript # prefix was interpreted as a Word heading; baseline controlled native PPTX/mm use the same ambiguous formatting route. Clipboard/TXT/Markdown/XLSX must keep exact source. Quote raw speech for rich rendering; classify real structure before removing the single quote prefix.",
+  "rendererFailure": "Actual frozen Windows060 native PDF and PNG requests failed. Identical standalone public headless jobs: launcher exits0 at0.031/0.047sec; PDF/PNG output arrives only1.141/0.953sec later. Existing generic wrapper terminates descendants immediately on launcher exit. New completion opt-in is restricted to document rendering; ordinary ASR/wrapper behavior remains.",
+  "sources": [
+    "windows060-system-handoff/actual-system-save-word060.json",
+    "windows060-system-handoff/baseline-native-progress.json",
+    "windows060-system-handoff/headless-lifetime-diagnosis.json"
+  ],
+  "qaFailuresKept": [
+    "Old CDP driver could not connect on the separate desktop; ordinary UI Automation with actual supported patterns proceeded instead.",
+    "A role/summary did not expose Invoke; the real recent-record button and ExpandCollapse route worked. No general product accessibility defect asserted.",
+    "Toggle verification initially ran before the async UI update; subsequent fresh state confirmed both requested selections without toggling again.",
+    "A fresh QA profile lacked standard Documents/Desktop directories, causing native location warning; only own QA profile folders were created and the warning normally acknowledged.",
+    "First focused compilation found String/&str mismatch; corrected before any product release.",
+    "Optional CPU-affinity monitor hit access denied on exiting link.exe and stopped; parent already inherited4 CPUs. Observer now tolerates disappearing/inaccessible child, without permission change."
+  ],
+  "newWindowsCandidateBuilt": false,
+  "phone066InstalledByThisWork": false,
+  "wholeProductQualified": false
+}

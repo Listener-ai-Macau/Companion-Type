@@ -1,0 +1,27 @@
+{
+  "result": [
+    {
+      "format": "pdf",
+      "parentExitCode": 0,
+      "parentExitSeconds": 0.031,
+      "outputAtParentExit": false,
+      "outputEventuallyExists": true,
+      "observedOutputSeconds": 1.141,
+      "bytes": 57925,
+      "headlessOnly": true
+    },
+    {
+      "format": "png",
+      "parentExitCode": 0,
+      "parentExitSeconds": 0.047,
+      "outputAtParentExit": false,
+      "outputEventuallyExists": true,
+      "observedOutputSeconds": 0.953,
+      "bytes": 11822,
+      "headlessOnly": true
+    }
+  ],
+  "diagnosticFolderLocal": "E:\\CodexData\\Companion\\.build-cache\\windows051\\headless-diagnostic-6f688ccf",
+  "sourceIsPublicSynthetic": true,
+  "noOwnerBrowserProfileUsed": true
+}

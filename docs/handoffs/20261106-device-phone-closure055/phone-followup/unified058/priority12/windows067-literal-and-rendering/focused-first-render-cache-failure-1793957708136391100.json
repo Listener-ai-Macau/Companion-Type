@@ -1,0 +1,12 @@
+[
+  {
+    "name": "backend::content_export::tests::content051_can_export_a_saved_material_without_ai_minutes_or_audio",
+    "exitCode": 0,
+    "output": "\nrunning 1 test\ntest backend::content_export::tests::content051_can_export_a_saved_material_without_ai_minutes_or_audio ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1202 filtered out; finished in 0.00s\n\n"
+  },
+  {
+    "name": "backend::content_export::tests::content051_generate_files_for_external_reader_checks",
+    "exitCode": 101,
+    "output": "\nrunning 1 test\ntest backend::content_export::tests::content051_generate_files_for_external_reader_checks ... FAILED\n\nfailures:\n\nfailures:\n    backend::content_export::tests::content051_generate_files_for_external_reader_checks\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1202 filtered out; finished in 1.05s\n\n\nthread 'backend::content_export::tests::content051_generate_files_for_external_reader_checks' (26708) panicked at src\\backend\\content_export.rs:177:60:\ncalled `Result::unwrap()` on an `Err` value: \"PDF 已生成，但临时文件未能清理；请检查本机临时目录。\"\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+  }
+]

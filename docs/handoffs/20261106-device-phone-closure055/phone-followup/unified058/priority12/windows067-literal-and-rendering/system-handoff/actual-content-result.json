@@ -1,0 +1,143 @@
+{
+  "state": "INSTALLED_WINDOWS067_ACTUAL_NATIVE_SAVE_AS_CONTENT_CHECKED",
+  "version": "0.1.67",
+  "files": [
+    {
+      "actualSaveAs": false,
+      "format": "txt",
+      "bytes": 246,
+      "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": false,
+      "format": "md",
+      "bytes": 246,
+      "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": false,
+      "format": "docx",
+      "bytes": 6302,
+      "sha256": "381fd967618b8f401c4ca2d6739497bb4db58af83b714d0334c280f0eb7ea7b2",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": false,
+      "format": "xlsx",
+      "bytes": 5021,
+      "sha256": "4f75c6c48c1e80ac1db6ae948ac47a1986aaf924724356e928cbd896322c2c2b",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": false,
+      "format": "pptx",
+      "bytes": 17358,
+      "sha256": "221d6b3f3050158fe7d43075cd0bc920e1fe4b44d83280cff3ca5f770ae06cee",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": false,
+      "format": "mm",
+      "bytes": 511,
+      "sha256": "1a12496441bb36ae825d6643dbf80ba255b6e182d0682be363fc0bc23838aef7",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": false,
+      "format": "pdf",
+      "bytes": 72558,
+      "sha256": "8f509788f8055ad7bbca20e231f26f5bba8d04a9797e23d4af37ed6447c3c22c",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": false,
+      "format": "png",
+      "fullImageDecodes": true,
+      "dimensions": [
+        1352,
+        552
+      ],
+      "sha256": "ae2334cd2490246578dd7e516e6252a71e7c5faa8821a6456ccc677980f82347"
+    },
+    {
+      "actualSaveAs": true,
+      "format": "txt",
+      "bytes": 246,
+      "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": true,
+      "format": "md",
+      "bytes": 246,
+      "sha256": "af3466745e2dad46114bda044448cb32f651877d1c531e47c33462511a5dc32d",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": true,
+      "format": "docx",
+      "bytes": 6302,
+      "sha256": "381fd967618b8f401c4ca2d6739497bb4db58af83b714d0334c280f0eb7ea7b2",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": true,
+      "format": "xlsx",
+      "bytes": 5021,
+      "sha256": "4f75c6c48c1e80ac1db6ae948ac47a1986aaf924724356e928cbd896322c2c2b",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": true,
+      "format": "pptx",
+      "bytes": 17358,
+      "sha256": "221d6b3f3050158fe7d43075cd0bc920e1fe4b44d83280cff3ca5f770ae06cee",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": true,
+      "format": "mm",
+      "bytes": 511,
+      "sha256": "1a12496441bb36ae825d6643dbf80ba255b6e182d0682be363fc0bc23838aef7",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": true,
+      "format": "pdf",
+      "bytes": 72558,
+      "sha256": "35200e960967347a3727003d1ac96027a6eccde7701c72f3cd7ba3da1e78b594",
+      "literalAndNegationPreserved": true
+    },
+    {
+      "actualSaveAs": true,
+      "format": "png",
+      "fullImageDecodes": true,
+      "dimensions": [
+        1352,
+        552
+      ],
+      "sha256": "ae2334cd2490246578dd7e516e6252a71e7c5faa8821a6456ccc677980f82347"
+    }
+  ],
+  "actualSaveAsFormats": 8,
+  "releaseNativeFormats": 8,
+  "sourceContentPreserved": true,
+  "officeSchemaErrors": 0,
+  "cancellation": {
+    "actualCancel": {
+      "action": "cancel",
+      "desktop": "CompanionExportQA_d53af2be2c4f",
+      "inputDesktop": "Default",
+      "desktopSwitched": false,
+      "result": "ACTUAL_NATIVE_DIALOG_CANCELLED"
+    },
+    "savedFilesIdentical": true,
+    "modelsRun": false
+  },
+  "publicSyntheticFixture": true,
+  "actualShareRecipientVerified": false,
+  "modelsRun": false,
+  "wholeProductQualified": false
+}
