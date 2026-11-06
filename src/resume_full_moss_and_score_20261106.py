@@ -8,6 +8,8 @@ r=Path('C:/Users/Billy/Desktop/Denzic/Companion');m=r/'docs/handoffs/20261105-mo
 parser=argparse.ArgumentParser()
 parser.add_argument('--control-name',default='full-L-owner-resume-20261106')
 parser.add_argument('--output-suffix',default='-20261106-r17')
+parser.add_argument('--prepared-inputs',help='Exact author tensor manifest from a completed, separate preprocessing process')
+parser.add_argument('--prepared-inputs-sha256')
 args=parser.parse_args()
 assert all(c.isalnum() or c in '._-' for c in args.control_name)
 assert all(c.isalnum() or c in '._-' for c in args.output_suffix)
@@ -34,6 +36,11 @@ try:
     assert read(m/'post-reboot-output-equivalence-20261106.json')['sameGeneratedIds']
     protocol=read(prior/'frozen-protocol.json')
     protocol.update(at=now(),scope='Owner explicitly resumes full real meeting and skips reboot-cause investigation. Same pinned published model, complete context, query128/key256, BF16, CPU5%, private-memory2GiB, GPU IDLE and cooperative duty0.1 with durable encoder/token/layer progress. No reference/count/hotwords in inference, no tuning/training. Full output scored only after worker exit. This changes duty from interrupted r16 .25 to post-restart-tested .1 and retains earlier failure evidence.')
+    assert bool(args.prepared_inputs)==bool(args.prepared_inputs_sha256)
+    if args.prepared_inputs:
+        with Path(args.prepared_inputs).open('rb') as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==args.prepared_inputs_sha256
+        protocol['runtime']['preparedInputs']={'manifest':str(Path(args.prepared_inputs).resolve()),'sha256':args.prepared_inputs_sha256}
+        protocol['scope']+=' Exact original author processor tensors staged in a separate exited process, byte-bound to audio/pins. Model input values, shapes, context and generation unchanged.'
     assert protocol['runtime']['cooperativeGpuDuty']==.1 and protocol['runtime']['durableProgressWrites']
     case=next(c for c in read(m/'public-audio-restore-r5.json')['cases'] if c['meeting']=='L_R003S01C02')
     for field,checksum in [('audio','audioSha256'),('reference','referenceSha256')]:

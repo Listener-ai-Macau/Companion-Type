@@ -170,9 +170,14 @@ try:
             encodedFeatureBytes=sum(x.numel()*x.element_size() for x in result),state='DECODER_PREFILL');save()
         return result
     model.model.get_audio_features=observed_features
-    messages=build_transcription_messages(case['audio'])
     tick=time.perf_counter()
-    inputs=prepare_inputs(processor,messages,max_length=protocol['runtime']['maxLength'],device=device).to(device)
+    if protocol['runtime'].get('preparedInputs'):
+        from moss_prepared_inputs_20261106 import load as load_prepared_inputs
+        inputs,prepared_binding=load_prepared_inputs(binding=protocol['runtime']['preparedInputs'],case=case,protocol=protocol,device=device,torch=torch)
+        state['preparedInputCache']=prepared_binding
+    else:
+        messages=build_transcription_messages(case['audio'])
+        inputs=prepare_inputs(processor,messages,max_length=protocol['runtime']['maxLength'],device=device).to(device)
     prompt_len=int(inputs['attention_mask'][0].sum().item())
     state.update(inputPreparationSeconds=time.perf_counter()-tick,inputTokens=prompt_len,
         acousticChunks=int(inputs['input_features'].shape[0]),audioFeatureTokenLengths=inputs['audio_feature_lengths'].tolist(),

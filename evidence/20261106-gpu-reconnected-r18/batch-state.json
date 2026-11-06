@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-06T21:47:17+08:00",
+  "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
+  "ownerDirective": "重启的问题应该不用查了，你就继续吧。把整那东西跑好就行了。",
+  "work": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-gpu-reconnected-20261106-r18",
+  "pid": 24768,
+  "processCreatedAt": 1793972837.1943517,
+  "bootTime": 1793890677.215675,
+  "previousSourceCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
+  "skipRebootInvestigationByOwner": true,
+  "automaticInferenceRetries": 0,
+  "referencePassedToInference": false,
+  "startedAt": "2026-11-06T21:47:18+08:00",
+  "audioSeconds": 2362.945,
+  "hostAvailableBytes": 1996881920,
+  "supervisorPid": 17316,
+  "supervisorCreatedAt": 1793972838.636381,
+  "inferenceSupervisorExitCode": 0,
+  "inferenceState": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+  "inferenceFinishedAt": "2026-11-06T21:48:39+08:00",
+  "finishedAt": "2026-11-06T21:48:39+08:00"
+}

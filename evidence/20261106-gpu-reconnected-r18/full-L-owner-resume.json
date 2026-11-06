@@ -1,0 +1,22 @@
+{
+  "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+  "startedAt": "2026-11-06T21:47:18+08:00",
+  "protocolSha256": "1b68240eddae1df4379ac0967c3aaa2fd0fd1ce1fc83b879861dfa3a0cac9da7",
+  "inputManifestSha256": "53a7fe03471af0b095317af13d18e5dbc407c76e48de9e0f66d0316508de03a7",
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 15,
+      "workerState": "FAILED_BEFORE_RECEIPT",
+      "wholeProcessFamilySeconds": 80.984812,
+      "observedProcessFamilyPeakRssBytes": 1459707904,
+      "observedProcessFamilyPeakPrivateBytes": 1448017920,
+      "processFamilyCpuSeconds": 24.203125,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-gpu-reconnected-20261106-r18\\results\\L_R003S01C02-20261106-r18\\completed-state.json",
+      "smokeOnly": false
+    }
+  ],
+  "referencePassedToWorker": false,
+  "stopReason": "Windows LowMemoryResourceNotification signaled; release only this experiment family",
+  "finishedAt": "2026-11-06T21:48:39+08:00"
+}
