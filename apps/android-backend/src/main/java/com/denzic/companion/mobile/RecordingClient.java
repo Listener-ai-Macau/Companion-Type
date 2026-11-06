@@ -18,6 +18,8 @@ public final class RecordingClient implements Closeable {
         int mtu();
         default boolean calendarSupported() {return false;}
         default String otaDataWriteMode() throws IOException {return "unspecified";}
+        /** Best-effort connection parameters only for active payload work. */
+        default void setTransferPriority(boolean bulk) {}
         byte[] read(UUID characteristic) throws IOException;
         void subscribe(UUID characteristic) throws IOException;
         void write(UUID characteristic,byte[] value) throws IOException;
@@ -199,11 +201,14 @@ public final class RecordingClient implements Closeable {
             previous=d;
         }
         if(!selectedOnDevice)RecordingLibrary.verifiedPrefix(privateDirectory,selected);
-        for(int i=0;i<matches.size();i++){
-            final int index=i;RecorderWire.Descriptor d=matches.get(i);
-            download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
-            durableConsume.consume(privateDirectory,d);
-        }
+        if(!matches.isEmpty())link.setTransferPriority(true);
+        try {
+            for(int i=0;i<matches.size();i++){
+                final int index=i;RecorderWire.Descriptor d=matches.get(i);
+                download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
+                durableConsume.consume(privateDirectory,d);
+            }
+        } finally {if(!matches.isEmpty())link.setTransferPriority(false);}
         for(RecordingLibrary.Session session:RecordingLibrary.sessions(privateDirectory,selected)){
             if(session.segments.isEmpty())continue;
             RecorderWire.Descriptor first=session.segments.get(0).descriptor;

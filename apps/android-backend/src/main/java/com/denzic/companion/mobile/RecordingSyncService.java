@@ -142,13 +142,14 @@ public final class RecordingSyncService extends Service {
                 AndroidGattLink link=AndroidGattLink.connect(getApplicationContext(),device);
                 RecordingClient client;
                 try {
-                    boolean requested=link.preferBulkTransfer();
-                    getSharedPreferences(PREFS,MODE_PRIVATE).edit().putBoolean("highPriorityRequestAccepted",requested).commit();
                     client=new RecordingClient(link);
                 } catch(IOException|RuntimeException failed){link.close();throw failed;}
                 activeClient=client;
                 return new RecordingSyncRunner.Connection(){
-                    public RecordingLibrary.Session sync() throws IOException {return client.syncAvailableAndReclaim(selected,path,null);}
+                    public RecordingLibrary.Session sync() throws IOException {
+                        try{return client.syncAvailableAndReclaim(selected,path,null);}
+                        finally{getSharedPreferences(PREFS,MODE_PRIVATE).edit().putBoolean("highPriorityRequestAccepted",link.highPriorityRequestAccepted()).putBoolean("balancedPriorityRequestAccepted",link.balancedPriorityRequestAccepted()).commit();}
+                    }
                     public boolean disconnected(){return link.wasDisconnected();}
                     public void close() throws IOException {if(activeClient==client)activeClient=null;client.close();}
                 };

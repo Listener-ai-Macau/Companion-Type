@@ -21,9 +21,11 @@ public final class RecorderWireTest {
         final java.util.Map<Long,RecorderWire.Descriptor> segments=new java.util.HashMap<>();
         int directoryRequests,directoryRestarts,staleAt=-1,staleRemaining,refusalResult=8;
         boolean malformedRefusal;long lastDirectoryNonce;
+        int bulkRequests,balancedRequests;boolean bulkActive;
         FakeLink(byte[] s,byte[] a,byte[] b,byte[] p){status=s;page0=a;page1=b;packet=p;}
         public int mtu(){return 247;} public byte[] read(UUID id){return status.clone();}
         public void subscribe(UUID id){} public void close(){closed=true;}
+        public void setTransferPriority(boolean bulk){if(bulk){if(bulkActive)throw new AssertionError("nested bulk priority");bulkActive=true;bulkRequests++;}else{if(!bulkActive)throw new AssertionError("unmatched balanced restore");bulkActive=false;balancedRequests++;}}
         public void write(UUID id,byte[] value){
             if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x22) control=value.clone();
             else if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x20){
@@ -134,6 +136,7 @@ public final class RecorderWireTest {
             RecordingLibrary.Session received=client.syncAvailableAndReclaim(d,isolated,null);
             if(received.state!=RecordingLibrary.SessionState.COMPLETE||received.segments.size()!=3)throw new AssertionError("unrelated damaged metadata stopped an intact recording");
             if(isolatedLink.consumeWrites!=3||isolatedLink.directoryRestarts!=2)throw new AssertionError("catalog refresh repeated consumption or lost selected session");
+            if(isolatedLink.bulkRequests!=1||isolatedLink.balancedRequests!=1||isolatedLink.bulkActive)throw new AssertionError("successful segment batch left bulk priority active");
             if(client.receiveSession(d,isolated,null).state!=RecordingLibrary.SessionState.COMPLETE)throw new AssertionError("unrelated damage stopped a non-reclaiming receive");
         }
         if(!Arrays.equals(Files.readAllBytes(unrelated),brokenMetadata))throw new AssertionError("unrelated damaged metadata was not preserved");
@@ -154,6 +157,18 @@ public final class RecorderWireTest {
         }
         if(protectedLink.consumeWrites!=0||!Arrays.equals(Files.readAllBytes(damagedCurrent),brokenMetadata))
             throw new AssertionError("damaged metadata for the selected session must retain device and local copies");
+        if(protectedLink.bulkRequests!=1||protectedLink.balancedRequests!=1||protectedLink.bulkActive)throw new AssertionError("failed segment batch left bulk priority active");
+        FakeLink idlePriority=new FakeLink(status,page0,page1,null);idlePriority.staleAt=2;idlePriority.staleRemaining=1;idlePriority.refusalResult=6;
+        try(RecordingClient client=new RecordingClient(idlePriority,dir->{},prefix->{checkPrefix(prefix);})){
+            expectFailure(()->client.syncAvailableAndReclaim(d,Files.createTempDirectory(root,"priority-no-work-"),null));
+        }
+        if(idlePriority.bulkRequests!=0||idlePriority.balancedRequests!=0)throw new AssertionError("failed catalog requested high priority without payload");
+        byte[] emptyPage=Arrays.copyOf(page0,24);emptyPage[1]=0;put32(emptyPage,12,0);CRC32 emptyCrc=new CRC32();emptyCrc.update(emptyPage,0,20);put32(emptyPage,20,emptyCrc.getValue());
+        FakeLink noSealed=new FakeLink(status,emptyPage,page1,null);
+        try(RecordingClient client=new RecordingClient(noSealed,dir->{},prefix->{checkPrefix(prefix);})){
+            if(client.syncAvailableAndReclaim(d,isolated,null).state!=RecordingLibrary.SessionState.COMPLETE)throw new AssertionError("saved complete prefix lost without new segments");
+        }
+        if(noSealed.bulkRequests!=0||noSealed.balancedRequests!=0)throw new AssertionError("following without new segments requested high priority");
         RecordingLibrary.Inventory affected=RecordingLibrary.inspect(currentDamage);
         if(affected.problems.size()!=1||affected.sessions.size()!=1||affected.sessions.get(0).state!=RecordingLibrary.SessionState.DAMAGED)
             throw new AssertionError("a damaged metadata file must mark its own visible session damaged");
