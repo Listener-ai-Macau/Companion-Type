@@ -1,0 +1,27 @@
+{
+  "result": "PASS_MOBILE_BOOKMARK_PLAYBACK_LIFECYCLE",
+  "scope": "SYNTHETIC_MOBILE_DOM_ONLY",
+  "observations": [
+    {
+      "label": "open-a",
+      "count": 1
+    },
+    {
+      "label": "four-playback-ticks",
+      "count": 1
+    },
+    {
+      "label": "paused",
+      "count": 1
+    },
+    {
+      "label": "return-library",
+      "count": 0
+    },
+    {
+      "label": "open-b",
+      "count": 1
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-06T13:37:36+08:00",
+  "archive": "canonical-backlog-and-log-after059.zip",
+  "archiveSha256": "320df7da062e076ab6f86ae07436b44ec760df6837a5636b0d34630243ab9c9c",
+  "canonicalFiles": [
+    {
+      "path": "docs/product_backlog.json",
+      "sha256": "ea05235ebea7d46d37efb914468988aeb300e8eab81d30760e564ac2c3c21e14"
+    },
+    {
+      "path": "docs/development_log.md",
+      "sha256": "2bfe5b4d42853f5dad714dda89f9f3ced4828f24b1f021d24f00a7ea4fdaf42f"
+    }
+  ],
+  "source": {
+    "at": "2026-11-06T13:34:07+08:00",
+    "versionName": "0.1.59",
+    "versionCode": 59,
+    "frontendSourceCommit": "69c58e38acf12e370479a4881763e928f864e291",
+    "frontendBranch": "work/device-phone-closure055-20261106",
+    "backendSourceCommit": "c30a7753cc0325c9e105661a4acd34ce585ce00c",
+    "backendBranch": "work/device-phone-closure055-android-20261106",
+    "remoteReadback": true,
+    "installed": false,
+    "scope": "059 unifies legacy/dated recorder metadata with058 OTA publication/retention and playback lifecycle fixes.",
+    "nativeRebuilt": false,
+    "nativeReusedWithExactProductionSourceMatch": true
+  },
+  "apkSha256": "dd4ab648d355b99cafb29b543cfb42bb4ae80d9e44fc39e5f93fc7442b0357b3",
+  "audioPayloadUploaded": false
+}

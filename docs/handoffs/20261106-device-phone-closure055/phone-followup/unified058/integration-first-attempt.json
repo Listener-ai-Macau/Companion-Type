@@ -1,0 +1,12 @@
+{
+  "result": "HARNESS_USED_STALE_DIST_BEFORE_REBUILD",
+  "observations": {
+    "open-a": 1,
+    "four-playback-ticks": 8
+  },
+  "cause": "Bookmark DOM regression serves apps/mobile/dist; initial integration invoked it before rebuilding changed App.tsx.",
+  "nativeAndJavaChecksPassed": true,
+  "phoneUsed": false,
+  "correction": "Build merged mobile web source, then run the unchanged lifecycle regression.",
+  "versionCoordination": "Other existing shared-device flow advanced to058; this integrated dated-metadata candidate uses059 and will not replace the active test."
+}

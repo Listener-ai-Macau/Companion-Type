@@ -1,0 +1,42 @@
+{
+  "result": "ANDROID059_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+  "versionName": "0.1.59",
+  "versionCode": 59,
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\Companion-Android-0.1.59-录音兼容修复候选.apk",
+  "sha256": "dd4ab648d355b99cafb29b543cfb42bb4ae80d9e44fc39e5f93fc7442b0357b3",
+  "bytes": 48765664,
+  "frontendSourceCommit": "69c58e38acf12e370479a4881763e928f864e291",
+  "backendSourceCommit": "c30a7753cc0325c9e105661a4acd34ce585ce00c",
+  "signerMatches050r2And055": true,
+  "zip16KiBAligned": true,
+  "nativeLibraries": [
+    {
+      "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+      "sha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libonnxruntime.so",
+      "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+      "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+      "elf16KiBAligned": true
+    }
+  ],
+  "webAssetsExact": [
+    "index.html",
+    "manifest.webmanifest",
+    "assets/index-BeLbnNsw.css",
+    "assets/index-QaVRx1Hi.js"
+  ],
+  "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\apk059-build-1793943291554457600.log",
+  "buildWallSeconds": 19.597,
+  "installed": false,
+  "reasonNotInstalled": "Another existing flow owns the shared phone/board for058 OTA acceptance. Do not replace its active test.",
+  "actualOrdinaryControlButtonsAccepted": false,
+  "modelsRun": false,
+  "nativeRebuilt": false
+}

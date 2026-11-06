@@ -1,0 +1,7 @@
+{
+  "metadata": "PASS exact actual dated120B and legacy112B metadata callback; corrupt CRC refused, original retained; NO_BLUETOOTH_OR_AUDIO_DECODE\nPicked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2\n",
+  "ota": "PASS 370 assertions: actual signed producer package, corruption/target/layout rejection, durable-only progress, preserved complete package, stale generation/wrong offset/power/cancel refusal, lost FINISH reply resolved only by exact running identity; NO_HARDWARE_OTA\nPicked up JAVA_TOOL_OPTIONS: -XX:ActiveProcessorCount=2\n",
+  "backendSourceCommit": "c30a7753cc0325c9e105661a4acd34ce585ce00c",
+  "classesDirectory": "E:\\CodexData\\Companion\\.build-cache\\device-phone055\\unified058\\classes",
+  "physicalAndroidAcceptance": false
+}

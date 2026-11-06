@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-06T13:28:27+08:00",
+  "result": "ANDROID058_INSTALLED_ORDINARY_UI_ACCEPTANCE_PENDING",
+  "apk": "E:\\CodexData\\Companion\\.build-cache\\android058-capability-fix\\android-build\\app\\outputs\\apk\\debug\\app-debug.apk",
+  "sha256": "5cce657d0614557d7a6187833b356c13e2445bef54b0e9a9c6998de5dbecb0bc",
+  "frontendSource": "95763801dc461d07f912160af6a1d8311e6c6d10",
+  "backendSource": "9f518bf016d0a268201a27041658d3b33fcb2cf8",
+  "signerUnchanged": true,
+  "zip16KiBAligned": true,
+  "nativeLibraries": {
+    "libcompanion_mobile_audio.so": "e3d6ad244eb9e32ca97121e3e12bd176b29c3ffb3b5a26fbe2b7035e1da3fb52",
+    "libonnxruntime.so": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+    "libsherpa-onnx-c-api.so": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278"
+  },
+  "androidGoldenTests": "2/7 passed in adb shell and run-as contexts;5 output-hardlink permission errors retained. Ordinary app decode/control acceptance still required; no blanket native pass claimed.",
+  "installExitCode": 0,
+  "installOutput": "Performing Streamed Install\nSuccess",
+  "installed": true,
+  "installedVersions": [
+    "versionCode=58 minSdk=26 targetSdk=35",
+    "versionName=0.1.58"
+  ]
+}

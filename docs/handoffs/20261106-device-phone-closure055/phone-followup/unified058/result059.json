@@ -1,0 +1,98 @@
+{
+  "at": "2026-11-06T13:37:36+08:00",
+  "state": "ANDROID059_INTEGRATED_CANDIDATE_READY_SHARED_PHONE_ACCEPTANCE_BUSY",
+  "ownerLatest": "现在还有什么东西可以搞；手机是好了，可以用了。",
+  "ownerPhoneAvailable": true,
+  "foregroundPausedByOwner": false,
+  "latestInstalledFromSharedReceipt": "0.1.58/code58",
+  "candidateInstalled": false,
+  "source": {
+    "at": "2026-11-06T13:34:07+08:00",
+    "versionName": "0.1.59",
+    "versionCode": 59,
+    "frontendSourceCommit": "69c58e38acf12e370479a4881763e928f864e291",
+    "frontendBranch": "work/device-phone-closure055-20261106",
+    "backendSourceCommit": "c30a7753cc0325c9e105661a4acd34ce585ce00c",
+    "backendBranch": "work/device-phone-closure055-android-20261106",
+    "remoteReadback": true,
+    "installed": false,
+    "scope": "059 unifies legacy/dated recorder metadata with058 OTA publication/retention and playback lifecycle fixes.",
+    "nativeRebuilt": false,
+    "nativeReusedWithExactProductionSourceMatch": true
+  },
+  "apk": {
+    "result": "ANDROID059_SIGNED_SOURCE_AND_CONTENT_VERIFIED_CANDIDATE",
+    "versionName": "0.1.59",
+    "versionCode": 59,
+    "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\Companion-Android-0.1.59-录音兼容修复候选.apk",
+    "sha256": "dd4ab648d355b99cafb29b543cfb42bb4ae80d9e44fc39e5f93fc7442b0357b3",
+    "bytes": 48765664,
+    "frontendSourceCommit": "69c58e38acf12e370479a4881763e928f864e291",
+    "backendSourceCommit": "c30a7753cc0325c9e105661a4acd34ce585ce00c",
+    "signerMatches050r2And055": true,
+    "zip16KiBAligned": true,
+    "nativeLibraries": [
+      {
+        "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+        "sha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libonnxruntime.so",
+        "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+        "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+        "elf16KiBAligned": true
+      }
+    ],
+    "webAssetsExact": [
+      "index.html",
+      "manifest.webmanifest",
+      "assets/index-BeLbnNsw.css",
+      "assets/index-QaVRx1Hi.js"
+    ],
+    "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\apk059-build-1793943291554457600.log",
+    "buildWallSeconds": 19.597,
+    "installed": false,
+    "reasonNotInstalled": "Another existing flow owns the shared phone/board for058 OTA acceptance. Do not replace its active test.",
+    "actualOrdinaryControlButtonsAccepted": false,
+    "modelsRun": false,
+    "nativeRebuilt": false
+  },
+  "changes": [
+    "Retain both112B legacy and120B dated local recording metadata, validating the inner/outer CRC and keeping original dates/files.",
+    "Integrate committed058 OTA capability publication wait and complete-file retention before disconnect, shared foreground transfer ownership, and mobile playback bookmark lifecycle fix.",
+    "Keep real nonblocking Android kernel file exclusion, distinguishing genuine concurrent work from filesystem failure."
+  ],
+  "checks": {
+    "java": "Production callbacks accepted actual own-test dated120B and legacy112B; damaged date CRC rejected. Merged producer-package OTA transport regression passed including deferred retention and warming capability.",
+    "bookmark": "Merged web rebuilt, unchanged synthetic DOM regression passed playback ticks, pause, library return and switching recording; not a real-phone playback result.",
+    "native": "Reused prior16KiB production library; exact native source/Cargo inputs compared to5197a7b. No repeat native compilation, inference, training or weights changed.",
+    "apk": "Same signing certificate, source and packaged web/native bytes, all3 ELF plusAPK16KiB alignment checked."
+  },
+  "failureRetained": "First DOM invocation used the pre-merge dist and reproduced8 bookmark sections. The runner was corrected to build merged source before the unchanged test; first failure is retained separately.",
+  "sharedPhoneProgress": {
+    "installed058Receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\inherited058-installation.json",
+    "otaStatusHistory": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\inherited058-ota-status-history.json",
+    "lastObservedPhase": "complete",
+    "lastObservedAt": "2026-11-06T13:33:56+08:00",
+    "meaning": "Other existing flow observed full1359700B transfer followed by exact running-identity complete phase. Await its final ordinary-UI/maintenance receipt; do not replace the active058 test or declare item1 fully accepted."
+  },
+  "remaining": [
+    "When the existing shared lease is released, recheck actual installed version and install059 only if still needed; never overwrite a newer candidate.",
+    "Actual ordinary App recording control start/pause/resume/stop with new own sample, then receive/playback/delete confirm/cancel and recoverable interruption.",
+    "Inherit the existing OTA/maintenance final receipt, retaining any failed attempts and original34 recordings.",
+    "Public isolated library restore, selected-format save, copy and local-only share recipient, then return to original library.",
+    "External Word/Excel sample filling and other original36-row parity gaps remain open; model quality/physical release requirements retain their own pending gates."
+  ],
+  "next": "共享手机058普通OTA/维护占用结束后先读取其最终收据与实际安装版本，补059日期格式修复所需普通控制/仅新录音回听删除和公开库系统保存复制分享；已有实证不重跑。设备忙时不抢占，不把候选构建算真机或售卖通过。",
+  "modelsRun": false,
+  "phoneUiActionsThisBatch": false,
+  "boardLeaseClaimed": false,
+  "ownerAccepted": false,
+  "customerResult": null,
+  "wholeProductQualified": false
+}

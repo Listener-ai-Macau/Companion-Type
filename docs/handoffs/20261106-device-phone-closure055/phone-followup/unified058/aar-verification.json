@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-06T13:31:54+08:00",
+  "aarSha256": "36a5f0a0527e018e498892a7d4b0edadbd9df0d907c889ec6ad9b34ee066ab83",
+  "backendSourceCommit": "c30a7753cc0325c9e105661a4acd34ce585ce00c",
+  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
+  "remoteSourceVerified": true,
+  "nativeChanges": true,
+  "nativeSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+  "nativeProductionSourceIdenticalToIntegratedBackend": true,
+  "nativeLibrarySha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+  "nativeLibrary16KiBElfAligned": true,
+  "inheritedNativeReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\native-final-library.json",
+  "javaClassesChangedFrom057": [
+    "com/denzic/companion/mobile/NativeRecordingControl$Callbacks.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/SystemUpdateClient.class"
+  ],
+  "allOtherAarEntriesIdenticalTo057": true,
+  "speechRuntimeBinariesAndWeightsChanged": false,
+  "scope": "057 retention/capability/ownership and playback fixes with validated dated120B recorder metadata and Android kernel file exclusion; no new model inference.",
+  "ordinaryPhoneAcceptance": false
+}
