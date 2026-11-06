@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-06T09:49:17+08:00",
+  "status": "INITIAL_SAFE_RECEIPTS_PUSHED_CANONICAL_ZIP_WAS_IGNORED",
+  "branch": "work/material-exports052-20261106",
+  "functionalSourceCommit": "e684fa73b3c14423c0f62cd961af6732470b3a02",
+  "receiptCommit": "54103004d2676568b7d5937e251fb729badd19f7",
+  "remoteReadback": "54103004d2676568b7d5937e251fb729badd19f7",
+  "sourceAndTaskBackupProtected": false,
+  "canonicalSnapshotSha256": "c7f26b5618d21e4b655f45fbbf4842d2931082116d51a105216c57c88dcf0a19",
+  "privateAppDataUploaded": false,
+  "binaryPackagesUploaded": false,
+  "reason": "Repository *.zip rule excluded new canonical snapshot; explicit tracking required before claiming backup."
+}
