@@ -1,0 +1,16 @@
+{
+  "state": "PREPROCESSING_FAILURE_RETAINED_NO_RETRY",
+  "startedAt": "2026-11-06T22:02:11+08:00",
+  "referencePassedToWorker": false,
+  "automaticRetries": 0,
+  "sourceCommit": "816229f5062854c45c61a3f4cee02115ddda4ac5",
+  "peakPrivateBytes": 552284160,
+  "peakRssBytes": 575352832,
+  "output": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r20\\packet",
+  "pid": 27604,
+  "processCreatedAt": 1793973731.393468,
+  "exitCode": 1,
+  "workerState": "INPUT_PREPARATION_FAILED_RETAINED",
+  "finishedAt": "2026-11-06T22:02:20+08:00",
+  "wallSeconds": 9.104393800007529
+}

@@ -1,0 +1,27 @@
+{
+  "state": "INPUT_PREPARATION_FAILED_RETAINED",
+  "startedAt": "2026-11-06T22:02:11+08:00",
+  "modelLoaded": false,
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "resourceLimits": {
+    "pid": 16376,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 10395648,
+    "cpuPriorityClass": 64,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "pcm16RamLoader": {
+    "nativePcm16Loads": 0,
+    "fallbackLoads": 0,
+    "resamplingSkippedOnlyWhenAlreadyExactFormat": true
+  },
+  "error": "AttributeError(\"property 'adaptor_input_dim' of 'MossTranscribeDiarizeConfig' object has no setter\")",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\prepare_moss_inputs_worker_20261106.py\", line 33, in <module>\n    processor=MossTranscribeDiarizeProcessor.from_pretrained(assets/'model',local_files_only=True)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\processing_utils.py\", line 1749, in from_pretrained\n    args = cls._get_arguments_from_pretrained(pretrained_model_name_or_path, processor_dict, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\processing_utils.py\", line 1874, in _get_arguments_from_pretrained\n    tokenizer = cls._load_tokenizer_from_pretrained(\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\processing_utils.py\", line 1810, in _load_tokenizer_from_pretrained\n    tokenizer = auto_processor_class.from_pretrained(\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\auto\\tokenization_auto.py\", line 800, in from_pretrained\n    config = AutoConfig.from_pretrained(\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\auto\\configuration_auto.py\", line 448, in from_pretrained\n    return config_class.from_dict(config_dict, **unused_kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\configuration_utils.py\", line 1089, in from_dict\n    config = cls(**config_dict)\n             ^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\huggingface_hub\\dataclasses.py\", line 275, in init_with_validate\n    initial_init(self, *args, **kwargs)  # type: ignore [call-arg]\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\configuration_utils.py\", line 174, in __init__\n    self.__post_init__(**additional_kwargs)\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\configuration_utils.py\", line 504, in __post_init__\n    raise err\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\configuration_utils.py\", line 501, in __post_init__\n    setattr(self, key, value)\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\huggingface_hub\\dataclasses.py\", line 149, in __strict_setattr__\n    original_setattr(self, name, value)\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\huggingface_hub\\dataclasses.py\", line 149, in __strict_setattr__\n    original_setattr(self, name, value)\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\configuration_utils.py\", line 653, in __setattr__\n    super().__setattr__(key, value)\nAttributeError: property 'adaptor_input_dim' of 'MossTranscribeDiarizeConfig' object has no setter\n"
+}

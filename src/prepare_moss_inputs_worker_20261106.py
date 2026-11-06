@@ -25,12 +25,15 @@ try:
     assert file_sha(case['audio'])==case['audioSha256']
     assets=Path('E:/CodexData/Companion/asr-accuracy-latency-20261103/multispeaker-ai/joint-moss-architecture-20261104')
     sys.path.insert(0,str(assets/'official-source'))
-    from moss_transcribe_diarize import MossTranscribeDiarizeProcessor,inference_utils
+    from moss_transcribe_diarize import MossTranscribeDiarizeProcessor,MossTranscribeDiarizeConfig,inference_utils
     from moss_pcm16_ram_20261104 import install_pcm16_loader
     for record in json.loads((assets/'prepare-state.json').read_text(encoding='utf8'))['files']:
         path=assets/('model' if record['source']=='hf' else 'official-source')/record['file'];assert file_sha(path)==record['sha256']
     state['pcm16RamLoader']=install_pcm16_loader(inference_utils)
-    processor=MossTranscribeDiarizeProcessor.from_pretrained(assets/'model',local_files_only=True)
+    # Match the already validated model worker exactly. Passing its explicit
+    # author config avoids AutoTokenizer's incompatible AutoConfig reparse.
+    config=MossTranscribeDiarizeConfig.from_pretrained(assets/'model',local_files_only=True)
+    processor=MossTranscribeDiarizeProcessor.from_pretrained(assets/'model',config=config,local_files_only=True)
     assert not getattr(processor.feature_extractor,'dither',0),'Do not stage stochastic preprocessing without matching original RNG position'
     state.update(state='PREPARING_COMPLETE_AUDIO_WITHOUT_MODEL',actualGpu=selected['name'],gpuIdentitySelection=selected);save()
     messages=inference_utils.build_transcription_messages(case['audio'])
