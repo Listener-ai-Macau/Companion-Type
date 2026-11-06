@@ -1,7 +1,7 @@
 {
   "at": "2026-11-06T13:31:54+08:00",
-  "aarSha256": "4d9971d898beaeafb362629ff6ef83ddb143bd85c7e486ff60b1eef74814b0ec",
-  "backendSourceCommit": "cc828eb31da49a8b9355676be7de6926dbaa0ea0",
+  "aarSha256": "ce87e4ec560b50102e0342095c0dc78d27f199990958875205fb61941574fb6a",
+  "backendSourceCommit": "a4820a08b07f4480952d9e8548fb4f07999bc445",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeChanges": true,
@@ -17,7 +17,7 @@
   ],
   "allOtherAarEntriesIdenticalTo057": true,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Integrate the verified dated112/120 metadata and real Android flock native library from5197, preserving current OTA retention/publication and playback fixes. Add advertised DATA no-response mode and bounded monotonic phase/link/counter metrics; control/receipts remain acknowledged. No firmware runtime growth.",
+  "scope": "Unified dated recorder/control and playback; Android adapts existing Windows continuous215/WOC5 generation-bound durable credits, physical pipeline<=16, final ordered whole-file fence, single FINISH and exact running proof. Host monotonic/link metrics. Native library and MCU image/RAM unchanged from integrated060.",
   "ordinaryPhoneAcceptance": false,
   "allNonClassAarEntriesByteIdenticalToIntegrated059": true,
   "physicalOrdinaryAppAcceptance": false
