@@ -1,5 +1,5 @@
 //! Local PDF generation for an already saved meeting. No remote content is loaded.
-use std::{fs, path::PathBuf, time::Duration};
+use std::{fs, path::{Path,PathBuf}, time::Duration};
 
 fn escape(value:&str)->String {
     let mut out=String::with_capacity(value.len());
@@ -38,6 +38,26 @@ pub(super) fn browser()->Option<PathBuf>{
 struct Temporary(PathBuf);
 impl Drop for Temporary {fn drop(&mut self){let _=fs::remove_dir_all(&self.0);}}
 
+/// Windows can release the final profile handles just after its process job
+/// becomes empty. Retry only those bounded filesystem-close races, and only
+/// for a verified, UUID-named rendering directory directly under our temp root.
+pub(super) fn remove_render_cache(path:&Path)->std::io::Result<()>{
+    let resolved=match path.canonicalize(){Ok(value)=>value,Err(error) if error.kind()==std::io::ErrorKind::NotFound=>return Ok(()),Err(error)=>return Err(error)};
+    let base=std::env::temp_dir().canonicalize()?;
+    let name=resolved.file_name().and_then(|name|name.to_str()).unwrap_or_default();
+    let own=name.strip_prefix("companion-pdf-").or_else(||name.strip_prefix("companion-mindmap-")).is_some_and(|suffix|uuid::Uuid::parse_str(suffix).is_ok());
+    if !own||resolved.parent()!=Some(base.as_path()){return Err(std::io::Error::new(std::io::ErrorKind::PermissionDenied,"not an owned render cache"));}
+    let start=std::time::Instant::now();
+    loop{
+        match fs::remove_dir_all(&resolved){
+            Ok(())=>return Ok(()),
+            Err(error) if error.kind()==std::io::ErrorKind::NotFound=>return Ok(()),
+            Err(error) if cfg!(windows)&&matches!(error.raw_os_error(),Some(5|32|33|145))&&start.elapsed()<Duration::from_secs(2)=>std::thread::sleep(Duration::from_millis(20)),
+            Err(error)=>return Err(error),
+        }
+    }
+}
+
 pub(crate) fn render(title:&str,content:&str)->Result<Vec<u8>,String>{
     #[cfg(not(windows))] {let _=(title,content);return Err("本机暂不支持直接生成 PDF。".into());}
     #[cfg(windows)] {
@@ -53,7 +73,7 @@ pub(crate) fn render(title:&str,content:&str)->Result<Vec<u8>,String>{
             .map_err(|_|"PDF 生成未完成；已保存的会议内容不受影响，请重试或先导出 Word。")?;
         let bytes=fs::read(&output).map_err(|_|"PDF 生成未完成，请重试。")?;
         if !bytes.starts_with(b"%PDF-") || bytes.len()<100 {return Err("PDF 生成未完成，请重试。".into());}
-        fs::remove_dir_all(&root).map_err(|_|"PDF 已生成，但临时文件未能清理；请检查本机临时目录。")?;
+        remove_render_cache(&root).map_err(|_|"PDF 已生成，但临时文件未能清理；请检查本机临时目录。")?;
         drop(cleanup);Ok(bytes)
     }
 }
@@ -61,6 +81,16 @@ pub(crate) fn render(title:&str,content:&str)->Result<Vec<u8>,String>{
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(windows)]
+    #[test]fn render_cache_waits_for_transient_writer_close_and_refuses_other_roots(){
+        use std::os::windows::fs::OpenOptionsExt;
+        let root=std::env::temp_dir().join(format!("companion-pdf-{}",uuid::Uuid::new_v4()));fs::create_dir(&root).unwrap();let file=root.join("controlled.txt");fs::write(&file,b"public synthetic fixture").unwrap();
+        let (send,receive)=std::sync::mpsc::channel();
+        let writer=std::thread::spawn(move||{let _handle=fs::OpenOptions::new().read(true).share_mode(0).open(file).unwrap();send.send(()).unwrap();std::thread::sleep(Duration::from_millis(100));});
+        receive.recv().unwrap();remove_render_cache(&root).unwrap();writer.join().unwrap();assert!(!root.exists());
+        let other=std::env::temp_dir().join(format!("not-render-cache-{}",uuid::Uuid::new_v4()));fs::create_dir(&other).unwrap();let marker=other.join("keep.txt");fs::write(&marker,b"keep").unwrap();
+        assert!(remove_render_cache(&other).is_err());assert!(marker.exists());fs::remove_file(marker).unwrap();fs::remove_dir(other).unwrap();
+    }
     #[test] fn page_escapes_meeting_content_and_has_no_external_loads(){
         let s=html("会议 <样品>","## 纪要\n- 小王 <script>报价</script> & 原话\n原文依据：蓝色文件夹");
         assert!(s.contains("会议 &lt;样品&gt;") && s.contains("&lt;script&gt;报价&lt;/script&gt; &amp; 原话"));

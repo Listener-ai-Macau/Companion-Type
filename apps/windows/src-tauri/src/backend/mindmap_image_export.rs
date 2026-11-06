@@ -58,7 +58,7 @@ pub(super) fn page(title:&str,content:&str)->Result<Image,String>{
     Ok(Image{html,width,height})
 }
 struct Temporary(PathBuf);
-impl Drop for Temporary {fn drop(&mut self){let _=fs::remove_dir_all(&self.0);}}
+impl Drop for Temporary {fn drop(&mut self){let _=super::pdf_export::remove_render_cache(&self.0);}}
 pub(crate) fn render(title:&str,content:&str)->Result<Vec<u8>,String>{
     let image=page(title,content)?;
     #[cfg(not(windows))] {let _=image;return Err("本机暂不支持PNG导图，请导出可编辑思维导图。".into());}
@@ -77,7 +77,7 @@ pub(crate) fn render(title:&str,content:&str)->Result<Vec<u8>,String>{
         if bytes.len()<100||!bytes.starts_with(b"\x89PNG\r\n\x1a\n")||bytes.get(16..20)!=Some(image.width.to_be_bytes().as_slice())||bytes.get(20..24)!=Some(image.height.to_be_bytes().as_slice()){
             return Err("PNG尺寸与完整导图不符，请改用可编辑思维导图；未交付裁切图片。".into());
         }
-        fs::remove_dir_all(&root).map_err(|_|"PNG已生成，但临时文件未能清理。")?;drop(cleanup);Ok(bytes)
+        super::pdf_export::remove_render_cache(&root).map_err(|_|"PNG已生成，但临时文件未能清理。")?;drop(cleanup);Ok(bytes)
     }
 }
 
