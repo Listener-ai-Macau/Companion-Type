@@ -126,6 +126,9 @@ public final class RecordingClient implements Closeable {
         if(confirm==null)throw new IllegalArgumentException("confirmation required");
         return DeviceRecordings.delete(link,selected,nonce(),confirm);
     }
+    public synchronized DeviceMaintenance.Status maintainDevice(DeviceMaintenance.Operation operation)throws IOException {
+        ensureOpen();return DeviceMaintenance.perform(link,operation,nonce());
+    }
 
     /** Receive every currently sealed segment of the selected original session.
      * Reconnect and call again with the same descriptor to resume partial files.

@@ -21,7 +21,7 @@ with tempfile.TemporaryDirectory(prefix="companion-wire-", dir=args.workdir) as 
         (tmp / name).write_bytes(bytes.fromhex(data))
     source = backend / "src/main/java/com/denzic/companion/mobile"
     test = backend / "src/test/java/com/denzic/companion/mobile"
-    files = [source / (name + ".java") for name in ("RecorderWire", "DeviceRecordings", "SegmentReceiver", "RecordingLibrary", "RecordingClient", "NativeRecordingControl", "DurableConsume", "MeetingStore", "NativeAudio", "DecodedAudioParts", "DeviceBookmarkCache", "RecordingSyncRunner")]
+    files = [source / (name + ".java") for name in ("RecorderWire", "DeviceRecordings", "DeviceMaintenance", "SegmentReceiver", "RecordingLibrary", "RecordingClient", "NativeRecordingControl", "DurableConsume", "MeetingStore", "NativeAudio", "DecodedAudioParts", "DeviceBookmarkCache", "RecordingSyncRunner")]
     files += [test / "RecorderWireTest.java", test / "SavedSyntheticWireReplay.java", test / "MeetingStoreTest.java"]
     stub = tmp / "AndroidDirectorySync.java"
     stub.write_text("package com.denzic.companion.mobile; final class AndroidDirectorySync { "
