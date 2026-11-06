@@ -130406,7 +130406,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-06T11:30:24+08:00",
+      "updatedAt": "2026-11-06T12:21:59+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP04-01",
@@ -130576,13 +130576,13 @@
             "CP27-11",
             "CP23-08"
           ],
-          "current": "实际Cancel保留e5；普通删除完成回收；只收e5原音2040ms/32640样本并耐久校验后精确消费；暂停自动同步选择保持。最终34原目录逐条一致、空闲空间4608000B、UART正常空闲且linked0；全部句柄已关闭、板卡已release。",
+          "current": "Companion FW66685；设备/Windows隔离候选和Android055普通按场删除/取消/精确收取通过。手机056已修并实测普通远程开录/停录31.82秒，新e8收取并启动回听；最终34原目录和4608000B空间保持、板卡空闲断连。",
           "remaining": [
-            "手机普通设备目录/选场删除/选场收取与维护/OTA由前端055原批次继续；53已装不等于该用户链已通过。",
-            "实体冷/睡眠首录第一句话回听由Owner明确延后；屏幕仍按原指示暂停。",
-            "电池采样/低电/耗电、生产条件与原音质后置依原范围保留；Capture新板LED/MCU另属未来Capture硬件范围，不算Companion当前新增阻断。"
+            "手机维护/正常OTA与完整回听验收：USB断开后Owner明确暂缓，待手机接回再集中做；66686签名包已就绪。",
+            "原生单WAV测试在shell/run-as环境遇硬链接权限错误，普通App分段回听已启动；保留失败并按实际路径处理，不冒称全部原生检查通过。",
+            "Windows合并日用发布沿前端原批次；实体首字、屏幕暂停及原电池/耗电/音质/生产条件保持各自范围。"
           ],
-          "next": "本批设备与Windows范围已验，手机维护/升级沿前端055继续；本侧按真实受影响范围支持设备联调，不重复无变化验收，不调查重启。",
+          "next": "手机后续验收待Owner接回；当前后台源/产物/实际结果已保存，后续沿本点续作，不重做删除/收取或开停录已验项。",
           "doneWhen": "在已验录音核心上，录音日期可追溯，无屏恢复入口和状态反馈可用，首录/标记成功时机明确；原实物block保持未完成。",
           "evidence": [
             "E:/CodexData/Companion/capture-closeout-20261105/owner-session-r1/after-cleanup/result.json",
@@ -130817,7 +130817,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Companion未block软件预计2–4小时收尾、真实手机配对/OTA若需返修则按一个工作日估计，出现新阻断时据实重估；不承诺整机售卖日期。前端055负责普通手机链，本侧已提供66686向前版本签名整包（未安装），409252B/常驻RAM较66685均无增；当前板上基线仍66685。下一步由055普通手机入口验配对/目录/选删/收取/维护及66685→66686正常OTA，本侧按真实设备问题联调，不重复已验Windows或另造手机实现。",
+      "next": "Companion后台本批已收尾：Android056控制锁修复已装并真实开停录31820ms/收取/启动回听；双端目录/选删/取消/精确收取已验，34旧元数据不变、空间恢复、板卡最终空闲断连并release。手机USB断开后Owner明确先后台收尾，普通维护/完整回听及66685→66686手机OTA留待接回集中验；实际固件仍66685，不能把候选包当已装。保留单WAV后台权限失败与未确认重复标题现象，Windows日用发布沿原前端批次，原硬件block/首字延后/屏幕暂停不动。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -130887,7 +130887,11 @@
         "initialDisconnect19UniqueCause": "Unresolved; retained in run-r1; not claimed repaired",
         "phoneTestProcessEnded": true,
         "boardLeaseReleased": true,
-        "appOnboardingOrAudioSyncQualified": false
+        "appOnboardingOrAudioSyncQualified": false,
+        "ordinaryApp056": {
+          "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-ordinary-control-acceptance.json",
+          "scope": "System pairing/catalogue/delete/cancel/selective receive on055; repaired ordinary START/STOP and new e8 receive/playback-start on056. No phone OTA started."
+        }
       },
       "batteryDeferral": {
         "at": "2026-11-05T11:00:08+08:00",
@@ -130895,17 +130899,13 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66684,
-        "installed": true,
-        "sourceCommit": "c1bbc42a151853f25439db69767b7bee0628ba37",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\build-result.json",
-        "appBytes": 408996,
-        "appDeltaBytes": -120,
-        "staticRamDeltaBytes": -528,
-        "stackReservedUnchanged": true,
-        "otaReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\ota-result.json",
-        "impactAcceptance": "PASS_SCOPED",
-        "impactAcceptanceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json"
+        "version": 66686,
+        "installed": false,
+        "runtimeCodeCommit": "cfedd31dc6d10078d2848b7101ff195797988f5e",
+        "sourceCommit": "30bdbc007f6b0feecf0d010d3fdec868604f6919",
+        "appBytes": 409252,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota-candidate66686.json",
+        "reason": "Forward-version package for ordinary phone OTA; actual board remains66685."
       },
       "deliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json",
       "blockedItems": [
@@ -131124,12 +131124,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-06T11:20:21+08:00",
+        "at": "2026-11-06T12:21:59+08:00",
         "firmware": 66685,
         "coreDelivery": "FW66685_AND_WINDOWS053_SELECTED_DELETE_SPACE_AND_SYNC_ACCEPTED_SCOPED",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "手机普通配对/录音管理/维护和升级完整链及合并发布仍需前端055完成；实体首句由Owner延后，屏幕暂停。设备端/普通Windows删除回收与按场同步本轮已验。",
+        "openSoftware": "设备/普通双端管理和手机远程开停录本轮通过。普通手机维护/OTA与完整回听因Owner暂缓未完成，Windows合并日用发布未完；原生单WAV测试权限失败保留。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -131390,7 +131390,8 @@
               "state": "owner_deferred_physical_experience",
               "ownerAnswer": "稍后再做，先完成后台项",
               "resumeWhen": "Owner明确方便后再集中实体操作；不影响已验设备软件结论。"
-            }
+            },
+            "ordinaryAndroidControlAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-ordinary-control-acceptance.json"
           },
           {
             "key": "capture-resource-trim",
@@ -131467,9 +131468,9 @@
               "CP07-09",
               "CP13-05"
             ],
-            "state": "firmware_and_ordinary_windows_accepted_android_user_path_pending",
-            "current": "cfedd31/FW66685正常OTA与选场取消/删除/回收后再录通过，应用409252B（+256B）、常驻RAM无增。Windows普通053/2ba08c56实机Cancel保留、选删回收、目录即时更新均通过；最终34旧元数据逐条不变，剩余4608000B。先前“worker未绑定”的审查误判已纠正，复用原worker与packet；手机用户链仍未通过。",
-            "next": "不重复已验设备/Windows路径。前端055沿已提交Android0272e98接普通手机维护/录音管理并真实验收；整项保留部分完成。",
+            "state": "firmware_windows_candidate_and_ordinary_android055_accepted_daily_windows_integration_pending",
+            "current": "cfedd31/FW66685正常OTA与选场取消/删除/回收后再录通过，应用409252B（+256B）、常驻RAM无增。Windows普通053/2ba08c56实机Cancel保留、选删回收、目录即时更新均通过；最终34旧元数据逐条不变，剩余4608000B。先前“worker未绑定”的审查误判已纠正，复用原worker与packet；手机用户链仍未通过。 Android055普通系统配对/逻辑目录已验，e6删除后目录和空间恢复；e7真实点击取消后仍保留，再仅收e7到手机4754B原音SHA匹配并精确消费，34旧目录逐条一致、原空间4608000B恢复。首个e6确认点击者未观察，不当取消成功；e7取消有实际输入和结果。",
+            "next": "本批设备/Windows隔离候选/已装Android055范围通过；不重复这些路径，日用Windows合并发布沿前端原批次。继续当前手机远程开录缺陷、维护和OTA，不把它们藏进本项关闭。",
             "benefit": "误录或不需要的录音可直接删掉腾空间，不必先全量下载或恢复设置。",
             "acceptance": [
               "选择逻辑会话，显示实际日期/时长/释放量；物理切段不冒充多场。",
@@ -131505,7 +131506,8 @@
               "plaud-storage",
               "soundcore-data"
             ],
-            "ordinaryWindowsAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\acceptance.json"
+            "ordinaryWindowsAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\acceptance.json",
+            "ordinaryAndroidAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone055-management-acceptance.json"
           },
           {
             "key": "selective-device-receive",
@@ -131516,9 +131518,9 @@
               "CP09-05",
               "CP27-11"
             ],
-            "state": "core_and_ordinary_windows_accepted_android_user_path_pending",
-            "current": "Windows普通列表“接收这场”仅收新e5，2040ms/32640有效样本耐久保存校验并精确回收；未选34旧目录保持，暂停自动同步选择未改变。Android已有原整场接收后端，53逻辑场次入口待实机配对后确认。",
-            "next": "前端055完成手机普通入口同key收取；只用本轮新工程数据，不重读/消费旧原音。",
+            "state": "firmware_windows_candidate_and_ordinary_android055_accepted_daily_windows_integration_pending",
+            "current": "Windows普通列表“接收这场”仅收新e5，2040ms/32640有效样本耐久保存校验并精确回收；未选34旧目录保持，暂停自动同步选择未改变。Android已有原整场接收后端，53逻辑场次入口待实机配对后确认。 Android055普通系统配对/逻辑目录已验，e6删除后目录和空间恢复；e7真实点击取消后仍保留，再仅收e7到手机4754B原音SHA匹配并精确消费，34旧目录逐条一致、原空间4608000B恢复。首个e6确认点击者未观察，不当取消成功；e7取消有实际输入和结果。",
+            "next": "本批设备/Windows隔离候选/已装Android055范围通过；不重复这些路径，日用Windows合并发布沿前端原批次。继续当前手机远程开录缺陷、维护和OTA，不把它们藏进本项关闭。",
             "benefit": "积压很多场时，可以先拿今天急用的一场；同步暂停后能有明确选择。",
             "acceptance": [
               "列表按逻辑会话汇总日期、时长、完整/录中/未收取状态，未知日期如实保留。",
@@ -131532,7 +131534,8 @@
             "competitorSources": [
               "notta-transfer"
             ],
-            "ordinaryWindowsAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\acceptance.json"
+            "ordinaryWindowsAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\acceptance.json",
+            "ordinaryAndroidAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone055-management-acceptance.json"
           },
           {
             "key": "mobile-device-maintenance-update",
@@ -131543,9 +131546,9 @@
               "CP04-06",
               "CP23-08"
             ],
-            "state": "device_protocols_accepted_android_product_entry_pending",
-            "current": "设备恢复默认/清配对已验，正常签名OTA已从Windows工程入口验过；正式Android源码已有原生BLE和录音收取，但本轮未找到固件升级客户端/普通入口，恢复设置入口也仍未交付。CP23-08旧“Android尚无原生BLE”的原因已过期，不能再按它判断现状。",
-            "next": "共享日志2026-11-06T10:45记录前端companion-device-closure055已承接0272e98和054；本侧不重复开发。继续实际普通手机维护和正常整包OTA，保留旧原音，确认Boot安装/运行版本，不以下载100%作成功。",
+            "state": "android056_installed_phone_physical_maintenance_ota_deferred_by_owner",
+            "current": "Android055/a39c44ed与后端8e8a82c已安装，普通系统配对和目录实际通过。维护及OTA源码/主机协议检查已完成，66686正常签名整包可用；手机切回其它应用前未开始OTA，不把原生状态检查当真实升级通过。",
+            "next": "手机接回且Owner方便时，集中做普通恢复/清配对与66685→66686签名整包OTA并读回实际运行版本；已装056不等于OTA已验。当前不催手机，推进实际可独立任务，原设备协议/WindowsOTA证据沿用。",
             "benefit": "售后修复和设置恢复可用手机完成，不要求用户准备Windows或调试线。",
             "acceptance": [
               "普通设备页可恢复默认/清配对，明确保留原音；不把重启或改名称恢复出厂。",
@@ -131760,8 +131763,8 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "at": "2026-11-06T11:31:44+08:00",
-        "text": "好的, 继续推进, 你看看还有多久才能推进完"
+        "at": "2026-11-06T12:21:59+08:00",
+        "text": "暂不方便，先收尾后台项"
       },
       "calendarProgress": {
         "at": "2026-11-05T15:14:33+08:00",
@@ -131983,8 +131986,8 @@
         "busyRefusalAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66683\\hardware-acceptance.json"
       },
       "deviceManagementProgress": {
-        "at": "2026-11-06T11:20:21+08:00",
-        "state": "firmware_and_ordinary_windows_accepted_android_user_path_pending",
+        "at": "2026-11-06T12:21:59+08:00",
+        "state": "ordinary_android056_control_and_dual_client_management_accepted_phone_maintenance_ota_deferred_by_owner",
         "firmwareSource": "cfedd31",
         "candidateFirmware": 66685,
         "installedFirmwareAtStart": 66684,
@@ -131998,8 +132001,10 @@
         "frontendBase": "a8d3b707ba306bcbf83c8e3a215a612c3021f2e4",
         "frontendVersionReservation": "053已构建并在隔离Windows验收；日用未覆盖。前端055合并手机维护和升级中。",
         "remaining": [
-          "Android普通配对/目录/删除/按场收取的真实用户链",
-          "Android普通维护/正常签名OTA及合并版本安装交付"
+          "Phone ordinary restore-settings/clear-pairings and66685→66686 signed OTA actual result remain unqualified; Owner deferred phone.",
+          "Complete playback/WAV inspection and observed repeated bookmark headings require the returned phone; actual playback-start is not an acoustic first-word pass.",
+          "The rebuilt native single-WAV regression returned hardlink permission errors in shell/run-as, while ordinary parts playback started. Preserve failure and resolve only the actual affected product path.",
+          "Windows daily integration/release remains with the existing frontend delivery; isolated053 management path is already accepted."
         ],
         "oldRecordingPayloadReads": 0,
         "oldRecordingDeletion": false,
@@ -132014,7 +132019,7 @@
         "discoveryCorrection": "实际Windows扫描已看到UID对应MAC广播Capture且服务UUID列表空；普通前端旧筛选漏掉。e46f4769修复产品名识别，未改固件或放宽实际GATT身份验证。",
         "frontendSource": "2ba08c564e7795532718c97c82e1d329b4d28361",
         "frontendBuildState": "RELEASE_BUILT_ORDINARY_WINDOWS_USER_PATH_ACCEPTED",
-        "phoneState": "053 installed; actual paired reconnect/MTU133; pairing not qualified; phone handed back and own forward/display setting restored.",
+        "phoneState": "Installed056/934d3db4, native d7e543b. Actual ordinary phone START/STOP31820ms/e8, exact selected receive and playback-start observed. Final34 original descriptors exact, free4608000B, mic0/erase0/fault0/linked0; board released. USB disconnected before OTA package selection; Owner explicitly deferred phone and requested background closeout.",
         "captureWorkspace": "C:/Users/Billy/Desktop/Denzic/Capture",
         "firmware": 66685,
         "windowsAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\acceptance.json",
@@ -132049,6 +132054,30 @@
           "archiveSha256": "950617d3965d3e85f361c78323f1faba6908b28fe3705495e3828eb14576b7a7",
           "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota66686-build.log",
           "packageLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-ota66686-package.log"
+        },
+        "phoneAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone055-management-acceptance.json",
+        "androidRemoteStart": {
+          "state": "FIX_INSTALLED_ORDINARY_APP_START_STOP_ACCEPTED",
+          "error": "该设备正在处理另一项录音操作。",
+          "rootCause": "Native File::try_lock() on Rust1.95/Android returns Unsupported even without another owner; four control entry points mapped every lock error to Busy.",
+          "source": "C:/Users/Billy/Desktop/Denzic/Companion/capture-android-device-management",
+          "sourceCommit": "d7e543b318a08291b445b2d9e809123e1866cdea",
+          "change": "Android uses existing Bionic nonblocking flock; other platforms keep std file locks. Real contention remains Busy, other IO errors remain explicit. No recording/transport/state-machine duplication.",
+          "androidProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone-control-lock-android-production-lock-probe.log",
+          "nativeBuild": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-native-build.json",
+          "upstream": "https://github.com/rust-lang/rust/issues/148325",
+          "installedVersion": "0.1.56",
+          "actualAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-ordinary-control-acceptance.json",
+          "durationMs": 31820,
+          "sourceBackedUp": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-remote-source.json"
+        },
+        "installedAndroidVersion": "0.1.56",
+        "installedAndroidReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-installation.json",
+        "ordinaryPhoneControlAcceptance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\phone056-ordinary-control-acceptance.json",
+        "phoneDeferredByOwner": {
+          "at": "2026-11-06T12:21:59+08:00",
+          "quote": "暂不方便，先收尾后台项",
+          "resumeWhen": "Owner reconnects phone and offers an ordinary-app acceptance window; do not repeatedly ask meanwhile."
         }
       },
       "deliveryEstimate": {
@@ -132061,13 +132090,26 @@
         "contingency": "Up to one working day if ordinary Android pairing or physical OTA needs a substantive fix; not a whole-product sale date.",
         "basis": "Firmware/ordinary Windows accepted; Android055 maintenance/OTA sources and host checks exist, physical phone qualification and integration remain.",
         "ownerRaw": "好的, 继续推进, 你看看还有多久才能推进完"
+      },
+      "previousCandidateFirmware": {
+        "version": 66684,
+        "installed": true,
+        "sourceCommit": "c1bbc42a151853f25439db69767b7bee0628ba37",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\build-result.json",
+        "appBytes": 408996,
+        "appDeltaBytes": -120,
+        "staticRamDeltaBytes": -528,
+        "stackReservedUnchanged": true,
+        "otaReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\ota-result.json",
+        "impactAcceptance": "PASS_SCOPED",
+        "impactAcceptanceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json"
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
     "frontendWindowsMobile20261102": {
       "ownerDevicePhoneClosure055": {
         "at": "2026-11-06T11:34:22+08:00",
-        "state": "ANDROID055_INSTALLED_546_FILES_RETAINED_SOFTWARE_CHECKS_PASSED_ORDINARY_PHONE_HARDWARE_ACCEPTANCE_OPEN",
+        "state": "ANDROID056_CANDIDATE_READY_FOREGROUND_PAUSED_BY_OWNER_PHONE_OFFLINE",
         "ownerRaw": "1 做一下",
         "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055",
         "sourceCommit": "a39c44edd3c2f7a67ce07f500466519bc705fcfe",
@@ -132108,12 +132150,124 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "新版055已安装。手机可稳定前台时，从设备页搜索/系统配对和协议验证继续，仅新建测试录音完成按场收取/回听/指定删除，再集中验维护/正常OTA和保存分享；板卡重新按共享记录领取一项，不重新构建、重复源研究或重问已有授权。手机前台被占用期间继续原可执行软件工作，AI表样原工作点保留。",
+        "next": "Owner用手机期间只做不切主屏的后台工作。当前已无ADB连接，056候选和证据保存远端。恢复连接后可先运行已编译ARM控制测试；先实证独立虚拟屏幕隔离，再考虑部分后台界面验收。手机空闲时复用056候选集中安装及普通录音控制→仅新数据接收/回听/删除→维护OTA→公开库系统保存复制分享→切回原资料，不重复源研究或构建，不重新问已有授权。",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
         "currentBoardLeaseHeld": false,
-        "customerResult": null
+        "customerResult": null,
+        "ordinaryPhoneContinuation": {
+          "at": "2026-11-06T11:48:03+08:00",
+          "ownerRaw": "手机已经打开 Companion 并放好了，你继续把第1项剩下的真机流程验完，配对、接收、回听、删除、升级和保存分享都跑一遍，有问题就直接修，记得及时上传远端。",
+          "state": "ANDROID056_CANDIDATE_READY_FOREGROUND_PAUSED_BY_OWNER_PHONE_OFFLINE",
+          "phoneAvailabilityConfirmed": true,
+          "otherLease": "2026-11-06T11:36:13+08:00 Companion-phone055-ordinary-management-and-OTA",
+          "noTakeover": true,
+          "prepared": "Local-only actual ACTION_SEND receiver and explicit synthetic export fixture; no Internet/contact/storage permissions; production backup roundtrip. Source6177879c pushed and read back. Not yet installed or used on phone.",
+          "next": "等当前共享一项释放，从其真实记录承接已验配对/列表/指定新录音删除收取，补回听/维护OTA剩余；再在独立公开资料库实际系统保存/复制/分享，读回文件与只读授权，最后切回原资料。当前手机已可用，不再因上轮前台占用重复问就绪。",
+          "modelsRun": false,
+          "ownerAccepted": false,
+          "latestOwnerRaw": "我要玩手机, 你能后台手机操作码",
+          "foregroundAvailabilityNow": false,
+          "foregroundPausedByOwner": true
+        },
+        "controlAndBackground056": {
+          "at": "2026-11-06T12:34:53+08:00",
+          "state": "ANDROID056_CANDIDATE_READY_FOREGROUND_PAUSED_BY_OWNER_PHONE_OFFLINE",
+          "ownerLatest": "我要玩手机, 你能后台手机操作码",
+          "foregroundPhoneOperationsPaused": true,
+          "ownBoardLeaseReleased": true,
+          "ownerMainScreenUsedAfterPause": false,
+          "currentPhoneConnection": "ADB devices empty and no matching known-phone wireless service observed; no wireless debugging enabled by task",
+          "latestInstalledPhoneVersion": "0.1.55 last observed;056 not installed",
+          "candidate": {
+            "result": "ANDROID056_SIGNED_AND_SOURCE_VERIFIED_CANDIDATE_NOT_INSTALLED",
+            "versionName": "0.1.56",
+            "versionCode": 56,
+            "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\Companion-Android-0.1.56-录音控制修复候选.apk",
+            "sha256": "d77537d719a0759c817ef36c003dac0f6d3dc663f4c2c8b527f97f9898165fac",
+            "bytes": 48765640,
+            "frontendSourceCommit": "ad059a57d2ba480a484f7a6a81025a9bdcbcbb6a",
+            "backendSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+            "signerMatches050r2And055": true,
+            "zip16KiBAligned": true,
+            "nativeLibraries": [
+              {
+                "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+                "sha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+                "elf16KiBAligned": true
+              },
+              {
+                "name": "jni/arm64-v8a/libonnxruntime.so",
+                "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+                "elf16KiBAligned": true
+              },
+              {
+                "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+                "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+                "elf16KiBAligned": true
+              }
+            ],
+            "webAssetsExact": [
+              "index.html",
+              "manifest.webmanifest",
+              "assets/index-BeLbnNsw.css",
+              "assets/index-DjHrbBIS.js"
+            ],
+            "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\apk056-build-1793939427479780400.log",
+            "buildWallSeconds": 20.137,
+            "installed": false,
+            "reasonNotInstalled": "Owner is using phone and ADB disconnected; do not launch installer or any phone foreground UI.",
+            "actualOrdinaryControlButtonsAccepted": false,
+            "modelsRun": false
+          },
+          "source": {
+            "frontendSourceCommit": "ad059a57d2ba480a484f7a6a81025a9bdcbcbb6a",
+            "frontendBranch": "work/device-phone-closure055-20261106",
+            "backendSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+            "backendBranch": "work/device-phone-closure055-android-20261106",
+            "remoteReadback": true,
+            "versionName": "0.1.56",
+            "versionCode": 56,
+            "installed": false,
+            "foregroundValidationPending": true,
+            "ownerUsingPhone": true
+          },
+          "productChanges": [
+            "Android native recorder control now uses real non-blocking private-file exclusion; Rust1.95 std try_lock had returned Unsupported and was hidden as a busy error. Genuine concurrent locks still refuse; I/O failures report their actual type.",
+            "Newly received test session e7 really has120-byte dated metadata. Java callback and native reconciliation now accept legacy112 or dated120, validating both envelopes and retaining date/original bytes."
+          ],
+          "evidence": {
+            "sharedOrdinaryPhone055": "Actual pair/catalogue, cancel retains own e7, selected e7 received4754B exact SHA, own e6 deletion result, original34 metadata rows/free space checked. First deletion-confirmation actor unobserved, needs controlled repeat; no old audio read/deleted.",
+            "actualAndroidLock": "Exact production lock helper acquired/excluded independent handle/released on close on this phone, shell-owned isolated file; not an App-UID or real remote-button pass.",
+            "hostEngine": "20 exact production control/lock tests passed, including start/pause/resume/stop, lost replies, identity, sealed recovery and dated CRC; no speech inference or training.",
+            "javaMetadata": "Production callback accepted actual new-e7 dated120 and legacy112 metadata; corrupt date CRC refused.",
+            "androidEngine": "Full ARM test executable compiled. Device disconnected before upload, so not run and not counted as passed.",
+            "apk": "Same signing certificate050r2/055, exact web/native inputs, every JNI interface and dynamic dependency preserved, all3 native ELF plusAPK16KiB alignment checked. Only control/dated callback class and combined mobile library changed; separate onnx/sherpa binaries and model weights unchanged.",
+            "virtualDisplay": "Official scrcpy5.0.1 digest verified and prepared only. Not started, no virtual display created; isolation/native dialogs/audio/clipboard not yet qualified."
+          },
+          "failuresAndUnverified": [
+            "First Android file-lock probe reproduced std Unsupported; corrected real production flock helper passed.",
+            "Initial native link used4KiB pages; root-only relink with16KiB performed before packaging, no initial incompatible APK shipped.",
+            "Android engine runtime validation stopped at adb device not found; no blind reconnect or permission change.",
+            "Packager initially reused mutable ZipInfo and hit overlap detection when reading again; fixed by independent ZipInfo copies, reused unchanged validated native build, no integrity guard disabled.",
+            "Two DevTools attempts used stale process endpoint then timed out as foreground/visibility changed; no player action was reached. One empty UI tree observed, lock/visibility/debug state unresolved, not classified as an App crash or fixed UI defect."
+          ],
+          "remaining": [
+            "Install056 when phone available; execute already-built ARM engine suite in background on actual device, then ordinary App remote start/pause/resume/stop and interruption recovery with own new samples.",
+            "Actually play/pause/resume/finish newly received audio; no human acoustic-quality pass claimed.",
+            "Controlled fresh recording deletion confirm/cancel and receive/recovery; retain original34 old recordings.",
+            "Ordinary maintenance and normal signed phone OTA. Unused official66686 package exists but no phone OTA started.",
+            "Independent explicit public fixture via ordinary library restore, selected-content save/copy/share recipient bytes/read-only grants, restore original library afterward.",
+            "Before any virtual-display UI use, verify actual main-screen independence; hold physical-system dialogs, audio and clipboard tests while Owner uses phone."
+          ],
+          "next": "Owner用手机期间只做不切主屏的后台工作。当前已无ADB连接，056候选和证据保存远端。恢复连接后可先运行已编译ARM控制测试；先实证独立虚拟屏幕隔离，再考虑部分后台界面验收。手机空闲时复用056候选集中安装及普通录音控制→仅新数据接收/回听/删除→维护OTA→公开库系统保存复制分享→切回原资料，不重复源研究或构建，不重新问已有授权。",
+          "ownerAccepted": false,
+          "wholeProductQualified": false,
+          "modelsRun": false
+        },
+        "candidateVersion": "0.1.56/code56, not installed",
+        "currentCandidateSourceCommit": "ad059a57d2ba480a484f7a6a81025a9bdcbcbb6a"
       },
       "ownerAndroidMaterialExports054": {
         "at": "2026-11-06T10:24:17+08:00",
@@ -136452,7 +136606,7 @@
         "scope": "Four-point AI UX installed050 retained. Exact current source and APK restored, remote backup verified. Original foreground/real AI/full parity/customer/owner acceptance boundaries remain open."
       },
       "at": "2026-11-05T18:11:23+08:00",
-      "state": "ANDROID055_INSTALLED_546_FILES_RETAINED_SOFTWARE_CHECKS_PASSED_ORDINARY_PHONE_HARDWARE_ACCEPTANCE_OPEN",
+      "state": "ANDROID056_CANDIDATE_READY_FOREGROUND_PAUSED_BY_OWNER_PHONE_OFFLINE",
       "scope": "Owner澄清：Companion Windows与手机功能尽量一致，平台差异按实际能力处理；本会话负责两端前端、相关后端功能和模型接入，模型本身由Grok负责。Listener会话仅负责Listener电脑端。",
       "workspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-software050",
       "baseCommit": "79b3df827c2cfbd5605178d22da010559a8956bb",
@@ -141336,10 +141490,10 @@
         "baseline": "单场32段新接收8191682字节，首到末507.455秒、15.764 KiB/s；逐段收包耗时加权17.490 KiB/s，前四段3.701、后28段34.075 KiB/s；旧Type dc0016d8/FW858，非新0.1.24实测。"
       },
       "at": "2026-11-06T10:24:17+08:00",
-      "status": "OWNER_PRIORITY1_ANDROID055_INSTALLED_ORDINARY_DEVICE_CHAIN_ACCEPTANCE_PENDING",
+      "status": "ANDROID056_CONTROL_FIX_CANDIDATE_READY_OWNER_PHONE_FOREGROUND_PAUSED",
       "goal": "沿原36项售卖标准推进；Windows052已交付，手机/系统交互/AI材料和真实使用范围继续收敛。模型待实际外置卡接回后按原整会指标验证。",
       "scope": "保留原音、录音保存与同步恢复；普通识别准确率优先，双人重叠整段分离再逐路转写，未知身份/角色待确认，纪要可核原话；Android与Windows整链实测仍待，前端原任务后置保留。",
-      "next": "新版055已安装。手机可稳定前台时，从设备页搜索/系统配对和协议验证继续，仅新建测试录音完成按场收取/回听/指定删除，再集中验维护/正常OTA和保存分享；板卡重新按共享记录领取一项，不重新构建、重复源研究或重问已有授权。手机前台被占用期间继续原可执行软件工作，AI表样原工作点保留。",
+      "next": "Owner用手机期间只做不切主屏的后台工作。当前已无ADB连接，056候选和证据保存远端。恢复连接后可先运行已编译ARM控制测试；先实证独立虚拟屏幕隔离，再考虑部分后台界面验收。手机空闲时复用056候选集中安装及普通录音控制→仅新数据接收/回听/删除→维护OTA→公开库系统保存复制分享→切回原资料，不重复源研究或构建，不重新问已有授权。",
       "baseline": "新MOSS只有四场120秒筛查；DER7.69%/5.38%/12.02%/4.37%，人数6/7、5/5、7/7、4/4；非整会/最终准确率。旧R002整会cpCER33.89%纠正24.77%，为读取修正非模型增益。",
       "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json",
       "interruptedWork": "手机修订原文对应录音位置接口已包含在当前手机后端候选交付中；真实手机和同事前端联调仍待完成。",

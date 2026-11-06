@@ -1,0 +1,95 @@
+{
+  "at": "2026-11-06T12:34:53+08:00",
+  "state": "ANDROID056_CANDIDATE_READY_FOREGROUND_PAUSED_BY_OWNER_PHONE_OFFLINE",
+  "ownerLatest": "我要玩手机, 你能后台手机操作码",
+  "foregroundPhoneOperationsPaused": true,
+  "ownBoardLeaseReleased": true,
+  "ownerMainScreenUsedAfterPause": false,
+  "currentPhoneConnection": "ADB devices empty and no matching known-phone wireless service observed; no wireless debugging enabled by task",
+  "latestInstalledPhoneVersion": "0.1.55 last observed;056 not installed",
+  "candidate": {
+    "result": "ANDROID056_SIGNED_AND_SOURCE_VERIFIED_CANDIDATE_NOT_INSTALLED",
+    "versionName": "0.1.56",
+    "versionCode": 56,
+    "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\Companion-Android-0.1.56-录音控制修复候选.apk",
+    "sha256": "d77537d719a0759c817ef36c003dac0f6d3dc663f4c2c8b527f97f9898165fac",
+    "bytes": 48765640,
+    "frontendSourceCommit": "ad059a57d2ba480a484f7a6a81025a9bdcbcbb6a",
+    "backendSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+    "signerMatches050r2And055": true,
+    "zip16KiBAligned": true,
+    "nativeLibraries": [
+      {
+        "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+        "sha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libonnxruntime.so",
+        "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+        "elf16KiBAligned": true
+      },
+      {
+        "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+        "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+        "elf16KiBAligned": true
+      }
+    ],
+    "webAssetsExact": [
+      "index.html",
+      "manifest.webmanifest",
+      "assets/index-BeLbnNsw.css",
+      "assets/index-DjHrbBIS.js"
+    ],
+    "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\apk056-build-1793939427479780400.log",
+    "buildWallSeconds": 20.137,
+    "installed": false,
+    "reasonNotInstalled": "Owner is using phone and ADB disconnected; do not launch installer or any phone foreground UI.",
+    "actualOrdinaryControlButtonsAccepted": false,
+    "modelsRun": false
+  },
+  "source": {
+    "frontendSourceCommit": "ad059a57d2ba480a484f7a6a81025a9bdcbcbb6a",
+    "frontendBranch": "work/device-phone-closure055-20261106",
+    "backendSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+    "backendBranch": "work/device-phone-closure055-android-20261106",
+    "remoteReadback": true,
+    "versionName": "0.1.56",
+    "versionCode": 56,
+    "installed": false,
+    "foregroundValidationPending": true,
+    "ownerUsingPhone": true
+  },
+  "productChanges": [
+    "Android native recorder control now uses real non-blocking private-file exclusion; Rust1.95 std try_lock had returned Unsupported and was hidden as a busy error. Genuine concurrent locks still refuse; I/O failures report their actual type.",
+    "Newly received test session e7 really has120-byte dated metadata. Java callback and native reconciliation now accept legacy112 or dated120, validating both envelopes and retaining date/original bytes."
+  ],
+  "evidence": {
+    "sharedOrdinaryPhone055": "Actual pair/catalogue, cancel retains own e7, selected e7 received4754B exact SHA, own e6 deletion result, original34 metadata rows/free space checked. First deletion-confirmation actor unobserved, needs controlled repeat; no old audio read/deleted.",
+    "actualAndroidLock": "Exact production lock helper acquired/excluded independent handle/released on close on this phone, shell-owned isolated file; not an App-UID or real remote-button pass.",
+    "hostEngine": "20 exact production control/lock tests passed, including start/pause/resume/stop, lost replies, identity, sealed recovery and dated CRC; no speech inference or training.",
+    "javaMetadata": "Production callback accepted actual new-e7 dated120 and legacy112 metadata; corrupt date CRC refused.",
+    "androidEngine": "Full ARM test executable compiled. Device disconnected before upload, so not run and not counted as passed.",
+    "apk": "Same signing certificate050r2/055, exact web/native inputs, every JNI interface and dynamic dependency preserved, all3 native ELF plusAPK16KiB alignment checked. Only control/dated callback class and combined mobile library changed; separate onnx/sherpa binaries and model weights unchanged.",
+    "virtualDisplay": "Official scrcpy5.0.1 digest verified and prepared only. Not started, no virtual display created; isolation/native dialogs/audio/clipboard not yet qualified."
+  },
+  "failuresAndUnverified": [
+    "First Android file-lock probe reproduced std Unsupported; corrected real production flock helper passed.",
+    "Initial native link used4KiB pages; root-only relink with16KiB performed before packaging, no initial incompatible APK shipped.",
+    "Android engine runtime validation stopped at adb device not found; no blind reconnect or permission change.",
+    "Packager initially reused mutable ZipInfo and hit overlap detection when reading again; fixed by independent ZipInfo copies, reused unchanged validated native build, no integrity guard disabled.",
+    "Two DevTools attempts used stale process endpoint then timed out as foreground/visibility changed; no player action was reached. One empty UI tree observed, lock/visibility/debug state unresolved, not classified as an App crash or fixed UI defect."
+  ],
+  "remaining": [
+    "Install056 when phone available; execute already-built ARM engine suite in background on actual device, then ordinary App remote start/pause/resume/stop and interruption recovery with own new samples.",
+    "Actually play/pause/resume/finish newly received audio; no human acoustic-quality pass claimed.",
+    "Controlled fresh recording deletion confirm/cancel and receive/recovery; retain original34 old recordings.",
+    "Ordinary maintenance and normal signed phone OTA. Unused official66686 package exists but no phone OTA started.",
+    "Independent explicit public fixture via ordinary library restore, selected-content save/copy/share recipient bytes/read-only grants, restore original library afterward.",
+    "Before any virtual-display UI use, verify actual main-screen independence; hold physical-system dialogs, audio and clipboard tests while Owner uses phone."
+  ],
+  "next": "Owner用手机期间只做不切主屏的后台工作。当前已无ADB连接，056候选和证据保存远端。恢复连接后可先运行已编译ARM控制测试；先实证独立虚拟屏幕隔离，再考虑部分后台界面验收。手机空闲时复用056候选集中安装及普通录音控制→仅新数据接收/回听/删除→维护OTA→公开库系统保存复制分享→切回原资料，不重复源研究或构建，不重新问已有授权。",
+  "ownerAccepted": false,
+  "wholeProductQualified": false,
+  "modelsRun": false
+}

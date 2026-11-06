@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+  "branch": "work/device-phone-closure055-android-20261106",
+  "remoteReadback": true,
+  "sharedDependencyCommit": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
+  "rootCause": "Rust1.95 Android std File.try_lock unsupported, hidden as generic busy; same compiled production flock helper actual Android/Windows exclusion/drop checks passed",
+  "workdir": "E:\\CodexData\\Companion\\.build-cache\\device-phone055\\native056",
+  "initialLockSourceCommit": "7d2b5a12c6ea75775ef0b01396013e21ef6402f3",
+  "calendarCompatibility": "Actual new test session has120B dated metadata. Java callback and native reconcile now validate and retain both112B legacy/120B dated forms; both CRCs checked. Host engine and Java callback passed; Android suite compiled but device disconnected before execution."
+}

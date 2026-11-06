@@ -1,0 +1,23 @@
+{
+  "status": "OFFICIAL_TOOL_PREPARED_NOT_STARTED_NOT_DEVICE_QUALIFIED",
+  "version": "5.0.1",
+  "releaseUrl": "https://github.com/Genymobile/scrcpy/releases/tag/v5.0.1",
+  "assetUrl": "https://github.com/Genymobile/scrcpy/releases/download/v5.0.1/scrcpy-win64-v5.0.1.zip",
+  "sha256": "b12a2c4ee8be317422451fc7dcf8ee20a71b5ea7ef9ad73ddd825a25316227a5",
+  "officialGitHubDigestVerified": true,
+  "executable": "E:\\CodexData\\Companion\\.build-cache\\device-phone055\\background-display\\scrcpy-win64-v5.0.1\\scrcpy.exe",
+  "phoneConnected": false,
+  "virtualDisplayCreated": false,
+  "ownerMainScreenTouched": false,
+  "clipboardSyncDisabledInFutureUse": true,
+  "globalSystemProxyChanged": false,
+  "constraints": [
+    "First validate actual virtual-display isolation while phone available; do not promise main-screen independence from docs alone.",
+    "Force exact test serial; create a new display only, never mirror/record primary display. No audio capture/clipboard sync/power changes.",
+    "Do not use no-vd-destroy-content: it would move app to physical main display on exit.",
+    "Pin IME to local virtual display and verify native dialogs stay there; stop any dialog that opens on physical display.",
+    "Clipboard and playback/audio remain shared-device behaviors; hold those tests while Owner actively uses phone.",
+    "Finish any active recording/receive/OTA before closing test display.",
+    "No new background service/login task installed; tool not launched because ADB is disconnected."
+  ]
+}

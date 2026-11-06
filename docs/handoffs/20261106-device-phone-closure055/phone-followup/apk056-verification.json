@@ -1,0 +1,41 @@
+{
+  "result": "ANDROID056_SIGNED_AND_SOURCE_VERIFIED_CANDIDATE_NOT_INSTALLED",
+  "versionName": "0.1.56",
+  "versionCode": 56,
+  "apk": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\Companion-Android-0.1.56-录音控制修复候选.apk",
+  "sha256": "d77537d719a0759c817ef36c003dac0f6d3dc663f4c2c8b527f97f9898165fac",
+  "bytes": 48765640,
+  "frontendSourceCommit": "ad059a57d2ba480a484f7a6a81025a9bdcbcbb6a",
+  "backendSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+  "signerMatches050r2And055": true,
+  "zip16KiBAligned": true,
+  "nativeLibraries": [
+    {
+      "name": "jni/arm64-v8a/libcompanion_mobile_audio.so",
+      "sha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libonnxruntime.so",
+      "sha256": "4d2318b3849abb8862133d3068fc7e807ed8b2671cc6d83657fff2fcb9e1caad",
+      "elf16KiBAligned": true
+    },
+    {
+      "name": "jni/arm64-v8a/libsherpa-onnx-c-api.so",
+      "sha256": "c9d2277b02366fd467ca6f0cde2fc16f8efb69b2fb80cf51e8e3fee0c9f12278",
+      "elf16KiBAligned": true
+    }
+  ],
+  "webAssetsExact": [
+    "index.html",
+    "manifest.webmanifest",
+    "assets/index-BeLbnNsw.css",
+    "assets/index-DjHrbBIS.js"
+  ],
+  "buildLog": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\apk056-build-1793939427479780400.log",
+  "buildWallSeconds": 20.137,
+  "installed": false,
+  "reasonNotInstalled": "Owner is using phone and ADB disconnected; do not launch installer or any phone foreground UI.",
+  "actualOrdinaryControlButtonsAccepted": false,
+  "modelsRun": false
+}

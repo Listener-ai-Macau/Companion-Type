@@ -1,0 +1,14 @@
+from pathlib import Path
+import urllib.request,json,hashlib,zipfile,subprocess
+r=Path('C:/Users/Billy/Desktop/Denzic/Companion');b=r/'docs/handoffs/20261106-device-phone-closure055/phone-followup';c=Path('E:/CodexData/Companion/.build-cache/device-phone055/background-display');c.mkdir(exist_ok=True)
+def fetch(url):return urllib.request.urlopen(urllib.request.Request(url,headers={'User-Agent':'Companion-local-test-preparation'}),timeout=40).read()
+release=json.loads(fetch('https://api.github.com/repos/Genymobile/scrcpy/releases/tags/v5.0.1'));asset=next(x for x in release['assets'] if x['name']=='scrcpy-win64-v5.0.1.zip');archive=c/asset['name'];expected=asset['digest'].split(':',1)[1]
+if not archive.exists():archive.write_bytes(fetch(asset['browser_download_url']))
+assert archive.stat().st_size==asset['size'] and hashlib.sha256(archive.read_bytes()).hexdigest()==expected
+with zipfile.ZipFile(archive) as z:
+ for item in z.infolist():
+  assert ':' not in item.filename and not item.filename.startswith(('/','\\'));path=(c/item.filename).resolve();assert path.is_relative_to(c.resolve()),item.filename
+ z.extractall(c)
+exe=c/'scrcpy-win64-v5.0.1/scrcpy.exe';p=subprocess.run([str(exe),'--help'],capture_output=True,text=True,encoding='utf8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW);assert p.returncode==0,p.stdout+p.stderr;help=p.stdout+p.stderr;(b/'scrcpy501-help.txt').write_text(help,encoding='utf8')
+flags=['--new-display','--no-window','--no-audio','--no-clipboard-autosync','--no-power-on','--display-ime-policy','--start-app'];assert all(flag in help for flag in flags)
+record={'status':'OFFICIAL_TOOL_PREPARED_NOT_STARTED_NOT_DEVICE_QUALIFIED','version':'5.0.1','releaseUrl':release['html_url'],'assetUrl':asset['browser_download_url'],'sha256':expected,'officialGitHubDigestVerified':True,'executable':str(exe),'phoneConnected':False,'virtualDisplayCreated':False,'ownerMainScreenTouched':False,'clipboardSyncDisabledInFutureUse':True,'globalSystemProxyChanged':False,'constraints':['First validate actual virtual-display isolation while phone available; do not promise main-screen independence from docs alone.','Force exact test serial; create a new display only, never mirror/record primary display. No audio capture/clipboard sync/power changes.','Do not use no-vd-destroy-content: it would move app to physical main display on exit.','Pin IME to local virtual display and verify native dialogs stay there; stop any dialog that opens on physical display.','Clipboard and playback/audio remain shared-device behaviors; hold those tests while Owner actively uses phone.','Finish any active recording/receive/OTA before closing test display.','No new background service/login task installed; tool not launched because ADB is disconnected.']};(b/'background-display-preparation.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print(json.dumps(record,ensure_ascii=False))

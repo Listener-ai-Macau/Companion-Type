@@ -1,0 +1,5 @@
+STD_TRY_LOCK=Err(Error { kind: Unsupported, message: "try_lock() not supported" })
+RAW_FIRST=0 ERR=Os { code: 13, kind: PermissionDenied, message: "Permission denied" }
+RAW_CONFLICT=-1 ERR=Os { code: 11, kind: WouldBlock, message: "Try again" }
+RAW_AFTER_DROP=0
+PASS_ANDROID_REAL_FILE_LOCK_EXCLUSION_AND_DROP_RELEASE

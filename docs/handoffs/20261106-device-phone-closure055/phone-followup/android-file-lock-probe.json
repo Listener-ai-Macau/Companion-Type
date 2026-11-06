@@ -1,0 +1,10 @@
+{
+  "rustVersion": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "actualAndroidExecution": true,
+  "appUidExecution": false,
+  "scope": "Same Android Rust standard library and real local/private filesystem, shell-owned isolated test directory; no recorder, no application user-data read",
+  "binarySha256": "a4a821b9e5523595498cc5de140fbe21eb6f5fd3269dcde6d8c5b36ca4438209",
+  "result": "STD_TRY_LOCK=Err(Error { kind: Unsupported, message: \"try_lock() not supported\" })\nRAW_FIRST=0 ERR=Os { code: 13, kind: PermissionDenied, message: \"Permission denied\" }\nRAW_CONFLICT=-1 ERR=Os { code: 11, kind: WouldBlock, message: \"Try again\" }\nRAW_AFTER_DROP=0\nPASS_ANDROID_REAL_FILE_LOCK_EXCLUSION_AND_DROP_RELEASE\n",
+  "primarySource": "https://github.com/rust-lang/rust/issues/148325",
+  "cleanup": "Only own probe and owned-test.lock removed"
+}

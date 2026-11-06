@@ -1,0 +1,18 @@
+{
+  "exitCode": 0,
+  "library": "E:\\CodexData\\Companion\\.build-cache\\device-phone055\\native056\\target\\aarch64-linux-android\\release\\libcompanion_mobile_audio.so",
+  "sha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+  "bytes": 10313144,
+  "elfLoadSegments": [
+    "  LOAD           0x000000 0x0000000000000000 0x0000000000000000 0x2526d0 0x2526d0 R   0x4000",
+    "  LOAD           0x252700 0x0000000000256700 0x0000000000256700 0x4385d0 0x4385d0 R E 0x4000",
+    "  LOAD           0x68acd0 0x0000000000692cd0 0x0000000000692cd0 0x05a598 0x05b330 RW  0x4000",
+    "  LOAD           0x6e5268 0x00000000006f1268 0x00000000006f1268 0x001438 0x001df8 RW  0x4000"
+  ],
+  "sixteenKiBCompatible": true,
+  "wallSeconds": 54.398,
+  "rootCrateRelinkOnly": true,
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\native-relink16k-1793939175382716300.log",
+  "originalNativeBuild": "native-build-result.json",
+  "sourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a"
+}

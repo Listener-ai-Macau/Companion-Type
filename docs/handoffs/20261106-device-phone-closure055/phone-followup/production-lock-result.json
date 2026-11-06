@@ -1,0 +1,9 @@
+{
+  "result": "PASS_EXACT_PRODUCTION_LOCK_ON_WINDOWS_AND_ANDROID",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055\\apps\\android-backend\\native\\src\\backend\\control_lock.rs",
+  "sourceSha256": "9179433c3484cc87ebc158e6f173242e4522aa737bb6337172cf639f62e997af",
+  "host": "\nrunning 1 test\ntest tests::exclusive_across_independent_handles_and_released_on_drop ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+  "phone": "PASS_EXACT_PRODUCTION_ANDROID_LOCK_EXCLUSION_AND_DROP_RELEASE\n",
+  "androidAppUid": false,
+  "noBluetoothOrAudioUsed": true
+}

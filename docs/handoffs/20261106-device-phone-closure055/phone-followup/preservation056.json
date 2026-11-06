@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-06T12:34:53+08:00",
+  "archive": "canonical-backlog-and-log-after056.zip",
+  "sha256": "bf23e7a5d317d8e3ebf7718e3e36a48e7f2acf5c0cce97070029c33ccadfb41c",
+  "canonicalFiles": [
+    {
+      "path": "docs/product_backlog.json",
+      "sha256": "740e2b33016d50e4326d1c11710324b06dd44712bdd55e9ddda8021dc8778442"
+    },
+    {
+      "path": "docs/development_log.md",
+      "sha256": "6a60ac2992e9a3c268fcda686b26d8ee86e29f0753c21ea6ec02120d8874ee6e"
+    }
+  ],
+  "source": {
+    "frontendSourceCommit": "ad059a57d2ba480a484f7a6a81025a9bdcbcbb6a",
+    "frontendBranch": "work/device-phone-closure055-20261106",
+    "backendSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+    "backendBranch": "work/device-phone-closure055-android-20261106",
+    "remoteReadback": true,
+    "versionName": "0.1.56",
+    "versionCode": 56,
+    "installed": false,
+    "foregroundValidationPending": true,
+    "ownerUsingPhone": true
+  },
+  "apkSha256": "d77537d719a0759c817ef36c003dac0f6d3dc663f4c2c8b527f97f9898165fac",
+  "noAudioPayloadOrOwnerScreenCopies": true
+}
