@@ -47,6 +47,8 @@ public final class MainActivity extends Activity {
     private long libraryRequestId;
     private String libraryRequestKind,libraryRequestToken,documentLibraryToken;
     private boolean libraryRequestRestored;
+    private long updateRequestId;
+    private boolean updateRequestRestored;
     private Path root() { return getFilesDir().toPath(); }
     private LocalLibraryBackups libraries(){return new LocalLibraryBackups(root());}
     private Path recordings() throws java.io.IOException { return libraries().recordings(); }
@@ -95,6 +97,7 @@ public final class MainActivity extends Activity {
     @SuppressLint("SetJavaScriptEnabled") @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         if (state != null) {
+            updateRequestId=state.getLong("updateRequestId",0);updateRequestRestored=updateRequestId!=0;
             libraryRequestId=state.getLong("libraryRequestId",0);libraryRequestKind=state.getString("libraryRequestKind");libraryRequestToken=state.getString("libraryRequestToken");
             libraryRequestRestored=libraryRequestId!=0;documentLibraryToken=state.getString("documentLibraryToken");documentPreparedId=state.getString("documentPreparedId");
             long pendingId=state.getLong("documentRequestId",0);
@@ -168,6 +171,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
+        state.putLong("updateRequestId",updateRequestId);
         state.putLong("libraryRequestId",libraryRequestId);state.putString("libraryRequestKind",libraryRequestKind);state.putString("libraryRequestToken",libraryRequestToken);state.putString("documentLibraryToken",documentLibraryToken);state.putString("documentPreparedId",documentPreparedId);
         if (documentRequestId!=0) {
             state.putLong("documentRequestId",documentRequestId);
@@ -177,6 +181,7 @@ public final class MainActivity extends Activity {
     }
     @Override protected void onResume() {
         super.onResume();
+        if(updateRequestRestored&&updateRequestId!=0){updateRequestId=0;updateRequestRestored=false;android.widget.Toast.makeText(this,"升级包选择已中断，请重新选择。设备保持原状态。",android.widget.Toast.LENGTH_LONG).show();}
         if(libraryRequestRestored&&libraryRequestId!=0){libraryRequestId=0;libraryRequestKind=null;libraryRequestToken=null;libraryRequestRestored=false;android.widget.Toast.makeText(this,"备份文件选择已中断，原资料仍保留，请重新操作。",android.widget.Toast.LENGTH_LONG).show();}
         // If a restored picker never delivers a result, do not block future exports.
         // Android delivers an activity result before the following onResume.
@@ -195,6 +200,7 @@ public final class MainActivity extends Activity {
     @Override public void onBackPressed() { web.evaluateJavascript("window.companionBack()", null); }
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==33){finishUpdatePicker(resultCode,data);return;}
         if(requestCode==32){finishLibraryPicker(resultCode,data);return;}
         if (requestCode != 31) return;
         final long id=documentRequestId; final String key=documentKey, format=documentFormat;
@@ -252,6 +258,7 @@ public final class MainActivity extends Activity {
         });
     }
     private void requireLibraryIdle() throws Exception {
+        if(DeviceUpdateService.isRunning())throw new java.io.IOException("正在升级录音卡，请等待完成后再操作资料备份。");
         if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成或暂停接收后再操作资料备份。");
     }
     private void libraryReply(long id,Object value,String error,boolean restored){
@@ -345,6 +352,12 @@ public final class MainActivity extends Activity {
             });
         }
         @JavascriptInterface public void finishApp() { runOnUiThread(MainActivity.this::finish); }
+        @JavascriptInterface public void pickDeviceUpdate(long id){runOnUiThread(()->{
+            if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||LocalLibraryBackups.BUSY.get()||RecordingSyncService.isRunning()||DeviceUpdateService.isRunning()){reply(id,null,"已有文件选择、接收或升级正在进行，请等待完成。");return;}
+            updateRequestId=id;updateRequestRestored=false;
+            try{startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/zip"),33);}
+            catch(Exception e){updateRequestId=0;reply(id,null,"无法打开升级包选择器。");}
+        });}
         @JavascriptInterface public void openBluetoothSettings() {
             runOnUiThread(() -> {
                 try { startActivity(new Intent(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS)); }
@@ -353,7 +366,7 @@ public final class MainActivity extends Activity {
         }
         @JavascriptInterface public void exportDocument(long id, String key, String format) {
             runOnUiThread(() -> {
-                if (documentRequestId!=0||libraryRequestId!=0||LocalLibraryBackups.BUSY.get()) { reply(id,null,"已有文件选择或资料操作正在进行。"); return; }
+                if (documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||LocalLibraryBackups.BUSY.get()) { reply(id,null,"已有文件选择或资料操作正在进行。"); return; }
                 String mime, extension;
                 if ("pdf".equals(format)) { mime="application/pdf";extension="pdf"; }
                 else if ("word".equals(format)) { mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document";extension="docx"; }
@@ -370,7 +383,7 @@ public final class MainActivity extends Activity {
         }
         @JavascriptInterface public void exportPrepared(long id,String preparedId){
             runOnUiThread(()->{
-                if(documentRequestId!=0||libraryRequestId!=0||LocalLibraryBackups.BUSY.get()){reply(id,null,"已有文件选择或资料操作正在进行。");return;}
+                if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||LocalLibraryBackups.BUSY.get()){reply(id,null,"已有文件选择或资料操作正在进行。");return;}
                 documentRequestId=id;documentFormat="preparedPreparing";documentPreparedId=preparedId;documentRequestRestored=false;
                 worker.execute(()->{try{
                     PreparedExports exports=preparedExports();PreparedExports.Entry entry=exports.load(preparedId,true);exports.requireLibrary(entry,libraries().token());
@@ -383,7 +396,7 @@ public final class MainActivity extends Activity {
         }
         @JavascriptInterface public void exportAudio(long id,String key) {
             runOnUiThread(() -> {
-                if (documentRequestId!=0||libraryRequestId!=0||LocalLibraryBackups.BUSY.get()) { reply(id,null,"已有文件选择或资料操作正在进行。");return; }
+                if (documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0||LocalLibraryBackups.BUSY.get()) { reply(id,null,"已有文件选择或资料操作正在进行。");return; }
                 documentRequestId=id;documentKey=key;documentFormat="audioPreparing";documentRequestRestored=false;
                 worker.execute(() -> {
                     try {
@@ -497,6 +510,69 @@ public final class MainActivity extends Activity {
             if (startImmediately) next.start();
         } catch (Exception error) { next.release(); throw error; }
     }
+    private void finishUpdatePicker(int resultCode,Intent data){
+        final long id=updateRequestId;final boolean restored=updateRequestRestored;updateRequestId=0;updateRequestRestored=false;
+        if(id==0)return;
+        if(restored){android.widget.Toast.makeText(this,"升级包选择已中断，请重新选择；没有自动开始升级。",android.widget.Toast.LENGTH_LONG).show();return;}
+        if(resultCode!=RESULT_OK||data==null||data.getData()==null){reply(id,JSONObject.NULL,null);return;}
+        final android.net.Uri source=data.getData();worker.execute(()->{try{
+            if(LocalLibraryBackups.BUSY.get())throw new java.io.IOException("资料操作正在进行，请稍后再选升级包。");
+            try(java.io.InputStream in=getContentResolver().openInputStream(source)){if(in==null)throw new java.io.IOException("升级包无法读取。");reply(id,DeviceUpdateService.prepare(this,in),null);}
+        }catch(Exception e){reply(id,null,e.getMessage()==null?"升级包读取失败；未发送任何升级内容。":e.getMessage());}});
+    }
+    private boolean confirmDeviceUpdate(String name,SystemUpdatePackage pack)throws Exception{
+        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
+        final android.app.AlertDialog[] shown=new android.app.AlertDialog[1];
+        onUi(()->{shown[0]=new android.app.AlertDialog.Builder(this).setTitle("升级录音卡？")
+            .setMessage("设备："+name+"\n程序版本："+pack.firmwareVersion+"\n资源版本："+pack.resourceVersion+"\n\n升级时请保持录音卡供电与手机蓝牙连接。设备会在安装前验证签名；原录音保留。")
+            .setNegativeButton("取消",(dialog,which)->answer.complete(false)).setPositiveButton("开始升级",(dialog,which)->answer.complete(true)).setOnCancelListener(dialog->answer.complete(false)).create();shown[0].show();return null;});
+        try{return answer.get(90,java.util.concurrent.TimeUnit.SECONDS);}finally{answer.cancel(false);runOnUiThread(()->{if(shown[0]!=null)shown[0].dismiss();});}
+    }
+    private boolean confirmDeviceMaintenance(String operation,String name)throws Exception{
+        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
+        boolean clear="clearPairings".equals(operation);
+        onUi(()->{new android.app.AlertDialog.Builder(this)
+            .setTitle(clear?"清除录音卡配对？":"恢复录音卡设置？")
+            .setMessage((clear?"将清除 "+name+" 上全部已保存的蓝牙配对。之后请在手机系统蓝牙中忘记旧配对，再重新连接。":"将恢复 "+name+" 的设备设置。")+"\n\n设备原录音和手机里已保存的资料保留。")
+            .setNegativeButton("取消",(dialog,which)->answer.complete(false))
+            .setPositiveButton(clear?"清除配对":"恢复设置",(dialog,which)->answer.complete(true))
+            .setOnCancelListener(dialog->answer.complete(false)).show();return null;});
+        try{return answer.get(90,java.util.concurrent.TimeUnit.SECONDS);}finally{answer.cancel(false);}
+    }
+    private JSONObject maintainDevice(JSONObject args)throws Exception{
+        if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成或停止接收后再维护设备。");
+        final BluetoothDevice device=selectedDevice;String address=args.getString("address"),operation=args.getString("operation");
+        if(device==null||!address.equals(device.getAddress()))throw new java.io.IOException("设备已变化，请重新选择录音卡。");
+        DeviceMaintenance.Operation command;
+        switch(operation){case "query":command=DeviceMaintenance.Operation.QUERY;break;case "openPairing":command=DeviceMaintenance.Operation.OPEN_PAIRING;break;case "restoreSettings":command=DeviceMaintenance.Operation.RESTORE_SETTINGS;break;case "clearPairings":command=DeviceMaintenance.Operation.CLEAR_PAIRINGS;break;default:throw new java.io.IOException("不支持的设备维护操作。");}
+        String name=device.getName()==null?"录音卡":device.getName();
+        if(("restoreSettings".equals(operation)||"clearPairings".equals(operation))&&!confirmDeviceMaintenance(operation,name))return new JSONObject().put("address",address).put("name",name).put("operation",operation).put("cancelled",true);
+        if(RecordingSyncService.isRunning()||selectedDevice!=device)throw new java.io.IOException("设备或接收任务已变化，请重新操作。");
+        DeviceMaintenance.Status result;
+        try(RecordingClient client=CompanionAndroidBackend.connect(this,device)){result=client.maintainDevice(command);}
+        if(command==DeviceMaintenance.Operation.RESTORE_SETTINGS&&(!result.settingsSaved||!result.defaultSettings))throw new java.io.IOException("设备已回复，但尚未确认设置已保存，请重新读取状态。");
+        if(command==DeviceMaintenance.Operation.CLEAR_PAIRINGS&&(!result.bondCountValid||result.bonds!=0))throw new java.io.IOException("设备已回复，但尚未确认配对已清除，请重新连接后读取状态。");
+        if(command==DeviceMaintenance.Operation.CLEAR_PAIRINGS){selectedDevice=null;segments=new ArrayList<>();}
+        return new JSONObject().put("address",address).put("name",name).put("operation",operation).put("settingsSaved",result.settingsSaved).put("defaultSettings",result.defaultSettings).put("radioEnabled",result.radioEnabled).put("bondCountValid",result.bondCountValid).put("bonds",result.bonds);
+    }
+    private JSONArray deviceRows()throws Exception{
+        JSONArray out=new JSONArray();for(int i=0;i<devices.size();i++){BluetoothDevice device=devices.get(i);out.put(new JSONObject().put("index",i).put("name",device.getName()==null?"未命名设备":device.getName()).put("address",device.getAddress()).put("bonded",device.getBondState()==BluetoothDevice.BOND_BONDED));}return out;
+    }
+    private JSONArray discoverDevices()throws Exception{
+        if(!bluetoothGranted())throw new java.io.IOException("请先允许附近设备权限，再搜索录音卡。");
+        if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成后再搜索设备。");
+        java.util.Map<String,BluetoothDevice> found=java.util.Collections.synchronizedMap(new java.util.LinkedHashMap<>());
+        for(BluetoothDevice d:CompanionAndroidBackend.pairedDevices(this))found.put(d.getAddress(),d);
+        java.util.concurrent.CountDownLatch finished=new java.util.concurrent.CountDownLatch(1);java.util.concurrent.atomic.AtomicReference<String> failure=new java.util.concurrent.atomic.AtomicReference<>();
+        try(AndroidDevices.Scan scan=CompanionAndroidBackend.discover(this,new AndroidDevices.Listener(){
+            @Override public void onDevice(BluetoothDevice device,String name){found.put(device.getAddress(),device);}
+            @Override public void onFinished(String error){failure.set(error);finished.countDown();}
+        })){
+            if(!finished.await(16,java.util.concurrent.TimeUnit.SECONDS))throw new java.io.IOException("搜索尚未结束，请检查附近设备权限后重试。");
+        }
+        if(failure.get()!=null)throw new java.io.IOException("搜索录音卡失败："+failure.get());
+        synchronized(found){devices=new ArrayList<>(found.values());}selectedDevice=null;segments=new ArrayList<>();return deviceRows();
+    }
     private PreparedExports preparedExports(){return new PreparedExports(getCacheDir().toPath());}
     private ExportContents.Source exportSource(String key)throws Exception{
         RecordingLibrary.Session recording=session(key);MeetingStore ms=store();MeetingStore.Snapshot meeting=null;MeetingStore.Minutes minutes=null;TranslationStore.Entry translation=null;JSONArray problems=new JSONArray();
@@ -505,23 +581,6 @@ public final class MainActivity extends Activity {
         try{translation=translations().load(key);}catch(java.io.IOException error){problems.put("译文暂不可读取，原文件保留。");}
         JSONArray materials=new JSONArray();try{materials=new AiMaterialStore(libraries().meetings()).list(key);}catch(Exception error){problems.put("部分AI材料暂不可读取，原文件保留；可先导出其它内容。");}
         return new ExportContents.Source(key,recordingTitle(key,recording),libraries().token(),meeting,minutes,translation,problems,materials);
-    }
-    private boolean confirmDeviceRecordingDelete(com.denzic.companion.mobile.DeviceRecordings.Offer offer)throws java.io.IOException {
-        java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
-        java.util.concurrent.atomic.AtomicReference<android.app.AlertDialog> shown=new java.util.concurrent.atomic.AtomicReference<>();
-        runOnUiThread(()->{
-            if(answer.isDone())return;
-            if(isFinishing()||isDestroyed()){answer.complete(false);return;}
-            String date=offer.startedUnixSeconds==0?"日期未知":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm",java.util.Locale.getDefault()).format(new java.util.Date(offer.startedUnixSeconds*1000));
-            android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("删除设备录音")
-                .setMessage(date+"，设备剩余音频约"+offer.durationMillis/1000+"秒，可释放"+offer.releasableBytes/1024+" KiB。\n未同步的设备原音将永久删除。本机已保存的副本保留。")
-                .setNegativeButton("取消",(d,w)->answer.complete(false)).setPositiveButton("删除这场录音",(d,w)->answer.complete(true))
-                .setOnCancelListener(d->answer.complete(false)).create();
-            shown.set(dialog);dialog.setOnDismissListener(d->answer.complete(false));dialog.show();
-        });
-        try{return answer.get(45,java.util.concurrent.TimeUnit.SECONDS);}
-        catch(Exception e){answer.cancel(false);throw new java.io.IOException("删除确认已取消或过期，请重新选择。",e);}
-        finally{runOnUiThread(()->{android.app.AlertDialog dialog=shown.get();if(dialog!=null)dialog.dismiss();});}
     }
     private boolean confirmDeviceRecordingDelete(com.denzic.companion.mobile.DeviceRecordings.Offer offer)throws java.io.IOException {
         java.util.concurrent.CompletableFuture<Boolean> answer=new java.util.concurrent.CompletableFuture<>();
@@ -584,11 +643,22 @@ public final class MainActivity extends Activity {
         for(int i=0;i<docs.length();i++){JSONObject d=docs.getJSONObject(i);if(!d.getString("binding").equals(aiDocument(d.getString("id")).getString("binding")))throw new java.io.IOException("会议文字已变化，请重新提问，原内容仍保留。");}
     }
     private Object execute(String method, JSONObject a) throws Exception {
+        if(DeviceUpdateService.isRunning()&&java.util.Arrays.asList("devices","discoverDevices","pairDevice","connectDevice","catalog","deviceMaintenance","deleteDeviceRecording","sync","resume","resumeConfirmation","controlInventory","control","libraryActivate").contains(method))throw new java.io.IOException("录音卡正在升级，请等待完成后再操作设备。");
         if(LocalLibraryBackups.BUSY.get()&&!"status".equals(method))throw new IllegalStateException("正在备份或恢复资料，请等待完成。");
         if(("minutes".equals(method)||"translate".equals(method))&&a.optString("apiKey","").isEmpty()){
             JSONObject credentials=aiServices().credentials();a.put("apiKey",credentials.getString("apiKey")).put("endpoint",credentials.getString("endpoint")).put("model",credentials.getString("model"));
         }
         switch (method) {
+            case "deviceUpdateStatus":return DeviceUpdateService.status(this);
+            case "cancelDeviceUpdate":return DeviceUpdateService.cancel(this);
+            case "startDeviceUpdate":case "verifyDeviceUpdate":{
+                if(documentRequestId!=0||libraryRequestId!=0||updateRequestId!=0)throw new java.io.IOException("请先完成当前文件选择。");
+                BluetoothDevice requested=selectedDevice;if(requested==null||!requested.getAddress().equals(a.getString("address")))throw new java.io.IOException("请先连接对应的录音卡。");
+                boolean verify=method.equals("verifyDeviceUpdate");String name=requested.getName()==null?"录音卡":requested.getName(),id=a.optString("id","");
+                if(!verify&&!confirmDeviceUpdate(name,DeviceUpdateService.load(this,id)))return DeviceUpdateService.status(this).put("cancelled",true);
+                if(selectedDevice!=requested||LocalLibraryBackups.BUSY.get())throw new java.io.IOException("设备或资料状态已变化，请重新操作。");
+                return onUi(()->DeviceUpdateService.start(this,requested,name,id,verify));
+            }
             case "libraryStatus":return libraries().status();
             case "exportInfo":return exportSource(a.getString("key")).info();
             case "prepareExport":return prepareContent(a).dto();
@@ -641,17 +711,26 @@ public final class MainActivity extends Activity {
             case "devices": {
                 if (!bluetoothGranted()) throw new IllegalStateException("请先允许附近设备权限，再重新读取。");
                 devices = CompanionAndroidBackend.pairedDevices(this); segments = new ArrayList<>(); selectedDevice = null;
-                JSONArray out = new JSONArray();
-                for (int i = 0; i < devices.size(); i++) {
-                    BluetoothDevice d = devices.get(i);
-                    out.put(new JSONObject().put("index", i).put("name", d.getName() == null ? "未命名设备" : d.getName()).put("address", d.getAddress()));
-                }
-                return out;
+                return deviceRows();
+            }
+            case "discoverDevices":return discoverDevices();
+            case "pairDevice":{
+                if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成后再配对。");
+                BluetoothDevice device=devices.get(a.getInt("index"));if(!device.getAddress().equals(a.getString("address")))throw new java.io.IOException("设备列表已变化，请重新搜索。");
+                AndroidPairing.pair(this,device);return new JSONObject().put("paired",true).put("address",device.getAddress());
+            }
+            case "deviceMaintenance":return maintainDevice(a);
+            case "connectDevice":{
+                if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成后再连接其它设备。");
+                BluetoothDevice requested=devices.get(a.getInt("index"));if(!requested.getAddress().equals(a.getString("address")))throw new java.io.IOException("设备列表已变化，请重新搜索。");
+                try(RecordingClient client=CompanionAndroidBackend.connect(this,requested)){client.readDeviceStatus();}
+                selectedDevice=requested;segments=new ArrayList<>();return new JSONObject().put("address",requested.getAddress()).put("connected",true);
             }
             case "catalog": {
                 if (RecordingSyncService.isRunning()) throw new IllegalStateException("正在接收录音，请先等待接收结束。");
-                if(a.has("index"))selectedDevice=devices.get(a.getInt("index"));
+                if(a.has("index")){BluetoothDevice requested=devices.get(a.getInt("index"));if(a.has("address")&&!requested.getAddress().equals(a.getString("address")))throw new java.io.IOException("设备列表已变化，请重新选择。");selectedDevice=requested;}
                 if(selectedDevice==null)throw new IllegalStateException("请先选择录音卡。");
+                if(a.has("address")&&!a.getString("address").equals(selectedDevice.getAddress()))throw new java.io.IOException("设备已变化，请重新选择。");
                 segments = new ArrayList<>();
                 java.util.List<com.denzic.companion.mobile.DeviceRecordings.Session> sessions;
                 try (RecordingClient client = CompanionAndroidBackend.connect(this, selectedDevice)) { sessions = client.listDeviceSessions(); }

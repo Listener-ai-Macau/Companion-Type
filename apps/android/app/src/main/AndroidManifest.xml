@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
     <application android:label="Companion" android:allowBackup="false" android:usesCleartextTraffic="false" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher">
+        <service android:name=".DeviceUpdateService" android:exported="false" android:foregroundServiceType="connectedDevice" />
         <provider android:name=".ExportFileProvider" android:authorities="${applicationId}.exports" android:exported="false" android:grantUriPermissions="true" />
         <activity android:name=".MainActivity" android:exported="true" android:screenOrientation="portrait" android:windowSoftInputMode="adjustResize" android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>

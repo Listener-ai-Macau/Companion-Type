@@ -1,20 +1,10 @@
 {
-  "schema": 1,
-  "aarSha256": "e71478a71093786910eee549e629b0572a86d5ae1f1878bbc15c4da492de36bd",
-  "backendSourceCommit": "d43ef35eb49e2647875fbcd953e718eb96e3dc20",
-  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\capture-android-device-management",
-  "priorVerifiedBackendCommit": "c608dc954405598067bad62f6b74d55108120e78",
-  "scope": "Logical device recording inventory and CDS3 exact-session deletion; existing JNI and ASR runtime retained.",
-  "features": [
-    "mobile-asr",
-    "mobile-local-asr",
-    "mobile-calendar",
-    "mobile-control"
-  ],
-  "changeScope": "Java device management only; no JNI or model changes",
-  "previousBackendReceipt": "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel043\\previous-backend-provenance.json",
-  "recoveredOriginalBackendCommit": "1fc276e2ad16f1cb881c03a54f6d0137c54f40a6",
-  "backendSourceTree": "00404808294dcd270ec92fa8cc059ce6db970748",
-  "sourceRecoveryScope": "Exact original backend source payload. New independent recovery commit; native runtime and AAR bytes unchanged.",
-  "nativeInputReceipt": "E:\\CodexData\\Companion\\.build-cache\\android053-device-management\\native-input.json"
+  "aarSha256": "163b6e77abbc268ea83c71e8ac440dd1a06858717213b7278c98c82f3391bead",
+  "backendSourceCommit": "8e8a82c58090aac97d5e8023cafdf9bcbe277eaa",
+  "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
+  "scope": "Ordinary discovery, system pairing, CRM1 maintenance service routing, existing signed DOV1/CUP3 full-file OTA and exact WSI4 post-boot verification. Host protocol/package checks passed; physical Android OTA not yet tested.",
+  "nativeChanges": false,
+  "allNonClassAarEntriesByteIdentical": true,
+  "nativeInputReceipt": "E:/CodexData/Companion/.build-cache/android053-device-management/native-input.json",
+  "remoteSourceVerified": true
 }
