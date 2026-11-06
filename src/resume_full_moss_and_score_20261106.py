@@ -10,6 +10,7 @@ parser.add_argument('--control-name',default='full-L-owner-resume-20261106')
 parser.add_argument('--output-suffix',default='-20261106-r17')
 parser.add_argument('--prepared-inputs',help='Exact author tensor manifest from a completed, separate preprocessing process')
 parser.add_argument('--prepared-inputs-sha256')
+parser.add_argument('--retire-acoustic-after-encoding',action='store_true',help='Require passed affected short control, then release completed acoustic weights before decoder prefill')
 args=parser.parse_args()
 assert all(c.isalnum() or c in '._-' for c in args.control_name)
 assert all(c.isalnum() or c in '._-' for c in args.output_suffix)
@@ -41,6 +42,16 @@ try:
         with Path(args.prepared_inputs).open('rb') as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==args.prepared_inputs_sha256
         protocol['runtime']['preparedInputs']={'manifest':str(Path(args.prepared_inputs).resolve()),'sha256':args.prepared_inputs_sha256}
         protocol['scope']+=' Exact original author processor tensors staged in a separate exited process, byte-bound to audio/pins. Model input values, shapes, context and generation unchanged.'
+    if args.retire_acoustic_after_encoding:
+        proof=m/'acoustic-retirement-short-20261106-r23'
+        verified=read(proof/'equivalence-result.json')
+        assert verified['sameGeneratedIds'] and verified['generatedTokenCount']==verified['previousTokenCount']==173,'Affected execution control must pass first'
+        frozen=read(proof/'frozen-source-sha256.json')
+        for name in ['moss_retire_acoustic_20261106.py','moss_night_gpu_worker_20261104.py']:
+            assert hashlib.sha256((q/'src'/name).read_bytes()).hexdigest()==frozen[name],'Verified execution source changed'
+        assert verified['acousticRetirement']['acousticReuseRefused']
+        protocol['runtime']['retireAcousticModulesAfterEncoding']=True
+        protocol['scope']+=' Completed acoustic encoder/adaptor storage retired after original features are computed; same173 generated IDs in affected short control. All language weights, full audio context and generation remain unchanged. Low-RAM protections retained; system-RAM effect must be measured.'
     assert protocol['runtime']['cooperativeGpuDuty']==.1 and protocol['runtime']['durableProgressWrites']
     case=next(c for c in read(m/'public-audio-restore-r5.json')['cases'] if c['meeting']=='L_R003S01C02')
     for field,checksum in [('audio','audioSha256'),('reference','referenceSha256')]:
