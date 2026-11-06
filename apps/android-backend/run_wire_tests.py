@@ -1,5 +1,6 @@
 """Run synthetic V2 tests without a phone. Supply an external work directory."""
 import argparse
+from contextlib import nullcontext
 import json
 from pathlib import Path
 import subprocess
@@ -8,11 +9,14 @@ import tempfile
 parser = argparse.ArgumentParser()
 parser.add_argument("--workdir", required=True, type=Path)
 parser.add_argument("--saved-synthetic-wire", type=Path)
+parser.add_argument("--retain-fixture", action="store_true", help="Keep exact host fixtures and results; no Windows temporary cleanup")
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[2]
 backend = Path(__file__).resolve().parent
 args.workdir.mkdir(parents=True, exist_ok=True)
-with tempfile.TemporaryDirectory(prefix="companion-wire-", dir=args.workdir) as tmp:
+fixture = (nullcontext(tempfile.mkdtemp(prefix="companion-wire-", dir=args.workdir))
+           if args.retain_fixture else tempfile.TemporaryDirectory(prefix="companion-wire-", dir=args.workdir))
+with fixture as tmp:
     tmp = Path(tmp)
     golden = json.loads((root / "apps/windows/src-tauri/src/backend/recording_wire/golden.json").read_text(encoding="utf-8"))
     for name, data in [("descriptor0.bin", golden["descriptorsHex"][0]),
