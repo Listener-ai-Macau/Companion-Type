@@ -70,6 +70,17 @@ pub(super) fn run(
     limits: Limits,
     cancel: Option<&AtomicBool>,
 ) -> Result<String, Failure> {
+    validate(limits,cancel)?;
+    #[cfg(windows)]
+    return windows::run(program, args, limits, cancel);
+    #[cfg(not(windows))]
+    {
+        let _ = (program, args);
+        Err(Failure::Unsupported)
+    }
+}
+
+fn validate(limits:Limits,cancel:Option<&AtomicBool>)->Result<(),Failure>{
     if limits.timeout.is_zero()
         || limits.timeout > Duration::from_secs(300)
         || limits.stdout_bytes == 0
@@ -82,13 +93,38 @@ pub(super) fn run(
     if cancel.is_some_and(|flag| flag.load(Ordering::SeqCst)) {
         return Err(Failure::Cancelled);
     }
+    Ok(())
+}
+
+/// Document launchers may exit successfully before their owned renderer does.
+/// Only these explicit calls may wait for a closed, complete output file; ASR
+/// and other wrappers retain the original terminate-on-parent-exit behavior.
+pub(super) fn run_until_ready(
+    program:&str,args:&[String],limits:Limits,cancel:Option<&AtomicBool>,ready:&dyn Fn()->bool,
+)->Result<String,Failure>{
+    validate(limits,cancel)?;
     #[cfg(windows)]
-    return windows::run(program, args, limits, cancel);
+    return windows::run_with_completion(program,args,limits,cancel,Some(ready));
     #[cfg(not(windows))]
     {
-        let _ = (program, args);
+        let _ = (program,args,ready);
         Err(Failure::Unsupported)
     }
+}
+
+/// Check only a newly allocated output, without loading an entire document.
+/// On Windows an exclusive read also proves that its writer closed the file.
+pub(super) fn closed_output_matches(path:&std::path::Path,prefix:&[u8],suffix:&[u8])->bool{
+    use std::io::{Read,Seek,SeekFrom};
+    let mut options=std::fs::OpenOptions::new();options.read(true);
+    #[cfg(windows)] {use std::os::windows::fs::OpenOptionsExt;options.share_mode(0);}
+    let Ok(mut file)=options.open(path) else{return false};
+    let Ok(size)=file.metadata().map(|m|m.len()) else{return false};
+    if size<100||prefix.is_empty()||prefix.len()>1024||suffix.is_empty()||suffix.len()>1024{return false;}
+    let mut first=vec![0;prefix.len()];if file.read_exact(&mut first).is_err()||first!=prefix{return false;}
+    let mut last=vec![0;size.min(1024) as usize];
+    if file.seek(SeekFrom::End(-(last.len() as i64))).is_err()||file.read_exact(&mut last).is_err(){return false;}
+    last.trim_ascii_end().ends_with(suffix)
 }
 
 #[cfg(windows)]

@@ -1,4 +1,9 @@
 //! Conservative CJK/Latin line wrapping, preserving every non-format character.
+/// One presentation quote, removed exactly once by rich document renderers.
+/// The saved speech itself is never parsed as Markdown structure.
+pub(super) fn quote_literal_lines(text:&str)->String{
+    text.lines().map(|line|format!("> {line}")).collect::<Vec<_>>().join("\n")
+}
 pub(super) fn visual_line(text:&str)->&str {
     let trimmed=text.trim_start();trimmed.strip_prefix("> ").unwrap_or(text)
 }

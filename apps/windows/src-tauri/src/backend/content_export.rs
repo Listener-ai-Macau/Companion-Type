@@ -16,6 +16,10 @@ pub struct Selection {
 }
 
 pub fn source(session:&CompanionV1HostSession,mode:&str,choice:&Selection)->Result<String,String>{
+    selected_source(session,mode,choice,false)
+}
+
+fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,literal_transcript:bool)->Result<String,String>{
     super::library_lifecycle::require_available(session)?;
     if !matches!(mode,"offlineStore"|"onlineLive") {return Err("不支持的会议版本。".into());}
     if !choice.minutes&&!choice.transcript&&!choice.highlights&&choice.note_ids.is_empty(){return Err("请选择要导出或复制的内容。".into());}
@@ -30,7 +34,12 @@ pub fn source(session:&CompanionV1HostSession,mode:&str,choice:&Selection)->Resu
         if !super::transcript_review::effective_unrecognized(session).is_empty(){
             parts.push("> 部分原音没有完整文字，以下仅为已保存内容，请回听原音核对。".into());
         }
-        parts.push(format!("## 录音文字\n\n{}",super::transcript_review::effective_text(session)));
+        let text=super::transcript_review::effective_text(session);
+        // Rich renderers treat a quote as one verbatim paragraph. Protect
+        // saved speech before interpreting document structure, while keeping
+        // clipboard/TXT/Markdown/XLSX source text unchanged.
+        let presented=if literal_transcript {super::export_text_layout::quote_literal_lines(text)} else {text.to_owned()};
+        parts.push(format!("## 录音文字\n\n{presented}"));
         if choice.timeline {
             let rows=super::transcript_review::effective_utterances(session);
             if rows.is_empty(){return Err("这份录音没有可用的分段时间。".into());}
@@ -65,7 +74,8 @@ pub fn prepare(session:&CompanionV1HostSession,mode:&str,format:Format,choice:&S
         if !choice.transcript||choice.minutes||choice.highlights||!choice.note_ids.is_empty(){return Err("字幕文件只包含有有效时间轴的录音文字，请取消其他内容。".into());}
         return super::export::prepare_meeting_export(session,mode,format);
     }
-    let content=source(session,mode,choice)?;
+    let rich_document=matches!(format,Format::Docx|Format::Pdf|Format::Mindmap|Format::Pptx|Format::Png);
+    let content=selected_source(session,mode,choice,rich_document)?;
     let bytes=match format {
         Format::Docx=>super::meeting_document_export::word(&session.title,&content)?,
         Format::Mindmap=>super::meeting_document_export::mindmap(&session.title,&content),
@@ -105,7 +115,7 @@ mod tests {
         let choice=Selection{minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![row.meeting_notes[0].id.clone()]};
         let selected=source(&row,"offlineStore",&choice).unwrap();
         assert!(selected.contains("20%差额，尚未确认采购"));assert!(selected.contains("The purchase has not been approved."));assert!(!selected.contains("UNSELECTED_PRIVATE_MATERIAL"));
-        for format in [Format::Txt,Format::Markdown,Format::Pdf] {
+        for format in [Format::Txt,Format::Markdown] {
             let p=prepare(&row,"offlineStore",format,&choice).unwrap();assert_eq!(String::from_utf8(p.bytes).unwrap(),selected);
         }
         let p=prepare(&row,"offlineStore",Format::Docx,&choice).unwrap();
@@ -116,6 +126,33 @@ mod tests {
         let empty=Selection{minutes:false,transcript:false,highlights:false,timeline:false,note_ids:vec![]};assert!(prepare(&row,"offlineStore",Format::Txt,&empty).is_err());
         let prepared=prepare(&row,"offlineStore",Format::Txt,&choice).unwrap();let hash=super::super::export::content_hash(&prepared);
         let mut changed=row.clone();changed.transcript_text.push_str("会后修订");assert!(super::super::export::require_unchanged(&prepare(&changed,"offlineStore",Format::Txt,&choice).unwrap(),Some(&hash)).is_err());
+    }
+    #[test]
+    fn content067_literal_transcript_prefixes_are_not_document_structure(){
+        use std::io::{Cursor,Read};
+        let mut row=sample();row.transcript_review=None;
+        let literal="# 原样井号\n## 不是文档标题\n> 原样引用符\n- 原样短横线\n  # 保留缩进\n**原样星号** <A&B> 😀\n=HYPERLINK(\"https://example.invalid\",\"literal\")";
+        row.transcript_text=literal.into();
+        let choice=Selection{minutes:false,transcript:true,highlights:false,timeline:false,note_ids:vec![]};
+        let exact=source(&row,"offlineStore",&choice).unwrap();assert!(exact.ends_with(literal));
+        for format in [Format::Txt,Format::Markdown] {
+            assert_eq!(prepare(&row,"offlineStore",format,&choice).unwrap().bytes,exact.as_bytes());
+        }
+        let word=prepare(&row,"offlineStore",Format::Docx,&choice).unwrap();
+        let mut archive=zip::ZipArchive::new(Cursor::new(word.bytes)).unwrap();let mut body=String::new();archive.by_name("word/document.xml").unwrap().read_to_string(&mut body).unwrap();
+        for line in literal.lines(){assert!(body.contains(&super::super::meeting_document_export::xml(line)),"Word lost literal line: {line}");}
+        assert!(!body.contains("UNSELECTED_PRIVATE_MATERIAL"));
+        let pdf=prepare(&row,"offlineStore",Format::Pdf,&choice).unwrap();
+        let markup=super::super::pdf_export::html(&row.title,std::str::from_utf8(&pdf.bytes).unwrap());
+        for line in ["# 原样井号","## 不是文档标题","&gt; 原样引用符","- 原样短横线","  # 保留缩进"]{assert!(markup.contains(line),"PDF lost: {line}");}
+        let map=prepare(&row,"offlineStore",Format::Mindmap,&choice).unwrap();let map=String::from_utf8(map.bytes).unwrap();
+        for line in ["# 原样井号","## 不是文档标题","> 原样引用符","- 原样短横线","  # 保留缩进"]{assert!(map.contains(&super::super::meeting_document_export::xml(line)),"Map lost: {line}");}
+        let ppt=prepare(&row,"offlineStore",Format::Pptx,&choice).unwrap();let mut archive=zip::ZipArchive::new(Cursor::new(ppt.bytes)).unwrap();let mut slides=String::new();
+        for i in 0..archive.len(){let mut file=archive.by_index(i).unwrap();if file.name().starts_with("ppt/slides/slide")&&file.name().ends_with(".xml"){file.read_to_string(&mut slides).unwrap();}}
+        for line in ["# 原样井号","## 不是文档标题","> 原样引用符","- 原样短横线","  # 保留缩进"]{assert!(slides.contains(&super::super::meeting_document_export::xml(line)),"Slides lost: {line}");}
+        let png=prepare(&row,"offlineStore",Format::Png,&choice).unwrap();let page=super::super::mindmap_image_export::page("> 原样会议名",std::str::from_utf8(&png.bytes).unwrap()).unwrap();
+        for line in ["> 原样会议名","# 原样井号","## 不是文档标题","> 原样引用符","- 原样短横线","  # 保留缩进"]{assert!(page.html.contains(&super::super::meeting_document_export::xml(line)),"Image lost: {line}");}
+        assert_eq!(row.transcript_text,literal);
     }
     #[test]
     fn content051_can_export_a_saved_material_without_ai_minutes_or_audio(){

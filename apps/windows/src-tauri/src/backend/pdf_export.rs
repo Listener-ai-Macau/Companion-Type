@@ -48,7 +48,8 @@ pub(crate) fn render(title:&str,content:&str)->Result<Vec<u8>,String>{
         fs::write(&source,html(title,content)).map_err(|_|"无法准备 PDF 内容。")?;
         let url=tauri::Url::from_file_path(&source).map_err(|_|"无法准备 PDF 路径。")?;
         let args=vec!["--headless=new".into(),"--disable-gpu".into(),"--disable-extensions".into(),"--disable-background-networking".into(),"--disable-sync".into(),"--no-first-run".into(),"--no-default-browser-check".into(),"--no-pdf-header-footer".into(),format!("--user-data-dir={}",profile.display()),format!("--print-to-pdf={}",output.display()),url.to_string()];
-        super::external_command::run(&exe.to_string_lossy(),&args,super::external_command::Limits::for_timeout(Duration::from_secs(180)),None)
+        super::external_command::run_until_ready(&exe.to_string_lossy(),&args,super::external_command::Limits::for_timeout(Duration::from_secs(180)),None,
+            &||super::external_command::closed_output_matches(&output,b"%PDF-",b"%%EOF"))
             .map_err(|_|"PDF 生成未完成；已保存的会议内容不受影响，请重试或先导出 Word。")?;
         let bytes=fs::read(&output).map_err(|_|"PDF 生成未完成，请重试。")?;
         if !bytes.starts_with(b"%PDF-") || bytes.len()<100 {return Err("PDF 生成未完成，请重试。".into());}

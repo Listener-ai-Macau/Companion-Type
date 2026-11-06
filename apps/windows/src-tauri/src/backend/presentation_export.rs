@@ -22,8 +22,9 @@ fn pages(title:&str,content:&str)->Result<Vec<Slide>,String>{
     let mut current=Slide{title:"会议材料".into(),body:Vec::new()};
     let mut explicit_heading=false;
     for line in readable_lines(title,content){
-        let line=visual_line(&line);
-        if let Some((_,text))=heading(line){
+        // Classify before removing one presentation quote. A quoted saved
+        // line starting with '#' is speech, not a new slide heading.
+        if let Some((_,text))=heading(&line){
             if !current.body.is_empty()||explicit_heading {slides.push(current);}
             let (name,body)=heading_and_overflow(text);
             current=Slide{title:name,body:Vec::new()};explicit_heading=true;
@@ -32,6 +33,7 @@ fn pages(title:&str,content:&str)->Result<Vec<Slide>,String>{
                 current.body.push(value);
             }
         }else{
+            let line=visual_line(&line);
             if line.trim().is_empty()&&(current.body.is_empty()||current.body.last().is_some_and(|s|s.is_empty())){continue;}
             for value in wrap(line,144){
                 if current.body.len()==BODY_LINES {slides.push(current.clone());current.body.clear();}

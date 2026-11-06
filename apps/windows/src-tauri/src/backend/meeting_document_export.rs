@@ -80,9 +80,9 @@ pub(super) fn mindmap_nodes(title: &str, markdown: &str) -> Vec<Node> {
     let mut nodes=vec![Node{text:title.to_owned(),children:Vec::new()}];
     let mut headings=vec![(0usize,0usize)];
     for line in readable_lines(title,markdown).iter().filter(|line| !line.trim().is_empty()) {
-        let (level,text,is_heading)=match heading(super::export_text_layout::visual_line(line)) {
+        let (level,text,is_heading)=match heading(line) {
             Some((depth,text))=>(depth,text,true),
-            None=>(usize::MAX,line.trim(),false),
+            None=>(usize::MAX,super::export_text_layout::visual_line(line),false),
         };
         if is_heading { while headings.last().is_some_and(|(depth,_)| *depth>=level) {headings.pop();} }
         let parent=headings.last().map(|(_,index)|*index).unwrap_or(0);

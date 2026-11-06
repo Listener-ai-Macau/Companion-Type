@@ -3,7 +3,7 @@
 //! are rejected before a browser starts instead of being cropped silently.
 use std::{fs,path::PathBuf,time::Duration};
 use super::meeting_document_export::{mindmap_nodes,xml};
-use super::export_text_layout::{wrap,root_lines,visual_line};
+use super::export_text_layout::{wrap,root_lines};
 
 struct Layout {x:u32,y:u32,width:u32,height:u32,lines:Vec<String>}
 pub(super) struct Image {pub html:String,pub width:u32,pub height:u32}
@@ -12,7 +12,9 @@ pub(super) fn page(title:&str,content:&str)->Result<Image,String>{
     let nodes=mindmap_nodes(title,content);
     if nodes.len()>180{return Err("导图超过180个节点，请减少所选内容或导出可编辑思维导图。".into());}
     let mut layout:Vec<_>=nodes.iter().enumerate().map(|(i,node)|{
-        let lines=if i==0{root_lines(visual_line(&node.text),44)}else{wrap(visual_line(&node.text),68)};
+        // Nodes are already display text. Do not strip a second user-authored
+        // quote marker, or reinterpret the meeting title as Markdown.
+        let lines=if i==0{root_lines(&node.text,44)}else{wrap(&node.text,68)};
         Layout{x:0,y:0,width:if i==0{320}else{360},height:lines.len() as u32*28+32,lines}
     }).collect();
     let mut heights=vec![0u32;nodes.len()];
@@ -68,7 +70,8 @@ pub(crate) fn render(title:&str,content:&str)->Result<Vec<u8>,String>{
         fs::write(&source,&image.html).map_err(|_|"无法准备导图内容。")?;
         let url=tauri::Url::from_file_path(&source).map_err(|_|"无法准备导图路径。")?;
         let args=vec!["--headless=new".into(),"--disable-gpu".into(),"--disable-extensions".into(),"--disable-background-networking".into(),"--disable-sync".into(),"--no-first-run".into(),"--no-default-browser-check".into(),"--hide-scrollbars".into(),"--force-device-scale-factor=1".into(),"--virtual-time-budget=1000".into(),format!("--user-data-dir={}",root.join("profile").display()),format!("--window-size={},{}",image.width,image.height),format!("--screenshot={}",output.display()),url.to_string()];
-        super::external_command::run(&exe.to_string_lossy(),&args,super::external_command::Limits::for_timeout(Duration::from_secs(180)),None)
+        super::external_command::run_until_ready(&exe.to_string_lossy(),&args,super::external_command::Limits::for_timeout(Duration::from_secs(180)),None,
+            &||super::external_command::closed_output_matches(&output,b"\x89PNG\r\n\x1a\n",b"\x00\x00\x00\x00IEND\xae\x42\x60\x82"))
             .map_err(|_|"PNG导图生成未完成，请重试或先导出可编辑思维导图。")?;
         let bytes=fs::read(&output).map_err(|_|"PNG导图生成未完成。")?;
         if bytes.len()<100||!bytes.starts_with(b"\x89PNG\r\n\x1a\n")||bytes.get(16..20)!=Some(image.width.to_be_bytes().as_slice())||bytes.get(20..24)!=Some(image.height.to_be_bytes().as_slice()){

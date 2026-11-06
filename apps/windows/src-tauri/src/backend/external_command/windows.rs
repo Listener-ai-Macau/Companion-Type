@@ -42,6 +42,13 @@ impl Handle {
 
 struct Job(Handle);
 impl Job {
+    fn active_processes(&self)->Result<u32,Failure>{
+        let mut info=JOBOBJECT_BASIC_ACCOUNTING_INFORMATION::default();
+        unsafe{QueryInformationJobObject(self.0.0,JobObjectBasicAccountingInformation,
+            &mut info as *mut _ as *mut _,size_of::<JOBOBJECT_BASIC_ACCOUNTING_INFORMATION>() as u32,None)}
+            .map_err(|_|Failure::Cleanup)?;
+        Ok(info.ActiveProcesses)
+    }
     fn new() -> Result<Self, Failure> {
         let handle =
             Handle(unsafe { CreateJobObjectW(None, PCWSTR::null()) }.map_err(|_| Failure::Start)?);
@@ -236,6 +243,12 @@ pub(super) fn run(
     limits: Limits,
     cancel: Option<&AtomicBool>,
 ) -> Result<String, Failure> {
+    run_with_completion(program,args,limits,cancel,None)
+}
+
+pub(super) fn run_with_completion(
+    program:&str,args:&[String],limits:Limits,cancel:Option<&AtomicBool>,ready:Option<&dyn Fn()->bool>,
+) -> Result<String,Failure>{
     let started = Instant::now();
     let mut command = command_line(program, args)?;
     let job = Job::new()?;
@@ -345,11 +358,13 @@ pub(super) fn run(
                 if unsafe { GetExitCodeProcess(process_handle.0, &mut code) }.is_err() {
                     break Err(Failure::OutputRead);
                 }
-                break if code == 0 {
-                    Ok(())
-                } else {
-                    Err(Failure::Exit(code))
-                };
+                if code!=0{break Err(Failure::Exit(code));}
+                if ready.is_none_or(|check|check()){break Ok(());}
+                match job.active_processes(){
+                    Ok(0)=>break Err(Failure::OutputRead),
+                    Ok(_)=>thread::sleep(Duration::from_millis(10)),
+                    Err(error)=>break Err(error),
+                }
             }
             WAIT_TIMEOUT => {}
             _ => break Err(Failure::OutputRead),
@@ -439,5 +454,23 @@ mod tests {
     fn nul_and_oversized_arguments_are_rejected_before_process_start() {
         assert!(command_line("program", &["\0private".into()]).is_err());
         assert!(command_line("program", &["X".repeat(32767)]).is_err());
+    }
+    #[test]
+    fn document_completion_waits_for_owned_child_after_launcher_exits(){
+        let root=std::env::temp_dir().join(format!("document-child-{}",uuid::Uuid::new_v4()));
+        std::fs::create_dir(&root).unwrap();let file=root.join("output.txt");let writer=root.join("writer.cmd");let launcher=root.join("launcher.cmd");
+        assert!(!root.to_string_lossy().contains(['&','%','!','"']));
+        std::fs::write(&writer,format!("@echo off\r\nping -n 2 127.0.0.1 >nul\r\necho complete>\"{}\"\r\n",file.display())).unwrap();
+        std::fs::write(&launcher,format!("@echo off\r\nstart \"\" /b cmd.exe /d /c \"\"{}\"\"\r\nexit /b 0\r\n",writer.display())).unwrap();
+        let args=vec!["/d".into(),"/c".into(),launcher.to_string_lossy().into_owned()];
+        let result=run_with_completion(&cmd(),&args,Limits::for_timeout(Duration::from_secs(5)),None,
+            Some(&||std::fs::read(&file).is_ok_and(|value|value==b"complete\r\n")));
+        assert!(result.is_ok(),"{result:?}");assert_eq!(std::fs::read(&file).unwrap(),b"complete\r\n");
+        for path in [file,writer,launcher]{std::fs::remove_file(path).unwrap();}std::fs::remove_dir(root).unwrap();
+    }
+    #[test]
+    fn missing_document_with_no_remaining_child_is_rejected(){
+        let args=vec!["/d".into(),"/c".into(),"exit /b 0".into()];
+        assert_eq!(run_with_completion(&cmd(),&args,Limits::for_timeout(Duration::from_secs(2)),None,Some(&||false)),Err(Failure::OutputRead));
     }
 }
