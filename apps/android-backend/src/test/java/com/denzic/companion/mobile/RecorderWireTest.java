@@ -21,11 +21,13 @@ public final class RecorderWireTest {
         final java.util.Map<Long,RecorderWire.Descriptor> segments=new java.util.HashMap<>();
         int directoryRequests,directoryRestarts,staleAt=-1,staleRemaining,refusalResult=8;
         boolean malformedRefusal;long lastDirectoryNonce;
+        boolean declineOverlap,strictConsumeOrder;int receiptReads;long partialRecord;
+        final java.util.ArrayList<String> flow=new java.util.ArrayList<>();
         FakeLink(byte[] s,byte[] a,byte[] b,byte[] p){status=s;page0=a;page1=b;packet=p;}
         public int mtu(){return 247;} public byte[] read(UUID id){return status.clone();}
         public void subscribe(UUID id){} public void close(){closed=true;}
         public void write(UUID id,byte[] value){
-            if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x22) control=value.clone();
+            if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x22){control=value.clone();if(declineOverlap){control[3]&=0x7f;put32(control,28,RecorderWire.crc(control,0,28));}}
             else if(id.equals(RecordingClient.RECORDING_CONTROL) && value[1]==0x20){
                 directoryRequests++;
                 if(value[12]==0){
@@ -43,16 +45,20 @@ public final class RecorderWireTest {
                 }
             }
             else if(id.equals(RecordingClient.RECORDING_PULL)){if(value[2]!=4)throw new AssertionError("pull must stream the whole segment");pullCount++;
+                flow.add("P"+RecorderWire.u32(value,4));
                 if(multiAudio!=null){long recording=0,offset=0;for(int i=0;i<4;i++){recording|=(value[4+i]&255L)<<(8*i);offset|=(value[28+i]&255L)<<(8*i);}
                     RecorderWire.Descriptor d=segments.get(recording);if(d==null)throw new AssertionError("unknown requested segment");
-                    if(partialOnce){partialOnce=false;failOnNextPull=true;pull=packet(d,multiAudio,0,7,false);}else pull=packet(d,multiAudio,(int)offset,multiAudio.length-(int)offset,true);
+                    if(partialOnce&&(partialRecord==0||recording==partialRecord)){partialOnce=false;failOnNextPull=true;pull=packet(d,multiAudio,0,7,false);}else pull=packet(d,multiAudio,(int)offset,multiAudio.length-(int)offset,true);
                 }else pull=(value[28]==7&&resumedPacket!=null?resumedPacket:packet).clone();
-            }else if(id.equals(RecordingClient.RECORDING_CONSUME)){consumeWrites++;consumeReply=value.clone();}
+            }else if(id.equals(RecordingClient.RECORDING_CONSUME)){
+                if(strictConsumeOrder&&consumeWrites!=receiptReads)throw new AssertionError("next consume sent before prior exact receipt");
+                flow.add("C"+RecorderWire.u32(value,40));consumeWrites++;consumeReply=value.clone();
+            }
             else throw new AssertionError("unexpected command");
         }
         public byte[] await(UUID id,long timeout)throws java.io.IOException {if(id.equals(RecordingClient.RECORDING_CONTROL))return control;if(id.equals(RecordingClient.RECORDING_LIST))return list;if(id.equals(RecordingClient.RECORDING_PULL)){
             if(pull==null&&failOnNextPull){failOnNextPull=false;throw new java.io.IOException("synthetic disconnect");}byte[] result=pull;if(failOnNextPull)pull=null;return result;}
-            if(id.equals(RecordingClient.RECORDING_CONSUME)){if(timeoutConsumeReply)throw new java.net.SocketTimeoutException("synthetic lost receipt without disconnect");if(loseConsumeReply)throw new java.io.IOException("synthetic lost receipt");return consumeReply.clone();}
+            if(id.equals(RecordingClient.RECORDING_CONSUME)){if(timeoutConsumeReply)throw new java.net.SocketTimeoutException("synthetic lost receipt without disconnect");if(loseConsumeReply)throw new java.io.IOException("synthetic lost receipt");flow.add("A"+RecorderWire.u32(consumeReply,40));receiptReads++;return consumeReply.clone();}
             throw new AssertionError("unexpected notification");}
     }
     private static byte[] directoryError(long nonce,int result){
@@ -97,6 +103,36 @@ public final class RecorderWireTest {
             try(RecordingClient client=new RecordingClient(hardFailure)){expectFailure(client::listRecordings);}
             if(hardFailure.directoryRestarts!=1||hardFailure.consumeWrites!=0)throw new AssertionError("corruption must not refresh or consume");
         }
+        byte[] overlapStatus=status.clone();put32(overlapStatus,4,66697);
+        for(boolean decline:new boolean[]{false,true}){
+            Path folder=Files.createTempDirectory(root,"overlap-negotiation-");FakeLink transport=new FakeLink(overlapStatus,page0,page1,null);
+            transport.declineOverlap=decline;transport.strictConsumeOrder=true;transport.multiAudio=audio;
+            for(RecorderWire.Descriptor item:catalog.entries())transport.segments.put(item.recordingId,item);
+            try(RecordingClient client=new RecordingClient(transport,dir->{},prefix->{checkPrefix(prefix);})){
+                if(client.consumePullOverlapNegotiated()==decline)throw new AssertionError("mode not determined by exact peer echo");
+                RecordingLibrary.Session received=client.syncAvailableAndReclaim(d,folder,null);
+                if(received.state!=RecordingLibrary.SessionState.COMPLETE)throw new AssertionError("overlap lost complete original");
+            }
+            java.util.List<String> expected=decline?Arrays.asList("P41","C41","A41","P42","C42","A42","P43","C43","A43"):
+                Arrays.asList("P41","C41","P42","A41","C42","P43","A42","C43","A43");
+            if(!transport.flow.equals(expected)||Files.exists(folder.resolve(".consume-pending")))throw new AssertionError("incorrect copy/physical receipt order: "+transport.flow);
+        }
+        Path interruptedOverlap=Files.createTempDirectory(root,"overlap-interrupted-");
+        FakeLink failedOverlap=new FakeLink(overlapStatus,page0,page1,null);failedOverlap.strictConsumeOrder=true;failedOverlap.multiAudio=audio;failedOverlap.partialOnce=true;failedOverlap.partialRecord=42;
+        for(RecorderWire.Descriptor item:catalog.entries())failedOverlap.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(failedOverlap,dir->{},prefix->{checkPrefix(prefix);})){
+            expectFailure(()->client.syncAvailableAndReclaim(d,interruptedOverlap,null));
+        }
+        if(failedOverlap.consumeWrites!=1||failedOverlap.receiptReads!=0||!Files.exists(interruptedOverlap.resolve(".consume-pending"))||
+            !Arrays.equals(Files.readAllBytes(interruptedOverlap.resolve(".consume-pending")),d.wireBytes()))throw new AssertionError("failed next copy lost original pending confirmation");
+        FakeLink resumedOverlap=new FakeLink(overlapStatus,page0,page1,null);resumedOverlap.strictConsumeOrder=true;resumedOverlap.multiAudio=audio;
+        for(RecorderWire.Descriptor item:catalog.entries())resumedOverlap.segments.put(item.recordingId,item);
+        try(RecordingClient client=new RecordingClient(resumedOverlap,dir->{},prefix->{checkPrefix(prefix);})){
+            if(client.syncAvailableAndReclaim(d,interruptedOverlap,null).state!=RecordingLibrary.SessionState.COMPLETE)throw new AssertionError("overlap resume incomplete");
+        }
+        if(resumedOverlap.consumeWrites!=3||resumedOverlap.pullCount!=2||Files.exists(interruptedOverlap.resolve(".consume-pending"))||
+            !resumedOverlap.flow.equals(Arrays.asList("C41","A41","P42","C42","P43","A42","C43","A43")))
+            throw new AssertionError("same-session recovery redownloaded old prefix or consumed out of order: "+resumedOverlap.flow);
         long recordingDate=1793856001L;
         RecorderWire.Catalog datedCatalog=new RecorderWire.Catalog(peer,17);datedCatalog.calendar(true);
         if(datedCatalog.request()[2]!=1)throw new AssertionError("calendar request missing");

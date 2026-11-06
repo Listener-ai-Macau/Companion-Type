@@ -133,10 +133,16 @@ final class DurableConsume {
         long sectors=(length+4095)/4096+2;
         return Math.min(240_000,Math.max(15_000,5_000+sectors*50));
     }
-    private void send(Path directory,RecorderWire.Descriptor d)throws IOException {
+    private byte[] request(RecorderWire.Descriptor d)throws IOException {
         byte[] request=peer.consumeReceipt(d);
         if(!subscribed){link.subscribe(RecordingClient.RECORDING_CONSUME);subscribed=true;}
         link.write(RecordingClient.RECORDING_CONSUME,request);
+        return request;
+    }
+    private void awaitReceipt(Path directory,RecorderWire.Descriptor d,byte[] request)throws IOException {
+        // A later sealed file may have been copied while this notification
+        // queued. Bound the actual wait, including stale replies; never resend
+        // or remove the durable pending proof merely because copying took time.
         long deadline=System.nanoTime()+receiptTimeoutMillis(d.encodedLength)*1_000_000L;
         while(true){
             long remaining=(deadline-System.nanoTime())/1_000_000L;
@@ -149,6 +155,9 @@ final class DurableConsume {
             }
         }
         writeNew(directory,confirmed(directory,d),request);
+    }
+    private void send(Path directory,RecorderWire.Descriptor d)throws IOException {
+        awaitReceipt(directory,d,request(d));
     }
     private boolean reconcile(Path directory,RecorderWire.Descriptor selected)throws IOException {
         Path file=pending(directory);if(!Files.exists(file,LinkOption.NOFOLLOW_LINKS))return false;
@@ -167,22 +176,49 @@ final class DurableConsume {
         try(RandomAccessFile f=new RandomAccessFile(directory.resolve(".consume-lock").toFile(),"rw");
             FileChannel channel=f.getChannel();FileLock ignored=lock(channel)) {return reconcile(directory,selected);}
     }
-    /** True only when a new exact device receipt was confirmed in this call. */
-    boolean consume(Path directory,RecorderWire.Descriptor d)throws IOException {
+    /** Holds the same directory lock and durable pending proof across one
+     * unrelated sealed download. Close on any error leaves that proof intact. */
+    final class Pending implements java.io.Closeable {
+        private final Path directory;private final RecorderWire.Descriptor descriptor;
+        private final RandomAccessFile file;private final FileLock held;
+        private byte[] wire;private boolean finished,closed;
+        final boolean changed;
+        Pending(Path directory,RecorderWire.Descriptor descriptor,RandomAccessFile file,FileLock held,boolean finished,boolean changed){
+            this.directory=directory;this.descriptor=descriptor;this.file=file;this.held=held;this.finished=finished;this.changed=changed;
+        }
+        void finish()throws IOException {
+            if(closed)throw new IOException("recording confirmation is closed");
+            if(finished)return;
+            awaitReceipt(directory,descriptor,wire);
+            Files.delete(pending(directory));syncDirectory.sync(directory);finished=true;
+        }
+        @Override public void close()throws IOException {
+            if(closed)return;closed=true;
+            IOException problem=null;
+            try{held.release();}catch(IOException e){problem=e;}
+            try{file.close();}catch(IOException e){if(problem==null)problem=e;else problem.addSuppressed(e);}
+            if(problem!=null)throw problem;
+        }
+    }
+    Pending begin(Path directory,RecorderWire.Descriptor d)throws IOException {
         Files.createDirectories(directory);
-        try(RandomAccessFile f=new RandomAccessFile(directory.resolve(".consume-lock").toFile(),"rw");
-            FileChannel channel=f.getChannel();FileLock ignored=lock(channel)) {
+        RandomAccessFile f=new RandomAccessFile(directory.resolve(".consume-lock").toFile(),"rw");
+        try {
+            FileLock held=lock(f.getChannel());
             boolean hadPending=Files.exists(pending(directory),LinkOption.NOFOLLOW_LINKS);
             if(hadPending&&(!regular(pending(directory))||Files.size(pending(directory))!=112))
                 throw new IOException("pending recording confirmation is invalid; originals retained");
             RecorderWire.Descriptor prior=hadPending?RecorderWire.Descriptor.decode(Files.readAllBytes(pending(directory))):null;
             reconcile(directory,d);
-            if(hadPending&&prior.sameContent(d))return true;
+            if(hadPending&&prior.sameContent(d))return new Pending(directory,d,f,held,true,true);
             ready(directory,d);
-            if(hasConfirmation(directory,d))return false;
+            if(hasConfirmation(directory,d))return new Pending(directory,d,f,held,true,false);
             writeNew(directory,pending(directory),d.wireBytes());
-            send(directory,d);
-            Files.delete(pending(directory));syncDirectory.sync(directory);return true;
-        }
+            Pending result=new Pending(directory,d,f,held,false,true);result.wire=request(d);return result;
+        }catch(IOException|RuntimeException failure){try{f.close();}catch(IOException close){failure.addSuppressed(close);}throw failure;}
+    }
+    /** True only when a new exact device receipt was confirmed in this call. */
+    boolean consume(Path directory,RecorderWire.Descriptor d)throws IOException {
+        try(Pending result=begin(directory,d)){result.finish();return result.changed;}
     }
 }

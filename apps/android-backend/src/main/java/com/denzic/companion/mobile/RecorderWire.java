@@ -32,7 +32,8 @@ public final class RecorderWire {
         private final byte[] uid;
         public final long epoch;
         public final int capacity, maxValueBytes;
-        private Peer(byte[] uid,long epoch,int capacity,int maxValueBytes) {this.uid=uid;this.epoch=epoch;this.capacity=capacity;this.maxValueBytes=maxValueBytes;}
+        private final boolean overlapProbe;
+        private Peer(byte[] uid,long epoch,int capacity,int maxValueBytes,boolean overlapProbe) {this.uid=uid;this.epoch=epoch;this.capacity=capacity;this.maxValueBytes=maxValueBytes;this.overlapProbe=overlapProbe;}
         public byte[] uid() {return uid.clone();}
 
         /** Require actual V2 publication; an absent suffix is not V1 support. */
@@ -48,13 +49,17 @@ public final class RecorderWire {
                     || capacity==0 || capacity>64 || u16(status,p+22)!=1024 || max<248 || max>509
                     || u16(status,p+26)!=0 || uniform(uid,0) || uniform(uid,255)
                     || crc(status,p,28)!=u32(status,p+28)) throw invalid("unsupported or corrupt V2 capability");
-            return new Peer(uid,epoch,capacity,max);
+            // Product-private extension, like the existing FW801+ unlimited
+            // contract. It is enabled only by the exact negotiation echo;
+            // unchanged CRV2 flags keep old Windows/phone readers compatible.
+            return new Peer(uid,epoch,capacity,max,u32(status,4)>=66697L);
         }
         public byte[] negotiate(long nonce,int mtu) throws IOException {
             if(nonce<=0||nonce>0xffffffffL)throw invalid("invalid negotiation nonce");
             if(mtu<139)throw invalid("MTU too small for recording directory");
             byte[] p=new byte[32];p[0]=2;p[1]=0x22;
             if(maxValueBytes>248){int value=Math.min(maxValueBytes,mtu-3);if(value<136)throw invalid("MTU too small");put16(p,2,value);}
+            if(overlapProbe)p[3]|=(byte)0x80;
             put32(p,4,nonce);System.arraycopy(uid,0,p,8,12);put64(p,20,epoch);put32(p,28,crc(p,0,28));return p;
         }
         public void validate(Descriptor d) throws IOException {

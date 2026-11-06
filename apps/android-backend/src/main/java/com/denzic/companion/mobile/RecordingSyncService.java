@@ -51,6 +51,7 @@ public final class RecordingSyncService extends Service {
                 public boolean saveSelection(){return prefs.edit().putString(ADDRESS,address)
                     .putString(DESCRIPTOR,Base64.encodeToString(wire,Base64.NO_WRAP))
                     .putString(DIRECTORY,directory.getName()).putString("state","starting")
+                    .putBoolean("consumePullOverlapNegotiated",false)
                     .putString("detail","正在准备接收").commit();}
                 public void saveLaunchFailure(){prefs.edit().putString("state","error")
                     .putString("detail","无法启动后台接收，请检查蓝牙权限并在应用中重试").commit();}
@@ -141,6 +142,7 @@ public final class RecordingSyncService extends Service {
                 }
                 AndroidGattLink link=AndroidGattLink.connect(getApplicationContext(),device);
                 RecordingClient client=new RecordingClient(link);activeClient=client;
+                getSharedPreferences(PREFS,MODE_PRIVATE).edit().putBoolean("consumePullOverlapNegotiated",client.consumePullOverlapNegotiated()).commit();
                 return new RecordingSyncRunner.Connection(){
                     public RecordingLibrary.Session sync() throws IOException {return client.syncAvailableAndReclaim(selected,path,null);}
                     public boolean disconnected(){return link.wasDisconnected();}

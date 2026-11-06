@@ -35,6 +35,7 @@ public final class RecordingClient implements Closeable {
     }
     private final Link link;private final RecorderWire.Peer peer;private final DurableConsume durableConsume;private final SecureRandom random=new SecureRandom();private final Object liveControlLock=new Object();
     private List<RecorderWire.Descriptor> current;private final AtomicBoolean closed=new AtomicBoolean();
+    private final boolean consumePullOverlap;
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
 
     /** The caller first establishes the user's selected, bonded device link. */
@@ -47,8 +48,16 @@ public final class RecordingClient implements Closeable {
             link.subscribe(RECORDING_CONTROL);link.subscribe(RECORDING_LIST);link.subscribe(RECORDING_PULL);
             peer=readPublishedPeer(link);
             byte[] request=peer.negotiate(nonce(),link.mtu());link.write(RECORDING_CONTROL,request);
+            byte[] legacy=request.clone();legacy[3]&=0x7f;RecorderWire.put32(legacy,28,RecorderWire.crc(legacy,0,28));
+            boolean overlap=false;
             long deadline=System.nanoTime()+8_000_000_000L;
-            while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording negotiation timed out");if(Arrays.equals(request,link.await(RECORDING_CONTROL,remaining)))break;}
+            while(true){
+                long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording negotiation timed out");
+                byte[] reply=link.await(RECORDING_CONTROL,remaining);
+                if(Arrays.equals(request,reply)){overlap=(request[3]&0x80)!=0;break;}
+                if((request[3]&0x80)!=0&&Arrays.equals(legacy,reply))break;
+            }
+            consumePullOverlap=overlap;
             durableConsume=directorySync==null&&prefixCheck==null?new DurableConsume(peer,link):new DurableConsume(peer,link,directorySync,prefixCheck);
             ready=true;
         } finally {if(!ready)link.close();}
@@ -69,6 +78,8 @@ public final class RecordingClient implements Closeable {
         throw new RecordingSyncRunner.LinkFailure("device recording capability is not ready; try again after reconnecting");
     }
     private void ensureOpen() throws IOException {if(closed.get())throw new IOException("device connection is closed");}
+    /** Actual opt-in acknowledgement, never inferred from version alone. */
+    public boolean consumePullOverlapNegotiated(){return consumePullOverlap;}
 
     /** Read the current device observation without changing recordings or device state. */
     public synchronized DeviceStatus readDeviceStatus() throws IOException {
@@ -199,10 +210,23 @@ public final class RecordingClient implements Closeable {
             previous=d;
         }
         if(!selectedOnDevice)RecordingLibrary.verifiedPrefix(privateDirectory,selected);
-        for(int i=0;i<matches.size();i++){
-            final int index=i;RecorderWire.Descriptor d=matches.get(i);
-            download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
-            durableConsume.consume(privateDirectory,d);
+        if(consumePullOverlap&&!matches.isEmpty()){
+            download(matches.get(0).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,matches.size(),received,total));
+            for(int i=0;i<matches.size();i++){
+                try(DurableConsume.Pending pending=durableConsume.begin(privateDirectory,matches.get(i))){
+                    if(i+1<matches.size()){
+                        final int next=i+1;
+                        download(matches.get(next).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(next,matches.size(),received,total));
+                    }
+                    pending.finish(); // exact physical receipt before the NEXT consume
+                }
+            }
+        }else{
+            for(int i=0;i<matches.size();i++){
+                final int index=i;RecorderWire.Descriptor d=matches.get(i);
+                download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
+                durableConsume.consume(privateDirectory,d);
+            }
         }
         for(RecordingLibrary.Session session:RecordingLibrary.sessions(privateDirectory,selected)){
             if(session.segments.isEmpty())continue;
