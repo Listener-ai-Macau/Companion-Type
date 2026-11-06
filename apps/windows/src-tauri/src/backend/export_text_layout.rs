@@ -29,6 +29,17 @@ pub(super) fn wrap(text:&str,limit:usize)->Vec<String>{
     }
     result
 }
+pub(super) fn root_lines(text:&str,limit:usize)->Vec<String>{
+    let mut rows=wrap(text,limit);
+    if rows.len()>1&&rows.last().is_some_and(|line|line.chars().count()<=2)
+        &&text.chars().any(|c|('\u{4e00}'..='\u{9fff}').contains(&c))
+        &&text.chars().all(|c|!c.is_ascii_alphanumeric()&&!c.is_whitespace()) {
+        let last=rows.pop().unwrap();let prior=rows.pop().unwrap();let combined=(prior+&last).chars().collect::<Vec<_>>();
+        let middle=combined.len().div_ceil(2);
+        rows.push(combined[..middle].iter().collect());rows.push(combined[middle..].iter().collect());
+    }
+    rows
+}
 #[cfg(test)]mod tests{
     use super::*;
     #[test]fn content052_wrapping_keeps_words_and_all_source_characters(){
@@ -38,5 +49,7 @@ pub(super) fn wrap(text:&str,limit:usize)->Vec<String>{
         assert!(wrap("先核对开发内容与引用出处。",16).len()>1);
         let wide="W".repeat(60);let rows=wrap(&wide,68);
         assert!(rows.iter().all(|row|row.len()<=17));assert_eq!(rows.concat(),wide);
+        let title="公开示例·采购与交付复盘";let rows=root_lines(title,44);
+        assert_eq!(rows.concat(),title);assert!(rows.iter().all(|line|line.chars().count()>=3));
     }
 }

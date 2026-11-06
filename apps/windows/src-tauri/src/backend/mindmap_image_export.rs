@@ -3,7 +3,7 @@
 //! are rejected before a browser starts instead of being cropped silently.
 use std::{fs,path::PathBuf,time::Duration};
 use super::meeting_document_export::{mindmap_nodes,xml};
-use super::export_text_layout::{wrap,visual_line};
+use super::export_text_layout::{wrap,root_lines,visual_line};
 
 struct Layout {x:u32,y:u32,width:u32,height:u32,lines:Vec<String>}
 pub(super) struct Image {pub html:String,pub width:u32,pub height:u32}
@@ -12,7 +12,7 @@ pub(super) fn page(title:&str,content:&str)->Result<Image,String>{
     let nodes=mindmap_nodes(title,content);
     if nodes.len()>180{return Err("导图超过180个节点，请减少所选内容或导出可编辑思维导图。".into());}
     let mut layout:Vec<_>=nodes.iter().enumerate().map(|(i,node)|{
-        let lines=wrap(visual_line(&node.text),if i==0{44}else{68});
+        let lines=if i==0{root_lines(visual_line(&node.text),44)}else{wrap(visual_line(&node.text),68)};
         Layout{x:0,y:0,width:if i==0{320}else{360},height:lines.len() as u32*28+32,lines}
     }).collect();
     let mut heights=vec![0u32;nodes.len()];
@@ -46,9 +46,9 @@ pub(super) fn page(title:&str,content:&str)->Result<Image,String>{
     }
     for (i,item) in layout.iter().enumerate(){
         let (fill,border,color,font)=if i==0{("#172B40","#172B40","#FFFFFF",24)}else if nodes[i].children.is_empty(){("#FFFFFF","#D8E1EB","#27364A",18)}else{("#EAF0F7","#BBCDE0","#172B40",18)};
-        drawing.push_str(&format!(r##"<g><rect x="{}" y="{}" width="{}" height="{}" rx="12" fill="{fill}" stroke="{border}"/><text fill="{color}" font-size="{font}" font-family="Microsoft YaHei,Arial,sans-serif">"##,item.x,item.y,item.width,item.height));
+        drawing.push_str(&format!(r##"<g><rect x="{}" y="{}" width="{}" height="{}" rx="12" fill="{fill}" stroke="{border}"/><text fill="{color}" font-size="{font}" text-anchor="{}" font-family="Microsoft YaHei,Arial,sans-serif">"##,item.x,item.y,item.width,item.height,if i==0{"middle"}else{"start"}));
         for (line,text) in item.lines.iter().enumerate(){
-            drawing.push_str(&format!(r#"<tspan x="{}" y="{}" xml:space="preserve">{}</tspan>"#,item.x+18,item.y+35+line as u32*28,xml(text)));
+            drawing.push_str(&format!(r#"<tspan x="{}" y="{}" xml:space="preserve">{}</tspan>"#,if i==0{item.x+item.width/2}else{item.x+18},item.y+35+line as u32*28,xml(text)));
         }
         drawing.push_str("</text></g>");
     }
