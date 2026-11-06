@@ -130612,10 +130612,10 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-06T17:37:13+08:00",
+      "updatedAt": "2026-11-06T18:15:14+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
-      "active": null,
+      "active": "CP27-18",
       "baseline": {
         "firmwareVersion": 66689,
         "uiGeneration": 85,
@@ -130668,7 +130668,7 @@
         {
           "id": "CP27-18",
           "title": "录音存储异常正确收尾并可继续使用",
-          "category": "本轮核心范围已收尾",
+          "category": "真实满空间封口、完整收取及回收后再录",
           "owner": "本侧",
           "tasks": [
             "CP27-18",
@@ -130678,20 +130678,30 @@
             "CP09-08"
           ],
           "current": "原TODO判断纠正；满空间/坏尾隔离/普通START恢复已实现。修复两份失效fixture后现有故障场景通过；无新增固件功能，无需重刷。",
-          "remaining": [],
-          "next": "本轮已收尾；复发先对照原证据和已验版本定位。",
-          "doneWhen": "失败原因明确，已录内容保留，故障解除后能录下一场，原有录音不受影响。",
+          "remaining": [
+            "只新建一场实麦录音，不收取任何音频直到独立快照证实真正录满；原软件模型通过保留。",
+            "实际停止原因/可分配段0、完整原音CRC/SHA/时间轴与WAV核对，精确回收本场后容量回原基线并再次短录。"
+          ],
+          "next": "沿embedded.next执行；不把定时停止或其它故障当作满盘。",
+          "doneWhen": "独立容量0证明真实满盘，原音完整耐久保存后精确回收，原目录不变，回收后普通开始能再录。",
           "evidence": [
             "docs/product_backlog.json#CP07-02",
             "docs/product_backlog.json#CP07-06",
             "docs/product_backlog.json#CP07-11"
           ],
-          "status": "completed",
+          "status": "open",
           "completedAt": "2026-11-04T20:40:11+08:00",
           "verificationEvidence": [
             "E:/CodexData/Companion/capture-core-closeout-20261104/storage-acceptance.json"
           ],
-          "limits": "普通START恢复已有实现；当前生产C/NOR/Opus模型覆盖满空间、64槽目录、故障收尾、介质瞬断与原命令恢复。物理坏介质/断电和电源资格仍后置，不宣称实物注错已验。"
+          "limits": "普通START恢复已有实现；当前生产C/NOR/Opus模型覆盖满空间、64槽目录、故障收尾、介质瞬断与原命令恢复。物理坏介质/断电和电源资格仍后置，不宣称实物注错已验。",
+          "previousSoftwareClosure": {
+            "completedAt": "2026-11-04T20:40:11+08:00",
+            "verificationEvidence": [
+              "E:/CodexData/Companion/capture-core-closeout-20261104/storage-acceptance.json"
+            ],
+            "limits": "普通START恢复已有实现；当前生产C/NOR/Opus模型覆盖满空间、64槽目录、故障收尾、介质瞬断与原命令恢复。物理坏介质/断电和电源资格仍后置，不宣称实物注错已验。"
+          }
         },
         {
           "id": "CP24-08",
@@ -131028,7 +131038,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "本轮Companion共用嵌软的设备管理、手机OTA、分段接收速率与维护已闭环，板卡已空闲释放，手机临时设置/辅助程序已收回。不重复已验录音/50KiB/s/OTA路径。沿原售卖清单等待明确受阻的电源/ADC/充电与电流、实体首字/声学、生产签名和暂停屏幕的实际条件；Windows日用软件交付沿原前端模块，不冒称已装057或整机可售。",
+      "next": "FW66689/61.44MHz实板真实满空间验收：起点34原段/4608000B/17完整可分配段；仅新场采音至自然满空间封口，周期只读BLE状态，不卸载音频。预计约35至40分钟，最长有界停止；结束后只收本场并验证恢复再录。UART路径无输出但BLE身份/状态正常，不复位追重启。后台修复产品身份错误依赖屏幕开关的问题；原ADC/耗电/声学/生产及屏幕暂停范围保留。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131335,12 +131345,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-06T17:37:13+08:00",
+        "at": "2026-11-06T18:15:14+08:00",
         "firmware": 66689,
         "coreDelivery": "FW66685_AND_WINDOWS053_SELECTED_DELETE_SPACE_AND_SYNC_ACCEPTED_SCOPED",
         "wholeCaptureSale": "NOT_QUALIFIED",
-        "nonBlockedWorkAllComplete": true,
-        "openSoftware": "本侧当前设备工作包已收尾；Windows日用交付按原前端批次，原实物依赖未关闭。",
+        "nonBlockedWorkAllComplete": false,
+        "openSoftware": "FW66689/61.44MHz实板真实满空间验收：起点34原段/4608000B/17完整可分配段；仅新场采音至自然满空间封口，周期只读BLE状态，不卸载音频。预计约35至40分钟，最长有界停止；结束后只收本场并验证恢复再录。UART路径无输出但BLE身份/状态正常，不复位追重启。后台修复产品身份错误依赖屏幕开关的问题；原ADC/耗电/声学/生产及屏幕暂停范围保留。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -131976,9 +131986,8 @@
         "lastReviewedAt": "2026-11-06T08:46:43+08:00"
       },
       "lastOwnerInput": {
-        "at": "2026-11-06T17:37:13+08:00",
-        "text": "手机恢复了；刚刚有用拔掉了",
-        "context": "Owner confirms the USB disconnect was manual; original historical100K question is retained in metricAcceptance.recordingComparison."
+        "at": "2026-11-06T18:15:14+08:00",
+        "text": "好的, 请你继续推进吧, 需要达到完整售卖标准在嵌软上"
       },
       "calendarProgress": {
         "at": "2026-11-05T15:14:33+08:00",
@@ -132503,7 +132512,12 @@
           "currentFacts": "真实449秒四段943748B新录音，保守持续50.575186KiB/s，普通原音/索引及设备确认26.844s，普通分享准备至完整WAV57.578s，时长差10ms，CRC/SHA/连续序号全过。26秒停顿本轮未复现，最大相邻增长采样间隔2.156s；手机锁屏只延迟主机停录点击，设备持续采音。"
         }
       },
-      "previousDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json"
+      "previousDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json",
+      "lastOwnerAssistance": {
+        "at": "2026-11-06T18:15:14+08:00",
+        "text": "已接好并短按一次",
+        "result": "UART仍无输出；BLE实际FW66689/UID/空闲状态正常，34原段与4608000B不变，CSN1可分配17段；未复位。"
+      }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
     "frontendWindowsMobile20261102": {
@@ -132821,7 +132835,7 @@
           },
           "actualNewPhoneChecksPassed": false,
           "wholeProductQualified": false,
-          "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing.",
+          "next": "Windows067已安装并实走八格式系统保存/取消/内容核验与复制；接续Windows真实系统分享及接收文件，不能把DataPackage单测当完成。手机/板当前另一个嵌软长录/电源任务占用，待其释放后读实际最新版本，不降级066；只验原待办受影响的新录控制/接收/回听/受控删除/原音和Word修复，最后切回原库。整机及其它非模型缺口仍保留。",
           "actualProgress": {
             "at": "2026-11-06T14:45:43+08:00",
             "ordinaryUi": "Actual Android App on isolated display2; primary display remained with owner or locked, no main-screen input.",
@@ -132845,6 +132859,16 @@
             "at": "2026-11-06T17:31:02+08:00",
             "ownerQuote": "那继续推进吧",
             "meaning": "Continue original priority1/2; no new task tree or model work."
+          },
+          "latestWindows067": {
+            "at": "2026-11-06T18:18:32+08:00",
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\priority12\\windows067-literal-and-rendering\\progress-result.json",
+            "installed": true,
+            "actualEightSaveAs": true,
+            "copyExact": true,
+            "shareRecipientPending": true,
+            "phoneFinalPending": true,
+            "remoteCommit": "1723688233fd73e4e12e12519d36be36db599f1b"
           }
         },
         "priority12Actual": {
@@ -132961,7 +132985,7 @@
             "meaningForThisTask": "Honor resource handoff, but frontend priority1/2 are still incomplete. No own new card recording has been made; current public library return and062 Word retest are pending. Preserve active virtual display used by the OTA."
           },
           "windows": "Shared footer source corrected; desktop binary/package and ordinary SaveAs/share remain outside this actual Android evidence.",
-          "next": "当前手机锁屏且065收取实测占用尚未交回，不抢占/不降级。释放后重查实际版本；若无更新者，用已合并Word062原生212ec44d与最新Java传输的066，先实际Word保存/分享及SDK核验，再仅新录音控制/回听/受控删除/原音交付，最后切原库。Windows060已原位静默更新及隔离公开资料启动/八格式预览通过，系统SaveAs/分享接收端仍开。",
+          "next": "Windows067已安装并实走八格式系统保存/取消/内容核验与复制；接续Windows真实系统分享及接收文件，不能把DataPackage单测当完成。手机/板当前另一个嵌软长录/电源任务占用，待其释放后读实际最新版本，不降级066；只验原待办受影响的新录控制/接收/回听/受控删除/原音和Word修复，最后切回原库。整机及其它非模型缺口仍保留。",
           "modelsRun": false,
           "customerResult": null,
           "ownerAccepted": false,
@@ -133234,7 +133258,15 @@
               "After shared lease release, re-read latest Android/FW; unified066 candidate must not downgrade any newer installed app. Verify actual corrected Word and current own-new recording pause/resume/playback/delete/audio as affected.",
               "Return phone from public test library to original retained library after existing shared flow releases.",
               "Other existing non-model/physical sale gaps remain; these two scopes are not the entire product."
-            ]
+            ],
+            "remoteProtection": {
+              "commit": "1723688233fd73e4e12e12519d36be36db599f1b",
+              "remoteReadback": true,
+              "msiAndActualAcceptanceBlobsVerified": true,
+              "version": "0.1.67",
+              "actualSaveAsFormats": 8,
+              "wholeProductQualified": false
+            }
           }
         },
         "latestWindowsInstalled": {
@@ -133312,7 +133344,15 @@
             "After shared lease release, re-read latest Android/FW; unified066 candidate must not downgrade any newer installed app. Verify actual corrected Word and current own-new recording pause/resume/playback/delete/audio as affected.",
             "Return phone from public test library to original retained library after existing shared flow releases.",
             "Other existing non-model/physical sale gaps remain; these two scopes are not the entire product."
-          ]
+          ],
+          "remoteProtection": {
+            "commit": "1723688233fd73e4e12e12519d36be36db599f1b",
+            "remoteReadback": true,
+            "msiAndActualAcceptanceBlobsVerified": true,
+            "version": "0.1.67",
+            "actualSaveAsFormats": 8,
+            "wholeProductQualified": false
+          }
         }
       },
       "ownerAndroidMaterialExports054": {

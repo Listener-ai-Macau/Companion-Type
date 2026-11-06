@@ -23828,3 +23828,6 @@ Windows先确认原0.1.52且无Companion进程；按已授权前两项静默升�
 普通复制所选内容确实写入与预期包含系统章节头的原文字节相同文本。验收工具恢复原剪贴板时OleSetClipboard报CLIPBRD_E_CANT_CLOSE，随后进程退出，恢复完整性无法确认；只回查测试文字已不在、Unicode格式不在，没有读取/记录原剪贴板内容。已向Owner说明，不再复用该OLE备份方法。初始文本检查器误期望无系统“## 录音文字”章节头，纠正预期为保留该头+逐字原文后通过，未为适配测试改产品。
 
 当前共享板/手机自17:32仍被另一原嵌软电源/长录流程占用，未抢占、安装066或输入手机；现行AGENTS报告FW66689/Android065并保留功耗与声学等缺口，实际接手仍须重查最新身份。Windows实际系统ShareSheet/接收应用、Android合并修复后Word及原录控/回听/受控删/原音和切回原库仍未结束。任务不标全通过，亦非“只剩模型”。进展与剩余见C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-device-phone-closure055\phone-followup\unified058\priority12\windows067-literal-and-rendering\progress-result.json。
+
+
+- 2026-11-06T18:18:32+08:00｜Windows067本批交付远端回读完成：1723688233fd73e4e12e12519d36be36db599f1b；MSI与真实八格式保存/内容收据Git blob SHA回读匹配。首次既有ssh.github.com:443超时，未改代理/DNS或安全设置；同一GitHub原生22端口连接成功后仅本次命令使用该正常SSH入口，保StrictHostKeyChecking，成功push及ls-remote核对。首次附加证据白空格检查把Windows CRLF当尾空白，改QA脚本范围并显式cr-at-eol后通过，未改产品/历史日志来掩盖。原剪贴板OLE失败保留且工具入口已退役，不能再复用。当前所有本侧Windows QA进程/桌面已关闭，输入桌面仍Default；他方17:32设备租约未释放，不碰手机/板。原前两项下一步在task/ownerPriority12/priority12Actual三处同步，不恢复旧059候选或宣称只剩模型。
