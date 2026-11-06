@@ -1,0 +1,17 @@
+{
+  "state": "SHARE_SOURCE_CONTEXT_TARGETED_CHECKS_PASSED_REAL_SYSTEM_HANDOFF_PENDING",
+  "wallSeconds": 114.001,
+  "sourceSha256": "c5f26bdf995c994c33d7d86869ffd09207c31769141eca2c00491bdb7ea10ec2",
+  "testExeSha256": "e184f3bfeae60908b36e681c2cc69ae9a7ec17cc209367bfdfcd817317b71ebf",
+  "jobs": 1,
+  "cpuSlots": [
+    12,
+    13,
+    14,
+    15
+  ],
+  "modelsRun": false,
+  "uiInput": false,
+  "actualShareRecipientVerified": false,
+  "installedVersionUnchanged": "0.1.67"
+}

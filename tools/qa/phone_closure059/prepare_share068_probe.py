@@ -1,8 +1,8 @@
 from pathlib import Path
-import json,subprocess,tomllib,time,os,shutil
+import json,subprocess,tomllib,time,os,shutil,psutil
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'companion-device-closure055';W=Path(__file__).parent
 C=Path('E:/CodexData/Companion/.build-cache/windows-share068/native-probe');C.mkdir(exist_ok=True);(C/'src').mkdir(exist_ok=True)
-product=tomllib.loads((S/'apps/windows/src-tauri/Cargo.toml').read_text(encoding='utf8'));dep=product['target']['cfg(windows)']['dependencies']['windows'];features=dep['features']+['Win32_Graphics_Gdi']
+product=tomllib.loads((S/'apps/windows/src-tauri/Cargo.toml').read_text(encoding='utf8'));dep=product['target']['cfg(windows)']['dependencies']['windows'];features=dep['features']+['Win32_Graphics_Gdi','Win32_System_Com_Marshal','Win32_System_Com_StructuredStorage']
 (C/'Cargo.toml').write_text('[package]\nname="companion-share068-probe"\nversion="0.1.0"\nedition="2021"\n[dependencies]\nwindows={version="0.58",features='+json.dumps(features)+'}\nuuid={version="1",features=["v4"]}\n',encoding='utf8')
 source=(S/'apps/windows/src-tauri/src/content_handoff.rs').read_text(encoding='utf8')
 needle='args.Request()?.SetData(&package)'
@@ -29,6 +29,7 @@ fn inspect(){
   Ok(package)=>{
    let checked=(||->windows::core::Result<()>{
     let view=package.GetView()?;println!("title {:?}",view.Properties()?.Title()?);
+    println!("advertised file types {}",view.Properties()?.FileTypes()?.Size()?);
     println!("storage-format {:?}",view.Contains(&StandardDataFormats::StorageItems()?)?);
     let files=view.GetStorageItemsAsync()?.get()?;println!("storage count {}",files.Size()?);
     println!("first file {:?}",files.GetAt(0)?.Path()?);Ok(())
@@ -50,6 +51,7 @@ unsafe extern "system" fn wndproc(hwnd:HWND,msg:u32,wparam:WPARAM,lparam:LPARAM)
  }
 }
 fn main(){
+ if std::env::args().any(|a|a.starts_with("--ipc")){match main_ipc(){Ok(())=>{},Err(e)=>{eprintln!("BACKGROUND_IPC_ERROR {e:?}");std::process::exit(1);}}return;}
  if !std::env::args().any(|a|a=="--gui"){inspect();return;}
  unsafe{
   RoInitialize(RO_INIT_SINGLETHREADED).unwrap();
@@ -63,9 +65,11 @@ fn main(){
  }
 }
 '''
+main+='\n'+(W/'windows_shareqa068/ipc_probe.rs').read_text(encoding='utf8')
 (C/'src/main.rs').write_text(main,encoding='utf8')
 env={**os.environ,'CARGO_TARGET_DIR':str(Path('E:/CodexData/Companion/.build-cache/windows051/target')),'CARGO_BUILD_JOBS':'1','RAYON_NUM_THREADS':'2'}
 args=[str(Path('C:/Users/Billy/.cargo/bin/cargo.exe')),'build','--offline','--manifest-path',str(C/'Cargo.toml')]
+psutil.Process().cpu_affinity([12,13,14,15])
 run=subprocess.run(args,env=env,cwd=C,capture_output=True,text=True,encoding='utf8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
 O=R/'docs/handoffs/20261106-device-phone-closure055/phone-followup/unified058/priority12/windows-share068'
 if (O/'probe-build.log').exists():shutil.copy2(O/'probe-build.log',O/('probe-build-prior-'+str(time.time_ns())+'.log'))
@@ -74,3 +78,5 @@ exe=Path(env['CARGO_TARGET_DIR'])/'debug/companion-share068-probe.exe'
 public=R/'docs/handoffs/20261106-device-phone-closure055/phone-followup/unified058/priority12/windows067-literal-and-rendering/system-handoff/saved/Windows067-public-transcript.pdf'
 run=subprocess.run([str(exe),str(public)],capture_output=True,text=True,encoding='utf8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW,timeout=20)
 (O/'probe-result.log').write_text(run.stdout+run.stderr,encoding='utf8');print(run.stdout+run.stderr);assert run.returncode==0,run.returncode
+run=subprocess.run([str(exe),str(public),'--ipc-send'],capture_output=True,text=True,encoding='utf8',errors='replace',creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS,timeout=30)
+(O/('ipc-result-'+str(time.time_ns())+'.log')).write_text(run.stdout+run.stderr,encoding='utf8');print(run.stdout+run.stderr);assert run.returncode==0,run.returncode

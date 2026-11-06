@@ -23842,3 +23842,12 @@ Windows先确认原0.1.52且无Companion进程；按已授权前两项静默升�
 最小Rust探针直接复制生产content_handoff prepare，MTA工作线程退出后STA仍能读取标题/StorageItems/1文件路径，排除基本文件不可读；不证明跨进程系统分享可用。准备小原生窗口对照原SetData与微软推荐填充request.Data，保编译准备失败；窗口刚启动，Computer Use报告Owner物理Esc停止，尚无该探针点击/结果。立即停止所有前台输入，精确验证PID/创建时间/exe后仅关闭自身探针；此前测试App/新文件窗口已关闭。原剪贴板本轮未动，亦未恢复已退役OLE方式。不能把工具/对照当Share功能完成。
 
 结果与原失败在C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-device-phone-closure055\phone-followup\unified058\priority12\windows-share068\progress-result.json，本轮无产品源码修复/新产品构建/安装；Windows仍067，真实Share接收未合格。根因未确认，下一步用最小对照区分，不重跑已失败profile或重复打包。前两项/整机售卖继续未完成，原客户、模型和硬件缺口均保留。
+
+
+## 2026-11-06T20:04:34+08:00｜按Owner尽量不用Computer Use接续：分享069源码候选与独立进程文件核对通过，系统Picker仍未验证
+
+承接“继续推进吧, 尽量不要computeruse”，本轮无Computer Use、桌面输入、模型或板/手机IO。复用068原失败，不重复profile/提升权限对照。新增纯后台COM封送：直接复制冻结60166生产prepare，工作线程MTA退出后STA可读，独立进程通过CoMarshal/CoUnmarshal读取WinRT StorageFile并与原72558B公开PDF逐字节一致。原包FileTypes列表0是观察；微软官方普通文件样例也未手填此列表，因此不凭此断言根因或盲补扩展名。COM封送blob仅留本机E，不入远端。
+
+按微软官方Windows-classic-samples WPF及Windows-universal-samples ShareFiles共同模式改content_handoff：预先取得文件，实际DataRequested填系统已有request.Data，而非替换整个DataPackage；保已有Windows来源上下文，复制/只读文件语义和失败保存回退保留。首次StorageFile裸跨线程编译被Send约束拒绝，改用windows-core AgileReference正常代理，不增加unsafe Send；失败编译原件保留。针对产品源码检查通过，含请求对象身份/已有ApplicationName上下文/准确单文件与Copy语义。独立进程再确认原方案和新候选都能拿到完整72558B，新候选来源上下文也完整保留。该结果支持源改写保信息，不证明已修复Picker枚举。源码e6a3f63548720b8273841fea4ff2276b91380cd4远端核对，仍未产品原生构建/安装，日用保持067。
+
+同一最小原生窗口已备两个普通按钮，分别冻结旧方式/实际新候选，让手工对照能区分Tauri窗口路径与DataRequest填充；仅本机公开资料，不运行新窗口。已异步给Owner“我来手动点/暂时不方便”选择，等待回复时不打开桌面；后台继续可独立原事项。手机原嵌软工作当前FW66690真实满空间238、后续回收再录在途，本侧不抢占。原SharePicker接收、Android066Word/录控回听与原库切回、其它非模型售卖缺口继续未完成，source/tests/IPC准备不计实际销售交付。

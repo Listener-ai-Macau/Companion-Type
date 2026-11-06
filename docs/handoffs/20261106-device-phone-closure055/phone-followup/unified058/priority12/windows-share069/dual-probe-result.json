@@ -1,0 +1,23 @@
+{
+  "state": "BASELINE_AND_CANDIDATE_BACKGROUND_IPC_BYTE_CHECKS_PASSED_NO_SYSTEM_SHARE_UI_RUN",
+  "baselineSourceCommit": "60166fa3bd22cc277d4a6c69962d39fa3c13e9e0",
+  "candidateSourceSha256": "c5f26bdf995c994c33d7d86869ffd09207c31769141eca2c00491bdb7ea10ec2",
+  "probeExe": "E:\\CodexData\\Companion\\.build-cache\\windows051\\target\\debug\\companion-share069-probe.exe",
+  "probeExeSha256": "7546159f612eae0624516b0de57663fd09f0da985ab57f83f2f4e0553af065ce",
+  "wallSeconds": 2.802,
+  "cases": [
+    {
+      "mode": "baseline",
+      "exactIndependentRecipientBytes": 72558,
+      "exitCode": 0
+    },
+    {
+      "mode": "candidate",
+      "exactIndependentRecipientBytes": 72558,
+      "exitCode": 0
+    }
+  ],
+  "uiInput": false,
+  "modelsRun": false,
+  "actualSystemShareQualified": false
+}

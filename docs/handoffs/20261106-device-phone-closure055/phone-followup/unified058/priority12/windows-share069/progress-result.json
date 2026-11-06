@@ -1,0 +1,61 @@
+{
+  "at": "2026-11-06T20:04:34+08:00",
+  "state": "SHARE069_SOURCE_CONTEXT_REPAIR_AND_BACKGROUND_IPC_PASSED_SYSTEM_PICKER_UNVERIFIED",
+  "ownerQuote": "继续推进吧, 尽量不要computeruse",
+  "sourceCommit": "e6a3f63548720b8273841fea4ff2276b91380cd4",
+  "remoteSourceConfirmed": true,
+  "sourceSha256": "c5f26bdf995c994c33d7d86869ffd09207c31769141eca2c00491bdb7ea10ec2",
+  "sourceTests": {
+    "state": "SHARE_SOURCE_CONTEXT_TARGETED_CHECKS_PASSED_REAL_SYSTEM_HANDOFF_PENDING",
+    "wallSeconds": 114.001,
+    "sourceSha256": "c5f26bdf995c994c33d7d86869ffd09207c31769141eca2c00491bdb7ea10ec2",
+    "testExeSha256": "e184f3bfeae60908b36e681c2cc69ae9a7ec17cc209367bfdfcd817317b71ebf",
+    "jobs": 1,
+    "cpuSlots": [
+      12,
+      13,
+      14,
+      15
+    ],
+    "modelsRun": false,
+    "uiInput": false,
+    "actualShareRecipientVerified": false,
+    "installedVersionUnchanged": "0.1.67"
+  },
+  "backgroundIpc": {
+    "state": "BASELINE_AND_CANDIDATE_BACKGROUND_IPC_BYTE_CHECKS_PASSED_NO_SYSTEM_SHARE_UI_RUN",
+    "baselineSourceCommit": "60166fa3bd22cc277d4a6c69962d39fa3c13e9e0",
+    "candidateSourceSha256": "c5f26bdf995c994c33d7d86869ffd09207c31769141eca2c00491bdb7ea10ec2",
+    "probeExe": "E:\\CodexData\\Companion\\.build-cache\\windows051\\target\\debug\\companion-share069-probe.exe",
+    "probeExeSha256": "7546159f612eae0624516b0de57663fd09f0da985ab57f83f2f4e0553af065ce",
+    "wallSeconds": 2.802,
+    "cases": [
+      {
+        "mode": "baseline",
+        "exactIndependentRecipientBytes": 72558,
+        "exitCode": 0
+      },
+      {
+        "mode": "candidate",
+        "exactIndependentRecipientBytes": 72558,
+        "exitCode": 0
+      }
+    ],
+    "uiInput": false,
+    "modelsRun": false,
+    "actualSystemShareQualified": false
+  },
+  "decisionBasis": {
+    "baseline": "Installed067 ordinary share sheet fails target enumeration; same public PDF Explorer share succeeds. Normal profile environment still fails; same elevation; cross-process package transfer now proved byte-identical in background.",
+    "ruledOut": "Do not rewrite renderer/ASR, blame file corruption or repeat the normal-profile/elevation comparison. Independent IPC alone does not qualify system SharePicker.",
+    "candidate": "Follow official Microsoft desktop/UWP samples: fill request.Data synchronously from pre-resolved file; preserve Windows-owned source metadata. Use AgileReference to resolve StorageFile on callback apartment; no unsafe Send override. Per-request file preparation errors use FailWithDisplayText with save fallback.",
+    "stopCondition": "Keep source candidate pending until real picker/receiver path is observed; compare frozen old/current native methods before expensive product release. Do not call backend IPC a system-share fix."
+  },
+  "manualTwoButtonProbeReady": true,
+  "manualReplyPending": true,
+  "computerUseThisBatch": false,
+  "modelsRun": false,
+  "productBuildOrInstallThisBatch": false,
+  "installedProduct": "Windows0.1.67",
+  "wholeProductQualified": false
+}
