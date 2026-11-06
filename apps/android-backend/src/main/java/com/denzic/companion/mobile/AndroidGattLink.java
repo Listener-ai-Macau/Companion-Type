@@ -43,6 +43,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
         @Override public void onConnectionStateChange(BluetoothGatt g,int status,int state){connected=status==BluetoothGatt.GATT_SUCCESS&&state==BluetoothProfile.STATE_CONNECTED;if(state==BluetoothProfile.STATE_DISCONNECTED){disconnected=true;failure="Bluetooth disconnected";}operation(new Event("connection",null,status,state,null));}
         @Override public void onServicesDiscovered(BluetoothGatt g,int status){operation(new Event("services",null,status,0,null));}
         @Override public void onMtuChanged(BluetoothGatt g,int value,int status){if(status==BluetoothGatt.GATT_SUCCESS)mtu=value;operation(new Event("mtu",null,status,value,null));}
+        @Override public void onPhyUpdate(BluetoothGatt g,int txPhy,int rxPhy,int status){android.util.Log.i("CompanionBle","phy tx="+txPhy+" rx="+rxPhy+" status="+status);}
         @Override public void onCharacteristicRead(BluetoothGatt g,BluetoothGattCharacteristic c,int status){operation(new Event("read",c.getUuid(),status,0,c.getValue()));}
         @Override public void onCharacteristicRead(BluetoothGatt g,BluetoothGattCharacteristic c,byte[] value,int status){operation(new Event("read",c.getUuid(),status,0,value));}
         @Override public void onCharacteristicWrite(BluetoothGatt g,BluetoothGattCharacteristic c,int status){operation(new Event("write",c.getUuid(),status,0,null));}
@@ -78,10 +79,10 @@ public final class AndroidGattLink implements RecordingClient.Link {
                 link.write(DeviceClock.SETTINGS,clock);
                 DeviceClock.verify(clock,link.read(DeviceClock.SETTINGS));
             }
-            // Ask for the existing fast radio mode on this OTA connection.
+            // Share the existing fast radio preference across recording and OTA.
             // Android/controller coexistence policy decides the actual PHY;
             // WOC5 readback records what was negotiated, not this preference.
-            if(!synchronizeClock)link.gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_NO_PREFERRED);
+            link.gatt.setPreferredPhy(BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_LE_2M_MASK,BluetoothDevice.PHY_OPTION_NO_PREFERRED);
             ready=true;return link;
         } catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
         finally{if(!ready)link.close();}
