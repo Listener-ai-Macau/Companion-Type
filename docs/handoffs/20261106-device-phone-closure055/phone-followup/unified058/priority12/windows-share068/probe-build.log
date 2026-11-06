@@ -1,0 +1,56 @@
+   Compiling windows v0.58.0
+   Compiling companion-share068-probe v0.1.0 (E:\CodexData\Companion\.build-cache\windows-share068\native-probe)
+warning: unused imports: `DataPackage`, `HSTRING`, and `IInspectable`
+ --> src\main.rs:4:32
+  |
+4 | ...ce,IInspectable,HSTRING},Win32::System::WinRT::{RoInitialize,RoUninitialize,RO_INIT_SINGLETHREADED},ApplicationModel::DataTransfer::{DataPackage,St...
+  |       ^^^^^^^^^^^^ ^^^^^^^                                                                                                              ^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `HINSTANCE`
+  --> src\main.rs:23:71
+   |
+23 | use windows::{core::w,Win32::{Foundation::{HWND,LRESULT,WPARAM,LPARAM,HINSTANCE},UI::WindowsAndMessaging::*}};
+   |                                                                       ^^^^^^^^^
+
+warning: unused import: `Interface`
+ --> src\main.rs:4:22
+  |
+4 | use windows::{core::{Interface,IInspectable,HSTRING},Win32::System::WinRT::{RoInitialize,RoUninitialize,RO_INIT_SINGLETHREADED},Appli...
+  |                      ^^^^^^^^^
+
+warning: function `write_atomic` is never used
+ --> src\main.rs:2:37
+  |
+2 | mod backend {pub mod export {pub fn write_atomic(path:&std::path::Path, bytes:&[u8])->Result<(),String>{std::fs::write(path,bytes).ma...
+  |                                     ^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `write_clipboard` is never used
+ --> src\content_handoff.rs:4:8
+  |
+4 | pub fn write_clipboard(owner:usize,text:&str)->Result<(),String>{
+  |        ^^^^^^^^^^^^^^^
+
+warning: function `reserve_shared_file` is never used
+  --> src\content_handoff.rs:23:8
+   |
+23 | pub fn reserve_shared_file(directory:&Path,name:&str)->Result<PathBuf,String>{
+   |        ^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleanup_expired` is never used
+  --> src\content_handoff.rs:33:4
+   |
+33 | fn cleanup_expired(directory:&Path){
+   |    ^^^^^^^^^^^^^^^
+
+warning: function `prepare_shared_file` is never used
+  --> src\content_handoff.rs:45:8
+   |
+45 | pub fn prepare_shared_file(directory:&Path,name:&str,bytes:&[u8])->Result<PathBuf,String>{
+   |        ^^^^^^^^^^^^^^^^^^^
+
+warning: `companion-share068-probe` (bin "companion-share068-probe") generated 8 warnings (run `cargo fix --bin "companion-share068-probe" -p companion-share068-probe` to apply 2 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 34.93s

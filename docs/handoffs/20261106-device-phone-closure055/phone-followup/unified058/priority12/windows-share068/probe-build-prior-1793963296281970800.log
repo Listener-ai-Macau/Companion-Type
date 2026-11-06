@@ -1,0 +1,189 @@
+   Compiling companion-share068-probe v0.1.0 (E:\CodexData\Companion\.build-cache\windows-share068\native-probe)
+error[E0422]: cannot find struct, variant or union type `WNDCLASSW` in this scope
+  --> src\main.rs:40:28
+   |
+40 |   let atom=RegisterClassW(&WNDCLASSW{lpfnWndProc:Some(wndproc),lpszClassName:class,..Default::default()});assert!(atom!=0);
+   |                            ^^^^^^^^^ not found in this scope
+
+warning: unused imports: `DataPackage`, `HSTRING`, and `IInspectable`
+ --> src\main.rs:4:32
+  |
+4 | ...ce,IInspectable,HSTRING},Win32::System::WinRT::{RoInitialize,RoUninitialize,RO_INIT_SINGLETHREADED},ApplicationModel::DataTransfer::{DataPackage,St...
+  |       ^^^^^^^^^^^^ ^^^^^^^                                                                                                              ^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `HINSTANCE`
+  --> src\main.rs:23:71
+   |
+23 | use windows::{core::w,Win32::{Foundation::{HWND,LRESULT,WPARAM,LPARAM,HINSTANCE},UI::WindowsAndMessaging::*}};
+   |                                                                       ^^^^^^^^^
+
+error[E0425]: cannot find function, tuple struct or tuple variant `RegisterClassW` in this scope
+    --> src\main.rs:40:12
+     |
+  40 |     let atom=RegisterClassW(&WNDCLASSW{lpfnWndProc:Some(wndproc),lpszClassName:class,..Default::default()});assert!(atom!=0);
+     |              ^^^^^^^^^^^^^^
+     |
+    ::: C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.58.0\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:3257:1
+     |
+3257 | / pub unsafe fn UnregisterClassW<P0, P1>(lpclassname: P0, hinstance: P1) -> windows_core::Result<()>
+3258 | | where
+3259 | |     P0: windows_core::Param<windows_core::PCWSTR>,
+3260 | |     P1: windows_core::Param<super::super::Foundation::HINSTANCE>,
+     | |_________________________________________________________________- similarly named function `UnregisterClassW` defined here
+     |
+help: a function with a similar name exists
+     |
+  40 -   let atom=RegisterClassW(&WNDCLASSW{lpfnWndProc:Some(wndproc),lpszClassName:class,..Default::default()});assert!(atom!=0);
+  40 +   let atom=UnregisterClassW(&WNDCLASSW{lpfnWndProc:Some(wndproc),lpszClassName:class,..Default::default()});assert!(atom!=0);
+     |
+
+error[E0271]: type mismatch resolving `<Option<HWND> as TypeKind>::TypeKind == CopyType`
+   --> src\main.rs:42:99
+    |
+ 42 |   CreateWindowExW(WINDOW_EX_STYLE(0),w!("BUTTON"),w!("分享公开测试文件"),WS_CHILD|WS_VISIBLE,30,35,300,45,Some(hwnd),Some(HMENU(100...
+    |   --------------- required by a bound introduced by this call                                             ^^^^^^^^^^ expected `CopyType`, found `InterfaceType`
+    |
+    = note: required for `Option<HWND>` to implement `Param<HWND, core::r#type::CopyType>`
+note: required by a bound in `WindowsAndMessaging::CreateWindowExW`
+   --> C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.58.0\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:542:9
+    |
+538 | pub unsafe fn CreateWindowExW<P0, P1, P2, P3, P4>(dwexstyle: WINDOW_EX_STYLE, lpclassname: P0, lpwindowname: P1, dwstyle: WINDOW_ST...
+    |               --------------- required by a bound in this function
+...
+542 |     P2: windows_core::Param<super::super::Foundation::HWND>,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `CreateWindowExW`
+
+error[E0277]: the trait bound `Option<HWND>: Param<HWND, core::r#type::CopyType>` is not satisfied
+   --> src\main.rs:42:99
+    |
+ 42 |   CreateWindowExW(WINDOW_EX_STYLE(0),w!("BUTTON"),w!("分享公开测试文件"),WS_CHILD|WS_VISIBLE,30,35,300,45,Some(hwnd),Some(HMENU(100...
+    |   --------------- required by a bound introduced by this call                                             ^^^^^^^^^^ the trait `core::imp::can_into::CanInto<HWND>` is not implemented for `Option<HWND>`
+    |
+    = help: the following other types implement trait `core::imp::can_into::CanInto<T>`:
+              `AppDataPaths` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppDataPaths` implements `core::imp::can_into::CanInto<IUnknown>`
+              `AppDisplayInfo` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppDisplayInfo` implements `core::imp::can_into::CanInto<IUnknown>`
+              `AppInfo` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppInfo` implements `core::imp::can_into::CanInto<IUnknown>`
+              `AppInstallerInfo` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppInstallerInfo` implements `core::imp::can_into::CanInto<IUnknown>`
+            and 1642 others
+    = note: required for `Option<HWND>` to implement `Param<HWND, core::r#type::CopyType>`
+note: required by a bound in `WindowsAndMessaging::CreateWindowExW`
+   --> C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.58.0\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:542:9
+    |
+538 | pub unsafe fn CreateWindowExW<P0, P1, P2, P3, P4>(dwexstyle: WINDOW_EX_STYLE, lpclassname: P0, lpwindowname: P1, dwstyle: WINDOW_ST...
+    |               --------------- required by a bound in this function
+...
+542 |     P2: windows_core::Param<super::super::Foundation::HWND>,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `CreateWindowExW`
+
+error[E0277]: the trait bound `Option<HWND>: Param<HWND, core::r#type::CopyType>` is not satisfied
+   --> src\main.rs:42:99
+    |
+ 42 |   CreateWindowExW(WINDOW_EX_STYLE(0),w!("BUTTON"),w!("分享公开测试文件"),WS_CHILD|WS_VISIBLE,30,35,300,45,Some(hwnd),Some(HMENU(100...
+    |   --------------- required by a bound introduced by this call                                             ^^^^^^^^^^ the trait `Interface` is not implemented for `Option<HWND>`
+    |
+    = help: the following other types implement trait `Interface`:
+              AppDataPaths
+              AppDisplayInfo
+              AppInfo
+              AppInstallerInfo
+              AppInstance
+              ApplicationData
+              ApplicationDataCompositeValue
+              ApplicationDataContainer
+            and 1361 others
+    = note: required for `Option<HWND>` to implement `core::r#type::TypeKind`
+    = note: required for `Option<HWND>` to implement `Param<HWND, core::r#type::CopyType>`
+note: required by a bound in `WindowsAndMessaging::CreateWindowExW`
+   --> C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.58.0\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:542:9
+    |
+538 | pub unsafe fn CreateWindowExW<P0, P1, P2, P3, P4>(dwexstyle: WINDOW_EX_STYLE, lpclassname: P0, lpwindowname: P1, dwstyle: WINDOW_ST...
+    |               --------------- required by a bound in this function
+...
+542 |     P2: windows_core::Param<super::super::Foundation::HWND>,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `CreateWindowExW`
+
+error[E0271]: type mismatch resolving `<Option<HMENU> as TypeKind>::TypeKind == CopyType`
+   --> src\main.rs:42:110
+    |
+ 42 |   CreateWindowExW(WINDOW_EX_STYLE(0),w!("BUTTON"),w!("分享公开测试文件"),WS_CHILD|WS_VISIBLE,30,35,300,45,Some(hwnd),Some(HMENU(100 as *mut _)),No...
+    |   --------------- required by a bound introduced by this call                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `CopyType`, found `InterfaceType`
+    |
+    = note: required for `Option<WindowsAndMessaging::HMENU>` to implement `Param<WindowsAndMessaging::HMENU, core::r#type::CopyType>`
+note: required by a bound in `WindowsAndMessaging::CreateWindowExW`
+   --> C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.58.0\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:543:9
+    |
+538 | pub unsafe fn CreateWindowExW<P0, P1, P2, P3, P4>(dwexstyle: WINDOW_EX_STYLE, lpclassname: P0, lpwindowname: P1, dwstyle: WINDOW_ST...
+    |               --------------- required by a bound in this function
+...
+543 |     P3: windows_core::Param<HMENU>,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `CreateWindowExW`
+
+error[E0277]: the trait bound `Option<WindowsAndMessaging::HMENU>: Param<WindowsAndMessaging::HMENU, core::r#type::CopyType>` is not satisfied
+   --> src\main.rs:42:110
+    |
+ 42 |   CreateWindowExW(WINDOW_EX_STYLE(0),w!("BUTTON"),w!("分享公开测试文件"),WS_CHILD|WS_VISIBLE,30,35,300,45,Some(hwnd),Some(HMENU(100 as *mut _)),No...
+    |   --------------- required by a bound introduced by this call                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `core::imp::can_into::CanInto<WindowsAndMessaging::HMENU>` is not implemented for `Option<WindowsAndMessaging::HMENU>`
+    |
+    = help: the following other types implement trait `core::imp::can_into::CanInto<T>`:
+              `AppDataPaths` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppDataPaths` implements `core::imp::can_into::CanInto<IUnknown>`
+              `AppDisplayInfo` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppDisplayInfo` implements `core::imp::can_into::CanInto<IUnknown>`
+              `AppInfo` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppInfo` implements `core::imp::can_into::CanInto<IUnknown>`
+              `AppInstallerInfo` implements `core::imp::can_into::CanInto<IInspectable>`
+              `AppInstallerInfo` implements `core::imp::can_into::CanInto<IUnknown>`
+            and 1642 others
+    = note: required for `Option<WindowsAndMessaging::HMENU>` to implement `Param<WindowsAndMessaging::HMENU, core::r#type::CopyType>`
+note: required by a bound in `WindowsAndMessaging::CreateWindowExW`
+   --> C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.58.0\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:543:9
+    |
+538 | pub unsafe fn CreateWindowExW<P0, P1, P2, P3, P4>(dwexstyle: WINDOW_EX_STYLE, lpclassname: P0, lpwindowname: P1, dwstyle: WINDOW_ST...
+    |               --------------- required by a bound in this function
+...
+543 |     P3: windows_core::Param<HMENU>,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `CreateWindowExW`
+
+error[E0277]: the trait bound `Option<WindowsAndMessaging::HMENU>: Param<WindowsAndMessaging::HMENU, core::r#type::CopyType>` is not satisfied
+   --> src\main.rs:42:110
+    |
+ 42 |   CreateWindowExW(WINDOW_EX_STYLE(0),w!("BUTTON"),w!("分享公开测试文件"),WS_CHILD|WS_VISIBLE,30,35,300,45,Some(hwnd),Some(HMENU(100 as *mut _)),No...
+    |   --------------- required by a bound introduced by this call                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Interface` is not implemented for `Option<WindowsAndMessaging::HMENU>`
+    |
+    = help: the following other types implement trait `Interface`:
+              AppDataPaths
+              AppDisplayInfo
+              AppInfo
+              AppInstallerInfo
+              AppInstance
+              ApplicationData
+              ApplicationDataCompositeValue
+              ApplicationDataContainer
+            and 1361 others
+    = note: required for `Option<WindowsAndMessaging::HMENU>` to implement `core::r#type::TypeKind`
+    = note: required for `Option<WindowsAndMessaging::HMENU>` to implement `Param<WindowsAndMessaging::HMENU, core::r#type::CopyType>`
+note: required by a bound in `WindowsAndMessaging::CreateWindowExW`
+   --> C:\Users\Billy\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\windows-0.58.0\src\Windows\Win32\UI\WindowsAndMessaging\mod.rs:543:9
+    |
+538 | pub unsafe fn CreateWindowExW<P0, P1, P2, P3, P4>(dwexstyle: WINDOW_EX_STYLE, lpclassname: P0, lpwindowname: P1, dwstyle: WINDOW_ST...
+    |               --------------- required by a bound in this function
+...
+543 |     P3: windows_core::Param<HMENU>,
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `CreateWindowExW`
+
+warning: unused import: `Interface`
+ --> src\main.rs:4:22
+  |
+4 | use windows::{core::{Interface,IInspectable,HSTRING},Win32::System::WinRT::{RoInitialize,RoUninitialize,RO_INIT_SINGLETHREADED},Appli...
+  |                      ^^^^^^^^^
+
+Some errors have detailed explanations: E0271, E0277, E0422, E0425.
+For more information about an error, try `rustc --explain E0271`.
+warning: `companion-share068-probe` (bin "companion-share068-probe") generated 3 warnings
+error: could not compile `companion-share068-probe` (bin "companion-share068-probe") due to 8 previous errors; 3 warnings emitted

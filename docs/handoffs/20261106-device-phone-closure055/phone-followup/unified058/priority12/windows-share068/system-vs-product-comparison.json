@@ -1,0 +1,18 @@
+{
+  "actualExplorerSystemShareOpened": true,
+  "ownPublicReceiverListed": true,
+  "productShareTargetsFailed": true,
+  "processTokens": [
+    {
+      "role": "ownProduct",
+      "elevated": true,
+      "elevationType": 1
+    },
+    {
+      "role": "desktopShell",
+      "elevated": true,
+      "elevationType": 1
+    }
+  ],
+  "noContactsSelectedOrTransmitted": true
+}

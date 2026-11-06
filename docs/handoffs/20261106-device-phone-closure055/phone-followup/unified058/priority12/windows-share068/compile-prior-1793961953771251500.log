@@ -1,0 +1,26 @@
+ShareReceiver.cpp
+E:\CodexData\Companion\.build-cache\windows-share068\ShareReceiver.cpp(59): error C3779: “winrt::impl::consume_Windows_Storage_FileProperties_IBasicProperties<winrt::Windows::Storage::FileProperties::IBasicProperties>::Size”: 要使用将会返回“auto”的函数，必须首先定义此函数
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/impl/Windows.Storage.FileProperties.0.h(307): note: 参见“winrt::impl::consume_Windows_Storage_FileProperties_IBasicProperties<winrt::Windows::Storage::FileProperties::IBasicProperties>::Size”的声明
+E:\CodexData\Companion\.build-cache\windows-share068\ShareReceiver.cpp(59): error C3779: “winrt::impl::consume_Windows_Storage_FileProperties_IBasicProperties<winrt::Windows::Storage::FileProperties::IBasicProperties>::Size”: 要使用将会返回“auto”的函数，必须首先定义此函数
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/impl/Windows.Storage.FileProperties.0.h(307): note: 参见“winrt::impl::consume_Windows_Storage_FileProperties_IBasicProperties<winrt::Windows::Storage::FileProperties::IBasicProperties>::Size”的声明
+E:\CodexData\Companion\.build-cache\windows-share068\ShareReceiver.cpp(61): error C3779: “winrt::impl::consume_Windows_Storage_FileProperties_IBasicProperties<winrt::Windows::Storage::FileProperties::IBasicProperties>::Size”: 要使用将会返回“auto”的函数，必须首先定义此函数
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/impl/Windows.Storage.FileProperties.0.h(307): note: 参见“winrt::impl::consume_Windows_Storage_FileProperties_IBasicProperties<winrt::Windows::Storage::FileProperties::IBasicProperties>::Size”的声明
+E:\CodexData\Companion\.build-cache\windows-share068\ShareReceiver.cpp(71): error C2039: "create_guid": 不是 "winrt::guid" 的成员
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(352): note: 参见“winrt::guid”的声明
+E:\CodexData\Companion\.build-cache\windows-share068\ShareReceiver.cpp(71): error C3861: “create_guid”: 找不到标识符
+E:\CodexData\Companion\.build-cache\windows-share068\ShareReceiver.cpp(71): error C2668: “winrt::to_hstring”: 对重载函数的调用不明确
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/Windows.Foundation.h(5924): note: 可能是“winrt::hstring winrt::to_hstring(const winrt::Windows::Foundation::IStringable &)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3521): note: 或    “winrt::hstring winrt::to_hstring(const winrt::guid &)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3503): note: 或    “winrt::hstring winrt::to_hstring(const winrt::hstring &) noexcept”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3497): note: 或    “winrt::hstring winrt::to_hstring(char16_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3491): note: 或    “winrt::hstring winrt::to_hstring(double)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3486): note: 或    “winrt::hstring winrt::to_hstring(float)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3480): note: 或    “winrt::hstring winrt::to_hstring(int64_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3475): note: 或    “winrt::hstring winrt::to_hstring(uint64_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3470): note: 或    “winrt::hstring winrt::to_hstring(int32_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3465): note: 或    “winrt::hstring winrt::to_hstring(uint32_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3460): note: 或    “winrt::hstring winrt::to_hstring(int16_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3455): note: 或    “winrt::hstring winrt::to_hstring(uint16_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3450): note: 或    “winrt::hstring winrt::to_hstring(int8_t)”
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\cppwinrt\winrt/base.h(3445): note: 或    “winrt::hstring winrt::to_hstring(uint8_t)”
+E:\CodexData\Companion\.build-cache\windows-share068\ShareReceiver.cpp(71): note: 尝试匹配参数列表“(<error type>)”时

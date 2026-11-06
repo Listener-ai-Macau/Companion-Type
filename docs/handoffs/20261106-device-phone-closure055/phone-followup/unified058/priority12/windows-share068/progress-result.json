@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-06T19:10:41+08:00",
+  "state": "WINDOWS067_ACTUAL_SHARE_TARGET_ENUMERATION_FAILED_ROOT_UNCONFIRMED_UI_STOPPED_BY_OWNER_ESCAPE",
+  "ownerQuote": "需要继续推进到售卖标准",
+  "scope": "Continue original priority1/2 and existing sale backlog; no new feature tree, model or device takeover.",
+  "installedProductUnchanged": "Windows0.1.67",
+  "actualProductShare": {
+    "systemPanelOpened": true,
+    "panelMessage": "重试，我们无法为你显示所有共享方法。",
+    "recipientDelivered": false
+  },
+  "counterfactuals": {
+    "samePublicPdfExplorerShareTargetsListed": true,
+    "localQaTargetListedFromExplorer": true,
+    "normalWindowsProfileEnvironmentStillFailsFromProduct": true,
+    "productAndExplorerBothElevatedDefaultType1": true,
+    "exactProductPrepareCodeWorkerToStaCanReadOneFile": true
+  },
+  "notProven": [
+    "Which product/WinRT/STA/event-loop data-request condition causes the target enumeration failure.",
+    "Minimal native GUI baseline versus populating existing request.Data; window launched, no share action before physical Escape.",
+    "Local QA target actual activation/receipt; only built/installed/listed so far."
+  ],
+  "next": "先对照最小原生窗口baseline与填充现有request.Data的实际系统结果，只有新证据支持才修产品；不重复正常profile/权限相同对照。此次Computer Use被Owner物理Esc停止，本轮不再输入。后续前台实际对照需Owner恢复该操作；后台可接续原待办其它项。手机仍按共享记录等待既有满盘收尾/回收流程释放，不抢占。",
+  "ownProbeClosed": true,
+  "ownProductAndPublicExplorerClosedBeforeProbe": true,
+  "noFurtherUiInputAfterEscape": true,
+  "qaRecipientInstalled": true,
+  "qaRecipientIdentity": "Denzic.Companion.PublicShareQA068",
+  "qaRecipientHasNetworkCapability": false,
+  "originalClipboardUntouchedThisBatch": true,
+  "modelsRun": false,
+  "ownerAcceptance": false,
+  "fullPriority12Complete": false,
+  "wholeProductQualified": false
+}
