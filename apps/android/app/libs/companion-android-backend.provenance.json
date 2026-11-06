@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T04:19:59+08:00",
-  "aarSha256": "bc38b488db264f966c17b421029202c95487030c07e3bb22eba33e898428e1a3",
-  "backendSourceCommit": "40dedf93ceef095c9f7cb925ea6c5657155c8c0d",
+  "at": "2026-11-07T05:44:10+08:00",
+  "aarSha256": "3ebbacab3d75fa83897561459ef5568fa41e6711535fad4480879c06abbc56dd",
+  "backendSourceCommit": "40b48fc415cd26e3920785054ac88012e982c9a1",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Extend075 observations with per-file first-window/original-verified/exact-durable-receipt times, connection-to-first-private-directory and reconnect timing/events; idempotent close/replay preserves first observations. Include wait/cooldown, no transfer/retry/control policy change. Native/UI/models and firmware unchanged. Not yet hardware-qualified",
-  "javaSourceCommit": "40dedf93ceef095c9f7cb925ea6c5657155c8c0d",
+  "scope": "Treat adapter-off as availability wait, checked every second without advancing actual GATT failure backoff. Preserve076 timestamps/counters and all transfer/control/data policies. Old36s-on/65s-next-check delay29s reproduced; exact runner fixed model passed. Native/UI/models/firmware unchanged. Not yet phone-qualified",
+  "javaSourceCommit": "40b48fc415cd26e3920785054ac88012e982c9a1",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -100,5 +100,10 @@
     "com/denzic/companion/mobile/RecordingTransferMetrics.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo075": true,
-  "inherited075Receipt": "E:\\CodexData\\Companion\\.build-cache\\trace076\\inherited-provenance075.json"
+  "inherited075Receipt": "E:\\CodexData\\Companion\\.build-cache\\trace076\\inherited-provenance075.json",
+  "javaClassesChangedFrom076": [
+    "com/denzic/companion/mobile/RecordingSyncRunner.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo076": true,
+  "inherited076Receipt": "E:\\CodexData\\Companion\\.build-cache\\reconnect078\\build\\inherited-provenance076.json"
 }
