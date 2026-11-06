@@ -30,6 +30,9 @@ timing_diagnostic=bool(args.diagnose_complete_text_with_invalid_time and state['
  and state.get('eosCompleted') and state.get('allGeneratedTextParsed') and state.get('invalidNativeTimeRows'))
 assert state['state']=='COMPLETE_JOINT_CANDIDATE_UNQUALIFIED' or timing_diagnostic
 case=next(x for x in read(root/'frozen-scoring-only.json') if x['meeting']==args.meeting)
+assert case['meeting']==state['meeting']==args.meeting,'Scoring case and completed worker meeting must match'
+assert case['audioSha256']==state['audioSha256'],'Scoring reference belongs to a different source audio'
+assert case['audioSeconds']==state['audioSeconds'],'Scoring and completed input durations must match'
 reference=Path(case['reference']);assert hashlib.sha256(reference.read_bytes()).hexdigest()==case['referenceSha256']
 assert hashlib.sha256((raw_folder/'model-output.json').read_bytes()).hexdigest()==state['modelOutputSha256']
 references=[r for r in read_reference_intervals(reference) if normalize(r['text'])]

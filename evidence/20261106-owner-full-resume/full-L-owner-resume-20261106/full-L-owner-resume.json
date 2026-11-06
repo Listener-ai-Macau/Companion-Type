@@ -1,0 +1,21 @@
+{
+  "state": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+  "startedAt": "2026-11-06T08:12:59+08:00",
+  "protocolSha256": "2d7d9cb8f6bef543bd8e9ff9828935202779660a9557e211477abd9e4a85c812",
+  "inputManifestSha256": "53a7fe03471af0b095317af13d18e5dbc407c76e48de9e0f66d0316508de03a7",
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 1,
+      "workerState": "FAILED_RETAINED",
+      "wholeProcessFamilySeconds": 9.157451,
+      "observedProcessFamilyPeakRssBytes": 437960704,
+      "observedProcessFamilyPeakPrivateBytes": 387923968,
+      "processFamilyCpuSeconds": 5.0625,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-owner-resume-20261106\\results\\L_R003S01C02-20261106-r17\\completed-state.json",
+      "smokeOnly": false
+    }
+  ],
+  "referencePassedToWorker": false,
+  "finishedAt": "2026-11-06T08:13:08+08:00"
+}

@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-06T08:12:57+08:00",
+  "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
+  "ownerDirective": "重启的问题应该不用查了，你就继续吧。把整那东西跑好就行了。",
+  "work": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-owner-resume-20261106",
+  "pid": 14096,
+  "processCreatedAt": 1793923977.471315,
+  "bootTime": 1793890677.2156754,
+  "previousSourceCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
+  "skipRebootInvestigationByOwner": true,
+  "automaticInferenceRetries": 0,
+  "referencePassedToInference": false,
+  "startedAt": "2026-11-06T08:12:59+08:00",
+  "audioSeconds": 2362.945,
+  "hostAvailableBytes": 3451777024,
+  "supervisorPid": 11396,
+  "supervisorCreatedAt": 1793923979.0505688,
+  "inferenceSupervisorExitCode": 0,
+  "inferenceState": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+  "inferenceFinishedAt": "2026-11-06T08:13:08+08:00",
+  "finishedAt": "2026-11-06T08:13:08+08:00"
+}

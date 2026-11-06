@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_night_gpu_worker_20261104.py", line 40, in <module>
+    gpu_index=protocol['runtime']['gpuIndex'];properties=torch.cuda.get_device_properties(gpu_index)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\cuda\__init__.py", line 699, in get_device_properties
+    raise AssertionError("Invalid device id")
+AssertionError: Invalid device id

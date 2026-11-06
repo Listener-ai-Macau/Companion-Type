@@ -37,7 +37,14 @@ try:
     torch.set_num_threads(2);torch.set_num_interop_threads(1)
     random.seed(0);np.random.seed(0);torch.manual_seed(0)
     assert torch.version.hip, 'Native AMD runtime required; no CPU execution fallback'
-    gpu_index=protocol['runtime']['gpuIndex'];properties=torch.cuda.get_device_properties(gpu_index)
+    from moss_gpu_identity_20261106 import enumerate_native_gpus,select_rx6800xt,DeclaredGpuUnavailable
+    devices=enumerate_native_gpus(torch)
+    state.update(state='SELECTING_DECLARED_GPU',enumeratedGpus=devices);save()
+    try:selected=select_rx6800xt(devices,protocol['runtime'].get('gpuIndex'))
+    except DeclaredGpuUnavailable:
+        state['failureCategory']='DECLARED_EXTERNAL_GPU_UNAVAILABLE_BEFORE_MODEL_LOADING';save();raise
+    gpu_index=selected['index'];properties=torch.cuda.get_device_properties(gpu_index)
+    state['gpuIdentitySelection']=selected
     assert 'RX 6800 XT' in properties.name and properties.gcnArchName.startswith('gfx1030')
     torch.cuda.set_device(gpu_index);device=torch.device('cuda',gpu_index)
     torch.cuda.reset_peak_memory_stats(device)

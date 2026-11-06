@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-06T08:18:43+08:00",
+  "state": "FULL_MEETING_ATTEMPT_FAILED_BEFORE_MODEL_LOADING_EXTERNAL_GPU_DISCONNECTED",
+  "inferenceAttempt": "full-L-owner-resume-20261106/L_R003S01C02-20261106-r17",
+  "nativeGpuEnumeration": {
+    "count": 1,
+    "devices": [
+      {
+        "index": 0,
+        "name": "AMD Radeon 780M Graphics",
+        "architecture": "gfx1103"
+      }
+    ]
+  },
+  "windowsConnectedDisplayQuery": "pnputil /enum-devices /class Display /connected /deviceids also lists only780M/DEV15BF; no DEV73BF external card.",
+  "legacyError": "Invalid device id due stale ordinal1; native inference had not loaded model or processed audio.",
+  "sourceFix": "Choose unique declared RX6800XT/gfx1030 by identity, index is a hint. Explicit missing/ambiguous device error; no integrated fallback. CPU checks passed for original/reordered/missing/ambiguous/wrong-architecture cases.",
+  "modelMathChanged": false,
+  "rebootInvestigationSkippedPerOwner": true,
+  "restartNotClaimedFixed": true,
+  "waiting": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\external-gpu-connection-wait-20261106.json",
+  "newWholeMeetingQuality": null
+}

@@ -1,0 +1,29 @@
+{
+  "state": "FAILED_RETAINED",
+  "startedAt": "2026-11-06T08:12:59+08:00",
+  "pid": 9396,
+  "meeting": "L_R003S01C02",
+  "resourceLimits": {
+    "pid": 9396,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 11268096,
+    "cpuPriorityClass": 64,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "generatedTokens": 0,
+  "progressWriteDeferrals": 0,
+  "cacheWriteWarnings": 0,
+  "scope": "Official pinned joint architecture, local full input, no reference text/count/hotwords. Smoke is compatibility only.",
+  "errorType": "AssertionError",
+  "error": "Invalid device id",
+  "finishedAt": "2026-11-06T08:13:07+08:00",
+  "wholeWorkerSeconds": 8.132497999999032
+}
