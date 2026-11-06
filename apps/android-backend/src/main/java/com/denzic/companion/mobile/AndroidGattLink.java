@@ -117,8 +117,14 @@ public final class AndroidGattLink implements RecordingClient.Link {
             if(!accepted)throw new RecordingSyncRunner.LinkFailure("Bluetooth notification subscription refused");waitOperation("descriptor",id,15_000);
         }catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
     }
+    static int writeTypeFor(UUID id,int properties) {
+        return id.equals(RecordingClient.RECORDING_PULL)||(id.equals(SystemUpdateClient.DATA)&&(properties&BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)!=0)?BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE:BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
+    }
+    @Override public String otaDataWriteMode()throws IOException {
+        return writeTypeFor(SystemUpdateClient.DATA,characteristic(SystemUpdateClient.DATA).getProperties())==BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE?"without_response":"with_response";
+    }
     @Override public synchronized void write(UUID id,byte[] value) throws IOException {
-        check();try{BluetoothGattCharacteristic c=characteristic(id);int type=id.equals(RecordingClient.RECORDING_PULL)?BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE:BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
+        check();try{BluetoothGattCharacteristic c=characteristic(id);int type=writeTypeFor(id,c.getProperties());
             int property=type==BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE?BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE:BluetoothGattCharacteristic.PROPERTY_WRITE;
             if((c.getProperties()&property)==0)throw new IOException("Bluetooth write mode unavailable");boolean accepted;
             if(Build.VERSION.SDK_INT>=33)accepted=gatt.writeCharacteristic(c,value,type)==BluetoothStatusCodes.SUCCESS;
