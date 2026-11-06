@@ -12,7 +12,7 @@ final class RecordingSyncRunner {
         ActionRequired(String message,Throwable cause){super(message,cause);}
     }
     /** A failed Android GATT operation; local files and protocol errors are not link failures. */
-    static final class LinkFailure extends IOException {
+    static class LinkFailure extends IOException {
         LinkFailure(String message){super(message);}
     }
     static final class BluetoothOff extends IOException {}

@@ -36,11 +36,19 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private final Map<UUID,ArrayBlockingQueue<byte[]>> notifications=new ConcurrentHashMap<>();
     private volatile BluetoothGatt gatt;private volatile boolean connected;private volatile boolean disconnected;private final AtomicBoolean closed=new AtomicBoolean();private volatile String failure;
     private volatile int mtu=23;
+    private volatile int initialConnectionStatus=-1;
+    private volatile boolean connectedOnce;
     private boolean calendarSupported;
     private void operation(Event e){if(!closed.get()&&!operations.offer(e))failure="Bluetooth operation queue overflow";}
     private void notification(UUID id,byte[] value){if(closed.get())return;ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q!=null&&(value==null||!q.offer(value.clone())))failure="Bluetooth notification queue overflow";}
     private final BluetoothGattCallback callbacks=new BluetoothGattCallback(){
-        @Override public void onConnectionStateChange(BluetoothGatt g,int status,int state){connected=status==BluetoothGatt.GATT_SUCCESS&&state==BluetoothProfile.STATE_CONNECTED;if(state==BluetoothProfile.STATE_DISCONNECTED){disconnected=true;failure="Bluetooth disconnected";}operation(new Event("connection",null,status,state,null));}
+        @Override public void onConnectionStateChange(BluetoothGatt g,int status,int state){
+            if(status!=BluetoothGatt.GATT_SUCCESS&&!connectedOnce)initialConnectionStatus=status;
+            connected=status==BluetoothGatt.GATT_SUCCESS&&state==BluetoothProfile.STATE_CONNECTED;
+            if(connected)connectedOnce=true;
+            if(state==BluetoothProfile.STATE_DISCONNECTED){disconnected=true;failure="Bluetooth disconnected";}
+            operation(new Event("connection",null,status,state,null));
+        }
         @Override public void onServicesDiscovered(BluetoothGatt g,int status){operation(new Event("services",null,status,0,null));}
         @Override public void onMtuChanged(BluetoothGatt g,int value,int status){if(status==BluetoothGatt.GATT_SUCCESS)mtu=value;operation(new Event("mtu",null,status,value,null));}
         @Override public void onPhyUpdate(BluetoothGatt g,int txPhy,int rxPhy,int status){android.util.Log.i("CompanionBle","phy tx="+txPhy+" rx="+rxPhy+" status="+status);}
@@ -55,7 +63,10 @@ public final class AndroidGattLink implements RecordingClient.Link {
 
     /** Connect only a device the user has already selected and paired. Call off the main thread. */
     public static AndroidGattLink connect(Context context,BluetoothDevice device) throws IOException {
-        return connect(context,device,139,true);
+        return InitialConnectionRetry.open(()->connect(context,device,139,true),millis->{
+            android.util.Log.w("CompanionBle","Initial GATT133 refused before connection; closed client, retrying once");
+            Thread.sleep(millis);
+        });
     }
     /** Upgrade uses the same bonded GATT owner with no recording negotiation or
      * clock write. Read-back verification must not modify the new application. */
@@ -90,9 +101,9 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private void check() throws IOException {if(closed.get())throw new RecordingSyncRunner.LinkFailure("Bluetooth link closed");if(failure!=null)throw new RecordingSyncRunner.LinkFailure(failure);if(!connected)throw new RecordingSyncRunner.LinkFailure("Bluetooth not connected");}
     private Event waitOperation(String kind,UUID id,long timeout) throws IOException {
         long deadline=System.nanoTime()+TimeUnit.MILLISECONDS.toNanos(timeout);
-        try{while(System.nanoTime()<deadline){if(closed.get())throw new RecordingSyncRunner.LinkFailure("Bluetooth link closed");if(failure!=null)throw new RecordingSyncRunner.LinkFailure(failure);Event e=operations.poll(100,TimeUnit.MILLISECONDS);if(e==null)continue;
+        try{while(System.nanoTime()<deadline){if(closed.get())throw new RecordingSyncRunner.LinkFailure("Bluetooth link closed");if(kind.equals("connection")&&initialConnectionStatus>0)throw new InitialConnectionRetry.Refused(initialConnectionStatus);if(failure!=null)throw new RecordingSyncRunner.LinkFailure(failure);Event e=operations.poll(100,TimeUnit.MILLISECONDS);if(e==null)continue;
             if(!e.kind.equals(kind)||(id!=null&&!id.equals(e.id)))continue;
-            if(e.status!=BluetoothGatt.GATT_SUCCESS){failure="Bluetooth "+kind+" failed ("+e.status+")";throw new RecordingSyncRunner.LinkFailure(failure);}return e;}}
+            if(e.status!=BluetoothGatt.GATT_SUCCESS){failure="Bluetooth "+kind+" failed ("+e.status+")";if(kind.equals("connection")&&!connectedOnce)throw new InitialConnectionRetry.Refused(e.status);throw new RecordingSyncRunner.LinkFailure(failure);}return e;}}
         catch(InterruptedException e){Thread.currentThread().interrupt();failure="Bluetooth operation interrupted";throw new IOException(failure,e);}
         failure="Bluetooth "+kind+" timed out";throw new java.net.SocketTimeoutException(failure);
     }

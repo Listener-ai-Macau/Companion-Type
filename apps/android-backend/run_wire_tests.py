@@ -22,13 +22,14 @@ with tempfile.TemporaryDirectory(prefix="companion-wire-", dir=args.workdir) as 
     source = backend / "src/main/java/com/denzic/companion/mobile"
     test = backend / "src/test/java/com/denzic/companion/mobile"
     files = [source / (name + ".java") for name in ("RecorderWire", "DeviceRecordings", "DeviceMaintenance", "SegmentReceiver", "RecordingLibrary", "RecordingClient", "NativeRecordingControl", "DurableConsume", "MeetingStore", "NativeAudio", "DecodedAudioParts", "DeviceBookmarkCache", "RecordingSyncRunner")]
-    files += [test / "RecorderWireTest.java", test / "SavedSyntheticWireReplay.java", test / "MeetingStoreTest.java"]
+    files += [source / "InitialConnectionRetry.java", test / "InitialConnectionRetryTest.java", test / "RecorderWireTest.java", test / "SavedSyntheticWireReplay.java", test / "MeetingStoreTest.java"]
     stub = tmp / "AndroidDirectorySync.java"
     stub.write_text("package com.denzic.companion.mobile; final class AndroidDirectorySync { "
                     "static void sync(java.nio.file.Path p) throws java.io.IOException { "
                     "throw new java.io.IOException(\"Android directory sync unavailable in host test\"); }}", encoding="utf8")
     subprocess.run(["javac", "--release", "8", "-encoding", "UTF-8", "-d", str(tmp)] + list(map(str, files)) + [str(stub)], check=True)
     subprocess.run(["java", "-cp", str(tmp), "com.denzic.companion.mobile.RecorderWireTest", str(tmp)], check=True)
+    subprocess.run(["java", "-cp", str(tmp), "com.denzic.companion.mobile.InitialConnectionRetryTest"], check=True)
     subprocess.run(["java", "-cp", str(tmp), "com.denzic.companion.mobile.MeetingStoreTest", str(tmp)], check=True)
     if args.saved_synthetic_wire:
         subprocess.run(["java", "-cp", str(tmp), "com.denzic.companion.mobile.SavedSyntheticWireReplay", str(args.saved_synthetic_wire)], check=True)
