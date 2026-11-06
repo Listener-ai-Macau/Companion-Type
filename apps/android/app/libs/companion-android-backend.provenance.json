@@ -1,10 +1,48 @@
 {
-  "aarSha256": "163b6e77abbc268ea83c71e8ac440dd1a06858717213b7278c98c82f3391bead",
-  "backendSourceCommit": "8e8a82c58090aac97d5e8023cafdf9bcbe277eaa",
+  "aarSha256": "cdc125a3c99af4b4d20696f17e91248cc60c7bb2166f4a8854d27cd459fa63ff",
+  "backendSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
-  "scope": "Ordinary discovery, system pairing, CRM1 maintenance service routing, existing signed DOV1/CUP3 full-file OTA and exact WSI4 post-boot verification. Host protocol/package checks passed; physical Android OTA not yet tested.",
-  "nativeChanges": false,
-  "allNonClassAarEntriesByteIdentical": true,
-  "nativeInputReceipt": "E:/CodexData/Companion/.build-cache/android053-device-management/native-input.json",
-  "remoteSourceVerified": true
+  "remoteSourceVerified": true,
+  "nativeChanges": true,
+  "nativeSourceCommit": "5197a7bcbf06ae1a4c2a82aa547629cf104ad46a",
+  "nativeLibrarySha256": "156acc23dcf6ba2ab50e74c1f9fded9fb56036dcd0fb9f85f2591cc46c942898",
+  "nativeLibrary16KiBElfAligned": true,
+  "jniExportsIdenticalTo055": [
+    "Java_com_denzic_companion_mobile_NativeAudio_decodeFiles",
+    "Java_com_denzic_companion_mobile_NativeAudio_decodeFilesDetailed",
+    "Java_com_denzic_companion_mobile_NativeAudio_decodeFilesInParts",
+    "Java_com_denzic_companion_mobile_NativeAudio_inspectFiles",
+    "Java_com_denzic_companion_mobile_NativeCalendar_exportJson",
+    "Java_com_denzic_companion_mobile_NativeLocalTranscription_transcribeDetailedFile",
+    "Java_com_denzic_companion_mobile_NativeLocalTranscription_transcribeDetailedFiles",
+    "Java_com_denzic_companion_mobile_NativeLocalTranscription_transcribeDetailedFilesObserved",
+    "Java_com_denzic_companion_mobile_NativeLocalTranscription_transcribeFile",
+    "Java_com_denzic_companion_mobile_NativeMeetingDocuments_exportSavedNative",
+    "Java_com_denzic_companion_mobile_NativeMeetingDocuments_savedTextNative",
+    "Java_com_denzic_companion_mobile_NativeMeetingQa_askJson",
+    "Java_com_denzic_companion_mobile_NativeMeetingQa_cancelJson",
+    "Java_com_denzic_companion_mobile_NativeMemo_extractJson",
+    "Java_com_denzic_companion_mobile_NativeMinutes_compareSupplementSourcesJson",
+    "Java_com_denzic_companion_mobile_NativeMinutes_generateJson",
+    "Java_com_denzic_companion_mobile_NativeMinutes_generateJsonObserved",
+    "Java_com_denzic_companion_mobile_NativeRecordingControl_adoptNative",
+    "Java_com_denzic_companion_mobile_NativeRecordingControl_executeNative",
+    "Java_com_denzic_companion_mobile_NativeRecordingControl_listNative",
+    "Java_com_denzic_companion_mobile_NativeRecordingControl_reconcileNative",
+    "Java_com_denzic_companion_mobile_NativeTranscription_transcribeFileWithCache",
+    "Java_com_denzic_companion_mobile_NativeTranscription_transcribeFilesObserved",
+    "Java_com_denzic_companion_mobile_NativeTranscription_transcribeFilesWithCache"
+  ],
+  "dynamicDependenciesIdenticalTo055": [
+    "libc.so",
+    "libdl.so",
+    "libm.so"
+  ],
+  "javaClassesChanged": [
+    "com/denzic/companion/mobile/NativeRecordingControl$Callbacks.class"
+  ],
+  "otherAarEntriesIdenticalTo055": true,
+  "previousAarSha256": "163b6e77abbc268ea83c71e8ac440dd1a06858717213b7278c98c82f3391bead",
+  "speechRuntimeBinariesAndWeightsChanged": false,
+  "scope": "Android actual private-file flock and legacy/dated120B local recording reconciliation. Host engine/Java metadata checks and actual Android production lock passed; full Android engine binary compiled but device disconnected, main App buttons pending Owner phone availability."
 }
