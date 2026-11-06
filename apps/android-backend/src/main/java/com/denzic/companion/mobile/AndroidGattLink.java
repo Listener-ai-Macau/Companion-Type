@@ -68,6 +68,23 @@ public final class AndroidGattLink implements RecordingClient.Link {
         @Override public void onCharacteristicChanged(BluetoothGatt g,BluetoothGattCharacteristic c,byte[] value){notification(c.getUuid(),value);}
     };
     private AndroidGattLink(){}
+    /** Android15 can wrap a dead Bluetooth Binder in RuntimeException.
+     * Only that transport failure is retryable; programming/security errors
+     * retain their existing behavior instead of being hidden by a broad catch. */
+    static boolean deadBluetoothService(Throwable error){
+        for(int depth=0;error!=null&&depth<16;depth++,error=error.getCause())
+            if(error instanceof android.os.DeadObjectException)return true;
+        return false;
+    }
+    static RecordingSyncRunner.LinkFailure recoverablePlatformFailure(RuntimeException error){
+        if(error instanceof SecurityException||!deadBluetoothService(error))throw error;
+        RecordingSyncRunner.LinkFailure failure=new RecordingSyncRunner.LinkFailure("Bluetooth service became unavailable");
+        failure.initCause(error);return failure;
+    }
+    private RecordingSyncRunner.LinkFailure platformFailure(RuntimeException error){
+        RecordingSyncRunner.LinkFailure failure=recoverablePlatformFailure(error);
+        connectError=failure.getMessage();return failure;
+    }
 
     /** Connect only a device the user has already selected and paired. Call off the main thread. */
     public static AndroidGattLink connect(Context context,BluetoothDevice device) throws IOException {
@@ -114,6 +131,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
             link.traceStage="ready";ready=true;return link;
         } catch(IOException e){link.connectError=e.getMessage()==null?e.getClass().getSimpleName():e.getMessage();throw e;}
         catch(SecurityException e){link.connectError="Bluetooth permission is required";throw new IOException("Bluetooth permission is required",e);}
+        catch(RuntimeException e){throw link.platformFailure(e);}
         finally{if(!ready)link.close();}
     }
     private void check() throws IOException {if(closed.get())throw new RecordingSyncRunner.LinkFailure("Bluetooth link closed");if(failure!=null)throw new RecordingSyncRunner.LinkFailure(failure);if(!connected)throw new RecordingSyncRunner.LinkFailure("Bluetooth not connected");}
@@ -136,11 +154,11 @@ public final class AndroidGattLink implements RecordingClient.Link {
     @Override public int mtu(){return mtu;}
     @Override public boolean calendarSupported(){return calendarSupported;}
     @Override public String deviceAddress() throws IOException {
-        check();try{return gatt.getDevice().getAddress();}catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
+        check();try{return gatt.getDevice().getAddress();}catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}catch(RuntimeException e){throw platformFailure(e);}
     }
     @Override public synchronized byte[] read(UUID id) throws IOException {
         check();try{BluetoothGattCharacteristic c=characteristic(id);if((c.getProperties()&BluetoothGattCharacteristic.PROPERTY_READ)==0)throw new IOException("Bluetooth read unavailable");if(!gatt.readCharacteristic(c))throw new RecordingSyncRunner.LinkFailure("Bluetooth read refused");Event e=waitOperation("read",id,15_000);if(e.data==null)throw new RecordingSyncRunner.LinkFailure("Bluetooth read returned no data");return e.data;}
-        catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
+        catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}catch(RuntimeException e){throw platformFailure(e);}
     }
     @Override public synchronized void subscribe(UUID id) throws IOException {
         check();try{BluetoothGattCharacteristic c=characteristic(id);if((c.getProperties()&BluetoothGattCharacteristic.PROPERTY_NOTIFY)==0)throw new IOException("Bluetooth notifications unavailable");
@@ -149,7 +167,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
             boolean accepted;if(Build.VERSION.SDK_INT>=33)accepted=gatt.writeDescriptor(d,BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)==BluetoothStatusCodes.SUCCESS;
             else{d.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);accepted=gatt.writeDescriptor(d);}
             if(!accepted)throw new RecordingSyncRunner.LinkFailure("Bluetooth notification subscription refused");waitOperation("descriptor",id,15_000);
-        }catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
+        }catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}catch(RuntimeException e){throw platformFailure(e);}
     }
     static int writeTypeFor(UUID id,int properties) {
         return id.equals(RecordingClient.RECORDING_PULL)||(id.equals(SystemUpdateClient.DATA)&&(properties&BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE)!=0)?BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE:BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
@@ -164,7 +182,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
             if(Build.VERSION.SDK_INT>=33)accepted=gatt.writeCharacteristic(c,value,type)==BluetoothStatusCodes.SUCCESS;
             else{c.setWriteType(type);c.setValue(value);accepted=gatt.writeCharacteristic(c);}
             if(!accepted)throw new RecordingSyncRunner.LinkFailure("Bluetooth write refused");waitOperation("write",id,15_000);
-        }catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}
+        }catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}catch(RuntimeException e){throw platformFailure(e);}
     }
     @Override public byte[] await(UUID id,long timeoutMillis) throws IOException {
         if(timeoutMillis<=0)throw new java.net.SocketTimeoutException("Bluetooth wait timed out");ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q==null)throw new IOException("Bluetooth notifications not subscribed");long deadline=System.nanoTime()+TimeUnit.MILLISECONDS.toNanos(timeoutMillis);
@@ -193,8 +211,8 @@ public final class AndroidGattLink implements RecordingClient.Link {
         final BluetoothGatt g=gatt;long started=System.nanoTime();
         try{
             if(g!=null)GattCloseAwait.close(new GattCloseAwait.Port(){
-                public boolean disconnect(){try{g.disconnect();return true;}catch(SecurityException denied){return false;}}
-                public void close(){try{g.close();}catch(SecurityException ignored){}}
+                public boolean disconnect(){try{g.disconnect();return true;}catch(SecurityException denied){return false;}catch(RuntimeException died){if(!deadBluetoothService(died))throw died;return false;}}
+                public void close(){try{g.close();}catch(SecurityException ignored){}catch(RuntimeException died){if(!deadBluetoothService(died))throw died;}}
             },disconnectAcknowledged);
         }finally{closeElapsedNanos=System.nanoTime()-started;saveCloseTrace();}
     }
