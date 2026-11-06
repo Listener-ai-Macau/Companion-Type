@@ -1,0 +1,178 @@
+--- a/docs/product_backlog.json
++++ b/docs/product_backlog.json
+@@ -132638,7 +132638,8 @@
+       },
+       "androidBackendWorkspace": "C:/Users/Billy/Desktop/Denzic/Companion/recovered-android-backend",
+       "ownerCoreDeliveryPriority20261104": {
+-        "ownerCompetitiveParity20261105": {
++        "ownerCompetitiveParity20261105": {
++        "progressReview20261106": {"at": "2026-11-06T10:35:36+08:00", "ownerQuestion": "现在还有什么东西要做？对比竞品还需要做什么，完整进度如何？", "type": "READ_ONLY_PROGRESS_REVIEW_AND_STALE_INDEX_CORRECTION_NOT_NEW_TASK_OR_FEATURE_BATCH", "scope": "Companion现板录音共用核心、Windows/Android及原竞品功能并集；Capture新板独立，屏幕/宠物按原决定暂停", "currentStage": "核心实板已有多项范围通过、Windows常用资料管理旧范围已由Owner关闭；安卓与普通设备闭环/真实会议质量/正式售卖交付仍在集成验收阶段。", "counts": {"parityRows": 36, "qualifiedWholeRows": 0, "engineeringStatuses": {"PARTIAL_NOT_READY": 33, "PARTIAL_DELIVERED": 3}, "ownerStatuses": {"PENDING": 36}}, "percentagePolicy": "No weighted/size-normalized completion model exists. Do not convert broad row counts, commits, builds or tests into an invented overall completion percent.", "versions": {"windowsInstalledVerified": "0.1.52 from actual file ProductVersion", "phoneLastObserved": "0.1.53/code53", "androidCandidate": "0.1.54/code54, phone native format QA but ordinary App install/save/share still pending", "firmwareLatestScopedDeviceProof": "66685 selected-delete/acceptance.json; not a new device query"}, "topRemaining": ["普通App发现/配对、按场收取删除、后台中断恢复及手机维护OTA", "陌生复杂真实会议跨集<5%、全场分人/角色确认、噪声重叠与资源耗时", "纪要事实/引用/行动负责人时间、真实完整会后用途与客户体验", "Android新格式普通安装升级/保存分享、双端资料管理/回收站/回听导入", "真实拾音、电池/充电/低电收尾与耗电续航", "正式签名/升级渠道、隐私安全和商业费用/售后条件"], "additionalParityKept": ["日历/会前准备/自动工作流", "账号云同步与客户端覆盖", "团队权限、企业集成/API及设备找回等平台条件", "AI表样填字段及其他材料能力"], "competitorClarification": {"nottaFill": "Official2026-10-29: preset Word/Excel auto-fill is Web-only, credit-based; mobile unsupported. Custom layouts are managed Business/Enterprise customization, not general self-service arbitrary-template upload. Existing requested feature remains in original acceptance25; preserve actual platform/plan scope.", "union": "The36-item list is a union across PLAUD/soundcore/Notta/Granola, including paid/platform-specific capabilities; do not call all features universal defaults on every competing recording card."}, "officialSources": ["https://www.plaud.ai/products/plaud-note-pro", "https://www.soundcore.com/products/d3200-soundcore-work-ai-voice-recorder", "https://support.notta.ai/hc/en-us/articles/45649026891419-What-is-included-in-each-Notta-plan", "https://support.notta.ai/hc/en-us/articles/47907285577755-Auto-fill-Word-Excel", "https://support.notta.ai/hc/en-us/articles/46063273145627-Notta-Brain-Beginner-s-Guide", "https://support.plaud.ai/hc/en-us/articles/63429911054617-Export-transcripts-notes-and-audio-for-v4-0-x-or-later", "https://docs.granola.ai/help-center/getting-more-from-your-notes/chatting-with-your-meetings"], "lastHandledRawAndOriginalTaskPreserved": true, "engineeringChangesThisReview": 0, "builds": 0, "newModelInference": false, "newDeviceOrPhoneIo": false, "newCustomerResult": null, "corrections": [{"id": "asr", "previousCurrent": "保留单份61分钟3.61%开发样本；不代表跨会/手机/实卡整体达标，模型当前暂停。", "current": "已保留产品本地转写与云可选路径；单份61分钟公开开发样本曾为严格字错率3.61%，不能代表跨会/手机/实卡普遍<5%。新联合预训练方案整会准确率、多人/重叠及实际耗时资源门仍未完成；Owner明确早上无外置GPU，当前延后该GPU验证，不把所有AI软件功能都视作不可推进。"}, {"id": "minutes", "previousCurrent": "已有结构纪要及人工事项；完整事实/来源与真实会议收益尚未全部合格。", "current": "结构纪要、来源核对、人工修订、模板与问答/材料入口已有交付；完整真实会议中的漏项、错误结论、负责人/时间和实际会后收益仍待验证，不能仅用生成成功或转写单样本分数关闭。"}, {"id": "qa", "previousCurrent": "Windows已交付选定多会问答/引用/取消恢复；AndroidAAR有基础，当前App未接完整问答入口。", "current": "Windows/Android050已接统一会议问答、选定多会范围、原话依据与独立材料保存；053保留相关前端/后端，054补材料选择导出候选。当前缺口为普通手机完整目的使用、真实AI输出质量与取消恢复等全链资格；旧“Android App未接完整问答入口”已过时，不能当尚无入口。"}, {"id": "mindmap", "previousCurrent": "两端原导图保留；Windows052已安装完整PNG与可编辑mm导出，同一已保存内容结构、中文/英文换行、尺寸上限明确拒绝。原生1352×5900 PNG内容与图形已验；长图交互/正文定位、Android新格式、客户使用及全项资格未关闭。 11-06安卓054新增候选：PPTX/XLSX/mm/PNG、逐份已存AI材料与原样引用，同源APK/实际手机独立原生渲染已验；主App未替换053，普通保存分享及升级资料保留仍待，不能称双端全交付。", "current": "两端已有导图结构；Windows052完整PNG与可编辑mm已安装。Android054新增同选内容PPTX/XLSX/mm/PNG和独立AI材料候选，实际手机独立生产Java/Canvas图片与文稿结构通过；主App未替换053，普通保存分享、长图交互与全项实际使用仍开。"}, {"id": "exports", "previousCurrent": "Android既有内容选择/SAF保存/复制/分享沿048r3历史实机范围保留，现版050r2。Windows052已安装，保留051内容与音频导出，新增已存材料可编辑自动分页PPTX、完整PNG；冻结原生14页PPTX/PNG、来源变更与删除拒绝、8格式实际预览、深浅色和245原资料SHA不变已验。实际Save As/分享接收、Android新格式、AI Word/Excel填表及全对标仍待。 11-06安卓054新增候选：PPTX/XLSX/mm/PNG、逐份已存AI材料与原样引用，同源APK/实际手机独立原生渲染已验；主App未替换053，普通保存分享及升级资料保留仍待，不能称双端全交付。", "current": "Windows052已安装，统一选择已存内容/材料，保留TXT/MD/DOCX/PDF/XLSX/mm/SRT、原音/MP3及新增PPTX/PNG；实际文稿/预览/升级资料保留已验，系统Save As/分享接收仍开。Android048r3的原普通保存/复制/分享实机范围保留，050问答/材料已接入；当前手机053，054新格式/AI材料选择候选未替换，独立原生渲染与文件检查通过。普通新版升级/系统分享、Word多材料新组合、AI按表样填字段与完整对标仍待。"}, {"id": "hardware", "previousCurrent": "Capture新硬件与当前板有边界；实体功耗、电池/充电/低电及远场指标仍开。", "current": "当前对象是Companion现板，屏幕拔下运行无屏配置只验证共用核心；已有实板录音/同步/OTA与66685指定删除证据。现板原音可懂度/远场、真实电池采样/充电/低电保存/电流续航和整机可靠性仍开。Capture新板在独立产品目录、尚未到板；不把新板适配计为当前Companion已交付或混作同一售卖范围。"}, {"id": "updates", "previousCurrent": "Windows040/Android048 r3为当前工程交付；048同签名原70文件保留。Windows未正式签名、Android debug，生产渠道未齐。", "current": "本轮核对Windows安装版本0.1.52；手机最近实读0.1.53/code53，054/code54为已签名核验候选未替换。固件最近66685正常OTA及指定删除实板证据保留；普通App发现/配对/设备管理、Android维护/OTA仍在收尾。现有工程签名/Android debug与正式发布签名、生产密钥/渠道、故障升级恢复资格分开，商业发布仍未齐。"}]},
+           "ownerAcceptancePlan20261105": {
+             "at": "2026-11-05T10:36:40+08:00",
+             "ownerQuote": "那你就列进这个任务书里面，一项项把它做完好了。然后呢，到时候我再一项项验验收。",
+@@ -133169,7 +133170,7 @@
+                 "soundcore",
+                 "notta"
+               ],
+-              "current": "保留单份61分钟3.61%开发样本；不代表跨会/手机/实卡整体达标，模型当前暂停。",
++              "current": "已保留产品本地转写与云可选路径；单份61分钟公开开发样本曾为严格字错率3.61%，不能代表跨会/手机/实卡普遍<5%。新联合预训练方案整会准确率、多人/重叠及实际耗时资源门仍未完成；Owner明确早上无外置GPU，当前延后该GPU验证，不把所有AI软件功能都视作不可推进。",
+               "acceptance": "沿原冻结跨语料整会质量门，中文CER<5%阶段目标及原更高目标保留；计入装载/运行/取消/峰值RAM与CPU，不能把机器卡住。",
+               "order": "P0",
+               "dependency": "model_paused",
+@@ -133413,7 +133414,7 @@
+                 "granola_enhanced",
+                 "notta_ai_notes"
+               ],
+-              "current": "已有结构纪要及人工事项；完整事实/来源与真实会议收益尚未全部合格。",
++              "current": "结构纪要、来源核对、人工修订、模板与问答/材料入口已有交付；完整真实会议中的漏项、错误结论、负责人/时间和实际会后收益仍待验证，不能仅用生成成功或转写单样本分数关闭。",
+               "acceptance": "阅读清楚区分事实、决定、建议、待确认项；长会末尾不遗漏，关键结论可回到原文/原音。",
+               "order": "P0",
+               "dependency": "model_paused",
+@@ -133556,7 +133557,7 @@
+                 "soundcore_ai_plan",
+                 "notta_brain"
+               ],
+-              "current": "Windows已交付选定多会问答/引用/取消恢复；AndroidAAR有基础，当前App未接完整问答入口。",
++              "current": "Windows/Android050已接统一会议问答、选定多会范围、原话依据与独立材料保存；053保留相关前端/后端，054补材料选择导出候选。当前缺口为普通手机完整目的使用、真实AI输出质量与取消恢复等全链资格；旧“Android App未接完整问答入口”已过时，不能当尚无入口。",
+               "acceptance": "选择单会/多会/文件夹范围，答案带可核引用，证据不足明确；删除源后不继续检索，取消/续做/保存笔记可用。 11-05 AI增强对标补充：补手机单会/选定多会/文件夹入口、回答保存为材料、可复用提问任务；选词百科/联网检索与会议原话来源区分，联网为明确按需选择。",
+               "order": "P1",
+               "dependency": "model_paused_for_generation",
+@@ -133650,7 +133651,7 @@
+                 "plaud_export",
+                 "notta_map"
+               ],
+-              "current": "两端原导图保留；Windows052已安装完整PNG与可编辑mm导出，同一已保存内容结构、中文/英文换行、尺寸上限明确拒绝。原生1352×5900 PNG内容与图形已验；长图交互/正文定位、Android新格式、客户使用及全项资格未关闭。 11-06安卓054新增候选：PPTX/XLSX/mm/PNG、逐份已存AI材料与原样引用，同源APK/实际手机独立原生渲染已验；主App未替换053，普通保存分享及升级资料保留仍待，不能称双端全交付。",
++              "current": "两端已有导图结构；Windows052完整PNG与可编辑mm已安装。Android054新增同选内容PPTX/XLSX/mm/PNG和独立AI材料候选，实际手机独立生产Java/Canvas图片与文稿结构通过；主App未替换053，普通保存分享、长图交互与全项实际使用仍开。",
+               "acceptance": "同一已保存纪要生成可阅读结构，长图缩放/定位/文字不遮挡，格式可在外部正常打开，不把导图当新事实。",
+               "order": "P1",
+               "dependency": "software",
+@@ -133673,7 +133674,7 @@
+                 "status": "PARTIAL_DELIVERED",
+                 "label": "Windows052完整PNG与可编辑mm已交付；长图交互及安卓完整范围待完成",
+                 "readyForOwnerAcceptance": false,
+-                "deliveredVersion": "Windows0.1.52 / Android050r2 code51 unchanged",
++                "deliveredVersion": "Windows0.1.52 installed / Android0.1.53 observed; 0.1.54 candidate not installed",
+                 "evidence": ["C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-material-exports052\\state.json", "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json"]
+               },
+               "ownerAcceptance": {
+@@ -134065,7 +134066,7 @@
+                 "notta_fill",
+                 "notta_brain"
+               ],
+-              "current": "Android既有内容选择/SAF保存/复制/分享沿048r3历史实机范围保留，现版050r2。Windows052已安装，保留051内容与音频导出，新增已存材料可编辑自动分页PPTX、完整PNG；冻结原生14页PPTX/PNG、来源变更与删除拒绝、8格式实际预览、深浅色和245原资料SHA不变已验。实际Save As/分享接收、Android新格式、AI Word/Excel填表及全对标仍待。 11-06安卓054新增候选：PPTX/XLSX/mm/PNG、逐份已存AI材料与原样引用，同源APK/实际手机独立原生渲染已验；主App未替换053，普通保存分享及升级资料保留仍待，不能称双端全交付。",
++              "current": "Windows052已安装，统一选择已存内容/材料，保留TXT/MD/DOCX/PDF/XLSX/mm/SRT、原音/MP3及新增PPTX/PNG；实际文稿/预览/升级资料保留已验，系统Save As/分享接收仍开。Android048r3的原普通保存/复制/分享实机范围保留，050问答/材料已接入；当前手机053，054新格式/AI材料选择候选未替换，独立原生渲染与文件检查通过。普通新版升级/系统分享、Word多材料新组合、AI按表样填字段与完整对标仍待。",
+               "acceptance": "原音/原文/纪要/译文可分别选，所需MP3/WAV/TXT/MD/DOCX/PDF/SRT/XLSX/导图格式逐项核内容与外部打开；PDF中文复制/搜索须正确。 11-05 AI增强对标补充：另区分普通转写文件导出与AI材料交付：按既有Word/Excel表样填字段、演示提纲PDF/PPTX及生成图PNG；未接AI/附件/格式真实链就保留未完成，不把普通DOCX或XLSX导出当智能填表已完成。",
+               "order": "P0",
+               "dependency": "software",
+@@ -134135,7 +134136,7 @@
+                 "status": "PARTIAL_DELIVERED",
+                 "label": "Windows052新增PPTX/PNG已交付；安卓新格式、系统交互、AI填表与完整对标待完成",
+                 "readyForOwnerAcceptance": false,
+-                "deliveredVersion": "Windows0.1.52 / Android050r2 code51 unchanged",
++                "deliveredVersion": "Windows0.1.52 installed / Android0.1.53 observed; 0.1.54 candidate not installed",
+                 "evidence": ["E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel046\\delivery-result.json", "E:\\CodexData\\Companion\\core-meeting-delivery-20261104\\day-nonmodel048\\delivery-result.json", "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-windows-content051\\state.json", "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-material-exports052\\state.json", "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json"],
+                 "pdfSubscope": {
+                   "status": "ACTUAL_ANDROID_NORMAL_SAF_AND_EXTERNAL_PRINT_PREVIEW_VERIFIED",
+@@ -134539,7 +134540,7 @@
+                 "plaud",
+                 "soundcore"
+               ],
+-              "current": "Capture新硬件与当前板有边界；实体功耗、电池/充电/低电及远场指标仍开。",
++              "current": "当前对象是Companion现板，屏幕拔下运行无屏配置只验证共用核心；已有实板录音/同步/OTA与66685指定删除证据。现板原音可懂度/远场、真实电池采样/充电/低电保存/电流续航和整机可靠性仍开。Capture新板在独立产品目录、尚未到板；不把新板适配计为当前Companion已交付或混作同一售卖范围。",
+               "acceptance": "真实姿态/噪声/距离、连续录音与存储、充电/低电/唤醒逐项有证据；功能/结果等价需真实满足，不能照搬宣传数值。",
+               "order": "P0",
+               "dependency": "physical_hardware",
+@@ -134584,7 +134585,7 @@
+                 "notta",
+                 "granola"
+               ],
+-              "current": "Windows040/Android048 r3为当前工程交付；048同签名原70文件保留。Windows未正式签名、Android debug，生产渠道未齐。",
++              "current": "本轮核对Windows安装版本0.1.52；手机最近实读0.1.53/code53，054/code54为已签名核验候选未替换。固件最近66685正常OTA及指定删除实板证据保留；普通App发现/配对/设备管理、Android维护/OTA仍在收尾。现有工程签名/Android debug与正式发布签名、生产密钥/渠道、故障升级恢复资格分开，商业发布仍未齐。",
+               "acceptance": "正式身份、升级/失败恢复、数据保留与下载渠道可供普通用户完成；工程包不当正式售卖包。",
+               "order": "P0",
+               "dependency": "signing_service",
+--- a/docs/development_log.md
++++ b/docs/development_log.md
+@@ -1,3 +1,11 @@
++## 2026-11-06T10:35:36+08:00｜Owner询问整体进度与竞品差距：按真实交付复核，原任务和验收不变
++
++核原36项及最新软件/嵌软收据，并复查PLAUD/soundcore/Notta/Granola官方文档。严格整项qualified仍0/36，3项PARTIAL_DELIVERED、33项PARTIAL_NOT_READY，Owner36原状态保留；原Windows常用资料管理已于11-02由Owner明确关闭的范围不抹除。未定义工作量权重，不能据上述数量估80%/90%或16.7%等整体百分比。当前是核心实板多项已验、Windows部分日用交付、Android和普通设备用户链集成/质量验收阶段，整机售卖未达；模型以外仍有发现配对/按场收取删除/手机维护OTA、日用升级与保存分享、双端资料管理、真实电源拾音、正式签名和交付服务缺口。
++
++纠正原当前索引：050安卓问答/跨会范围/材料已有入口，不能继续记“App未接”；Windows实读0.1.52，手机最近实读053，054为候选，不能沿旧040/048或050作当前版本。固件66685已有指定删除实板证据，但普通App配对/收取/删除和维护升级未关闭；053r2/e46f4769仅Windows发现修复仍待完整交付。当前开发对象按Owner新澄清为Companion现板共用核心，Capture新板独立准备、屏幕宠物暂停。Notta自动填Word/Excel官方为Web按额度、手机不支持，自定义版式为企业受管定制；原需求保留，不把该特定套餐功能误作所有竞品手机标配。61分钟3.61%仍是单份开发样本，复杂跨会<5%、全场分人/重叠和耗时资源门未关闭；白天无独显延后GPU，不恢复已撤回的重启调查前提。
++
++本次仅状态复核及过时当前字段纠正，0产品代码/构建/模型/设备IO/客户轮次；不重复建任务、不改原nextBatch工作点/Owner状态。详细复核并入原竞品事项progressReview20261106，安全收据同批progress-review-20261106.json；原完整任务/时间线054快照加本次小增量补丁可恢复最新状态。
++
+ ## 2026-11-06T10:24:17+08:00｜安卓054材料导出候选：四种格式、独立AI材料与实际手机原生PNG通过，日用053保留
+ 
+ 承09:54 Owner“继续吧”和早上无独显，沿原25/17；Windows052原基线725433a9/e684fa73保留。导入另一工作树已提交57af37b0的安卓设备选场/删除/前端及精确AAR，独立后端d43ef35eb49e2647875fbcd953e718eb96e3dc20已另推recovery/android054-backend-d43ef并读回，不覆盖其在途工作。主程序功能源c9f624bbf5c9c7ab2c48af00bf359edafc28cc3e已推work/android-material-exports054-20261106读回；APK0.1.54/code54 SHAf831df89cc47fb3ca723d5f3baaa038cfeba665dfec80c1b3558e816b8943e8f。本批不替换Windows、不跑GPU/模型/板卡BLE，不读用户录音。
+--- a/docs/PRODUCT_BACKLOG.md
++++ b/docs/PRODUCT_BACKLOG.md
+@@ -202,7 +202,7 @@
+ #### 8. 准确转写、长会与资源占用
+ 
+ - **原任务：** [CP11-01](PRODUCT_BACKLOG_HISTORY.md#cp11-01)、[CP11-07](PRODUCT_BACKLOG_HISTORY.md#cp11-07)、[CP20-07](PRODUCT_BACKLOG_HISTORY.md#cp20-07)
+-- **当前情况：** 保留单份61分钟3.61%开发样本；不代表跨会/手机/实卡整体达标，模型当前暂停。
++- **当前情况：** 已保留产品本地转写与云可选路径；单份61分钟公开开发样本曾为严格字错率3.61%，不能代表跨会/手机/实卡普遍<5%。新联合预训练方案整会准确率、多人/重叠及实际耗时资源门仍未完成；Owner明确早上无外置GPU，当前延后该GPU验证，不把所有AI软件功能都视作不可推进。
+ - **工程完成条件：** 沿原冻结跨语料整会质量门，中文CER<5%阶段目标及原更高目标保留；计入装载/运行/取消/峰值RAM与CPU，不能把机器卡住。
+ - **交付版本：** 本项整体交付待完成；既有成果见当前情况
+ - **验收准备：** 工程提供可检查的交付版本、可用入口和明确支持条件后进行；优先使用测试资料，原有资料保留。
+@@ -287,7 +287,7 @@
+ #### 13. 结构纪要、结论、行动与事实依据
+ 
+ - **原任务：** [CP12-01](PRODUCT_BACKLOG_HISTORY.md#cp12-01)、[CP12-02](PRODUCT_BACKLOG_HISTORY.md#cp12-02)、[CP12-08](PRODUCT_BACKLOG_HISTORY.md#cp12-08)
+-- **当前情况：** 已有结构纪要及人工事项；完整事实/来源与真实会议收益尚未全部合格。
++- **当前情况：** 结构纪要、来源核对、人工修订、模板与问答/材料入口已有交付；完整真实会议中的漏项、错误结论、负责人/时间和实际会后收益仍待验证，不能仅用生成成功或转写单样本分数关闭。
+ - **工程完成条件：** 阅读清楚区分事实、决定、建议、待确认项；长会末尾不遗漏，关键结论可回到原文/原音。
+ - **交付版本：** 本项整体交付待完成；既有成果见当前情况
+ - **验收准备：** 工程提供可检查的交付版本、可用入口和明确支持条件后进行；优先使用测试资料，原有资料保留。
+@@ -321,7 +321,7 @@
+ #### 15. 单会/跨会问答和引用
+ 
+ - **原任务：** [CP27-06](PRODUCT_BACKLOG_HISTORY.md#cp27-06)、[CP12-06](PRODUCT_BACKLOG_HISTORY.md#cp12-06)
+-- **当前情况：** Windows已交付选定多会问答/引用/取消恢复；AndroidAAR有基础，当前App未接完整问答入口。
++- **当前情况：** Windows/Android050已接统一会议问答、选定多会范围、原话依据与独立材料保存；053保留相关前端/后端，054补材料选择导出候选。当前缺口为普通手机完整目的使用、真实AI输出质量与取消恢复等全链资格；旧“Android App未接完整问答入口”已过时，不能当尚无入口。
+ - **工程完成条件：** 选择单会/多会/文件夹范围，答案带可核引用，证据不足明确；删除源后不继续检索，取消/续做/保存笔记可用。 11-05 AI增强对标补充：补手机单会/选定多会/文件夹入口、回答保存为材料、可复用提问任务；选词百科/联网检索与会议原话来源区分，联网为明确按需选择。
+ - **交付版本：** 本项整体交付待完成；既有成果见当前情况
+ - **验收准备：** 工程提供可检查的交付版本、可用入口和明确支持条件后进行；优先使用测试资料，原有资料保留。
+@@ -355,9 +355,9 @@
+ #### 17. 思维导图和可用导出
+ 
+ - **原任务：** [CP27-09](PRODUCT_BACKLOG_HISTORY.md#cp27-09)
+-- **当前情况：** 两端原导图保留；Windows052已安装完整PNG与可编辑mm导出，同一已保存内容结构、中文/英文换行、尺寸上限明确拒绝。原生1352×5900 PNG内容与图形已验；长图交互/正文定位、Android新格式、客户使用及全项资格未关闭。 11-06安卓054新增候选：PPTX/XLSX/mm/PNG、逐份已存AI材料与原样引用，同源APK/实际手机独立原生渲染已验；主App未替换053，普通保存分享及升级资料保留仍待，不能称双端全交付。
++- **当前情况：** 两端已有导图结构；Windows052完整PNG与可编辑mm已安装。Android054新增同选内容PPTX/XLSX/mm/PNG和独立AI材料候选，实际手机独立生产Java/Canvas图片与文稿结构通过；主App未替换053，普通保存分享、长图交互与全项实际使用仍开。
+ - **工程完成条件：** 同一已保存纪要生成可阅读结构，长图缩放/定位/文字不遮挡，格式可在外部正常打开，不把导图当新事实。
+-- **交付版本：** Windows0.1.52 / Android050r2 code51 unchanged
++- **交付版本：** Windows0.1.52 installed / Android0.1.53 observed; 0.1.54 candidate not installed
+ - **验收准备：** 工程提供可检查的交付版本、可用入口和明确支持条件后进行；优先使用测试资料，原有资料保留。
+ 
+ 你可这样验收：
+@@ -491,9 +491,9 @@
+ #### 25. 按内容/格式导出、复制与分享
+ 
+ - **原任务：** [CP27-09](PRODUCT_BACKLOG_HISTORY.md#cp27-09)、[CP12-04](PRODUCT_BACKLOG_HISTORY.md#cp12-04)、[CP14-08](PRODUCT_BACKLOG_HISTORY.md#cp14-08)
+-- **当前情况：** Android既有内容选择/SAF保存/复制/分享沿048r3历史实机范围保留，现版050r2。Windows052已安装，保留051内容与音频导出，新增已存材料可编辑自动分页PPTX、完整PNG；冻结原生14页PPTX/PNG、来源变更与删除拒绝、8格式实际预览、深浅色和245原资料SHA不变已验。实际Save As/分享接收、Android新格式、AI Word/Excel填表及全对标仍待。 11-06安卓054新增候选：PPTX/XLSX/mm/PNG、逐份已存AI材料与原样引用，同源APK/实际手机独立原生渲染已验；主App未替换053，普通保存分享及升级资料保留仍待，不能称双端全交付。
++- **当前情况：** Windows052已安装，统一选择已存内容/材料，保留TXT/MD/DOCX/PDF/XLSX/mm/SRT、原音/MP3及新增PPTX/PNG；实际文稿/预览/升级资料保留已验，系统Save As/分享接收仍开。Android048r3的原普通保存/复制/分享实机范围保留，050问答/材料已接入；当前手机053，054新格式/AI材料选择候选未替换，独立原生渲染与文件检查通过。普通新版升级/系统分享、Word多材料新组合、AI按表样填字段与完整对标仍待。
+ - **工程完成条件：** 原音/原文/纪要/译文可分别选，所需MP3/WAV/TXT/MD/DOCX/PDF/SRT/XLSX/导图格式逐项核内容与外部打开；PDF中文复制/搜索须正确。 11-05 AI增强对标补充：另区分普通转写文件导出与AI材料交付：按既有Word/Excel表样填字段、演示提纲PDF/PPTX及生成图PNG；未接AI/附件/格式真实链就保留未完成，不把普通DOCX或XLSX导出当智能填表已完成。
+-- **交付版本：** Windows0.1.52 / Android050r2 code51 unchanged
++- **交付版本：** Windows0.1.52 installed / Android0.1.53 observed; 0.1.54 candidate not installed
+ - **验收准备：** 工程提供可检查的交付版本、可用入口和明确支持条件后进行；优先使用测试资料，原有资料保留。
+ 
+ 你可这样验收：
+@@ -627,7 +627,7 @@
+ #### 33. 拾音、续航、存储与便携规格
+ 
+ - **原任务：** [CP27-12](PRODUCT_BACKLOG_HISTORY.md#cp27-12)、[CP24-08](PRODUCT_BACKLOG_HISTORY.md#cp24-08)、[CP27-19](PRODUCT_BACKLOG_HISTORY.md#cp27-19)
+-- **当前情况：** Capture新硬件与当前板有边界；实体功耗、电池/充电/低电及远场指标仍开。
++- **当前情况：** 当前对象是Companion现板，屏幕拔下运行无屏配置只验证共用核心；已有实板录音/同步/OTA与66685指定删除证据。现板原音可懂度/远场、真实电池采样/充电/低电保存/电流续航和整机可靠性仍开。Capture新板在独立产品目录、尚未到板；不把新板适配计为当前Companion已交付或混作同一售卖范围。
+ - **工程完成条件：** 真实姿态/噪声/距离、连续录音与存储、充电/低电/唤醒逐项有证据；功能/结果等价需真实满足，不能照搬宣传数值。
+ - **交付版本：** 本项整体交付待完成；既有成果见当前情况
+ - **验收准备：** 工程提供可检查的交付版本、可用入口和明确支持条件后进行；优先使用测试资料，原有资料保留。
+@@ -644,7 +644,7 @@
+ #### 34. 安装、OTA、正式签名与更新恢复
+ 
+ - **原任务：** [CP16-07](PRODUCT_BACKLOG_HISTORY.md#cp16-07)、[CP25-06](PRODUCT_BACKLOG_HISTORY.md#cp25-06)
+-- **当前情况：** Windows040/Android048 r3为当前工程交付；048同签名原70文件保留。Windows未正式签名、Android debug，生产渠道未齐。
++- **当前情况：** 本轮核对Windows安装版本0.1.52；手机最近实读0.1.53/code53，054/code54为已签名核验候选未替换。固件最近66685正常OTA及指定删除实板证据保留；普通App发现/配对/设备管理、Android维护/OTA仍在收尾。现有工程签名/Android debug与正式发布签名、生产密钥/渠道、故障升级恢复资格分开，商业发布仍未齐。
+ - **工程完成条件：** 正式身份、升级/失败恢复、数据保留与下载渠道可供普通用户完成；工程包不当正式售卖包。
+ - **交付版本：** 本项整体交付待完成；既有成果见当前情况
+ - **验收准备：** 工程提供可检查的交付版本、可用入口和明确支持条件后进行；优先使用测试资料，原有资料保留。
