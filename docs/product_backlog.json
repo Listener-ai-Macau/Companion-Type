@@ -132204,7 +132204,7 @@
           "主App新增内容格式的系统保存与真实分享接收端权限/Office实开；现仅保留已有原生格式和候选证明",
           "正式发行签名、升级发布渠道、真实电源/拾音等原售卖缺口仍沿原待办"
         ],
-        "next": "共享手机058普通OTA/维护占用结束后先读取其最终收据与实际安装版本，补059日期格式修复所需普通控制/仅新录音回听删除和公开库系统保存复制分享；已有实证不重跑。设备忙时不抢占，不把候选构建算真机或售卖通过。",
+        "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing.",
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
@@ -132424,6 +132424,58 @@
           "version": "0.1.58/code58",
           "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-device-phone-closure055\\phone-followup\\unified058\\inherited058-installation.json",
           "at": "2026-11-06T13:28:27+08:00"
+        },
+        "ownerPriority12": {
+          "at": "2026-11-06T13:50:38+08:00",
+          "ownerQuote": "先，那你优先把那个前两项给搞了，然后的话。继续做这个事情，然后做完这些事情就可以说。我们只剩下模型能力没做了，对吧？这个时间进度大概还要多久？",
+          "state": "PRIORITY12_READY_FOR_PHONE_OTHER_EXISTING_LEASE_ACTIVE",
+          "priority": [
+            "Ordinary phone/device recording control, only own-new sample receive/playback/delete/recovery and OTA/maintenance final receipts.",
+            "Installed ordinary App selected-content SAF save, clipboard paste and ACTION_SEND recipient bytes/grants, then original-library return."
+          ],
+          "existingWorkpointPreserved": "Android059 compiled/verified/protected; installed058 maintained by existing embedded flow. Original36-row backlog and model directives preserved.",
+          "estimate": {
+            "engineeringAndAcceptanceHours": [
+              4,
+              8
+            ],
+            "planningAllowance": "One working day for these two scopes, conditional on continuous device access and no new substantive native/firmware blocker.",
+            "basis": "Control/OTA/format implementations already exist; partial real-phone receipts and unified059 package available. Remaining main work is ordinary end-to-end execution, directly related repair, content verification and preservation.",
+            "notAWholeProductSaleDate": true,
+            "sharedResourceWaitNotPredictable": true
+          },
+          "reusedEvidence": [
+            "docs/handoffs/20261106-companion-device-management/phone055-management-acceptance.json",
+            "docs/handoffs/20261106-companion-device-management/phone056-ordinary-control-acceptance.json",
+            "docs/handoffs/20261106-device-phone-closure055/phone-followup/unified058/inherited058-ota-status-history.json"
+          ],
+          "remainingPhoneChecks": [
+            "059 dated-metadata compatibility in ordinary App control/recovery as affected; no repeated unrelated pairing or OTA if final existing receipt suffices.",
+            "Pause/resume/stop recording and real playback pause/resume/natural completion; controlled delete confirmation/cancel of a newly created own session.",
+            "Public fixture ordinary restore, selected TXT/MD/DOCX/PDF/XLSX/PPTX/mm/PNG save/share and exact text copy; validate actual recipient content; return original library."
+          ],
+          "preparedThisTurn": [
+            "Phone drivers require exact own shared lease, unlocked/on screen and permitted foreground before each input; allocate/remove only own debugging forward.",
+            "Local-only share recipient now also offers ordinary public-text paste/verification; no Internet, contacts or broad storage permission. Unexpected clipboard text is not recorded.",
+            "Actual phone/export acceptance remains false until execution; preparation is not functional progress."
+          ],
+          "notOnlyModelsAfterTheseTwo": {
+            "knownSoftwareGaps": [
+              "AI fill external Word/Excel sample fields",
+              "Remaining mobile import/organization/playback/editing flows and full cross-device parity",
+              "Account/shared-library/team and third-party integrations under full competitor scope"
+            ],
+            "knownPhysicalReleaseGaps": [
+              "Actual battery sampling/charge/low-battery preservation/current/endurance",
+              "Pickup/first-word and actual audio qualification",
+              "Production signing and distribution",
+              "Companion screen/touch retained under Owner pause"
+            ],
+            "source": "Existing36-row coverage plus embedded.releaseReadiness/blockedItems; no new feature scope added."
+          },
+          "actualNewPhoneChecksPassed": false,
+          "wholeProductQualified": false,
+          "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing."
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -141646,11 +141698,11 @@
         "reference": "E:/CodexData/Companion/current-device-meeting-20261102/offline-long-retry/run/offline-transfer-recount-20261102.json",
         "baseline": "单场32段新接收8191682字节，首到末507.455秒、15.764 KiB/s；逐段收包耗时加权17.490 KiB/s，前四段3.701、后28段34.075 KiB/s；旧Type dc0016d8/FW858，非新0.1.24实测。"
       },
-      "at": "2026-11-06T13:37:36+08:00",
-      "status": "ANDROID059_INTEGRATED_CANDIDATE_READY_SHARED_PHONE_ACCEPTANCE_BUSY",
+      "at": "2026-11-06T13:50:38+08:00",
+      "status": "PRIORITY12_READY_FOR_PHONE_OTHER_EXISTING_LEASE_ACTIVE",
       "goal": "沿原36项售卖标准推进；Windows052已交付，手机/系统交互/AI材料和真实使用范围继续收敛。模型待实际外置卡接回后按原整会指标验证。",
       "scope": "保留原音、录音保存与同步恢复；普通识别准确率优先，双人重叠整段分离再逐路转写，未知身份/角色待确认，纪要可核原话；Android与Windows整链实测仍待，前端原任务后置保留。",
-      "next": "共享手机058普通OTA/维护占用结束后先读取其最终收据与实际安装版本，补059日期格式修复所需普通控制/仅新录音回听删除和公开库系统保存复制分享；已有实证不重跑。设备忙时不抢占，不把候选构建算真机或售卖通过。",
+      "next": "Wait for existing phone/board lease final receipt/release, then recheck installed identity and claim one ordinary059 control/export item. Keep058/newer versions if candidate superseded; no cross-chat steering or lease stealing.",
       "baseline": "新MOSS只有四场120秒筛查；DER7.69%/5.38%/12.02%/4.37%，人数6/7、5/5、7/7、4/4；非整会/最终准确率。旧R002整会cpCER33.89%纠正24.77%，为读取修正非模型增益。",
       "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-android-material-exports054\\state.json",
       "interruptedWork": "手机修订原文对应录音位置接口已包含在当前手机后端候选交付中；真实手机和同事前端联调仍待完成。",
