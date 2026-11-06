@@ -140,7 +140,13 @@ public final class RecordingSyncService extends Service {
                     throw new RecordingSyncRunner.ActionRequired("请允许蓝牙连接后继续接收",denied);
                 }
                 AndroidGattLink link=AndroidGattLink.connect(getApplicationContext(),device);
-                RecordingClient client=new RecordingClient(link);activeClient=client;
+                RecordingClient client;
+                try {
+                    boolean requested=link.preferBulkTransfer();
+                    getSharedPreferences(PREFS,MODE_PRIVATE).edit().putBoolean("highPriorityRequestAccepted",requested).commit();
+                    client=new RecordingClient(link);
+                } catch(IOException|RuntimeException failed){link.close();throw failed;}
+                activeClient=client;
                 return new RecordingSyncRunner.Connection(){
                     public RecordingLibrary.Session sync() throws IOException {return client.syncAvailableAndReclaim(selected,path,null);}
                     public boolean disconnected(){return link.wasDisconnected();}
