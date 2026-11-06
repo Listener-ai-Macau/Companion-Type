@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T07:33:32+08:00",
-  "aarSha256": "2d2aedcbb38dd553aef341d577a20243650ebd08c2798daeeab88756bae2bf0e",
-  "backendSourceCommit": "f0170f8ab29e2dde5f152328b264900882c65590",
+  "at": "2026-11-07T07:52:43+08:00",
+  "aarSha256": "8b820de84d0a8c7d3a2d1a5ce0889a69f419d2fbd364011b3911558ed21b67dc",
+  "backendSourceCommit": "1ae35389944b2b3735f39868eadb1f2472e76f2e",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Await actual disconnect callback before closing GATT, bounded750ms even under cancellation, preserve interrupt state. Keep last connection stage/status in two overwritten private metadata records only. No data/control retry or bond/adapter changes; retains078 runner1s/5s waits. Native/UI/models unchanged; not physical-qualified.",
-  "javaSourceCommit": "f0170f8ab29e2dde5f152328b264900882c65590",
+  "scope": "Exact Android15 RuntimeException(DeadObjectException) from Bluetooth Binder becomes existing typed LinkFailure, including connection/read/write/descriptor and cleanup paths. Preserve permission/programming exceptions, cause, bounded close, saved cursor and0781s/5s recovery. Original079 process crash retained. No adapter/bond reset or data/control replay. Native/UI/models unchanged; not physical-qualified.",
+  "javaSourceCommit": "1ae35389944b2b3735f39868eadb1f2472e76f2e",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\gatt079\\build\\inherited-provenance078.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\gatt080\\build\\inherited-provenance079.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -119,5 +119,10 @@
     "com/denzic/companion/mobile/GattCloseAwait$Port.class",
     "com/denzic/companion/mobile/GattCloseAwait.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo078": true
+  "allNonClassAarEntriesByteIdenticalTo078": true,
+  "javaClassesChangedFrom079": [
+    "com/denzic/companion/mobile/AndroidGattLink$2.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo079": true
 }
