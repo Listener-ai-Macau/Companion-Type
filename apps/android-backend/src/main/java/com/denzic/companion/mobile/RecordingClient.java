@@ -119,7 +119,7 @@ public final class RecordingClient implements Closeable {
     }
 
     public synchronized List<DeviceRecordings.Session> listDeviceSessions() throws IOException {
-        ensureOpen();DeviceRecordings.ready(link);return DeviceRecordings.group(listRecordings());
+        ensureOpen();return DeviceRecordings.group(listRecordings());
     }
     public synchronized boolean deleteDeviceSession(RecorderWire.Descriptor selected,DeviceRecordings.Confirm confirm) throws IOException {
         ensureOpen();peer.validate(selected);

@@ -34,13 +34,6 @@ public final class DeviceRecordings {
         List<Session> out=new ArrayList<>();for(List<Descriptor> group:groups.values())out.add(new Session(group));
         Collections.reverse(out);return out;
     }
-    public static final class Capacity {
-        public final long freeBytes,generation;public final int entries;
-        Capacity(byte[] p)throws IOException {
-            if(p==null||p.length<84||!magic(p,36,"CCQ2")||(p[41]&1)==0||(p[41]&2)!=0)throw new IOException("设备容量尚未就绪");
-            freeBytes=u32(p,52);generation=u32(p,44);entries=u8(p,42);
-        }
-    }
     public static final class Offer {
         final byte[] wire;
         public final long sessionId,startedUnixSeconds,durationMillis,encodedBytes,releasableBytes;
@@ -67,15 +60,6 @@ public final class DeviceRecordings {
         byte[] p=new byte[96];System.arraycopy(new byte[]{'C','D','S','3'},0,p,0,4);p[4]=1;put32(p,8,request);
         System.arraycopy(selected.uid(),0,p,16,12);put64(p,28,selected.epoch);put64(p,36,selected.sessionId);put32(p,92,crc(p,0,92));return p;
     }
-    static Capacity ready(RecordingClient.Link link)throws IOException {
-        long deadline=System.nanoTime()+20_000_000_000L;
-        while(true) {
-            byte[] p=link.read(RecordingClient.DEVICE_STATUS);
-            if(p!=null&&p.length>=84&&magic(p,36,"CCQ2")&&(p[41]&1)!=0&&(p[41]&2)==0)return new Capacity(p);
-            if(System.nanoTime()>=deadline)throw new IOException("设备正在录音或整理存储，请稍后刷新");
-            try {Thread.sleep(250);}catch(InterruptedException e){Thread.currentThread().interrupt();throw new IOException("设备操作已中断",e);}
-        }
-    }
     static byte[] response(RecordingClient.Link link,long request,int op,long seconds)throws IOException {
         long deadline=System.nanoTime()+seconds*1_000_000_000L;
         while(true) {
@@ -91,13 +75,12 @@ public final class DeviceRecordings {
         }
     }
     static boolean delete(RecordingClient.Link link,Descriptor selected,long request,Confirm confirm)throws IOException {
-        ready(link);link.subscribe(RecordingClient.RECORDING_CONSUME);
+        link.subscribe(RecordingClient.RECORDING_CONSUME);
         byte[] preview=selection(selected,request);link.write(RecordingClient.RECORDING_CONSUME,preview);
         Offer offer=new Offer(response(link,request,1,20),selected,request);long issued=System.nanoTime();
         boolean accepted=confirm.approve(offer);byte[] decision=offer.decision(accepted,(System.nanoTime()-issued)/1_000_000L);
         link.write(RecordingClient.RECORDING_CONSUME,decision);
         offer.receipt(response(link,request,accepted?2:3,accepted?600:20),accepted?2:3);
-        if(accepted)ready(link);
         return accepted;
     }
 }

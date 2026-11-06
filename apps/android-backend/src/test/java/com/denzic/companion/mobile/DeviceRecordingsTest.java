@@ -11,7 +11,7 @@ public final class DeviceRecordingsTest {
   final byte[] offer,status;final Queue<byte[]> replies=new ArrayDeque<>();int commands,erase;boolean forged;
   Link(byte[] o,byte[] s){offer=o.clone();status=s.clone();}
   public int mtu(){return 512;} public void close(){} public void subscribe(UUID id){}
-  public byte[] read(UUID id){return status.clone();}
+  public byte[] read(UUID id){byte[] p=status.clone();if(erase>0)p[41]=2;return p;}
   public void write(UUID id,byte[] value)throws IOException {
    check(id.equals(RecordingClient.RECORDING_CONSUME));commands++;
    if(value[4]==1) {
