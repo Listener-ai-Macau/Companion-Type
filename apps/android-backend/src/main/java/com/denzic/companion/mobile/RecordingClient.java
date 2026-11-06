@@ -17,6 +17,7 @@ public final class RecordingClient implements Closeable {
     public interface Link extends Closeable {
         int mtu();
         default boolean calendarSupported() {return false;}
+        default String otaDataWriteMode() throws IOException {return "unspecified";}
         byte[] read(UUID characteristic) throws IOException;
         void subscribe(UUID characteristic) throws IOException;
         void write(UUID characteristic,byte[] value) throws IOException;
