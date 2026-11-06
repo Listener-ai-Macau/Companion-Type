@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T03:44:36+08:00",
-  "aarSha256": "b52348e5be8ee3204a50398e02cb98bf8e87aaeead418676ce0ae741027256bd",
-  "backendSourceCommit": "fffc3602de5866235b6cf8617f30ab034461b2c3",
+  "at": "2026-11-07T04:19:59+08:00",
+  "aarSha256": "bc38b488db264f966c17b421029202c95487030c07e3bb22eba33e898428e1a3",
+  "backendSourceCommit": "40dedf93ceef095c9f7cb925ea6c5657155c8c0d",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Native first-PULL-write through terminal originals and exact durable receipts; verified new bytes only, cache/resume/follow modes explicit, same task spans reconnect waits. Existing typed initial133 one-retry wrapper now also used by OTA opening, before product commands; no data/installation replay. Existing074 overlap,072/071/070 fixes, native/UI/models unchanged. Not installed or hardware-qualified",
-  "javaSourceCommit": "fffc3602de5866235b6cf8617f30ab034461b2c3",
+  "scope": "Extend075 observations with per-file first-window/original-verified/exact-durable-receipt times, connection-to-first-private-directory and reconnect timing/events; idempotent close/replay preserves first observations. Include wait/cooldown, no transfer/retry/control policy change. Native/UI/models and firmware unchanged. Not yet hardware-qualified",
+  "javaSourceCommit": "40dedf93ceef095c9f7cb925ea6c5657155c8c0d",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -90,5 +90,15 @@
     "com/denzic/companion/mobile/RecordingTransferMetrics.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo074": true,
-  "inherited074Receipt": "E:\\CodexData\\Companion\\.build-cache\\native075\\inherited-provenance074.json"
+  "inherited074Receipt": "E:\\CodexData\\Companion\\.build-cache\\native075\\inherited-provenance074.json",
+  "javaClassesChangedFrom075": [
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingSyncService$2.class",
+    "com/denzic/companion/mobile/RecordingSyncService$3.class",
+    "com/denzic/companion/mobile/RecordingSyncService.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics$Segment.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo075": true,
+  "inherited075Receipt": "E:\\CodexData\\Companion\\.build-cache\\trace076\\inherited-provenance075.json"
 }
