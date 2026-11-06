@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T01:04:45+08:00",
-  "aarSha256": "631e13061271ab92b96c636e0dff18ad15dd50f63d4a4fd52dcfbb922dd10bc3",
-  "backendSourceCommit": "0d9cd297ca6fba1984e947705e7350c7958761a2",
+  "at": "2026-11-07T01:25:04+08:00",
+  "aarSha256": "94abcbb2222a941e174d7da2e8fd93942d98c1be80d681effb62789fbdd99138",
+  "backendSourceCommit": "6b01d52f76f54cada65572365512ece2e2875d8f",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Only explicit CRE2 stale snapshot result8 restarts the entire catalog with a fresh nonce, at most twice and within24s. All other device codes are reported exactly and fail; CRC/identity/order protections remain. Native audio/control, Word, model weights and firmware unchanged.",
-  "javaSourceCommit": "0d9cd297ca6fba1984e947705e7350c7958761a2",
+  "scope": "Exactly one retry after initial connection status133; closed first GATT client and1000ms cooldown before any recording command exists. Other errors and OTA opening unchanged. Preserve071 catalog recovery and070 local-library fix; native audio/control, Word, models and firmware unchanged.",
+  "javaSourceCommit": "6b01d52f76f54cada65572365512ece2e2875d8f",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -31,5 +31,19 @@
     "com/denzic/companion/mobile/RecordingClient.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo070": true,
-  "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json"
+  "inherited070Receipt": "E:\\CodexData\\Companion\\.build-cache\\catalog071\\inherited-provenance070.json",
+  "javaClassesChangedFrom071": [
+    "com/denzic/companion/mobile/AndroidGattLink$1.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Attempt.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Delay.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Refused.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingSyncRunner$LinkFailure.class",
+    "com/denzic/companion/mobile/RecordingSyncRunner.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo071": true,
+  "inherited071Receipt": "E:\\CodexData\\Companion\\.build-cache\\connect072\\inherited-provenance071.json",
+  "buildPreparationCorrection": "Initial class-diff allowlist did not expect RecordingClient inner-class final flag metadata to change after LinkFailure became extensible. javap -p -c -s instructions identical; verbose diff confirms only LinkFailure InnerClasses flag. Compilation itself passed; first candidate retained and checked, not blindly rebuilt."
 }
