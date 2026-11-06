@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-06T09:32:35+08:00",
+  "state": "FROZEN_RELEASE_ACTUAL_NATIVE_FORMATS_AND_SOURCE_GUARDS_PASSED",
+  "exeSha256": "ab154c7384cb62996ae2efb4043750479025c1edd9043f4bcc9ef7638495e93f",
+  "sourceCommit": "e684fa73b3c14423c0f62cd961af6732470b3a02",
+  "files": [
+    {
+      "format": "pptx",
+      "bytes": 99449,
+      "sha256": "f6d1c2ba4d49865a437e198750b458e0cffc231b525c3d7b66994b9e4c683cb3",
+      "wallSeconds": 0.069
+    },
+    {
+      "format": "png",
+      "bytes": 569306,
+      "sha256": "549b6dc375486f78ea13605132fffdb98dc33acfd0d85b609975b65c87d803e0",
+      "wallSeconds": 1.865
+    },
+    {
+      "format": "mindmap",
+      "bytes": 5510,
+      "sha256": "cd87f2d89eb197edd7c4f698715f373c2809653e8be4fc0772c4fe5d9e1d2209",
+      "wallSeconds": 0.054
+    }
+  ],
+  "staleSourceRejected": true,
+  "missingMaterialRejected": true,
+  "publicSourceContentUnchanged": true,
+  "ownerDataUsed": false,
+  "modelInference": false,
+  "deviceIo": false,
+  "scope": "Actual frozen release EXE, isolated native persistence/export boundary, synthetic saved material. OS Save As/share sheet and PowerPoint application not exercised."
+}

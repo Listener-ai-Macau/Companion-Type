@@ -1,0 +1,15 @@
+{
+  "state": "WINDOWS052_INSTALLED_EXISTING_DATA_IDENTICAL",
+  "startedAt": "2026-11-06T09:34:23+08:00",
+  "candidateVersion": "0.1.52",
+  "sourceCommit": "e684fa73b3c14423c0f62cd961af6732470b3a02",
+  "msiSha256": "62908df40faa65e412e62db2044f03ba37246b26f6ecc956633ced94cee8a4df",
+  "existingDataFiles": 245,
+  "dataContentsPrinted": false,
+  "installerExitCode": 0,
+  "finishedAt": "2026-11-06T09:34:27+08:00",
+  "dataManifestIdentical": true,
+  "installedExeSha256": "20c03908f67a450a77963005e95a70834335ee594a041df047aab3175285cca3",
+  "installedDllSha256": "5baf8ad5f02a861d652f68d86b54f7afc3619a3b87b22f97351744049486a61e",
+  "limitations": "No owner app launch, foreground interaction, actual share/save modal, device operation or model inference."
+}

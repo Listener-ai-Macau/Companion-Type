@@ -1,0 +1,65 @@
+{
+  "at": "2026-11-06T09:48:28+08:00",
+  "state": "WINDOWS052_INSTALLED_SAVED_MATERIAL_PPTX_PNG_VERIFIED_ACCEPTANCE_OPEN",
+  "ownerLatest": "现在未连接，稍后再接；早上没有显卡的",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\recovered-software050",
+  "branch": "work/material-exports052-20261106",
+  "baseline": "Windows0.1.51 installed/source15fd54ee/receipts4de6308c; Android050r2 retained",
+  "existingTask": "CP27-01/exports acceptance25, plus mindmap17; no new acceptance row",
+  "userOutcome": "Windows按同一份已保存内容/材料选择，导出可编辑自动分页PPTX、完整导图PNG及可编辑mm；预览、复制与文件分享沿现有内容来源校验。",
+  "scope": [
+    "No new ASR training/inference required",
+    "Saved text, disclosures and citations retained",
+    "Native copy/preview/save/share source hashes remain consistent",
+    "PNG exact graph nodes with size refusal rather than silent truncation",
+    "External document/image validation and UI checks before batch delivery"
+  ],
+  "boundaries": [
+    "实际系统Save As窗口、分享选择器/接收应用本轮未操作；不称完整系统交互验收通过。",
+    "PPTX经Microsoft Open XML SDK完整模式及几何检查；本机无PowerPoint/LibreOffice，未冒称在Office应用打开。",
+    "这是已保存材料的格式转换，非AI智能填Word/Excel、AI生图或新事实生成。",
+    "Android新PPTX/PNG尚未交付；完整双端对标、客户深用与Owner验收保持未完成。",
+    "本轮无新模型推理/训练、板卡/手机I/O，不改原音或用户资料；系统剪贴板未触碰。",
+    "导图长文在声明尺寸范围内完整输出，超出上限明确拒绝；未宣称无限长图。",
+    "Windows053设备管理在另一个工作树推进；后续集成必须保留本批最终e684fa73的格式修复，不能仅沿早期a8d3b707冻结源。"
+  ],
+  "modelResume": {
+    "state": "GPU_DEFERRED_OWNER_CONFIRMED_NOT_CONNECTED_MORNING",
+    "waitExited": true,
+    "runRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-owner-resume-20261106",
+    "resumeScript": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\resume_full_moss_and_score_20261106.py",
+    "rebootInvestigationPrerequisite": false,
+    "newWholeMeetingScore": null
+  },
+  "sourceCommit": "e684fa73b3c14423c0f62cd961af6732470b3a02",
+  "remoteSourceVerified": true,
+  "installed": true,
+  "version": "0.1.52",
+  "androidVersionUnchanged": "050r2/code51",
+  "ownerAccepted": false,
+  "customerResult": null,
+  "installer": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-material-exports052\\Companion-Windows-0.1.52-演示材料与导图.msi",
+  "msiSha256": "62908df40faa65e412e62db2044f03ba37246b26f6ecc956633ced94cee8a4df",
+  "checks": {
+    "nativePreFinalRootBalance": "cargo-tests.json: 11 targeted tests on 26ea29d; final root-only correction independently tested",
+    "finalTextLayout": "final-text-layout-tests.log",
+    "documents": "document-verification.json",
+    "frozenReleaseActualFormats": "packaged-format-check/result.json",
+    "actual14SlidePptxSchema": "packaged-format-check/openxml-schema.json",
+    "msi": "windows-verification.json",
+    "upgrade": "windows-upgrade/result.json",
+    "installedReadonlyUi": "installed-native-readonly-ui-result.json"
+  },
+  "installedData": {
+    "existingFiles": 245,
+    "sha256ManifestIdentical": true,
+    "privateManifestsLocalOnly": true
+  },
+  "release": {
+    "finalSeconds": 474.05,
+    "source": "e684fa73b3c14423c0f62cd961af6732470b3a02",
+    "jobs": 1,
+    "retainedCorrection": "release-visual-correction-stop.json: own pre-package build stopped to fix visually detected single-character root orphan"
+  },
+  "remoteReceiptVerification": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-material-exports052\\remote-verification.json"
+}

@@ -1,0 +1,15 @@
+{
+  "kind": "release",
+  "exitCode": 0,
+  "wallSeconds": 474.05,
+  "jobs": 1,
+  "modelsRun": false,
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-material-exports052\\cargo-release-1793927981179687800.log",
+  "command": [
+    "cargo",
+    "build",
+    "--offline",
+    "--locked",
+    "--release"
+  ]
+}

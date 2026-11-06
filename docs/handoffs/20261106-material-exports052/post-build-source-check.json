@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-06T09:48:28+08:00",
+  "trackedFileCount": 1086,
+  "exactShaMatched": 1085,
+  "lineEndingOnlyDifferences": [
+    {
+      "path": "apps/windows/src-tauri/Cargo.toml",
+      "frozenSha256": "9aa14b8f9c4fe6994ab842b3fe992ffac524f71e1bb263f8a83e0b5873a18c7b",
+      "workingSha256": "59dadb1d03d9ecae4592e5347073511bd7115edcbae8bfaa9bd6b15c84e6cb02",
+      "normalizedContentIdentical": true,
+      "difference": "CRLF versus LF only; retained working tree, no semantic source change"
+    }
+  ],
+  "functionalSourceUnchanged": true
+}

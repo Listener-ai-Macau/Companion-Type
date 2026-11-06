@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-06T09:18:25.192609+08:00",
+  "state": "OWN_RELEASE_STOPPED_BEFORE_PACKAGING_FOR_DETECTED_PNG_ROOT_ORPHAN_FIX",
+  "ownedProcesses": [
+    {
+      "pid": 24868,
+      "createdAt": 1793927769.359614
+    }
+  ],
+  "reason": "Visual QA found a single Chinese character orphaned in the diagram root. Same unshipped batch, complete balancing before final release; no user app/process affected."
+}

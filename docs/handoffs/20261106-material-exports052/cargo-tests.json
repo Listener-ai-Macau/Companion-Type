@@ -1,0 +1,18 @@
+{
+  "kind": "tests",
+  "exitCode": 0,
+  "wallSeconds": 165.16,
+  "jobs": 1,
+  "modelsRun": false,
+  "log": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-material-exports052\\cargo-tests-1793927401210561900.log",
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--lib",
+    "content05",
+    "--",
+    "--test-threads=1"
+  ]
+}
