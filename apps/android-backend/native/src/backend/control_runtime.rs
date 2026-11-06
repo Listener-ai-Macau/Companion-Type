@@ -53,7 +53,7 @@ pub(crate) fn inventory(root:&Path,device:&str,identity:&[u8])->Result<Inventory
     let dir=device_dir(root,device)?;let peer=PausePeer::from_status(identity)?.ok_or("设备不支持当前录音控制。")?;
     if !dir.exists(){return Ok(Inventory{sessions:vec![],unreadable_count:0});}
     let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(dir.join("control.lock")).map_err(|_|"录音控制记录暂不可用。")?;
-    lock.try_lock().map_err(|_|"该设备正在处理另一项录音操作。")?;
+    super::control_lock::try_lock(&lock)?;
     let mut sessions=Vec::new();let mut unreadable=0;
     for item in fs::read_dir(&dir).map_err(|_|"无法检查录音控制记录。")? {
         let path=item.map_err(|_|"无法检查录音控制记录。")?.path();if path.extension().is_none_or(|e|e!="json"){continue;}
@@ -70,7 +70,7 @@ pub(crate) fn inventory(root:&Path,device:&str,identity:&[u8])->Result<Inventory
 pub(crate) fn adopt_local<T:Transport>(root:&Path,device:&str,transport:&mut T)->Result<Report,String> {
     let dir=device_dir(root,device)?;fs::create_dir_all(&dir).map_err(|_|"无法保存录音控制记录。")?;
     let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(dir.join("control.lock")).map_err(|_|"录音控制暂不可用。")?;
-    lock.try_lock().map_err(|_|"该设备正在处理另一项录音操作。")?;
+    super::control_lock::try_lock(&lock)?;
     let identity=transport.identity()?;let peer=PausePeer::from_status(&identity)?.ok_or("设备不支持当前录音控制。")?;
     let raw=transport.status()?;let status=PauseStatus::decode(&raw)?;
     let anchor=u32::from_le_bytes(raw[12..16].try_into().unwrap());let duration=u32::from_le_bytes(raw[20..24].try_into().unwrap());
@@ -113,7 +113,7 @@ pub(crate) fn reconcile_catalogue<T:Transport>(root:&Path,host:&str,device:&str,
     if host.trim().is_empty()||host.len()>256{return Err("录音会话无效。".into());}
     let dir=device_dir(root,device)?;
     let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(dir.join("control.lock")).map_err(|_|"录音控制暂不可用。")?;
-    lock.try_lock().map_err(|_|"该设备正在处理另一项录音操作。")?;
+    super::control_lock::try_lock(&lock)?;
     let identity=transport.identity()?;let peer=PausePeer::from_status(&identity)?.ok_or("设备不支持当前录音控制。")?;
     let negotiated=Peer::from_status(&identity)?.ok_or("设备录音身份不可用。")?;
     let path=dir.join(journal_name(host));let mut journal=read_journal(&path)?.ok_or("没有找到这次录音的控制记录。")?;
@@ -218,7 +218,7 @@ pub(crate) fn execute<T:Transport>(root:&Path,host:&str,device:&str,command:u8,s
     if host.trim().is_empty()||host.len()>256||command>5||(command!=1&&seconds!=0){return Err("录音操作参数不完整。".into());}
     let dir=device_dir(root,device)?;fs::create_dir_all(&dir).map_err(|_|"无法保存录音控制记录。")?;
     let lock=OpenOptions::new().read(true).write(true).create(true).truncate(false).open(dir.join("control.lock")).map_err(|_|"录音控制暂不可用。")?;
-    lock.try_lock().map_err(|_|"该设备正在处理另一项录音操作。")?;
+    super::control_lock::try_lock(&lock)?;
     let identity=transport.identity()?;let peer=PausePeer::from_status(&identity)?.ok_or("设备不支持当前录音控制。")?;
     if command==1&&seconds==0&&!capacity::supports_unlimited(&identity) {
         return Err("当前设备尚不支持无预设时长录音，请先升级设备；没有开始录音。".into());

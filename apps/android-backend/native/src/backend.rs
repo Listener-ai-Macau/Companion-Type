@@ -74,6 +74,8 @@ pub(crate) mod recorder_control {include!(concat!(env!("OUT_DIR"),"/mobile_contr
 #[path = "../../../windows/src-tauri/src/backend/recording_capacity.rs"]
 pub(crate) mod recording_capacity;
 #[cfg(feature="mobile-control")]
+pub(crate) mod control_lock;
+#[cfg(feature="mobile-control")]
 pub(crate) mod control_runtime;
 #[cfg(all(test,feature="mobile-control"))]
 mod control_engine_tests;
