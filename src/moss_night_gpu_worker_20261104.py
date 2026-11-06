@@ -161,8 +161,13 @@ try:
 
     original_features=model.model.get_audio_features
     def observed_features(*values,**kwargs):
+        if getattr(model,'_completed_acoustic_weights_retired',False):
+            raise RuntimeError('New acoustic call after retirement; no empty-weight reuse')
         state.update(state='ENCODING_COMPLETE_AUDIO');save();begin=time.perf_counter()
         result=original_features(*values,**kwargs);torch.cuda.synchronize(device)
+        if protocol['runtime'].get('retireAcousticModulesAfterEncoding'):
+            from moss_retire_acoustic_20261106 import retire_completed_acoustic_modules
+            state['acousticRetirement']=retire_completed_acoustic_modules(model,torch=torch,device=device)
         if protocol['runtime'].get('releaseUnusedModelAllocations'):
             torch.cuda.empty_cache()
             state['unusedAllocatorReleases']=state.get('unusedAllocatorReleases',0)+1
