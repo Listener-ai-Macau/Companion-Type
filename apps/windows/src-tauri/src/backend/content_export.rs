@@ -38,7 +38,7 @@ fn selected_source(session:&CompanionV1HostSession,mode:&str,choice:&Selection,l
         // Rich renderers treat a quote as one verbatim paragraph. Protect
         // saved speech before interpreting document structure, while keeping
         // clipboard/TXT/Markdown/XLSX source text unchanged.
-        let presented=if literal_transcript {super::export_text_layout::quote_literal_lines(text)} else {text.to_owned()};
+        let presented=if literal_transcript {super::export_text_layout::quote_literal_lines(&text)} else {text.to_owned()};
         parts.push(format!("## 录音文字\n\n{presented}"));
         if choice.timeline {
             let rows=super::transcript_review::effective_utterances(session);
