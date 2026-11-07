@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T16:41:54+08:00",
-  "aarSha256": "65c1c9672a6a1a92b8dc3368621f9d769d8667c105237e247e2093880b6d0d61",
-  "backendSourceCommit": "85444676596f605851ea9e22e35b6f042129cb2f",
+  "at": "2026-11-07T17:18:56+08:00",
+  "aarSha256": "28fac38507b6f396736179f272ecbc42f4be48e59aa01769892d38f5db764357",
+  "backendSourceCommit": "166bce153cae32847912490d1f748a672f147ab9",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Measured HIGH negotiation completes270-450ms after fresh short PULL. Optional STOP-time prime starts it while normal STOP/seal/catalogue runs; same connection handoff borrows accepted HIGH with no duplicate request. Unused prime expires5s, active transfer and closed-owner late timers are protected. STOP is never held for priority or replayed. Native metrics endpoints/JNI/Web/firmware unchanged. Actual speed improvement pending.",
-  "javaSourceCommit": "85444676596f605851ea9e22e35b6f042129cb2f",
+  "scope": "Existing finite-board hint is sent only after ordinary confirmedSTOP before inventory/catalogue. Existing2s board expiry retained; immediate receive reuses accepted hint, delayed receive renews fresh nonce. No payload, receipt, native, firmware or metric endpoint change. Actual speed pending.",
+  "javaSourceCommit": "166bce153cae32847912490d1f748a672f147ab9",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -242,5 +242,10 @@
     "com/denzic/companion/mobile/RecordingClient.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo093": true,
-  "inherited093Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability094\\build\\inherited-provenance093.json"
+  "inherited093Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability094\\build\\inherited-provenance093.json",
+  "javaClassesChangedFrom094": [
+    "com/denzic/companion/mobile/RecordingClient.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo094": true,
+  "inherited094Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability095\\build\\inherited-provenance094.json"
 }

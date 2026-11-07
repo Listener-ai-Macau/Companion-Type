@@ -652,6 +652,9 @@ public final class MainActivity extends Activity {
     /** A confirmed control ACK remains confirmed if a later list read fails.
      * Reuse this operation's connection; never replay START/STOP for a refresh. */
     private JSONObject recordingControlSnapshot(RecordingClient client,boolean receiving,String action,JSONObject result)throws Exception {
+        if(!receiving&&"STOP".equals(action)&&"stopped".equals(result.optString("state"))){
+            try{client.prepareStoppedReceive();}catch(java.io.IOException optionalPreferenceUnavailable){/* The ordinary catalogue still determines whether this link is usable. */}
+        }
         try{
             result.put("inventory",new JSONObject(receiving ? RecordingSyncService.controlSessions(root().resolve("companion-control")) : client.controlSessions(root().resolve("companion-control"))));
         }catch(java.io.IOException refresh){result.put("inventoryRefreshFailed",true);}
