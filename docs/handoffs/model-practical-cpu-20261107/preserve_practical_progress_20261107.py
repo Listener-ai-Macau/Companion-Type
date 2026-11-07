@@ -44,7 +44,7 @@ for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
     if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
         r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
         (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -79,6 +79,8 @@ record['native8CommandCancelResumeProof']=optional(base/'native8-command-r1/canc
 record['native8AmiPreparation']=optional(base/'native8-ami-r1/input-preparation.json')
 record['native8AmiRun']=optional(base/'native8-ami-r1/native-run.json')
 record['native8AmiChain']=optional(base/'native8-ami-r1/chain-state.json')
+record['native8AmiRegions']=optional(base/'native8-ami-r1/overlap-breakdown.json')
+record['practicalReleaseReview']=optional(base/'native8-release-review-r1/review.json')
 if record['native8VulkanFullRun']:record['state']=record['native8VulkanFullRun']['state']
 elif record['native8VulkanShortRun']:record['state']=record['native8VulkanShortRun']['state']
 if record['native8VulkanChain']:record['state']=record['native8VulkanChain']['state']
@@ -97,6 +99,9 @@ if record['native8F16Assessment']:
     record['state']='F16_TWO_FULL_DEVELOPMENT_MEETINGS_STAGE15_PASSED_QUALIFICATION_OPEN'
 if record['native8AmiRun']:record['state']=record['native8AmiRun']['state']
 if record['native8AmiChain']:record['state']=record['native8AmiChain']['state']
+if record['practicalReleaseReview']:
+    record['state']=record['practicalReleaseReview']['state']
+    record['next']=record['practicalReleaseReview']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
@@ -108,11 +113,17 @@ if record['native8F16Assessment']:
     contract=data['quality_targets']['real_meeting_model_contract_20261103'];speaker_gate=next(g for g in contract['gates'] if g['id']=='QM05')
     speaker_gate['native8Fp16Development20261107']={'at':now,'state':'STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN','modelEvidenceCommit':head,'assessment':str(base/'native8-f16-full-r1/candidate-assessment.json'),'der':{'L_R003S01C02':0.13464234040692016,'S_R004S03C01':0.03855615562340746},'predictedReferencePeople':{'L_R003S01C02':[6,6],'S_R004S03C01':[5,5]},'allReferencePeopleHavePositiveCorrectCoverage':True,'shortTurnsStillIncomplete':True,'defaultProductBackendChanged':False,'finalHoldoutOpened':False,'commandAndActualCancelResumePassed':bool(record['native8CommandCancelResumeProof']),'amiCrossCorpus':record['native8AmiRun']}
     contract['qualification']['currentQualification']='NOT_QUALIFIED: nativeFP16 full Chinese development meetings reach diarization15% stage (13.4642%/3.8556%,6/6 and5/5), complex10%/short speech and overlap remain open. Ordinary textCER7.6997% and joint10.2583%, complex joint40.9751% fail<5%. Standalone command and actual cancel/reopen boundary work; no installed mobile/card, factual-minute, final-holdout or sale acceptance.'
+    if record['practicalReleaseReview']:
+        speaker_gate['native8Fp16Development20261107']['crossCorpusQualification']='FAILED_AMI_EN2002a_DER31.0766_PERCENT_MOSTLY_MISSED_ACTIVITY_NOT_PROMOTED'
+        speaker_gate['native8Fp16Development20261107']['releaseReview']=str(base/'native8-release-review-r1/review.json')
+        contract['qualification']['currentQualification']=record['practicalReleaseReview']['qualification']
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}
 with (R/'docs/development_log.md').open('a',encoding='utf8') as out:
     out.write('\n\n## '+now+'｜完整文字与有界内存说话人链 '+a.phase+'\n\n沿Owner“把模型做到可实用”及原QM05，不另立任务树。本次实测状态：'+record['state']+'。'+json.dumps(summary,ensure_ascii=False)+'\n\nR2完成3327个embedding后bad allocation，private约2GiB，完整说话人未完成；不扩大上限或原样重跑。新实现沿冻结官方权重/窗口/clean-frame/完整链接默认阈值，不输入真实人数；去除逐窗全局声道矩阵展开，三阶段耐久缓存。30秒原版所有段落/时间/匿名编号已逐项一致；这是兼容门，不是完整会议质量。两场完整文字已实测与共享Document校验：L混音全文诊断26.7635%（重叠顺序影响，非逐人CER），S全文7.6997%，均不冒充<5%或售卖达标；累计自有进程族240.645917/276.649706秒含低RAM中断重启，不含等待内存恢复或纪要。缺身份时不计算可采纳身份结论。原始窗口缓存、文字草稿先保存、分人后零新神经回填、连续匿名显示编号；实际30秒独立命令全链已完成，未安装替换产品。最终未见集未开，实际低RAM/CPU5%/private2GiB保护保持。源及公开证据'+head+'已远端逐ref核验。下一项：'+record['next']+'\n')
+    if record['practicalReleaseReview']:
+        out.write('\n本阶段终态复盘：同源360个GGUF张量/语义配置精确核验后，FP16替代Q8作研究基线，中文L整会39:23/6人标准DER24.5373%→13.4642%，S38:47/5人3.8540%→3.8556%（轻微变差，不称零回退）；真实共享Document通过且旧ASR原字未改。固定同一模型/几何/阈值的第三场AMI EN2002a35:43/4人DER31.0766%，漏检724.893519秒，占错误约92%；跨域资格失败，不用两中文平均掩盖。AMI非重叠22.9267%、>=2人40.7816%、>=3人45.9037%；同一全场身份映射，不区域重配。原音/参考哈希及失败保留，最终未见集未开。独立入口真实61秒首次调用、完成缓存重开0模型、中途取消保草稿/原始ASR复用/声音从原音重放并累计旧耗时、旧CPU完成任务0模型兼容读取均通过；未安装替换Windows/Android应用或跑实卡。详见'+str(base/'native8-release-review-r1/review.json')+'。模型源/证据远端提交'+head+'。实用/售卖未通过，下一项按原QM04与QM05/RM-OVERLAP继续，禁止单会阈值搜索、人数真值输入或盲目自研训练。\n')
 dest=S/'docs/handoffs/model-practical-cpu-20261107';dest.mkdir(parents=True,exist_ok=True)
 for file in [path,R/'docs/development_log.md']:shutil.copyfile(file,S/'docs'/file.name)
 (dest/(a.phase+'-result.json')).write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8');shutil.copyfile(__file__,dest/Path(__file__).name)
@@ -124,5 +135,7 @@ chain=Path(__file__).with_name('run_native8_f16_model_chain_20261107.py')
 if chain.exists():shutil.copyfile(chain,dest/chain.name)
 chain=Path(__file__).with_name('run_native8_ami_chain_20261107.py')
 if chain.exists():shutil.copyfile(chain,dest/chain.name)
+review_source=Path(__file__).with_name('review_practical_release_20261107.py')
+if review_source.exists():shutil.copyfile(review_source,dest/review_source.name)
 main=ship(S,['docs/product_backlog.json','docs/development_log.md','docs/handoffs/model-practical-cpu-20261107'],'Record complete meeting pipeline '+a.phase)
 print(json.dumps({'state':record['state'],'modelCommit':head,'mainCommit':main,'remoteReadbackConfirmed':True}),flush=True)
