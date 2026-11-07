@@ -1,0 +1,15 @@
+{
+  "state": "CONCRETE_NATIVE_TRIAL_TERMINAL_REVIEW_REQUIRED",
+  "startedAt": "2026-11-07T17:12:10+08:00",
+  "pid": 9088,
+  "modelFailureRetries": 0,
+  "lowMemoryContinuations": 0,
+  "futilityStopRequested": false,
+  "limitsChanged": false,
+  "sourceSha256": "d64b61c293acf2eb7e99cc94c2ef10ae72870e867c4e0595906ec5e2b669790f",
+  "events": [],
+  "ordinaryStrictCer": 0.06438438438438439,
+  "durableWindows": 113,
+  "controllerState": "FAILED_NATIVE_FULL_RETAINED_NO_AUTOMATIC_RETRY",
+  "finishedAt": "2026-11-07T17:13:00+08:00"
+}

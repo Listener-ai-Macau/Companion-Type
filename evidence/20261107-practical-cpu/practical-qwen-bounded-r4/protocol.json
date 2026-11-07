@@ -1,0 +1,19 @@
+{
+  "declaredAt": "2026-11-07T17:21:51+08:00",
+  "baseControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3",
+  "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+  "baseWorkerSourceSha256": "ed9ba63e799caea8e3b26c29e232a5da6d7f2f8276b11f37a68cdb93c5447882",
+  "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+  "recoverySourceSha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+  "maximumSplitDepth": 2,
+  "minimumLeafSamples": 120000,
+  "repeatCopies": 20,
+  "maximumRepeatBlockTokens": 8,
+  "rule": "On missing natural EOS or the existing short-gate20-copy token loop, retain the failed raw node, bisect the entire original input and decode both children. At most2levels; no child shorter than7.5s. Exhaustion is a failure. Early loop stop changes no generated prefix. No word deletion, VAD trimming, token-budget increase, model/prompt/weight change, reference or participant count.",
+  "normalOutputPolicy": "Keep every accepted original raw ID/text exactly; same frozen policy across both whole meetings.",
+  "modelParametersChanged": false,
+  "rawFailedParentReplacedByClaimedEos": false,
+  "qualityQualified": false,
+  "pilotCases": "One ordinary original first30s fresh generation must exactly match R3; real failed root34 retains its old failed parent and must recover all samples via accepted children. Pilot is exposed development, not independent qualification.",
+  "originalFailedReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\review.json"
+}

@@ -1,13 +1,13 @@
 {
-  "state": "RUNNING_FULL_OFFICIAL_NATIVE_ASR",
-  "pid": 22332,
-  "startedAt": "2026-11-07T17:04:52+08:00",
+  "state": "FAILED_OFFICIAL_NATIVE_FULL_ASR_RETAINED",
+  "pid": 19412,
+  "startedAt": "2026-11-07T17:09:46+08:00",
   "meeting": "L_R003S01C02",
   "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
   "audioSeconds": 2362.945,
   "modelLoaded": true,
-  "newNeuralWindows": 11,
-  "reusedWindows": 16,
+  "newNeuralWindows": 8,
+  "reusedWindows": 27,
   "referencePassedToWorker": false,
   "speakerJournalPending": true,
   "priorAttemptSeconds": 0.0,
@@ -19,14 +19,14 @@
     "officialShortWorkerSourceSha256": "c7bdf59e86e26833450cf36ee7c8a3135d7ec0529eb93fb35001fb84f7e2b402"
   },
   "limits": {
-    "pid": 22332,
+    "pid": 19412,
     "cpuRate": 500,
     "cpuControlFlags": 5,
     "cpuPercentMaximum": 5.0,
     "inLimitedJob": true,
     "jobPrivateCommitLimitBytes": 2147483648,
     "jobMemoryLimitEnabled": true,
-    "jobPeakPrivateCommitBytes": 1247260672,
+    "jobPeakPrivateCommitBytes": 1247318016,
     "cpuPriorityClass": 64,
     "memoryPagePriority": 1,
     "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -35,9 +35,13 @@
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
   "totalWindows": 79,
-  "completedWindows": 27,
-  "completedSample": 12960000,
+  "completedWindows": 34,
+  "completedSample": 16320000,
   "gpu": "AMD Radeon RX 6800 XT",
   "transformersVersion": "5.22.1",
-  "modelLoadSeconds": 14.240449100005208
+  "modelLoadSeconds": 18.233860199979972,
+  "error": "AssertionError('Generation hit the limit; retain raw partial output, do not silently label final')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_full_worker_20261107.py\", line 100, in <module>\n    assert raw['naturalEos'],'Generation hit the limit; retain raw partial output, do not silently label final'\n           ~~~^^^^^^^^^^^^^^\nAssertionError: Generation hit the limit; retain raw partial output, do not silently label final\n",
+  "finishedAt": "2026-11-07T17:12:57+08:00",
+  "wholeWorkerSeconds": 190.65432709999732
 }
