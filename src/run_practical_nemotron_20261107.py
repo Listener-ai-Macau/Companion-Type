@@ -26,8 +26,8 @@ try:
                     if pressure.low() or (C/'stop.request').exists():
                         stop_owned_family(child,root);state['state']='STOPPED_NATIVE8_LOW_RAM_OR_EXPLICIT_RETAINED';break
                     try:
-                        family=[root]+root.children(recursive=True);private=sum(getattr(p.memory_info(),'private',0) for p in family);peak=max(peak,private)
-                        with (C/'resources.jsonl').open('a',encoding='utf8') as file:file.write(json.dumps({'at':now(),'meeting':case['meeting'],'phase':phase,'privateBytes':private,'availableBytes':psutil.virtual_memory().available})+'\n')
+                        family=[root]+root.children(recursive=True);private=sum(getattr(p.memory_info(),'private',0) for p in family);rss=sum(p.memory_info().rss for p in family);peak=max(peak,private)
+                        with (C/'resources.jsonl').open('a',encoding='utf8') as file:file.write(json.dumps({'at':now(),'meeting':case['meeting'],'phase':phase,'privateBytes':private,'rssBytes':rss,'availableBytes':psutil.virtual_memory().available})+'\n')
                     except psutil.Error:pass
                     time.sleep(1)
             out=C/'results'/case['meeting'];receipt=read(out/('completed-state.json' if phase=='activity' else 'native-cli-control.json')) if (out/('completed-state.json' if phase=='activity' else 'native-cli-control.json')).exists() else {}

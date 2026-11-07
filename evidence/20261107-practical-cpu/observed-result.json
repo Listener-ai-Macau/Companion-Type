@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-07T12:30:53+08:00",
-  "phase": "prepared",
+  "at": "2026-11-07T12:34:52+08:00",
+  "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
     "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "NATIVE8_INCOMPLETE_RETAINED_NO_AUTOMATIC_RETRY",
+  "state": "NATIVE8_SHORT_PASSED_FULL_MEETINGS_PENDING",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -4120,7 +4120,34 @@
   },
   "native8FullRun": null,
   "boundedFullFirstMeetingRejected": true,
-  "native8VulkanShortRun": null,
+  "native8VulkanShortRun": {
+    "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+    "pid": 15000,
+    "startedAt": "2026-11-07T12:32:06+08:00",
+    "results": [
+      {
+        "meeting": "public61-native8-control",
+        "phase": "activity",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 5.072200099995825,
+        "privatePeakBytes": 1694691328
+      },
+      {
+        "meeting": "public61-native8-control",
+        "phase": "cli-control",
+        "exitCode": 0,
+        "workerState": "PASS_NATIVE61_C_ABI_AND_OFFICIAL_CLI_SEGMENTS",
+        "wholeProcessFamilySeconds": 5.0608981999976095,
+        "privatePeakBytes": 1719496704
+      }
+    ],
+    "automaticRetries": 0,
+    "referencePassedToWorker": false,
+    "protocolSha256": "7568e9b0420d329c4c7fca51f19b17b77b7e75433a839562855e4e921951fdad",
+    "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+    "finishedAt": "2026-11-07T12:32:18+08:00"
+  },
   "native8VulkanFullRun": null,
   "native8GeometryCorrection": {
     "recordedAt": "2026-11-07T12:30:53+08:00",
@@ -4199,5 +4226,7 @@
     "noWholeMeetingNative8InferenceYet": true,
     "modelWeightsAndQualityGatesUnchanged": true
   },
-  "next": "原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。"
+  "native8VulkanChain": null,
+  "native8VulkanAssessment": null,
+  "next": "原QM05继续：旧complete-link整会L/S均失败（标准DER78.0445%/25.6591%），不替换产品、不逐会扫阈值。一个新官方8路端到端候选：固定Q8权重、官方v0.3.0 Vulkan运行库、每次按真实6800XT型号选择，C ABI/CLI均显式应用同一作者6项geometry，保留首次CPU接入参数错误。修复后61秒连续状态/原版CLI同编号同时间门已过，下一步同一L/S整会、标准零collar含重叠/逐人短句评分，再将旧完整ASR原字零神经回填共享Document。原文字<5%、重叠逐路文字、事实、独立集和双端/实卡门保持。顺序模型，CPU5%/private2GiB/实际低RAM保护，块间1s让出资源（非GPU利用率硬限），不重跑失败HIP、不扩大预算。"
 }

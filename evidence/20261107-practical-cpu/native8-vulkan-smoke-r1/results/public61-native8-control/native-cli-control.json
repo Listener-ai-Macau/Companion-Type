@@ -1,0 +1,37 @@
+{
+  "state": "PASS_NATIVE61_C_ABI_AND_OFFICIAL_CLI_SEGMENTS",
+  "startedAt": "2026-11-07T12:32:13+08:00",
+  "pid": 14260,
+  "referenceInput": false,
+  "gpuUsed": true,
+  "selectedNativeDevice": {
+    "registryIndex": 0,
+    "name": "Vulkan0",
+    "description": "AMD Radeon RX 6800 XT",
+    "type": 1,
+    "gpuOrdinal": 0
+  },
+  "segments": 8,
+  "allSpeakerIdsMatch": true,
+  "allTimesMatchToCliMillisecondPrecision": true,
+  "fullMultiPushStateExercised": true,
+  "qualityQualified": false,
+  "finishedAt": "2026-11-07T12:32:17+08:00",
+  "wholeWorkerSeconds": 3.8854767000011634,
+  "limits": {
+    "pid": 14260,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1858555904,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
