@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T21:03:01+08:00",
+  "at": "2026-11-07T21:07:08+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -14388,27 +14388,23 @@
       },
       "run-r2.json": {
         "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
-        "pid": 25088,
-        "startedAt": "2026-11-07T20:31:16+08:00",
-        "priorAttemptReceipts": [],
+        "pid": 26152,
+        "startedAt": "2026-11-07T21:04:29+08:00",
+        "priorAttemptReceipts": [
+          "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1\\r2-attempt-0001.json"
+        ],
         "results": [
-          {
-            "stage": "separation",
-            "exitCode": 0,
-            "wholeProcessFamilySeconds": 425.9413976999931,
-            "privatePeakBytes": 1067130880
-          },
           {
             "stage": "asr",
             "exitCode": 15,
-            "wholeProcessFamilySeconds": 1469.1630988999968,
-            "privatePeakBytes": 1279303680
+            "wholeProcessFamilySeconds": 152.99454079999123,
+            "privatePeakBytes": 1246232576
           }
         ],
         "automaticModelFailureRetries": 0,
         "qualityQualified": false,
         "stage": "asr",
-        "finishedAt": "2026-11-07T21:02:51+08:00"
+        "finishedAt": "2026-11-07T21:07:02+08:00"
       },
       "separation-state-r2.json": {
         "state": "COMPLETE_PS4_SEPARATION_UNQUALIFIED",
@@ -14450,28 +14446,28 @@
       },
       "asr-state-r2.json": {
         "state": "TRANSCRIBING_EVERY_EXTRACTED_VOICE",
-        "pid": 13348,
-        "startedAt": "2026-11-07T20:38:22+08:00",
+        "pid": 21324,
+        "startedAt": "2026-11-07T21:04:29+08:00",
         "stage": "asr",
         "binding": {
           "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
           "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
           "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
         },
-        "newNeuralCalls": 123,
-        "reusedOutputs": 6,
-        "completedInputs": 121,
+        "newNeuralCalls": 8,
+        "reusedOutputs": 129,
+        "completedInputs": 129,
         "referencePassedToWorker": false,
         "qualityQualified": false,
         "limits": {
-          "pid": 13348,
+          "pid": 21324,
           "cpuRate": 500,
           "cpuControlFlags": 5,
           "cpuPercentMaximum": 5.0,
           "inLimitedJob": true,
           "jobPrivateCommitLimitBytes": 2147483648,
           "jobMemoryLimitEnabled": true,
-          "jobPeakPrivateCommitBytes": 1284993024,
+          "jobPeakPrivateCommitBytes": 1281323008,
           "cpuPriorityClass": 64,
           "memoryPagePriority": 1,
           "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -14485,6 +14481,6 @@
       "review.json": null
     }
   },
-  "sourceAndEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
+  "sourceAndEvidenceCommit": "52e69dd016ccfc1ac0952d31d338d2e0f3add53e",
   "remoteReadbackConfirmed": true
 }
