@@ -40,7 +40,6 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private volatile int mtu=23;
     private volatile int initialConnectionStatus=-1;
     private volatile boolean connectedOnce;
-    private volatile boolean backgroundConnect;
     private boolean calendarSupported;
     private final CountDownLatch disconnectAcknowledged=new CountDownLatch(1);
     private final long traceStartedNanos=System.nanoTime();
@@ -54,10 +53,6 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private final BluetoothGattCallback callbacks=new BluetoothGattCallback(){
         @Override public void onConnectionStateChange(BluetoothGatt g,int status,int state){
             callbackStatus=status;callbackState=state;
-            // Background scheduling may report a normal initial idle state.
-            // It is not a lost established connection. Closing still signals
-            // its disconnect latch, and every real error remains actionable.
-            if(backgroundConnect&&!connectedOnce&&!closed.get()&&status==BluetoothGatt.GATT_SUCCESS&&state==BluetoothProfile.STATE_DISCONNECTED)return;
             if(status!=BluetoothGatt.GATT_SUCCESS&&!connectedOnce)initialConnectionStatus=status;
             connected=status==BluetoothGatt.GATT_SUCCESS&&state==BluetoothProfile.STATE_CONNECTED;
             if(connected)connectedOnce=true;
@@ -99,7 +94,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
     }
     private static AndroidGattLink connectWithInitialRetry(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock)throws IOException {
         java.util.concurrent.atomic.AtomicReference<BluetoothDevice> rediscovered=new java.util.concurrent.atomic.AtomicReference<>();
-        try{return InitialConnectionRetry.open(background->connect(context,rediscovered.get()==null?device:rediscovered.get(),minimumMtu,synchronizeClock,rediscovered.get()!=null,background),millis->{
+        try{return InitialConnectionRetry.open(()->connect(context,rediscovered.get()==null?device:rediscovered.get(),minimumMtu,synchronizeClock,rediscovered.get()!=null),millis->{
             android.util.Log.w("CompanionBle","Initial GATT133 refused before connection; closed client, retrying once");
             rediscovered.set(AndroidDevices.refreshSelected(context,device,millis));
         });}catch(RuntimeException died){throw recoverablePlatformFailure(died);}
@@ -107,11 +102,10 @@ public final class AndroidGattLink implements RecordingClient.Link {
     /** Upgrade uses the same bonded GATT owner with no recording negotiation or
      * clock write. Read-back verification must not modify the new application. */
     public static AndroidGattLink connectForUpdate(Context context,BluetoothDevice device)throws IOException{return connectWithInitialRetry(context,device,23,false);}
-    private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock,boolean rediscovered,boolean background) throws IOException {
+    private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock,boolean rediscovered) throws IOException {
         if(context==null||device==null)throw new IllegalArgumentException("context and selected device required");
         if(Build.VERSION.SDK_INT<26)throw new RecordingSyncRunner.ActionRequired("需要 Android 8 或更新的系统才能接收录音");
         AndroidGattLink link=new AndroidGattLink();boolean ready=false;
-        link.backgroundConnect=background;
         link.traceContext=context.getApplicationContext();
         try {
             if(Build.VERSION.SDK_INT>=35)link.inputAddressType=device.getAddressType();
@@ -126,7 +120,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
             }
             if(device.getBondState()!=BluetoothDevice.BOND_BONDED)throw new RecordingSyncRunner.ActionRequired("录音卡已取消配对，请重新配对后继续接收");
             link.traceStage="connect";
-            link.gatt=device.connectGatt(context.getApplicationContext(),background,link.callbacks,BluetoothDevice.TRANSPORT_LE);
+            link.gatt=device.connectGatt(context.getApplicationContext(),false,link.callbacks,BluetoothDevice.TRANSPORT_LE);
             if(link.gatt==null)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection could not start");
             link.traceStage="wait_connection";
             Event connection=link.waitOperation("connection",null,15_000);if(connection.state!=BluetoothProfile.STATE_CONNECTED)throw new RecordingSyncRunner.LinkFailure("Bluetooth connection not established");
@@ -230,7 +224,6 @@ public final class AndroidGattLink implements RecordingClient.Link {
                 .put("connectedOnce",connectedOnce).put("initialConnectionStatus",initialConnectionStatus)
                     .put("callbackStatus",callbackStatus).put("callbackState",callbackState).put("mtu",mtu)
                     .put("inputAddressType",inputAddressType).put("requestedAddressType",requestedAddressType)
-                    .put("connectionMode",backgroundConnect?"background":"direct")
                 .put("disconnectAcknowledged",disconnectAcknowledged.getCount()==0)
                 .put("closeElapsedNanos",closeElapsedNanos).put("connectError",error);
             android.content.SharedPreferences.Editor editor=traceContext.getSharedPreferences("companion_ble_diagnostics",Context.MODE_PRIVATE).edit().putString("last",trace.toString());
