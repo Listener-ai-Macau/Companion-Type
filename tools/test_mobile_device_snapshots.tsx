@@ -4,7 +4,8 @@ import {act,create} from 'react-test-renderer';
 const g=globalThis as any;
 g.document={querySelectorAll:()=>[],querySelector:()=>null,getElementById:()=>null};
 g.localStorage={getItem:()=>null,setItem:()=>{}};
-g.window={setTimeout,clearTimeout,setInterval,clearInterval,requestAnimationFrame:(fn:any)=>{fn();return 0;},matchMedia:()=>({matches:false})};
+const ownedIntervals=new Set<ReturnType<typeof setInterval>>();
+g.window={setTimeout,clearTimeout,setInterval:(fn:any,ms:number)=>{const id=setInterval(fn,ms);ownedIntervals.add(id);return id;},clearInterval:(id:any)=>{ownedIntervals.delete(id);clearInterval(id);},requestAnimationFrame:(fn:any)=>{fn();return 0;},matchMedia:()=>({matches:false})};
 const {App}=await import('../apps/mobile/src/App');
 const text=(n:any):string=>typeof n==='string'?n:(n?.children??[]).map(text).join('');
 const old={index:0,session:'41',segment:0,segments:1,bytes:2000,durationMs:1000,complete:true};
@@ -95,5 +96,43 @@ await completionScenario('stopped','C8:ED:45:EB:95:B4','uid:epoch:42');
 await completionScenario('complete','another-device','uid:epoch:42');
 await completionScenario('complete','C8:ED:45:EB:95:B4','uid:another-epoch:42');
 await completionScenario('complete','C8:ED:45:EB:95:B4','uid:epoch:42',true);
+async function controlReplyAcrossCompletion(deferred:boolean){
+ let receiving=false,finished=false,tick:(()=>void)|undefined,answer:(()=>void)|undefined;
+ const oldInterval=window.setInterval,oldClear=window.clearInterval;
+ window.setInterval=((fn:any,ms:number)=>{if(ms===3000)tick=fn;return 1;})as any;window.clearInterval=(()=>{})as any;
+ window.CompanionNative={permissions(){},cancelTranscription(){},cancelMinutes(){},finishApp(){},openBluetoothSettings(){},exportDocument(){},exportAudio(){},call(id,method,input){
+  const a=JSON.parse(input);let result:any=null;
+  switch(method){
+   case'library':result={rows:[],problems:0};break;
+   case'status':result={running:receiving&&!finished,state:finished?'complete':receiving?'syncing':'idle',detail:'',hasSavedTask:receiving};break;
+   case'aiServiceStatus':result={configured:false,saved:false};break;
+   case'deviceUpdateStatus':result={running:false,phase:'idle'};break;
+   case'devices':result=[{index:0,name:'Companion',address:'C8:ED:45:EB:95:B4',bonded:true},{index:1,name:'Other',address:'C8:ED:45:EB:95:B5',bonded:true}];break;
+   case'connectDevice':result={connected:true,address:a.address,recordings:[old]};break;
+   case'pendingConfirmation':result={pending:false,invalid:false,deferred:[],unreadableCount:0};break;
+   case'sync':receiving=true;result={running:true,state:'syncing',detail:'',hasSavedTask:true};break;
+   case'controlInventory':result={sessions:[],unreadableCount:0};break;
+   default:throw Error('Unexpected control completion bridge operation '+method);
+  }
+  const reply=()=>window.companionReply({id,result,error:null});
+  if(method==='controlInventory'&&deferred)answer=reply;else queueMicrotask(reply);
+ }};
+ let tree:any;await act(async()=>{tree=create(<App/>);await new Promise(setImmediate);});
+ const buttons=(name:string)=>tree.root.findAllByType('button').filter((n:any)=>text(n)===name);
+ const click=async(name:string,contains=false)=>{const b=tree.root.findAllByType('button').find((n:any)=>contains?text(n).includes(name):text(n)===name);assert.ok(b,name);await act(async()=>{b.props.onClick();await new Promise(setImmediate);});};
+ try{
+  await click('设备');await click('读取已配对设备');await click('95:B4',true);
+  await click('接收这场');await click('设备');await click('读取状态');assert.ok(tick);
+  if(!deferred)assert.equal(buttons('开始录音').length,1,'successful query is shown while receive remains active');
+  finished=true;await act(async()=>{tick!();await new Promise(setImmediate);});
+  if(deferred){assert.ok(answer);await act(async()=>{answer!();await new Promise(setImmediate);});}
+  assert.equal(buttons('开始录音').length,1,'late receive-complete status must not erase a successful selected-device query');
+  assert.equal(buttons('开始录音')[0].props.disabled,false,'completed receiver leaves queried controls usable');
+  await click('95:B5',true);assert.equal(buttons('开始录音').length,0,'switching device still clears prior device controls');
+ }finally{await act(async()=>tree.unmount());window.setInterval=oldInterval;window.clearInterval=oldClear;}
+}
+await controlReplyAcrossCompletion(false);await controlReplyAcrossCompletion(true);
+console.log('PASS_CONTROL_REPLY_SURVIVES_BOTH_COMPLETION_ORDERINGS_OTHER_DEVICE_STILL_CLEARS');
 console.log('PASS_REAL_MOBILE_COMPONENT_COMBINED_CATALOG_CONTROL_ACK_FOLLOWUP_FAILURE_NO_REPLAY_AND_LEGACY_BRIDGE');
 console.log('PASS_COMPLETED_EXACT_DEVICE_UID_EPOCH_SESSION_ROW_REMOVED_PAUSE_OTHER_DEVICE_EPOCH_LEGACY_RETAINED_NATIVE_INDICES_UNCHANGED');
+for(const id of ownedIntervals)clearInterval(id);
