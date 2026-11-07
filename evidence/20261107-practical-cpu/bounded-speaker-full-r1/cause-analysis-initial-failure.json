@@ -1,9 +1,11 @@
 {
-  "at": "2026-11-07T12:01:00+08:00",
   "state": "POSTHOC_ENTRY_ENVIRONMENT_FIXED",
   "initialEnvironment": "base Python311",
   "error": "ModuleNotFoundError: praatio",
   "neuralModelsLoaded": 0,
   "fix": "Use existing pinned clean scoring runtime; no package installation or neural rerun. Full L cached diagnostic subsequently completed.",
-  "correctedOutput": "results/L_R003S01C02/embedding-cause-review.json"
+  "correctedOutput": "results/L_R003S01C02/embedding-cause-review.json",
+  "recordedAt": "2026-11-07T12:18:16+08:00",
+  "failureObservedExactTimeRecorded": false,
+  "timestampScope": "Recorded after the observed entry failure and corrected successful run, not an invented failure timestamp."
 }

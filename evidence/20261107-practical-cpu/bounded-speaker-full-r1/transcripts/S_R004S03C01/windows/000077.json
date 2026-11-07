@@ -1,0 +1,67 @@
+{
+  "binding": {
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "protocolSha256": "427b60935bf6042dfa92547985c1813e093fdfc7cad924f4f1d0358428034832",
+    "journalSha256": "a0c81beca91722e0be1847b14ab83033aeb30d95a880d3d729f14f0727526792",
+    "workerSha256": "b608ffb8c957aa921e819bcd63ef80dffd2be558a3d298da5beeff800e8f50ef",
+    "attributionSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd"
+  },
+  "raw": {
+    "index": 77,
+    "startSample": 36960000,
+    "endSample": 37233904,
+    "text": "5。",
+    "tokens": [
+      "5",
+      "。"
+    ],
+    "timestamps": [
+      6.539999961853027,
+      16.979999542236328
+    ],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"5。\", \"timestamps\": [6.54, 16.98], \"durations\": [], \"tokens\":[\"5\", \"。\"], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 1.25641309999628
+  },
+  "aligned": {
+    "alignmentAvailable": true,
+    "rawText": "5。",
+    "tokenEstimates": [
+      {
+        "token": "5",
+        "textStart": 0,
+        "textEnd": 1,
+        "estimatedOnsetSeconds": 2316.539999961853,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "。",
+        "textStart": 1,
+        "textEnd": 2,
+        "estimatedOnsetSeconds": 2326.9799995422363,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      }
+    ],
+    "utterances": [
+      {
+        "text": "5。",
+        "startMs": 2316540,
+        "endMs": 2327040,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [],
+        "sourceWindow": 77,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      }
+    ]
+  }
+}

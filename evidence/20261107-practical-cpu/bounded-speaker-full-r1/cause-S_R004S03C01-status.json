@@ -1,0 +1,7 @@
+{
+  "exitCode": 0,
+  "stdout": "{\"state\": \"POSTHOC_FEATURE_AND_FRAGMENTATION_DIAGNOSTIC_ONLY\", \"meeting\": \"S_R004S03C01\", \"candidatePairs\": 2306, \"referenceDominantEligiblePairs\": 2279, \"cosineDistanceDiagnostic\": {\"randomSeed\": 20261107, \"sameSpeakerPairs\": 4335, \"differentSpeakerPairs\": 15654, \"sameSpeakerQuantiles\": {\"0.1\": 0.13199207782745362, \"0.5\": 0.21357059478759766, \"0.9\": 0.38682702779769895}, \"differentSpeakerQuantiles\": {\"0.1\": 0.7174117386341095, \"0.5\": 0.8792309463024139, \"0.9\": 0.9981393575668336}, \"scope\": \"References describe cached embeddings only; not an identity predictor or accepted recognition score.\"}}\n",
+  "stderr": "",
+  "inferenceNotRetried": true,
+  "preservationContinuesEvenIfAnalysisFails": true
+}

@@ -1,0 +1,778 @@
+{
+  "at": "2026-11-07T12:18:24+08:00",
+  "meeting": "L_R003S01C02",
+  "audioSeconds": 2362.945,
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceCharacters": 8676,
+  "hypothesisCharacters": 7606,
+  "chronologicalTextDiagnostic": {
+    "edits": {
+      "replace": 796,
+      "delete": 1298,
+      "insert": 228
+    },
+    "cer": 0.2676348547717842,
+    "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+  },
+  "anonymousStreamCpCerDiagnostic": {
+    "metric": "cpCER",
+    "audioSeconds": 2362.945,
+    "referenceCharacters": 8676,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 131,
+    "edits": {
+      "replace": 1467,
+      "delete": 4947,
+      "insert": 3877
+    },
+    "totalEdits": 10291,
+    "characterErrorRate": 1.1861456892577225,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "__unconfirmed__",
+        "edits": 1319
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "104",
+        "edits": 316
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "5",
+        "edits": 700
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "111",
+        "edits": 1676
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "39",
+        "edits": 2337
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "162",
+        "edits": 131
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "102",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "103",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "134",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "42",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "45",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "56",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "92",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "120",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "143",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "151",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "178",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "184",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "55",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "59",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "67",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "8",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "87",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "88",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "97",
+        "edits": 2
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "161",
+        "edits": 3
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "0",
+        "edits": 3
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "166",
+        "edits": 3
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "2",
+        "edits": 3
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "24",
+        "edits": 3
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "139",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "121",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "123",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "158",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "26",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "47",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "94",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "132",
+        "edits": 5
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "1",
+        "edits": 5
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "119",
+        "edits": 5
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "124",
+        "edits": 5
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "125",
+        "edits": 5
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "128",
+        "edits": 5
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "167",
+        "edits": 5
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "15",
+        "edits": 6
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "147",
+        "edits": 6
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "21",
+        "edits": 6
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "173",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "33",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "57",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "73",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "84",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "96",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "175",
+        "edits": 8
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "74",
+        "edits": 8
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "83",
+        "edits": 8
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "188",
+        "edits": 9
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "133",
+        "edits": 9
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "53",
+        "edits": 9
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "69",
+        "edits": 9
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "110",
+        "edits": 10
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "168",
+        "edits": 11
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "115",
+        "edits": 11
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "163",
+        "edits": 11
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "4",
+        "edits": 12
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "135",
+        "edits": 12
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "63",
+        "edits": 12
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "75",
+        "edits": 12
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "77",
+        "edits": 12
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "95",
+        "edits": 12
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "183",
+        "edits": 13
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "30",
+        "edits": 13
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "91",
+        "edits": 13
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "99",
+        "edits": 13
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "46",
+        "edits": 14
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "49",
+        "edits": 14
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "78",
+        "edits": 15
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "153",
+        "edits": 16
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "98",
+        "edits": 16
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "54",
+        "edits": 17
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "131",
+        "edits": 17
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "138",
+        "edits": 17
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "82",
+        "edits": 17
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "172",
+        "edits": 18
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "58",
+        "edits": 19
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "155",
+        "edits": 19
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "171",
+        "edits": 19
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "60",
+        "edits": 19
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "179",
+        "edits": 20
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "61",
+        "edits": 21
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "62",
+        "edits": 21
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "86",
+        "edits": 21
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "52",
+        "edits": 23
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "117",
+        "edits": 23
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "189",
+        "edits": 24
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "32",
+        "edits": 25
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "126",
+        "edits": 25
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "141",
+        "edits": 25
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "169",
+        "edits": 25
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "17",
+        "edits": 25
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "64",
+        "edits": 26
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "29",
+        "edits": 26
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "20",
+        "edits": 28
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "16",
+        "edits": 31
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "36",
+        "edits": 33
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "22",
+        "edits": 34
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "136",
+        "edits": 34
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "150",
+        "edits": 34
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "122",
+        "edits": 39
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "114",
+        "edits": 39
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "51",
+        "edits": 44
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "35",
+        "edits": 45
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "10",
+        "edits": 45
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "152",
+        "edits": 46
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "34",
+        "edits": 48
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "68",
+        "edits": 60
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "48",
+        "edits": 70
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "14",
+        "edits": 81
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "18",
+        "edits": 83
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "127",
+        "edits": 92
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "27",
+        "edits": 93
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "113",
+        "edits": 96
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "12",
+        "edits": 123
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "11",
+        "edits": 147
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "37",
+        "edits": 159
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "7",
+        "edits": 186
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "41",
+        "edits": 189
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "90",
+        "edits": 196
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "13",
+        "edits": 206
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "3",
+        "edits": 291
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "28",
+        "edits": 277
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "unconfirmedSpeakerText": {
+    "characters": 856,
+    "fractionOfRecognizedCharacters": 0.11254272942413884,
+    "neverRealIdentityOrOwnerClaim": true
+  },
+  "confirmedAttributionCerDiagnostic": {
+    "totalEdits": 10868,
+    "cer": 1.2526509912402028,
+    "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+  },
+  "speakerActivityReview": {
+    "at": "2026-11-07T12:00:32+08:00",
+    "corpus": "AISHELL-4",
+    "meeting": "L_R003S01C02",
+    "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+    "audioSeconds": 2362.945,
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+    "referenceKind": "textgrid_lexical",
+    "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+    "referenceSpeakers": 6,
+    "predictedSpeakers": 190,
+    "components": {
+      "false alarm": 173.58982112001166,
+      "total": 2311.9690375138302,
+      "confusion": 1538.7480211624593,
+      "missed detection": 92.02672663384747,
+      "correct": 681.1942897175236,
+      "diarization error rate": 0.7804449539067517
+    },
+    "perReferenceSpeakerForEvaluationOnly": {
+      "002-F": {
+        "referenceSeconds": 381.8366360770482,
+        "correctlyAttributedSeconds": 71.09410701301829,
+        "attributionRecall": 0.18618985266430196,
+        "matchedAnonymousGroup": "speaker_60"
+      },
+      "003-F": {
+        "referenceSeconds": 90.63832169674632,
+        "correctlyAttributedSeconds": 6.744378922892224,
+        "attributionRecall": 0.07440979484877565,
+        "matchedAnonymousGroup": "speaker_181"
+      },
+      "004-M": {
+        "referenceSeconds": 309.5234638706896,
+        "correctlyAttributedSeconds": 184.5054744900031,
+        "attributionRecall": 0.5960952755655526,
+        "matchedAnonymousGroup": "speaker_11"
+      },
+      "005-M": {
+        "referenceSeconds": 568.6460135867515,
+        "correctlyAttributedSeconds": 69.03346802102556,
+        "attributionRecall": 0.12139972209704755,
+        "matchedAnonymousGroup": "speaker_190"
+      },
+      "006-M": {
+        "referenceSeconds": 876.9389412077983,
+        "correctlyAttributedSeconds": 289.72222970736607,
+        "attributionRecall": 0.33037902195144264,
+        "matchedAnonymousGroup": "speaker_78"
+      },
+      "007-M": {
+        "referenceSeconds": 84.38569107480062,
+        "correctlyAttributedSeconds": 60.09463456321828,
+        "attributionRecall": 0.7121424710493819,
+        "matchedAnonymousGroup": "speaker_342"
+      }
+    },
+    "macroReferenceAttributionRecall": 0.33676935636275035,
+    "uncoveredReferenceSpeakers": [],
+    "shortReferenceSpans": {
+      "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+      "count": 209,
+      "referenceSeconds": 170.1290882682149,
+      "correctSeconds": 10.2153561149658,
+      "zeroCorrectSpans": 196
+    },
+    "rttmSha256": "f3f5f342992b25174263df3a44d5439525ebb2409a61b7d1acc015b9f1a5b5f8"
+  },
+  "speakerJournalPending": false,
+  "identityMetricsApplicable": true,
+  "allAudioSamplesCoveredOnce": true,
+  "allRawAsrTextPreserved": true,
+  "nativeTokenOnsetsAreApproximate": true,
+  "overlapBothVoicesRecovered": false,
+  "qualified": false,
+  "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+}

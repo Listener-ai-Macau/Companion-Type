@@ -1,0 +1,54 @@
+{
+  "binding": {
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "protocolSha256": "427b60935bf6042dfa92547985c1813e093fdfc7cad924f4f1d0358428034832",
+    "journalSha256": "09494c60ec406db88ce897f495b3adafd30dc57816f8c7d00d9612cf54ce7fe1",
+    "workerSha256": "b608ffb8c957aa921e819bcd63ef80dffd2be558a3d298da5beeff800e8f50ef",
+    "attributionSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd"
+  },
+  "raw": {
+    "index": 76,
+    "startSample": 36480000,
+    "endSample": 36960000,
+    "text": "。",
+    "tokens": [
+      "。"
+    ],
+    "timestamps": [
+      29.8799991607666
+    ],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"。\", \"timestamps\": [29.88], \"durations\": [], \"tokens\":[\"。\"], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 3.283048699988285
+  },
+  "aligned": {
+    "alignmentAvailable": true,
+    "rawText": "。",
+    "tokenEstimates": [
+      {
+        "token": "。",
+        "textStart": 0,
+        "textEnd": 1,
+        "estimatedOnsetSeconds": 2309.8799991607666,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      }
+    ],
+    "utterances": [
+      {
+        "text": "。",
+        "startMs": 2309880,
+        "endMs": 2309940,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [],
+        "sourceWindow": 76,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      }
+    ]
+  }
+}

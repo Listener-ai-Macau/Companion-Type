@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "modelFiles": {
+      "model.int8.onnx": {
+        "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\model.int8.onnx",
+        "sha256": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
+      },
+      "tokens.txt": {
+        "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\tokens.txt",
+        "sha256": "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
+      }
+    },
+    "runtimeVersion": "1.13.4",
+    "nativeExtensionSha256": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699",
+    "windowSamples": 480000,
+    "language": "zh",
+    "useItn": true,
+    "provider": "cpu",
+    "numThreads": 1
+  },
+  "originalNeuralWorkerSha256": "e97b86a727e3ae1abae2a5f7cc698d7751d87ead4ebe297464c83a2118f49a71",
+  "raw": {
+    "index": 77,
+    "startSample": 36960000,
+    "endSample": 37440000,
+    "text": "就 number3对吧？。",
+    "tokens": [
+      "就",
+      " number",
+      "3",
+      "对",
+      "吧",
+      "？",
+      "。"
+    ],
+    "timestamps": [
+      19.079999923706055,
+      19.3799991607666,
+      19.739999771118164,
+      19.979999542236328,
+      20.03999900817871,
+      20.15999984741211,
+      29.8799991607666
+    ],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"就 number3对吧？。\", \"timestamps\": [19.08, 19.38, 19.74, 19.98, 20.04, 20.16, 29.88], \"durations\": [], \"tokens\":[\"就\", \" number\", \"3\", \"对\", \"吧\", \"？\", \"。\"], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 3.3283585000026505
+  },
+  "rawSha256": "4b84ce964834caf4908e06f82f60676adba9c7db8980ff4f22da0fc352918893"
+}

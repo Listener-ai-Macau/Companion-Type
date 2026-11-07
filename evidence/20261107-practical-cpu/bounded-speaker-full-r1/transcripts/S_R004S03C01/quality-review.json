@@ -1,0 +1,267 @@
+{
+  "at": "2026-11-07T12:18:26+08:00",
+  "meeting": "S_R004S03C01",
+  "audioSeconds": 2327.119,
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceCharacters": 8325,
+  "hypothesisCharacters": 8094,
+  "chronologicalTextDiagnostic": {
+    "edits": {
+      "replace": 314,
+      "delete": 279,
+      "insert": 48
+    },
+    "cer": 0.076996996996997,
+    "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+  },
+  "anonymousStreamCpCerDiagnostic": {
+    "metric": "cpCER",
+    "audioSeconds": 2327.119,
+    "referenceCharacters": 8325,
+    "referenceSpeakers": 5,
+    "predictedTextStreams": 30,
+    "edits": {
+      "replace": 222,
+      "delete": 2258,
+      "insert": 2027
+    },
+    "totalEdits": 4507,
+    "characterErrorRate": 0.5413813813813814,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "001-M",
+        "hypothesisSpeaker": "7",
+        "edits": 695
+      },
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "25",
+        "edits": 68
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "16",
+        "edits": 174
+      },
+      {
+        "referenceSpeaker": "004-F",
+        "hypothesisSpeaker": "12",
+        "edits": 1370
+      },
+      {
+        "referenceSpeaker": "005-F",
+        "hypothesisSpeaker": "20",
+        "edits": 211
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "22",
+        "edits": 1
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "2",
+        "edits": 3
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "3",
+        "edits": 4
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "0",
+        "edits": 6
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "1",
+        "edits": 7
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "26",
+        "edits": 9
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "27",
+        "edits": 9
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "21",
+        "edits": 12
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "17",
+        "edits": 13
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "18",
+        "edits": 13
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "8",
+        "edits": 13
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "23",
+        "edits": 14
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "28",
+        "edits": 15
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "15",
+        "edits": 17
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "24",
+        "edits": 20
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "29",
+        "edits": 22
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "9",
+        "edits": 28
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "4",
+        "edits": 31
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "19",
+        "edits": 43
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "14",
+        "edits": 70
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "__unconfirmed__",
+        "edits": 70
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "5",
+        "edits": 118
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "6",
+        "edits": 283
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "10",
+        "edits": 401
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "11",
+        "edits": 767
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "unconfirmedSpeakerText": {
+    "characters": 70,
+    "fractionOfRecognizedCharacters": 0.008648381517173214,
+    "neverRealIdentityOrOwnerClaim": true
+  },
+  "confirmedAttributionCerDiagnostic": {
+    "totalEdits": 4507,
+    "cer": 0.5413813813813814,
+    "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+  },
+  "speakerActivityReview": {
+    "at": "2026-11-07T12:18:21+08:00",
+    "corpus": "AISHELL-4",
+    "meeting": "S_R004S03C01",
+    "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+    "audioSeconds": 2327.119,
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+    "referenceKind": "textgrid_lexical",
+    "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+    "referenceSpeakers": 5,
+    "predictedSpeakers": 30,
+    "components": {
+      "correct": 1560.8425399999983,
+      "confusion": 471.4226849999997,
+      "total": 2074.3894869999986,
+      "missed detection": 42.12426200000047,
+      "false alarm": 18.72273700000195,
+      "diarization error rate": 0.25659100537082624
+    },
+    "perReferenceSpeakerForEvaluationOnly": {
+      "001-M": {
+        "referenceSeconds": 526.4244499999995,
+        "correctlyAttributedSeconds": 382.8168769999992,
+        "attributionRecall": 0.7272019318251641,
+        "matchedAnonymousGroup": "speaker_10"
+      },
+      "002-F": {
+        "referenceSeconds": 161.2375100000003,
+        "correctlyAttributedSeconds": 148.4944840000005,
+        "attributionRecall": 0.9209673605105924,
+        "matchedAnonymousGroup": "speaker_44"
+      },
+      "003-F": {
+        "referenceSeconds": 475.39315999999974,
+        "correctlyAttributedSeconds": 440.81456099999946,
+        "attributionRecall": 0.9272631541438242,
+        "matchedAnonymousGroup": "speaker_26"
+      },
+      "004-F": {
+        "referenceSeconds": 536.8083999999998,
+        "correctlyAttributedSeconds": 240.3734009999995,
+        "attributionRecall": 0.44778248812797933,
+        "matchedAnonymousGroup": "speaker_17"
+      },
+      "005-F": {
+        "referenceSeconds": 374.5259699999999,
+        "correctlyAttributedSeconds": 348.3432179999995,
+        "attributionRecall": 0.9300909573774006,
+        "matchedAnonymousGroup": "speaker_35"
+      }
+    },
+    "macroReferenceAttributionRecall": 0.7906611783969921,
+    "uncoveredReferenceSpeakers": [],
+    "shortReferenceSpans": {
+      "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+      "count": 8,
+      "referenceSeconds": 11.584090000000048,
+      "correctSeconds": 4.031383999999889,
+      "zeroCorrectSpans": 5
+    },
+    "rttmSha256": "2516a5b4afa9c503026c9f90799f1b59319e1d0d6b2b3764bdb38a1ef75f514f"
+  },
+  "speakerJournalPending": false,
+  "identityMetricsApplicable": true,
+  "allAudioSamplesCoveredOnce": true,
+  "allRawAsrTextPreserved": true,
+  "nativeTokenOnsetsAreApproximate": true,
+  "overlapBothVoicesRecovered": false,
+  "qualified": false,
+  "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+}
