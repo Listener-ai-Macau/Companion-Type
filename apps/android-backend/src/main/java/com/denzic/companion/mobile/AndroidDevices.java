@@ -82,4 +82,19 @@ public final class AndroidDevices {
             Scan scan=new Scan(scanner,listener);scan.start();return scan;
         }catch(SecurityException error){throw new IOException("Bluetooth permission is required",error);}
     }
+    /** Refresh only the selected identity inside the existing initial133 retry
+     * delay. No GATT owner, pairing change, product command or unbounded scan. */
+    static BluetoothDevice refreshSelected(Context context,BluetoothDevice selected,long budgetMillis)throws InterruptedException {
+        long started=System.nanoTime();java.util.concurrent.CountDownLatch found=new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.atomic.AtomicReference<BluetoothDevice> candidate=new java.util.concurrent.atomic.AtomicReference<>();
+        try(Scan scan=discover(context,new Listener(){
+            public void onDevice(BluetoothDevice device,String name){if(selected.getAddress().equals(device.getAddress())){candidate.compareAndSet(null,device);found.countDown();}}
+            public void onFinished(String error){found.countDown();}
+        })){found.await(budgetMillis,java.util.concurrent.TimeUnit.MILLISECONDS);}
+        catch(IOException unavailable){android.util.Log.w("CompanionBle","Selected-device discovery unavailable; retaining existing initial retry",unavailable);}
+        // Preserve the existing bounded controller/client close-settle budget.
+        long remaining=budgetMillis-java.util.concurrent.TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-started);
+        if(remaining>0)Thread.sleep(remaining);
+        return candidate.get();
+    }
 }

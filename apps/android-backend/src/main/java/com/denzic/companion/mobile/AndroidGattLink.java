@@ -93,15 +93,16 @@ public final class AndroidGattLink implements RecordingClient.Link {
         return connectWithInitialRetry(context,device,139,true);
     }
     private static AndroidGattLink connectWithInitialRetry(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock)throws IOException {
-        return InitialConnectionRetry.open(()->connect(context,device,minimumMtu,synchronizeClock),millis->{
+        java.util.concurrent.atomic.AtomicReference<BluetoothDevice> rediscovered=new java.util.concurrent.atomic.AtomicReference<>();
+        try{return InitialConnectionRetry.open(()->connect(context,rediscovered.get()==null?device:rediscovered.get(),minimumMtu,synchronizeClock,rediscovered.get()!=null),millis->{
             android.util.Log.w("CompanionBle","Initial GATT133 refused before connection; closed client, retrying once");
-            Thread.sleep(millis);
-        });
+            rediscovered.set(AndroidDevices.refreshSelected(context,device,millis));
+        });}catch(RuntimeException died){throw recoverablePlatformFailure(died);}
     }
     /** Upgrade uses the same bonded GATT owner with no recording negotiation or
      * clock write. Read-back verification must not modify the new application. */
     public static AndroidGattLink connectForUpdate(Context context,BluetoothDevice device)throws IOException{return connectWithInitialRetry(context,device,23,false);}
-    private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock) throws IOException {
+    private static AndroidGattLink connect(Context context,BluetoothDevice device,int minimumMtu,boolean synchronizeClock,boolean rediscovered) throws IOException {
         if(context==null||device==null)throw new IllegalArgumentException("context and selected device required");
         if(Build.VERSION.SDK_INT<26)throw new RecordingSyncRunner.ActionRequired("需要 Android 8 或更新的系统才能接收录音");
         AndroidGattLink link=new AndroidGattLink();boolean ready=false;
@@ -112,7 +113,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
             // in app_ble.c. Rebuild that LE identity after process/radio/OTA
             // recovery instead of losing its type in getRemoteDevice(String).
             // Older Android keeps the original discovered/bonded object.
-            if(Build.VERSION.SDK_INT>=33){
+            if(Build.VERSION.SDK_INT>=33&&!rediscovered){
                 android.bluetooth.BluetoothManager manager=(android.bluetooth.BluetoothManager)context.getSystemService(Context.BLUETOOTH_SERVICE);
                 BluetoothAdapter adapter=manager==null?null:manager.getAdapter();
                 if(adapter!=null){device=adapter.getRemoteLeDevice(device.getAddress(),BluetoothDevice.ADDRESS_TYPE_RANDOM);link.requestedAddressType=BluetoothDevice.ADDRESS_TYPE_RANDOM;}
