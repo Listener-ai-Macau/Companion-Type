@@ -139960,11 +139960,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED",
+          "status": "PRECISION_SOURCE_CONTROL_IN_PROGRESS_MODEL_UNQUALIFIED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "原QM05继续：旧complete-link整会L/S均失败（标准DER78.0445%/25.6591%），不替换产品、不逐会扫阈值。一个新官方8路端到端候选：固定Q8权重、官方v0.3.0 Vulkan运行库、每次按真实6800XT型号选择，C ABI/CLI均显式应用同一作者6项geometry，保留首次CPU接入参数错误。修复后61秒连续状态/原版CLI同编号同时间门已过，下一步同一L/S整会、标准零collar含重叠/逐人短句评分，再将旧完整ASR原字零神经回填共享Document。原文字<5%、重叠逐路文字、事实、独立集和双端/实卡门保持。顺序模型，CPU5%/private2GiB/实际低RAM保护，块间1s让出资源（非GPU利用率硬限），不重跑失败HIP、不扩大预算。",
+          "next": "完整8人候选L/S已完成并回填旧原字、真实共享Document校验通过：普通S标准DER3.8540%/5人、复杂L24.5373%/6人；全系统未达标，复杂尚差于旧最好17.226%。不因人数正确就当身份正确。0新增声音模型的固定人数融合L19.4545%/S10.5782%，普通回退且复杂不及历史最好，拒绝默认采用，不按已见会议挑算法。下一项先做同一官方checkpoint的部署精度核对：精确作者转换源码重建Q8张量核验；源头一致后才比较高精度权重，同一两整会、几何/阈值/评分全固定，不训练或扫参。文字原始S7.6997%/逐人10.3063%、复杂L逐人52.9852%等失败保留，原<5%/重叠逐路/事实/独立集/双端实卡门继续OPEN。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -141288,8 +141288,8 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T12:38:28+08:00",
-              "phase": "finished",
+              "at": "2026-11-07T12:50:44+08:00",
+              "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
                 "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -144097,7 +144097,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED",
+              "state": "PRECISION_SOURCE_CONTROL_IN_PROGRESS_MODEL_UNQUALIFIED",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -145956,7 +145956,8 @@
                 "qualityQualified": false,
                 "speakerControllerExitCode": 0,
                 "speakerBatchState": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
-                "finishedAt": "2026-11-07T12:38:28+08:00"
+                "finishedAt": "2026-11-07T12:38:28+08:00",
+                "preservationExitCode": 0
               },
               "native8VulkanAssessment": {
                 "at": "2026-11-07T12:38:28+08:00",
@@ -146456,8 +146457,227 @@
                 "scope": "Engineering complete output is distinct from practical quality acceptance. A lower diagnostic score cannot close any unmeasured gate. Existing thresholds unchanged.",
                 "qualified": false
               },
-              "next": "原QM05继续：旧complete-link整会L/S均失败（标准DER78.0445%/25.6591%），不替换产品、不逐会扫阈值。一个新官方8路端到端候选：固定Q8权重、官方v0.3.0 Vulkan运行库、每次按真实6800XT型号选择，C ABI/CLI均显式应用同一作者6项geometry，保留首次CPU接入参数错误。修复后61秒连续状态/原版CLI同编号同时间门已过，下一步同一L/S整会、标准零collar含重叠/逐人短句评分，再将旧完整ASR原字零神经回填共享Document。原文字<5%、重叠逐路文字、事实、独立集和双端/实卡门保持。顺序模型，CPU5%/private2GiB/实际低RAM保护，块间1s让出资源（非GPU利用率硬限），不重跑失败HIP、不扩大预算。",
-              "sourceAndEvidenceCommit": "8d5d25b84eea886014b15de393ecd09ffeddc0cc",
+              "native8PredictedCountControl": {
+                "state": "COMPLETE_FIXED_COUNT_FUSION_REVIEW_REQUIRED_NO_QUALIFICATION",
+                "startedAt": "2026-11-07T12:42:16+08:00",
+                "neuralItemsAdded": 0,
+                "referencePassedToReconstruction": false,
+                "participantCountFromHumanOrReference": false,
+                "results": [
+                  {
+                    "meeting": "L_R003S01C02",
+                    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+                    "predictedCountSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-vulkan-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+                    "predictedCountSourceSha256": "775ef157b35d4b74214365de4d06f4318057edc077bea2f48771d0ba6710526c",
+                    "neuralPredictedCount": 6,
+                    "activeReconstructedGroups": 6,
+                    "newNeuralItems": 0,
+                    "reconstructionSeconds": 0.9666402000002563,
+                    "memoryLayout": {
+                      "expandedWindowMatricesAllocated": false,
+                      "voteDtype": "uint8",
+                      "voteBytes": 840180,
+                      "avoidedDenseRelabelBytes": 33276144,
+                      "globalSpeakerClusters": 6,
+                      "voteUpperBound": 11
+                    },
+                    "rttmSha256": "70c947b586cf836153290c1a36b184c09ab572406026b2ba041d9eb31014538a",
+                    "referenceUsedForClustering": false,
+                    "qualityReview": {
+                      "at": "2026-11-07T12:42:19+08:00",
+                      "corpus": "AISHELL-4",
+                      "meeting": "L_R003S01C02",
+                      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+                      "audioSeconds": 2362.945,
+                      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+                      "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+                      "referenceKind": "textgrid_lexical",
+                      "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+                      "referenceSpeakers": 6,
+                      "predictedSpeakers": 6,
+                      "components": {
+                        "total": 2311.9690615138334,
+                        "correct": 2018.9483505443552,
+                        "false alarm": 156.76139333927875,
+                        "missed detection": 90.09964585311437,
+                        "confusion": 202.9210651163635,
+                        "diarization error rate": 0.19454503600244888
+                      },
+                      "perReferenceSpeakerForEvaluationOnly": {
+                        "002-F": {
+                          "referenceSeconds": 381.8366360770482,
+                          "correctlyAttributedSeconds": 319.99776918071063,
+                          "attributionRecall": 0.8380488904059497,
+                          "matchedAnonymousGroup": "speaker_1"
+                        },
+                        "003-F": {
+                          "referenceSeconds": 90.63832169674632,
+                          "correctlyAttributedSeconds": 10.366103216809734,
+                          "attributionRecall": 0.11436777538194257,
+                          "matchedAnonymousGroup": "speaker_5"
+                        },
+                        "004-M": {
+                          "referenceSeconds": 309.5234638706896,
+                          "correctlyAttributedSeconds": 290.17942517742966,
+                          "attributionRecall": 0.9375038051999142,
+                          "matchedAnonymousGroup": "speaker_0"
+                        },
+                        "005-M": {
+                          "referenceSeconds": 568.6460135867515,
+                          "correctlyAttributedSeconds": 532.2500706433652,
+                          "attributionRecall": 0.9359954311227512,
+                          "matchedAnonymousGroup": "speaker_2"
+                        },
+                        "006-M": {
+                          "referenceSeconds": 876.9389412077983,
+                          "correctlyAttributedSeconds": 859.5661113649933,
+                          "attributionRecall": 0.980189236643001,
+                          "matchedAnonymousGroup": "speaker_4"
+                        },
+                        "007-M": {
+                          "referenceSeconds": 84.38569107480062,
+                          "correctlyAttributedSeconds": 6.58887496104785,
+                          "attributionRecall": 0.07808047640692285,
+                          "matchedAnonymousGroup": "speaker_3"
+                        }
+                      },
+                      "macroReferenceAttributionRecall": 0.6473642691934135,
+                      "uncoveredReferenceSpeakers": [],
+                      "shortReferenceSpans": {
+                        "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+                        "count": 209,
+                        "referenceSeconds": 170.1290882682149,
+                        "correctSeconds": 66.67997057223286,
+                        "zeroCorrectSpans": 138
+                      },
+                      "rttmSha256": "70c947b586cf836153290c1a36b184c09ab572406026b2ba041d9eb31014538a"
+                    }
+                  },
+                  {
+                    "meeting": "S_R004S03C01",
+                    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                    "predictedCountSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-vulkan-full-r1\\results\\S_R004S03C01\\speaker-journal.json",
+                    "predictedCountSourceSha256": "e232837f760f439a74c23504b8640565a6d68db9de4136bb2806591eaf19e376",
+                    "neuralPredictedCount": 5,
+                    "activeReconstructedGroups": 4,
+                    "newNeuralItems": 0,
+                    "reconstructionSeconds": 0.9518566000042483,
+                    "memoryLayout": {
+                      "expandedWindowMatricesAllocated": false,
+                      "voteDtype": "uint8",
+                      "voteBytes": 689780,
+                      "avoidedDenseRelabelBytes": 27317820,
+                      "globalSpeakerClusters": 5,
+                      "voteUpperBound": 11
+                    },
+                    "rttmSha256": "97ef45ffbcea14bcebf065aab4fa896bcd2f8ac88d42cf62417dd6914cf93b3b",
+                    "referenceUsedForClustering": false,
+                    "qualityReview": {
+                      "at": "2026-11-07T12:42:22+08:00",
+                      "corpus": "AISHELL-4",
+                      "meeting": "S_R004S03C01",
+                      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+                      "audioSeconds": 2327.119,
+                      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                      "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+                      "referenceKind": "textgrid_lexical",
+                      "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+                      "referenceSpeakers": 5,
+                      "predictedSpeakers": 4,
+                      "components": {
+                        "total": 2074.389489999999,
+                        "missed detection": 41.75301600000046,
+                        "confusion": 159.98737400000024,
+                        "false alarm": 17.69338100000126,
+                        "correct": 1872.6490999999987,
+                        "diarization error rate": 0.10578233839779147
+                      },
+                      "perReferenceSpeakerForEvaluationOnly": {
+                        "001-M": {
+                          "referenceSeconds": 526.4244499999995,
+                          "correctlyAttributedSeconds": 517.5175769999996,
+                          "attributionRecall": 0.9830804344289101,
+                          "matchedAnonymousGroup": "speaker_0"
+                        },
+                        "002-F": {
+                          "referenceSeconds": 161.2375100000003,
+                          "correctlyAttributedSeconds": 0,
+                          "attributionRecall": 0.0,
+                          "matchedAnonymousGroup": null
+                        },
+                        "003-F": {
+                          "referenceSeconds": 475.39315999999974,
+                          "correctlyAttributedSeconds": 458.33087099999966,
+                          "attributionRecall": 0.9641090986668801,
+                          "matchedAnonymousGroup": "speaker_1"
+                        },
+                        "004-F": {
+                          "referenceSeconds": 536.8083999999998,
+                          "correctlyAttributedSeconds": 533.6193289999998,
+                          "attributionRecall": 0.9940592006384401,
+                          "matchedAnonymousGroup": "speaker_2"
+                        },
+                        "005-F": {
+                          "referenceSeconds": 374.5259699999999,
+                          "correctlyAttributedSeconds": 363.18132299999957,
+                          "attributionRecall": 0.9697093181548923,
+                          "matchedAnonymousGroup": "speaker_3"
+                        }
+                      },
+                      "macroReferenceAttributionRecall": 0.7821916103778246,
+                      "uncoveredReferenceSpeakers": [
+                        "002-F"
+                      ],
+                      "shortReferenceSpans": {
+                        "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+                        "count": 8,
+                        "referenceSeconds": 11.584090000000048,
+                        "correctSeconds": 6.721180999999888,
+                        "zeroCorrectSpans": 2
+                      },
+                      "rttmSha256": "97ef45ffbcea14bcebf065aab4fa896bcd2f8ac88d42cf62417dd6914cf93b3b"
+                    }
+                  }
+                ],
+                "qualified": false,
+                "finishedAt": "2026-11-07T12:42:22+08:00",
+                "limits": {
+                  "pid": 14896,
+                  "cpuRate": 500,
+                  "cpuControlFlags": 5,
+                  "cpuPercentMaximum": 5.0,
+                  "inLimitedJob": true,
+                  "jobPrivateCommitLimitBytes": 2147483648,
+                  "jobMemoryLimitEnabled": true,
+                  "jobPeakPrivateCommitBytes": 207777792,
+                  "cpuPriorityClass": 64,
+                  "memoryPagePriority": 1,
+                  "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                  "gpuPriorityClass": 0,
+                  "gpuUtilizationHardCapped": false,
+                  "scope": "This worker and its descendants only; no global or other-app changes."
+                }
+              },
+              "native8PrecisionPreparation": null,
+              "native8PrecisionWorkpoint": {
+                "observedAt": "2026-11-07T12:50:43+08:00",
+                "state": "PREPARING_EXACT_CHECKPOINT_AND_SOURCE",
+                "actualProcessIds": [
+                  18836
+                ],
+                "checkpointDownloads": [
+                  {
+                    "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\Nemotron-3-Diarization.nemo.part",
+                    "observedBytes": 177209344
+                  }
+                ],
+                "modelsRunning": false,
+                "neuralInferenceStarted": false,
+                "trainingStarted": false
+              },
+              "native8PrecisionConversion": null,
+              "next": "完整8人候选L/S已完成并回填旧原字、真实共享Document校验通过：普通S标准DER3.8540%/5人、复杂L24.5373%/6人；全系统未达标，复杂尚差于旧最好17.226%。不因人数正确就当身份正确。0新增声音模型的固定人数融合L19.4545%/S10.5782%，普通回退且复杂不及历史最好，拒绝默认采用，不按已见会议挑算法。下一项先做同一官方checkpoint的部署精度核对：精确作者转换源码重建Q8张量核验；源头一致后才比较高精度权重，同一两整会、几何/阈值/评分全固定，不训练或扫参。文字原始S7.6997%/逐人10.3063%、复杂L逐人52.9852%等失败保留，原<5%/重叠逐路/事实/独立集/双端实卡门继续OPEN。",
+              "sourceAndEvidenceCommit": "b6425993c968b1395c96953625b71606fbd1f8ab",
               "remoteReadbackConfirmed": true
             }
           }
