@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T13:00:02+08:00",
-  "aarSha256": "3655ef12b8866ecac3dd0ac41efe7306c7f18f37f9b6de0ca8fc0f3743ea8334",
-  "backendSourceCommit": "840d8c531e13bb75e10ef90612ffec76b493d4fe",
+  "at": "2026-11-07T15:15:55+08:00",
+  "aarSha256": "2d1a4a5cae2317a12231b918eb1bf9c976fd14829dd008b31c1ec60d369a2ecf",
+  "backendSourceCommit": "614eb205305cee69621eba45f58ea19070796f8d",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "First direct unchanged; the existing one initial133 retry uses public Android background connect scheduling after same1s selected rediscovery. Normal initial idle callback waits for a real connected event; error133/later disconnect/close acknowledgement preserved. No added retries, reset, bond clear or control replay. Existing transfer-scoped central priority/byte integrity/physical receipt endpoints retained. JNI/models/assets unchanged, physical acceptance pending.",
-  "javaSourceCommit": "840d8c531e13bb75e10ef90612ffec76b493d4fe",
+  "scope": "One address-scoped GATT lifetime owner across Activity, receiver and OTA workers; handoff retains the same lease, close releases only after actual unregister. Complete notification follows transport close. Previous direct connection and single133 retry retained; ineffective background retry reverted. No command replay or metric endpoint change. JNI/models/Web/firmware unchanged. Physical acceptance pending.",
+  "javaSourceCommit": "614eb205305cee69621eba45f58ea19070796f8d",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -209,5 +209,17 @@
     "com/denzic/companion/mobile/InitialConnectionRetry$Attempt.class",
     "com/denzic/companion/mobile/InitialConnectionRetry.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo089": true
+  "allNonClassAarEntriesByteIdenticalTo089": true,
+  "javaClassesChangedFrom090": [
+    "com/denzic/companion/mobile/AndroidGattLink$1.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/GattConnectionOwner$1.class",
+    "com/denzic/companion/mobile/GattConnectionOwner$Entry.class",
+    "com/denzic/companion/mobile/GattConnectionOwner.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Attempt.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry.class",
+    "com/denzic/companion/mobile/RecordingSyncRunner.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo090": true,
+  "inherited090Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability091\\build\\inherited-provenance090.json"
 }
