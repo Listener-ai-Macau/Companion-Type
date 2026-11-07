@@ -4,7 +4,7 @@ from datetime import datetime
 import argparse,hashlib,json,os,psutil,shutil,subprocess,sys,time,traceback
 from practical_io_20261107 import atomic_json,stop_owned_family
 from moss_windows_resource_limits_20261104 import SystemRamPressure
-p=argparse.ArgumentParser();p.add_argument('--resume-after-low-ram',action='store_true');p.add_argument('--parent');a=p.parse_args()
+p=argparse.ArgumentParser();resume=p.add_mutually_exclusive_group();resume.add_argument('--resume-after-low-ram',action='store_true');resume.add_argument('--resume-after-external-session',action='store_true');p.add_argument('--parent');a=p.parse_args()
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');base=R/'docs/handoffs/20261107-model-generation-recovery';parent=Path(a.parent) if a.parent else base/'practical-qwen-native-r1';C=parent/'full';C.mkdir(exist_ok=True)
 PY='E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe';SC='E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
@@ -14,12 +14,29 @@ proof=read(parent/'short-native-state.json');assert proof['state']=='PASS_OFFICI
 assert proof['sourceSha256']==sha(Path(__file__).with_name('practical_qwen_native_worker_20261107.py'))
 target=C/'run.json';prior=[]
 if target.exists():
-    assert a.resume_after_low_ram;old=read(target)
+    assert a.resume_after_low_ram or a.resume_after_external_session;old=read(target)
+    if a.resume_after_external_session:
+        assert old['state']=='RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR' and not old.get('finishedAt')
+        stale_ids=[old['pid'],old['activePid']]
+        active_out=C/'transcripts'/old['activeMeeting']/'state.json'
+        if active_out.exists():stale_ids.append(read(active_out)['pid'])
+        assert all(not psutil.pid_exists(pid) for pid in stale_ids),'Previous process ID still exists; do not guess ownership or launch a duplicate'
+        for process in psutil.process_iter(['cmdline']):
+            try:assert not any(Path(arg).name in ['run_practical_qwen_full_20261107.py','practical_qwen_full_worker_20261107.py'] for arg in process.info['cmdline'] or []) or process.pid==os.getpid(),'Previous controller or worker still exists'
+            except (psutil.NoSuchProcess,psutil.AccessDenied):pass
+        observed=json.loads((C/'resources.jsonl').read_text().splitlines()[-1])
+        receipt=C/'external-session-interruption-0001.json';assert not receipt.exists()
+        atomic_json(receipt,{'observedAt':now(),'state':'ORPHANED_EXTERNAL_EXECUTION_SESSION_NO_LIVE_MODEL_PROCESS','originalRun':old,'verifiedAbsentProcessIds':stale_ids,'lastOwnedResourceObservation':observed,'interruptedAttemptExactDurationKnown':False,'notModelFailureOrLowRamEvidence':True,'noNeuralParameterChanged':True})
+        old=dict(old,state='STOPPED_EXTERNAL_EXECUTION_SESSION',finishedAt=now(),externalInterruptionReceipt=str(receipt))
+        old.pop('activePid',None);old.pop('activeMeeting',None)
     refused_before_launch=old['state']=='CONTROLLER_ERROR_RETAINED_NO_AUTOMATIC_RETRY' and old.get('error','').startswith("AssertionError('Wait for actual external memory recovery") and not old['results']
-    assert (old['state'] in ['STOPPED_ACTUAL_WINDOWS_LOW_RAM','DEFERRED_ACTUAL_WINDOWS_LOW_RAM'] or refused_before_launch) and old.get('finishedAt') and not old.get('activePid')
+    assert (old['state'] in ['STOPPED_ACTUAL_WINDOWS_LOW_RAM','DEFERRED_ACTUAL_WINDOWS_LOW_RAM','STOPPED_EXTERNAL_EXECUTION_SESSION'] or refused_before_launch) and old.get('finishedAt') and not old.get('activePid')
     prior=old.get('priorAttemptReceipts',[])
     latest_real=read(prior[-1]) if refused_before_launch else old
-    if latest_real['results'] and (C/'resources.jsonl').exists():
+    if a.resume_after_external_session:
+        test=SystemRamPressure();low=test.low();test.close();assert not low,'Wait for actual Windows low-memory signal to clear'
+        recovery={'actualWindowsLowRam':False,'externalSessionInterruptionVerified':True,'interruptedAttemptExactDurationKnown':False}
+    elif latest_real['results'] and (C/'resources.jsonl').exists():
         last=json.loads((C/'resources.jsonl').read_text().splitlines()[-1]);peak=latest_real['results'][-1]['sampledPrivatePeakBytes'];available=psutil.virtual_memory().available
         test=SystemRamPressure();low=test.low();test.close()
         # More than our entire released private peak must have returned, so
@@ -33,9 +50,9 @@ if target.exists():
     if refused_before_launch:
         archive=C/'preflight-controller-error-0001.json';assert not archive.exists();archive.write_bytes(target.read_bytes())
     else:
-        archive=C/('attempt-%04d.json'%(len(prior)+1));assert not archive.exists();archive.write_bytes(target.read_bytes());prior=prior+[str(archive)]
+        archive=C/('attempt-%04d.json'%(len(prior)+1));assert not archive.exists();atomic_json(archive,old);prior=prior+[str(archive)]
 else:
-    assert not a.resume_after_low_ram
+    assert not a.resume_after_low_ram and not a.resume_after_external_session
     cases=sorted(read(base/'practical-text-first-r1/audio-only.json'),key=lambda c:c['meeting'].startswith('L_'))
     atomic_json(C/'audio-only.json',cases);shutil.copyfile(base/'practical-text-first-r1/scoring-only.json',C/'scoring-only.json')
 state={'state':'PREPARING_FROZEN_TWO_NATIVE_FULL_MEETINGS','pid':os.getpid(),'startedAt':now(),'priorAttemptReceipts':prior,'automaticRetries':0,'referencePassedToWorker':False,'qualityQualified':False,'results':[]}

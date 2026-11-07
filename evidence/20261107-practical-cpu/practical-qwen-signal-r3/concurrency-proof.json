@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-07T17:05:06+08:00",
+  "state": "PASS_REAL_COMMAND_REFUSES_CONCURRENT_NATIVE_ASR_BEFORE_NEURAL_LAUNCH",
+  "publicAudio": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\public61-from-S.wav",
+  "modelPack": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-command-r1\\model-pack.json",
+  "commandExitCode": 1,
+  "taskState": "INCOMPLETE_RETAINED_RESUMABLE",
+  "refusal": "AssertionError('已有模型正在处理，请待该任务结束后继续。')",
+  "newNeuralStages": 0,
+  "originalFullRunNotStopped": true,
+  "otherApplicationsTouched": false,
+  "referencesProvided": false,
+  "adapterSourceSha256": "97e320b0f286ea7b4ae6b342e94648afda95495963a1eca358f604089b6a81b5",
+  "qualityQualified": false
+}

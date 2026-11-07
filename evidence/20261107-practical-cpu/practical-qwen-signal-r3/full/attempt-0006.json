@@ -1,0 +1,33 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "pid": 14452,
+  "startedAt": "2026-11-07T16:43:34+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0001.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0002.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0003.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0004.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0005.json"
+  ],
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 15.28911290000542,
+      "accumulatedProcessFamilySeconds": 1088.1452462000016,
+      "sampledPrivatePeakBytes": 513478656
+    }
+  ],
+  "recoveryObservation": {
+    "previousAvailableBytes": 920797184,
+    "releasedOwnPrivatePeakUpperBound": 1239773184,
+    "currentAvailableBytes": 2603294720,
+    "actualWindowsLowRam": false,
+    "externalRecoveryBeyondOwnRelease": true,
+    "noFixedFreeRamFloor": true
+  },
+  "finishedAt": "2026-11-07T16:43:50+08:00"
+}

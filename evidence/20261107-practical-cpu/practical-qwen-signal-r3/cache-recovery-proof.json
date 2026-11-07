@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-07T16:54:33+08:00",
+  "state": "PASS_FULL_CACHE_IDENTICAL_ZERO_MODEL_AND_STICKY_MISSING_RAW_REFUSAL",
+  "meeting": "S_R004S03C01",
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "outputSha256": "f8275c4a8fed5117ce510bca95a780493585e14f323568e59ee52e0fa768c9ea",
+  "workerSourceSha256": "ed9ba63e799caea8e3b26c29e232a5da6d7f2f8276b11f37a68cdb93c5447882",
+  "neuralInferenceAdded": 0,
+  "modelLoadedInControls": false,
+  "referenceFilesProvided": false,
+  "originalExperimentRawAndOutputUnchanged": true,
+  "isolatedHeldRawBytesPreserved": true,
+  "fullCacheReopenSameBytes": true,
+  "missingCacheRefusedTwice": true,
+  "qualityQualified": false
+}

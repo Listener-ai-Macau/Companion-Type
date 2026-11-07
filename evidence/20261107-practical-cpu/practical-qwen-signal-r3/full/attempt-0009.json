@@ -1,0 +1,120 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "pid": 22584,
+  "startedAt": "2026-11-07T17:00:14+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0001.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0002.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0003.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0004.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0005.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0006.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0007.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0008.json"
+  ],
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 0.0,
+      "accumulatedProcessFamilySeconds": 1227.8013023000094,
+      "reusedCompleteMeeting": true,
+      "qualityReview": {
+        "at": "2026-11-07T16:50:31+08:00",
+        "meeting": "S_R004S03C01",
+        "audioSeconds": 2327.119,
+        "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+        "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+        "referenceCharacters": 8325,
+        "hypothesisCharacters": 8203,
+        "chronologicalTextDiagnostic": {
+          "edits": {
+            "replace": 276,
+            "delete": 191,
+            "insert": 69
+          },
+          "cer": 0.06438438438438439,
+          "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+        },
+        "anonymousStreamCpCerDiagnostic": {
+          "metric": "cpCER",
+          "audioSeconds": 2327.119,
+          "referenceCharacters": 8325,
+          "referenceSpeakers": 5,
+          "predictedTextStreams": 1,
+          "edits": {
+            "replace": 40,
+            "delete": 5965,
+            "insert": 5843
+          },
+          "totalEdits": 11848,
+          "characterErrorRate": 1.4231831831831832,
+          "anonymousAssignmentForEvaluationOnly": [
+            {
+              "referenceSpeaker": "001-M",
+              "hypothesisSpeaker": null,
+              "edits": 1983
+            },
+            {
+              "referenceSpeaker": "002-F",
+              "hypothesisSpeaker": null,
+              "edits": 650
+            },
+            {
+              "referenceSpeaker": "003-F",
+              "hypothesisSpeaker": null,
+              "edits": 1681
+            },
+            {
+              "referenceSpeaker": "004-F",
+              "hypothesisSpeaker": "__unconfirmed__",
+              "edits": 5925
+            },
+            {
+              "referenceSpeaker": "005-F",
+              "hypothesisSpeaker": null,
+              "edits": 1609
+            }
+          ],
+          "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+        },
+        "unconfirmedSpeakerText": {
+          "characters": 8203,
+          "fractionOfRecognizedCharacters": 1.0,
+          "neverRealIdentityOrOwnerClaim": true
+        },
+        "confirmedAttributionCerDiagnostic": {
+          "totalEdits": 16528,
+          "cer": 1.9853453453453453,
+          "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+        },
+        "speakerActivityReview": null,
+        "speakerJournalPending": true,
+        "identityMetricsApplicable": false,
+        "allAudioSamplesCoveredOnce": true,
+        "allRawAsrTextPreserved": true,
+        "nativeTokenOnsetsAreApproximate": true,
+        "overlapBothVoicesRecovered": false,
+        "qualified": false,
+        "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+      }
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 218.7183495000063,
+      "accumulatedProcessFamilySeconds": 257.5318785000127,
+      "sampledPrivatePeakBytes": 1236733952
+    }
+  ],
+  "recoveryObservation": {
+    "actualWindowsLowRam": false,
+    "externalSessionInterruptionVerified": true,
+    "interruptedAttemptExactDurationKnown": false
+  },
+  "finishedAt": "2026-11-07T17:03:54+08:00"
+}
