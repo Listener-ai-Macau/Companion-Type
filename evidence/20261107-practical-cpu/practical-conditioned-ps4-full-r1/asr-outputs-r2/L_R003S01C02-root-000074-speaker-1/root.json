@@ -1,0 +1,49 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "bd7b9e9105ff25ab65f778986128154e3a1488d321e602ba7d85d5882536dc96",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "嗯。嗯。嗯嗯。嗯嗯。嗯。嗯，别的也为什么？嗯嗯。嗯嗯。嗯嗯。",
+    "generatedIds": [
+      106287,
+      1773,
+      106287,
+      1773,
+      106287,
+      106287,
+      1773,
+      106287,
+      106287,
+      1773,
+      106287,
+      1773,
+      106287,
+      3837,
+      102657,
+      74763,
+      100678,
+      11319,
+      106287,
+      106287,
+      1773,
+      106287,
+      106287,
+      1773,
+      106287,
+      106287,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯。嗯。嗯嗯。嗯嗯。嗯。嗯，别的也为什么？嗯嗯。嗯嗯。嗯嗯。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 7.012619699991774
+  },
+  "rawSha256": "379a101f1d19d99efd2646347cabc3f964cba630a4e874d06cd8620479573d6e"
+}

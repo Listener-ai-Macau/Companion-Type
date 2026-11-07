@@ -1,0 +1,41 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "b02379ca8c9003ab3046ffcc4ed4a0867d85c652c1bd12f1890d55d71d5a491d",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "嗯嗯，叫保安多巡逻，叫叫保安多操点心。二二。",
+    "generatedIds": [
+      106287,
+      106287,
+      3837,
+      99882,
+      107150,
+      42140,
+      111384,
+      3837,
+      99882,
+      99882,
+      107150,
+      42140,
+      100557,
+      27442,
+      63109,
+      1773,
+      40820,
+      40820,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯嗯，叫保安多巡逻，叫叫保安多操点心。二二。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.301199999987148
+  },
+  "rawSha256": "e2abae9b87b9eb03237b5079c2bf747d5a0728e7dfd44006e9b41feb1c5059f1"
+}

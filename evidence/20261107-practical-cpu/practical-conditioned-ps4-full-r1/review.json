@@ -1,0 +1,373 @@
+{
+  "at": "2026-11-07T21:17:32+08:00",
+  "state": "FULL_COMPLEX_ROUTED_CANDIDATE_NOT_ADOPTED_TOTAL_REGRESSION",
+  "meeting": "L_R003S01C02",
+  "audioSeconds": 2362.945,
+  "fullOriginalReferenceUsed": true,
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "allRoots": 79,
+  "routedRoots": 57,
+  "actuallyReplacedRoots": 57,
+  "allRejectedFallbackOriginalRoots": [],
+  "extractedTargetLanes": 168,
+  "admittedAsrLanes": 159,
+  "identityRejectedRawLanesRetained": 9,
+  "standardCpCerBefore": {
+    "metric": "cpCER",
+    "audioSeconds": 2362.945,
+    "referenceCharacters": 8676,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 7,
+    "edits": {
+      "replace": 767,
+      "delete": 1524,
+      "insert": 1127
+    },
+    "totalEdits": 3418,
+    "characterErrorRate": 0.39396035039188565,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 573
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "__unconfirmed__",
+        "edits": 794
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 282
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "5",
+        "edits": 641
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "4",
+        "edits": 949
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "0",
+        "edits": 78
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "3",
+        "edits": 101
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "standardCpCerAfter": {
+    "metric": "cpCER",
+    "audioSeconds": 2362.945,
+    "referenceCharacters": 8676,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 7,
+    "edits": {
+      "replace": 853,
+      "delete": 445,
+      "insert": 3348
+    },
+    "totalEdits": 4646,
+    "characterErrorRate": 0.5355002305209774,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 1122
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "3",
+        "edits": 1111
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 195
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "5",
+        "edits": 894
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "4",
+        "edits": 1124
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "0",
+        "edits": 169
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "__unconfirmed__",
+        "edits": 31
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "fixedGlobalMappingBefore": {
+    "metric": "FIXED_FULL_DER_MAPPING_WITH_UNKNOWN_UNMATCHED_DIAGNOSTIC",
+    "totalEdits": 3706,
+    "referenceCharacters": 8676,
+    "cer": 0.4271553711387736,
+    "perReferenceSpeaker": [
+      {
+        "referenceSpeaker": "002-F",
+        "fixedAnonymousSpeaker": "1",
+        "referenceCharacters": 1581,
+        "recognizedCharacters": 1072,
+        "edits": {
+          "replace": 58,
+          "delete": 512,
+          "insert": 3
+        },
+        "totalEdits": 573
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "fixedAnonymousSpeaker": "3",
+        "referenceCharacters": 331,
+        "recognizedCharacters": 101,
+        "edits": {
+          "replace": 14,
+          "delete": 233,
+          "insert": 3
+        },
+        "totalEdits": 250
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "fixedAnonymousSpeaker": "2",
+        "referenceCharacters": 1470,
+        "recognizedCharacters": 1281,
+        "edits": {
+          "replace": 51,
+          "delete": 210,
+          "insert": 21
+        },
+        "totalEdits": 282
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "fixedAnonymousSpeaker": "5",
+        "referenceCharacters": 1821,
+        "recognizedCharacters": 1453,
+        "edits": {
+          "replace": 117,
+          "delete": 446,
+          "insert": 78
+        },
+        "totalEdits": 641
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "fixedAnonymousSpeaker": "4",
+        "referenceCharacters": 3167,
+        "recognizedCharacters": 3187,
+        "edits": {
+          "replace": 331,
+          "delete": 299,
+          "insert": 319
+        },
+        "totalEdits": 949
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "fixedAnonymousSpeaker": "0",
+        "referenceCharacters": 306,
+        "recognizedCharacters": 252,
+        "edits": {
+          "replace": 22,
+          "delete": 55,
+          "insert": 1
+        },
+        "totalEdits": 78
+      }
+    ],
+    "unmatchedStreamInsertions": {
+      "__unconfirmed__": 933
+    },
+    "notStandardCpCer": true
+  },
+  "fixedGlobalMappingAfter": {
+    "metric": "FIXED_FULL_DER_MAPPING_WITH_UNKNOWN_UNMATCHED_DIAGNOSTIC",
+    "totalEdits": 4646,
+    "referenceCharacters": 8676,
+    "cer": 0.5355002305209774,
+    "perReferenceSpeaker": [
+      {
+        "referenceSpeaker": "002-F",
+        "fixedAnonymousSpeaker": "1",
+        "referenceCharacters": 1581,
+        "recognizedCharacters": 2409,
+        "edits": {
+          "replace": 144,
+          "delete": 75,
+          "insert": 903
+        },
+        "totalEdits": 1122
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "fixedAnonymousSpeaker": "3",
+        "referenceCharacters": 331,
+        "recognizedCharacters": 1372,
+        "edits": {
+          "replace": 58,
+          "delete": 6,
+          "insert": 1047
+        },
+        "totalEdits": 1111
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "fixedAnonymousSpeaker": "2",
+        "referenceCharacters": 1470,
+        "recognizedCharacters": 1537,
+        "edits": {
+          "replace": 64,
+          "delete": 32,
+          "insert": 99
+        },
+        "totalEdits": 195
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "fixedAnonymousSpeaker": "5",
+        "referenceCharacters": 1821,
+        "recognizedCharacters": 2304,
+        "edits": {
+          "replace": 203,
+          "delete": 104,
+          "insert": 587
+        },
+        "totalEdits": 894
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "fixedAnonymousSpeaker": "4",
+        "referenceCharacters": 3167,
+        "recognizedCharacters": 3509,
+        "edits": {
+          "replace": 358,
+          "delete": 212,
+          "insert": 554
+        },
+        "totalEdits": 1124
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "fixedAnonymousSpeaker": "0",
+        "referenceCharacters": 306,
+        "recognizedCharacters": 417,
+        "edits": {
+          "replace": 26,
+          "delete": 16,
+          "insert": 127
+        },
+        "totalEdits": 169
+      }
+    ],
+    "unmatchedStreamInsertions": {
+      "__unconfirmed__": 31
+    },
+    "notStandardCpCer": true
+  },
+  "perPersonContentEdits": [
+    {
+      "referenceSpeaker": "002-F",
+      "referenceCharacters": 1581,
+      "editsBefore": 573,
+      "editsAfter": 1122,
+      "editsDelta": 549
+    },
+    {
+      "referenceSpeaker": "003-F",
+      "referenceCharacters": 331,
+      "editsBefore": 250,
+      "editsAfter": 1111,
+      "editsDelta": 861
+    },
+    {
+      "referenceSpeaker": "004-M",
+      "referenceCharacters": 1470,
+      "editsBefore": 282,
+      "editsAfter": 195,
+      "editsDelta": -87
+    },
+    {
+      "referenceSpeaker": "005-M",
+      "referenceCharacters": 1821,
+      "editsBefore": 641,
+      "editsAfter": 894,
+      "editsDelta": 253
+    },
+    {
+      "referenceSpeaker": "006-M",
+      "referenceCharacters": 3167,
+      "editsBefore": 949,
+      "editsAfter": 1124,
+      "editsDelta": 175
+    },
+    {
+      "referenceSpeaker": "007-M",
+      "referenceCharacters": 306,
+      "editsBefore": 78,
+      "editsAfter": 169,
+      "editsDelta": 91
+    }
+  ],
+  "allUnreplacedSourceUtterancesRetained": true,
+  "unreplacedSourceUtterances": 1941,
+  "ordinaryOriginalDocumentStillByteIdentical": true,
+  "ordinaryProofScope": "Inherited routed bypass on complete ordinary source, zero new ordinary inference; forced PS4 control regression remains retained separately.",
+  "newSeparationCalls": 161,
+  "newSpeakerEncoderCalls": 167,
+  "newAsrCallsOnLastWorkerAttempt": 40,
+  "sameCandidateSeparationSeedsReused": 7,
+  "sameCandidateAsrSeedsReused": 6,
+  "cachedNodesAndSeedsReusedOnLastAsrAttempt": 137,
+  "ownedStageProcessFamilySecondsIncludingKnownInterruptions": {
+    "separation": 425.9413976999931,
+    "asr": 2095.8737720999925
+  },
+  "timeScope": "This full routed-candidate attempt load/compute/pause/known interruption times only. Seven existing component separation lanes/six admitted ASR lanes and original baseline ASR are inherited with their earlier costs separate; waits/manual work/scoring/transfer/minutes excluded.",
+  "wordTimesOnNewSeparatedTextVerified": false,
+  "pureOverlapWordCerMeasured": false,
+  "finalHoldoutOpened": false,
+  "trainingOverlapUnknown": true,
+  "actualSharedRustDocumentPassed": true,
+  "installedWindowsAndroidCardAcceptance": false,
+  "factualMinutesMeasured": false,
+  "qualityQualified": false,
+  "defaultProductChanged": false,
+  "next": "原RM-OVERLAP：整场总固定人物内容未改善，拒绝默认采用，不挑选局部收益掩盖回退；保留全部声音/原字/身份核对、逐人和短轮/重叠上下文诊断，按真实失败复盘路由/目标缺席/分离损伤，停止同配置扩展，不扫阈值。原文字5%/跨域/事实/双端实卡/售卖门继续OPEN。",
+  "posthocLimits": {
+    "pid": 25404,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 107134976,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

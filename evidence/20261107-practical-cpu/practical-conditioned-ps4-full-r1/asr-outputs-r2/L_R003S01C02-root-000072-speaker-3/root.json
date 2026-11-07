@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "ff83653cbc66deaf5a0c66c5dea1a03cdef62f947b678801fa6371879dc5feeb",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "别的，你像那个那个，进楼进小区乱推乱乱推乱发广告，业主烦人的也比较多。对。都。",
+    "generatedIds": [
+      102657,
+      3837,
+      56568,
+      65101,
+      101095,
+      101095,
+      3837,
+      41299,
+      99432,
+      41299,
+      102039,
+      100397,
+      83751,
+      100397,
+      100397,
+      83751,
+      100397,
+      28291,
+      101927,
+      3837,
+      104348,
+      100886,
+      103947,
+      74763,
+      109867,
+      1773,
+      32664,
+      1773,
+      71268,
+      1773,
+      151645
+    ],
+    "rawDecoded": "别的，你像那个那个，进楼进小区乱推乱乱推乱发广告，业主烦人的也比较多。对。都。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 6.320166799996514
+  },
+  "rawSha256": "6289bc7bb5278d539165c91ea07f081091c7262527d2a9f060db974035162095"
+}

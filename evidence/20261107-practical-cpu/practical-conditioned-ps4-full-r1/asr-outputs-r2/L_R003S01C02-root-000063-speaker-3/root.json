@@ -1,0 +1,42 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "7e86094995f7706a34419b416d0684e883cfed96c43a7377a2e3c5a33eb761fa",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "嗯。嗯。嗯。嗯。收破烂儿，对，收破烂儿。",
+    "generatedIds": [
+      106287,
+      1773,
+      106287,
+      1773,
+      106287,
+      1773,
+      106287,
+      1773,
+      50009,
+      99577,
+      102581,
+      99261,
+      3837,
+      32664,
+      3837,
+      50009,
+      99577,
+      102581,
+      99261,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯。嗯。嗯。嗯。收破烂儿，对，收破烂儿。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.292862199974479
+  },
+  "rawSha256": "b50b8be8914d3f5437c5fc3bb4224fbdb64ffb207f6d4ddf8bb5577403589a1b"
+}

@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "febf2e641bc84c5cf0b4c1c1310c8d3d57c6b167da33f65da759e8c2a6c45fcb",
+  "raw": {
+    "startSample": 0,
+    "endSample": 240000,
+    "text": "我把家电视柜都搬走了，那到时候回来了，咱也看不出来，是吧？嗯。",
+    "generatedIds": [
+      35946,
+      99360,
+      45629,
+      100234,
+      100495,
+      71268,
+      100561,
+      104398,
+      3837,
+      99212,
+      110625,
+      109344,
+      3837,
+      102177,
+      74763,
+      50930,
+      110421,
+      3837,
+      20412,
+      100003,
+      11319,
+      106287,
+      1773,
+      151645
+    ],
+    "rawDecoded": "我把家电视柜都搬走了，那到时候回来了，咱也看不出来，是吧？嗯。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.914675699983491
+  },
+  "rawSha256": "b0e657c2334ce692abfe7a0e8c53ff33e7bf8612df01eec2ec1a03d75e74a2c0"
+}

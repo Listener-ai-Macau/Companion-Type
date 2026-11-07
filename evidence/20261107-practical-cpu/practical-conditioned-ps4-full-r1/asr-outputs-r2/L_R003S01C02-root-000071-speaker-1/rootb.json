@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "90b1a3f234f13198aad913ab9a93143db8726632d826f80936e8fcbef8d6e271",
+  "raw": {
+    "startSample": 240000,
+    "endSample": 480000,
+    "text": "负责人的职责叫进岗位，嗯，不该进的职责也要进到位。对，对，这是重要。对对对。",
+    "generatedIds": [
+      100668,
+      103947,
+      104559,
+      99882,
+      41299,
+      101196,
+      3837,
+      106287,
+      3837,
+      109841,
+      41299,
+      9370,
+      104559,
+      104302,
+      41299,
+      26939,
+      24156,
+      1773,
+      32664,
+      3837,
+      32664,
+      3837,
+      100346,
+      99335,
+      1773,
+      32664,
+      32664,
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "负责人的职责叫进岗位，嗯，不该进的职责也要进到位。对，对，这是重要。对对对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 6.113515499979258
+  },
+  "rawSha256": "194c8fb7d2b7648eee551e2731f36ea73ca69470b7750f91520105fb26c55e39"
+}

@@ -1,10 +1,13 @@
 {
-  "at": "2026-11-07T21:04:38+08:00",
-  "state": "FOLLOWING_OWNED_FULL_COMPLEX_TRIAL",
+  "at": "2026-11-07T21:07:54+08:00",
+  "state": "RUN_TERMINAL_UNQUALIFIED_CHECKPOINT_PROTECTED",
   "ownedControllerPid": 26152,
   "ownedControllerCreateTime": 1794056668.0648084,
   "scorerSourceSha256": "2e691c36ccd20948d0a685e6698fd3e6644dc19a03639b3f69cc4bd7c6bdc296",
   "publisherSourceSha256": "a6ac3fc3479bbe68dbb35ffbdbdce0e049c45d17afc1cfdd2011fc5aebcbfb8f",
   "modelFailureRetries": 0,
-  "qualityQualified": false
+  "qualityQualified": false,
+  "neuralRunState": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "neuralRunFinishedAt": "2026-11-07T21:07:02+08:00",
+  "publishExitCode": 0
 }

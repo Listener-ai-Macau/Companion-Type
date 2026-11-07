@@ -1,0 +1,66 @@
+{
+  "id": "L_R003S01C02-root-000067-speaker-1",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 67,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 1,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000067-speaker-1.wav",
+  "audioSha256": "72a3c435179bf5de354dea1d440e1b2f72bfc1a7534bd416bad2ac26cbf52b70",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "63d3e2592bedf2485520a63f251bfe5af05a2b1a1afc315e108f8b9666952103",
+  "enrollmentSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+  "mixtureAuthorPeakNormalization": 0.075103759765625,
+  "enrollmentAuthorPeakNormalization": 0.065155029296875,
+  "floatOutputSha256": "c8327dad3f1f56740ed596a72ed6bcd0be64691fbbe752a43d0f4c460acd9f61",
+  "floatOutputPeak": 0.28272804617881775,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.3154967000009492,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.18546205759048462,
+      "1": 0.6441736817359924,
+      "2": 0.22427600622177124,
+      "3": 0.47502005100250244,
+      "4": 0.3007814586162567,
+      "5": 0.35978010296821594
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "对，嗯，对。嗯。嗯。咱们去。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "对，嗯，对。嗯。嗯。咱们去。",
+      "generatedIds": [
+        32664,
+        3837,
+        106287,
+        3837,
+        32664,
+        1773,
+        106287,
+        1773,
+        106287,
+        1773,
+        104335,
+        85336,
+        1773,
+        151645
+      ],
+      "rawDecoded": "对，嗯，对。嗯。嗯。咱们去。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.941729599988321
+    }
+  ]
+}
