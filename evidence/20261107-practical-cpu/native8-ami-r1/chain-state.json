@@ -1,0 +1,86 @@
+{
+  "state": "COMPLETE_ONE_AMI_DIARIZATION_REVIEW_REQUIRED",
+  "startedAt": "2026-11-07T13:29:28+08:00",
+  "automaticRetries": 0,
+  "asrAndProductQualification": false,
+  "controllerExitCode": 0,
+  "run": {
+    "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+    "pid": 21880,
+    "startedAt": "2026-11-07T13:29:28+08:00",
+    "results": [
+      {
+        "meeting": "EN2002a",
+        "phase": "activity",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 77.82847720000427,
+        "privatePeakBytes": 1780920320,
+        "scoringExitCode": 0,
+        "qualityReview": {
+          "at": "2026-11-07T13:30:50+08:00",
+          "corpus": "AMI",
+          "meeting": "EN2002a",
+          "referenceParser": "original_rttm_parser",
+          "audioSeconds": 2142.709375,
+          "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+          "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+          "referenceKind": "rttm_only_words",
+          "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+          "referenceSpeakers": 4,
+          "predictedSpeakers": 4,
+          "components": {
+            "correct": 1773.9039389999996,
+            "total": 2530.259999999997,
+            "missed detection": 724.8935189999996,
+            "false alarm": 29.96351900000063,
+            "confusion": 31.462541999998344,
+            "diarization error rate": 0.310766316505023
+          },
+          "perReferenceSpeakerForEvaluationOnly": {
+            "FEO070": {
+              "referenceSeconds": 526.9500000000015,
+              "correctlyAttributedSeconds": 341.25819700000034,
+              "attributionRecall": 0.6476102040041737,
+              "matchedAnonymousGroup": "speaker_3"
+            },
+            "FEO072": {
+              "referenceSeconds": 879.5699999999997,
+              "correctlyAttributedSeconds": 691.1189370000011,
+              "attributionRecall": 0.7857463726593692,
+              "matchedAnonymousGroup": "speaker_2"
+            },
+            "MEE071": {
+              "referenceSeconds": 511.06999999999977,
+              "correctlyAttributedSeconds": 341.53824600000087,
+              "attributionRecall": 0.6682807560608156,
+              "matchedAnonymousGroup": "speaker_0"
+            },
+            "MEE073": {
+              "referenceSeconds": 612.6699999999995,
+              "correctlyAttributedSeconds": 399.9885589999974,
+              "attributionRecall": 0.6528613429741912,
+              "matchedAnonymousGroup": "speaker_1"
+            }
+          },
+          "macroReferenceAttributionRecall": 0.6886246689246374,
+          "uncoveredReferenceSpeakers": [],
+          "shortReferenceSpans": {
+            "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+            "count": 419,
+            "referenceSeconds": 290.56999999999977,
+            "correctSeconds": 199.38681000000284,
+            "zeroCorrectSpans": 63
+          },
+          "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb"
+        }
+      }
+    ],
+    "automaticRetries": 0,
+    "referencePassedToWorker": false,
+    "protocolSha256": "dcd5b2bffa4799ae574741ee1010051421838a406bfe63e37a893fc2d412f492",
+    "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+    "finishedAt": "2026-11-07T13:30:50+08:00"
+  },
+  "finishedAt": "2026-11-07T13:30:50+08:00"
+}
