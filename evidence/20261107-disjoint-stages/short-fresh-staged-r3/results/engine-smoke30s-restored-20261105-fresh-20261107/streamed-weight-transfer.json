@@ -1,0 +1,22 @@
+{
+  "state": "PINNED_STAGE_TENSORS_STREAMED_AND_ROUNDTRIP_VERIFIED",
+  "tensorCount": 310,
+  "dataBytesCopied": 1192099840,
+  "maximumTransferChunkBytes": 16777216,
+  "scratchBytes": 16777216,
+  "roundtripBufferBytes": 16777216,
+  "roundtripCpuBufferReused": true,
+  "fileSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "deviceRoundtripSha256": null,
+  "selectedSourceBytesSha256": "c8c3b5cb15db4f296f8cdac20abf326a2ee704d82a093136a86047ae6fa02efb",
+  "selectedDeviceBytesSha256": "c8c3b5cb15db4f296f8cdac20abf326a2ee704d82a093136a86047ae6fa02efb",
+  "selectedPrefixes": [
+    "model.language_model."
+  ],
+  "sourceTensorCount": 683,
+  "skippedTensorCount": 373,
+  "targetDevice": "cuda:0",
+  "mmapUsed": false,
+  "wholeCpuStateDictCreated": false,
+  "seconds": 10.701984100000118
+}

@@ -1,0 +1,21 @@
+{
+  "state": "COMPLETE_GPU_INFERENCE_SCORING_REQUIRED",
+  "startedAt": "2026-11-07T08:54:59+08:00",
+  "protocolSha256": "70229b65fe9b49d78c57d59d75601170aebcd726845bb50664dbc2339f0ee51c",
+  "inputManifestSha256": "7b7427c089df8ba77b70a57d5e3067cbaf3b54aa459f619e7c34f7adeefb94ee",
+  "results": [
+    {
+      "meeting": "engine-smoke30s-restored-20261105",
+      "exitCode": 0,
+      "workerState": "COMPLETE_JOINT_CANDIDATE_UNQUALIFIED",
+      "wholeProcessFamilySeconds": 121.249595,
+      "observedProcessFamilyPeakRssBytes": 1294467072,
+      "observedProcessFamilyPeakPrivateBytes": 1391165440,
+      "processFamilyCpuSeconds": 45.8125,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\short-fresh-staged-r3\\results\\engine-smoke30s-restored-20261105-fresh-20261107\\completed-state.json",
+      "smokeOnly": true
+    }
+  ],
+  "referencePassedToWorker": false,
+  "finishedAt": "2026-11-07T08:57:00+08:00"
+}
