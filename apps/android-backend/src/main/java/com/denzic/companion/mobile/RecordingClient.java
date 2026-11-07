@@ -304,12 +304,12 @@ public final class RecordingClient implements Closeable {
         if(transferMetrics!=null&&priority.requested)transferMetrics.centralPriority(priority.accepted);
         if(!matches.isEmpty()&&(matches.get(matches.size()-1).flags&2)!=0)preferStoppedBatch();
         if(consumePullOverlap&&!matches.isEmpty()){
-            download(matches.get(0).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,matches.size(),received,total));
+            download(matches.get(0).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,matches.size(),received,total),true);
             for(int i=0;i<matches.size();i++){
                 try(DurableConsume.Pending pending=durableConsume.begin(privateDirectory,matches.get(i))){
                     if(i+1<matches.size()){
                         final int next=i+1;
-                        download(matches.get(next).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(next,matches.size(),received,total));
+                        download(matches.get(next).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(next,matches.size(),received,total),true);
                     }
                     pending.finish(); // exact physical receipt before the NEXT consume
                     if(transferMetrics!=null)transferMetrics.confirmed(matches.get(i));
@@ -318,7 +318,7 @@ public final class RecordingClient implements Closeable {
         }else{
             for(int i=0;i<matches.size();i++){
                 final int index=i;RecorderWire.Descriptor d=matches.get(i);
-                download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total));
+                download(d.recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(index,matches.size(),received,total),true);
                 durableConsume.consume(privateDirectory,d);
                 if(transferMetrics!=null)transferMetrics.confirmed(d);
             }
@@ -337,6 +337,7 @@ public final class RecordingClient implements Closeable {
         }
     }
 
+
     /** Follow without a preset duration; close or interrupt to stop following. */
     public RecordingLibrary.Session followSessionAndReclaim(RecorderWire.Descriptor selected,Path privateDirectory,SessionProgress progress) throws IOException {
         while(true){
@@ -349,6 +350,9 @@ public final class RecordingClient implements Closeable {
 
     /** Copy a selected sealed segment to app-private storage, retaining the device copy. */
     public synchronized Path download(long recordingId,Path privateDirectory,Progress progress) throws IOException {
+        return download(recordingId,privateDirectory,progress,false);
+    }
+    private Path download(long recordingId,Path privateDirectory,Progress progress,boolean prepareReclaim) throws IOException {
         ensureOpen();if(current==null)throw new IOException("read the recording directory first");
         RecorderWire.Descriptor found=null;for(RecorderWire.Descriptor d:current)if(d.recordingId==recordingId){found=d;break;}
         if(found==null)throw new IOException("recording is not in the current directory");
@@ -360,6 +364,10 @@ public final class RecordingClient implements Closeable {
                     if(transferMetrics!=null)transferMetrics.window(measured);
                     link.write(RECORDING_PULL,peer.pull(found,receiver.resumeOffset()));
                     if(measured!=null)measured.pullWritten();
+                    // This GATT subscription overlaps actual data flight inside
+                    // the measured window. No consume is sent before the exact
+                    // original, metadata and pending proof are durable.
+                    if(prepareReclaim)durableConsume.prepareSubscription();
                     while(!receiver.completeBytesReceived()){
                         if(Thread.currentThread().isInterrupted())throw new IOException("transfer interrupted; partial copy retained");
                         receiver.accept(link.await(RECORDING_PULL,15_000));

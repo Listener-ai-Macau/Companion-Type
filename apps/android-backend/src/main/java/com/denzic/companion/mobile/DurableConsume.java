@@ -136,9 +136,13 @@ final class DurableConsume {
         long sectors=(length+4095)/4096+2;
         return Math.min(240_000,Math.max(15_000,5_000+sectors*50));
     }
+    /** Arm only the notification sink, without acknowledging or removing data. */
+    void prepareSubscription()throws IOException {
+        if(!subscribed){link.subscribe(RecordingClient.RECORDING_CONSUME);subscribed=true;}
+    }
     private byte[] request(RecorderWire.Descriptor d)throws IOException {
         byte[] request=peer.consumeReceipt(d);
-        if(!subscribed){link.subscribe(RecordingClient.RECORDING_CONSUME);subscribed=true;}
+        prepareSubscription();
         link.write(RecordingClient.RECORDING_CONSUME,request);
         if(metrics!=null)metrics.consumeStage(d,1);
         return request;
