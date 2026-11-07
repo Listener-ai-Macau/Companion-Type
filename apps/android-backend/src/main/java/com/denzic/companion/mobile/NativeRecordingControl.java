@@ -37,7 +37,7 @@ public final class NativeRecordingControl {
     static String execute(RecordingClient.Link link,Path privateRoot,String hostSession,Action action,int seconds) throws IOException {
         if(link==null||privateRoot==null||hostSession==null||hostSession.trim().isEmpty()||action==null)throw new IllegalArgumentException("device, private directory, session and action required");
         if(action==Action.START ? seconds<0||seconds>65535 : seconds!=0)throw new IllegalArgumentException("duration required only for start");
-        try{System.loadLibrary("companion_mobile_audio");return executeNative(new Callbacks(link),privateRoot.toAbsolutePath().toString(),hostSession,link.deviceAddress(),action.code,seconds);}
+        try{System.loadLibrary("companion_mobile_audio");return executeNative(new Callbacks(link,action==Action.START),privateRoot.toAbsolutePath().toString(),hostSession,link.deviceAddress(),action.code,seconds);}
         catch(UnsatisfiedLinkError error){throw new IOException("mobile recording control library is not installed for this device",error);}
     }
 
@@ -46,9 +46,27 @@ public final class NativeRecordingControl {
         private final RecordingClient.Link link;
         private final RecordingClient client;
         private final Path recordingDirectory;
-        Callbacks(RecordingClient.Link link){this(link,null,null);}
-        Callbacks(RecordingClient.Link link,RecordingClient client,Path recordingDirectory){this.link=link;this.client=client;this.recordingDirectory=recordingDirectory;}
-        public byte[] identity() throws IOException{return link.read(RecordingClient.DEVICE_STATUS);}
+        private final boolean preparingStart;
+        Callbacks(RecordingClient.Link link){this(link,null,null,false);}
+        Callbacks(RecordingClient.Link link,boolean preparingStart){this(link,null,null,preparingStart);}
+        Callbacks(RecordingClient.Link link,RecordingClient client,Path recordingDirectory){this(link,client,recordingDirectory,false);}
+        private Callbacks(RecordingClient.Link link,RecordingClient client,Path recordingDirectory,boolean preparingStart){this.link=link;this.client=client;this.recordingDirectory=recordingDirectory;this.preparingStart=preparingStart;}
+        public byte[] identity() throws IOException{
+            byte[] value=link.read(RecordingClient.DEVICE_STATUS);
+            if(!preparingStart||!capacityRefreshing(value))return value;
+            RecorderWire.Peer first=RecorderWire.Peer.fromStatus(value);
+            long deadline=System.nanoTime()+1_000_000_000L;
+            while(capacityRefreshing(value)){
+                if(System.nanoTime()>=deadline)throw new IOException("录音卡正在更新剩余空间，请稍后再开始；没有发送开录命令。");
+                try{Thread.sleep(25);}catch(InterruptedException error){Thread.currentThread().interrupt();throw new IOException("录音准备已取消；没有发送开录命令。",error);}
+                value=link.read(RecordingClient.DEVICE_STATUS);RecorderWire.Peer current=RecorderWire.Peer.fromStatus(value);
+                if(current.epoch!=first.epoch||!java.util.Arrays.equals(current.uid(),first.uid()))throw new IOException("录音卡身份已变化，请重新连接；没有发送开录命令。");
+            }
+            return value;
+        }
+        private static boolean capacityRefreshing(byte[] value){
+            return value!=null&&value.length>=84&&value[0]==1&&value[36]=='C'&&value[37]=='C'&&value[38]=='Q'&&value[39]=='2'&&value[40]==3&&(value[41]&3)==2;
+        }
         public byte[] status() throws IOException{return link.read(RecordingClient.MEETING_STATUS);}
         public byte[][] catalogue() throws IOException {
             if(client==null)throw new IOException("recording directory is unavailable");
