@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+            "modelEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41625,10 +41625,10 @@
           "currentStatus": "OPEN",
           "baseline": "L第二段真实开发片60字：原盲分离26.6667%，新双声纹固定身份提取后仍16/60=26.6667%，无改善；另一语料REAL-T单目标47字：混音2/47=4.2553%，目标提取4/47=8.5106%变差。两者均为短开发片，不构成整会/双人完整验收；不采纳此提取候选。",
           "ps4ConditionedComponentScreen20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1",
             "state": "LOCAL_IDENTITY_ACTIVITY_HYPOTHESIS_REJECTED_NO_THRESHOLD_SWEEP",
-            "modelEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+            "modelEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
             "review": {
               "at": "2026-11-07T20:12:49+08:00",
               "state": "PS4_REAL_COMPONENT_SCREEN_FAILED_NOT_ADOPTED",
@@ -42421,10 +42421,10 @@
             "allExistingFormalGatesRetained": true
           },
           "ps4FullRoutedDevelopment20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1",
             "state": "LOCAL_IDENTITY_ACTIVITY_HYPOTHESIS_REJECTED_NO_THRESHOLD_SWEEP",
-            "modelEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+            "modelEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
             "review": {
               "at": "2026-11-07T21:17:32+08:00",
               "state": "FULL_COMPLEX_ROUTED_CANDIDATE_NOT_ADOPTED_TOTAL_REGRESSION",
@@ -42804,10 +42804,10 @@
             "qualityQualified": false
           },
           "ps4TimeLocalIdentityFalsification20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-ps4-local-presence-r1",
             "state": "LOCAL_IDENTITY_ACTIVITY_HYPOTHESIS_REJECTED_NO_THRESHOLD_SWEEP",
-            "modelEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+            "modelEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
             "summary": {
               "TP": 1414,
               "FN": 141,
@@ -42840,7 +42840,7 @@
           "currentStatus": "OPEN",
           "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
           "nativeVerbatimDevelopment20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
             "rawCer": {
               "S_R004S03C01": 0.06954954954954955,
@@ -42857,7 +42857,7 @@
             "defaultProductChanged": false
           },
           "officialNativeQwenControl20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
             "state": "LOCAL_IDENTITY_ACTIVITY_HYPOTHESIS_REJECTED_NO_THRESHOLD_SWEEP",
             "noNewQualityScoreUnlessFullCompleted": true,
@@ -43014,7 +43014,7 @@
             "defaultProductChanged": false
           },
           "native17OrdinaryDevelopment20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "stage": {
               "state": "ORDINARY_FULL_NATIVE17_IMPROVES_STAGE5_OPEN_COMPLEX_RUNNING",
               "rawChronologicalCerBaseline06": 0.06438438438438439,
@@ -43310,23 +43310,23 @@
               "qualification": "NOT_QUALIFIED: exposed development chronological text only. Non-overlap-only/time-constrained per-person, separated overlap, factual minutes, final cross-domain holdout and actual installed phone/card/sale gates remain open. Prior AMI speaker failure retained.",
               "noTrainingReferenceHotwordsOrFillerErDeletion": true
             },
-            "modelEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+            "modelEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
             "ordinary5PercentGateClosed": false,
             "qualityQualified": false
           },
           "authorBoundaryDevelopment20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\review.json",
-            "modelEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+            "modelEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
             "ordinaryFullDevelopmentBelow5": false,
             "finalHoldoutOpened": false,
             "qualityQualified": false,
             "defaultProductChanged": false
           },
           "native17AlignedSpeakerContent20261107": {
-            "at": "2026-11-07T21:43:17+08:00",
+            "at": "2026-11-07T21:47:43+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\onset-review.json",
-            "modelEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+            "modelEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
             "results": [
               {
                 "meeting": "S_R004S03C01",
@@ -132891,18 +132891,18 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-07T20:24:06+08:00",
+      "updatedAt": "2026-11-07T21:45:39+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66712,
+        "firmwareVersion": 66718,
         "uiGeneration": 85,
         "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
-        "sourceCommit": "a641d13d5dceee73052252406ce50ee2008f22da",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\build-result.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\after-ota.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\runtime\\after328-board.json",
+        "sourceCommit": "b2303c15f636c2a40cced83011799edc52b08b4b",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\after-ota.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\runtime\\after-ota-board.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
@@ -133109,10 +133109,11 @@
           ],
           "current": "App080将真实DeadObject系统异常转既有LinkFailure。279蓝牙关闭36秒未再崩溃，同原任务自动恢复，原音全部核对；普通暂停续传3.188秒过，冷连接4.267秒过一次。自动恢复保守10.735秒未证新10秒门，首次133现象仍保留。",
           "remaining": [
-            "096一次正常冷连2.156<=5秒端点过，稳定性/10秒同任务恢复仍开放；失败需实际HCI和空口对应。",
-            "内部重试若在用户端点5秒内恢复，不另造零重试门；正常包不能宣称解释早期0x3E。"
+            "当前717096十次进程冷启后正常选择均1.918–2.090<=5秒，097正常路径2.102秒通过；不把复用连接算冷连。",
+            "历史早期0x3E本批未复现也未取得失败空口；不能宣称已解释或跨机型全稳。只在新现场触发留证，不继续盲调正常参数。",
+            "启动库读取期间导航仍显示可点但nav守卫会忽略，导致首轮脚本未发起设备选择；是前选择体验观察，未计成蓝牙失败，沿原UI模块留待同批处理。"
           ],
-          "next": "按Owner要求先核对理论方向已完成：当前10.5秒缺246.8ms，2.56秒缺216.7ms，手机小等待不足；下一项有界测WIP忙区间/轮询间隙及ACK-ERASING-物理擦除-删除提交-通知各段，再决定减少擦除命令/调整新段布局还是修调度，不重复711无收益全扫描。连接按5秒端点/真实失败HCI空口继续，未证明前不再盲调参数；受影响修复后最终当前版长录同步。实板712/096，静态69328恢复；离线714应用409364/静态69328已恢复原构建预算，未安装。明确block和原Windows依赖保留。",
+          "next": "Owner再次明确任何长度含物理回收平均>=50不放宽。716实际330/331证实6/2次擦除忙至少236/78ms，最大轮询间隙3ms，元数据编程约3ms，停止手机/轮询微调。下一项先给存储/同步候选结构的最乐观耗时、容量/目录耗尽、断电及旧媒体兼容模型，只有覆盖短样本预算的方案才实现；不提前回执/后台擦除挪终点。718097正常资源已交付，OTA56.079/114.687/90.574当前样本过，冷连10样本1.918–2.090及0972.102秒过；历史0x3E未复现未解释，后续只在新现场留证，不无变化反复录。结构收敛后最终长录并传；明确block及Windows原依赖保持。",
           "doneWhen": "新手机在正常有限配对窗口内完成配对和加密目录访问，失败可恢复；不清其它绑定，不读取原录音。",
           "evidence": [
             "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66694\\phone069\\actual-phone-pairing.json"
@@ -133134,12 +133135,12 @@
           ],
           "current": "702/080正常签名OTA55.085KiB/s/117.474秒/传后91.906秒，WSI4和旧34/4608000B/17核对。279517.58秒/5段1088106B、一次START/STOP和全部CRC/SHA/连续样本/WAV10ms通过，异常0，栈最低4272/guard0/low0。原274两小时完整性/零断链成立，旧耗时超参考留存。",
           "remaining": [
-            "Any length>=50KiB/s including physical receipt;32732.076 and32817.536 fail.",
-            "Early visible connection failures/5s cold and10s same-task recovery qualification, then final current-version long concurrent sync.",
-            "Installed712app+1040B; offline714app409364 is below original412216 budget, but not installed and no physical pass inherited.",
-            "Explicit battery/ADC/charge/current, acoustics/physical first-word, production keys and paused screen blocks unchanged. Windows daily-package dependency stays with its module."
+            "Any-length including physical reclaim>=50: current33033.154/33117.910 FAIL. Prior100KiB/s alone insufficient under observed236/78ms busy; do not keep parameter microtuning.",
+            "Historical early0x3E cause not captured this batch; current normal10cold pass cannot explain historical failure or assert universal compatibility.",
+            "Final affected current-version long concurrent recording/sync and10s automatic same-task recovery scope after architecture settles.",
+            "Explicit battery/ADC/charge/current, acoustic/physical first-word, production keys and paused display blocks; Windows daily-package dependency retains original module."
           ],
-          "next": "按Owner要求先核对理论方向已完成：当前10.5秒缺246.8ms，2.56秒缺216.7ms，手机小等待不足；下一项有界测WIP忙区间/轮询间隙及ACK-ERASING-物理擦除-删除提交-通知各段，再决定减少擦除命令/调整新段布局还是修调度，不重复711无收益全扫描。连接按5秒端点/真实失败HCI空口继续，未证明前不再盲调参数；受影响修复后最终当前版长录同步。实板712/096，静态69328恢复；离线714应用409364/静态69328已恢复原构建预算，未安装。明确block和原Windows依赖保留。",
+          "next": "Owner再次明确任何长度含物理回收平均>=50不放宽。716实际330/331证实6/2次擦除忙至少236/78ms，最大轮询间隙3ms，元数据编程约3ms，停止手机/轮询微调。下一项先给存储/同步候选结构的最乐观耗时、容量/目录耗尽、断电及旧媒体兼容模型，只有覆盖短样本预算的方案才实现；不提前回执/后台擦除挪终点。718097正常资源已交付，OTA56.079/114.687/90.574当前样本过，冷连10样本1.918–2.090及0972.102秒过；历史0x3E未复现未解释，后续只在新现场留证，不无变化反复录。结构收敛后最终长录并传；明确block及Windows原依赖保持。",
           "doneWhen": "实际完整签名升级、正确版本/资源/哈希/临时区释放与旧目录核对通过，并达到当前正常传输/资源指标。",
           "evidence": [
             "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66694\\ota-measurements.json",
@@ -133379,7 +133380,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "按Owner要求先核对理论方向已完成：当前10.5秒缺246.8ms，2.56秒缺216.7ms，手机小等待不足；下一项有界测WIP忙区间/轮询间隙及ACK-ERASING-物理擦除-删除提交-通知各段，再决定减少擦除命令/调整新段布局还是修调度，不重复711无收益全扫描。连接按5秒端点/真实失败HCI空口继续，未证明前不再盲调参数；受影响修复后最终当前版长录同步。实板712/096，静态69328恢复；离线714应用409364/静态69328已恢复原构建预算，未安装。明确block和原Windows依赖保留。",
+      "next": "Owner再次明确任何长度含物理回收平均>=50不放宽。716实际330/331证实6/2次擦除忙至少236/78ms，最大轮询间隙3ms，元数据编程约3ms，停止手机/轮询微调。下一项先给存储/同步候选结构的最乐观耗时、容量/目录耗尽、断电及旧媒体兼容模型，只有覆盖短样本预算的方案才实现；不提前回执/后台擦除挪终点。718097正常资源已交付，OTA56.079/114.687/90.574当前样本过，冷连10样本1.918–2.090及0972.102秒过；历史0x3E未复现未解释，后续只在新现场留证，不无变化反复录。结构收敛后最终长录并传；明确block及Windows原依赖保持。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133399,16 +133400,16 @@
       },
       "unexpectedReceiveIncident": "E:/CodexData/Companion/capture-core-closeout-20261104/unexpected-receive-incident.json",
       "sourceCandidate": {
-        "sourceCommit": "2d0b8e2470e8ee5b014d5ef672800caf148725dd",
-        "installedSourceCommit": "a641d13d5dceee73052252406ce50ee2008f22da",
-        "installedFirmwareVersion": 66712,
-        "scope": "Installed712096 unchanged.714 is offline resource candidate below original application/static budgets; real short/radio/long qualification remains open.",
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json",
-        "phoneActualVersion": "0.1.96",
-        "phoneSourceCommit": "4b2b9beae31b7050d4979d989d9aa6bbbd50b966",
-        "latestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\stability096\\progress.json",
+        "sourceCommit": "b2303c15f636c2a40cced83011799edc52b08b4b",
+        "installedSourceCommit": "b2303c15f636c2a40cced83011799edc52b08b4b",
+        "installedFirmwareVersion": 66718,
+        "scope": "Current718097 installed; resource budgets and OTA sample pass; any-length50 remains open. No temporary timing memory/state in normal build.",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json",
+        "phoneActualVersion": "0.1.97",
+        "phoneSourceCommit": "a8d3671e0b0a21e4d780f177fc35a88edce374f8",
+        "latestPhoneReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\stability097\\progress.json",
         "phone073FullQualification": "IN_PROGRESS_NO_PASS_INHERITED",
-        "backendSourceCommit": "b1387436b7162ab3d4b91a93df40ac3da4394295"
+        "backendSourceCommit": "f03a884c7a27095bb061fb0c1883ab4ea46c17c4"
       },
       "ownerInteractionFeedback": {
         "at": "2026-11-05T09:53:42+08:00",
@@ -133639,13 +133640,14 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66714,
-        "installed": false,
-        "sourceCommit": "2d0b8e2470e8ee5b014d5ef672800caf148725dd",
+        "version": 66718,
+        "installed": true,
+        "sourceCommit": "b2303c15f636c2a40cced83011799edc52b08b4b",
         "appBytes": 409364,
         "staticBytes": 69328,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66714\\candidate.json",
-        "reason": "Complete existing screen-disabled conditional around paused PANEL16/17/14 and touch diagnostic generation. Actual enabled-region ARM preprocessing identical in all four passive-trace/low-slew combinations; default/on/off diagnostic-console tests and strict M33 compile passed. Core/storage/audio/BLE/power retained; no recording/protocol/clock/timer change.",
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\candidate.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\after-ota.json",
+        "reason": "Normal profile, paused display diagnostics excluded, original resource budgets restored. Short50 architecture work open.",
         "wholeProductQualified": false
       },
       "deliveryReceipt": {
@@ -133791,7 +133793,10 @@
         "runtimeUnchanged": false,
         "decision": "已交付本轮必要屏幕编译边界，Capture实际RAM省528B；其它调度已有底层回调，没有证据支持大重写。正常资源校验、联合Boot/OTA与原有调度兼容保留。",
         "lastUpdatedAt": "2026-11-06T08:20:42+08:00",
-        "runtimeChangeScope": "c1bbc42: screen-only state/cache and callbacks omitted in Capture; recorder/codec/radio algorithms unchanged."
+        "runtimeChangeScope": "c1bbc42: screen-only state/cache and callbacks omitted in Capture; recorder/codec/radio algorithms unchanged.",
+        "reclaimTimingAttribution": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66716\\reclaim-attribution.json",
+        "ownerKeepsAllLength50": true,
+        "next": "Owner再次明确任何长度含物理回收平均>=50不放宽。716实际330/331证实6/2次擦除忙至少236/78ms，最大轮询间隙3ms，元数据编程约3ms，停止手机/轮询微调。下一项先给存储/同步候选结构的最乐观耗时、容量/目录耗尽、断电及旧媒体兼容模型，只有覆盖短样本预算的方案才实现；不提前回执/后台擦除挪终点。718097正常资源已交付，OTA56.079/114.687/90.574当前样本过，冷连10样本1.918–2.090及0972.102秒过；历史0x3E未复现未解释，后续只在新现场留证，不无变化反复录。结构收敛后最终长录并传；明确block及Windows原依赖保持。"
       },
       "priorityDecision": {
         "at": "2026-11-05T11:41:53+08:00",
@@ -133874,12 +133879,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-07T20:18:26+08:00",
-        "firmware": 66712,
-        "coreDelivery": "FIRST_PACKET_GAIN_ORIGINAL_STATIC_BUDGET_RESTORED_ORDINARY_OTA_SAMPLES_PASS_SHORT50_STILL_FAIL",
+        "at": "2026-11-07T21:45:39+08:00",
+        "firmware": 66718,
+        "coreDelivery": "ORIGINAL_RESOURCE_BUDGETS_INSTALLED_CURRENT_OTA_SCOPED_PASS_SHORT50_ARCHITECTURE_OPEN",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "按Owner要求先核对理论方向已完成：当前10.5秒缺246.8ms，2.56秒缺216.7ms，手机小等待不足；下一项有界测WIP忙区间/轮询间隙及ACK-ERASING-物理擦除-删除提交-通知各段，再决定减少擦除命令/调整新段布局还是修调度，不重复711无收益全扫描。连接按5秒端点/真实失败HCI空口继续，未证明前不再盲调参数；受影响修复后最终当前版长录同步。实板712/096，静态69328恢复；离线714应用409364/静态69328已恢复原构建预算，未安装。明确block和原Windows依赖保留。",
+        "openSoftware": "Owner再次明确任何长度含物理回收平均>=50不放宽。716实际330/331证实6/2次擦除忙至少236/78ms，最大轮询间隙3ms，元数据编程约3ms，停止手机/轮询微调。下一项先给存储/同步候选结构的最乐观耗时、容量/目录耗尽、断电及旧媒体兼容模型，只有覆盖短样本预算的方案才实现；不提前回执/后台擦除挪终点。718097正常资源已交付，OTA56.079/114.687/90.574当前样本过，冷连10样本1.918–2.090及0972.102秒过；历史0x3E未复现未解释，后续只在新现场留证，不无变化反复录。结构收敛后最终长录并传；明确block及Windows原依赖保持。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -133892,12 +133897,12 @@
           "当前结论仅覆盖嵌软已有证据，不替代前后端整机交付结果",
           "blocked仅表示暂时不能推进，不代表完成或免除售卖缺口"
         ],
-        "completionScope": "327/328均原音/WAV/精确物理回执完成且动态总等待过，含回收50仍失败。712OTA54.245KiB/s、116.831/90.964秒该样本过；096冷连2.156秒仅单样本。原34不变、4608000B/17段，板卡已释放。",
+        "completionScope": "Current resources app409364/static69328 below/equal original budgets; current OTA sample pass. Short330/331 still FAIL, valid physical timing attribution not a speed fix. Current idle runtime has0audio samples, never final long qualification.",
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
         "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。",
-        "phoneVersion": "0.1.96"
+        "phoneVersion": "0.1.97"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -135792,72 +135797,72 @@
         }
       },
       "metricAcceptance": {
-        "at": "2026-11-07T20:18:26+08:00",
+        "at": "2026-11-07T21:45:39+08:00",
         "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
-        "currentFacts": "按Owner要求先核对理论方向已完成：当前10.5秒缺246.8ms，2.56秒缺216.7ms，手机小等待不足；下一项有界测WIP忙区间/轮询间隙及ACK-ERASING-物理擦除-删除提交-通知各段，再决定减少擦除命令/调整新段布局还是修调度，不重复711无收益全扫描。连接按5秒端点/真实失败HCI空口继续，未证明前不再盲调参数；受影响修复后最终当前版长录同步。实板712/096，静态69328恢复；离线714应用409364/静态69328已恢复原构建预算，未安装。明确block和原Windows依赖保留。",
-        "verdict": "FAIL_OPEN_ALL_LENGTH50_RADIO_STABILITY_FINAL_LONG_AND_APP_BUDGET",
+        "currentFacts": "Owner再次明确任何长度含物理回收平均>=50不放宽。716实际330/331证实6/2次擦除忙至少236/78ms，最大轮询间隙3ms，元数据编程约3ms，停止手机/轮询微调。下一项先给存储/同步候选结构的最乐观耗时、容量/目录耗尽、断电及旧媒体兼容模型，只有覆盖短样本预算的方案才实现；不提前回执/后台擦除挪终点。718097正常资源已交付，OTA56.079/114.687/90.574当前样本过，冷连10样本1.918–2.090及0972.102秒过；历史0x3E未复现未解释，后续只在新现场留证，不无变化反复录。结构收敛后最终长录并传；明确block及Windows原依赖保持。",
+        "verdict": "FAIL_OPEN_ANY_LENGTH50_ARCHITECTURE_AND_FINAL_AFFECTED_QUALIFICATION",
         "result": "NOT_QUALIFIED",
-        "functionalOtaResult": "PASS_ORDINARY095_OTA712_EXACT_IDENTITY_NATIVE_SAMPLE",
+        "functionalOtaResult": "PASS_CURRENT097_OTA718_NATIVE_EXACT_IDENTITY_SAMPLE",
         "ownerQuotes": [
           "然后你测手机的时候，你 OTA 同时要测一下那些指标，不要说测。过了就算了，你有记录下之前那些指标吗？就欠软这个东西主要是根据指标去做优化。",
           "是的，让像嵌入式这样的功能，它虽然说可以，但是如果是。那个要求的指标不及格的话，你也是报失败。之前指标好像都有列吧，如果没有列的话就列一个合适"
         ],
-        "next": "按Owner要求先核对理论方向已完成：当前10.5秒缺246.8ms，2.56秒缺216.7ms，手机小等待不足；下一项有界测WIP忙区间/轮询间隙及ACK-ERASING-物理擦除-删除提交-通知各段，再决定减少擦除命令/调整新段布局还是修调度，不重复711无收益全扫描。连接按5秒端点/真实失败HCI空口继续，未证明前不再盲调参数；受影响修复后最终当前版长录同步。实板712/096，静态69328恢复；离线714应用409364/静态69328已恢复原构建预算，未安装。明确block和原Windows依赖保留。",
+        "next": "Owner再次明确任何长度含物理回收平均>=50不放宽。716实际330/331证实6/2次擦除忙至少236/78ms，最大轮询间隙3ms，元数据编程约3ms，停止手机/轮询微调。下一项先给存储/同步候选结构的最乐观耗时、容量/目录耗尽、断电及旧媒体兼容模型，只有覆盖短样本预算的方案才实现；不提前回执/后台擦除挪终点。718097正常资源已交付，OTA56.079/114.687/90.574当前样本过，冷连10样本1.918–2.090及0972.102秒过；历史0x3E未复现未解释，后续只在新现场留证，不无变化反复录。结构收敛后最终长录并传；明确block及Windows原依赖保持。",
         "latestValues": {
           "payload_rate_kib_s": {
-            "value": 54.245111132102195,
-            "status": "PASS_ORDINARY095_OTA712_SAMPLE",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "value": 56.078514311232404,
+            "status": "PASS_CURRENT097_OTA718_SAMPLE",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "total_seconds": {
-            "value": 116.830779851,
-            "status": "PASS_ORDINARY095_OTA712_SAMPLE",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "value": 114.68683808200001,
+            "status": "PASS_CURRENT097_OTA718_SAMPLE",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "post_finish_verify_seconds": {
-            "value": 90.96370486100001,
-            "status": "PASS_ORDINARY095_OTA712_SAMPLE",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "value": 90.573742934,
+            "status": "PASS_CURRENT097_OTA718_CLEAN_SAMPLE",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "application_bytes": {
-            "value": 413256,
-            "status": "FAIL_INSTALLED712_PLUS1040_ORIGINAL412216",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "value": 409364,
+            "status": "PASS_INSTALLED718_ORIGINAL412216_BUDGET_MINUS2852",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "static_data_bss_bytes": {
             "value": 69328,
-            "status": "PASS_ORIGINAL_STATIC_BUDGET_RESTORED_INSTALLED712",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "status": "PASS_INSTALLED718_ORIGINAL_BUDGET",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "stack_reserved_bytes": {
             "value": 21504,
             "status": "PASS_UNCHANGED",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "stack_guard_faults": {
             "value": 0,
-            "status": "PASS_OBSERVED712",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "status": "PASS_IDLE718_ONLY",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "old_catalog_changed_count": {
             "value": 0,
             "status": "PASS_ORIGINAL34_UNCHANGED",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "pending_ota_claimed_bytes": {
             "value": 0,
-            "status": "PASS_AFTER_OTA712",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "status": "PASS_CURRENT718",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "installed_identity_mismatch_count": {
             "value": 0,
-            "status": "PASS_EXACT712_IDENTITY_PAYLOAD",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "status": "PASS_EXACT_CURRENT718_PAYLOAD",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "cold_private_directory_seconds": {
-            "value": 2.1562000000029804,
-            "status": "PASS_ONE_COLD096_SAMPLE_STABILITY_OPEN",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "value": 2.1019000000059607,
+            "status": "PASS097_NORMAL717_ONE_SAMPLE_AND096717_TEN_FRESH_SAMPLES",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "resume_first_new_payload_seconds": {
             "value": 3.311999999990803,
@@ -135865,9 +135870,9 @@
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\pause702-083-r2\\controlled-reconnect.json"
           },
           "recording_receive_payload_rate_kib_s": {
-            "value": 17.53619353883153,
-            "status": "FAIL_CURRENT712096_OWN328_INCLUDING_PHYSICAL_RECLAIM",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json"
+            "value": 17.910033173723235,
+            "status": "FAIL_716096_DIAGNOSTIC331_CURRENT_LAYOUT_UNCHANGED",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json"
           },
           "recording_integrity_mismatch_count": {
             "value": 0,
@@ -135913,37 +135918,23 @@
           "currentFacts": "真实449秒四段943748B新录音，保守持续50.575186KiB/s，普通原音/索引及设备确认26.844s，普通分享准备至完整WAV57.578s，时长差10ms，CRC/SHA/连续序号全过。26秒停顿本轮未复现，最大相邻增长采样间隔2.156s；手机锁屏只延迟主机停录点击，设备持续采音。"
         },
         "recordingCurrentFacts": {
-          "firmware": 66712,
+          "session": 331,
+          "firmware": 66716,
           "phoneVersion": "0.1.96",
-          "session": 328,
-          "seconds": 2.56,
-          "encodedBytes": 5994,
-          "confirmedKiBps": 17.53619353883153,
+          "encodedBytes": 5746,
+          "nativeKiBps": 17.910033173723235,
+          "nativeWindowMs": 313.306406,
           "rateResult": "FAIL",
-          "minimumKiBps": 50,
-          "nativeWindowMs": 333.796249,
-          "maximumWindowFor50Ms": 117.0703125,
-          "requiredSavingMs": 216.7259365,
-          "normalPrefixEraseSectors4K": 2,
-          "prefixFormulaScope": "Derived from exact encoded length and production normal-STOP layout. This is not a measurement of each erase command duration.",
-          "fullAudioUpperSeconds": 6.5969567,
-          "dynamicMaximumSeconds": 8.132642669677734,
+          "seconds": 2.44,
+          "fullAudioSeconds": 6.9062129,
+          "dynamicMaximumSeconds": 8.127005462646485,
           "dynamicResult": "PASS",
-          "wavDurationErrorMs": 10,
+          "wavDurationErrorMs": 20,
           "oneStartOneStop": true,
           "zeroCachedBytes": true,
           "sameConnectionStopCatalogue": true,
-          "phasesMs": {
-            "pullToFirstPayload": 39.304166,
-            "firstToLastPayload": 89.671302,
-            "lastPayloadToOriginalVerified": 4.636927,
-            "originalVerifiedToConsumeReady": 27.515677,
-            "consumeReadyToWrite": 22.866928,
-            "consumeWriteToPhysicalReply": 114.626041,
-            "physicalReplyToDurableReceipt": 11.512604
-          },
-          "unassignedCompletionMs": 23.662603999999988,
-          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\current096\\short2\\result.json"
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66716\\current096\\short2\\result.json",
+          "timingProfile": "Diagnostic attribution; not release speed qualification"
         },
         "recordingCurrentVerdict": "FAIL_ANY_LENGTH50_INCLUDING_PHYSICAL_RECLAIM",
         "fiveMinuteStopToWavSeconds": 27.7679752,
@@ -135952,7 +135943,7 @@
         "longConcurrentCurrentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66699\\phone076\\long274\\acceptance.json",
         "sourceSummary": "FW706/phone093 current, real UI invalidation fixed.092501.84秒同场续传/无线恢复完整通过。093十秒24.504/24.730仍FAIL任意长度50含回收，分阶段耗时见收据；没有提高MCU频率或新增固件占用。",
         "sourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ota-measurements.json",
-        "recordingCompletionEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\current096\\short2\\dynamic-verdict.json",
+        "recordingCompletionEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66716\\current096\\short2\\dynamic-verdict.json",
         "comparisonScope": "New observations have explicit firmware/phone versions. No old failure or unmeasured current variant is promoted to PASS; CPU% diagnostic only."
       },
       "previousDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json",
@@ -135966,7 +135957,7 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T20:24:06+08:00",
+        "at": "2026-11-07T21:45:39+08:00",
         "state": "718_097_DELIVERED_RELEASED_ARCHITECTURE_BUDGET_EVALUATION_NEXT",
         "phoneInstalled": "0.1.97",
         "firmwareInstalled": 66718,
@@ -135981,7 +135972,7 @@
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
         "ownLatestSession": 331,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66714\\progress.json",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json",
         "firmwareBuildSession": null,
         "firmwareCandidate": null,
         "candidateSourceCommit": "b2303c15f636c2a40cced83011799edc52b08b4b",
@@ -138035,6 +138026,58 @@
         "staticBytes": 69328,
         "installed": false,
         "savedBytesFromInstalled712": 3892
+      },
+      "baselineBefore715718": {
+        "firmwareVersion": 66712,
+        "uiGeneration": 85,
+        "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+        "sourceCommit": "a641d13d5dceee73052252406ce50ee2008f22da",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\after-ota.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\runtime\\after328-board.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "CURRENT_FUNCTIONAL_FIRMWARE_INSTALLED_NOT_WHOLE_QUALIFIED",
+        "evidenceAvailability": "Current source/UI85/full build/signed OTA and scoped physical receipts retained on C; deleted E historical receipts remain historical",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently"
+      },
+      "reclaimAttribution715718": {
+        "at": "2026-11-07T21:45:39+08:00",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json",
+        "deviceConsume10Ms": 280,
+        "busy10LowerMs": 236,
+        "deviceConsume2Ms": 110,
+        "busy2LowerMs": 78,
+        "maxPollGapMs": 3,
+        "interrupted": 0,
+        "parameterTuningCanCloseGate": false,
+        "ownerKeepsAllLength50": true
+      },
+      "stabilityDelivery097": {
+        "at": "2026-11-07T21:45:39+08:00",
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\stability097\\progress.json",
+        "sourceCommit": "a8d3671e0b0a21e4d780f177fc35a88edce374f8",
+        "backendSourceCommit": "f03a884c7a27095bb061fb0c1883ab4ea46c17c4",
+        "installed": true,
+        "normalColdSampleSeconds": 2.1019000000059607,
+        "ota": {
+          "firmware": 66718,
+          "phoneVersion": "0.1.97",
+          "payloadKiBps": 56.078514311232404,
+          "totalSeconds": 114.68683808200001,
+          "postPayloadSeconds": 90.573742934,
+          "installed": true,
+          "verifyAttempts": 22,
+          "verifyFailures": 21,
+          "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\ordinary-phone097\\result.json",
+          "scope": "Failed verification probes include unavailable boot installation. Never classify them as same number of RF drops."
+        },
+        "wholeQualified": false
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -138299,14 +138342,14 @@
           "wholeProductQualified": false
         },
         "latestInstalledVersionObservation": {
-          "at": "2026-11-07T20:18:26+08:00",
-          "phoneVersion": "0.1.96",
-          "firmware": 66712,
+          "at": "2026-11-07T21:45:39+08:00",
+          "firmware": 66718,
+          "phoneVersion": "0.1.97",
           "uiGeneration": 85,
-          "phoneSourceCommit": "4b2b9beae31b7050d4979d989d9aa6bbbd50b966",
-          "backendSourceCommit": "b1387436b7162ab3d4b91a93df40ac3da4394295",
-          "firmwareSourceCommit": "a641d13d5dceee73052252406ce50ee2008f22da",
-          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66712\\progress.json",
+          "firmwareSourceCommit": "b2303c15f636c2a40cced83011799edc52b08b4b",
+          "phoneSourceCommit": "a8d3671e0b0a21e4d780f177fc35a88edce374f8",
+          "backendSourceCommit": "f03a884c7a27095bb061fb0c1883ab4ea46c17c4",
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json",
           "wholeProductQualified": false
         },
         "ownerPriority12": {
@@ -139492,6 +139535,29 @@
             "budgetResult": "PASS_BUILD_ONLY_NOT_INSTALLED",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66714\\progress.json"
           }
+        },
+        "embeddedDelivery715718": {
+          "at": "2026-11-07T21:45:39+08:00",
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\progress.json",
+          "firmwareInstalled": 66718,
+          "phoneInstalled": "0.1.97",
+          "resourceBudgets": "PASS_INSTALLED409364_69328",
+          "ota": {
+            "firmware": 66718,
+            "phoneVersion": "0.1.97",
+            "payloadKiBps": 56.078514311232404,
+            "totalSeconds": 114.68683808200001,
+            "postPayloadSeconds": 90.573742934,
+            "installed": true,
+            "verifyAttempts": 22,
+            "verifyFailures": 21,
+            "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66718\\ordinary-phone097\\result.json",
+            "scope": "Failed verification probes include unavailable boot installation. Never classify them as same number of RF drops."
+          },
+          "normalCold10MaximumSeconds": 2.09020000000298,
+          "short50": "FAIL_ARCHITECTURE_EVALUATION_OWNER_RECONFIRMED",
+          "boardLeaseHeld": false,
+          "wholeProductQualified": false
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -143576,7 +143642,7 @@
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+          "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -144900,7 +144966,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T21:43:17+08:00",
+              "at": "2026-11-07T21:47:43+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -152952,7 +153018,7 @@
                 "qualityQualified": false,
                 "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
               },
-              "next": "原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+              "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
               "lastOwnerQuote": "推进把, 主要是复杂多人这个看看怎么搞",
               "nativeVerbatimPreparation": {
                 "at": "2026-11-07T15:04:06+08:00",
@@ -162755,15 +162821,121 @@
                         "finding": "Published evaluation recipe lists separate WavLM/ECAPA/TS-VAD weights and a gated pyannote segmentation dependency. It is not a verified drop-in ungated commercial package here."
                       }
                     ],
-                    "next": "原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+                    "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
                     "finalHoldoutOpened": false,
                     "productDefaultsChanged": false,
                     "newDeploymentOrCustomerAcceptance": false,
-                    "qualityQualified": false
+                    "qualityQualified": false,
+                    "publicSourcePairAvailability": {
+                      "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-ps4-local-presence-r1\\source-availability.json",
+                      "state": "PINNED_PUBLIC_ACTIVITY_AND_MATCHED_ENROLLMENT_PAIR_FOUND_RUNTIME_UNVERIFIED",
+                      "commit": "cb828468d183424fd574984f00b3ffbcce0be9bc",
+                      "matchingEnrollmentRevision": "1cf80d41fb3435bd3d8df185b5c423333b2db42a",
+                      "neuralModelsLoaded": 0
+                    }
+                  },
+                  "source-availability.json": {
+                    "at": "2026-11-07T21:46:43+08:00",
+                    "neuralModelsLoaded": 0,
+                    "weightBytesDownloaded": 0,
+                    "qualityQualified": false,
+                    "productChanged": false,
+                    "state": "PINNED_PUBLIC_ACTIVITY_AND_MATCHED_ENROLLMENT_PAIR_FOUND_RUNTIME_UNVERIFIED",
+                    "repository": "https://github.com/tuya/nomo-pvad",
+                    "release": "release-1.1",
+                    "releaseTagObject": "27a9bf9fca92ad78aa297ec5e06f3cd14a5f76cc",
+                    "commit": "cb828468d183424fd574984f00b3ffbcce0be9bc",
+                    "pinnedFiles": [
+                      {
+                        "path": "LICENSE",
+                        "sha": "a4f8e3ccc09fd4e3deb0ce195763d4f70f76ed12",
+                        "size": 11357
+                      },
+                      {
+                        "path": "THIRD_PARTY_NOTICES.md",
+                        "sha": "81155cfe85ff4272d5cc4a0e7c90444ff9958b71",
+                        "size": 1181
+                      },
+                      {
+                        "path": "weights/WEIGHTS_LICENSE.md",
+                        "sha": "0626ee6bec4af6b8c60beafb9b76fd532180e42e",
+                        "size": 942
+                      },
+                      {
+                        "path": "weights/nomo_pvad.pt",
+                        "sha": "530bf062ea68977a5f74c3c93eb10ec0bd155709",
+                        "size": 36576677
+                      },
+                      {
+                        "path": "nomo_pvad.py",
+                        "sha": "cbff33a56013500872eb9b7265b5ccd76208686c",
+                        "size": 8390
+                      },
+                      {
+                        "path": "core/model.py",
+                        "sha": "eef54550702e05a80b144813a881ee25c1d35021",
+                        "size": 7256
+                      },
+                      {
+                        "path": "core/eres2netv2_backbone.py",
+                        "sha": "905cc0119e8bb0ea0e9685e7e7752f34bfcc7136",
+                        "size": 4442
+                      },
+                      {
+                        "path": "core/frame_adapter.py",
+                        "sha": "e2b2b174c97fe190ebfcf8a1c40b73b5a8810c0b",
+                        "size": 3865
+                      },
+                      {
+                        "path": "core/film.py",
+                        "sha": "7e7d263ff5f1898168cb18ade91248a4ecb85ae6",
+                        "size": 1922
+                      },
+                      {
+                        "path": "requirements.txt",
+                        "sha": "214a863dfd5eccf527dff223f0e4a17a0196b279",
+                        "size": 101
+                      }
+                    ],
+                    "licenseBytesVerifiedAgainstPinnedGitBlobs": [
+                      {
+                        "path": "LICENSE",
+                        "gitBlobSha1": "a4f8e3ccc09fd4e3deb0ce195763d4f70f76ed12",
+                        "sha256": "3359ea11b3bdde09d47f03740e257cdcefbb1a0161878cb792aa5863e5d83269"
+                      },
+                      {
+                        "path": "THIRD_PARTY_NOTICES.md",
+                        "gitBlobSha1": "81155cfe85ff4272d5cc4a0e7c90444ff9958b71",
+                        "sha256": "a7f4a0a76e235e47b5d16e02de3d5058c6facac8fd63919d10d0f8c3ccbef4fa"
+                      },
+                      {
+                        "path": "weights/WEIGHTS_LICENSE.md",
+                        "gitBlobSha1": "0626ee6bec4af6b8c60beafb9b76fd532180e42e",
+                        "sha256": "353cfb4d2f402455353a9d5c453f3e67f66534c62561063e8bfdf5d85a99539b"
+                      }
+                    ],
+                    "matchedEnrollmentModel": {
+                      "repository": "iic/speech_eres2netv2_sv_zh-cn_16k-common",
+                      "Path": "pretrained_eres2netv2.ckpt",
+                      "Revision": "1cf80d41fb3435bd3d8df185b5c423333b2db42a",
+                      "Sha256": "0eb4057106b2573dd7b132cf0c36273ab29afd192c1610f80baa9c556dbb963c",
+                      "Size": 71768231
+                    },
+                    "incomplete": [
+                      "No weight payload downloaded or hash-checked yet.",
+                      "No model constructed, strict parameter coverage check, or acoustic/time-semantic pilot yet.",
+                      "The matched ERes2NetV2 license is upstream-declared by the pinned derivative notices; actual model/source license files must accompany preparation.",
+                      "No ordinary/absent/brief/overlap meeting scores for this candidate."
+                    ],
+                    "rejectSubstitution": [
+                      "Existing cached ERes2Net base ONNX is not ERes2NetV2.",
+                      "PS4 matching192d ECAPA vectors are not ERes2NetV2 matching192d vectors."
+                    ],
+                    "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。"
                   }
                 }
               },
-              "sourceAndEvidenceCommit": "4dec8226fb4483ddf5bad47aa4e88c2c4fb21237",
+              "sourceAndEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
               "remoteReadbackConfirmed": true
             }
           }

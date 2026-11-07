@@ -170,7 +170,7 @@ if full_ps4['protocol-r2.json']:
 if full_ps4['review.json']:
     record['state']=full_ps4['review.json']['state'];record['next']=full_ps4['review.json']['next']
 presence_root=base/'practical-ps4-local-presence-r1'
-presence={name:optional(presence_root/name) for name in ['protocol.json','run.json','state.json','review.json','next-direction.json']}
+presence={name:optional(presence_root/name) for name in ['protocol.json','run.json','state.json','review.json','next-direction.json','source-availability.json']}
 ps4['timeLocalIdentityFalsification']=presence
 if presence['review.json']:
     record['state']=presence['review.json']['state'];record['next']=presence['review.json']['next']
