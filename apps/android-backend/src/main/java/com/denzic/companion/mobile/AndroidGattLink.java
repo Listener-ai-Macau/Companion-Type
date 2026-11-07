@@ -1,6 +1,7 @@
 package com.denzic.companion.mobile;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -45,6 +46,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private Context traceContext;
     private volatile String traceStage="construct",connectError="";
     private volatile int callbackStatus=-1,callbackState=-1;
+    private int inputAddressType=-1,requestedAddressType=-1;
     private long closeElapsedNanos;
     private void operation(Event e){if(!closed.get()&&!operations.offer(e))failure="Bluetooth operation queue overflow";}
     private void notification(UUID id,byte[] value){if(closed.get())return;ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q!=null&&(value==null||!q.offer(value.clone())))failure="Bluetooth notification queue overflow";}
@@ -105,6 +107,16 @@ public final class AndroidGattLink implements RecordingClient.Link {
         AndroidGattLink link=new AndroidGattLink();boolean ready=false;
         link.traceContext=context.getApplicationContext();
         try {
+            if(Build.VERSION.SDK_INT>=35)link.inputAddressType=device.getAddressType();
+            // The Companion WBA port explicitly uses GAP_STATIC_RANDOM_ADDR
+            // in app_ble.c. Rebuild that LE identity after process/radio/OTA
+            // recovery instead of losing its type in getRemoteDevice(String).
+            // Older Android keeps the original discovered/bonded object.
+            if(Build.VERSION.SDK_INT>=33){
+                android.bluetooth.BluetoothManager manager=(android.bluetooth.BluetoothManager)context.getSystemService(Context.BLUETOOTH_SERVICE);
+                BluetoothAdapter adapter=manager==null?null:manager.getAdapter();
+                if(adapter!=null){device=adapter.getRemoteLeDevice(device.getAddress(),BluetoothDevice.ADDRESS_TYPE_RANDOM);link.requestedAddressType=BluetoothDevice.ADDRESS_TYPE_RANDOM;}
+            }
             if(device.getBondState()!=BluetoothDevice.BOND_BONDED)throw new RecordingSyncRunner.ActionRequired("录音卡已取消配对，请重新配对后继续接收");
             link.traceStage="connect";
             link.gatt=device.connectGatt(context.getApplicationContext(),false,link.callbacks,BluetoothDevice.TRANSPORT_LE);
@@ -200,7 +212,8 @@ public final class AndroidGattLink implements RecordingClient.Link {
             org.json.JSONObject trace=new org.json.JSONObject().put("schema",1).put("stage",traceStage)
                 .put("startedNanos",traceStartedNanos).put("closedNanos",System.nanoTime())
                 .put("connectedOnce",connectedOnce).put("initialConnectionStatus",initialConnectionStatus)
-                .put("callbackStatus",callbackStatus).put("callbackState",callbackState).put("mtu",mtu)
+                    .put("callbackStatus",callbackStatus).put("callbackState",callbackState).put("mtu",mtu)
+                    .put("inputAddressType",inputAddressType).put("requestedAddressType",requestedAddressType)
                 .put("disconnectAcknowledged",disconnectAcknowledged.getCount()==0)
                 .put("closeElapsedNanos",closeElapsedNanos).put("connectError",error);
             android.content.SharedPreferences.Editor editor=traceContext.getSharedPreferences("companion_ble_diagnostics",Context.MODE_PRIVATE).edit().putString("last",trace.toString());

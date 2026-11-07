@@ -35,6 +35,11 @@ public final class RecorderWire {
         private final boolean overlapProbe,streamDirectory;
         private Peer(byte[] uid,long epoch,int capacity,int maxValueBytes,boolean overlapProbe,boolean streamDirectory) {this.uid=uid;this.epoch=epoch;this.capacity=capacity;this.maxValueBytes=maxValueBytes;this.overlapProbe=overlapProbe;this.streamDirectory=streamDirectory;}
         public byte[] uid() {return uid.clone();}
+        boolean stoppedBatchHintSupported(){return streamDirectory;}
+        byte[] stoppedBatchHint(long nonce)throws IOException {
+            if(nonce<=0||nonce>0xffffffffL)throw invalid("invalid stopped batch nonce");
+            byte[] p=new byte[32];p[0]=2;p[1]=0x25;p[2]=1;put32(p,4,nonce);System.arraycopy(uid,0,p,8,12);put64(p,20,epoch);put32(p,28,crc(p,0,28));return p;
+        }
 
         /** Require actual V2 publication; an absent suffix is not V1 support. */
         public static Peer fromStatus(byte[] status) throws IOException {

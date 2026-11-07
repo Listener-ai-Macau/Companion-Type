@@ -38,6 +38,7 @@ public final class RecordingClient implements Closeable {
     private final Link link;private final RecorderWire.Peer peer;private final DurableConsume durableConsume;private final SecureRandom random=new SecureRandom();private final Object liveControlLock=new Object();
     private List<RecorderWire.Descriptor> current;private final AtomicBoolean closed=new AtomicBoolean();
     private boolean catalogueReusable,useHandedOffCatalogue;
+    private boolean stoppedBatchHintAttempted;
     private RecorderWire.Descriptor handedOffSelection;
     private final boolean consumePullOverlap;
     private RecordingTransferMetrics transferMetrics;
@@ -69,6 +70,7 @@ public final class RecordingClient implements Closeable {
             }
             consumePullOverlap=overlap;
             durableConsume=directorySync==null&&prefixCheck==null?new DurableConsume(peer,link):new DurableConsume(peer,link,directorySync,prefixCheck);
+            durableConsume.observe(transferMetrics);
             ready=true;
         } finally {if(!ready)link.close();}
     }
@@ -98,7 +100,7 @@ public final class RecordingClient implements Closeable {
     }
     synchronized void attachTransferMetrics(RecordingTransferMetrics metrics,RecorderWire.Descriptor selected)throws IOException {
         ensureOpen();if(metrics==null||transferMetrics!=null)throw new IOException("connection already belongs to a transfer");
-        peer.validate(selected);transferMetrics=metrics;
+        peer.validate(selected);transferMetrics=metrics;durableConsume.observe(metrics);
         // The immutable complete session was just enumerated on this same
         // authenticated connection. Mutations and pending receipts invalidate
         // reuse; live sessions and all newly opened links read a fresh list.
@@ -112,6 +114,20 @@ public final class RecordingClient implements Closeable {
         handedOffSelection=useHandedOffCatalogue?selected:null;
     }
     private void catalogueMutating(){catalogueReusable=false;useHandedOffCatalogue=false;handedOffSelection=null;}
+    private void preferStoppedBatch()throws IOException {
+        if(stoppedBatchHintAttempted||!peer.stoppedBatchHintSupported())return;
+        stoppedBatchHintAttempted=true;byte[] request=peer.stoppedBatchHint(nonce());boolean accepted=false;
+        link.write(RECORDING_CONTROL,request);long deadline=System.nanoTime()+1_500_000_000L;
+        try{
+            while(System.nanoTime()<deadline){
+                long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)break;
+                byte[] reply=link.await(RECORDING_CONTROL,remaining);
+                if(Arrays.equals(reply,request)){accepted=true;break;}
+                if(reply!=null&&reply.length==16&&RecorderWire.magic(reply,0,"CRE2")&&RecorderWire.u32(reply,8)==RecorderWire.u32(request,4))break;
+            }
+        }catch(java.net.SocketTimeoutException unavailable){/* Optional parameter preference, never retry the command. */}
+        if(transferMetrics!=null)transferMetrics.stoppedBatchHint(accepted);
+    }
     List<RecorderWire.Descriptor> directoryForSync(RecorderWire.Descriptor selected,boolean recovered)throws IOException {
         if(useHandedOffCatalogue&&!recovered&&catalogueReusable&&current!=null&&handedOffSelection.sameContent(selected)){
             useHandedOffCatalogue=false;catalogueReusable=false;handedOffSelection=null;
@@ -257,6 +273,7 @@ public final class RecordingClient implements Closeable {
         if(transferMetrics!=null)transferMetrics.initialSync(!recovered&&selectedOnDevice&&selected.segmentIndex==0,
             !matches.isEmpty()&&(matches.get(matches.size()-1).flags&2)!=0);
         if(!selectedOnDevice)RecordingLibrary.verifiedPrefix(privateDirectory,selected);
+        if(!matches.isEmpty()&&(matches.get(matches.size()-1).flags&2)!=0)preferStoppedBatch();
         if(consumePullOverlap&&!matches.isEmpty()){
             download(matches.get(0).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,matches.size(),received,total));
             for(int i=0;i<matches.size();i++){

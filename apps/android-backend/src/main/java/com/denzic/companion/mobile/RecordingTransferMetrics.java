@@ -14,6 +14,7 @@ final class RecordingTransferMetrics {
     private long firstConnectNanos,firstDirectoryDelayNanos=-1,reconnectStartedNanos,maxReconnectDirectoryDelayNanos=-1;
     private int connectionAttempts,connectionsEstablished,reconnectSequences,unexpectedDisconnections,reusedConnections,reusedCatalogues;
     private int directoryRequests,directoryPages,streamDirectoryRequests;
+    private boolean stoppedBatchHintRequested,stoppedBatchHintAccepted;
     private boolean reconnectPending;
     RecordingTransferMetrics(){this(System::nanoTime);}
     RecordingTransferMetrics(Clock clock){this.clock=clock;}
@@ -22,6 +23,7 @@ final class RecordingTransferMetrics {
         final long length,initialOffset,recordingId,index;
         long highOffset;
         long firstWindow,verifiedAt,receiptAt;
+        long consumeReadyAt=-1,consumeSentAt=-1,consumeReceivedAt=-1;
         boolean verified,windowStarted,receiptConfirmed;
         Segment(RecorderWire.Descriptor d,long initialOffset){this.length=d.encodedLength;this.initialOffset=initialOffset;this.highOffset=initialOffset;this.recordingId=d.recordingId;this.index=d.segmentIndex;}
         void accepted(long offset){synchronized(RecordingTransferMetrics.this){
@@ -56,6 +58,11 @@ final class RecordingTransferMetrics {
     synchronized void reusedCatalogue(){reusedCatalogues++;}
     synchronized void directoryRequest(boolean streaming){directoryRequests++;if(streaming)streamDirectoryRequests++;}
     synchronized void directoryPage(){directoryPages++;}
+    synchronized void stoppedBatchHint(boolean accepted){stoppedBatchHintRequested=true;stoppedBatchHintAccepted=accepted;}
+    synchronized void consumeStage(RecorderWire.Descriptor d,int stage){
+        Segment s=segments.get(SegmentReceiver.key(d));if(s==null)return;
+        long now=clock.nanoTime();if(stage==0)s.consumeReadyAt=now;else if(stage==1)s.consumeSentAt=now;else if(stage==2)s.consumeReceivedAt=now;
+    }
     synchronized void connectionClosed(boolean unexpected){if(unexpected)unexpectedDisconnections++;}
     synchronized void reconnecting(){if(!reconnectPending){reconnectPending=true;reconnectStartedNanos=clock.nanoTime();reconnectSequences++;}}
     synchronized void directoryAvailable(){
@@ -87,6 +94,9 @@ final class RecordingTransferMetrics {
                 .append(",\"windowAcceptedNewBytes\":").append(Math.max(0,s.highOffset-s.initialOffset))
                 .append(",\"windowStartedNanos\":").append(s.windowStarted?Long.toString(s.firstWindow):"null")
                 .append(",\"originalVerifiedNanos\":").append(s.verified?Long.toString(s.verifiedAt):"null")
+                .append(",\"consumeLocalReadyNanos\":").append(s.consumeReadyAt>=0?Long.toString(s.consumeReadyAt):"null")
+                .append(",\"consumeWriteCompletedNanos\":").append(s.consumeSentAt>=0?Long.toString(s.consumeSentAt):"null")
+                .append(",\"consumeReplyReceivedNanos\":").append(s.consumeReceivedAt>=0?Long.toString(s.consumeReceivedAt):"null")
                 .append(",\"receiptDurableNanos\":").append(s.receiptConfirmed?Long.toString(s.receiptAt):"null").append('}');
         }
         trace.append(']');
@@ -100,6 +110,7 @@ final class RecordingTransferMetrics {
             ",\"confirmedKiBps\":"+(rate==null?"null":Double.toString(rate))+
             ",\"connectionAttempts\":"+connectionAttempts+",\"connectionsEstablished\":"+connectionsEstablished+",\"reusedConnections\":"+reusedConnections+",\"reusedCatalogues\":"+reusedCatalogues+
             ",\"directoryRequests\":"+directoryRequests+",\"directoryPages\":"+directoryPages+",\"streamDirectoryRequests\":"+streamDirectoryRequests+
+            ",\"stoppedBatchHintRequested\":"+stoppedBatchHintRequested+",\"stoppedBatchHintAccepted\":"+stoppedBatchHintAccepted+
             ",\"reconnectSequences\":"+reconnectSequences+",\"unexpectedDisconnections\":"+unexpectedDisconnections+
             ",\"firstPrivateDirectoryDelayNanos\":"+(firstDirectoryDelayNanos<0?"null":Long.toString(firstDirectoryDelayNanos))+
             ",\"maxReconnectDirectoryDelayNanos\":"+(maxReconnectDirectoryDelayNanos<0?"null":Long.toString(maxReconnectDirectoryDelayNanos))+

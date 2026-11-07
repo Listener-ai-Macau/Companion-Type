@@ -22,6 +22,8 @@ final class DurableConsume {
     private final DirectorySync syncDirectory;
     private final PrefixCheck checkPrefix;
     private boolean subscribed;
+    private RecordingTransferMetrics metrics;
+    void observe(RecordingTransferMetrics value){metrics=value;}
 
     DurableConsume(RecorderWire.Peer peer,RecordingClient.Link link) {
         this(peer,link,AndroidDirectorySync::sync,
@@ -49,6 +51,7 @@ final class DurableConsume {
         Path parent=directory.toAbsolutePath().getParent();
         if(parent==null)throw new IOException("recording directory has no durable parent");
         syncDirectory.sync(parent);
+        if(metrics!=null)metrics.consumeStage(d,0);
     }
     private void writeNew(Path directory,Path target,byte[] data)throws IOException {
         Path temp=directory.resolve(".consume-"+UUID.randomUUID()+".tmp");
@@ -137,6 +140,7 @@ final class DurableConsume {
         byte[] request=peer.consumeReceipt(d);
         if(!subscribed){link.subscribe(RecordingClient.RECORDING_CONSUME);subscribed=true;}
         link.write(RecordingClient.RECORDING_CONSUME,request);
+        if(metrics!=null)metrics.consumeStage(d,1);
         return request;
     }
     private void awaitReceipt(Path directory,RecorderWire.Descriptor d,byte[] request)throws IOException {
@@ -154,6 +158,7 @@ final class DurableConsume {
                 if(id==d.recordingId)throw new IOException("device did not confirm recording consumption; local recording retained");
             }
         }
+        if(metrics!=null)metrics.consumeStage(d,2);
         writeNew(directory,confirmed(directory,d),request);
     }
     private void send(Path directory,RecorderWire.Descriptor d)throws IOException {
