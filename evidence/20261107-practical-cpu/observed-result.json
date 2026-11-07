@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-07T10:50:24+08:00",
-  "phase": "running",
+  "at": "2026-11-07T10:58:12+08:00",
+  "phase": "finished",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2",
   "protocol": {
@@ -66,10 +66,20 @@
     "scope": "Speaker activity/anonymous identity only. This does not recover overlapped words, recognize names/roles, prove ASR<5%, phone performance or product qualification."
   },
   "run": {
-    "state": "RUNNING_COMPLETE_MEETING_DIARIZATION",
+    "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
     "startedAt": "2026-11-07T10:40:35+08:00",
     "pid": 18960,
-    "results": [],
+    "results": [
+      {
+        "meeting": "L_R003S01C02",
+        "exitCode": 1,
+        "workerState": "FAILED_RETAINED",
+        "wholeProcessFamilySeconds": 1055.628851500005,
+        "privatePeakBytes": 2117996544,
+        "rssPeakBytes": 1686429696,
+        "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2\\results\\L_R003S01C02"
+      }
+    ],
     "protocolSha256": "c25306d5b28efa27bd3c862f158c51143b655c9700a95d7eda38f717dd9bf77a",
     "sourceSha256": {
       "practical_cpu_worker_20261107.py": "b2e45bfef306f482dc32b19629aad5b4fce5977e377825771e4a9b609dc6c7c0",
@@ -80,8 +90,7 @@
     },
     "referencePassedToInference": false,
     "automaticRetries": 0,
-    "activeMeeting": "L_R003S01C02",
-    "activePid": 23144
+    "finishedAt": "2026-11-07T10:58:12+08:00"
   },
   "asrProbe": {
     "state": "EXISTING_ASR_CONTROL_COMPLETE",
@@ -256,7 +265,7 @@
   "wholeMeetingAsrQuality": null,
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
-  "state": "RUNNING_COMPLETE_MEETING_DIARIZATION",
+  "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
   "shortIntegrationProof": {
     "state": "PASS_ACTUAL_PUBLIC30S_CPU_JOURNAL_TOKEN_ATTRIBUTION_AND_NO_MODEL_CACHE_RESUME",
     "sameRawTextTokensOnsetsAsOriginalProbe": true,

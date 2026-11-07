@@ -1,0 +1,7 @@
+{
+  "speakerWorkerImportedBeforeLaterTempNameFix": true,
+  "speakerImportedIoSourceCommit": "1a218deded247940eaed891d951e6c73fcf9133f",
+  "speakerImportedIoSourceSha256": "2195d3d4574cb04a25b8e57730b90bbedcebf2781322287d99b9ff68bccd37bd",
+  "laterRawCacheIoSourceSha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+  "difference": "Later short temporary names for long cached-transcript paths; running speaker worker keeps its already-imported earlier IO function. Weight/math/protocol unchanged. ASR stage source captured separately at launch."
+}

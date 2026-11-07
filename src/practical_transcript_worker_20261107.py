@@ -6,7 +6,7 @@ os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='
 from moss_windows_resource_limits_20261104 import WorkerLimits
 from practical_transcript_20261107 import align_window
 from practical_io_20261107 import atomic_json
-p=argparse.ArgumentParser();p.add_argument('--control',required=True);p.add_argument('--index',type=int,required=True);p.add_argument('--resume',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--control',required=True);p.add_argument('--index',type=int,required=True);p.add_argument('--resume',action='store_true');p.add_argument('--text-only',action='store_true');a=p.parse_args()
 C=Path(a.control);read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));case=read(C/'audio-only.json')[a.index];protocol=read(C/'asr-protocol.json')
 limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3);out=C/'transcripts'/case['meeting'];out.mkdir(parents=True,exist_ok=a.resume)
 chunks=out/'windows';chunks.mkdir(exist_ok=a.resume)
@@ -18,19 +18,21 @@ def write(path,value):
 tick=time.perf_counter();state={'state':'LOADING_EXISTING_CPU_ASR','pid':os.getpid(),'startedAt':now(),'meeting':case['meeting'],'audioSha256':case['audioSha256'],'referencePassedToWorker':False,'gpuUsed':False,'completedWindows':0,'newNeuralWindows':0,'priorAttemptSeconds':0.,'limits':limits.query()}
 if a.resume:
     old=read(out/'state.json');assert old['meeting']==case['meeting'] and old['audioSha256']==case['audioSha256']
-    snapshot=out/('prior-state-'+sha(out/'state.json')+'.json')
+    snapshot=out/('prior-state-'+sha(out/'state.json')[:12]+'.json')
     if not snapshot.exists():snapshot.write_bytes((out/'state.json').read_bytes())
     state['priorAttemptSeconds']=old.get('priorAttemptSeconds',0)+old.get('wholeWorkerSeconds',old.get('newAttemptSeconds',0))
     state['priorAttemptTimeIncomplete']=old.get('priorAttemptTimeIncomplete',False) or 'wholeWorkerSeconds' not in old
 write(out/'state.json',state)
 try:
     assert sha(case['audio'])==case['audioSha256']
-    journal_file=C/'results'/case['meeting']/'speaker-journal.json';journal=read(journal_file)
-    producer=read(journal_file.parent/'completed-state.json')
-    assert producer['state']=='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED' and producer['finishedAt']
-    assert journal['audioSha256']==case['audioSha256'] and journal['audioSeconds']==case['audioSeconds']
-    assert sha(journal_file)==protocol['speakerJournals'][case['meeting']]
-    binding={'audioSha256':case['audioSha256'],'protocolSha256':sha(C/'asr-protocol.json'),'journalSha256':sha(journal_file),'workerSha256':sha(__file__),'attributionSha256':sha(Path(__file__).with_name('practical_transcript_20261107.py'))}
+    journal_file=C/'results'/case['meeting']/'speaker-journal.json'
+    journal={'segments':[]};journal_sha=None
+    if not a.text_only:
+        journal=read(journal_file);producer=read(journal_file.parent/'completed-state.json')
+        assert producer['state']=='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED' and producer['finishedAt']
+        assert journal['audioSha256']==case['audioSha256'] and journal['audioSeconds']==case['audioSeconds']
+        journal_sha=sha(journal_file);assert journal_sha==protocol['speakerJournals'][case['meeting']]
+    binding={'audioSha256':case['audioSha256'],'protocolSha256':sha(C/'asr-protocol.json'),'journalSha256':journal_sha,'workerSha256':sha(__file__),'attributionSha256':sha(Path(__file__).with_name('practical_transcript_20261107.py'))}
     raw_binding={'audioSha256':case['audioSha256'],'modelFiles':protocol['modelFiles'],'runtimeVersion':protocol['runtimeVersion'],'nativeExtensionSha256':protocol['nativeExtensionSha256'],'windowSamples':protocol['maximumWindowSamples'],'language':'zh','useItn':True,'provider':'cpu','numThreads':1}
     canonical=lambda obj:json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf8')
     for record in protocol['modelFiles'].values():assert sha(record['file'])==record['sha256']
@@ -70,8 +72,9 @@ try:
             if file.exists():
                 previous=read(file)
                 if previous!=packet:
-                    archive=file.with_name(file.stem+'-prior-'+sha(file)+'.json')
+                    archive=file.with_name(file.stem+'-p-'+sha(file)[:12]+'.json')
                     if not archive.exists():archive.write_bytes(file.read_bytes())
+                    else:assert sha(archive)==sha(file),'Archive prefix collision; original results retained'
             write(file,packet)
             raw_windows.append(raw);utterances.extend(aligned['utterances']);estimated_tokens.extend(aligned['tokenEstimates'])
             state.update(completedWindows=index+1,reusedDurableWindows=reused,completedSample=end,newAttemptSeconds=time.perf_counter()-tick,limits=limits.query());write(out/'state.json',state)
@@ -82,7 +85,7 @@ try:
     write(out/'model-output.json',document)
     review={'meeting':case['meeting'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'binding':binding,'allOriginalAudioSamplesCoveredOnce':True,'rawWindowCount':len(raw_windows),'rawWindowText':'\n'.join(r['text'] for r in raw_windows),'allTextPreservedThroughAttribution':True,'tokenEstimates':estimated_tokens,'utterancesWithAttribution':utterances,'unconfirmedTokens':sum(r['speaker'] is None for r in estimated_tokens),'overlapTokensRequiringRecovery':sum(r['overlapDetectedNearOnset'] for r in estimated_tokens),'scope':'Completed baseline, not quality qualified. Full original audio retained. Native token onsets only; unknown boundaries/overlaps must be reviewed, both overlapping voices are not recovered. No real names/roles or verified word duration.'}
     write(out/'attribution-review.json',review)
-    state.update(state='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED',modelLoaded=rec is not None,allAudioSamplesCoveredOnce=True,allAsrTextPreserved=True,unconfirmedTokens=review['unconfirmedTokens'],overlapTokensRequiringRecovery=review['overlapTokensRequiringRecovery'],modelOutputSha256=sha(out/'model-output.json'),attributionReviewSha256=sha(out/'attribution-review.json'))
+    state.update(state='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED',speakerJournalPending=a.text_only,modelLoaded=rec is not None,allAudioSamplesCoveredOnce=True,allAsrTextPreserved=True,unconfirmedTokens=review['unconfirmedTokens'],overlapTokensRequiringRecovery=review['overlapTokensRequiringRecovery'],modelOutputSha256=sha(out/'model-output.json'),attributionReviewSha256=sha(out/'attribution-review.json'))
 except BaseException as error:
     state.update(state='FAILED_RETAINED_RESUMABLE',error=repr(error),traceback=traceback.format_exc());raise
 finally:

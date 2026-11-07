@@ -3,7 +3,7 @@ from pathlib import Path
 import json,os,time,uuid
 
 def atomic_json(path,value,*,progress=False):
-    path=Path(path);temp=path.with_name(path.name+'.'+str(os.getpid())+'.'+uuid.uuid4().hex+'.tmp')
+    path=Path(path);temp=path.parent/('.tmp-'+uuid.uuid4().hex)
     try:
         with temp.open('xb') as stream:
             stream.write((json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode('utf8'));stream.flush()

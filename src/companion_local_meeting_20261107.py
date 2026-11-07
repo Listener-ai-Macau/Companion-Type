@@ -5,7 +5,7 @@ shared Document JSON only after both local model stages finish successfully.
 """
 from pathlib import Path
 from datetime import datetime
-import argparse,hashlib,json,os,psutil,subprocess,sys,time,traceback,wave
+import argparse,hashlib,json,os,psutil,shutil,subprocess,sys,time,traceback,wave
 from practical_io_20261107 import atomic_json,stop_owned_family
 from moss_windows_resource_limits_20261104 import SystemRamPressure
 
@@ -35,27 +35,33 @@ def main():
     assert meeting and all(c.isalnum() or c in '._-' for c in meeting),'Invalid saved recording identifier'
     journal=current/'results'/meeting/'completed-state.json' if current else None
     if journal is None or not journal.exists() or read(journal).get('state')!='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED':
+        previous=current
         current=root/('attempt-%04d'%(len(task['attempts'])+1));current.mkdir(exist_ok=False)
         case={'meeting':meeting,'audio':str(audio),**binding};case.pop('modelPackSha256')
         atomic_json(current/'audio-only.json',[case]);atomic_json(current/'protocol.json',pack['diarization'])
         task['attempts'].append({'control':str(current),'startedAt':now(),'stages':[]})
+        if previous and (previous/'transcripts'/meeting).exists():
+            destination=current/'transcripts'/meeting
+            assert previous.resolve().is_relative_to(root) and destination.resolve().is_relative_to(root)
+            destination.parent.mkdir(exist_ok=True);shutil.copytree(previous/'transcripts'/meeting,destination)
+            task['attempts'][-1]['rawTranscriptReusedFrom']=str(previous/'transcripts'/meeting)
     attempt=task['attempts'][-1];atomic_json(state_path,task)
     pressure=SystemRamPressure();child=None;process=None
-    def run_stage(module,phase,resume=False):
+    def run_stage(module,phase,resume=False,text_only=False):
         nonlocal child,process
         for member in psutil.process_iter(['cmdline']):
             try:assert not any(Path(arg).name in ['moss_night_gpu_worker_20261104.py','practical_cpu_worker_20261107.py','practical_transcript_worker_20261107.py'] for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
             except (psutil.NoSuchProcess,psutil.AccessDenied):pass
         if pressure.low():raise RuntimeError('Windows低内存保护触发，当前任务已保留。')
-        if (current/'stop.request').exists():raise InterruptedError('当前任务已请求停止，原音和已保存结果保留。')
+        if (current/'stop.request').exists() or (root/'stop.request').exists():raise InterruptedError('当前任务已请求停止，原音和已保存结果保留。')
         task.update(state=phase,updatedAt=now());atomic_json(state_path,task);tick=time.perf_counter();private_peak=0
         log=current/(phase+'-'+str(len(attempt['stages']))+'.log')
-        command=[sys.executable,str(Path(__file__).with_name(module)),'--control',str(current),'--index','0']+(['--resume'] if resume else [])
+        command=[sys.executable,str(Path(__file__).with_name(module)),'--control',str(current),'--index','0']+(['--resume'] if resume else [])+(['--text-only'] if text_only else [])
         with log.open('xb') as stream:
             child=subprocess.Popen(command,stdout=stream,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
             process=psutil.Process(child.pid);process.cpu_affinity([12,13]);task['activePid']=child.pid;atomic_json(state_path,task)
             while child.poll() is None:
-                if pressure.low() or (current/'stop.request').exists():
+                if pressure.low() or (current/'stop.request').exists() or (root/'stop.request').exists():
                     stop_owned_family(child,process);raise InterruptedError('低内存或停止请求，已结束本任务进程并保留原音和检查点。')
                 try:
                     family=[process]+process.children(recursive=True);private=sum(getattr(p.memory_info(),'private',0) for p in family);private_peak=max(private_peak,private)
@@ -67,16 +73,25 @@ def main():
         assert child.returncode==0,'本地模型阶段未完成；可查看本任务日志并保留已有检查点。'
     try:
         journal=current/'results'/meeting/'completed-state.json'
+        ready=journal.exists() and read(journal).get('state')=='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED'
+        file=current/'asr-protocol.json';completed=current/'transcripts'/meeting/'completed-state.json'
+        if not file.exists():atomic_json(file,{**pack['asr'],'speakerJournals':({meeting:checksum(journal.parent/'speaker-journal.json')} if ready else {})})
+        if not completed.exists() or read(completed).get('state')!='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED':
+            run_stage('practical_transcript_worker_20261107.py','TRANSCRIBING_DRAFT',(current/'transcripts'/meeting).exists(),text_only=not ready)
+        draft=current/'text-draft.json'
+        if not draft.exists():atomic_json(draft,read(completed.parent/'model-output.json'))
+        task['textDraft']=str(draft);task.setdefault('textDraftReadyAt',now());atomic_json(state_path,task)
         if not journal.exists() or read(journal).get('state')!='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED':run_stage('practical_cpu_worker_20261107.py','DIARIZING')
         assert read(journal)['state']=='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED'
         assert read(journal)['audioSha256']==binding['audioSha256'] and read(journal)['audioSeconds']==seconds
         assert checksum(journal.parent/'predicted.rttm')==read(journal)['rttmSha256']
         asr={**pack['asr'],'speakerJournals':{meeting:checksum(journal.parent/'speaker-journal.json')}}
-        file=current/'asr-protocol.json'
-        if file.exists():assert read(file)==asr
-        else:atomic_json(file,asr)
-        completed=current/'transcripts'/meeting/'completed-state.json'
-        if not completed.exists() or read(completed).get('state')!='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED':
+        if read(file)!=asr:
+            assert {k:v for k,v in read(file).items() if k!='speakerJournals'}==pack['asr'],'ASR settings changed during task'
+            old=file.with_name('asr-protocol-prior-'+checksum(file)[:12]+'.json')
+            if not old.exists():old.write_bytes(file.read_bytes())
+            atomic_json(file,asr)
+        if read(completed).get('speakerJournalPending') or read(completed).get('state')!='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED':
             run_stage('practical_transcript_worker_20261107.py','TRANSCRIBING',(current/'transcripts'/meeting).exists())
         result=read(completed);assert result['state']=='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED'
         assert result['audioSha256']==binding['audioSha256'] and result['audioSeconds']==seconds
@@ -93,5 +108,5 @@ def main():
 
 if __name__=='__main__':
     try:main()
-    except BaseException as error:
+    except Exception as error:
         print(json.dumps({'error':str(error),'isFinal':False},ensure_ascii=False),file=sys.stderr,flush=True);raise SystemExit(1)
