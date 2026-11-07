@@ -115,7 +115,7 @@ if record['nativeVerbatimReview']:
 qwen_root=base/'practical-qwen-native-r1';active=optional(qwen_root/'active-execution.json')
 qwen_current=Path(active['control']) if active else qwen_root
 assert qwen_current.resolve().parent==base.resolve() and qwen_current.name in names,'Only allowlisted public model controls can be published'
-record['officialNativeAsrControl']={name:optional(qwen_current/name) for name in ['download-range-receipt.json','prepared.json','hip-inventory.json','short-run.json','short-native-state.json','full/run.json','review.json']}
+record['officialNativeAsrControl']={name:optional(qwen_current/name) for name in ['download-range-receipt.json','prepared.json','hip-inventory.json','short-run.json','short-native-state.json','full/run.json','cache-recovery-proof.json','concurrency-proof.json','execution-stop-rule.json','followthrough-final-observation.json','review.json']}
 record['officialNativeAsrControl'].update(control=str(qwen_current),activeExecution=active,initialLoaderFailure=optional(qwen_root/'short-run.json'),nativeLoaderTinyControl=optional(qwen_root/'streamed-loader-proof-r2.json'),featureNumericControl=optional(qwen_root/'processor-numeric-proof.json'),exactZeroGuardControl=optional(qwen_root/'exact-zero-guard-proof.json'))
 qwen=record['officialNativeAsrControl']
 if qwen['download-range-receipt.json'] and not qwen['short-run.json']:
@@ -144,15 +144,19 @@ if record['native8F16Assessment']:
     if record['nativeVerbatimReview']:
         text_gate=next(g for g in contract['gates'] if g['id']=='QM04')
         text_gate['nativeVerbatimDevelopment20261107']={'at':now,'review':str(base/'practical-verbatim-r1/review.json'),'rawCer':{'S_R004S03C01':0.06954954954954955,'L_R003S01C02':0.2612955278930383},'complexMixedCerIsOnlyDiagnostic':True,'jointCpCerDiagnostic':{'S_R004S03C01':0.09549549549549549,'L_R003S01C02':0.405025357307515},'strictScoringUnchanged':True,'neuralSettingChanged':'native useItn True→False only','qualityQualified':False,'defaultProductChanged':False}
-        text_gate['officialNativeQwenControl20261107']={'at':now,'evidence':str(base/'practical-qwen-native-r1'),'state':record['state'],'noNewQualityScoreUnlessFullCompleted':True}
+        text_gate['officialNativeQwenControl20261107']={'at':now,'evidence':str(qwen_current),'state':record['state'],'noNewQualityScoreUnlessFullCompleted':True,'review':qwen['review.json'],'allSpeakersUnknownUntilValidatedAlignmentAndAttribution':True,'qualityQualified':False,'defaultProductChanged':False}
         contract['qualification']['currentQualification']='NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state '+record['state']+'. Overlap words/facts/installed mobile-card/final holdout/sale still open.'
+        if qwen['review.json']:
+            rows=qwen['review.json']['results']
+            scores='; '.join(row['meeting']+' chronologicalCER '+format(row['rawChronologicalCerNativeQwen']*100,'.5f')+'%' for row in rows)
+            contract['qualification']['currentQualification']='NOT_QUALIFIED: official fixed native Qwen complete exposed development outputs: '+scores+'. Complex mixed chronological value is diagnostic only; all speakers unknown, no word alignment or joint/time-constrained text acceptance. Ordinary5% remains open. Prior FP16 diarization and AMI cross-corpus failure retained. Overlap-separated words/factual minutes/installed Windows-Android/card/final holdout/sale still open.'
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}
 with (R/'docs/development_log.md').open('a',encoding='utf8') as out:
     if record['nativeVerbatimPreparation']:
         if a.phase in ['finished','failed']:
-            out.write('\n\n## '+now+'｜原QM04逐字输出与严格准确率对照\n\n承接Owner“达到可售卖标准、正确方向”。保持原模型/音频/30秒切分/严格含语气词和儿化评分，按现有错误清单只验证原生useItn=False输出；旧useItn=True及失败结果保留。状态：'+record['state']+'。结果/范围：'+json.dumps(record['nativeVerbatimReview'] or record['nativeVerbatimRun'],ensure_ascii=False)+'。模型源码和公开证据'+head+'已远端核验；未改产品默认、未训练、未开最终未见集，原全部售卖门继续。下一步：'+record['next']+'\n')
+            out.write('\n\n## '+now+'｜原QM04逐字输出与原生ASR完整会议对照\n\n承接Owner“达到可售卖标准、正确方向”。原生useItn=False对照保持原模型/音频/30秒切分/严格含语气词和儿化评分，旧useItn=True及失败结果保留。逐字输出结果/范围：'+json.dumps(record['nativeVerbatimReview'] or record['nativeVerbatimRun'],ensure_ascii=False)+'。随后同一两场完整公开真实会议固定官方Qwen3-ASR-0.6B-hf/BF16，不传参考/人数/热词，GPU特征独立数值对照和分块权重精确回读通过。原生ASR状态：'+record['state']+'；完整结果/决策/准确范围/阶段耗时：'+json.dumps(qwen['review.json'] or qwen['full/run.json'],ensure_ascii=False)+'。加载失败、裸模型静音幻觉、实际低RAM与运行会话中断保留；完整缓存重开0模型和缺失缓存两次拒绝已验证。模型源码和公开证据'+head+'已远端核验；未改产品默认、未训练、未开最终未见集，原全部售卖门继续。下一步：'+record['next']+'\n')
         # Live checkpoints update the original backlog, not another timeline
         # entry for every sampled progress change.
     else:

@@ -4,12 +4,15 @@ from datetime import datetime
 import hashlib,json,psutil,subprocess,sys,time
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');base=R/'docs/handoffs/20261107-model-generation-recovery';C=base/'practical-qwen-signal-r3';full=C/'full'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
-quality=full/'transcripts/S_R004S03C01/quality-review.json';rule=C/'execution-stop-rule.json';assert not quality.exists() and not rule.exists()
+quality=full/'transcripts/S_R004S03C01/quality-review.json';rule=C/'execution-stop-rule.json'
 baseline=next(r for r in read(base/'practical-verbatim-r1/review.json')['results'] if r['meeting']=='S_R004S03C01')['rawCerAfter']
 value={'declaredAt':now(),'state':'DECLARED_BEFORE_FIRST_COMPLETE_NEW_MEETING_SCORE','ordinaryMeeting':'S_R004S03C01','baselineStrictCer':baseline,'futilityRule':'If full ordinary raw CER is not lower than the existing6.95495% baseline, reject this pipeline as a default improvement and stop further complex inference. Do not hide the failed ordinary score or mark unrun complex/identity/facts/holdout qualified.','neuralProtocolChanged':False,'originallyPlannedMeetings':['S_R004S03C01','L_R003S01C02'],'fullNewQualityScoreAvailableAtDeclaration':False,'sourceSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
-rule.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+if rule.exists():
+    original=read(rule);assert original['baselineStrictCer']==baseline and not original['fullNewQualityScoreAvailableAtDeclaration']
+else:
+    assert not quality.exists();rule.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 state={'state':'FOLLOWING_EXISTING_FULL_NATIVE_RUN','startedAt':now(),'parentControllerPid':read(full/'run.json')['pid'],'futilityStopRequested':False,'newInferenceLaunchedByFollower':False}
-target=C/'followthrough.json'
+target=C/'followthrough-final-observation.json'
 def save():target.write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 save()
 while True:
