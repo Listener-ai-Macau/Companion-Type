@@ -1,0 +1,170 @@
+{
+  "L_R003S01C02-root-000029-speaker-2": {
+    "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-2.json",
+    "separationFileSha256": "15cc9f8a1f5501cc1e7d69504cda9ddfb8db45babee605c65ab8d7f2f8fbc3df",
+    "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-2\\completed.json",
+    "asrFileSha256": "aca126f21b3d4f5be5626cf4087eefd8fcd9b098bb6e20880d85112971c2093f",
+    "identity": {
+      "id": "L_R003S01C02-root-000029-speaker-2",
+      "meeting": "L_R003S01C02",
+      "requestedPredictedSpeaker": 2,
+      "top1PredictedSpeaker": 2,
+      "targetIsTop1": true,
+      "similarities": {
+        "0": 0.11138086020946503,
+        "1": 0.13645131886005402,
+        "2": 0.3658430278301239,
+        "3": 0.14373809099197388,
+        "4": 0.05601392686367035,
+        "5": 0.20930364727973938
+      },
+      "top1MinusSecond": 0.15653938055038452,
+      "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+    },
+    "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+  },
+  "L_R003S01C02-root-000029-speaker-3": {
+    "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-3.json",
+    "separationFileSha256": "52d36f8d2b8a3e51e7af0a3133fd96990da6df8be6e7dcaf516ce9c1c22e23ea",
+    "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-3\\completed.json",
+    "asrFileSha256": "e5ae6edf7fb34011a20a3035b13ab5720ffb99aeb4978f11dd456ce5cbad2e8f",
+    "identity": {
+      "id": "L_R003S01C02-root-000029-speaker-3",
+      "meeting": "L_R003S01C02",
+      "requestedPredictedSpeaker": 3,
+      "top1PredictedSpeaker": 3,
+      "targetIsTop1": true,
+      "similarities": {
+        "0": 0.1408526599407196,
+        "1": 0.4177590012550354,
+        "2": 0.26797235012054443,
+        "3": 0.7332406044006348,
+        "4": 0.24317556619644165,
+        "5": 0.3945496678352356
+      },
+      "top1MinusSecond": 0.31548160314559937,
+      "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+    },
+    "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+  },
+  "L_R003S01C02-root-000029-speaker-4": {
+    "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-4.json",
+    "separationFileSha256": "86655d7cd8333141bc4555b92b0dd638af4fccec965b7236fc0aa92628a65fa9",
+    "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-4\\completed.json",
+    "asrFileSha256": "e60551d7587307ed1ff06c20123fcddbe308d75971d287b15d748d8d4571c816",
+    "identity": {
+      "id": "L_R003S01C02-root-000029-speaker-4",
+      "meeting": "L_R003S01C02",
+      "requestedPredictedSpeaker": 4,
+      "top1PredictedSpeaker": 5,
+      "targetIsTop1": false,
+      "similarities": {
+        "0": 0.22292497754096985,
+        "1": 0.1965370774269104,
+        "2": 0.3120832145214081,
+        "3": 0.18687573075294495,
+        "4": 0.35825592279434204,
+        "5": 0.4906386137008667
+      },
+      "top1MinusSecond": 0.13238269090652466,
+      "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+    },
+    "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+  },
+  "L_R003S01C02-root-000029-speaker-5": {
+    "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-5.json",
+    "separationFileSha256": "4b298e6563396b9d080f9a7a1fbb1719bbb301545800eeabd176fc0eefff236f",
+    "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-5\\completed.json",
+    "asrFileSha256": "cf5e9de2073970e1ad673267d41b1d47a651735280e6e97c6ba427031811ef4d",
+    "identity": {
+      "id": "L_R003S01C02-root-000029-speaker-5",
+      "meeting": "L_R003S01C02",
+      "requestedPredictedSpeaker": 5,
+      "top1PredictedSpeaker": 5,
+      "targetIsTop1": true,
+      "similarities": {
+        "0": 0.2831933796405792,
+        "1": 0.3467448055744171,
+        "2": 0.31300032138824463,
+        "3": 0.3693978190422058,
+        "4": 0.43056103587150574,
+        "5": 0.6552560925483704
+      },
+      "top1MinusSecond": 0.22469505667686462,
+      "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+    },
+    "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+  },
+  "L_R003S01C02-root-000031-speaker-0": {
+    "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000031-speaker-0.json",
+    "separationFileSha256": "3aebd1b306fe86e7832eaba618a37666586b8ad8c12decc8a20788d8149fd609",
+    "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000031-speaker-0\\completed.json",
+    "asrFileSha256": "a0912ff700acc697f663e1a223e940c1cb3dfc3785c5613b8472234c1f555e1a",
+    "identity": {
+      "id": "L_R003S01C02-root-000031-speaker-0",
+      "meeting": "L_R003S01C02",
+      "requestedPredictedSpeaker": 0,
+      "top1PredictedSpeaker": 0,
+      "targetIsTop1": true,
+      "similarities": {
+        "0": 0.5082284212112427,
+        "1": 0.18562181293964386,
+        "2": 0.30664458870887756,
+        "3": 0.1559913456439972,
+        "4": 0.16613060235977173,
+        "5": 0.17096352577209473
+      },
+      "top1MinusSecond": 0.2015838325023651,
+      "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+    },
+    "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+  },
+  "L_R003S01C02-root-000031-speaker-1": {
+    "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000031-speaker-1.json",
+    "separationFileSha256": "fa6e5651e967265478191ed6d85b62c5ca595d9d8cb8d64892d8ee9c63609b88",
+    "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000031-speaker-1\\completed.json",
+    "asrFileSha256": "affe0ae5115d575bc8c20d17815f4c4dc1ffbf192e5d86617ee983b0e9da7292",
+    "identity": {
+      "id": "L_R003S01C02-root-000031-speaker-1",
+      "meeting": "L_R003S01C02",
+      "requestedPredictedSpeaker": 1,
+      "top1PredictedSpeaker": 1,
+      "targetIsTop1": true,
+      "similarities": {
+        "0": 0.14164909720420837,
+        "1": 0.8342503905296326,
+        "2": 0.20385204255580902,
+        "3": 0.4361640512943268,
+        "4": 0.16740117967128754,
+        "5": 0.2032538801431656
+      },
+      "top1MinusSecond": 0.3980863392353058,
+      "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+    },
+    "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+  },
+  "L_R003S01C02-root-000031-speaker-3": {
+    "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000031-speaker-3.json",
+    "separationFileSha256": "d527b407f3f669a8c055a136202c2b0ec9064fed17cc6e569b01c05a713ad966",
+    "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000031-speaker-3\\completed.json",
+    "asrFileSha256": "e1e9285389105bf0e8b805b48a9920d9c0f066f829cfed2afb71ce842c957ee7",
+    "identity": {
+      "id": "L_R003S01C02-root-000031-speaker-3",
+      "meeting": "L_R003S01C02",
+      "requestedPredictedSpeaker": 3,
+      "top1PredictedSpeaker": 3,
+      "targetIsTop1": true,
+      "similarities": {
+        "0": 0.13003301620483398,
+        "1": 0.44853147864341736,
+        "2": 0.20356109738349915,
+        "3": 0.714067280292511,
+        "4": 0.225010484457016,
+        "5": 0.2690444886684418
+      },
+      "top1MinusSecond": 0.26553580164909363,
+      "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+    },
+    "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+  }
+}

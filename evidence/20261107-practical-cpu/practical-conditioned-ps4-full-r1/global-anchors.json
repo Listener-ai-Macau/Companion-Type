@@ -1,0 +1,92 @@
+[
+  {
+    "speaker": 0,
+    "startSample": 31053759,
+    "endSample": 31181759,
+    "sourceSoloRegion": {
+      "start": 1933.4399567842484,
+      "end": 1956.2799562737346,
+      "people": [
+        0
+      ]
+    },
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+    "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+    "audioSeconds": 8.0
+  },
+  {
+    "speaker": 1,
+    "startSample": 6870480,
+    "endSample": 6998480,
+    "sourceSoloRegion": {
+      "start": 423.67999053001404,
+      "end": 443.12999009527266,
+      "people": [
+        1
+      ]
+    },
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+    "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+    "audioSeconds": 8.0
+  },
+  {
+    "speaker": 2,
+    "startSample": 2571200,
+    "endSample": 2699200,
+    "sourceSoloRegion": {
+      "start": 154.90999653749168,
+      "end": 174.48999609984457,
+      "people": [
+        2
+      ]
+    },
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+    "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+    "audioSeconds": 8.0
+  },
+  {
+    "speaker": 3,
+    "startSample": 12805120,
+    "endSample": 12933120,
+    "sourceSoloRegion": {
+      "start": 799.3699821326882,
+      "end": 809.2699819114059,
+      "people": [
+        3
+      ]
+    },
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+    "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+    "audioSeconds": 8.0
+  },
+  {
+    "speaker": 4,
+    "startSample": 1310720,
+    "endSample": 1438720,
+    "sourceSoloRegion": {
+      "start": 67.2899984959513,
+      "end": 104.5499976631254,
+      "people": [
+        4
+      ]
+    },
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+    "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+    "audioSeconds": 8.0
+  },
+  {
+    "speaker": 5,
+    "startSample": 4413360,
+    "endSample": 4541360,
+    "sourceSoloRegion": {
+      "start": 268.0099940095097,
+      "end": 291.659993480891,
+      "people": [
+        5
+      ]
+    },
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+    "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+    "audioSeconds": 8.0
+  }
+]

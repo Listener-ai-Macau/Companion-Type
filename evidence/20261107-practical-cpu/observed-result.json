@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T20:28:32+08:00",
+  "at": "2026-11-07T20:32:33+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "CACHED_TARGET_IDENTITY_ROUTING_COMPONENT_IMPROVED_QUALIFICATION_OPEN",
+  "state": "RUNNING_PS4_SEPARATION_QUALITY_AND_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -8051,7 +8051,7 @@
     "qualityQualified": false,
     "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
   },
-  "next": "原RM-OVERLAP：本轮组件门通过，仅保留研究候选，下一步冻结覆盖整场全部预测重叠区域的同一策略，目标人数/声纹均自动估计，保留普通原音旁路、短新人物与无登记覆盖；真实完整会议逐人/重叠内容与跨语料复验后才考虑接双端，不按已见片段挑轨。原文字5%/事实/独立最终集/双端实卡/售卖门全保留。",
+  "next": "完成当前已冻结39分23秒L整场路由验证：79根中57个预测重叠根、168条预测目标路，使用同一PS4/原生声纹Top1身份核对与普通原音旁路。7条同源组件缓存明确复用，全部新提取/身份核对结束退出后才逐路转写；不使用旧分人活动硬静音，以免丢掉真实005讲话。以完整原标注/固定全局映射看总错字、逐人/短句/重叠上下文，任何总回退拒绝整个候选，不按段挑赢家；003短声退化显式保留。CPU5%/private2GiB/实际低RAM保护，原<5%与全部跨域/事实/双端实卡/售卖门保持。",
   "lastOwnerQuote": "推进把, 主要是复杂多人这个看看怎么搞",
   "nativeVerbatimPreparation": {
     "at": "2026-11-07T15:04:06+08:00",
@@ -12860,6 +12860,1581 @@
         "gpuUtilizationHardCapped": false,
         "scope": "This worker and its descendants only; no global or other-app changes."
       }
+    },
+    "fullMeetingFollowthrough": {
+      "protocol-r2.json": {
+        "at": "2026-11-07T20:30:27+08:00",
+        "state": "FROZEN_FULL_COMPLEX_ROUTED_CANDIDATE_BEFORE_NEW_INFERENCE",
+        "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c",
+        "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+        "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+        "helperSources": {
+          "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+          "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+          "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107",
+          "practical_target_voice_router_20261107.py": "b416999fe9dd6769a81ef46a7a51394a9432b6bad1aceb76b66945c9942e8afb"
+        },
+        "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+        "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+        "derivedAudioRoot": "E:/CodexData/Companion/.model-cache/ps4-target-extraction-20261107/full-L-extracted",
+        "separation": "Unmodified complete author build_model/extract_speaker, exact matching state tensors, strict load, FP32/eval, matching embedded ECAPA encoder. Both mixture/enrollment separately peak-normalized as official CLI. Every predicted active person with automatically chosen same-meeting solo anchor is extracted. No reference/name/count or output-track deletion.",
+        "asr": "Same pinned native1.7B/BF16/eager/greedy512/Chinese/no-context and bounded raw-preserving recovery. Every extracted lane is transcribed; exact-zero pipeline guard only. Source mixture full-ASR cache retained, not re-recognized.",
+        "scoring": "Replace only selected original30s root text in the existing complete per-person Document, leave all other full-meeting text unchanged, then score against the entire original reference. All duplicate/missing/incorrect lanes count. Report global cpCER and independently fixed full-speaker DER mapping/unknown-unmatched diagnostic; no per-clip oracle mapping or boundary-word discard. Categories use full reference utterances, not a claimed pure overlap-word score.",
+        "retainRule": "Require fewer whole-L fixed-mapping/unknown-unmatched content edits than the frozen baseline, no worse full-S ordinary control edits, and no new complete-execution failure. Otherwise retain raw outputs and reject scaling this exact candidate; no threshold/window/enrollment sweep. Improvements are development component evidence, never full<5%, final holdout or sale acceptance.",
+        "singleSpeakerProtection": "Ordinary production route retains source recording; forced extraction is an explicit damage control, not silently applied by default.",
+        "trainingOverlapWithThesePublicRecordingsUnknown": true,
+        "finalHoldoutOpened": false,
+        "qualityQualified": false,
+        "cpuPercentMaximum": 5,
+        "privateCommitLimitBytes": 2147483648,
+        "modelStagesSequential": true,
+        "parentProtocolSha256": "c275bd222f81c785c61e1fa390056183bf42e3e90c09768696b57aab46c9e152",
+        "audioFrontendManifestSha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c",
+        "preparationFailure": "Original model attempt stopped on missing torchaudio before weights or any inference. Pinned unmodified official Python frontend added only to separation-worker path; standard PCM wave I/O and native Torch are unchanged. No model/audio/retention/scoring setting changed.",
+        "componentParentVerifiedReviewSha256": "021474ee010a417f9d238d87563020ba77a7cc3829d734db2700efa3672186aa",
+        "seedManifestSha256": "a2ca387cb66b2e806b6b055a2482695375bac1445e24c686e44405b474d0112a",
+        "globalAnchorsSha256": "eefd80617a89918661178867aad3da5e1650ff5feb22e974d69106e8cf3f7cd7",
+        "fullRoutePlanSha256": "e42d537c4635de487aee4ef310d009a3a6c114124f4349cee561b39ee4340bc9",
+        "fullRoute": "Every predicted-overlap root, all predicted-active enrolled people, same native encoder top1 self-identity check against all6 frozen automatic anchors. All rejected raw lanes retained; no hard time-activity masking. If no lane admitted in a root, retain its full original transcript. Other roots retain original whole output. Same thresholds/model/ASR as routed component, no per-root winner selection.",
+        "fullRetentionRule": "Report full-L fixed global DER mapping/unknown-unmatched and standard cpCER, all-person errors, short utterance and overlap-context categories separately. Any total regression rejects this whole candidate, no per-root model cherry-picking. Ordinary source route stays byte-identical. Short-person regression and absent/unregistered speakers remain explicit even if total improves; no formal5% or sale pass from this one development meeting."
+      },
+      "full-route-plan.json": {
+        "meeting": "L_R003S01C02",
+        "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+        "audioSeconds": 2362.945,
+        "roots": [
+          {
+            "id": "L_R003S01C02-root-000000",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 0,
+            "startSample": 0,
+            "endSample": 480000,
+            "predictedPeople": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 1.0799999758601189,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 12.930000381544232,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000001",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 1,
+            "startSample": 480000,
+            "endSample": 960000,
+            "predictedPeople": [
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 29.38000001385808,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000002",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 2,
+            "startSample": 960000,
+            "endSample": 1440000,
+            "predictedPeople": [
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 29.670000007376075,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000003",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 3,
+            "startSample": 1440000,
+            "endSample": 1920000,
+            "predictedPeople": [
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.4400000795722,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000004",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 4,
+            "startSample": 1920000,
+            "endSample": 2400000,
+            "predictedPeople": [
+              2
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.91000004671514,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000005",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 5,
+            "startSample": 2400000,
+            "endSample": 2880000,
+            "predictedPeople": [
+              2
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 29.27000001631677,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000006",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 6,
+            "startSample": 2880000,
+            "endSample": 3360000,
+            "predictedPeople": [
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 0.3799999915063381,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 24.969995418563485,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000007",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 7,
+            "startSample": 3360000,
+            "endSample": 3840000,
+            "predictedPeople": [
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.30000475421548,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000008",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 8,
+            "startSample": 3840000,
+            "endSample": 4320000,
+            "predictedPeople": [
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 28.34000003710389,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000009",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 9,
+            "startSample": 4320000,
+            "endSample": 4800000,
+            "predictedPeople": [
+              2,
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 28.34000003710389,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000010",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 10,
+            "startSample": 4800000,
+            "endSample": 5280000,
+            "predictedPeople": [
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 28.64000003039837,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000011",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 11,
+            "startSample": 5280000,
+            "endSample": 5760000,
+            "predictedPeople": [
+              1,
+              5
+            ],
+            "predictedOverlapSeconds": 0.7099999841302633,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.360000103712082,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000012",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 12,
+            "startSample": 5760000,
+            "endSample": 6240000,
+            "predictedPeople": [
+              1,
+              5
+            ],
+            "predictedOverlapSeconds": 2.7300086561590433,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.799991376698017,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000013",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 13,
+            "startSample": 6240000,
+            "endSample": 6720000,
+            "predictedPeople": [
+              1,
+              5
+            ],
+            "predictedOverlapSeconds": 1.7899912428110838,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.730008790269494,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000014",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 14,
+            "startSample": 6720000,
+            "endSample": 7200000,
+            "predictedPeople": [
+              1,
+              2,
+              5
+            ],
+            "predictedOverlapSeconds": 4.139999907463789,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.43000010214746,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000015",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 15,
+            "startSample": 7200000,
+            "endSample": 7680000,
+            "predictedPeople": [
+              1,
+              2,
+              5
+            ],
+            "predictedOverlapSeconds": 1.8099999595433474,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.540000077337027,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000016",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 16,
+            "startSample": 7680000,
+            "endSample": 8160000,
+            "predictedPeople": [
+              1,
+              2,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 1.5699999649077654,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.880000069737434,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000017",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 17,
+            "startSample": 8160000,
+            "endSample": 8640000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 4.479999899864197,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.290000105276704,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000018",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 18,
+            "startSample": 8640000,
+            "endSample": 9120000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 1.269999971613288,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.110000064596534,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000019",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 19,
+            "startSample": 9120000,
+            "endSample": 9600000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 0.5799999870359898,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 28.07000004313886,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000020",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 20,
+            "startSample": 9600000,
+            "endSample": 10080000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 1.1199999749660492,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.52000007778406,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000021",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 21,
+            "startSample": 10080000,
+            "endSample": 10560000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 1.9499999564141035,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.470000056549907,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000022",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 22,
+            "startSample": 10560000,
+            "endSample": 11040000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.230000084266067,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000023",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 23,
+            "startSample": 11040000,
+            "endSample": 11520000,
+            "predictedPeople": [
+              1,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 1.409999968484044,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 23.540000144392252,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000024",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 24,
+            "startSample": 11520000,
+            "endSample": 12000000,
+            "predictedPeople": [
+              1,
+              5
+            ],
+            "predictedOverlapSeconds": 2.1599999517202377,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 23.820000138133764,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000025",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 25,
+            "startSample": 12000000,
+            "endSample": 12480000,
+            "predictedPeople": [
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 0.19999999552965164,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.93000009097159,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000026",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 26,
+            "startSample": 12480000,
+            "endSample": 12960000,
+            "predictedPeople": [
+              1,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 1.0399999767541885,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 20.55000021122396,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000027",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 27,
+            "startSample": 12960000,
+            "endSample": 13440000,
+            "predictedPeople": [
+              1,
+              2,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 2.149999951943755,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.880000092089176,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000028",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 28,
+            "startSample": 13440000,
+            "endSample": 13920000,
+            "predictedPeople": [
+              1,
+              2,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 2.3799999468028545,
+            "predictedTripleSeconds": 0.23999999463558197,
+            "predictedSoloSeconds": 24.46000012382865,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000029",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 29,
+            "startSample": 13920000,
+            "endSample": 14400000,
+            "predictedPeople": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 5.049999887123704,
+            "predictedTripleSeconds": 0.30999999307096004,
+            "predictedSoloSeconds": 21.99000017903745,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000030",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 30,
+            "startSample": 14400000,
+            "endSample": 14880000,
+            "predictedPeople": [
+              0,
+              1,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 6.979999843984842,
+            "predictedTripleSeconds": 0.03999999910593033,
+            "predictedSoloSeconds": 22.41000016964972,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000031",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 31,
+            "startSample": 14880000,
+            "endSample": 15360000,
+            "predictedPeople": [
+              0,
+              1,
+              3
+            ],
+            "predictedOverlapSeconds": 3.9799999110400677,
+            "predictedTripleSeconds": 1.0099999774247408,
+            "predictedSoloSeconds": 24.640000119805336,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000032",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 32,
+            "startSample": 15360000,
+            "endSample": 15840000,
+            "predictedPeople": [
+              1,
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 3.799999915063381,
+            "predictedTripleSeconds": 0.18999999575316906,
+            "predictedSoloSeconds": 19.349978109821677,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000033",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 33,
+            "startSample": 15840000,
+            "endSample": 16320000,
+            "predictedPeople": [
+              1,
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 6.679999850690365,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 17.60002240538597,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000034",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 34,
+            "startSample": 16320000,
+            "endSample": 16800000,
+            "predictedPeople": [
+              1,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 6.9999998435378075,
+            "predictedTripleSeconds": 0.5999999865889549,
+            "predictedSoloSeconds": 22.57000016607344,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000035",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 35,
+            "startSample": 16800000,
+            "endSample": 17280000,
+            "predictedPeople": [
+              0,
+              1,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 7.229999838396907,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 20.410000214353204,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000036",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 36,
+            "startSample": 17280000,
+            "endSample": 17760000,
+            "predictedPeople": [
+              1,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 4.669999895617366,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 24.990000111982226,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000037",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 37,
+            "startSample": 17760000,
+            "endSample": 18240000,
+            "predictedPeople": [
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 0.8299999814480543,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 28.60000003129244,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000038",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 38,
+            "startSample": 18240000,
+            "endSample": 18720000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 1.8299999590963125,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.83000007085502,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000039",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 39,
+            "startSample": 18720000,
+            "endSample": 19200000,
+            "predictedPeople": [
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.490000056102872,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000040",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 40,
+            "startSample": 19200000,
+            "endSample": 19680000,
+            "predictedPeople": [
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.760000072419643,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000041",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 41,
+            "startSample": 19680000,
+            "endSample": 20160000,
+            "predictedPeople": [
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.94000006839633,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000042",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 42,
+            "startSample": 20160000,
+            "endSample": 20640000,
+            "predictedPeople": [
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 1.219999972730875,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.78000007197261,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000043",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 43,
+            "startSample": 20640000,
+            "endSample": 21120000,
+            "predictedPeople": [
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.68000005185604,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000044",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 44,
+            "startSample": 21120000,
+            "endSample": 21600000,
+            "predictedPeople": [
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 0.46999998949468136,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 28.37000003643334,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000045",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 45,
+            "startSample": 21600000,
+            "endSample": 22080000,
+            "predictedPeople": [
+              1,
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 23.76000013947487,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000046",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 46,
+            "startSample": 22080000,
+            "endSample": 22560000,
+            "predictedPeople": [
+              2,
+              4
+            ],
+            "predictedOverlapSeconds": 0.07999999821186066,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 29.27000001631677,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000047",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 47,
+            "startSample": 22560000,
+            "endSample": 23040000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 29.160000018775463,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000048",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 48,
+            "startSample": 23040000,
+            "endSample": 23520000,
+            "predictedPeople": [
+              1,
+              2,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 23.30000014975667,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000049",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 49,
+            "startSample": 23520000,
+            "endSample": 24000000,
+            "predictedPeople": [
+              1,
+              5
+            ],
+            "predictedOverlapSeconds": 1.50999996624887,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 24.429966596886516,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000050",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 50,
+            "startSample": 24000000,
+            "endSample": 24480000,
+            "predictedPeople": [
+              1,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 8.089999819174409,
+            "predictedTripleSeconds": 0.3199999928474426,
+            "predictedSoloSeconds": 20.130033748224378,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000051",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 51,
+            "startSample": 24480000,
+            "endSample": 24960000,
+            "predictedPeople": [
+              1,
+              3
+            ],
+            "predictedOverlapSeconds": 1.4499999675899744,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.019965197890997,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000052",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 52,
+            "startSample": 24960000,
+            "endSample": 25440000,
+            "predictedPeople": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 7.239999838173389,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 19.860035095363855,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000053",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 53,
+            "startSample": 25440000,
+            "endSample": 25920000,
+            "predictedPeople": [
+              0,
+              1,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 8.579999808222055,
+            "predictedTripleSeconds": 0.3899999912828207,
+            "predictedSoloSeconds": 19.370000237599015,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000054",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 54,
+            "startSample": 25920000,
+            "endSample": 26400000,
+            "predictedPeople": [
+              1,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 3.039999932050705,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 23.929963255301118,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000055",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 55,
+            "startSample": 26400000,
+            "endSample": 26880000,
+            "predictedPeople": [
+              2,
+              3,
+              5
+            ],
+            "predictedOverlapSeconds": 7.139999840408564,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 21.710037065669894,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000056",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 56,
+            "startSample": 26880000,
+            "endSample": 27360000,
+            "predictedPeople": [
+              1,
+              2,
+              3
+            ],
+            "predictedOverlapSeconds": 3.9200381338596344,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.24996188469231,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000057",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 57,
+            "startSample": 27360000,
+            "endSample": 27840000,
+            "predictedPeople": [
+              1,
+              2,
+              3
+            ],
+            "predictedOverlapSeconds": 6.649961629882455,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 20.670038430020213,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000058",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 58,
+            "startSample": 27840000,
+            "endSample": 28320000,
+            "predictedPeople": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 3.7399999164044857,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 24.680000118911266,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000059",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 59,
+            "startSample": 28320000,
+            "endSample": 28800000,
+            "predictedPeople": [
+              1,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 5.689999872818589,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 23.850000137463212,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000060",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 60,
+            "startSample": 28800000,
+            "endSample": 29280000,
+            "predictedPeople": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 9.879999779164791,
+            "predictedTripleSeconds": 0.8199999816715717,
+            "predictedSoloSeconds": 19.830000227317214,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000061",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 61,
+            "startSample": 29280000,
+            "endSample": 29760000,
+            "predictedPeople": [
+              1,
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 4.669999895617366,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 23.860000137239695,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000062",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 62,
+            "startSample": 29760000,
+            "endSample": 30240000,
+            "predictedPeople": [
+              0,
+              1,
+              2,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 2.579999942332506,
+            "predictedTripleSeconds": 0.12999999709427357,
+            "predictedSoloSeconds": 16.570000300183892,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000063",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 63,
+            "startSample": 30240000,
+            "endSample": 30720000,
+            "predictedPeople": [
+              0,
+              1,
+              3
+            ],
+            "predictedOverlapSeconds": 2.7199999392032623,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.260000061243773,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000064",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 64,
+            "startSample": 30720000,
+            "endSample": 31200000,
+            "predictedPeople": [
+              0,
+              3
+            ],
+            "predictedOverlapSeconds": 0.029999999329447746,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 29.390000013634562,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000065",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 65,
+            "startSample": 31200000,
+            "endSample": 31680000,
+            "predictedPeople": [
+              0,
+              1,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 3.3599999248981476,
+            "predictedTripleSeconds": 0.4499999899417162,
+            "predictedSoloSeconds": 25.90000009164214,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000066",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 66,
+            "startSample": 31680000,
+            "endSample": 32160000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 4.179999906569719,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 24.39000012539327,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000067",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 67,
+            "startSample": 32160000,
+            "endSample": 32640000,
+            "predictedPeople": [
+              1,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 1.9899999555200338,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 25.39000010304153,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000068",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 68,
+            "startSample": 32640000,
+            "endSample": 33120000,
+            "predictedPeople": [
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.340000081807375,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000069",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 69,
+            "startSample": 33120000,
+            "endSample": 33600000,
+            "predictedPeople": [
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 1.5499999653548002,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 27.660000052303076,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000070",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 70,
+            "startSample": 33600000,
+            "endSample": 34080000,
+            "predictedPeople": [
+              1,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 3.36999992467463,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.080000087618828,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000071",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 71,
+            "startSample": 34080000,
+            "endSample": 34560000,
+            "predictedPeople": [
+              1,
+              4
+            ],
+            "predictedOverlapSeconds": 1.459999967366457,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.74000007286668,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000072",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 72,
+            "startSample": 34560000,
+            "endSample": 35040000,
+            "predictedPeople": [
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 1.4399999678134918,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.350000081583858,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000073",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 73,
+            "startSample": 35040000,
+            "endSample": 35520000,
+            "predictedPeople": [
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 0.07999999821186066,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 29.46000001206994,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000074",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 74,
+            "startSample": 35520000,
+            "endSample": 36000000,
+            "predictedPeople": [
+              1,
+              3,
+              4
+            ],
+            "predictedOverlapSeconds": 1.4899999666959047,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 26.890000069513917,
+            "route": "verify_extracted_targets"
+          },
+          {
+            "id": "L_R003S01C02-root-000075",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 75,
+            "startSample": 36000000,
+            "endSample": 36480000,
+            "predictedPeople": [
+              3,
+              4,
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 15.309949366375804,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000076",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 76,
+            "startSample": 36480000,
+            "endSample": 36960000,
+            "predictedPeople": [],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 0.0,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000077",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 77,
+            "startSample": 36960000,
+            "endSample": 37440000,
+            "predictedPeople": [
+              2,
+              5
+            ],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 1.3299999702721834,
+            "route": "retain_original"
+          },
+          {
+            "id": "L_R003S01C02-root-000078",
+            "meeting": "L_R003S01C02",
+            "kind": "full-predicted-overlap",
+            "rootIndex": 78,
+            "startSample": 37440000,
+            "endSample": 37807120,
+            "predictedPeople": [],
+            "predictedOverlapSeconds": 0.0,
+            "predictedTripleSeconds": 0.0,
+            "predictedSoloSeconds": 0.0,
+            "route": "retain_original"
+          }
+        ],
+        "originalAlignedDocument": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\derived-onset\\transcripts\\L_R003S01C02\\model-output.json",
+        "originalAttributionReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\derived-onset\\transcripts\\L_R003S01C02\\attribution-review.json",
+        "scope": "All full-L roots selected before new inference from frozen model activity only. Nonoverlap roots retain all original text/person assignments. No participant count/GT/text used to select inputs."
+      },
+      "seed-manifest.json": {
+        "L_R003S01C02-root-000029-speaker-2": {
+          "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-2.json",
+          "separationFileSha256": "15cc9f8a1f5501cc1e7d69504cda9ddfb8db45babee605c65ab8d7f2f8fbc3df",
+          "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-2\\completed.json",
+          "asrFileSha256": "aca126f21b3d4f5be5626cf4087eefd8fcd9b098bb6e20880d85112971c2093f",
+          "identity": {
+            "id": "L_R003S01C02-root-000029-speaker-2",
+            "meeting": "L_R003S01C02",
+            "requestedPredictedSpeaker": 2,
+            "top1PredictedSpeaker": 2,
+            "targetIsTop1": true,
+            "similarities": {
+              "0": 0.11138086020946503,
+              "1": 0.13645131886005402,
+              "2": 0.3658430278301239,
+              "3": 0.14373809099197388,
+              "4": 0.05601392686367035,
+              "5": 0.20930364727973938
+            },
+            "top1MinusSecond": 0.15653938055038452,
+            "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+          },
+          "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+        },
+        "L_R003S01C02-root-000029-speaker-3": {
+          "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-3.json",
+          "separationFileSha256": "52d36f8d2b8a3e51e7af0a3133fd96990da6df8be6e7dcaf516ce9c1c22e23ea",
+          "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-3\\completed.json",
+          "asrFileSha256": "e5ae6edf7fb34011a20a3035b13ab5720ffb99aeb4978f11dd456ce5cbad2e8f",
+          "identity": {
+            "id": "L_R003S01C02-root-000029-speaker-3",
+            "meeting": "L_R003S01C02",
+            "requestedPredictedSpeaker": 3,
+            "top1PredictedSpeaker": 3,
+            "targetIsTop1": true,
+            "similarities": {
+              "0": 0.1408526599407196,
+              "1": 0.4177590012550354,
+              "2": 0.26797235012054443,
+              "3": 0.7332406044006348,
+              "4": 0.24317556619644165,
+              "5": 0.3945496678352356
+            },
+            "top1MinusSecond": 0.31548160314559937,
+            "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+          },
+          "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+        },
+        "L_R003S01C02-root-000029-speaker-4": {
+          "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-4.json",
+          "separationFileSha256": "86655d7cd8333141bc4555b92b0dd638af4fccec965b7236fc0aa92628a65fa9",
+          "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-4\\completed.json",
+          "asrFileSha256": "e60551d7587307ed1ff06c20123fcddbe308d75971d287b15d748d8d4571c816",
+          "identity": {
+            "id": "L_R003S01C02-root-000029-speaker-4",
+            "meeting": "L_R003S01C02",
+            "requestedPredictedSpeaker": 4,
+            "top1PredictedSpeaker": 5,
+            "targetIsTop1": false,
+            "similarities": {
+              "0": 0.22292497754096985,
+              "1": 0.1965370774269104,
+              "2": 0.3120832145214081,
+              "3": 0.18687573075294495,
+              "4": 0.35825592279434204,
+              "5": 0.4906386137008667
+            },
+            "top1MinusSecond": 0.13238269090652466,
+            "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+          },
+          "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+        },
+        "L_R003S01C02-root-000029-speaker-5": {
+          "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000029-speaker-5.json",
+          "separationFileSha256": "4b298e6563396b9d080f9a7a1fbb1719bbb301545800eeabd176fc0eefff236f",
+          "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000029-speaker-5\\completed.json",
+          "asrFileSha256": "cf5e9de2073970e1ad673267d41b1d47a651735280e6e97c6ba427031811ef4d",
+          "identity": {
+            "id": "L_R003S01C02-root-000029-speaker-5",
+            "meeting": "L_R003S01C02",
+            "requestedPredictedSpeaker": 5,
+            "top1PredictedSpeaker": 5,
+            "targetIsTop1": true,
+            "similarities": {
+              "0": 0.2831933796405792,
+              "1": 0.3467448055744171,
+              "2": 0.31300032138824463,
+              "3": 0.3693978190422058,
+              "4": 0.43056103587150574,
+              "5": 0.6552560925483704
+            },
+            "top1MinusSecond": 0.22469505667686462,
+            "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+          },
+          "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+        },
+        "L_R003S01C02-root-000031-speaker-0": {
+          "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000031-speaker-0.json",
+          "separationFileSha256": "3aebd1b306fe86e7832eaba618a37666586b8ad8c12decc8a20788d8149fd609",
+          "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000031-speaker-0\\completed.json",
+          "asrFileSha256": "a0912ff700acc697f663e1a223e940c1cb3dfc3785c5613b8472234c1f555e1a",
+          "identity": {
+            "id": "L_R003S01C02-root-000031-speaker-0",
+            "meeting": "L_R003S01C02",
+            "requestedPredictedSpeaker": 0,
+            "top1PredictedSpeaker": 0,
+            "targetIsTop1": true,
+            "similarities": {
+              "0": 0.5082284212112427,
+              "1": 0.18562181293964386,
+              "2": 0.30664458870887756,
+              "3": 0.1559913456439972,
+              "4": 0.16613060235977173,
+              "5": 0.17096352577209473
+            },
+            "top1MinusSecond": 0.2015838325023651,
+            "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+          },
+          "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+        },
+        "L_R003S01C02-root-000031-speaker-1": {
+          "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000031-speaker-1.json",
+          "separationFileSha256": "fa6e5651e967265478191ed6d85b62c5ca595d9d8cb8d64892d8ee9c63609b88",
+          "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000031-speaker-1\\completed.json",
+          "asrFileSha256": "affe0ae5115d575bc8c20d17815f4c4dc1ffbf192e5d86617ee983b0e9da7292",
+          "identity": {
+            "id": "L_R003S01C02-root-000031-speaker-1",
+            "meeting": "L_R003S01C02",
+            "requestedPredictedSpeaker": 1,
+            "top1PredictedSpeaker": 1,
+            "targetIsTop1": true,
+            "similarities": {
+              "0": 0.14164909720420837,
+              "1": 0.8342503905296326,
+              "2": 0.20385204255580902,
+              "3": 0.4361640512943268,
+              "4": 0.16740117967128754,
+              "5": 0.2032538801431656
+            },
+            "top1MinusSecond": 0.3980863392353058,
+            "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+          },
+          "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+        },
+        "L_R003S01C02-root-000031-speaker-3": {
+          "separationFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\separation-outputs-r2\\L_R003S01C02-root-000031-speaker-3.json",
+          "separationFileSha256": "d527b407f3f669a8c055a136202c2b0ec9064fed17cc6e569b01c05a713ad966",
+          "asrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1\\asr-outputs-r2\\L_R003S01C02-root-000031-speaker-3\\completed.json",
+          "asrFileSha256": "e1e9285389105bf0e8b805b48a9920d9c0f066f829cfed2afb71ce842c957ee7",
+          "identity": {
+            "id": "L_R003S01C02-root-000031-speaker-3",
+            "meeting": "L_R003S01C02",
+            "requestedPredictedSpeaker": 3,
+            "top1PredictedSpeaker": 3,
+            "targetIsTop1": true,
+            "similarities": {
+              "0": 0.13003301620483398,
+              "1": 0.44853147864341736,
+              "2": 0.20356109738349915,
+              "3": 0.714067280292511,
+              "4": 0.225010484457016,
+              "5": 0.2690444886684418
+            },
+            "top1MinusSecond": 0.26553580164909363,
+            "decisionUsesAudioOnlyFrozenArgmaxNotGroundTruth": true
+          },
+          "sameWeightsSourceAudioNativeEncoderPrototypesAndAsrPolicy": true
+        }
+      },
+      "run-r2.json": {
+        "state": "RUNNING_PS4_SEPARATION",
+        "pid": 25088,
+        "startedAt": "2026-11-07T20:31:16+08:00",
+        "priorAttemptReceipts": [],
+        "results": [],
+        "automaticModelFailureRetries": 0,
+        "qualityQualified": false,
+        "stage": "separation",
+        "activePid": 17888
+      },
+      "separation-state-r2.json": {
+        "state": "EXTRACTING_TARGET_VOICES",
+        "pid": 25984,
+        "startedAt": "2026-11-07T20:31:16+08:00",
+        "stage": "separation",
+        "binding": {
+          "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+          "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+          "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+        },
+        "newNeuralCalls": 23,
+        "reusedOutputs": 0,
+        "completedInputs": 23,
+        "referencePassedToWorker": false,
+        "qualityQualified": false,
+        "limits": {
+          "pid": 25984,
+          "cpuRate": 500,
+          "cpuControlFlags": 5,
+          "cpuPercentMaximum": 5.0,
+          "inLimitedJob": true,
+          "jobPrivateCommitLimitBytes": 2147483648,
+          "jobMemoryLimitEnabled": true,
+          "jobPeakPrivateCommitBytes": 1066676224,
+          "cpuPriorityClass": 64,
+          "memoryPagePriority": 1,
+          "memoryPagePriorityIsReclaimHintNotRamCap": true,
+          "gpuPriorityClass": 0,
+          "gpuUtilizationHardCapped": false,
+          "scope": "This worker and its descendants only; no global or other-app changes."
+        },
+        "gpu": "AMD Radeon RX 6800 XT",
+        "modelLoaded": true,
+        "modelLoadSeconds": 3.777412600000389,
+        "newSpeakerEncoderCalls": 29
+      },
+      "asr-state-r2.json": null,
+      "review.json": null
     }
   }
 }

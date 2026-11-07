@@ -1,0 +1,4058 @@
+[
+  {
+    "id": "L_R003S01C02-root-000000",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 0,
+    "startSample": 0,
+    "endSample": 480000,
+    "predictedPeople": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 1.0799999758601189,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 12.930000381544232,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000000-mixture.wav",
+    "audioSha256": "b340428f39bdbc8cb82b9a8683aaaaca1a0e091fef4c7fcce5fa39da709de6fc",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000006",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 6,
+    "startSample": 2880000,
+    "endSample": 3360000,
+    "predictedPeople": [
+      2,
+      4
+    ],
+    "predictedOverlapSeconds": 0.3799999915063381,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 24.969995418563485,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000006-mixture.wav",
+    "audioSha256": "7bff90c09721304bc9dafa5beac2e7dd3033a3fb5ca5b2f40ea9c589014d2591",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000011",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 11,
+    "startSample": 5280000,
+    "endSample": 5760000,
+    "predictedPeople": [
+      1,
+      5
+    ],
+    "predictedOverlapSeconds": 0.7099999841302633,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.360000103712082,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000011-mixture.wav",
+    "audioSha256": "53e4303c661b02afec477e1f6bb7d7d3f4cfdf446b076c5bfff7a1e66efd962c",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000012",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 12,
+    "startSample": 5760000,
+    "endSample": 6240000,
+    "predictedPeople": [
+      1,
+      5
+    ],
+    "predictedOverlapSeconds": 2.7300086561590433,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.799991376698017,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000012-mixture.wav",
+    "audioSha256": "1ba8375ac7851d7ea8b287c9575bf9c5a658028d8cec09cb036c3d800660b2e2",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000013",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 13,
+    "startSample": 6240000,
+    "endSample": 6720000,
+    "predictedPeople": [
+      1,
+      5
+    ],
+    "predictedOverlapSeconds": 1.7899912428110838,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.730008790269494,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000013-mixture.wav",
+    "audioSha256": "ef0106fc6fb15a725c0c6a2503feb4972e9468402a51713569d477de3007aee4",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000014",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 14,
+    "startSample": 6720000,
+    "endSample": 7200000,
+    "predictedPeople": [
+      1,
+      2,
+      5
+    ],
+    "predictedOverlapSeconds": 4.139999907463789,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.43000010214746,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000014-mixture.wav",
+    "audioSha256": "812108a8da627735243fd26ac64400ccaad449e73c3ff9ec89411d4af994c353",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000015",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 15,
+    "startSample": 7200000,
+    "endSample": 7680000,
+    "predictedPeople": [
+      1,
+      2,
+      5
+    ],
+    "predictedOverlapSeconds": 1.8099999595433474,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.540000077337027,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000015-mixture.wav",
+    "audioSha256": "858f28fcfe0934c191569414ad7b951585a4230d1700446f8a5f36fe7dd8cb76",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000016",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 16,
+    "startSample": 7680000,
+    "endSample": 8160000,
+    "predictedPeople": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 1.5699999649077654,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.880000069737434,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000016-mixture.wav",
+    "audioSha256": "3abfe188c0086a9887b39cd8e9e638ae24de2845f101a43366d44648e40a5508",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000017",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 17,
+    "startSample": 8160000,
+    "endSample": 8640000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 4.479999899864197,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.290000105276704,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000017-mixture.wav",
+    "audioSha256": "751d7f4d80b17a5f1f48809b9fa4ba5878227d198c8c55c968714c46b7156530",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000018",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 18,
+    "startSample": 8640000,
+    "endSample": 9120000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 1.269999971613288,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 27.110000064596534,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000018-mixture.wav",
+    "audioSha256": "9d827808e7f63d61803cc6f33ed8f7bccc13f4f433e4736527d4e5dcbc41dc67",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000019",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 19,
+    "startSample": 9120000,
+    "endSample": 9600000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 0.5799999870359898,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 28.07000004313886,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000019-mixture.wav",
+    "audioSha256": "af6b402ebdb91ac7e0d747971858e29adaec8ba9bb75fa939f46106df45a0de9",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000020",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 20,
+    "startSample": 9600000,
+    "endSample": 10080000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 1.1199999749660492,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.52000007778406,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000020-mixture.wav",
+    "audioSha256": "8a45bc1841dcf78b2cb5f1820a71b3f8f51d0fc448a0d701f01a88f720ac44a1",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000021",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 21,
+    "startSample": 10080000,
+    "endSample": 10560000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 1.9499999564141035,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 27.470000056549907,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000021-mixture.wav",
+    "audioSha256": "e1e262dd2e2b29ec9039ea74cf425cf72b61869f77cd348c5d381fe238792c8c",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000023",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 23,
+    "startSample": 11040000,
+    "endSample": 11520000,
+    "predictedPeople": [
+      1,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 1.409999968484044,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 23.540000144392252,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000023-mixture.wav",
+    "audioSha256": "255ec8d56f9fef898b839d4a3df599467181303884437b49c2cc846214a7b341",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000024",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 24,
+    "startSample": 11520000,
+    "endSample": 12000000,
+    "predictedPeople": [
+      1,
+      5
+    ],
+    "predictedOverlapSeconds": 2.1599999517202377,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 23.820000138133764,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000024-mixture.wav",
+    "audioSha256": "5281b7025b76c7981250571cfbf05d904d2489d7e2774ae34075ab12f4e40383",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000025",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 25,
+    "startSample": 12000000,
+    "endSample": 12480000,
+    "predictedPeople": [
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 0.19999999552965164,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.93000009097159,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000025-mixture.wav",
+    "audioSha256": "11ceea19f64d9c2e2fa56e7cc0612f68c57a86845e07298e3fce1af73c9c4039",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000026",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 26,
+    "startSample": 12480000,
+    "endSample": 12960000,
+    "predictedPeople": [
+      1,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 1.0399999767541885,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 20.55000021122396,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000026-mixture.wav",
+    "audioSha256": "7e3f5f1a2822fbea34fa058eecfc821fca8c50e51ce0faa50656f865770dee18",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000027",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 27,
+    "startSample": 12960000,
+    "endSample": 13440000,
+    "predictedPeople": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 2.149999951943755,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.880000092089176,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000027-mixture.wav",
+    "audioSha256": "5d1d8e45fffa9f0b08621a4358d47b6d8426f066a907489a558eab96a76ec06f",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000028",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 28,
+    "startSample": 13440000,
+    "endSample": 13920000,
+    "predictedPeople": [
+      1,
+      2,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 2.3799999468028545,
+    "predictedTripleSeconds": 0.23999999463558197,
+    "predictedSoloSeconds": 24.46000012382865,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000028-mixture.wav",
+    "audioSha256": "7a2e72407793b09b383d54dec31bc71433dd90c6c2ade5f2e89c6b488a8dbb75",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000029",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 29,
+    "startSample": 13920000,
+    "endSample": 14400000,
+    "predictedPeople": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 5.049999887123704,
+    "predictedTripleSeconds": 0.30999999307096004,
+    "predictedSoloSeconds": 21.99000017903745,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000029-mixture.wav",
+    "audioSha256": "8df81aaf36a29a344f80de98af55554f5f3a067540a3489653ee235956c07a2c",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000030",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 30,
+    "startSample": 14400000,
+    "endSample": 14880000,
+    "predictedPeople": [
+      0,
+      1,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 6.979999843984842,
+    "predictedTripleSeconds": 0.03999999910593033,
+    "predictedSoloSeconds": 22.41000016964972,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000030-mixture.wav",
+    "audioSha256": "5c0d1a87091897828c9e89120c986abeb63af58d9a6e8c11d816bb9386c51933",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000031",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 31,
+    "startSample": 14880000,
+    "endSample": 15360000,
+    "predictedPeople": [
+      0,
+      1,
+      3
+    ],
+    "predictedOverlapSeconds": 3.9799999110400677,
+    "predictedTripleSeconds": 1.0099999774247408,
+    "predictedSoloSeconds": 24.640000119805336,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000031-mixture.wav",
+    "audioSha256": "631c6bc436250af95d442697a516da1a7db804686e604702bc135a5c0d039317",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000032",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 32,
+    "startSample": 15360000,
+    "endSample": 15840000,
+    "predictedPeople": [
+      1,
+      3,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 3.799999915063381,
+    "predictedTripleSeconds": 0.18999999575316906,
+    "predictedSoloSeconds": 19.349978109821677,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000032-mixture.wav",
+    "audioSha256": "9c7b4e98c61f488a34a205ec215288db4da700c49d82f89e10ef25a02c61876c",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000033",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 33,
+    "startSample": 15840000,
+    "endSample": 16320000,
+    "predictedPeople": [
+      1,
+      3,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 6.679999850690365,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 17.60002240538597,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000033-mixture.wav",
+    "audioSha256": "28bcb4a15b9e0551c28d5e50a78d55bb8df46d0028f25de36fc8530b6e05e66a",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000034",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 34,
+    "startSample": 16320000,
+    "endSample": 16800000,
+    "predictedPeople": [
+      1,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 6.9999998435378075,
+    "predictedTripleSeconds": 0.5999999865889549,
+    "predictedSoloSeconds": 22.57000016607344,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000034-mixture.wav",
+    "audioSha256": "ccfe71dfbafebe97358b376bdb1b61f8d3c8058f2f5ab9d0e21b0510b5c2d39a",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000035",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 35,
+    "startSample": 16800000,
+    "endSample": 17280000,
+    "predictedPeople": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 7.229999838396907,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 20.410000214353204,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000035-mixture.wav",
+    "audioSha256": "cc3ad7c2bd7c85d5a0b27ba4eb243cfdc7174ded10e44fd20eca2ee45f72accc",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000036",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 36,
+    "startSample": 17280000,
+    "endSample": 17760000,
+    "predictedPeople": [
+      1,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 4.669999895617366,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 24.990000111982226,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000036-mixture.wav",
+    "audioSha256": "06b44dd765147e3b316fb6d5ee662a463b8d132318539a2527df7f0bc387fb83",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000037",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 37,
+    "startSample": 17760000,
+    "endSample": 18240000,
+    "predictedPeople": [
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 0.8299999814480543,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 28.60000003129244,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000037-mixture.wav",
+    "audioSha256": "a47cf4be174e3a32854d86d3c59c1c349b2b1edd329f0b71f54d3a1e4e157e46",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000038",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 38,
+    "startSample": 18240000,
+    "endSample": 18720000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 1.8299999590963125,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.83000007085502,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000038-mixture.wav",
+    "audioSha256": "d4fac3e07e7e38398820bed01fb69c8adf655bd84a7c156f110e4bb5e341d0b3",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000042",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 42,
+    "startSample": 20160000,
+    "endSample": 20640000,
+    "predictedPeople": [
+      2,
+      4
+    ],
+    "predictedOverlapSeconds": 1.219999972730875,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.78000007197261,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000042-mixture.wav",
+    "audioSha256": "3ebacef381fc9d2fc2b8262d393cb3ea420852e3612618e5ae83f74c784a6784",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000044",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 44,
+    "startSample": 21120000,
+    "endSample": 21600000,
+    "predictedPeople": [
+      2,
+      4
+    ],
+    "predictedOverlapSeconds": 0.46999998949468136,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 28.37000003643334,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000044-mixture.wav",
+    "audioSha256": "c86d347489fd8778f3f924d3a4951920291915fc764d36b1ba4079a3becc4cae",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000046",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 46,
+    "startSample": 22080000,
+    "endSample": 22560000,
+    "predictedPeople": [
+      2,
+      4
+    ],
+    "predictedOverlapSeconds": 0.07999999821186066,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 29.27000001631677,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000046-mixture.wav",
+    "audioSha256": "6b316bb737571387c32eb9e1bc1a176a9e216e74f68f05cea1fab5dcba818518",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000049",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 49,
+    "startSample": 23520000,
+    "endSample": 24000000,
+    "predictedPeople": [
+      1,
+      5
+    ],
+    "predictedOverlapSeconds": 1.50999996624887,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 24.429966596886516,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000049-mixture.wav",
+    "audioSha256": "1bd7a2b52bfffe80dadf1f2859ed05dab3c9ce34f244c8f7b8dd664ff5e5b88c",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000050",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 50,
+    "startSample": 24000000,
+    "endSample": 24480000,
+    "predictedPeople": [
+      1,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 8.089999819174409,
+    "predictedTripleSeconds": 0.3199999928474426,
+    "predictedSoloSeconds": 20.130033748224378,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000050-mixture.wav",
+    "audioSha256": "09de966127949fe0d175d1330a64dbaa84dc22a1ea920a945ea32276d1ec62cb",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000051",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 51,
+    "startSample": 24480000,
+    "endSample": 24960000,
+    "predictedPeople": [
+      1,
+      3
+    ],
+    "predictedOverlapSeconds": 1.4499999675899744,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 27.019965197890997,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000051-mixture.wav",
+    "audioSha256": "301d7422b8aa7d5ca66f8677c33979795a5e9d70fa82774d10ee897e774fb3f5",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000052",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 52,
+    "startSample": 24960000,
+    "endSample": 25440000,
+    "predictedPeople": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 7.239999838173389,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 19.860035095363855,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000052-mixture.wav",
+    "audioSha256": "0bad2908bdfd74f7738e8e8a4f38d5b37ba8342923623c25f03a6362ec78dbcd",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000053",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 53,
+    "startSample": 25440000,
+    "endSample": 25920000,
+    "predictedPeople": [
+      0,
+      1,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 8.579999808222055,
+    "predictedTripleSeconds": 0.3899999912828207,
+    "predictedSoloSeconds": 19.370000237599015,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000053-mixture.wav",
+    "audioSha256": "a92d7eb3c2629a7820ab5a60d73fee3c903fc3d4a7b733af753fdc8fd004e412",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000054",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 54,
+    "startSample": 25920000,
+    "endSample": 26400000,
+    "predictedPeople": [
+      1,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 3.039999932050705,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 23.929963255301118,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000054-mixture.wav",
+    "audioSha256": "841434ea4b591309429dedec4f4b0b5854c82fe071610785551a3a58aa026b9b",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000055",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 55,
+    "startSample": 26400000,
+    "endSample": 26880000,
+    "predictedPeople": [
+      2,
+      3,
+      5
+    ],
+    "predictedOverlapSeconds": 7.139999840408564,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 21.710037065669894,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000055-mixture.wav",
+    "audioSha256": "a7defe75cb1ffe27165b700184d8ee88b753883a4f5449b2a46eb3636ba0a81a",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000056",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 56,
+    "startSample": 26880000,
+    "endSample": 27360000,
+    "predictedPeople": [
+      1,
+      2,
+      3
+    ],
+    "predictedOverlapSeconds": 3.9200381338596344,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.24996188469231,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000056-mixture.wav",
+    "audioSha256": "bab412b367c5b9ea2c6ccec30e3f203006e9e47c4cd8be96c023e21a97b95830",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000057",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 57,
+    "startSample": 27360000,
+    "endSample": 27840000,
+    "predictedPeople": [
+      1,
+      2,
+      3
+    ],
+    "predictedOverlapSeconds": 6.649961629882455,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 20.670038430020213,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000057-mixture.wav",
+    "audioSha256": "e638cf8b553f668c79b35c6b7e09fadab3f01c1b2d9976c3183ddf394b49d1a5",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000058",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 58,
+    "startSample": 27840000,
+    "endSample": 28320000,
+    "predictedPeople": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 3.7399999164044857,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 24.680000118911266,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000058-mixture.wav",
+    "audioSha256": "5bdc92ce6e1a63a7777b8821880f2fcd2362dcedfc8e6b9063ad7153f045caad",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000059",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 59,
+    "startSample": 28320000,
+    "endSample": 28800000,
+    "predictedPeople": [
+      1,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 5.689999872818589,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 23.850000137463212,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000059-mixture.wav",
+    "audioSha256": "ae44cfbeac0bc6e6376d28853d2a11bb459c626ce452cb59e168403b007be5ec",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000060",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 60,
+    "startSample": 28800000,
+    "endSample": 29280000,
+    "predictedPeople": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 9.879999779164791,
+    "predictedTripleSeconds": 0.8199999816715717,
+    "predictedSoloSeconds": 19.830000227317214,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000060-mixture.wav",
+    "audioSha256": "4f2833036971d0a14140c49718fd3f9dc5f2d4943f54da0bf409992106bc593f",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000061",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 61,
+    "startSample": 29280000,
+    "endSample": 29760000,
+    "predictedPeople": [
+      1,
+      3,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 4.669999895617366,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 23.860000137239695,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000061-mixture.wav",
+    "audioSha256": "8a3561cb700acbc4e32f01a8afc6bff6e3a864500184883d65919778029b30bc",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000062",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 62,
+    "startSample": 29760000,
+    "endSample": 30240000,
+    "predictedPeople": [
+      0,
+      1,
+      2,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 2.579999942332506,
+    "predictedTripleSeconds": 0.12999999709427357,
+    "predictedSoloSeconds": 16.570000300183892,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000062-mixture.wav",
+    "audioSha256": "000f5e10aae2e38dfbdf56a38b5ca9d5636c9dd4a978fc1c92e5c141eca163f7",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000063",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 63,
+    "startSample": 30240000,
+    "endSample": 30720000,
+    "predictedPeople": [
+      0,
+      1,
+      3
+    ],
+    "predictedOverlapSeconds": 2.7199999392032623,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 27.260000061243773,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000063-mixture.wav",
+    "audioSha256": "f70e28c85c6287aaf48f95d3ccde420ecf91888a91ffe51064c7c02bed596de3",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000064",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 64,
+    "startSample": 30720000,
+    "endSample": 31200000,
+    "predictedPeople": [
+      0,
+      3
+    ],
+    "predictedOverlapSeconds": 0.029999999329447746,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 29.390000013634562,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000064-mixture.wav",
+    "audioSha256": "371b08f25f0c2f22401e4b1347e32a7a4c85e8f2dce5d1f24f2fd153857b35b9",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000065",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 65,
+    "startSample": 31200000,
+    "endSample": 31680000,
+    "predictedPeople": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 3.3599999248981476,
+    "predictedTripleSeconds": 0.4499999899417162,
+    "predictedSoloSeconds": 25.90000009164214,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000065-mixture.wav",
+    "audioSha256": "3b1974d337d80018d52fb832ccee93bcb02e171f46c0054357e169a94f18b854",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000066",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 66,
+    "startSample": 31680000,
+    "endSample": 32160000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 4.179999906569719,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 24.39000012539327,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000066-mixture.wav",
+    "audioSha256": "75e5d83add3215feab53b528dea3adadf64760e91d15795c3275c3e70b961e8f",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000067",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 67,
+    "startSample": 32160000,
+    "endSample": 32640000,
+    "predictedPeople": [
+      1,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 1.9899999555200338,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 25.39000010304153,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000067-mixture.wav",
+    "audioSha256": "63d3e2592bedf2485520a63f251bfe5af05a2b1a1afc315e108f8b9666952103",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000069",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 69,
+    "startSample": 33120000,
+    "endSample": 33600000,
+    "predictedPeople": [
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 1.5499999653548002,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 27.660000052303076,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000069-mixture.wav",
+    "audioSha256": "86c33aff220548f4671db630f8d866d5ff1ccc91239131288b2f23a796c29aa8",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000070",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 70,
+    "startSample": 33600000,
+    "endSample": 34080000,
+    "predictedPeople": [
+      1,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 3.36999992467463,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.080000087618828,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000070-mixture.wav",
+    "audioSha256": "75ec126f91930ccac41e94015362f6943ab57042b4b384d5e0f767338e482ea2",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000071",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 71,
+    "startSample": 34080000,
+    "endSample": 34560000,
+    "predictedPeople": [
+      1,
+      4
+    ],
+    "predictedOverlapSeconds": 1.459999967366457,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.74000007286668,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000071-mixture.wav",
+    "audioSha256": "1e83de4f857693de881552ced715483045d1755d1acd09915ac9a31b4660d270",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000072",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 72,
+    "startSample": 34560000,
+    "endSample": 35040000,
+    "predictedPeople": [
+      3,
+      4,
+      5
+    ],
+    "predictedOverlapSeconds": 1.4399999678134918,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.350000081583858,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000072-mixture.wav",
+    "audioSha256": "a226ecc699cdbced9c45c6ca4fa651127d1d8e04fba06b1c9e4f42f1b0e95d12",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000073",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 73,
+    "startSample": 35040000,
+    "endSample": 35520000,
+    "predictedPeople": [
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 0.07999999821186066,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 29.46000001206994,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000073-mixture.wav",
+    "audioSha256": "cfc50ab5afc9e56f0c04d6d7dcc3f9375ae924a1b691a213aed819929c717eaa",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  },
+  {
+    "id": "L_R003S01C02-root-000074",
+    "meeting": "L_R003S01C02",
+    "kind": "full-predicted-overlap",
+    "rootIndex": 74,
+    "startSample": 35520000,
+    "endSample": 36000000,
+    "predictedPeople": [
+      1,
+      3,
+      4
+    ],
+    "predictedOverlapSeconds": 1.4899999666959047,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 26.890000069513917,
+    "route": "verify_extracted_targets",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-audio\\L_R003S01C02-root-000074-mixture.wav",
+    "audioSha256": "42da895f5867d1fa731895820c4bd7959663760708c1c90159bf33642bd67405",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": []
+  }
+]
