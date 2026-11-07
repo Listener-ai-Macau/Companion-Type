@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T13:29:18+08:00",
+            "at": "2026-11-07T13:30:51+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "1c6a68ada6a98aba4c3afb8e6927fced95643061",
+            "modelEvidenceCommit": "8badd1fd6b31e9b650bec650ce97e81e62ebb971",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41530,7 +41530,84 @@
             "defaultProductBackendChanged": false,
             "finalHoldoutOpened": false,
             "commandAndActualCancelResumePassed": true,
-            "amiCrossCorpus": null
+            "amiCrossCorpus": {
+              "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+              "pid": 21880,
+              "startedAt": "2026-11-07T13:29:28+08:00",
+              "results": [
+                {
+                  "meeting": "EN2002a",
+                  "phase": "activity",
+                  "exitCode": 0,
+                  "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+                  "wholeProcessFamilySeconds": 77.82847720000427,
+                  "privatePeakBytes": 1780920320,
+                  "scoringExitCode": 0,
+                  "qualityReview": {
+                    "at": "2026-11-07T13:30:50+08:00",
+                    "corpus": "AMI",
+                    "meeting": "EN2002a",
+                    "referenceParser": "original_rttm_parser",
+                    "audioSeconds": 2142.709375,
+                    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+                    "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+                    "referenceKind": "rttm_only_words",
+                    "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+                    "referenceSpeakers": 4,
+                    "predictedSpeakers": 4,
+                    "components": {
+                      "correct": 1773.9039389999996,
+                      "total": 2530.259999999997,
+                      "missed detection": 724.8935189999996,
+                      "false alarm": 29.96351900000063,
+                      "confusion": 31.462541999998344,
+                      "diarization error rate": 0.310766316505023
+                    },
+                    "perReferenceSpeakerForEvaluationOnly": {
+                      "FEO070": {
+                        "referenceSeconds": 526.9500000000015,
+                        "correctlyAttributedSeconds": 341.25819700000034,
+                        "attributionRecall": 0.6476102040041737,
+                        "matchedAnonymousGroup": "speaker_3"
+                      },
+                      "FEO072": {
+                        "referenceSeconds": 879.5699999999997,
+                        "correctlyAttributedSeconds": 691.1189370000011,
+                        "attributionRecall": 0.7857463726593692,
+                        "matchedAnonymousGroup": "speaker_2"
+                      },
+                      "MEE071": {
+                        "referenceSeconds": 511.06999999999977,
+                        "correctlyAttributedSeconds": 341.53824600000087,
+                        "attributionRecall": 0.6682807560608156,
+                        "matchedAnonymousGroup": "speaker_0"
+                      },
+                      "MEE073": {
+                        "referenceSeconds": 612.6699999999995,
+                        "correctlyAttributedSeconds": 399.9885589999974,
+                        "attributionRecall": 0.6528613429741912,
+                        "matchedAnonymousGroup": "speaker_1"
+                      }
+                    },
+                    "macroReferenceAttributionRecall": 0.6886246689246374,
+                    "uncoveredReferenceSpeakers": [],
+                    "shortReferenceSpans": {
+                      "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+                      "count": 419,
+                      "referenceSeconds": 290.56999999999977,
+                      "correctSeconds": 199.38681000000284,
+                      "zeroCorrectSpans": 63
+                    },
+                    "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb"
+                  }
+                }
+              ],
+              "automaticRetries": 0,
+              "referencePassedToWorker": false,
+              "protocolSha256": "dcd5b2bffa4799ae574741ee1010051421838a406bfe63e37a893fc2d412f492",
+              "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+              "finishedAt": "2026-11-07T13:30:50+08:00"
+            }
           }
         },
         {
@@ -140148,7 +140225,7 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "F16_TWO_FULL_DEVELOPMENT_MEETINGS_STAGE15_PASSED_QUALIFICATION_OPEN",
+          "status": "COMPLETE_ONE_AMI_DIARIZATION_REVIEW_REQUIRED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
@@ -141476,8 +141553,8 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T13:29:18+08:00",
-              "phase": "running",
+              "at": "2026-11-07T13:30:51+08:00",
+              "phase": "finished",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
                 "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -144285,7 +144362,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "F16_TWO_FULL_DEVELOPMENT_MEETINGS_STAGE15_PASSED_QUALIFICATION_OPEN",
+              "state": "COMPLETE_ONE_AMI_DIARIZATION_REVIEW_REQUIRED",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -148749,10 +148826,172 @@
                 "qualification": "Known project validation, original cache/manifest deleted. Fresh source hashes frozen now; not claimed byte-compared to deleted old cache, new final blind data, Chinese ASR or product acceptance.",
                 "finishedAt": "2026-11-07T13:26:21+08:00"
               },
-              "native8AmiRun": null,
-              "native8AmiChain": null,
+              "native8AmiRun": {
+                "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+                "pid": 21880,
+                "startedAt": "2026-11-07T13:29:28+08:00",
+                "results": [
+                  {
+                    "meeting": "EN2002a",
+                    "phase": "activity",
+                    "exitCode": 0,
+                    "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+                    "wholeProcessFamilySeconds": 77.82847720000427,
+                    "privatePeakBytes": 1780920320,
+                    "scoringExitCode": 0,
+                    "qualityReview": {
+                      "at": "2026-11-07T13:30:50+08:00",
+                      "corpus": "AMI",
+                      "meeting": "EN2002a",
+                      "referenceParser": "original_rttm_parser",
+                      "audioSeconds": 2142.709375,
+                      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+                      "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+                      "referenceKind": "rttm_only_words",
+                      "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+                      "referenceSpeakers": 4,
+                      "predictedSpeakers": 4,
+                      "components": {
+                        "correct": 1773.9039389999996,
+                        "total": 2530.259999999997,
+                        "missed detection": 724.8935189999996,
+                        "false alarm": 29.96351900000063,
+                        "confusion": 31.462541999998344,
+                        "diarization error rate": 0.310766316505023
+                      },
+                      "perReferenceSpeakerForEvaluationOnly": {
+                        "FEO070": {
+                          "referenceSeconds": 526.9500000000015,
+                          "correctlyAttributedSeconds": 341.25819700000034,
+                          "attributionRecall": 0.6476102040041737,
+                          "matchedAnonymousGroup": "speaker_3"
+                        },
+                        "FEO072": {
+                          "referenceSeconds": 879.5699999999997,
+                          "correctlyAttributedSeconds": 691.1189370000011,
+                          "attributionRecall": 0.7857463726593692,
+                          "matchedAnonymousGroup": "speaker_2"
+                        },
+                        "MEE071": {
+                          "referenceSeconds": 511.06999999999977,
+                          "correctlyAttributedSeconds": 341.53824600000087,
+                          "attributionRecall": 0.6682807560608156,
+                          "matchedAnonymousGroup": "speaker_0"
+                        },
+                        "MEE073": {
+                          "referenceSeconds": 612.6699999999995,
+                          "correctlyAttributedSeconds": 399.9885589999974,
+                          "attributionRecall": 0.6528613429741912,
+                          "matchedAnonymousGroup": "speaker_1"
+                        }
+                      },
+                      "macroReferenceAttributionRecall": 0.6886246689246374,
+                      "uncoveredReferenceSpeakers": [],
+                      "shortReferenceSpans": {
+                        "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+                        "count": 419,
+                        "referenceSeconds": 290.56999999999977,
+                        "correctSeconds": 199.38681000000284,
+                        "zeroCorrectSpans": 63
+                      },
+                      "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb"
+                    }
+                  }
+                ],
+                "automaticRetries": 0,
+                "referencePassedToWorker": false,
+                "protocolSha256": "dcd5b2bffa4799ae574741ee1010051421838a406bfe63e37a893fc2d412f492",
+                "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+                "finishedAt": "2026-11-07T13:30:50+08:00"
+              },
+              "native8AmiChain": {
+                "state": "COMPLETE_ONE_AMI_DIARIZATION_REVIEW_REQUIRED",
+                "startedAt": "2026-11-07T13:29:28+08:00",
+                "automaticRetries": 0,
+                "asrAndProductQualification": false,
+                "controllerExitCode": 0,
+                "run": {
+                  "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+                  "pid": 21880,
+                  "startedAt": "2026-11-07T13:29:28+08:00",
+                  "results": [
+                    {
+                      "meeting": "EN2002a",
+                      "phase": "activity",
+                      "exitCode": 0,
+                      "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+                      "wholeProcessFamilySeconds": 77.82847720000427,
+                      "privatePeakBytes": 1780920320,
+                      "scoringExitCode": 0,
+                      "qualityReview": {
+                        "at": "2026-11-07T13:30:50+08:00",
+                        "corpus": "AMI",
+                        "meeting": "EN2002a",
+                        "referenceParser": "original_rttm_parser",
+                        "audioSeconds": 2142.709375,
+                        "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+                        "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+                        "referenceKind": "rttm_only_words",
+                        "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+                        "referenceSpeakers": 4,
+                        "predictedSpeakers": 4,
+                        "components": {
+                          "correct": 1773.9039389999996,
+                          "total": 2530.259999999997,
+                          "missed detection": 724.8935189999996,
+                          "false alarm": 29.96351900000063,
+                          "confusion": 31.462541999998344,
+                          "diarization error rate": 0.310766316505023
+                        },
+                        "perReferenceSpeakerForEvaluationOnly": {
+                          "FEO070": {
+                            "referenceSeconds": 526.9500000000015,
+                            "correctlyAttributedSeconds": 341.25819700000034,
+                            "attributionRecall": 0.6476102040041737,
+                            "matchedAnonymousGroup": "speaker_3"
+                          },
+                          "FEO072": {
+                            "referenceSeconds": 879.5699999999997,
+                            "correctlyAttributedSeconds": 691.1189370000011,
+                            "attributionRecall": 0.7857463726593692,
+                            "matchedAnonymousGroup": "speaker_2"
+                          },
+                          "MEE071": {
+                            "referenceSeconds": 511.06999999999977,
+                            "correctlyAttributedSeconds": 341.53824600000087,
+                            "attributionRecall": 0.6682807560608156,
+                            "matchedAnonymousGroup": "speaker_0"
+                          },
+                          "MEE073": {
+                            "referenceSeconds": 612.6699999999995,
+                            "correctlyAttributedSeconds": 399.9885589999974,
+                            "attributionRecall": 0.6528613429741912,
+                            "matchedAnonymousGroup": "speaker_1"
+                          }
+                        },
+                        "macroReferenceAttributionRecall": 0.6886246689246374,
+                        "uncoveredReferenceSpeakers": [],
+                        "shortReferenceSpans": {
+                          "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+                          "count": 419,
+                          "referenceSeconds": 290.56999999999977,
+                          "correctSeconds": 199.38681000000284,
+                          "zeroCorrectSpans": 63
+                        },
+                        "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb"
+                      }
+                    }
+                  ],
+                  "automaticRetries": 0,
+                  "referencePassedToWorker": false,
+                  "protocolSha256": "dcd5b2bffa4799ae574741ee1010051421838a406bfe63e37a893fc2d412f492",
+                  "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+                  "finishedAt": "2026-11-07T13:30:50+08:00"
+                },
+                "finishedAt": "2026-11-07T13:30:50+08:00"
+              },
               "next": "采用FP16作新的分人研究基线，原产品默认未改：同源360张量/语义配置精确重建Q8后，FP16完整L/S标准DER13.4642%/3.8556%，实际6/6与5/5、每人正确覆盖>0；仅两完整开发会达到15%阶段，复杂正式10%仍OPEN。L非重叠11.1501%/重叠25.0128%/三人40.0100%，同一全场身份映射；短轮64.5886%且60/209完全未正确。部署量化的长期身份影响已有同源证据，不再按单会扫参/盲训练。先完成原EN2002a跨语料恢复和同一冻结模型验证；随后优先原QM04文字<5%及重叠逐路内容，普通原文7.6997%、逐人10.2583%，复杂逐人40.9751%，不拿说话人DER当CER。独立调用已支持原文草稿/本地8人后处理/0ASR重跑回填、完整缓存重开0模型、真实中途取消保草稿且重放声音时计入旧耗时；实际共享Rust边界通过。手机/实卡/事实/最终未见集/售卖门继续OPEN。",
-              "sourceAndEvidenceCommit": "1c6a68ada6a98aba4c3afb8e6927fced95643061",
+              "sourceAndEvidenceCommit": "8badd1fd6b31e9b650bec650ce97e81e62ebb971",
               "remoteReadbackConfirmed": true
             }
           }
