@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-07T19:11:15+08:00",
+  "state": "PASS_EXACT_GIT_CHECKOUT_FILTER_FOR_HASH_BOUND_MODEL_SOURCE_AND_PROTOCOL",
+  "observations": [
+    {
+      "path": "src/practical_qwen_boundaries_worker_20261107.py",
+      "diskSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+      "checkoutBeforeSha256": "7a471b0c366eb28a037408e7b355ab89355063cf0f2260c83a18dfc503710800",
+      "differentBefore": true,
+      "checkoutAfterSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+      "exactAfter": true
+    },
+    {
+      "path": "evidence/20261107-practical-cpu/practical-qwen-native17-r5/native-protocol.json",
+      "diskSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+      "checkoutBeforeSha256": "21d712648fdeff611ef5da682f076b018c9dd0fe200ff6219fc27855b870b091",
+      "differentBefore": true,
+      "checkoutAfterSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+      "exactAfter": true
+    }
+  ],
+  "runtimeSourceBytesChanged": false,
+  "globalGitSettingsChanged": false,
+  "recognitionQualityImprovementClaimed": false,
+  "scope": "Repository-only byte preservation prevents newline conversion from invalidating recorded source/protocol SHA256 after cleanup and restore."
+}

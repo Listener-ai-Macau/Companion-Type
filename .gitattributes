@@ -1,2 +1,11 @@
 
 evidence/20261107-practical-cpu/practical-qwen-native-r1/upstream-input-review/*.txt -text -whitespace
+
+# Preserve byte-bound native model recovery inputs (2026-11-07).
+src/*practical*20261107.py -text
+src/companion_*20261107.py -text
+src/full_meeting_transcript_metrics_20261103.py -text
+src/reference_textgrid_20261104.py -text
+src/moss_streamed_weights_20261104.py -text
+src/moss_windows_resource_limits_20261104.py -text
+evidence/20261107-practical-cpu/** -text

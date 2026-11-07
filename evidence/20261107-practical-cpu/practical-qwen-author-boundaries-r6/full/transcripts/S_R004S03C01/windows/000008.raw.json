@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 8,
+    "startSample": 3724048,
+    "endSample": 4262526,
+    "text": "呃，东西哪些多哪些少，我能看得见。但是，呃，顾客们对哪些消费比较感兴趣，这块儿我这边还不太清楚，还是大家比我要清楚，因为大家都在呃超市内部呃呃工作的。我这边主管只是偶尔巡查一次，呃，巡查巡查看看工作呃大家工作的情况。我对客户这块儿不太了解，呃，客户对你的产品比较感兴趣，希望大家呃把自己的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 3724048,
+        "endSample": 4262526,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "bf0baaef5b8154bb8fb004c631acaf172af25ff79ca10b860803c5b43f580451"
+}

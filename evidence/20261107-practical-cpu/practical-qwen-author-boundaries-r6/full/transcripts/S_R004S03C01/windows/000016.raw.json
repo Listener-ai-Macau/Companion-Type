@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 16,
+    "startSample": 7640996,
+    "endSample": 8154024,
+    "text": "呃，在这个保持它这个呃新鲜，保持它的新鲜度吧，算是。嗯，然后那个严禁沾水的菜，有些那个菜它不能沾水，那就要放到那个离这个菜叶叶菜的这个产品呢，要要远一点儿，放在这个喷雾口远一点的那个时间。而且我们菜的这个销售期限呢，也是有时间限制的，是一天。嗯，比如说今天我们这个菜没有卖出去。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 7640996,
+        "endSample": 8154024,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "f39d3d8b5f7a47b084bacb1e46d23f6b53a4c30a88bc13c3164e4f46187987d5"
+}
