@@ -68,10 +68,20 @@ public final class RecordingLibrary {
     }
     /** Inspect other recordings even when an individual metadata file is damaged. */
     public static Inventory inspect(Path directory) throws IOException {
+        return inspectMatching(directory,null);
+    }
+    /** Verify one selected session without reading any other recording's audio. */
+    public static Inventory inspectSession(Path directory,String key)throws IOException {
+        if(key==null||!key.matches("[0-9a-f]{24}:(0|[1-9a-f][0-9a-f]{0,15}):(0|[1-9a-f][0-9a-f]{0,15})"))
+            throw new IllegalArgumentException("canonical recording key required");
+        return inspectMatching(directory,key.replace(':','-')+"-");
+    }
+    private static Inventory inspectMatching(Path directory,String selectedPrefix)throws IOException {
         if(directory==null)throw new IllegalArgumentException("directory required");
         List<Entry> entries=new ArrayList<>();List<MetadataProblem> problems=new ArrayList<>();
         if(Files.exists(directory))try(DirectoryStream<Path> files=Files.newDirectoryStream(directory,"*.meta")) {
             for(Path metadata:files) {
+                if(selectedPrefix!=null&&!metadata.getFileName().toString().startsWith(selectedPrefix))continue;
                 try {Entry entry=readEntry(directory,metadata);if(entry!=null)entries.add(entry);}
                 catch(IOException error){problems.add(new MetadataProblem(metadata,error.getMessage()==null?"无法读取录音资料":error.getMessage()));}
             }

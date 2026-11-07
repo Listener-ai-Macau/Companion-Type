@@ -26,6 +26,20 @@ public final class RecordingSyncService extends Service {
     private static final int NOTIFICATION=0x434f4d;
     private static boolean startingOrRunning;
     private static volatile RecordingClient activeClient;
+    private static RecordingClient pendingClient;
+    private static String pendingAddress;
+    private static byte[] pendingDescriptor;
+    private static synchronized RecordingClient takePending(String address,byte[] descriptor)throws IOException {
+        if(pendingClient==null)return null;
+        if(!address.equals(pendingAddress)||!java.util.Arrays.equals(descriptor,pendingDescriptor)){
+            closePending();throw new IOException("selected connection handoff changed");
+        }
+        RecordingClient client=pendingClient;pendingClient=null;pendingAddress=null;pendingDescriptor=null;return client;
+    }
+    private static synchronized void closePending(){
+        RecordingClient client=pendingClient;pendingClient=null;pendingAddress=null;pendingDescriptor=null;
+        if(client!=null)try{client.close();}catch(IOException ignored){}
+    }
     private RecordingSyncRunner runner;
     private volatile RecordingTransferMetrics transferMetrics;
     private volatile int runningStartId;
@@ -34,6 +48,15 @@ public final class RecordingSyncService extends Service {
 
     /** Start while the host activity is visible and Bluetooth permission has been granted. */
     public static void start(Context context, BluetoothDevice device, RecorderWire.Descriptor selected, File recordingDirectory) throws IOException {
+        start(context,device,selected,recordingDirectory,null);
+    }
+    /** Consumes ownership of an optional already verified activity connection.
+     * Saved selection still permits a fresh connection after process death. */
+    public static void start(Context context,BluetoothDevice device,RecorderWire.Descriptor selected,File recordingDirectory,RecordingClient connection)throws IOException {
+        try{startOwned(context,device,selected,recordingDirectory,connection);}
+        catch(IOException|RuntimeException error){if(connection!=null)try{connection.close();}catch(IOException close){error.addSuppressed(close);}throw error;}
+    }
+    private static void startOwned(Context context,BluetoothDevice device,RecorderWire.Descriptor selected,File recordingDirectory,RecordingClient connection)throws IOException {
         if(context==null||device==null||selected==null||recordingDirectory==null)throw new IllegalArgumentException("device, recording and directory required");
         File parent=context.getFilesDir().getCanonicalFile();File directory=recordingDirectory.getCanonicalFile();
         if(!parent.equals(directory.getParentFile())||!directory.isDirectory())throw new IOException("录音目录必须是应用私有目录中已存在的直接子目录");
@@ -45,7 +68,8 @@ public final class RecordingSyncService extends Service {
         final byte[] wire=selected.wireBytes();
         Intent intent=new Intent(context,RecordingSyncService.class).setAction(START).putExtra(ADDRESS,address)
                 .putExtra(DESCRIPTOR,wire).putExtra(DIRECTORY,directory.getName());
-        synchronized(RecordingSyncService.class){if(startingOrRunning)throw new IOException("已有录音正在接收，请先停止或等待完成");startingOrRunning=true;}
+        if(connection!=null)connection.validateHandoff(address,selected);
+        synchronized(RecordingSyncService.class){if(startingOrRunning)throw new IOException("已有录音正在接收，请先停止或等待完成");startingOrRunning=true;pendingClient=connection;pendingAddress=address;pendingDescriptor=wire.clone();}
         try {
             SharedPreferences prefs=context.getSharedPreferences(PREFS,MODE_PRIVATE);
             RecordingSyncStart.begin(new RecordingSyncStart.Store(){
@@ -57,7 +81,7 @@ public final class RecordingSyncService extends Service {
                 public void saveLaunchFailure(){prefs.edit().putString("state","error")
                     .putString("detail","无法启动后台接收，请检查蓝牙权限并在应用中重试").commit();}
             },()->context.startForegroundService(intent));
-        } catch(IOException|RuntimeException e){synchronized(RecordingSyncService.class){startingOrRunning=false;}throw e;}
+        } catch(IOException|RuntimeException e){closePending();synchronized(RecordingSyncService.class){startingOrRunning=false;}throw e;}
     }
     /** Ask the same selected session to continue after process death or a user stop. */
     public static void resume(Context context) throws IOException {
@@ -144,15 +168,21 @@ public final class RecordingSyncService extends Service {
                     throw new RecordingSyncRunner.ActionRequired("请允许蓝牙连接后继续接收",denied);
                 }
                 measured.connecting();
-                AndroidGattLink link=AndroidGattLink.connect(getApplicationContext(),device);
-                RecordingClient client=new RecordingClient(link,measured);activeClient=client;
+                RecordingClient transferred=takePending(address,wire);
+                final RecordingClient client;
+                if(transferred!=null){
+                    try{transferred.validateHandoff(address,selected);transferred.attachTransferMetrics(measured);}
+                    catch(IOException|RuntimeException error){try{transferred.close();}catch(IOException close){error.addSuppressed(close);}throw error;}
+                    client=transferred;measured.reusedConnection();
+                }else client=new RecordingClient(AndroidGattLink.connect(getApplicationContext(),device),measured);
+                activeClient=client;
                 measured.connected();
                 getSharedPreferences(PREFS,MODE_PRIVATE).edit().putBoolean("consumePullOverlapNegotiated",client.consumePullOverlapNegotiated()).commit();
                 return new RecordingSyncRunner.Connection(){
                     private boolean retired;
                     public RecordingLibrary.Session sync() throws IOException {return client.syncAvailableAndReclaim(selected,path,null);}
-                    public boolean disconnected(){return link.wasDisconnected();}
-                    public synchronized void close() throws IOException {if(retired)return;retired=true;if(activeClient==client)activeClient=null;measured.connectionClosed(link.wasDisconnected());client.close();}
+                    public boolean disconnected(){return client.disconnected();}
+                    public synchronized void close() throws IOException {if(retired)return;retired=true;if(activeClient==client)activeClient=null;measured.connectionClosed(client.disconnected());client.close();}
                 };
             },new RecordingSyncRunner.Listener(){
                 public void status(String state,String detail){update(state,detail);}
@@ -181,6 +211,6 @@ public final class RecordingSyncService extends Service {
         if(launch!=null)b.setContentIntent(PendingIntent.getActivity(this,0,launch,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE));
         return b.build();
     }
-    @Override public void onDestroy(){destroyed=true;if(runner!=null)runner.stop();synchronized(RecordingSyncService.class){if(runner==null||workerDone)startingOrRunning=false;}super.onDestroy();}
+    @Override public void onDestroy(){destroyed=true;if(runner!=null)runner.stop();closePending();synchronized(RecordingSyncService.class){if(runner==null||workerDone)startingOrRunning=false;}super.onDestroy();}
     @Override public IBinder onBind(Intent intent){return null;}
 }

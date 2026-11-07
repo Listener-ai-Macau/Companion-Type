@@ -24,6 +24,8 @@ public final class RecordingClient implements Closeable {
         byte[] await(UUID characteristic,long timeoutMillis) throws IOException;
         /** Stable address of the user-selected paired device. */
         default String deviceAddress() throws IOException {throw new IOException("device address unavailable");}
+        default boolean isConnected(){return true;}
+        default boolean disconnected(){return false;}
     }
     public interface Progress { void onBytes(long received,long total); }
     public interface SessionProgress { void onSegment(int index,int count,long received,long total); }
@@ -36,7 +38,7 @@ public final class RecordingClient implements Closeable {
     private final Link link;private final RecorderWire.Peer peer;private final DurableConsume durableConsume;private final SecureRandom random=new SecureRandom();private final Object liveControlLock=new Object();
     private List<RecorderWire.Descriptor> current;private final AtomicBoolean closed=new AtomicBoolean();
     private final boolean consumePullOverlap;
-    private final RecordingTransferMetrics transferMetrics;
+    private RecordingTransferMetrics transferMetrics;
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
 
     /** The caller first establishes the user's selected, bonded device link. */
@@ -84,6 +86,18 @@ public final class RecordingClient implements Closeable {
         throw new RecordingSyncRunner.LinkFailure("device recording capability is not ready; try again after reconnecting");
     }
     private void ensureOpen() throws IOException {if(closed.get())throw new IOException("device connection is closed");}
+    /** Cached transport liveness for the current connection owner, not an identity proof. */
+    public boolean isConnected(){return !closed.get()&&link.isConnected();}
+    boolean disconnected(){return link.disconnected();}
+    void validateHandoff(String address,RecorderWire.Descriptor selected)throws IOException {
+        ensureOpen();peer.validate(selected);
+        if(!isConnected())throw new RecordingSyncRunner.LinkFailure("selected device connection disconnected before handoff");
+        if(!address.equals(link.deviceAddress()))throw new IOException("selected device connection changed");
+    }
+    synchronized void attachTransferMetrics(RecordingTransferMetrics metrics)throws IOException {
+        ensureOpen();if(metrics==null||transferMetrics!=null)throw new IOException("connection already belongs to a transfer");
+        transferMetrics=metrics;
+    }
     /** Actual opt-in acknowledgement, never inferred from version alone. */
     public boolean consumePullOverlapNegotiated(){return consumePullOverlap;}
 

@@ -151,6 +151,8 @@ public final class AndroidGattLink implements RecordingClient.Link {
         if(c==null)throw new IOException("Companion Bluetooth characteristic unavailable: "+id);return c;
     }
     boolean wasDisconnected(){return disconnected;}
+    @Override public boolean disconnected(){return disconnected;}
+    @Override public boolean isConnected(){return connected&&!closed.get()&&failure==null;}
     @Override public int mtu(){return mtu;}
     @Override public boolean calendarSupported(){return calendarSupported;}
     @Override public String deviceAddress() throws IOException {
