@@ -44,7 +44,7 @@ for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
     if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
         r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
         (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -112,6 +112,14 @@ if record['nativeVerbatimPreparation']:
 if record['nativeVerbatimReview']:
     record['state']=record['nativeVerbatimReview']['state']
     record['next']=record['nativeVerbatimReview']['next']
+record['officialNativeAsrControl']={name:optional(base/'practical-qwen-native-r1'/name) for name in ['download-range-receipt.json','prepared.json','hip-inventory.json','short-run.json','short-native-state.json','full/run.json','review.json']}
+qwen=record['officialNativeAsrControl']
+if qwen['download-range-receipt.json'] and not qwen['short-run.json']:
+    record['state']='OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED'
+if qwen['short-run.json']:record['state']='OFFICIAL_NATIVE_ASR_'+qwen['short-run.json']['state']+'_SALE_OPEN'
+if qwen['full/run.json']:record['state']='OFFICIAL_NATIVE_ASR_'+qwen['full/run.json']['state']+'_SALE_OPEN'
+if qwen['review.json']:
+    record['state']=qwen['review.json']['state'];record['next']=qwen['review.json']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
@@ -127,6 +135,11 @@ if record['native8F16Assessment']:
         speaker_gate['native8Fp16Development20261107']['crossCorpusQualification']='FAILED_AMI_EN2002a_DER31.0766_PERCENT_MOSTLY_MISSED_ACTIVITY_NOT_PROMOTED'
         speaker_gate['native8Fp16Development20261107']['releaseReview']=str(base/'native8-release-review-r1/review.json')
         contract['qualification']['currentQualification']=record['practicalReleaseReview']['qualification']
+    if record['nativeVerbatimReview']:
+        text_gate=next(g for g in contract['gates'] if g['id']=='QM04')
+        text_gate['nativeVerbatimDevelopment20261107']={'at':now,'review':str(base/'practical-verbatim-r1/review.json'),'rawCer':{'S_R004S03C01':0.06954954954954955,'L_R003S01C02':0.2612955278930383},'complexMixedCerIsOnlyDiagnostic':True,'jointCpCerDiagnostic':{'S_R004S03C01':0.09549549549549549,'L_R003S01C02':0.405025357307515},'strictScoringUnchanged':True,'neuralSettingChanged':'native useItn True→False only','qualityQualified':False,'defaultProductChanged':False}
+        text_gate['officialNativeQwenControl20261107']={'at':now,'evidence':str(base/'practical-qwen-native-r1'),'state':record['state'],'noNewQualityScoreUnlessFullCompleted':True}
+        contract['qualification']['currentQualification']='NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state '+record['state']+'. Overlap words/facts/installed mobile-card/final holdout/sale still open.'
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}

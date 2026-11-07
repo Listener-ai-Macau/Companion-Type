@@ -41455,7 +41455,7 @@
           "M_R003S01C01",
           "L_R003S01C02"
         ],
-        "currentQualification": "NOT_QUALIFIED: Chinese exposed full recordings improve to DER13.4642%/3.8556%, but identical frozen FP16 protocol fails AMI EN2002a DER31.0766% (4/4 people, mostly missed activity). No cross-corpus15% or formal10% acceptance. Ordinary raw CER7.6997% and joint10.2583%, complex joint40.9751% remain above5%. Command/cancel/cache recovery work; no complete overlapping words, factual-minute, installed mobile/card, final holdout or sale acceptance."
+        "currentQualification": "NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED. Overlap words/facts/installed mobile-card/final holdout/sale still open."
       },
       "executionOrder": [
         "QM04",
@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T15:08:40+08:00",
+            "at": "2026-11-07T15:29:11+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "9c71305d168563398bcd664a43112aacd8743a82",
+            "modelEvidenceCommit": "493569566a40c4971c5e87267027b9934d8464c8",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41639,7 +41639,30 @@
           "measure": "普通非重叠严格CER及全会逐人转写字符错误分别报告。按整场一致的说话人排列与时间约束核对；参考/音频终点一致，跨界句不丢弃。标点空白大小写可归一化，语气词不为达标而删除。",
           "jointEvaluation": "引入标准cpWER/tcpWER流程的逐字输入以评估中文；时间容差在新候选评分前冻结。尚未实现的联合评估保持NOT_MEASURED，普通混音按时间拼接分数不能用于重叠验收。",
           "currentStatus": "OPEN",
-          "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。"
+          "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
+          "nativeVerbatimDevelopment20261107": {
+            "at": "2026-11-07T15:29:11+08:00",
+            "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
+            "rawCer": {
+              "S_R004S03C01": 0.06954954954954955,
+              "L_R003S01C02": 0.2612955278930383
+            },
+            "complexMixedCerIsOnlyDiagnostic": true,
+            "jointCpCerDiagnostic": {
+              "S_R004S03C01": 0.09549549549549549,
+              "L_R003S01C02": 0.405025357307515
+            },
+            "strictScoringUnchanged": true,
+            "neuralSettingChanged": "native useItn True→False only",
+            "qualityQualified": false,
+            "defaultProductChanged": false
+          },
+          "officialNativeQwenControl20261107": {
+            "at": "2026-11-07T15:29:11+08:00",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1",
+            "state": "OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED",
+            "noNewQualityScoreUnlessFullCompleted": true
+          }
         },
         {
           "completeModelPipeline20261104": {
@@ -140420,11 +140443,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "NATIVE_VERBATIM_CONTROL_RUNNING_COMPLETE_CPU_TRANSCRIPT_SALE_OPEN",
+          "status": "OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "先收尾已冻结useItn=False的同两场完整S/L，不改模型/30秒边界/严格含语气词和儿化评分；当前原8段实际低RAM中断已保存，依据实际恢复后续作，不关其它程序或扩大内存。对照原useItn=True，逐场保留回退/金额实词差，完成后再决定是否保留；不得用数字格式或删儿化冒充语音能力提升。普通<5%、复杂分人/重叠内容、纪要事实/独立集/手机/实卡/售卖门继续OPEN。",
+          "next": "原QM04继续：原生数字格式控制S6.95495%仍>5%、L混音26.12955%仅诊断，停止继续调该开关。保留FP16分人研究基线和跨域失败。现在只验证已固定官方Qwen3-ASR-0.6B-hf原生Transformers5.22.1/BF16，不重跑旧社区ONNX复读实现；现有外置6800XT唯一型号识别、CPU5%/private2GiB/实际低RAM保护不变，先短段EOS/复读/静音/资源，过门后才同两完整真实会评分；失败保留无自动重试。不喂参考/人数/热词、不训练或扩大预算。最终未见集、重叠逐路内容/事实纪要/手机实卡/售卖门继续OPEN。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -141748,7 +141771,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T15:08:40+08:00",
+              "at": "2026-11-07T15:29:11+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -144557,7 +144580,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "NATIVE_VERBATIM_CONTROL_RUNNING_COMPLETE_CPU_TRANSCRIPT_SALE_OPEN",
+              "state": "OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -149800,7 +149823,7 @@
                 "qualityQualified": false,
                 "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
               },
-              "next": "先收尾已冻结useItn=False的同两场完整S/L，不改模型/30秒边界/严格含语气词和儿化评分；当前原8段实际低RAM中断已保存，依据实际恢复后续作，不关其它程序或扩大内存。对照原useItn=True，逐场保留回退/金额实词差，完成后再决定是否保留；不得用数字格式或删儿化冒充语音能力提升。普通<5%、复杂分人/重叠内容、纪要事实/独立集/手机/实卡/售卖门继续OPEN。",
+              "next": "原QM04继续：原生数字格式控制S6.95495%仍>5%、L混音26.12955%仅诊断，停止继续调该开关。保留FP16分人研究基线和跨域失败。现在只验证已固定官方Qwen3-ASR-0.6B-hf原生Transformers5.22.1/BF16，不重跑旧社区ONNX复读实现；现有外置6800XT唯一型号识别、CPU5%/private2GiB/实际低RAM保护不变，先短段EOS/复读/静音/资源，过门后才同两完整真实会评分；失败保留无自动重试。不喂参考/人数/热词、不训练或扩大预算。最终未见集、重叠逐路内容/事实纪要/手机实卡/售卖门继续OPEN。",
               "lastOwnerQuote": "继续推进一下, 达到可售卖标准才行, 要在正确方向上行走",
               "nativeVerbatimPreparation": {
                 "at": "2026-11-07T15:04:06+08:00",
@@ -149824,12 +149847,43 @@
                 "qualified": false
               },
               "nativeVerbatimRun": {
-                "state": "RUNNING_COMPLETE_CPU_TRANSCRIPT",
+                "state": "TWO_COMPLETE_TEXT_ONLY_MEETINGS_SCORED_SPEAKERS_PENDING",
                 "startedAt": "2026-11-07T15:06:00+08:00",
                 "pid": 15292,
                 "automaticRetries": 0,
                 "referencePassedToInference": false,
-                "results": [],
+                "results": [
+                  {
+                    "meeting": "S_R004S03C01",
+                    "exitCode": 0,
+                    "wholeProcessFamilySeconds": 200.92242940000142,
+                    "privatePeakBytes": 448040960,
+                    "rssPeakBytes": 451825664,
+                    "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+                    "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcripts\\S_R004S03C01",
+                    "priorAttemptProcessFamilySeconds": 35.888645500002895,
+                    "accumulatedProcessFamilySeconds": 236.81107490000431,
+                    "scoringExitCode": 0,
+                    "chronologicalDiagnosticCer": 0.06954954954954955,
+                    "cpCerDiagnostic": 1.414054054054054,
+                    "unconfirmedTextFraction": 1.0
+                  },
+                  {
+                    "meeting": "L_R003S01C02",
+                    "exitCode": 0,
+                    "wholeProcessFamilySeconds": 230.20789439999498,
+                    "privatePeakBytes": 447094784,
+                    "rssPeakBytes": 451305472,
+                    "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+                    "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcripts\\L_R003S01C02",
+                    "priorAttemptProcessFamilySeconds": 0,
+                    "accumulatedProcessFamilySeconds": 230.20789439999498,
+                    "scoringExitCode": 0,
+                    "chronologicalDiagnosticCer": 0.2612955278930383,
+                    "cpCerDiagnostic": 1.2408944213923467,
+                    "unconfirmedTextFraction": 1.0
+                  }
+                ],
                 "priorAttemptReceipts": [
                   "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcript-attempt-0001.json"
                 ],
@@ -149850,11 +149904,129 @@
                   "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
                 },
                 "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
-                "activeMeeting": "S_R004S03C01",
-                "activePid": 14024
+                "finishedAt": "2026-11-07T15:13:16+08:00"
               },
-              "nativeVerbatimReview": null,
-              "sourceAndEvidenceCommit": "9c71305d168563398bcd664a43112aacd8743a82",
+              "nativeVerbatimReview": {
+                "at": "2026-11-07T15:19:38+08:00",
+                "state": "NATIVE_VERBATIM_TWO_FULL_MEETINGS_COMPLETE_TEXT5_AND_SALE_OPEN",
+                "results": [
+                  {
+                    "meeting": "S_R004S03C01",
+                    "audioSeconds": 2327.119,
+                    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+                    "rawCerBefore": 0.076996996996997,
+                    "rawCerAfter": 0.06954954954954955,
+                    "rawMetricScope": "Ordinary full text CER",
+                    "strictEditsBefore": 641,
+                    "strictEditsAfter": 579,
+                    "referenceCharacters": 8325,
+                    "jointCpCerDiagnostic": 0.09549549549549549,
+                    "unconfirmedTextFraction": 0.014091470951792336,
+                    "rawAsrProcessFamilySeconds": 236.81107490000431,
+                    "cacheAttributionAndScoringSeconds": 2.814486699993722,
+                    "rawCacheUnchangedDuringAttribution": true,
+                    "additionalNeuralInference": 0,
+                    "actualProductDocumentContractPassed": true,
+                    "modelOutputSha256": "f5b9ac9f31fdd4c6a9a31ee97858141a744bc929fb564f0eab3ea08d4599d875",
+                    "qualified": false
+                  },
+                  {
+                    "meeting": "L_R003S01C02",
+                    "audioSeconds": 2362.945,
+                    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+                    "rawCerBefore": 0.2676348547717842,
+                    "rawCerAfter": 0.2612955278930383,
+                    "rawMetricScope": "Mixed chronological diagnostic only; not per-person overlap acceptance",
+                    "strictEditsBefore": 2322,
+                    "strictEditsAfter": 2267,
+                    "referenceCharacters": 8676,
+                    "jointCpCerDiagnostic": 0.405025357307515,
+                    "unconfirmedTextFraction": 0.100104821802935,
+                    "rawAsrProcessFamilySeconds": 230.20789439999498,
+                    "cacheAttributionAndScoringSeconds": 3.1640033000148833,
+                    "rawCacheUnchangedDuringAttribution": true,
+                    "additionalNeuralInference": 0,
+                    "actualProductDocumentContractPassed": true,
+                    "modelOutputSha256": "b3d676e326ba3a5c637f6cf9c320e312ac9ae8307e3a492f9ebcc82301632828",
+                    "qualified": false
+                  }
+                ],
+                "decision": "Keep opt-in native verbatim output support and its distinct cache binding. Do not promote as acoustic accuracy fix or change installed defaults. No flag sweep/per-meeting choosing; both fixed full meetings and baseline retained.",
+                "scope": "No text/reference rewrite, filler/er deletion, training, new ASR weights, or new diarization inference. Only documented native useItn flag changed. Low-RAM interrupted8 windows reused and35.8886455s retained. New full texts were then attributed with existing FP16 journals, no new ASR. Shared product format works; no app/mobile/card/customer/factual-minute qualification.",
+                "next": "原QM04继续：原生数字格式控制S6.95495%仍>5%、L混音26.12955%仅诊断，停止继续调该开关。保留FP16分人研究基线和跨域失败。现在只验证已固定官方Qwen3-ASR-0.6B-hf原生Transformers5.22.1/BF16，不重跑旧社区ONNX复读实现；现有外置6800XT唯一型号识别、CPU5%/private2GiB/实际低RAM保护不变，先短段EOS/复读/静音/资源，过门后才同两完整真实会评分；失败保留无自动重试。不喂参考/人数/热词、不训练或扩大预算。最终未见集、重叠逐路内容/事实纪要/手机实卡/售卖门继续OPEN。",
+                "qualityQualified": false,
+                "defaultProductChanged": false,
+                "finalHoldoutOpened": false
+              },
+              "officialNativeAsrControl": {
+                "download-range-receipt.json": {
+                  "at": "2026-11-07T15:21:13+08:00",
+                  "state": "RESUMING_OWNED_PUBLIC_DOWNLOAD_VERIFIED_RANGES",
+                  "terminatedOwnPreparerPid": 17364,
+                  "reason": "Reuse the existing prefix; four bounded network streams after a successful206range probe, no proxy/routing changes. This is download preparation, not a model failure or inference.",
+                  "revision": "7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
+                  "prefixBytesPreserved": 517996544,
+                  "prefixSha256": "653e9bc5d2acf040a616009b93a9773de510fd4cfcfbda14e310653aad2f6c69",
+                  "expectedBytes": 1564928088,
+                  "expectedSha256": "d3f212dd20abecd315d830bc54ae3865e56ebfc3276484e57b771288ba27fd35",
+                  "inferenceStarted": false
+                },
+                "prepared.json": null,
+                "hip-inventory.json": {
+                  "startedAt": "2026-11-07T15:18:18+08:00",
+                  "state": "PASS_CURRENT_HIP_DEVICE_INVENTORY_NO_MODEL",
+                  "pid": 23688,
+                  "sourceSha256": "d04736e7220309aef3fcff93a41f1a45cf179e6f3b9154d75906a004fdb4250c",
+                  "referenceOpened": false,
+                  "trainingPerformed": false,
+                  "modelLoaded": false,
+                  "results": [],
+                  "limits": {
+                    "pid": 23688,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 2147483648,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 342720512,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  },
+                  "torchVersion": "2.11.0+rocm10.0.0",
+                  "devices": [
+                    {
+                      "ordinal": 0,
+                      "name": "AMD Radeon 780M Graphics",
+                      "architecture": "gfx1103",
+                      "totalMemory": 9875259392
+                    },
+                    {
+                      "ordinal": 1,
+                      "name": "AMD Radeon RX 6800 XT",
+                      "architecture": "gfx1030",
+                      "totalMemory": 17163091968
+                    }
+                  ],
+                  "selected": {
+                    "ordinal": 1,
+                    "name": "AMD Radeon RX 6800 XT",
+                    "architecture": "gfx1030",
+                    "totalMemory": 17163091968
+                  },
+                  "finishedAt": "2026-11-07T15:18:22+08:00",
+                  "wholeWorkerSeconds": 3.6579053000023123
+                },
+                "short-run.json": null,
+                "short-native-state.json": null,
+                "full/run.json": null,
+                "review.json": null
+              },
+              "sourceAndEvidenceCommit": "493569566a40c4971c5e87267027b9934d8464c8",
               "remoteReadbackConfirmed": true
             }
           }
