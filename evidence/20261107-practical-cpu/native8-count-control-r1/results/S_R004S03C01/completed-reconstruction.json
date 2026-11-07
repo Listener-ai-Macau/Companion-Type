@@ -1,0 +1,20 @@
+{
+  "meeting": "S_R004S03C01",
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "predictedCountSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-vulkan-full-r1\\results\\S_R004S03C01\\speaker-journal.json",
+  "predictedCountSourceSha256": "e232837f760f439a74c23504b8640565a6d68db9de4136bb2806591eaf19e376",
+  "neuralPredictedCount": 5,
+  "activeReconstructedGroups": 4,
+  "newNeuralItems": 0,
+  "reconstructionSeconds": 0.9518566000042483,
+  "memoryLayout": {
+    "expandedWindowMatricesAllocated": false,
+    "voteDtype": "uint8",
+    "voteBytes": 689780,
+    "avoidedDenseRelabelBytes": 27317820,
+    "globalSpeakerClusters": 5,
+    "voteUpperBound": 11
+  },
+  "rttmSha256": "97ef45ffbcea14bcebf065aab4fa896bcd2f8ac88d42cf62417dd6914cf93b3b",
+  "referenceUsedForClustering": false
+}

@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-11-07T12:50:43+08:00",
+  "state": "PREPARING_EXACT_CHECKPOINT_AND_SOURCE",
+  "actualProcessIds": [
+    18836
+  ],
+  "checkpointDownloads": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\Nemotron-3-Diarization.nemo.part",
+      "observedBytes": 177209344
+    }
+  ],
+  "modelsRunning": false,
+  "neuralInferenceStarted": false,
+  "trainingStarted": false
+}
