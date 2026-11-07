@@ -12,7 +12,10 @@
     }
   },
   "maximumWindowSamples": 480000,
-  "speakerJournals": {},
+  "speakerJournals": {
+    "S_R004S03C01": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+    "L_R003S01C02": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e"
+  },
   "scope": "One frozen native verbatim-output control. Same weights/native runtime/30s disjoint cuts/language/threads/audio/scorer; only the documented native inverse text normalization flag changes. No output rewrite, filler removal, reference/hotword input, threshold sweep, or model training. Both exposed full meetings retained even on failure; not product-default adoption.",
   "useItn": false
 }

@@ -1,10 +1,41 @@
 {
-  "state": "RUNNING_COMPLETE_CPU_TRANSCRIPT",
+  "state": "TWO_COMPLETE_TEXT_ONLY_MEETINGS_SCORED_SPEAKERS_PENDING",
   "startedAt": "2026-11-07T15:06:00+08:00",
   "pid": 15292,
   "automaticRetries": 0,
   "referencePassedToInference": false,
-  "results": [],
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 200.92242940000142,
+      "privatePeakBytes": 448040960,
+      "rssPeakBytes": 451825664,
+      "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcripts\\S_R004S03C01",
+      "priorAttemptProcessFamilySeconds": 35.888645500002895,
+      "accumulatedProcessFamilySeconds": 236.81107490000431,
+      "scoringExitCode": 0,
+      "chronologicalDiagnosticCer": 0.06954954954954955,
+      "cpCerDiagnostic": 1.414054054054054,
+      "unconfirmedTextFraction": 1.0
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 230.20789439999498,
+      "privatePeakBytes": 447094784,
+      "rssPeakBytes": 451305472,
+      "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcripts\\L_R003S01C02",
+      "priorAttemptProcessFamilySeconds": 0,
+      "accumulatedProcessFamilySeconds": 230.20789439999498,
+      "scoringExitCode": 0,
+      "chronologicalDiagnosticCer": 0.2612955278930383,
+      "cpCerDiagnostic": 1.2408944213923467,
+      "unconfirmedTextFraction": 1.0
+    }
+  ],
   "priorAttemptReceipts": [
     "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcript-attempt-0001.json"
   ],
@@ -25,6 +56,5 @@
     "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
   },
   "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
-  "activeMeeting": "S_R004S03C01",
-  "activePid": 14024
+  "finishedAt": "2026-11-07T15:13:16+08:00"
 }

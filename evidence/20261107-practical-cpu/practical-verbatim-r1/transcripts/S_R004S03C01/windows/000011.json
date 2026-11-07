@@ -1,8 +1,8 @@
 {
   "binding": {
     "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
-    "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
-    "journalSha256": null,
+    "protocolSha256": "69e1314531a8244f9ff565575f2d5a9d5d36abe94086a88f9f86fa5ea205510f",
+    "journalSha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
     "workerSha256": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
     "attributionSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd"
   },
@@ -272,9 +272,11 @@
         "textStart": 0,
         "textEnd": 1,
         "estimatedOnsetSeconds": 330.1199999973178,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -283,9 +285,11 @@
         "textStart": 1,
         "textEnd": 2,
         "estimatedOnsetSeconds": 330.2399999946356,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -294,9 +298,11 @@
         "textStart": 2,
         "textEnd": 3,
         "estimatedOnsetSeconds": 330.3599999845028,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -305,9 +311,11 @@
         "textStart": 3,
         "textEnd": 4,
         "estimatedOnsetSeconds": 330.47999998927116,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -316,9 +324,11 @@
         "textStart": 4,
         "textEnd": 5,
         "estimatedOnsetSeconds": 330.6599999666214,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -327,9 +337,11 @@
         "textStart": 5,
         "textEnd": 6,
         "estimatedOnsetSeconds": 330.77999997138977,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -338,9 +350,11 @@
         "textStart": 6,
         "textEnd": 7,
         "estimatedOnsetSeconds": 331.0199999809265,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -349,9 +363,11 @@
         "textStart": 7,
         "textEnd": 8,
         "estimatedOnsetSeconds": 331.1999999284744,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -360,9 +376,11 @@
         "textStart": 8,
         "textEnd": 9,
         "estimatedOnsetSeconds": 331.3799999952316,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -371,9 +389,11 @@
         "textStart": 9,
         "textEnd": 10,
         "estimatedOnsetSeconds": 331.8600000143051,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -382,9 +402,11 @@
         "textStart": 10,
         "textEnd": 11,
         "estimatedOnsetSeconds": 332.460000038147,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -393,9 +415,11 @@
         "textStart": 11,
         "textEnd": 12,
         "estimatedOnsetSeconds": 332.6399998664856,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -404,9 +428,11 @@
         "textStart": 12,
         "textEnd": 13,
         "estimatedOnsetSeconds": 332.9399998188019,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -415,9 +441,11 @@
         "textStart": 13,
         "textEnd": 14,
         "estimatedOnsetSeconds": 333.1799998283386,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -426,9 +454,11 @@
         "textStart": 14,
         "textEnd": 15,
         "estimatedOnsetSeconds": 333.72000002861023,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -437,9 +467,11 @@
         "textStart": 15,
         "textEnd": 16,
         "estimatedOnsetSeconds": 333.89999985694885,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -448,9 +480,11 @@
         "textStart": 16,
         "textEnd": 17,
         "estimatedOnsetSeconds": 334.0199999809265,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -459,9 +493,11 @@
         "textStart": 17,
         "textEnd": 18,
         "estimatedOnsetSeconds": 334.1399998664856,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -470,9 +506,11 @@
         "textStart": 18,
         "textEnd": 19,
         "estimatedOnsetSeconds": 334.2599997520447,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -481,9 +519,11 @@
         "textStart": 19,
         "textEnd": 20,
         "estimatedOnsetSeconds": 334.44000005722046,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -492,9 +532,11 @@
         "textStart": 20,
         "textEnd": 21,
         "estimatedOnsetSeconds": 334.55999994277954,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -503,9 +545,11 @@
         "textStart": 21,
         "textEnd": 22,
         "estimatedOnsetSeconds": 334.73999977111816,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -514,9 +558,11 @@
         "textStart": 22,
         "textEnd": 23,
         "estimatedOnsetSeconds": 334.92000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -525,9 +571,11 @@
         "textStart": 23,
         "textEnd": 24,
         "estimatedOnsetSeconds": 335.09999990463257,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -536,9 +584,11 @@
         "textStart": 24,
         "textEnd": 25,
         "estimatedOnsetSeconds": 335.2799997329712,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -547,9 +597,11 @@
         "textStart": 25,
         "textEnd": 26,
         "estimatedOnsetSeconds": 335.460000038147,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -558,9 +610,11 @@
         "textStart": 26,
         "textEnd": 27,
         "estimatedOnsetSeconds": 335.57999992370605,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -569,9 +623,11 @@
         "textStart": 27,
         "textEnd": 28,
         "estimatedOnsetSeconds": 335.94000005722046,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -580,9 +636,11 @@
         "textStart": 28,
         "textEnd": 29,
         "estimatedOnsetSeconds": 337.44000005722046,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -591,9 +649,11 @@
         "textStart": 29,
         "textEnd": 30,
         "estimatedOnsetSeconds": 337.73999977111816,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -602,9 +662,11 @@
         "textStart": 30,
         "textEnd": 31,
         "estimatedOnsetSeconds": 338.039999961853,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -613,9 +675,11 @@
         "textStart": 31,
         "textEnd": 32,
         "estimatedOnsetSeconds": 338.1599998474121,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -624,9 +688,11 @@
         "textStart": 32,
         "textEnd": 33,
         "estimatedOnsetSeconds": 338.3999996185303,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -635,9 +701,11 @@
         "textStart": 33,
         "textEnd": 34,
         "estimatedOnsetSeconds": 338.57999992370605,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -646,9 +714,11 @@
         "textStart": 34,
         "textEnd": 35,
         "estimatedOnsetSeconds": 338.76000022888184,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -657,9 +727,11 @@
         "textStart": 35,
         "textEnd": 36,
         "estimatedOnsetSeconds": 338.9399995803833,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -668,9 +740,11 @@
         "textStart": 36,
         "textEnd": 37,
         "estimatedOnsetSeconds": 339.42000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -679,9 +753,11 @@
         "textStart": 37,
         "textEnd": 38,
         "estimatedOnsetSeconds": 339.5999994277954,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -690,9 +766,11 @@
         "textStart": 38,
         "textEnd": 39,
         "estimatedOnsetSeconds": 339.7799997329712,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -701,9 +779,11 @@
         "textStart": 39,
         "textEnd": 40,
         "estimatedOnsetSeconds": 339.8999996185303,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -712,9 +792,11 @@
         "textStart": 40,
         "textEnd": 41,
         "estimatedOnsetSeconds": 340.13999938964844,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -723,9 +805,11 @@
         "textStart": 41,
         "textEnd": 42,
         "estimatedOnsetSeconds": 340.26000022888184,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -734,9 +818,11 @@
         "textStart": 42,
         "textEnd": 43,
         "estimatedOnsetSeconds": 340.5,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -745,9 +831,11 @@
         "textStart": 43,
         "textEnd": 44,
         "estimatedOnsetSeconds": 340.73999977111816,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -756,9 +844,11 @@
         "textStart": 44,
         "textEnd": 45,
         "estimatedOnsetSeconds": 340.85999965667725,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -767,9 +857,11 @@
         "textStart": 45,
         "textEnd": 46,
         "estimatedOnsetSeconds": 341.039999961853,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -778,9 +870,11 @@
         "textStart": 46,
         "textEnd": 47,
         "estimatedOnsetSeconds": 341.0999994277954,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -789,9 +883,11 @@
         "textStart": 47,
         "textEnd": 48,
         "estimatedOnsetSeconds": 341.2199993133545,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -800,9 +896,11 @@
         "textStart": 48,
         "textEnd": 49,
         "estimatedOnsetSeconds": 341.2799997329712,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -811,9 +909,11 @@
         "textStart": 49,
         "textEnd": 50,
         "estimatedOnsetSeconds": 341.3999996185303,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -822,9 +922,11 @@
         "textStart": 50,
         "textEnd": 51,
         "estimatedOnsetSeconds": 341.51999950408936,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -833,9 +935,11 @@
         "textStart": 51,
         "textEnd": 52,
         "estimatedOnsetSeconds": 341.69999980926514,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -844,9 +948,11 @@
         "textStart": 52,
         "textEnd": 53,
         "estimatedOnsetSeconds": 341.8800001144409,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -856,7 +962,9 @@
         "textEnd": 54,
         "estimatedOnsetSeconds": 342.23999977111816,
         "speaker": null,
-        "candidateSpeakers": [],
+        "candidateSpeakers": [
+          2
+        ],
         "attribution": "boundary_or_gap_unconfirmed",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
@@ -866,9 +974,11 @@
         "textStart": 54,
         "textEnd": 55,
         "estimatedOnsetSeconds": 343.13999938964844,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -877,9 +987,11 @@
         "textStart": 55,
         "textEnd": 56,
         "estimatedOnsetSeconds": 343.3800001144409,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -888,9 +1000,11 @@
         "textStart": 56,
         "textEnd": 57,
         "estimatedOnsetSeconds": 343.6199998855591,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -899,9 +1013,11 @@
         "textStart": 57,
         "textEnd": 58,
         "estimatedOnsetSeconds": 343.92000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -910,9 +1026,11 @@
         "textStart": 58,
         "textEnd": 59,
         "estimatedOnsetSeconds": 344.039999961853,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -921,9 +1039,11 @@
         "textStart": 59,
         "textEnd": 60,
         "estimatedOnsetSeconds": 344.2199993133545,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -932,9 +1052,11 @@
         "textStart": 60,
         "textEnd": 61,
         "estimatedOnsetSeconds": 344.51999950408936,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -943,9 +1065,11 @@
         "textStart": 61,
         "textEnd": 62,
         "estimatedOnsetSeconds": 344.63999938964844,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -954,9 +1078,11 @@
         "textStart": 62,
         "textEnd": 63,
         "estimatedOnsetSeconds": 344.8199996948242,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -965,9 +1091,11 @@
         "textStart": 63,
         "textEnd": 64,
         "estimatedOnsetSeconds": 345.0599994659424,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -976,9 +1104,11 @@
         "textStart": 64,
         "textEnd": 65,
         "estimatedOnsetSeconds": 345.17999935150146,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -987,9 +1117,11 @@
         "textStart": 65,
         "textEnd": 66,
         "estimatedOnsetSeconds": 345.35999965667725,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -998,9 +1130,11 @@
         "textStart": 66,
         "textEnd": 67,
         "estimatedOnsetSeconds": 345.539999961853,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1009,9 +1143,11 @@
         "textStart": 67,
         "textEnd": 68,
         "estimatedOnsetSeconds": 345.8399991989136,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1020,9 +1156,11 @@
         "textStart": 68,
         "textEnd": 69,
         "estimatedOnsetSeconds": 346.1999988555908,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1031,9 +1169,11 @@
         "textStart": 69,
         "textEnd": 70,
         "estimatedOnsetSeconds": 346.5,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1042,9 +1182,11 @@
         "textStart": 70,
         "textEnd": 71,
         "estimatedOnsetSeconds": 346.6800003051758,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1053,9 +1195,11 @@
         "textStart": 71,
         "textEnd": 72,
         "estimatedOnsetSeconds": 346.92000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1064,9 +1208,11 @@
         "textStart": 72,
         "textEnd": 73,
         "estimatedOnsetSeconds": 347.0399990081787,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1075,9 +1221,11 @@
         "textStart": 73,
         "textEnd": 74,
         "estimatedOnsetSeconds": 347.1599998474121,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1086,9 +1234,11 @@
         "textStart": 74,
         "textEnd": 75,
         "estimatedOnsetSeconds": 347.3400001525879,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1097,9 +1247,11 @@
         "textStart": 75,
         "textEnd": 76,
         "estimatedOnsetSeconds": 347.5200004577637,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1108,9 +1260,11 @@
         "textStart": 76,
         "textEnd": 77,
         "estimatedOnsetSeconds": 347.76000022888184,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1119,9 +1273,11 @@
         "textStart": 77,
         "textEnd": 78,
         "estimatedOnsetSeconds": 347.8799991607666,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1130,9 +1286,11 @@
         "textStart": 78,
         "textEnd": 79,
         "estimatedOnsetSeconds": 348.1800003051758,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1141,9 +1299,11 @@
         "textStart": 79,
         "textEnd": 80,
         "estimatedOnsetSeconds": 348.35999870300293,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1152,9 +1312,11 @@
         "textStart": 80,
         "textEnd": 81,
         "estimatedOnsetSeconds": 348.6000003814697,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1164,7 +1326,9 @@
         "textEnd": 82,
         "estimatedOnsetSeconds": 349.1999988555908,
         "speaker": null,
-        "candidateSpeakers": [],
+        "candidateSpeakers": [
+          2
+        ],
         "attribution": "boundary_or_gap_unconfirmed",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
@@ -1174,9 +1338,11 @@
         "textStart": 82,
         "textEnd": 83,
         "estimatedOnsetSeconds": 349.5,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1185,9 +1351,11 @@
         "textStart": 83,
         "textEnd": 84,
         "estimatedOnsetSeconds": 349.79999923706055,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1196,9 +1364,11 @@
         "textStart": 84,
         "textEnd": 85,
         "estimatedOnsetSeconds": 350.45999908447266,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1207,9 +1377,11 @@
         "textStart": 85,
         "textEnd": 86,
         "estimatedOnsetSeconds": 350.63999938964844,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1218,9 +1390,11 @@
         "textStart": 86,
         "textEnd": 87,
         "estimatedOnsetSeconds": 350.8799991607666,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1229,9 +1403,11 @@
         "textStart": 87,
         "textEnd": 88,
         "estimatedOnsetSeconds": 351.11999893188477,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1240,9 +1416,11 @@
         "textStart": 88,
         "textEnd": 89,
         "estimatedOnsetSeconds": 351.29999923706055,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1251,9 +1429,11 @@
         "textStart": 89,
         "textEnd": 90,
         "estimatedOnsetSeconds": 351.6000003814697,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1262,9 +1442,11 @@
         "textStart": 90,
         "textEnd": 91,
         "estimatedOnsetSeconds": 352.0200004577637,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1273,9 +1455,11 @@
         "textStart": 91,
         "textEnd": 92,
         "estimatedOnsetSeconds": 352.1999988555908,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1284,9 +1468,11 @@
         "textStart": 92,
         "textEnd": 93,
         "estimatedOnsetSeconds": 352.5,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1295,9 +1481,11 @@
         "textStart": 93,
         "textEnd": 94,
         "estimatedOnsetSeconds": 352.92000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1306,9 +1494,11 @@
         "textStart": 94,
         "textEnd": 95,
         "estimatedOnsetSeconds": 353.76000022888184,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1317,9 +1507,11 @@
         "textStart": 95,
         "textEnd": 96,
         "estimatedOnsetSeconds": 353.939998626709,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1328,9 +1520,11 @@
         "textStart": 96,
         "textEnd": 97,
         "estimatedOnsetSeconds": 354.1800003051758,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1339,9 +1533,11 @@
         "textStart": 97,
         "textEnd": 98,
         "estimatedOnsetSeconds": 354.42000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1350,9 +1546,11 @@
         "textStart": 98,
         "textEnd": 99,
         "estimatedOnsetSeconds": 354.4799995422363,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1361,9 +1559,11 @@
         "textStart": 99,
         "textEnd": 100,
         "estimatedOnsetSeconds": 354.7199993133545,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1372,9 +1572,11 @@
         "textStart": 100,
         "textEnd": 101,
         "estimatedOnsetSeconds": 354.8999996185303,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1383,9 +1585,11 @@
         "textStart": 101,
         "textEnd": 102,
         "estimatedOnsetSeconds": 355.13999938964844,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1394,9 +1598,11 @@
         "textStart": 102,
         "textEnd": 103,
         "estimatedOnsetSeconds": 355.439998626709,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1405,9 +1611,11 @@
         "textStart": 103,
         "textEnd": 104,
         "estimatedOnsetSeconds": 355.5599994659424,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1416,9 +1624,11 @@
         "textStart": 104,
         "textEnd": 105,
         "estimatedOnsetSeconds": 355.92000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1427,9 +1637,11 @@
         "textStart": 105,
         "textEnd": 106,
         "estimatedOnsetSeconds": 356.2799987792969,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1438,9 +1650,11 @@
         "textStart": 106,
         "textEnd": 107,
         "estimatedOnsetSeconds": 356.45999908447266,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1449,9 +1663,11 @@
         "textStart": 107,
         "textEnd": 108,
         "estimatedOnsetSeconds": 356.63999938964844,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1460,9 +1676,11 @@
         "textStart": 108,
         "textEnd": 109,
         "estimatedOnsetSeconds": 356.8799991607666,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1471,9 +1689,11 @@
         "textStart": 109,
         "textEnd": 110,
         "estimatedOnsetSeconds": 357.0599994659424,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1482,9 +1702,11 @@
         "textStart": 110,
         "textEnd": 111,
         "estimatedOnsetSeconds": 357.29999923706055,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1493,9 +1715,11 @@
         "textStart": 111,
         "textEnd": 112,
         "estimatedOnsetSeconds": 357.5999984741211,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1504,9 +1728,11 @@
         "textStart": 112,
         "textEnd": 113,
         "estimatedOnsetSeconds": 358.26000022888184,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1515,9 +1741,11 @@
         "textStart": 113,
         "textEnd": 114,
         "estimatedOnsetSeconds": 358.439998626709,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1526,9 +1754,11 @@
         "textStart": 114,
         "textEnd": 115,
         "estimatedOnsetSeconds": 358.5599994659424,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1537,9 +1767,11 @@
         "textStart": 115,
         "textEnd": 116,
         "estimatedOnsetSeconds": 358.79999923706055,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1548,9 +1780,11 @@
         "textStart": 116,
         "textEnd": 117,
         "estimatedOnsetSeconds": 358.92000007629395,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1559,9 +1793,11 @@
         "textStart": 117,
         "textEnd": 118,
         "estimatedOnsetSeconds": 359.1599998474121,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1570,9 +1806,11 @@
         "textStart": 118,
         "textEnd": 119,
         "estimatedOnsetSeconds": 359.2799987792969,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1581,9 +1819,11 @@
         "textStart": 119,
         "textEnd": 120,
         "estimatedOnsetSeconds": 359.3999996185303,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1592,9 +1832,11 @@
         "textStart": 120,
         "textEnd": 121,
         "estimatedOnsetSeconds": 359.63999938964844,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       },
@@ -1603,22 +1845,78 @@
         "textStart": 121,
         "textEnd": 122,
         "estimatedOnsetSeconds": 359.76000022888184,
-        "speaker": null,
-        "candidateSpeakers": [],
-        "attribution": "boundary_or_gap_unconfirmed",
+        "speaker": 2,
+        "candidateSpeakers": [
+          2
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
         "overlapDetectedNearOnset": false,
         "timeUncertaintyMarginSeconds": 0.06
       }
     ],
     "utterances": [
       {
-        "text": "段时间的销售还可以呃但是呢嗯我对大家的要求呢也非常的高嗯其实每天呢都有去细心的去检查去看看大家有没有做到位嗯首先呢就是说比如说我们这个呃菜的话我们的陈列是有标准的那你呃摆放的品种呀大小啊嗯包括它应该在上呀在下呀都是有要求的嗯所有的商品呢都是经过",
+        "text": "段时间的销售还可以呃但是呢嗯我对大家的要求呢也非常的高嗯其实每天呢都有去细心的去检查去看看大家有没有做到位",
         "startMs": 330120,
-        "endMs": 359820,
+        "endMs": 341940,
+        "speaker": 2,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          2
+        ],
+        "sourceWindow": 11,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "嗯",
+        "startMs": 342240,
+        "endMs": 342300,
         "speaker": null,
         "approximateTiming": true,
         "attribution": "boundary_or_gap_unconfirmed",
-        "candidateSpeakers": [],
+        "candidateSpeakers": [
+          2
+        ],
+        "sourceWindow": 11,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "首先呢就是说比如说我们这个呃菜的话我们的陈列是有标准的",
+        "startMs": 343140,
+        "endMs": 348660,
+        "speaker": 2,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          2
+        ],
+        "sourceWindow": 11,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "那",
+        "startMs": 349200,
+        "endMs": 349260,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [
+          2
+        ],
+        "sourceWindow": 11,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "你呃摆放的品种呀大小啊嗯包括它应该在上呀在下呀都是有要求的嗯所有的商品呢都是经过",
+        "startMs": 349500,
+        "endMs": 359820,
+        "speaker": 2,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          2
+        ],
         "sourceWindow": 11,
         "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
       }

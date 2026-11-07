@@ -1,0 +1,52 @@
+{
+  "at": "2026-11-07T15:19:38+08:00",
+  "state": "NATIVE_VERBATIM_TWO_FULL_MEETINGS_COMPLETE_TEXT5_AND_SALE_OPEN",
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "audioSeconds": 2327.119,
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "rawCerBefore": 0.076996996996997,
+      "rawCerAfter": 0.06954954954954955,
+      "rawMetricScope": "Ordinary full text CER",
+      "strictEditsBefore": 641,
+      "strictEditsAfter": 579,
+      "referenceCharacters": 8325,
+      "jointCpCerDiagnostic": 0.09549549549549549,
+      "unconfirmedTextFraction": 0.014091470951792336,
+      "rawAsrProcessFamilySeconds": 236.81107490000431,
+      "cacheAttributionAndScoringSeconds": 2.814486699993722,
+      "rawCacheUnchangedDuringAttribution": true,
+      "additionalNeuralInference": 0,
+      "actualProductDocumentContractPassed": true,
+      "modelOutputSha256": "f5b9ac9f31fdd4c6a9a31ee97858141a744bc929fb564f0eab3ea08d4599d875",
+      "qualified": false
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "audioSeconds": 2362.945,
+      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+      "rawCerBefore": 0.2676348547717842,
+      "rawCerAfter": 0.2612955278930383,
+      "rawMetricScope": "Mixed chronological diagnostic only; not per-person overlap acceptance",
+      "strictEditsBefore": 2322,
+      "strictEditsAfter": 2267,
+      "referenceCharacters": 8676,
+      "jointCpCerDiagnostic": 0.405025357307515,
+      "unconfirmedTextFraction": 0.100104821802935,
+      "rawAsrProcessFamilySeconds": 230.20789439999498,
+      "cacheAttributionAndScoringSeconds": 3.1640033000148833,
+      "rawCacheUnchangedDuringAttribution": true,
+      "additionalNeuralInference": 0,
+      "actualProductDocumentContractPassed": true,
+      "modelOutputSha256": "b3d676e326ba3a5c637f6cf9c320e312ac9ae8307e3a492f9ebcc82301632828",
+      "qualified": false
+    }
+  ],
+  "decision": "Keep opt-in native verbatim output support and its distinct cache binding. Do not promote as acoustic accuracy fix or change installed defaults. No flag sweep/per-meeting choosing; both fixed full meetings and baseline retained.",
+  "scope": "No text/reference rewrite, filler/er deletion, training, new ASR weights, or new diarization inference. Only documented native useItn flag changed. Low-RAM interrupted8 windows reused and35.8886455s retained. New full texts were then attributed with existing FP16 journals, no new ASR. Shared product format works; no app/mobile/card/customer/factual-minute qualification.",
+  "next": "原QM04继续：原生数字格式控制S6.95495%仍>5%、L混音26.12955%仅诊断，停止继续调该开关。保留FP16分人研究基线和跨域失败。现在只验证已固定官方Qwen3-ASR-0.6B-hf原生Transformers5.22.1/BF16，不重跑旧社区ONNX复读实现；现有外置6800XT唯一型号识别、CPU5%/private2GiB/实际低RAM保护不变，先短段EOS/复读/静音/资源，过门后才同两完整真实会评分；失败保留无自动重试。不喂参考/人数/热词、不训练或扩大预算。最终未见集、重叠逐路内容/事实纪要/手机实卡/售卖门继续OPEN。",
+  "qualityQualified": false,
+  "defaultProductChanged": false,
+  "finalHoldoutOpened": false
+}

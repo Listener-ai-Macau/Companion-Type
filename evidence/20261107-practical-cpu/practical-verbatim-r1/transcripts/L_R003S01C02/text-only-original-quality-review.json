@@ -1,0 +1,85 @@
+{
+  "at": "2026-11-07T15:13:15+08:00",
+  "meeting": "L_R003S01C02",
+  "audioSeconds": 2362.945,
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceCharacters": 8676,
+  "hypothesisCharacters": 7632,
+  "chronologicalTextDiagnostic": {
+    "edits": {
+      "replace": 767,
+      "delete": 1272,
+      "insert": 228
+    },
+    "cer": 0.2612955278930383,
+    "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+  },
+  "anonymousStreamCpCerDiagnostic": {
+    "metric": "cpCER",
+    "audioSeconds": 2362.945,
+    "referenceCharacters": 8676,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 1,
+    "edits": {
+      "replace": 408,
+      "delete": 5701,
+      "insert": 4657
+    },
+    "totalEdits": 10766,
+    "characterErrorRate": 1.2408944213923467,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": null,
+        "edits": 1581
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": null,
+        "edits": 331
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": null,
+        "edits": 1470
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": null,
+        "edits": 1821
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "__unconfirmed__",
+        "edits": 5257
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": null,
+        "edits": 306
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "unconfirmedSpeakerText": {
+    "characters": 7632,
+    "fractionOfRecognizedCharacters": 1.0,
+    "neverRealIdentityOrOwnerClaim": true
+  },
+  "confirmedAttributionCerDiagnostic": {
+    "totalEdits": 16308,
+    "cer": 1.879668049792531,
+    "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+  },
+  "speakerActivityReview": null,
+  "speakerJournalPending": true,
+  "identityMetricsApplicable": false,
+  "allAudioSamplesCoveredOnce": true,
+  "allRawAsrTextPreserved": true,
+  "nativeTokenOnsetsAreApproximate": true,
+  "overlapBothVoicesRecovered": false,
+  "qualified": false,
+  "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+}

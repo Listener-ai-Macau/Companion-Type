@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-07T15:13:03+08:00",
+  "state": "PASS_DEFAULT_CACHE_COMPATIBILITY_AND_CHANGED_ITN_REFUSAL_NO_MODEL",
+  "sourceWorkerSha256": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+  "unchangedOutputSha256": "1d2ef9b1b47a848af73b4743075ebed55df35721e62f69a8def8e510f73e2301",
+  "rawFilesUnchanged": true,
+  "defaultOldProtocolWithNoUseItnStillMeansTrue": true,
+  "changedFlagCannotReuseOldNeuralCache": true,
+  "neuralWindowsAdded": 0,
+  "modelLoadedInEitherControl": false,
+  "public30sOnly": true,
+  "qualityQualified": false
+}

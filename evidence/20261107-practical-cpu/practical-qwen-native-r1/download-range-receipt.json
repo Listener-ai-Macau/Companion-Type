@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-07T15:21:13+08:00",
+  "state": "RESUMING_OWNED_PUBLIC_DOWNLOAD_VERIFIED_RANGES",
+  "terminatedOwnPreparerPid": 17364,
+  "reason": "Reuse the existing prefix; four bounded network streams after a successful206range probe, no proxy/routing changes. This is download preparation, not a model failure or inference.",
+  "revision": "7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
+  "prefixBytesPreserved": 517996544,
+  "prefixSha256": "653e9bc5d2acf040a616009b93a9773de510fd4cfcfbda14e310653aad2f6c69",
+  "expectedBytes": 1564928088,
+  "expectedSha256": "d3f212dd20abecd315d830bc54ae3865e56ebfc3276484e57b771288ba27fd35",
+  "inferenceStarted": false
+}

@@ -1,0 +1,26 @@
+{
+  "binding": {
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
+    "journalSha256": null,
+    "workerSha256": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+    "attributionSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd"
+  },
+  "raw": {
+    "index": 33,
+    "startSample": 15840000,
+    "endSample": 16320000,
+    "text": "",
+    "tokens": [],
+    "timestamps": [],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|EMO_UNKNOWN|>\", \"event\": \"<|BGM|>\", \"text\": \"\", \"timestamps\": [], \"durations\": [], \"tokens\":[], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 3.119672000000719
+  },
+  "aligned": {
+    "alignmentAvailable": true,
+    "rawText": "",
+    "tokenEstimates": [],
+    "utterances": []
+  }
+}

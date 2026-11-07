@@ -1,0 +1,51 @@
+{
+  "at": "2026-11-07T15:09:50.756005+08:00",
+  "rows": [
+    {
+      "meeting": "L_R003S01C02",
+      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+      "rmsDbfs": -37.933543400658436,
+      "peakDbfs": -9.219801954406279,
+      "oneSecondRmsDbfsPercentiles": {
+        "5": -47.34786687149644,
+        "25": -43.74002579197793,
+        "50": -40.472413326662874,
+        "75": -37.24743496266487,
+        "95": -32.77014503680497
+      },
+      "clippedSamples": 0,
+      "totalSamples": 37807120
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "rmsDbfs": -38.17175386292311,
+      "peakDbfs": -10.282114090962333,
+      "oneSecondRmsDbfsPercentiles": {
+        "5": -55.59124117809323,
+        "25": -43.32588790256374,
+        "50": -39.22168336201648,
+        "75": -36.67091862085991,
+        "95": -33.93105903008027
+      },
+      "clippedSamples": 0,
+      "totalSamples": 37233904
+    },
+    {
+      "meeting": "EN2002a",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "rmsDbfs": -42.372953676505,
+      "peakDbfs": -8.017446159191039,
+      "oneSecondRmsDbfsPercentiles": {
+        "5": -58.420743810822486,
+        "25": -52.985949631887166,
+        "50": -49.24913014854302,
+        "75": -45.017693603895886,
+        "95": -36.49855433364095
+      },
+      "clippedSamples": 0,
+      "totalSamples": 34283350
+    }
+  ],
+  "scope": "Original full audio numeric inventory only, no references or neural inference, no gain/denoise applied. Volume alone does not establish missed speech cause."
+}
