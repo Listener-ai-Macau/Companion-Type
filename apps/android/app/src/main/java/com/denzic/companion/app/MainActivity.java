@@ -540,7 +540,16 @@ public final class MainActivity extends Activity {
         RecordingSyncStatus s = RecordingSyncService.status(this);
         String saved=getSharedPreferences("companion_recording_sync",MODE_PRIVATE).getString("directory",null);
         if(!s.running&&saved!=null&&!saved.equals(recordings().getFileName().toString()))return new JSONObject().put("state","idle").put("detail","原接收任务保留在另一份资料中；切回该资料后可继续。").put("running",false).put("hasSavedTask",false);
-        return new JSONObject().put("state", s.state).put("detail", s.detail).put("running", s.running).put("hasSavedTask", s.hasSavedTask);
+        JSONObject result=new JSONObject().put("state", s.state).put("detail", s.detail).put("running", s.running).put("hasSavedTask", s.hasSavedTask);
+        if(!s.running&&"complete".equals(s.state)){
+            android.content.SharedPreferences prefs=getSharedPreferences("companion_recording_sync",MODE_PRIVATE);
+            String encoded=prefs.getString("descriptor",null),address=prefs.getString("address",null);
+            if(encoded!=null&&address!=null)try{
+                RecorderWire.Descriptor completed=RecorderWire.Descriptor.decode(android.util.Base64.decode(encoded,android.util.Base64.NO_WRAP));
+                result.put("completedDeviceRecording",new JSONObject().put("address",address).put("identity",recordingIdentity(completed)));
+            }catch(java.io.IOException|IllegalArgumentException invalidSavedSelection){/* No completion claim for unverified metadata. */}
+        }
+        return result;
     }
     private void playbackEvent(String state, String message) {
         try {
@@ -625,12 +634,15 @@ public final class MainActivity extends Activity {
         final BluetoothDevice requested=selectedDevice;
         return deviceConnection.use(requested.getAddress(),()->CompanionAndroidBackend.connect(this,requested),operation);
     }
+    private static String recordingIdentity(RecorderWire.Descriptor d){
+        return android.util.Base64.encodeToString(d.uid(),android.util.Base64.NO_WRAP)+":"+Long.toUnsignedString(d.epoch)+":"+Long.toUnsignedString(d.sessionId);
+    }
     /** Publish the exact catalogue already read on the current GATT owner. */
     private JSONArray deviceRecordingRows(java.util.List<com.denzic.companion.mobile.DeviceRecordings.Session> sessions)throws org.json.JSONException {
         java.util.List<RecorderWire.Descriptor> selected=new ArrayList<>();JSONArray out=new JSONArray();
         for(int i=0;i<sessions.size();i++){
             com.denzic.companion.mobile.DeviceRecordings.Session row=sessions.get(i);RecorderWire.Descriptor d=row.representative;selected.add(d);
-            out.put(new JSONObject().put("index",i).put("session",Long.toUnsignedString(d.sessionId))
+            out.put(new JSONObject().put("index",i).put("identity",recordingIdentity(d)).put("session",Long.toUnsignedString(d.sessionId))
                 .put("segment",d.segmentIndex).put("bytes",row.bytes).put("segments",row.segments)
                 .put("startedAtUnixSeconds",row.startedUnixSeconds==0?JSONObject.NULL:row.startedUnixSeconds)
                 .put("durationMs",row.durationMillis).put("complete",row.complete));

@@ -57,4 +57,43 @@ async function scenario(combined:boolean,followFailure=false,stopFailure=false){
  }finally{await act(async()=>tree.unmount());}
 }
 await scenario(true);await scenario(true,true);await scenario(true,false,true);await scenario(false);
+async function completionScenario(state:string,address:string,identity:string,legacy=false){
+ const expected='uid:epoch:42',other='different-uid:epoch:42',source=[{...old,identity:'uid:epoch:41'},{...fresh,identity:legacy?undefined:expected},{...fresh,index:2,identity:other}];
+ let receiving=false,finished=false,tick:(()=>void)|undefined;const indices:number[]=[];
+ const previousInterval=window.setInterval,previousClear=window.clearInterval;
+ window.setInterval=((fn:any,ms:number)=>{if(ms===3000)tick=fn;return 1;})as any;window.clearInterval=(()=>{})as any;
+ window.CompanionNative={permissions(){},cancelTranscription(){},cancelMinutes(){},finishApp(){},openBluetoothSettings(){},exportDocument(){},exportAudio(){},call(id,method,input){
+  const a=JSON.parse(input);let result:any=null,error:string|null=null;
+  switch(method){
+   case'library':result={rows:[],problems:0};break;
+   case'status':result=finished?{running:false,state,detail:'done',hasSavedTask:true,completedDeviceRecording:{address,identity}}:{running:receiving,state:receiving?'syncing':'idle',detail:'',hasSavedTask:receiving};break;
+   case'aiServiceStatus':result={configured:false,saved:false};break;
+   case'deviceUpdateStatus':result={running:false,phase:'idle'};break;
+   case'devices':result=[{index:0,name:'Companion',address:'C8:ED:45:EB:95:B4',bonded:true}];break;
+   case'connectDevice':result={connected:true,address:a.address,recordings:source};break;
+   case'pendingConfirmation':result={pending:false,invalid:false,deferred:[],unreadableCount:0};break;
+   case'sync':receiving=true;indices.push(a.index);result={running:true,state:'syncing',detail:'receiving',hasSavedTask:true};break;
+   default:error='Unexpected completion bridge operation '+method;
+  }
+  queueMicrotask(()=>window.companionReply({id,result,error}));
+ }};
+ let tree:any;await act(async()=>{tree=create(<App/>);await new Promise(setImmediate);});
+ const click=async(name:string,contains=false)=>{const b=tree.root.findAllByType('button').find((n:any)=>contains?text(n).includes(name):text(n)===name);assert.ok(b,name);await act(async()=>{b.props.onClick();await new Promise(setImmediate);});};
+ try{
+  await click('设备');await click('读取已配对设备');await click('95:B4',true);
+  const target=tree.root.findAllByProps({'data-device-session':'42'})[0].findAllByType('button').find((n:any)=>text(n)==='接收这场');
+  await act(async()=>{target.props.onClick();await new Promise(setImmediate);});assert.ok(tick);finished=true;
+  await act(async()=>{tick!();await new Promise(setImmediate);});await click('设备');
+  const removed=state==='complete'&&address==='C8:ED:45:EB:95:B4'&&identity===expected&&!legacy;
+  assert.equal(tree.root.findAllByProps({'data-device-session':'41'}).length,1,'unrelated session retained');
+  assert.equal(tree.root.findAllByProps({'data-device-session':'42'}).length,removed?1:2,'exact UID/epoch/session only, matching selected device and completed state');
+  if(removed){const next=tree.root.findAllByProps({'data-device-session':'42'})[0].findAllByType('button').find((n:any)=>text(n)==='接收这场');finished=false;await act(async()=>{next.props.onClick();await new Promise(setImmediate);});assert.deepEqual(indices,[1,2],'hiding consumed row never renumbers native catalogue indices');}
+ }finally{await act(async()=>tree.unmount());window.setInterval=previousInterval;window.clearInterval=previousClear;}
+}
+await completionScenario('complete','C8:ED:45:EB:95:B4','uid:epoch:42');
+await completionScenario('stopped','C8:ED:45:EB:95:B4','uid:epoch:42');
+await completionScenario('complete','another-device','uid:epoch:42');
+await completionScenario('complete','C8:ED:45:EB:95:B4','uid:another-epoch:42');
+await completionScenario('complete','C8:ED:45:EB:95:B4','uid:epoch:42',true);
 console.log('PASS_REAL_MOBILE_COMPONENT_COMBINED_CATALOG_CONTROL_ACK_FOLLOWUP_FAILURE_NO_REPLAY_AND_LEGACY_BRIDGE');
+console.log('PASS_COMPLETED_EXACT_DEVICE_UID_EPOCH_SESSION_ROW_REMOVED_PAUSE_OTHER_DEVICE_EPOCH_LEGACY_RETAINED_NATIVE_INDICES_UNCHANGED');
