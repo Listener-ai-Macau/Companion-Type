@@ -1,0 +1,49 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "a031a7d311d091b7f569a85f7618c5672a44280a4e8b21443d078461ce9152e1",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "要强多了。嗯嗯嗯，上上上上上，下下下你怎么弄？对不对？嗯。就是。",
+    "generatedIds": [
+      30534,
+      99193,
+      104593,
+      1773,
+      106287,
+      106287,
+      106287,
+      3837,
+      17447,
+      17447,
+      17447,
+      17447,
+      17447,
+      3837,
+      16872,
+      16872,
+      16872,
+      109111,
+      102115,
+      11319,
+      32664,
+      105788,
+      11319,
+      106287,
+      1773,
+      99486,
+      1773,
+      151645
+    ],
+    "rawDecoded": "要强多了。嗯嗯嗯，上上上上上，下下下你怎么弄？对不对？嗯。就是。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 6.48928429998341
+  },
+  "rawSha256": "9dd99105e4aa6376743c08017d6c3bac138762ecb15fe299e9a93fae577915f9"
+}

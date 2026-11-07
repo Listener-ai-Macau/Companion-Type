@@ -1,24 +1,20 @@
 {
   "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
-  "pid": 25088,
-  "startedAt": "2026-11-07T20:31:16+08:00",
-  "priorAttemptReceipts": [],
+  "pid": 26152,
+  "startedAt": "2026-11-07T21:04:29+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1\\r2-attempt-0001.json"
+  ],
   "results": [
-    {
-      "stage": "separation",
-      "exitCode": 0,
-      "wholeProcessFamilySeconds": 425.9413976999931,
-      "privatePeakBytes": 1067130880
-    },
     {
       "stage": "asr",
       "exitCode": 15,
-      "wholeProcessFamilySeconds": 1469.1630988999968,
-      "privatePeakBytes": 1279303680
+      "wholeProcessFamilySeconds": 152.99454079999123,
+      "privatePeakBytes": 1246232576
     }
   ],
   "automaticModelFailureRetries": 0,
   "qualityQualified": false,
   "stage": "asr",
-  "finishedAt": "2026-11-07T21:02:51+08:00"
+  "finishedAt": "2026-11-07T21:07:02+08:00"
 }

@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "3ced5b347c74270a4d336058e59cd3edcc90b89c0de094c20490c40021e0fa99",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "嗯，该去还是去？嗯，嗯，你说谁讲我灭了安全问题没有点，这个就放心是吧？就是。",
+    "generatedIds": [
+      106287,
+      3837,
+      75882,
+      85336,
+      99998,
+      85336,
+      11319,
+      106287,
+      3837,
+      106287,
+      3837,
+      105665,
+      100165,
+      99526,
+      35946,
+      100493,
+      34187,
+      99464,
+      86119,
+      80443,
+      27442,
+      3837,
+      99487,
+      80158,
+      104633,
+      20412,
+      100003,
+      11319,
+      99486,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，该去还是去？嗯，嗯，你说谁讲我灭了安全问题没有点，这个就放心是吧？就是。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 7.96384440001566
+  },
+  "rawSha256": "60a1b1343b9c8c467609d92610862b4e75be54e5d9d92615a74bfdb66dbdb077"
+}

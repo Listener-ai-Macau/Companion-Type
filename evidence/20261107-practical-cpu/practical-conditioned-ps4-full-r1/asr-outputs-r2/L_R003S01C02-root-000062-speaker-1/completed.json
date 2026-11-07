@@ -1,0 +1,80 @@
+{
+  "id": "L_R003S01C02-root-000062-speaker-1",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 62,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 1,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000062-speaker-1.wav",
+  "audioSha256": "a031a7d311d091b7f569a85f7618c5672a44280a4e8b21443d078461ce9152e1",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "000f5e10aae2e38dfbdf56a38b5ca9d5636c9dd4a978fc1c92e5c141eca163f7",
+  "enrollmentSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+  "mixtureAuthorPeakNormalization": 0.172821044921875,
+  "enrollmentAuthorPeakNormalization": 0.065155029296875,
+  "floatOutputSha256": "9bff503afc89c4c730884a2295a05d0511a15bd0cdfebe2d59295407c62f49ab",
+  "floatOutputPeak": 0.23269349336624146,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.3258638000115752,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.1710425764322281,
+      "1": 0.6390276551246643,
+      "2": 0.20359335839748383,
+      "3": 0.5064035058021545,
+      "4": 0.29346510767936707,
+      "5": 0.35932019352912903
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "要强多了。嗯嗯嗯，上上上上上，下下下你怎么弄？对不对？嗯。就是。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "要强多了。嗯嗯嗯，上上上上上，下下下你怎么弄？对不对？嗯。就是。",
+      "generatedIds": [
+        30534,
+        99193,
+        104593,
+        1773,
+        106287,
+        106287,
+        106287,
+        3837,
+        17447,
+        17447,
+        17447,
+        17447,
+        17447,
+        3837,
+        16872,
+        16872,
+        16872,
+        109111,
+        102115,
+        11319,
+        32664,
+        105788,
+        11319,
+        106287,
+        1773,
+        99486,
+        1773,
+        151645
+      ],
+      "rawDecoded": "要强多了。嗯嗯嗯，上上上上上，下下下你怎么弄？对不对？嗯。就是。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 6.48928429998341
+    }
+  ]
+}
