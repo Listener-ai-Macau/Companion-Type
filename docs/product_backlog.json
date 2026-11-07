@@ -130879,7 +130879,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-07T10:02:37+08:00",
+      "updatedAt": "2026-11-07T10:28:27+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -131367,7 +131367,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "本轮动态等待在10秒/1分钟/5分钟新录音均通过，0.1.84已装；读取本轮batch-result再接原CP23-10/CP09-02。优先下一批用户等待：自动radio恢复旧10.735>10，先沿已有waiting→connecting1.375秒、连接准备至syncing8.188秒、再目录2.5秒定位，不盲改5秒回退（本次off期间已走1秒adapter等待）。目录当前固定每页≤2，在现有大MTU缓冲中可研究兼容旧客户端的显式批量页，不能直接破坏旧Windows。短录原生含实际物理回收仍35.673/10.146/13.242KiB/s<50，保留FAIL，不以动态PASS抹掉。录中同步缺STOP精确前缀快照仍不评价动态；当前最终长录、正式资源版及设备已回收条目刷新显示继续。Owner明确block保持，不再追CPU百分比、不调查重启、不抢板、不为一项内部观测单独固件。",
+      "next": "按Owner继续至可售，当前同批先收敛自动radio10秒和正式资源：已知上次10.735秒中目录约2.5秒；实际GATT目录属性248B，因此不扩属性/RAM，改66703+显式一次请求连续小页。旧客户端仍逐页，目录变化以原nonce拒绝重读，通知回压不覆盖原页，断开退还通道。C生产者/真实Opus-radio模型与旧路径已过，Android源正在验证；CPU观察默认关闭随这次真实功能固件构建，不为CPU数字另包。完成手机联动和受影响模型后集中构建/OTA及真实radio/原音/长录；短录严格速率原FAIL与物理block不关闭，不抢共享板。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133928,18 +133928,16 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T10:02:37+08:00",
-        "state": "084_INSTALLED_BATCH_TERMINAL_BOARD_RELEASED",
+        "at": "2026-11-07T10:28:27+08:00",
+        "state": "703_STREAMED_DIRECTORY_PRODUCTION_CANDIDATE_SOURCE_AND_MODELS",
         "boardLease": false,
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
-        "firmware": 66702,
-        "phoneVersion": "0.1.84",
-        "phoneSourceCommit": "1d805f0d38238e98c337f92ae29a449aca009609",
-        "javaSourceCommitInstalled": "5824680e60a0f273b2568b9f40647660b11f5caa",
-        "sourcePending": null,
-        "result": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\batch-result.json"
+        "firmwareInstalled": 66702,
+        "phoneInstalled": "0.1.84",
+        "sourcePending": "FW66703 opt-in one-request consecutive catalogue pages in existing248B attribute and same scratch, old clients unchanged; Android gates opt-in on firmware. Production build will omit optional CPU observer. Not installed.",
+        "evidence": "E:/CodexData/Companion/.build-cache/full-media66703/models"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -134151,7 +134149,7 @@
           "缺少STOP时已保存字节/部分前缀准确快照则NOT_EVALUATED，不倒推或编造。"
         ]
       },
-      "lastOwnerRequest": "好的, 就这个, 优化一下",
+      "lastOwnerRequest": "继续把, 推进到可以售卖为止",
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
         "result": "PASS_DYNAMIC_WAIT_COVERED_LENGTHS_AND_SCOPED_RESUME_NOT_FULL_SALE_QUALIFICATION",
@@ -141079,10 +141077,10 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T10:26:05+08:00",
+              "at": "2026-11-07T10:39:32+08:00",
               "phase": "prepared",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
-              "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r1",
+              "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2",
               "protocol": {
                 "at": "2026-11-07T10:23:58+08:00",
                 "route": "sherpa-onnx complete offline speaker segmentation/clean embedding/global clustering/count-constrained reconstruction",
@@ -141320,8 +141318,46 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "state": "PREPARED_COMPLETE_CPU_DIARIZATION_AND_EXISTING_ASR_TOKEN_TIMING",
+              "shortIntegrationProof": {
+                "state": "PASS_ACTUAL_PUBLIC30S_CPU_JOURNAL_TOKEN_ATTRIBUTION_AND_NO_MODEL_CACHE_RESUME",
+                "sameRawTextTokensOnsetsAsOriginalProbe": true,
+                "modelOutputAndAttributionHashesUnchangedAfterResume": true,
+                "restoredWindows": 1,
+                "newNeuralWindows": 0,
+                "modelLoadedOnResume": false,
+                "noAccuracyClaim": true,
+                "noNameOrRoleRecognitionClaim": true
+              },
+              "qualityReviews": [],
+              "priorCpuR1": {
+                "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
+                "startedAt": "2026-11-07T10:26:59+08:00",
+                "pid": 14780,
+                "results": [
+                  {
+                    "meeting": "L_R003S01C02",
+                    "exitCode": 1,
+                    "workerState": "FAILED_RETAINED",
+                    "wholeProcessFamilySeconds": 296.4252853999933,
+                    "privatePeakBytes": 737337344,
+                    "rssPeakBytes": 688553984,
+                    "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r1\\results\\L_R003S01C02"
+                  }
+                ],
+                "protocolSha256": "c25306d5b28efa27bd3c862f158c51143b655c9700a95d7eda38f717dd9bf77a",
+                "sourceSha256": {
+                  "practical_cpu_worker_20261107.py": "971e6758b5503bcb7312b9a7664c072a687b49853e2f28187fba7496698f13b6",
+                  "run_practical_cpu_20261107.py": "0cd8deca6978c3171fe576aa80cfd8975cfd3ab4af1c1c2f1edffa2ed3533011",
+                  "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+                  "score_cross_corpus_diarization_20261103.py": "99756dd111ba154432604cf61236a7ad49e97274492bbc8c6737e6063fc8ccec",
+                  "reference_textgrid_20261104.py": "8f43fd26b67851714feb5530c3b321d0cca0c650b63ab8b2e0ca78e15715dc60"
+                },
+                "referencePassedToInference": false,
+                "automaticRetries": 0,
+                "finishedAt": "2026-11-07T10:31:57+08:00"
+              },
               "next": "同一冻结完整CPU分人流程依次验L/S整会，标准DER同时核逐人/短句覆盖；普通转写保留原音与原始文字，用模型token时间估计绑定人物，重叠/边界不明确保留未知，不整窗乱贴一人。退出后才评分，按真实结果决定保留/拒绝，不扫阈值、不训练、不原样重跑HIP长上下文。原跨会文字<5%、重叠逐路、事实/双端/实卡和售卖门保持。",
-              "sourceAndEvidenceCommit": "c64e5be5eb7dce0a538bdeb0b0dc492201c08251",
+              "sourceAndEvidenceCommit": "1a218deded247940eaed891d951e6c73fcf9133f",
               "remoteReadbackConfirmed": true
             }
           }

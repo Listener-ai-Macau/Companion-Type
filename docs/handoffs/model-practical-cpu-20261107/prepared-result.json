@@ -1,8 +1,8 @@
 {
-  "at": "2026-11-07T10:26:05+08:00",
+  "at": "2026-11-07T10:39:32+08:00",
   "phase": "prepared",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
-  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r1",
+  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2",
   "protocol": {
     "at": "2026-11-07T10:23:58+08:00",
     "route": "sherpa-onnx complete offline speaker segmentation/clean embedding/global clustering/count-constrained reconstruction",
@@ -240,7 +240,45 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "state": "PREPARED_COMPLETE_CPU_DIARIZATION_AND_EXISTING_ASR_TOKEN_TIMING",
+  "shortIntegrationProof": {
+    "state": "PASS_ACTUAL_PUBLIC30S_CPU_JOURNAL_TOKEN_ATTRIBUTION_AND_NO_MODEL_CACHE_RESUME",
+    "sameRawTextTokensOnsetsAsOriginalProbe": true,
+    "modelOutputAndAttributionHashesUnchangedAfterResume": true,
+    "restoredWindows": 1,
+    "newNeuralWindows": 0,
+    "modelLoadedOnResume": false,
+    "noAccuracyClaim": true,
+    "noNameOrRoleRecognitionClaim": true
+  },
+  "qualityReviews": [],
+  "priorCpuR1": {
+    "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
+    "startedAt": "2026-11-07T10:26:59+08:00",
+    "pid": 14780,
+    "results": [
+      {
+        "meeting": "L_R003S01C02",
+        "exitCode": 1,
+        "workerState": "FAILED_RETAINED",
+        "wholeProcessFamilySeconds": 296.4252853999933,
+        "privatePeakBytes": 737337344,
+        "rssPeakBytes": 688553984,
+        "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r1\\results\\L_R003S01C02"
+      }
+    ],
+    "protocolSha256": "c25306d5b28efa27bd3c862f158c51143b655c9700a95d7eda38f717dd9bf77a",
+    "sourceSha256": {
+      "practical_cpu_worker_20261107.py": "971e6758b5503bcb7312b9a7664c072a687b49853e2f28187fba7496698f13b6",
+      "run_practical_cpu_20261107.py": "0cd8deca6978c3171fe576aa80cfd8975cfd3ab4af1c1c2f1edffa2ed3533011",
+      "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+      "score_cross_corpus_diarization_20261103.py": "99756dd111ba154432604cf61236a7ad49e97274492bbc8c6737e6063fc8ccec",
+      "reference_textgrid_20261104.py": "8f43fd26b67851714feb5530c3b321d0cca0c650b63ab8b2e0ca78e15715dc60"
+    },
+    "referencePassedToInference": false,
+    "automaticRetries": 0,
+    "finishedAt": "2026-11-07T10:31:57+08:00"
+  },
   "next": "同一冻结完整CPU分人流程依次验L/S整会，标准DER同时核逐人/短句覆盖；普通转写保留原音与原始文字，用模型token时间估计绑定人物，重叠/边界不明确保留未知，不整窗乱贴一人。退出后才评分，按真实结果决定保留/拒绝，不扫阈值、不训练、不原样重跑HIP长上下文。原跨会文字<5%、重叠逐路、事实/双端/实卡和售卖门保持。",
-  "sourceAndEvidenceCommit": "c64e5be5eb7dce0a538bdeb0b0dc492201c08251",
+  "sourceAndEvidenceCommit": "1a218deded247940eaed891d951e6c73fcf9133f",
   "remoteReadbackConfirmed": true
 }
