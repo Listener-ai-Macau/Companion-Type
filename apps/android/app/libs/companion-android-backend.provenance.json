@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T11:13:59+08:00",
-  "aarSha256": "232fb259ab78072f98f0f64f4a88d8816b8bcdcf125c87027afe461db545cc90",
-  "backendSourceCommit": "ee712a2e4439466a99bdbb0afd3aff2bbf736b54",
+  "at": "2026-11-07T11:45:55+08:00",
+  "aarSha256": "616b66174a02aa9a95cfbadaa231c42f66471eda741858990ae80d9b47f62580",
+  "backendSourceCommit": "2a24144e1e933c2ef8bbc89df141be9e724dc69c",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Explicit current Companion WBA static random LE address onAPI33+, same bonded device and private protocol validation; pre33 original route. Uses existing finite stopped-batch fast interval preference once, live/old-peer unchanged, no command replay. Separates local durable proof, consume write and exact receipt arrival using metadata timestamps; original payload and durable receipt endpoints unchanged. JNI/models/assets untouched; physical acceptance pending.",
-  "javaSourceCommit": "ee712a2e4439466a99bdbb0afd3aff2bbf736b54",
+  "scope": "Only after initial pre-command133, rediscover the exact selected address within the existing1s retry budget and preserve ScanResult device for the single retry. Paired/private validation and no command replay retained. First attempt remains direct typed LE; unavailable optional scan retains original retry. Ordinary physical acceptance pending; JNI/assets/models unchanged.",
+  "javaSourceCommit": "2a24144e1e933c2ef8bbc89df141be9e724dc69c",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device086\\build\\inherited-provenance085.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device087\\build\\inherited-provenance086.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -173,5 +173,13 @@
     "com/denzic/companion/mobile/RecordingTransferMetrics$Segment.class",
     "com/denzic/companion/mobile/RecordingTransferMetrics.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo085": true
+  "allNonClassAarEntriesByteIdenticalTo085": true,
+  "javaClassesChangedFrom086": [
+    "com/denzic/companion/mobile/AndroidDevices$1.class",
+    "com/denzic/companion/mobile/AndroidDevices$Scan.class",
+    "com/denzic/companion/mobile/AndroidDevices.class",
+    "com/denzic/companion/mobile/AndroidGattLink$2.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo086": true
 }
