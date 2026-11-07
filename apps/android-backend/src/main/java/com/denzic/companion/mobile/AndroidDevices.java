@@ -47,7 +47,7 @@ public final class AndroidDevices {
         } catch(SecurityException error){throw new IOException("Bluetooth permission is required",error);}
     }
     public static final class Scan implements Closeable {
-        private final BluetoothLeScanner scanner;private final Listener listener;private final Handler handler=new Handler(Looper.getMainLooper());
+        private final BluetoothLeScanner scanner;private final Listener listener;private final String selectedAddress;private final Handler handler=new Handler(Looper.getMainLooper());
         private final Set<String> seen=new HashSet<>();private boolean closed;
         private final ScanCallback callback=new ScanCallback(){
             @Override public void onScanResult(int type,ScanResult result){
@@ -55,16 +55,20 @@ public final class AndroidDevices {
                 try{
                     ScanRecord record=result.getScanRecord();String name=record==null?null:record.getDeviceName();
                     boolean service=record!=null&&record.getServiceUuids()!=null&&record.getServiceUuids().contains(RECORDING_SERVICE);
-                    if(!DeviceNames.candidate(name,service))return;
+                    if(!DeviceNames.candidate(name,service,result.getDevice().getAddress(),selectedAddress))return;
                     synchronized(Scan.this){if(closed||!seen.add(result.getDevice().getAddress()))return;}
                     listener.onDevice(result.getDevice(),name==null?"Companion":name);
                 }catch(SecurityException error){finish("Bluetooth permission is required");}
             }
             @Override public void onScanFailed(int code){finish("Bluetooth scan failed ("+code+")");}
         };
-        private Scan(BluetoothLeScanner scanner,Listener listener){this.scanner=scanner;this.listener=listener;}
+        private Scan(BluetoothLeScanner scanner,Listener listener,String selectedAddress){this.scanner=scanner;this.listener=listener;this.selectedAddress=selectedAddress;}
         private void start() throws IOException {
-            try{scanner.startScan(callback);handler.postDelayed(()->finish(null),12_000);}
+            try{
+                if(selectedAddress==null)scanner.startScan(callback);
+                else scanner.startScan(Collections.singletonList(new android.bluetooth.le.ScanFilter.Builder().setDeviceAddress(selectedAddress).build()),new android.bluetooth.le.ScanSettings.Builder().build(),callback);
+                handler.postDelayed(()->finish(null),12_000);
+            }
             catch(SecurityException error){throw new IOException("Bluetooth scan permission is required",error);}
         }
         private void finish(String error){
@@ -76,10 +80,13 @@ public final class AndroidDevices {
     }
     /** The host app must request the appropriate Android Bluetooth permission first. */
     public static Scan discover(Context context,Listener listener) throws IOException {
+        return discover(context,listener,null);
+    }
+    private static Scan discover(Context context,Listener listener,String selectedAddress) throws IOException {
         if(context==null||listener==null)throw new IllegalArgumentException("context and listener required");
         try{BluetoothManager manager=(BluetoothManager)context.getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);BluetoothAdapter adapter=manager==null?null:manager.getAdapter();
             if(adapter==null||!adapter.isEnabled())throw new IOException("Bluetooth is unavailable or turned off");BluetoothLeScanner scanner=adapter.getBluetoothLeScanner();if(scanner==null)throw new IOException("Bluetooth scanning is unavailable");
-            Scan scan=new Scan(scanner,listener);scan.start();return scan;
+            Scan scan=new Scan(scanner,listener,selectedAddress);scan.start();return scan;
         }catch(SecurityException error){throw new IOException("Bluetooth permission is required",error);}
     }
     /** Refresh only the selected identity inside the existing initial133 retry
@@ -90,7 +97,7 @@ public final class AndroidDevices {
         try(Scan scan=discover(context,new Listener(){
             public void onDevice(BluetoothDevice device,String name){if(selected.getAddress().equals(device.getAddress())){candidate.compareAndSet(null,device);found.countDown();}}
             public void onFinished(String error){found.countDown();}
-        })){found.await(budgetMillis,java.util.concurrent.TimeUnit.MILLISECONDS);}
+        },selected.getAddress())){found.await(budgetMillis,java.util.concurrent.TimeUnit.MILLISECONDS);}
         catch(IOException unavailable){android.util.Log.w("CompanionBle","Selected-device discovery unavailable; retaining existing initial retry",unavailable);}
         // Preserve the existing bounded controller/client close-settle budget.
         long remaining=budgetMillis-java.util.concurrent.TimeUnit.NANOSECONDS.toMillis(System.nanoTime()-started);

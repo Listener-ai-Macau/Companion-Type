@@ -9,4 +9,7 @@ public final class DeviceNames {
         String normalized=name==null?"":name.trim().toLowerCase(Locale.ROOT);
         return normalized.contains("companion")||normalized.contains("capture");
     }
+    static boolean candidate(String name,boolean service,String address,String selectedAddress){
+        return selectedAddress==null?candidate(name,service):selectedAddress.equals(address);
+    }
 }
