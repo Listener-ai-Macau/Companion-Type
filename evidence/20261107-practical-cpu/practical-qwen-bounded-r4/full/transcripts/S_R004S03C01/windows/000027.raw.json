@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 27,
+    "startSample": 12960000,
+    "endSample": 13440000,
+    "text": "就买了吧，然后就是促进他的销售吧，算是。嗯，我先想到的就有这么多，我先说这么多吧。看大家有什么需要说的没？嗯，那我说吧，我这个蛋糕，蛋糕店儿这这块儿，嗯，我想说的就是，因为是蛋糕嘛，就是糕点之类的，然后就是，嗯，需。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 12960000,
+        "endSample": 13440000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "0f4455e8f08134396fd59301696cb092b434d011e375e3c6605bc84ebb206acf"
+}

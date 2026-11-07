@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 71,
+    "startSample": 34080000,
+    "endSample": 34560000,
+    "text": "你们自己负责的这块儿负责起来，下面员工也要提醒，及时的巡查。还有就是，呃，下面员工你们一定要把这个对待客户这一块儿一定要积极主动。呃，一旦客户遇到呃不明白的商品，要及时进行回答。呃，比如呃这个标签儿，那个你们一定要注意，咱们不要贴错，以防就是客户去结账的时候，呃。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 34080000,
+        "endSample": 34560000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "28518b1e8d7acf65634156a0e0d1044c85bf538e4553bfed1c049a49ae9f8a6a"
+}

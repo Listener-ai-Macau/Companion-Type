@@ -1,0 +1,38 @@
+{
+  "state": "CONCRETE_NATIVE_TRIAL_TERMINAL_REVIEW_REQUIRED",
+  "startedAt": "2026-11-07T17:26:51+08:00",
+  "pid": 9524,
+  "modelFailureRetries": 0,
+  "lowMemoryContinuations": 2,
+  "futilityStopRequested": false,
+  "limitsChanged": false,
+  "sourceSha256": "5e5e2507ccbd081f544533971467c58f0f385e7c1dba2d84d00db25ca322f35f",
+  "events": [
+    {
+      "at": "2026-11-07T17:26:59+08:00",
+      "state": "CONTINUE_AFTER_OBSERVED_RAM_RECOVERY",
+      "durableWindowsBefore": 112,
+      "availableBytes": 3193753600,
+      "actualWindowsLowRam": false,
+      "controllerPid": 17604
+    },
+    {
+      "at": "2026-11-07T17:30:40+08:00",
+      "state": "CONTINUE_AFTER_OBSERVED_RAM_RECOVERY",
+      "durableWindowsBefore": 126,
+      "availableBytes": 2412011520,
+      "actualWindowsLowRam": false,
+      "controllerPid": 26580
+    }
+  ],
+  "ordinaryStrictCer": 0.06438438438438439,
+  "durableWindows": 157,
+  "resourceObservation": {
+    "availableBytes": 2135085056,
+    "actualWindowsLowRam": false,
+    "lastAvailableBytes": 935186432,
+    "releasedOwnPrivatePeakUpperBound": 1237987328
+  },
+  "controllerState": "COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED",
+  "finishedAt": "2026-11-07T17:37:39+08:00"
+}

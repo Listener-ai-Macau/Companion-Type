@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 30,
+    "startSample": 14400000,
+    "endSample": 14880000,
+    "text": "进行一个系统的培训。多长时间浇一次水是呗？比如两天浇一次，三天浇一次。你你一星期不浇，那花肯定干枯了，是吧？这一块儿，你看是，嗯，这你看基本上，你看掌握大概也。还还有还有卫生这一块是吧？卫生这一块。对对。到时候就说你都得，呃，去检查，多检查，还得看还能给扫干净了吧，要不叫叶。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 14400000,
+        "endSample": 14880000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "18b68c29d65604449299831465fe309330b38c85e02427d7e7d55e582902e891"
+}

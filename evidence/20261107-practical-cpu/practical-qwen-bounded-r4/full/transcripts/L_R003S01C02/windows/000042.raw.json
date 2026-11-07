@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 42,
+    "startSample": 20160000,
+    "endSample": 20640000,
+    "text": "放一些那种温馨的那种提示牌子，公益性的，是吧？提示他们多去注意这些问题，是吧？自己遛呃这个带着小朋友，呃出来活动的时候，一定得让他们有这个意识，得多贴一些宣传的标语。因为这个小区是大家的，是吧？也不是他个人的，啊。也是应该有一定的帮助的。那小区的是公共的，不是呃。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 20160000,
+        "endSample": 20640000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "2f58ccfd1225c7f5155b452c32a7b07a2be831bf7f19222b250e369dd868d1c9"
+}

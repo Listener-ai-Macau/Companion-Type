@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 21,
+    "startSample": 10080000,
+    "endSample": 10560000,
+    "text": "我们针对的客户程度不同，呃比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说呃也回家也不需要摘，完了以后呢我们就是超市有专门的这项服务，呃然后就是提前就是把菜洗干净，给它包装好，当然了这个价格上呢也会稍微的高一点，呃比普通的菜呢要高一点，针对一些像年轻的人群啊，他们回家以后。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 10080000,
+        "endSample": 10560000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "3baa6b5d656852c10292792d2c9f5da49226840b7065d80be4b89dcb109212da"
+}

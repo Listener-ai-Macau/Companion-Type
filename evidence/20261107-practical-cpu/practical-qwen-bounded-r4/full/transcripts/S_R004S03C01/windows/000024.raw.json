@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 24,
+    "startSample": 11520000,
+    "endSample": 12000000,
+    "text": "去，呃方便他去，那个什么那个使用去，嗯，然后还有一个就是我们这个，呃超市的话，我们针对于超市有一些促销的产品，比如说每天呢，我们超市中有一款两款或者是三款的特价菜，就是摆放到这个，需要有一些那个宣传，呃放到那个超市的门口，比如说我们菜品区里面有，呃三种蔬菜是，呃低于市。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 11520000,
+        "endSample": 12000000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "5789c2eb98dd34681a278870f39a17be49e10a6343d3befc4b83e3ee1306e989"
+}

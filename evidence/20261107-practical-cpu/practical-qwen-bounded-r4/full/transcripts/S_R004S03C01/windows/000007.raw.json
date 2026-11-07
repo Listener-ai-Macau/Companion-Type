@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 7,
+    "startSample": 3360000,
+    "endSample": 3840000,
+    "text": "进行一下，呃，优惠活动，呃，或者咱嗯，呃，不好卖的产品呢，是否要进行下架，呃，这得需要各位来进行一个评判。我这边只是看到你们日常的一些工作状态，一些报表情况，这个包括我这边一些出库，呃，入库这些，呃，东西，哪些多，哪些少，我能看得见。但是，呃，顾客们对哪些消费比较感兴趣，这块。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 3360000,
+        "endSample": 3840000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "1c1e2621a8c7add46ab8f8319aaf55383d146561eced0d74c678dc862e7ed889"
+}

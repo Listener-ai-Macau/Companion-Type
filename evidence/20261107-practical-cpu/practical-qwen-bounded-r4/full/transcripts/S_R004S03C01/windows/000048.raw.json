@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 48,
+    "startSample": 23040000,
+    "endSample": 23520000,
+    "text": "感觉一下，这个护肤品到底适不适合这个，呃，他的那个肤质，因为每个人跟每个人肤质是不一样的，嗯，有比较呃干的，有有的人皮肤是干皮的或者油皮的，他的呃，用品，因为他没有用过这种呃呃产品，他肯定不知道他适不适合这种产品，比如有有有些人容易过敏的是吧，然后我们可以现场体验一下，如果说感觉良好的话，他可以现场购买。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 23040000,
+        "endSample": 23520000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "dcc0e21a436a12a65e11d4b7aa5c08979f201210dc63b16f5cc93cf520103e8b"
+}

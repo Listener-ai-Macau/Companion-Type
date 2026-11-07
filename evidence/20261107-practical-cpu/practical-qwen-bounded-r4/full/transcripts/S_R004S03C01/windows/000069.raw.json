@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 69,
+    "startSample": 33120000,
+    "endSample": 33600000,
+    "text": "这一点你们下去每个部门啊，看看谁跟谁哪个部门合作，这个那个的话，你们心里也都对也都一目明白。再就是咱那个超市那个门口那个那块空地啊，还挺大的。咱可以呃把一些呃你们各个区域的这个打折商品，呃要呃可以往这儿摆放一些，让顾客来了以后呃能够一眼看到啊这些咱。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 33120000,
+        "endSample": 33600000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "146ddf74fd98584ef98a2f7ead62766de038c51ded8f7b07fb225700dca9267d"
+}

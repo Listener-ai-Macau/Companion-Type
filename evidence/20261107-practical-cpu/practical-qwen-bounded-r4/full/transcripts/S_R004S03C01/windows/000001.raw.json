@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 1,
+    "startSample": 480000,
+    "endSample": 960000,
+    "text": "嗯，比往期的要好，啊，明显的客流量也客流量也多了，啊，但那个销售这个，呃，营业额也上去了。嗯，这都是大家伙儿在座的努力的出现的状况，估计公司各位在下也出了在下边也出了不少的，呃，力气，呃，也做了很多的这个，呃，营销的一些方案，呃，希望大家以后啊，要继续保持咱这种工作状态，嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 480000,
+        "endSample": 960000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "8eac39f650c1c8999311591902525da2d2bbc3f00d1acb7ba70db331997be33a"
+}

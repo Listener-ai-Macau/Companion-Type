@@ -1,0 +1,32 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 77,
+    "startSample": 36960000,
+    "endSample": 37440000,
+    "text": "这number三对吧？",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      43288,
+      4082,
+      44991,
+      32664,
+      100003,
+      11319,
+      151645
+    ],
+    "rawDecoded": "这number三对吧？<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 0.9334539000119548,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true
+  },
+  "rawSha256": "dcb40671b8d6415f4d4a22b4d421c519abec2dc9688bba953866a5c4754a81d9"
+}

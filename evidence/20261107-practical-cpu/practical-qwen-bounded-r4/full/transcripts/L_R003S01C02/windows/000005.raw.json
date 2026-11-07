@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 5,
+    "startSample": 2400000,
+    "endSample": 2880000,
+    "text": "这个车辆进入咱们小区，监管力度不够。咱们就说一个问题一个问题来吧，是吧？一个问题一个问题去讨论。那解决一个问题，咱们讨论下一个问题。解决一个问题，咱们讨论下一个问题。啊，第一个就是车辆问题。很多业主都不满意，说我的车为什么别的车在这停着呢？然后因为这个事还沉着很多的一个纠纷。然后我的车在这停着，我让你走你也不走，打电话你也不来。所以这是确实有业主给咱们物业啊投这个诉，然后提出这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 2400000,
+        "endSample": 2880000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "9b884e2d9a3b1098e9f2d5c27fe4f86ff7a79a824bfa7004a8a99fb49ed2d5c8"
+}

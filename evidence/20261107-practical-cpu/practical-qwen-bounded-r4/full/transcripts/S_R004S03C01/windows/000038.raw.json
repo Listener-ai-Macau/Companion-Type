@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 38,
+    "startSample": 18240000,
+    "endSample": 18720000,
+    "text": "要注重这种健康什么的，可以多进一点，就是比较健康的那种有机蔬菜的那种蛋糕，嗯，可以养生的，嗯，而且也不长肉的那种，嗯，还有就是，嗯。嗯，还有就是那个，嗯，就是咱这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 18240000,
+        "endSample": 18720000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "103dbc25ff4d7cdef10f2659fcad217db1f73253af20e1c7468a3eec5277a5a4"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 17,
+    "startSample": 8160000,
+    "endSample": 8640000,
+    "text": "业主这边这个提上来，你看车位不够，啊，你看有的也说这个家里有两三辆车，对吧？嗯，还有的说回来，呃，自己的车位上没人占了。咱小区这个没有不分这个车位属于谁的，除非人家买下来。买下来的话，这个车位属于人家的。对，就属于人家。他自己会管理自己的车位，不用在他自己身上加把锁，对吧？那是他自己的车位，专车专用嘛。对，对家自己都会自己管理。咱是讨论的剩下这个，没有这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 8160000,
+        "endSample": 8640000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "96869cec84b5233b908f9b96b114da419e28bc23bdc6a6e0d9e11aa56a3261a0"
+}

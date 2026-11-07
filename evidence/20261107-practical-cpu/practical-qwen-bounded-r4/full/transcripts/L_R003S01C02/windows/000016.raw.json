@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 16,
+    "startSample": 7680000,
+    "endSample": 8160000,
+    "text": "不是说咱们现在车位不够吗？现在小区也是啊，不是说每户都有车。就说车位的话，是吧？车位是有限的。这个就是说，还是说到怎么怎么去管理，怎么去监督。现在业主家每家都是两两三辆车，两三辆。都为了上班方便，车多。就这块儿的话，咱们车位就是咱们不是说要难解决吗？有没有更好更好的建议？对对对。咱这块儿，把这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 7680000,
+        "endSample": 8160000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "60fa5792ba7e91762a66824542963f4eed295a21b0831f19cf3c4d2580b80ee7"
+}

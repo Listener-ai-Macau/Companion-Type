@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 17,
+    "startSample": 8160000,
+    "endSample": 8640000,
+    "text": "这个叶子菜，菜这个绿叶菜，今天我们没有卖完，到到每天下午的五点呢，我们就要出一些这个特价菜，就是我们把这个菜呢，需要就是呃给它促销出去，比如说一块钱一斤的菜，我们可能到了下午五点以后呢，我们就是，呃，八毛钱或者是五毛钱，我们就出清仓出去了，这样的话我们就是每天都是有新鲜的菜，呃好多人呢，他也是，呃为了。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 8160000,
+        "endSample": 8640000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "4e1eb2bc9c8f5ee949a34b9455e2a5fbb405a16e3afa3a7751ec3d0f595bb17c"
+}

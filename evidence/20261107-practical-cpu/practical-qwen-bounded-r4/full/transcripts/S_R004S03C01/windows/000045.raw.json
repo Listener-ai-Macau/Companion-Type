@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 45,
+    "startSample": 21600000,
+    "endSample": 22080000,
+    "text": "分卡，呃，然后对应他那个卡号记录，就是比如说他可以，嗯，呃持卡，就是带着他那个卡来买的话，消费个位数的话可以抹零，买二万以上，呃消费那个十位数也抹零，就不打折。要是要是打折的话，你以后肯定也还是总是跟他打折，嗯，就是抹个零，就是这样的，是一个不错的促销方式，还能拉动这个，客。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 21600000,
+        "endSample": 22080000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a3ebdc6085884ac565c2cdfa161f6a941ad56bd251e90f1fbbba6dc6f17827d2"
+}

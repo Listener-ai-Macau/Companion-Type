@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 32,
+    "startSample": 15360000,
+    "endSample": 15840000,
+    "text": "他们说：“咱可别不当回事儿。”对啊。哎，这个宠物。宠物。反正还是尽量多说呗。宠物主要还是就是跟他们业主说，叫嗯，把牵着，就是说让他们带上狗绳儿，或者是呃，那什么，反正呃，你反正基本上都规范一下。他这个，兄弟，我觉得。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 15360000,
+        "endSample": 15840000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "e15480f80745248a98f6d453b805d5c667b63ebc22fdb970a080491ac13a0f8b"
+}

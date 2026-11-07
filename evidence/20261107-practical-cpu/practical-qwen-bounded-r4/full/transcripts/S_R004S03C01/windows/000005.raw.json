@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 5,
+    "startSample": 2400000,
+    "endSample": 2880000,
+    "text": "来超市，把一些生活的上的必备品，包括日常的一些，呃，蔬菜啦，油啦，面啦，呃，他们的需求量跟，明显要少一些。呃，明显是周六周日人员比较多，呃，都是带一些这个，呃，周日带着孩子啦，或者一一家三口啦，呃，来超市，买一些这个小孩子的用品，呃，小孩子的一些。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 2400000,
+        "endSample": 2880000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a9a469a4daafaf809a3c8172c77d5aad6b0cc317f72d4269c17db8cb2168b5e7"
+}

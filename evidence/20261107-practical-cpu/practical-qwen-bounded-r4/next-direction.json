@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-07T17:41:31+08:00",
+  "state": "ORIGINAL_QM04_NEXT_WORK_POINT_NO_GATE_CLOSED",
+  "next": "原QM04准确率优先：同一原生部署路线下一项只比较官方Qwen3-ASR-1.7B-hf的实测收益，保持同两整会/无参考热词/严格含语气词与儿化评分及CPU5%/private2GiB预算；先完整权重精确加载与正常/失败原音/静音短控，再全会，失败不原样重跑。普通仍须<5%，大模型不预设通过。随后用官方Qwen3-ForcedAligner-0.6B-hf独立对齐已有识别文字，保留原字、分别测时间精度与逐人内容，再接FP16分人；对齐不当作纠词或声音分离。复杂重叠必须逐路恢复声音并分别转写、核对身份和两路内容；保留短句/跨域失败。纪要事实/手机电脑新模型安装/实卡/最终未见集/售卖门继续OPEN，不先启动自研训练。",
+  "basis": {
+    "ordinaryStrictFullTextCer": 0.06438438438438439,
+    "complexFullMixedTextDiagnosticCer": 0.23420931304748732,
+    "fixed30sNativeDecoderItselfRepeated": true,
+    "boundedRecoveryCompletedBothFullMeetings": true,
+    "ordinaryWholeDocumentUnchangedByRecovery": true,
+    "notSolvedByNativeImplementationAlone": true,
+    "wordAlignmentAndSpeakerTextPending": true
+  },
+  "sourcesCheckedOn": "2026-11-07",
+  "primarySources": [
+    "https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf",
+    "https://github.com/QwenLM/Qwen3-ASR"
+  ],
+  "verifiedSourceScope": "Author documents native Transformers ASR and a separate word-level forced-aligner interface. Author results/throughput are not our two full recordings or RX6800XT5%CPU/2GiB results. A1.7B checkpoint has not been downloaded or run by this batch.",
+  "doNotRepeat": [
+    "Do not infer no repetition from one passed short control or from using native instead of exported inference.",
+    "Do not strip generated repetitions or fillers to manufacture CER5% or a final result.",
+    "Do not label time bisection as two-voice source separation.",
+    "Do not treat anonymous speaker activity DER as aligned word/person or factual-minute accuracy.",
+    "Do not treat cached S reconstruction seconds as new ASR inference time.",
+    "Do not mix actual memory recovery/manual engineering waits with model process time or summary latency.",
+    "Do not consume final holdout or train before existing development/cross-corpus gates justify it."
+  ],
+  "nextCheckpointDownloadedOrRun": false,
+  "sourceReviewAloneIsCapabilityProgress": false,
+  "qualityQualified": false
+}

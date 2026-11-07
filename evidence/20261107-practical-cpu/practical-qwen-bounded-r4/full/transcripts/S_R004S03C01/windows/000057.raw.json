@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 57,
+    "startSample": 27360000,
+    "endSample": 27840000,
+    "text": "哎，来增加，增加顾客的视觉感，嗯。还有比如说那个卫生纸的，然后我们可以赠，那找一个那个，那种那个，小小型的那个娃娃，然后把那个卫，呃，把那个卫生纸呢，然后做些那个，做成那种服装，做成那，做成那种婚纱那种啥的，然后让顾客一一来体验一下那个那个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 27360000,
+        "endSample": 27840000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "4a4331354be0f06faf16d68c679ca1bd72e35f1deceb76c8a1ce309c615e6967"
+}

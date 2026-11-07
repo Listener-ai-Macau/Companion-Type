@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 31,
+    "startSample": 14880000,
+    "endSample": 15360000,
+    "text": "嗯。还有就是，嗯，咱可以就是促进，就是这个打折优惠，就是每次就是不同种类的蛋糕，嗯不，不限一种，嗯，让顾客有机会品尝到店内的每种蛋糕，就是比如说在嗯节日期间有优惠，嗯，比如说买大大蛋糕送小蛋糕，也可以办理这个优惠积积分卡，嗯，嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 14880000,
+        "endSample": 15360000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "de9d38d27f0aae6846076f722964ffc57f81504cb63f1d32e0a9acc389f8730f"
+}

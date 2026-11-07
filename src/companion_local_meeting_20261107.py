@@ -65,7 +65,7 @@ def main():
     def run_stage(module,phase,resume=False,text_only=False,extra_args=()):
         nonlocal child,process
         for member in psutil.process_iter(['cmdline']):
-            try:assert not any(Path(arg).name in ['moss_night_gpu_worker_20261104.py','practical_cpu_worker_20261107.py','practical_transcript_worker_20261107.py','bounded_speaker_20261107.py','practical_nemotron_worker_20261107.py','practical_nemotron_cli_control_20261107.py','nemo-speech.exe','run_practical_qwen_full_20261107.py','run_practical_qwen_native_20261107.py','practical_qwen_full_worker_20261107.py','practical_qwen_native_worker_20261107.py'] for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
+            try:assert not any(Path(arg).name in ['moss_night_gpu_worker_20261104.py','practical_cpu_worker_20261107.py','practical_transcript_worker_20261107.py','bounded_speaker_20261107.py','practical_nemotron_worker_20261107.py','practical_nemotron_cli_control_20261107.py','nemo-speech.exe','run_practical_qwen_full_20261107.py','run_practical_qwen_native_20261107.py','practical_qwen_full_worker_20261107.py','practical_qwen_native_worker_20261107.py','run_practical_qwen_bounded_20261107.py','practical_qwen_bounded_worker_20261107.py'] for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
             except (psutil.NoSuchProcess,psutil.AccessDenied):pass
         if pressure.low():raise RuntimeError('Windows低内存保护触发，当前任务已保留。')
         if (current/'stop.request').exists() or (root/'stop.request').exists():raise InterruptedError('当前任务已请求停止，原音和已保存结果保留。')

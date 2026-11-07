@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 26,
+    "startSample": 12480000,
+    "endSample": 12960000,
+    "text": "嗯，没什么问题，可以，可以，谢谢。是不是？嗯。你现在还就是说，这个比如说，一个就是，栽培技术。你可以请点儿一些那个专业的人员，过来那个，比如说怎么栽培啊，请请点儿专业的人员，专门绿化的一些人，过来那个什么。嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 12480000,
+        "endSample": 12960000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "98df4141312e8b084cfbdd2665a8c82b8101b795419b765e0cd433b79448837c"
+}

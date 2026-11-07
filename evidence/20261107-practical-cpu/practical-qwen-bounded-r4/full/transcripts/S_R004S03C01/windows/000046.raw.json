@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 46,
+    "startSample": 22080000,
+    "endSample": 22560000,
+    "text": "单价，嗯，一举两得，这样消费者他也愿意来来你这儿买，嗯嗯，这个这样的话，这种咱这个店儿的销量也会上去，他他可能也会给你介绍那种新顾客，嗯，这就是我的这种销售方案。然后说下我们的那日化区嘛，日化区，然后我们的首先呢，我们的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 22080000,
+        "endSample": 22560000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "c45454faf23c38a98a52934723e066bd9b6d4ec5bd47eb0d1200dab3b66f7afe"
+}

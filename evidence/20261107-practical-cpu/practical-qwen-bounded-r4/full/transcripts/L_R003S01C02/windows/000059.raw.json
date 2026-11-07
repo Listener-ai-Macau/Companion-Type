@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 59,
+    "startSample": 28320000,
+    "endSample": 28800000,
+    "text": "晚上呢，就是关好窗户，对吧？关好门儿，啊，把贵重物品尽量，啊，收拢回去，比如车内物品，要好注意，呃，发现有车被盗的。嗯。那你那车被，有里边被盗的，肯定车里放着一些重要物品啊。对，是。对吧？啊，那这块儿还是比如哪个哪个后被盗了，咱们把这个影像设备及时给他提供。嗯。把咱们的责任一定要分明确，不要什么责任都，估计这。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 28320000,
+        "endSample": 28800000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "bc63e021a04ced6704d7f6e31d07ca7e288db9b5716cf9c65620204b84f6f2a3"
+}

@@ -16,8 +16,8 @@ target=folder/'run.json' if a.phase=='full' else C/'pilot-run.json';resources=fo
 prior=[]
 if target.exists():
     assert a.resume_after_low_ram;old=read(target)
-    assert old['state']=='STOPPED_ACTUAL_WINDOWS_LOW_RAM' and old.get('finishedAt') and not old.get('activePid')
-    last=json.loads(resources.read_text().splitlines()[-1]);peak=old['results'][-1]['sampledPrivatePeakBytes'];available=psutil.virtual_memory().available
+    assert old['state'] in ['STOPPED_ACTUAL_WINDOWS_LOW_RAM','DEFERRED_ACTUAL_WINDOWS_LOW_RAM'] and old.get('finishedAt') and not old.get('activePid')
+    last=json.loads(resources.read_text().splitlines()[-1]) if old['results'] else {'availableBytes':0};peak=old['results'][-1]['sampledPrivatePeakBytes'] if old['results'] else 0;available=psutil.virtual_memory().available
     pressure=SystemRamPressure();low=pressure.low();pressure.close()
     if low or available<=last['availableBytes']+peak:
         receipt=folder/('recovery-deferred-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.json')

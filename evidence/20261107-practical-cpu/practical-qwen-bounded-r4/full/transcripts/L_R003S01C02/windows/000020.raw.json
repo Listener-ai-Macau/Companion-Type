@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 20,
+    "startSample": 9600000,
+    "endSample": 10080000,
+    "text": "我要收取一部分的这个物业费。这也是咱的一个管理管理办法，对吧？对，这也是一个方案之一。嗯，嗯，然后呢，咱就是，呃，每户要给他进行，呃，比如你家两辆车，或者你开的别人家车过来，你来我这停业的话，我这也要进行收费。对。我每要做到每户你几辆车，我这心里有数，因为咱马上要。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 9600000,
+        "endSample": 10080000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "3263f16f679608911c03fe44bee55b871c5a8fd50ab729d1d9965a616248a23c"
+}

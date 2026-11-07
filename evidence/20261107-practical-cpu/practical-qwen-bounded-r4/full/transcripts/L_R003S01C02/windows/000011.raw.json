@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 11,
+    "startSample": 5280000,
+    "endSample": 5760000,
+    "text": "哎，你等好半天，咱们可以直接上户，对吧？基本上目前我总结这两天，就这样。不过现在这个业主也挺难逃的，有时候那个哎，就是说哎，市都登记好了，完了你有的车，就是说他家有第二辆车，你不让人家信，人家说我这有房，你不让我信，然后他就会限制，限制几辆车。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 5280000,
+        "endSample": 5760000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "750b7cf5c9fc7357a1b7408c38a1366a4535d8e2d2315828f3445f28a87e43ad"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 19,
+    "startSample": 9120000,
+    "endSample": 9600000,
+    "text": "你来，我是登记。呃，这个外小区车呀，是临时车，不允许过夜。这个可以，咱因为咱咱的大部分车位呀都是晚上用，对吧？白天一般都是开着车，上面都走了。对。呃，呃，外来车就是不允许过夜，这是一点。呃，你过夜的话，我这边要，呃，咱后边给这个业主们商量一下，是否。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 9120000,
+        "endSample": 9600000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "0964f2aa77d7b35ad7627da793741b13f7ba09bdbe4ba612f4fe708e47e1a2f5"
+}

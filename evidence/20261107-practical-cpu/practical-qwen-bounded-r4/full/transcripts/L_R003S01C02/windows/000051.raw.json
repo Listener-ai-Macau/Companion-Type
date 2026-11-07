@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 51,
+    "startSample": 24480000,
+    "endSample": 24960000,
+    "text": "他几率就说，还有还有那个业主反映，就说那个早晨的时候五六点的时候就有人进去进来，每一个楼道里边儿看看捡那个箱子里边的垃圾，但是会不会偷东西。到早晨五六点那么早的时候，就业主就反映这个事儿了，就说那个哎，就说早晨一开门一出来就碰到那个人就在那儿到处乱翻，然后有的业主就反映这个事儿了。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 24480000,
+        "endSample": 24960000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "6aacfdead31019330031f61279d56890a24178042f04c420ad48708a5d8fd1f5"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 64,
+    "startSample": 30720000,
+    "endSample": 31200000,
+    "text": "是比较好的，小孩子呢，他是比较喜欢喝一些酸奶之类的，这个，还是比较容易销售的。然后呢，对于奶制品这些呢，我们还可以推出一些，买赠活动，像一些，就是整箱奶的这个出售的，有的不是附带什么，杯子呀碗之类的，可以做一些这样的活动。然后奶制品呢，它的这个，保质期呢，一般是。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 30720000,
+        "endSample": 31200000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "2a6c18690270eba69400f01d93df009f27177c30bae063aa612e58977f16b838"
+}

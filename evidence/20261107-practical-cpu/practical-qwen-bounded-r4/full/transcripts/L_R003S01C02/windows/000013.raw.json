@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 13,
+    "startSample": 6240000,
+    "endSample": 6720000,
+    "text": "目前来说，咱们这个车位目前来说啊，还是比较充足的，知道吧。主要是就是说，呃前一段时间比较紧张的原因是什么呀？就是说外部小区进来的车辆太多，对本小区的车辆造成了一定的困扰，好吧。你要是放开这一部分，咱们的小区的车位还是比较充足的。它你说一说，它一个车位。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 6240000,
+        "endSample": 6720000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "c40e2d9016f9b11b403e7b038bc19adc18d0317d68b725e37cd8877bf4d08a83"
+}

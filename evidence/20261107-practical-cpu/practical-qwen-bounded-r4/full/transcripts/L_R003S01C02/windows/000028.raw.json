@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 28,
+    "startSample": 13440000,
+    "endSample": 13920000,
+    "text": "说实在的啊，真的还是不到位。那就把主管撤了吧，换一个。那工作出问题啊，就是领导的问题，对不对？那领导出问题怎么办？那工作不作为了怎么办？那跟。这这叫主管管理不到位。那跟主管没关系啊。主管咱没关系。主管也是定期即就是检查叫那什么，只不过他是没有专业的一个，他有一个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 13440000,
+        "endSample": 13920000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "dcf5388b95cfa90ec7ff84a6fea926c237037dc5f6b8492e1df68f8d6bb93edd"
+}

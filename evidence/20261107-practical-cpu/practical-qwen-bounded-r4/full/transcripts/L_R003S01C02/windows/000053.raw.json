@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 53,
+    "startSample": 25440000,
+    "endSample": 25920000,
+    "text": "他进来了。这个咱门卫呀，咱门卫不是在吃干饭的呀。啊，看咱这物业的工作也不是说特别好做。对。真的，都是有难度。对，您说进来你不相信。但是业主这个业主就业主就这么反映这个事儿了。反正咱这工作也是确实不好做。嗯对。要不到咱们这儿还有个来贺登你知道吗？你朝条里的纪律什么。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 25440000,
+        "endSample": 25920000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "1cebe35c578f96f3cb06483e347d3560e9bbaa281b525a1c81857f1457ac8dfc"
+}

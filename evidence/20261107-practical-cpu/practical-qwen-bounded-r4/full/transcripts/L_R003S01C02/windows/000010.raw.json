@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 10,
+    "startSample": 4800000,
+    "endSample": 5280000,
+    "text": "外部小区基本上就能，嗯，杜绝外部的车辆进来。再一个就是说，呃，各家各户的车有一个登记，有一个，咱们这儿做到有，就是说心中有数啊。啊，就是说有什么问题就能也能珍贵性的，不至于说找不到人或者是，这个，呃，拒绝人，呃，就是拖拉吧，嗯，等会儿下来。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 4800000,
+        "endSample": 5280000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "23c39c2a92cec2fa08cf32001b48d92206b3fac1a497967f92ebe2f5eaf69472"
+}

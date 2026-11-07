@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 13,
+    "startSample": 6240000,
+    "endSample": 6720000,
+    "text": "要的。然后同一分类的商品呢，应该摆放到一起，然后有层次的。包括颜色上呢，我们也是需要搭配的。这样看起来呢，这个商品比较的丰满，而且呢，看着呢比较的养眼。呃，最起码你买不买，走到这儿以后，你感觉这哎呀，这个菜怎么这么新鲜呀，是不是？让人看上去就是，哎，眼睛看上去就是，哎呀，这菜很新鲜呀，比外面的菜要新鲜很多。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 6240000,
+        "endSample": 6720000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "4ab309d89ed82c7dd3a800d60852b63be4f2b90cee8e237a362dade80abc0b65"
+}

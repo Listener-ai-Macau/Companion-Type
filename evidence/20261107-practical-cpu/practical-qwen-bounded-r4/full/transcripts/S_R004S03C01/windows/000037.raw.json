@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 37,
+    "startSample": 17760000,
+    "endSample": 18240000,
+    "text": "他就，他就不想走，嗯，然后可以让孩子在那儿玩儿，然后我们就可以跟这些家长推推一些门店的产品啦，什么蛋糕啦，嗯，也会促进我们店儿里的销售，嗯。还有就是，嗯，这种咱这个产品就是，要符合那种健康那种，而且现在就是年老的人嘛，他们比较。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 17760000,
+        "endSample": 18240000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "ec766db8c77326cf43c452ddf3b9c5c26bb29c710b6e621910cac7a2d9860cca"
+}

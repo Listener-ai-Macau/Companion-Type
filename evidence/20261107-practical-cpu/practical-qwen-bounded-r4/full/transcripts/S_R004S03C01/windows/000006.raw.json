@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 6,
+    "startSample": 2880000,
+    "endSample": 3360000,
+    "text": "零嘴儿，呃，这个有上升的趋势，所以大家看看有没有对，呃，咱下季度的这个销售，呃，有没有一些好的，就是整改，在原有的基础上，嗯，咱做一些新的调整，啊，把一些咱那个，呃，比较卖的销量比较高的这个销售产品是否在。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 2880000,
+        "endSample": 3360000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "f10a773c2e15159d751ca1b42f2af73c5d4907cc15ea7b57c8cec4dc16b5ca16"
+}

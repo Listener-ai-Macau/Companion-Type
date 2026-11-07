@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 15,
+    "startSample": 7200000,
+    "endSample": 7680000,
+    "text": "就是呃有要求的，嗯，然后我们像一些那个冷鲜的这个产品啊，我们都有冷柜，呃我们是需要放到冷柜里去冷藏的，像这普通的菜啊，土豆啥的你可以，不用冷藏，但是有一些东西是需要冷藏的，我们就是需要放到冷藏柜里面去陈列去，嗯，然后一人菜类的，一人菜类的是就是每天要求这个员工啊，都需要去喷水，嗯，在这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 7200000,
+        "endSample": 7680000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "95837f266c5d2848a5fe48b43798035d0043aa478abaa81ffced7c70edbe295f"
+}

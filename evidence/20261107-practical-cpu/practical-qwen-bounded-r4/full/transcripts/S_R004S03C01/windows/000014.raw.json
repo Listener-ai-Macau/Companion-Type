@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "cb360e44987420f743a455d2dc85cb81a9ac7f1e73204764a2fd845c94349686",
+    "seedManifestSha256": "348452a786e1c9cb5738bd6a6994ea7a8e25cfaea72768018448006c7ce5fc0f",
+    "workerSourceSha256": "cda7496fd1e2b12f25a788edbb6ff06522acfe54c3c2dc8753ec92c1151c99c3",
+    "baseProtocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 14,
+    "startSample": 6720000,
+    "endSample": 7200000,
+    "text": "而且现在天也冷了，也也马上就要零下了。你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌碴儿。在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯堆放呢，这个层次上也有要求，不能超过四层。层数太多的话，就是说给人眼睛观上去有一种，呃不太好的这种感觉。而且这个上下呀，包括这个呃摆放的顺序呀，也都。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 6720000,
+        "endSample": 7200000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "3b6781cb321029ed54f848905bd462eb3ee24b6681fcc56035f04b862531f265"
+}
