@@ -24116,3 +24116,10 @@ Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→
 Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→真实恢复控制→原整会续算评分，不扩大到训练/手机/板/UI。CPU小型真实作者API的声音特征逐字节一致、全20token及7/13token恢复一致、输入变更拒绝、BF16缓存可核；仅合成架构控制，不当公开权重识别精度。首用basePython因transformers/tokenizers环境不匹配在模型前失败，已保留；改固定AMD环境后通过，未改系统包。声音阶段只装624926720B组，文字只装1192099840B组，未装部分保持meta；非持久RoPE用作者原构造器生成。原始完整特征出盘、逐字节读回、绑定音频/全部输入/模型/执行设置，生产者退出后才加载下一阶段；累计声音预计算和原失败时间，不改变音频/人物/上下文/权重/采样，不声称这些权重字节就是系统RAM节省。
 
 本阶段实际状态：DISJOINT_STAGE_NATIVE_FRESH_AND_RESUME_ALL173_IDENTICAL_FULL_NEXT。原生控制：PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY。整会：尚未开始。证据e863a8889cbafa267677dffa367235bf3a379706已推送读回；CPU5%/private2GiB/页优先级1/IDLE+duty.25/实际低RAM停止不变，无用户应用关闭、无源头不明重试。下一项：真实固定30秒分阶段Fresh/64token恢复与原173token全量相同；开始原完整2362.945秒声音预计算，退出后只装文字解码，从2752token接续。完整EOS且worker退出后独立评分并累计历史失败及声音预计算时间。
+
+
+## 2026-11-07T09:00:09+08:00｜同权重分阶段装载 full
+
+Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→真实恢复控制→原整会续算评分，不扩大到训练/手机/板/UI。CPU小型真实作者API的声音特征逐字节一致、全20token及7/13token恢复一致、输入变更拒绝、BF16缓存可核；仅合成架构控制，不当公开权重识别精度。首用basePython因transformers/tokenizers环境不匹配在模型前失败，已保留；改固定AMD环境后通过，未改系统包。声音阶段只装624926720B组，文字只装1192099840B组，未装部分保持meta；非持久RoPE用作者原构造器生成。原始完整特征出盘、逐字节读回、绑定音频/全部输入/模型/执行设置，生产者退出后才加载下一阶段；累计声音预计算和原失败时间，不改变音频/人物/上下文/权重/采样，不声称这些权重字节就是系统RAM节省。
+
+本阶段实际状态：RUNNING_ACOUSTIC_ONLY_COMPLETE_AUDIO。原生控制：PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY。整会：RUNNING_ACOUSTIC_ONLY_COMPLETE_AUDIO。证据e4222eee535ef336a63980a7daffc461d3e3204b已推送读回；CPU5%/private2GiB/页优先级1/IDLE+duty.25/实际低RAM停止不变，无用户应用关闭、无源头不明重试。下一项：按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。

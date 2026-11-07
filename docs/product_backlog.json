@@ -139301,12 +139301,13 @@
             "at": "2026-11-06T08:12:56+08:00",
             "ownerQuote": "重启的问题应该不用查了，你就继续吧。把整那东西跑好就行了。",
             "decision": "Owner supersedes prior engineering deferral for reboot investigation; continue original full real meeting using exact post-restart-tested duty0.1 and original resource guards. Historical reboot remains unresolved evidence, not a prerequisite.",
-            "state": "FULL_MEETING_RETAINED_PREFIX_READY_NATIVE_RESUME_GATE_PENDING",
-            "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
-            "next": "真实固定30秒分阶段Fresh/64token恢复与原173token全量相同；开始原完整2362.945秒声音预计算，退出后只装文字解码，从2752token接续。完整EOS且worker退出后独立评分并累计历史失败及声音预计算时间。",
+            "state": "RUNNING_ACOUSTIC_ONLY_COMPLETE_AUDIO",
+            "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25",
+            "next": "按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。",
             "previousFunctionalCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
-            "activeWorkerPid": null,
-            "finishedAt": "2026-11-07T02:13:44+08:00"
+            "activeWorkerPid": 20928,
+            "finishedAt": "2026-11-07T02:13:44+08:00",
+            "activeSupervisorPid": 27812
           },
           "restoredSpeechResult20261106": {
             "at": "2026-11-06T08:06:10+08:00",
@@ -139546,11 +139547,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "DISJOINT_STAGE_NATIVE_FRESH_AND_RESUME_ALL173_IDENTICAL_FULL_NEXT",
+          "status": "RUNNING_ACOUSTIC_ONLY_COMPLETE_AUDIO",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "真实固定30秒分阶段Fresh/64token恢复与原173token全量相同；开始原完整2362.945秒声音预计算，退出后只装文字解码，从2752token接续。完整EOS且worker退出后独立评分并累计历史失败及声音预计算时间。",
+          "next": "按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -140047,8 +140048,8 @@
             "sourceAndEvidenceCommit": "bd0625c15ee6afe736450d88f8c76bb2461f8759",
             "remoteReadbackConfirmed": true,
             "disjointStageExecution": {
-              "at": "2026-11-07T08:58:43+08:00",
-              "phase": "control",
+              "at": "2026-11-07T09:00:09+08:00",
+              "phase": "full",
               "ownerQuote": "继续推进123昨晚",
               "cpuControl": {
                 "state": "PASS_TINY_CPU_DISJOINT_AUTHOR_STAGES_AND_PREFIX_EQUIVALENCE_ONLY",
@@ -140316,9 +140317,28 @@
               "weightsOrMathChanged": false,
               "trainingStarted": false,
               "productBackendChanged": false,
-              "state": "DISJOINT_STAGE_NATIVE_FRESH_AND_RESUME_ALL173_IDENTICAL_FULL_NEXT",
-              "next": "真实固定30秒分阶段Fresh/64token恢复与原173token全量相同；开始原完整2362.945秒声音预计算，退出后只装文字解码，从2752token接续。完整EOS且worker退出后独立评分并累计历史失败及声音预计算时间。",
-              "sourceAndEvidenceCommit": "e863a8889cbafa267677dffa367235bf3a379706",
+              "fullMeeting": {
+                "at": "2026-11-07T08:59:29+08:00",
+                "state": "RUNNING_ACOUSTIC_ONLY_COMPLETE_AUDIO",
+                "ownerDirective": "请继续吧, 你看看接下来从什么地方推进比较好",
+                "work": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25",
+                "pid": 29780,
+                "processCreatedAt": 1794013169.3508737,
+                "bootTime": 1793890675.9475114,
+                "previousSourceCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
+                "skipRebootInvestigationByOwner": true,
+                "automaticInferenceRetries": 0,
+                "referencePassedToInference": false,
+                "recoveryManifestSha256": "10ae768d9946c7e50621ee68e7994ddee0e7aaf3b4eba81917cfd6cfa4f76634",
+                "recoveredGeneratedPrefixTokens": 2752,
+                "priorInferenceAttemptProcessFamilySeconds": 12192.729083,
+                "audioSeconds": 2362.945,
+                "acousticControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25\\acoustic",
+                "acousticSupervisorPid": 27812
+              },
+              "state": "RUNNING_ACOUSTIC_ONLY_COMPLETE_AUDIO",
+              "next": "按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。",
+              "sourceAndEvidenceCommit": "e4222eee535ef336a63980a7daffc461d3e3204b",
               "remoteReadbackConfirmed": true
             }
           }
