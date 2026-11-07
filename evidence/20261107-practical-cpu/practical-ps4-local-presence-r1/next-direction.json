@@ -51,9 +51,16 @@
       "finding": "Published evaluation recipe lists separate WavLM/ECAPA/TS-VAD weights and a gated pyannote segmentation dependency. It is not a verified drop-in ungated commercial package here."
     }
   ],
-  "next": "原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+  "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
   "finalHoldoutOpened": false,
   "productDefaultsChanged": false,
   "newDeploymentOrCustomerAcceptance": false,
-  "qualityQualified": false
+  "qualityQualified": false,
+  "publicSourcePairAvailability": {
+    "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-ps4-local-presence-r1\\source-availability.json",
+    "state": "PINNED_PUBLIC_ACTIVITY_AND_MATCHED_ENROLLMENT_PAIR_FOUND_RUNTIME_UNVERIFIED",
+    "commit": "cb828468d183424fd574984f00b3ffbcce0be9bc",
+    "matchingEnrollmentRevision": "1cf80d41fb3435bd3d8df185b5c423333b2db42a",
+    "neuralModelsLoaded": 0
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T21:43:17+08:00",
+  "at": "2026-11-07T21:47:43+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -8051,7 +8051,7 @@
     "qualityQualified": false,
     "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
   },
-  "next": "原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+  "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
   "lastOwnerQuote": "推进把, 主要是复杂多人这个看看怎么搞",
   "nativeVerbatimPreparation": {
     "at": "2026-11-07T15:04:06+08:00",
@@ -17854,11 +17854,117 @@
             "finding": "Published evaluation recipe lists separate WavLM/ECAPA/TS-VAD weights and a gated pyannote segmentation dependency. It is not a verified drop-in ungated commercial package here."
           }
         ],
-        "next": "原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+        "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
         "finalHoldoutOpened": false,
         "productDefaultsChanged": false,
         "newDeploymentOrCustomerAcceptance": false,
-        "qualityQualified": false
+        "qualityQualified": false,
+        "publicSourcePairAvailability": {
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-ps4-local-presence-r1\\source-availability.json",
+          "state": "PINNED_PUBLIC_ACTIVITY_AND_MATCHED_ENROLLMENT_PAIR_FOUND_RUNTIME_UNVERIFIED",
+          "commit": "cb828468d183424fd574984f00b3ffbcce0be9bc",
+          "matchingEnrollmentRevision": "1cf80d41fb3435bd3d8df185b5c423333b2db42a",
+          "neuralModelsLoaded": 0
+        }
+      },
+      "source-availability.json": {
+        "at": "2026-11-07T21:46:43+08:00",
+        "neuralModelsLoaded": 0,
+        "weightBytesDownloaded": 0,
+        "qualityQualified": false,
+        "productChanged": false,
+        "state": "PINNED_PUBLIC_ACTIVITY_AND_MATCHED_ENROLLMENT_PAIR_FOUND_RUNTIME_UNVERIFIED",
+        "repository": "https://github.com/tuya/nomo-pvad",
+        "release": "release-1.1",
+        "releaseTagObject": "27a9bf9fca92ad78aa297ec5e06f3cd14a5f76cc",
+        "commit": "cb828468d183424fd574984f00b3ffbcce0be9bc",
+        "pinnedFiles": [
+          {
+            "path": "LICENSE",
+            "sha": "a4f8e3ccc09fd4e3deb0ce195763d4f70f76ed12",
+            "size": 11357
+          },
+          {
+            "path": "THIRD_PARTY_NOTICES.md",
+            "sha": "81155cfe85ff4272d5cc4a0e7c90444ff9958b71",
+            "size": 1181
+          },
+          {
+            "path": "weights/WEIGHTS_LICENSE.md",
+            "sha": "0626ee6bec4af6b8c60beafb9b76fd532180e42e",
+            "size": 942
+          },
+          {
+            "path": "weights/nomo_pvad.pt",
+            "sha": "530bf062ea68977a5f74c3c93eb10ec0bd155709",
+            "size": 36576677
+          },
+          {
+            "path": "nomo_pvad.py",
+            "sha": "cbff33a56013500872eb9b7265b5ccd76208686c",
+            "size": 8390
+          },
+          {
+            "path": "core/model.py",
+            "sha": "eef54550702e05a80b144813a881ee25c1d35021",
+            "size": 7256
+          },
+          {
+            "path": "core/eres2netv2_backbone.py",
+            "sha": "905cc0119e8bb0ea0e9685e7e7752f34bfcc7136",
+            "size": 4442
+          },
+          {
+            "path": "core/frame_adapter.py",
+            "sha": "e2b2b174c97fe190ebfcf8a1c40b73b5a8810c0b",
+            "size": 3865
+          },
+          {
+            "path": "core/film.py",
+            "sha": "7e7d263ff5f1898168cb18ade91248a4ecb85ae6",
+            "size": 1922
+          },
+          {
+            "path": "requirements.txt",
+            "sha": "214a863dfd5eccf527dff223f0e4a17a0196b279",
+            "size": 101
+          }
+        ],
+        "licenseBytesVerifiedAgainstPinnedGitBlobs": [
+          {
+            "path": "LICENSE",
+            "gitBlobSha1": "a4f8e3ccc09fd4e3deb0ce195763d4f70f76ed12",
+            "sha256": "3359ea11b3bdde09d47f03740e257cdcefbb1a0161878cb792aa5863e5d83269"
+          },
+          {
+            "path": "THIRD_PARTY_NOTICES.md",
+            "gitBlobSha1": "81155cfe85ff4272d5cc4a0e7c90444ff9958b71",
+            "sha256": "a7f4a0a76e235e47b5d16e02de3d5058c6facac8fd63919d10d0f8c3ccbef4fa"
+          },
+          {
+            "path": "weights/WEIGHTS_LICENSE.md",
+            "gitBlobSha1": "0626ee6bec4af6b8c60beafb9b76fd532180e42e",
+            "sha256": "353cfb4d2f402455353a9d5c453f3e67f66534c62561063e8bfdf5d85a99539b"
+          }
+        ],
+        "matchedEnrollmentModel": {
+          "repository": "iic/speech_eres2netv2_sv_zh-cn_16k-common",
+          "Path": "pretrained_eres2netv2.ckpt",
+          "Revision": "1cf80d41fb3435bd3d8df185b5c423333b2db42a",
+          "Sha256": "0eb4057106b2573dd7b132cf0c36273ab29afd192c1610f80baa9c556dbb963c",
+          "Size": 71768231
+        },
+        "incomplete": [
+          "No weight payload downloaded or hash-checked yet.",
+          "No model constructed, strict parameter coverage check, or acoustic/time-semantic pilot yet.",
+          "The matched ERes2NetV2 license is upstream-declared by the pinned derivative notices; actual model/source license files must accompany preparation.",
+          "No ordinary/absent/brief/overlap meeting scores for this candidate."
+        ],
+        "rejectSubstitution": [
+          "Existing cached ERes2Net base ONNX is not ERes2NetV2.",
+          "PS4 matching192d ECAPA vectors are not ERes2NetV2 matching192d vectors."
+        ],
+        "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。"
       }
     }
   }
