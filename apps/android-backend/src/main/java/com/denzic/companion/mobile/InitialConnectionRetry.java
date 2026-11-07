@@ -8,15 +8,15 @@ final class InitialConnectionRetry {
         final int status;
         Refused(int status){super("Bluetooth connection failed ("+status+")");this.status=status;}
     }
-    interface Attempt<T> {T open() throws IOException;}
+    interface Attempt<T> {T open(boolean background) throws IOException;}
     interface Delay {void waitMillis(long millis) throws InterruptedException;}
     static <T> T open(Attempt<T> attempt,Delay delay) throws IOException {
-        try{return attempt.open();}
+        try{return attempt.open(false);}
         catch(Refused first){
             if(first.status!=133)throw first;
             try{delay.waitMillis(1000);}
             catch(InterruptedException interrupted){Thread.currentThread().interrupt();throw new IOException("Bluetooth connection interrupted",interrupted);}
-            return attempt.open();
+            return attempt.open(true);
         }
     }
     private InitialConnectionRetry(){}
