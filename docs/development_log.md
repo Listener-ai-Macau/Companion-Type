@@ -1,3 +1,16 @@
+<!-- stop-wait083-final -->
+### 2026-11-07T10:02:37+08:00｜停录完整音频等待实际缩短，083短/中样本与暂停续收通过；084补容量快照误判并交付
+
+Owner“好的,就这个,优化一下”沿动态标准处理。本批先081合并控制与目录，再082连接所有者交接及仅校验当前录音，实机仍失败；原081/082源码/失败与操作条件保留。083源b77058d9/Java0c4e3656新增同一认证连接、同一完整封口场次目录一次复用，活录音/不完整/待确认恢复/状态修改/新链均重读；补暂停继续与待确认入口的连接移交。实际Android SDK和真实生产类生命周期/单所有者/精确交接/当前原音/缓存失效测试过。Web与JNI不变，无板卡固件新增。
+
+083新28360.54秒127762B，STOP到完整原音/精确回收/完整AppWAV独立验证8.816035秒≤动态10.864806秒；284300.42秒631742B，18.866154秒≤22.172276秒，原生首PULL至最终耐久回执50.396224KiB/s≥50。两场reusedConnections=1/reusedCatalogues=1，目录准备约7/4ms（082重复读取2.327秒），CRC/SHA/样本连续/WAV10ms过。082同等127762B短录11.310秒至0838.816秒，属同控制器样本；历史27327.768秒的观察器不同，不归因成纯产品差值。短录35.672519KiB/s仍严格FAIL50，动态PASS不抹掉它。
+
+暂停续收首次在START前被“请升级设备、不支持无预设录音”拒绝，未发开录未建新场，失败冻结。空闲PC只读目录/状态确认FW/原34/4608000/17正常，未重启/清配对；该工程handover条件明确，重新普通开录285182.48秒，正常暂停保留57702B前缀，查询确认仍录音，继续3.312秒收到新字节≤10，实际移交连接1/活场目录复用0，全原音CRC/SHA/连续样本/WAV过。全程一START/STOP。尾部13.797秒只观察，缺STOP精确剩余快照不评价动态。没有执行系统radio注入，因此旧10.735>10不关闭。
+
+285结束只读抓到同UID/epoch的真实CCQ2 flags2忙且容量字段未有效，稍后flags5有效。源码发现START先用全容量parse判“是否支持无时长录音”，可将短暂刷新误判旧固件。084 Java5824680e仅START identity在显式刷新时等有效快照，上限1秒；期间不发控制命令、身份变化退出、持续忙准确报稍后再试，QUERY/STOP/旧接口不变。真实忙/有效帧回归、无写入/不重放、超时、身份变化、中断及旧状态测试过。084前端源1d805f0d/APK8c8352c1已安装逐字节核验，只有NativeRecordingControl两类字节变，JNI212ec44d及其它Java/资源沿083。28610.52秒、28710.44秒（显式刷新目录后开录，复验原失败操作顺序）均单START/STOP并完整收取，动态7.876004≤8.505758、6.906256≤8.500365，WAV10/20ms；短原生10.145957/13.242268KiB/s仍FAIL50。未声称手机已直接记录到busy分支耗时，设备真实输入确定性复现与实际普通流程分开。084普通扫描后选已配对设备至私有目录4.623883秒≤5，前置扫描单列，旧配对列表133稳定性未宣称已修。
+
+终态FW66702/UI85，手机0.1.84，当前无录音/接收/升级，原34逐描述符不变、4608000B/17段恢复，实际BLE句柄关闭并release。固件仍61.44MHz，未为CPU百分比构建或放宽资源门。当前仍非完整可售：短场严格回收速率、自动radio10秒、录中STOP准确剩余/最终长期/正式资源以及既定物理block未关。接收后设备列表可暂留已回收条目直到刷新也入原CP09-02，未另建任务树。下一步沿同原待办先读本轮结果与旧radio分阶段记录，避免误改并未导致该次10.735秒的5秒回退。实测与源补丁、失败与真实输入见 C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261106-companion-device-management\full-media66702\stop-wait-081-083\batch-result.json；不含用户旧音频。
+
 <!-- device082-results-083-source -->
 ### 2026-11-07T09:34:28+08:00｜082同连接交接已实机生效，短录动态仍失败；083补重复目录及恢复入口
 
@@ -24155,3 +24168,12 @@ Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→
 Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→真实恢复控制→原整会续算评分，不扩大到训练/手机/板/UI。CPU小型真实作者API的声音特征逐字节一致、全20token及7/13token恢复一致、输入变更拒绝、BF16缓存可核；仅合成架构控制，不当公开权重识别精度。首用basePython因transformers/tokenizers环境不匹配在模型前失败，已保留；改固定AMD环境后通过，未改系统包。声音阶段只装624926720B组，文字只装1192099840B组，未装部分保持meta；非持久RoPE用作者原构造器生成。原始完整特征出盘、逐字节读回、绑定音频/全部输入/模型/执行设置，生产者退出后才加载下一阶段；累计声音预计算和原失败时间，不改变音频/人物/上下文/权重/采样，不声称这些权重字节就是系统RAM节省。
 
 本阶段实际状态：FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY。原生控制：PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY。整会：FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY；声音预计算族耗时139.367892秒。实际worker快照：[{"state": "COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY", "completedAcousticChunks": 79, "totalAcousticChunks": 79, "generatedTokens": 0, "newGeneratedTokens": null, "decoderPrefillLayersCompleted": null}, {"state": "DECODING", "completedAcousticChunks": null, "totalAcousticChunks": null, "generatedTokens": 3776, "newGeneratedTokens": 1024, "decoderPrefillLayersCompleted": 28}]。证据3eae2a3cca513aa53cc62b042b930104e4f6d7a8已推送读回；CPU5%/private2GiB/页优先级1/IDLE+duty.25/实际低RAM停止不变，无用户应用关闭、无源头不明重试。下一项：按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。
+
+
+## 2026-11-07T10:26:05+08:00｜实用模型链：停止重复HIP长跑，完整CPU分人/逐token归属 prepared
+
+Owner“继续推进一下, 把模型做到可实用”。R25原整会最终09:53:42退出0xC0000005/amdhip64_7.dll，声学79块139.367892秒已成功，文字层28完成，3776token含新增1024、105段至模型预测656.94秒，文字族3111.698087秒；临近可用约2.3GB，无低RAM停止。最终3eae2a3已远端，停止同条件HIP长跑；既有173/64恢复一致有效但未修小时级原生故障，不当准确率/售卖通过。
+
+本批变化：固定维护中的完整sherpa1.13.4 CPU局部重叠分割→洁净人声embedding→整会一次complete-link聚类→人数约束重建，替换旧自制CAM++片段拼合；官方FP32 segmentation与中文ERes2Net，自动人数-1/官方threshold.5不扫参。冻结完整L/S，最终保留不碰；标准零collar/含重叠DER、逐人/短回应分别核，不以标签数当漏人修复。首准备API504，保已下archive，改复用已核官方资产URL/大小，不重复大下载/改网络。声音检测/归属不等于恢复重叠双方原话。现有SenseVoice实际30秒处理2.543937秒，返回63tokens及63个原生onset、无duration，Job私有峰436228096B；仅字段/执行验证，无新精度。将原文与token时间保存，边界/多人未知，不整窗乱指人，不伪造真实姓名角色。
+
+当前PREPARED_COMPLETE_CPU_DIARIZATION_AND_EXISTING_ASR_TOKEN_TIMING；源及证据c64e5be5eb7dce0a538bdeb0b0dc492201c08251推送读回。CPU5%/private2GiB/页优先级1/实际低RAM只停止本族保留；无训练/默认后端替换/手机板/Computer Use。下一动作：同一冻结完整CPU分人流程依次验L/S整会，标准DER同时核逐人/短句覆盖；普通转写保留原音与原始文字，用模型token时间估计绑定人物，重叠/边界不明确保留未知，不整窗乱贴一人。退出后才评分，按真实结果决定保留/拒绝，不扫阈值、不训练、不原样重跑HIP长上下文。原跨会文字<5%、重叠逐路、事实/双端/实卡和售卖门保持。
