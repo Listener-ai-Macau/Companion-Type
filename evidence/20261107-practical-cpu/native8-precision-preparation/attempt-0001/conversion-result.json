@@ -1,0 +1,31 @@
+{
+  "state": "CONVERSION_FAILED_RETAINED_NO_NEURAL_INFERENCE",
+  "startedAt": "2026-11-07T12:53:26+08:00",
+  "pid": 19440,
+  "trainingPerformed": false,
+  "neuralInferencePerformed": false,
+  "gpuUsed": false,
+  "checkpointSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "q8TensorFidelityPassed": true,
+  "error": "ValueError(\"unknown --weight-type 'f16'; choose from ['bf16', 'f32', 'fp16', 'mxfp4', 'nvfp4', 'q4_k', 'q5_k', 'q6_k', 'q8_0']\")",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_precision_conversion_20261107.py\", line 30, in <module>\n    state.update(state='CONVERTING_SAME_WEIGHTS_HIGHER_PRECISION_NO_TRAINING',q8TensorFidelityPassed=True);save();convert(Path(prep['checkpoint']),higher,'f16');high=GGUFReader(higher);high_manifest=tensor_manifest(high)\n                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\diarization.py\", line 247, in convert\n    raise ValueError(\nValueError: unknown --weight-type 'f16'; choose from ['bf16', 'f32', 'fp16', 'mxfp4', 'nvfp4', 'q4_k', 'q5_k', 'q6_k', 'q8_0']\n",
+  "finishedAt": "2026-11-07T12:53:33+08:00",
+  "wholeWorkerSeconds": 6.802812300011283,
+  "limits": {
+    "pid": 19440,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 724385792,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
