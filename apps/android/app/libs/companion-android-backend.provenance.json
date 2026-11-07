@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T15:15:55+08:00",
-  "aarSha256": "2d1a4a5cae2317a12231b918eb1bf9c976fd14829dd008b31c1ec60d369a2ecf",
-  "backendSourceCommit": "614eb205305cee69621eba45f58ea19070796f8d",
+  "at": "2026-11-07T15:51:34+08:00",
+  "aarSha256": "70d489b70197f04b933b70a48fbb6b42cf3b8f9deaa471f7377f7d0428bee4b0",
+  "backendSourceCommit": "c9d6870d7ed3953f746ee4bff7f8dda13399969d",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "One address-scoped GATT lifetime owner across Activity, receiver and OTA workers; handoff retains the same lease, close releases only after actual unregister. Complete notification follows transport close. Previous direct connection and single133 retry retained; ineffective background retry reverted. No command replay or metric endpoint change. JNI/models/Web/firmware unchanged. Physical acceptance pending.",
-  "javaSourceCommit": "614eb205305cee69621eba45f58ea19070796f8d",
+  "scope": "Three phone scalar timestamps separate PULL write completion, first accepted validated payload, last accepted payload and existing durable original boundary. Existing native throughput endpoint, bytes, retries, protocol and durable physical receipts unchanged. Firmware/JNI/Web/models unchanged. Physical speed diagnosis pending.",
+  "javaSourceCommit": "c9d6870d7ed3953f746ee4bff7f8dda13399969d",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -221,5 +221,12 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo090": true,
-  "inherited090Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability091\\build\\inherited-provenance090.json"
+  "inherited090Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability091\\build\\inherited-provenance090.json",
+  "javaClassesChangedFrom092": [
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics$Segment.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo092": true,
+  "inherited092Receipt": "E:\\CodexData\\Companion\\.build-cache\\stability093\\build\\inherited-provenance092.json"
 }
