@@ -12,7 +12,7 @@ final class RecordingTransferMetrics {
     private boolean initialSync,started,complete,valid=true,fresh=true,liveFollow,integrityRetry;
     private long firstWindowNanos,completedNanos,windows;
     private long firstConnectNanos,firstDirectoryDelayNanos=-1,reconnectStartedNanos,maxReconnectDirectoryDelayNanos=-1;
-    private int connectionAttempts,connectionsEstablished,reconnectSequences,unexpectedDisconnections,reusedConnections;
+    private int connectionAttempts,connectionsEstablished,reconnectSequences,unexpectedDisconnections,reusedConnections,reusedCatalogues;
     private boolean reconnectPending;
     RecordingTransferMetrics(){this(System::nanoTime);}
     RecordingTransferMetrics(Clock clock){this.clock=clock;}
@@ -52,6 +52,7 @@ final class RecordingTransferMetrics {
     synchronized void connecting(){if(connectionAttempts++==0)firstConnectNanos=clock.nanoTime();}
     synchronized void connected(){connectionsEstablished++;}
     synchronized void reusedConnection(){reusedConnections++;}
+    synchronized void reusedCatalogue(){reusedCatalogues++;}
     synchronized void connectionClosed(boolean unexpected){if(unexpected)unexpectedDisconnections++;}
     synchronized void reconnecting(){if(!reconnectPending){reconnectPending=true;reconnectStartedNanos=clock.nanoTime();reconnectSequences++;}}
     synchronized void directoryAvailable(){
@@ -94,7 +95,7 @@ final class RecordingTransferMetrics {
             ",\"durationNanos\":"+(nanos==null?"null":nanos.toString())+
             ",\"verifiedNewBytes\":"+verified+",\"acceptedNewBytes\":"+accepted+",\"initialCachedBytes\":"+cached+
             ",\"confirmedKiBps\":"+(rate==null?"null":Double.toString(rate))+
-            ",\"connectionAttempts\":"+connectionAttempts+",\"connectionsEstablished\":"+connectionsEstablished+",\"reusedConnections\":"+reusedConnections+
+            ",\"connectionAttempts\":"+connectionAttempts+",\"connectionsEstablished\":"+connectionsEstablished+",\"reusedConnections\":"+reusedConnections+",\"reusedCatalogues\":"+reusedCatalogues+
             ",\"reconnectSequences\":"+reconnectSequences+",\"unexpectedDisconnections\":"+unexpectedDisconnections+
             ",\"firstPrivateDirectoryDelayNanos\":"+(firstDirectoryDelayNanos<0?"null":Long.toString(firstDirectoryDelayNanos))+
             ",\"maxReconnectDirectoryDelayNanos\":"+(maxReconnectDirectoryDelayNanos<0?"null":Long.toString(maxReconnectDirectoryDelayNanos))+

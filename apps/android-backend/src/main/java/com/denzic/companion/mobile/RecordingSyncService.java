@@ -85,6 +85,13 @@ public final class RecordingSyncService extends Service {
     }
     /** Ask the same selected session to continue after process death or a user stop. */
     public static void resume(Context context) throws IOException {
+        resume(context,null);
+    }
+    public static void resume(Context context,RecordingClient connection)throws IOException {
+        try{resumeOwned(context,connection);}
+        catch(IOException|RuntimeException error){if(connection!=null)try{connection.close();}catch(IOException close){error.addSuppressed(close);}throw error;}
+    }
+    private static void resumeOwned(Context context,RecordingClient connection)throws IOException {
         SharedPreferences p=context.getSharedPreferences(PREFS,MODE_PRIVATE);
         String address=p.getString(ADDRESS,null),encoded=p.getString(DESCRIPTOR,null),name=p.getString(DIRECTORY,null);
         if(address==null||encoded==null||name==null)throw new IOException("没有可继续的录音接收任务");
@@ -92,15 +99,22 @@ public final class RecordingSyncService extends Service {
             BluetoothManager manager=(BluetoothManager)context.getSystemService(Context.BLUETOOTH_SERVICE);
             BluetoothAdapter adapter=manager==null?null:manager.getAdapter();if(adapter==null)throw new IOException("蓝牙不可用");
             RecorderWire.Descriptor selected=RecorderWire.Descriptor.decode(Base64.decode(encoded,Base64.NO_WRAP));
-            start(context,adapter.getRemoteDevice(address),selected,new File(context.getFilesDir(),name));
+            start(context,adapter.getRemoteDevice(address),selected,new File(context.getFilesDir(),name),connection);
         } catch(IllegalArgumentException|SecurityException e){throw new IOException("无法继续原来的录音接收",e);}
     }
     /** Continue the exact outstanding confirmation, even if its segment is no longer on the card. */
     public static void resumePending(Context context,BluetoothDevice device,File recordingDirectory) throws IOException {
+        resumePending(context,device,recordingDirectory,null);
+    }
+    public static void resumePending(Context context,BluetoothDevice device,File recordingDirectory,RecordingClient connection)throws IOException {
+        try{resumePendingOwned(context,device,recordingDirectory,connection);}
+        catch(IOException|RuntimeException error){if(connection!=null)try{connection.close();}catch(IOException close){error.addSuppressed(close);}throw error;}
+    }
+    private static void resumePendingOwned(Context context,BluetoothDevice device,File recordingDirectory,RecordingClient connection)throws IOException {
         if(context==null||device==null||recordingDirectory==null)throw new IllegalArgumentException("device and directory required");
         RecorderWire.Descriptor pending=RecordingLibrary.pendingConfirmation(recordingDirectory.toPath());
         if(pending==null)throw new IOException("没有待确认的录音接收任务");
-        start(context,device,pending,recordingDirectory);
+        start(context,device,pending,recordingDirectory,connection);
     }
     /** Stops only reception, not the recording on the card. */
     public static void stop(Context context) {context.stopService(new Intent(context,RecordingSyncService.class));}
@@ -171,7 +185,7 @@ public final class RecordingSyncService extends Service {
                 RecordingClient transferred=takePending(address,wire);
                 final RecordingClient client;
                 if(transferred!=null){
-                    try{transferred.validateHandoff(address,selected);transferred.attachTransferMetrics(measured);}
+                    try{transferred.validateHandoff(address,selected);transferred.attachTransferMetrics(measured,selected);}
                     catch(IOException|RuntimeException error){try{transferred.close();}catch(IOException close){error.addSuppressed(close);}throw error;}
                     client=transferred;measured.reusedConnection();
                 }else client=new RecordingClient(AndroidGattLink.connect(getApplicationContext(),device),measured);

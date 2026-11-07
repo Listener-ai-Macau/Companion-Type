@@ -37,6 +37,8 @@ public final class RecordingClient implements Closeable {
     }
     private final Link link;private final RecorderWire.Peer peer;private final DurableConsume durableConsume;private final SecureRandom random=new SecureRandom();private final Object liveControlLock=new Object();
     private List<RecorderWire.Descriptor> current;private final AtomicBoolean closed=new AtomicBoolean();
+    private boolean catalogueReusable,useHandedOffCatalogue;
+    private RecorderWire.Descriptor handedOffSelection;
     private final boolean consumePullOverlap;
     private RecordingTransferMetrics transferMetrics;
     private long nonce(){long n;do{n=random.nextInt()&0xffffffffL;}while(n==0);return n;}
@@ -94,9 +96,29 @@ public final class RecordingClient implements Closeable {
         if(!isConnected())throw new RecordingSyncRunner.LinkFailure("selected device connection disconnected before handoff");
         if(!address.equals(link.deviceAddress()))throw new IOException("selected device connection changed");
     }
-    synchronized void attachTransferMetrics(RecordingTransferMetrics metrics)throws IOException {
+    synchronized void attachTransferMetrics(RecordingTransferMetrics metrics,RecorderWire.Descriptor selected)throws IOException {
         ensureOpen();if(metrics==null||transferMetrics!=null)throw new IOException("connection already belongs to a transfer");
-        transferMetrics=metrics;
+        peer.validate(selected);transferMetrics=metrics;
+        // The immutable complete session was just enumerated on this same
+        // authenticated connection. Mutations and pending receipts invalidate
+        // reuse; live sessions and all newly opened links read a fresh list.
+        boolean exact=false,terminal=false;
+        if(catalogueReusable&&current!=null)for(RecorderWire.Descriptor d:current){
+            if(!RecordingLibrary.sameSession(d,selected))continue;
+            if(d.sameContent(selected))exact=true;
+            if((d.flags&2)!=0&&(d.flags&4)==0)terminal=true;
+        }
+        useHandedOffCatalogue=exact&&terminal;
+        handedOffSelection=useHandedOffCatalogue?selected:null;
+    }
+    private void catalogueMutating(){catalogueReusable=false;useHandedOffCatalogue=false;handedOffSelection=null;}
+    List<RecorderWire.Descriptor> directoryForSync(RecorderWire.Descriptor selected,boolean recovered)throws IOException {
+        if(useHandedOffCatalogue&&!recovered&&catalogueReusable&&current!=null&&handedOffSelection.sameContent(selected)){
+            useHandedOffCatalogue=false;catalogueReusable=false;handedOffSelection=null;
+            if(transferMetrics!=null){transferMetrics.reusedCatalogue();transferMetrics.directoryAvailable();}
+            return current;
+        }
+        useHandedOffCatalogue=false;handedOffSelection=null;return listRecordings();
     }
     /** Actual opt-in acknowledgement, never inferred from version alone. */
     public boolean consumePullOverlapNegotiated(){return consumePullOverlap;}
@@ -110,7 +132,7 @@ public final class RecordingClient implements Closeable {
 
     /** Explicit user-initiated recording control; use one stable host session ID for retries. */
     public synchronized String control(Path privateDirectory,String hostSession,NativeRecordingControl.Action action,int maxSeconds) throws IOException {
-        ensureOpen();return NativeRecordingControl.execute(link,privateDirectory,hostSession,action,maxSeconds);
+        ensureOpen();catalogueMutating();return NativeRecordingControl.execute(link,privateDirectory,hostSession,action,maxSeconds);
     }
     /** Existing session control during a streamed download on the same GATT connection.
      * The link serializes GATT operations and receives pull notifications separately.
@@ -141,7 +163,7 @@ public final class RecordingClient implements Closeable {
     }
 
     public synchronized List<RecorderWire.Descriptor> listRecordings() throws IOException {
-        ensureOpen();current=null;
+        ensureOpen();current=null;catalogueMutating();
         // Sealing or reclaiming a segment can retire an otherwise valid page
         // snapshot. Discard every page and change nonce; never mix generations.
         // Other device refusals and malformed/CRC/identity errors still fail.
@@ -157,7 +179,7 @@ public final class RecordingClient implements Closeable {
                     long deadline=Math.min(overallDeadline,System.nanoTime()+8_000_000_000L);
                     while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording directory timed out");if(catalog.accept(link.await(RECORDING_LIST,remaining)))break;}
                 }
-                current=catalog.entries();if(transferMetrics!=null)transferMetrics.directoryAvailable();return current;
+                current=catalog.entries();catalogueReusable=true;if(transferMetrics!=null)transferMetrics.directoryAvailable();return current;
             } catch(RecorderWire.CatalogChanged changed) {
                 if(refresh>=2||System.nanoTime()>=overallDeadline)throw changed;
             }
@@ -168,12 +190,12 @@ public final class RecordingClient implements Closeable {
         ensureOpen();return DeviceRecordings.group(listRecordings());
     }
     public synchronized boolean deleteDeviceSession(RecorderWire.Descriptor selected,DeviceRecordings.Confirm confirm) throws IOException {
-        ensureOpen();peer.validate(selected);
+        ensureOpen();peer.validate(selected);catalogueMutating();
         if(confirm==null)throw new IllegalArgumentException("confirmation required");
         return DeviceRecordings.delete(link,selected,nonce(),confirm);
     }
     public synchronized DeviceMaintenance.Status maintainDevice(DeviceMaintenance.Operation operation)throws IOException {
-        ensureOpen();return DeviceMaintenance.perform(link,operation,nonce());
+        ensureOpen();catalogueMutating();return DeviceMaintenance.perform(link,operation,nonce());
     }
 
     /** Receive every currently sealed segment of the selected original session.
@@ -216,7 +238,7 @@ public final class RecordingClient implements Closeable {
     public synchronized RecordingLibrary.Session syncAvailableAndReclaim(RecorderWire.Descriptor selected,Path privateDirectory,SessionProgress progress) throws IOException {
         ensureOpen();if(selected==null||privateDirectory==null)throw new IllegalArgumentException("recording and private directory required");
         peer.validate(selected);boolean recovered=durableConsume.reconcilePending(privateDirectory,selected);
-        List<RecorderWire.Descriptor> entries=listRecordings();java.util.ArrayList<RecorderWire.Descriptor> matches=new java.util.ArrayList<>();
+        List<RecorderWire.Descriptor> entries=directoryForSync(selected,recovered);java.util.ArrayList<RecorderWire.Descriptor> matches=new java.util.ArrayList<>();
         for(RecorderWire.Descriptor d:entries)if(d.sessionId==selected.sessionId)matches.add(d);
         matches.sort(java.util.Comparator.comparingLong(d->d.segmentIndex));
         RecorderWire.Descriptor previous=null;boolean selectedOnDevice=false;
