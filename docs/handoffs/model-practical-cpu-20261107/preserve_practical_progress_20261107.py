@@ -118,6 +118,10 @@ assert qwen_current.resolve().parent==base.resolve() and qwen_current.name in na
 record['officialNativeAsrControl']={name:optional(qwen_current/name) for name in ['download-range-receipt.json','prepared.json','hip-inventory.json','short-run.json','short-native-state.json','full/run.json','cache-recovery-proof.json','concurrency-proof.json','execution-stop-rule.json','followthrough-final-observation.json','review.json','next-direction.json']}
 record['officialNativeAsrControl'].update(control=str(qwen_current),activeExecution=active,initialLoaderFailure=optional(qwen_root/'short-run.json'),nativeLoaderTinyControl=optional(qwen_root/'streamed-loader-proof-r2.json'),featureNumericControl=optional(qwen_root/'processor-numeric-proof.json'),exactZeroGuardControl=optional(qwen_root/'exact-zero-guard-proof.json'))
 qwen=record['officialNativeAsrControl']
+if qwen_current.name=='practical-qwen-author-boundaries-r6':
+    qwen['authorBoundaryControl']={'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'boundaryMathProof':optional(qwen_current/'boundary-math-proof.json'),'priorNative17Review':optional(base/'practical-qwen-native17-r5/review.json')}
+    record['state']='AUTHOR_BOUNDARY_'+(qwen['authorBoundaryControl']['pilotRun'] or qwen['prepared.json'] or {}).get('state','PREPARING')+'_SALE_OPEN'
+    record['next']='原QM04：固定1.7B权重，验证作者低能量边界规则在本机约30秒预算下是否降低固定30秒截断的错误；不采用作者20分钟默认块长、不删语音/语气词，不喂参考。数学等价与原音逐样本覆盖已验，先30秒原生ID一致/最长约35秒不截断的真实短控，再完整S严格<5%才继续同完整L，否则保留结果停止复杂、不扫参数。独立接口、逐人/重叠/纪要事实/跨域独立集/手机实卡/售卖门继续OPEN。'
 if qwen_current.name=='practical-qwen-native17-r5':
     qwen['checkpoint17']={'ready':optional(qwen_current/'model-ready.json'),'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'priorComplete06Review':optional(base/'practical-qwen-bounded-r4/review.json'),'ordinaryStage':optional(qwen_current/'ordinary-stage-review.json'),'independentPack':optional(qwen_current/'model-pack.json'),'independentBusyProof':optional(qwen_current/'independent-command-busy-proof.json'),'independentCommandProof':optional(qwen_current/'independent-command-proof.json')}
     record['state']='NATIVE17_'+(qwen['checkpoint17']['pilotRun'] or qwen['checkpoint17']['ready'] or qwen['prepared.json'] or {}).get('state','PREPARING')+'_SALE_OPEN'
@@ -130,7 +134,7 @@ if qwen['download-range-receipt.json'] and not qwen['short-run.json']:
     record['state']='OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED'
 if qwen['short-run.json']:record['state']='OFFICIAL_NATIVE_ASR_'+qwen['short-run.json']['state']+'_SALE_OPEN'
 if qwen['full/run.json']:record['state']='OFFICIAL_NATIVE_ASR_'+qwen['full/run.json']['state']+'_SALE_OPEN'
-if qwen['full/run.json'] and not qwen['review.json'] and qwen_current.name not in ['practical-qwen-bounded-r4','practical-qwen-native17-r5']:
+if qwen['full/run.json'] and not qwen['review.json'] and qwen_current.name not in ['practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6']:
     record['next']='收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原跨域和加载失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。'
 if qwen['review.json']:
     record['state']=qwen['review.json']['state'];record['next']=qwen['review.json']['next']

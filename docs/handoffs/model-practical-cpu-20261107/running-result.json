@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T18:27:04+08:00",
+  "at": "2026-11-07T18:49:35+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "OFFICIAL_NATIVE_ASR_RUNNING_BOUNDED_NATIVE_FULL_SALE_OPEN",
+  "state": "OFFICIAL_NATIVE_ASR_COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -8317,7 +8317,7 @@
     "short-run.json": null,
     "short-native-state.json": null,
     "full/run.json": {
-      "state": "RUNNING_BOUNDED_NATIVE_FULL",
+      "state": "COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED",
       "pid": 26376,
       "startedAt": "2026-11-07T18:12:32+08:00",
       "priorAttemptReceipts": [
@@ -8412,13 +8412,106 @@
             "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
           },
           "actualProductDocumentContractPassed": true
+        },
+        {
+          "meeting": "L_R003S01C02",
+          "exitCode": 0,
+          "wholeProcessFamilySeconds": 1474.7604900000151,
+          "accumulatedProcessFamilySeconds": 1474.7604900000151,
+          "sampledPrivatePeakBytes": 1278500864,
+          "scoringExitCode": 0,
+          "qualityReview": {
+            "at": "2026-11-07T18:46:23+08:00",
+            "meeting": "L_R003S01C02",
+            "audioSeconds": 2362.945,
+            "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+            "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+            "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+            "referenceCharacters": 8676,
+            "hypothesisCharacters": 8279,
+            "chronologicalTextDiagnostic": {
+              "edits": {
+                "replace": 722,
+                "delete": 842,
+                "insert": 445
+              },
+              "cer": 0.23155832180728447,
+              "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+            },
+            "anonymousStreamCpCerDiagnostic": {
+              "metric": "cpCER",
+              "audioSeconds": 2362.945,
+              "referenceCharacters": 8676,
+              "referenceSpeakers": 6,
+              "predictedTextStreams": 1,
+              "edits": {
+                "replace": 350,
+                "delete": 5601,
+                "insert": 5204
+              },
+              "totalEdits": 11155,
+              "characterErrorRate": 1.2857307514983864,
+              "anonymousAssignmentForEvaluationOnly": [
+                {
+                  "referenceSpeaker": "002-F",
+                  "hypothesisSpeaker": null,
+                  "edits": 1581
+                },
+                {
+                  "referenceSpeaker": "003-F",
+                  "hypothesisSpeaker": null,
+                  "edits": 331
+                },
+                {
+                  "referenceSpeaker": "004-M",
+                  "hypothesisSpeaker": null,
+                  "edits": 1470
+                },
+                {
+                  "referenceSpeaker": "005-M",
+                  "hypothesisSpeaker": null,
+                  "edits": 1821
+                },
+                {
+                  "referenceSpeaker": "006-M",
+                  "hypothesisSpeaker": "__unconfirmed__",
+                  "edits": 5646
+                },
+                {
+                  "referenceSpeaker": "007-M",
+                  "hypothesisSpeaker": null,
+                  "edits": 306
+                }
+              ],
+              "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+            },
+            "unconfirmedSpeakerText": {
+              "characters": 8279,
+              "fractionOfRecognizedCharacters": 1.0,
+              "neverRealIdentityOrOwnerClaim": true
+            },
+            "confirmedAttributionCerDiagnostic": {
+              "totalEdits": 16955,
+              "cer": 1.9542415859843245,
+              "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+            },
+            "speakerActivityReview": null,
+            "speakerJournalPending": true,
+            "identityMetricsApplicable": false,
+            "allAudioSamplesCoveredOnce": true,
+            "allRawAsrTextPreserved": true,
+            "nativeTokenOnsetsAreApproximate": true,
+            "overlapBothVoicesRecovered": false,
+            "qualified": false,
+            "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+          },
+          "actualProductDocumentContractPassed": true
         }
       ],
       "referencePassedToWorker": false,
       "qualityQualified": false,
       "automaticModelFailureRetries": 0,
-      "activePid": 13840,
-      "activeMeeting": "L_R003S01C02"
+      "finishedAt": "2026-11-07T18:46:23+08:00"
     },
     "cache-recovery-proof.json": null,
     "concurrency-proof.json": null,
@@ -8935,6 +9028,6 @@
       "independentCommandProof": null
     }
   },
-  "sourceAndEvidenceCommit": "bacbdf60c724f9182ae230662e3e5874779c351a",
+  "sourceAndEvidenceCommit": "78034db60a5ce225e536c5f4218c5752ae8c3ec2",
   "remoteReadbackConfirmed": true
 }
