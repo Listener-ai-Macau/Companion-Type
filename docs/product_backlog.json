@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T20:32:33+08:00",
+            "at": "2026-11-07T20:42:19+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "62814e38267be47c333e1e98bc5cc9d03c32fb1c",
+            "modelEvidenceCommit": "905247098a667753a277b9dab1ac076cdcbe0db7",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41625,10 +41625,10 @@
           "currentStatus": "OPEN",
           "baseline": "L第二段真实开发片60字：原盲分离26.6667%，新双声纹固定身份提取后仍16/60=26.6667%，无改善；另一语料REAL-T单目标47字：混音2/47=4.2553%，目标提取4/47=8.5106%变差。两者均为短开发片，不构成整会/双人完整验收；不采纳此提取候选。",
           "ps4ConditionedComponentScreen20261107": {
-            "at": "2026-11-07T20:32:33+08:00",
+            "at": "2026-11-07T20:42:19+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1",
-            "state": "RUNNING_PS4_SEPARATION_QUALITY_AND_SALE_OPEN",
-            "modelEvidenceCommit": "62814e38267be47c333e1e98bc5cc9d03c32fb1c",
+            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
+            "modelEvidenceCommit": "905247098a667753a277b9dab1ac076cdcbe0db7",
             "review": {
               "at": "2026-11-07T20:12:49+08:00",
               "state": "PS4_REAL_COMPONENT_SCREEN_FAILED_NOT_ADOPTED",
@@ -42419,6 +42419,17 @@
             },
             "qualityQualified": false,
             "allExistingFormalGatesRetained": true
+          },
+          "ps4FullRoutedDevelopment20261107": {
+            "at": "2026-11-07T20:42:19+08:00",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1",
+            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
+            "modelEvidenceCommit": "905247098a667753a277b9dab1ac076cdcbe0db7",
+            "review": null,
+            "wordLevelPureOverlapCerMeasured": false,
+            "finalHoldoutOpened": false,
+            "defaultProductChanged": false,
+            "qualityQualified": false
           }
         },
         {
@@ -42437,7 +42448,7 @@
           "currentStatus": "OPEN",
           "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
           "nativeVerbatimDevelopment20261107": {
-            "at": "2026-11-07T20:32:33+08:00",
+            "at": "2026-11-07T20:42:19+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
             "rawCer": {
               "S_R004S03C01": 0.06954954954954955,
@@ -42454,9 +42465,9 @@
             "defaultProductChanged": false
           },
           "officialNativeQwenControl20261107": {
-            "at": "2026-11-07T20:32:33+08:00",
+            "at": "2026-11-07T20:42:19+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
-            "state": "RUNNING_PS4_SEPARATION_QUALITY_AND_SALE_OPEN",
+            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
             "noNewQualityScoreUnlessFullCompleted": true,
             "review": {
               "at": "2026-11-07T19:31:33+08:00",
@@ -42611,7 +42622,7 @@
             "defaultProductChanged": false
           },
           "native17OrdinaryDevelopment20261107": {
-            "at": "2026-11-07T20:32:33+08:00",
+            "at": "2026-11-07T20:42:19+08:00",
             "stage": {
               "state": "ORDINARY_FULL_NATIVE17_IMPROVES_STAGE5_OPEN_COMPLEX_RUNNING",
               "rawChronologicalCerBaseline06": 0.06438438438438439,
@@ -42907,23 +42918,23 @@
               "qualification": "NOT_QUALIFIED: exposed development chronological text only. Non-overlap-only/time-constrained per-person, separated overlap, factual minutes, final cross-domain holdout and actual installed phone/card/sale gates remain open. Prior AMI speaker failure retained.",
               "noTrainingReferenceHotwordsOrFillerErDeletion": true
             },
-            "modelEvidenceCommit": "62814e38267be47c333e1e98bc5cc9d03c32fb1c",
+            "modelEvidenceCommit": "905247098a667753a277b9dab1ac076cdcbe0db7",
             "ordinary5PercentGateClosed": false,
             "qualityQualified": false
           },
           "authorBoundaryDevelopment20261107": {
-            "at": "2026-11-07T20:32:33+08:00",
+            "at": "2026-11-07T20:42:19+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\review.json",
-            "modelEvidenceCommit": "62814e38267be47c333e1e98bc5cc9d03c32fb1c",
+            "modelEvidenceCommit": "905247098a667753a277b9dab1ac076cdcbe0db7",
             "ordinaryFullDevelopmentBelow5": false,
             "finalHoldoutOpened": false,
             "qualityQualified": false,
             "defaultProductChanged": false
           },
           "native17AlignedSpeakerContent20261107": {
-            "at": "2026-11-07T20:32:33+08:00",
+            "at": "2026-11-07T20:42:19+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\onset-review.json",
-            "modelEvidenceCommit": "62814e38267be47c333e1e98bc5cc9d03c32fb1c",
+            "modelEvidenceCommit": "905247098a667753a277b9dab1ac076cdcbe0db7",
             "results": [
               {
                 "meeting": "S_R004S03C01",
@@ -135564,14 +135575,14 @@
       },
       "runningWork": {
         "at": "2026-11-07T20:24:06+08:00",
-        "state": "FEASIBILITY_REVIEW_AND_RESOURCE714_BUILD_COMPLETE_NEXT_ERASE_TIMING_NO_BOARD",
+        "state": "OFFLINE715_BOUNDED_RECLAIM_TIMING_BUILD_BOARD_CLAIMED",
         "phoneInstalled": "0.1.96",
         "firmwareInstalled": 66712,
         "phoneSourceCommit": "4b2b9beae31b7050d4979d989d9aa6bbbd50b966",
         "backendSourceCommit": "b1387436b7162ab3d4b91a93df40ac3da4394295",
         "firmwareSource": "a641d13d5dceee73052252406ce50ee2008f22da",
-        "boardLease": false,
-        "boardItem": null,
+        "boardLease": true,
+        "boardItem": "Companion715短录回收忙时归因",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
@@ -135579,9 +135590,9 @@
         "systemHciReportRunning": false,
         "ownLatestSession": 328,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66714\\progress.json",
-        "firmwareBuildSession": null,
-        "firmwareCandidate": 66714,
-        "candidateSourceCommit": "2d0b8e2470e8ee5b014d5ef672800caf148725dd",
+        "firmwareBuildSession": 41016,
+        "firmwareCandidate": 66715,
+        "candidateSourceCommit": "c8d0c1b31ae2734284ac7220c85fc79112777476",
         "externalSnifferSession": null,
         "phoneCandidate": "0.1.96",
         "phoneCandidateSource": "4b2b9beae31b7050d4979d989d9aa6bbbd50b966",
@@ -135799,9 +135810,9 @@
         ]
       },
       "lastOwnerRequest": {
-        "at": "2026-11-07T18:57:36+08:00",
-        "text": "继续修短录音收取速度、偶发首次连接失败、资源占用及最终长录验收，修好了再售卖。",
-        "handling": "Continue original CP09-02/CP23-10 at61.44MHz, any-length50 including physical reclaim unchanged. No sale qualification until measured gates pass; explicit hardware blocks retained."
+        "at": "2026-11-07T20:38:07+08:00",
+        "text": "请继续吧, 继续推进, 到售卖标准为止",
+        "decision": "Continue current short critical-path attribution and affected fixes, ordinary phone metrics and final long validation; explicit blocks retained."
       },
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
@@ -143163,7 +143174,7 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "RUNNING_PS4_SEPARATION_QUALITY_AND_SALE_OPEN",
+          "status": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
@@ -144491,7 +144502,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T20:32:33+08:00",
+              "at": "2026-11-07T20:42:19+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -147300,7 +147311,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "RUNNING_PS4_SEPARATION_QUALITY_AND_SALE_OPEN",
+              "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -158879,18 +158890,25 @@
                     }
                   },
                   "run-r2.json": {
-                    "state": "RUNNING_PS4_SEPARATION",
+                    "state": "RUNNING_PS4_ASR",
                     "pid": 25088,
                     "startedAt": "2026-11-07T20:31:16+08:00",
                     "priorAttemptReceipts": [],
-                    "results": [],
+                    "results": [
+                      {
+                        "stage": "separation",
+                        "exitCode": 0,
+                        "wholeProcessFamilySeconds": 425.9413976999931,
+                        "privatePeakBytes": 1067130880
+                      }
+                    ],
                     "automaticModelFailureRetries": 0,
                     "qualityQualified": false,
-                    "stage": "separation",
-                    "activePid": 17888
+                    "stage": "asr",
+                    "activePid": 17416
                   },
                   "separation-state-r2.json": {
-                    "state": "EXTRACTING_TARGET_VOICES",
+                    "state": "COMPLETE_PS4_SEPARATION_UNQUALIFIED",
                     "pid": 25984,
                     "startedAt": "2026-11-07T20:31:16+08:00",
                     "stage": "separation",
@@ -158899,9 +158917,9 @@
                       "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
                       "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
                     },
-                    "newNeuralCalls": 23,
-                    "reusedOutputs": 0,
-                    "completedInputs": 23,
+                    "newNeuralCalls": 161,
+                    "reusedOutputs": 7,
+                    "completedInputs": 168,
                     "referencePassedToWorker": false,
                     "qualityQualified": false,
                     "limits": {
@@ -158923,13 +158941,48 @@
                     "gpu": "AMD Radeon RX 6800 XT",
                     "modelLoaded": true,
                     "modelLoadSeconds": 3.777412600000389,
-                    "newSpeakerEncoderCalls": 29
+                    "newSpeakerEncoderCalls": 167,
+                    "finishedAt": "2026-11-07T20:38:20+08:00",
+                    "wholeWorkerSeconds": 424.0328440000012
                   },
-                  "asr-state-r2.json": null,
+                  "asr-state-r2.json": {
+                    "state": "TRANSCRIBING_EVERY_EXTRACTED_VOICE",
+                    "pid": 13348,
+                    "startedAt": "2026-11-07T20:38:22+08:00",
+                    "stage": "asr",
+                    "binding": {
+                      "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+                      "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+                      "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+                    },
+                    "newNeuralCalls": 20,
+                    "reusedOutputs": 0,
+                    "completedInputs": 18,
+                    "referencePassedToWorker": false,
+                    "qualityQualified": false,
+                    "limits": {
+                      "pid": 13348,
+                      "cpuRate": 500,
+                      "cpuControlFlags": 5,
+                      "cpuPercentMaximum": 5.0,
+                      "inLimitedJob": true,
+                      "jobPrivateCommitLimitBytes": 2147483648,
+                      "jobMemoryLimitEnabled": true,
+                      "jobPeakPrivateCommitBytes": 1281019904,
+                      "cpuPriorityClass": 64,
+                      "memoryPagePriority": 1,
+                      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                      "gpuPriorityClass": 0,
+                      "gpuUtilizationHardCapped": false,
+                      "scope": "This worker and its descendants only; no global or other-app changes."
+                    },
+                    "gpu": "AMD Radeon RX 6800 XT",
+                    "modelLoaded": true
+                  },
                   "review.json": null
                 }
               },
-              "sourceAndEvidenceCommit": "62814e38267be47c333e1e98bc5cc9d03c32fb1c",
+              "sourceAndEvidenceCommit": "905247098a667753a277b9dab1ac076cdcbe0db7",
               "remoteReadbackConfirmed": true
             }
           }

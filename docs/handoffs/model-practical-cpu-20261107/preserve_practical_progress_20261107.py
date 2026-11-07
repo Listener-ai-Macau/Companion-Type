@@ -209,6 +209,11 @@ if record['native8F16Assessment']:
         if ps4['model-ready.json']:
             overlap_gate=next(g for g in contract['gates'] if g['id']=='RM-OVERLAP')
             overlap_gate['ps4ConditionedComponentScreen20261107']={'at':now,'evidence':str(ps4_root),'state':record['state'],'modelEvidenceCommit':head,'review':ps4['review.json'],'inputSelection':ps4['input-selection.json'],'qualityQualified':False,'allExistingFormalGatesRetained':True}
+            if full_ps4['protocol-r2.json']:
+                overlap_gate['ps4FullRoutedDevelopment20261107']={'at':now,'evidence':str(full_ps4_root),'state':record['state'],'modelEvidenceCommit':head,'review':full_ps4['review.json'],'wordLevelPureOverlapCerMeasured':False,'finalHoldoutOpened':False,'defaultProductChanged':False,'qualityQualified':False}
+            if full_ps4['review.json']:
+                f=full_ps4['review.json']
+                contract['qualification']['currentQualification']+=' Full39:23 L routed-candidate fixed-mapping/unknown-unmatched diagnostic '+format(f['fixedGlobalMappingAfter']['cer']*100,'.5f')+'%, standard cpCER '+format(f['standardCpCerAfter']['characterErrorRate']*100,'.5f')+'%; per-person regressions retained. Research comparison only; no true word-time/pure-overlap/facts/cross-domain/installed-phone-card or sale promotion.'
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}
