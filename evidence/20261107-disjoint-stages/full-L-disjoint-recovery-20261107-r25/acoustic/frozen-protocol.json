@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-07T08:59:30+08:00",
+  "model": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+  "modelRevision": "10304d926740cf5a5cee05a268086e3265197910",
+  "officialSourceCommit": "79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "weightSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "runtime": {
+    "python": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1",
+    "gpuIndex": 1,
+    "dtype": "bfloat16",
+    "boundedMathAttention": true,
+    "queryBlock": 128,
+    "keyBlock": 256,
+    "encoderBatch": 1,
+    "streamedWeightLoading": true,
+    "directGpuWeightLoading": true,
+    "nativePcm16RamLoading": true,
+    "releaseUnusedModelAllocations": true,
+    "systemPrivateMemoryBudgetBytes": 2147483648,
+    "workerCpuHardCapPercent": 5,
+    "workerGpuScheduling": "IDLE",
+    "cooperativeGpuDuty": 0.25,
+    "affinity": [
+      14,
+      15
+    ],
+    "threads": 2,
+    "maxLength": 131072,
+    "maxNewTokensSmoke": 2048,
+    "maxNewTokensFull": 65536,
+    "doSample": false,
+    "seed": 0,
+    "durableProgressWrites": true,
+    "preparedInputs": {
+      "manifest": "E:\\CodexData\\Companion\\.model-cache\\moss-prepared-full-L-20261106-r21\\packet\\manifest.json",
+      "sha256": "dc2bd9195972c2cd8c6828838b6c12daf08d8d42afefd1173e432dbd2c5ab432"
+    },
+    "hipVisibleDeviceOrdinal": 1,
+    "rebuildableCacheRoot": "E:/CodexData/Companion/.model-cache/full-generation-recovery-20261107",
+    "modelLoadStage": "acoustic",
+    "workerMemoryPagePriority": 1,
+    "encodedAudioOutput": "E:/CodexData/Companion/.model-cache/full-generation-recovery-20261107/full-L-disjoint-recovery-20261107-r25-encoded"
+  },
+  "scope": "Continue original complete meeting/audio/context from verified retained generated token prefix, rebuilding full context without KV-cache claims. Same pinned weights/math and passed all173 native fresh/resume controls. Only RX6800XT visible; existing allowed cooperative duty.25, CPU5%/private2GiB/GPUidle/very-low page priority/actual Windows low-RAM stop. No training, reference/count/hotwords or automatic inference retries. Include all verified previous failed-attempt time in final scoring."
+}
