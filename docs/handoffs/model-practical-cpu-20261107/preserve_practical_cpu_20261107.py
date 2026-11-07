@@ -26,11 +26,14 @@ record={'at':now,'phase':a.phase,'ownerQuote':'继续推进一下, 把模型做�
 record['state']=record['run']['state'] if record['run'] else 'PREPARED_COMPLETE_CPU_DIARIZATION_AND_EXISTING_ASR_TOKEN_TIMING'
 if (C/'transcript-run.json').exists():record['transcriptRun']=read(C/'transcript-run.json');record['state']=record['transcriptRun']['state']
 record['shortIntegrationProof']=read(base/'practical-smoke-r2/integration-proof.json') if (base/'practical-smoke-r2/integration-proof.json').exists() else None
+record['sharedProductContractProof']=read(base/'practical-smoke-r2/product-contract-proof.json') if (base/'practical-smoke-r2/product-contract-proof.json').exists() else None
+record['commandAdapterProof']=read(base/'practical-smoke-r2/command-adapter-proof.json') if (base/'practical-smoke-r2/command-adapter-proof.json').exists() else None
 record['qualityReviews']=[read(file) for file in C.glob('transcripts/*/quality-review.json')]
 record['priorCpuR1']=read(base/'practical-cpu-r1/run.json') if (base/'practical-cpu-r1/run.json').exists() else None
 record['next']='同一冻结完整CPU分人流程依次验L/S整会，标准DER同时核逐人/短句覆盖；普通转写保留原音与原始文字，用模型token时间估计绑定人物，重叠/边界不明确保留未知，不整窗乱贴一人。退出后才评分，按真实结果决定保留/拒绝，不扫阈值、不训练、不原样重跑HIP长上下文。原跨会文字<5%、重叠逐路、事实/双端/实卡和售卖门保持。'
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['README.md','src/probe_existing_asr_20261107.py','evidence/20261107-practical-cpu']
+paths += ['src/companion_local_meeting_20261107.py','tools/model-output-contract-20261107']
 paths += [str(p.relative_to(M)).replace('\\','/') for p in (M/'src').glob('*practical*20261107.py')]
 head=ship(M,paths,'Preserve practical CPU model pipeline '+a.phase)
 record.update(sourceAndEvidenceCommit=head,remoteReadbackConfirmed=True)

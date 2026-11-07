@@ -42950,10 +42950,10 @@
         "normal_recording_receive": [
           {
             "id": "recording_receive_payload_rate_kib_s",
-            "title": "手机按场收取持续有效速率",
+            "title": "手机按场收取平均有效速率（任意长度，含实际回收）",
             "unit": "KiB/s",
             "minimum": 50,
-            "basis": "Owner2026-11-07后续明确保留50KiB/s；实际新有效字节/首PULL或DATA至最终设备耐久确认，普通多蓝牙共存与61.44MHz不变，不算缓存或压缩前PCM，不扣回压/重试。"
+            "basis": "Owner2026-11-07最新明确“任何长度都要平均 ≥50，包含回收”。实际新有效编码字节/首PULL至最终设备耐久回收确认；短录不豁免，不算缓存/压缩前PCM，不扣回压/重试/回收等待。61.44MHz与正常蓝牙共存保持。"
           },
           {
             "id": "recording_integrity_mismatch_count",
@@ -43277,6 +43277,16 @@
         "previousFixed25Contract": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\dynamic-completion\\previous-fixed-sample-contract.json",
         "policy": "动态替代固定五分钟25秒及独立收取45秒/两小时300秒。吞吐50与冷5/恢复10/控制400ms/首PCM1.5秒、OTA150/100、完整性和CPU只观察保持。",
         "noReflashForMetricsChange": true
+      },
+      "ownerAllLengthRate20261107": {
+        "at": "2026-11-07T10:48:35+08:00",
+        "ownerRaw": "任何长度都要平均 ≥50，包含回收",
+        "questionContext": "持续大段50、短录动态（建议） vs 任意长度含回收平均50；Owner选择后者。",
+        "minimumKiBps": 50,
+        "allLengths": true,
+        "includesPhysicalReclaim": true,
+        "dynamicDeadlineAlsoRequired": true,
+        "policy": "Every observed length includes firstPULL through exact durable original and physical-reclaim receipt. Short failure stays FAIL even if dynamic waiting passes. No cached bytes, early ACK, size exemption or wait deduction."
       }
     },
     "owner_clarification20261106": {
@@ -131367,7 +131377,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "按Owner继续至可售，当前同批先收敛自动radio10秒和正式资源：已知上次10.735秒中目录约2.5秒；实际GATT目录属性248B，因此不扩属性/RAM，改66703+显式一次请求连续小页。旧客户端仍逐页，目录变化以原nonce拒绝重读，通知回压不覆盖原页，断开退还通道。C生产者/真实Opus-radio模型与旧路径已过，Android源正在验证；CPU观察默认关闭随这次真实功能固件构建，不为CPU数字另包。完成手机联动和受影响模型后集中构建/OTA及真实radio/原音/长录；短录严格速率原FAIL与物理block不关闭，不抢共享板。",
+      "next": "先收尾本轮703正常手机OTA及自动radio10秒验证，0.1.85已装703尚未装。Owner新明确任意长度含回收平均50，无短录豁免；短录当前仍失败，动态过门不能抵消。目录连续页不加248B属性或RAM，正式CPU观察默认关，703镜像412408B比702减1264、静态69328/栈21504；相对原699加192B预算仍待实际有用结果评估，不先抬门。随后优先查并优化短录实体回收固定开销，保留真实耐久原音与物理回收回执，不提前确认来凑速度；再最终长期/原剩余软件项。明确block继续。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133928,16 +133938,20 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T10:28:27+08:00",
-        "state": "703_STREAMED_DIRECTORY_PRODUCTION_CANDIDATE_SOURCE_AND_MODELS",
-        "boardLease": false,
+        "at": "2026-11-07T10:48:35+08:00",
+        "state": "085_INSTALLED_703_SIGNED_PACKAGE_READY_BOARD_LEASE_HELD",
+        "boardLease": true,
+        "boardItem": "Companion703目录连续返回与正式资源验收",
+        "firmwareInstalled": 66702,
+        "phoneInstalled": "0.1.85",
+        "phoneSourceCommit": "a289a1f6465d051a546934cfc1077a22d44f84b7",
+        "backendSourceCommit": "6fed4d8c5fad09791db19ed5c43f9c5c695bd1eb",
+        "firmwareCandidate": 66703,
+        "firmwareCandidateSource": "0bcb10ec712289222f2546984379580fddcb6e80",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
-        "firmwareInstalled": 66702,
-        "phoneInstalled": "0.1.84",
-        "sourcePending": "FW66703 opt-in one-request consecutive catalogue pages in existing248B attribute and same scratch, old clients unchanged; Android gates opt-in on firmware. Production build will omit optional CPU observer. Not installed.",
-        "evidence": "E:/CodexData/Companion/.build-cache/full-media66703/models"
+        "scope": "Signed703 ready, not installed. Source/producers/new and old peers/stale snapshot/models and real React completion cache tests pass. Original34/free4608000/17 before board metadata verified. Ordinary phone OTA being prepared."
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -134149,7 +134163,7 @@
           "缺少STOP时已保存字节/部分前缀准确快照则NOT_EVALUATED，不倒推或编造。"
         ]
       },
-      "lastOwnerRequest": "继续把, 推进到可以售卖为止",
+      "lastOwnerRequest": "继续把, 推进到可以售卖为止；任何长度都要平均 ≥50，包含回收",
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
         "result": "PASS_DYNAMIC_WAIT_COVERED_LENGTHS_AND_SCOPED_RESUME_NOT_FULL_SALE_QUALIFICATION",
@@ -134292,6 +134306,16 @@
         "installed": true,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\device084\\build\\installation-verification.json",
         "scope": "Current installed delivery; START capacity refresh fix. Receive code/JNI/assets identical to083. Phone source/build actually committed."
+      },
+      "ownerAllLengthRate20261107": {
+        "at": "2026-11-07T10:48:35+08:00",
+        "ownerRaw": "任何长度都要平均 ≥50，包含回收",
+        "questionContext": "持续大段50、短录动态（建议） vs 任意长度含回收平均50；Owner选择后者。",
+        "minimumKiBps": 50,
+        "allLengths": true,
+        "includesPhysicalReclaim": true,
+        "dynamicDeadlineAlsoRequired": true,
+        "policy": "Every observed length includes firstPULL through exact durable original and physical-reclaim receipt. Short failure stays FAIL even if dynamic waiting passes. No cached bytes, early ACK, size exemption or wait deduction."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -134343,7 +134367,7 @@
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
-        "currentBoardLeaseHeld": false,
+        "currentBoardLeaseHeld": true,
         "customerResult": null,
         "ordinaryPhoneContinuation": {
           "at": "2026-11-06T11:48:03+08:00",
@@ -134556,13 +134580,13 @@
           "wholeProductQualified": false
         },
         "latestInstalledVersionObservation": {
-          "at": "2026-11-07T10:02:37+08:00",
-          "version": "0.1.84",
+          "at": "2026-11-07T10:48:35+08:00",
+          "version": "0.1.85",
           "firmware": 66702,
-          "sourceCommit": "1d805f0d38238e98c337f92ae29a449aca009609",
-          "backendSourceCommit": "5824680e60a0f273b2568b9f40647660b11f5caa",
-          "apkSha256": "8c8352c1601bb7dad579e5d8ee0d67c6c4cd690aa16f0beec6183066258508ff",
-          "scope": "Exact installed084; current ordinary start/stop/receive286/287 and dynamicPASS. Inherited unchanged083 normal receive5min and scoped pause evidence retains actual083 labels. Original34/free4608000/17 unchanged; board idle and released."
+          "sourceCommit": "a289a1f6465d051a546934cfc1077a22d44f84b7",
+          "backendSourceCommit": "6fed4d8c5fad09791db19ed5c43f9c5c695bd1eb",
+          "apkSha256": "ee6e9e9e417eaaede8c211727279fcc91cb40a5d6da3f92a7bd8ffda3944cdc6",
+          "scope": "Exact installed085, board remains66702; 703 signed ready not installed; no recording, sync or upgrade yet."
         },
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
@@ -139749,7 +139773,7 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "PREPARED_COMPLETE_CPU_DIARIZATION_AND_EXISTING_ASR_TOKEN_TIMING",
+          "status": "RUNNING_COMPLETE_MEETING_DIARIZATION",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
@@ -141077,8 +141101,8 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T10:39:32+08:00",
-              "phase": "prepared",
+              "at": "2026-11-07T10:50:24+08:00",
+              "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2",
               "protocol": {
@@ -141143,7 +141167,24 @@
                 ],
                 "scope": "Speaker activity/anonymous identity only. This does not recover overlapped words, recognize names/roles, prove ASR<5%, phone performance or product qualification."
               },
-              "run": null,
+              "run": {
+                "state": "RUNNING_COMPLETE_MEETING_DIARIZATION",
+                "startedAt": "2026-11-07T10:40:35+08:00",
+                "pid": 18960,
+                "results": [],
+                "protocolSha256": "c25306d5b28efa27bd3c862f158c51143b655c9700a95d7eda38f717dd9bf77a",
+                "sourceSha256": {
+                  "practical_cpu_worker_20261107.py": "b2e45bfef306f482dc32b19629aad5b4fce5977e377825771e4a9b609dc6c7c0",
+                  "run_practical_cpu_20261107.py": "3d56711830a9bb986b40f221124133334fec2d14c0ce51d4b5ea2becbf717d3c",
+                  "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+                  "score_cross_corpus_diarization_20261103.py": "99756dd111ba154432604cf61236a7ad49e97274492bbc8c6737e6063fc8ccec",
+                  "reference_textgrid_20261104.py": "8f43fd26b67851714feb5530c3b321d0cca0c650b63ab8b2e0ca78e15715dc60"
+                },
+                "referencePassedToInference": false,
+                "automaticRetries": 0,
+                "activeMeeting": "L_R003S01C02",
+                "activePid": 23144
+              },
               "asrProbe": {
                 "state": "EXISTING_ASR_CONTROL_COMPLETE",
                 "newAsrAccuracyEvidence": false,
@@ -141317,7 +141358,7 @@
               "wholeMeetingAsrQuality": null,
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
-              "state": "PREPARED_COMPLETE_CPU_DIARIZATION_AND_EXISTING_ASR_TOKEN_TIMING",
+              "state": "RUNNING_COMPLETE_MEETING_DIARIZATION",
               "shortIntegrationProof": {
                 "state": "PASS_ACTUAL_PUBLIC30S_CPU_JOURNAL_TOKEN_ATTRIBUTION_AND_NO_MODEL_CACHE_RESUME",
                 "sameRawTextTokensOnsetsAsOriginalProbe": true,
@@ -141327,6 +141368,29 @@
                 "modelLoadedOnResume": false,
                 "noAccuracyClaim": true,
                 "noNameOrRoleRecognitionClaim": true
+              },
+              "sharedProductContractProof": {
+                "result": {
+                  "allWithinAudio": true,
+                  "approximateRows": 10,
+                  "characters": 72,
+                  "scope": "Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.",
+                  "state": "PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY",
+                  "unknownSpeakerRows": 4,
+                  "utterances": 10
+                },
+                "windowsSourceSha256": "f8f5b87017ebf10616b93d36520bab388f7e63033187bc289dfa1034b3af1684",
+                "androidSourceSha256": "e896c81cda5d6296b5ad0b79594c768ab5df6c34889683159aa6838c353b0f0c",
+                "sourceEqualAfterNewlineNormalization": true,
+                "androidDeviceRun": false,
+                "windowUiRun": false
+              },
+              "commandAdapterProof": {
+                "state": "PASS_LOCAL_COMMAND_ADAPTER_CACHED_REAL_OUTPUT_READBACK",
+                "outputExactlyEqualToActualControl": true,
+                "newModelProcessesLaunched": 0,
+                "referenceRead": false,
+                "scope": "Cache-only command adapter, not new speech/accuracy or UI validation"
               },
               "qualityReviews": [],
               "priorCpuR1": {
@@ -141357,7 +141421,7 @@
                 "finishedAt": "2026-11-07T10:31:57+08:00"
               },
               "next": "同一冻结完整CPU分人流程依次验L/S整会，标准DER同时核逐人/短句覆盖；普通转写保留原音与原始文字，用模型token时间估计绑定人物，重叠/边界不明确保留未知，不整窗乱贴一人。退出后才评分，按真实结果决定保留/拒绝，不扫阈值、不训练、不原样重跑HIP长上下文。原跨会文字<5%、重叠逐路、事实/双端/实卡和售卖门保持。",
-              "sourceAndEvidenceCommit": "1a218deded247940eaed891d951e6c73fcf9133f",
+              "sourceAndEvidenceCommit": "76a4cc776d0c990c09d113811149977bfbf35406",
               "remoteReadbackConfirmed": true
             }
           }
