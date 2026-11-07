@@ -176,6 +176,8 @@ if presence['review.json']:
     record['state']=presence['review.json']['state'];record['next']=presence['review.json']['next']
 if presence['next-direction.json']:
     record['next']=presence['next-direction.json']['next']
+    method=presence['next-direction.json'].get('ownerMethodReview')
+    if method:record['ownerQuote']=method['ownerQuote']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker','upstream-tse']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]

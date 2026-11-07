@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T21:47:43+08:00",
+  "at": "2026-11-07T21:53:12+08:00",
   "phase": "running",
-  "ownerQuote": "继续推进一下, 把模型做到可实用",
+  "ownerQuote": "不及格要怎么搞, 慢慢尝试这些模型, 合理吗这个方式",
   "stockCpuR1": {
     "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
     "startedAt": "2026-11-07T10:26:59+08:00",
@@ -8051,7 +8051,7 @@
     "qualityQualified": false,
     "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
   },
-  "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+  "next": "原RM-OVERLAP：先复用现有整会原音/分离音/逐路文字和错误归因，区分目标活动漏检、分离串音/损伤、残留声音触发ASR额外文字、结果合并重复；冻结覆盖普通讲话/目标缺席/短轮/两路及三路以上重叠且来自不同真实会议的短诊断对照，单次只改变一环。模型按已确认缺口、任务匹配和匹配完整权重筛选，首轮1个主候选、至多1个有不同依据的备选，短对照不过门不跑整场、不继续轮换同类模型/扫阈值。nomo-pvad只保留候选，先核查真实远场重叠能力证据，未因公开权重就默认开跑。95%/5%只是快速否决条件，不能代替整场严格<5%文字与分人验收。若同一原因无改善，回到架构/监督数据/定向微调决策；没有对应证据不从头训练。普通基线/原音/原字、未见最终集及事实/双端实卡/售卖门保持。",
   "lastOwnerQuote": "推进把, 主要是复杂多人这个看看怎么搞",
   "nativeVerbatimPreparation": {
     "at": "2026-11-07T15:04:06+08:00",
@@ -17854,7 +17854,7 @@
             "finding": "Published evaluation recipe lists separate WavLM/ECAPA/TS-VAD weights and a gated pyannote segmentation dependency. It is not a verified drop-in ungated commercial package here."
           }
         ],
-        "next": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+        "next": "原RM-OVERLAP：先复用现有整会原音/分离音/逐路文字和错误归因，区分目标活动漏检、分离串音/损伤、残留声音触发ASR额外文字、结果合并重复；冻结覆盖普通讲话/目标缺席/短轮/两路及三路以上重叠且来自不同真实会议的短诊断对照，单次只改变一环。模型按已确认缺口、任务匹配和匹配完整权重筛选，首轮1个主候选、至多1个有不同依据的备选，短对照不过门不跑整场、不继续轮换同类模型/扫阈值。nomo-pvad只保留候选，先核查真实远场重叠能力证据，未因公开权重就默认开跑。95%/5%只是快速否决条件，不能代替整场严格<5%文字与分人验收。若同一原因无改善，回到架构/监督数据/定向微调决策；没有对应证据不从头训练。普通基线/原音/原字、未见最终集及事实/双端实卡/售卖门保持。",
         "finalHoldoutOpened": false,
         "productDefaultsChanged": false,
         "newDeploymentOrCustomerAcceptance": false,
@@ -17865,6 +17865,37 @@
           "commit": "cb828468d183424fd574984f00b3ffbcce0be9bc",
           "matchingEnrollmentRevision": "1cf80d41fb3435bd3d8df185b5c423333b2db42a",
           "neuralModelsLoaded": 0
+        },
+        "ownerMethodReview": {
+          "at": "2026-11-07T21:53:11+08:00",
+          "ownerQuote": "不及格要怎么搞, 慢慢尝试这些模型, 合理吗这个方式",
+          "priorWorkpointRetained": "原RM-OVERLAP：公开配套可获得性已核实并固定发布commit/Git blob及原始声纹权重revision/SHA256；下一项按此配套隔离下载校验、完整参数覆盖和160ms时间语义短检，之后冻结普通/缺席/短轮/重叠的原始混音真实会议验证。仍不能接入删字或宣称复杂多人达标。 原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+          "decision": "BOUNDED_HYPOTHESIS_DRIVEN_COMPONENT_VALIDATION_NOT_OPEN_ENDED_MODEL_SHOPPING",
+          "currentEvidence": "PS4 whole39:23 L cpCER39.39604%→53.55002%; fixed total3706→4646. Local3s identity hypothesis90.93248% positive recall/77.62619% absent false acceptance rejected. These failures constrain those configurations; they do not prove all separation architectures invalid or the next activity checkpoint effective.",
+          "notYetDisentangled": [
+            "Target activity missed by diarization vs extractable speech missed by ASR",
+            "Acoustic leakage/target absence vs ASR additions on separated residual",
+            "Speaker conditioning/enrollment errors vs transcript merging duplication"
+          ],
+          "candidatePolicy": {
+            "preferred": 1,
+            "alternativeMaximum": 1,
+            "mustExplainChangedCausalHypothesis": true,
+            "shortCrossMeetingControlBeforeFullRun": true,
+            "oneComponentChangesAtATime": true,
+            "noSameConfigurationOrThresholdSweep": true,
+            "publicWeightsAloneInsufficient": true
+          },
+          "measurement": "Keep ordinary strictCER, speaker activity miss/confusion, per-person and overlap attributed text, extra/omitted words and actual stage cost separate. Existing95%/5% local criterion is a rejection screen, not proof of final<5%.",
+          "pendingCandidate": "nomo-pvad remains untested optional hypothesis, not an adopted architecture or automatic next full run.",
+          "trainingDecision": "Targeted adaptation of the demonstrated failing module from a strong public pretrained base only after task/implementation/data mismatch is isolated; no blind foundation training. Training/dev/test rooms and speakers must be separated and the final holdout stays unopened.",
+          "productAccuracyImprovedThisReply": false,
+          "newNeuralRuns": 0,
+          "sources": [
+            "https://www.isca-archive.org/interspeech_2023/zhang23k_interspeech.html",
+            "https://www.merl.com/research/downloads/TS-SEP",
+            "https://www.chimechallenge.org/challenges/chime8/task1/results"
+          ]
         }
       },
       "source-availability.json": {
@@ -17968,6 +17999,6 @@
       }
     }
   },
-  "sourceAndEvidenceCommit": "9c1454171fa6e3b948771fc0ede7b7e8a3de7d88",
+  "sourceAndEvidenceCommit": "f8388b9aefffad37cd3b6a2b5c667c4fc9085cab",
   "remoteReadbackConfirmed": true
 }
