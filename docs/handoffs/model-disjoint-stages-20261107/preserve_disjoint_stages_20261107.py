@@ -36,6 +36,7 @@ record={'at':now,'phase':args.phase,'ownerQuote':'继续推进123昨晚','cpuCon
 full=None
 if args.full_control:
     full=Path(args.full_control);record['fullMeeting']=read(full/'batch-state.json')
+    record['fullWorkerObservations']=[read(file) for file in full.rglob('state.json')]
     for file in full.glob('results/*/review.json'):record['newWholeMeetingQuality']=read(file)
 if args.phase=='source':
     status='DISJOINT_STAGE_SOURCE_AND_CPU_EQUIVALENCE_READY_NATIVE_SHORT_PENDING'
@@ -71,7 +72,7 @@ if full:
 assert path.read_bytes()==raw,'Shared backlog changed; re-read and merge again'
 temp=path.with_suffix('.disjoint.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 log=R/'docs/development_log.md'
-entry='\n\n## '+now+'｜同权重分阶段装载 '+args.phase+'\n\nOwner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→真实恢复控制→原整会续算评分，不扩大到训练/手机/板/UI。CPU小型真实作者API的声音特征逐字节一致、全20token及7/13token恢复一致、输入变更拒绝、BF16缓存可核；仅合成架构控制，不当公开权重识别精度。首用basePython因transformers/tokenizers环境不匹配在模型前失败，已保留；改固定AMD环境后通过，未改系统包。声音阶段只装624926720B组，文字只装1192099840B组，未装部分保持meta；非持久RoPE用作者原构造器生成。原始完整特征出盘、逐字节读回、绑定音频/全部输入/模型/执行设置，生产者退出后才加载下一阶段；累计声音预计算和原失败时间，不改变音频/人物/上下文/权重/采样，不声称这些权重字节就是系统RAM节省。\n\n本阶段实际状态：'+status+'。原生控制：'+(record['nativeControl']['state'] if record['nativeControl'] else '尚未开始')+'。整会：'+(record.get('fullMeeting',{}).get('state','尚未开始'))+'。证据'+head+'已推送读回；CPU5%/private2GiB/页优先级1/IDLE+duty.25/实际低RAM停止不变，无用户应用关闭、无源头不明重试。下一项：'+next_step+'\n'
+entry='\n\n## '+now+'｜同权重分阶段装载 '+args.phase+'\n\nOwner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→真实恢复控制→原整会续算评分，不扩大到训练/手机/板/UI。CPU小型真实作者API的声音特征逐字节一致、全20token及7/13token恢复一致、输入变更拒绝、BF16缓存可核；仅合成架构控制，不当公开权重识别精度。首用basePython因transformers/tokenizers环境不匹配在模型前失败，已保留；改固定AMD环境后通过，未改系统包。声音阶段只装624926720B组，文字只装1192099840B组，未装部分保持meta；非持久RoPE用作者原构造器生成。原始完整特征出盘、逐字节读回、绑定音频/全部输入/模型/执行设置，生产者退出后才加载下一阶段；累计声音预计算和原失败时间，不改变音频/人物/上下文/权重/采样，不声称这些权重字节就是系统RAM节省。\n\n本阶段实际状态：'+status+'。原生控制：'+(record['nativeControl']['state'] if record['nativeControl'] else '尚未开始')+'。整会：'+(record.get('fullMeeting',{}).get('state','尚未开始'))+'；声音预计算族耗时'+str(record.get('fullMeeting',{}).get('audioPrecomputationProcessFamilySeconds'))+'秒。实际worker快照：'+json.dumps([{k:r.get(k) for k in ['state','completedAcousticChunks','totalAcousticChunks','generatedTokens','newGeneratedTokens','decoderPrefillLayersCompleted']} for r in record.get('fullWorkerObservations',[])],ensure_ascii=False)+'。证据'+head+'已推送读回；CPU5%/private2GiB/页优先级1/IDLE+duty.25/实际低RAM停止不变，无用户应用关闭、无源头不明重试。下一项：'+next_step+'\n'
 with log.open('a',encoding='utf8') as out:out.write(entry)
 destination=S/'docs/handoffs/model-disjoint-stages-20261107';destination.mkdir(parents=True,exist_ok=True)
 for name in ['preserve_disjoint_stages_20261107.py','run_disjoint_full_guarded_20261107.py']:
