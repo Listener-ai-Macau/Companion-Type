@@ -140,12 +140,17 @@ if qwen['review.json']:
     record['state']=qwen['review.json']['state'];record['next']=qwen['review.json']['next']
 if qwen['next-direction.json']:record['next']=qwen['next-direction.json']['next']
 alignment_root=base/'practical-alignment-r1'
-record['nativeAlignment']={name:optional(alignment_root/name) for name in ['preparation.json','protocol.json','run.json','tiny-loader-proof.json','pilot-state.json','full-state.json','review.json']}
+record['nativeAlignment']={name:optional(alignment_root/name) for name in ['preparation.json','protocol.json','run.json','tiny-loader-proof.json','pilot-state.json','full-state.json','review.json','decision-r1.json','onset-attribution-policy.json','onset-review.json','onset-decision.json']}
 record['native17ConcurrentCacheProof']=optional(base/'practical-qwen-native17-r5/independent-concurrent-cache-proof.json')
 if record['nativeAlignment']['run.json']:
     record['state']=record['nativeAlignment']['run.json']['state']+'_QUALITY_AND_SALE_OPEN'
 if record['nativeAlignment']['review.json']:
     record['next']=record['nativeAlignment']['review.json']['next']
+if record['nativeAlignment']['decision-r1.json']:
+    record['next']=record['nativeAlignment']['decision-r1.json']['next']
+if record['nativeAlignment']['onset-decision.json']:
+    record['state']=record['nativeAlignment']['onset-decision.json']['state']+'_QUALITY_AND_SALE_OPEN'
+    record['next']=record['nativeAlignment']['onset-decision.json']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
@@ -171,7 +176,8 @@ if record['native8F16Assessment']:
         if qwen_current.name=='practical-qwen-author-boundaries-r6' and qwen['review.json']:
             text_gate['authorBoundaryDevelopment20261107']={'at':now,'review':str(qwen_current/'review.json'),'modelEvidenceCommit':head,'ordinaryFullDevelopmentBelow5':qwen['review.json']['ordinaryFullChronologicalCerBelow5Percent'],'finalHoldoutOpened':False,'qualityQualified':False,'defaultProductChanged':False}
         if record['nativeAlignment']['review.json']:
-            text_gate['native17AlignedSpeakerContent20261107']={'at':now,'review':str(alignment_root/'review.json'),'modelEvidenceCommit':head,'results':record['nativeAlignment']['review.json']['results'],'rawRecognitionTextUnchanged':True,'newAsrOrSpeakerNeuralCalls':0,'wordTimeGroundTruthAvailable':False,'qualityQualified':False,'defaultProductChanged':False}
+            latest_alignment=record['nativeAlignment']['onset-review.json'] or record['nativeAlignment']['review.json']
+            text_gate['native17AlignedSpeakerContent20261107']={'at':now,'review':str(alignment_root/('onset-review.json' if record['nativeAlignment']['onset-review.json'] else 'review.json')),'modelEvidenceCommit':head,'results':latest_alignment['results'],'priorFailedFullIntervalReview':str(alignment_root/'review.json'),'onsetDecision':record['nativeAlignment']['onset-decision.json'],'rawRecognitionTextUnchanged':True,'newAsrOrSpeakerNeuralCalls':0,'wordTimeGroundTruthAvailable':False,'qualityQualified':False,'defaultProductChanged':False}
         contract['qualification']['currentQualification']='NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state '+record['state']+'. Overlap words/facts/installed mobile-card/final holdout/sale still open.'
         if qwen['review.json']:
             rows=qwen['review.json']['results']
@@ -179,9 +185,9 @@ if record['native8F16Assessment']:
             stage_note='One exposed ordinary development meeting reached strict5%; formal cross-domain text gate stays open.' if qwen['review.json'].get('ordinaryFullChronologicalCerBelow5Percent') else 'Ordinary strict5% stage remains open.'
             contract['qualification']['currentQualification']='NOT_QUALIFIED: official fixed native Qwen exposed development results: '+scores+'. Complex mixed chronological value is diagnostic only; all speakers unknown, no word alignment or joint/time-constrained text acceptance. '+stage_note+' Prior FP16 diarization and AMI cross-corpus failure retained. Overlap-separated words/factual minutes/installed Windows-Android/card/final holdout/sale still open.'
         if record['nativeAlignment']['review.json']:
-            aligned=record['nativeAlignment']['review.json']
+            aligned=record['nativeAlignment']['onset-review.json'] or record['nativeAlignment']['review.json']
             joint='; '.join(r['meeting']+' cpCER '+format(r['standardAnonymousCpCerDiagnostic']['characterErrorRate']*100,'.5f')+'%' for r in aligned['results'])
-            contract['qualification']['currentQualification']='NOT_QUALIFIED: native17 fixed30s recognized text now has independent predicted word intervals and conservative anonymous identity on both complete development meetings: '+joint+'. Raw fixed30s S5.76577%/complex mixed23.15583% unchanged. Separate author-boundary S5.53754% still misses5%, complex not run by predeclared rule. Unknown forced-unmatched diagnostics separate; no verified word-time accuracy/tcpCER or both-overlap-voices recovered. Prior FP16/AMI failure and factual minutes/cross-domain holdout/installed Windows-Android/card/sale gates remain open.'
+            contract['qualification']['currentQualification']='NOT_QUALIFIED: native17 fixed30s recognized text now has independent predicted word onsets and anonymous identity on both complete development meetings: '+joint+'. Bad full-positive-interval integration and zero-duration predictions retained. Historical onset60ms policy kept with no threshold sweep. Raw fixed30s S5.76577%/complex mixed23.15583% unchanged. Separate author-boundary S5.53754% still misses5%, complex not run by predeclared rule. Complex unknown-forced-unmatched42.71554% remains a failure; no verified word-duration accuracy/tcpCER or both-overlap-voices recovered. Prior FP16/AMI failure and factual minutes/cross-domain holdout/installed Windows-Android/card/sale gates remain open.'
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}
