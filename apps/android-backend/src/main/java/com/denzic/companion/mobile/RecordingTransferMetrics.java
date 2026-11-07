@@ -25,12 +25,18 @@ final class RecordingTransferMetrics {
         long highOffset;
         long firstWindow,verifiedAt,receiptAt;
         long consumeReadyAt=-1,consumeSentAt=-1,consumeReceivedAt=-1;
+        long pullWrittenAt=-1,firstPayloadAt=-1,lastPayloadAt=-1;
         boolean verified,windowStarted,receiptConfirmed;
         Segment(RecorderWire.Descriptor d,long initialOffset){this.length=d.encodedLength;this.initialOffset=initialOffset;this.highOffset=initialOffset;this.recordingId=d.recordingId;this.index=d.segmentIndex;}
         void accepted(long offset){synchronized(RecordingTransferMetrics.this){
             if(offset<0||offset>length){valid=false;return;}
-            highOffset=Math.max(highOffset,offset);
+            if(offset>highOffset){
+                if(firstPayloadAt<0)firstPayloadAt=clock.nanoTime();
+                if(offset==length)lastPayloadAt=clock.nanoTime();
+                highOffset=offset;
+            }
         }}
+        void pullWritten(){synchronized(RecordingTransferMetrics.this){if(pullWrittenAt<0)pullWrittenAt=clock.nanoTime();}}
         void verified(){synchronized(RecordingTransferMetrics.this){if(!verified)verifiedAt=clock.nanoTime();verified=true;highOffset=length;}}
     }
     synchronized void initialSync(boolean freshSelection,boolean terminalAvailable){
@@ -95,6 +101,9 @@ final class RecordingTransferMetrics {
                 .append(",\"windowVerifiedNewBytes\":").append(s.verified?Math.max(0,s.length-s.initialOffset):0)
                 .append(",\"windowAcceptedNewBytes\":").append(Math.max(0,s.highOffset-s.initialOffset))
                 .append(",\"windowStartedNanos\":").append(s.windowStarted?Long.toString(s.firstWindow):"null")
+                .append(",\"pullWriteCompletedNanos\":").append(s.pullWrittenAt>=0?Long.toString(s.pullWrittenAt):"null")
+                .append(",\"firstPayloadAcceptedNanos\":").append(s.firstPayloadAt>=0?Long.toString(s.firstPayloadAt):"null")
+                .append(",\"lastPayloadAcceptedNanos\":").append(s.lastPayloadAt>=0?Long.toString(s.lastPayloadAt):"null")
                 .append(",\"originalVerifiedNanos\":").append(s.verified?Long.toString(s.verifiedAt):"null")
                 .append(",\"consumeLocalReadyNanos\":").append(s.consumeReadyAt>=0?Long.toString(s.consumeReadyAt):"null")
                 .append(",\"consumeWriteCompletedNanos\":").append(s.consumeSentAt>=0?Long.toString(s.consumeSentAt):"null")

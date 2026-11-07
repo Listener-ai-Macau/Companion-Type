@@ -131,7 +131,9 @@ public final class RecorderWireTest {
                 throw new AssertionError("native metric omitted physical receipts or counted duplicate/cache bytes: "+measured);
             String firstTrace=metricSegment(measured,41);
             long firstReceipt=decline?1_530_000_000L:1_560_000_000L;
-            if(metricNumber(firstTrace,"windowStartedNanos")!=0||metricNumber(firstTrace,"originalVerifiedNanos")!=30_000_000L||
+            if(metricNumber(firstTrace,"pullWriteCompletedNanos")!=10_000_000L||
+               metricNumber(firstTrace,"firstPayloadAcceptedNanos")!=30_000_000L||metricNumber(firstTrace,"lastPayloadAcceptedNanos")!=30_000_000L||
+               metricNumber(firstTrace,"windowStartedNanos")!=0||metricNumber(firstTrace,"originalVerifiedNanos")!=30_000_000L||
                metricNumber(firstTrace,"receiptDurableNanos")!=firstReceipt||metricNumber(firstTrace,"windowVerifiedNewBytes")!=audio.length)
                 throw new AssertionError("per-segment metric finished before exact receipt: "+firstTrace);
             metricClock[0]+=5_000_000_000L;observed.confirmed(d);

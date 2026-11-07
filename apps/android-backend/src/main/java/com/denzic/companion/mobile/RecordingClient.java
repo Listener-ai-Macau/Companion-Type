@@ -334,6 +334,7 @@ public final class RecordingClient implements Closeable {
                 if(!receiver.completeBytesReceived()){
                     if(transferMetrics!=null)transferMetrics.window(measured);
                     link.write(RECORDING_PULL,peer.pull(found,receiver.resumeOffset()));
+                    if(measured!=null)measured.pullWritten();
                     while(!receiver.completeBytesReceived()){
                         if(Thread.currentThread().isInterrupted())throw new IOException("transfer interrupted; partial copy retained");
                         receiver.accept(link.await(RECORDING_PULL,15_000));
