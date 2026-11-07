@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T12:31:43+08:00",
-  "aarSha256": "4f45df5e5e7a46fdccec5203974dc0ee8f1b14558bcd82bc6214b7d7e23972b2",
-  "backendSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
+  "at": "2026-11-07T13:00:02+08:00",
+  "aarSha256": "3655ef12b8866ecac3dd0ac41efe7306c7f18f37f9b6de0ca8fc0f3743ea8334",
+  "backendSourceCommit": "840d8c531e13bb75e10ef90612ffec76b493d4fe",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Central HIGH only during actual available recording or verified OTA data transfer, balanced on success/failure and no-data follow stays normal. Optional rejection does not fake negotiation or block data; primary storage errors survive cleanup. No extra delay, data/CRC/SHA/durable reclaim endpoints unchanged. Board FW705 unchanged, MCU61.44MHz, JNI/assets/models unchanged. Physical acceptance pending.",
-  "javaSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
+  "scope": "First direct unchanged; the existing one initial133 retry uses public Android background connect scheduling after same1s selected rediscovery. Normal initial idle callback waits for a real connected event; error133/later disconnect/close acknowledgement preserved. No added retries, reset, bond clear or control replay. Existing transfer-scoped central priority/byte integrity/physical receipt endpoints retained. JNI/models/assets unchanged, physical acceptance pending.",
+  "javaSourceCommit": "840d8c531e13bb75e10ef90612ffec76b493d4fe",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device089\\build\\inherited-provenance088.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device090\\build\\inherited-provenance089.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -201,5 +201,13 @@
     "com/denzic/companion/mobile/SystemUpdateClient.class",
     "com/denzic/companion/mobile/TransferPriorityScope.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo088": true
+  "allNonClassAarEntriesByteIdenticalTo088": true,
+  "javaClassesChangedFrom089": [
+    "com/denzic/companion/mobile/AndroidGattLink$1.class",
+    "com/denzic/companion/mobile/AndroidGattLink$2.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry$Attempt.class",
+    "com/denzic/companion/mobile/InitialConnectionRetry.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo089": true
 }
