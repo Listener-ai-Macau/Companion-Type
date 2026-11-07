@@ -9,11 +9,14 @@ import argparse,hashlib,json,psutil,subprocess,sys,time
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');src=R/'model-research/src';sys.path.insert(0,str(src))
 from moss_windows_resource_limits_20261104 import SystemRamPressure
 from practical_io_20261107 import atomic_json,stop_owned_family
-base=R/'docs/handoffs/20261107-model-generation-recovery';C=base/'practical-qwen-signal-r3';full=C/'full'
+base=R/'docs/handoffs/20261107-model-generation-recovery'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
-parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['ordinary','complex'],default='ordinary');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['ordinary','complex'],default='ordinary');parser.add_argument('--bounded',action='store_true');args=parser.parse_args()
+C=base/('practical-qwen-bounded-r4' if args.bounded else 'practical-qwen-signal-r3');full=C/'full'
 target=C/('resource-followthrough-complex.json' if args.stage=='complex' else 'resource-followthrough.json');assert not target.exists()
-rule=read(C/'execution-stop-rule.json');baseline=rule['baselineStrictCer'];quality=full/'transcripts/S_R004S03C01/quality-review.json'
+rule=read(base/'practical-qwen-signal-r3/execution-stop-rule.json');baseline=rule['baselineStrictCer'];quality=full/'transcripts/S_R004S03C01/quality-review.json'
+controller='run_practical_qwen_bounded_20261107.py' if args.bounded else 'run_practical_qwen_full_20261107.py'
+if args.bounded:assert args.stage=='complex' and read(C/'pilot/state.json')['state']=='PASS_BOUNDED_NATIVE_PILOT_FULL_QUALITY_UNMEASURED'
 if args.stage=='complex':
     assert read(full/'transcripts/S_R004S03C01/completed-state.json')['state']=='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED'
     assert read(quality)['chronologicalTextDiagnostic']['cer']<baseline
@@ -34,7 +37,7 @@ try:
                 if not stop.exists():stop.write_text('Predeclared ordinary no-improvement stop '+now()+'\n',encoding='utf8')
                 state.update(futilityStopRequested=True,futilityStopAt=now());save()
         if not run.get('finishedAt'):
-            parent=psutil.Process(run['pid']);assert any(Path(arg).name=='run_practical_qwen_full_20261107.py' for arg in parent.cmdline()),'Controller PID identity differs'
+            parent=psutil.Process(run['pid']);assert any(Path(arg).name==controller for arg in parent.cmdline()),'Controller PID identity differs'
             state.update(state='FOLLOWING_RUNNING_NATIVE_TRIAL',durableWindows=progress());save();time.sleep(1);continue
         if child is not None and child.poll() is None:
             time.sleep(.2);continue
@@ -49,7 +52,7 @@ try:
             state.update(state='WAITING_ACTUAL_SYSTEM_MEMORY_RECOVERY',durableWindows=current,resourceObservation={'availableBytes':available,'actualWindowsLowRam':low,'lastAvailableBytes':last['availableBytes'],'releasedOwnPrivatePeakUpperBound':peak});save();time.sleep(2);continue
         launched_floor=current
         count=state['lowMemoryContinuations']+1;prefix='complex-resource-continuation' if args.stage=='complex' else 'resource-continuation';log=full/(prefix+'-%02d.log'%count)
-        command=[sys.executable,str(src/'run_practical_qwen_full_20261107.py'),'--parent',str(C),'--resume-after-low-ram']
+        command=[sys.executable,str(src/controller)]+(['--phase','full'] if args.bounded else ['--parent',str(C)])+['--resume-after-low-ram']
         with log.open('xb') as stream:child=subprocess.Popen(command,stdout=stream,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
         process=psutil.Process(child.pid);state['lowMemoryContinuations']=count;state['events'].append({'at':now(),'state':'CONTINUE_AFTER_OBSERVED_RAM_RECOVERY','durableWindowsBefore':current,'availableBytes':available,'actualWindowsLowRam':False,'controllerPid':child.pid});save()
         # Wait for this new controller to publish its identity or refuse before
