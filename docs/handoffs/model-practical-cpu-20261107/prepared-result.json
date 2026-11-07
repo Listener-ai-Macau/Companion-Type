@@ -1,257 +1,8 @@
 {
-  "at": "2026-11-07T10:39:32+08:00",
+  "at": "2026-11-07T11:41:49+08:00",
   "phase": "prepared",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
-  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2",
-  "protocol": {
-    "at": "2026-11-07T10:23:58+08:00",
-    "route": "sherpa-onnx complete offline speaker segmentation/clean embedding/global clustering/count-constrained reconstruction",
-    "runtime": {
-      "python": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
-      "sherpa-onnx": "1.13.4",
-      "nativeExtension": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\_sherpa_onnx.cp311-win_amd64.pyd",
-      "nativeExtensionSha256": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699",
-      "numThreads": 1,
-      "provider": "cpu",
-      "cpuPercent": 5,
-      "privateBudgetBytes": 2147483648,
-      "affinity": [
-        12,
-        13
-      ],
-      "memoryPagePriority": 1,
-      "systemLowRamStopsOwnFamily": true
-    },
-    "segmentation": {
-      "model": "E:\\CodexData\\Companion\\.model-cache\\practical-cpu-20261107-r1\\pyannote-segmentation-3.0.onnx",
-      "sha256": "220ad67ca923bef2fa91f2390c786097bf305bceb5e261d4af67b38e938e1079",
-      "precision": "published FP32 ONNX",
-      "source": {
-        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-segmentation-models/sherpa-onnx-pyannote-segmentation-3-0.tar.bz2",
-        "assetId": null,
-        "size": 6958444,
-        "sha256": "24615ee884c897d9d2ba09bb4d30da6bb1b15e685065962db5b02e76e4996488",
-        "publisherDigest": null,
-        "metadataScope": "Asset name/size read from official release API; digest unavailable. Freeze downloaded SHA256, not an externally authenticated publisher digest."
-      }
-    },
-    "embedding": {
-      "model": "E:\\CodexData\\Companion\\.model-cache\\practical-cpu-20261107-r1\\3dspeaker_speech_eres2net_base_sv_zh-cn_3dspeaker_16k.onnx",
-      "sha256": "1a331345f04805badbb495c775a6ddffcdd1a732567d5ec8b3d5749e3c7a5e4b",
-      "source": {
-        "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/3dspeaker_speech_eres2net_base_sv_zh-cn_3dspeaker_16k.onnx",
-        "assetId": null,
-        "size": 39593761,
-        "sha256": "1a331345f04805badbb495c775a6ddffcdd1a732567d5ec8b3d5749e3c7a5e4b",
-        "publisherDigest": null,
-        "metadataScope": "Asset name/size read from official release API; digest unavailable. Freeze downloaded SHA256, not an externally authenticated publisher digest."
-      }
-    },
-    "clustering": {
-      "numClusters": -1,
-      "threshold": 0.5
-    },
-    "minDurationOn": 0.3,
-    "minDurationOff": 0.5,
-    "decisionBasis": {
-      "oldResults": "R24 and R25 Windows HIP native long decoder crashes; single-GPU visibility and disjoint loading did not resolve them. Original ad-hoc CAM++ segment clustering fragmented whole L; speakrs baseline missed short speakers. Keep all old evidence.",
-      "differentThisTime": "Complete maintained sherpa pipeline: overlapping local speaker segmentation, speaker-masked embedding, one whole-recording complete-link clustering and reconstruction from local simultaneous-speaker count. Official Chinese ERes2Net embedding, no supplied count, no per-meeting threshold tuning. This is not the old plain VAD+CAM++ clustering or accepted improvement.",
-      "retainOnlyIf": "Exited whole-meeting result must improve attribution and short-speaker coverage with measured resources. Compare both frozen full development meetings. Do not adopt a fragmented or short-speaker-losing result even when average DER is low.",
-      "stop": "No same-condition HIP long retry, no threshold sweep, no training, no final holdout or default product-backend replacement."
-    },
-    "sources": [
-      "https://k2-fsa.github.io/sherpa/onnx/speaker-diarization/index.html",
-      "https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.4"
-    ],
-    "scope": "Speaker activity/anonymous identity only. This does not recover overlapped words, recognize names/roles, prove ASR<5%, phone performance or product qualification."
-  },
-  "run": null,
-  "asrProbe": {
-    "state": "EXISTING_ASR_CONTROL_COMPLETE",
-    "newAsrAccuracyEvidence": false,
-    "referenceOpened": false,
-    "runtime": "1.13.4",
-    "modelFiles": {
-      "model.int8.onnx": {
-        "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\model.int8.onnx",
-        "sha256": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
-      },
-      "tokens.txt": {
-        "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\tokens.txt",
-        "sha256": "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
-      }
-    },
-    "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
-    "audioSeconds": 30.0,
-    "inferenceSeconds": 2.5439374999987194,
-    "text": "001超市主管006A007B008C009D把各个区的这个咱这个负责人啊叫过来来简单呃做一个交流，呃，咱超市啊近期的销售啊。",
-    "tokens": [
-      "0",
-      "0",
-      "1",
-      "超",
-      "市",
-      "主",
-      "管",
-      "0",
-      "0",
-      "6",
-      "A",
-      "0",
-      "0",
-      "7",
-      "B",
-      "0",
-      "0",
-      "8",
-      "C",
-      "0",
-      "0",
-      "9",
-      "D",
-      "把",
-      "各",
-      "个",
-      "区",
-      "的",
-      "这",
-      "个",
-      "咱",
-      "这",
-      "个",
-      "负",
-      "责",
-      "人",
-      "啊",
-      "叫",
-      "过",
-      "来",
-      "来",
-      "简",
-      "单",
-      "呃",
-      "做",
-      "一",
-      "个",
-      "交",
-      "流",
-      "，",
-      "呃",
-      "，",
-      "咱",
-      "超",
-      "市",
-      "啊",
-      "近",
-      "期",
-      "的",
-      "销",
-      "售",
-      "啊",
-      "。"
-    ],
-    "timestamps": [
-      6.239999771118164,
-      6.480000019073486,
-      6.659999847412109,
-      6.960000038146973,
-      7.079999923706055,
-      7.259999752044678,
-      7.440000057220459,
-      12.539999961853027,
-      12.719999313354492,
-      12.899999618530273,
-      13.199999809265137,
-      14.579999923706055,
-      14.75999927520752,
-      14.9399995803833,
-      15.299999237060547,
-      17.399999618530273,
-      17.639999389648438,
-      17.81999969482422,
-      18.059999465942383,
-      18.779998779296875,
-      18.959999084472656,
-      19.139999389648438,
-      19.31999969482422,
-      22.619998931884766,
-      22.920000076293945,
-      23.100000381469727,
-      23.219999313354492,
-      23.34000015258789,
-      23.459999084472656,
-      23.579999923706055,
-      23.69999885559082,
-      23.81999969482422,
-      23.939998626708984,
-      24.119998931884766,
-      24.239999771118164,
-      24.299999237060547,
-      24.420000076293945,
-      24.600000381469727,
-      24.65999984741211,
-      24.779998779296875,
-      24.899999618530273,
-      25.139999389648438,
-      25.260000228881836,
-      25.559999465942383,
-      25.979999542236328,
-      26.219999313354492,
-      26.279998779296875,
-      26.459999084472656,
-      26.51999855041504,
-      26.760000228881836,
-      27.239999771118164,
-      27.479999542236328,
-      27.719999313354492,
-      28.31999969482422,
-      28.439998626708984,
-      28.619998931884766,
-      28.799999237060547,
-      28.920000076293945,
-      29.099998474121094,
-      29.279998779296875,
-      29.399999618530273,
-      29.579999923706055,
-      29.8799991607666
-    ],
-    "durations": [],
-    "rawResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"001超市主管006A007B008C009D把各个区的这个咱这个负责人啊叫过来来简单呃做一个交流，呃，咱超市啊近期的销售啊。\", \"timestamps\": [6.24, 6.48, 6.66, 6.96, 7.08, 7.26, 7.44, 12.54, 12.72, 12.90, 13.20, 14.58, 14.76, 14.94, 15.30, 17.40, 17.64, 17.82, 18.06, 18.78, 18.96, 19.14, 19.32, 22.62, 22.92, 23.10, 23.22, 23.34, 23.46, 23.58, 23.70, 23.82, 23.94, 24.12, 24.24, 24.30, 24.42, 24.60, 24.66, 24.78, 24.90, 25.14, 25.26, 25.56, 25.98, 26.22, 26.28, 26.46, 26.52, 26.76, 27.24, 27.48, 27.72, 28.32, 28.44, 28.62, 28.80, 28.92, 29.10, 29.28, 29.40, 29.58, 29.88], \"durations\": [], \"tokens\":[\"0\", \"0\", \"1\", \"超\", \"市\", \"主\", \"管\", \"0\", \"0\", \"6\", \"A\", \"0\", \"0\", \"7\", \"B\", \"0\", \"0\", \"8\", \"C\", \"0\", \"0\", \"9\", \"D\", \"把\", \"各\", \"个\", \"区\", \"的\", \"这\", \"个\", \"咱\", \"这\", \"个\", \"负\", \"责\", \"人\", \"啊\", \"叫\", \"过\", \"来\", \"来\", \"简\", \"单\", \"呃\", \"做\", \"一\", \"个\", \"交\", \"流\", \"，\", \"呃\", \"，\", \"咱\", \"超\", \"市\", \"啊\", \"近\", \"期\", \"的\", \"销\", \"售\", \"啊\", \"。\"], \"ys_log_probs\": [], \"words\": []}",
-    "scope": "Public30s compatibility and real output-field inspection only; no reference/quality score, no replacement/default model changed.",
-    "wholeSeconds": 5.984801300000981,
-    "limits": {
-      "pid": 15220,
-      "cpuRate": 500,
-      "cpuControlFlags": 5,
-      "cpuPercentMaximum": 5.0,
-      "inLimitedJob": true,
-      "jobPrivateCommitLimitBytes": 2147483648,
-      "jobMemoryLimitEnabled": true,
-      "jobPeakPrivateCommitBytes": 436228096,
-      "cpuPriorityClass": 64,
-      "memoryPagePriority": 1,
-      "memoryPagePriorityIsReclaimHintNotRamCap": true,
-      "gpuPriorityClass": 0,
-      "gpuUtilizationHardCapped": false,
-      "scope": "This worker and its descendants only; no global or other-app changes."
-    }
-  },
-  "wholeMeetingAsrQuality": null,
-  "defaultProductBackendChanged": false,
-  "finalHoldoutOpened": false,
-  "state": "PREPARED_COMPLETE_CPU_DIARIZATION_AND_EXISTING_ASR_TOKEN_TIMING",
-  "shortIntegrationProof": {
-    "state": "PASS_ACTUAL_PUBLIC30S_CPU_JOURNAL_TOKEN_ATTRIBUTION_AND_NO_MODEL_CACHE_RESUME",
-    "sameRawTextTokensOnsetsAsOriginalProbe": true,
-    "modelOutputAndAttributionHashesUnchangedAfterResume": true,
-    "restoredWindows": 1,
-    "newNeuralWindows": 0,
-    "modelLoadedOnResume": false,
-    "noAccuracyClaim": true,
-    "noNameOrRoleRecognitionClaim": true
-  },
-  "qualityReviews": [],
-  "priorCpuR1": {
+  "stockCpuR1": {
     "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
     "startedAt": "2026-11-07T10:26:59+08:00",
     "pid": 14780,
@@ -278,7 +29,364 @@
     "automaticRetries": 0,
     "finishedAt": "2026-11-07T10:31:57+08:00"
   },
-  "next": "同一冻结完整CPU分人流程依次验L/S整会，标准DER同时核逐人/短句覆盖；普通转写保留原音与原始文字，用模型token时间估计绑定人物，重叠/边界不明确保留未知，不整窗乱贴一人。退出后才评分，按真实结果决定保留/拒绝，不扫阈值、不训练、不原样重跑HIP长上下文。原跨会文字<5%、重叠逐路、事实/双端/实卡和售卖门保持。",
-  "sourceAndEvidenceCommit": "1a218deded247940eaed891d951e6c73fcf9133f",
+  "stockCpuR2": {
+    "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
+    "startedAt": "2026-11-07T10:40:35+08:00",
+    "pid": 18960,
+    "results": [
+      {
+        "meeting": "L_R003S01C02",
+        "exitCode": 1,
+        "workerState": "FAILED_RETAINED",
+        "wholeProcessFamilySeconds": 1055.628851500005,
+        "privatePeakBytes": 2117996544,
+        "rssPeakBytes": 1686429696,
+        "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2\\results\\L_R003S01C02"
+      }
+    ],
+    "protocolSha256": "c25306d5b28efa27bd3c862f158c51143b655c9700a95d7eda38f717dd9bf77a",
+    "sourceSha256": {
+      "practical_cpu_worker_20261107.py": "b2e45bfef306f482dc32b19629aad5b4fce5977e377825771e4a9b609dc6c7c0",
+      "run_practical_cpu_20261107.py": "3d56711830a9bb986b40f221124133334fec2d14c0ce51d4b5ea2becbf717d3c",
+      "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+      "score_cross_corpus_diarization_20261103.py": "99756dd111ba154432604cf61236a7ad49e97274492bbc8c6737e6063fc8ccec",
+      "reference_textgrid_20261104.py": "8f43fd26b67851714feb5530c3b321d0cca0c650b63ab8b2e0ca78e15715dc60"
+    },
+    "referencePassedToInference": false,
+    "automaticRetries": 0,
+    "finishedAt": "2026-11-07T10:58:12+08:00"
+  },
+  "textFirstRun": {
+    "state": "TWO_COMPLETE_TEXT_ONLY_MEETINGS_SCORED_SPEAKERS_PENDING",
+    "startedAt": "2026-11-07T11:15:47+08:00",
+    "pid": 2136,
+    "automaticRetries": 0,
+    "referencePassedToInference": false,
+    "results": [
+      {
+        "meeting": "L_R003S01C02",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 0,
+        "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+        "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcripts\\L_R003S01C02",
+        "reusedCompletedMeetingWithoutLaunchingModel": true,
+        "priorAttemptProcessFamilySeconds": 240.6459166999848,
+        "accumulatedProcessFamilySeconds": 240.6459166999848,
+        "scoringExitCode": 0,
+        "chronologicalDiagnosticCer": 0.2676348547717842,
+        "cpCerDiagnostic": 1.2411249423697557,
+        "unconfirmedTextFraction": 1.0
+      },
+      {
+        "meeting": "S_R004S03C01",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 241.5700472000026,
+        "privatePeakBytes": 448417792,
+        "rssPeakBytes": 449847296,
+        "workerState": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+        "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcripts\\S_R004S03C01",
+        "priorAttemptProcessFamilySeconds": 35.07965920001152,
+        "accumulatedProcessFamilySeconds": 276.6497064000141,
+        "scoringExitCode": 0,
+        "chronologicalDiagnosticCer": 0.076996996996997,
+        "cpCerDiagnostic": 1.417057057057057,
+        "unconfirmedTextFraction": 1.0
+      }
+    ],
+    "priorAttemptReceipts": [
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcript-attempt-0001.json",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1\\transcript-attempt-0002.json"
+    ],
+    "resourceRecoveryObservation": {
+      "previousLastAvailableBytes": 821919744,
+      "priorModelPrivatePeakBytes": 441380864,
+      "currentAvailableBytes": 3675860992,
+      "actualWindowsLowRam": false,
+      "criterion": "Current available > last low-pressure sample + twice measured own private peak. Dynamic measured recovery, no fixed free-RAM floor. Raw completed windows reused, no blind native-crash retry."
+    },
+    "speakerJournalPending": true,
+    "sourceSha256": {
+      "practical_transcript_20261107.py": "9cfc07bcf778b616608bb796302fc87c51ad9d2014c0230ade08dc15dcacfe30",
+      "practical_transcript_worker_20261107.py": "e97b86a727e3ae1abae2a5f7cc698d7751d87ead4ebe297464c83a2118f49a71",
+      "run_practical_transcript_20261107.py": "beaced82b27c8315d7a478d5c9fa8203f15ef6bfa5c9acee7316b1c8584d08a1",
+      "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+      "test_practical_transcript_20261107.py": "e53ad3b918028d3f1421737afc86841965dbf73c66e5f0037bd7ca19d2b6e146",
+      "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    "protocolSha256": "1094b0bfecd10578ed68b38d5b8f08b6b0979c6c41c7a27d8265e65e9c4801dc",
+    "finishedAt": "2026-11-07T11:19:51+08:00"
+  },
+  "textQualityReviews": [
+    {
+      "at": "2026-11-07T11:12:55+08:00",
+      "meeting": "L_R003S01C02",
+      "audioSeconds": 2362.945,
+      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+      "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "referenceCharacters": 8676,
+      "hypothesisCharacters": 7606,
+      "chronologicalTextDiagnostic": {
+        "edits": {
+          "replace": 796,
+          "delete": 1298,
+          "insert": 228
+        },
+        "cer": 0.2676348547717842,
+        "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+      },
+      "anonymousStreamCpCerDiagnostic": {
+        "metric": "cpCER",
+        "audioSeconds": 2362.945,
+        "referenceCharacters": 8676,
+        "referenceSpeakers": 6,
+        "predictedTextStreams": 1,
+        "edits": {
+          "replace": 432,
+          "delete": 5703,
+          "insert": 4633
+        },
+        "totalEdits": 10768,
+        "characterErrorRate": 1.2411249423697557,
+        "anonymousAssignmentForEvaluationOnly": [
+          {
+            "referenceSpeaker": "002-F",
+            "hypothesisSpeaker": null,
+            "edits": 1581
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "hypothesisSpeaker": null,
+            "edits": 331
+          },
+          {
+            "referenceSpeaker": "004-M",
+            "hypothesisSpeaker": null,
+            "edits": 1470
+          },
+          {
+            "referenceSpeaker": "005-M",
+            "hypothesisSpeaker": null,
+            "edits": 1821
+          },
+          {
+            "referenceSpeaker": "006-M",
+            "hypothesisSpeaker": "__unconfirmed__",
+            "edits": 5259
+          },
+          {
+            "referenceSpeaker": "007-M",
+            "hypothesisSpeaker": null,
+            "edits": 306
+          }
+        ],
+        "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+      },
+      "unconfirmedSpeakerText": {
+        "characters": 7606,
+        "fractionOfRecognizedCharacters": 1.0,
+        "neverRealIdentityOrOwnerClaim": true
+      },
+      "confirmedAttributionCerDiagnostic": {
+        "totalEdits": 16282,
+        "cer": 1.8766712770862148,
+        "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+      },
+      "speakerActivityReview": null,
+      "speakerJournalPending": true,
+      "identityMetricsApplicable": false,
+      "allAudioSamplesCoveredOnce": true,
+      "allRawAsrTextPreserved": true,
+      "nativeTokenOnsetsAreApproximate": true,
+      "overlapBothVoicesRecovered": false,
+      "qualified": false,
+      "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+    },
+    {
+      "at": "2026-11-07T11:19:51+08:00",
+      "meeting": "S_R004S03C01",
+      "audioSeconds": 2327.119,
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "referenceCharacters": 8325,
+      "hypothesisCharacters": 8094,
+      "chronologicalTextDiagnostic": {
+        "edits": {
+          "replace": 314,
+          "delete": 279,
+          "insert": 48
+        },
+        "cer": 0.076996996996997,
+        "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+      },
+      "anonymousStreamCpCerDiagnostic": {
+        "metric": "cpCER",
+        "audioSeconds": 2327.119,
+        "referenceCharacters": 8325,
+        "referenceSpeakers": 5,
+        "predictedTextStreams": 1,
+        "edits": {
+          "replace": 62,
+          "delete": 5983,
+          "insert": 5752
+        },
+        "totalEdits": 11797,
+        "characterErrorRate": 1.417057057057057,
+        "anonymousAssignmentForEvaluationOnly": [
+          {
+            "referenceSpeaker": "001-M",
+            "hypothesisSpeaker": null,
+            "edits": 1983
+          },
+          {
+            "referenceSpeaker": "002-F",
+            "hypothesisSpeaker": null,
+            "edits": 650
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "hypothesisSpeaker": null,
+            "edits": 1681
+          },
+          {
+            "referenceSpeaker": "004-F",
+            "hypothesisSpeaker": "__unconfirmed__",
+            "edits": 5874
+          },
+          {
+            "referenceSpeaker": "005-F",
+            "hypothesisSpeaker": null,
+            "edits": 1609
+          }
+        ],
+        "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+      },
+      "unconfirmedSpeakerText": {
+        "characters": 8094,
+        "fractionOfRecognizedCharacters": 1.0,
+        "neverRealIdentityOrOwnerClaim": true
+      },
+      "confirmedAttributionCerDiagnostic": {
+        "totalEdits": 16419,
+        "cer": 1.9722522522522523,
+        "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+      },
+      "speakerActivityReview": null,
+      "speakerJournalPending": true,
+      "identityMetricsApplicable": false,
+      "allAudioSamplesCoveredOnce": true,
+      "allRawAsrTextPreserved": true,
+      "nativeTokenOnsetsAreApproximate": true,
+      "overlapBothVoicesRecovered": false,
+      "qualified": false,
+      "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+    }
+  ],
+  "textProductContractProof": [
+    {
+      "meeting": "L_R003S01C02",
+      "result": {
+        "allWithinAudio": true,
+        "approximateRows": 79,
+        "characters": 8385,
+        "scope": "Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.",
+        "state": "PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY",
+        "unknownSpeakerRows": 79,
+        "utterances": 79
+      },
+      "modelOutputSha256": "581d108f8a536823a1960dff0feaf338bd5b8cb70fb24903486598bb34f3a40e"
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "result": {
+        "allWithinAudio": true,
+        "approximateRows": 78,
+        "characters": 8871,
+        "scope": "Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.",
+        "state": "PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY",
+        "unknownSpeakerRows": 78,
+        "utterances": 78
+      },
+      "modelOutputSha256": "4da042a561a9d0136691e67a42d2d44923727318d6bbb685f4abce3e07f3adbe"
+    }
+  ],
+  "boundedShortNativeProof": {
+    "state": "PASS_NATIVE_SHORT_DIARIZATION_WITH_BOUNDED_VOTES",
+    "workerSourceSha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304",
+    "ioSourceSha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "allNativeSegmentsTimesAndNumericSpeakerIdsExactlyEqual": true,
+    "rttmSha256": "17762c550b722123b0648a1b17973a033964b3da52934cc717d95c7da6763e67",
+    "nativeActiveSpeakers": 5,
+    "segments": 7,
+    "newNeuralItemsForCorrectedReconstruction": 0,
+    "whyR1Changed": "Author cutree labels clusters by first observation and stops at height>=threshold. SciPy label numbering alone changes vote tie outcomes; fixed to the published convention, not threshold tuning. Neural caches reused.",
+    "scope": "Actual30s model compatibility only, no human reference/accuracy or full-meeting memory guarantee."
+  },
+  "boundedRun": null,
+  "completeChain": null,
+  "boundedSpeakerReviews": [],
+  "attributedTextQualityReviews": [],
+  "publicCommandEntryProof": {
+    "state": "PASS_PUBLIC_FRESH_30S_COMMAND_AND_RAW_ONLY_RETAG",
+    "publicAudioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+    "freshStages": [
+      {
+        "phase": "TRANSCRIBING_DRAFT",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 6.063998199999332,
+        "privatePeakBytes": 436494336,
+        "finishedAt": "2026-11-07T11:31:06+08:00"
+      },
+      {
+        "phase": "SPEAKERS_SEGMENT",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 2.0274257000128273,
+        "privatePeakBytes": 85118976,
+        "finishedAt": "2026-11-07T11:31:09+08:00"
+      },
+      {
+        "phase": "SPEAKERS_EMBED",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 5.055806499993196,
+        "privatePeakBytes": 224186368,
+        "finishedAt": "2026-11-07T11:31:15+08:00"
+      },
+      {
+        "phase": "SPEAKERS_RECONSTRUCT",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 2.027289899997413,
+        "privatePeakBytes": 47054848,
+        "finishedAt": "2026-11-07T11:31:18+08:00"
+      },
+      {
+        "phase": "TRANSCRIBING",
+        "exitCode": 0,
+        "wholeProcessFamilySeconds": 1.019839900021907,
+        "privatePeakBytes": 1531904,
+        "finishedAt": "2026-11-07T11:31:20+08:00"
+      }
+    ],
+    "textDraftReadyAt": "2026-11-07T11:31:06+08:00",
+    "priorHistoricalOutputSha256": "a4ae35d51bd38894144fc4889c3268da4ee59acd5fd4f358ac7470f60eaf19a3",
+    "currentOutputSha256": "1d2ef9b1b47a848af73b4743075ebed55df35721e62f69a8def8e510f73e2301",
+    "formatAndDisplayIdsChanged": true,
+    "cachedRetagModelLoaded": false,
+    "cachedRetagNewNeuralWindows": 0,
+    "allAsrWordsPreserved": true,
+    "sharedProductContract": {
+      "exitCode": 0,
+      "stdout": "{\"allWithinAudio\":true,\"approximateRows\":10,\"characters\":63,\"scope\":\"Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.\",\"state\":\"PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY\",\"unknownSpeakerRows\":4,\"utterances\":10}\n",
+      "stderr": ""
+    },
+    "qualityQualified": false,
+    "installedAppChanged": false
+  },
+  "defaultProductBackendChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "state": "TEXT_COMPLETE_BOUNDED_SPEAKER_FULL_READY_UNQUALIFIED",
+  "next": "继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。",
+  "sourceAndEvidenceCommit": "e5225b55ed188d217009fed77df7843e906fd749",
   "remoteReadbackConfirmed": true
 }
