@@ -44,7 +44,7 @@ for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
     if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
         r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
         (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6','practical-alignment-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -119,7 +119,7 @@ record['officialNativeAsrControl']={name:optional(qwen_current/name) for name in
 record['officialNativeAsrControl'].update(control=str(qwen_current),activeExecution=active,initialLoaderFailure=optional(qwen_root/'short-run.json'),nativeLoaderTinyControl=optional(qwen_root/'streamed-loader-proof-r2.json'),featureNumericControl=optional(qwen_root/'processor-numeric-proof.json'),exactZeroGuardControl=optional(qwen_root/'exact-zero-guard-proof.json'))
 qwen=record['officialNativeAsrControl']
 if qwen_current.name=='practical-qwen-author-boundaries-r6':
-    qwen['authorBoundaryControl']={'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'boundaryMathProof':optional(qwen_current/'boundary-math-proof.json'),'priorNative17Review':optional(base/'practical-qwen-native17-r5/review.json')}
+    qwen['authorBoundaryControl']={'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'boundaryMathProof':optional(qwen_current/'boundary-math-proof.json'),'priorNative17Review':optional(base/'practical-qwen-native17-r5/review.json'),'priorNative17IndependentCommandProof':optional(base/'practical-qwen-native17-r5/independent-command-proof.json'),'exactGitByteRecoveryProof':optional(qwen_current/'git-byte-recovery-proof.json')}
     record['state']='AUTHOR_BOUNDARY_'+(qwen['authorBoundaryControl']['pilotRun'] or qwen['prepared.json'] or {}).get('state','PREPARING')+'_SALE_OPEN'
     record['next']='原QM04：固定1.7B权重，验证作者低能量边界规则在本机约30秒预算下是否降低固定30秒截断的错误；不采用作者20分钟默认块长、不删语音/语气词，不喂参考。数学等价与原音逐样本覆盖已验，先30秒原生ID一致/最长约35秒不截断的真实短控，再完整S严格<5%才继续同完整L，否则保留结果停止复杂、不扫参数。独立接口、逐人/重叠/纪要事实/跨域独立集/手机实卡/售卖门继续OPEN。'
 if qwen_current.name=='practical-qwen-native17-r5':
@@ -139,6 +139,13 @@ if qwen['full/run.json'] and not qwen['review.json'] and qwen_current.name not i
 if qwen['review.json']:
     record['state']=qwen['review.json']['state'];record['next']=qwen['review.json']['next']
 if qwen['next-direction.json']:record['next']=qwen['next-direction.json']['next']
+alignment_root=base/'practical-alignment-r1'
+record['nativeAlignment']={name:optional(alignment_root/name) for name in ['preparation.json','protocol.json','run.json','tiny-loader-proof.json','pilot-state.json','full-state.json','review.json']}
+record['native17ConcurrentCacheProof']=optional(base/'practical-qwen-native17-r5/independent-concurrent-cache-proof.json')
+if record['nativeAlignment']['run.json']:
+    record['state']=record['nativeAlignment']['run.json']['state']+'_QUALITY_AND_SALE_OPEN'
+if record['nativeAlignment']['review.json']:
+    record['next']=record['nativeAlignment']['review.json']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
@@ -158,20 +165,26 @@ if record['native8F16Assessment']:
         text_gate=next(g for g in contract['gates'] if g['id']=='QM04')
         text_gate['nativeVerbatimDevelopment20261107']={'at':now,'review':str(base/'practical-verbatim-r1/review.json'),'rawCer':{'S_R004S03C01':0.06954954954954955,'L_R003S01C02':0.2612955278930383},'complexMixedCerIsOnlyDiagnostic':True,'jointCpCerDiagnostic':{'S_R004S03C01':0.09549549549549549,'L_R003S01C02':0.405025357307515},'strictScoringUnchanged':True,'neuralSettingChanged':'native useItn True→False only','qualityQualified':False,'defaultProductChanged':False}
         text_gate['officialNativeQwenControl20261107']={'at':now,'evidence':str(qwen_current),'state':record['state'],'noNewQualityScoreUnlessFullCompleted':True,'review':qwen['review.json'],'allSpeakersUnknownUntilValidatedAlignmentAndAttribution':True,'qualityQualified':False,'defaultProductChanged':False}
-        if qwen_current.name=='practical-qwen-native17-r5' and qwen['checkpoint17']['ordinaryStage']:
-            text_gate['native17OrdinaryDevelopment20261107']={'at':now,'stage':qwen['checkpoint17']['ordinaryStage'],'evidence':str(qwen_current/'ordinary-stage-review.json'),'modelEvidenceCommit':head,'fullComplexResultPending':qwen['review.json'] is None,'ordinary5PercentGateClosed':False,'qualityQualified':False}
+        native17_stage=optional(base/'practical-qwen-native17-r5/ordinary-stage-review.json')
+        if native17_stage:
+            text_gate['native17OrdinaryDevelopment20261107']={'at':now,'stage':native17_stage,'evidence':str(base/'practical-qwen-native17-r5/ordinary-stage-review.json'),'fullReview':optional(base/'practical-qwen-native17-r5/review.json'),'modelEvidenceCommit':head,'ordinary5PercentGateClosed':False,'qualityQualified':False}
+        if qwen_current.name=='practical-qwen-author-boundaries-r6' and qwen['review.json']:
+            text_gate['authorBoundaryDevelopment20261107']={'at':now,'review':str(qwen_current/'review.json'),'modelEvidenceCommit':head,'ordinaryFullDevelopmentBelow5':qwen['review.json']['ordinaryFullChronologicalCerBelow5Percent'],'finalHoldoutOpened':False,'qualityQualified':False,'defaultProductChanged':False}
         contract['qualification']['currentQualification']='NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state '+record['state']+'. Overlap words/facts/installed mobile-card/final holdout/sale still open.'
         if qwen['review.json']:
             rows=qwen['review.json']['results']
             scores='; '.join(row['meeting']+' chronologicalCER '+(format(row['rawChronologicalCerNativeQwen']*100,'.5f')+'%' if row.get('rawChronologicalCerNativeQwen') is not None else 'NOT_MEASURED_INCOMPLETE') for row in rows)
-            contract['qualification']['currentQualification']='NOT_QUALIFIED: official fixed native Qwen complete exposed development outputs: '+scores+'. Complex mixed chronological value is diagnostic only; all speakers unknown, no word alignment or joint/time-constrained text acceptance. Ordinary5% remains open. Prior FP16 diarization and AMI cross-corpus failure retained. Overlap-separated words/factual minutes/installed Windows-Android/card/final holdout/sale still open.'
+            stage_note='One exposed ordinary development meeting reached strict5%; formal cross-domain text gate stays open.' if qwen['review.json'].get('ordinaryFullChronologicalCerBelow5Percent') else 'Ordinary strict5% stage remains open.'
+            contract['qualification']['currentQualification']='NOT_QUALIFIED: official fixed native Qwen exposed development results: '+scores+'. Complex mixed chronological value is diagnostic only; all speakers unknown, no word alignment or joint/time-constrained text acceptance. '+stage_note+' Prior FP16 diarization and AMI cross-corpus failure retained. Overlap-separated words/factual minutes/installed Windows-Android/card/final holdout/sale still open.'
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}
 with (R/'docs/development_log.md').open('a',encoding='utf8') as out:
     if record['nativeVerbatimPreparation']:
         if a.phase in ['finished','failed']:
-            out.write('\n\n## '+now+'｜原QM04逐字输出与原生ASR完整会议对照\n\n承接Owner“达到可售卖标准、正确方向”。原生useItn=False对照保持原模型/音频/30秒切分/严格含语气词和儿化评分，旧useItn=True及失败结果保留。逐字输出结果/范围：'+json.dumps(record['nativeVerbatimReview'] or record['nativeVerbatimRun'],ensure_ascii=False)+'。随后同一两场完整公开真实会议固定官方Qwen3-ASR-0.6B-hf/BF16，不传参考/人数/热词，GPU特征独立数值对照和分块权重精确回读通过。原生ASR状态：'+record['state']+'；完整结果/决策/准确范围/阶段耗时：'+json.dumps(qwen['review.json'] or qwen['full/run.json'],ensure_ascii=False)+'。加载失败、裸模型静音幻觉、实际低RAM与运行会话中断保留；完整缓存重开0模型和缺失缓存两次拒绝已验证。模型源码和公开证据'+head+'已远端核验；未改产品默认、未训练、未开最终未见集，原全部售卖门继续。下一步：'+record['next']+'\n')
+            prior17=optional(base/'practical-qwen-native17-r5/review.json')
+            batch={'priorNative17CompleteReview':prior17,'native17IndependentCommand':optional(base/'practical-qwen-native17-r5/independent-command-proof.json'),'concurrentCompleteCacheRead':record['native17ConcurrentCacheProof'],'gitByteRecovery':optional(base/'practical-qwen-author-boundaries-r6/git-byte-recovery-proof.json'),'nativeAlignment':record['nativeAlignment']}
+            out.write('\n\n## '+now+'｜原QM04原生完整会议与音频边界对照\n\n承接Owner“达到可售卖标准、正确方向”。保留原useItn逐字输出和0.6B完整结果。本轮固定官方原生1.7B，与同两场完整公开真实会议的0.6B基线比较，不传参考/人数/热词；随后只比较同一1.7B作者低能量边界，约30秒本机预算，未跑作者20分钟默认块长。严格含语气词和儿化评分保持，按预声明普通严格<5%门决定是否继续复杂；未完成会不评分，不扫窗口/阈值。原生ASR状态：'+record['state']+'；当前完整结果/决策/范围/阶段耗时：'+json.dumps(qwen['review.json'] or qwen['full/run.json'],ensure_ascii=False)+'。同批1.7B完整基线、独立调用实际取消/低RAM续作/完整缓存0模型/缺失缓存两次拒绝和Git按原字节恢复证据：'+json.dumps(batch,ensure_ascii=False)+'。加载失败、裸模型静音幻觉、实际低RAM与运行会话中断全部保留，时间包含已知自有中断尝试，不含人工等待/上传/纪要，不冒充会后成稿时间。源码和公开证据'+head+'已远端核验；未改产品默认、未训练、未开最终未见集，原全部售卖门继续。下一步：'+record['next']+'\n')
         # Live checkpoints update the original backlog, not another timeline
         # entry for every sampled progress change.
     else:
