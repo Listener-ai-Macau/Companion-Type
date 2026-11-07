@@ -44,7 +44,7 @@ for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
     if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
         r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
         (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6','practical-alignment-r1','practical-conditioned-ps4-r1','practical-conditioned-ps4-full-r1','practical-ps4-local-presence-r1']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6','practical-alignment-r1','practical-conditioned-ps4-r1','practical-conditioned-ps4-full-r1','practical-ps4-local-presence-r1','practical-target-activity-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -178,6 +178,13 @@ if presence['next-direction.json']:
     record['next']=presence['next-direction.json']['next']
     method=presence['next-direction.json'].get('ownerMethodReview')
     if method:record['ownerQuote']=method['ownerQuote']
+activity_root=base/'practical-target-activity-r1'
+activity={name:optional(activity_root/name) for name in ['merge-and-lane-cause-review.json','waveform-cause-review.json','control-selection.json','protocol.json','model-ready.json','run.json','review.json','enrollment-cause-review.json','mandarin-triple-supplement.json','author-sanity/review.json','decision.json']}
+record['boundedOriginalMixtureTargetActivity']=activity
+if activity['protocol.json']:
+    record['state']=(activity['run.json'] or activity['protocol.json'])['state'];record['next']='原RM-OVERLAP：按冻结跨会议短对照验证单一学习式目标活动候选，不改普通ASR/分离/文字，先技术接入再评分；短门不过不扩整场，不扫阈值。'
+if activity['review.json']:record['state']=activity['review.json']['state'];record['next']=activity['review.json']['next']
+if activity['decision.json']:record['next']=activity['decision.json']['next'];record['ownerQuote']=activity['decision.json']['ownerQuote']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker','upstream-tse']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
@@ -226,11 +233,17 @@ if record['native8F16Assessment']:
             if presence['review.json']:
                 overlap_gate['ps4TimeLocalIdentityFalsification20261107']={'at':now,'evidence':str(presence_root),'state':presence['review.json']['state'],'modelEvidenceCommit':head,'summary':presence['review.json']['summary'],'newAsrOrSeparationCalls':0,'notCerOrDerAcceptance':True,'allRawWordsRetained':True,'qualityQualified':False}
                 contract['qualification']['currentQualification']+=' Fixed local3s identity audit rejected: positive-window recall90.93248%, absent-window false acceptance77.62619% on3021 correlated development windows. No target-activity filter adopted; all original gates remain open.'
+            if activity['review.json']:
+                overlap_gate['boundedOriginalMixtureActivity20261107']={'at':now,'evidence':str(activity_root),'state':activity['review.json']['state'],'modelEvidenceCommit':head,'actualRawMixtureClips':activity['review.json']['actualRawMixtureClips'],'targetQueries':activity['review.json']['targetQueries'],'allPredeclaredShortCriteriaPassed':activity['review.json']['allPredeclaredShortCriteriaPassed'],'fullExpansionExecuted':False,'newAsrOrSeparationCalls':0,'productDefaultChanged':False,'finalHoldoutOpened':False,'qualityQualified':False}
+                contract['qualification']['currentQualification']+=' One learned target-activity candidate on13raw-mixture clips/3real development meetings/67queries rejected before full expansion. Native model/encoder/feature compatibility checked; absent/short/ordinary activity failures retained. No wordCER/standardDER or product accuracy improvement claimed.'
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}
 with (R/'docs/development_log.md').open('a',encoding='utf8') as out:
-    if ps4['model-ready.json']:
+    if activity['decision.json']:
+        if a.phase in ['finished','failed']:
+            out.write('\n\n## '+now+'｜原RM-OVERLAP四步续作：归因、跨会议短对照、单候选筛选与停止条件\n\n承接Owner“好的, 1234推进一下”，保留上批原模型/日志/失败。实际完成：159条ASR人物路的已接受原音片连续且不重叠，唯一来源重建2109条成品行完全一致，排除本次合并重复插入；33根47对不同人物路在合并前已有≥8字长重复，最长65字，波形相关仅作串音诊断，不据此删字或当干净声源证据。固定三场真实开发会议L/S/AMI的13段30秒原始混音、15份与测试片完全分离的自动登记、67个人物查询。实际参考复核：AMI含真实3人重叠，中文旧预测三人片并非真实三人；另以标注明示策展补齐L根27的真实三人30秒片（1.900779秒三人），仅供下一方案曝光诊断，不拿其重跑失败候选或称未见验收。\n\n唯一新候选nomo-pvad与原生匹配ERes2NetV2：557/583/557张量严格键/值与GPU字节核验过；最初CPU Kaldi前端的OpenBLAS原生退出在无模型/单线程功能检查中复现。没有增大CPU5%/private2GiB预算或改DLL，保留原协议/源/成功权重证明及失败；仅将未改作者特征函数输入移到选定GPU，独立NumPy对真实10秒/30秒、0和1LSB对照最大误差<0.000190。固定阈值0.7不扫描；三场讲话窗保留/缺席窗误收分别L74.40%/12.36%、S96.84%/17.63%、AMI68.33%/44.44%，均未过原声明的短筛选条件。9份长且无标注他人声的登记中8份人物仍有超门失败，不按GT重选登记。另用作者自带样例做接入归因，前14个160ms窗接受/后段拒绝符合作者目标在先/他人在后的定性顺序，但无帧真值不能冒称准确率；不抵消真实会议失败。\n\n模型候选pilot+short进程累计131.741529秒（含首次6.102880秒前端退出；成功两阶段125.638650秒），作者样例18.218085秒另计；inventory/数值探针/下载/人工/分析/上传另列，不当转写或纪要速度。采样private峰1142104064字节，模型均串行且已退出。第4步条件未成立，未再跑整场活动/分离/ASR、未换默认/删字/训练/开最终集/安装双端实卡或派客户；本批没有交付产品准确率改善。源码与公开证据提交'+head+'已远端核验，实际阶段与范围见'+str(activity_root/'decision.json')+'。原严格<5%、复杂逐人/短句/重叠文字、跨域/事实/双端实卡/售卖门全部保留。下一动作：'+record['next']+'\n')
+    elif ps4['model-ready.json']:
         if a.phase in ['finished','failed']:
             out.write('\n\n## '+now+'｜原RM-OVERLAP复杂多人：匹配声纹条件目标提取与逐路转写实测\n\n承接Owner“推进把, 主要是复杂多人这个看看怎么搞”。旧VoxLock无改善/REAL-T变差、固定8槽TSSEP单人回退不重跑；本轮差异为作者PS4真实会议/ASR代理适配权重与完整匹配ECAPA编码器。只从已冻结预测活动选普通S根1、复杂L根29/31，登记取同场预测单人片，所有8目标路保留并逐路识别；原混音/原字及其它完整会议内容保留。无GT文字/人数/角色输入，不按输出挑轨，不扫窗口/阈值。以替换选中根段后的完整原会议参考评分，固定全场分人映射/未知不匹配与单人无回退为组件保留门，不冒称纯重叠逐字或独立整会验收。实际状态、失败、模型/协议来源、资源/耗时与决策：'+json.dumps(ps4,ensure_ascii=False)+'。原准备直接TLS失败改同一固定raw文本端点校验；初次缺torchaudio在0神经/装权重前失败，补官方v2.11.0未改Python前端到隔离进程，未改系统或原ASR环境。源码/公开证据提交'+head+'已远端核验；公开训练域与本开发录音重合未知，最终未见集未开，未改默认/未训练/未安装手机实卡/未做客户体验。普通5%、复杂逐路、事实、跨域及全部售卖门保留。下一项：'+record['next']+'\n')
     elif record['nativeVerbatimPreparation']:
@@ -255,7 +268,7 @@ chain=Path(__file__).with_name('run_native8_ami_chain_20261107.py')
 if chain.exists():shutil.copyfile(chain,dest/chain.name)
 review_source=Path(__file__).with_name('review_practical_release_20261107.py')
 if review_source.exists():shutil.copyfile(review_source,dest/review_source.name)
-for helper_name in ["follow_practical_asr_20261107.py","drive_practical_asr_resource_20261107.py","record_ps4_presence_decision_20261107.py"]:
+for helper_name in ["follow_practical_asr_20261107.py","drive_practical_asr_resource_20261107.py","record_ps4_presence_decision_20261107.py","record_practical_target_activity_decision_20261107.py"]:
     helper=Path(__file__).with_name(helper_name)
     if helper.exists():shutil.copyfile(helper,dest/helper_name)
 main=ship(S,['docs/product_backlog.json','docs/development_log.md','docs/handoffs/model-practical-cpu-20261107'],'Record complete meeting pipeline '+a.phase)
