@@ -614,6 +614,30 @@ public final class MainActivity extends Activity {
         if(command==DeviceMaintenance.Operation.CLEAR_PAIRINGS){selectedDevice=null;segments=new ArrayList<>();}
         return new JSONObject().put("address",address).put("name",name).put("operation",operation).put("settingsSaved",result.settingsSaved).put("defaultSettings",result.defaultSettings).put("radioEnabled",result.radioEnabled).put("bondCountValid",result.bondCountValid).put("bonds",result.bonds);
     }
+    /** Publish the exact catalogue already read on the current GATT owner. */
+    private JSONArray deviceRecordingRows(java.util.List<com.denzic.companion.mobile.DeviceRecordings.Session> sessions)throws org.json.JSONException {
+        java.util.List<RecorderWire.Descriptor> selected=new ArrayList<>();JSONArray out=new JSONArray();
+        for(int i=0;i<sessions.size();i++){
+            com.denzic.companion.mobile.DeviceRecordings.Session row=sessions.get(i);RecorderWire.Descriptor d=row.representative;selected.add(d);
+            out.put(new JSONObject().put("index",i).put("session",Long.toUnsignedString(d.sessionId))
+                .put("segment",d.segmentIndex).put("bytes",row.bytes).put("segments",row.segments)
+                .put("startedAtUnixSeconds",row.startedUnixSeconds==0?JSONObject.NULL:row.startedUnixSeconds)
+                .put("durationMs",row.durationMillis).put("complete",row.complete));
+        }
+        segments=selected;return out;
+    }
+    /** A confirmed control ACK remains confirmed if a later list read fails.
+     * Reuse this operation's connection; never replay START/STOP for a refresh. */
+    private JSONObject recordingControlSnapshot(RecordingClient client,boolean receiving,String action,JSONObject result)throws Exception {
+        try{
+            result.put("inventory",new JSONObject(receiving ? RecordingSyncService.controlSessions(root().resolve("companion-control")) : client.controlSessions(root().resolve("companion-control"))));
+        }catch(java.io.IOException refresh){result.put("inventoryRefreshFailed",true);}
+        if(!receiving&&"STOP".equals(action)&&"stopped".equals(result.optString("state"))){
+            try{result.put("recordings",deviceRecordingRows(client.listDeviceSessions()));}
+            catch(java.io.IOException refresh){segments=new ArrayList<>();result.put("recordingsRefreshFailed",true);}
+        }
+        return result;
+    }
     private JSONArray deviceRows()throws Exception{
         JSONArray out=new JSONArray();for(int i=0;i<devices.size();i++){BluetoothDevice device=devices.get(i);out.put(new JSONObject().put("index",i).put("name",device.getName()==null?"未命名设备":device.getName()).put("address",device.getAddress()).put("bonded",device.getBondState()==BluetoothDevice.BOND_BONDED));}return out;
     }
@@ -784,8 +808,11 @@ public final class MainActivity extends Activity {
             case "connectDevice":{
                 if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成后再连接其它设备。");
                 BluetoothDevice requested=devices.get(a.getInt("index"));if(!requested.getAddress().equals(a.getString("address")))throw new java.io.IOException("设备列表已变化，请重新搜索。");
-                try(RecordingClient client=CompanionAndroidBackend.connect(this,requested)){client.readDeviceStatus();}
-                selectedDevice=requested;segments=new ArrayList<>();return new JSONObject().put("address",requested.getAddress()).put("connected",true);
+                JSONArray recordings;
+                try(RecordingClient client=CompanionAndroidBackend.connect(this,requested)){
+                    client.readDeviceStatus();recordings=deviceRecordingRows(client.listDeviceSessions());
+                }
+                selectedDevice=requested;return new JSONObject().put("address",requested.getAddress()).put("connected",true).put("recordings",recordings);
             }
             case "catalog": {
                 if (RecordingSyncService.isRunning()) throw new IllegalStateException("正在接收录音，请先等待接收结束。");
@@ -795,16 +822,7 @@ public final class MainActivity extends Activity {
                 segments = new ArrayList<>();
                 java.util.List<com.denzic.companion.mobile.DeviceRecordings.Session> sessions;
                 try (RecordingClient client = CompanionAndroidBackend.connect(this, selectedDevice)) { sessions = client.listDeviceSessions(); }
-                JSONArray out = new JSONArray();
-                for (int i = 0; i < sessions.size(); i++) {
-                    com.denzic.companion.mobile.DeviceRecordings.Session row=sessions.get(i);
-                    RecorderWire.Descriptor d = row.representative;segments.add(d);
-                    out.put(new JSONObject().put("index", i).put("session", Long.toUnsignedString(d.sessionId))
-                            .put("segment", d.segmentIndex).put("bytes", row.bytes).put("segments",row.segments)
-                            .put("startedAtUnixSeconds",row.startedUnixSeconds==0?JSONObject.NULL:row.startedUnixSeconds)
-                            .put("durationMs",row.durationMillis).put("complete",row.complete));
-                }
-                return out;
+                return deviceRecordingRows(sessions);
             }
             case "deleteDeviceRecording": {
                 if(RecordingSyncService.isRunning())throw new IllegalStateException("请先等待录音接收结束。");
@@ -891,7 +909,7 @@ public final class MainActivity extends Activity {
                     JSONObject inventory = new JSONObject(receiving ? RecordingSyncService.controlSessions(root().resolve("companion-control")) : client.controlSessions(root().resolve("companion-control")));
                     JSONArray saved = inventory.getJSONArray("sessions");
                     if (inventory.optInt("unreadableCount") > 0) throw new IllegalStateException("有录音控制记录无法读取，请保留原录音并先检查设备。");
-                    if ("ADOPT".equals(action)) return new JSONObject(client.adoptLocalControl(root().resolve("companion-control")));
+                    if ("ADOPT".equals(action)) return recordingControlSnapshot(client,false,action,new JSONObject(client.adoptLocalControl(root().resolve("companion-control"))));
                     String host;
                     if ("START".equals(action) && !a.has("hostSession")) {
                         for (int i=0;i<saved.length();i++) if (!"stopped".equals(saved.getJSONObject(i).optString("state")))
@@ -911,7 +929,8 @@ public final class MainActivity extends Activity {
                         if (!found) throw new IllegalStateException("找不到原录音控制记录，请重新读取。");
                     }
                     NativeRecordingControl.Action command=NativeRecordingControl.Action.valueOf(action);
-                    return new JSONObject(receiving ? RecordingSyncService.control(root().resolve("companion-control"),host,command,0) : client.control(root().resolve("companion-control"),host,command,0));
+                    JSONObject result=new JSONObject(receiving ? RecordingSyncService.control(root().resolve("companion-control"),host,command,0) : client.control(root().resolve("companion-control"),host,command,0));
+                    return recordingControlSnapshot(client,receiving,action,result);
                 }
             }
             case "library": {
