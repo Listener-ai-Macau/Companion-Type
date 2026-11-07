@@ -44,7 +44,7 @@ for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
     if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
         r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
         (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -118,6 +118,10 @@ assert qwen_current.resolve().parent==base.resolve() and qwen_current.name in na
 record['officialNativeAsrControl']={name:optional(qwen_current/name) for name in ['download-range-receipt.json','prepared.json','hip-inventory.json','short-run.json','short-native-state.json','full/run.json','cache-recovery-proof.json','concurrency-proof.json','execution-stop-rule.json','followthrough-final-observation.json','review.json','next-direction.json']}
 record['officialNativeAsrControl'].update(control=str(qwen_current),activeExecution=active,initialLoaderFailure=optional(qwen_root/'short-run.json'),nativeLoaderTinyControl=optional(qwen_root/'streamed-loader-proof-r2.json'),featureNumericControl=optional(qwen_root/'processor-numeric-proof.json'),exactZeroGuardControl=optional(qwen_root/'exact-zero-guard-proof.json'))
 qwen=record['officialNativeAsrControl']
+if qwen_current.name=='practical-qwen-native17-r5':
+    qwen['checkpoint17']={'ready':optional(qwen_current/'model-ready.json'),'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'priorComplete06Review':optional(base/'practical-qwen-bounded-r4/review.json')}
+    record['state']='NATIVE17_'+(qwen['checkpoint17']['pilotRun'] or qwen['checkpoint17']['ready'] or qwen['prepared.json'] or {}).get('state','PREPARING')+'_SALE_OPEN'
+    record['next']='原QM04准确率优先：只比较固定官方原生1.7B权重；0.6B普通S6.43844%/复杂L混音23.42093%完整研究基线保留。保持BF16/eager/greedy/无参考热词/原30秒根块与有界失败恢复/CPU5%/private2GiB。先同一普通30秒默认/有界生成ID精确一致、原失败复杂30秒、全零输入管线短控；通过后同两完整真实会，普通S若不优于6.43844%就停止复杂并拒绝默认采用。不同权重不得复用旧神经输出。普通5%/逐人重叠/纪要事实/跨域独立集/手机实卡/售卖门全保留。'
 if qwen_current.name=='practical-qwen-bounded-r4':
     qwen['boundedRecovery']={'prepared':optional(qwen_current/'prepared.json'),'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'originalFailed30sReview':optional(base/'practical-qwen-signal-r3/review.json')}
     record['state']='BOUNDED_NATIVE_RECOVERY_'+(qwen['boundedRecovery']['pilotRun'] or qwen['boundedRecovery']['prepared'] or {}).get('state','PREPARED')+'_SALE_OPEN'
@@ -126,7 +130,7 @@ if qwen['download-range-receipt.json'] and not qwen['short-run.json']:
     record['state']='OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED'
 if qwen['short-run.json']:record['state']='OFFICIAL_NATIVE_ASR_'+qwen['short-run.json']['state']+'_SALE_OPEN'
 if qwen['full/run.json']:record['state']='OFFICIAL_NATIVE_ASR_'+qwen['full/run.json']['state']+'_SALE_OPEN'
-if qwen['full/run.json'] and not qwen['review.json'] and qwen_current.name!='practical-qwen-bounded-r4':
+if qwen['full/run.json'] and not qwen['review.json'] and qwen_current.name not in ['practical-qwen-bounded-r4','practical-qwen-native17-r5']:
     record['next']='收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原跨域和加载失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。'
 if qwen['review.json']:
     record['state']=qwen['review.json']['state'];record['next']=qwen['review.json']['next']
