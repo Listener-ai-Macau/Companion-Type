@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class MainActivity extends Activity {
     private WebView web;
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
+    private final DeviceConnectionOwner<RecordingClient> deviceConnection=new DeviceConnectionOwner<>(RecordingClient::isConnected);
     private List<BluetoothDevice> devices = new ArrayList<>();
     private List<RecorderWire.Descriptor> segments = new ArrayList<>();
     private BluetoothDevice selectedDevice;
@@ -200,9 +201,13 @@ public final class MainActivity extends Activity {
             android.widget.Toast.makeText(this,"文件选择已中断，请检查保存位置后重试。",android.widget.Toast.LENGTH_LONG).show();
         }
     }
+    @Override protected void onStop(){
+        if(!worker.isShutdown())worker.execute(this::closeSelectedDevice);
+        super.onStop();
+    }
     @Override protected void onDestroy() {
         meetingAi.cancelAll();
-        worker.execute(this::stopPlayback);
+        worker.execute(()->{closeSelectedDevice();stopPlayback();});
         web.removeJavascriptInterface("CompanionNative");
         worker.shutdown();
         super.onDestroy();
@@ -480,7 +485,7 @@ public final class MainActivity extends Activity {
         lifecycle().requireVisible(key);return storedSession(key);
     }
     private RecordingLibrary.Session storedSession(String key) throws Exception {
-        for (RecordingLibrary.Session s : RecordingLibrary.inspect(recordings()).sessions)
+        for (RecordingLibrary.Session s : RecordingLibrary.inspectSession(recordings(),key).sessions)
             if (!s.segments.isEmpty() && MeetingStore.sessionKey(s.segments.get(0).descriptor).equals(key)) return s;
         throw new IllegalStateException("找不到这条本机录音，请刷新列表。");
     }
@@ -614,6 +619,12 @@ public final class MainActivity extends Activity {
         if(command==DeviceMaintenance.Operation.CLEAR_PAIRINGS){selectedDevice=null;segments=new ArrayList<>();}
         return new JSONObject().put("address",address).put("name",name).put("operation",operation).put("settingsSaved",result.settingsSaved).put("defaultSettings",result.defaultSettings).put("radioEnabled",result.radioEnabled).put("bondCountValid",result.bondCountValid).put("bonds",result.bonds);
     }
+    private void closeSelectedDevice(){try{deviceConnection.close();}catch(java.io.IOException ignored){}}
+    private <T>T withSelectedDevice(DeviceConnectionOwner.Operation<RecordingClient,T> operation)throws Exception {
+        if(selectedDevice==null)throw new IllegalStateException("请先选择录音卡。");
+        final BluetoothDevice requested=selectedDevice;
+        return deviceConnection.use(requested.getAddress(),()->CompanionAndroidBackend.connect(this,requested),operation);
+    }
     /** Publish the exact catalogue already read on the current GATT owner. */
     private JSONArray deviceRecordingRows(java.util.List<com.denzic.companion.mobile.DeviceRecordings.Session> sessions)throws org.json.JSONException {
         java.util.List<RecorderWire.Descriptor> selected=new ArrayList<>();JSONArray out=new JSONArray();
@@ -636,6 +647,7 @@ public final class MainActivity extends Activity {
             try{result.put("recordings",deviceRecordingRows(client.listDeviceSessions()));}
             catch(java.io.IOException refresh){segments=new ArrayList<>();result.put("recordingsRefreshFailed",true);}
         }
+        if(!receiving&&(result.optBoolean("inventoryRefreshFailed")||result.optBoolean("recordingsRefreshFailed")))closeSelectedDevice();
         return result;
     }
     private JSONArray deviceRows()throws Exception{
@@ -739,6 +751,7 @@ public final class MainActivity extends Activity {
                 BluetoothDevice requested=selectedDevice;if(requested==null||!requested.getAddress().equals(a.getString("address")))throw new java.io.IOException("请先连接对应的录音卡。");
                 boolean verify=method.equals("verifyDeviceUpdate");String name=requested.getName()==null?"录音卡":requested.getName(),id=a.optString("id","");
                 if(!verify&&!confirmDeviceUpdate(name,DeviceUpdateService.load(this,id)))return DeviceUpdateService.status(this).put("cancelled",true);
+                closeSelectedDevice();
                 if(selectedDevice!=requested||LocalLibraryBackups.BUSY.get())throw new java.io.IOException("设备或资料状态已变化，请重新操作。");
                 return onUi(()->DeviceUpdateService.start(this,requested,name,id,verify));
             }
@@ -791,27 +804,29 @@ public final class MainActivity extends Activity {
             }
             case "libraryActivate":{
                 requireLibraryIdle();if(!LocalLibraryBackups.BUSY.compareAndSet(false,true))throw new java.io.IOException("资料操作正在进行。");
-                try{stopPlayback();JSONObject result=libraries().activate(a.getString("id"),a.getString("token"));selectedDevice=null;segments=new ArrayList<>();return result;}finally{LocalLibraryBackups.BUSY.set(false);}
+                try{closeSelectedDevice();stopPlayback();JSONObject result=libraries().activate(a.getString("id"),a.getString("token"));selectedDevice=null;segments=new ArrayList<>();return result;}finally{LocalLibraryBackups.BUSY.set(false);}
             }
             case "devices": {
+                closeSelectedDevice();
                 if (!bluetoothGranted()) throw new IllegalStateException("请先允许附近设备权限，再重新读取。");
                 devices = CompanionAndroidBackend.pairedDevices(this); segments = new ArrayList<>(); selectedDevice = null;
                 return deviceRows();
             }
-            case "discoverDevices":return discoverDevices();
+            case "discoverDevices":closeSelectedDevice();return discoverDevices();
             case "pairDevice":{
                 if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成后再配对。");
                 BluetoothDevice device=devices.get(a.getInt("index"));if(!device.getAddress().equals(a.getString("address")))throw new java.io.IOException("设备列表已变化，请重新搜索。");
+                closeSelectedDevice();
                 AndroidPairing.pair(this,device);return new JSONObject().put("paired",true).put("address",device.getAddress());
             }
-            case "deviceMaintenance":return maintainDevice(a);
+            case "deviceMaintenance":closeSelectedDevice();return maintainDevice(a);
             case "connectDevice":{
                 if(RecordingSyncService.isRunning())throw new java.io.IOException("正在接收录音，请等待完成后再连接其它设备。");
                 BluetoothDevice requested=devices.get(a.getInt("index"));if(!requested.getAddress().equals(a.getString("address")))throw new java.io.IOException("设备列表已变化，请重新搜索。");
                 JSONArray recordings;
-                try(RecordingClient client=CompanionAndroidBackend.connect(this,requested)){
-                    client.readDeviceStatus();recordings=deviceRecordingRows(client.listDeviceSessions());
-                }
+                recordings=deviceConnection.use(requested.getAddress(),()->CompanionAndroidBackend.connect(this,requested),client->{
+                    client.readDeviceStatus();return deviceRecordingRows(client.listDeviceSessions());
+                });
                 selectedDevice=requested;return new JSONObject().put("address",requested.getAddress()).put("connected",true).put("recordings",recordings);
             }
             case "catalog": {
@@ -821,7 +836,7 @@ public final class MainActivity extends Activity {
                 if(a.has("address")&&!a.getString("address").equals(selectedDevice.getAddress()))throw new java.io.IOException("设备已变化，请重新选择。");
                 segments = new ArrayList<>();
                 java.util.List<com.denzic.companion.mobile.DeviceRecordings.Session> sessions;
-                try (RecordingClient client = CompanionAndroidBackend.connect(this, selectedDevice)) { sessions = client.listDeviceSessions(); }
+                sessions=withSelectedDevice(RecordingClient::listDeviceSessions);
                 return deviceRecordingRows(sessions);
             }
             case "deleteDeviceRecording": {
@@ -829,16 +844,14 @@ public final class MainActivity extends Activity {
                 if(selectedDevice==null)throw new IllegalStateException("请重新选择设备。");
                 RecorderWire.Descriptor selected=segments.get(a.getInt("index"));
                 boolean deleted;
-                try(RecordingClient client=CompanionAndroidBackend.connect(this,selectedDevice)) {
-                    deleted=client.deleteDeviceSession(selected,this::confirmDeviceRecordingDelete);
-                }
+                deleted=withSelectedDevice(client->client.deleteDeviceSession(selected,this::confirmDeviceRecordingDelete));
                 return new JSONObject().put("deleted",deleted).put("message",deleted?"设备副本已删除，空间已回收。本机已保存的录音保留。":"已取消删除。");
             }
             case "sync": {
                 if (selectedDevice == null) throw new IllegalStateException("请重新选择设备和录音。");
                 File dir = recordings().toFile();
                 if (!dir.isDirectory() && !dir.mkdirs()) throw new IllegalStateException("无法创建录音目录。");
-                RecordingSyncService.start(this, selectedDevice, segments.get(a.getInt("index")), dir);
+                RecordingSyncService.start(this,selectedDevice,segments.get(a.getInt("index")),dir,deviceConnection.take(selectedDevice.getAddress()));
                 return syncStatus();
             }
             case "resume": {
@@ -895,9 +908,7 @@ public final class MainActivity extends Activity {
             case "controlInventory": {
                 if (RecordingSyncService.isRunning()) return new JSONObject(RecordingSyncService.controlSessions(root().resolve("companion-control")));
                 if (selectedDevice == null) throw new IllegalStateException("请先选择录音卡。");
-                try (RecordingClient client = CompanionAndroidBackend.connect(this, selectedDevice)) {
-                    return new JSONObject(client.controlSessions(root().resolve("companion-control")));
-                }
+                return withSelectedDevice(client->new JSONObject(client.controlSessions(root().resolve("companion-control"))));
             }
             case "control": {
                 boolean receiving=RecordingSyncService.isRunning();
@@ -905,7 +916,7 @@ public final class MainActivity extends Activity {
                 String action = a.getString("action");
                 if (receiving && ("START".equals(action)||"ADOPT".equals(action)))
                     throw new IllegalStateException("接收期间不能开始或接管新的录音。");
-                try (RecordingClient client = receiving ? null : CompanionAndroidBackend.connect(this, selectedDevice)) {
+                DeviceConnectionOwner.Operation<RecordingClient,JSONObject> operation=client->{
                     JSONObject inventory = new JSONObject(receiving ? RecordingSyncService.controlSessions(root().resolve("companion-control")) : client.controlSessions(root().resolve("companion-control")));
                     JSONArray saved = inventory.getJSONArray("sessions");
                     if (inventory.optInt("unreadableCount") > 0) throw new IllegalStateException("有录音控制记录无法读取，请保留原录音并先检查设备。");
@@ -931,7 +942,8 @@ public final class MainActivity extends Activity {
                     NativeRecordingControl.Action command=NativeRecordingControl.Action.valueOf(action);
                     JSONObject result=new JSONObject(receiving ? RecordingSyncService.control(root().resolve("companion-control"),host,command,0) : client.control(root().resolve("companion-control"),host,command,0));
                     return recordingControlSnapshot(client,receiving,action,result);
-                }
+                };
+                return receiving?operation.run(null):withSelectedDevice(operation);
             }
             case "library": {
                 RecordingLibrary.Inventory inv = RecordingLibrary.inspect(recordings()); JSONArray rows = new JSONArray(); int titleProblems=0,searchProblems=0;
