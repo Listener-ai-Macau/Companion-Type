@@ -139773,7 +139773,7 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "RUNNING_COMPLETE_MEETING_DIARIZATION",
+          "status": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
@@ -141101,8 +141101,8 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T10:50:24+08:00",
-              "phase": "running",
+              "at": "2026-11-07T10:58:12+08:00",
+              "phase": "finished",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2",
               "protocol": {
@@ -141168,10 +141168,20 @@
                 "scope": "Speaker activity/anonymous identity only. This does not recover overlapped words, recognize names/roles, prove ASR<5%, phone performance or product qualification."
               },
               "run": {
-                "state": "RUNNING_COMPLETE_MEETING_DIARIZATION",
+                "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
                 "startedAt": "2026-11-07T10:40:35+08:00",
                 "pid": 18960,
-                "results": [],
+                "results": [
+                  {
+                    "meeting": "L_R003S01C02",
+                    "exitCode": 1,
+                    "workerState": "FAILED_RETAINED",
+                    "wholeProcessFamilySeconds": 1055.628851500005,
+                    "privatePeakBytes": 2117996544,
+                    "rssPeakBytes": 1686429696,
+                    "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-cpu-r2\\results\\L_R003S01C02"
+                  }
+                ],
                 "protocolSha256": "c25306d5b28efa27bd3c862f158c51143b655c9700a95d7eda38f717dd9bf77a",
                 "sourceSha256": {
                   "practical_cpu_worker_20261107.py": "b2e45bfef306f482dc32b19629aad5b4fce5977e377825771e4a9b609dc6c7c0",
@@ -141182,8 +141192,7 @@
                 },
                 "referencePassedToInference": false,
                 "automaticRetries": 0,
-                "activeMeeting": "L_R003S01C02",
-                "activePid": 23144
+                "finishedAt": "2026-11-07T10:58:12+08:00"
               },
               "asrProbe": {
                 "state": "EXISTING_ASR_CONTROL_COMPLETE",
@@ -141358,7 +141367,7 @@
               "wholeMeetingAsrQuality": null,
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
-              "state": "RUNNING_COMPLETE_MEETING_DIARIZATION",
+              "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
               "shortIntegrationProof": {
                 "state": "PASS_ACTUAL_PUBLIC30S_CPU_JOURNAL_TOKEN_ATTRIBUTION_AND_NO_MODEL_CACHE_RESUME",
                 "sameRawTextTokensOnsetsAsOriginalProbe": true,
@@ -141421,7 +141430,7 @@
                 "finishedAt": "2026-11-07T10:31:57+08:00"
               },
               "next": "同一冻结完整CPU分人流程依次验L/S整会，标准DER同时核逐人/短句覆盖；普通转写保留原音与原始文字，用模型token时间估计绑定人物，重叠/边界不明确保留未知，不整窗乱贴一人。退出后才评分，按真实结果决定保留/拒绝，不扫阈值、不训练、不原样重跑HIP长上下文。原跨会文字<5%、重叠逐路、事实/双端/实卡和售卖门保持。",
-              "sourceAndEvidenceCommit": "76a4cc776d0c990c09d113811149977bfbf35406",
+              "sourceAndEvidenceCommit": "7b8e44edeb8e7e6856919efbc9aa62f26b127fff",
               "remoteReadbackConfirmed": true
             }
           }
