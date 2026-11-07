@@ -1,0 +1,85 @@
+{
+  "at": "2026-11-07T13:34:41+08:00",
+  "state": "COMPLETE_FULL_MAPPING_OVERLAP_BREAKDOWN_NO_NEW_INFERENCE",
+  "results": [
+    {
+      "at": "2026-11-07T13:34:41+08:00",
+      "meeting": "EN2002a",
+      "referenceParser": "original_rttm_parser",
+      "referenceKind": "rttm_only_words",
+      "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+      "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb",
+      "frozenFullMeetingMappingForEvaluationOnly": {
+        "speaker_3": "FEO070",
+        "speaker_2": "FEO072",
+        "speaker_0": "MEE071",
+        "speaker_1": "MEE073"
+      },
+      "mappingNeverReturnedToInference": true,
+      "fullOriginalComponentsReproduced": true,
+      "collarSeconds": 0.0,
+      "overlapIncluded": true,
+      "regionSpecificRemapping": false,
+      "regions": {
+        "nonOverlapIncludingSilence": {
+          "audioRegionSeconds": 1623.129375,
+          "referenceSpeakerSeconds": 1375.3199999999986,
+          "derWithFrozenGlobalAssignment": 0.22926744321321582,
+          "components": {
+            "missed detection": 282.4609180000016,
+            "false alarm": 22.503627000000584,
+            "correct": 1082.5075269999993,
+            "total": 1375.3199999999986,
+            "confusion": 10.351554999997521,
+            "identification error rate": 0.22926744321321582
+          }
+        },
+        "twoOrMore": {
+          "audioRegionSeconds": 519.5799999999999,
+          "referenceSpeakerSeconds": 1154.939999999999,
+          "derWithFrozenGlobalAssignment": 0.4078164060470668,
+          "components": {
+            "missed detection": 442.43260099999804,
+            "false alarm": 7.459892000000046,
+            "correct": 691.396412,
+            "total": 1154.939999999999,
+            "confusion": 21.110987000000822,
+            "identification error rate": 0.4078164060470668
+          }
+        },
+        "threeOrMore": {
+          "audioRegionSeconds": 109.4500000000001,
+          "referenceSpeakerSeconds": 334.6800000000002,
+          "derWithFrozenGlobalAssignment": 0.4590368919564956,
+          "components": {
+            "missed detection": 146.3202590000002,
+            "false alarm": 0.6599549999998997,
+            "correct": 181.70948800000008,
+            "total": 334.6800000000002,
+            "confusion": 6.650252999999935,
+            "identification error rate": 0.4590368919564956
+          }
+        }
+      },
+      "neuralInferenceAdded": 0,
+      "overlapWordsRecovered": false,
+      "qualified": false
+    }
+  ],
+  "limits": {
+    "pid": 24588,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 101777408,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

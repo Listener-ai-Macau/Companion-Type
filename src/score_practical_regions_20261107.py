@@ -15,8 +15,16 @@ for case in read(C/'scoring-only.json'):
     out=C/'results'/case['meeting'];review=read(out/'review.json');producer=read(out/'completed-state.json');assert producer['state']=='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED' and producer['finishedAt'] and producer['audioSha256']==case['audioSha256']
     assert sha(case['reference'])==case['referenceSha256'] and sha(out/'predicted.rttm')==review['rttmSha256']==producer['rttmSha256']
     reference=Annotation(uri=case['meeting']);hypothesis=Annotation(uri=case['meeting']);uem=Timeline([Segment(0,case['audioSeconds'])])
-    for index,row in enumerate(read_reference_intervals(case['reference'])):
-        if re.sub(r'<[^>]*>','',row['text']).strip():reference[Segment(row['start'],row['end']),row['speaker']+':'+str(index)]=row['speaker']
+    if case['referenceKind']=='rttm_only_words':
+        for index,line in enumerate(Path(case['reference']).read_text(encoding='utf8').splitlines()):
+            if not line.strip() or line.lstrip().startswith('#'):continue
+            fields=line.split();assert len(fields)>=8 and fields[0]=='SPEAKER' and fields[1]==case['meeting']
+            start=float(fields[3]);reference[Segment(start,start+float(fields[4])),str(index)]=fields[7]
+        reference_parser='original_rttm_parser'
+    else:
+        for index,row in enumerate(read_reference_intervals(case['reference'])):
+            if re.sub(r'<[^>]*>','',row['text']).strip():reference[Segment(row['start'],row['end']),row['speaker']+':'+str(index)]=row['speaker']
+        reference_parser=PARSER_ID
     reference=reference.support().crop(uem)
     mapping={r['matchedAnonymousGroup']:person for person,r in review['perReferenceSpeakerForEvaluationOnly'].items() if r['matchedAnonymousGroup'] is not None}
     for index,line in enumerate((out/'predicted.rttm').read_text(encoding='utf8').splitlines()):
@@ -41,5 +49,5 @@ for case in read(C/'scoring-only.json'):
     # including quiet false alarms. No region gets its own identity remap.
     for key in ['correct','confusion','missed detection','false alarm','total']:
         assert abs(sum(details[name].get('components',{}).get(key,0) for name in ['nonOverlapIncludingSilence','twoOrMore'])-all_components[key])<1e-4
-    row={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'meeting':case['meeting'],'referenceParser':PARSER_ID,'referenceSha256':case['referenceSha256'],'rttmSha256':producer['rttmSha256'],'frozenFullMeetingMappingForEvaluationOnly':mapping,'mappingNeverReturnedToInference':True,'fullOriginalComponentsReproduced':True,'collarSeconds':0.,'overlapIncluded':True,'regionSpecificRemapping':False,'regions':details,'neuralInferenceAdded':0,'overlapWordsRecovered':False,'qualified':False};atomic_json(out/'overlap-breakdown.json',row);rows.append(row)
+    row={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'meeting':case['meeting'],'referenceParser':reference_parser,'referenceKind':case['referenceKind'],'referenceSha256':case['referenceSha256'],'rttmSha256':producer['rttmSha256'],'frozenFullMeetingMappingForEvaluationOnly':mapping,'mappingNeverReturnedToInference':True,'fullOriginalComponentsReproduced':True,'collarSeconds':0.,'overlapIncluded':True,'regionSpecificRemapping':False,'regions':details,'neuralInferenceAdded':0,'overlapWordsRecovered':False,'qualified':False};atomic_json(out/'overlap-breakdown.json',row);rows.append(row)
 pressure.close();atomic_json(C/'overlap-breakdown.json',{'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'COMPLETE_FULL_MAPPING_OVERLAP_BREAKDOWN_NO_NEW_INFERENCE','results':rows,'limits':limits.query()});print(json.dumps([{'meeting':r['meeting'],'regions':{k:{x:v.get(x) for x in ['audioRegionSeconds','derWithFrozenGlobalAssignment']} for k,v in r['regions'].items()}} for r in rows]),flush=True)
