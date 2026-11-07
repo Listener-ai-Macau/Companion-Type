@@ -39,11 +39,12 @@ if chain_path.exists() and read(chain_path).get('state')=='COMPLETE_TWO_MEETING_
         if not (chain_path.parent/'results'/case['meeting']/'embedding-cause-review.json').exists():
             posthoc(['E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe',str(M/'src/practical_speaker_cause_20261107.py'),'--control',str(chain_path.parent),'--meeting',case['meeting']],'cause-'+case['meeting'])
     if not (chain_path.parent/'candidate-assessment.json').exists():posthoc([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(chain_path.parent),'--backlog',str(R/'docs/product_backlog.json')],'assessment')
-native_chain=base/'native8-vulkan-full-r1/chain-state.json'
-if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
-    r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
-    (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation']
+for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
+    native_chain=base/native_name/'chain-state.json'
+    if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
+        r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
+        (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -68,6 +69,10 @@ record['native8PredictedCountControl']=optional(base/'native8-count-control-r1/p
 record['native8PrecisionPreparation']=optional(base/'native8-precision-preparation/prepared.json')
 record['native8PrecisionWorkpoint']=optional(base/'native8-precision-preparation/workpoint.json')
 record['native8PrecisionConversion']=optional(base/'native8-precision-preparation/conversion-result.json')
+record['native8F16ShortRun']=optional(base/'native8-f16-smoke-r1/native-run.json')
+record['native8F16FullRun']=optional(base/'native8-f16-full-r1/native-run.json')
+record['native8F16Chain']=optional(base/'native8-f16-full-r1/chain-state.json')
+record['native8F16Assessment']=optional(base/'native8-f16-full-r1/candidate-assessment.json')
 if record['native8VulkanFullRun']:record['state']=record['native8VulkanFullRun']['state']
 elif record['native8VulkanShortRun']:record['state']=record['native8VulkanShortRun']['state']
 if record['native8VulkanChain']:record['state']=record['native8VulkanChain']['state']
@@ -78,6 +83,9 @@ if record['native8Preparation']:
 if record['native8PredictedCountControl']:
     record['next']='完整8人候选L/S已完成并回填旧原字、真实共享Document校验通过：普通S标准DER3.8540%/5人、复杂L24.5373%/6人；全系统未达标，复杂尚差于旧最好17.226%。不因人数正确就当身份正确。0新增声音模型的固定人数融合L19.4545%/S10.5782%，普通回退且复杂不及历史最好，拒绝默认采用，不按已见会议挑算法。下一项先做同一官方checkpoint的部署精度核对：精确作者转换源码重建Q8张量核验；源头一致后才比较高精度权重，同一两整会、几何/阈值/评分全固定，不训练或扫参。文字原始S7.6997%/逐人10.3063%、复杂L逐人52.9852%等失败保留，原<5%/重叠逐路/事实/独立集/双端实卡门继续OPEN。'
     if record['native8PrecisionWorkpoint'] or record['native8PrecisionPreparation']:record['state']='PRECISION_SOURCE_CONTROL_IN_PROGRESS_MODEL_UNQUALIFIED'
+if record['native8F16Chain']:record['state']=record['native8F16Chain']['state']
+elif record['native8F16FullRun']:record['state']=record['native8F16FullRun']['state']
+elif record['native8F16ShortRun']:record['state']=record['native8F16ShortRun']['state']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
@@ -96,6 +104,8 @@ for file in [path,R/'docs/development_log.md']:shutil.copyfile(file,S/'docs'/fil
 chain=Path(__file__).with_name('run_bounded_model_chain_20261107.py')
 if chain.exists():shutil.copyfile(chain,dest/chain.name)
 chain=Path(__file__).with_name('run_native8_model_chain_20261107.py')
+if chain.exists():shutil.copyfile(chain,dest/chain.name)
+chain=Path(__file__).with_name('run_native8_f16_model_chain_20261107.py')
 if chain.exists():shutil.copyfile(chain,dest/chain.name)
 main=ship(S,['docs/product_backlog.json','docs/development_log.md','docs/handoffs/model-practical-cpu-20261107'],'Record complete meeting pipeline '+a.phase)
 print(json.dumps({'state':record['state'],'modelCommit':head,'mainCommit':main,'remoteReadbackConfirmed':True}),flush=True)

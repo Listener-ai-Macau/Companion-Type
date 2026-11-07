@@ -130889,7 +130889,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-07T12:09:57+08:00",
+      "updatedAt": "2026-11-07T12:53:56+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -131377,7 +131377,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "优先原CP23-10任意长度含实际回收平均≥50，不放宽、不填充字节、不提前ACK。705减少已找到目标的重复全目录扫描（只改ACK/ERASING状态、每次重新读目标严格匹配原身份/长度/CRC/SHA/state，完整恢复/旧接口保留），正常构建后手机088普通OTA及实机短录/分钟/五分钟按受影响范围再测。当前没有活动录音。继续真实radio≤10与最终长录；数据不足的首PCM/动态STOP前缀不填0/不声称通过；原app412216预算仍守。Owner明确硬件电源/声学/屏幕/生产block保留。",
+      "next": "Fix same single initial133 retry using Android public background-connect scheduling instead of another direct request; keep first direct path/paired UID validation/5s gate/no product command replay. Then finish short50/radio10/final longevity. Do not claim literal any-length50 from five-minute52.723. Existing explicit hardware/production blocks remain.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131870,12 +131870,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-07T12:09:57+08:00",
-        "firmware": 66704,
-        "coreDelivery": "NORMAL_USER_STOP_PHYSICAL_PREFIX_RECLAIM_AND_COMPLETED_ROW_PASS_ALL_LENGTH_SPEED_FAIL",
+        "at": "2026-11-07T12:53:56+08:00",
+        "firmware": 66705,
+        "coreDelivery": "FIVE_MINUTE_RATE52_723_PASS_SHORT23_198_43_894_FAIL_IDLE_PHONE133_REPRODUCED",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "10秒19.36/1分钟40.74/5分钟46.85KiB/s含实际回收均FAIL50，动态等待均过但不能替代速率。703目录连续返回/704正常短段物理前缀擦除已装，静态69328/栈21504不增；应用412560对原412216+344仍FAIL待实际收益/资源复核。088精确地址发现修复已装，普通冷2.0482秒过，首次133后的新分支仍待真实触发；旧失败保留。705已完成已解析目标条目状态核对，避免ACK/回收再次全目录扫描，错误位置/证明/读取失败及GC逻辑槽复用模型过，尚在构建未装。不冒称radio10秒/最终长录/首PCM等当前实测过。",
+        "openSoftware": "五分钟705/088新样本52.723KiB/s/16.882秒动态通过，不能替代任意长度。705十秒22.865和一分钟43.894仍FAIL50；089系统HIGH请求accepted后十秒23.198仍FAIL，不能以参数请求成功冒称优化完成。完成条目自动隐藏/原音WAV完整已验。089空闲后手机用刚扫描到的random设备仍initial133，未开始新录音；板705随后正常读取，无pair失败/bondlost、无采音错误、core61439820Hz/栈余4344B。需修现有一次重试的连接调度，不叠加次数或清配对/复位。原412216应用预算对705+464仍待差异评估，RAM/栈不增。radio10秒/最终长录与已明确物理/生产block保持。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -131893,7 +131893,7 @@
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
         "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。",
-        "phoneVersion": "0.1.88"
+        "phoneVersion": "0.1.89"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -133788,12 +133788,12 @@
         }
       },
       "metricAcceptance": {
-        "at": "2026-11-07T10:02:37+08:00",
+        "at": "2026-11-07T12:53:56+08:00",
         "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
-        "currentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ota-measurements.json",
+        "currentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json",
         "verdict": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ota-current-contract-verdict.json",
-        "result": "FAIL_SHORT_RAW_RATE_RADIO10_AND_CURRENT_RESOURCE_BUDGET_STILL_OPEN",
-        "functionalOtaResult": "PASS_ORDINARY_PHONE_SIGNED_OTA_EXACT_IDENTITY_AND_RELEASE",
+        "result": "FAIL_REQUIRED_ANY_LENGTH_RATE_AND_IDLE_PHONE_CONNECTION_CURRENT_RESOURCE_DIFF_OPEN",
+        "functionalOtaResult": "PASS_ORDINARY705_PHONE088_EXACT_IDENTITY_RETAIN_VERIFY_FAILURES",
         "ownerQuotes": [
           "然后你测手机的时候，你 OTA 同时要测一下那些指标，不要说测。过了就算了，你有记录下之前那些指标吗？就欠软这个东西主要是根据指标去做优化。",
           "是的，让像嵌入式这样的功能，它虽然说可以，但是如果是。那个要求的指标不及格的话，你也是报失败。之前指标好像都有列吧，如果没有列的话就列一个合适"
@@ -133801,54 +133801,54 @@
         "next": "沿embedded.next，不复用旧手机065的PASS。",
         "latestValues": {
           "payload_rate_kib_s": {
-            "value": 55.085130309956575,
+            "value": 55.290132799274076,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ordinary-phone080-ota.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "total_seconds": {
-            "value": 117.473825788,
+            "value": 115.995858342,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ordinary-phone080-ota.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "post_finish_verify_seconds": {
-            "value": 91.905898454,
+            "value": 90.538611372,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ordinary-phone080-ota.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "application_bytes": {
-            "value": 413672,
+            "value": 412680,
             "status": "FAIL",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\resource-sections.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "static_data_bss_bytes": {
-            "value": 69416,
-            "status": "FAIL",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\resource-sections.json"
+            "value": 69328,
+            "status": "PASS",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "stack_reserved_bytes": {
             "value": 21504,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\resource-sections.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "stack_guard_faults": {
             "value": 0,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\phone080-session279\\after279-metrics.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "old_catalog_changed_count": {
             "value": 0,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\after-ota.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "pending_ota_claimed_bytes": {
             "value": 0,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\after-ota.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "installed_identity_mismatch_count": {
             "value": 0,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\after-ota.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "cold_private_directory_seconds": {
             "value": 4.6238832,
@@ -133925,7 +133925,8 @@
         "longConcurrentCurrentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66699\\phone076\\long274\\acceptance.json",
         "sourceSummary": "当前0.1.84/FW66702；083实机60.54/300.42秒动态8.816/18.866≤10.865/22.172，五分钟50.396KiB/s；084十秒7.876/6.906≤8.506/8.500。083暂停续收3.312秒、084冷4.624秒通过。短录严格含回收速率仍失败，radio旧10.735秒>10、正式资源/最终长期未关闭；不把CPU观测当硬门。",
         "sourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ota-measurements.json",
-        "recordingCompletionEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\batch-result.json"
+        "recordingCompletionEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\batch-result.json",
+        "comparisonScope": "New observations have explicit firmware/phone versions. No old failure or unmeasured current variant is promoted to PASS; CPU% diagnostic only."
       },
       "previousDeliveryReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery\\recovery\\rebuilt66684\\hardware-acceptance.json",
       "lastOwnerAssistance": {
@@ -133938,20 +133939,19 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T12:09:57+08:00",
-        "state": "MODELS_PASS_NORMAL_BUILD_IN_PROGRESS_NOT_INSTALLED",
-        "firmwareInstalled": 66704,
-        "phoneInstalled": "0.1.88",
-        "firmwareSourceInstalled": "38aed99284f543a3d3aa2cb0b25985b320a34a3a",
-        "firmwareCandidateSource": "81ad65518a11d7264815312be7ce3c5b043f9ca8",
-        "phoneSourceCommit": "5d7f4adf4d0d6d1a7dc2c21a8e76a1f8a41c281d",
-        "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
+        "at": "2026-11-07T12:53:56+08:00",
+        "state": "705_089_INSTALLED_IDLE_CURRENT_PHONE_INITIAL133_NOT_SOLVED_BY_REDISCOVERY",
+        "firmwareInstalled": 66705,
+        "phoneInstalled": "0.1.89",
+        "firmwareSource": "81ad65518a11d7264815312be7ce3c5b043f9ca8",
+        "phoneSourceCommit": "e8acd9d12de075093777e0049cb372d9df40d5fb",
+        "backendSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
         "boardLease": true,
         "boardItem": "Companion703目录连续返回与正式资源验收",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66704\\progress-704-088.json"
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -134496,6 +134496,163 @@
         "installed": true,
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66704\\phone088\\build\\installation-verification.json",
         "scope": "Only after initial133, exact-address filtered1s rediscovery for one retry, independent of missing/custom name; ScanResult preserved. No commands replayed, no pairing cleared. Ordinary paired cold704/0882.0482s PASS. Retry branch not yet physically triggered on088; previous133 retained."
+      },
+      "recordingCompletionProgress705": {
+        "at": "2026-11-07T12:53:56+08:00",
+        "result": "NOT_SALE_QUALIFIED_SHORT_SPEED_AND_IDLE_CONNECTION_STILL_OPEN",
+        "firmware": 66705,
+        "firmwareSource": "81ad65518a11d7264815312be7ce3c5b043f9ca8",
+        "phoneVersion": "0.1.89",
+        "sourceCommit": "e8acd9d12de075093777e0049cb372d9df40d5fb",
+        "backendSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
+        "apkSha256": "1a112c1c402c6f1c769979707edbad357a48a3743b716a53de07c40781a2837c",
+        "cases": [
+          {
+            "case": "device088/short705-1",
+            "session": "293",
+            "firmware": 66705,
+            "phoneVersion": "0.1.88",
+            "confirmedKiBps": 22.865290025029985,
+            "rateResult": "FAIL",
+            "bytes": 22362,
+            "dynamicSeconds": 5.217540999999999,
+            "dynamicMaximumSeconds": 8.500303802490235,
+            "dynamicResult": "PASS",
+            "wavErrorMs": 10,
+            "centralHighPriorityRequestAccepted": null
+          },
+          {
+            "case": "device088/minute705-1",
+            "session": "294",
+            "firmware": 66705,
+            "phoneVersion": "0.1.88",
+            "confirmedKiBps": 43.89401083869568,
+            "rateResult": "FAIL",
+            "bytes": 127514,
+            "dynamicSeconds": 7.282226600000002,
+            "dynamicMaximumSeconds": 10.859473724365236,
+            "dynamicResult": "PASS",
+            "wavErrorMs": 10,
+            "centralHighPriorityRequestAccepted": null
+          },
+          {
+            "case": "device088/five705-1",
+            "session": "295",
+            "firmware": 66705,
+            "phoneVersion": "0.1.88",
+            "confirmedKiBps": 52.72304870656217,
+            "rateResult": "PASS",
+            "bytes": 631742,
+            "dynamicSeconds": 16.882259299999976,
+            "dynamicMaximumSeconds": 22.172581634521485,
+            "dynamicResult": "PASS",
+            "wavErrorMs": 20,
+            "centralHighPriorityRequestAccepted": null
+          },
+          {
+            "case": "device089/short705-1",
+            "session": "296",
+            "firmware": 66705,
+            "phoneVersion": "0.1.89",
+            "confirmedKiBps": 23.198033656943462,
+            "rateResult": "FAIL",
+            "bytes": 22610,
+            "dynamicSeconds": 5.081905899999998,
+            "dynamicMaximumSeconds": 8.505696868896486,
+            "dynamicResult": "PASS",
+            "wavErrorMs": 20,
+            "centralHighPriorityRequestAccepted": true
+          }
+        ],
+        "ota": {
+          "phone": "0.1.88",
+          "payloadKiBps": 55.290132799274076,
+          "totalSeconds": 115.995858342,
+          "postPayloadSeconds": 90.538611372,
+          "verifyAttempts": 7,
+          "verifyFailures": 6,
+          "firstAttemptReachedPayload": true
+        },
+        "latestIdleConnectionFailure": {
+          "case": "device089/minute705-1",
+          "newRecordingStarted": false,
+          "phoneObservedFreshScanResult": true,
+          "inputAddressType": 1,
+          "requestedAddressType": -1,
+          "gattStage": "wait_connection",
+          "status": 133,
+          "sameOrdinaryDirectRetryFailed": true,
+          "boardKnownPairingFailureFlag": false,
+          "pairingStatus": 0,
+          "pairingReason": 0,
+          "lastUnsecuredDisconnectReason": 255,
+          "initialLinkSeen": 8,
+          "initialLinkFailed": 0,
+          "bondLost": 0,
+          "boardStillAvailable": true,
+          "uartQueryBytes": 0,
+          "scope": "These snapshots do not time-correlate every HCI event with phone callbacks. Board pair/bond rejection and recording faults absent; fresh scanned device still got133, so type/rediscovery alone did not solve it. No reset or bond clear."
+        },
+        "runtime": {
+          "memory": {
+            "sampled": true,
+            "guardFailed": false,
+            "lowLatched": false,
+            "stackReservedBytes": 21504,
+            "minimumFreeBytes": 4344,
+            "coreHz": 61439820,
+            "uptimeMs": 1822154
+          },
+          "audioTiming": {
+            "validMask": 15,
+            "mediaReady": true,
+            "running": false,
+            "encodeSamples": 526,
+            "pdmSamples": 1051,
+            "encodeP95UpperMs": 5.5,
+            "encodePeakUpperMs": 5.412,
+            "pdmP95UpperMs": 2.0,
+            "pdmPeakUpperMs": 2.226,
+            "encodeP95UpperUs": 5500,
+            "encodePeakUpperUs": 5412,
+            "pdmP95UpperUs": 2000,
+            "pdmPeakUpperUs": 2226,
+            "wireUnits": "CONSERVATIVE_UPPER_MICROSECONDS_SCHEMA2"
+          },
+          "audioFaults": {
+            "initialized": true,
+            "running": false,
+            "overflows": 0,
+            "staleDmaHalves": 0,
+            "processingRejections": 0,
+            "deadlineFaults": 0
+          },
+          "audioService": {
+            "initialized": true,
+            "processedDmaHalves": 38182,
+            "errorIrqs": 0,
+            "maxCaptureForegroundMs": 6,
+            "microphoneMaxPollMs": 3
+          },
+          "cpuDuty": "NOT_EVALUATED_OBSERVER_COMPILED_OFF"
+        },
+        "resources": {
+          "appBytes": 412680,
+          "originalAppMaximum": 412216,
+          "originalAppResult": "FAIL_PLUS464_PENDING_DIFF_ASSESSMENT",
+          "staticBytes": 69328,
+          "reservedStackBytes": 21504,
+          "productLinkBytes": 1008,
+          "screenEnabled": false,
+          "cpuObserverEnabled": false
+        },
+        "old34Unchanged": true,
+        "freeBytes": 4608000,
+        "allocatableSegments": 17,
+        "oldAudioRead": false,
+        "oldAudioConsumed": false,
+        "wholeSaleQualified": false,
+        "next": "Fix same single initial133 retry using Android public background-connect scheduling instead of another direct request; keep first direct path/paired UID validation/5s gate/no product command replay. Then finish short50/radio10/final longevity. Do not claim literal any-length50 from five-minute52.723. Existing explicit hardware/production blocks remain."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -134760,13 +134917,13 @@
           "wholeProductQualified": false
         },
         "latestInstalledVersionObservation": {
-          "at": "2026-11-07T12:09:57+08:00",
-          "version": "0.1.88",
-          "firmware": 66704,
-          "sourceCommit": "5d7f4adf4d0d6d1a7dc2c21a8e76a1f8a41c281d",
-          "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
-          "apkSha256": "9509bbdbb3f05ced7cc55d7dc7d68deccf3653786476438bddfa49225dd2b69d",
-          "scope": "Exact installed088/actual independent WSI4/UI85/payload704 confirmed; no active recording/receive/OTA.705 model source built next, not installed. Any-length physical-reclaim50 all current tested lengths FAIL; no sale claim."
+          "at": "2026-11-07T12:53:56+08:00",
+          "version": "0.1.89",
+          "firmware": 66705,
+          "sourceCommit": "e8acd9d12de075093777e0049cb372d9df40d5fb",
+          "backendSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
+          "apkSha256": "1a112c1c402c6f1c769979707edbad357a48a3743b716a53de07c40781a2837c",
+          "scope": "Exact installed089, actual705 WSI4/UI85/payload independently confirmed; latest minute attempt failed beforeSTART133 after exact rediscovery. No active recording/receive/OTA; five-minute088≥50 is not all-length PASS."
         },
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
@@ -135880,6 +136037,11 @@
           "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
           "result": "INSTALLED_EXACT_ADDRESS_REDISCOVERY_COLD_ONE_PASS_BRANCH_NOT_TRIGGERED",
           "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66704\\progress-704-088.json"
+        },
+        "embeddedConnection089": {
+          "at": "2026-11-07T12:53:56+08:00",
+          "result": "INSTALLED_TRANSFER_SCOPE_HIGH_ACCEPTED_SHORT_RATE_STILL_FAIL_CACHED_COLD133_REPRODUCED",
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -141288,7 +141450,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T12:50:44+08:00",
+              "at": "2026-11-07T12:56:36+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -146658,7 +146820,391 @@
                   "scope": "This worker and its descendants only; no global or other-app changes."
                 }
               },
-              "native8PrecisionPreparation": null,
+              "native8PrecisionPreparation": {
+                "at": "2026-11-07T12:51:03+08:00",
+                "state": "PREPARED_EXACT_AUTHOR_CONVERTER_AND_CHECKPOINT_NO_INFERENCE",
+                "checkpoint": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\Nemotron-3-Diarization.nemo",
+                "checkpointSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+                "checkpointBytes": 198676480,
+                "sourceRoot": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source",
+                "sourceFiles": [
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "LICENSE",
+                    "gitBlob": "a98019d81d0919b67368ec33e7c6d1f14462e885",
+                    "sha256": "eaaca34b26b27c7be5a5099a0b9ddf9913f2db0aa96f6d5854435f2916d6fdc3",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\LICENSE"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/__init__.py",
+                    "gitBlob": "763d6a8f02b19724df5388db12eddfef5a923f89",
+                    "sha256": "8c43965b961176ecc5cf65b4b4e62ad7ba271030bac0be342a8e0a7be822b7d7",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\__init__.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/asr.py",
+                    "gitBlob": "9e4d2512e07c71f6732950fd84640ffae5be9e24",
+                    "sha256": "cb4c8150e5e98868fb9a42f002dbaab277797afab29cf618a1bf642378e6f1da",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\asr.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/codec.py",
+                    "gitBlob": "7be6038a570ad3c7c50891c4d5662633ecac0bc0",
+                    "sha256": "4553f201708a007923c5b64ad4b85091451eed566d3ec52838852b341a82b993",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\codec.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/ctc_timestamp.py",
+                    "gitBlob": "04c87f21bfd3c312509af7a039a15853e918429a",
+                    "sha256": "778903b149c1a55fff7a5f141835a3c8e0ee068396583d8aeea08dee87ef46ee",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\ctc_timestamp.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/diarization.py",
+                    "gitBlob": "2f4d97ee50c9936cb76dcf43597204d348ccd6a6",
+                    "sha256": "b246c039dd56fea63500f105d77be17eafbc73f9c79fb6c8cd6e420101ed2317",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\diarization.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/pee.py",
+                    "gitBlob": "1e21853ced7275027f9af764de9bd20d6b1726c2",
+                    "sha256": "74c0d0c5f83a9757a8d8c351129ea0206a73973f1c925db90fcd7495b4681238",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\pee.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/pnc.py",
+                    "gitBlob": "1e8b17b4c02c65eab291ca93538c27268ab63076",
+                    "sha256": "2c206ab647e6bfc52f2f58f1b94dd44ab7c740dfeb213d2af961b4cf924eec9f",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\pnc.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/quantization.py",
+                    "gitBlob": "478ec369d06adb28a0ecd1270ef382a2649cedc5",
+                    "sha256": "203df33778a5e3f68d6a416ff626db9643d2c3a5d7b525dee50056ef1841bd15",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\quantization.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/registry.py",
+                    "gitBlob": "c9edc95fca4a786b4b6cd2bdaddb2a870a871d09",
+                    "sha256": "302ef95633b09d4ed077456fee4a1e2e8ae1cacd83acc337d848b13c862f4fdd",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\registry.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s.py",
+                    "gitBlob": "7834483aa06c0357fbcfece25b7361865ec0db1e",
+                    "sha256": "44488a162297e007137dc8bd742176fb7a09e73f516be9169ee2dacdd894b43a",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/__init__.py",
+                    "gitBlob": "28da70405f8fd56996a242e8307746d52ff6d058",
+                    "sha256": "9d590cc6812e9413afff7071824a03d1dace651f1c5a842056d906c6c0e5fc52",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\__init__.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/codec.py",
+                    "gitBlob": "8ce22053e0c33da88d23775ebcb79e4cf535cf6f",
+                    "sha256": "48ce59c0705693b29d9c1c876ec178e2e5fac8c5cb9ebaa6575e17735e960511",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\codec.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/eartts_backbone.py",
+                    "gitBlob": "c31b82c403b2f55a7c55f0cfc986d376d88c2c91",
+                    "sha256": "4f9c60b8da3dce3b616dbc836b50ba009eb685b1322dc1949c8796e2818d5387",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\eartts_backbone.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/eartts_side.py",
+                    "gitBlob": "fb704861fa95685e5bbdb385efe6ed468bab8060",
+                    "sha256": "348e6213afc904188b55e7cab92f4379960b9859745b489cb0ae690f5838e8a4",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\eartts_side.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/llm_aux.py",
+                    "gitBlob": "c75d5f610f539d3e07a464083933e6614af93827",
+                    "sha256": "224c4f2a7d1a602504d1b5907cb6b434641f79a533d4fdf01c435cc46dddb446",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\llm_aux.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/llm_backbone.py",
+                    "gitBlob": "f3083d64e01dc0b779c92214964d70d9ce2b5d39",
+                    "sha256": "cc7fc161ae9e594e33789164cd9dabe26fd0e31234cbf26fb98f9134faed5d28",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\llm_backbone.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/perception.py",
+                    "gitBlob": "f5f83073d64e7a02a7e4bbb0cd31045d117ee522",
+                    "sha256": "910f3cb4ab845c392a5629f073f07aac201837eb39c14c047755cefe2288a7c4",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\perception.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/tts_prompt.py",
+                    "gitBlob": "9c17c410dc96330dc12b487d11dd7fc6b65fad24",
+                    "sha256": "a40022cdeab43268b0629f5860216c60205a60a8bd97efe4e834f5ba6bf14065",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\tts_prompt.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/s2s_components/voicechat_source.py",
+                    "gitBlob": "b5e1e41bc008377de03d6a242d7cf77b4403b4fd",
+                    "sha256": "b92ccdf1589d74a64c7ada0cb76fad03e30c7ef9e743a814b01d997378910df3",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\s2s_components\\voicechat_source.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/salm.py",
+                    "gitBlob": "b344e8f831076cfdd8c3473305324e915978bdfd",
+                    "sha256": "3bd89bff7ff41d2676ba58adce5d02470a453fb9c74077a07ac38f59b7f3ef85",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\salm.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/salm_decoder_hf.py",
+                    "gitBlob": "1403dab6519cd76a19fcbb6575203a2a9ff055ca",
+                    "sha256": "c63db4348af63788a1507c67b8e00714c273dd3e7545116b08e7b01d3bfc5878",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\salm_decoder_hf.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/salm_dflash2.py",
+                    "gitBlob": "f48c2500b879bb02ee6e861f9536d8fe8758cd5a",
+                    "sha256": "f9fc4e2220bdbccfae1ee29715634ba46407646e541e0a01806aa7cc6514e750",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\salm_dflash2.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/salm_encoder.py",
+                    "gitBlob": "d1dc706a806b425cc8d12f5008579ba13d115d26",
+                    "sha256": "5615be9089278ddbd9b49b9c8477f60d40535210843e9f3719ede14079447ba6",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\salm_encoder.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/source.py",
+                    "gitBlob": "dcb948d36947da172338c27955fc1b967ced3c92",
+                    "sha256": "7d9fcd101540ddad7937d311388cf9128f1114ded5463f04fc7706e29ff15c75",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\source.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/tts.py",
+                    "gitBlob": "c9b7f2340228c2a20d24569ac5fa7d6d58d3671e",
+                    "sha256": "16b6a44202130d85e84ea3301c6a2879c2237449156b196e0b0f7d9dcdde8bd0",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\tts.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/tts_tokenizer_profiles.py",
+                    "gitBlob": "713446132a70c9536e7be1638baa41955d24a72b",
+                    "sha256": "4fd29c82f0167a26e077ff7257b7896c45e0fefdb87326b60248406664d16773",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\tts_tokenizer_profiles.py"
+                  },
+                  {
+                    "repository": "NVIDIA/NeMo-Speech.cpp",
+                    "revision": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+                    "path": "conversion/vad.py",
+                    "gitBlob": "bf4a1d4103aac3df54aa32d2c50bf03d8e2fac1b",
+                    "sha256": "622460be6688bbd1ecdefc874a6216348dfb737b793b4cc08bf1aee55a10e1ac",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\conversion\\vad.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "LICENSE",
+                    "gitBlob": "e7dca554bcb802f98408383a864404e3aa4eacca",
+                    "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\LICENSE"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/__init__.py",
+                    "gitBlob": "243defc4c1ca42d3713017d8902592f54ac849cd",
+                    "sha256": "3ccfc0104cd7ea88c6028743b7bf3f2c89b5f474425de03a217a6072320d7c2f",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\__init__.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/constants.py",
+                    "gitBlob": "27c83516ecc0f6a8d73ca2281a02bc5ffd990c32",
+                    "sha256": "462ef1a793adacb60ffc5e35c4dd5da41583fd7745b13eebcaa1c236e3f2b687",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\constants.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/gguf.py",
+                    "gitBlob": "651a81eb828248728f854c85c1a437b52892f275",
+                    "sha256": "f0c0eeedad0911784b52ffed8e162a0eb5ae6d535ce35705bc16196e46597a72",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\gguf.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/gguf_reader.py",
+                    "gitBlob": "bf3e083800b01c822989c096f0d875dc750ab022",
+                    "sha256": "d0ea743200e19d7ef0a4c969edcc4a6dba8e3656a790b217e3bdc7b31170718e",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\gguf_reader.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/gguf_writer.py",
+                    "gitBlob": "56cc65a70a0d03c50bf98907627b1bedc28e1993",
+                    "sha256": "7e3ff8d04b290dde083ae30d1091b67c95299f6865958fe1cdcb7e35dd201766",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\gguf_writer.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/lazy.py",
+                    "gitBlob": "a39f22321597311ad54d03d360e155ae309ff5fd",
+                    "sha256": "dbc98e3ee9ef8606df34e9d91f98ab29c2697e6824995f1dd8952938c135ad85",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\lazy.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/metadata.py",
+                    "gitBlob": "d5836cc68d7a96cd267e70800994bb3cc7bfcad0",
+                    "sha256": "7cedac3b8457271a3f58e5531a7e6958fdecb9ea072f7895ba5d7f6693c9db29",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\metadata.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/quants.py",
+                    "gitBlob": "80966b6ef1518a45b86745d94eb70d05c3c5490f",
+                    "sha256": "2c927a1b3d9f0920dcf4007fb686e1b0999333e9f65ce43dcc689900c0beae8b",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\quants.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/scripts/gguf_convert_endian.py",
+                    "gitBlob": "31618acfc79eac3d8cd3c8111550f6cf8f21147b",
+                    "sha256": "6be91de3af4d9b3fc2c90dafb3d1d8eed7e9dd72b3d6b52d245f005c76ece280",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\scripts\\gguf_convert_endian.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/scripts/gguf_dump.py",
+                    "gitBlob": "8177dff386c7ee1e130ed0a013c2d297ee866439",
+                    "sha256": "d8b8fc28e96d15d8a4d6f05cdff4a747f5a06f31172efee9dfc971998ed0203f",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\scripts\\gguf_dump.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/scripts/gguf_editor_gui.py",
+                    "gitBlob": "293316afed4e497ce3e426243d9fbd30193f5c30",
+                    "sha256": "6e9d70e850268fff5d4108d9ecbc2b4d90e70b61f08e71f7d37ac20916d854bb",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\scripts\\gguf_editor_gui.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/scripts/gguf_hash.py",
+                    "gitBlob": "3ef98992197e987d8aefc8fb5f5bf9c787e9d06a",
+                    "sha256": "9f277c9338d12a73857a4e54683d7da4d5de01531751f14401267c9289e4197f",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\scripts\\gguf_hash.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/scripts/gguf_new_metadata.py",
+                    "gitBlob": "c67436bad4af6dfcf662b23aff3d3a5bb1d26257",
+                    "sha256": "972499d35957b4721b9243828d5547d1c84def8d4e6fc641887c6578bf765255",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\scripts\\gguf_new_metadata.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/scripts/gguf_set_metadata.py",
+                    "gitBlob": "f5809c35c887086f8055e828719041f8ae3ea749",
+                    "sha256": "c8612a7109428a677ea55976dd5eeed6088934ddef7ef01246a5bc7a6e585b3b",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\scripts\\gguf_set_metadata.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/tensor_mapping.py",
+                    "gitBlob": "d2dfeece59522ffb417f70939cf94ee157591eee",
+                    "sha256": "df97c2291dc1d8e8992ae91b800e0cf139f94d5173b9ed4705f5ef75a371d924",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\tensor_mapping.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/utility.py",
+                    "gitBlob": "154351d8ed63c50f8a66cc0bb9152ec020414077",
+                    "sha256": "da920e2c62166ec9f30e407e9fb35ec29fda671310ffbf0f8ce856b62f1c70d7",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\utility.py"
+                  },
+                  {
+                    "repository": "ggml-org/llama.cpp",
+                    "revision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+                    "path": "gguf-py/gguf/vocab.py",
+                    "gitBlob": "d93b94f2d792147276be21db004dbd8d4edef82c",
+                    "sha256": "16cddd93700f86c8b72e6f9e741e2362189155b9f96aa9e3bbb0995060095f1a",
+                    "localFile": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\conversion-source\\llama.cpp\\gguf-py\\gguf\\vocab.py"
+                  }
+                ],
+                "modelRevision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
+                "hypothesis": "Check deployment quantization before training or clustering tuning. First reproduce publishedQ8 tensors from exact official checkpoint/converter; only if provenance/metadata/tensors match, create higher-precision weights and compare the same fullL/S recordings with all inference/score settings fixed. Keep every failure and regression.",
+                "newNeuralInference": false,
+                "trainingPerformed": false,
+                "originalQualityTargetsUnchanged": true,
+                "privateCommitLimitBytes": 2147483648,
+                "noGlobalPackageChanges": true
+              },
               "native8PrecisionWorkpoint": {
                 "observedAt": "2026-11-07T12:50:43+08:00",
                 "state": "PREPARING_EXACT_CHECKPOINT_AND_SOURCE",
@@ -146675,9 +147221,47 @@
                 "neuralInferenceStarted": false,
                 "trainingStarted": false
               },
-              "native8PrecisionConversion": null,
+              "native8PrecisionConversion": {
+                "state": "READY_SAME_CHECKPOINT_F16_CONTROL_NOT_QUALITY_SCORED",
+                "startedAt": "2026-11-07T12:55:01+08:00",
+                "pid": 24880,
+                "trainingPerformed": false,
+                "neuralInferencePerformed": false,
+                "gpuUsed": false,
+                "checkpointSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+                "torchVersion": "2.11.0+rocm10.0.0",
+                "previousQ8ConversionReusedWithoutRebuilding": true,
+                "q8TensorFidelityPassed": true,
+                "output": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\precision-r1\\higher-f16.gguf",
+                "outputSha256": "5c7947680e6060e0d88cbbdd432bcee2b3edd2d3ea04c242326b067947e2027e",
+                "outputBytes": 199018496,
+                "tensorCount": 360,
+                "sameSemanticMetadata": true,
+                "finishedAt": "2026-11-07T12:55:06+08:00",
+                "wholeWorkerSeconds": 4.538268100004643,
+                "limits": {
+                  "pid": 24880,
+                  "cpuRate": 500,
+                  "cpuControlFlags": 5,
+                  "cpuPercentMaximum": 5.0,
+                  "inLimitedJob": true,
+                  "jobPrivateCommitLimitBytes": 2147483648,
+                  "jobMemoryLimitEnabled": true,
+                  "jobPeakPrivateCommitBytes": 843792384,
+                  "cpuPriorityClass": 64,
+                  "memoryPagePriority": 1,
+                  "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                  "gpuPriorityClass": 0,
+                  "gpuUtilizationHardCapped": false,
+                  "scope": "This worker and its descendants only; no global or other-app changes."
+                }
+              },
+              "native8F16ShortRun": null,
+              "native8F16FullRun": null,
+              "native8F16Chain": null,
+              "native8F16Assessment": null,
               "next": "完整8人候选L/S已完成并回填旧原字、真实共享Document校验通过：普通S标准DER3.8540%/5人、复杂L24.5373%/6人；全系统未达标，复杂尚差于旧最好17.226%。不因人数正确就当身份正确。0新增声音模型的固定人数融合L19.4545%/S10.5782%，普通回退且复杂不及历史最好，拒绝默认采用，不按已见会议挑算法。下一项先做同一官方checkpoint的部署精度核对：精确作者转换源码重建Q8张量核验；源头一致后才比较高精度权重，同一两整会、几何/阈值/评分全固定，不训练或扫参。文字原始S7.6997%/逐人10.3063%、复杂L逐人52.9852%等失败保留，原<5%/重叠逐路/事实/独立集/双端实卡门继续OPEN。",
-              "sourceAndEvidenceCommit": "b6425993c968b1395c96953625b71606fbd1f8ab",
+              "sourceAndEvidenceCommit": "7b8fc3702fda3fd9e87dbd66303f07bd751c8a9d",
               "remoteReadbackConfirmed": true
             }
           }
