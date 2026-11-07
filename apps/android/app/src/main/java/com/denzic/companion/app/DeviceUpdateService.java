@@ -88,7 +88,7 @@ public final class DeviceUpdateService extends Service {
             try{
                 SharedPreferences p=prefs(this);SystemUpdatePackage pack=load(this,p.getString("transactionId",""));
                 BluetoothManager m=(BluetoothManager)getSystemService(BLUETOOTH_SERVICE);BluetoothAdapter adapter=m==null?null:m.getAdapter();if(adapter==null)throw new IOException("手机蓝牙暂不可用。");
-                BluetoothDevice device=adapter.getRemoteDevice(p.getString("address",""));SystemUpdateClient.Connector connector=()->AndroidGattLink.connectForUpdate(this,device);
+                BluetoothDevice device=adapter.getRemoteDevice(p.getString("address",""));SystemUpdateClient.Connector connector=AndroidGattLink.updateConnector(this,device);
                 if(verify){if(!SystemUpdateClient.verify(connector,pack,p.getString("uid","")))throw new IOException("尚未看到匹配的新运行版本，请保持供电，稍后再核对；不要重复发送完成请求。");record("complete",pack.info().getLong("bytes"),pack.info().getLong("bytes"));}
                 else SystemUpdateClient.transfer(connector,pack,cancel,new SystemUpdateClient.Progress(){
                     public void update(String phase,long accepted,long total)throws IOException{record(phase,accepted,total);}
