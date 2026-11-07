@@ -1,13 +1,18 @@
 """Protect allowlisted public research; never publish generic private task directories."""
 from pathlib import Path
 from datetime import datetime
-import argparse,json,os,shutil,subprocess
+import argparse,json,os,shutil,subprocess,time
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');M=R/'model-research';S=R/'companion-device-closure055';base=R/'docs/handoffs/20261107-model-generation-recovery'
-p=argparse.ArgumentParser();p.add_argument('--phase',required=True,choices=['prepared','running','finished','failed']);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--phase',required=True,choices=['prepared','running','finished','failed']);p.add_argument('--retry-main-only',action='store_true');a=p.parse_args()
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));optional=lambda p:read(p) if Path(p).exists() else None;now=datetime.now().astimezone().isoformat(timespec='seconds')
 env=os.environ.copy();env.update(GIT_TERMINAL_PROMPT='0',GIT_SSH_COMMAND='ssh -o HostName=github.com -p 22 -o ProxyCommand=none -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=2')
 def git(root,*args):
-    r=subprocess.run(['git','-c','maintenance.auto=false','-c','pack.threads=1','-c','pack.windowMemory=32m',*args],cwd=root,env=env,capture_output=True,text=True)
+    deadline=time.monotonic()+45
+    while True:
+        r=subprocess.run(['git','-c','maintenance.auto=false','-c','pack.threads=1','-c','pack.windowMemory=32m',*args],cwd=root,env=env,capture_output=True,text=True)
+        if r.returncode and 'index.lock' in r.stderr and 'File exists' in r.stderr and time.monotonic()<deadline:
+            time.sleep(1);continue
+        break
     if r.returncode:raise RuntimeError(r.stdout+r.stderr)
     return r.stdout.strip()
 def ship(root,paths,message):
@@ -18,6 +23,12 @@ def ship(root,paths,message):
     head=git(root,'rev-parse','HEAD');branch=git(root,'branch','--show-current');git(root,'push','origin','HEAD:refs/heads/'+branch)
     assert git(root,'ls-remote','origin','refs/heads/'+branch).split()[0]==head
     return head
+if a.retry_main_only:
+    dest=S/'docs/handoffs/model-practical-cpu-20261107';assert (dest/(a.phase+'-result.json')).exists()
+    for file in [R/'docs/product_backlog.json',R/'docs/development_log.md']:shutil.copyfile(file,S/'docs'/file.name)
+    shutil.copyfile(__file__,dest/Path(__file__).name)
+    head=ship(S,['docs/product_backlog.json','docs/development_log.md','docs/handoffs/model-practical-cpu-20261107'],'Protect pending canonical model progress after shared index released')
+    print(json.dumps({'mainCommit':head,'remoteReadbackConfirmed':True,'noNeuralWorkRepeated':True}),flush=True);raise SystemExit(0)
 ev=M/'evidence/20261107-practical-cpu';ev.mkdir(parents=True,exist_ok=True)
 names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1']
 for name in names:
