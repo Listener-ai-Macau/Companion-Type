@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T09:35:06+08:00",
-  "aarSha256": "ae58f9306f469b2574f1b57146505b211108e63848e1ae32e866e098d7ccfe02",
-  "backendSourceCommit": "0c4e365674542ff4cec14ec03a55b19b37c4a385",
+  "at": "2026-11-07T09:55:19+08:00",
+  "aarSha256": "0db87efd6252057d0ee9ef7bab6c4259242191cc567b5e933c2bb10cfda46c5e",
+  "backendSourceCommit": "5824680e60a0f273b2568b9f40647660b11f5caa",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "One-time reuse of same-link immutable complete selected-session directory; live/incomplete/pending/mutated sessions reread. Both resume entry points transfer retained connection. Single ownership transfer from visible activity to foreground sync, exact address/descriptor binding, fresh fallback on saved-task process recovery, explicit reusedConnections counter. Only selected local audio hashed on open/export, current CRC/SHA and malformed metadata still checked. No command replay, adapter/bond/reset change. Native/models unchanged; actual latency pending.",
-  "javaSourceCommit": "0c4e365674542ff4cec14ec03a55b19b37c4a385",
+  "scope": "Fix captured BUSY invalid CCQ2 capacity incorrectly rejected as unsupported unlimited recording. START alone waits for valid same-peer snapshot without command replay; query/legacy unchanged. One-time reuse of same-link immutable complete selected-session directory; live/incomplete/pending/mutated sessions reread. Both resume entry points transfer retained connection. Single ownership transfer from visible activity to foreground sync, exact address/descriptor binding, fresh fallback on saved-task process recovery, explicit reusedConnections counter. Only selected local audio hashed on open/export, current CRC/SHA and malformed metadata still checked. No command replay, adapter/bond/reset change. Native/models unchanged; actual latency pending.",
+  "javaSourceCommit": "5824680e60a0f273b2568b9f40647660b11f5caa",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device083\\build\\inherited-provenance082.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device084\\build\\inherited-provenance083.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -142,5 +142,10 @@
     "com/denzic/companion/mobile/RecordingSyncService.class",
     "com/denzic/companion/mobile/RecordingTransferMetrics.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo082": true
+  "allNonClassAarEntriesByteIdenticalTo082": true,
+  "javaClassesChangedFrom083": [
+    "com/denzic/companion/mobile/NativeRecordingControl$Callbacks.class",
+    "com/denzic/companion/mobile/NativeRecordingControl.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo083": true
 }
