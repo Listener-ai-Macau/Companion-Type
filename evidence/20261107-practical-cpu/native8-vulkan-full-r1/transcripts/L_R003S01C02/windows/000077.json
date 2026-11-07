@@ -1,0 +1,158 @@
+{
+  "binding": {
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "protocolSha256": "f1152b55b4e26cf2591fcd58e46a4e9bf44bb42c7424265b78dbece5f9221ca5",
+    "journalSha256": "775ef157b35d4b74214365de4d06f4318057edc077bea2f48771d0ba6710526c",
+    "workerSha256": "b608ffb8c957aa921e819bcd63ef80dffd2be558a3d298da5beeff800e8f50ef",
+    "attributionSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd"
+  },
+  "raw": {
+    "index": 77,
+    "startSample": 36960000,
+    "endSample": 37440000,
+    "text": "就 number3对吧？。",
+    "tokens": [
+      "就",
+      " number",
+      "3",
+      "对",
+      "吧",
+      "？",
+      "。"
+    ],
+    "timestamps": [
+      19.079999923706055,
+      19.3799991607666,
+      19.739999771118164,
+      19.979999542236328,
+      20.03999900817871,
+      20.15999984741211,
+      29.8799991607666
+    ],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"就 number3对吧？。\", \"timestamps\": [19.08, 19.38, 19.74, 19.98, 20.04, 20.16, 29.88], \"durations\": [], \"tokens\":[\"就\", \" number\", \"3\", \"对\", \"吧\", \"？\", \"。\"], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 3.3283585000026505
+  },
+  "aligned": {
+    "alignmentAvailable": true,
+    "rawText": "就 number3对吧？。",
+    "tokenEstimates": [
+      {
+        "token": "就",
+        "textStart": 0,
+        "textEnd": 1,
+        "estimatedOnsetSeconds": 2329.079999923706,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": " number",
+        "textStart": 1,
+        "textEnd": 8,
+        "estimatedOnsetSeconds": 2329.3799991607666,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "3",
+        "textStart": 8,
+        "textEnd": 9,
+        "estimatedOnsetSeconds": 2329.739999771118,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "对",
+        "textStart": 9,
+        "textEnd": 10,
+        "estimatedOnsetSeconds": 2329.9799995422363,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "吧",
+        "textStart": 10,
+        "textEnd": 11,
+        "estimatedOnsetSeconds": 2330.0399990081787,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "？",
+        "textStart": 11,
+        "textEnd": 12,
+        "estimatedOnsetSeconds": 2330.159999847412,
+        "speaker": null,
+        "candidateSpeakers": [
+          4
+        ],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "。",
+        "textStart": 12,
+        "textEnd": 13,
+        "estimatedOnsetSeconds": 2339.8799991607666,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      }
+    ],
+    "utterances": [
+      {
+        "text": "就 number3对吧",
+        "startMs": 2329080,
+        "endMs": 2330100,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [],
+        "sourceWindow": 77,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "？",
+        "startMs": 2330160,
+        "endMs": 2330220,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [
+          4
+        ],
+        "sourceWindow": 77,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "。",
+        "startMs": 2339880,
+        "endMs": 2339940,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [],
+        "sourceWindow": 77,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      }
+    ]
+  }
+}

@@ -1,0 +1,2256 @@
+{
+  "binding": {
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "protocolSha256": "f1152b55b4e26cf2591fcd58e46a4e9bf44bb42c7424265b78dbece5f9221ca5",
+    "journalSha256": "775ef157b35d4b74214365de4d06f4318057edc077bea2f48771d0ba6710526c",
+    "workerSha256": "b608ffb8c957aa921e819bcd63ef80dffd2be558a3d298da5beeff800e8f50ef",
+    "attributionSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd"
+  },
+  "raw": {
+    "index": 31,
+    "startSample": 14880000,
+    "endSample": 15360000,
+    "text": "投诉咱是吧？就还有那投诉的宠物的对，还有大小，然后也是乱跑，也有咬人的。对，还有这宠物拉着屎，到时候得跟业主说，那自个家狗狗拉了得用纸给捡回去，扔到草丛里那，你不能在那个路上是吧？那路上了，那业主到时候又投诉了。我现在说着说有的那个业主跟那个素质也是客不。对啊，你。",
+    "tokens": [
+      "投",
+      "诉",
+      "咱",
+      "是",
+      "吧",
+      "？",
+      "就",
+      "还",
+      "有",
+      "那",
+      "投",
+      "诉",
+      "的",
+      "宠",
+      "物",
+      "的",
+      "对",
+      "，",
+      "还",
+      "有",
+      "大",
+      "小",
+      "，",
+      "然",
+      "后",
+      "也",
+      "是",
+      "乱",
+      "跑",
+      "，",
+      "也",
+      "有",
+      "咬",
+      "人",
+      "的",
+      "。",
+      "对",
+      "，",
+      "还",
+      "有",
+      "这",
+      "宠",
+      "物",
+      "拉",
+      "着",
+      "屎",
+      "，",
+      "到",
+      "时",
+      "候",
+      "得",
+      "跟",
+      "业",
+      "主",
+      "说",
+      "，",
+      "那",
+      "自",
+      "个",
+      "家",
+      "狗",
+      "狗",
+      "拉",
+      "了",
+      "得",
+      "用",
+      "纸",
+      "给",
+      "捡",
+      "回",
+      "去",
+      "，",
+      "扔",
+      "到",
+      "草",
+      "丛",
+      "里",
+      "那",
+      "，",
+      "你",
+      "不",
+      "能",
+      "在",
+      "那",
+      "个",
+      "路",
+      "上",
+      "是",
+      "吧",
+      "？",
+      "那",
+      "路",
+      "上",
+      "了",
+      "，",
+      "那",
+      "业",
+      "主",
+      "到",
+      "时",
+      "候",
+      "又",
+      "投",
+      "诉",
+      "了",
+      "。",
+      "我",
+      "现",
+      "在",
+      "说",
+      "着",
+      "说",
+      "有",
+      "的",
+      "那",
+      "个",
+      "业",
+      "主",
+      "跟",
+      "那",
+      "个",
+      "素",
+      "质",
+      "也",
+      "是",
+      "客",
+      "不",
+      "。",
+      "对",
+      "啊",
+      "，",
+      "你",
+      "。"
+    ],
+    "timestamps": [
+      0.23999999463558197,
+      0.35999998450279236,
+      0.5999999642372131,
+      1.6200000047683716,
+      1.8600000143051147,
+      2.0399999618530273,
+      2.6399998664855957,
+      2.93999981880188,
+      3.059999942779541,
+      3.240000009536743,
+      3.6599998474121094,
+      3.7799999713897705,
+      4.079999923706055,
+      4.440000057220459,
+      4.619999885559082,
+      4.920000076293945,
+      5.339999675750732,
+      5.579999923706055,
+      5.759999752044678,
+      5.87999963760376,
+      7.440000057220459,
+      7.559999942779541,
+      7.919999599456787,
+      8.09999942779541,
+      8.279999732971191,
+      8.519999504089355,
+      8.699999809265137,
+      9.059999465942383,
+      9.300000190734863,
+      9.539999961853027,
+      9.719999313354492,
+      9.899999618530273,
+      10.139999389648438,
+      10.260000228881836,
+      10.380000114440918,
+      10.5,
+      10.739999771118164,
+      10.979999542236328,
+      11.279999732971191,
+      11.399999618530273,
+      11.639999389648438,
+      11.9399995803833,
+      12.059999465942383,
+      12.359999656677246,
+      12.539999961853027,
+      12.719999313354492,
+      13.019999504089355,
+      13.25999927520752,
+      13.4399995803833,
+      13.559999465942383,
+      13.739999771118164,
+      13.920000076293945,
+      14.09999942779541,
+      14.219999313354492,
+      14.399999618530273,
+      14.579999923706055,
+      14.699999809265137,
+      15.059999465942383,
+      15.239999771118164,
+      15.479999542236328,
+      15.65999984741211,
+      15.839999198913574,
+      16.079999923706055,
+      16.19999885559082,
+      16.3799991607666,
+      16.559999465942383,
+      16.68000030517578,
+      16.85999870300293,
+      17.100000381469727,
+      17.279998779296875,
+      17.399999618530273,
+      17.520000457763672,
+      17.639999389648438,
+      17.760000228881836,
+      18.0,
+      18.18000030517578,
+      18.35999870300293,
+      18.53999900817871,
+      18.779998779296875,
+      19.260000228881836,
+      19.5,
+      19.619998931884766,
+      19.799999237060547,
+      19.979999542236328,
+      20.100000381469727,
+      20.279998779296875,
+      20.399999618530273,
+      20.639999389648438,
+      20.760000228881836,
+      20.939998626708984,
+      21.479999542236328,
+      21.779998779296875,
+      21.899999618530273,
+      22.079999923706055,
+      22.139999389648438,
+      22.260000228881836,
+      22.439998626708984,
+      22.559999465942383,
+      22.739999771118164,
+      22.85999870300293,
+      22.920000076293945,
+      23.03999900817871,
+      23.219999313354492,
+      23.399999618530273,
+      23.579999923706055,
+      23.760000228881836,
+      25.3799991607666,
+      25.619998931884766,
+      25.799999237060547,
+      25.979999542236328,
+      26.15999984741211,
+      26.34000015258789,
+      26.51999855041504,
+      26.639999389648438,
+      26.760000228881836,
+      26.8799991607666,
+      27.0,
+      27.18000030517578,
+      27.35999870300293,
+      27.479999542236328,
+      27.53999900817871,
+      27.719999313354492,
+      27.899999618530273,
+      28.139999389648438,
+      28.31999969482422,
+      28.85999870300293,
+      28.979999542236328,
+      29.15999984741211,
+      29.219999313354492,
+      29.34000015258789,
+      29.399999618530273,
+      29.51999855041504,
+      29.8799991607666
+    ],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"投诉咱是吧？就还有那投诉的宠物的对，还有大小，然后也是乱跑，也有咬人的。对，还有这宠物拉着屎，到时候得跟业主说，那自个家狗狗拉了得用纸给捡回去，扔到草丛里那，你不能在那个路上是吧？那路上了，那业主到时候又投诉了。我现在说着说有的那个业主跟那个素质也是客不。对啊，你。\", \"timestamps\": [0.24, 0.36, 0.60, 1.62, 1.86, 2.04, 2.64, 2.94, 3.06, 3.24, 3.66, 3.78, 4.08, 4.44, 4.62, 4.92, 5.34, 5.58, 5.76, 5.88, 7.44, 7.56, 7.92, 8.10, 8.28, 8.52, 8.70, 9.06, 9.30, 9.54, 9.72, 9.90, 10.14, 10.26, 10.38, 10.50, 10.74, 10.98, 11.28, 11.40, 11.64, 11.94, 12.06, 12.36, 12.54, 12.72, 13.02, 13.26, 13.44, 13.56, 13.74, 13.92, 14.10, 14.22, 14.40, 14.58, 14.70, 15.06, 15.24, 15.48, 15.66, 15.84, 16.08, 16.20, 16.38, 16.56, 16.68, 16.86, 17.10, 17.28, 17.40, 17.52, 17.64, 17.76, 18.00, 18.18, 18.36, 18.54, 18.78, 19.26, 19.50, 19.62, 19.80, 19.98, 20.10, 20.28, 20.40, 20.64, 20.76, 20.94, 21.48, 21.78, 21.90, 22.08, 22.14, 22.26, 22.44, 22.56, 22.74, 22.86, 22.92, 23.04, 23.22, 23.40, 23.58, 23.76, 25.38, 25.62, 25.80, 25.98, 26.16, 26.34, 26.52, 26.64, 26.76, 26.88, 27.00, 27.18, 27.36, 27.48, 27.54, 27.72, 27.90, 28.14, 28.32, 28.86, 28.98, 29.16, 29.22, 29.34, 29.40, 29.52, 29.88], \"durations\": [], \"tokens\":[\"投\", \"诉\", \"咱\", \"是\", \"吧\", \"？\", \"就\", \"还\", \"有\", \"那\", \"投\", \"诉\", \"的\", \"宠\", \"物\", \"的\", \"对\", \"，\", \"还\", \"有\", \"大\", \"小\", \"，\", \"然\", \"后\", \"也\", \"是\", \"乱\", \"跑\", \"，\", \"也\", \"有\", \"咬\", \"人\", \"的\", \"。\", \"对\", \"，\", \"还\", \"有\", \"这\", \"宠\", \"物\", \"拉\", \"着\", \"屎\", \"，\", \"到\", \"时\", \"候\", \"得\", \"跟\", \"业\", \"主\", \"说\", \"，\", \"那\", \"自\", \"个\", \"家\", \"狗\", \"狗\", \"拉\", \"了\", \"得\", \"用\", \"纸\", \"给\", \"捡\", \"回\", \"去\", \"，\", \"扔\", \"到\", \"草\", \"丛\", \"里\", \"那\", \"，\", \"你\", \"不\", \"能\", \"在\", \"那\", \"个\", \"路\", \"上\", \"是\", \"吧\", \"？\", \"那\", \"路\", \"上\", \"了\", \"，\", \"那\", \"业\", \"主\", \"到\", \"时\", \"候\", \"又\", \"投\", \"诉\", \"了\", \"。\", \"我\", \"现\", \"在\", \"说\", \"着\", \"说\", \"有\", \"的\", \"那\", \"个\", \"业\", \"主\", \"跟\", \"那\", \"个\", \"素\", \"质\", \"也\", \"是\", \"客\", \"不\", \"。\", \"对\", \"啊\", \"，\", \"你\", \"。\"], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 2.5641658999957144
+  },
+  "aligned": {
+    "alignmentAvailable": true,
+    "rawText": "投诉咱是吧？就还有那投诉的宠物的对，还有大小，然后也是乱跑，也有咬人的。对，还有这宠物拉着屎，到时候得跟业主说，那自个家狗狗拉了得用纸给捡回去，扔到草丛里那，你不能在那个路上是吧？那路上了，那业主到时候又投诉了。我现在说着说有的那个业主跟那个素质也是客不。对啊，你。",
+    "tokenEstimates": [
+      {
+        "token": "投",
+        "textStart": 0,
+        "textEnd": 1,
+        "estimatedOnsetSeconds": 930.2399999946356,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "诉",
+        "textStart": 1,
+        "textEnd": 2,
+        "estimatedOnsetSeconds": 930.3599999845028,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "咱",
+        "textStart": 2,
+        "textEnd": 3,
+        "estimatedOnsetSeconds": 930.5999999642372,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "是",
+        "textStart": 3,
+        "textEnd": 4,
+        "estimatedOnsetSeconds": 931.6200000047684,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "吧",
+        "textStart": 4,
+        "textEnd": 5,
+        "estimatedOnsetSeconds": 931.8600000143051,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "？",
+        "textStart": 5,
+        "textEnd": 6,
+        "estimatedOnsetSeconds": 932.039999961853,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "就",
+        "textStart": 6,
+        "textEnd": 7,
+        "estimatedOnsetSeconds": 932.6399998664856,
+        "speaker": null,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "还",
+        "textStart": 7,
+        "textEnd": 8,
+        "estimatedOnsetSeconds": 932.9399998188019,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "有",
+        "textStart": 8,
+        "textEnd": 9,
+        "estimatedOnsetSeconds": 933.0599999427795,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 9,
+        "textEnd": 10,
+        "estimatedOnsetSeconds": 933.2400000095367,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "投",
+        "textStart": 10,
+        "textEnd": 11,
+        "estimatedOnsetSeconds": 933.6599998474121,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "诉",
+        "textStart": 11,
+        "textEnd": 12,
+        "estimatedOnsetSeconds": 933.7799999713898,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "的",
+        "textStart": 12,
+        "textEnd": 13,
+        "estimatedOnsetSeconds": 934.079999923706,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "宠",
+        "textStart": 13,
+        "textEnd": 14,
+        "estimatedOnsetSeconds": 934.4400000572205,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "物",
+        "textStart": 14,
+        "textEnd": 15,
+        "estimatedOnsetSeconds": 934.6199998855591,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "的",
+        "textStart": 15,
+        "textEnd": 16,
+        "estimatedOnsetSeconds": 934.920000076294,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "对",
+        "textStart": 16,
+        "textEnd": 17,
+        "estimatedOnsetSeconds": 935.3399996757507,
+        "speaker": null,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 17,
+        "textEnd": 18,
+        "estimatedOnsetSeconds": 935.579999923706,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "还",
+        "textStart": 18,
+        "textEnd": 19,
+        "estimatedOnsetSeconds": 935.7599997520447,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "有",
+        "textStart": 19,
+        "textEnd": 20,
+        "estimatedOnsetSeconds": 935.8799996376038,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "大",
+        "textStart": 20,
+        "textEnd": 21,
+        "estimatedOnsetSeconds": 937.4400000572205,
+        "speaker": null,
+        "candidateSpeakers": [
+          3,
+          5
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "小",
+        "textStart": 21,
+        "textEnd": 22,
+        "estimatedOnsetSeconds": 937.5599999427795,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 22,
+        "textEnd": 23,
+        "estimatedOnsetSeconds": 937.9199995994568,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "然",
+        "textStart": 23,
+        "textEnd": 24,
+        "estimatedOnsetSeconds": 938.0999994277954,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "后",
+        "textStart": 24,
+        "textEnd": 25,
+        "estimatedOnsetSeconds": 938.2799997329712,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3,
+          5
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "也",
+        "textStart": 25,
+        "textEnd": 26,
+        "estimatedOnsetSeconds": 938.5199995040894,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3,
+          5
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "是",
+        "textStart": 26,
+        "textEnd": 27,
+        "estimatedOnsetSeconds": 938.6999998092651,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3,
+          5
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "乱",
+        "textStart": 27,
+        "textEnd": 28,
+        "estimatedOnsetSeconds": 939.0599994659424,
+        "speaker": null,
+        "candidateSpeakers": [
+          3,
+          5
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "跑",
+        "textStart": 28,
+        "textEnd": 29,
+        "estimatedOnsetSeconds": 939.3000001907349,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 29,
+        "textEnd": 30,
+        "estimatedOnsetSeconds": 939.539999961853,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "也",
+        "textStart": 30,
+        "textEnd": 31,
+        "estimatedOnsetSeconds": 939.7199993133545,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "有",
+        "textStart": 31,
+        "textEnd": 32,
+        "estimatedOnsetSeconds": 939.8999996185303,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "咬",
+        "textStart": 32,
+        "textEnd": 33,
+        "estimatedOnsetSeconds": 940.1399993896484,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "人",
+        "textStart": 33,
+        "textEnd": 34,
+        "estimatedOnsetSeconds": 940.2600002288818,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "的",
+        "textStart": 34,
+        "textEnd": 35,
+        "estimatedOnsetSeconds": 940.3800001144409,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "。",
+        "textStart": 35,
+        "textEnd": 36,
+        "estimatedOnsetSeconds": 940.5,
+        "speaker": 5,
+        "candidateSpeakers": [
+          5
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "对",
+        "textStart": 36,
+        "textEnd": 37,
+        "estimatedOnsetSeconds": 940.7399997711182,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          5
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 37,
+        "textEnd": 38,
+        "estimatedOnsetSeconds": 940.9799995422363,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "还",
+        "textStart": 38,
+        "textEnd": 39,
+        "estimatedOnsetSeconds": 941.2799997329712,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "有",
+        "textStart": 39,
+        "textEnd": 40,
+        "estimatedOnsetSeconds": 941.3999996185303,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "这",
+        "textStart": 40,
+        "textEnd": 41,
+        "estimatedOnsetSeconds": 941.6399993896484,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "宠",
+        "textStart": 41,
+        "textEnd": 42,
+        "estimatedOnsetSeconds": 941.9399995803833,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "物",
+        "textStart": 42,
+        "textEnd": 43,
+        "estimatedOnsetSeconds": 942.0599994659424,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "拉",
+        "textStart": 43,
+        "textEnd": 44,
+        "estimatedOnsetSeconds": 942.3599996566772,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "着",
+        "textStart": 44,
+        "textEnd": 45,
+        "estimatedOnsetSeconds": 942.539999961853,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "屎",
+        "textStart": 45,
+        "textEnd": 46,
+        "estimatedOnsetSeconds": 942.7199993133545,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 46,
+        "textEnd": 47,
+        "estimatedOnsetSeconds": 943.0199995040894,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "到",
+        "textStart": 47,
+        "textEnd": 48,
+        "estimatedOnsetSeconds": 943.2599992752075,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "时",
+        "textStart": 48,
+        "textEnd": 49,
+        "estimatedOnsetSeconds": 943.4399995803833,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "候",
+        "textStart": 49,
+        "textEnd": 50,
+        "estimatedOnsetSeconds": 943.5599994659424,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "得",
+        "textStart": 50,
+        "textEnd": 51,
+        "estimatedOnsetSeconds": 943.7399997711182,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "跟",
+        "textStart": 51,
+        "textEnd": 52,
+        "estimatedOnsetSeconds": 943.920000076294,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "业",
+        "textStart": 52,
+        "textEnd": 53,
+        "estimatedOnsetSeconds": 944.0999994277954,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "主",
+        "textStart": 53,
+        "textEnd": 54,
+        "estimatedOnsetSeconds": 944.2199993133545,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "说",
+        "textStart": 54,
+        "textEnd": 55,
+        "estimatedOnsetSeconds": 944.3999996185303,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 55,
+        "textEnd": 56,
+        "estimatedOnsetSeconds": 944.579999923706,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 56,
+        "textEnd": 57,
+        "estimatedOnsetSeconds": 944.6999998092651,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "自",
+        "textStart": 57,
+        "textEnd": 58,
+        "estimatedOnsetSeconds": 945.0599994659424,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "个",
+        "textStart": 58,
+        "textEnd": 59,
+        "estimatedOnsetSeconds": 945.2399997711182,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "家",
+        "textStart": 59,
+        "textEnd": 60,
+        "estimatedOnsetSeconds": 945.4799995422363,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "狗",
+        "textStart": 60,
+        "textEnd": 61,
+        "estimatedOnsetSeconds": 945.6599998474121,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "狗",
+        "textStart": 61,
+        "textEnd": 62,
+        "estimatedOnsetSeconds": 945.8399991989136,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "拉",
+        "textStart": 62,
+        "textEnd": 63,
+        "estimatedOnsetSeconds": 946.079999923706,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "了",
+        "textStart": 63,
+        "textEnd": 64,
+        "estimatedOnsetSeconds": 946.1999988555908,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "得",
+        "textStart": 64,
+        "textEnd": 65,
+        "estimatedOnsetSeconds": 946.3799991607666,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "用",
+        "textStart": 65,
+        "textEnd": 66,
+        "estimatedOnsetSeconds": 946.5599994659424,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "纸",
+        "textStart": 66,
+        "textEnd": 67,
+        "estimatedOnsetSeconds": 946.6800003051758,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "给",
+        "textStart": 67,
+        "textEnd": 68,
+        "estimatedOnsetSeconds": 946.8599987030029,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "捡",
+        "textStart": 68,
+        "textEnd": 69,
+        "estimatedOnsetSeconds": 947.1000003814697,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "回",
+        "textStart": 69,
+        "textEnd": 70,
+        "estimatedOnsetSeconds": 947.2799987792969,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "去",
+        "textStart": 70,
+        "textEnd": 71,
+        "estimatedOnsetSeconds": 947.3999996185303,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 71,
+        "textEnd": 72,
+        "estimatedOnsetSeconds": 947.5200004577637,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "扔",
+        "textStart": 72,
+        "textEnd": 73,
+        "estimatedOnsetSeconds": 947.6399993896484,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "到",
+        "textStart": 73,
+        "textEnd": 74,
+        "estimatedOnsetSeconds": 947.7600002288818,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "草",
+        "textStart": 74,
+        "textEnd": 75,
+        "estimatedOnsetSeconds": 948.0,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "丛",
+        "textStart": 75,
+        "textEnd": 76,
+        "estimatedOnsetSeconds": 948.1800003051758,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "里",
+        "textStart": 76,
+        "textEnd": 77,
+        "estimatedOnsetSeconds": 948.3599987030029,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 77,
+        "textEnd": 78,
+        "estimatedOnsetSeconds": 948.5399990081787,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 78,
+        "textEnd": 79,
+        "estimatedOnsetSeconds": 948.7799987792969,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "你",
+        "textStart": 79,
+        "textEnd": 80,
+        "estimatedOnsetSeconds": 949.2600002288818,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "不",
+        "textStart": 80,
+        "textEnd": 81,
+        "estimatedOnsetSeconds": 949.5,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "能",
+        "textStart": 81,
+        "textEnd": 82,
+        "estimatedOnsetSeconds": 949.6199989318848,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "在",
+        "textStart": 82,
+        "textEnd": 83,
+        "estimatedOnsetSeconds": 949.7999992370605,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 83,
+        "textEnd": 84,
+        "estimatedOnsetSeconds": 949.9799995422363,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "个",
+        "textStart": 84,
+        "textEnd": 85,
+        "estimatedOnsetSeconds": 950.1000003814697,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "路",
+        "textStart": 85,
+        "textEnd": 86,
+        "estimatedOnsetSeconds": 950.2799987792969,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "上",
+        "textStart": 86,
+        "textEnd": 87,
+        "estimatedOnsetSeconds": 950.3999996185303,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "是",
+        "textStart": 87,
+        "textEnd": 88,
+        "estimatedOnsetSeconds": 950.6399993896484,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "吧",
+        "textStart": 88,
+        "textEnd": 89,
+        "estimatedOnsetSeconds": 950.7600002288818,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "？",
+        "textStart": 89,
+        "textEnd": 90,
+        "estimatedOnsetSeconds": 950.939998626709,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 90,
+        "textEnd": 91,
+        "estimatedOnsetSeconds": 951.4799995422363,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "路",
+        "textStart": 91,
+        "textEnd": 92,
+        "estimatedOnsetSeconds": 951.7799987792969,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "上",
+        "textStart": 92,
+        "textEnd": 93,
+        "estimatedOnsetSeconds": 951.8999996185303,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "了",
+        "textStart": 93,
+        "textEnd": 94,
+        "estimatedOnsetSeconds": 952.079999923706,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 94,
+        "textEnd": 95,
+        "estimatedOnsetSeconds": 952.1399993896484,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 95,
+        "textEnd": 96,
+        "estimatedOnsetSeconds": 952.2600002288818,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "业",
+        "textStart": 96,
+        "textEnd": 97,
+        "estimatedOnsetSeconds": 952.439998626709,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "主",
+        "textStart": 97,
+        "textEnd": 98,
+        "estimatedOnsetSeconds": 952.5599994659424,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "到",
+        "textStart": 98,
+        "textEnd": 99,
+        "estimatedOnsetSeconds": 952.7399997711182,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "时",
+        "textStart": 99,
+        "textEnd": 100,
+        "estimatedOnsetSeconds": 952.8599987030029,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "候",
+        "textStart": 100,
+        "textEnd": 101,
+        "estimatedOnsetSeconds": 952.920000076294,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "又",
+        "textStart": 101,
+        "textEnd": 102,
+        "estimatedOnsetSeconds": 953.0399990081787,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "投",
+        "textStart": 102,
+        "textEnd": 103,
+        "estimatedOnsetSeconds": 953.2199993133545,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "诉",
+        "textStart": 103,
+        "textEnd": 104,
+        "estimatedOnsetSeconds": 953.3999996185303,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "了",
+        "textStart": 104,
+        "textEnd": 105,
+        "estimatedOnsetSeconds": 953.579999923706,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "。",
+        "textStart": 105,
+        "textEnd": 106,
+        "estimatedOnsetSeconds": 953.7600002288818,
+        "speaker": 1,
+        "candidateSpeakers": [
+          1
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "我",
+        "textStart": 106,
+        "textEnd": 107,
+        "estimatedOnsetSeconds": 955.3799991607666,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "现",
+        "textStart": 107,
+        "textEnd": 108,
+        "estimatedOnsetSeconds": 955.6199989318848,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "在",
+        "textStart": 108,
+        "textEnd": 109,
+        "estimatedOnsetSeconds": 955.7999992370605,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "说",
+        "textStart": 109,
+        "textEnd": 110,
+        "estimatedOnsetSeconds": 955.9799995422363,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "着",
+        "textStart": 110,
+        "textEnd": 111,
+        "estimatedOnsetSeconds": 956.1599998474121,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "说",
+        "textStart": 111,
+        "textEnd": 112,
+        "estimatedOnsetSeconds": 956.3400001525879,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "有",
+        "textStart": 112,
+        "textEnd": 113,
+        "estimatedOnsetSeconds": 956.519998550415,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "的",
+        "textStart": 113,
+        "textEnd": 114,
+        "estimatedOnsetSeconds": 956.6399993896484,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 114,
+        "textEnd": 115,
+        "estimatedOnsetSeconds": 956.7600002288818,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "个",
+        "textStart": 115,
+        "textEnd": 116,
+        "estimatedOnsetSeconds": 956.8799991607666,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "业",
+        "textStart": 116,
+        "textEnd": 117,
+        "estimatedOnsetSeconds": 957.0,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "主",
+        "textStart": 117,
+        "textEnd": 118,
+        "estimatedOnsetSeconds": 957.1800003051758,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "跟",
+        "textStart": 118,
+        "textEnd": 119,
+        "estimatedOnsetSeconds": 957.3599987030029,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "那",
+        "textStart": 119,
+        "textEnd": 120,
+        "estimatedOnsetSeconds": 957.4799995422363,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "个",
+        "textStart": 120,
+        "textEnd": 121,
+        "estimatedOnsetSeconds": 957.5399990081787,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "素",
+        "textStart": 121,
+        "textEnd": 122,
+        "estimatedOnsetSeconds": 957.7199993133545,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "质",
+        "textStart": 122,
+        "textEnd": 123,
+        "estimatedOnsetSeconds": 957.8999996185303,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "也",
+        "textStart": 123,
+        "textEnd": 124,
+        "estimatedOnsetSeconds": 958.1399993896484,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "是",
+        "textStart": 124,
+        "textEnd": 125,
+        "estimatedOnsetSeconds": 958.3199996948242,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "客",
+        "textStart": 125,
+        "textEnd": 126,
+        "estimatedOnsetSeconds": 958.8599987030029,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "不",
+        "textStart": 126,
+        "textEnd": 127,
+        "estimatedOnsetSeconds": 958.9799995422363,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "。",
+        "textStart": 127,
+        "textEnd": 128,
+        "estimatedOnsetSeconds": 959.1599998474121,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "对",
+        "textStart": 128,
+        "textEnd": 129,
+        "estimatedOnsetSeconds": 959.2199993133545,
+        "speaker": null,
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "attribution": "overlap_requires_recovery",
+        "overlapDetectedNearOnset": true,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "啊",
+        "textStart": 129,
+        "textEnd": 130,
+        "estimatedOnsetSeconds": 959.3400001525879,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "，",
+        "textStart": 130,
+        "textEnd": 131,
+        "estimatedOnsetSeconds": 959.3999996185303,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "你",
+        "textStart": 131,
+        "textEnd": 132,
+        "estimatedOnsetSeconds": 959.519998550415,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "。",
+        "textStart": 132,
+        "textEnd": 133,
+        "estimatedOnsetSeconds": 959.8799991607666,
+        "speaker": 3,
+        "candidateSpeakers": [
+          3
+        ],
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      }
+    ],
+    "utterances": [
+      {
+        "text": "投诉咱是吧？",
+        "startMs": 930240,
+        "endMs": 932100,
+        "speaker": 1,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          1
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "就",
+        "startMs": 932640,
+        "endMs": 932700,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "还有那投诉的宠物的",
+        "startMs": 932940,
+        "endMs": 934980,
+        "speaker": 5,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "对",
+        "startMs": 935340,
+        "endMs": 935400,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [
+          1
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "，",
+        "startMs": 935580,
+        "endMs": 935640,
+        "speaker": 1,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          1
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "还有",
+        "startMs": 935760,
+        "endMs": 935940,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "overlap_requires_recovery",
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "大",
+        "startMs": 937440,
+        "endMs": 937500,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "overlap_requires_recovery",
+        "candidateSpeakers": [
+          3,
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "小，然",
+        "startMs": 937560,
+        "endMs": 938160,
+        "speaker": 5,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "后也是",
+        "startMs": 938280,
+        "endMs": 938760,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "overlap_requires_recovery",
+        "candidateSpeakers": [
+          1,
+          3,
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "乱",
+        "startMs": 939060,
+        "endMs": 939120,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "overlap_requires_recovery",
+        "candidateSpeakers": [
+          3,
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "跑，也有咬人的。",
+        "startMs": 939300,
+        "endMs": 940560,
+        "speaker": 5,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "对",
+        "startMs": 940740,
+        "endMs": 940800,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "overlap_requires_recovery",
+        "candidateSpeakers": [
+          1,
+          5
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "，还有这宠物拉着屎，到时候得跟业主说，那自个家狗狗拉了得用纸给捡回去，扔到草丛里那，你不能在那个路上是吧？那路上了，那业主到时候又投诉了。",
+        "startMs": 940980,
+        "endMs": 953820,
+        "speaker": 1,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          1
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "我现在说着说有的那个业主跟那个素质也",
+        "startMs": 955380,
+        "endMs": 958200,
+        "speaker": 3,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          3
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "是客不。对",
+        "startMs": 958320,
+        "endMs": 959280,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "overlap_requires_recovery",
+        "candidateSpeakers": [
+          1,
+          3
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      },
+      {
+        "text": "啊，你。",
+        "startMs": 959340,
+        "endMs": 959940,
+        "speaker": 3,
+        "approximateTiming": true,
+        "attribution": "single_predicted_speaker_around_estimated_onset",
+        "candidateSpeakers": [
+          3
+        ],
+        "sourceWindow": 31,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      }
+    ]
+  }
+}

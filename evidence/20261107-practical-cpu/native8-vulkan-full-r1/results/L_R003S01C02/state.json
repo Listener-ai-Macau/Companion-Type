@@ -1,0 +1,82 @@
+{
+  "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+  "pid": 13868,
+  "startedAt": "2026-11-07T12:35:28+08:00",
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "referencePassedToWorker": false,
+  "gpuUsed": true,
+  "automaticRetries": 0,
+  "sourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+  "nativeGeometry": "author-offline-explicit",
+  "newNeuralPushes": 78,
+  "completedNeuralFrames": 236295,
+  "limits": {
+    "pid": 13868,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1820270592,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "nativeDeviceInventory": [
+    {
+      "registryIndex": 0,
+      "name": "Vulkan0",
+      "description": "AMD Radeon RX 6800 XT",
+      "type": 1,
+      "gpuOrdinal": 0
+    },
+    {
+      "registryIndex": 1,
+      "name": "Vulkan1",
+      "description": "AMD Radeon 780M Graphics",
+      "type": 2,
+      "gpuOrdinal": 1
+    },
+    {
+      "registryIndex": 2,
+      "name": "CPU",
+      "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+      "type": 0
+    }
+  ],
+  "selectedNativeDevice": {
+    "registryIndex": 0,
+    "name": "Vulkan0",
+    "description": "AMD Radeon RX 6800 XT",
+    "type": 1,
+    "gpuOrdinal": 0
+  },
+  "backend": "vulkan",
+  "appliedExplicitGeometry": {
+    "spkcache_len": 264,
+    "fifo_len": 40,
+    "chunk_len": 340,
+    "right_context": 40,
+    "update_period": 300,
+    "left_context": 0
+  },
+  "submittedSamples": 37807120,
+  "totalAudioSamples": 37807120,
+  "nativeFrameProbabilitiesStart": 162821,
+  "nativeOutputSpeakers": 8,
+  "nativeSecondsPerFrame": 0.009999999776482582,
+  "meeting": "L_R003S01C02",
+  "audioSeconds": 2362.945,
+  "predictedSpeakers": 6,
+  "segments": 716,
+  "rttmSha256": "2a710db96ae552247a8ad95aa7535f9ead43a753f8e6a11c428ece69b930790b",
+  "allOriginalAudioSamplesSubmitted": true,
+  "oneContinuousSpeakerState": true,
+  "probabilityManifestSha256": "ea199e917cb94e508ac109f3b6f5759df09f1731bdb67518ce26ed97531f6879",
+  "finishedAt": "2026-11-07T12:36:52+08:00",
+  "wholeWorkerSeconds": 84.15610719998949
+}

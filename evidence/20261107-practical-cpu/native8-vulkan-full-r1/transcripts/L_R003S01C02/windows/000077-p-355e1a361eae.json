@@ -1,0 +1,132 @@
+{
+  "binding": {
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "protocolSha256": "1094b0bfecd10578ed68b38d5b8f08b6b0979c6c41c7a27d8265e65e9c4801dc",
+    "journalSha256": null,
+    "workerSha256": "e97b86a727e3ae1abae2a5f7cc698d7751d87ead4ebe297464c83a2118f49a71",
+    "attributionSha256": "9cfc07bcf778b616608bb796302fc87c51ad9d2014c0230ade08dc15dcacfe30"
+  },
+  "raw": {
+    "index": 77,
+    "startSample": 36960000,
+    "endSample": 37440000,
+    "text": "就 number3对吧？。",
+    "tokens": [
+      "就",
+      " number",
+      "3",
+      "对",
+      "吧",
+      "？",
+      "。"
+    ],
+    "timestamps": [
+      19.079999923706055,
+      19.3799991607666,
+      19.739999771118164,
+      19.979999542236328,
+      20.03999900817871,
+      20.15999984741211,
+      29.8799991607666
+    ],
+    "durations": [],
+    "nativeResult": "{\"lang\": \"<|zh|>\", \"emotion\": \"<|NEUTRAL|>\", \"event\": \"<|Speech|>\", \"text\": \"就 number3对吧？。\", \"timestamps\": [19.08, 19.38, 19.74, 19.98, 20.04, 20.16, 29.88], \"durations\": [], \"tokens\":[\"就\", \" number\", \"3\", \"对\", \"吧\", \"？\", \"。\"], \"ys_log_probs\": [], \"words\": []}",
+    "inferenceSeconds": 3.3283585000026505
+  },
+  "aligned": {
+    "alignmentAvailable": true,
+    "rawText": "就 number3对吧？。",
+    "tokenEstimates": [
+      {
+        "token": "就",
+        "textStart": 0,
+        "textEnd": 1,
+        "estimatedOnsetSeconds": 2329.079999923706,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": " number",
+        "textStart": 1,
+        "textEnd": 8,
+        "estimatedOnsetSeconds": 2329.3799991607666,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "3",
+        "textStart": 8,
+        "textEnd": 9,
+        "estimatedOnsetSeconds": 2329.739999771118,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "对",
+        "textStart": 9,
+        "textEnd": 10,
+        "estimatedOnsetSeconds": 2329.9799995422363,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "吧",
+        "textStart": 10,
+        "textEnd": 11,
+        "estimatedOnsetSeconds": 2330.0399990081787,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "？",
+        "textStart": 11,
+        "textEnd": 12,
+        "estimatedOnsetSeconds": 2330.159999847412,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      },
+      {
+        "token": "。",
+        "textStart": 12,
+        "textEnd": 13,
+        "estimatedOnsetSeconds": 2339.8799991607666,
+        "speaker": null,
+        "candidateSpeakers": [],
+        "attribution": "boundary_or_gap_unconfirmed",
+        "overlapDetectedNearOnset": false,
+        "timeUncertaintyMarginSeconds": 0.06
+      }
+    ],
+    "utterances": [
+      {
+        "text": "就 number3对吧？。",
+        "startMs": 2329080,
+        "endMs": 2339940,
+        "speaker": null,
+        "approximateTiming": true,
+        "attribution": "boundary_or_gap_unconfirmed",
+        "candidateSpeakers": [],
+        "sourceWindow": 77,
+        "timeScope": "Native token onset estimates; end is last onset plus one60ms frame, not verified word duration."
+      }
+    ]
+  }
+}

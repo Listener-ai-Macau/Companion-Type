@@ -1,0 +1,282 @@
+{
+  "state": "COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED",
+  "startedAt": "2026-11-07T12:35:27+08:00",
+  "pid": 26456,
+  "automaticRetries": 0,
+  "textSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1",
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "originalAsrProcessFamilySeconds": 240.6459166999848,
+      "speakerProcessFamilySeconds": 84.81031290002284,
+      "cacheAttributionProcessSeconds": 1.4156742000195663,
+      "accumulatedOwnedProcessSeconds": 326.8719038000272,
+      "elapsedWaitingAndMinutesNotIncluded": true,
+      "newAsrNeuralWindows": 0,
+      "originalRawFilesUnchanged": true,
+      "allOriginalWordsPreserved": true,
+      "productContractPassed": true,
+      "chronologicalDiagnosticCer": 0.2676348547717842,
+      "cpCerDiagnostic": {
+        "metric": "cpCER",
+        "audioSeconds": 2362.945,
+        "referenceCharacters": 8676,
+        "referenceSpeakers": 6,
+        "predictedTextStreams": 7,
+        "edits": {
+          "replace": 935,
+          "delete": 2366,
+          "insert": 1296
+        },
+        "totalEdits": 4597,
+        "characterErrorRate": 0.5298524665744583,
+        "anonymousAssignmentForEvaluationOnly": [
+          {
+            "referenceSpeaker": "002-F",
+            "hypothesisSpeaker": "1",
+            "edits": 610
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "hypothesisSpeaker": "__unconfirmed__",
+            "edits": 671
+          },
+          {
+            "referenceSpeaker": "004-M",
+            "hypothesisSpeaker": "2",
+            "edits": 315
+          },
+          {
+            "referenceSpeaker": "005-M",
+            "hypothesisSpeaker": "5",
+            "edits": 1148
+          },
+          {
+            "referenceSpeaker": "006-M",
+            "hypothesisSpeaker": "4",
+            "edits": 1633
+          },
+          {
+            "referenceSpeaker": "007-M",
+            "hypothesisSpeaker": "0",
+            "edits": 120
+          },
+          {
+            "referenceSpeaker": null,
+            "hypothesisSpeaker": "3",
+            "edits": 100
+          }
+        ],
+        "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+      },
+      "unconfirmedSpeakerText": {
+        "characters": 763,
+        "fractionOfRecognizedCharacters": 0.10031554036287142,
+        "neverRealIdentityOrOwnerClaim": true
+      },
+      "speakerActivity": {
+        "at": "2026-11-07T12:36:56+08:00",
+        "corpus": "AISHELL-4",
+        "meeting": "L_R003S01C02",
+        "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+        "audioSeconds": 2362.945,
+        "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+        "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+        "referenceKind": "textgrid_lexical",
+        "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+        "referenceSpeakers": 6,
+        "predictedSpeakers": 6,
+        "components": {
+          "correct": 1841.0533210549263,
+          "total": 2311.9690655138347,
+          "confusion": 319.17739914792,
+          "false alarm": 96.37927379715225,
+          "missed detection": 151.7383453109889,
+          "diarization error rate": 0.2453731006690524
+        },
+        "perReferenceSpeakerForEvaluationOnly": {
+          "002-F": {
+            "referenceSeconds": 381.8366360770482,
+            "correctlyAttributedSeconds": 341.5956260329432,
+            "attributionRecall": 0.8946119721314928,
+            "matchedAnonymousGroup": "speaker_1"
+          },
+          "003-F": {
+            "referenceSeconds": 90.63832169674632,
+            "correctlyAttributedSeconds": 66.42560116772029,
+            "attributionRecall": 0.7328644211878076,
+            "matchedAnonymousGroup": "speaker_3"
+          },
+          "004-M": {
+            "referenceSeconds": 309.5234638706896,
+            "correctlyAttributedSeconds": 298.58369042604636,
+            "attributionRecall": 0.9646560770940015,
+            "matchedAnonymousGroup": "speaker_2"
+          },
+          "005-M": {
+            "referenceSeconds": 568.6460135867515,
+            "correctlyAttributedSeconds": 245.03412892488106,
+            "attributionRecall": 0.43090802198598227,
+            "matchedAnonymousGroup": "speaker_5"
+          },
+          "006-M": {
+            "referenceSeconds": 876.9389412077983,
+            "correctlyAttributedSeconds": 816.0255653830541,
+            "attributionRecall": 0.9305386350606704,
+            "matchedAnonymousGroup": "speaker_4"
+          },
+          "007-M": {
+            "referenceSeconds": 84.38569107480062,
+            "correctlyAttributedSeconds": 73.38870912028172,
+            "attributionRecall": 0.8696819115367435,
+            "matchedAnonymousGroup": "speaker_0"
+          }
+        },
+        "macroReferenceAttributionRecall": 0.8038768398327831,
+        "uncoveredReferenceSpeakers": [],
+        "shortReferenceSpans": {
+          "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+          "count": 209,
+          "referenceSeconds": 170.1290882682149,
+          "correctSeconds": 101.27668815501067,
+          "zeroCorrectSpans": 71
+        },
+        "rttmSha256": "2a710db96ae552247a8ad95aa7535f9ead43a753f8e6a11c428ece69b930790b"
+      },
+      "qualityQualified": false
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "originalAsrProcessFamilySeconds": 276.6497064000141,
+      "speakerProcessFamilySeconds": 83.78048969997326,
+      "cacheAttributionProcessSeconds": 1.2221744000271428,
+      "accumulatedOwnedProcessSeconds": 361.6523705000145,
+      "elapsedWaitingAndMinutesNotIncluded": true,
+      "newAsrNeuralWindows": 0,
+      "originalRawFilesUnchanged": true,
+      "allOriginalWordsPreserved": true,
+      "productContractPassed": true,
+      "chronologicalDiagnosticCer": 0.076996996996997,
+      "cpCerDiagnostic": {
+        "metric": "cpCER",
+        "audioSeconds": 2327.119,
+        "referenceCharacters": 8325,
+        "referenceSpeakers": 5,
+        "predictedTextStreams": 6,
+        "edits": {
+          "replace": 303,
+          "delete": 393,
+          "insert": 162
+        },
+        "totalEdits": 858,
+        "characterErrorRate": 0.10306306306306307,
+        "anonymousAssignmentForEvaluationOnly": [
+          {
+            "referenceSpeaker": "001-M",
+            "hypothesisSpeaker": "0",
+            "edits": 245
+          },
+          {
+            "referenceSpeaker": "002-F",
+            "hypothesisSpeaker": "1",
+            "edits": 34
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "hypothesisSpeaker": "4",
+            "edits": 136
+          },
+          {
+            "referenceSpeaker": "004-F",
+            "hypothesisSpeaker": "2",
+            "edits": 164
+          },
+          {
+            "referenceSpeaker": "005-F",
+            "hypothesisSpeaker": "3",
+            "edits": 164
+          },
+          {
+            "referenceSpeaker": null,
+            "hypothesisSpeaker": "__unconfirmed__",
+            "edits": 115
+          }
+        ],
+        "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+      },
+      "unconfirmedSpeakerText": {
+        "characters": 115,
+        "fractionOfRecognizedCharacters": 0.01420805534964171,
+        "neverRealIdentityOrOwnerClaim": true
+      },
+      "speakerActivity": {
+        "at": "2026-11-07T12:38:22+08:00",
+        "corpus": "AISHELL-4",
+        "meeting": "S_R004S03C01",
+        "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+        "audioSeconds": 2327.119,
+        "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+        "referenceKind": "textgrid_lexical",
+        "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+        "referenceSpeakers": 5,
+        "predictedSpeakers": 5,
+        "components": {
+          "confusion": 1.3699999999999992,
+          "total": 2074.389489999999,
+          "correct": 2007.221001999998,
+          "false alarm": 12.778977000001838,
+          "missed detection": 65.79848800000124,
+          "diarization error rate": 0.038540238169063955
+        },
+        "perReferenceSpeakerForEvaluationOnly": {
+          "001-M": {
+            "referenceSeconds": 526.4244499999995,
+            "correctlyAttributedSeconds": 512.365077999999,
+            "attributionRecall": 0.9732927070541642,
+            "matchedAnonymousGroup": "speaker_0"
+          },
+          "002-F": {
+            "referenceSeconds": 161.2375100000003,
+            "correctlyAttributedSeconds": 157.0905079999999,
+            "attributionRecall": 0.9742801659489755,
+            "matchedAnonymousGroup": "speaker_1"
+          },
+          "003-F": {
+            "referenceSeconds": 475.39315999999974,
+            "correctlyAttributedSeconds": 463.83804599999996,
+            "attributionRecall": 0.9756935627765453,
+            "matchedAnonymousGroup": "speaker_4"
+          },
+          "004-F": {
+            "referenceSeconds": 536.8083999999998,
+            "correctlyAttributedSeconds": 531.5939229999998,
+            "attributionRecall": 0.9902861486519212,
+            "matchedAnonymousGroup": "speaker_2"
+          },
+          "005-F": {
+            "referenceSeconds": 374.5259699999999,
+            "correctlyAttributedSeconds": 342.3334469999994,
+            "attributionRecall": 0.9140446175201135,
+            "matchedAnonymousGroup": "speaker_3"
+          }
+        },
+        "macroReferenceAttributionRecall": 0.965519440390344,
+        "uncoveredReferenceSpeakers": [],
+        "shortReferenceSpans": {
+          "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+          "count": 8,
+          "referenceSeconds": 11.584090000000048,
+          "correctSeconds": 8.562691000000022,
+          "zeroCorrectSpans": 1
+        },
+        "rttmSha256": "1d56a09473b0745475a718ebcd34ff8984e1a701d7fb989dfb9826a3d38ce214"
+      },
+      "qualityQualified": false
+    }
+  ],
+  "qualityQualified": false,
+  "speakerControllerExitCode": 0,
+  "speakerBatchState": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+  "finishedAt": "2026-11-07T12:38:28+08:00"
+}
