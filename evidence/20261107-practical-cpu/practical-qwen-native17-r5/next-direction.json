@@ -1,0 +1,9 @@
+{
+  "state": "NATIVE17_REAL_FULL_RESULTS_REVIEWED_NEXT_ONE_INPUT_BOUNDARY_CONTROL",
+  "next": "原QM04准确率优先：1.7B完整S5.76577%/L混音23.15583%，普通有改善但复杂仅小幅改善，停止继续堆更大checkpoint。独立入口真实取消/低RAM续作/缓存缺失恢复与共享Rust格式已验，原失败保留。下一项已冻结同1.7B权重、同解码与资源预算，仅比较作者低能量切分规则（本机约30秒，非作者20分钟默认）；先30秒ID一致/最长35秒不截断短控，再完整S严格<5%才继续L，否则保留结果停止复杂，不扫切分参数、不删语音或语气词。之后独立词级对齐与人物/重叠逐路/纪要事实/跨域独立集/手机实卡/售卖门继续OPEN。",
+  "currentNative17Review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\review.json",
+  "independentCommandProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\independent-command-proof.json",
+  "nextPreparedControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
+  "newBoundaryNeuralInferenceStarted": false,
+  "qualityQualified": false
+}

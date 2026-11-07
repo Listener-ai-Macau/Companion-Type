@@ -1,0 +1,12 @@
+{
+  "declaredAt": "2026-11-07T18:40:58+08:00",
+  "state": "FROZEN_BEFORE_AUTHOR_BOUNDARY_NEURAL_INFERENCE",
+  "baselineControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
+  "ordinaryMeeting": "S_R004S03C01",
+  "baselineStrictCer": 0.05765765765765766,
+  "requiredCerExclusiveMax": 0.05,
+  "rule": "Accuracy-first: only if complete ordinary strict CER<5% continue the same full complex meeting. Otherwise retain the actual gain/regression and stop complex inference; no threshold/window sweep or per-meeting policy choosing. All other quality/sale gates remain open.",
+  "whyDifferent": "Author uses low-energy cuts, while the controlled0.6B/1.7B comparisons used fixed30s cuts. This tests one specific input-boundary hypothesis, not another checkpoint/training/repetition penalty. The author1200s default is not attempted under this machine budget.",
+  "referenceOrAsrTextUsedToSelectSpans": false,
+  "qualityQualified": false
+}

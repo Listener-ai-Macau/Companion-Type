@@ -50,27 +50,31 @@ def main():
         assert checksum(control/'protocol.json')==pack['pinnedFiles']['protocol.json']
         assert read(control/'audio-only.json')==[{'meeting':task['meeting'],'audio':str(audio),'audioSha256':binding['audioSha256'],'audioSeconds':seconds}]
     out=control/'full/transcripts'/task['meeting'];atomic_json(task_path,task)
+    previous_state=read(out/'completed-state.json') if (out/'completed-state.json').exists() and read(out/'completed-state.json').get('state')=='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED' else read(out/'state.json') if (out/'state.json').exists() else {}
+    cache_only=previous_state.get('state')=='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED' or previous_state.get('completedCacheOnly',False)
     pressure=SystemRamPressure();child=None;owned=None;attempt=None
     try:
         names=['practical_qwen_boundaries_worker_20261107.py','practical_qwen_checkpoint_worker_20261107.py','practical_qwen_bounded_worker_20261107.py','practical_qwen_full_worker_20261107.py','practical_qwen_native_worker_20261107.py','practical_transcript_worker_20261107.py','practical_nemotron_worker_20261107.py','moss_night_gpu_worker_20261104.py','run_practical_qwen_boundaries_20261107.py','run_practical_qwen_checkpoint_20261107.py','run_practical_qwen_bounded_20261107.py']
         for member in psutil.process_iter(['cmdline']):
-            try:assert not any(Path(arg).name in names for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
+            try:assert cache_only or not any(Path(arg).name in names for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
             except (psutil.NoSuchProcess,psutil.AccessDenied):pass
-        assert not pressure.low(),'系统内存保护触发，任务保留，等待资源恢复。'
+        assert cache_only or not pressure.low(),'系统内存保护触发，任务保留，等待资源恢复。'
         assert not (root/'stop.request').exists(),'任务已请求停止，原音与已有结果保留。'
         env={k:v for k,v in os.environ.items() if k not in ['CUDA_VISIBLE_DEVICES','ROCR_VISIBLE_DEVICES','HIP_VISIBLE_DEVICES','GPU_DEVICE_ORDINAL','PYTHONPATH']}
         env.update(HIP_VISIBLE_DEVICES=str(read(source/'hip-inventory.json')['selected']['ordinal']),OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1')
         executable=pack['pythonExecutable'];assert Path(executable).is_file(),'模型包配置的本地运行环境不可用。'
         ordinal=len(task['attempts'])+1;log=root/('native-attempt-%04d.log'%ordinal)
         command=[executable,str(worker),'--control',str(control),'--phase','full','--index','0']+(['--resume'] if (out/'state.json').exists() else [])
-        attempt={'startedAt':now(),'log':str(log),'wholeProcessFamilySeconds':None,'privatePeakBytes':0};task['attempts'].append(attempt)
-        task.update(state='TRANSCRIBING_LOCAL_NATIVE_ASR',updatedAt=now());atomic_json(task_path,task);started=time.perf_counter()
+        attempt={'startedAt':now(),'log':str(log),'wholeProcessFamilySeconds':None,'privatePeakBytes':0,'cacheOnlyExpected':cache_only};task['attempts'].append(attempt)
+        task.update(state='READING_SAVED_NATIVE_ASR' if cache_only else 'TRANSCRIBING_LOCAL_NATIVE_ASR',updatedAt=now());atomic_json(task_path,task);started=time.perf_counter()
         with log.open('xb') as stream:
             child=subprocess.Popen(command,env=env,stdout=stream,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
             owned=psutil.Process(child.pid);owned.cpu_affinity([14,15]);task['activePid']=child.pid;atomic_json(task_path,task)
             while child.poll() is None:
-                if pressure.low() or (root/'stop.request').exists():
-                    attempt['interrupted']=True;stop_owned_family(child,owned);break
+                low=pressure.low() if not cache_only else False;explicit_stop=(root/'stop.request').exists()
+                if low or explicit_stop:
+                    attempt.update(interrupted=True,interruptionReason='actual_windows_low_ram' if low else 'explicit_stop',actualWindowsLowRam=low,explicitStopRequested=explicit_stop,systemAvailableBytesAtStop=psutil.virtual_memory().available)
+                    stop_owned_family(child,owned);break
                 try:
                     private=sum(p.memory_info().private for p in [owned]+owned.children(recursive=True));attempt['privatePeakBytes']=max(attempt['privatePeakBytes'],private)
                     with (root/'resources.jsonl').open('a',encoding='utf8') as stream:stream.write(json.dumps({'at':now(),'privateBytes':private,'systemAvailableBytes':psutil.virtual_memory().available})+'\n')
@@ -78,6 +82,8 @@ def main():
                 time.sleep(1)
         attempt.update(exitCode=child.returncode,finishedAt=now(),wholeProcessFamilySeconds=time.perf_counter()-started)
         task.pop('activePid',None);atomic_json(task_path,task)
+        if attempt.get('interrupted'):
+            raise InterruptedError('系统内存不足，已保存草稿和进度，资源恢复后可继续。' if attempt['interruptionReason']=='actual_windows_low_ram' else '已停止本地转写，原音和已保存进度保留，可继续。')
         assert child.returncode==0,'转写未完成，原音和已保存段落保留。'
         state=read(out/'completed-state.json');assert state['state']=='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED'
         assert state['audioSha256']==binding['audioSha256'] and state['audioSeconds']==seconds

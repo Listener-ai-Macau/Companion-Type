@@ -1,0 +1,125 @@
+{
+  "at": "2026-11-07T18:57:41+08:00",
+  "state": "PASS_INDEPENDENT_NATIVE_INPUT_CANCEL_RESUME_CACHE_AND_SHARED_DOCUMENT",
+  "audioSeconds": 60.0,
+  "publicOriginalSourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "publicInputSha256": "9405f586f3e4908725aa278a21e06654e7abae99c63240850d09c945b533c4c5",
+  "cliSourceSha256": "01f64dd284c07b0adf083a722dd76048bd9cb71092ac0dbf22316fee7781d7b8",
+  "modelPackSha256": "a3726424dc74f929c44433d35387f883e5dd1bd16242d60733b5427ffd29dcc2",
+  "outputSha256": "bf129c791bffab0e3509a6d277925b2456a1c02278851f1a9fc9e3776e96233e",
+  "actualCancellationAfterCommittedFirstRoot": true,
+  "firstRootRawBytesReusedUnchanged": true,
+  "independentNativeIdsAndTextMatchResearchOnSameAudio": true,
+  "actualSharedRustProductDocumentPassed": true,
+  "completeCacheZeroModelExactOutput": true,
+  "missingCommittedNodeRefusedTwiceZeroModel": true,
+  "restoredOriginalNodeReopensZeroModel": true,
+  "originalAudioUnchanged": true,
+  "knownOwnedWorkerAttempts": [
+    {
+      "startedAt": "2026-11-07T18:50:11+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 62.833705299999565,
+      "privatePeakBytes": 1238175744,
+      "interrupted": true,
+      "exitCode": 15,
+      "finishedAt": "2026-11-07T18:51:13+08:00",
+      "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+    },
+    {
+      "startedAt": "2026-11-07T18:51:15+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0002.log",
+      "wholeProcessFamilySeconds": 55.471261600003345,
+      "privatePeakBytes": 1087918080,
+      "interrupted": true,
+      "exitCode": 15,
+      "finishedAt": "2026-11-07T18:52:10+08:00",
+      "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+    },
+    {
+      "startedAt": "2026-11-07T18:56:11+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0003.log",
+      "wholeProcessFamilySeconds": 79.50375920001534,
+      "privatePeakBytes": 1238736896,
+      "cacheOnlyExpected": false,
+      "exitCode": 0,
+      "finishedAt": "2026-11-07T18:57:31+08:00"
+    },
+    {
+      "startedAt": "2026-11-07T18:57:32+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0004.log",
+      "wholeProcessFamilySeconds": 1.0254825000010896,
+      "privatePeakBytes": 1445888,
+      "cacheOnlyExpected": true,
+      "exitCode": 0,
+      "finishedAt": "2026-11-07T18:57:33+08:00"
+    },
+    {
+      "startedAt": "2026-11-07T18:57:35+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0005.log",
+      "wholeProcessFamilySeconds": 1.0206046999956015,
+      "privatePeakBytes": 1638400,
+      "cacheOnlyExpected": true,
+      "exitCode": 1,
+      "finishedAt": "2026-11-07T18:57:36+08:00",
+      "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+    },
+    {
+      "startedAt": "2026-11-07T18:57:37+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0006.log",
+      "wholeProcessFamilySeconds": 1.018027499987511,
+      "privatePeakBytes": 581632,
+      "cacheOnlyExpected": true,
+      "exitCode": 1,
+      "finishedAt": "2026-11-07T18:57:38+08:00",
+      "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+    },
+    {
+      "startedAt": "2026-11-07T18:57:39+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0007.log",
+      "wholeProcessFamilySeconds": 1.0187988999823574,
+      "privatePeakBytes": 1626112,
+      "cacheOnlyExpected": true,
+      "exitCode": 0,
+      "finishedAt": "2026-11-07T18:57:40+08:00"
+    }
+  ],
+  "controlEvents": [
+    {
+      "label": "independent-real-resume-after-resource-3",
+      "exitCode": 0,
+      "wholeControllerFamilySeconds": 80.89987220001058,
+      "cancelRequestedAfterFirstCommittedRoot": false
+    },
+    {
+      "label": "independent-complete-cache-reopen",
+      "exitCode": 0,
+      "wholeControllerFamilySeconds": 2.409045699983835,
+      "cancelRequestedAfterFirstCommittedRoot": false
+    },
+    {
+      "label": "independent-missing-node-refusal",
+      "exitCode": 1,
+      "wholeControllerFamilySeconds": 2.408750400005374,
+      "cancelRequestedAfterFirstCommittedRoot": false
+    },
+    {
+      "label": "independent-missing-node-refusal-again",
+      "exitCode": 1,
+      "wholeControllerFamilySeconds": 2.407951700006379,
+      "cancelRequestedAfterFirstCommittedRoot": false
+    },
+    {
+      "label": "independent-restored-node-cache-reopen",
+      "exitCode": 0,
+      "wholeControllerFamilySeconds": 2.408296199981123,
+      "cancelRequestedAfterFirstCommittedRoot": false
+    }
+  ],
+  "continuedExistingFixtureAfterRealLowRam": true,
+  "privateAudioUploaded": false,
+  "privateTaskPublished": false,
+  "publicFixtureOnly": true,
+  "installedAppOrPhoneCardPassed": false,
+  "qualityQualified": false
+}

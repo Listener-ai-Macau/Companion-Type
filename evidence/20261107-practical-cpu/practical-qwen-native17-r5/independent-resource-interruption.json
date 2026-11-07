@@ -1,0 +1,36 @@
+{
+  "state": "INDEPENDENT_CONTROL_CANCEL_PASSED_RESUME_STOPPED_BY_RESOURCE_GUARD",
+  "taskAttempts": [
+    {
+      "startedAt": "2026-11-07T18:50:11+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0001.log",
+      "wholeProcessFamilySeconds": 62.833705299999565,
+      "privatePeakBytes": 1238175744,
+      "interrupted": true,
+      "exitCode": 15,
+      "finishedAt": "2026-11-07T18:51:13+08:00",
+      "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+    },
+    {
+      "startedAt": "2026-11-07T18:51:15+08:00",
+      "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0002.log",
+      "wholeProcessFamilySeconds": 55.471261600003345,
+      "privatePeakBytes": 1087918080,
+      "interrupted": true,
+      "exitCode": 15,
+      "finishedAt": "2026-11-07T18:52:10+08:00",
+      "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+    }
+  ],
+  "lastResourceBeforeStop": {
+    "at": "2026-11-07T18:52:09+08:00",
+    "privateBytes": 1087918080,
+    "systemAvailableBytes": 872820736
+  },
+  "explicitStopFileStillExists": false,
+  "availableBytesNow": 4214411264,
+  "actualWindowsLowRamNow": false,
+  "firstNodeStillPresent": true,
+  "qualityQualified": false,
+  "scope": "The first intentional cancel assertion passed; subsequent resume was interrupted by the own controller. Its stop file had been cleared. Continue this existing fixture, not the first neural root again."
+}
