@@ -84,12 +84,13 @@ final class RecordingSyncRunner {
                 active=c;
                 if(stopped.get()){try{c.close();}catch(IOException ignored){}break;}
                 boolean reconnect=false;
+                RecordingLibrary.Session completed=null;
                 try {
                     while(!stopped.get()) {
                         listener.status("syncing","正在保存录音");
                         RecordingLibrary.Session session=c.sync();
                         RecorderWire.Descriptor last=session.segments.get(session.segments.size()-1).descriptor;
-                        if((last.flags&2)!=0){listener.finished(session);return;}
+                        if((last.flags&2)!=0){completed=session;break;}
                         listener.status("following","录音进行中，等待下一段");
                         delay.waitMillis(2000);
                     }
@@ -106,6 +107,7 @@ final class RecordingSyncRunner {
                     listener.status("reconnecting","等待录音卡重新连接，已保存的录音会保留");
                     reconnect=true;
                 } finally {active=null;try{c.close();}catch(IOException ignored){}}
+                if(completed!=null){listener.finished(completed);return;}
                 if(reconnect)delay.waitMillis(LINK_RETRY_MILLIS);
             }
         } catch(InterruptedException e) {Thread.currentThread().interrupt();}

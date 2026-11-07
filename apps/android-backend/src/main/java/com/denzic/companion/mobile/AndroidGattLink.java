@@ -48,6 +48,8 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private volatile int callbackStatus=-1,callbackState=-1;
     private int inputAddressType=-1,requestedAddressType=-1;
     private long closeElapsedNanos;
+    private GattConnectionOwner connectionOwner;
+    private long ownerWaitNanos;
     private void operation(Event e){if(!closed.get()&&!operations.offer(e))failure="Bluetooth operation queue overflow";}
     private void notification(UUID id,byte[] value){if(closed.get())return;ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q!=null&&(value==null||!q.offer(value.clone())))failure="Bluetooth notification queue overflow";}
     private final BluetoothGattCallback callbacks=new BluetoothGattCallback(){
@@ -108,6 +110,10 @@ public final class AndroidGattLink implements RecordingClient.Link {
         AndroidGattLink link=new AndroidGattLink();boolean ready=false;
         link.traceContext=context.getApplicationContext();
         try {
+            link.traceStage="wait_previous_owner";
+            long ownerStarted=System.nanoTime();
+            try{link.connectionOwner=GattConnectionOwner.acquire(device.getAddress());}
+            finally{link.ownerWaitNanos=System.nanoTime()-ownerStarted;}
             if(Build.VERSION.SDK_INT>=35)link.inputAddressType=device.getAddressType();
             // The Companion WBA port explicitly uses GAP_STATIC_RANDOM_ADDR
             // in app_ble.c. Rebuild that LE identity after process/radio/OTA
@@ -226,6 +232,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
                     .put("inputAddressType",inputAddressType).put("requestedAddressType",requestedAddressType)
                 .put("disconnectAcknowledged",disconnectAcknowledged.getCount()==0)
                 .put("closeElapsedNanos",closeElapsedNanos).put("connectError",error);
+            trace.put("ownerWaitNanos",ownerWaitNanos).put("ownerReleased",connectionOwner==null);
             android.content.SharedPreferences.Editor editor=traceContext.getSharedPreferences("companion_ble_diagnostics",Context.MODE_PRIVATE).edit().putString("last",trace.toString());
             if(!error.isEmpty())editor.putString("lastConnectionFailure",trace.toString());
             editor.apply();
@@ -239,6 +246,9 @@ public final class AndroidGattLink implements RecordingClient.Link {
                 public boolean disconnect(){try{g.disconnect();return true;}catch(SecurityException denied){return false;}catch(RuntimeException died){if(!deadBluetoothService(died))throw died;return false;}}
                 public void close(){try{g.close();}catch(SecurityException ignored){}catch(RuntimeException died){if(!deadBluetoothService(died))throw died;}}
             },disconnectAcknowledged);
-        }finally{closeElapsedNanos=System.nanoTime()-started;saveCloseTrace();}
+        }finally{
+            if(connectionOwner!=null){connectionOwner.close();connectionOwner=null;}
+            closeElapsedNanos=System.nanoTime()-started;saveCloseTrace();
+        }
     }
 }
