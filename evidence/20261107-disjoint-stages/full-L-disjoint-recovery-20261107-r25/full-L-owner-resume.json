@@ -1,10 +1,21 @@
 {
-  "state": "RUNNING_NATIVE_GPU_MODEL",
+  "state": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
   "startedAt": "2026-11-07T09:01:50+08:00",
   "protocolSha256": "358a12e5c7fbff4b3c80a52bbb49643db614ed29a2c100cd7233e2e29563b7a1",
   "inputManifestSha256": "53a7fe03471af0b095317af13d18e5dbc407c76e48de9e0f66d0316508de03a7",
-  "results": [],
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "exitCode": 3221225477,
+      "workerState": "FAILED_BEFORE_RECEIPT",
+      "wholeProcessFamilySeconds": 3111.698087,
+      "observedProcessFamilyPeakRssBytes": 1195692032,
+      "observedProcessFamilyPeakPrivateBytes": 1334824960,
+      "processFamilyCpuSeconds": 889.46875,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25\\results\\L_R003S01C02-20261107-r25\\completed-state.json",
+      "smokeOnly": false
+    }
+  ],
   "referencePassedToWorker": false,
-  "activeMeeting": "L_R003S01C02",
-  "activePid": 26536
+  "finishedAt": "2026-11-07T09:53:42+08:00"
 }

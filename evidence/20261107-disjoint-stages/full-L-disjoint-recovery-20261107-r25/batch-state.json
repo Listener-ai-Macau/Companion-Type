@@ -1,6 +1,6 @@
 {
   "at": "2026-11-07T08:59:29+08:00",
-  "state": "RUNNING_FULL_REAL_MEETING",
+  "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
   "ownerDirective": "请继续吧, 你看看接下来从什么地方推进比较好",
   "work": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25",
   "pid": 29780,
@@ -20,5 +20,9 @@
   "startedAt": "2026-11-07T09:01:50+08:00",
   "hostAvailableBytes": 2456068096,
   "supervisorPid": 29880,
-  "supervisorCreatedAt": 1794013310.2969224
+  "supervisorCreatedAt": 1794013310.2969224,
+  "inferenceSupervisorExitCode": 0,
+  "inferenceState": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+  "inferenceFinishedAt": "2026-11-07T09:53:42+08:00",
+  "finishedAt": "2026-11-07T09:53:42+08:00"
 }

@@ -1,2 +1,13 @@
 W1107 09:01:57.350000 3588 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
 [transformers] `MossTranscribeDiarizeProcessor` defines `feature_extractor_class = 'AutoFeatureExtractor'`, which is deprecated. Register the correct mapping in `AutoFeatureExtractor` instead.
+Exception Code: 0xC0000005
+0x00007FF8147290C7, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x8590C7 byte(s), hsa_system_get_major_extension_table() + 0x3AC827 byte(s)
+0x00007FF814355734, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x485734 byte(s), hipProfilerRegisterChunkCallbackExt() + 0xE5C34 byte(s)
+0x00007FF814340CD4, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x470CD4 byte(s), hipProfilerRegisterChunkCallbackExt() + 0xD11D4 byte(s)
+0x00007FF814344912, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x474912 byte(s), hipProfilerRegisterChunkCallbackExt() + 0xD4E12 byte(s)
+0x00007FF8142CE863, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x3FE863 byte(s), hipProfilerRegisterChunkCallbackExt() + 0x5ED63 byte(s)
+0x00007FF8142CE941, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x3FE941 byte(s), hipProfilerRegisterChunkCallbackExt() + 0x5EE41 byte(s)
+0x00007FF8142DFC89, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x40FC89 byte(s), hipProfilerRegisterChunkCallbackExt() + 0x70189 byte(s)
+0x00007FF8142AB35F, E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\_rocm_sdk_core\bin\amdhip64_7.dll(0x00007FF813ED0000) + 0x3DB35F byte(s), hipProfilerRegisterChunkCallbackExt() + 0x3B85F byte(s)
+0x00007FF879FCE957, C:\Windows\System32\KERNEL32.DLL(0x00007FF879FA0000) + 0x2E957 byte(s), BaseThreadInitThunk() + 0x17 byte(s)
+0x00007FF87B62AD6C, C:\Windows\SYSTEM32\ntdll.dll(0x00007FF87B580000) + 0xAAD6C byte(s), RtlUserThreadStart() + 0x2C byte(s)
