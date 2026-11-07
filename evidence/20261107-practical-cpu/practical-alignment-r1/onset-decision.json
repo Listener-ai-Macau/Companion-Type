@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-07T19:47:09+08:00",
+  "state": "RETAIN_HISTORICAL_ONSET_RESEARCH_INTEGRATION_NO_PRODUCT_PROMOTION",
+  "reviewSha256": "6a9d3646df028cd1bb1633d3266df33a05e71282c1a8523a4584f19ddafdd060",
+  "controlledComparison": [
+    {
+      "meeting": "S_R004S03C01",
+      "fullIntervalCpCer": 0.1485885885885886,
+      "historicalOnsetCpCer": 0.06378378378378378
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "fullIntervalCpCer": 0.5195942830797603,
+      "historicalOnsetCpCer": 0.39396035039188565
+    }
+  ],
+  "sameTextTimestampAndSpeakerCaches": true,
+  "newNeuralCalls": 0,
+  "generalQualityQualified": false,
+  "complexUnknownForcedUnmatchedCer": 0.4271553711387736,
+  "decision": "The newly introduced full-positive-duration admission was a bad integration for discrete80ms timestamp classes. Retain it as failure evidence. The established onset-only policy improves both exposed full meetings using identical cached words/timestamps/activity; all zero/invalid-duration evidence remains, and display endpoints are approximate. No default/mobile/card promotion. Complex39.396%cpCER and42.716%unknown-forced-unmatched remain failures.",
+  "next": "沿原QM04/QM05/RM-OVERLAP：已获得独立时间对齐与逐人内容的真实完整开发会诊断，原字错率5%仍未过；下一项根据两场逐人/未知/重叠漏词，固定已验证分人基线，验证其驱动的目标人分离，再逐路转写，普通非重叠必须保原字不回退。词级真值/时间约束逐人评分、噪声场景/跨域独立集/纪要事实/双端实卡/售卖门继续OPEN，不扫阈值或按会议挑后端。"
+}

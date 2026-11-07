@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-07T19:40:06+08:00",
+  "state": "FROZEN_BEFORE_ZERO_NEURAL_HISTORICAL_ONSET_REGRESSION_CONTROL",
+  "speakerJournals": {
+    "S_R004S03C01": {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\speaker-journal.json",
+      "sha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+      "producerFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\completed-state.json",
+      "producerSha256": "7b6cbaf0eb236e63c6c1dc6eb586ff158a24a9d1534b79cf7214fce85ac6cc38"
+    },
+    "L_R003S01C02": {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+      "sha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+      "producerFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\completed-state.json",
+      "producerSha256": "08ad84d1bf1c3e44366f491f68880e7d916a36045fe405ada076e5d1b3306fb2"
+    }
+  },
+  "helperSourceSha256": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+  "uncertaintyMarginSeconds": 0.06,
+  "rule": "Apply unchanged historical onset_attribution with60ms margin to every finite predicted onset strictly inside its original source leaf. Equal start/end classes can have a usable approximate onset, never a verified duration. Stable single-person window only; overlap, gaps, boundaries or out-of-bound onset remain unknown. Display end is onset+60ms clipped, identical established onset-display semantics. Both full meetings, no threshold sweep/per-meeting policy selection.",
+  "fallbackDisplayTime": "Invalid predicted times retain original word and unknown person; display range is explicitly approximate and bounded inside its source leaf, not verified word duration.",
+  "rawTextMustRemainIdentical": true,
+  "standardCpCerAndForcedUnmatchedDiagnosticReportedSeparately": true,
+  "trueWordTimeGroundTruthAvailable": false,
+  "noSpeakerLabelsOrReferencePassedToAligner": true,
+  "qualityQualified": false,
+  "postprocessorSourceSha256": "e074a96e8c85499af208b27ba9b3b380bb30db5d4e16bc0f66668cf3da02656f",
+  "sameAsrTextPredictedTimestampClassesAndSpeakerActivity": true,
+  "newNeuralCallsAllowed": 0,
+  "priorFullIntervalReviewSha256": "f2b7d46422f92219ae40b64e39d4f6da9cb243ed054935d781aeb019d51f2f3d",
+  "priorFailureDecisionSha256": "fa9b2b32b313bc9a88adb7e664750e5f15814399e4b204dd2302d9222b06400d"
+}
