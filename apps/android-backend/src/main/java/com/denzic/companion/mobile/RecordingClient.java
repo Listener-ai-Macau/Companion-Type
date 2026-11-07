@@ -19,6 +19,8 @@ public final class RecordingClient implements Closeable {
         default boolean calendarSupported() {return false;}
         /** Optional central preference; true is request acceptance, not measured radio speed. */
         default boolean preferBulkTransfer(boolean active)throws IOException {return false;}
+        /** Best-effort STOP preparation; expires unless a real transfer takes it. */
+        default boolean primeBulkTransfer()throws IOException {return false;}
         default String otaDataWriteMode() throws IOException {return "unspecified";}
         byte[] read(UUID characteristic) throws IOException;
         void subscribe(UUID characteristic) throws IOException;
@@ -150,14 +152,17 @@ public final class RecordingClient implements Closeable {
 
     /** Explicit user-initiated recording control; use one stable host session ID for retries. */
     public synchronized String control(Path privateDirectory,String hostSession,NativeRecordingControl.Action action,int maxSeconds) throws IOException {
-        ensureOpen();catalogueMutating();return NativeRecordingControl.execute(link,privateDirectory,hostSession,action,maxSeconds);
+        ensureOpen();catalogueMutating();prepareControlTransfer(action);return NativeRecordingControl.execute(link,privateDirectory,hostSession,action,maxSeconds);
     }
     /** Existing session control during a streamed download on the same GATT connection.
      * The link serializes GATT operations and receives pull notifications separately.
      * START is excluded because it also uses the recording catalogue channel. */
     String controlDuringSync(Path privateDirectory,String hostSession,NativeRecordingControl.Action action,int maxSeconds) throws IOException {
         if(action==null||action==NativeRecordingControl.Action.START)throw new IOException("请先停止同步，再开始新的录音");
-        synchronized(liveControlLock){ensureOpen();return NativeRecordingControl.execute(link,privateDirectory,hostSession,action,maxSeconds);}
+        synchronized(liveControlLock){ensureOpen();prepareControlTransfer(action);return NativeRecordingControl.execute(link,privateDirectory,hostSession,action,maxSeconds);}
+    }
+    private void prepareControlTransfer(NativeRecordingControl.Action action){
+        if(action==NativeRecordingControl.Action.STOP)try{link.primeBulkTransfer();}catch(IOException optionalPreferenceUnavailable){/* STOP still follows its normal durable control path. */}
     }
     String controlSessionsDuringSync(Path privateDirectory) throws IOException {
         synchronized(liveControlLock){ensureOpen();return NativeRecordingControl.list(link,privateDirectory);}

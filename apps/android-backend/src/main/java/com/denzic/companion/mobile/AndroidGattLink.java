@@ -50,6 +50,10 @@ public final class AndroidGattLink implements RecordingClient.Link {
     private long closeElapsedNanos;
     private GattConnectionOwner connectionOwner;
     private long ownerWaitNanos;
+    private final GattBulkPriority bulkPriority=new GattBulkPriority(this::requestBulkPriority,(millis,task)->{
+        android.os.Handler handler=new android.os.Handler(android.os.Looper.getMainLooper());
+        handler.postDelayed(task,millis);return ()->handler.removeCallbacks(task);
+    });
     private void operation(Event e){if(!closed.get()&&!operations.offer(e))failure="Bluetooth operation queue overflow";}
     private void notification(UUID id,byte[] value){if(closed.get())return;ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q!=null&&(value==null||!q.offer(value.clone())))failure="Bluetooth notification queue overflow";}
     private final BluetoothGattCallback callbacks=new BluetoothGattCallback(){
@@ -205,7 +209,9 @@ public final class AndroidGattLink implements RecordingClient.Link {
             if(!accepted)throw new RecordingSyncRunner.LinkFailure("Bluetooth write refused");waitOperation("write",id,15_000);
         }catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}catch(RuntimeException e){throw platformFailure(e);}
     }
-    @Override public boolean preferBulkTransfer(boolean active)throws IOException {
+    @Override public boolean primeBulkTransfer()throws IOException {check();return bulkPriority.prime();}
+    @Override public boolean preferBulkTransfer(boolean active)throws IOException {check();return bulkPriority.transfer(active);}
+    private boolean requestBulkPriority(boolean active)throws IOException {
         check();
         try{
             boolean accepted=gatt.requestConnectionPriority(active?BluetoothGatt.CONNECTION_PRIORITY_HIGH:BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
@@ -240,6 +246,7 @@ public final class AndroidGattLink implements RecordingClient.Link {
     }
     @Override public void close() {
         if(!closed.compareAndSet(false,true))return;
+        bulkPriority.close();
         final BluetoothGatt g=gatt;long started=System.nanoTime();
         try{
             if(g!=null)GattCloseAwait.close(new GattCloseAwait.Port(){
