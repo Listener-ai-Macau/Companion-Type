@@ -1,3 +1,21 @@
+<!-- device082-results-083-source -->
+### 2026-11-07T09:34:28+08:00｜082同连接交接已实机生效，短录动态仍失败；083补重复目录及恢复入口
+
+App082源493478ec/Java fb3d0989/APK80de1cdd已逐字节安装；JNI不变。实际SDK编译、单连接所有者/单次精确交接/生命周期/选中本地原音CRC-SHA测试通过；早期假链路状态与目录损坏fixture错误保留，修测试不计产品改善。普通手机扫描后选设备至私有目录4.714490秒≤5，扫描本身在计时前，不当完整发现体验，也不宣称旧配对列表133已修。原081五分钟281此前STOP确认后因脚本把已正常消费的280当原目录而退出，本次补收同一281、不重录不停第二次：303.12秒/637446B、CRC/SHA/样本连续/WAV10ms通过，48.924021KiB/s失败，缺原STOP持续时钟，动态不评价。
+
+082新282单START/STOP、60.56秒/127762B、全部CRC/SHA/连续样本/WAV20ms通过并正常消费，鲜收cache0且reusedConnections=1。STOP到目录2.849913秒；接收又读目录2.327090秒；完整等待11.310231秒>动态10.864867秒，原生完整35.391896KiB/s，两项仍FAIL。短流程比08117.412秒缩短，但081有录中误插PC只读被guard拒绝条件，不能当严格单变量改善。
+
+083源码进一步仅允许同一已认证连接、同一不可变已封口完整场次的最新目录单次复用；活录音/未完成/待消费确认恢复/控制或删除变更/新连接重读。现有原音CRC/SHA与耐久消费不省略。同时补齐082漏掉的暂停后继续与待确认继续入口，统一移交可见Activity连接，避免再起第二条GATT。当前083未构建安装，不计交付。板卡lease仍本侧，无录音/同步/OTA，原34条不触碰。继续本批源码验证及短录/五分钟实机动态与吞吐，50KiB/s、61.44MHz及Owner暂停范围保持。
+
+<!-- device081-to082-source-checkpoint -->
+### 2026-11-07T09:09:13+08:00｜081已装并真实失败，五分钟281已停录待收回；082完整连接所有权修复进行
+
+Owner授权“好的,就这个,优化一下”。App081源d9dc29cf/APK a75679cc逐字节安装核验，JNI212ec44d/AAR8b820de不变；一批合并选择设备身份+目录、控制ACK+最新状态及STOP目录，同一操作不另起连接，后置列表失败不重放已确认命令。实际React/TypeScript/全Android构建过。首次用旧cold helper未恢复升级后权限而在START前失败（原080历史结果未覆写）；恢复本App已有CONNECT/SCAN/通知授权后，一次普通初连133，板卡缓存diagnostic只多本侧PC一个LE完成、失败0/配对失败0/丢失0，手机失败没到板端。无清配对/开窗/板卡重启。PC查询后一次冷4.309秒≤5但注明工程handover条件。
+
+280单START/STOP62.2秒、131234B、CRC/SHA/连续样本/WAV10ms全过；严格原生39.115KiB/s、动态17.412秒>10.943均FAIL。段校验到真实消费回执1.546秒，开STOP到目录4.539秒、接收准备2.783秒，音频导航/准备仍有开销。短录中误插一次PC只读状态查询，guard因录中拒绝且句柄已关，范围保留不当纯手机正常场。五分钟28109:02开始、09:07已普通STOP确认，脚本因before列表还含已正常回收280而误拒绝目录变化，尚未receive；当前不重录、不第二STOP，先补普通收取。原Node进程已退，缺可靠持续STOP时钟，不能将恢复后结果冒充动态等待合格。
+
+源码进一步明确原有每个按钮都重建GATT，构成真正固定等待；MainActivity082新增一个可见Activity的连接所有者，统一选择/控制/目录并将连接单次移交foreground接收，离开Activity/换设备/操作失败/OTA释放，命令不自动重试。Backend正在补匹配移交/复用指标，选中录音打开/导出改仅校验该场，保留这场每个原音的CRC/SHA，不再哈希其它录音。当前未提交/未编包/未安装，不计真实改善。板卡本侧lease仍持有，当前无活录音/收取/OTA，281待原样收回；原规则/失败与其它聊天修改保留。
+
 <!-- dynamic-audio-completion-20261107 -->
 ### 2026-11-07T08:36:13+08:00｜Owner纠正五分钟只是样本，停录至完整音频按实际剩余工作动态验
 
@@ -24130,3 +24148,10 @@ Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→
 Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→真实恢复控制→原整会续算评分，不扩大到训练/手机/板/UI。CPU小型真实作者API的声音特征逐字节一致、全20token及7/13token恢复一致、输入变更拒绝、BF16缓存可核；仅合成架构控制，不当公开权重识别精度。首用basePython因transformers/tokenizers环境不匹配在模型前失败，已保留；改固定AMD环境后通过，未改系统包。声音阶段只装624926720B组，文字只装1192099840B组，未装部分保持meta；非持久RoPE用作者原构造器生成。原始完整特征出盘、逐字节读回、绑定音频/全部输入/模型/执行设置，生产者退出后才加载下一阶段；累计声音预计算和原失败时间，不改变音频/人物/上下文/权重/采样，不声称这些权重字节就是系统RAM节省。
 
 本阶段实际状态：RUNNING_FULL_REAL_MEETING。原生控制：PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY。整会：RUNNING_FULL_REAL_MEETING；声音预计算族耗时139.367892秒。实际worker快照：[{"state": "COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY", "completedAcousticChunks": 79, "totalAcousticChunks": 79, "generatedTokens": 0, "newGeneratedTokens": null, "decoderPrefillLayersCompleted": null}, {"state": "DECODER_PREFILL", "completedAcousticChunks": null, "totalAcousticChunks": null, "generatedTokens": 2752, "newGeneratedTokens": 0, "decoderPrefillLayersCompleted": 3}]。证据670b69ac8a37a00cebfaa2417d8db0ff2bea925a已推送读回；CPU5%/private2GiB/页优先级1/IDLE+duty.25/实际低RAM停止不变，无用户应用关闭、无源头不明重试。下一项：按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。
+
+
+## 2026-11-07T09:53:42+08:00｜同权重分阶段装载 full
+
+Owner“继续推进123昨晚”，沿现有模型待办执行装载分阶段→真实恢复控制→原整会续算评分，不扩大到训练/手机/板/UI。CPU小型真实作者API的声音特征逐字节一致、全20token及7/13token恢复一致、输入变更拒绝、BF16缓存可核；仅合成架构控制，不当公开权重识别精度。首用basePython因transformers/tokenizers环境不匹配在模型前失败，已保留；改固定AMD环境后通过，未改系统包。声音阶段只装624926720B组，文字只装1192099840B组，未装部分保持meta；非持久RoPE用作者原构造器生成。原始完整特征出盘、逐字节读回、绑定音频/全部输入/模型/执行设置，生产者退出后才加载下一阶段；累计声音预计算和原失败时间，不改变音频/人物/上下文/权重/采样，不声称这些权重字节就是系统RAM节省。
+
+本阶段实际状态：FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY。原生控制：PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY。整会：FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY；声音预计算族耗时139.367892秒。实际worker快照：[{"state": "COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY", "completedAcousticChunks": 79, "totalAcousticChunks": 79, "generatedTokens": 0, "newGeneratedTokens": null, "decoderPrefillLayersCompleted": null}, {"state": "DECODING", "completedAcousticChunks": null, "totalAcousticChunks": null, "generatedTokens": 3776, "newGeneratedTokens": 1024, "decoderPrefillLayersCompleted": 28}]。证据3eae2a3cca513aa53cc62b042b930104e4f6d7a8已推送读回；CPU5%/private2GiB/页优先级1/IDLE+duty.25/实际低RAM停止不变，无用户应用关闭、无源头不明重试。下一项：按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。

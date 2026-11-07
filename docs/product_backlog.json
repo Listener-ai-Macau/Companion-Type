@@ -130879,7 +130879,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-07T08:36:13+08:00",
+      "updatedAt": "2026-11-07T09:40:17+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -131367,7 +131367,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "优先改善用户等待：同任务恢复10.735秒未证≤10，先利用已有连接状态/GATT记录定位，不新增CPU固件。STOP至完整音频改动态预算8秒+STOP时未同步编码/50KiB/s+待生成音频/5MiB/s；五分钟/两小时只是样本。下一受影响实测增加STOP准确缓存/前缀/待生成文件字节快照，不能把已传编码视为完整音频已生成。原273旧27.768秒按动态约22.278秒失败；279缺精确STOP前缀快照，保留13.797秒尾部观察但不补造动态资格。速度50与CPU仅诊断保持，修完整批次后按影响验短/中/长和录中已同步场景；明确block与Windows内存依赖保留。",
+      "next": "先收尾已在录的083五分钟样本（09:38:42开始，controller自动STOP/收取/完整校验），不重录、不插PC链。083短28360.54秒/127762B，原音CRC/SHA/样本连续/WAV10ms通过，动态8.816035秒≤10.864806秒PASS，实测reusedConnections=1/reusedCatalogues=1/私有目录准备0.007秒。原生含最终回收35.672519KiB/s仍FAIL50；五分钟需实际判持续速度与动态预算。普通扫描后选定冷4.298365秒≤5单次PASS，旧配对列表133稳定性不宣称修复。后续验证同一任务暂停/继续新连接交接；旧radio10.735>10失败及生产资源/已明确block保持。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -133896,18 +133896,20 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T08:28:26+08:00",
-        "state": "IDLE_AFTER279_BOARD_RELEASED_CURRENT_EXPERIENCE_GAPS_OPEN",
-        "boardLease": false,
-        "liveRecording": false,
+        "at": "2026-11-07T09:40:17+08:00",
+        "state": "083_INSTALLED_283_SHORT_DYNAMIC_PASS_FIVE_MINUTE_RECORDING_ACTIVE",
+        "boardLease": true,
+        "boardItem": "Companion081动态停录等待与单连接验收",
+        "liveRecording": true,
         "liveReceive": false,
         "liveUpgrade": false,
         "firmware": 66702,
-        "phoneVersion": "0.1.80",
-        "firmwareSourceCommit": "a43893f4cf7e684f7577728ea69f52655ce479a3",
-        "phoneSourceCommit": "682da9ac5ebf17fcc2939b0fa9feaf7483a56816",
-        "javaSourceCommit": "1ae35389944b2b3735f39868eadb1f2472e76f2e",
-        "lastResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\phone080-session279\\current-contract-result.json"
+        "phoneVersion": "0.1.83",
+        "phoneSourceCommit": "b77058d975653127db4c39af7fa1d5c0657461ba",
+        "javaSourceCommitInstalled": "0c4e365674542ff4cec14ec03a55b19b37c4a385",
+        "sourcePending": null,
+        "activeCase": "E:/CodexData/Companion/.build-cache/device083/five300",
+        "activeController": "exec session95608; ordinary one START confirmed09:38:42, automatic STOP/receive/verify due after300s. Do not insert PC BLE/SWD/reset or another receiver."
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -134118,7 +134120,8 @@
           "不能丢掉音频、降低音质、放宽CRC/SHA或关闭其它蓝牙设备来过门。",
           "缺少STOP时已保存字节/部分前缀准确快照则NOT_EVALUATED，不倒推或编造。"
         ]
-      }
+      },
+      "lastOwnerRequest": "好的, 就这个, 优化一下"
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
     "frontendWindowsMobile20261102": {
@@ -134169,7 +134172,7 @@
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
-        "currentBoardLeaseHeld": false,
+        "currentBoardLeaseHeld": true,
         "customerResult": null,
         "ordinaryPhoneContinuation": {
           "at": "2026-11-06T11:48:03+08:00",
@@ -134382,13 +134385,13 @@
           "wholeProductQualified": false
         },
         "latestInstalledVersionObservation": {
-          "at": "2026-11-07T08:28:26+08:00",
-          "version": "0.1.80",
-          "sourceCommit": "682da9ac5ebf17fcc2939b0fa9feaf7483a56816",
-          "backendSourceCommit": "1ae35389944b2b3735f39868eadb1f2472e76f2e",
-          "apkSha256": "79f0a59feba089c0ee83b8e3f0b5c6d5f9d5f55bb313208b27080fe0392784bd",
+          "at": "2026-11-07T09:40:17+08:00",
+          "version": "0.1.83",
           "firmware": 66702,
-          "scope": "Actual080/702 installed, real279 complete and idle; board released, recovery10s/recording25s remain open."
+          "sourceCommit": "b77058d975653127db4c39af7fa1d5c0657461ba",
+          "backendSourceCommit": "0c4e365674542ff4cec14ec03a55b19b37c4a385",
+          "apkSha256": "067de2bef04eede6c87b67a2649ff18b84f77bbdc8133dc510ca22731745a850",
+          "scope": "Exact installed083. Short283 dynamicPASS8.816<=10.865, full integrityPASS, strict native35.673FAIL50. Freshfive300 actively recording, no OTA."
         },
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
@@ -135467,6 +135470,72 @@
           "wholeProductQualified": false,
           "automaticResumeUpperSeconds": 10.735,
           "boardLeaseHeld": false
+        },
+        "embeddedConnection082": {
+          "at": "2026-11-07T09:34:28+08:00",
+          "sourceCommit": "493478ec95e6eec784cabc0e211626e8af1d4286",
+          "backendSourceCommit": "fb3d0989c55016adf62494f80312e6f472e424dc",
+          "coldScannedSelectedSeconds": 4.7144899,
+          "coldScope": "Ordinary scan completed before selected-device clock. One selected-device to protected catalogue pass<=5; not whole app discovery nor paired-list133 stability fixed.",
+          "ownSession": 282,
+          "rawRateKiBps": 35.391895998,
+          "stopToFullAudioSeconds": 11.3102314,
+          "dynamicMaximumSeconds": 10.86486679,
+          "reusedConnections": 1,
+          "result": "FAIL_WAIT_AND_RATE_AUDIO_INTEGRITY_PASS",
+          "evidence": "E:/CodexData/Companion/.build-cache/device082/short60"
+        },
+        "embeddedConnection083": {
+          "at": "2026-11-07T09:40:17+08:00",
+          "sourceCommit": "b77058d975653127db4c39af7fa1d5c0657461ba",
+          "backendSourceCommit": "0c4e365674542ff4cec14ec03a55b19b37c4a385",
+          "short": {
+            "at": "2026-11-07T01:38:23.249Z",
+            "session": "283",
+            "phoneVersion": "0.1.83",
+            "firmware": 66702,
+            "stopToFullOriginalAndWavVerifiedUpperSeconds": 8.8160351,
+            "stopToCatalogueUiSeconds": 2.7228026000000027,
+            "stopToReceiptObservedSeconds": 6.836011900000005,
+            "receiveUiToReceiptObservedSeconds": 3.9111716000000016,
+            "audioPrepareUiToVerifiedSeconds": 1.6872396000000007,
+            "nativeConfirmedKiBps": 35.67251899295371,
+            "reusedConnections": 1,
+            "reusedCatalogues": 1,
+            "wavDurationErrorMs": 10,
+            "recordingDurationSeconds": 60.54,
+            "actualTransferredBytes": 127762,
+            "outputAudioBytes": 1937004,
+            "oneStartOneStop": true,
+            "zeroCachedBytes": true,
+            "sameConnectionStopCatalogue": true,
+            "harnessScope": "Current parent owns one CDP page and ordinary clicks; independently reads own source and generated WAV. Older273 observer used extra UI helper processes, both conservative upper bounds retained, no pure-product delta claimed from unlike controller overhead."
+          },
+          "shortDynamic": {
+            "result": "PASS",
+            "metrics": [
+              {
+                "id": "stop_to_full_audio_seconds",
+                "title": "停止录音至完整音频可用（按实际未完成工作动态计算）",
+                "unit": "s",
+                "maximumFrom": "recording_completion",
+                "basis": "按dynamicDeadlines.recording_completion，与实际未传编码量及音频生成量绑定。五分钟和两小时不是特殊分支。",
+                "calculatedMaximumSeconds": 10.864805755615235,
+                "maximum": 10.864805755615235,
+                "value": 8.8160351,
+                "status": "PASS",
+                "evidence": "E:\\CodexData\\Companion\\.build-cache\\device083\\short60\\node-timing.json",
+                "measurementNote": null
+              }
+            ],
+            "metricResult": "PASS",
+            "profile": "normal_recording_completion",
+            "sourceReceipt": "E:\\CodexData\\Companion\\.build-cache\\device083\\short60\\dynamic-measurements.json",
+            "requirements": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\product_backlog.json#/quality_targets/embedded_current_20261106",
+            "functionalResult": "PASS_ORDINARY_OWN_RECORDING_EXACT_ORIGINALS_AND_FULL_APP_AUDIO",
+            "wholeProductQualified": false
+          },
+          "scope": "One real short sample complete, five minute active. Does not close all throughput/recovery/sale readiness."
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -139301,13 +139370,13 @@
             "at": "2026-11-06T08:12:56+08:00",
             "ownerQuote": "重启的问题应该不用查了，你就继续吧。把整那东西跑好就行了。",
             "decision": "Owner supersedes prior engineering deferral for reboot investigation; continue original full real meeting using exact post-restart-tested duty0.1 and original resource guards. Historical reboot remains unresolved evidence, not a prerequisite.",
-            "state": "RUNNING_FULL_REAL_MEETING",
+            "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
             "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25",
             "next": "按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。",
             "previousFunctionalCommit": "4b6200d6b1073f2e51d33cc6c355586876dbbe24",
-            "activeWorkerPid": 3588,
+            "activeWorkerPid": null,
             "finishedAt": "2026-11-07T02:13:44+08:00",
-            "activeSupervisorPid": 29880
+            "activeSupervisorPid": null
           },
           "restoredSpeechResult20261106": {
             "at": "2026-11-06T08:06:10+08:00",
@@ -139547,7 +139616,7 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "RUNNING_FULL_REAL_MEETING",
+          "status": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
@@ -140048,7 +140117,7 @@
             "sourceAndEvidenceCommit": "bd0625c15ee6afe736450d88f8c76bb2461f8759",
             "remoteReadbackConfirmed": true,
             "disjointStageExecution": {
-              "at": "2026-11-07T09:04:54+08:00",
+              "at": "2026-11-07T09:53:42+08:00",
               "phase": "full",
               "ownerQuote": "继续推进123昨晚",
               "cpuControl": {
@@ -140319,7 +140388,7 @@
               "productBackendChanged": false,
               "fullMeeting": {
                 "at": "2026-11-07T08:59:29+08:00",
-                "state": "RUNNING_FULL_REAL_MEETING",
+                "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
                 "ownerDirective": "请继续吧, 你看看接下来从什么地方推进比较好",
                 "work": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25",
                 "pid": 29780,
@@ -140339,7 +140408,11 @@
                 "startedAt": "2026-11-07T09:01:50+08:00",
                 "hostAvailableBytes": 2456068096,
                 "supervisorPid": 29880,
-                "supervisorCreatedAt": 1794013310.2969224
+                "supervisorCreatedAt": 1794013310.2969224,
+                "inferenceSupervisorExitCode": 0,
+                "inferenceState": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+                "inferenceFinishedAt": "2026-11-07T09:53:42+08:00",
+                "finishedAt": "2026-11-07T09:53:42+08:00"
               },
               "fullWorkerObservations": [
                 {
@@ -140519,7 +140592,7 @@
                   "wholeWorkerSeconds": 137.210390799999
                 },
                 {
-                  "state": "DECODER_PREFILL",
+                  "state": "DECODING",
                   "startedAt": "2026-11-07T09:01:50+08:00",
                   "pid": 3588,
                   "meeting": "L_R003S01C02",
@@ -140540,7 +140613,7 @@
                     "scope": "This worker and its descendants only; no global or other-app changes."
                   },
                   "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
-                  "generatedTokens": 2752,
+                  "generatedTokens": 3776,
                   "progressWriteDeferrals": 0,
                   "cacheWriteWarnings": 0,
                   "scope": "Official pinned joint architecture, local full input, no reference text/count/hotwords. Smoke is compatibility only.",
@@ -140581,10 +140654,10 @@
                     "gpuUtilizationHardCapped": false,
                     "scope": "This worker and its descendants only; no global or other-app changes."
                   },
-                  "gpuAllocatedBytes": 2009173504,
-                  "gpuReservedBytes": 2715811840,
-                  "gpuPeakAllocatedBytes": 2706943488,
-                  "gpuPeakReservedBytes": 3355443200,
+                  "gpuAllocatedBytes": 5386386944,
+                  "gpuReservedBytes": 6809452544,
+                  "gpuPeakAllocatedBytes": 6537553408,
+                  "gpuPeakReservedBytes": 9418309632,
                   "pcm16RamLoader": {
                     "nativePcm16Loads": 0,
                     "fallbackLoads": 0,
@@ -140633,27 +140706,27 @@
                   "cooperativeGpuPacing": {
                     "targetActiveTimeFraction": 0.25,
                     "quantumSeconds": 0.025,
-                    "checkpoints": 1058,
-                    "synchronizedWorkSeconds": 31.426099899981637,
-                    "yieldedSeconds": 94.82458019985643,
+                    "checkpoints": 12220,
+                    "synchronizedWorkSeconds": 689.7851414995384,
+                    "yieldedSeconds": 2076.522507499205,
                     "maximumCheckpointWorkSeconds": 1.1632294000010006,
                     "hardwareUtilizationHardCap": false,
                     "limitations": "Cannot preempt one kernel; includes CPU dispatch/wait time in conservative work estimate.",
                     "forwardHookCount": 345
                   },
                   "executionAdapters": {
-                    "sdpaCalls": 3,
-                    "blockedCalls": 3,
+                    "sdpaCalls": 28672,
+                    "blockedCalls": 28,
                     "maxQueryTokens": 34044,
-                    "maxKeyTokens": 34044,
+                    "maxKeyTokens": 35067,
                     "encoderCalls": 0,
                     "encoderChunks": 0,
                     "encoderMicrobatches": 0,
                     "encoderNativeSdpaCalls": 0,
                     "queryBlock": 128,
                     "keyBlock": 256,
-                    "keyStreamedCalls": 792,
-                    "keyTiles": 53460,
+                    "keyStreamedCalls": 7392,
+                    "keyTiles": 498960,
                     "maximumScoreTileElements": 524288,
                     "encoderBatch": 1,
                     "semantics": "All original keys/context retained; no time/audio chunk discard or speaker reset."
@@ -140752,7 +140825,7 @@
                     "resumedModelOutputEquivalenceProven": false
                   },
                   "resumedPrefixTokens": 2752,
-                  "newGeneratedTokens": 0,
+                  "newGeneratedTokens": 1024,
                   "generationPromptTokens": 34044,
                   "inputPreparationSeconds": 0.9067303000047104,
                   "inputTokens": 31292,
@@ -140844,27 +140917,30 @@
                     3000
                   ],
                   "llvmJitImportedForPreprocessing": false,
-                  "unusedAllocatorReleases": 5,
+                  "unusedAllocatorReleases": 62,
                   "generationCheckpoint": {
-                    "manifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25\\results\\L_R003S01C02-20261107-r25\\generation-checkpoints\\checkpoint-0000002752.json",
-                    "sha256": "10ae768d9946c7e50621ee68e7994ddee0e7aaf3b4eba81917cfd6cfa4f76634",
-                    "tokenCount": 2752,
+                    "manifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25\\results\\L_R003S01C02-20261107-r25\\generation-checkpoints\\checkpoint-0000003776.json",
+                    "sha256": "94e89b5a3e52d122b800561e215f75070af0443c06b62df7a827f17176229d9e",
+                    "tokenCount": 3776,
                     "tokenBytesFsyncedBeforePublication": true
                   },
-                  "lastCompletedSegmentEndSeconds": 515.94,
-                  "completedSegments": 75,
-                  "generationElapsedSeconds": 0.014677500003017485,
+                  "lastCompletedSegmentEndSeconds": 656.94,
+                  "completedSegments": 105,
+                  "generationElapsedSeconds": 2766.467122000002,
                   "audioEncodingCacheReused": true,
                   "audioEncodingSeconds": 0.0005934999935561791,
                   "encodedFeatureBytes": 60491776,
-                  "decoderPrefillLayersCompleted": 3,
+                  "decoderPrefillLayersCompleted": 28,
                   "decoderPrefillLayerTotal": 28,
-                  "lastPrefillLayerAt": "2026-11-07T09:04:18+08:00"
+                  "lastPrefillLayerAt": "2026-11-07T09:19:52+08:00",
+                  "firstProjectionTokenCount": 1,
+                  "maximumProjectionTokenCount": 1,
+                  "firstGeneratedTokenSeconds": 1061.424885600005
                 }
               ],
-              "state": "RUNNING_FULL_REAL_MEETING",
+              "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
               "next": "按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。",
-              "sourceAndEvidenceCommit": "670b69ac8a37a00cebfaa2417d8db0ff2bea925a",
+              "sourceAndEvidenceCommit": "3eae2a3cca513aa53cc62b042b930104e4f6d7a8",
               "remoteReadbackConfirmed": true
             }
           }

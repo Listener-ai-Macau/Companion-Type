@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T09:04:54+08:00",
+  "at": "2026-11-07T09:53:42+08:00",
   "phase": "full",
   "ownerQuote": "继续推进123昨晚",
   "cpuControl": {
@@ -270,7 +270,7 @@
   "productBackendChanged": false,
   "fullMeeting": {
     "at": "2026-11-07T08:59:29+08:00",
-    "state": "RUNNING_FULL_REAL_MEETING",
+    "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
     "ownerDirective": "请继续吧, 你看看接下来从什么地方推进比较好",
     "work": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25",
     "pid": 29780,
@@ -290,7 +290,11 @@
     "startedAt": "2026-11-07T09:01:50+08:00",
     "hostAvailableBytes": 2456068096,
     "supervisorPid": 29880,
-    "supervisorCreatedAt": 1794013310.2969224
+    "supervisorCreatedAt": 1794013310.2969224,
+    "inferenceSupervisorExitCode": 0,
+    "inferenceState": "STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE",
+    "inferenceFinishedAt": "2026-11-07T09:53:42+08:00",
+    "finishedAt": "2026-11-07T09:53:42+08:00"
   },
   "fullWorkerObservations": [
     {
@@ -470,7 +474,7 @@
       "wholeWorkerSeconds": 137.210390799999
     },
     {
-      "state": "DECODER_PREFILL",
+      "state": "DECODING",
       "startedAt": "2026-11-07T09:01:50+08:00",
       "pid": 3588,
       "meeting": "L_R003S01C02",
@@ -491,7 +495,7 @@
         "scope": "This worker and its descendants only; no global or other-app changes."
       },
       "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
-      "generatedTokens": 2752,
+      "generatedTokens": 3776,
       "progressWriteDeferrals": 0,
       "cacheWriteWarnings": 0,
       "scope": "Official pinned joint architecture, local full input, no reference text/count/hotwords. Smoke is compatibility only.",
@@ -532,10 +536,10 @@
         "gpuUtilizationHardCapped": false,
         "scope": "This worker and its descendants only; no global or other-app changes."
       },
-      "gpuAllocatedBytes": 2009173504,
-      "gpuReservedBytes": 2715811840,
-      "gpuPeakAllocatedBytes": 2706943488,
-      "gpuPeakReservedBytes": 3355443200,
+      "gpuAllocatedBytes": 5386386944,
+      "gpuReservedBytes": 6809452544,
+      "gpuPeakAllocatedBytes": 6537553408,
+      "gpuPeakReservedBytes": 9418309632,
       "pcm16RamLoader": {
         "nativePcm16Loads": 0,
         "fallbackLoads": 0,
@@ -584,27 +588,27 @@
       "cooperativeGpuPacing": {
         "targetActiveTimeFraction": 0.25,
         "quantumSeconds": 0.025,
-        "checkpoints": 1058,
-        "synchronizedWorkSeconds": 31.426099899981637,
-        "yieldedSeconds": 94.82458019985643,
+        "checkpoints": 12220,
+        "synchronizedWorkSeconds": 689.7851414995384,
+        "yieldedSeconds": 2076.522507499205,
         "maximumCheckpointWorkSeconds": 1.1632294000010006,
         "hardwareUtilizationHardCap": false,
         "limitations": "Cannot preempt one kernel; includes CPU dispatch/wait time in conservative work estimate.",
         "forwardHookCount": 345
       },
       "executionAdapters": {
-        "sdpaCalls": 3,
-        "blockedCalls": 3,
+        "sdpaCalls": 28672,
+        "blockedCalls": 28,
         "maxQueryTokens": 34044,
-        "maxKeyTokens": 34044,
+        "maxKeyTokens": 35067,
         "encoderCalls": 0,
         "encoderChunks": 0,
         "encoderMicrobatches": 0,
         "encoderNativeSdpaCalls": 0,
         "queryBlock": 128,
         "keyBlock": 256,
-        "keyStreamedCalls": 792,
-        "keyTiles": 53460,
+        "keyStreamedCalls": 7392,
+        "keyTiles": 498960,
         "maximumScoreTileElements": 524288,
         "encoderBatch": 1,
         "semantics": "All original keys/context retained; no time/audio chunk discard or speaker reset."
@@ -703,7 +707,7 @@
         "resumedModelOutputEquivalenceProven": false
       },
       "resumedPrefixTokens": 2752,
-      "newGeneratedTokens": 0,
+      "newGeneratedTokens": 1024,
       "generationPromptTokens": 34044,
       "inputPreparationSeconds": 0.9067303000047104,
       "inputTokens": 31292,
@@ -795,26 +799,29 @@
         3000
       ],
       "llvmJitImportedForPreprocessing": false,
-      "unusedAllocatorReleases": 5,
+      "unusedAllocatorReleases": 62,
       "generationCheckpoint": {
-        "manifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25\\results\\L_R003S01C02-20261107-r25\\generation-checkpoints\\checkpoint-0000002752.json",
-        "sha256": "10ae768d9946c7e50621ee68e7994ddee0e7aaf3b4eba81917cfd6cfa4f76634",
-        "tokenCount": 2752,
+        "manifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-disjoint-recovery-20261107-r25\\results\\L_R003S01C02-20261107-r25\\generation-checkpoints\\checkpoint-0000003776.json",
+        "sha256": "94e89b5a3e52d122b800561e215f75070af0443c06b62df7a827f17176229d9e",
+        "tokenCount": 3776,
         "tokenBytesFsyncedBeforePublication": true
       },
-      "lastCompletedSegmentEndSeconds": 515.94,
-      "completedSegments": 75,
-      "generationElapsedSeconds": 0.014677500003017485,
+      "lastCompletedSegmentEndSeconds": 656.94,
+      "completedSegments": 105,
+      "generationElapsedSeconds": 2766.467122000002,
       "audioEncodingCacheReused": true,
       "audioEncodingSeconds": 0.0005934999935561791,
       "encodedFeatureBytes": 60491776,
-      "decoderPrefillLayersCompleted": 3,
+      "decoderPrefillLayersCompleted": 28,
       "decoderPrefillLayerTotal": 28,
-      "lastPrefillLayerAt": "2026-11-07T09:04:18+08:00"
+      "lastPrefillLayerAt": "2026-11-07T09:19:52+08:00",
+      "firstProjectionTokenCount": 1,
+      "maximumProjectionTokenCount": 1,
+      "firstGeneratedTokenSeconds": 1061.424885600005
     }
   ],
-  "state": "RUNNING_FULL_REAL_MEETING",
+  "state": "FULL_MEETING_INCOMPLETE_EVIDENCE_RETAINED_NO_AUTOMATIC_RETRY",
   "next": "按整会实际终态继续：完整输出后才独立评CER/cpCER/人物/重叠/累计成本；未完则保留具体失败与恢复点，避免原样长跑。不得用局部成绩关闭跨会议<5%、最终保留集或售卖门。",
-  "sourceAndEvidenceCommit": "670b69ac8a37a00cebfaa2417d8db0ff2bea925a",
+  "sourceAndEvidenceCommit": "3eae2a3cca513aa53cc62b042b930104e4f6d7a8",
   "remoteReadbackConfirmed": true
 }
