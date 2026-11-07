@@ -32,6 +32,9 @@ if a.retry_main_only:
 ev=M/'evidence/20261107-practical-cpu';ev.mkdir(parents=True,exist_ok=True)
 chain_path=base/'bounded-speaker-full-r1/chain-state.json'
 if chain_path.exists() and read(chain_path).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED':
+    for case in read(chain_path.parent/'audio-only.json'):
+        if not (chain_path.parent/'results'/case['meeting']/'embedding-cause-review.json').exists():
+            subprocess.run([__import__('sys').executable,str(M/'src/practical_speaker_cause_20261107.py'),'--control',str(chain_path.parent),'--meeting',case['meeting']],check=True)
     subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(chain_path.parent),'--backlog',str(R/'docs/product_backlog.json')],check=True)
 names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1']
 for name in names:
