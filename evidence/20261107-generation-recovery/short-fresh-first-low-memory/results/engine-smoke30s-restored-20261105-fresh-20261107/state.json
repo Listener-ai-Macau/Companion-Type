@@ -1,0 +1,73 @@
+{
+  "state": "LOADING_MODEL",
+  "startedAt": "2026-11-07T08:16:51+08:00",
+  "pid": 16864,
+  "meeting": "engine-smoke30s-restored-20261105",
+  "resourceLimits": {
+    "pid": 16864,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 11575296,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+  "generatedTokens": 0,
+  "progressWriteDeferrals": 0,
+  "cacheWriteWarnings": 0,
+  "scope": "Official pinned joint architecture, local full input, no reference text/count/hotwords. Smoke is compatibility only.",
+  "enumeratedGpus": [
+    {
+      "index": 0,
+      "name": "AMD Radeon RX 6800 XT",
+      "architecture": "gfx1030",
+      "reportedMemoryBytes": 17163091968
+    }
+  ],
+  "gpuIdentitySelection": {
+    "index": 0,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "reportedMemoryBytes": 17163091968,
+    "requestedIndexHint": 1,
+    "indexChangedFromHint": true,
+    "selectionPolicy": "Unique RX 6800 XT and gfx1030 identity; never substitute integrated graphics"
+  },
+  "actualGpu": "AMD Radeon RX 6800 XT",
+  "gpuIndex": 0,
+  "hipVersion": "7.15.26333",
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "resourceLimitsAfterGpuInit": {
+    "pid": 16864,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 389992448,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpuAllocatedBytes": 0,
+  "gpuReservedBytes": 0,
+  "gpuPeakAllocatedBytes": 0,
+  "gpuPeakReservedBytes": 0,
+  "pcm16RamLoader": {
+    "nativePcm16Loads": 0,
+    "fallbackLoads": 0,
+    "resamplingSkippedOnlyWhenAlreadyExactFormat": true
+  }
+}

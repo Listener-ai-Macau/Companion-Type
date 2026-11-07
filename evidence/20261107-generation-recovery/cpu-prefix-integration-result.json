@@ -1,0 +1,41 @@
+{
+  "state": "PASS_TINY_CPU_MOSS_ARCHITECTURE_PREFIX_RECOVERY_ONLY",
+  "publishedModelWeightsUsed": false,
+  "newAsrAccuracyEvidence": false,
+  "gpuUsed": false,
+  "comparisons": [
+    {
+      "retainedTokens": 7,
+      "newTokens": 13,
+      "all20GeneratedIdsIdentical": true,
+      "wholeAudioTensorObjectsPreserved": true
+    },
+    {
+      "retainedTokens": 13,
+      "newTokens": 7,
+      "all20GeneratedIdsIdentical": true,
+      "wholeAudioTensorObjectsPreserved": true
+    }
+  ],
+  "parameterCount": 14992,
+  "cudaInitialized": false,
+  "limits": {
+    "pid": 7068,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 851869696,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "scope": "Same author MOSS/Qwen3/Whisper generation APIs and real shared prefix assembler, tiny random synthetic dimensions, forced test length. Not the0.9B published model, real speech, GPU-resume equivalence or any accuracy gate.",
+  "at": "2026-11-07T08:23:10+08:00",
+  "seconds": 10.282377900002757
+}

@@ -1,0 +1,22 @@
+{
+  "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+  "startedAt": "2026-11-07T08:16:51+08:00",
+  "protocolSha256": "a4a7538bebc810180e39cecfd9b421dff4389d70779d514b0003abd48ed8090e",
+  "inputManifestSha256": "7b7427c089df8ba77b70a57d5e3067cbaf3b54aa459f619e7c34f7adeefb94ee",
+  "results": [
+    {
+      "meeting": "engine-smoke30s-restored-20261105",
+      "exitCode": 15,
+      "workerState": "FAILED_BEFORE_RECEIPT",
+      "wholeProcessFamilySeconds": 55.737932,
+      "observedProcessFamilyPeakRssBytes": 650784768,
+      "observedProcessFamilyPeakPrivateBytes": 658227200,
+      "processFamilyCpuSeconds": 17.640625,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\short-fresh\\results\\engine-smoke30s-restored-20261105-fresh-20261107\\completed-state.json",
+      "smokeOnly": true
+    }
+  ],
+  "referencePassedToWorker": false,
+  "stopReason": "Windows LowMemoryResourceNotification signaled; release only this experiment family",
+  "finishedAt": "2026-11-07T08:17:47+08:00"
+}

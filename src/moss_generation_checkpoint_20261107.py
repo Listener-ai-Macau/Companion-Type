@@ -36,6 +36,20 @@ def checked_tokens(values, vocab_size):
     return values
 
 
+def append_retained_prefix(inputs, tokens, *, torch, vocab_size, audio_token_id):
+    checked_tokens(tokens, vocab_size)
+    if not tokens or audio_token_id in tokens:
+        raise ValueError('A nonempty generated prefix without audio placeholders is required')
+    ids, mask = inputs['input_ids'], inputs['attention_mask']
+    if ids.ndim != 2 or ids.shape[0] != 1 or mask.shape != ids.shape or not bool((mask == 1).all().item()):
+        raise ValueError('Original complete single unpadded prompt required')
+    prefix = torch.tensor([tokens], dtype=ids.dtype, device=ids.device)
+    # Audio fields retain the exact original tensor objects and full lengths.
+    # No slice/reset/re-tokenization or mutation of the original input mapping.
+    return {**inputs, 'input_ids': torch.cat([ids, prefix], dim=-1),
+            'attention_mask': torch.cat([mask, torch.ones_like(prefix, dtype=mask.dtype)], dim=-1)}
+
+
 class TokenLedger:
     def __init__(self, directory, *, binding, vocab_size, eos_ids):
         self.directory = Path(directory)

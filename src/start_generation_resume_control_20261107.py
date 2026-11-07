@@ -1,7 +1,7 @@
 """Two sequential affected short controls; never auto-start a full meeting."""
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
-import hashlib, json, os, psutil, subprocess, sys
+import argparse, hashlib, json, os, psutil, subprocess, sys
 
 R = Path('C:/Users/Billy/Desktop/Denzic/Companion')
 M = R / 'model-research'
@@ -10,6 +10,8 @@ C = R / 'docs/handoffs/20261107-model-generation-recovery'
 read = lambda p: json.loads(Path(p).read_text(encoding='utf8'))
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 now = lambda: datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds')
+parser=argparse.ArgumentParser();parser.add_argument('--attempt',default='r1');args=parser.parse_args()
+assert args.attempt and all(ch.isalnum() or ch in '-_' for ch in args.attempt)
 assert read(C/'single-visible-gpu-result.json')['state']=='PASS_MODEL_FREE_SINGLE_GPU_VISIBILITY_AND_ARITHMETIC'
 assert read(C/'single-visible-gpu-worker.json')['visibleDeviceCount']==1
 for p in psutil.process_iter(['name','cmdline']):
@@ -17,7 +19,7 @@ for p in psutil.process_iter(['name','cmdline']):
         if (p.info['name'] or '').lower().startswith('python'):
             assert not any(Path(a).name=='moss_night_gpu_worker_20261104.py' for a in p.info['cmdline'] or []),'One model at a time'
     except (psutil.NoSuchProcess,psutil.AccessDenied): pass
-target=C/'generation-resume-control-result.json'
+target=C/('generation-resume-control-result.json' if args.attempt=='r1' else 'generation-resume-control-'+args.attempt+'-result.json')
 assert not target.exists(),'Preserve old control result'
 baseline=H/'post-reboot-short-20261106'
 original=read(next((baseline/'results').glob('*/generated-ids.json')))
@@ -36,7 +38,7 @@ save()
 try:
     first_output=None
     for stage in ['fresh','resume64']:
-        folder=C/('short-'+stage);folder.mkdir(exist_ok=False)
+        folder=C/('short-'+stage+('' if args.attempt=='r1' else '-'+args.attempt));folder.mkdir(exist_ok=False)
         if stage=='resume64':
             checkpoint=first_output/'generation-checkpoints/checkpoint-0000000064.json'
             assert checkpoint.exists()
@@ -61,7 +63,7 @@ try:
         if stage=='fresh': first_output=output
         else:
             assert worker['resumedPrefixTokens']==64 and worker['newGeneratedTokens']==109
-            state.update(state='PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY',verifiedSourceSha256={n:sha(M/'src'/n) for n in ['moss_night_gpu_worker_20261104.py','moss_generation_checkpoint_20261107.py','run_night_moss_gpu_20261104.py','moss_retire_acoustic_20261106.py']});save()
+            state.update(state='PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY',verifiedSourceSha256={n:sha(M/'src'/n) for n in ['moss_night_gpu_worker_20261104.py','moss_generation_checkpoint_20261107.py','run_night_moss_gpu_20261104.py','moss_retire_acoustic_20261106.py','moss_streamed_weights_20261104.py']});save()
 except BaseException as error:
     state.update(state='CONTROL_FAILURE_RETAINED',error=repr(error));save();raise
 finally:

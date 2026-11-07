@@ -1,0 +1,41 @@
+{
+  "state": "PASS_REUSED_CPU_ROUNDTRIP_BUFFER_OFFICIAL_BYTE_CONTROL",
+  "allTensorBytesAndDtypesMatchOfficialReader": true,
+  "bf16NanInfSignedZeroAndChunkBoundariesPreserved": true,
+  "wrongFileHashRejected": true,
+  "receipt": {
+    "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+    "tensorCount": 4,
+    "dataBytesCopied": 514,
+    "maximumTransferChunkBytes": 64,
+    "scratchBytes": 64,
+    "roundtripBufferBytes": 64,
+    "roundtripCpuBufferReused": true,
+    "fileSha256": "93a98e5bc6aad8e259c563ee89255163c9ff6292c578fcb54be7551931f69f02",
+    "deviceRoundtripSha256": "93a98e5bc6aad8e259c563ee89255163c9ff6292c578fcb54be7551931f69f02",
+    "targetDevice": "cpu",
+    "mmapUsed": false,
+    "wholeCpuStateDictCreated": false,
+    "seconds": 0.007331300002988428
+  },
+  "gpuUsed": false,
+  "modelLoaded": false,
+  "seconds": 4.307091700000456,
+  "limits": {
+    "pid": 3136,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 401637376,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "scope": "Exact transfer bytes and bounded CPU return-buffer allocation only; no measured full-weight system-RAM saving or model-quality claim."
+}

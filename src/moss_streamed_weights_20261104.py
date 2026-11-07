@@ -24,6 +24,8 @@ def load_streamed_weights(path, *, torch, device, expected_sha256, chunk_bytes=1
         source_hash.update(prefix+raw_header);roundtrip_hash.update(prefix+raw_header)
         items.sort(key=lambda pair:pair[1]['data_offsets'][0]);offset=0
         scratch=bytearray(chunk_bytes)
+        return_buffer=bytearray(chunk_bytes)
+        return_tensor=torch.frombuffer(return_buffer,dtype=torch.uint8)
         for name,meta in items:
             start,end=meta['data_offsets'];shape=meta['shape'];dtype,size=dtypes[meta['dtype']]
             assert isinstance(name,str) and all(isinstance(n,int) and n>=0 for n in shape)
@@ -41,7 +43,11 @@ def load_streamed_weights(path, *, torch, device, expected_sha256, chunk_bytes=1
                 target.copy_(cpu_view,non_blocking=False)
                 # A bitwise roundtrip is cheap compared with inference and
                 # proves the published bytes survived the transfer unchanged.
-                payload=target.view(torch.uint8).cpu().numpy().tobytes()
+                # Reuse one bounded CPU destination instead of allocating a
+                # new CPU tensor, NumPy owner and Python bytes for every slice.
+                # Blocking byte copy preserves dtype bits, including BF16.
+                return_tensor[:take].copy_(target.view(torch.uint8),non_blocking=False)
+                payload=memoryview(return_buffer)[:take]
                 assert payload==view
                 roundtrip_hash.update(payload)
                 del cpu_view,target,payload,view
@@ -52,6 +58,7 @@ def load_streamed_weights(path, *, torch, device, expected_sha256, chunk_bytes=1
     assert roundtrip_hash.hexdigest()==expected_sha256,'Device tensors differ from pinned bytes'
     receipt={'state':'PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED','tensorCount':len(result),
       'dataBytesCopied':copied,'maximumTransferChunkBytes':largest,'scratchBytes':chunk_bytes,
+      'roundtripBufferBytes':chunk_bytes,'roundtripCpuBufferReused':True,
       'fileSha256':source_hash.hexdigest(),'deviceRoundtripSha256':roundtrip_hash.hexdigest(),
       'targetDevice':str(device),'mmapUsed':False,'wholeCpuStateDictCreated':False,
       'seconds':time.perf_counter()-started}

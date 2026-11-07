@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-06T07:58:42+08:00",
+  "model": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+  "modelRevision": "10304d926740cf5a5cee05a268086e3265197910",
+  "officialSourceCommit": "79c675f0670cc2f824bcbcdd98263704f40f1f7e",
+  "weightSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "runtime": {
+    "python": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1",
+    "gpuIndex": 1,
+    "dtype": "bfloat16",
+    "boundedMathAttention": true,
+    "queryBlock": 128,
+    "keyBlock": 256,
+    "encoderBatch": 1,
+    "streamedWeightLoading": true,
+    "directGpuWeightLoading": true,
+    "nativePcm16RamLoading": true,
+    "releaseUnusedModelAllocations": true,
+    "systemPrivateMemoryBudgetBytes": 2147483648,
+    "workerCpuHardCapPercent": 5,
+    "workerGpuScheduling": "IDLE",
+    "cooperativeGpuDuty": 0.25,
+    "affinity": [
+      14,
+      15
+    ],
+    "threads": 2,
+    "maxLength": 131072,
+    "maxNewTokensSmoke": 2048,
+    "maxNewTokensFull": 65536,
+    "doSample": false,
+    "seed": 0,
+    "durableProgressWrites": true,
+    "generationCheckpointing": true,
+    "retireAcousticModulesAfterEncoding": true,
+    "hipVisibleDeviceOrdinal": 1,
+    "rebuildableCacheRoot": "E:/CodexData/Companion/.model-cache/generation-recovery-20261107"
+  },
+  "scope": "Execution control only: one visible RX6800XT, same pinned full30s input and all math/generation; durable prefix then re-prefill with saved64 tokens. Compare every token to original173. Cooperative duty returns to the existing allowed.25 ceiling after the.1 R24 run spent10939/12192 seconds yielding while CPU was7.6-11.8% near exit; CPU5%/private2GiB/very-low page priority/GPUidle/real low-RAM stop unchanged. No model accuracy, whole-meeting stability or automatic long-run claim."
+}

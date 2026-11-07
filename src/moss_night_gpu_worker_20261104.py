@@ -186,7 +186,7 @@ try:
     prompt_len=int(inputs['attention_mask'][0].sum().item())
     resume_prefix=[];generation_ledger=None
     if protocol['runtime'].get('generationCheckpointing'):
-        from moss_generation_checkpoint_20261107 import TokenLedger,make_binding,restore,digest
+        from moss_generation_checkpoint_20261107 import TokenLedger,make_binding,restore,digest,append_retained_prefix
         assert list(inputs['input_ids'].shape)==[1,prompt_len],'Single unpadded full prompt required for prefix recovery'
         prompt_bytes=inputs['input_ids'].detach().cpu().contiguous().numpy().tobytes()
         generation_binding=make_binding(case,protocol,prompt_sha256=digest(prompt_bytes),prompt_tokens=prompt_len,
@@ -210,10 +210,7 @@ try:
                 state['priorInferenceAttemptProcessFamilySeconds']=report['priorInferenceAttemptProcessFamilySeconds']
                 assert state['priorInferenceAttemptProcessFamilySeconds']>=source['results'][0]['wholeProcessFamilySeconds']
             state.update(generationResume=resume_receipt,resumedPrefixTokens=len(resume_prefix),newGeneratedTokens=0,generatedTokens=len(resume_prefix))
-            prefix_tensor=torch.tensor([resume_prefix],dtype=inputs['input_ids'].dtype,device=device)
-            inputs['input_ids']=torch.cat([inputs['input_ids'],prefix_tensor],dim=-1)
-            inputs['attention_mask']=torch.cat([inputs['attention_mask'],torch.ones_like(prefix_tensor,dtype=inputs['attention_mask'].dtype)],dim=-1)
-            del prefix_tensor
+            inputs=append_retained_prefix(inputs,resume_prefix,torch=torch,vocab_size=model.vocab_size,audio_token_id=model.config.audio_token_id)
         generation_ledger=TokenLedger(out/'generation-checkpoints',binding=generation_binding,vocab_size=model.vocab_size,eos_ids=eos_set)
         state['generationPromptTokens']=int(inputs['input_ids'].shape[-1])
     elif protocol['runtime'].get('resumeGeneration'):
