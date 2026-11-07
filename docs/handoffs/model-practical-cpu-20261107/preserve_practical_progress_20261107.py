@@ -44,7 +44,7 @@ for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
     if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
         r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
         (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6','practical-alignment-r1']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6','practical-alignment-r1','practical-conditioned-ps4-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -102,7 +102,7 @@ if record['native8AmiChain']:record['state']=record['native8AmiChain']['state']
 if record['practicalReleaseReview']:
     record['state']=record['practicalReleaseReview']['state']
     record['next']=record['practicalReleaseReview']['next']
-record['lastOwnerQuote']='需要继续推进啊, 现在是在正确方向吗'
+record['lastOwnerQuote']='推进把, 主要是复杂多人这个看看怎么搞'
 record['nativeVerbatimPreparation']=optional(base/'practical-verbatim-r1/prepared.json')
 record['nativeVerbatimRun']=optional(base/'practical-verbatim-r1/transcript-run.json')
 record['nativeVerbatimReview']=optional(base/'practical-verbatim-r1/review.json')
@@ -151,8 +151,16 @@ if record['nativeAlignment']['decision-r1.json']:
 if record['nativeAlignment']['onset-decision.json']:
     record['state']=record['nativeAlignment']['onset-decision.json']['state']+'_QUALITY_AND_SALE_OPEN'
     record['next']=record['nativeAlignment']['onset-decision.json']['next']
+ps4_root=base/'practical-conditioned-ps4-r1'
+record['conditionedTargetSpeakerExtraction']={name:optional(ps4_root/name) for name in ['model-ready.json','input-selection.json','protocol.json','protocol-r2.json','run.json','run-r2.json','separation-state.json','separation-state-r2.json','asr-state-r2.json','preparation-failure-1.json','audio-frontend-source.json','review.json']}
+ps4=record['conditionedTargetSpeakerExtraction']
+if ps4['model-ready.json']:
+    record['state']=(ps4['run-r2.json'] or ps4['run.json'] or ps4['model-ready.json'])['state']+'_QUALITY_AND_SALE_OPEN'
+    record['next']='原RM-OVERLAP/复杂多人优先：完成已冻结PS4匹配声纹编码器的真实先提取再逐路转写；普通S根1与复杂L根29/31由旧预测活动选择，6人各自同场最长单人片作登记，无参考词/人数。修缺少音频前端的0推理依赖失败后，仅补官方TorchAudio2.11纯Python源码到隔离进程；模型/样本/保留条件不变，不重跑旧VoxLock/固定8槽TSSEP。全部8路转写完再以完整原会议评分，严格固定分人映射/未知不匹配和单人无回退决定是否扩展，不按片挑轨/扫窗口或阈值。原5%/独立集/事实/双端实卡/售卖门继续。'
+if ps4['review.json']:
+    record['state']=ps4['review.json']['state'];record['next']=ps4['review.json']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
+paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker','upstream-tse']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*bounded*20261107.py')]
 head=ship(M,paths,'Preserve complete text and bounded speaker pipeline '+a.phase);record.update(sourceAndEvidenceCommit=head,remoteReadbackConfirmed=True)
@@ -188,11 +196,17 @@ if record['native8F16Assessment']:
             aligned=record['nativeAlignment']['onset-review.json'] or record['nativeAlignment']['review.json']
             joint='; '.join(r['meeting']+' cpCER '+format(r['standardAnonymousCpCerDiagnostic']['characterErrorRate']*100,'.5f')+'%' for r in aligned['results'])
             contract['qualification']['currentQualification']='NOT_QUALIFIED: native17 fixed30s recognized text now has independent predicted word onsets and anonymous identity on both complete development meetings: '+joint+'. Bad full-positive-interval integration and zero-duration predictions retained. Historical onset60ms policy kept with no threshold sweep. Raw fixed30s S5.76577%/complex mixed23.15583% unchanged. Separate author-boundary S5.53754% still misses5%, complex not run by predeclared rule. Complex unknown-forced-unmatched42.71554% remains a failure; no verified word-duration accuracy/tcpCER or both-overlap-voices recovered. Prior FP16/AMI failure and factual minutes/cross-domain holdout/installed Windows-Android/card/sale gates remain open.'
+        if ps4['model-ready.json']:
+            overlap_gate=next(g for g in contract['gates'] if g['id']=='RM-OVERLAP')
+            overlap_gate['ps4ConditionedComponentScreen20261107']={'at':now,'evidence':str(ps4_root),'state':record['state'],'modelEvidenceCommit':head,'review':ps4['review.json'],'inputSelection':ps4['input-selection.json'],'qualityQualified':False,'allExistingFormalGatesRetained':True}
 assert path.read_bytes()==raw,'Shared backlog changed before replace; re-read and merge'
 temp=path.with_suffix('.practical.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,path)
 summary={'stockCpuR2':record['stockCpuR2'].get('state') if record['stockCpuR2'] else None,'textMeetings':[{k:r.get(k) for k in ['meeting','accumulatedProcessFamilySeconds','chronologicalDiagnosticCer']} for r in (record['textFirstRun'] or {}).get('results',[])],'speakerResults':record['boundedRun'],'completeChain':record['completeChain']}
 with (R/'docs/development_log.md').open('a',encoding='utf8') as out:
-    if record['nativeVerbatimPreparation']:
+    if ps4['model-ready.json']:
+        if a.phase in ['finished','failed']:
+            out.write('\n\n## '+now+'｜原RM-OVERLAP复杂多人：匹配声纹条件目标提取与逐路转写实测\n\n承接Owner“推进把, 主要是复杂多人这个看看怎么搞”。旧VoxLock无改善/REAL-T变差、固定8槽TSSEP单人回退不重跑；本轮差异为作者PS4真实会议/ASR代理适配权重与完整匹配ECAPA编码器。只从已冻结预测活动选普通S根1、复杂L根29/31，登记取同场预测单人片，所有8目标路保留并逐路识别；原混音/原字及其它完整会议内容保留。无GT文字/人数/角色输入，不按输出挑轨，不扫窗口/阈值。以替换选中根段后的完整原会议参考评分，固定全场分人映射/未知不匹配与单人无回退为组件保留门，不冒称纯重叠逐字或独立整会验收。实际状态、失败、模型/协议来源、资源/耗时与决策：'+json.dumps(ps4,ensure_ascii=False)+'。原准备直接TLS失败改同一固定raw文本端点校验；初次缺torchaudio在0神经/装权重前失败，补官方v2.11.0未改Python前端到隔离进程，未改系统或原ASR环境。源码/公开证据提交'+head+'已远端核验；公开训练域与本开发录音重合未知，最终未见集未开，未改默认/未训练/未安装手机实卡/未做客户体验。普通5%、复杂逐路、事实、跨域及全部售卖门保留。下一项：'+record['next']+'\n')
+    elif record['nativeVerbatimPreparation']:
         if a.phase in ['finished','failed']:
             prior17=optional(base/'practical-qwen-native17-r5/review.json')
             batch={'priorNative17CompleteReview':prior17,'native17IndependentCommand':optional(base/'practical-qwen-native17-r5/independent-command-proof.json'),'concurrentCompleteCacheRead':record['native17ConcurrentCacheProof'],'gitByteRecovery':optional(base/'practical-qwen-author-boundaries-r6/git-byte-recovery-proof.json'),'nativeAlignment':record['nativeAlignment']}

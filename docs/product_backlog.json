@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T19:48:41+08:00",
+            "at": "2026-11-07T20:08:24+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "f34bfe0d742f346362100935019a5f0aae8bb4d3",
+            "modelEvidenceCommit": "eb78decbf4dad7779e5c249d844c14a40dc74fb9",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41623,7 +41623,122 @@
           "measure": "先分离后分别转写，在预先冻结的真实重叠区间按整场固定声纹映射统计逐人中文CER；同时报告允许最佳排列的诊断值，不能将其冒充身份正确。三人重叠另评。",
           "contentCoverage": "所有入选重叠时段计入，漏掉的声音计删除；原音保留，重复另一人的内容计错误。双人和三人分别判断。",
           "currentStatus": "OPEN",
-          "baseline": "L第二段真实开发片60字：原盲分离26.6667%，新双声纹固定身份提取后仍16/60=26.6667%，无改善；另一语料REAL-T单目标47字：混音2/47=4.2553%，目标提取4/47=8.5106%变差。两者均为短开发片，不构成整会/双人完整验收；不采纳此提取候选。"
+          "baseline": "L第二段真实开发片60字：原盲分离26.6667%，新双声纹固定身份提取后仍16/60=26.6667%，无改善；另一语料REAL-T单目标47字：混音2/47=4.2553%，目标提取4/47=8.5106%变差。两者均为短开发片，不构成整会/双人完整验收；不采纳此提取候选。",
+          "ps4ConditionedComponentScreen20261107": {
+            "at": "2026-11-07T20:08:24+08:00",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1",
+            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
+            "modelEvidenceCommit": "eb78decbf4dad7779e5c249d844c14a40dc74fb9",
+            "review": null,
+            "inputSelection": {
+              "at": "2026-11-07T20:00:16+08:00",
+              "state": "AUDIO_AND_PREDICTED_ACTIVITY_ONLY_SELECTION_FROZEN_BEFORE_NEW_INFERENCE",
+              "rule": "First complete30s native-ASR root with>=5s predicted overlap and<1s predicted triple; first distinct complete root with>=1s predicted triple. First ordinary complete root with one predicted person,>=20s solo activity and no overlap. Enrollment is central<=8s of each persons longest predicted solo region,>=3s after60ms boundary guards. No GT, words, names, source count or new-output selection.",
+              "meetings": [
+                {
+                  "meeting": "S_R004S03C01",
+                  "estimatedPeople": 5,
+                  "availableAnchors": [
+                    {
+                      "speaker": 0,
+                      "startSample": 2688240,
+                      "endSample": 2816240,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 1,
+                      "startSample": 31059439,
+                      "endSample": 31187439,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 2,
+                      "startSample": 10481200,
+                      "endSample": 10609200,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 3,
+                      "startSample": 23587839,
+                      "endSample": 23715839,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 4,
+                      "startSample": 21685920,
+                      "endSample": 21813920,
+                      "audioSeconds": 8.0
+                    }
+                  ],
+                  "selectionUsesOnlyFrozenPredictedActivity": true
+                },
+                {
+                  "meeting": "L_R003S01C02",
+                  "estimatedPeople": 6,
+                  "availableAnchors": [
+                    {
+                      "speaker": 0,
+                      "startSample": 31053759,
+                      "endSample": 31181759,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 1,
+                      "startSample": 6870480,
+                      "endSample": 6998480,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 2,
+                      "startSample": 2571200,
+                      "endSample": 2699200,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 3,
+                      "startSample": 12805120,
+                      "endSample": 12933120,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 4,
+                      "startSample": 1310720,
+                      "endSample": 1438720,
+                      "audioSeconds": 8.0
+                    },
+                    {
+                      "speaker": 5,
+                      "startSample": 4413360,
+                      "endSample": 4541360,
+                      "audioSeconds": 8.0
+                    }
+                  ],
+                  "selectionUsesOnlyFrozenPredictedActivity": true
+                }
+              ],
+              "allActivePredictedPeopleExtractedWhenAnAnchorExists": true,
+              "noAnchorRemainsExplicit": true,
+              "qualityQualified": false,
+              "limits": {
+                "pid": 15156,
+                "cpuRate": 500,
+                "cpuControlFlags": 5,
+                "cpuPercentMaximum": 5.0,
+                "inLimitedJob": true,
+                "jobPrivateCommitLimitBytes": 268435456,
+                "jobMemoryLimitEnabled": true,
+                "jobPeakPrivateCommitBytes": 11653120,
+                "cpuPriorityClass": 64,
+                "memoryPagePriority": 1,
+                "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                "gpuPriorityClass": 0,
+                "gpuUtilizationHardCapped": false,
+                "scope": "This worker and its descendants only; no global or other-app changes."
+              }
+            },
+            "qualityQualified": false,
+            "allExistingFormalGatesRetained": true
+          }
         },
         {
           "completeModelPipeline20261104": {
@@ -41641,7 +41756,7 @@
           "currentStatus": "OPEN",
           "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
           "nativeVerbatimDevelopment20261107": {
-            "at": "2026-11-07T19:48:41+08:00",
+            "at": "2026-11-07T20:08:24+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
             "rawCer": {
               "S_R004S03C01": 0.06954954954954955,
@@ -41658,9 +41773,9 @@
             "defaultProductChanged": false
           },
           "officialNativeQwenControl20261107": {
-            "at": "2026-11-07T19:48:41+08:00",
+            "at": "2026-11-07T20:08:24+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
-            "state": "RETAIN_HISTORICAL_ONSET_RESEARCH_INTEGRATION_NO_PRODUCT_PROMOTION_QUALITY_AND_SALE_OPEN",
+            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
             "noNewQualityScoreUnlessFullCompleted": true,
             "review": {
               "at": "2026-11-07T19:31:33+08:00",
@@ -41815,7 +41930,7 @@
             "defaultProductChanged": false
           },
           "native17OrdinaryDevelopment20261107": {
-            "at": "2026-11-07T19:48:41+08:00",
+            "at": "2026-11-07T20:08:24+08:00",
             "stage": {
               "state": "ORDINARY_FULL_NATIVE17_IMPROVES_STAGE5_OPEN_COMPLEX_RUNNING",
               "rawChronologicalCerBaseline06": 0.06438438438438439,
@@ -42111,23 +42226,23 @@
               "qualification": "NOT_QUALIFIED: exposed development chronological text only. Non-overlap-only/time-constrained per-person, separated overlap, factual minutes, final cross-domain holdout and actual installed phone/card/sale gates remain open. Prior AMI speaker failure retained.",
               "noTrainingReferenceHotwordsOrFillerErDeletion": true
             },
-            "modelEvidenceCommit": "f34bfe0d742f346362100935019a5f0aae8bb4d3",
+            "modelEvidenceCommit": "eb78decbf4dad7779e5c249d844c14a40dc74fb9",
             "ordinary5PercentGateClosed": false,
             "qualityQualified": false
           },
           "authorBoundaryDevelopment20261107": {
-            "at": "2026-11-07T19:48:41+08:00",
+            "at": "2026-11-07T20:08:24+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\review.json",
-            "modelEvidenceCommit": "f34bfe0d742f346362100935019a5f0aae8bb4d3",
+            "modelEvidenceCommit": "eb78decbf4dad7779e5c249d844c14a40dc74fb9",
             "ordinaryFullDevelopmentBelow5": false,
             "finalHoldoutOpened": false,
             "qualityQualified": false,
             "defaultProductChanged": false
           },
           "native17AlignedSpeakerContent20261107": {
-            "at": "2026-11-07T19:48:41+08:00",
+            "at": "2026-11-07T20:08:24+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\onset-review.json",
-            "modelEvidenceCommit": "f34bfe0d742f346362100935019a5f0aae8bb4d3",
+            "modelEvidenceCommit": "eb78decbf4dad7779e5c249d844c14a40dc74fb9",
             "results": [
               {
                 "meeting": "S_R004S03C01",
@@ -132180,7 +132295,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "712恢复原静态RAM69328与首包位置提示，711无收益的全空隙搜索已回退。096回执订阅置于实际PULL后的数据传输中，计时及耐久/物理确认不变。当前正测真实短录含回收50，随后连接5秒/同任务恢复10秒和最终长录；原Flash412216预算仍FAIL1040B，明确block保留。",
+      "next": "先完成Owner要求的可优化性与稳定性审查：按现有真实分段耗时、芯片公开资料和已失败方向量化理论边界与可预期收益，明确下一项能区分原因的验证，再继续原CP23-10/CP09-02。当前713资源构建继续收尾但不先做新安装/录音实验。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134756,25 +134871,25 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T19:46:12+08:00",
-        "state": "712096_EXACT_INSTALLED_FRESH_SHORT_QUALIFICATION_RUNNING",
+        "at": "2026-11-07T20:04:41+08:00",
+        "state": "OFFLINE_OPTIMIZATION_FEASIBILITY_REVIEW_713_BUILD_NO_BOARD",
         "phoneInstalled": "0.1.96",
         "firmwareInstalled": 66712,
         "phoneSourceCommit": "4b2b9beae31b7050d4979d989d9aa6bbbd50b966",
         "backendSourceCommit": "b1387436b7162ab3d4b91a93df40ac3da4394295",
         "firmwareSource": "a641d13d5dceee73052252406ce50ee2008f22da",
-        "boardLease": true,
-        "boardItem": "Companion710短录物理回收实际归因",
-        "liveRecording": true,
+        "boardLease": false,
+        "boardItem": null,
+        "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
         "activeExternalSniffer": false,
         "systemHciReportRunning": false,
-        "ownLatestSession": null,
+        "ownLatestSession": 328,
         "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66709\\progress.json",
-        "firmwareBuildSession": null,
-        "firmwareCandidate": 66712,
-        "candidateSourceCommit": "a641d13d5dceee73052252406ce50ee2008f22da",
+        "firmwareBuildSession": 23077,
+        "firmwareCandidate": 66713,
+        "candidateSourceCommit": "41f81729769f7edfde3ad9a872cba5314fd18f10",
         "externalSnifferSession": null,
         "phoneCandidate": "0.1.96",
         "phoneCandidateSource": "4b2b9beae31b7050d4979d989d9aa6bbbd50b966",
@@ -136761,6 +136876,11 @@
           "Explicit battery/ADC/charge/current, acoustic/physical first word, production keys and paused screen blocks retained. Windows daily package dependency remains in its existing module."
         ],
         "evidenceScope": "Real models prove ownership/capacity/fault settlement, not real timings or physical fault injection. Ordinary current322 is the normal short qualification; recovered323 is separately scoped. Clock61.44MHz, ordinary Bluetooth coexistence retained."
+      },
+      "ownerOptimizationDirection20261107": {
+        "at": "2026-11-07T20:06:57+08:00",
+        "text": "先确认方向正确，理论上能不能优化，避免一直做优化不到的优化；Owner认为可以优化，主要是不稳定。",
+        "decision": "Before more device experiments, quantify real critical path and required savings; distinguish repeatable fixed physical reclaim costs from radio/host variability. Preserve current actual712096 and pending713 offline resource build. No threshold relaxation or blind retesting."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -136812,7 +136932,7 @@
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
-        "currentBoardLeaseHeld": true,
+        "currentBoardLeaseHeld": false,
         "customerResult": null,
         "ordinaryPhoneContinuation": {
           "at": "2026-11-06T11:48:03+08:00",
@@ -142279,11 +142399,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "RETAIN_HISTORICAL_ONSET_RESEARCH_INTEGRATION_NO_PRODUCT_PROMOTION_QUALITY_AND_SALE_OPEN",
+          "status": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "沿原QM04/QM05/RM-OVERLAP：已获得独立时间对齐与逐人内容的真实完整开发会诊断，原字错率5%仍未过；下一项根据两场逐人/未知/重叠漏词，固定已验证分人基线，验证其驱动的目标人分离，再逐路转写，普通非重叠必须保原字不回退。词级真值/时间约束逐人评分、噪声场景/跨域独立集/纪要事实/双端实卡/售卖门继续OPEN，不扫阈值或按会议挑后端。",
+          "next": "原RM-OVERLAP/复杂多人优先：完成已冻结PS4匹配声纹编码器的真实先提取再逐路转写；普通S根1与复杂L根29/31由旧预测活动选择，6人各自同场最长单人片作登记，无参考词/人数。修缺少音频前端的0推理依赖失败后，仅补官方TorchAudio2.11纯Python源码到隔离进程；模型/样本/保留条件不变，不重跑旧VoxLock/固定8槽TSSEP。全部8路转写完再以完整原会议评分，严格固定分人映射/未知不匹配和单人无回退决定是否扩展，不按片挑轨/扫窗口或阈值。原5%/独立集/事实/双端实卡/售卖门继续。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -143607,8 +143727,8 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T19:48:41+08:00",
-              "phase": "finished",
+              "at": "2026-11-07T20:08:24+08:00",
+              "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
                 "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -146416,7 +146536,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "RETAIN_HISTORICAL_ONSET_RESEARCH_INTEGRATION_NO_PRODUCT_PROMOTION_QUALITY_AND_SALE_OPEN",
+              "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -151659,8 +151779,8 @@
                 "qualityQualified": false,
                 "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
               },
-              "next": "沿原QM04/QM05/RM-OVERLAP：已获得独立时间对齐与逐人内容的真实完整开发会诊断，原字错率5%仍未过；下一项根据两场逐人/未知/重叠漏词，固定已验证分人基线，验证其驱动的目标人分离，再逐路转写，普通非重叠必须保原字不回退。词级真值/时间约束逐人评分、噪声场景/跨域独立集/纪要事实/双端实卡/售卖门继续OPEN，不扫阈值或按会议挑后端。",
-              "lastOwnerQuote": "需要继续推进啊, 现在是在正确方向吗",
+              "next": "原RM-OVERLAP/复杂多人优先：完成已冻结PS4匹配声纹编码器的真实先提取再逐路转写；普通S根1与复杂L根29/31由旧预测活动选择，6人各自同场最长单人片作登记，无参考词/人数。修缺少音频前端的0推理依赖失败后，仅补官方TorchAudio2.11纯Python源码到隔离进程；模型/样本/保留条件不变，不重跑旧VoxLock/固定8槽TSSEP。全部8路转写完再以完整原会议评分，严格固定分人映射/未知不匹配和单人无回退决定是否扩展，不按片挑轨/扫窗口或阈值。原5%/独立集/事实/双端实卡/售卖门继续。",
+              "lastOwnerQuote": "推进把, 主要是复杂多人这个看看怎么搞",
               "nativeVerbatimPreparation": {
                 "at": "2026-11-07T15:04:06+08:00",
                 "state": "FROZEN_NATIVE_VERBATIM_CONTROL_PREPARED_NO_INFERENCE",
@@ -153701,7 +153821,792 @@
                 "cliSourceSha256": "01f64dd284c07b0adf083a722dd76048bd9cb71092ac0dbf22316fee7781d7b8",
                 "qualityQualified": false
               },
-              "sourceAndEvidenceCommit": "f34bfe0d742f346362100935019a5f0aae8bb4d3",
+              "conditionedTargetSpeakerExtraction": {
+                "model-ready.json": {
+                  "at": "2026-11-07T19:56:07+08:00",
+                  "state": "PINNED_PS4_AUTHOR_SOURCE_AND_WEIGHTS_VERIFIED_NO_INFERENCE",
+                  "modelId": "TaurenMountain/PS4",
+                  "revision": "8feb7a1b3da1264659f155c42bfb40a5be88d730",
+                  "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730",
+                  "weight": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\checkpoint_epoch037.pt",
+                  "files": [
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730\\README.md",
+                      "bytes": 6247,
+                      "sha256": "dded29647c1465b77b09c98ce8b6ae96d82e30a2721d4094d5889dcc224dc0cf"
+                    },
+                    {
+                      "file": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\checkpoint_epoch037.pt",
+                      "bytes": 282746518,
+                      "sha256": "3d5621c89e4af7d6a42180604aa191962636826b244c86cc3ac5bc2508064196"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730\\inference.py",
+                      "bytes": 33406,
+                      "sha256": "172f22339c79c29e46b1e213e91f822fb46b13d95cd3c90bfc93b8b007ea004e"
+                    }
+                  ],
+                  "publicSourceUrl": "https://huggingface.co/TaurenMountain/PS4/tree/8feb7a1b3da1264659f155c42bfb40a5be88d730",
+                  "sourceLicenseDeclared": "Apache-2.0 model card; upstream components retain their licenses",
+                  "trainingDomain": "Author reports real AISHELL4/AliMeeting/AMI/CHiME6; exact overlap with our exposed recordings unknown. This is a development screen, not independent generalization acceptance.",
+                  "whyDifferent": "Complete author BSRNN+native ECAPA cue encoder fine-tuned with real-conversation/ASR proxy objectives. Not old VoxLock or fixed8-slot TSSEP transfer; actual enrollment audio uses the matching checkpoint encoder.",
+                  "inferenceStarted": false,
+                  "qualityQualified": false,
+                  "limits": {
+                    "pid": 240,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 268435456,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 17076224,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  }
+                },
+                "input-selection.json": {
+                  "at": "2026-11-07T20:00:16+08:00",
+                  "state": "AUDIO_AND_PREDICTED_ACTIVITY_ONLY_SELECTION_FROZEN_BEFORE_NEW_INFERENCE",
+                  "rule": "First complete30s native-ASR root with>=5s predicted overlap and<1s predicted triple; first distinct complete root with>=1s predicted triple. First ordinary complete root with one predicted person,>=20s solo activity and no overlap. Enrollment is central<=8s of each persons longest predicted solo region,>=3s after60ms boundary guards. No GT, words, names, source count or new-output selection.",
+                  "meetings": [
+                    {
+                      "meeting": "S_R004S03C01",
+                      "estimatedPeople": 5,
+                      "availableAnchors": [
+                        {
+                          "speaker": 0,
+                          "startSample": 2688240,
+                          "endSample": 2816240,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 1,
+                          "startSample": 31059439,
+                          "endSample": 31187439,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 2,
+                          "startSample": 10481200,
+                          "endSample": 10609200,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 3,
+                          "startSample": 23587839,
+                          "endSample": 23715839,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 4,
+                          "startSample": 21685920,
+                          "endSample": 21813920,
+                          "audioSeconds": 8.0
+                        }
+                      ],
+                      "selectionUsesOnlyFrozenPredictedActivity": true
+                    },
+                    {
+                      "meeting": "L_R003S01C02",
+                      "estimatedPeople": 6,
+                      "availableAnchors": [
+                        {
+                          "speaker": 0,
+                          "startSample": 31053759,
+                          "endSample": 31181759,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 1,
+                          "startSample": 6870480,
+                          "endSample": 6998480,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 2,
+                          "startSample": 2571200,
+                          "endSample": 2699200,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 3,
+                          "startSample": 12805120,
+                          "endSample": 12933120,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 4,
+                          "startSample": 1310720,
+                          "endSample": 1438720,
+                          "audioSeconds": 8.0
+                        },
+                        {
+                          "speaker": 5,
+                          "startSample": 4413360,
+                          "endSample": 4541360,
+                          "audioSeconds": 8.0
+                        }
+                      ],
+                      "selectionUsesOnlyFrozenPredictedActivity": true
+                    }
+                  ],
+                  "allActivePredictedPeopleExtractedWhenAnAnchorExists": true,
+                  "noAnchorRemainsExplicit": true,
+                  "qualityQualified": false,
+                  "limits": {
+                    "pid": 15156,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 268435456,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 11653120,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  }
+                },
+                "protocol.json": {
+                  "at": "2026-11-07T20:03:05+08:00",
+                  "state": "FROZEN_BEFORE_PS4_NEURAL_INFERENCE",
+                  "workerSourceSha256": "cbe7830469f03f882c126e0d8595b0f3d5ee0f08ec87221992b8f83bb7db7b0b",
+                  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+                  "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+                  "helperSources": {
+                    "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+                    "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+                    "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107"
+                  },
+                  "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+                  "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+                  "derivedAudioRoot": "E:/CodexData/Companion/.model-cache/ps4-target-extraction-20261107/extracted",
+                  "separation": "Unmodified complete author build_model/extract_speaker, exact matching state tensors, strict load, FP32/eval, matching embedded ECAPA encoder. Both mixture/enrollment separately peak-normalized as official CLI. Every predicted active person with automatically chosen same-meeting solo anchor is extracted. No reference/name/count or output-track deletion.",
+                  "asr": "Same pinned native1.7B/BF16/eager/greedy512/Chinese/no-context and bounded raw-preserving recovery. Every extracted lane is transcribed; exact-zero pipeline guard only. Source mixture full-ASR cache retained, not re-recognized.",
+                  "scoring": "Replace only selected original30s root text in the existing complete per-person Document, leave all other full-meeting text unchanged, then score against the entire original reference. All duplicate/missing/incorrect lanes count. Report global cpCER and independently fixed full-speaker DER mapping/unknown-unmatched diagnostic; no per-clip oracle mapping or boundary-word discard. Categories use full reference utterances, not a claimed pure overlap-word score.",
+                  "retainRule": "Require fewer whole-L fixed-mapping/unknown-unmatched content edits than the frozen baseline, no worse full-S ordinary control edits, and no new complete-execution failure. Otherwise retain raw outputs and reject scaling this exact candidate; no threshold/window/enrollment sweep. Improvements are development component evidence, never full<5%, final holdout or sale acceptance.",
+                  "singleSpeakerProtection": "Ordinary production route retains source recording; forced extraction is an explicit damage control, not silently applied by default.",
+                  "trainingOverlapWithThesePublicRecordingsUnknown": true,
+                  "finalHoldoutOpened": false,
+                  "qualityQualified": false,
+                  "cpuPercentMaximum": 5,
+                  "privateCommitLimitBytes": 2147483648,
+                  "modelStagesSequential": true
+                },
+                "protocol-r2.json": {
+                  "at": "2026-11-07T20:07:02+08:00",
+                  "state": "FROZEN_ENGINEERED_AUDIO_FRONTEND_FIX_BEFORE_FIRST_SEPARATION",
+                  "workerSourceSha256": "54b466f4108097c5c2485c8633b4dc2dc33a90f75dd3e27ed8e04ce43bf3ed8d",
+                  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+                  "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+                  "helperSources": {
+                    "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+                    "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+                    "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107"
+                  },
+                  "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+                  "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+                  "derivedAudioRoot": "E:/CodexData/Companion/.model-cache/ps4-target-extraction-20261107/extracted-r2",
+                  "separation": "Unmodified complete author build_model/extract_speaker, exact matching state tensors, strict load, FP32/eval, matching embedded ECAPA encoder. Both mixture/enrollment separately peak-normalized as official CLI. Every predicted active person with automatically chosen same-meeting solo anchor is extracted. No reference/name/count or output-track deletion.",
+                  "asr": "Same pinned native1.7B/BF16/eager/greedy512/Chinese/no-context and bounded raw-preserving recovery. Every extracted lane is transcribed; exact-zero pipeline guard only. Source mixture full-ASR cache retained, not re-recognized.",
+                  "scoring": "Replace only selected original30s root text in the existing complete per-person Document, leave all other full-meeting text unchanged, then score against the entire original reference. All duplicate/missing/incorrect lanes count. Report global cpCER and independently fixed full-speaker DER mapping/unknown-unmatched diagnostic; no per-clip oracle mapping or boundary-word discard. Categories use full reference utterances, not a claimed pure overlap-word score.",
+                  "retainRule": "Require fewer whole-L fixed-mapping/unknown-unmatched content edits than the frozen baseline, no worse full-S ordinary control edits, and no new complete-execution failure. Otherwise retain raw outputs and reject scaling this exact candidate; no threshold/window/enrollment sweep. Improvements are development component evidence, never full<5%, final holdout or sale acceptance.",
+                  "singleSpeakerProtection": "Ordinary production route retains source recording; forced extraction is an explicit damage control, not silently applied by default.",
+                  "trainingOverlapWithThesePublicRecordingsUnknown": true,
+                  "finalHoldoutOpened": false,
+                  "qualityQualified": false,
+                  "cpuPercentMaximum": 5,
+                  "privateCommitLimitBytes": 2147483648,
+                  "modelStagesSequential": true,
+                  "parentProtocolSha256": "c275bd222f81c785c61e1fa390056183bf42e3e90c09768696b57aab46c9e152",
+                  "audioFrontendManifestSha256": "df1d0f08c10f7bf7de8301ad625233a0839480998ad97a3a1451fa8f96d15a8c",
+                  "preparationFailure": "Original model attempt stopped on missing torchaudio before weights or any inference. Pinned unmodified official Python frontend added only to separation-worker path; standard PCM wave I/O and native Torch are unchanged. No model/audio/retention/scoring setting changed."
+                },
+                "run.json": {
+                  "state": "FAILED_PS4_COMPONENT_RETAINED_NO_AUTOMATIC_RETRY",
+                  "pid": 3584,
+                  "startedAt": "2026-11-07T20:03:06+08:00",
+                  "priorAttemptReceipts": [],
+                  "results": [
+                    {
+                      "stage": "inventory",
+                      "exitCode": 0,
+                      "wholeProcessFamilySeconds": 5.083631299989065,
+                      "privatePeakBytes": 324079616
+                    },
+                    {
+                      "stage": "separation",
+                      "exitCode": 1,
+                      "wholeProcessFamilySeconds": 4.055217499990249,
+                      "privatePeakBytes": 314064896
+                    }
+                  ],
+                  "automaticModelFailureRetries": 0,
+                  "qualityQualified": false,
+                  "stage": "separation",
+                  "finishedAt": "2026-11-07T20:03:15+08:00"
+                },
+                "run-r2.json": {
+                  "state": "RUNNING_PS4_ASR",
+                  "pid": 23752,
+                  "startedAt": "2026-11-07T20:07:04+08:00",
+                  "priorAttemptReceipts": [],
+                  "results": [
+                    {
+                      "stage": "separation",
+                      "exitCode": 0,
+                      "wholeProcessFamilySeconds": 47.483598400023766,
+                      "privatePeakBytes": 1040818176
+                    }
+                  ],
+                  "automaticModelFailureRetries": 0,
+                  "qualityQualified": false,
+                  "stage": "asr",
+                  "activePid": 18108
+                },
+                "separation-state.json": {
+                  "state": "FAILED_PS4_SEPARATION_RETAINED_NO_AUTOMATIC_RETRY",
+                  "pid": 7528,
+                  "startedAt": "2026-11-07T20:03:11+08:00",
+                  "stage": "separation",
+                  "binding": {
+                    "protocolSha256": "c275bd222f81c785c61e1fa390056183bf42e3e90c09768696b57aab46c9e152",
+                    "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+                    "workerSourceSha256": "cbe7830469f03f882c126e0d8595b0f3d5ee0f08ec87221992b8f83bb7db7b0b"
+                  },
+                  "newNeuralCalls": 0,
+                  "reusedOutputs": 0,
+                  "completedInputs": 0,
+                  "referencePassedToWorker": false,
+                  "qualityQualified": false,
+                  "limits": {
+                    "pid": 7528,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 2147483648,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 338219008,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  },
+                  "gpu": "AMD Radeon RX 6800 XT",
+                  "error": "ModuleNotFoundError(\"No module named 'torchaudio'\")",
+                  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_ps4_worker_20261107.py\", line 43, in <module>\n    module_file=Path(ready['sourceRoot'])/'inference.py';spec=importlib.util.spec_from_file_location('pinned_ps4_author',module_file);author=importlib.util.module_from_spec(spec);spec.loader.exec_module(author)\n                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap_external>\", line 940, in exec_module\n  File \"<frozen importlib._bootstrap>\", line 241, in _call_with_frames_removed\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730\\inference.py\", line 47, in <module>\n    import torchaudio\nModuleNotFoundError: No module named 'torchaudio'\n",
+                  "finishedAt": "2026-11-07T20:03:14+08:00",
+                  "wholeWorkerSeconds": 2.4703868000069633
+                },
+                "separation-state-r2.json": {
+                  "state": "COMPLETE_PS4_SEPARATION_UNQUALIFIED",
+                  "pid": 10504,
+                  "startedAt": "2026-11-07T20:07:04+08:00",
+                  "stage": "separation",
+                  "binding": {
+                    "protocolSha256": "a2f8f6c1ab9ad33fbe779b9bb9f2d9129843d435516034f7b5ec043d3a39c30b",
+                    "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+                    "workerSourceSha256": "54b466f4108097c5c2485c8633b4dc2dc33a90f75dd3e27ed8e04ce43bf3ed8d"
+                  },
+                  "newNeuralCalls": 8,
+                  "reusedOutputs": 0,
+                  "completedInputs": 8,
+                  "referencePassedToWorker": false,
+                  "qualityQualified": false,
+                  "limits": {
+                    "pid": 10504,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 2147483648,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 1056956416,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  },
+                  "gpu": "AMD Radeon RX 6800 XT",
+                  "modelLoaded": true,
+                  "modelLoadSeconds": 3.15410659997724,
+                  "finishedAt": "2026-11-07T20:07:50+08:00",
+                  "wholeWorkerSeconds": 46.1296043000184
+                },
+                "asr-state-r2.json": {
+                  "state": "IMPORTING_NATIVE_TORCH",
+                  "pid": 22112,
+                  "startedAt": "2026-11-07T20:07:51+08:00",
+                  "stage": "asr",
+                  "binding": {
+                    "protocolSha256": "a2f8f6c1ab9ad33fbe779b9bb9f2d9129843d435516034f7b5ec043d3a39c30b",
+                    "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+                    "workerSourceSha256": "54b466f4108097c5c2485c8633b4dc2dc33a90f75dd3e27ed8e04ce43bf3ed8d"
+                  },
+                  "newNeuralCalls": 0,
+                  "reusedOutputs": 0,
+                  "completedInputs": 0,
+                  "referencePassedToWorker": false,
+                  "qualityQualified": false,
+                  "limits": {
+                    "pid": 22112,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 2147483648,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 336793600,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  },
+                  "gpu": "AMD Radeon RX 6800 XT"
+                },
+                "preparation-failure-1.json": {
+                  "stage": "Public download before model execution",
+                  "state": "DIRECT_TLS_EOF_DURING_PINNED_METADATA_TRANSFER",
+                  "neuralInferenceStarted": false,
+                  "networkRoutingChanged": false,
+                  "source": "prepare_practical_ps4_20261107.py first attempt; returned URLError SSLEOFError at metadata resolve redirect",
+                  "next": "Use the pinned raw-text endpoint and verify the same published Git blob; public weight transfer remains direct."
+                },
+                "audio-frontend-source.json": {
+                  "at": "2026-11-07T20:06:39+08:00",
+                  "state": "OFFICIAL_TORCHAUDIO211_PYTHON_SOURCE_VERIFIED_NO_IMPORT_OR_INFERENCE",
+                  "revision": "34c52a67e8941bbd8e6adaca0eb0b9eabec11d78",
+                  "tag": "v2.11.0",
+                  "pythonPath": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src",
+                  "archiveObservedSha256": "633c9324c23cdc97cbfe3a718a69f3cf3540fd8a248775cf4984aaa9c95062a1",
+                  "files": [
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\LICENSE",
+                      "sha256": "93a58861a858cc108e6b6b833e08e76e8b2a66339e4a8007c8a5a8c1ff9c40d6",
+                      "gitBlob": "1bec23eaf1dd562ae3d3216420b1b1bbfbd39cbc"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\__init__.py",
+                      "sha256": "f0e07710f18256217b2e0056cbf6d4c99505e872542296d323ca2e446c27ea55",
+                      "gitBlob": "6e2a9652976aa4fc166c9e151eee09d3a80896e0"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\_extension\\__init__.py",
+                      "sha256": "f17e57fcba245ba5db2236c463a6214ea6fb430f448fa5352e0261e7b8c916b1",
+                      "gitBlob": "fd94f64319b2640f7d14c37c0d90c74d017c7ed1"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\_extension\\utils.py",
+                      "sha256": "f197807cbfc59a2226f771b298b63c3680b019ab4c9b8fd60d9b372ac91f413b",
+                      "gitBlob": "526b8e704b470f4485eb53a45be6d3be97641e5d"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\_internal\\__init__.py",
+                      "sha256": "82353c83d1e155df611eb1d724cd313a564be9c4fc92d3bad0c37c44723a65b0",
+                      "gitBlob": "363e94f13bb5059ab6888af2fb60314699f1ab1e"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\_internal\\module_utils.py",
+                      "sha256": "f3c5b4c6bff16d3523cc13a4825336bf4713d95be66848bdd9999bf4dd634f88",
+                      "gitBlob": "8159668361e75485a3baa5052cfab8a668d83cb1"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\_torchcodec.py",
+                      "sha256": "6754e938d72d6cbf340ee7ee5a12d18f8742d2b5618cabba84e61e82570bc2f5",
+                      "gitBlob": "a785fe50ad33adc9bf970ad29c40da703e056cdf"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\compliance\\__init__.py",
+                      "sha256": "86134e6d44b473e7d2f9532e74cef3977f82beea6f0839844a58a49ed48c9f98",
+                      "gitBlob": "65579b4f01ba09695860717f1e6cd90d6e42b631"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\compliance\\kaldi.py",
+                      "sha256": "5cbea1a584ddea748f6f68a621d794e13334e88d9faa1d40986f7af32f196d29",
+                      "gitBlob": "98358f40b522facc0abdfbaceec45f5887e00e54"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\__init__.py",
+                      "sha256": "b5a46bdddb836842b53dfce3f4dd5d16e6695dfcbc7b8b8522d7098912c04304",
+                      "gitBlob": "609cb14fdcc38c48270acd5803f4bfe603c39e71"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\cmuarctic.py",
+                      "sha256": "4e022b0e73d74ca099c07a4950f4e01504de5531183274698ad83a88aa6dd3d5",
+                      "gitBlob": "2d124d2db39cc47663b4c0d41ebc7aff21e35d15"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\cmudict.py",
+                      "sha256": "f4e129343629caa784ca29c09f218853c15a9a90e3ef389238747024b225ab63",
+                      "gitBlob": "d1038f48badde6f5db589691c5aee2ddf1f1d5de"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\commonvoice.py",
+                      "sha256": "f6485e7540a674490228f53afebf155b3e88d95749a246adbb3899e81c49319b",
+                      "gitBlob": "db0e035c6116487a87efcffaeea31a19212be458"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\dr_vctk.py",
+                      "sha256": "2a6e3eb4a9650209ce282baaeba6115a14e5356982ec3d17cf7740b6d451192a",
+                      "gitBlob": "a634b968949480738eefef926d25b05846f0b67d"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\fluentcommands.py",
+                      "sha256": "bb7b643b8f8001a4d675b4508ba948bda778c76a656605ccdfd2a58c6b6646cc",
+                      "gitBlob": "5cdee398d6e31a5e622321d1f73177606d9c8640"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\gtzan.py",
+                      "sha256": "2397513ff406b90d63a17591c19c2dbe9c22db6b994dbf10666f4caf65b9e4c8",
+                      "gitBlob": "347e7e71831770f42d7fdaf0b3c63a09409f659d"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\iemocap.py",
+                      "sha256": "5ff582a173b346a71645146852d6340250fd48971450e00221c81b5748abb78f",
+                      "gitBlob": "224300a84f5ec3ae217f030783c825fc3db56c8a"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\librilight_limited.py",
+                      "sha256": "7c0c295f48443337b9695e7b04feeb8c12f046265adc08defcd5e2ff7a35eb00",
+                      "gitBlob": "f0cb3100f7c4ad2e488c20bdfaac3833e0a136dd"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\librimix.py",
+                      "sha256": "56d28e85fe9525cd72b160af52f87449bb633a45c90a198133f061a12920ff60",
+                      "gitBlob": "2c6c6f18600ab35f037dda11f9f5bc32c8a5cbf5"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\librispeech.py",
+                      "sha256": "ce4cc91567215ace0092d60023e8219961f865e27ce02d2e0e8f44d7fa538122",
+                      "gitBlob": "7cf05dbecb5cce24c91e3bbcf232935e1f6d8cd9"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\librispeech_biasing.py",
+                      "sha256": "77ed36b72ad723e09219b5c115815c9ccff24fc5921800477e9362171c9a74bd",
+                      "gitBlob": "bd518cf2b69094728f8693fe2cb8a2a535bd7d3c"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\libritts.py",
+                      "sha256": "12d58ea020f3effa862d917961c65f9c768bc47e18f102429e8a5a7cb8aa167a",
+                      "gitBlob": "829ce9572920c31ec7a4b393379f779a7df14ea9"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\ljspeech.py",
+                      "sha256": "f7635e2d0b02d622a9a9f88c90a29b7090e9698759295755101409cded709b16",
+                      "gitBlob": "9cdaeeb0f3e67a29fc57e9d0e9ed3056d98c24df"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\musdb_hq.py",
+                      "sha256": "4d82a3a5ab7a24aafd6e416a51e72eeff85176c8517d03f651b9276984774345",
+                      "gitBlob": "dd4bc9f340f3fde076ea31a683a7b41b7b3741d7"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\quesst14.py",
+                      "sha256": "43219de1f312f36d004db3fc62006dbbb6d248ad3da70e5166496c3c9f097f46",
+                      "gitBlob": "064423c4494850f2ad8f43fb00a956be21fcb95e"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\snips.py",
+                      "sha256": "59a614927185337ae72e494e8f96581d25f99a195ffc27b8a772c165d03dc897",
+                      "gitBlob": "6b15d677f7fa1f9c1baccad7625a6fa14c73d70f"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\speechcommands.py",
+                      "sha256": "70b4a089562542310eb983e915e02d7174868abada1f820ca0ff29f5622f5286",
+                      "gitBlob": "1945fc75c18b474404b733e43d50156f3c3d6652"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\tedlium.py",
+                      "sha256": "6bc1dfd90bce922eff72181770c005324fa98938e8764b5f9dcdc745b5152645",
+                      "gitBlob": "7e7d22195a772d18770f6db3253d83672743c81c"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\utils.py",
+                      "sha256": "3fa9dc921d98ac07ce3cca611e5c727c8f87066360dfd0d397143cf9ab06e0c6",
+                      "gitBlob": "b9ee2aa51ee98b84da59d938fc5521e53473cdf8"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\vctk.py",
+                      "sha256": "b7047f9fc2f241c4fc03f1eb268331dd191a56b4575d90272155357741349e94",
+                      "gitBlob": "3195b9b4276b643e934baadc26c872fc690383df"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\voxceleb1.py",
+                      "sha256": "f6f5347ed078fb6bac3bc662114291fc841311d1e103433c97db1c5c235e867c",
+                      "gitBlob": "5112fff0898a88adb1d2c33acf9bdd905ca883f3"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\datasets\\yesno.py",
+                      "sha256": "e2c81f31e4b1cfc1da44393a03650814ffb6d2adbd33010efebf03a04b5f6ef1",
+                      "gitBlob": "baad08f1593a49af5f95658e8d4b67be6d3deeb9"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\functional\\__init__.py",
+                      "sha256": "178fa7f7886fca33da98d4bf87996ac0fcd1b918ff2b6df14a59171493789b3c",
+                      "gitBlob": "7f86f1c3c3abd74e43aead2f4c2b422c56d309a6"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\functional\\_alignment.py",
+                      "sha256": "36f790ef8c7c3e695eb81f8a6bd784618cac85b57b9d873483e4eedcd187773d",
+                      "gitBlob": "911e2ba8d255863e3897be30c8bd7873c7bef03d"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\functional\\filtering.py",
+                      "sha256": "12abae10ff941b46c3aaee0e5697631b5953a62f0612af2d0675e0ae02b3b181",
+                      "gitBlob": "d4b9f19e4618193d69e74c7e51d117a1d51b0fa0"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\functional\\functional.py",
+                      "sha256": "dc462a67270b2250279c47725346b26bc6cdc9dce77dd08602d0fcce68f78711",
+                      "gitBlob": "75bd6c57eb7c21fc4a182f1b3f56eabf0eabf971"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\lib\\__init__.py",
+                      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\__init__.py",
+                      "sha256": "04d30d1aec29240151b1db701d843ab25182964ad44eedf5ffb99787b163795e",
+                      "gitBlob": "5d344400d3b8771d2c1b93ba48def361615a132f"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\_hdemucs.py",
+                      "sha256": "54f9d0ef7940f657c0c518d9f3934218960fdfa98f3704e34be4d4e2a7a5bbf9",
+                      "gitBlob": "74a3ebd1d609e67edd09f4356a8cefa305c1fc49"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\conformer.py",
+                      "sha256": "e4871e53e8dc64aa1f9074d3a912a8cadb9b43be4ccd93eb3e57e42ec225c5e0",
+                      "gitBlob": "3da0d24fac977a65cc97f4b0afae0ab64932d4b2"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\conv_tasnet.py",
+                      "sha256": "bfe0c8fc48fd1420416d21fe4a9921dedceaf2b90185b40d03e5a9e7651fdf61",
+                      "gitBlob": "770746dd46b34c47736e4607d4344672d0335ef2"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\decoder\\__init__.py",
+                      "sha256": "e084bf0f241a81e876fee637604d5a0426041371c0ac215df1951f6e0c30f937",
+                      "gitBlob": "d2e9b06d52ef7af302a000bb0f572b4c563e12bd"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\decoder\\_ctc_decoder.py",
+                      "sha256": "0262d001c9b84386c53ea9eaf9217b2e9be0d903caf3cc728a8f2897f3898ef5",
+                      "gitBlob": "e7dbaa7244d271d459ec6fc583a1dbbf046d7738"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\decoder\\_cuda_ctc_decoder.py",
+                      "sha256": "10b271f756b61094f98b7815002a11483e1644708775c6a090afe509d46c5559",
+                      "gitBlob": "deec7b2acfb6d54740a75dd7ef659d657831f5e6"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\deepspeech.py",
+                      "sha256": "9105b707a61c8d8baaef14735a3449146afb64dada63d80c6034f1208ec282d8",
+                      "gitBlob": "ef23d1d351bde615cb2b1b38ffdd7782fbb5b627"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\emformer.py",
+                      "sha256": "9dc0de11c61e814988290a03068b9f5215568f8758a59017c4b5f4aa612ab750",
+                      "gitBlob": "9ddd257552ecda94cb55bbc1eed1dae8a5382380"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\rnnt.py",
+                      "sha256": "8f3eba9f00ddd6a193e8a411d656c0feeacf92dca07b0866d051fae93ecfdc49",
+                      "gitBlob": "f9dbe22c9fb4a97cf7f8779a953b5bd7b5bbffd9"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\rnnt_decoder.py",
+                      "sha256": "230943b2ec35480fae091ad718c06a9b4e5ab8615285ad9b67ef013889a72b47",
+                      "gitBlob": "5a02b2ca907733a8e1ab404d1107bb702e977748"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\squim\\__init__.py",
+                      "sha256": "6fdf2701a2f6f10e30de5aea77feb051dd009fec4d861267e138fca199734277",
+                      "gitBlob": "092d6eb8e36e2329c78d21bf609a8458818995e6"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\squim\\objective.py",
+                      "sha256": "82f51ab33ed1a6a80a7867f4e321d4a2db21488cc7dcace35bdd3e887783a368",
+                      "gitBlob": "f49fd1f8aa4cde52e55aafb57d7739a5db372c67"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\squim\\subjective.py",
+                      "sha256": "374d2420b48f9b46a45b236cacd60a9878199a8a28f206f2526e4854b7fb6f1f",
+                      "gitBlob": "4be681c91c5f67a2b888b49ec8269b74762360ab"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\tacotron2.py",
+                      "sha256": "162998846488f052b059bf3b08b938877c8a59ab425361ef166535b795949f81",
+                      "gitBlob": "978fb97c88db9c64a9b216a340e63075e53e2295"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2letter.py",
+                      "sha256": "28d72ae29d2a646d81c1f75a92fed8c0b0af8bfc864fea81e1f27018cb854218",
+                      "gitBlob": "d776131686d1f65982a565088e72e45e7b7c107f"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2vec2\\__init__.py",
+                      "sha256": "5a569fba457a1b0b92361d026627eb614b78579979f648ef197ec064da278df9",
+                      "gitBlob": "bb83403f5719b68c790d2f9f934f8c80acea3557"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2vec2\\components.py",
+                      "sha256": "0d1996f861d87fe25178283fd25d68bcd58906701abde3cedd2daf3d8fb5cdee",
+                      "gitBlob": "480a6ae50921efebf5930dc21caaa3a1a44945dd"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2vec2\\model.py",
+                      "sha256": "67654de8a6c338e76ae49b4fee5c4f41e6f062ab312a6b3512ee088c326d65a4",
+                      "gitBlob": "254122f0eee21906ec50f3d4238a5b3024e74a0a"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2vec2\\utils\\__init__.py",
+                      "sha256": "aa631bcf81c03799041329787121a6fc9419238edb7b2878c22b7274f0bfaa7b",
+                      "gitBlob": "0457b5dd707f7216adc3ea919ba8e257d86f4f71"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2vec2\\utils\\import_fairseq.py",
+                      "sha256": "a02c06eaaa46d1b097b9ed95e7a7e30dc0bc700dab832e1bdcefe7bbf148f596",
+                      "gitBlob": "39791e9b7d75ac3c2eb1fcf4f9c3517e7483048c"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2vec2\\utils\\import_huggingface.py",
+                      "sha256": "d675428a9a7e94e500ca5ffe3f5d370d62d47933998bd5ff7df5fdddb397c449",
+                      "gitBlob": "519d8c919f02be62b2f2e2aa0dd8db97222430d5"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wav2vec2\\wavlm_attention.py",
+                      "sha256": "d4353fa64a0b09e1d0c12178949d3a71ecf43ec315a1737189828fd18bf4a854",
+                      "gitBlob": "fafddfeb958cbcdfdc0a7781b49bc124fff78290"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\models\\wavernn.py",
+                      "sha256": "e715326a8e60ebd8d15d7e1178d8b898ffda4d22289c93cfe9770faea2b26c49",
+                      "gitBlob": "8ae5a3e91675cd9ef7d4614f0daaec50f80dcdee"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\__init__.py",
+                      "sha256": "5f2f0d9889cac1370d047c0b4d38c78eb7dccd12ee42af1aebb10db753935573",
+                      "gitBlob": "efec1f3521e760803e095efb71f164ed268896f1"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_source_separation_pipeline.py",
+                      "sha256": "a2059a92f68ebfa39e82644471b6a0bdf226d233568f312db1d3184e26a544d9",
+                      "gitBlob": "368b72d45e9b84446487f59ff0f35e0c86aa236d"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_squim_pipeline.py",
+                      "sha256": "f39d92617a946438133de80becbaa0550af43d71bde1d6bf0d30c5d9bc038551",
+                      "gitBlob": "f7e7c1d9088ff819810a9924e4bd761893061ff3"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_tts\\__init__.py",
+                      "sha256": "3cfee5f17cd5511a9e970b8c24581f382bf87efcd9ba70e2cbdd19425464bfb8",
+                      "gitBlob": "02851f596ceb281acc75c4d6a1aaf17eeee4a809"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_tts\\impl.py",
+                      "sha256": "4e2838ff9b084c9003c3137979919e93b02d87ff9edec57c093339b7a5297945",
+                      "gitBlob": "b8542286242dcbb2036fff49c1d0e11fbbf9258b"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_tts\\interface.py",
+                      "sha256": "c94692d142b73d346bb985d15858a5ee5021afed62622c8168304b9849c93d44",
+                      "gitBlob": "564f236bc7c239d17dc82db04c350a9ccc618841"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_tts\\utils.py",
+                      "sha256": "286ac5a1eb42678978149908345a6d01cf0fbeb6e8f5ee10421088302a7c3586",
+                      "gitBlob": "da466aebedd28ca78628b404344af5ff34ff057d"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_wav2vec2\\__init__.py",
+                      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_wav2vec2\\aligner.py",
+                      "sha256": "a48591810fa4758531b4bf1b75cd2a93dc018f046b1d8d6e4962f72f87b6bf1b",
+                      "gitBlob": "3655d5bae88181796d6d889013b4438d0ea014b3"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_wav2vec2\\impl.py",
+                      "sha256": "cdd5c58f2b493b932f9c1fb76b283351414ac424e440653f397feb85487d7349",
+                      "gitBlob": "d60fa8adb94e92e1a479fe94e09f521d0fe50056"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\_wav2vec2\\utils.py",
+                      "sha256": "43cfdf58e4762439c7bb44d34661f346323704e25ad21188025d1c8ed00b82c4",
+                      "gitBlob": "e690e8103c7a47a01d719e746e6c98a9c7f6c8db"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\pipelines\\rnnt_pipeline.py",
+                      "sha256": "e7a9d09c2723638c5ec03a97475464ae1fe1ca82b8d82b18ba6a54f2650db35c",
+                      "gitBlob": "c7d5385b37e295e3ff8499ca140254887361e679"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\transforms\\__init__.py",
+                      "sha256": "5d0b1138f93860a666887479979dbb3509128c6f93b7fcd3a9bfe90817a5caed",
+                      "gitBlob": "19827e184d63efbd6daa46a7a33662cb3c23ac43"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\transforms\\_multi_channel.py",
+                      "sha256": "199dabaf016dd8ab521bb02dee44bd06a8752a6618c341f07149c48dcf805abf",
+                      "gitBlob": "4ba3db7f454058de7c0fda1d57781ed346d7a65c"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\transforms\\_transforms.py",
+                      "sha256": "d73705853d6e8d0f0f212c39e0e3a0256811bcf4ac1a6f5fa8e8c65c26115680",
+                      "gitBlob": "36f7ecc1ccc5025f073332c3ba735c751a7bbca3"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\utils\\__init__.py",
+                      "sha256": "69d01d7d89bd0c9042d895f14424eb8f1394535bca27dc37ac591ef83cca2aa5",
+                      "gitBlob": "f30b5ed929e8396d82575b8331f1862b80c08717"
+                    },
+                    {
+                      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\torchaudio-python-34c52a67e8941bbd8e6adaca0eb0b9eabec11d78\\src\\torchaudio\\utils\\download.py",
+                      "sha256": "81903b0a28d4a00bb743441de9d2a91500048dc767c51eb1393e7d95380420ea",
+                      "gitBlob": "5519b7f4be07342c3e7c069011240bc240682295"
+                    }
+                  ],
+                  "scope": "Unmodified official Python transforms/functional package; no native audio extension compiled, no TorchCodec I/O used. PCM wave I/O remains standard-library. Only this worker sys.path; existing AMD runtime/global packages unchanged.",
+                  "limits": {
+                    "pid": 22728,
+                    "cpuRate": 500,
+                    "cpuControlFlags": 5,
+                    "cpuPercentMaximum": 5.0,
+                    "inLimitedJob": true,
+                    "jobPrivateCommitLimitBytes": 268435456,
+                    "jobMemoryLimitEnabled": true,
+                    "jobPeakPrivateCommitBytes": 165048320,
+                    "cpuPriorityClass": 64,
+                    "memoryPagePriority": 1,
+                    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+                    "gpuPriorityClass": 0,
+                    "gpuUtilizationHardCapped": false,
+                    "scope": "This worker and its descendants only; no global or other-app changes."
+                  }
+                },
+                "review.json": null
+              },
+              "sourceAndEvidenceCommit": "eb78decbf4dad7779e5c249d844c14a40dc74fb9",
               "remoteReadbackConfirmed": true
             }
           }
