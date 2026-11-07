@@ -130889,7 +130889,7 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-07T11:31:44+08:00",
+      "updatedAt": "2026-11-07T12:09:57+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
@@ -131377,7 +131377,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "任意长度含实际回收平均≥50硬门不豁免，动态等待也必须过。704正常用户停录END_USER完整CSP2短段仅擦真实编程前缀（含provenance/扇区对齐），从66扇区减为6；异常/恢复/不完整/中间段/旧unknown/显式删除仍全擦。预留大小/所有权/最终精确回执不变，掉电ERASING重启全擦。真实CSP2整区空白与邻区、旧目录569cut矩阵过，编译后手机普通OTA、独立身份/旧34/空间复核，再短录/分钟/五分钟和真实自动恢复；不提前ACK、不垫传输字节。手机085完成条目精确移除需继续实机核对；当前没有活动录音/升级。",
+      "next": "优先原CP23-10任意长度含实际回收平均≥50，不放宽、不填充字节、不提前ACK。705减少已找到目标的重复全目录扫描（只改ACK/ERASING状态、每次重新读目标严格匹配原身份/长度/CRC/SHA/state，完整恢复/旧接口保留），正常构建后手机088普通OTA及实机短录/分钟/五分钟按受影响范围再测。当前没有活动录音。继续真实radio≤10与最终长录；数据不足的首PCM/动态STOP前缀不填0/不声称通过；原app412216预算仍守。Owner明确硬件电源/声学/屏幕/生产block保留。",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131870,12 +131870,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-07T10:02:37+08:00",
-        "firmware": 66702,
-        "coreDelivery": "DYNAMIC_COMPLETION_MULTI_LENGTH_AND_ORDINARY_RESUME_PASS_SHORT_RAW_RATE_RADIO10_RESOURCES_OPEN",
+        "at": "2026-11-07T12:09:57+08:00",
+        "firmware": 66704,
+        "coreDelivery": "NORMAL_USER_STOP_PHYSICAL_PREFIX_RECLAIM_AND_COMPLETED_ROW_PASS_ALL_LENGTH_SPEED_FAIL",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "本轮动态等待在10秒/1分钟/5分钟新录音均通过，0.1.84已装；读取本轮batch-result再接原CP23-10/CP09-02。优先下一批用户等待：自动radio恢复旧10.735>10，先沿已有waiting→connecting1.375秒、连接准备至syncing8.188秒、再目录2.5秒定位，不盲改5秒回退（本次off期间已走1秒adapter等待）。目录当前固定每页≤2，在现有大MTU缓冲中可研究兼容旧客户端的显式批量页，不能直接破坏旧Windows。短录原生含实际物理回收仍35.673/10.146/13.242KiB/s<50，保留FAIL，不以动态PASS抹掉。录中同步缺STOP精确前缀快照仍不评价动态；当前最终长录、正式资源版及设备已回收条目刷新显示继续。Owner明确block保持，不再追CPU百分比、不调查重启、不抢板、不为一项内部观测单独固件。",
+        "openSoftware": "10秒19.36/1分钟40.74/5分钟46.85KiB/s含实际回收均FAIL50，动态等待均过但不能替代速率。703目录连续返回/704正常短段物理前缀擦除已装，静态69328/栈21504不增；应用412560对原412216+344仍FAIL待实际收益/资源复核。088精确地址发现修复已装，普通冷2.0482秒过，首次133后的新分支仍待真实触发；旧失败保留。705已完成已解析目标条目状态核对，避免ACK/回收再次全目录扫描，错误位置/证明/读取失败及GC逻辑槽复用模型过，尚在构建未装。不冒称radio10秒/最终长录/首PCM等当前实测过。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -131888,12 +131888,12 @@
           "当前结论仅覆盖嵌软已有证据，不替代前后端整机交付结果",
           "blocked仅表示暂时不能推进，不代表完成或免除售卖缺口"
         ],
-        "completionScope": "10秒/1分钟/5分钟动态新录等待通过；083同连接暂停续收3.312秒通过，原音完整。自动radio10秒、严格短录速率、录中STOP精确剩余及最终长期/正式资源资格未关闭。",
+        "completionScope": "704/08710秒、一分钟、五分钟均动态等待/原音完整通过，含回收速率全部未过。完成条目无需刷新自动隐藏且其他旧条目保留，实机290/291/292过。明确物理/生产block不免售卖门。",
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
         "nonBlockedCompletionScope": "原CP27-18已交付，原CP09-02/CP23-10继续，不新建重复任务。",
-        "phoneVersion": "0.1.84"
+        "phoneVersion": "0.1.88"
       },
       "stackReviewProgress": {
         "at": "2026-11-05T12:38:26+08:00",
@@ -133938,32 +133938,20 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T11:31:44+08:00",
-        "state": "703_086_INSTALLED_COLD_PASS_SHORT_RATE_FAIL_704_BUILDING",
+        "at": "2026-11-07T12:09:57+08:00",
+        "state": "MODELS_PASS_NORMAL_BUILD_IN_PROGRESS_NOT_INSTALLED",
+        "firmwareInstalled": 66704,
+        "phoneInstalled": "0.1.88",
+        "firmwareSourceInstalled": "38aed99284f543a3d3aa2cb0b25985b320a34a3a",
+        "firmwareCandidateSource": "81ad65518a11d7264815312be7ce3c5b043f9ca8",
+        "phoneSourceCommit": "5d7f4adf4d0d6d1a7dc2c21a8e76a1f8a41c281d",
+        "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
         "boardLease": true,
         "boardItem": "Companion703目录连续返回与正式资源验收",
-        "firmwareInstalled": 66703,
-        "phoneInstalled": "0.1.86",
-        "phoneSourceCommit": "d7b60366938babcdeb68401ee6ab2282f41c1ac7",
-        "backendSourceCommit": "ee712a2e4439466a99bdbb0afd3aff2bbf736b54",
-        "firmwareInstalledSource": "0bcb10ec712289222f2546984379580fddcb6e80",
-        "firmwareCandidateSource": "38aed99284f543a3d3aa2cb0b25985b320a34a3a",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
-        "candidateBuilding": 66704,
-        "coldSeconds": [
-          2.3835,
-          1.0828999999985098,
-          1.1032000000029802
-        ],
-        "coldEvidence": "E:/CodexData/Companion/.build-cache/device086/cold703-paired1",
-        "shortSession": "288",
-        "shortConfirmedKiBps": 13.272187742226336,
-        "shortRateResult": "FAIL",
-        "shortDynamicSeconds": 5.418870700000001,
-        "shortEvidence": "E:/CodexData/Companion/.build-cache/device086/short703-1",
-        "scope": "All3 ordinary paired-only cold measurements use actual enabled DOM click through protected catalogue/ready, same browser monotonic clock; no prescan, bond reset or wait subtraction. Short firstPULL→local original0.49924s, local proof0.02510s, consume-write0.05603s, reply wait1.05419s. Existing finite batch hint accepted. Exact originals/full App WAV pass20ms; any-length physical-reclaim rate50 remains FAIL."
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66704\\progress-704-088.json"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -134328,6 +134316,186 @@
         "includesPhysicalReclaim": true,
         "dynamicDeadlineAlsoRequired": true,
         "policy": "Every observed length includes firstPULL through exact durable original and physical-reclaim receipt. Short failure stays FAIL even if dynamic waiting passes. No cached bytes, early ACK, size exemption or wait deduction."
+      },
+      "recordingCompletionProgress704": {
+        "at": "2026-11-07T12:09:57+08:00",
+        "result": "NOT_SALE_QUALIFIED_ALL_OBSERVED_STOPPED_LENGTH_RATE_GATES_FAIL",
+        "firmwareInstalled": 66704,
+        "phoneInstalled": "0.1.88",
+        "phoneSourceCommit": "5d7f4adf4d0d6d1a7dc2c21a8e76a1f8a41c281d",
+        "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
+        "apkSha256": "9509bbdbb3f05ced7cc55d7dc7d68deccf3653786476438bddfa49225dd2b69d",
+        "ownerAnyLengthRateIncludesPhysicalReclaim": 50,
+        "cases": [
+          {
+            "case": "device086/short703-1",
+            "session": "288",
+            "firmware": 66703,
+            "phoneVersion": "0.1.86",
+            "bytes": 22610,
+            "confirmedKiBps": 13.272187742226336,
+            "strictRateResult": "FAIL",
+            "timing": {
+              "at": "2026-11-07T03:23:41.252Z",
+              "session": "288",
+              "phoneVersion": "0.1.86",
+              "firmware": 66703,
+              "stopToFullOriginalAndWavVerifiedUpperSeconds": 5.418870700000001,
+              "stopToCatalogueUiSeconds": 0.8872445999999999,
+              "stopToReceiptObservedSeconds": 3.2181865,
+              "receiveUiToReceiptObservedSeconds": 2.1115722000000003,
+              "audioPrepareUiToVerifiedSeconds": 1.878893100000001,
+              "nativeConfirmedKiBps": 13.272187742226336,
+              "reusedConnections": 1,
+              "reusedCatalogues": 1,
+              "wavDurationErrorMs": 20,
+              "recordingDurationSeconds": 10.52,
+              "actualTransferredBytes": 22610,
+              "outputAudioBytes": 336044,
+              "oneStartOneStop": true,
+              "zeroCachedBytes": true,
+              "sameConnectionStopCatalogue": true,
+              "harnessScope": "Current parent owns one CDP page and ordinary clicks; independently reads own source and generated WAV. Older273 observer used extra UI helper processes, both conservative upper bounds retained, no pure-product delta claimed from unlike controller overhead."
+            },
+            "dynamicResult": "PASS",
+            "originalAndFullWavVerified": true
+          },
+          {
+            "case": "device086/short704-1",
+            "session": "289",
+            "firmware": 66704,
+            "phoneVersion": "0.1.86",
+            "bytes": 22610,
+            "confirmedKiBps": 19.82496929203481,
+            "strictRateResult": "FAIL",
+            "timing": null,
+            "dynamicResult": "NOT_EVALUATED_OBSERVER_UI_TAB_ASSERTION_FAILED_AFTER_VALID_NATIVE_RECEIVE",
+            "originalAndFullWavVerified": true
+          },
+          {
+            "case": "device087/short704-1",
+            "session": "290",
+            "firmware": 66704,
+            "phoneVersion": "0.1.87",
+            "bytes": 22362,
+            "confirmedKiBps": 19.363796508367063,
+            "strictRateResult": "FAIL",
+            "timing": {
+              "at": "2026-11-07T03:50:49.504Z",
+              "session": "290",
+              "phoneVersion": "0.1.87",
+              "firmware": 66704,
+              "stopToFullOriginalAndWavVerifiedUpperSeconds": 7.632309599999998,
+              "stopToCatalogueUiSeconds": 0.8796661999999996,
+              "stopToReceiptObservedSeconds": 2.7459599,
+              "receiveUiToReceiptObservedSeconds": 1.6466815000000006,
+              "audioPrepareUiToVerifiedSeconds": 2.2248701999999976,
+              "nativeConfirmedKiBps": 19.363796508367063,
+              "reusedConnections": 1,
+              "reusedCatalogues": 1,
+              "wavDurationErrorMs": 10,
+              "recordingDurationSeconds": 10.44,
+              "actualTransferredBytes": 22362,
+              "outputAudioBytes": 333804,
+              "oneStartOneStop": true,
+              "zeroCachedBytes": true,
+              "sameConnectionStopCatalogue": true,
+              "harnessScope": "Current parent owns one CDP page and ordinary clicks; independently reads own source and generated WAV. Older273 observer used extra UI helper processes, both conservative upper bounds retained, no pure-product delta claimed from unlike controller overhead."
+            },
+            "dynamicResult": "PASS",
+            "originalAndFullWavVerified": true
+          },
+          {
+            "case": "device087/minute704-1",
+            "session": "291",
+            "firmware": 66704,
+            "phoneVersion": "0.1.87",
+            "bytes": 127762,
+            "confirmedKiBps": 40.73887133609084,
+            "strictRateResult": "FAIL",
+            "timing": {
+              "at": "2026-11-07T03:52:24.230Z",
+              "session": "291",
+              "phoneVersion": "0.1.87",
+              "firmware": 66704,
+              "stopToFullOriginalAndWavVerifiedUpperSeconds": 10.729105500000005,
+              "stopToCatalogueUiSeconds": 0.8807143000000069,
+              "stopToReceiptObservedSeconds": 4.608435800000007,
+              "receiveUiToReceiptObservedSeconds": 3.489038400000005,
+              "audioPrepareUiToVerifiedSeconds": 2.3099679000000033,
+              "nativeConfirmedKiBps": 40.73887133609084,
+              "reusedConnections": 1,
+              "reusedCatalogues": 1,
+              "wavDurationErrorMs": 10,
+              "recordingDurationSeconds": 60.54,
+              "actualTransferredBytes": 127762,
+              "outputAudioBytes": 1937004,
+              "oneStartOneStop": true,
+              "zeroCachedBytes": true,
+              "sameConnectionStopCatalogue": true,
+              "harnessScope": "Current parent owns one CDP page and ordinary clicks; independently reads own source and generated WAV. Older273 observer used extra UI helper processes, both conservative upper bounds retained, no pure-product delta claimed from unlike controller overhead."
+            },
+            "dynamicResult": "PASS",
+            "originalAndFullWavVerified": true
+          },
+          {
+            "case": "device087/five704-1",
+            "session": "292",
+            "firmware": 66704,
+            "phoneVersion": "0.1.87",
+            "bytes": 631990,
+            "confirmedKiBps": 46.85071528404509,
+            "strictRateResult": "FAIL",
+            "timing": {
+              "at": "2026-11-07T03:58:21.935Z",
+              "session": "292",
+              "phoneVersion": "0.1.87",
+              "firmware": 66704,
+              "stopToFullOriginalAndWavVerifiedUpperSeconds": 18.378329700000002,
+              "stopToCatalogueUiSeconds": 1.3301011999999754,
+              "stopToReceiptObservedSeconds": 15.202555300000007,
+              "receiveUiToReceiptObservedSeconds": 13.642459400000051,
+              "audioPrepareUiToVerifiedSeconds": 2.8588837000000056,
+              "nativeConfirmedKiBps": 46.85071528404509,
+              "reusedConnections": 1,
+              "reusedCatalogues": 1,
+              "wavDurationErrorMs": 10,
+              "recordingDurationSeconds": 300.52,
+              "actualTransferredBytes": 631990,
+              "outputAudioBytes": 9616364,
+              "oneStartOneStop": true,
+              "zeroCachedBytes": true,
+              "sameConnectionStopCatalogue": true,
+              "harnessScope": "Current parent owns one CDP page and ordinary clicks; independently reads own source and generated WAV. Older273 observer used extra UI helper processes, both conservative upper bounds retained, no pure-product delta claimed from unlike controller overhead."
+            },
+            "dynamicResult": "PASS",
+            "originalAndFullWavVerified": true
+          }
+        ],
+        "successfulOtaAttempt": {
+          "phoneVersion": "0.1.86",
+          "confirmedPayloadKiBps": 55.83987742835929,
+          "totalSeconds": 116.47255703900001,
+          "postPayloadSeconds": 92.072377986,
+          "verifyFailures": 6,
+          "scope": "Second ordinary attempt after actual rediscovery. First initial133 attempt sent0 bytes and remains retained; successful attempt timing PASS does not close overall initial-connect reliability."
+        },
+        "firmware705Source": "81ad65518a11d7264815312be7ce3c5b043f9ca8",
+        "firmware705State": "MODELS_PASS_NORMAL_BUILD_IN_PROGRESS_NOT_INSTALLED",
+        "ownerOldAudioRead": false,
+        "saleQualified": false,
+        "measurementLimits": "Native first-PULL→terminal durable original and exact physical reclaim receipt unchanged. Per-segment reply-read timestamps can overlap next downloads and are not summed physical flash latency.289 dynamic NOT_EVALUATED: harness expected device rows while product intentionally navigated to library; actual original/WAV later verified.290/291 conservative end-to-end timing includes an extra device-list UI probe;292 list probe follows full-audio timing. Raw timings not deducted or rewritten. Final2h/radio10/current firstPCM and original application budget remain open."
+      },
+      "phoneCandidate088": {
+        "sourceCommit": "5d7f4adf4d0d6d1a7dc2c21a8e76a1f8a41c281d",
+        "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
+        "apkSha256": "9509bbdbb3f05ced7cc55d7dc7d68deccf3653786476438bddfa49225dd2b69d",
+        "aarSha256": "02469020e146b79968d6693108e1225eb1bfcd0875fcd39a3317e25ffe510b95",
+        "nativeLibrarySha256": "212ec44db8f2b06d2d3c3dc5e16fb2c8ff14f88c29fe6e7a0003c45a045df08f",
+        "version": "0.1.88",
+        "installed": true,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66704\\phone088\\build\\installation-verification.json",
+        "scope": "Only after initial133, exact-address filtered1s rediscovery for one retry, independent of missing/custom name; ScanResult preserved. No commands replayed, no pairing cleared. Ordinary paired cold704/0882.0482s PASS. Retry branch not yet physically triggered on088; previous133 retained."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -134592,13 +134760,13 @@
           "wholeProductQualified": false
         },
         "latestInstalledVersionObservation": {
-          "at": "2026-11-07T10:48:35+08:00",
-          "version": "0.1.85",
-          "firmware": 66702,
-          "sourceCommit": "a289a1f6465d051a546934cfc1077a22d44f84b7",
-          "backendSourceCommit": "6fed4d8c5fad09791db19ed5c43f9c5c695bd1eb",
-          "apkSha256": "ee6e9e9e417eaaede8c211727279fcc91cb40a5d6da3f92a7bd8ffda3944cdc6",
-          "scope": "Exact installed085, board remains66702; 703 signed ready not installed; no recording, sync or upgrade yet."
+          "at": "2026-11-07T12:09:57+08:00",
+          "version": "0.1.88",
+          "firmware": 66704,
+          "sourceCommit": "5d7f4adf4d0d6d1a7dc2c21a8e76a1f8a41c281d",
+          "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
+          "apkSha256": "9509bbdbb3f05ced7cc55d7dc7d68deccf3653786476438bddfa49225dd2b69d",
+          "scope": "Exact installed088/actual independent WSI4/UI85/payload704 confirmed; no active recording/receive/OTA.705 model source built next, not installed. Any-length physical-reclaim50 all current tested lengths FAIL; no sale claim."
         },
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
@@ -135705,6 +135873,13 @@
           "backendSourceCommit": "5824680e60a0f273b2568b9f40647660b11f5caa",
           "result": "INSTALLED_CAPACITY_REFRESH_START_FIX_TWO_ORDINARY_SHORT_CASES_PASS",
           "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\batch-result.json"
+        },
+        "embeddedConnection088": {
+          "at": "2026-11-07T12:09:57+08:00",
+          "sourceCommit": "5d7f4adf4d0d6d1a7dc2c21a8e76a1f8a41c281d",
+          "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
+          "result": "INSTALLED_EXACT_ADDRESS_REDISCOVERY_COLD_ONE_PASS_BRANCH_NOT_TRIGGERED",
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66704\\progress-704-088.json"
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -139789,7 +139964,7 @@
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。",
+          "next": "原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -141113,7 +141288,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T11:57:26+08:00",
+              "at": "2026-11-07T12:17:12+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -141453,6 +141628,112 @@
                     "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\segment-state.json",
                     "newNeuralItems": 2354,
                     "reusedCachedPrefix": 0
+                  },
+                  {
+                    "meeting": "L_R003S01C02",
+                    "stage": "embed",
+                    "exitCode": 0,
+                    "workerState": "COMPLETE_EMBEDDING_CACHE",
+                    "wholeProcessFamilySeconds": 968.0487252000021,
+                    "privatePeakBytes": 529690624,
+                    "rssPeakBytes": 536776704,
+                    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\embed-state.json",
+                    "newNeuralItems": 3327,
+                    "reusedCachedPrefix": 0
+                  },
+                  {
+                    "meeting": "L_R003S01C02",
+                    "stage": "reconstruct",
+                    "exitCode": 0,
+                    "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+                    "wholeProcessFamilySeconds": 3.0435854999814183,
+                    "privatePeakBytes": 114122752,
+                    "rssPeakBytes": 180436992,
+                    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\reconstruct-state.json",
+                    "newNeuralItems": 0,
+                    "reusedCachedPrefix": null,
+                    "scoringExitCode": 0,
+                    "qualityReview": {
+                      "at": "2026-11-07T12:00:32+08:00",
+                      "corpus": "AISHELL-4",
+                      "meeting": "L_R003S01C02",
+                      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+                      "audioSeconds": 2362.945,
+                      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+                      "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+                      "referenceKind": "textgrid_lexical",
+                      "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+                      "referenceSpeakers": 6,
+                      "predictedSpeakers": 190,
+                      "components": {
+                        "false alarm": 173.58982112001166,
+                        "total": 2311.9690375138302,
+                        "confusion": 1538.7480211624593,
+                        "missed detection": 92.02672663384747,
+                        "correct": 681.1942897175236,
+                        "diarization error rate": 0.7804449539067517
+                      },
+                      "perReferenceSpeakerForEvaluationOnly": {
+                        "002-F": {
+                          "referenceSeconds": 381.8366360770482,
+                          "correctlyAttributedSeconds": 71.09410701301829,
+                          "attributionRecall": 0.18618985266430196,
+                          "matchedAnonymousGroup": "speaker_60"
+                        },
+                        "003-F": {
+                          "referenceSeconds": 90.63832169674632,
+                          "correctlyAttributedSeconds": 6.744378922892224,
+                          "attributionRecall": 0.07440979484877565,
+                          "matchedAnonymousGroup": "speaker_181"
+                        },
+                        "004-M": {
+                          "referenceSeconds": 309.5234638706896,
+                          "correctlyAttributedSeconds": 184.5054744900031,
+                          "attributionRecall": 0.5960952755655526,
+                          "matchedAnonymousGroup": "speaker_11"
+                        },
+                        "005-M": {
+                          "referenceSeconds": 568.6460135867515,
+                          "correctlyAttributedSeconds": 69.03346802102556,
+                          "attributionRecall": 0.12139972209704755,
+                          "matchedAnonymousGroup": "speaker_190"
+                        },
+                        "006-M": {
+                          "referenceSeconds": 876.9389412077983,
+                          "correctlyAttributedSeconds": 289.72222970736607,
+                          "attributionRecall": 0.33037902195144264,
+                          "matchedAnonymousGroup": "speaker_78"
+                        },
+                        "007-M": {
+                          "referenceSeconds": 84.38569107480062,
+                          "correctlyAttributedSeconds": 60.09463456321828,
+                          "attributionRecall": 0.7121424710493819,
+                          "matchedAnonymousGroup": "speaker_342"
+                        }
+                      },
+                      "macroReferenceAttributionRecall": 0.33676935636275035,
+                      "uncoveredReferenceSpeakers": [],
+                      "shortReferenceSpans": {
+                        "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+                        "count": 209,
+                        "referenceSeconds": 170.1290882682149,
+                        "correctSeconds": 10.2153561149658,
+                        "zeroCorrectSpans": 196
+                      },
+                      "rttmSha256": "f3f5f342992b25174263df3a44d5439525ebb2409a61b7d1acc015b9f1a5b5f8"
+                    }
+                  },
+                  {
+                    "meeting": "S_R004S03C01",
+                    "stage": "segment",
+                    "exitCode": 0,
+                    "workerState": "COMPLETE_SEGMENTATION_CACHE",
+                    "wholeProcessFamilySeconds": 101.21150589999161,
+                    "privatePeakBytes": 232243200,
+                    "rssPeakBytes": 283365376,
+                    "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\S_R004S03C01\\segment-state.json",
+                    "newNeuralItems": 2319,
+                    "reusedCachedPrefix": 0
                   }
                 ],
                 "referencePassedToInference": false,
@@ -141464,8 +141745,8 @@
                   "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
                   "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
                 },
-                "activeMeeting": "L_R003S01C02",
-                "activePid": 24848
+                "activeMeeting": "S_R004S03C01",
+                "activePid": 18116
               },
               "completeChain": {
                 "state": "RUNNING_FROZEN_FULL_SPEAKER_BATCH",
@@ -141476,7 +141757,77 @@
                 "results": [],
                 "qualityQualified": false
               },
-              "boundedSpeakerReviews": [],
+              "boundedSpeakerReviews": [
+                {
+                  "at": "2026-11-07T12:00:32+08:00",
+                  "corpus": "AISHELL-4",
+                  "meeting": "L_R003S01C02",
+                  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+                  "audioSeconds": 2362.945,
+                  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+                  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+                  "referenceKind": "textgrid_lexical",
+                  "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+                  "referenceSpeakers": 6,
+                  "predictedSpeakers": 190,
+                  "components": {
+                    "false alarm": 173.58982112001166,
+                    "total": 2311.9690375138302,
+                    "confusion": 1538.7480211624593,
+                    "missed detection": 92.02672663384747,
+                    "correct": 681.1942897175236,
+                    "diarization error rate": 0.7804449539067517
+                  },
+                  "perReferenceSpeakerForEvaluationOnly": {
+                    "002-F": {
+                      "referenceSeconds": 381.8366360770482,
+                      "correctlyAttributedSeconds": 71.09410701301829,
+                      "attributionRecall": 0.18618985266430196,
+                      "matchedAnonymousGroup": "speaker_60"
+                    },
+                    "003-F": {
+                      "referenceSeconds": 90.63832169674632,
+                      "correctlyAttributedSeconds": 6.744378922892224,
+                      "attributionRecall": 0.07440979484877565,
+                      "matchedAnonymousGroup": "speaker_181"
+                    },
+                    "004-M": {
+                      "referenceSeconds": 309.5234638706896,
+                      "correctlyAttributedSeconds": 184.5054744900031,
+                      "attributionRecall": 0.5960952755655526,
+                      "matchedAnonymousGroup": "speaker_11"
+                    },
+                    "005-M": {
+                      "referenceSeconds": 568.6460135867515,
+                      "correctlyAttributedSeconds": 69.03346802102556,
+                      "attributionRecall": 0.12139972209704755,
+                      "matchedAnonymousGroup": "speaker_190"
+                    },
+                    "006-M": {
+                      "referenceSeconds": 876.9389412077983,
+                      "correctlyAttributedSeconds": 289.72222970736607,
+                      "attributionRecall": 0.33037902195144264,
+                      "matchedAnonymousGroup": "speaker_78"
+                    },
+                    "007-M": {
+                      "referenceSeconds": 84.38569107480062,
+                      "correctlyAttributedSeconds": 60.09463456321828,
+                      "attributionRecall": 0.7121424710493819,
+                      "matchedAnonymousGroup": "speaker_342"
+                    }
+                  },
+                  "macroReferenceAttributionRecall": 0.33676935636275035,
+                  "uncoveredReferenceSpeakers": [],
+                  "shortReferenceSpans": {
+                    "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+                    "count": 209,
+                    "referenceSeconds": 170.1290882682149,
+                    "correctSeconds": 10.2153561149658,
+                    "zeroCorrectSpans": 196
+                  },
+                  "rttmSha256": "f3f5f342992b25174263df3a44d5439525ebb2409a61b7d1acc015b9f1a5b5f8"
+                }
+              ],
               "attributedTextQualityReviews": [],
               "publicCommandEntryProof": {
                 "state": "PASS_PUBLIC_FRESH_30S_COMMAND_AND_RAW_ONLY_RETAG",
@@ -141538,8 +141889,44 @@
               "qualityQualified": false,
               "state": "RUNNING_FROZEN_FULL_SPEAKER_BATCH",
               "candidateAssessment": null,
-              "next": "继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。",
-              "sourceAndEvidenceCommit": "100dbb02769e3e90941004326525774de08742c1",
+              "native8Preparation": {
+                "at": "2026-11-07T12:06:04+08:00",
+                "state": "OFFICIAL_CPU_RUNTIME_AND_PUBLIC_8_SPEAKER_WEIGHTS_PREPARED_NO_INFERENCE",
+                "assets": [
+                  {
+                    "name": "nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+                    "url": "https://github.com/NVIDIA/NeMo-Speech.cpp/releases/download/v0.3.0/nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+                    "bytes": 8694509,
+                    "sha256": "4ed9740e361e4653f56c3dce7d1e81883a1c8b831c1bd7d01567fff1130b5b05",
+                    "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+                    "verified": true
+                  },
+                  {
+                    "name": "Nemotron-3-Diarization.q8_0.gguf",
+                    "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization/resolve/f667ed73aee57d40cc39428eb768b4fd87a0a29e/Nemotron-3-Diarization.q8_0.gguf",
+                    "bytes": 107012128,
+                    "sha256": "08456d9e22cd9a323c0364d98375f3746d6e68507ebb705cd46438c534c7a3a1",
+                    "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\Nemotron-3-Diarization.q8_0.gguf",
+                    "verified": true
+                  }
+                ],
+                "modelRepository": "nvidia/Nemotron-3-Diarization",
+                "modelRevision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
+                "accountRequiredForActualDownload": false,
+                "runtime": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\runtime-0.3.0-cpu\\nemo-speech-0.3.0-windows-x86_64-cpu\\bin\\nemo-speech.exe",
+                "runtimeSha256": "559ccf43f8fe97807ea92cf8ca2e5c0e158e0825071186536eaa3708b0581fef",
+                "helpExitCode": 0,
+                "cpuPackageOnly": true,
+                "inferencePerformed": false,
+                "defaultBackendChanged": false,
+                "modelCandidateNotQualified": true,
+                "routeReason": "Current full official complete-link result fragmented6 reference speakers into190 active groups, DER78.0445%. Test one pretrained8-channel end-to-end diarizer rather than per-meeting threshold fitting. Same full development meetings and original quality gates; not overlap-word separation or ASR<5%."
+              },
+              "native8ShortRun": null,
+              "native8FullRun": null,
+              "boundedFullFirstMeetingRejected": true,
+              "next": "原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。",
+              "sourceAndEvidenceCommit": "397aff6e7c426f1b2d6ef07d5e446a85fbe2acfc",
               "remoteReadbackConfirmed": true
             }
           }

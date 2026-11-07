@@ -32,11 +32,14 @@ if a.retry_main_only:
 ev=M/'evidence/20261107-practical-cpu';ev.mkdir(parents=True,exist_ok=True)
 chain_path=base/'bounded-speaker-full-r1/chain-state.json'
 if chain_path.exists() and read(chain_path).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED':
+    def posthoc(args,name):
+        r=subprocess.run(args,capture_output=True,text=True,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
+        (chain_path.parent/(name+'-status.json')).write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'inferenceNotRetried':True,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
     for case in read(chain_path.parent/'audio-only.json'):
         if not (chain_path.parent/'results'/case['meeting']/'embedding-cause-review.json').exists():
-            subprocess.run([__import__('sys').executable,str(M/'src/practical_speaker_cause_20261107.py'),'--control',str(chain_path.parent),'--meeting',case['meeting']],check=True)
-    subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(chain_path.parent),'--backlog',str(R/'docs/product_backlog.json')],check=True)
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1']
+            posthoc(['E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe',str(M/'src/practical_speaker_cause_20261107.py'),'--control',str(chain_path.parent),'--meeting',case['meeting']],'cause-'+case['meeting'])
+    posthoc([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(chain_path.parent),'--backlog',str(R/'docs/product_backlog.json')],'assessment')
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -46,7 +49,15 @@ text=base/'practical-text-first-r1';bounded=base/'bounded-speaker-full-r1';smoke
 record={'at':now,'phase':a.phase,'ownerQuote':'继续推进一下, 把模型做到可实用','stockCpuR1':optional(base/'practical-cpu-r1/run.json'),'stockCpuR2':optional(base/'practical-cpu-r2/run.json'),'textFirstRun':optional(text/'transcript-run.json'),'textQualityReviews':[read(f) for f in sorted(text.glob('transcripts/*/quality-review.json'))],'textProductContractProof':optional(text/'product-contract-proof.json'),'boundedShortNativeProof':optional(base/'bounded-speaker-smoke-r2/native-equivalence.json'),'boundedRun':optional(bounded/'bounded-run.json'),'completeChain':optional(bounded/'chain-state.json'),'boundedSpeakerReviews':[read(f) for f in sorted(bounded.glob('results/*/review.json'))],'attributedTextQualityReviews':[read(f) for f in sorted(bounded.glob('transcripts/*/quality-review.json'))],'publicCommandEntryProof':optional(smoke/'public-entry-proof.json'),'defaultProductBackendChanged':False,'finalHoldoutOpened':False,'qualityQualified':False}
 record['state']=(record['completeChain'] or record['boundedRun'] or {}).get('state','TEXT_COMPLETE_BOUNDED_SPEAKER_FULL_READY_UNQUALIFIED')
 record['candidateAssessment']=optional(bounded/'candidate-assessment.json')
+record['native8Preparation']=optional(base/'nemotron-speaker-20261107-prep/prepared.json')
+record['native8ShortRun']=optional(base/'native8-smoke-r1/native-run.json')
+record['native8FullRun']=optional(base/'native8-full-r1/native-run.json')
+if record['native8FullRun']:record['state']=record['native8FullRun']['state']
+elif record['native8ShortRun']:record['state']=record['native8ShortRun']['state']
+record['boundedFullFirstMeetingRejected']=any(r.get('components',{}).get('diarization error rate',0)>.15 for r in record['boundedSpeakerReviews'])
 record['next']='继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。'
+if record['native8Preparation']:
+    record['next']='原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。'
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]

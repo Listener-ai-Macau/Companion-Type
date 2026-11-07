@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T11:57:26+08:00",
+  "at": "2026-11-07T12:17:12+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -339,6 +339,112 @@
         "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\segment-state.json",
         "newNeuralItems": 2354,
         "reusedCachedPrefix": 0
+      },
+      {
+        "meeting": "L_R003S01C02",
+        "stage": "embed",
+        "exitCode": 0,
+        "workerState": "COMPLETE_EMBEDDING_CACHE",
+        "wholeProcessFamilySeconds": 968.0487252000021,
+        "privatePeakBytes": 529690624,
+        "rssPeakBytes": 536776704,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\embed-state.json",
+        "newNeuralItems": 3327,
+        "reusedCachedPrefix": 0
+      },
+      {
+        "meeting": "L_R003S01C02",
+        "stage": "reconstruct",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 3.0435854999814183,
+        "privatePeakBytes": 114122752,
+        "rssPeakBytes": 180436992,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\reconstruct-state.json",
+        "newNeuralItems": 0,
+        "reusedCachedPrefix": null,
+        "scoringExitCode": 0,
+        "qualityReview": {
+          "at": "2026-11-07T12:00:32+08:00",
+          "corpus": "AISHELL-4",
+          "meeting": "L_R003S01C02",
+          "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+          "audioSeconds": 2362.945,
+          "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+          "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+          "referenceKind": "textgrid_lexical",
+          "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+          "referenceSpeakers": 6,
+          "predictedSpeakers": 190,
+          "components": {
+            "false alarm": 173.58982112001166,
+            "total": 2311.9690375138302,
+            "confusion": 1538.7480211624593,
+            "missed detection": 92.02672663384747,
+            "correct": 681.1942897175236,
+            "diarization error rate": 0.7804449539067517
+          },
+          "perReferenceSpeakerForEvaluationOnly": {
+            "002-F": {
+              "referenceSeconds": 381.8366360770482,
+              "correctlyAttributedSeconds": 71.09410701301829,
+              "attributionRecall": 0.18618985266430196,
+              "matchedAnonymousGroup": "speaker_60"
+            },
+            "003-F": {
+              "referenceSeconds": 90.63832169674632,
+              "correctlyAttributedSeconds": 6.744378922892224,
+              "attributionRecall": 0.07440979484877565,
+              "matchedAnonymousGroup": "speaker_181"
+            },
+            "004-M": {
+              "referenceSeconds": 309.5234638706896,
+              "correctlyAttributedSeconds": 184.5054744900031,
+              "attributionRecall": 0.5960952755655526,
+              "matchedAnonymousGroup": "speaker_11"
+            },
+            "005-M": {
+              "referenceSeconds": 568.6460135867515,
+              "correctlyAttributedSeconds": 69.03346802102556,
+              "attributionRecall": 0.12139972209704755,
+              "matchedAnonymousGroup": "speaker_190"
+            },
+            "006-M": {
+              "referenceSeconds": 876.9389412077983,
+              "correctlyAttributedSeconds": 289.72222970736607,
+              "attributionRecall": 0.33037902195144264,
+              "matchedAnonymousGroup": "speaker_78"
+            },
+            "007-M": {
+              "referenceSeconds": 84.38569107480062,
+              "correctlyAttributedSeconds": 60.09463456321828,
+              "attributionRecall": 0.7121424710493819,
+              "matchedAnonymousGroup": "speaker_342"
+            }
+          },
+          "macroReferenceAttributionRecall": 0.33676935636275035,
+          "uncoveredReferenceSpeakers": [],
+          "shortReferenceSpans": {
+            "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+            "count": 209,
+            "referenceSeconds": 170.1290882682149,
+            "correctSeconds": 10.2153561149658,
+            "zeroCorrectSpans": 196
+          },
+          "rttmSha256": "f3f5f342992b25174263df3a44d5439525ebb2409a61b7d1acc015b9f1a5b5f8"
+        }
+      },
+      {
+        "meeting": "S_R004S03C01",
+        "stage": "segment",
+        "exitCode": 0,
+        "workerState": "COMPLETE_SEGMENTATION_CACHE",
+        "wholeProcessFamilySeconds": 101.21150589999161,
+        "privatePeakBytes": 232243200,
+        "rssPeakBytes": 283365376,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\S_R004S03C01\\segment-state.json",
+        "newNeuralItems": 2319,
+        "reusedCachedPrefix": 0
       }
     ],
     "referencePassedToInference": false,
@@ -350,8 +456,8 @@
       "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
       "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
     },
-    "activeMeeting": "L_R003S01C02",
-    "activePid": 24848
+    "activeMeeting": "S_R004S03C01",
+    "activePid": 18116
   },
   "completeChain": {
     "state": "RUNNING_FROZEN_FULL_SPEAKER_BATCH",
@@ -362,7 +468,77 @@
     "results": [],
     "qualityQualified": false
   },
-  "boundedSpeakerReviews": [],
+  "boundedSpeakerReviews": [
+    {
+      "at": "2026-11-07T12:00:32+08:00",
+      "corpus": "AISHELL-4",
+      "meeting": "L_R003S01C02",
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "audioSeconds": 2362.945,
+      "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+      "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+      "referenceKind": "textgrid_lexical",
+      "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+      "referenceSpeakers": 6,
+      "predictedSpeakers": 190,
+      "components": {
+        "false alarm": 173.58982112001166,
+        "total": 2311.9690375138302,
+        "confusion": 1538.7480211624593,
+        "missed detection": 92.02672663384747,
+        "correct": 681.1942897175236,
+        "diarization error rate": 0.7804449539067517
+      },
+      "perReferenceSpeakerForEvaluationOnly": {
+        "002-F": {
+          "referenceSeconds": 381.8366360770482,
+          "correctlyAttributedSeconds": 71.09410701301829,
+          "attributionRecall": 0.18618985266430196,
+          "matchedAnonymousGroup": "speaker_60"
+        },
+        "003-F": {
+          "referenceSeconds": 90.63832169674632,
+          "correctlyAttributedSeconds": 6.744378922892224,
+          "attributionRecall": 0.07440979484877565,
+          "matchedAnonymousGroup": "speaker_181"
+        },
+        "004-M": {
+          "referenceSeconds": 309.5234638706896,
+          "correctlyAttributedSeconds": 184.5054744900031,
+          "attributionRecall": 0.5960952755655526,
+          "matchedAnonymousGroup": "speaker_11"
+        },
+        "005-M": {
+          "referenceSeconds": 568.6460135867515,
+          "correctlyAttributedSeconds": 69.03346802102556,
+          "attributionRecall": 0.12139972209704755,
+          "matchedAnonymousGroup": "speaker_190"
+        },
+        "006-M": {
+          "referenceSeconds": 876.9389412077983,
+          "correctlyAttributedSeconds": 289.72222970736607,
+          "attributionRecall": 0.33037902195144264,
+          "matchedAnonymousGroup": "speaker_78"
+        },
+        "007-M": {
+          "referenceSeconds": 84.38569107480062,
+          "correctlyAttributedSeconds": 60.09463456321828,
+          "attributionRecall": 0.7121424710493819,
+          "matchedAnonymousGroup": "speaker_342"
+        }
+      },
+      "macroReferenceAttributionRecall": 0.33676935636275035,
+      "uncoveredReferenceSpeakers": [],
+      "shortReferenceSpans": {
+        "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+        "count": 209,
+        "referenceSeconds": 170.1290882682149,
+        "correctSeconds": 10.2153561149658,
+        "zeroCorrectSpans": 196
+      },
+      "rttmSha256": "f3f5f342992b25174263df3a44d5439525ebb2409a61b7d1acc015b9f1a5b5f8"
+    }
+  ],
   "attributedTextQualityReviews": [],
   "publicCommandEntryProof": {
     "state": "PASS_PUBLIC_FRESH_30S_COMMAND_AND_RAW_ONLY_RETAG",
@@ -424,7 +600,43 @@
   "qualityQualified": false,
   "state": "RUNNING_FROZEN_FULL_SPEAKER_BATCH",
   "candidateAssessment": null,
-  "next": "继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。",
-  "sourceAndEvidenceCommit": "100dbb02769e3e90941004326525774de08742c1",
+  "native8Preparation": {
+    "at": "2026-11-07T12:06:04+08:00",
+    "state": "OFFICIAL_CPU_RUNTIME_AND_PUBLIC_8_SPEAKER_WEIGHTS_PREPARED_NO_INFERENCE",
+    "assets": [
+      {
+        "name": "nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+        "url": "https://github.com/NVIDIA/NeMo-Speech.cpp/releases/download/v0.3.0/nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+        "bytes": 8694509,
+        "sha256": "4ed9740e361e4653f56c3dce7d1e81883a1c8b831c1bd7d01567fff1130b5b05",
+        "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+        "verified": true
+      },
+      {
+        "name": "Nemotron-3-Diarization.q8_0.gguf",
+        "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization/resolve/f667ed73aee57d40cc39428eb768b4fd87a0a29e/Nemotron-3-Diarization.q8_0.gguf",
+        "bytes": 107012128,
+        "sha256": "08456d9e22cd9a323c0364d98375f3746d6e68507ebb705cd46438c534c7a3a1",
+        "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\Nemotron-3-Diarization.q8_0.gguf",
+        "verified": true
+      }
+    ],
+    "modelRepository": "nvidia/Nemotron-3-Diarization",
+    "modelRevision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
+    "accountRequiredForActualDownload": false,
+    "runtime": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\runtime-0.3.0-cpu\\nemo-speech-0.3.0-windows-x86_64-cpu\\bin\\nemo-speech.exe",
+    "runtimeSha256": "559ccf43f8fe97807ea92cf8ca2e5c0e158e0825071186536eaa3708b0581fef",
+    "helpExitCode": 0,
+    "cpuPackageOnly": true,
+    "inferencePerformed": false,
+    "defaultBackendChanged": false,
+    "modelCandidateNotQualified": true,
+    "routeReason": "Current full official complete-link result fragmented6 reference speakers into190 active groups, DER78.0445%. Test one pretrained8-channel end-to-end diarizer rather than per-meeting threshold fitting. Same full development meetings and original quality gates; not overlap-word separation or ASR<5%."
+  },
+  "native8ShortRun": null,
+  "native8FullRun": null,
+  "boundedFullFirstMeetingRejected": true,
+  "next": "原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。",
+  "sourceAndEvidenceCommit": "397aff6e7c426f1b2d6ef07d5e446a85fbe2acfc",
   "remoteReadbackConfirmed": true
 }
