@@ -1,0 +1,192 @@
+{
+  "_id": "6a3e398dd7a0533dc8073fc5",
+  "id": "Qwen/Qwen3-ASR-1.7B-hf",
+  "private": false,
+  "pipeline_tag": "automatic-speech-recognition",
+  "library_name": "transformers",
+  "tags": [
+    "transformers",
+    "safetensors",
+    "qwen3_asr",
+    "automatic-speech-recognition",
+    "zh",
+    "en",
+    "yue",
+    "ar",
+    "de",
+    "fr",
+    "es",
+    "pt",
+    "id",
+    "it",
+    "ko",
+    "ru",
+    "th",
+    "vi",
+    "ja",
+    "tr",
+    "hi",
+    "ms",
+    "nl",
+    "sv",
+    "da",
+    "fi",
+    "pl",
+    "cs",
+    "fil",
+    "fa",
+    "el",
+    "hu",
+    "mk",
+    "ro",
+    "arxiv:2601.21337",
+    "license:apache-2.0",
+    "endpoints_compatible",
+    "region:us"
+  ],
+  "downloads": 339424,
+  "likes": 161,
+  "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
+  "author": "Qwen",
+  "sha": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+  "lastModified": "2026-07-22T11:58:31.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {
+    "architectures": [
+      "Qwen3ASRForConditionalGeneration"
+    ],
+    "model_type": "qwen3_asr",
+    "tokenizer_config": {
+      "bos_token": null,
+      "eos_token": "<|im_end|>",
+      "unk_token": null,
+      "pad_token": "<|endoftext|>"
+    },
+    "chat_template_jinja": "{%- set ns = namespace(system_text='') -%}{%- for m in messages -%}{%- if m.role == 'system' -%}{%- if m.content is string -%}{%- set ns.system_text = ns.system_text + m.content -%}{%- else -%}{%- for c in m.content -%}{%- if c.type == 'text' and (c.text is defined) -%}{%- set ns.system_text = ns.system_text + c.text -%}{%- endif -%}{%- endfor -%}{%- endif -%}{%- endif -%}{%- endfor -%}{%- set ns2 = namespace(audio_tokens='') -%}{%- for m in messages -%}{%- if m.content is not string -%}{%- for c in m.content -%}{%- if c.type == 'audio' or ('audio' in c) or ('audio_url' in c) -%}{%- set ns2.audio_tokens = ns2.audio_tokens + '<|audio_start|><|audio_pad|><|audio_end|>' -%}{%- endif -%}{%- endfor -%}{%- endif -%}{%- endfor -%}{{- '<|im_start|>system\n' + ns.system_text + '<|im_end|>\n' -}}{{- '<|im_start|>user\n' + ns2.audio_tokens + '<|im_end|>\n' -}}{%- for m in messages -%}{%- if m.role == 'assistant' -%}{%- set ns3 = namespace(assistant_text='') -%}{%- if m.content is string -%}{%- set ns3.assistant_text = m.content -%}{%- else -%}{%- for c in m.content -%}{%- if c.type == 'text' and (c.text is defined) -%}{%- set ns3.assistant_text = ns3.assistant_text + c.text -%}{%- endif -%}{%- endfor -%}{%- endif -%}{{- '<|im_start|>assistant\n' -}}{% generation %}{{- ns3.assistant_text + '<|im_end|>\n' -}}{% endgeneration %}{%- endif -%}{%- endfor -%}{%- if add_generation_prompt -%}{{- '<|im_start|>assistant\n' -}}{%- endif -%}"
+  },
+  "cardData": {
+    "license": "apache-2.0",
+    "pipeline_tag": "automatic-speech-recognition",
+    "library_name": "transformers",
+    "language": [
+      "zh",
+      "en",
+      "yue",
+      "ar",
+      "de",
+      "fr",
+      "es",
+      "pt",
+      "id",
+      "it",
+      "ko",
+      "ru",
+      "th",
+      "vi",
+      "ja",
+      "tr",
+      "hi",
+      "ms",
+      "nl",
+      "sv",
+      "da",
+      "fi",
+      "pl",
+      "cs",
+      "fil",
+      "fa",
+      "el",
+      "hu",
+      "mk",
+      "ro"
+    ]
+  },
+  "transformersInfo": {
+    "auto_model": "AutoModelForMultimodalLM",
+    "pipeline_tag": "automatic-speech-recognition",
+    "processor": "AutoProcessor"
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "52373fe24473b1aa44333d318f578ae6bf04b49b",
+      "size": 1570
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "e5bb005ab9a6445c7b1a91c6b250855f5d8e4bbd",
+      "size": 16538
+    },
+    {
+      "rfilename": "chat_template.jinja",
+      "blobId": "491fff331513a97316daf53591c7b9b9da53ef8c",
+      "size": 1434
+    },
+    {
+      "rfilename": "config.json",
+      "blobId": "331292992b1933c69fc83d77f0de560ab122a0d5",
+      "size": 2399
+    },
+    {
+      "rfilename": "generation_config.json",
+      "blobId": "3ed98c80087572bad932a83279c5602e58bbfc5c",
+      "size": 165
+    },
+    {
+      "rfilename": "model.safetensors",
+      "blobId": "aff2ea06d80f72db77b687f299b460b80862df7e",
+      "size": 4076193080,
+      "lfs": {
+        "sha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+        "size": 4076193080,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "processor_config.json",
+      "blobId": "a07dff48032bed341260501d6688036c6fd7f3ef",
+      "size": 487
+    },
+    {
+      "rfilename": "tokenizer.json",
+      "blobId": "9684da909ac4869cee4a3b6a6679194964b22ac6",
+      "size": 11429653,
+      "lfs": {
+        "sha256": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05",
+        "size": 11429653,
+        "pointerSize": 133
+      }
+    },
+    {
+      "rfilename": "tokenizer_config.json",
+      "blobId": "aa62b6c06ab8a704dc0895420fb1d2515954a49c",
+      "size": 998
+    }
+  ],
+  "spaces": [
+    "hf-audio/open_tts_leaderboard",
+    "treble-technologies/ffasr",
+    "hugging-apps/qwen3-asr-1-7b-demo",
+    "hhim8826/qwen3-asr-ja-anime",
+    "hugging-apps/agenticasr",
+    "boiior/asr",
+    "Arun0914/qwen3-asr-eval",
+    "rir-i/legacyagent",
+    "hugging-apps/qwen3-asr-1-7b-ko",
+    "hugging-apps/oruk-loop-153m",
+    "ayazzxcss/quvirl-worker",
+    "AustinXiao/voxturn-demo",
+    "AustinXiao/VeriSpoof-demo",
+    "lainlives/qwen3-asr-1-7b-demo"
+  ],
+  "createdAt": "2026-06-26T08:34:21.000Z",
+  "safetensors": {
+    "parameters": {
+      "BF16": 2038052480
+    },
+    "total": 2038052480
+  },
+  "usedStorage": 4087622733
+}

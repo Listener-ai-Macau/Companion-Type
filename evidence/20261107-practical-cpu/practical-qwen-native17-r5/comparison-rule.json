@@ -1,0 +1,10 @@
+{
+  "declaredAt": "2026-11-07T17:48:56+08:00",
+  "state": "FROZEN_BEFORE_NEW_CHECKPOINT_INFERENCE",
+  "baselineControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-bounded-r4",
+  "ordinaryMeeting": "S_R004S03C01",
+  "baselineStrictCer": 0.06438438438438439,
+  "rule": "If complete ordinary strict CER is not lower than6.43844%, stop further complex inference and reject default adoption. If better, finish the same full complex meeting before deciding. Text5%/person-aligned overlap/facts/independent set/mobile-card/sale remain open. No per-meeting model selection or reference-conditioned prompts.",
+  "whatChanged": "Official native checkpoint0.6B→1.7B only; retain greedy/BF16/eager/Chinese/no-context/30s roots and frozen bounded recovery. Old mixed-precision community ONNX path and failed MOSS long native decoder are not retried.",
+  "qualityQualified": false
+}

@@ -11,11 +11,11 @@ R=Path('C:/Users/Billy/Desktop/Denzic/Companion')
 B=R/'docs/handoffs/20261107-model-generation-recovery'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'))
 C=Path(read(B/'practical-qwen-native-r1/active-execution.json')['control'])
-assert C.resolve().parent==B.resolve() and C.name in ['practical-qwen-signal-r3','practical-qwen-bounded-r4']
+assert C.resolve().parent==B.resolve() and C.name in ['practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5']
 live=read(C/'full/run.json');assert live['state'] in ['RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR','RUNNING_BOUNDED_NATIVE_FULL']
 process=psutil.Process(live['activePid'])
 family=[process]+process.children(recursive=True)
-assert any(any(Path(arg).name in ['practical_qwen_full_worker_20261107.py','practical_qwen_bounded_worker_20261107.py'] for arg in p.cmdline()) for p in family)
+assert any(any(Path(arg).name in ['practical_qwen_full_worker_20261107.py','practical_qwen_bounded_worker_20261107.py','practical_qwen_checkpoint_worker_20261107.py'] for arg in p.cmdline()) for p in family)
 pack=B/'native8-command-r1/model-pack.json';audio=Path(read(B/'native8-f16-smoke-r1/audio-only.json')[0]['audio'])
 root=Path('E:/CodexData/Companion/.model-cache/qwen-native-asr-20261107')/('public-concurrency-control-'+C.name)
 assert not root.exists() and not (C/'concurrency-proof.json').exists()

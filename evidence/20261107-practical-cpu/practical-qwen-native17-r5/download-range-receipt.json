@@ -1,0 +1,66 @@
+{
+  "state": "COMPLETE_PINNED_PUBLIC_WEIGHTS_SHA256_VERIFIED",
+  "at": "2026-11-07T17:49:03+08:00",
+  "pid": 23328,
+  "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+  "expectedBytes": 4076193080,
+  "expectedSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+  "inferenceStarted": false,
+  "modelWeightsReady": true,
+  "ranges": [
+    {
+      "index": 2,
+      "start": 2038096540,
+      "end": 3057144809,
+      "bytes": 1019048270,
+      "resumedPrefixBytes": 0,
+      "sha256": "38dd00b4ff37f67f363389e7cfda3af9dda419a76554a01e7a641230b522c192",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-2.part"
+    },
+    {
+      "index": 1,
+      "start": 1019048270,
+      "end": 2038096539,
+      "bytes": 1019048270,
+      "resumedPrefixBytes": 0,
+      "sha256": "c81de872457a7b36fc8b707a95b51e5641562db887c5e8ce880460886aa58105",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-1.part"
+    },
+    {
+      "index": 0,
+      "start": 0,
+      "end": 1019048269,
+      "bytes": 1019048270,
+      "resumedPrefixBytes": 0,
+      "sha256": "b536c86dc89a1af05858bef6d376c39bd1440c6cafa0e68bfd8db09c18c117f0",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-0.part"
+    },
+    {
+      "index": 3,
+      "start": 3057144810,
+      "end": 4076193079,
+      "bytes": 1019048270,
+      "resumedPrefixBytes": 0,
+      "sha256": "d54700523fd6b8d3b0b7cc659226b02aea6b84239f5e7803ccbc3f3770fd209f",
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\native17-range-3.part"
+    }
+  ],
+  "finishedAt": "2026-11-07T17:50:11+08:00",
+  "limits": {
+    "pid": 23328,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 26300416,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "redundantVerifiedFragmentsRemoved": true
+}
