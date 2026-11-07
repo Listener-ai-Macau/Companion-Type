@@ -17,6 +17,8 @@ public final class RecordingClient implements Closeable {
     public interface Link extends Closeable {
         int mtu();
         default boolean calendarSupported() {return false;}
+        /** Optional central preference; true is request acceptance, not measured radio speed. */
+        default boolean preferBulkTransfer(boolean active)throws IOException {return false;}
         default String otaDataWriteMode() throws IOException {return "unspecified";}
         byte[] read(UUID characteristic) throws IOException;
         void subscribe(UUID characteristic) throws IOException;
@@ -273,6 +275,8 @@ public final class RecordingClient implements Closeable {
         if(transferMetrics!=null)transferMetrics.initialSync(!recovered&&selectedOnDevice&&selected.segmentIndex==0,
             !matches.isEmpty()&&(matches.get(matches.size()-1).flags&2)!=0);
         if(!selectedOnDevice)RecordingLibrary.verifiedPrefix(privateDirectory,selected);
+        try(TransferPriorityScope priority=TransferPriorityScope.open(link,!matches.isEmpty())){
+        if(transferMetrics!=null&&priority.requested)transferMetrics.centralPriority(priority.accepted);
         if(!matches.isEmpty()&&(matches.get(matches.size()-1).flags&2)!=0)preferStoppedBatch();
         if(consumePullOverlap&&!matches.isEmpty()){
             download(matches.get(0).recordingId,privateDirectory,progress==null?null:(received,total)->progress.onSegment(0,matches.size(),received,total));
@@ -305,6 +309,7 @@ public final class RecordingClient implements Closeable {
             }
         }
         throw new IOException("selected recording has no available sealed segments");
+        }
     }
 
     /** Follow without a preset duration; close or interrupt to stop following. */

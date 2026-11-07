@@ -15,6 +15,7 @@ final class RecordingTransferMetrics {
     private int connectionAttempts,connectionsEstablished,reconnectSequences,unexpectedDisconnections,reusedConnections,reusedCatalogues;
     private int directoryRequests,directoryPages,streamDirectoryRequests;
     private boolean stoppedBatchHintRequested,stoppedBatchHintAccepted;
+    private boolean centralHighPriorityRequested,centralHighPriorityRequestAccepted;
     private boolean reconnectPending;
     RecordingTransferMetrics(){this(System::nanoTime);}
     RecordingTransferMetrics(Clock clock){this.clock=clock;}
@@ -59,6 +60,7 @@ final class RecordingTransferMetrics {
     synchronized void directoryRequest(boolean streaming){directoryRequests++;if(streaming)streamDirectoryRequests++;}
     synchronized void directoryPage(){directoryPages++;}
     synchronized void stoppedBatchHint(boolean accepted){stoppedBatchHintRequested=true;stoppedBatchHintAccepted=accepted;}
+    synchronized void centralPriority(boolean accepted){centralHighPriorityRequested=true;centralHighPriorityRequestAccepted=accepted;}
     synchronized void consumeStage(RecorderWire.Descriptor d,int stage){
         Segment s=segments.get(SegmentReceiver.key(d));if(s==null)return;
         long now=clock.nanoTime();if(stage==0)s.consumeReadyAt=now;else if(stage==1)s.consumeSentAt=now;else if(stage==2)s.consumeReceivedAt=now;
@@ -111,6 +113,7 @@ final class RecordingTransferMetrics {
             ",\"connectionAttempts\":"+connectionAttempts+",\"connectionsEstablished\":"+connectionsEstablished+",\"reusedConnections\":"+reusedConnections+",\"reusedCatalogues\":"+reusedCatalogues+
             ",\"directoryRequests\":"+directoryRequests+",\"directoryPages\":"+directoryPages+",\"streamDirectoryRequests\":"+streamDirectoryRequests+
             ",\"stoppedBatchHintRequested\":"+stoppedBatchHintRequested+",\"stoppedBatchHintAccepted\":"+stoppedBatchHintAccepted+
+            ",\"centralHighPriorityRequested\":"+centralHighPriorityRequested+",\"centralHighPriorityRequestAccepted\":"+centralHighPriorityRequestAccepted+
             ",\"reconnectSequences\":"+reconnectSequences+",\"unexpectedDisconnections\":"+unexpectedDisconnections+
             ",\"firstPrivateDirectoryDelayNanos\":"+(firstDirectoryDelayNanos<0?"null":Long.toString(firstDirectoryDelayNanos))+
             ",\"maxReconnectDirectoryDelayNanos\":"+(maxReconnectDirectoryDelayNanos<0?"null":Long.toString(maxReconnectDirectoryDelayNanos))+

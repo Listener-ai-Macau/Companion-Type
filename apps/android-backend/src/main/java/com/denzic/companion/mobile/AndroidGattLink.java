@@ -199,6 +199,15 @@ public final class AndroidGattLink implements RecordingClient.Link {
             if(!accepted)throw new RecordingSyncRunner.LinkFailure("Bluetooth write refused");waitOperation("write",id,15_000);
         }catch(SecurityException e){throw new IOException("Bluetooth permission is required",e);}catch(RuntimeException e){throw platformFailure(e);}
     }
+    @Override public boolean preferBulkTransfer(boolean active)throws IOException {
+        check();
+        try{
+            boolean accepted=gatt.requestConnectionPriority(active?BluetoothGatt.CONNECTION_PRIORITY_HIGH:BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
+            android.util.Log.i("CompanionBle","central priority="+(active?"high":"balanced")+" requestAccepted="+accepted);
+            return accepted;
+        }catch(SecurityException denied){throw new IOException("Bluetooth permission is required",denied);}
+        catch(RuntimeException died){throw platformFailure(died);}
+    }
     @Override public byte[] await(UUID id,long timeoutMillis) throws IOException {
         if(timeoutMillis<=0)throw new java.net.SocketTimeoutException("Bluetooth wait timed out");ArrayBlockingQueue<byte[]> q=notifications.get(id);if(q==null)throw new IOException("Bluetooth notifications not subscribed");long deadline=System.nanoTime()+TimeUnit.MILLISECONDS.toNanos(timeoutMillis);
         try{while(System.nanoTime()<deadline){check();byte[] p=q.poll(100,TimeUnit.MILLISECONDS);if(p!=null)return p;}}

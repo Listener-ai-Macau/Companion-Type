@@ -160,6 +160,7 @@ public final class SystemUpdateClient {
         try{
             progress.update("checking",0,pack.image.length);link=connector.connect();identity=uid(link);metrics.uid=identity;progress.identity(identity);
             Status initial=observedStatus(link,metrics);pack.admit(link.read(IDENTITY));initial=fresh(link,initial,metrics);
+            try(TransferPriorityScope priority=TransferPriorityScope.open(link,true)){
             String writeMode=link.otaDataWriteMode();boolean credit=writeMode.equals("without_response")&&initial.raw.length==64&&u16(initial.raw,34)==53;
             int payload=Math.min(Math.min(initial.maxChunk,credit?215:505),link.mtu()-7),requestedWindow=Math.min(initial.maxWindow,credit?64:8);if(payload<16)throw new IOException("蓝牙连接容量不足，未开始升级");
             if(credit)link.subscribe(STATUS);
@@ -192,6 +193,7 @@ public final class SystemUpdateClient {
                 waitRetained(link,start,metrics);
             }catch(IOException error){finishError=error;metrics.lastError=error.getMessage();}
             finally{metrics.finishEnd=System.nanoTime();progress.metrics(metrics.json());}
+            }
         }catch(IOException error){if(link!=null&&beginSent&&!finishAttempted)try{link.write(CONTROL,control(4,0,0,0,0));}catch(IOException ignored){}throw error;}
         finally{if(link!=null)link.close();}
         metrics.stage="verifying";metrics.verifyStart=System.nanoTime();progress.metrics(metrics.json());progress.update("verifying",pack.image.length,pack.image.length);sleep(10000);long deadline=System.nanoTime()+180_000_000_000L;String last=finishError==null?"":finishError.getMessage();
