@@ -1,0 +1,19 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "pid": 17804,
+  "startedAt": "2026-11-07T17:57:11+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 884.7922274000011,
+      "accumulatedProcessFamilySeconds": 884.7922274000011,
+      "sampledPrivatePeakBytes": 1271988224
+    }
+  ],
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "automaticModelFailureRetries": 0,
+  "finishedAt": "2026-11-07T18:11:56+08:00"
+}

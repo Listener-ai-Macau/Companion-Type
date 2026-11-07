@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 44,
+    "startSample": 21120000,
+    "endSample": 21600000,
+    "text": "糕店、大型商场都会，嗯，比如说满了一百，然后加，嗯，八块八、九块九换购一个商品，或者换购一个卫生纸，就是这种日常需要的用品，嗯，也是非常不错的。然后，比如说像一些老顾客，老顾客的话，嗯，就是，嗯，有有那个，有可以，可以就是加上那种积分。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 21120000,
+        "endSample": 21600000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a9efc24102154a710abf17fe3a3aa69c97ac8b40fb9f2262294f272c4eb786c9"
+}

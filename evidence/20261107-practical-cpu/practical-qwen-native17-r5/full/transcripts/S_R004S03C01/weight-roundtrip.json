@@ -16,7 +16,7 @@
   "targetDevice": "cuda:0",
   "mmapUsed": false,
   "wholeCpuStateDictCreated": false,
-  "seconds": 39.83165189999272,
+  "seconds": 33.32932129999972,
   "modelClass": "Qwen3ASRForConditionalGeneration",
   "allExpectedParametersLoaded": true,
   "missingOnlyTiedLmHead": true,
@@ -31,7 +31,7 @@
   ],
   "wholeModelToEmptyUsed": false,
   "generationConfigFromOfficialFiles": true,
-  "loadSeconds": 40.30102949999855,
+  "loadSeconds": 33.61664849999943,
   "streamReaderSourceSha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f",
   "loaderSourceSha256": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
   "modelMathChanged": false

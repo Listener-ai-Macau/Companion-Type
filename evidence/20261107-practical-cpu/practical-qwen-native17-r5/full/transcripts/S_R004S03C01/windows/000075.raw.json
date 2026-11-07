@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 75,
+    "startSample": 36000000,
+    "endSample": 36480000,
+    "text": "人流，这个人流量客户也起来了，咱这个销售这个额度肯定也往往上提升提升，咱总不能就是，呃，各种原因、各种理由找借口、找理由，呃，说，呃，这个销售不上去，那个销售不上去，啊，我这边儿也好上上面一个交代，比如，你们每个人遇到什么一个问题、难题了，哎，的确是什么什么的原因，咱要有根有。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 36000000,
+        "endSample": 36480000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "eb8e8001a76d1776ac78dff3911146b7b4dbce63dfc702a2346d71785181981e"
+}

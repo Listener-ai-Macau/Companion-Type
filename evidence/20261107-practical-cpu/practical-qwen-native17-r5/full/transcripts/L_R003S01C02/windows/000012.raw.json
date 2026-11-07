@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 12,
+    "startSample": 5760000,
+    "endSample": 6240000,
+    "text": "但你都进来了，你就没地儿停放了，这就会堵住别人的车了。这物业有的也是那个业主也是难逃的不行。咱物业有时候这个问题，这工作也不是特别好做。那业主骂，业主给吵在大门口，都不让他进。不用那个，一人家是业主，你凭什么让人家进？那他没有车位啊，他就一个车位，他家两辆车、三辆车咋整？人家一个车位就是说，咱们这个车位。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 5760000,
+        "endSample": 6240000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "98a1c57d23bd3dcb648e25cac2a86131ac5800772cfd5cd6623f76a1fb0a1840"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 56,
+    "startSample": 26880000,
+    "endSample": 27360000,
+    "text": "也需要那个，比如说那个做一些那个广告宣呃广告宣传的海报，然后还有一些就是说我们可以增在门口呢，我们也可以增加一些那个艺术陈艺术形式的陈列，比如说把肥皂啊做成一嗯摆放成一个那个船的造型呢，或者是说摆放一个其呃那个动物的一个造型啊。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 26880000,
+        "endSample": 27360000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "51228704a0a64528c867b33b69fa0f48f5179ad2464c7fe17ce8495fa9f5fccc"
+}

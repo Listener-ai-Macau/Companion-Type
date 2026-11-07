@@ -3,10 +3,26 @@
   "startedAt": "2026-11-07T17:58:43+08:00",
   "pid": 22248,
   "modelFailureRetries": 0,
-  "lowMemoryContinuations": 0,
+  "lowMemoryContinuations": 1,
   "futilityStopRequested": false,
   "limitsChanged": false,
   "sourceSha256": "fc14d2c4ccd4f15cfccb13ea46c32ff00d73499ea377aff324a2264086893cc0",
-  "events": [],
-  "durableWindows": 26
+  "events": [
+    {
+      "at": "2026-11-07T18:12:31+08:00",
+      "state": "CONTINUE_AFTER_OBSERVED_RAM_RECOVERY",
+      "durableWindowsBefore": 47,
+      "availableBytes": 6372159488,
+      "actualWindowsLowRam": false,
+      "controllerPid": 26376
+    }
+  ],
+  "durableWindows": 94,
+  "resourceObservation": {
+    "availableBytes": 557993984,
+    "actualWindowsLowRam": true,
+    "lastAvailableBytes": 769351680,
+    "releasedOwnPrivatePeakUpperBound": 1271988224
+  },
+  "ordinaryStrictCer": 0.05765765765765766
 }

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 73,
+    "startSample": 35040000,
+    "endSample": 35520000,
+    "text": "安全也要提升一下，呃，你看咱一些老人，一些小孩儿，尤其这个临时区的，呃，小孩儿比较多，呃，让他们呃尽量的跟在大人后边儿。我建议还有的小孩儿就是，咱那小推车，呃，到你们那哪个区域啦，他有的客户啊不用了，直接就放那儿了，这样的话影响就是咱那个通道的通行。你们哪个区域负责人啊，及时把这个他们一溜那儿的小推车。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 35040000,
+        "endSample": 35520000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "b346203fa89beb4649694bca9889086f200230904a0c1bdb8603984f74a5f393"
+}

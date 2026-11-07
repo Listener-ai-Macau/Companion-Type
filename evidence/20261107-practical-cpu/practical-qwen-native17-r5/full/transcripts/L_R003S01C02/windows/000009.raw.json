@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 9,
+    "startSample": 4320000,
+    "endSample": 4800000,
+    "text": "车辆的牌号，嗯，车辆信息都登记一下，完了制作一个那个，每辆车登有一个登记牌儿，出入的时候，就是出去的时候要交回来，进去的时候要要领牌儿。首先，它有一个这个标志，外部小区它是没有这个这个标志的。嗯。这样的话。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 4320000,
+        "endSample": 4800000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "1f39f5447afff186c788963b71311487b9d8bd36943dc51ac053c8df5c83316d"
+}

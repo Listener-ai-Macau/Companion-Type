@@ -86,9 +86,12 @@ def main():
         assert checksum(audio)==binding['audioSha256'],'原音发生变化，已有输出保留。'
         task.update(state='COMPLETE_LOCAL_NATIVE_ASR_CANDIDATE_NOT_QUALITY_QUALIFIED',finishedAt=now(),output=str(output),outputSha256=state['modelOutputSha256'],
           originalAudioUnchanged=True,wordAlignmentPending=True,speakerAttributionPending=True,
-          accumulatedKnownOwnedProcessSeconds=sum(r['wholeProcessFamilySeconds'] or 0 for r in task['attempts']))
+          accumulatedKnownOwnedProcessSeconds=sum(r['wholeProcessFamilySeconds'] or 0 for r in task['attempts']),
+          attemptsWithUnknownDuration=[i+1 for i,r in enumerate(task['attempts']) if r['wholeProcessFamilySeconds'] is None])
+        task.pop('error',None);task.pop('traceback',None)
         atomic_json(task_path,task);print(output.read_text(encoding='utf8'),flush=True)
     except BaseException as error:
+        if attempt is not None:attempt['error']=repr(error)
         task.update(state='INCOMPLETE_RETAINED_RESUMABLE',error=repr(error),traceback=traceback.format_exc(),updatedAt=now());task.pop('activePid',None)
         if (out/'text-draft.json').exists():task['textDraft']=str(out/'text-draft.json')
         atomic_json(task_path,task);raise

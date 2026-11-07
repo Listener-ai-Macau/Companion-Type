@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 72,
+    "startSample": 34560000,
+    "endSample": 35040000,
+    "text": "出现一些类似这个纠纷，本来说我去看标签是多少多少钱，这个以前咱超市发生过，咱不要再发生了。再有还有就是咱那个，你们各个部门这个下边员工一定要培训一下。呃，马上这个，这一搞个大活动嘛，就是把下边员工这个呃意识这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 34560000,
+        "endSample": 35040000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a0ffdf1268cdad8d82baddde08c95fc121720b7f2e7c71ff08a9f49e84ec8f09"
+}
