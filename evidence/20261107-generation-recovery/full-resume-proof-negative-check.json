@@ -1,0 +1,8 @@
+{
+  "state": "PASS_UNQUALIFIED_FULL_GENERATION_RESUME_REFUSED_BEFORE_INFERENCE",
+  "suppliedProofState": "SHORT_CONTROL_INCOMPLETE_NO_NEXT_STAGE",
+  "wrapperState": "BATCH_FAILURE_RETAINED",
+  "modelWorkerLaunched": false,
+  "referenceContentOpened": false,
+  "reason": "Real native fresh/resume control has not passed; engineering tests cannot bypass it."
+}

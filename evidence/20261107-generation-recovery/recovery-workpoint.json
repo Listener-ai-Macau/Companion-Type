@@ -1,0 +1,204 @@
+{
+  "at": "2026-11-07T08:35:46+08:00",
+  "state": "RECOVERY_ENGINEERING_PREPARED_NATIVE_RESUME_PROOF_PENDING_ACTUAL_LOW_RAM",
+  "ownerQuote": "请继续吧, 你看看接下来从什么地方推进比较好",
+  "previousFullMeeting": {
+    "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
+    "finishedAt": "2026-11-07T02:13:44+08:00",
+    "elapsedSeconds": 12192.729083,
+    "completedAcousticChunks": 79,
+    "completedDecoderPrefillLayers": 28,
+    "retainedGeneratedTokens": 2752,
+    "completedSegments": 75,
+    "lastCompletedSegmentEndSeconds": 515.94,
+    "exitCode": "0xC0000005",
+    "module": "amdhip64_7.dll",
+    "lowSystemMemoryStop": false,
+    "newWholeMeetingQuality": null,
+    "evidenceCommit": "4231762c009e1e2139f0b8d38e17cc3cf09e519a"
+  },
+  "retainedPrefixRecovery": {
+    "at": "2026-11-07T08:12:50+08:00",
+    "state": "RETAINED_PREFIX_ADOPTED_AND_VERBATIM_TEXT_VERIFIED_NO_MODEL_RUN",
+    "sourceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24",
+    "sourceStateSha256": "d113939bb07bb233a87119c5ee04e073b2db415fc793fcf7981f620e3e8ca5d6",
+    "sourceProtocolSha256": "bf93fe445376b2b9e94306b22304dbcade46dab6ae9d1571c11e6c822a36551b",
+    "sourceTokenFileSha256": "08ff55c4fc07e4248c414985542a1598c0593aa81fba7b21ec12994db454a3ac",
+    "sourcePartialTextSha256": "68d046def7b58992fd952f734d4a4e686accdd521b14e1e56319e31c8d314af0",
+    "tokenizerSha256": "bcf03774334462d6e34b5005cb11120a62275f146ee2953e68731ecdbce84fbb",
+    "retainedGeneratedTokens": 2752,
+    "completedSegmentsBeforeCrash": 75,
+    "lastCompletedSegmentEndSeconds": 515.94,
+    "recoveryManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261105-model-resume\\full-L-retired-acoustic-20261106-r24\\generation-recovery-bound-20261107\\checkpoint-0000002752.json",
+    "recoveryManifestSha256": "10ae768d9946c7e50621ee68e7994ddee0e7aaf3b4eba81917cfd6cfa4f76634",
+    "decodedTextExactlyMatchesOriginal": true,
+    "recoveryReadbackAllTokenIdsIdentical": true,
+    "originalArtifactsUnchanged": true,
+    "torchImported": false,
+    "gpuUsed": false,
+    "newWholeMeetingQuality": null,
+    "wholeMeetingComplete": false,
+    "actualResumedModelOutputVerified": false,
+    "limits": "Token prefix only, not KV cache. Re-prefill still required; native resumed-output control must pass before continuing the full meeting. No reference opened or partial CER reported.",
+    "sourceRunSha256": "224c4640b503e4ec1eb8c03af897be260daacd9c30b5a37d747f05a6e4bd7099",
+    "priorInferenceAttemptProcessFamilySeconds": 12192.729083
+  },
+  "singleVisibleGpuProbe": {
+    "at": "2026-11-07T08:08:54+08:00",
+    "state": "PASS_MODEL_FREE_SINGLE_GPU_VISIBILITY_AND_ARITHMETIC",
+    "modelLoaded": false,
+    "automaticRetries": 0,
+    "exitCode": 0,
+    "seconds": 10.345720700002857,
+    "finishedAt": "2026-11-07T08:09:04+08:00",
+    "noModelInferenceRun": true,
+    "systemDriverChanged": false,
+    "dllPatched": false,
+    "limitation": "A successful small kernel probe does not establish hours-long model stability or a fixed crash root cause.",
+    "legacyLauncherOnlyPrivatePeakBytes": 847872,
+    "legacyPeakCounterWithdrawnReason": "Venv launcher spawns the native worker; the original parent sampler omitted descendants. Preserve original counter as launcher-only, not model RAM. Source supervisor now accounts for verified descendants.",
+    "nativeWorkerJobPeakPrivateCommitBytes": 602144768
+  },
+  "cpuSyntheticIntegration": {
+    "state": "PASS_TINY_CPU_MOSS_ARCHITECTURE_PREFIX_RECOVERY_ONLY",
+    "publishedModelWeightsUsed": false,
+    "newAsrAccuracyEvidence": false,
+    "gpuUsed": false,
+    "comparisons": [
+      {
+        "retainedTokens": 7,
+        "newTokens": 13,
+        "all20GeneratedIdsIdentical": true,
+        "wholeAudioTensorObjectsPreserved": true
+      },
+      {
+        "retainedTokens": 13,
+        "newTokens": 7,
+        "all20GeneratedIdsIdentical": true,
+        "wholeAudioTensorObjectsPreserved": true
+      }
+    ],
+    "parameterCount": 14992,
+    "cudaInitialized": false,
+    "limits": {
+      "pid": 7068,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 851869696,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "scope": "Same author MOSS/Qwen3/Whisper generation APIs and real shared prefix assembler, tiny random synthetic dimensions, forced test length. Not the0.9B published model, real speech, GPU-resume equivalence or any accuracy gate.",
+    "at": "2026-11-07T08:23:10+08:00",
+    "seconds": 10.282377900002757
+  },
+  "nativeResumeControls": {
+    "first": {
+      "at": "2026-11-07T08:16:51+08:00",
+      "state": "SHORT_CONTROL_INCOMPLETE_NO_NEXT_STAGE",
+      "automaticFullMeetingAfterwards": false,
+      "newAccuracyScore": null,
+      "referenceOpened": false,
+      "stages": [],
+      "activeControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\short-fresh",
+      "stage": "fresh",
+      "run": {
+        "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+        "startedAt": "2026-11-07T08:16:51+08:00",
+        "protocolSha256": "a4a7538bebc810180e39cecfd9b421dff4389d70779d514b0003abd48ed8090e",
+        "inputManifestSha256": "7b7427c089df8ba77b70a57d5e3067cbaf3b54aa459f619e7c34f7adeefb94ee",
+        "results": [
+          {
+            "meeting": "engine-smoke30s-restored-20261105",
+            "exitCode": 15,
+            "workerState": "FAILED_BEFORE_RECEIPT",
+            "wholeProcessFamilySeconds": 55.737932,
+            "observedProcessFamilyPeakRssBytes": 650784768,
+            "observedProcessFamilyPeakPrivateBytes": 658227200,
+            "processFamilyCpuSeconds": 17.640625,
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\short-fresh\\results\\engine-smoke30s-restored-20261105-fresh-20261107\\completed-state.json",
+            "smokeOnly": true
+          }
+        ],
+        "referencePassedToWorker": false,
+        "stopReason": "Windows LowMemoryResourceNotification signaled; release only this experiment family",
+        "finishedAt": "2026-11-07T08:17:47+08:00"
+      },
+      "finishedAt": "2026-11-07T08:17:47+08:00"
+    },
+    "afterReusedWeightBuffer": {
+      "at": "2026-11-07T08:27:54+08:00",
+      "state": "SHORT_CONTROL_INCOMPLETE_NO_NEXT_STAGE",
+      "automaticFullMeetingAfterwards": false,
+      "newAccuracyScore": null,
+      "referenceOpened": false,
+      "stages": [],
+      "activeControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\short-fresh-r2",
+      "stage": "fresh",
+      "run": {
+        "state": "STOPPED_DURING_WORKER_WINDOWS_LOW_SYSTEM_RAM",
+        "startedAt": "2026-11-07T08:27:55+08:00",
+        "protocolSha256": "a4a7538bebc810180e39cecfd9b421dff4389d70779d514b0003abd48ed8090e",
+        "inputManifestSha256": "7b7427c089df8ba77b70a57d5e3067cbaf3b54aa459f619e7c34f7adeefb94ee",
+        "results": [
+          {
+            "meeting": "engine-smoke30s-restored-20261105",
+            "exitCode": 15,
+            "workerState": "FAILED_BEFORE_RECEIPT",
+            "wholeProcessFamilySeconds": 52.340095,
+            "observedProcessFamilyPeakRssBytes": 1309868032,
+            "observedProcessFamilyPeakPrivateBytes": 1388699648,
+            "processFamilyCpuSeconds": 27.71875,
+            "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\short-fresh-r2\\results\\engine-smoke30s-restored-20261105-fresh-20261107\\completed-state.json",
+            "smokeOnly": true
+          }
+        ],
+        "referencePassedToWorker": false,
+        "stopReason": "Windows LowMemoryResourceNotification signaled; release only this experiment family",
+        "finishedAt": "2026-11-07T08:28:47+08:00"
+      },
+      "finishedAt": "2026-11-07T08:28:47+08:00"
+    },
+    "qualified": false
+  },
+  "realPublishedWeightRoundtrip": {
+    "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+    "tensorCount": 683,
+    "dataBytesCopied": 1817026560,
+    "maximumTransferChunkBytes": 16777216,
+    "scratchBytes": 16777216,
+    "roundtripBufferBytes": 16777216,
+    "roundtripCpuBufferReused": true,
+    "fileSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+    "deviceRoundtripSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+    "targetDevice": "cuda:0",
+    "mmapUsed": false,
+    "wholeCpuStateDictCreated": false,
+    "seconds": 15.535644200004754
+  },
+  "fullResumeProofGate": {
+    "state": "PASS_UNQUALIFIED_FULL_GENERATION_RESUME_REFUSED_BEFORE_INFERENCE",
+    "suppliedProofState": "SHORT_CONTROL_INCOMPLETE_NO_NEXT_STAGE",
+    "wrapperState": "BATCH_FAILURE_RETAINED",
+    "modelWorkerLaunched": false,
+    "referenceContentOpened": false,
+    "reason": "Real native fresh/resume control has not passed; engineering tests cannot bypass it."
+  },
+  "modelWorkerRunning": false,
+  "automaticInferenceRetries": 0,
+  "newAccuracyScore": null,
+  "productModelChanged": false,
+  "phoneOrBoardIo": false,
+  "computerUse": false,
+  "rootCauseScope": "R24 native library access violation after2752 output tokens; this is not an accuracy score or proof of low-memory cause. Nearest exported symbols with large offsets are not an exact symbolized crash site. Related upstream gfx1201 first-dispatch reports do not prove identical root cause on this gfx1030 hours-long run.",
+  "decisionBasis": "Do not repeat the same long native run or start training. Preserve actual output and add bound durable generation recovery; investigate supported per-process single-dGPU visibility rather than binary DLL patches. Reused bounded CPU return buffers preserve every published weight byte but do not establish global RAM savings. Native resume control must pass before the full prefix can continue. Both current short attempts were stopped by actual Windows RAM pressure, not scored or auto-retried.",
+  "next": "当前暂停GPU重任务，不放宽CPU5%/private2GiB/低内存停止，不关闭其它应用；原生恢复对照因实际系统内存不足仍未通过。继续模型端可独立的分阶段装载设计：同权重声学预计算与文字解码分别退出/装载，先核原始特征/字节与普通语音保真，降低同时装载峰值。资源条件有实际变化后先完成固定30秒全量173-token与64-token续算对照，通过才从本轮2752-token恢复点继续原完整会议，结束后独立计CER/cpCER/人物/重叠/完整累计耗时。原最终保留集不碰，不在同场调参，不用局部分数替代<5%或整机资格。"
+}

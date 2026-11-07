@@ -11,6 +11,9 @@ parser.add_argument('--output-suffix',default='-20261106-r17')
 parser.add_argument('--prepared-inputs',help='Exact author tensor manifest from a completed, separate preprocessing process')
 parser.add_argument('--prepared-inputs-sha256')
 parser.add_argument('--retire-acoustic-after-encoding',action='store_true',help='Require passed affected short control, then release completed acoustic weights before decoder prefill')
+parser.add_argument('--generation-recovery-report',help='Verified, exited source attempt and retained-prefix adoption report')
+parser.add_argument('--generation-recovery-report-sha256')
+parser.add_argument('--generation-execution-proof',help='Passed same173-token fresh AND prefix-resumed native controls for these exact execution sources')
 args=parser.parse_args()
 assert all(c.isalnum() or c in '._-' for c in args.control_name)
 assert all(c.isalnum() or c in '._-' for c in args.output_suffix)
@@ -42,7 +45,32 @@ try:
         with Path(args.prepared_inputs).open('rb') as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==args.prepared_inputs_sha256
         protocol['runtime']['preparedInputs']={'manifest':str(Path(args.prepared_inputs).resolve()),'sha256':args.prepared_inputs_sha256}
         protocol['scope']+=' Exact original author processor tensors staged in a separate exited process, byte-bound to audio/pins. Model input values, shapes, context and generation unchanged.'
-    if args.retire_acoustic_after_encoding:
+    assert bool(args.generation_recovery_report)==bool(args.generation_recovery_report_sha256)
+    assert not args.generation_execution_proof or args.generation_recovery_report,'An execution proof alone does not select a recovery prefix'
+    if args.generation_recovery_report:
+        assert args.generation_execution_proof and args.retire_acoustic_after_encoding,'Prefix resume requires its actual native execution proof and tested acoustic retirement'
+        proof=read(args.generation_execution_proof)
+        assert proof['state']=='PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY' and proof.get('finishedAt')
+        assert len(proof['stages'])==2 and all(stage['sameAll173GeneratedIds'] and stage['tokenCount']==173 and stage['visibleGpuCount']==1 and stage['visibleGpuIndex']==0 for stage in proof['stages'])
+        for name,checksum in proof['verifiedSourceSha256'].items():
+            assert hashlib.sha256((q/'src'/name).read_bytes()).hexdigest()==checksum,'Verified generation execution source changed'
+        tested=read(Path(proof['stages'][0]['control'])/'frozen-protocol.json')
+        for key in ['modelRevision','officialSourceCommit','weightSha256']:assert tested[key]==protocol[key]
+        for key in ['torch','transformers','dtype','maxLength','queryBlock','keyBlock','encoderBatch','doSample','seed','systemPrivateMemoryBudgetBytes','workerCpuHardCapPercent']:
+            assert tested['runtime'][key]==protocol['runtime'][key],key
+        assert tested['runtime']['hipVisibleDeviceOrdinal']==1 and tested['runtime']['cooperativeGpuDuty']==.25
+        report_path=Path(args.generation_recovery_report).resolve()
+        assert hashlib.sha256(report_path.read_bytes()).hexdigest()==args.generation_recovery_report_sha256
+        report=read(report_path)
+        assert report['decodedTextExactlyMatchesOriginal'] and report['recoveryReadbackAllTokenIdsIdentical'] and not report['wholeMeetingComplete']
+        manifest=Path(report['recoveryManifest'])
+        assert hashlib.sha256(manifest.read_bytes()).hexdigest()==report['recoveryManifestSha256']
+        protocol['runtime'].update(generationCheckpointing=True,retireAcousticModulesAfterEncoding=True,hipVisibleDeviceOrdinal=1,
+            cooperativeGpuDuty=.25,rebuildableCacheRoot='E:/CodexData/Companion/.model-cache/full-generation-recovery-20261107',
+            resumeGeneration={'manifest':str(manifest),'sha256':report['recoveryManifestSha256'],'sourceReport':str(report_path),'sourceReportSha256':args.generation_recovery_report_sha256})
+        protocol['scope']='Continue original complete meeting/audio/context from verified retained generated token prefix, rebuilding full context without KV-cache claims. Same pinned weights/math and passed all173 native fresh/resume controls. Only RX6800XT visible; existing allowed cooperative duty.25, CPU5%/private2GiB/GPUidle/very-low page priority/actual Windows low-RAM stop. No training, reference/count/hotwords or automatic inference retries. Include all verified previous failed-attempt time in final scoring.'
+        state.update(ownerDirective='请继续吧, 你看看接下来从什么地方推进比较好',recoveryManifestSha256=report['recoveryManifestSha256'],recoveredGeneratedPrefixTokens=report['retainedGeneratedTokens'],priorInferenceAttemptProcessFamilySeconds=report['priorInferenceAttemptProcessFamilySeconds'])
+    elif args.retire_acoustic_after_encoding:
         proof=m/'acoustic-retirement-short-20261106-r23'
         verified=read(proof/'equivalence-result.json')
         assert verified['sameGeneratedIds'] and verified['generatedTokenCount']==verified['previousTokenCount']==173,'Affected execution control must pass first'
@@ -54,7 +82,7 @@ try:
         protocol['runtime']['workerMemoryPagePriority']=1
         protocol['scope']+=' Completed acoustic encoder/adaptor storage retired after original features are computed; same173 generated IDs in affected short control. All language weights, full audio context and generation remain unchanged. Low-RAM protections retained; system-RAM effect must be measured.'
         protocol['scope']+=' This worker alone uses Windows VERY_LOW memory-page reclaim priority (real readback); no forced working-set trim or changes to other processes. Reclaim hint, not a guaranteed RAM saving.'
-    assert protocol['runtime']['cooperativeGpuDuty']==.1 and protocol['runtime']['durableProgressWrites']
+    assert protocol['runtime']['cooperativeGpuDuty']==(.25 if args.generation_recovery_report else .1) and protocol['runtime']['durableProgressWrites']
     case=next(c for c in read(m/'public-audio-restore-r5.json')['cases'] if c['meeting']=='L_R003S01C02')
     for field,checksum in [('audio','audioSha256'),('reference','referenceSha256')]:
         with Path(case[field]).open('rb') as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==case[checksum]

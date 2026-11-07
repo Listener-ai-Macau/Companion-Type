@@ -63,7 +63,9 @@ try:
         if stage=='fresh': first_output=output
         else:
             assert worker['resumedPrefixTokens']==64 and worker['newGeneratedTokens']==109
-            state.update(state='PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY',verifiedSourceSha256={n:sha(M/'src'/n) for n in ['moss_night_gpu_worker_20261104.py','moss_generation_checkpoint_20261107.py','run_night_moss_gpu_20261104.py','moss_retire_acoustic_20261106.py','moss_streamed_weights_20261104.py']});save()
+            current={p.name:sha(p) for p in (M/'src').glob('*.py')}
+            assert all(read(Path(row['control'])/'frozen-source-sha256.json')==current for row in state['stages']),'Execution source changed between control stages'
+            state.update(state='PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY',verifiedSourceSha256=current);save()
 except BaseException as error:
     state.update(state='CONTROL_FAILURE_RETAINED',error=repr(error));save();raise
 finally:
