@@ -1,0 +1,30 @@
+{
+  "state": "RUNNING_EMBED",
+  "startedAt": "2026-11-07T11:42:34+08:00",
+  "pid": 10208,
+  "results": [
+    {
+      "meeting": "L_R003S01C02",
+      "stage": "segment",
+      "exitCode": 0,
+      "workerState": "COMPLETE_SEGMENTATION_CACHE",
+      "wholeProcessFamilySeconds": 101.08255920000374,
+      "privatePeakBytes": 234663936,
+      "rssPeakBytes": 273137664,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\segment-state.json",
+      "newNeuralItems": 2354,
+      "reusedCachedPrefix": 0
+    }
+  ],
+  "referencePassedToInference": false,
+  "automaticRetries": 0,
+  "protocolSha256": "c8594b528da76d5963840ca12117de9208106c041ebad1d093bf06da91364b3f",
+  "sourceSha256": {
+    "bounded_speaker_20261107.py": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304",
+    "run_bounded_speaker_20261107.py": "6f891b4a8cb21c54ddaea6436b5d736880b138eec03a8d97176f269684345aa5",
+    "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+  },
+  "activeMeeting": "L_R003S01C02",
+  "activePid": 24848
+}

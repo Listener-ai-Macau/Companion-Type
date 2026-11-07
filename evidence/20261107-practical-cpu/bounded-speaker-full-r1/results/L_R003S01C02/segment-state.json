@@ -1,0 +1,33 @@
+{
+  "state": "COMPLETE_SEGMENTATION_CACHE",
+  "stage": "segment",
+  "pid": 12748,
+  "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+  "referenceRead": false,
+  "gpuUsed": false,
+  "sourceSha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304",
+  "newNeuralItems": 2354,
+  "reusedCachedPrefix": 0,
+  "completed": 2354,
+  "total": 2354,
+  "limits": {
+    "pid": 12748,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 233439232,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "manifest": "E:\\CodexData\\Companion\\.model-cache\\bounded-speaker-20261107-full-r1\\L_R003S01C02\\segment.json",
+  "manifestSha256": "2c751312b8e2d52428769a157a71950179097ccadbc2298836edf9392cf22d2d",
+  "finishedAt": "2026-11-07T11:44:15+08:00",
+  "wholeWorkerSeconds": 99.80246910001733
+}
