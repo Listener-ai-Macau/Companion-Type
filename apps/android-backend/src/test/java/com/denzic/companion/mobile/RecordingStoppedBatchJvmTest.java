@@ -29,6 +29,14 @@ public final class RecordingStoppedBatchJvmTest {
    }
   }
   Link old=new Link(golden,66702,0);try(RecordingClient client=new RecordingClient(old)){prefer(client);check(old.hints==0);}
+  Link early=new Link(golden,66703,0);try(RecordingClient client=new RecordingClient(early)){
+   client.prepareStoppedReceive();check(early.hints==1);prefer(client);check(early.hints==1);
+  }
+  Link expired=new Link(golden,66703,0);try(RecordingClient client=new RecordingClient(expired)){
+   client.prepareStoppedReceive();byte[] first=expired.base.last.clone();Thread.sleep(2100);
+   prefer(client);check(expired.hints==2&&!Arrays.equals(first,expired.base.last));prefer(client);check(expired.hints==2);
+  }
+  Link unsupported=new Link(golden,66702,0);try(RecordingClient client=new RecordingClient(unsupported)){client.prepareStoppedReceive();prefer(client);check(unsupported.hints==0);}
   RecorderWire.Descriptor descriptor=RecorderWire.Descriptor.decode(Arrays.copyOfRange(golden,24,136));final long[] clock={1};RecordingTransferMetrics m=new RecordingTransferMetrics(()->clock[0]);m.segment(descriptor,0).verified();clock[0]=2;m.consumeStage(descriptor,0);clock[0]=3;m.consumeStage(descriptor,1);clock[0]=4;m.consumeStage(descriptor,2);String json=m.json();check(json.contains("\"originalVerifiedNanos\":1")&&json.contains("\"consumeLocalReadyNanos\":2")&&json.contains("\"consumeWriteCompletedNanos\":3")&&json.contains("\"consumeReplyReceivedNanos\":4")&&json.contains("\"firstWindowNanos\":null"));
   System.out.println("PASS_EXISTING_FINITE_BATCH_PROTOCOL_ONE_ATTEMPT_BUSY_TIMEOUT_FALLBACK_LINK_FAILURE_PROPAGATION_OLD_PEER_SKIP_AND_PHASES_DO_NOT_MOVE_PAYLOAD_START");
  }
