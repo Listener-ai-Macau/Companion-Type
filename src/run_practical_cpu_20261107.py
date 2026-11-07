@@ -3,13 +3,14 @@ from pathlib import Path
 from datetime import datetime
 import argparse,hashlib,json,os,psutil,subprocess,sys,time,traceback
 from moss_windows_resource_limits_20261104 import SystemRamPressure
+from practical_io_20261107 import atomic_json,stop_owned_family
 p=argparse.ArgumentParser();p.add_argument('--control',required=True);args=p.parse_args();C=Path(args.control)
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 protocol=read(C/'protocol.json');cases=read(C/'audio-only.json');scoring=read(C/'scoring-only.json');target=C/'run.json';assert not target.exists()
 state={'state':'PREPARING','startedAt':datetime.now().astimezone().isoformat(timespec='seconds'),'pid':os.getpid(),'results':[],'protocolSha256':sha(C/'protocol.json'),'sourceSha256':{name:sha(Path(__file__).with_name(name)) for name in ['practical_cpu_worker_20261107.py','run_practical_cpu_20261107.py','moss_windows_resource_limits_20261104.py','score_cross_corpus_diarization_20261103.py','reference_textgrid_20261104.py']},'referencePassedToInference':False,'automaticRetries':0}
 def save():
-    temp=target.with_suffix('.tmp');temp.write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,target)
-save();pressure=SystemRamPressure();psutil.cpu_percent(interval=None)
+    atomic_json(target,state)
+save();pressure=SystemRamPressure();psutil.cpu_percent(interval=None);child=None;family_root=None
 try:
     for proc in psutil.process_iter(['cmdline','name']):
         try:
@@ -59,4 +60,5 @@ try:
 except BaseException as error:
     state.update(state='CONTROLLER_FAILURE_RETAINED',error=repr(error),traceback=traceback.format_exc());raise
 finally:
+    if child is not None and child.poll() is None:state['ownWorkerReleasedOnControllerFailure']=stop_owned_family(child,family_root)
     pressure.close();state.update(finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'));state.pop('activePid',None);state.pop('activeMeeting',None);save();print(json.dumps(state,ensure_ascii=False),flush=True)

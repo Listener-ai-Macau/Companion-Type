@@ -1,0 +1,62 @@
+{
+  "at": "2026-11-07T10:23:58+08:00",
+  "route": "sherpa-onnx complete offline speaker segmentation/clean embedding/global clustering/count-constrained reconstruction",
+  "runtime": {
+    "python": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "sherpa-onnx": "1.13.4",
+    "nativeExtension": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\_sherpa_onnx.cp311-win_amd64.pyd",
+    "nativeExtensionSha256": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699",
+    "numThreads": 1,
+    "provider": "cpu",
+    "cpuPercent": 5,
+    "privateBudgetBytes": 2147483648,
+    "affinity": [
+      12,
+      13
+    ],
+    "memoryPagePriority": 1,
+    "systemLowRamStopsOwnFamily": true
+  },
+  "segmentation": {
+    "model": "E:\\CodexData\\Companion\\.model-cache\\practical-cpu-20261107-r1\\pyannote-segmentation-3.0.onnx",
+    "sha256": "220ad67ca923bef2fa91f2390c786097bf305bceb5e261d4af67b38e938e1079",
+    "precision": "published FP32 ONNX",
+    "source": {
+      "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-segmentation-models/sherpa-onnx-pyannote-segmentation-3-0.tar.bz2",
+      "assetId": null,
+      "size": 6958444,
+      "sha256": "24615ee884c897d9d2ba09bb4d30da6bb1b15e685065962db5b02e76e4996488",
+      "publisherDigest": null,
+      "metadataScope": "Asset name/size read from official release API; digest unavailable. Freeze downloaded SHA256, not an externally authenticated publisher digest."
+    }
+  },
+  "embedding": {
+    "model": "E:\\CodexData\\Companion\\.model-cache\\practical-cpu-20261107-r1\\3dspeaker_speech_eres2net_base_sv_zh-cn_3dspeaker_16k.onnx",
+    "sha256": "1a331345f04805badbb495c775a6ddffcdd1a732567d5ec8b3d5749e3c7a5e4b",
+    "source": {
+      "url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/3dspeaker_speech_eres2net_base_sv_zh-cn_3dspeaker_16k.onnx",
+      "assetId": null,
+      "size": 39593761,
+      "sha256": "1a331345f04805badbb495c775a6ddffcdd1a732567d5ec8b3d5749e3c7a5e4b",
+      "publisherDigest": null,
+      "metadataScope": "Asset name/size read from official release API; digest unavailable. Freeze downloaded SHA256, not an externally authenticated publisher digest."
+    }
+  },
+  "clustering": {
+    "numClusters": -1,
+    "threshold": 0.5
+  },
+  "minDurationOn": 0.3,
+  "minDurationOff": 0.5,
+  "decisionBasis": {
+    "oldResults": "R24 and R25 Windows HIP native long decoder crashes; single-GPU visibility and disjoint loading did not resolve them. Original ad-hoc CAM++ segment clustering fragmented whole L; speakrs baseline missed short speakers. Keep all old evidence.",
+    "differentThisTime": "Complete maintained sherpa pipeline: overlapping local speaker segmentation, speaker-masked embedding, one whole-recording complete-link clustering and reconstruction from local simultaneous-speaker count. Official Chinese ERes2Net embedding, no supplied count, no per-meeting threshold tuning. This is not the old plain VAD+CAM++ clustering or accepted improvement.",
+    "retainOnlyIf": "Exited whole-meeting result must improve attribution and short-speaker coverage with measured resources. Compare both frozen full development meetings. Do not adopt a fragmented or short-speaker-losing result even when average DER is low.",
+    "stop": "No same-condition HIP long retry, no threshold sweep, no training, no final holdout or default product-backend replacement."
+  },
+  "sources": [
+    "https://k2-fsa.github.io/sherpa/onnx/speaker-diarization/index.html",
+    "https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.4"
+  ],
+  "scope": "Speaker activity/anonymous identity only. This does not recover overlapped words, recognize names/roles, prove ASR<5%, phone performance or product qualification."
+}

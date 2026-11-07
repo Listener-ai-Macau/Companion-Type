@@ -1,0 +1,22 @@
+[
+  {
+    "meeting": "L_R003S01C02",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "audioSeconds": 2362.945,
+    "reference": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02.TextGrid",
+    "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+    "corpus": "AISHELL-4",
+    "referenceKind": "textgrid_lexical"
+  },
+  {
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "audioSeconds": 2327.119,
+    "reference": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\S_R004S03C01.TextGrid",
+    "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+    "corpus": "AISHELL-4",
+    "referenceKind": "textgrid_lexical"
+  }
+]

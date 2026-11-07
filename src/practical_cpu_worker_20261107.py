@@ -4,6 +4,7 @@ from datetime import datetime
 import argparse,hashlib,json,os,time,traceback,wave
 os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',TOKENIZERS_PARALLELISM='false')
 from moss_windows_resource_limits_20261104 import WorkerLimits
+from practical_io_20261107 import atomic_json
 p=argparse.ArgumentParser();p.add_argument('--control',required=True);p.add_argument('--index',required=True,type=int);args=p.parse_args()
 C=Path(args.control);protocol=json.loads((C/'protocol.json').read_text(encoding='utf8'));case=json.loads((C/'audio-only.json').read_text(encoding='utf8'))[args.index]
 assert not any('reference' in k.lower() for k in case)
@@ -13,7 +14,8 @@ now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 state={'state':'LOADING_CPU_DIARIZATION','startedAt':now(),'pid':os.getpid(),'meeting':case['meeting'],'audioSha256':case['audioSha256'],'referencePassedToWorker':False,'modelGpuUsed':False}
 started=time.perf_counter()
 def save():
-    state['limits']=limits.query();temp=out/'state.tmp';temp.write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,out/'state.json')
+    state['limits']=limits.query()
+    if not atomic_json(out/'state.json',state,progress=True):state['progressWriteDeferrals']=state.get('progressWriteDeferrals',0)+1
 def checksum(path):
     with Path(path).open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
 save()
@@ -54,5 +56,5 @@ except BaseException as error:
     state.update(state='FAILED_RETAINED',error=repr(error),traceback=traceback.format_exc());raise
 finally:
     state.update(finishedAt=now(),wholeWorkerSeconds=time.perf_counter()-started);save()
-    (out/'completed-state.json').write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+    atomic_json(out/'completed-state.json',state)
     print(json.dumps(state,ensure_ascii=False),flush=True)
