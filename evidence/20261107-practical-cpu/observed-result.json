@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T11:45:48+08:00",
+  "at": "2026-11-07T11:57:26+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -423,5 +423,6 @@
   "finalHoldoutOpened": false,
   "qualityQualified": false,
   "state": "RUNNING_FROZEN_FULL_SPEAKER_BATCH",
+  "candidateAssessment": null,
   "next": "继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。"
 }

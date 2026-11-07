@@ -1,0 +1,91 @@
+{
+  "state": "PASS_MISSING_COMPLETED_RAW_REFUSED_AND_REFUSAL_PERSISTS",
+  "actualPublicAudio": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+  "originalTaskModified": false,
+  "runs": [
+    {
+      "attempt": 1,
+      "returnCode": 1,
+      "receipt": {
+        "state": "FAILED_RETAINED_RESUMABLE",
+        "pid": 10016,
+        "startedAt": "2026-11-07T11:54:04+08:00",
+        "meeting": "recording-2ef90eaa6d0c8529",
+        "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+        "referencePassedToWorker": false,
+        "gpuUsed": false,
+        "completedWindows": 0,
+        "newNeuralWindows": 0,
+        "modelLoaded": false,
+        "priorAttemptSeconds": 5.368133199954173,
+        "limits": {
+          "pid": 10016,
+          "cpuRate": 500,
+          "cpuControlFlags": 5,
+          "cpuPercentMaximum": 5.0,
+          "inLimitedJob": true,
+          "jobPrivateCommitLimitBytes": 2147483648,
+          "jobMemoryLimitEnabled": true,
+          "jobPeakPrivateCommitBytes": 12603392,
+          "cpuPriorityClass": 64,
+          "memoryPagePriority": 1,
+          "memoryPagePriorityIsReclaimHintNotRamCap": true,
+          "gpuPriorityClass": 0,
+          "gpuUtilizationHardCapped": false,
+          "scope": "This worker and its descendants only; no global or other-app changes."
+        },
+        "priorAttemptTimeIncomplete": false,
+        "cachedOnly": true,
+        "audioSeconds": 30.0,
+        "totalWindows": 1,
+        "error": "AssertionError('Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.')",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_transcript_worker_20261107.py\", line 59, in <module>\n    assert not a.cached_only,'Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.'\n           ^^^^^^^^^^^^^^^^^\nAssertionError: Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.\n",
+        "finishedAt": "2026-11-07T11:54:04+08:00",
+        "wholeWorkerSeconds": 0.30676219999440946
+      },
+      "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_transcript_worker_20261107.py\", line 59, in <module>\n    assert not a.cached_only,'Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.'\n           ^^^^^^^^^^^^^^^^^\nAssertionError: Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.\n"
+    },
+    {
+      "attempt": 2,
+      "returnCode": 1,
+      "receipt": {
+        "state": "FAILED_RETAINED_RESUMABLE",
+        "pid": 13536,
+        "startedAt": "2026-11-07T11:54:05+08:00",
+        "meeting": "recording-2ef90eaa6d0c8529",
+        "audioSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+        "referencePassedToWorker": false,
+        "gpuUsed": false,
+        "completedWindows": 0,
+        "newNeuralWindows": 0,
+        "modelLoaded": false,
+        "priorAttemptSeconds": 5.674895399948582,
+        "limits": {
+          "pid": 13536,
+          "cpuRate": 500,
+          "cpuControlFlags": 5,
+          "cpuPercentMaximum": 5.0,
+          "inLimitedJob": true,
+          "jobPrivateCommitLimitBytes": 2147483648,
+          "jobMemoryLimitEnabled": true,
+          "jobPeakPrivateCommitBytes": 12517376,
+          "cpuPriorityClass": 64,
+          "memoryPagePriority": 1,
+          "memoryPagePriorityIsReclaimHintNotRamCap": true,
+          "gpuPriorityClass": 0,
+          "gpuUtilizationHardCapped": false,
+          "scope": "This worker and its descendants only; no global or other-app changes."
+        },
+        "priorAttemptTimeIncomplete": false,
+        "cachedOnly": true,
+        "audioSeconds": 30.0,
+        "totalWindows": 1,
+        "error": "AssertionError('Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.')",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_transcript_worker_20261107.py\", line 59, in <module>\n    assert not a.cached_only,'Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.'\n           ^^^^^^^^^^^^^^^^^\nAssertionError: Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.\n",
+        "finishedAt": "2026-11-07T11:54:05+08:00",
+        "wholeWorkerSeconds": 0.19377790001453832
+      },
+      "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_transcript_worker_20261107.py\", line 59, in <module>\n    assert not a.cached_only,'Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.'\n           ^^^^^^^^^^^^^^^^^\nAssertionError: Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.\n"
+    }
+  ]
+}

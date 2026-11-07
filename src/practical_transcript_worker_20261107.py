@@ -6,7 +6,7 @@ os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='
 from moss_windows_resource_limits_20261104 import WorkerLimits
 from practical_transcript_20261107 import align_window,normalized_journal
 from practical_io_20261107 import atomic_json
-p=argparse.ArgumentParser();p.add_argument('--control',required=True);p.add_argument('--index',type=int,required=True);p.add_argument('--resume',action='store_true');p.add_argument('--text-only',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--control',required=True);p.add_argument('--index',type=int,required=True);p.add_argument('--resume',action='store_true');p.add_argument('--text-only',action='store_true');p.add_argument('--cached-only',action='store_true');a=p.parse_args()
 C=Path(a.control);read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));case=read(C/'audio-only.json')[a.index];protocol=read(C/'asr-protocol.json')
 limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3);out=C/'transcripts'/case['meeting'];out.mkdir(parents=True,exist_ok=a.resume)
 chunks=out/'windows';chunks.mkdir(exist_ok=a.resume)
@@ -15,13 +15,17 @@ def sha(path):
     with Path(path).open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
 def write(path,value):
     if not atomic_json(path,value,progress=path.name=='state.json'):state['progressWriteDeferrals']=state.get('progressWriteDeferrals',0)+1
-tick=time.perf_counter();state={'state':'LOADING_EXISTING_CPU_ASR','pid':os.getpid(),'startedAt':now(),'meeting':case['meeting'],'audioSha256':case['audioSha256'],'referencePassedToWorker':False,'gpuUsed':False,'completedWindows':0,'newNeuralWindows':0,'priorAttemptSeconds':0.,'limits':limits.query()}
+tick=time.perf_counter();state={'state':'LOADING_EXISTING_CPU_ASR','pid':os.getpid(),'startedAt':now(),'meeting':case['meeting'],'audioSha256':case['audioSha256'],'referencePassedToWorker':False,'gpuUsed':False,'completedWindows':0,'newNeuralWindows':0,'modelLoaded':False,'priorAttemptSeconds':0.,'limits':limits.query()}
 if a.resume:
     old=read(out/'state.json');assert old['meeting']==case['meeting'] and old['audioSha256']==case['audioSha256']
+    # A completed recognition may only be re-derived, never silently sent
+    # through the neural recognizer after cleanup removes a committed file.
+    if old.get('state')=='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED' or old.get('cachedOnly'):a.cached_only=True
     snapshot=out/('prior-state-'+sha(out/'state.json')[:12]+'.json')
     if not snapshot.exists():snapshot.write_bytes((out/'state.json').read_bytes())
     state['priorAttemptSeconds']=old.get('priorAttemptSeconds',0)+old.get('wholeWorkerSeconds',old.get('newAttemptSeconds',0))
     state['priorAttemptTimeIncomplete']=old.get('priorAttemptTimeIncomplete',False) or 'wholeWorkerSeconds' not in old
+state['cachedOnly']=a.cached_only
 write(out/'state.json',state)
 try:
     assert sha(case['audio'])==case['audioSha256']
@@ -52,12 +56,14 @@ try:
                 raw=packet['raw'];assert hashlib.sha256(canonical(raw)).hexdigest()==packet['rawSha256'],'Durable raw ASR changed'
                 assert raw['index']==index and raw['startSample']==start and raw['endSample']==end;reused+=1
             else:
+                assert not a.cached_only,'Completed raw ASR cache is missing; no new model was loaded. Original audio/results retained.'
                 if rec is None:
                     import numpy as np,sherpa_onnx
                     import sherpa_onnx.lib._sherpa_onnx as native
                     assert sherpa_onnx.__version__==protocol['runtimeVersion'] and sha(native.__file__)==protocol['nativeExtensionSha256']
                     before_load=time.perf_counter()
                     rec=sherpa_onnx.OfflineRecognizer.from_sense_voice(model=protocol['modelFiles']['model.int8.onnx']['file'],tokens=protocol['modelFiles']['tokens.txt']['file'],num_threads=1,provider='cpu',language='zh',use_itn=True)
+                    state['modelLoaded']=True
                     state['modelLoadSeconds']=time.perf_counter()-before_load
                 audio.setpos(start);samples=np.frombuffer(audio.readframes(end-start),dtype='<i2').astype(np.float32)/32768
                 assert len(samples)==end-start
