@@ -1,0 +1,33 @@
+{
+  "state": "IMPORTING_NATIVE_TORCH",
+  "pid": 22112,
+  "startedAt": "2026-11-07T20:07:51+08:00",
+  "stage": "asr",
+  "binding": {
+    "protocolSha256": "a2f8f6c1ab9ad33fbe779b9bb9f2d9129843d435516034f7b5ec043d3a39c30b",
+    "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+    "workerSourceSha256": "54b466f4108097c5c2485c8633b4dc2dc33a90f75dd3e27ed8e04ce43bf3ed8d"
+  },
+  "newNeuralCalls": 0,
+  "reusedOutputs": 0,
+  "completedInputs": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 22112,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 336793600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT"
+}

@@ -1,0 +1,8 @@
+{
+  "stage": "Public download before model execution",
+  "state": "DIRECT_TLS_EOF_DURING_PINNED_METADATA_TRANSFER",
+  "neuralInferenceStarted": false,
+  "networkRoutingChanged": false,
+  "source": "prepare_practical_ps4_20261107.py first attempt; returned URLError SSLEOFError at metadata resolve redirect",
+  "next": "Use the pinned raw-text endpoint and verify the same published Git blob; public weight transfer remains direct."
+}

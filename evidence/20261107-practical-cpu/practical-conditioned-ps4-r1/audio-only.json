@@ -1,0 +1,202 @@
+[
+  {
+    "id": "S_R004S03C01-root-000001",
+    "meeting": "S_R004S03C01",
+    "kind": "ordinary-single-person-forced-extraction-control",
+    "rootIndex": 1,
+    "startSample": 480000,
+    "endSample": 960000,
+    "predictedOverlapSeconds": 0.0,
+    "predictedTripleSeconds": 0.0,
+    "predictedSoloSeconds": 29.210000017657876,
+    "predictedPeople": [
+      0
+    ],
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\S_R004S03C01-root-000001-mixture.wav",
+    "audioSha256": "f5c8f06081d43e0e5f6b95bc83a0ac5f406fc65ca88856148d027bdd59fe6207",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "originalFullAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\speaker-journal.json",
+    "journalSha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 2688240,
+        "endSample": 2816240,
+        "sourceSoloRegion": {
+          "start": 139.1599968895316,
+          "end": 204.86999542079866,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\S_R004S03C01-anchor-0.wav",
+        "audioSha256": "3a1596ba1bfbae02a91150763338a5dcfde3837e2cc8eb570d69cdd49a9842c3",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": [],
+    "originalRootRawFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\full\\transcripts\\S_R004S03C01\\nodes\\000001-root.json"
+  },
+  {
+    "id": "L_R003S01C02-root-000029",
+    "meeting": "L_R003S01C02",
+    "kind": "predicted-two-person-overlap",
+    "rootIndex": 29,
+    "startSample": 13920000,
+    "endSample": 14400000,
+    "predictedOverlapSeconds": 5.049999887123704,
+    "predictedTripleSeconds": 0.30999999307096004,
+    "predictedSoloSeconds": 21.99000017903745,
+    "predictedPeople": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-root-000029-mixture.wav",
+    "audioSha256": "8df81aaf36a29a344f80de98af55554f5f3a067540a3489653ee235956c07a2c",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 2,
+        "startSample": 2571200,
+        "endSample": 2699200,
+        "sourceSoloRegion": {
+          "start": 154.90999653749168,
+          "end": 174.48999609984457,
+          "people": [
+            2
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+        "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 4,
+        "startSample": 1310720,
+        "endSample": 1438720,
+        "sourceSoloRegion": {
+          "start": 67.2899984959513,
+          "end": 104.5499976631254,
+          "people": [
+            4
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+        "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 5,
+        "startSample": 4413360,
+        "endSample": 4541360,
+        "sourceSoloRegion": {
+          "start": 268.0099940095097,
+          "end": 291.659993480891,
+          "people": [
+            5
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+        "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": [],
+    "originalRootRawFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\full\\transcripts\\L_R003S01C02\\nodes\\000029-root.json"
+  },
+  {
+    "id": "L_R003S01C02-root-000031",
+    "meeting": "L_R003S01C02",
+    "kind": "predicted-three-plus-overlap",
+    "rootIndex": 31,
+    "startSample": 14880000,
+    "endSample": 15360000,
+    "predictedOverlapSeconds": 3.9799999110400677,
+    "predictedTripleSeconds": 1.0099999774247408,
+    "predictedSoloSeconds": 24.640000119805336,
+    "predictedPeople": [
+      0,
+      1,
+      3
+    ],
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-root-000031-mixture.wav",
+    "audioSha256": "631c6bc436250af95d442697a516da1a7db804686e604702bc135a5c0d039317",
+    "audioSeconds": 30.0,
+    "originalFullAudio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\L_R003S01C02-channel1.wav",
+    "originalFullAudioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+    "journal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\L_R003S01C02\\speaker-journal.json",
+    "journalSha256": "6cc6a8828d6d48ede22fcb0e4df948c0d81ee051906edf0ce892d5de5efc492e",
+    "anchors": [
+      {
+        "speaker": 0,
+        "startSample": 31053759,
+        "endSample": 31181759,
+        "sourceSoloRegion": {
+          "start": 1933.4399567842484,
+          "end": 1956.2799562737346,
+          "people": [
+            0
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+        "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 1,
+        "startSample": 6870480,
+        "endSample": 6998480,
+        "sourceSoloRegion": {
+          "start": 423.67999053001404,
+          "end": 443.12999009527266,
+          "people": [
+            1
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+        "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+        "audioSeconds": 8.0
+      },
+      {
+        "speaker": 3,
+        "startSample": 12805120,
+        "endSample": 12933120,
+        "sourceSoloRegion": {
+          "start": 799.3699821326882,
+          "end": 809.2699819114059,
+          "people": [
+            3
+          ]
+        },
+        "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+        "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+        "audioSeconds": 8.0
+      }
+    ],
+    "peopleWithoutPredictedSoloAnchor": [],
+    "originalRootRawFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\full\\transcripts\\L_R003S01C02\\nodes\\000031-root.json"
+  }
+]

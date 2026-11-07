@@ -1,0 +1,37 @@
+{
+  "state": "FAILED_PS4_SEPARATION_RETAINED_NO_AUTOMATIC_RETRY",
+  "pid": 7528,
+  "startedAt": "2026-11-07T20:03:11+08:00",
+  "stage": "separation",
+  "binding": {
+    "protocolSha256": "c275bd222f81c785c61e1fa390056183bf42e3e90c09768696b57aab46c9e152",
+    "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+    "workerSourceSha256": "cbe7830469f03f882c126e0d8595b0f3d5ee0f08ec87221992b8f83bb7db7b0b"
+  },
+  "newNeuralCalls": 0,
+  "reusedOutputs": 0,
+  "completedInputs": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 7528,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 338219008,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "error": "ModuleNotFoundError(\"No module named 'torchaudio'\")",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_ps4_worker_20261107.py\", line 43, in <module>\n    module_file=Path(ready['sourceRoot'])/'inference.py';spec=importlib.util.spec_from_file_location('pinned_ps4_author',module_file);author=importlib.util.module_from_spec(spec);spec.loader.exec_module(author)\n                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap_external>\", line 940, in exec_module\n  File \"<frozen importlib._bootstrap>\", line 241, in _call_with_frames_removed\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\upstream-tse\\ps4-8feb7a1b3da1264659f155c42bfb40a5be88d730\\inference.py\", line 47, in <module>\n    import torchaudio\nModuleNotFoundError: No module named 'torchaudio'\n",
+  "finishedAt": "2026-11-07T20:03:14+08:00",
+  "wholeWorkerSeconds": 2.4703868000069633
+}

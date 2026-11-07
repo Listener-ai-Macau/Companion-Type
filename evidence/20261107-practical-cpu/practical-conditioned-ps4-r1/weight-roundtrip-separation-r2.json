@@ -1,0 +1,12 @@
+{
+  "state": "ALL_EXACT_AUTHOR_STATE_TENSORS_LOADED_AND_GPU_BYTES_VERIFIED",
+  "tensors": 754,
+  "sourceTensorHash": "07fb6ac6f500d981b76221a1ef4c31c2d9d1038faaf8c7bbdd6aedd332bc13de",
+  "deviceTensorHash": "07fb6ac6f500d981b76221a1ef4c31c2d9d1038faaf8c7bbdd6aedd332bc13de",
+  "uniformDdpPrefixRemoved": false,
+  "strictMissingKeys": [],
+  "strictUnexpectedKeys": [],
+  "authorInferenceSourceUnmodified": true,
+  "safeWeightsOnlyLoad": true,
+  "mmapCheckpoint": true
+}

@@ -1,0 +1,24 @@
+{
+  "state": "FAILED_PS4_COMPONENT_RETAINED_NO_AUTOMATIC_RETRY",
+  "pid": 3584,
+  "startedAt": "2026-11-07T20:03:06+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "stage": "inventory",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 5.083631299989065,
+      "privatePeakBytes": 324079616
+    },
+    {
+      "stage": "separation",
+      "exitCode": 1,
+      "wholeProcessFamilySeconds": 4.055217499990249,
+      "privatePeakBytes": 314064896
+    }
+  ],
+  "automaticModelFailureRetries": 0,
+  "qualityQualified": false,
+  "stage": "separation",
+  "finishedAt": "2026-11-07T20:03:15+08:00"
+}

@@ -1,0 +1,82 @@
+{
+  "_id": "6a4f6af2f517e5282dc8a57d",
+  "id": "TaurenMountain/PS4",
+  "private": false,
+  "pipeline_tag": "audio-to-audio",
+  "tags": [
+    "audio",
+    "speech",
+    "target-speaker-extraction",
+    "speaker-extraction",
+    "bsrnn",
+    "ecapa-tdnn",
+    "whisper",
+    "audio-to-audio",
+    "zh",
+    "en",
+    "dataset:TaurenMountain/REAL-PS4",
+    "arxiv:2607.08111",
+    "license:apache-2.0",
+    "region:us"
+  ],
+  "downloads": 0,
+  "likes": 3,
+  "modelId": "TaurenMountain/PS4",
+  "author": "TaurenMountain",
+  "sha": "8feb7a1b3da1264659f155c42bfb40a5be88d730",
+  "lastModified": "2026-08-08T09:48:34.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {},
+  "cardData": {
+    "license": "apache-2.0",
+    "language": [
+      "zh",
+      "en"
+    ],
+    "tags": [
+      "audio",
+      "speech",
+      "target-speaker-extraction",
+      "speaker-extraction",
+      "bsrnn",
+      "ecapa-tdnn",
+      "whisper"
+    ],
+    "datasets": [
+      "TaurenMountain/REAL-PS4"
+    ],
+    "pipeline_tag": "audio-to-audio"
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+      "size": 1519
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "e90daeba53976ec6eec17c88da56e7df6aa6273f",
+      "size": 6247
+    },
+    {
+      "rfilename": "checkpoint_epoch037.pt",
+      "blobId": "4803df687ffc6a2d7120a4aafbe2fea6cc20b999",
+      "size": 282746518,
+      "lfs": {
+        "sha256": "3d5621c89e4af7d6a42180604aa191962636826b244c86cc3ac5bc2508064196",
+        "size": 282746518,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "inference.py",
+      "blobId": "cc1bcecaea5cede9b66de0bfbacd017b1c641eba",
+      "size": 33406
+    }
+  ],
+  "spaces": [],
+  "createdAt": "2026-07-09T09:33:38.000Z",
+  "usedStorage": 282746518
+}

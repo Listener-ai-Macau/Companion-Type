@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-07T20:03:05+08:00",
+  "state": "FROZEN_BEFORE_PS4_NEURAL_INFERENCE",
+  "workerSourceSha256": "cbe7830469f03f882c126e0d8595b0f3d5ee0f08ec87221992b8f83bb7db7b0b",
+  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+  "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+  "helperSources": {
+    "practical_qwen_streamed_loader_20261107.py": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e",
+    "practical_qwen_bounded_decode_20261107.py": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+    "practical_qwen_input_20261107.py": "d47d48791521bd3fd9ba09dd78c088e5a49d0dc0bc0a507c589855a340554107"
+  },
+  "nativeAsrProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\native-protocol.json",
+  "nativeAsrProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "derivedAudioRoot": "E:/CodexData/Companion/.model-cache/ps4-target-extraction-20261107/extracted",
+  "separation": "Unmodified complete author build_model/extract_speaker, exact matching state tensors, strict load, FP32/eval, matching embedded ECAPA encoder. Both mixture/enrollment separately peak-normalized as official CLI. Every predicted active person with automatically chosen same-meeting solo anchor is extracted. No reference/name/count or output-track deletion.",
+  "asr": "Same pinned native1.7B/BF16/eager/greedy512/Chinese/no-context and bounded raw-preserving recovery. Every extracted lane is transcribed; exact-zero pipeline guard only. Source mixture full-ASR cache retained, not re-recognized.",
+  "scoring": "Replace only selected original30s root text in the existing complete per-person Document, leave all other full-meeting text unchanged, then score against the entire original reference. All duplicate/missing/incorrect lanes count. Report global cpCER and independently fixed full-speaker DER mapping/unknown-unmatched diagnostic; no per-clip oracle mapping or boundary-word discard. Categories use full reference utterances, not a claimed pure overlap-word score.",
+  "retainRule": "Require fewer whole-L fixed-mapping/unknown-unmatched content edits than the frozen baseline, no worse full-S ordinary control edits, and no new complete-execution failure. Otherwise retain raw outputs and reject scaling this exact candidate; no threshold/window/enrollment sweep. Improvements are development component evidence, never full<5%, final holdout or sale acceptance.",
+  "singleSpeakerProtection": "Ordinary production route retains source recording; forced extraction is an explicit damage control, not silently applied by default.",
+  "trainingOverlapWithThesePublicRecordingsUnknown": true,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "cpuPercentMaximum": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "modelStagesSequential": true
+}

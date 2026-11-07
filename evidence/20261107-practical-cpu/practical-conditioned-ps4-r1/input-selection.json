@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-07T20:00:16+08:00",
+  "state": "AUDIO_AND_PREDICTED_ACTIVITY_ONLY_SELECTION_FROZEN_BEFORE_NEW_INFERENCE",
+  "rule": "First complete30s native-ASR root with>=5s predicted overlap and<1s predicted triple; first distinct complete root with>=1s predicted triple. First ordinary complete root with one predicted person,>=20s solo activity and no overlap. Enrollment is central<=8s of each persons longest predicted solo region,>=3s after60ms boundary guards. No GT, words, names, source count or new-output selection.",
+  "meetings": [
+    {
+      "meeting": "S_R004S03C01",
+      "estimatedPeople": 5,
+      "availableAnchors": [
+        {
+          "speaker": 0,
+          "startSample": 2688240,
+          "endSample": 2816240,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 1,
+          "startSample": 31059439,
+          "endSample": 31187439,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 2,
+          "startSample": 10481200,
+          "endSample": 10609200,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 3,
+          "startSample": 23587839,
+          "endSample": 23715839,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 4,
+          "startSample": 21685920,
+          "endSample": 21813920,
+          "audioSeconds": 8.0
+        }
+      ],
+      "selectionUsesOnlyFrozenPredictedActivity": true
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "estimatedPeople": 6,
+      "availableAnchors": [
+        {
+          "speaker": 0,
+          "startSample": 31053759,
+          "endSample": 31181759,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 1,
+          "startSample": 6870480,
+          "endSample": 6998480,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 2,
+          "startSample": 2571200,
+          "endSample": 2699200,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 3,
+          "startSample": 12805120,
+          "endSample": 12933120,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 4,
+          "startSample": 1310720,
+          "endSample": 1438720,
+          "audioSeconds": 8.0
+        },
+        {
+          "speaker": 5,
+          "startSample": 4413360,
+          "endSample": 4541360,
+          "audioSeconds": 8.0
+        }
+      ],
+      "selectionUsesOnlyFrozenPredictedActivity": true
+    }
+  ],
+  "allActivePredictedPeopleExtractedWhenAnAnchorExists": true,
+  "noAnchorRemainsExplicit": true,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 15156,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 11653120,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
