@@ -41455,7 +41455,7 @@
           "M_R003S01C01",
           "L_R003S01C02"
         ],
-        "currentQualification": "NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state OFFICIAL_NATIVE_ASR_RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR_SALE_OPEN. Overlap words/facts/installed mobile-card/final holdout/sale still open."
+        "currentQualification": "NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state OFFICIAL_NATIVE_ASR_STOPPED_ACTUAL_WINDOWS_LOW_RAM_SALE_OPEN. Overlap words/facts/installed mobile-card/final holdout/sale still open."
       },
       "executionOrder": [
         "QM04",
@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T16:11:27+08:00",
+            "at": "2026-11-07T16:44:13+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "4ad0b57bb382477710c312aa29f8fe6fd500312d",
+            "modelEvidenceCommit": "f60f9389da634e641aa254f832d02454ee48b9bc",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41641,7 +41641,7 @@
           "currentStatus": "OPEN",
           "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
           "nativeVerbatimDevelopment20261107": {
-            "at": "2026-11-07T16:11:27+08:00",
+            "at": "2026-11-07T16:44:13+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
             "rawCer": {
               "S_R004S03C01": 0.06954954954954955,
@@ -41658,9 +41658,9 @@
             "defaultProductChanged": false
           },
           "officialNativeQwenControl20261107": {
-            "at": "2026-11-07T16:11:27+08:00",
+            "at": "2026-11-07T16:44:13+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1",
-            "state": "OFFICIAL_NATIVE_ASR_RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR_SALE_OPEN",
+            "state": "OFFICIAL_NATIVE_ASR_STOPPED_ACTUAL_WINDOWS_LOW_RAM_SALE_OPEN",
             "noNewQualityScoreUnlessFullCompleted": true
           }
         },
@@ -131505,7 +131505,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Original CP09-02/CP23-10: fix demonstrated first-payload/data-delivery and physical-reclaim costs while preserving any-length50 inclusive endpoint; intermittent133 remains open. Current cold5/radio10 repeated reliability and final longevity, actual current OTA postpayload100 and original app budget remain. Do not repeat ineffective HIGH/background/scan branches without new evidence. Explicit battery/acoustic/screen/production/newCapture blocks unchanged.",
+      "next": "Finish exact094 install and real short originals/reclaim/rate comparison. HCI actual failed links: connection-complete success then0x3E disconnect about172ms, before encryption; not established GATT owner-leak closure. RF current captures normal links only, no failed air sequence yet. HCI fresh short PULL starts270-450ms before priority negotiation completes, now primed concurrently atSTOP; no wait/endpoint moved or firmware growth. Any-length50 remains mandatory; evaluate real benefit before keeping094. nRF capture absolute timestamps show queued-frame anchor issue; internal per-link intervals used, no cross-clock precision claim. Preparation failures retained, cold series during failed redirection has no RF evidence.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -134066,20 +134066,23 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T16:06:19+08:00",
-        "state": "093_INSTALLED_UI_REGRESSION_FIXED_LIVE092_PASS_SHORT50_AND133_OPEN_IDLE",
+        "at": "2026-11-07T16:43:05+08:00",
+        "state": "093_INSTALLED_HCI_ROOT_LAYER_LOCATED_094_STOP_PRIME_BUILDING",
         "firmwareInstalled": 66706,
         "phoneInstalled": "0.1.93",
         "firmwareSource": "f43a85c5dc9d6a818ebd087257c441037efc5245",
         "phoneSourceCommit": "5283eaee26031ead8a01a27b132568e76feb9674",
         "backendSourceCommit": "c9d6870d7ed3953f746ee4bff7f8dda13399969d",
-        "boardLease": false,
-        "boardItem": null,
+        "candidatePhoneSource": "26f5514c6f10d5c5e47a5d78a56c43e24452eb7c",
+        "candidateBackendSource": "85444676596f605851ea9e22e35b6f042129cb2f",
+        "boardLease": true,
+        "boardItem": "Companion133及短录耗时HCI与nRF52840定位",
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
-        "ownLatestSession": 307,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\stability091093\\progress.json"
+        "ownLatestSession": 308,
+        "activeExternalSniffer": false,
+        "evidence": "E:/CodexData/Companion/.build-cache/stability-hci093/short-pull-radio-phases.json"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -134292,9 +134295,9 @@
         ]
       },
       "lastOwnerRequest": {
-        "at": "2026-11-07T15:34:41+08:00",
-        "text": "继续要推进才行, 很不稳定啊",
-        "handling": "Continue original CP09-02/CP23-10; stability first, any-length50 including reclaim retained. No new task tree."
+        "at": "2026-11-07T16:43:05+08:00",
+        "text": "继续看看怎么修复一下, 需要抓包器吗；已经接好了, 在拓展坞, 手机旁边；我还按下了reset按钮",
+        "handling": "Continue original CP09-02/CP23-10. Actual PCA10059 C06430228A01 identified and app-only official sniffer4.1.1 loaded; nowCOM14. No Companion reset/flash. Phone HCI captured; source094 prepares HIGH earlier during STOP, real any-length50 acceptance pending."
       },
       "recordingCompletionProgress": {
         "at": "2026-11-07T10:02:37+08:00",
@@ -135233,7 +135236,7 @@
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
-        "currentBoardLeaseHeld": false,
+        "currentBoardLeaseHeld": true,
         "customerResult": null,
         "ordinaryPhoneContinuation": {
           "at": "2026-11-06T11:48:03+08:00",
@@ -140662,11 +140665,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "OFFICIAL_NATIVE_ASR_RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR_SALE_OPEN",
+          "status": "OFFICIAL_NATIVE_ASR_STOPPED_ACTUAL_WINDOWS_LOW_RAM_SALE_OPEN",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原35%等失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。",
+          "next": "收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原跨域和加载失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -141990,7 +141993,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T16:11:27+08:00",
+              "at": "2026-11-07T16:44:13+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -144799,7 +144802,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "OFFICIAL_NATIVE_ASR_RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR_SALE_OPEN",
+              "state": "OFFICIAL_NATIVE_ASR_STOPPED_ACTUAL_WINDOWS_LOW_RAM_SALE_OPEN",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -150042,7 +150045,7 @@
                 "qualityQualified": false,
                 "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
               },
-              "next": "收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原35%等失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。",
+              "next": "收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原跨域和加载失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。",
               "lastOwnerQuote": "继续推进一下, 达到可售卖标准才行, 要在正确方向上行走",
               "nativeVerbatimPreparation": {
                 "at": "2026-11-07T15:04:06+08:00",
@@ -150466,16 +150469,37 @@
                   "wholeWorkerSeconds": 44.56035380001413
                 },
                 "full/run.json": {
-                  "state": "RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR",
-                  "pid": 7540,
-                  "startedAt": "2026-11-07T16:10:02+08:00",
-                  "priorAttemptReceipts": [],
+                  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+                  "pid": 14452,
+                  "startedAt": "2026-11-07T16:43:34+08:00",
+                  "priorAttemptReceipts": [
+                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0001.json",
+                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0002.json",
+                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0003.json",
+                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0004.json",
+                    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0005.json"
+                  ],
                   "automaticRetries": 0,
                   "referencePassedToWorker": false,
                   "qualityQualified": false,
-                  "results": [],
-                  "activePid": 21660,
-                  "activeMeeting": "S_R004S03C01"
+                  "results": [
+                    {
+                      "meeting": "S_R004S03C01",
+                      "exitCode": 15,
+                      "wholeProcessFamilySeconds": 15.28911290000542,
+                      "accumulatedProcessFamilySeconds": 1088.1452462000016,
+                      "sampledPrivatePeakBytes": 513478656
+                    }
+                  ],
+                  "recoveryObservation": {
+                    "previousAvailableBytes": 920797184,
+                    "releasedOwnPrivatePeakUpperBound": 1239773184,
+                    "currentAvailableBytes": 2603294720,
+                    "actualWindowsLowRam": false,
+                    "externalRecoveryBeyondOwnRelease": true,
+                    "noFixedFreeRamFloor": true
+                  },
+                  "finishedAt": "2026-11-07T16:43:50+08:00"
                 },
                 "review.json": null,
                 "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3",
@@ -150665,7 +150689,7 @@
                   "qualityQualified": false
                 }
               },
-              "sourceAndEvidenceCommit": "4ad0b57bb382477710c312aa29f8fe6fd500312d",
+              "sourceAndEvidenceCommit": "f60f9389da634e641aa254f832d02454ee48b9bc",
               "remoteReadbackConfirmed": true
             }
           }

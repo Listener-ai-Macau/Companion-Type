@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T16:11:27+08:00",
+  "at": "2026-11-07T16:44:13+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "OFFICIAL_NATIVE_ASR_RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR_SALE_OPEN",
+  "state": "OFFICIAL_NATIVE_ASR_STOPPED_ACTUAL_WINDOWS_LOW_RAM_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -8051,7 +8051,7 @@
     "qualityQualified": false,
     "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
   },
-  "next": "收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原35%等失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。",
+  "next": "收尾当前同两完整真实S/L的官方Qwen3-ASR-0.6B-hf固定BF16/原生Transformers全会结果，不更改权重/切分/提示词/评分。GPU特征数值已独立复核，分块读取611张量/原文件与GPU逐字节一致，计算缓冲保留；真实30秒的重复调用为同一原音，不算两个独立样本；原生裸模型全零静音生成“嗯”失败保留，新流程只跳过确切全零输入，±1LSB弱声保留，非零真实录音ID/文字完全不变。现有CPU5%/private2GiB/实际低RAM保护保持，单模型逐场，原跨域和加载失败不混成合格。全会标准CER/逐人未知、关键内容和实际阶段耗时分开，未过5%不切产品默认；之后继续重叠逐路和事实纪要/手机实卡/最终未见集/售卖门。",
   "lastOwnerQuote": "继续推进一下, 达到可售卖标准才行, 要在正确方向上行走",
   "nativeVerbatimPreparation": {
     "at": "2026-11-07T15:04:06+08:00",
@@ -8475,16 +8475,37 @@
       "wholeWorkerSeconds": 44.56035380001413
     },
     "full/run.json": {
-      "state": "RUNNING_COMPLETE_OFFICIAL_NATIVE_ASR",
-      "pid": 7540,
-      "startedAt": "2026-11-07T16:10:02+08:00",
-      "priorAttemptReceipts": [],
+      "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+      "pid": 14452,
+      "startedAt": "2026-11-07T16:43:34+08:00",
+      "priorAttemptReceipts": [
+        "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0001.json",
+        "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0002.json",
+        "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0003.json",
+        "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0004.json",
+        "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0005.json"
+      ],
       "automaticRetries": 0,
       "referencePassedToWorker": false,
       "qualityQualified": false,
-      "results": [],
-      "activePid": 21660,
-      "activeMeeting": "S_R004S03C01"
+      "results": [
+        {
+          "meeting": "S_R004S03C01",
+          "exitCode": 15,
+          "wholeProcessFamilySeconds": 15.28911290000542,
+          "accumulatedProcessFamilySeconds": 1088.1452462000016,
+          "sampledPrivatePeakBytes": 513478656
+        }
+      ],
+      "recoveryObservation": {
+        "previousAvailableBytes": 920797184,
+        "releasedOwnPrivatePeakUpperBound": 1239773184,
+        "currentAvailableBytes": 2603294720,
+        "actualWindowsLowRam": false,
+        "externalRecoveryBeyondOwnRelease": true,
+        "noFixedFreeRamFloor": true
+      },
+      "finishedAt": "2026-11-07T16:43:50+08:00"
     },
     "review.json": null,
     "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3",
@@ -8674,6 +8695,6 @@
       "qualityQualified": false
     }
   },
-  "sourceAndEvidenceCommit": "4ad0b57bb382477710c312aa29f8fe6fd500312d",
+  "sourceAndEvidenceCommit": "f60f9389da634e641aa254f832d02454ee48b9bc",
   "remoteReadbackConfirmed": true
 }
