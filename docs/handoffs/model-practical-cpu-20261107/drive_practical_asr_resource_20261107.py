@@ -5,14 +5,19 @@ otherwise this driver stops. Existing strict model/CPU/RAM limits stay intact.
 """
 from pathlib import Path
 from datetime import datetime
-import hashlib,json,psutil,subprocess,sys,time
+import argparse,hashlib,json,psutil,subprocess,sys,time
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion');src=R/'model-research/src';sys.path.insert(0,str(src))
 from moss_windows_resource_limits_20261104 import SystemRamPressure
 from practical_io_20261107 import atomic_json,stop_owned_family
 base=R/'docs/handoffs/20261107-model-generation-recovery';C=base/'practical-qwen-signal-r3';full=C/'full'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
-target=C/'resource-followthrough.json';assert not target.exists()
+parser=argparse.ArgumentParser();parser.add_argument('--stage',choices=['ordinary','complex'],default='ordinary');args=parser.parse_args()
+target=C/('resource-followthrough-complex.json' if args.stage=='complex' else 'resource-followthrough.json');assert not target.exists()
 rule=read(C/'execution-stop-rule.json');baseline=rule['baselineStrictCer'];quality=full/'transcripts/S_R004S03C01/quality-review.json'
+if args.stage=='complex':
+    assert read(full/'transcripts/S_R004S03C01/completed-state.json')['state']=='COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED'
+    assert read(quality)['chronologicalTextDiagnostic']['cer']<baseline
+    assert len(list((full/'transcripts/L_R003S01C02/windows').glob('*.raw.json')))>0,'Complex stage must already have real durable progress; no blind retry of failed loading'
 state={'state':'FOLLOWING_ONE_FROZEN_NATIVE_TRIAL','startedAt':now(),'pid':__import__('os').getpid(),'modelFailureRetries':0,'lowMemoryContinuations':0,'futilityStopRequested':False,'limitsChanged':False,'sourceSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'events':[]}
 pressure=SystemRamPressure();child=None;process=None;launched_floor=None;last_wait=None
 def save():atomic_json(target,state)
@@ -43,7 +48,7 @@ try:
         if not eligible:
             state.update(state='WAITING_ACTUAL_SYSTEM_MEMORY_RECOVERY',durableWindows=current,resourceObservation={'availableBytes':available,'actualWindowsLowRam':low,'lastAvailableBytes':last['availableBytes'],'releasedOwnPrivatePeakUpperBound':peak});save();time.sleep(2);continue
         launched_floor=current
-        count=state['lowMemoryContinuations']+1;log=full/('resource-continuation-%02d.log'%count)
+        count=state['lowMemoryContinuations']+1;prefix='complex-resource-continuation' if args.stage=='complex' else 'resource-continuation';log=full/(prefix+'-%02d.log'%count)
         command=[sys.executable,str(src/'run_practical_qwen_full_20261107.py'),'--parent',str(C),'--resume-after-low-ram']
         with log.open('xb') as stream:child=subprocess.Popen(command,stdout=stream,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
         process=psutil.Process(child.pid);state['lowMemoryContinuations']=count;state['events'].append({'at':now(),'state':'CONTINUE_AFTER_OBSERVED_RAM_RECOVERY','durableWindowsBefore':current,'availableBytes':available,'actualWindowsLowRam':False,'controllerPid':child.pid});save()
