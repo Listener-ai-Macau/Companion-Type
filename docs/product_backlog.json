@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "f669bc3748b2087ca28256d9972f5440f3d0d3ff",
+            "modelEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -41625,10 +41625,10 @@
           "currentStatus": "OPEN",
           "baseline": "L第二段真实开发片60字：原盲分离26.6667%，新双声纹固定身份提取后仍16/60=26.6667%，无改善；另一语料REAL-T单目标47字：混音2/47=4.2553%，目标提取4/47=8.5106%变差。两者均为短开发片，不构成整会/双人完整验收；不采纳此提取候选。",
           "ps4ConditionedComponentScreen20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-r1",
-            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
-            "modelEvidenceCommit": "f669bc3748b2087ca28256d9972f5440f3d0d3ff",
+            "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM_QUALITY_AND_SALE_OPEN",
+            "modelEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
             "review": {
               "at": "2026-11-07T20:12:49+08:00",
               "state": "PS4_REAL_COMPONENT_SCREEN_FAILED_NOT_ADOPTED",
@@ -42421,10 +42421,10 @@
             "allExistingFormalGatesRetained": true
           },
           "ps4FullRoutedDevelopment20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1",
-            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
-            "modelEvidenceCommit": "f669bc3748b2087ca28256d9972f5440f3d0d3ff",
+            "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM_QUALITY_AND_SALE_OPEN",
+            "modelEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
             "review": null,
             "wordLevelPureOverlapCerMeasured": false,
             "finalHoldoutOpened": false,
@@ -42448,7 +42448,7 @@
           "currentStatus": "OPEN",
           "baseline": "四段完整发言边界开发CER7.4288%；L全场147段完成，完整边界且无参考重叠子集627参考字/284.545秒含参考空白块，90次插删替=14.3541%，只覆盖约12%音频、非整会资格。参考空白尾段出现33字且切分模型有检出声音，真实背景人声/识别错误尚未核听，不能称物理静音。61分钟拼接开发3.6120%不作完整单场验收。",
           "nativeVerbatimDevelopment20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\review.json",
             "rawCer": {
               "S_R004S03C01": 0.06954954954954955,
@@ -42465,9 +42465,9 @@
             "defaultProductChanged": false
           },
           "officialNativeQwenControl20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
-            "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
+            "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM_QUALITY_AND_SALE_OPEN",
             "noNewQualityScoreUnlessFullCompleted": true,
             "review": {
               "at": "2026-11-07T19:31:33+08:00",
@@ -42622,7 +42622,7 @@
             "defaultProductChanged": false
           },
           "native17OrdinaryDevelopment20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "stage": {
               "state": "ORDINARY_FULL_NATIVE17_IMPROVES_STAGE5_OPEN_COMPLEX_RUNNING",
               "rawChronologicalCerBaseline06": 0.06438438438438439,
@@ -42918,23 +42918,23 @@
               "qualification": "NOT_QUALIFIED: exposed development chronological text only. Non-overlap-only/time-constrained per-person, separated overlap, factual minutes, final cross-domain holdout and actual installed phone/card/sale gates remain open. Prior AMI speaker failure retained.",
               "noTrainingReferenceHotwordsOrFillerErDeletion": true
             },
-            "modelEvidenceCommit": "f669bc3748b2087ca28256d9972f5440f3d0d3ff",
+            "modelEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
             "ordinary5PercentGateClosed": false,
             "qualityQualified": false
           },
           "authorBoundaryDevelopment20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\review.json",
-            "modelEvidenceCommit": "f669bc3748b2087ca28256d9972f5440f3d0d3ff",
+            "modelEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
             "ordinaryFullDevelopmentBelow5": false,
             "finalHoldoutOpened": false,
             "qualityQualified": false,
             "defaultProductChanged": false
           },
           "native17AlignedSpeakerContent20261107": {
-            "at": "2026-11-07T20:51:07+08:00",
+            "at": "2026-11-07T21:03:01+08:00",
             "review": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-alignment-r1\\onset-review.json",
-            "modelEvidenceCommit": "f669bc3748b2087ca28256d9972f5440f3d0d3ff",
+            "modelEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
             "results": [
               {
                 "meeting": "S_R004S03C01",
@@ -143174,7 +143174,7 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
+          "status": "STOPPED_ACTUAL_WINDOWS_LOW_RAM_QUALITY_AND_SALE_OPEN",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
@@ -144502,7 +144502,7 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T20:51:07+08:00",
+              "at": "2026-11-07T21:03:01+08:00",
               "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
@@ -147311,7 +147311,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
+              "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM_QUALITY_AND_SALE_OPEN",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -158890,7 +158890,7 @@
                     }
                   },
                   "run-r2.json": {
-                    "state": "RUNNING_PS4_ASR",
+                    "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
                     "pid": 25088,
                     "startedAt": "2026-11-07T20:31:16+08:00",
                     "priorAttemptReceipts": [],
@@ -158900,12 +158900,18 @@
                         "exitCode": 0,
                         "wholeProcessFamilySeconds": 425.9413976999931,
                         "privatePeakBytes": 1067130880
+                      },
+                      {
+                        "stage": "asr",
+                        "exitCode": 15,
+                        "wholeProcessFamilySeconds": 1469.1630988999968,
+                        "privatePeakBytes": 1279303680
                       }
                     ],
                     "automaticModelFailureRetries": 0,
                     "qualityQualified": false,
                     "stage": "asr",
-                    "activePid": 17416
+                    "finishedAt": "2026-11-07T21:02:51+08:00"
                   },
                   "separation-state-r2.json": {
                     "state": "COMPLETE_PS4_SEPARATION_UNQUALIFIED",
@@ -158955,9 +158961,9 @@
                       "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
                       "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
                     },
-                    "newNeuralCalls": 66,
+                    "newNeuralCalls": 123,
                     "reusedOutputs": 6,
-                    "completedInputs": 68,
+                    "completedInputs": 121,
                     "referencePassedToWorker": false,
                     "qualityQualified": false,
                     "limits": {
@@ -158982,7 +158988,7 @@
                   "review.json": null
                 }
               },
-              "sourceAndEvidenceCommit": "f669bc3748b2087ca28256d9972f5440f3d0d3ff",
+              "sourceAndEvidenceCommit": "9db135d7119a01b2cc1cb47689111a587c2a6a17",
               "remoteReadbackConfirmed": true
             }
           }
