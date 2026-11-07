@@ -17,6 +17,11 @@ def main():
     read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
     audio=Path(args.audio).resolve();pack_path=Path(args.model_pack).resolve();root=Path(args.work_dir).resolve();pack=read(pack_path)
     assert pack['version']==1
+    native8=pack.get('speakerBackend')=='native8'
+    if native8:
+        proof=pack['nativeControlProof'];assert proof['state']=='PASS_NATIVE61_FULL_STREAM_AND_CLI_BOUNDARY'
+        assert proof['workerSourceSha256']==checksum(Path(__file__).with_name('practical_nemotron_worker_20261107.py'))
+        assert proof['protocolNeuralBinding']==pack['diarization'],'Native model pack differs from its passed execution control'
     with wave.open(str(audio),'rb') as wav:
         assert wav.getnchannels()==1 and wav.getframerate()==16000 and wav.getsampwidth()==2 and wav.getcomptype()=='NONE','需要使用应用标准化后的16kHz/单声道/PCM16 WAV；原音未改动。'
         seconds=wav.getnframes()/16000
@@ -40,7 +45,7 @@ def main():
         while (root/('attempt-%04d'%ordinal)).exists():ordinal+=1
         current=root/('attempt-%04d'%ordinal);current.mkdir(exist_ok=False)
         case={'meeting':meeting,'audio':str(audio),**binding};case.pop('modelPackSha256')
-        atomic_json(current/'audio-only.json',[case]);atomic_json(current/'protocol.json',{**pack['diarization'],'boundedCacheRoot':str(current/'speaker-cache')})
+        atomic_json(current/'audio-only.json',[case]);atomic_json(current/'protocol.json',{**pack['diarization'],'boundedCacheRoot':str(current/'speaker-cache'),'probabilityCacheRoot':str(current/'native-speaker-cache')})
         task['attempts'].append({'control':str(current),'startedAt':now(),'stages':[]})
         if previous and (previous/'transcripts'/meeting).exists():
             destination=current/'transcripts'/meeting
@@ -51,12 +56,16 @@ def main():
             assert previous.resolve().is_relative_to(root) and current.resolve().is_relative_to(root)
             shutil.copytree(previous/'speaker-cache',current/'speaker-cache')
             task['attempts'][-1]['speakerFeatureCacheReusedFrom']=str(previous/'speaker-cache')
+        if native8 and previous and (previous/'native-speaker-cache').exists():
+            task['attempts'][-1]['priorNativeCacheRetainedAt']=str(previous/'native-speaker-cache')
+            task['attempts'][-1]['nativeSpeakerStateExported']=False
+            task['attempts'][-1]['nativeSpeakerReplayRequired']=True
     attempt=task['attempts'][-1];atomic_json(state_path,task)
     pressure=SystemRamPressure();child=None;process=None
     def run_stage(module,phase,resume=False,text_only=False,extra_args=()):
         nonlocal child,process
         for member in psutil.process_iter(['cmdline']):
-            try:assert not any(Path(arg).name in ['moss_night_gpu_worker_20261104.py','practical_cpu_worker_20261107.py','practical_transcript_worker_20261107.py','bounded_speaker_20261107.py'] for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
+            try:assert not any(Path(arg).name in ['moss_night_gpu_worker_20261104.py','practical_cpu_worker_20261107.py','practical_transcript_worker_20261107.py','bounded_speaker_20261107.py','practical_nemotron_worker_20261107.py','practical_nemotron_cli_control_20261107.py','nemo-speech.exe'] for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
             except (psutil.NoSuchProcess,psutil.AccessDenied):pass
         if pressure.low():raise RuntimeError('Windows低内存保护触发，当前任务已保留。')
         if (current/'stop.request').exists() or (root/'stop.request').exists():raise InterruptedError('当前任务已请求停止，原音和已保存结果保留。')
@@ -68,7 +77,10 @@ def main():
             process=psutil.Process(child.pid);process.cpu_affinity([12,13]);task['activePid']=child.pid;atomic_json(state_path,task)
             while child.poll() is None:
                 if pressure.low() or (current/'stop.request').exists() or (root/'stop.request').exists():
-                    stop_owned_family(child,process);raise InterruptedError('低内存或停止请求，已结束本任务进程并保留原音和检查点。')
+                    stop_owned_family(child,process)
+                    attempt['stages'].append({'phase':phase,'exitCode':child.returncode,'wholeProcessFamilySeconds':time.perf_counter()-tick,'privatePeakBytes':private_peak,'finishedAt':now(),'interrupted':True,'priorElapsedMustRemainInTotal':True})
+                    task.pop('activePid',None);atomic_json(state_path,task)
+                    raise InterruptedError('低内存或停止请求，已结束本任务进程并保留原音和检查点。')
                 try:
                     family=[process]+process.children(recursive=True);private=sum(getattr(p.memory_info(),'private',0) for p in family);private_peak=max(private_peak,private)
                     with (current/'resources.jsonl').open('a',encoding='utf8') as f:f.write(json.dumps({'at':now(),'stage':phase,'privateBytes':private,'availableBytes':psutil.virtual_memory().available})+'\n')
@@ -88,7 +100,9 @@ def main():
         if not draft.exists():atomic_json(draft,read(completed.parent/'model-output.json'))
         task['textDraft']=str(draft);task.setdefault('textDraftReadyAt',now());atomic_json(state_path,task)
         if not journal.exists() or read(journal).get('state')!='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED':
-            if seconds>10:
+            assert all((completed.parent/'windows'/('%06d.raw.json'%index)).exists() for index in range(read(completed)['totalWindows'])),'原始转写缓存缺失，保留已保存的文字；不会启动额外声音模型。'
+            if native8:run_stage('practical_nemotron_worker_20261107.py','DIARIZING_NATIVE8')
+            elif seconds>10:
                 for stage in ['segment','embed','reconstruct']:
                     run_stage('bounded_speaker_20261107.py','SPEAKERS_'+stage.upper(),extra_args=('--stage',stage))
             else:run_stage('practical_cpu_worker_20261107.py','DIARIZING')

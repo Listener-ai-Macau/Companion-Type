@@ -1,0 +1,131 @@
+{
+  "at": "2026-11-07T13:09:44+08:00",
+  "state": "COMPLETE_FULL_MAPPING_OVERLAP_BREAKDOWN_NO_NEW_INFERENCE",
+  "results": [
+    {
+      "at": "2026-11-07T13:09:44+08:00",
+      "meeting": "L_R003S01C02",
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+      "rttmSha256": "89b2d182dc8656b63d706e3ef81db01ced1b8c6ada9be8918f129de7f90dc593",
+      "frozenFullMeetingMappingForEvaluationOnly": {
+        "speaker_1": "002-F",
+        "speaker_3": "003-F",
+        "speaker_2": "004-M",
+        "speaker_5": "005-M",
+        "speaker_4": "006-M",
+        "speaker_0": "007-M"
+      },
+      "mappingNeverReturnedToInference": true,
+      "fullOriginalComponentsReproduced": true,
+      "collarSeconds": 0.0,
+      "overlapIncluded": true,
+      "regionSpecificRemapping": false,
+      "regions": {
+        "nonOverlapIncludingSilence": {
+          "audioRegionSeconds": 2174.5856119324885,
+          "referenceSpeakerSeconds": 1926.0326800506082,
+          "derWithFrozenGlobalAssignment": 0.11150141272365624,
+          "components": {
+            "correct": 1801.5838707403277,
+            "false alarm": 90.30655546729218,
+            "missed detection": 65.135035088527,
+            "confusion": 59.313774221753434,
+            "total": 1926.0326800506082,
+            "identification error rate": 0.11150141272365623
+          }
+        },
+        "twoOrMore": {
+          "audioRegionSeconds": 188.3593880675116,
+          "referenceSpeakerSeconds": 385.93638746322654,
+          "derWithFrozenGlobalAssignment": 0.25012816763771195,
+          "components": {
+            "correct": 291.26468441635836,
+            "false alarm": 1.861858374026724,
+            "missed detection": 73.91245526662628,
+            "confusion": 20.759247780241864,
+            "total": 385.93638746322654,
+            "identification error rate": 0.25012816763771195
+          }
+        },
+        "threeOrMore": {
+          "audioRegionSeconds": 9.217611328203304,
+          "referenceSpeakerSeconds": 27.652833984609913,
+          "derWithFrozenGlobalAssignment": 0.40009966128590474,
+          "components": {
+            "correct": 16.58894447377213,
+            "false alarm": 0.0,
+            "missed detection": 10.96793301083784,
+            "confusion": 0.09595649999994293,
+            "total": 27.652833984609913,
+            "identification error rate": 0.40009966128590474
+          }
+        }
+      },
+      "neuralInferenceAdded": 0,
+      "overlapWordsRecovered": false,
+      "qualified": false
+    },
+    {
+      "at": "2026-11-07T13:09:44+08:00",
+      "meeting": "S_R004S03C01",
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+      "rttmSha256": "fc68ac4c7a11995be7cefda3592bcd381a4797fe3ebd975330afa03d26c23adb",
+      "frozenFullMeetingMappingForEvaluationOnly": {
+        "speaker_0": "001-M",
+        "speaker_1": "002-F",
+        "speaker_4": "003-F",
+        "speaker_2": "004-F",
+        "speaker_3": "005-F"
+      },
+      "mappingNeverReturnedToInference": true,
+      "fullOriginalComponentsReproduced": true,
+      "collarSeconds": 0.0,
+      "overlapIncluded": true,
+      "regionSpecificRemapping": false,
+      "regions": {
+        "nonOverlapIncludingSilence": {
+          "audioRegionSeconds": 2327.119,
+          "referenceSpeakerSeconds": 2074.389489999999,
+          "derWithFrozenGlobalAssignment": 0.038556155623407466,
+          "components": {
+            "correct": 2007.1044930000003,
+            "false alarm": 12.695487000001684,
+            "missed detection": 65.91499699999912,
+            "confusion": 1.3699999999999992,
+            "total": 2074.389489999999,
+            "identification error rate": 0.03855615562340746
+          }
+        },
+        "twoOrMore": {
+          "audioRegionSeconds": 0.0,
+          "state": "NOT_APPLICABLE_NO_REFERENCE_REGION"
+        },
+        "threeOrMore": {
+          "audioRegionSeconds": 0.0,
+          "state": "NOT_APPLICABLE_NO_REFERENCE_REGION"
+        }
+      },
+      "neuralInferenceAdded": 0,
+      "overlapWordsRecovered": false,
+      "qualified": false
+    }
+  ],
+  "limits": {
+    "pid": 360,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 98652160,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

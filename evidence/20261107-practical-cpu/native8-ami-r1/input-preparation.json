@@ -1,0 +1,30 @@
+{
+  "state": "RESTORED_ONE_COMPLETE_AMI_VALIDATION_NO_INFERENCE",
+  "startedAt": "2026-11-07T13:23:54+08:00",
+  "selection": "Exactly EN2002a/Array1-01 from the original20261103 cross-corpus v2 preparation script, no source/output-based replacement",
+  "referencePolicy": "Original official only_words RTTM, not forced-aligned model-card labels. Do not compare its short-word spans to Chinese utterance spans or published scores with other references.",
+  "finalHoldoutOpened": false,
+  "neuralInferencePerformed": false,
+  "files": [
+    {
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/EN2002a/audio/EN2002a.Array1-01.wav",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "bytes": 68566744,
+      "sha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "lastModified": "Thu, 21 Jul 2005 12:53:16 GMT",
+      "etag": "\"4163ed8-3fc686ecf2700\""
+    },
+    {
+      "url": "https://raw.githubusercontent.com/BUTSpeechFIT/AMI-diarization-setup/2509d8933721023fab4def2618aabd5c28eb82e9/only_words/rttms/test/EN2002a.rttm",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.rttm",
+      "bytes": 42817,
+      "sha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+      "lastModified": null,
+      "etag": "\"f0667122af8d4248a74bdadb6ab85ef324826c645e0f89dfce9936e5739d0563\""
+    }
+  ],
+  "audioSeconds": 2142.709375,
+  "neuralConfigurationUnchangedFromFrozenChineseBatch": true,
+  "qualification": "Known project validation, original cache/manifest deleted. Fresh source hashes frozen now; not claimed byte-compared to deleted old cache, new final blind data, Chinese ASR or product acceptance.",
+  "finishedAt": "2026-11-07T13:26:21+08:00"
+}

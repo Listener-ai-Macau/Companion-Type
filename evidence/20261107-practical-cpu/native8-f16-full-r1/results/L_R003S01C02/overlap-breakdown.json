@@ -1,0 +1,64 @@
+{
+  "at": "2026-11-07T13:09:44+08:00",
+  "meeting": "L_R003S01C02",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "rttmSha256": "89b2d182dc8656b63d706e3ef81db01ced1b8c6ada9be8918f129de7f90dc593",
+  "frozenFullMeetingMappingForEvaluationOnly": {
+    "speaker_1": "002-F",
+    "speaker_3": "003-F",
+    "speaker_2": "004-M",
+    "speaker_5": "005-M",
+    "speaker_4": "006-M",
+    "speaker_0": "007-M"
+  },
+  "mappingNeverReturnedToInference": true,
+  "fullOriginalComponentsReproduced": true,
+  "collarSeconds": 0.0,
+  "overlapIncluded": true,
+  "regionSpecificRemapping": false,
+  "regions": {
+    "nonOverlapIncludingSilence": {
+      "audioRegionSeconds": 2174.5856119324885,
+      "referenceSpeakerSeconds": 1926.0326800506082,
+      "derWithFrozenGlobalAssignment": 0.11150141272365624,
+      "components": {
+        "correct": 1801.5838707403277,
+        "false alarm": 90.30655546729218,
+        "missed detection": 65.135035088527,
+        "confusion": 59.313774221753434,
+        "total": 1926.0326800506082,
+        "identification error rate": 0.11150141272365623
+      }
+    },
+    "twoOrMore": {
+      "audioRegionSeconds": 188.3593880675116,
+      "referenceSpeakerSeconds": 385.93638746322654,
+      "derWithFrozenGlobalAssignment": 0.25012816763771195,
+      "components": {
+        "correct": 291.26468441635836,
+        "false alarm": 1.861858374026724,
+        "missed detection": 73.91245526662628,
+        "confusion": 20.759247780241864,
+        "total": 385.93638746322654,
+        "identification error rate": 0.25012816763771195
+      }
+    },
+    "threeOrMore": {
+      "audioRegionSeconds": 9.217611328203304,
+      "referenceSpeakerSeconds": 27.652833984609913,
+      "derWithFrozenGlobalAssignment": 0.40009966128590474,
+      "components": {
+        "correct": 16.58894447377213,
+        "false alarm": 0.0,
+        "missed detection": 10.96793301083784,
+        "confusion": 0.09595649999994293,
+        "total": 27.652833984609913,
+        "identification error rate": 0.40009966128590474
+      }
+    }
+  },
+  "neuralInferenceAdded": 0,
+  "overlapWordsRecovered": false,
+  "qualified": false
+}

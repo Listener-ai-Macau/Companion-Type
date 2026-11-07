@@ -1,0 +1,23 @@
+"""Real opt-in command test using only the pinned public61s recording."""
+from pathlib import Path
+from datetime import datetime
+import hashlib,json,subprocess,sys,time
+from practical_io_20261107 import atomic_json
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');base=R/'docs/handoffs/20261107-model-generation-recovery';C=base/'native8-command-r1';C.mkdir(exist_ok=False);N=base/'native8-f16-smoke-r1';E=Path('E:/CodexData/Companion/.model-cache/native8-command-20261107');E.mkdir(exist_ok=True);task=E/'public61-r1'
+read=lambda p:json.loads(Path(p).read_text(encoding='utf8'))
+def sha(path):
+    with Path(path).open('rb') as source:return hashlib.file_digest(source,'sha256').hexdigest()
+case=read(N/'audio-only.json')[0];assert case['audioSha256']=='c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd' and sha(case['audio'])==case['audioSha256'];P=read(N/'protocol.json');P.pop('probabilityCacheRoot');proof=read(N/'native-control-proof.json');assert P==proof['protocolNeuralBinding']
+oldpack=read('E:/CodexData/Companion/.model-cache/practical-cpu-20261107-r1/model-pack.json');pack={'version':1,'speakerBackend':'native8','name':'Companion8-speaker FP16 local research candidate','diarization':P,'nativeControlProof':proof,'asr':oldpack['asr'],'qualityQualified':False,'scope':'Opt-in Windows command only. Complete two public development meetings passed existing Document boundary; ASR<5%, generalization, facts, mobile/card/sale gates stay open.0network during private runtime tasks.'};atomic_json(C/'model-pack.json',pack)
+command=[sys.executable,str(Path(__file__).with_name('companion_local_meeting_20261107.py')),'--audio',case['audio'],'--model-pack',str(C/'model-pack.json'),'--work-dir',str(task)];tick=time.perf_counter()
+with (C/'fresh-command.log').open('xb') as log:code=subprocess.run(command,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.IDLE_PRIORITY_CLASS).returncode
+assert code==0,(C/'fresh-command.log').read_text(errors='replace')[-1500:]
+fresh=read(task/'task.json');output=Path(fresh['output']);before=sha(output);stages=fresh['attempts'][0]['stages'];control=Path(fresh['attempts'][0]['control']);meeting=fresh['meeting'];voice=read(control/'results'/meeting/'completed-state.json');text=read(control/'transcripts'/meeting/'completed-state.json')
+assert [r['phase'] for r in stages]==['TRANSCRIBING_DRAFT','DIARIZING_NATIVE8','TRANSCRIBING'] and voice['gpuUsed'] and voice['selectedNativeDevice']['description']=='AMD Radeon RX 6800 XT';assert text['cachedOnly'] and text['newNeuralWindows']==0 and not text['modelLoaded']
+with (C/'resume-command.log').open('xb') as log:resume=subprocess.run(command+['--resume'],stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.IDLE_PRIORITY_CLASS).returncode
+cached=read(task/'task.json');assert resume==0 and cached['attempts']==fresh['attempts'] and sha(output)==before
+validator=Path('E:/CodexData/Companion/.build-cache/practical-model-contract-20261107/x86_64-pc-windows-msvc/debug/companion-model-output-contract-check.exe');current_shared=R/'companion-device-closure055/packages/meeting-transcript/src/lib.rs';assert sha(current_shared)=='f8f5b87017ebf10616b93d36520bab388f7e63033187bc289dfa1034b3af1684','Shared validator source changed; rebuild the focused verifier before claiming current product-boundary acceptance'
+check=subprocess.run([str(validator),str(output),'61000'],capture_output=True,text=True);assert check.returncode==0,check.stderr
+assert sha(case['audio'])==case['audioSha256']
+result={'at':datetime.now().astimezone().isoformat(timespec='seconds'),'state':'PASS_ACTUAL_PUBLIC_NATIVE8_COMMAND_DRAFT_FINAL_AND_ZERO_MODEL_RESUME','publicAudioSha256':case['audioSha256'],'originalAudioBytesUnchanged':True,'task':fresh,'finalAttributionReceipt':text,'speakerReceipt':voice,'finalOutputSha256':before,'resumeAddedNeuralStages':0,'resumeOutputBytesIdentical':True,'textDraftBeforeSpeakerStage':fresh['textDraftReadyAt']<=stages[1]['finishedAt'],'sharedProductRustParser':{'exitCode':check.returncode,'stdout':check.stdout,'currentSourceSha256':sha(current_shared)},'wholeCheckSecondsIncludingCacheAndVerifier':time.perf_counter()-tick,'scope':'Functional public61s integration, not full-meeting accuracy/performance or installed app/phone/card acceptance. Generic private runtime task directories must never enter research publication.','qualityQualified':False}
+atomic_json(C/'command-proof.json',result);atomic_json(C/'public-model-output.json',read(output));print(json.dumps({'state':result['state'],'outputSha256':before,'resumeAddedNeuralStages':0,'rustBoundaryPassed':True,'freshStages':stages},ensure_ascii=False),flush=True)
