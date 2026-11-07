@@ -10,7 +10,7 @@ C = R / 'docs/handoffs/20261107-model-generation-recovery'
 read = lambda p: json.loads(Path(p).read_text(encoding='utf8'))
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 now = lambda: datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds')
-parser=argparse.ArgumentParser();parser.add_argument('--attempt',default='r1');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--attempt',default='r1');parser.add_argument('--disjoint-stages',action='store_true');args=parser.parse_args()
 assert args.attempt and all(ch.isalnum() or ch in '-_' for ch in args.attempt)
 assert read(C/'single-visible-gpu-result.json')['state']=='PASS_MODEL_FREE_SINGLE_GPU_VISIBILITY_AND_ARITHMETIC'
 assert read(C/'single-visible-gpu-worker.json')['visibleDeviceCount']==1
@@ -31,14 +31,27 @@ protocol['runtime'].update(generationCheckpointing=True,retireAcousticModulesAft
     cooperativeGpuDuty=.25,
     rebuildableCacheRoot='E:/CodexData/Companion/.model-cache/generation-recovery-20261107')
 protocol['scope']='Execution control only: one visible RX6800XT, same pinned full30s input and all math/generation; durable prefix then re-prefill with saved64 tokens. Compare every token to original173. Cooperative duty returns to the existing allowed.25 ceiling after the.1 R24 run spent10939/12192 seconds yielding while CPU was7.6-11.8% near exit; CPU5%/private2GiB/very-low page priority/GPUidle/real low-RAM stop unchanged. No model accuracy, whole-meeting stability or automatic long-run claim.'
-state={'at':now(),'state':'PREPARING_FRESH_CONTROL','automaticFullMeetingAfterwards':False,'newAccuracyScore':None,'referenceOpened':False,'stages':[]}
+if args.disjoint_stages:
+    cpu=read(C/'cpu-disjoint-stages-r2-result.json')
+    assert cpu['state']=='PASS_TINY_CPU_DISJOINT_AUTHOR_STAGES_AND_PREFIX_EQUIVALENCE_ONLY'
+    protocol['runtime'].pop('retireAcousticModulesAfterEncoding',None)
+    protocol['runtime']['workerMemoryPagePriority']=1
+    protocol['scope']+=' Acoustic and language weights have disjoint process lifetimes. Whole original projected audio features are byte-bound and roundtrip checked; no audio/context reset or reference input.'
+state={'at':now(),'state':'PREPARING_FRESH_CONTROL','automaticFullMeetingAfterwards':False,'newAccuracyScore':None,'referenceOpened':False,'disjointStages':args.disjoint_stages,'stages':[]}
 def save():
     temp=target.with_suffix('.tmp');temp.write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.replace(temp,target)
 save()
 try:
     first_output=None
-    for stage in ['fresh','resume64']:
+    for stage in (['acoustic','fresh','resume64'] if args.disjoint_stages else ['fresh','resume64']):
         folder=C/('short-'+stage+('' if args.attempt=='r1' else '-'+args.attempt));folder.mkdir(exist_ok=False)
+        if args.disjoint_stages:
+            protocol['runtime']['modelLoadStage']='acoustic' if stage=='acoustic' else 'language'
+            if stage=='acoustic':
+                protocol['runtime']['encodedAudioOutput']='E:/CodexData/Companion/.model-cache/generation-recovery-20261107/short-encoded-'+args.attempt
+            else:
+                protocol['runtime'].pop('encodedAudioOutput',None)
+                protocol['runtime']['encodedAudioInput']=state['encodedAudioInput']
         if stage=='resume64':
             checkpoint=first_output/'generation-checkpoints/checkpoint-0000000064.json'
             assert checkpoint.exists()
@@ -51,20 +64,29 @@ try:
             child=subprocess.Popen(cmd,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
             state['supervisorPid']=child.pid;save();code=child.wait()
         run=read(folder/'control.json')
-        if code or run['state']!='COMPLETE_GPU_INFERENCE_SCORING_REQUIRED':
+        expected='COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY' if stage=='acoustic' else 'COMPLETE_GPU_INFERENCE_SCORING_REQUIRED'
+        if code or run['state']!=expected:
             state.update(state='SHORT_CONTROL_INCOMPLETE_NO_NEXT_STAGE',stage=stage,run=run);save();break
         output=Path(run['results'][0]['receipt']).parent
+        if stage=='acoustic':
+            worker=read(output/'completed-state.json');producer=folder/'control.json'
+            assert worker['languageWeightsNeverLoaded'] and worker['generatedTokens']==0
+            state['encodedAudioInput']={'manifest':worker['encodedFeatureManifest'],'sha256':worker['encodedFeatureManifestSha256'],'producerRun':str(producer),'producerRunSha256':sha(producer)}
+            state['acousticStage']={'control':str(folder),'resources':run['results'][0],'languageWeightsNeverLoaded':True}
+            save();continue
         actual=read(output/'generated-ids.json');worker=read(output/'completed-state.json')
         comparison={'stage':stage,'control':str(folder),'sameAll173GeneratedIds':actual==original,'tokenCount':len(actual),'actualGpu':worker['actualGpu'],'visibleGpuIndex':worker['gpuIndex'],'visibleGpuCount':len(worker['enumeratedGpus']),'resumedPrefixTokens':worker.get('resumedPrefixTokens',0),'newGeneratedTokens':worker.get('newGeneratedTokens'),'noDuplicateOrDroppedPrefix':True,'resources':run['results'][0]}
         state['stages'].append(comparison);save()
         if actual!=original:
             state.update(state='TOKEN_EQUIVALENCE_FAILED_NO_NEXT_STAGE');save();break
         assert len(worker['enumeratedGpus'])==1 and worker['gpuIndex']==0 and 'RX 6800 XT' in worker['actualGpu']
+        if args.disjoint_stages:assert worker['acousticWeightsNeverLoaded'] and worker['audioEncodingCacheReused']
         if stage=='fresh': first_output=output
         else:
             assert worker['resumedPrefixTokens']==64 and worker['newGeneratedTokens']==109
             current={p.name:sha(p) for p in (M/'src').glob('*.py')}
             assert all(read(Path(row['control'])/'frozen-source-sha256.json')==current for row in state['stages']),'Execution source changed between control stages'
+            if args.disjoint_stages:assert read(Path(state['acousticStage']['control'])/'frozen-source-sha256.json')==current
             state.update(state='PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY',verifiedSourceSha256=current);save()
 except BaseException as error:
     state.update(state='CONTROL_FAILURE_RETAINED',error=repr(error));save();raise

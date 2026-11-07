@@ -14,6 +14,7 @@ parser.add_argument('--retire-acoustic-after-encoding',action='store_true',help=
 parser.add_argument('--generation-recovery-report',help='Verified, exited source attempt and retained-prefix adoption report')
 parser.add_argument('--generation-recovery-report-sha256')
 parser.add_argument('--generation-execution-proof',help='Passed same173-token fresh AND prefix-resumed native controls for these exact execution sources')
+parser.add_argument('--disjoint-stages',action='store_true',help='Require staged native proof; precompute original whole audio in an exited acoustic-only worker')
 args=parser.parse_args()
 assert all(c.isalnum() or c in '._-' for c in args.control_name)
 assert all(c.isalnum() or c in '._-' for c in args.output_suffix)
@@ -51,6 +52,7 @@ try:
         assert args.generation_execution_proof and args.retire_acoustic_after_encoding,'Prefix resume requires its actual native execution proof and tested acoustic retirement'
         proof=read(args.generation_execution_proof)
         assert proof['state']=='PASS_FRESH_AND_RESUMED_ALL173_IDS_IDENTICAL_EXECUTION_ONLY' and proof.get('finishedAt')
+        assert bool(proof.get('disjointStages'))==args.disjoint_stages,'Same tested model loading strategy required'
         assert len(proof['stages'])==2 and all(stage['sameAll173GeneratedIds'] and stage['tokenCount']==173 and stage['visibleGpuCount']==1 and stage['visibleGpuIndex']==0 for stage in proof['stages'])
         for name,checksum in proof['verifiedSourceSha256'].items():
             assert hashlib.sha256((q/'src'/name).read_bytes()).hexdigest()==checksum,'Verified generation execution source changed'
@@ -70,6 +72,10 @@ try:
             resumeGeneration={'manifest':str(manifest),'sha256':report['recoveryManifestSha256'],'sourceReport':str(report_path),'sourceReportSha256':args.generation_recovery_report_sha256})
         protocol['scope']='Continue original complete meeting/audio/context from verified retained generated token prefix, rebuilding full context without KV-cache claims. Same pinned weights/math and passed all173 native fresh/resume controls. Only RX6800XT visible; existing allowed cooperative duty.25, CPU5%/private2GiB/GPUidle/very-low page priority/actual Windows low-RAM stop. No training, reference/count/hotwords or automatic inference retries. Include all verified previous failed-attempt time in final scoring.'
         state.update(ownerDirective='请继续吧, 你看看接下来从什么地方推进比较好',recoveryManifestSha256=report['recoveryManifestSha256'],recoveredGeneratedPrefixTokens=report['retainedGeneratedTokens'],priorInferenceAttemptProcessFamilySeconds=report['priorInferenceAttemptProcessFamilySeconds'])
+        if args.disjoint_stages:
+            assert proof['acousticStage']['languageWeightsNeverLoaded'] and tested['runtime']['modelLoadStage']=='language'
+            protocol['runtime'].pop('retireAcousticModulesAfterEncoding',None)
+            protocol['runtime'].update(modelLoadStage='language',workerMemoryPagePriority=1)
     elif args.retire_acoustic_after_encoding:
         proof=m/'acoustic-retirement-short-20261106-r23'
         verified=read(proof/'equivalence-result.json')
@@ -83,11 +89,32 @@ try:
         protocol['scope']+=' Completed acoustic encoder/adaptor storage retired after original features are computed; same173 generated IDs in affected short control. All language weights, full audio context and generation remain unchanged. Low-RAM protections retained; system-RAM effect must be measured.'
         protocol['scope']+=' This worker alone uses Windows VERY_LOW memory-page reclaim priority (real readback); no forced working-set trim or changes to other processes. Reclaim hint, not a guaranteed RAM saving.'
     assert protocol['runtime']['cooperativeGpuDuty']==(.25 if args.generation_recovery_report else .1) and protocol['runtime']['durableProgressWrites']
+    assert not args.disjoint_stages or args.generation_recovery_report,'Staged full continuation requires its actual fresh/resumed proof'
     case=next(c for c in read(m/'public-audio-restore-r5.json')['cases'] if c['meeting']=='L_R003S01C02')
     for field,checksum in [('audio','audioSha256'),('reference','referenceSha256')]:
         with Path(case[field]).open('rb') as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==case[checksum]
     audio={k:case[k] for k in ['meeting','audio','audioSha256','audioSeconds']}
     scoring={**case,'corpus':'AISHELL-4','referenceKind':'textgrid_lexical'}
+    if args.disjoint_stages:
+        # No language weights or generated-prefix text enter the producer.
+        # Its process must exit successfully before the decoder is launched.
+        import copy
+        acoustic=control/'acoustic';acoustic.mkdir(exist_ok=False)
+        ap=copy.deepcopy(protocol);ap['runtime'].update(modelLoadStage='acoustic',encodedAudioOutput='E:/CodexData/Companion/.model-cache/full-generation-recovery-20261107/'+args.control_name+'-encoded')
+        for key in ['generationCheckpointing','resumeGeneration','encodedAudioInput']:ap['runtime'].pop(key,None)
+        for filename,value in [('frozen-protocol.json',ap),('audio-only.json',[audio]),('frozen-source-sha256.json',{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (q/'src').glob('*.py')})]:
+            (acoustic/filename).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+        state.update(state='RUNNING_ACOUSTIC_ONLY_COMPLETE_AUDIO',audioSeconds=case['audioSeconds'],acousticControl=str(acoustic));save()
+        cmd=[sys.executable,str(q/'src/run_night_moss_gpu_20261104.py'),'--inputs',str(acoustic/'audio-only.json'),'--run-name','acoustic','--protocol',str(acoustic/'frozen-protocol.json'),'--control-root',str(acoustic),'--output-suffix='+args.output_suffix+'-acoustic']
+        with (acoustic/'supervisor.log').open('xb') as log:
+            child=subprocess.Popen(cmd,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
+            state.update(acousticSupervisorPid=child.pid);save();code=child.wait()
+        producer=acoustic/'acoustic.json';run=read(producer)
+        assert code==0 and run['state']=='COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY','Acoustic stage incomplete; no decoder/scoring/retry'
+        worker=read(run['results'][0]['receipt'])
+        assert worker['languageWeightsNeverLoaded'] and worker['generatedTokens']==0
+        protocol['runtime']['encodedAudioInput']={'manifest':worker['encodedFeatureManifest'],'sha256':worker['encodedFeatureManifestSha256'],'producerRun':str(producer),'producerRunSha256':hashlib.sha256(producer.read_bytes()).hexdigest()}
+        state.update(acousticState=run['state'],audioPrecomputationProcessFamilySeconds=run['results'][0]['wholeProcessFamilySeconds']);state.pop('acousticSupervisorPid',None);save()
     for filename,value in [('frozen-protocol.json',protocol),('audio-only.json',[audio]),('frozen-scoring-only.json',[scoring])]:
         (control/filename).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
     (control/'frozen-source-sha256.json').write_text(json.dumps({str(p.relative_to(q)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (q/'src').glob('*.py')},indent=2)+'\n',encoding='utf8')

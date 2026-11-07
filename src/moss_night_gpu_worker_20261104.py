@@ -30,6 +30,7 @@ def save():
         target.replace(out/'state.json')
     except OSError:state['progressWriteDeferrals']+=1
 save();started=time.perf_counter()
+class AudioStageComplete(Exception):pass
 try:
     with Path(case['audio']).open('rb') as stream:assert hashlib.file_digest(stream,'sha256').hexdigest()==case['audioSha256']
     import importlib.metadata,random
@@ -71,6 +72,9 @@ try:
         assert hashlib.sha256(file.read_bytes()).hexdigest()==record['sha256']
     tick=time.perf_counter();state.update(state='LOADING_MODEL');save()
     config=MossTranscribeDiarizeConfig.from_pretrained(assets/'model',local_files_only=True)
+    stage=protocol['runtime'].get('modelLoadStage')
+    assert stage in (None,'acoustic','language')
+    if stage:config._attn_implementation='sdpa'
     selected_dtype=getattr(torch,case.get('dtype',protocol['runtime']['dtype']))
     load_options={}
     if protocol['runtime'].get('directGpuWeightLoading'):
@@ -80,13 +84,21 @@ try:
     pretrained_source=assets/'model'
     if protocol['runtime'].get('streamedWeightLoading'):
         from moss_streamed_weights_20261104 import load_streamed_weights
+        from moss_stage_runtime_20261107 import GROUPS
         tensors,transfer=load_streamed_weights(assets/'model/model-00000-of-00001.safetensors',torch=torch,
-            device=device,expected_sha256=protocol['weightSha256'])
+            device=device,expected_sha256=protocol['weightSha256'],tensor_prefixes=GROUPS[stage] if stage else None)
         state['streamedWeightLoading']=transfer;save()
         (out/'streamed-weight-transfer.json').write_text(json.dumps(transfer,indent=2),encoding='utf8')
         load_options['state_dict']=tensors;pretrained_source=None
-    model,loading=MossTranscribeDiarizeForConditionalGeneration.from_pretrained(pretrained_source,config=config,
-        dtype=selected_dtype,attn_implementation='sdpa',local_files_only=True,output_loading_info=True,**load_options)
+    if stage:
+        assert protocol['runtime'].get('streamedWeightLoading')
+        from moss_stage_runtime_20261107 import build_stage_model
+        model,loading=build_stage_model(MossTranscribeDiarizeForConditionalGeneration,config,tensors,
+            stage=stage,torch=torch,device=device,dtype=selected_dtype)
+        state['disjointStageLoading']=loading
+    else:
+        model,loading=MossTranscribeDiarizeForConditionalGeneration.from_pretrained(pretrained_source,config=config,
+            dtype=selected_dtype,attn_implementation='sdpa',local_files_only=True,output_loading_info=True,**load_options)
     if 'state_dict' in load_options:
         del load_options['state_dict'],tensors
     model=model.eval() if load_options else model.to(device).eval()
@@ -106,11 +118,12 @@ try:
     state['directGpuWeightLoading']=bool(load_options)
     state['deviceMap']={str(k):str(v) for k,v in getattr(model,'hf_device_map',{}).items()}
     torch.cuda.synchronize(device)
-    assert all(p.device==device for p in model.parameters())
+    if not stage:assert all(p.device==device for p in model.parameters())
     (out/'loading-info.json').write_text(json.dumps(loading,default=str,indent=2),encoding='utf8')
-    assert not loading.get('unexpected_keys') and not loading.get('mismatched_keys')
-    assert set(loading.get('missing_keys',[]))<= {'lm_head.weight'}
-    assert model.lm_head.weight.data_ptr()==model.model.language_model.embed_tokens.weight.data_ptr(),'Output head must use published tied embedding weights'
+    if not stage:
+        assert not loading.get('unexpected_keys') and not loading.get('mismatched_keys')
+        assert set(loading.get('missing_keys',[]))<= {'lm_head.weight'}
+    assert model.lm_head.weight is model.model.language_model.embed_tokens.weight,'Output head must use published tied embedding weights'
     processor=MossTranscribeDiarizeProcessor.from_pretrained(assets/'model',config=config,local_files_only=True)
     state.update(modelLoadSeconds=time.perf_counter()-tick,modelParameterCount=sum(p.numel() for p in model.parameters()),
         actualDtype=str(next(model.parameters()).dtype),torchThreads=torch.get_num_threads(),outputEmbeddingTied=True,state='PREPARING_COMPLETE_AUDIO');save()
@@ -165,13 +178,13 @@ try:
             raise RuntimeError('New acoustic call after retirement; no empty-weight reuse')
         state.update(state='ENCODING_COMPLETE_AUDIO');save();begin=time.perf_counter()
         result=original_features(*values,**kwargs);torch.cuda.synchronize(device)
-        if protocol['runtime'].get('retireAcousticModulesAfterEncoding'):
+        if protocol['runtime'].get('retireAcousticModulesAfterEncoding') and stage!='language':
             from moss_retire_acoustic_20261106 import retire_completed_acoustic_modules
             state['acousticRetirement']=retire_completed_acoustic_modules(model,torch=torch,device=device)
         if protocol['runtime'].get('releaseUnusedModelAllocations'):
             torch.cuda.empty_cache()
             state['unusedAllocatorReleases']=state.get('unusedAllocatorReleases',0)+1
-        state.update(audioEncodingCacheReused=False,audioEncodingSeconds=time.perf_counter()-begin,
+        state.update(audioEncodingCacheReused=stage=='language',audioEncodingSeconds=time.perf_counter()-begin,
             encodedFeatureBytes=sum(x.numel()*x.element_size() for x in result),state='DECODER_PREFILL');save()
         return result
     model.model.get_audio_features=observed_features
@@ -183,6 +196,45 @@ try:
     else:
         messages=build_transcription_messages(case['audio'])
         inputs=prepare_inputs(processor,messages,max_length=protocol['runtime']['maxLength'],device=device).to(device)
+    if stage=='acoustic':
+        from moss_stage_runtime_20261107 import publish_features
+        assert not protocol['runtime'].get('resumeGeneration'),'Acoustic stage must not read generated text'
+        if pacer is not None:pacer.begin()
+        begin=time.perf_counter()
+        state.update(state='ENCODING_COMPLETE_AUDIO');save()
+        # The author's complete-input encoder/adaptor runs once, without the
+        # language weights ever being materialized in this process.
+        import inspect
+        feature_args={k:v for k,v in inputs.items() if k in inspect.signature(original_features).parameters}
+        with torch.inference_mode():features=original_features(**feature_args)
+        torch.cuda.synchronize(device)
+        path,manifest=publish_features(features,directory=protocol['runtime']['encodedAudioOutput'],
+            inputs=inputs,case=case,protocol=protocol,torch=torch,
+            provenance={'workerOutput':str(out),'sourceSha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob('*.py')}})
+        state.update(state='COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY',audioEncodingSeconds=time.perf_counter()-begin,
+            encodedFeatureManifest=str(path),encodedFeatureManifestSha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+            encodedFeatureBytes=sum(v.numel()*v.element_size() for v in features),languageWeightsNeverLoaded=True,
+            generatedTokens=0,audioSeconds=case['audioSeconds'])
+        raise AudioStageComplete()
+    if stage=='language':
+        from moss_stage_runtime_20261107 import load_features
+        features,receipt=load_features(protocol['runtime']['encodedAudioInput'],inputs=inputs,case=case,protocol=protocol,torch=torch,device=device)
+        producer_path=Path(protocol['runtime']['encodedAudioInput']['producerRun'])
+        assert hashlib.sha256(producer_path.read_bytes()).hexdigest()==protocol['runtime']['encodedAudioInput']['producerRunSha256']
+        producer=read(producer_path)
+        assert producer['state']=='COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY' and producer.get('finishedAt') and not producer.get('activePid')
+        assert len(producer['results'])==1 and producer['results'][0]['exitCode']==0
+        producer_worker=read(producer['results'][0]['receipt'])
+        assert producer_worker['encodedFeatureManifestSha256']==receipt['manifestSha256'] and producer_worker['languageWeightsNeverLoaded']
+        state['audioPrecomputationProcessFamilySeconds']=producer['results'][0]['wholeProcessFamilySeconds']
+        state['encodedAudioInput']=receipt
+        calls=[0]
+        def cached_features(*values,**kwargs):
+            assert calls[0]==0,'Encoded whole input may be injected only once'
+            calls[0]+=1
+            return features
+        original_features=cached_features
+        state['acousticWeightsNeverLoaded']=True
     prompt_len=int(inputs['attention_mask'][0].sum().item())
     resume_prefix=[];generation_ledger=None
     if protocol['runtime'].get('generationCheckpointing'):
@@ -305,6 +357,8 @@ try:
         nativeSpeakerMap=speaker_map,maxSimultaneousPredictedSpeakers=maximum,predictedOverlapSeconds=overlap_seconds,
         audioSeconds=case['audioSeconds'],nativeTimingScope='Model-predicted sentence boundaries, not validated true word alignment.',
         sourceGenerationOrderRetainedSeparately=True,modelOutputSha256=hashlib.sha256(target.read_bytes()).hexdigest())
+except AudioStageComplete:
+    pass
 except BaseException as error:
     state.update(state='FAILED_RETAINED',errorType=type(error).__name__,error=str(error))
     (out/'failure.txt').write_text(traceback.format_exc(),encoding='utf8');raise

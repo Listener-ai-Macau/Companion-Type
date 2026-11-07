@@ -90,10 +90,11 @@ try:
    and actual.get('allGeneratedTextParsed') and actual.get('invalidNativeTimeRows'))
   if timing_diagnostic:
    result['timingInvalidDiagnosticOnly']=True;save()
-  if child.returncode!=0 or (actual['state']!='COMPLETE_JOINT_CANDIDATE_UNQUALIFIED' and not timing_diagnostic):
+  expected='COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY' if settings['runtime'].get('modelLoadStage')=='acoustic' else 'COMPLETE_JOINT_CANDIDATE_UNQUALIFIED'
+  if child.returncode!=0 or (actual['state']!=expected and not timing_diagnostic):
    state['state']='STOPPED_WITH_NATIVE_MODEL_FAILURE_EVIDENCE' if child.returncode else 'STOPPED_WITH_INVALID_OUTPUT_EVIDENCE';break
   if (root/'stop.request').exists():state['state']='STOPPED_AFTER_SAVED_OUTPUT_EXPLICIT_REQUEST';break
- else:state['state']=('DIAGNOSTIC_QUEUE_FINISHED_WITH_INVALID_TIMING_NOT_QUALIFIED'
+ else:state['state']=('COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY' if settings['runtime'].get('modelLoadStage')=='acoustic' else 'DIAGNOSTIC_QUEUE_FINISHED_WITH_INVALID_TIMING_NOT_QUALIFIED'
   if any(x.get('timingInvalidDiagnosticOnly') for x in state['results']) else 'COMPLETE_GPU_INFERENCE_SCORING_REQUIRED')
 except BaseException as error:
  state.update(state='GPU_SUPERVISOR_FAILURE_RETAINED',error=repr(error));raise

@@ -1,0 +1,115 @@
+{
+  "state": "PASS_TINY_CPU_DISJOINT_AUTHOR_STAGES_AND_PREFIX_EQUIVALENCE_ONLY",
+  "publishedModelWeightsUsed": false,
+  "newAccuracyEvidence": false,
+  "gpuUsed": false,
+  "receipts": [
+    {
+      "stage": "acoustic",
+      "transfer": {
+        "state": "PINNED_STAGE_TENSORS_STREAMED_AND_ROUNDTRIP_VERIFIED",
+        "tensorCount": 28,
+        "dataBytesCopied": 34944,
+        "maximumTransferChunkBytes": 128,
+        "scratchBytes": 128,
+        "roundtripBufferBytes": 128,
+        "roundtripCpuBufferReused": true,
+        "fileSha256": "ddaceaae6a631342440fe43fb46737c85243dee7a8460147d3ba672159e666df",
+        "deviceRoundtripSha256": null,
+        "selectedSourceBytesSha256": "904a3f1ee7c1432c0d6d7f479f1830825a12112c07d505e76b0efb41de1180c5",
+        "selectedDeviceBytesSha256": "904a3f1ee7c1432c0d6d7f479f1830825a12112c07d505e76b0efb41de1180c5",
+        "selectedPrefixes": [
+          "model.whisper_encoder.",
+          "model.vq_adaptor."
+        ],
+        "sourceTensorCount": 52,
+        "skippedTensorCount": 24,
+        "targetDevice": "cpu",
+        "mmapUsed": false,
+        "wholeCpuStateDictCreated": false,
+        "seconds": 0.005833999995957129
+      },
+      "loading": {
+        "stage": "acoustic",
+        "loadedTensorKeys": 28,
+        "omittedTensorKeys": 25,
+        "selectedParameterBytes": 34944,
+        "omittedParametersRemainMeta": true,
+        "languageOutputEmbeddingTied": true,
+        "rotaryBuffersFromOriginalConstructor": false,
+        "wholeCpuStateDictCreated": false
+      }
+    },
+    {
+      "stage": "language",
+      "transfer": {
+        "state": "PINNED_STAGE_TENSORS_STREAMED_AND_ROUNDTRIP_VERIFIED",
+        "tensorCount": 24,
+        "dataBytesCopied": 25024,
+        "maximumTransferChunkBytes": 128,
+        "scratchBytes": 128,
+        "roundtripBufferBytes": 128,
+        "roundtripCpuBufferReused": true,
+        "fileSha256": "ddaceaae6a631342440fe43fb46737c85243dee7a8460147d3ba672159e666df",
+        "deviceRoundtripSha256": null,
+        "selectedSourceBytesSha256": "56de69145f99379ad8563947935f7900b59f5158907ae7529ae5adae06145104",
+        "selectedDeviceBytesSha256": "56de69145f99379ad8563947935f7900b59f5158907ae7529ae5adae06145104",
+        "selectedPrefixes": [
+          "model.language_model."
+        ],
+        "sourceTensorCount": 52,
+        "skippedTensorCount": 28,
+        "targetDevice": "cpu",
+        "mmapUsed": false,
+        "wholeCpuStateDictCreated": false,
+        "seconds": 0.004862499990849756
+      },
+      "loading": {
+        "stage": "language",
+        "loadedTensorKeys": 24,
+        "omittedTensorKeys": 29,
+        "selectedParameterBytes": 25024,
+        "omittedParametersRemainMeta": true,
+        "languageOutputEmbeddingTied": true,
+        "rotaryBuffersFromOriginalConstructor": true,
+        "wholeCpuStateDictCreated": false
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "prefix": 0,
+      "all20IdsIdentical": true
+    },
+    {
+      "prefix": 7,
+      "all20IdsIdentical": true
+    },
+    {
+      "prefix": 13,
+      "all20IdsIdentical": true
+    }
+  ],
+  "projectedFeaturesBitwiseEqual": true,
+  "cacheRoundtripBitwiseEqual": true,
+  "changedInputRejected": true,
+  "bfloat16HashSupported": true,
+  "cudaInitialized": false,
+  "limits": {
+    "pid": 16668,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 853348352,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "seconds": 10.6377230000071
+}
