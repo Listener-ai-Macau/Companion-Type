@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T20:32:33+08:00",
+  "at": "2026-11-07T20:42:19+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "RUNNING_PS4_SEPARATION_QUALITY_AND_SALE_OPEN",
+  "state": "RUNNING_PS4_ASR_QUALITY_AND_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -14387,18 +14387,25 @@
         }
       },
       "run-r2.json": {
-        "state": "RUNNING_PS4_SEPARATION",
+        "state": "RUNNING_PS4_ASR",
         "pid": 25088,
         "startedAt": "2026-11-07T20:31:16+08:00",
         "priorAttemptReceipts": [],
-        "results": [],
+        "results": [
+          {
+            "stage": "separation",
+            "exitCode": 0,
+            "wholeProcessFamilySeconds": 425.9413976999931,
+            "privatePeakBytes": 1067130880
+          }
+        ],
         "automaticModelFailureRetries": 0,
         "qualityQualified": false,
-        "stage": "separation",
-        "activePid": 17888
+        "stage": "asr",
+        "activePid": 17416
       },
       "separation-state-r2.json": {
-        "state": "EXTRACTING_TARGET_VOICES",
+        "state": "COMPLETE_PS4_SEPARATION_UNQUALIFIED",
         "pid": 25984,
         "startedAt": "2026-11-07T20:31:16+08:00",
         "stage": "separation",
@@ -14407,9 +14414,9 @@
           "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
           "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
         },
-        "newNeuralCalls": 23,
-        "reusedOutputs": 0,
-        "completedInputs": 23,
+        "newNeuralCalls": 161,
+        "reusedOutputs": 7,
+        "completedInputs": 168,
         "referencePassedToWorker": false,
         "qualityQualified": false,
         "limits": {
@@ -14431,9 +14438,44 @@
         "gpu": "AMD Radeon RX 6800 XT",
         "modelLoaded": true,
         "modelLoadSeconds": 3.777412600000389,
-        "newSpeakerEncoderCalls": 29
+        "newSpeakerEncoderCalls": 167,
+        "finishedAt": "2026-11-07T20:38:20+08:00",
+        "wholeWorkerSeconds": 424.0328440000012
       },
-      "asr-state-r2.json": null,
+      "asr-state-r2.json": {
+        "state": "TRANSCRIBING_EVERY_EXTRACTED_VOICE",
+        "pid": 13348,
+        "startedAt": "2026-11-07T20:38:22+08:00",
+        "stage": "asr",
+        "binding": {
+          "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+          "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+          "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+        },
+        "newNeuralCalls": 20,
+        "reusedOutputs": 0,
+        "completedInputs": 18,
+        "referencePassedToWorker": false,
+        "qualityQualified": false,
+        "limits": {
+          "pid": 13348,
+          "cpuRate": 500,
+          "cpuControlFlags": 5,
+          "cpuPercentMaximum": 5.0,
+          "inLimitedJob": true,
+          "jobPrivateCommitLimitBytes": 2147483648,
+          "jobMemoryLimitEnabled": true,
+          "jobPeakPrivateCommitBytes": 1281019904,
+          "cpuPriorityClass": 64,
+          "memoryPagePriority": 1,
+          "memoryPagePriorityIsReclaimHintNotRamCap": true,
+          "gpuPriorityClass": 0,
+          "gpuUtilizationHardCapped": false,
+          "scope": "This worker and its descendants only; no global or other-app changes."
+        },
+        "gpu": "AMD Radeon RX 6800 XT",
+        "modelLoaded": true
+      },
       "review.json": null
     }
   }

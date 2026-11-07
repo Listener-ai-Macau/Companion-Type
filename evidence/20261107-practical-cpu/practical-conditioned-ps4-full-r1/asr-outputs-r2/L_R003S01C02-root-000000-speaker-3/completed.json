@@ -1,0 +1,68 @@
+{
+  "id": "L_R003S01C02-root-000000-speaker-3",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 0,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 3,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000000-speaker-3.wav",
+  "audioSha256": "4b66a39e1e656c74e55df14ef36e2da23c248caf10be14413b24e9133b52d65f",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "b340428f39bdbc8cb82b9a8683aaaaca1a0e091fef4c7fcce5fa39da709de6fc",
+  "enrollmentSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84",
+  "mixtureAuthorPeakNormalization": 0.168060302734375,
+  "enrollmentAuthorPeakNormalization": 0.072113037109375,
+  "floatOutputSha256": "5aae1e0d4121aeb5d6a181e753c1e6d30b25883afff1ca65a687600aca1c6554",
+  "floatOutputPeak": 0.29114362597465515,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 2.099742899998091,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.12496624886989594,
+      "1": 0.3492738902568817,
+      "2": 0.19753246009349823,
+      "3": 0.6047329902648926,
+      "4": 0.17469653487205505,
+      "5": 0.372587651014328
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "零六，零幺三，零幺九，零幺九。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "零六，零幺三，零幺九，零幺九。",
+      "generatedIds": [
+        99822,
+        99566,
+        3837,
+        99822,
+        119538,
+        44991,
+        3837,
+        99822,
+        119538,
+        99609,
+        3837,
+        99822,
+        119538,
+        99609,
+        1773,
+        151645
+      ],
+      "rawDecoded": "零六，零幺三，零幺九，零幺九。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 3.484131900011562
+    }
+  ]
+}

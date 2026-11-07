@@ -1,0 +1,37 @@
+{
+  "id": "L_R003S01C02-root-000051-speaker-1",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 51,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 1,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000051-speaker-1.wav",
+  "audioSha256": "8c676b2bbb4e3d269a1445b05b9b2b5576cdfac9ff17f50c151fe2242b1587cb",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "301d7422b8aa7d5ca66f8677c33979795a5e9d70fa82774d10ee897e774fb3f5",
+  "enrollmentSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+  "mixtureAuthorPeakNormalization": 0.141510009765625,
+  "enrollmentAuthorPeakNormalization": 0.065155029296875,
+  "floatOutputSha256": "a949abc7a45e0b4a26ca50ece16c1f1d46e4e2ed4e612e8a8afe88a27d98d14d",
+  "floatOutputPeak": 0.7079784870147705,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.3279707999899983,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.20427827537059784,
+      "1": 0.8817112445831299,
+      "2": 0.2315501570701599,
+      "3": 0.4261219799518585,
+      "4": 0.2827407717704773,
+      "5": 0.2595842778682709
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  }
+}

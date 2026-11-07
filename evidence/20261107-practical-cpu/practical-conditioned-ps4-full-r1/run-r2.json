@@ -1,11 +1,18 @@
 {
-  "state": "RUNNING_PS4_SEPARATION",
+  "state": "RUNNING_PS4_ASR",
   "pid": 25088,
   "startedAt": "2026-11-07T20:31:16+08:00",
   "priorAttemptReceipts": [],
-  "results": [],
+  "results": [
+    {
+      "stage": "separation",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 425.9413976999931,
+      "privatePeakBytes": 1067130880
+    }
+  ],
   "automaticModelFailureRetries": 0,
   "qualityQualified": false,
-  "stage": "separation",
-  "activePid": 17888
+  "stage": "asr",
+  "activePid": 17416
 }

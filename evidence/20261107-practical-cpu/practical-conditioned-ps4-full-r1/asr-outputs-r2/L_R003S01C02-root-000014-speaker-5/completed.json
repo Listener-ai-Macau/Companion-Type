@@ -1,0 +1,64 @@
+{
+  "id": "L_R003S01C02-root-000014-speaker-5",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 14,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 5,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000014-speaker-5.wav",
+  "audioSha256": "57b50bb5d1141cf6a311ef9e57eda1dceb0ab940737ec95d257b04c58f0045fc",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "812108a8da627735243fd26ac64400ccaad449e73c3ff9ec89411d4af994c353",
+  "enrollmentSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347",
+  "mixtureAuthorPeakNormalization": 0.119964599609375,
+  "enrollmentAuthorPeakNormalization": 0.085479736328125,
+  "floatOutputSha256": "f4af331b0403cc161f9d76a8c1757f3dc32242c1c75fb112ce7b7028db0acc20",
+  "floatOutputPeak": 0.3308866322040558,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.8077899999916553,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.253776490688324,
+      "1": 0.5007771849632263,
+      "2": 0.31290343403816223,
+      "3": 0.5414241552352905,
+      "4": 0.368998646736145,
+      "5": 0.5736497640609741
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "可以在租或者买的时候，都可以啊。对。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "可以在租或者买的时候，都可以啊。对。",
+      "generatedIds": [
+        104964,
+        99850,
+        100631,
+        99565,
+        103920,
+        3837,
+        104570,
+        103924,
+        1773,
+        32664,
+        1773,
+        151645
+      ],
+      "rawDecoded": "可以在租或者买的时候，都可以啊。对。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.543365999998059
+    }
+  ]
+}

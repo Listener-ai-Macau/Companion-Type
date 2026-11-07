@@ -1,0 +1,32 @@
+{
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "audioSha256": "27f1c3b5d92f0f923c05fcaa64604c87fb3a8992b837ba04dd62276167003274",
+  "raw": {
+    "startSample": 0,
+    "endSample": 240000,
+    "text": "停了，你家往哪停啊？",
+    "generatedIds": [
+      94375,
+      34187,
+      3837,
+      56568,
+      45629,
+      99321,
+      99459,
+      94375,
+      103924,
+      11319,
+      151645
+    ],
+    "rawDecoded": "停了，你家往哪停啊？<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 2.296819699986372
+  },
+  "rawSha256": "e390f7bdbb2b0e8aa7031da14afbb514f78bc91ef19b63c84f2d1a96ad85f85f"
+}

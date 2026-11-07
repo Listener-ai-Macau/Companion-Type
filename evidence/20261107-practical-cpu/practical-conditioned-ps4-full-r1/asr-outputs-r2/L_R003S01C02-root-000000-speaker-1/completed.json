@@ -1,0 +1,64 @@
+{
+  "id": "L_R003S01C02-root-000000-speaker-1",
+  "binding": {
+    "protocolSha256": "21195765f2dd62c309e0ef18b781f71e74491c4916f28a7dd6eda5210db721c0",
+    "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
+    "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
+  },
+  "meeting": "L_R003S01C02",
+  "rootIndex": 0,
+  "kind": "full-predicted-overlap",
+  "predictedSpeaker": 1,
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000000-speaker-1.wav",
+  "audioSha256": "2ca91d4790ec6bb758e20725b2647cdb0d33b76e2da2318e7f03dbc644a116aa",
+  "audioSeconds": 30.0,
+  "inputMixtureSha256": "b340428f39bdbc8cb82b9a8683aaaaca1a0e091fef4c7fcce5fa39da709de6fc",
+  "enrollmentSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226",
+  "mixtureAuthorPeakNormalization": 0.168060302734375,
+  "enrollmentAuthorPeakNormalization": 0.065155029296875,
+  "floatOutputSha256": "a7a38bdc692d7a325e1a72e43f380cfdf23556a3f8e80636f2ad8a54eec5ef0c",
+  "floatOutputPeak": 0.3233053386211395,
+  "pcmExportDivisor": 1.0,
+  "inferenceSeconds": 1.5870953999983612,
+  "noReferenceInputOrOutputFiltering": true,
+  "sampleCountUnchanged": true,
+  "voiceIdentity": {
+    "sameMeetingCosines": {
+      "0": 0.044462621212005615,
+      "1": 0.49905598163604736,
+      "2": 0.1616293042898178,
+      "3": 0.40798771381378174,
+      "4": 0.10455720871686935,
+      "5": 0.25311964750289917
+    },
+    "targetIsTop1": true,
+    "argmaxOnlyNoAbsoluteThreshold": true
+  },
+  "text": "零六，零幺三，零幺九。",
+  "acceptedLeaves": [
+    {
+      "startSample": 0,
+      "endSample": 480000,
+      "text": "零六，零幺三，零幺九。",
+      "generatedIds": [
+        99822,
+        99566,
+        3837,
+        99822,
+        119538,
+        44991,
+        3837,
+        99822,
+        119538,
+        99609,
+        1773,
+        151645
+      ],
+      "rawDecoded": "零六，零幺三，零幺九。<|im_end|>",
+      "naturalEos": true,
+      "repeatBlock": null,
+      "neuralInferencePerformed": true,
+      "inferenceSeconds": 2.5220206000085454
+    }
+  ]
+}

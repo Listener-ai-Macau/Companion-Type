@@ -1,5 +1,5 @@
 {
-  "state": "EXTRACTING_TARGET_VOICES",
+  "state": "COMPLETE_PS4_SEPARATION_UNQUALIFIED",
   "pid": 25984,
   "startedAt": "2026-11-07T20:31:16+08:00",
   "stage": "separation",
@@ -8,9 +8,9 @@
     "audioOnlySha256": "c8cf9e0c0b385f7c8bce8a62babfb79d6b37d715e9cb19dd1db603df445350bd",
     "workerSourceSha256": "eda0e0599369b1052f22c31d40090e617df903b2a9e3a4146c86b8bf7dca7f4c"
   },
-  "newNeuralCalls": 23,
-  "reusedOutputs": 0,
-  "completedInputs": 23,
+  "newNeuralCalls": 161,
+  "reusedOutputs": 7,
+  "completedInputs": 168,
   "referencePassedToWorker": false,
   "qualityQualified": false,
   "limits": {
@@ -32,5 +32,7 @@
   "gpu": "AMD Radeon RX 6800 XT",
   "modelLoaded": true,
   "modelLoadSeconds": 3.777412600000389,
-  "newSpeakerEncoderCalls": 29
+  "newSpeakerEncoderCalls": 167,
+  "finishedAt": "2026-11-07T20:38:20+08:00",
+  "wholeWorkerSeconds": 424.0328440000012
 }
