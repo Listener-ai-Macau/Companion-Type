@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T18:06:49+08:00",
+  "at": "2026-11-07T18:27:04+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -8052,7 +8052,7 @@
     "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
   },
   "next": "原QM04准确率优先：只比较固定官方原生1.7B权重；0.6B普通S6.43844%/复杂L混音23.42093%完整研究基线保留。保持BF16/eager/greedy/无参考热词/原30秒根块与有界失败恢复/CPU5%/private2GiB。先同一普通30秒默认/有界生成ID精确一致、原失败复杂30秒、全零输入管线短控；通过后同两完整真实会，普通S若不优于6.43844%就停止复杂并拒绝默认采用。不同权重不得复用旧神经输出。普通5%/逐人重叠/纪要事实/跨域独立集/手机实卡/售卖门全保留。",
-  "lastOwnerQuote": "继续推进一下, 达到可售卖标准才行, 要在正确方向上行走",
+  "lastOwnerQuote": "需要继续推进啊, 现在是在正确方向吗",
   "nativeVerbatimPreparation": {
     "at": "2026-11-07T15:04:06+08:00",
     "state": "FROZEN_NATIVE_VERBATIM_CONTROL_PREPARED_NO_INFERENCE",
@@ -8318,15 +8318,107 @@
     "short-native-state.json": null,
     "full/run.json": {
       "state": "RUNNING_BOUNDED_NATIVE_FULL",
-      "pid": 17804,
-      "startedAt": "2026-11-07T17:57:11+08:00",
-      "priorAttemptReceipts": [],
-      "results": [],
+      "pid": 26376,
+      "startedAt": "2026-11-07T18:12:32+08:00",
+      "priorAttemptReceipts": [
+        "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\full\\full-attempt-0001.json"
+      ],
+      "results": [
+        {
+          "meeting": "S_R004S03C01",
+          "exitCode": 0,
+          "wholeProcessFamilySeconds": 553.7182878000021,
+          "accumulatedProcessFamilySeconds": 1438.5105152000033,
+          "sampledPrivatePeakBytes": 1243738112,
+          "scoringExitCode": 0,
+          "qualityReview": {
+            "at": "2026-11-07T18:21:47+08:00",
+            "meeting": "S_R004S03C01",
+            "audioSeconds": 2327.119,
+            "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+            "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+            "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+            "referenceCharacters": 8325,
+            "hypothesisCharacters": 8228,
+            "chronologicalTextDiagnostic": {
+              "edits": {
+                "replace": 223,
+                "delete": 177,
+                "insert": 80
+              },
+              "cer": 0.05765765765765766,
+              "scope": "Whole chronological ASR text. Overlapping reference utterances have no unique merged word order; this is not overlap/attribution acceptance."
+            },
+            "anonymousStreamCpCerDiagnostic": {
+              "metric": "cpCER",
+              "audioSeconds": 2327.119,
+              "referenceCharacters": 8325,
+              "referenceSpeakers": 5,
+              "predictedTextStreams": 1,
+              "edits": {
+                "replace": 35,
+                "delete": 5965,
+                "insert": 5868
+              },
+              "totalEdits": 11868,
+              "characterErrorRate": 1.4255855855855857,
+              "anonymousAssignmentForEvaluationOnly": [
+                {
+                  "referenceSpeaker": "001-M",
+                  "hypothesisSpeaker": null,
+                  "edits": 1983
+                },
+                {
+                  "referenceSpeaker": "002-F",
+                  "hypothesisSpeaker": null,
+                  "edits": 650
+                },
+                {
+                  "referenceSpeaker": "003-F",
+                  "hypothesisSpeaker": null,
+                  "edits": 1681
+                },
+                {
+                  "referenceSpeaker": "004-F",
+                  "hypothesisSpeaker": "__unconfirmed__",
+                  "edits": 5945
+                },
+                {
+                  "referenceSpeaker": "005-F",
+                  "hypothesisSpeaker": null,
+                  "edits": 1609
+                }
+              ],
+              "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+            },
+            "unconfirmedSpeakerText": {
+              "characters": 8228,
+              "fractionOfRecognizedCharacters": 1.0,
+              "neverRealIdentityOrOwnerClaim": true
+            },
+            "confirmedAttributionCerDiagnostic": {
+              "totalEdits": 16553,
+              "cer": 1.9883483483483484,
+              "scope": "Optimal mapping over known anonymous streams only; unknown text forced unmatched. This stricter diagnostic is not the standard cpCER and cannot be substituted silently."
+            },
+            "speakerActivityReview": null,
+            "speakerJournalPending": true,
+            "identityMetricsApplicable": false,
+            "allAudioSamplesCoveredOnce": true,
+            "allRawAsrTextPreserved": true,
+            "nativeTokenOnsetsAreApproximate": true,
+            "overlapBothVoicesRecovered": false,
+            "qualified": false,
+            "qualityScope": "Complete exposed development meeting. No tuning, final holdout, phone/card or sale qualification. Read text/speaker/short-turn/overlap metrics separately. All-unknown text-only runs have no speaker/identity result."
+          },
+          "actualProductDocumentContractPassed": true
+        }
+      ],
       "referencePassedToWorker": false,
       "qualityQualified": false,
       "automaticModelFailureRetries": 0,
-      "activePid": 20460,
-      "activeMeeting": "S_R004S03C01"
+      "activePid": 13840,
+      "activeMeeting": "L_R003S01C02"
     },
     "cache-recovery-proof.json": null,
     "concurrency-proof.json": null,
@@ -8790,6 +8882,16 @@
         "fillerOrErRemovedToScore": false,
         "qualification": "NOT_QUALIFIED: exposed development full text only. Strict5%/person-aligned text/separated overlap/factual minutes/cross-corpus final holdout/installed phone-card and sale remain unqualified. Prior AMI31.0766% speaker failure is retained."
       },
+      "ordinaryStage": {
+        "state": "ORDINARY_FULL_NATIVE17_IMPROVES_STAGE5_OPEN_COMPLEX_RUNNING",
+        "rawChronologicalCerBaseline06": 0.06438438438438439,
+        "rawChronologicalCerNative17": 0.05765765765765766,
+        "referenceCharacters": 8325,
+        "editsNative17": 480,
+        "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+        "qualityQualified": false,
+        "speakerWordAlignmentMeasured": false
+      },
       "independentPack": {
         "version": 1,
         "backend": "qwen-native-bounded",
@@ -8833,6 +8935,6 @@
       "independentCommandProof": null
     }
   },
-  "sourceAndEvidenceCommit": "1338e1057a355d8571e95d719cedbff70eff7c8f",
+  "sourceAndEvidenceCommit": "bacbdf60c724f9182ae230662e3e5874779c351a",
   "remoteReadbackConfirmed": true
 }

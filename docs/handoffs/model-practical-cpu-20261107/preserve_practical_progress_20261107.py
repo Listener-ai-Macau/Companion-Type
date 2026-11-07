@@ -102,7 +102,7 @@ if record['native8AmiChain']:record['state']=record['native8AmiChain']['state']
 if record['practicalReleaseReview']:
     record['state']=record['practicalReleaseReview']['state']
     record['next']=record['practicalReleaseReview']['next']
-record['lastOwnerQuote']='继续推进一下, 达到可售卖标准才行, 要在正确方向上行走'
+record['lastOwnerQuote']='需要继续推进啊, 现在是在正确方向吗'
 record['nativeVerbatimPreparation']=optional(base/'practical-verbatim-r1/prepared.json')
 record['nativeVerbatimRun']=optional(base/'practical-verbatim-r1/transcript-run.json')
 record['nativeVerbatimReview']=optional(base/'practical-verbatim-r1/review.json')
@@ -119,7 +119,7 @@ record['officialNativeAsrControl']={name:optional(qwen_current/name) for name in
 record['officialNativeAsrControl'].update(control=str(qwen_current),activeExecution=active,initialLoaderFailure=optional(qwen_root/'short-run.json'),nativeLoaderTinyControl=optional(qwen_root/'streamed-loader-proof-r2.json'),featureNumericControl=optional(qwen_root/'processor-numeric-proof.json'),exactZeroGuardControl=optional(qwen_root/'exact-zero-guard-proof.json'))
 qwen=record['officialNativeAsrControl']
 if qwen_current.name=='practical-qwen-native17-r5':
-    qwen['checkpoint17']={'ready':optional(qwen_current/'model-ready.json'),'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'priorComplete06Review':optional(base/'practical-qwen-bounded-r4/review.json'),'independentPack':optional(qwen_current/'model-pack.json'),'independentBusyProof':optional(qwen_current/'independent-command-busy-proof.json'),'independentCommandProof':optional(qwen_current/'independent-command-proof.json')}
+    qwen['checkpoint17']={'ready':optional(qwen_current/'model-ready.json'),'pilotRun':optional(qwen_current/'pilot-run.json'),'pilotState':optional(qwen_current/'pilot/state.json'),'comparisonRule':optional(qwen_current/'comparison-rule.json'),'priorComplete06Review':optional(base/'practical-qwen-bounded-r4/review.json'),'ordinaryStage':optional(qwen_current/'ordinary-stage-review.json'),'independentPack':optional(qwen_current/'model-pack.json'),'independentBusyProof':optional(qwen_current/'independent-command-busy-proof.json'),'independentCommandProof':optional(qwen_current/'independent-command-proof.json')}
     record['state']='NATIVE17_'+(qwen['checkpoint17']['pilotRun'] or qwen['checkpoint17']['ready'] or qwen['prepared.json'] or {}).get('state','PREPARING')+'_SALE_OPEN'
     record['next']='原QM04准确率优先：只比较固定官方原生1.7B权重；0.6B普通S6.43844%/复杂L混音23.42093%完整研究基线保留。保持BF16/eager/greedy/无参考热词/原30秒根块与有界失败恢复/CPU5%/private2GiB。先同一普通30秒默认/有界生成ID精确一致、原失败复杂30秒、全零输入管线短控；通过后同两完整真实会，普通S若不优于6.43844%就停止复杂并拒绝默认采用。不同权重不得复用旧神经输出。普通5%/逐人重叠/纪要事实/跨域独立集/手机实卡/售卖门全保留。'
 if qwen_current.name=='practical-qwen-bounded-r4':
@@ -154,6 +154,8 @@ if record['native8F16Assessment']:
         text_gate=next(g for g in contract['gates'] if g['id']=='QM04')
         text_gate['nativeVerbatimDevelopment20261107']={'at':now,'review':str(base/'practical-verbatim-r1/review.json'),'rawCer':{'S_R004S03C01':0.06954954954954955,'L_R003S01C02':0.2612955278930383},'complexMixedCerIsOnlyDiagnostic':True,'jointCpCerDiagnostic':{'S_R004S03C01':0.09549549549549549,'L_R003S01C02':0.405025357307515},'strictScoringUnchanged':True,'neuralSettingChanged':'native useItn True→False only','qualityQualified':False,'defaultProductChanged':False}
         text_gate['officialNativeQwenControl20261107']={'at':now,'evidence':str(qwen_current),'state':record['state'],'noNewQualityScoreUnlessFullCompleted':True,'review':qwen['review.json'],'allSpeakersUnknownUntilValidatedAlignmentAndAttribution':True,'qualityQualified':False,'defaultProductChanged':False}
+        if qwen_current.name=='practical-qwen-native17-r5' and qwen['checkpoint17']['ordinaryStage']:
+            text_gate['native17OrdinaryDevelopment20261107']={'at':now,'stage':qwen['checkpoint17']['ordinaryStage'],'evidence':str(qwen_current/'ordinary-stage-review.json'),'modelEvidenceCommit':head,'fullComplexResultPending':qwen['review.json'] is None,'ordinary5PercentGateClosed':False,'qualityQualified':False}
         contract['qualification']['currentQualification']='NOT_QUALIFIED: native verbatim output control ordinary full S CER6.95495%/joint9.54955%; complex L mixed26.12955% only diagnostic/joint40.50254%. Text5% still open. Retain native FP16 diarization Chinese13.4642%/3.8556% and AMI31.0766% cross-corpus failure. Official native Qwen control state '+record['state']+'. Overlap words/facts/installed mobile-card/final holdout/sale still open.'
         if qwen['review.json']:
             rows=qwen['review.json']['results']
