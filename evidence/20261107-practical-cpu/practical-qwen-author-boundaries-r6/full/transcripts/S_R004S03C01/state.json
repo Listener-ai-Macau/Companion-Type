@@ -1,5 +1,5 @@
 {
-  "state": "RUNNING_BOUNDED_NATIVE_FULL_ASR",
+  "state": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
   "pid": 9120,
   "startedAt": "2026-11-07T19:08:04+08:00",
   "binding": {
@@ -11,7 +11,7 @@
   },
   "phase": "full",
   "modelLoaded": true,
-  "newNeuralCalls": 69,
+  "newNeuralCalls": 76,
   "inheritedRootNodes": 0,
   "reusedNodeFiles": 0,
   "completedCacheOnly": false,
@@ -37,10 +37,19 @@
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
   "totalWindows": 79,
-  "completedWindows": 72,
+  "completedWindows": 79,
   "rootBoundaryPolicy": "author-low-energy-local30s-budget",
   "gpu": "AMD Radeon RX 6800 XT",
   "modelLoadSeconds": 34.27830450001056,
-  "completedSample": 34307651,
-  "recoveredRootIndices": []
+  "completedSample": 37233904,
+  "recoveredRootIndices": [],
+  "allAudioSamplesCoveredOnce": true,
+  "allAsrTextPreserved": true,
+  "qualityQualified": false,
+  "modelOutputSha256": "543423e146ab4f5deb03d27d0d85e25fc2fe0e3dd436e9c82341e372869d5155",
+  "attributionReviewSha256": "dd5e790625d5084a4db8d75158ee02981674ffb4bf4293c5d895a5f7c236587b",
+  "acceptedLeafCount": 79,
+  "differentCheckpointOutputComparedByStrictScorerNotByteEquality": true,
+  "finishedAt": "2026-11-07T19:30:58+08:00",
+  "wholeWorkerSeconds": 1373.671173699986
 }

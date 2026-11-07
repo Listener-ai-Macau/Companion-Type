@@ -1,12 +1,16 @@
 {
-  "state": "FOLLOWING_RUNNING_NATIVE_TRIAL",
+  "state": "CONCRETE_NATIVE_TRIAL_TERMINAL_REVIEW_REQUIRED",
   "startedAt": "2026-11-07T19:13:01+08:00",
   "pid": 21512,
   "modelFailureRetries": 0,
   "lowMemoryContinuations": 0,
-  "futilityStopRequested": false,
+  "futilityStopRequested": true,
   "limitsChanged": false,
   "sourceSha256": "1d7a23a8eea40cddd0341f30c80565c8e6955ca5d39636f491823f2f423140cb",
   "events": [],
-  "durableWindows": 72
+  "durableWindows": 79,
+  "ordinaryStrictCer": 0.055375375375375374,
+  "futilityStopAt": "2026-11-07T19:31:11+08:00",
+  "controllerState": "AUTHOR_BOUNDARY_ORDINARY5_NOT_REACHED_COMPLEX_NOT_RUN",
+  "finishedAt": "2026-11-07T19:31:11+08:00"
 }

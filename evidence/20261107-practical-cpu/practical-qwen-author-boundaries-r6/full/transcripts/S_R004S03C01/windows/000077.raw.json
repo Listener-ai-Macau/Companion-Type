@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 77,
+    "startSample": 36747542,
+    "endSample": 37226077,
+    "text": "就行了。那行，那今天会议到此，你们下去该呃整理的整理，该呃培训的下属员工听培训，好。我。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 36747542,
+        "endSample": 37226077,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "d87f27c3ffde55466cc8d523369c5f740305ab4c3565dc1617d830cfb7e4e62c"
+}
