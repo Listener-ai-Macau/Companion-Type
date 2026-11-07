@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-07T12:06:04+08:00",
+  "state": "OFFICIAL_CPU_RUNTIME_AND_PUBLIC_8_SPEAKER_WEIGHTS_PREPARED_NO_INFERENCE",
+  "assets": [
+    {
+      "name": "nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+      "url": "https://github.com/NVIDIA/NeMo-Speech.cpp/releases/download/v0.3.0/nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+      "bytes": 8694509,
+      "sha256": "4ed9740e361e4653f56c3dce7d1e81883a1c8b831c1bd7d01567fff1130b5b05",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\nemo-speech-0.3.0-windows-x86_64-cpu.zip",
+      "verified": true
+    },
+    {
+      "name": "Nemotron-3-Diarization.q8_0.gguf",
+      "url": "https://huggingface.co/nvidia/Nemotron-3-Diarization/resolve/f667ed73aee57d40cc39428eb768b4fd87a0a29e/Nemotron-3-Diarization.q8_0.gguf",
+      "bytes": 107012128,
+      "sha256": "08456d9e22cd9a323c0364d98375f3746d6e68507ebb705cd46438c534c7a3a1",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\Nemotron-3-Diarization.q8_0.gguf",
+      "verified": true
+    }
+  ],
+  "modelRepository": "nvidia/Nemotron-3-Diarization",
+  "modelRevision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
+  "accountRequiredForActualDownload": false,
+  "runtime": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\runtime-0.3.0-cpu\\nemo-speech-0.3.0-windows-x86_64-cpu\\bin\\nemo-speech.exe",
+  "runtimeSha256": "559ccf43f8fe97807ea92cf8ca2e5c0e158e0825071186536eaa3708b0581fef",
+  "helpExitCode": 0,
+  "cpuPackageOnly": true,
+  "inferencePerformed": false,
+  "defaultBackendChanged": false,
+  "modelCandidateNotQualified": true,
+  "routeReason": "Current full official complete-link result fragmented6 reference speakers into190 active groups, DER78.0445%. Test one pretrained8-channel end-to-end diarizer rather than per-meeting threshold fitting. Same full development meetings and original quality gates; not overlap-word separation or ASR<5%."
+}

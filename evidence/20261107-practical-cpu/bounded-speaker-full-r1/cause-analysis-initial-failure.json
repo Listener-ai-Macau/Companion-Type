@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-07T12:01:00+08:00",
+  "state": "POSTHOC_ENTRY_ENVIRONMENT_FIXED",
+  "initialEnvironment": "base Python311",
+  "error": "ModuleNotFoundError: praatio",
+  "neuralModelsLoaded": 0,
+  "fix": "Use existing pinned clean scoring runtime; no package installation or neural rerun. Full L cached diagnostic subsequently completed.",
+  "correctedOutput": "results/L_R003S01C02/embedding-cause-review.json"
+}

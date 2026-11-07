@@ -14,6 +14,112 @@
       "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\segment-state.json",
       "newNeuralItems": 2354,
       "reusedCachedPrefix": 0
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "stage": "embed",
+      "exitCode": 0,
+      "workerState": "COMPLETE_EMBEDDING_CACHE",
+      "wholeProcessFamilySeconds": 968.0487252000021,
+      "privatePeakBytes": 529690624,
+      "rssPeakBytes": 536776704,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\embed-state.json",
+      "newNeuralItems": 3327,
+      "reusedCachedPrefix": 0
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "stage": "reconstruct",
+      "exitCode": 0,
+      "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "wholeProcessFamilySeconds": 3.0435854999814183,
+      "privatePeakBytes": 114122752,
+      "rssPeakBytes": 180436992,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\L_R003S01C02\\reconstruct-state.json",
+      "newNeuralItems": 0,
+      "reusedCachedPrefix": null,
+      "scoringExitCode": 0,
+      "qualityReview": {
+        "at": "2026-11-07T12:00:32+08:00",
+        "corpus": "AISHELL-4",
+        "meeting": "L_R003S01C02",
+        "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+        "audioSeconds": 2362.945,
+        "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
+        "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+        "referenceKind": "textgrid_lexical",
+        "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+        "referenceSpeakers": 6,
+        "predictedSpeakers": 190,
+        "components": {
+          "false alarm": 173.58982112001166,
+          "total": 2311.9690375138302,
+          "confusion": 1538.7480211624593,
+          "missed detection": 92.02672663384747,
+          "correct": 681.1942897175236,
+          "diarization error rate": 0.7804449539067517
+        },
+        "perReferenceSpeakerForEvaluationOnly": {
+          "002-F": {
+            "referenceSeconds": 381.8366360770482,
+            "correctlyAttributedSeconds": 71.09410701301829,
+            "attributionRecall": 0.18618985266430196,
+            "matchedAnonymousGroup": "speaker_60"
+          },
+          "003-F": {
+            "referenceSeconds": 90.63832169674632,
+            "correctlyAttributedSeconds": 6.744378922892224,
+            "attributionRecall": 0.07440979484877565,
+            "matchedAnonymousGroup": "speaker_181"
+          },
+          "004-M": {
+            "referenceSeconds": 309.5234638706896,
+            "correctlyAttributedSeconds": 184.5054744900031,
+            "attributionRecall": 0.5960952755655526,
+            "matchedAnonymousGroup": "speaker_11"
+          },
+          "005-M": {
+            "referenceSeconds": 568.6460135867515,
+            "correctlyAttributedSeconds": 69.03346802102556,
+            "attributionRecall": 0.12139972209704755,
+            "matchedAnonymousGroup": "speaker_190"
+          },
+          "006-M": {
+            "referenceSeconds": 876.9389412077983,
+            "correctlyAttributedSeconds": 289.72222970736607,
+            "attributionRecall": 0.33037902195144264,
+            "matchedAnonymousGroup": "speaker_78"
+          },
+          "007-M": {
+            "referenceSeconds": 84.38569107480062,
+            "correctlyAttributedSeconds": 60.09463456321828,
+            "attributionRecall": 0.7121424710493819,
+            "matchedAnonymousGroup": "speaker_342"
+          }
+        },
+        "macroReferenceAttributionRecall": 0.33676935636275035,
+        "uncoveredReferenceSpeakers": [],
+        "shortReferenceSpans": {
+          "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+          "count": 209,
+          "referenceSeconds": 170.1290882682149,
+          "correctSeconds": 10.2153561149658,
+          "zeroCorrectSpans": 196
+        },
+        "rttmSha256": "f3f5f342992b25174263df3a44d5439525ebb2409a61b7d1acc015b9f1a5b5f8"
+      }
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "stage": "segment",
+      "exitCode": 0,
+      "workerState": "COMPLETE_SEGMENTATION_CACHE",
+      "wholeProcessFamilySeconds": 101.21150589999161,
+      "privatePeakBytes": 232243200,
+      "rssPeakBytes": 283365376,
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\bounded-speaker-full-r1\\results\\S_R004S03C01\\segment-state.json",
+      "newNeuralItems": 2319,
+      "reusedCachedPrefix": 0
     }
   ],
   "referencePassedToInference": false,
@@ -25,6 +131,6 @@
     "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
     "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
   },
-  "activeMeeting": "L_R003S01C02",
-  "activePid": 24848
+  "activeMeeting": "S_R004S03C01",
+  "activePid": 18116
 }

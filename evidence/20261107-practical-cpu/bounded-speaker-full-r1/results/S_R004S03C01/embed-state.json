@@ -1,0 +1,29 @@
+{
+  "state": "EMBEDDING",
+  "stage": "embed",
+  "pid": 18116,
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "referenceRead": false,
+  "gpuUsed": false,
+  "sourceSha256": "462e641b0d7ad6a6eb6f40d64444c4e6db1ce72f104d081e8305dc2426b23304",
+  "newNeuralItems": 2144,
+  "reusedCachedPrefix": 0,
+  "completed": 2144,
+  "total": 2306,
+  "limits": {
+    "pid": 18116,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 521953280,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

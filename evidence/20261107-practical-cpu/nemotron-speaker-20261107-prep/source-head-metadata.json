@@ -1,0 +1,305 @@
+{
+  "sha": "536b17a41bef62d2a67a40ed3df61df26a4389fe",
+  "node_id": "C_kwDOTZNjWdoAKDUzNmIxN2E0MWJlZjYyZDJhNjdhNDBlZDNkZjYxZGYyNmE0Mzg5ZmU",
+  "commit": {
+    "author": {
+      "name": "Prabhsimran Singh",
+      "email": "prabhsimrans@nvidia.com",
+      "date": "2026-11-02T10:34:00Z"
+    },
+    "committer": {
+      "name": "GitHub",
+      "email": "noreply@github.com",
+      "date": "2026-11-02T10:34:00Z"
+    },
+    "message": "feat(speechlm): Q2_0 quant and CPU MoE offload for smaller GPUs (#99)\n\n* feat(convert): q2_0 SALM decoder profile\n\n- patches: fitted block scales for Q2_0 quantization, with the importance matrix\n- convert_model.py --architecture salm --outtype q2_0: Q2_0 routed experts,\n  IQ4_NL in the last five MoE layers, Q8_0 dense linears, embeddings and output\n  head\n- the converter checks the Q2_0 output for the patched rounding\n- converter contract tests; model-conversion.md lists q2_0\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n* feat(speechlm): n_cpu_moe and batched SALM options\n\n- asr.salm.n_cpu_moe: MoE experts of the first N decoder blocks in system RAM\n- asr.salm.batched: false selects the upstream llama.cpp path\n- both in the C API\n- configuration.md and models.md: settings for 8, 12 and 16 GB GPUs\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n* fix(speechlm): q2_0 quantizer selection, n_cpu_moe patterns, C library SOVERSION 2\n\n- q2_0 conversion uses only the converter-managed llama-quantize; the rounding\n  check names the binary that ran\n- n_cpu_moe override patterns are owned by each engine\n- libnemo_speech_asr_c SOVERSION 2: nemo_speech_asr_salm_config grew\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n* fix(convert): q2_0 builds its quantizer from the current patches\n\n- q2_0 rebuilds the managed llama-quantize from patches/ before converting\n- q2_0 rejects a --llama-cpp checkout, which the converter does not patch\n- asr_c_dlopen: the macOS library name\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n---------\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>",
+    "tree": {
+      "sha": "d23319fadd19ecc687e990719579f304c49e006a",
+      "url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/git/trees/d23319fadd19ecc687e990719579f304c49e006a"
+    },
+    "url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/git/commits/536b17a41bef62d2a67a40ed3df61df26a4389fe",
+    "comment_count": 0,
+    "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJq6GcYCRC1aQ7uu5UhlAAAenUQAIEi0lP5eCYYR8T3qqMT3b//\nu7dUnbQJgSimsSSDK6h/OCAOUu5kuxgHBTWF1SbNPgq7PJbTrIBywWUb4Y632AV7\nUtcXPVXnq5vuw2lXPGYnpGG9oyMlzqZdo97g+tuVyNjDX38ejDWbKk9SyNdNT7Vv\nx8CTlS1xaO5n/31drpVZ1OC+yPSMW2RKyy6bkftjP1AeH1pqyXj8E4rFzRcW0t4J\nodWOfJn3VCOAg5eitapsgp/8Z+gGp+NihkfZBcWWa9Zrh7c/WySf5hQMNrVoItx+\nZYkbQkpHFWB1uDYevtepd1rq+vvOwz5yHndOcQMQyGPVlnkr+kjPcWT5Cr96eh75\nwKo+o1ECsOgv2yw46+hMcCZveigCCH9Oj5wZnngHh9j5PrEz6BPQHrEjNhD9mGGB\nZoywxFHzWImoEVarK/EF89UjDQRfDE18P84Nmu7ISIazodP7CMzxWKQxB0McfBcy\no8ix4zDSKSb+aYAfvtHltnhO3oPBXOd0wBB2iM0OOe6kbdMzGMLpTz88EX7EExiH\nd0nlTkfvDxXoAohUcnQ7kjZI4AFS3mO7fPZFSZp5kaQd/SOirE3MaIKAwm0D7buk\nJyucKL/rg57fFD8r6MJv7GP5tlju+reAqP4WGs2+vvzu9h9b1T27nhVq5T7UCVuT\nCSFp5DboXdRsNtrlUJLv\n=jVZ6\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree d23319fadd19ecc687e990719579f304c49e006a\nparent 20999cc921d2b14aa58708f61756a8b2e787ba20\nauthor Prabhsimran Singh <prabhsimrans@nvidia.com> 1793615640 +0530\ncommitter GitHub <noreply@github.com> 1793615640 +0530\n\nfeat(speechlm): Q2_0 quant and CPU MoE offload for smaller GPUs (#99)\n\n* feat(convert): q2_0 SALM decoder profile\n\n- patches: fitted block scales for Q2_0 quantization, with the importance matrix\n- convert_model.py --architecture salm --outtype q2_0: Q2_0 routed experts,\n  IQ4_NL in the last five MoE layers, Q8_0 dense linears, embeddings and output\n  head\n- the converter checks the Q2_0 output for the patched rounding\n- converter contract tests; model-conversion.md lists q2_0\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n* feat(speechlm): n_cpu_moe and batched SALM options\n\n- asr.salm.n_cpu_moe: MoE experts of the first N decoder blocks in system RAM\n- asr.salm.batched: false selects the upstream llama.cpp path\n- both in the C API\n- configuration.md and models.md: settings for 8, 12 and 16 GB GPUs\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n* fix(speechlm): q2_0 quantizer selection, n_cpu_moe patterns, C library SOVERSION 2\n\n- q2_0 conversion uses only the converter-managed llama-quantize; the rounding\n  check names the binary that ran\n- n_cpu_moe override patterns are owned by each engine\n- libnemo_speech_asr_c SOVERSION 2: nemo_speech_asr_salm_config grew\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n* fix(convert): q2_0 builds its quantizer from the current patches\n\n- q2_0 rebuilds the managed llama-quantize from patches/ before converting\n- q2_0 rejects a --llama-cpp checkout, which the converter does not patch\n- asr_c_dlopen: the macOS library name\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>\n\n---------\n\nSigned-off-by: Prabhsimran Singh <prabhsimrans@nvidia.com>",
+      "verified_at": "2026-11-02T10:34:01Z"
+    }
+  },
+  "url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/commits/536b17a41bef62d2a67a40ed3df61df26a4389fe",
+  "html_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/commit/536b17a41bef62d2a67a40ed3df61df26a4389fe",
+  "comments_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/commits/536b17a41bef62d2a67a40ed3df61df26a4389fe/comments",
+  "author": {
+    "login": "pskrunner14",
+    "id": 22117854,
+    "node_id": "MDQ6VXNlcjIyMTE3ODU0",
+    "avatar_url": "https://avatars.githubusercontent.com/u/22117854?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/pskrunner14",
+    "html_url": "https://github.com/pskrunner14",
+    "followers_url": "https://api.github.com/users/pskrunner14/followers",
+    "following_url": "https://api.github.com/users/pskrunner14/following{/other_user}",
+    "gists_url": "https://api.github.com/users/pskrunner14/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/pskrunner14/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/pskrunner14/subscriptions",
+    "organizations_url": "https://api.github.com/users/pskrunner14/orgs",
+    "repos_url": "https://api.github.com/users/pskrunner14/repos",
+    "events_url": "https://api.github.com/users/pskrunner14/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/pskrunner14/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "web-flow",
+    "id": 19864447,
+    "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/web-flow",
+    "html_url": "https://github.com/web-flow",
+    "followers_url": "https://api.github.com/users/web-flow/followers",
+    "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+    "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+    "organizations_url": "https://api.github.com/users/web-flow/orgs",
+    "repos_url": "https://api.github.com/users/web-flow/repos",
+    "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/web-flow/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+      "url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/commits/20999cc921d2b14aa58708f61756a8b2e787ba20",
+      "html_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/commit/20999cc921d2b14aa58708f61756a8b2e787ba20"
+    }
+  ],
+  "stats": {
+    "total": 409,
+    "additions": 364,
+    "deletions": 45
+  },
+  "files": [
+    {
+      "sha": "320366acbe03011d9a5b547e22e79ec5164d4e00",
+      "filename": "conversion/registry.py",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/conversion%2Fregistry.py",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/conversion%2Fregistry.py",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/conversion%2Fregistry.py?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -193,7 +193,7 @@ def _normalized_outtype(architecture: str, outtype: str) -> str:\n         \"codec\": {\"f16\", \"f32\"},\n         \"nmt\": {\"f32\", \"f16\", \"bf16\", \"q8_0\", \"auto\"},\n         \"s2s\": {\"bf16\", \"q4_k_m\", \"nvfp4\"},\n-        \"salm\": {\"nvfp4\", \"iq4_nl\"},\n+        \"salm\": {\"nvfp4\", \"iq4_nl\", \"q2_0\"},\n         \"dflash2\": {\"bf16\", \"f16\", \"f32\"},\n     }\n     if value not in supported[architecture]:"
+    },
+    {
+      "sha": "a785719365d7683e52e327dab4e359ce83142ca2",
+      "filename": "conversion/s2s_components/voicechat_source.py",
+      "status": "modified",
+      "additions": 29,
+      "deletions": 16,
+      "changes": 45,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/conversion%2Fs2s_components%2Fvoicechat_source.py",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/conversion%2Fs2s_components%2Fvoicechat_source.py",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/conversion%2Fs2s_components%2Fvoicechat_source.py?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -214,14 +214,18 @@ def find_quantizer(\n             )\n         return resolved\n \n-    candidates = [\n-        llama_cpp / \"build\" / \"bin\" / \"llama-quantize\",\n-        llama_cpp / \"build-quantize\" / \"bin\" / \"llama-quantize\",\n-    ]\n-    candidates.extend(sorted(llama_cpp.glob(\"build*/bin/llama-quantize\")))\n-    installed = shutil.which(\"llama-quantize\")\n-    if installed:\n-        candidates.append(Path(installed))\n+    if profile and profile.lower() == \"q2_0\":\n+        # Q2_0 needs the scale fitting of patches/: only the converter-managed build has it\n+        candidates = [default_quantizer_path(llama_cpp)]\n+    else:\n+        candidates = [\n+            llama_cpp / \"build\" / \"bin\" / \"llama-quantize\",\n+            llama_cpp / \"build-quantize\" / \"bin\" / \"llama-quantize\",\n+        ]\n+        candidates.extend(sorted(llama_cpp.glob(\"build*/bin/llama-quantize\")))\n+        installed = shutil.which(\"llama-quantize\")\n+        if installed:\n+            candidates.append(Path(installed))\n     for candidate in candidates:\n         resolved = candidate.resolve()\n         if (\n@@ -248,15 +252,24 @@ def ensure_quantizer(\n     checkout = llama_cpp.expanduser().resolve()\n     if explicit is not None:\n         return find_quantizer(checkout, explicit, profile=profile)\n-    try:\n-        return find_quantizer(checkout, profile=profile)\n-    except FileNotFoundError as missing:\n-        if not auto_build:\n-            raise FileNotFoundError(\n-                f\"{missing}; automatic build is disabled, so pass --llama-quantize PATH\"\n-            ) from missing\n-\n     root = (repo_root or _project_root()).expanduser().resolve()\n+    q2_0 = bool(profile) and profile.lower() == \"q2_0\"\n+    if q2_0 and checkout != (root / \"llama.cpp\").resolve():\n+        raise RuntimeError(\n+            \"q2_0 needs the Q2_0 scale fitting in patches/, which the converter applies only to this \"\n+            \"repository's llama.cpp; omit --llama-cpp, or pass --llama-quantize built with patches/\"\n+        )\n+    # q2_0 always goes through the build, so the managed quantizer carries the current patches/\n+    # (an incremental no-op when it does)\n+    if not (q2_0 and auto_build and shutil.which(\"cmake\")):\n+        try:\n+            return find_quantizer(checkout, profile=profile)\n+        except FileNotFoundError as missing:\n+            if not auto_build:\n+                raise FileNotFoundError(\n+                    f\"{missing}; automatic build is disabled, so pass --llama-quantize PATH\"\n+                ) from missing\n+\n     checkout = ensure_llama_checkout(checkout, root)\n     cmake = shutil.which(\"cmake\")\n     if cmake is None:"
+    },
+    {
+      "sha": "b4a152e274c42ff472a477d1c91d899578de6abf",
+      "filename": "conversion/salm.py",
+      "status": "modified",
+      "additions": 102,
+      "deletions": 10,
+      "changes": 112,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/conversion%2Fsalm.py",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/conversion%2Fsalm.py",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/conversion%2Fsalm.py?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -12,8 +12,11 @@\n \n     nvfp4   routed experts NVFP4, dense linears BF16 (default; Blackwell runs the experts natively)\n     iq4_nl  routed experts IQ4_NL, dense linears Q8_0 (other GPUs, CPU, Vulkan, Metal; sized for 24 GB GPUs)\n+    q2_0    routed experts Q2_0 except those of the last Q2_KEPT_MOE_LAYERS MoE layers (IQ4_NL), dense linears,\n+            embeddings and the output head Q8_0 (the smallest decoder, for smaller GPUs)\n \n-Embeddings, the output head and the norms stay BF16/F32.\n+Otherwise embeddings, the output head and the norms stay BF16/F32. Q2_0 needs the scale fitting of patches/: stock\n+llama.cpp rounds every block to three of its four levels, so the converter checks its output for the fourth.\n \n The speech encoder (conversion/pee.py) is F16 (\"none\" writes the decoder alone, for a second profile of a checkpoint\n whose encoder file exists) and the CTC timestamp head (conversion/ctc_timestamp.py) comes from the checkpoint when it\n@@ -31,11 +34,21 @@\n import sys\n from pathlib import Path\n \n-from .s2s_components.voicechat_source import ensure_llama_checkout, ensure_quantizer\n+from .s2s_components.voicechat_source import (\n+    default_quantizer_path,\n+    ensure_llama_checkout,\n+    ensure_quantizer,\n+)\n \n DEFAULT_PROFILE = \"nvfp4\"\n-PROFILES = (\"nvfp4\", \"iq4_nl\")\n-DENSE_TYPE = {\"nvfp4\": \"bf16\", \"iq4_nl\": \"q8_0\"}  # the dense linears of each profile\n+PROFILES = (\"nvfp4\", \"iq4_nl\", \"q2_0\")\n+DENSE_TYPE = {\n+    \"nvfp4\": \"bf16\",\n+    \"iq4_nl\": \"q8_0\",\n+    \"q2_0\": \"q8_0\",\n+}  # the dense linears of each profile\n+Q2_KEPT_MOE_LAYERS = 5  # q2_0: the last MoE layers whose routed experts stay IQ4_NL\n+Q2_0_BLOCK_BYTES = 18  # FP16 scale and 64 2-bit codes\n ENCODER_TYPES = (\"f16\", \"none\")\n DEFAULT_ENCODER = \"f16\"\n ENCODER_FILE_KEY = \"nemo_speech.speech_model\"  # the encoder file the decoder names\n@@ -63,6 +76,16 @@ def backbone_config(source: Path) -> dict:\n     raise RuntimeError(f\"{source}: no llm_backbone/config.json and no llm_config in config.json\")\n \n \n+def kept_expert_layers(profile: str, config: dict) -> list[int]:\n+    \"\"\"The decoder blocks whose routed experts stay IQ4_NL: for q2_0 the last MoE layers of the main stack.\"\"\"\n+    if profile != \"q2_0\":\n+        return []\n+    moe = [i for i, kind in enumerate(config.get(\"layers_block_type\") or []) if kind == \"moe\"]\n+    if not moe:\n+        raise RuntimeError(\"the backbone config lists no MoE layers (layers_block_type)\")\n+    return moe[-Q2_KEPT_MOE_LAYERS:]\n+\n+\n def stage(source: Path, staging: Path, weights: bool = True) -> None:\n     \"\"\"An HF-shaped directory for the converter: backbone config, the tokenizer without the audio locator (it\n     has no embedding row) and, with `weights`, links to the checkpoint's safetensors.\"\"\"\n@@ -186,7 +209,15 @@ def convert(\n     if dry_run:  # tensor mapping checked, nothing written\n         shutil.rmtree(work, ignore_errors=True)\n         return\n-    quantize_decoder(bf16, outfile, profile, quantize, dense)\n+    quantize_decoder(\n+        bf16,\n+        outfile,\n+        profile,\n+        quantize,\n+        dense,\n+        kept_expert_layers(profile, backbone_config(source)),\n+        llama,\n+    )\n     shutil.rmtree(work, ignore_errors=True)\n     if speech:\n         print(f\"[convert-salm] {outfile.name} and its encoder file {speech.name}\")\n@@ -239,33 +270,94 @@ def encoder_type(profile: str, encoder: str | None = None) -> str:\n     return (encoder or DEFAULT_ENCODER).lower()\n \n \n-def tensor_rules(profile: str, dense: str = \"bf16\") -> list[str]:\n+def tensor_rules(\n+    profile: str, dense: str = \"bf16\", kept_layers: list[int] | None = None\n+) -> list[str]:\n     \"\"\"llama-quantize --tensor-type rules: they apply over a quantized base type and the first match wins, so the\n     expert and dense rules come first and a catch-all keeps everything else BF16 (the base type is never used).\n+    `kept_layers`: blocks whose routed experts stay IQ4_NL (kept_expert_layers).\n     \"\"\"\n-    rules = [f\"{EXPERT_TENSORS}={profile}\"]\n+    rules = []\n+    if kept_layers:\n+        rules.append(rf\"blk\\.({'|'.join(str(i) for i in kept_layers)})\\.{EXPERT_TENSORS}=iq4_nl\")\n+    rules.append(f\"{EXPERT_TENSORS}={profile}\")\n     if dense != \"bf16\":\n         rules.extend(f\"{pattern}={dense}\" for pattern in DENSE_TENSORS)\n+    if profile == \"q2_0\":\n+        rules += [r\"^token_embd\\.weight=q8_0\", r\"^output\\.weight=q8_0\"]\n     return rules + [\".=bf16\"]\n \n \n+def q2_0_uses_top_level(blocks: bytes) -> bool:\n+    \"\"\"Whether Q2_0 blocks use code 3 (+2 x scale). Stock llama.cpp's rounding takes the scale from the block's\n+    largest magnitude and never reaches it; the fitted scales of patches/ do.\"\"\"\n+    import numpy as np\n+\n+    raw = np.frombuffer(blocks, dtype=np.uint8)\n+    codes = raw[: raw.size - raw.size % Q2_0_BLOCK_BYTES].reshape(-1, Q2_0_BLOCK_BYTES)[:, 2:]\n+    shifts = np.array([0, 2, 4, 6], dtype=np.uint8)\n+    return bool((((codes[:, :, None] >> shifts) & 3) == 3).any())\n+\n+\n+def check_q2_0_rounding(path: Path, llama_cpp: Path, quantize: Path) -> None:\n+    \"\"\"Fails when the first Q2_0 tensor of `path` was rounded by an unpatched llama-quantize (`quantize`). Reads it\n+    in a fresh interpreter with the pinned llama.cpp's gguf-py first on the path: an installed gguf may predate Q2_0.\n+    \"\"\"\n+    script = (\n+        \"import sys, gguf\\n\"\n+        \"for t in gguf.GGUFReader(sys.argv[1]).tensors:\\n\"\n+        \"    if t.tensor_type == gguf.GGMLQuantizationType.Q2_0:\\n\"\n+        \"        sys.stdout.buffer.write(t.data.reshape(-1)[: int(sys.argv[2])].tobytes())\\n\"\n+        \"        break\\n\"\n+    )\n+    env = dict(os.environ, PYTHONPATH=str(llama_cpp / \"gguf-py\"))\n+    blocks = subprocess.run(\n+        [sys.executable, \"-c\", script, str(path), str(Q2_0_BLOCK_BYTES * 65536)],\n+        env=env,\n+        check=True,\n+        capture_output=True,\n+    ).stdout\n+    if not blocks:\n+        raise RuntimeError(f\"{path} has no Q2_0 tensor\")\n+    if not q2_0_uses_top_level(blocks):\n+        managed = default_quantizer_path(llama_cpp)\n+        if Path(quantize).resolve() == managed:\n+            hint = f\"remove {managed.parents[1]} so the converter rebuilds it from patches/\"\n+        else:\n+            hint = (\n+                \"pass --llama-quantize a build of this repository's llama.cpp with patches/ applied\"\n+            )\n+        raise RuntimeError(f\"{quantize} rounded Q2_0 without the fitted scales of patches/; {hint}\")\n+\n+\n def quantize_decoder(\n-    bf16: Path, outfile: Path, profile: str, quantize: Path, dense: str = \"bf16\"\n+    bf16: Path,\n+    outfile: Path,\n+    profile: str,\n+    quantize: Path,\n+    dense: str = \"bf16\",\n+    kept_layers: list[int] | None = None,\n+    llama_cpp: Path | None = None,\n ) -> None:\n-    \"\"\"A BF16 decoder GGUF with its routed experts in `profile` and its dense linears in `dense`.\"\"\"\n+    \"\"\"A BF16 decoder GGUF with its routed experts in `profile` (IQ4_NL in `kept_layers`) and its dense linears in\n+    `dense`.\"\"\"\n     threads = (\n         len(os.sched_getaffinity(0)) if hasattr(os, \"sched_getaffinity\") else os.cpu_count() or 8\n     )\n     temporary = outfile.with_name(outfile.name + \".quantizing\")\n     print(f\"[convert-salm] routed experts -> {profile.upper()}, dense linears -> {dense.upper()}\")\n     command = [str(quantize)]\n-    for rule in tensor_rules(profile, dense):\n+    for rule in tensor_rules(profile, dense, kept_layers):\n         command += [\"--tensor-type\", rule]\n     command += [str(bf16), str(temporary), \"Q8_0\", str(threads)]\n     try:\n         subprocess.run(command, check=True)\n         if not temporary.is_file() or temporary.stat().st_size == 0:\n             raise RuntimeError(f\"llama-quantize did not produce {temporary}\")\n+        if profile == \"q2_0\":\n+            check_q2_0_rounding(\n+                temporary, llama_cpp or Path(__file__).resolve().parents[1] / \"llama.cpp\", quantize\n+            )\n         temporary.replace(outfile)\n     finally:\n         temporary.unlink(missing_ok=True)"
+    },
+    {
+      "sha": "73297b327082484fa7ede791a04055229a55108e",
+      "filename": "docs/model-conversion.md",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 2,
+      "changes": 6,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/docs%2Fmodel-conversion.md",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/docs%2Fmodel-conversion.md",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/docs%2Fmodel-conversion.md?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -73,7 +73,8 @@ experts); embeddings, the output head and the norms stay BF16/F32:\n | `--outtype` | Routed experts | Dense linears | Use |\n |---|---|---|---|\n | `nvfp4` (default) | NVFP4 | BF16 | Blackwell GPUs run the experts natively |\n-| `iq4_nl` | IQ4_NL | Q8_0 | GPUs without NVFP4 (Ampere, Ada), CPU, Vulkan; the smaller file |\n+| `iq4_nl` | IQ4_NL | Q8_0 | GPUs without NVFP4 (Ampere, Ada), CPU, Vulkan |\n+| `q2_0` | Q2_0, IQ4_NL in the last five MoE layers | Q8_0 (also the embeddings and output head) | the smallest file, for smaller GPUs |\n \n The encoder file is the same for every `--outtype` (F16 encoder and F32 CTC head), named after the\n checkpoint, so decoders of several types share one. `--salm-encoder none` writes only the decoder, for a second\n@@ -82,7 +83,8 @@ checkpoint, so decoders of several types share one. `--salm-encoder none` writes\n The conversion stages the checkpoint's decoder for llama.cpp's NemotronH converter (the pinned `llama.cpp`\n submodule), writes a BF16 intermediate next to the output (the size of the BF16 decoder) and then quantizes it\n with the patched `llama-quantize`, built once on first use like the S2S converter's. `--dry-run` checks the tensor\n-mapping without writing.\n+mapping without writing. `q2_0` needs the Q2_0 scale fitting in `patches/`: the converter builds `llama-quantize`\n+for it from this repository's patched `llama.cpp` (not a `--llama-cpp` checkout) and checks its output.\n \n ### DFlash2 draft model\n "
+    },
+    {
+      "sha": "de2eced637cccac23274b86a6a24ba3f168dda01",
+      "filename": "docs/salm/configuration.md",
+      "status": "modified",
+      "additions": 7,
+      "deletions": 0,
+      "changes": 7,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/docs%2Fsalm%2Fconfiguration.md",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/docs%2Fsalm%2Fconfiguration.md",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/docs%2Fsalm%2Fconfiguration.md?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -33,6 +33,8 @@ asr:\n | `encoder_ahead_seconds` | 20000 | audio encoded ahead of the decoder, in seconds; it waits on the GPU (about 134 KB per second of audio) until a decode slot frees, so lower it if long requests fail with `pee: out of device memory for the encoder output`; 0 removes the limit |\n | `mtp_draft` | 7 | speculative decoding, tokens drafted per step (up to 15), with the model's MTP head; more memory; 0 turns it off |\n | `dflash_path` | none | DFlash2 draft model GGUF: drafts the `mtp_draft` tokens instead of the MTP head (batched path) |\n+| `batched` | true | `false`: the upstream llama.cpp path instead of the batched CUDA path; less GPU memory, no MTP |\n+| `n_cpu_moe` | 0 | MoE experts of the first N decoder blocks kept in system RAM (llama.cpp's `--n-cpu-moe`) so the decoder fits a smaller GPU; slower, best with `max_sequences: 1` |\n \n CPU threads are `asr.backend.threads`, as for the other models.\n \n@@ -44,11 +46,16 @@ GPU:\n \n | GPU memory | `max_sequences` | `n_ctx_per_sequence` | Longest request | Other changes |\n |---|---|---|---|---|\n+| 8 GB | 1 | 32768 | 29 minutes (`max_context: 32768`) | IQ4_NL decoder; `n_cpu_moe: 53` (every expert in system RAM), `n_batch: 512`, `encoder_max_batch: 1`, `encoder_ahead_seconds: 600` |\n+| 12 GB | 1 | 32768 | 29 minutes (`max_context: 32768`) | IQ4_NL decoder; `n_cpu_moe: 40`, `n_batch: 512`, `encoder_max_batch: 1`, `encoder_ahead_seconds: 600` |\n+| 16 GB | 1 | 32768 | 29 minutes (`max_context: 32768`) | IQ4_NL decoder; `n_cpu_moe: 28`, `n_batch: 512`, `encoder_max_batch: 1`, `encoder_ahead_seconds: 600` |\n | 24 GB | 4 | 8192 | 29 minutes (`max_context: 32768`) | IQ4_NL decoder; `mtp_draft: 0`, `n_batch: 1024`, `encoder_max_batch: 4` |\n | 32 GB | 16 | 8192 | one hour | none (the defaults) |\n | 80 GB or more | 240 | 2048 | one hour | `n_batch: 16384`, `encoder_max_batch: 128`: many requests at once |\n | 128 GB, unified | 240 | 2048 | one hour | `n_batch: 8192`, `encoder_max_batch: 64`, `mtp_draft: 3` |\n \n+The Q2_0 decoder (`--outtype q2_0`, [Model conversion](../model-conversion.md)) fits a 16 GB GPU entirely and decodes faster: use `batched: false` instead of `n_cpu_moe`. Its transcripts drift about 4% in relative WER on average.\n+\n A request needs 12.5 tokens per second of audio plus up to 6 per second of transcript. The batched path grows each\n request's share of the pool as it decodes; CPU, Vulkan and the other [upstream llama.cpp](models.md#platforms) paths\n reserve the whole share (prompt and transcript budget) when the request starts, so fewer long requests decode"
+    },
+    {
+      "sha": "dcfdd8d4a9f819b7b1c62da421a03d5c70a9a8b7",
+      "filename": "docs/salm/models.md",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/docs%2Fsalm%2Fmodels.md",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/docs%2Fsalm%2Fmodels.md",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/docs%2Fsalm%2Fmodels.md?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -11,6 +11,7 @@ run writing the decoder and, next to it, the encoder file they share. Choose the\n |---|---|\n | NVIDIA Blackwell GPU | `nvfp4` |\n | Other NVIDIA GPUs, the CPU, Vulkan | `iq4_nl` |\n+| 16 GB GPUs, every weight on the GPU | `q2_0` |\n \n For example:\n \n@@ -60,3 +61,7 @@ with Vulkan and decodes requests side by side without speculative decoding.\n |---|---|---|\n | CUDA with `patches/` (the default), NVIDIA GPU of compute capability 8.0 or newer | batched serving | many requests decoded together, MTP or DFlash2 speculative decoding; needs CUDA 12.8 or newer |\n | CPU, Vulkan, CUDA without `patches/` (`NEMO_SPEECH_GGML_PATCHED=OFF`) or older GPUs | upstream llama.cpp | up to 256 requests at once, no speculative decoding; IQ4_NL decoder |\n+\n+The default CUDA build also runs the upstream llama.cpp path with `asr.salm.batched: false`, or when\n+`asr.salm.n_cpu_moe` keeps experts in system RAM: it needs less GPU memory, which suits a smaller GPU serving one\n+request at a time ([GPU memory](configuration.md#gpu-memory))."
+    },
+    {
+      "sha": "8658345a4375c386f0779d16a16d6f877dd1040c",
+      "filename": "include/nemo_speech/asr.h",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 2,
+      "changes": 10,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/include%2Fnemo_speech%2Fasr.h",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/include%2Fnemo_speech%2Fasr.h",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/include%2Fnemo_speech%2Fasr.h?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -156,13 +156,19 @@ typedef struct nemo_speech_asr_batching_config {\n // continuously (of the batching config only max_queue_depth applies), and keeps\n // the model's own punctuation and casing. Requires a library built with\n // NEMO_SPEECH_BUILD_SPEECHLM; otherwise creation returns INVALID_ARGUMENT. A\n-// zeroed struct sets mtp_draft = 0 (MTP off); start from\n-// nemo_speech_asr_salm_config_default() to keep every library default.\n+// zeroed struct sets mtp_draft = 0 (MTP off) and batched = 0 (the upstream llama.cpp path);\n+// start from nemo_speech_asr_salm_config_default() to keep every library default.\n typedef struct nemo_speech_asr_salm_config {\n     size_t size;\n     const char* encoder_path;  // encoder GGUF; NULL/\"\" = the encoder file the decoder names\n     int32_t max_sequences;     // concurrent decode slots; <= 0 = default\n     int32_t mtp_draft;         // speculative draft tokens; 0 disables MTP; < 0 = default\n+    // Decoder blocks whose MoE expert weights stay in system RAM (llama.cpp's --n-cpu-moe), for\n+    // GPUs smaller than the decoder; decoding is slower and without MTP. <= 0 = all on the GPU.\n+    int32_t n_cpu_moe;\n+    // 1: the batched CUDA path where available; 0: the upstream llama.cpp path (less GPU memory,\n+    // no MTP); < 0 = default (1).\n+    int32_t batched;\n } nemo_speech_asr_salm_config;\n \n typedef struct nemo_speech_asr_recognizer_config {"
+    },
+    {
+      "sha": "f34f60aca71946e73e07410b8c218d2dc5d0d2a0",
+      "filename": "patches/ggml-fit-q2_0-block-scales-to-the-weights-and-the-importance-matrix.patch",
+      "status": "added",
+      "additions": 60,
+      "deletions": 0,
+      "changes": 60,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/patches%2Fggml-fit-q2_0-block-scales-to-the-weights-and-the-importance-matrix.patch",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/patches%2Fggml-fit-q2_0-block-scales-to-the-weights-and-the-importance-matrix.patch",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/patches%2Fggml-fit-q2_0-block-scales-to-the-weights-and-the-importance-matrix.patch?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -0,0 +1,60 @@\n+From: Prabhsimran Singh <prabhsimrans@nvidia.com>\n+Subject: ggml: fit Q2_0 block scales to the weights and the importance matrix\n+\n+quantize_q2_0 rounded every row with quantize_row_q2_0_ref, which takes the\n+block scale from the largest magnitude, so a block uses three of its four\n+levels, and it ignored the importance matrix. Each 64-weight block now gets\n+the scale make_qx_quants finds for the levels -2..1 (stored as -1..2 with the\n+sign of d flipped), with each weight's error weighted by its importance (1\n+without an importance matrix) times sqrt(sigma2 + x^2), as the other\n+small-block types do. On SALM's routed experts the relative squared error\n+falls from 0.52 to 0.13, and a decoder with Q2_0 experts no longer falls into\n+repetition loops. quantize_row_q2_0_ref (copies into Q2_0 tensors, tests) is\n+unchanged.\n+\n+Upstream: candidate (needs perplexity and KLD numbers on text models).\n+\n+diff --git a/ggml/src/ggml-quants.c b/ggml/src/ggml-quants.c\n+index 55db802c0aeb5fd85de9ed77b4c5fe3dd84b5bd1..b800feb04146957999fc6a02335fab2bf98b25f8 100644\n+--- a/ggml/src/ggml-quants.c\n++++ b/ggml/src/ggml-quants.c\n+@@ -2110,15 +2110,34 @@ size_t quantize_q1_0(const float * GGML_RESTRICT src, void * GGML_RESTRICT dst,\n+     return nrow * row_size;\n+ }\n+ \n+-size_t quantize_q2_0(const float * GGML_RESTRICT src, void * GGML_RESTRICT dst, int64_t nrow, int64_t n_per_row, const float * quant_weights) {\n+-    if (!quant_weights) {\n+-        quantize_row_q2_0_ref(src, dst, (int64_t)nrow*n_per_row);\n+-        return nrow * ggml_row_size(GGML_TYPE_Q2_0, n_per_row);\n++static void quantize_row_q2_0_impl(const float * GGML_RESTRICT x, block_q2_0 * GGML_RESTRICT y, int64_t n_per_row, const float * quant_weights) {\n++    float weight[QK2_0];\n++    int8_t L[QK2_0];\n++\n++    float sum_x2 = 0;\n++    for (int j = 0; j < n_per_row; ++j) sum_x2 += x[j]*x[j];\n++    float sigma2 = sum_x2/n_per_row;\n++\n++    const int64_t nb = n_per_row/QK2_0;\n++    for (int ib = 0; ib < nb; ++ib) {\n++        const float * xb = x + QK2_0 * ib;\n++        const float * qw = quant_weights ? quant_weights + QK2_0 * ib : NULL;\n++        for (int j = 0; j < QK2_0; ++j) weight[j] = (qw ? qw[j] : 1.0f) * sqrtf(sigma2 + xb[j]*xb[j]);\n++        // levels -2..1 times d, while q2_0 stores -1..2 times d: flip the sign of d and of the codes\n++        float d = make_qx_quants(QK2_0, 2, xb, L, 1, weight);\n++        y[ib].d = GGML_FP32_TO_FP16(-d);\n++        memset(y[ib].qs, 0, sizeof(y[ib].qs));\n++        for (int j = 0; j < QK2_0; ++j) {\n++            y[ib].qs[j/4] |= (uint8_t)(3 - L[j]) << ((j%4)*2);\n++        }\n+     }\n++}\n++\n++size_t quantize_q2_0(const float * GGML_RESTRICT src, void * GGML_RESTRICT dst, int64_t nrow, int64_t n_per_row, const float * quant_weights) {\n+     size_t row_size = ggml_row_size(GGML_TYPE_Q2_0, n_per_row);\n+     char * qrow = (char *)dst;\n+     for (int64_t row = 0; row < nrow; ++row) {\n+-        quantize_row_q2_0_ref(src, (block_q2_0*)qrow, n_per_row);\n++        quantize_row_q2_0_impl(src, (block_q2_0*)qrow, n_per_row, quant_weights);\n+         src += n_per_row;\n+         qrow += row_size;\n+     }"
+    },
+    {
+      "sha": "a825606e06b05588d07dc2204a3921a87feb9e29",
+      "filename": "patches/series",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/patches%2Fseries",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/patches%2Fseries",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/patches%2Fseries?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -39,3 +39,4 @@ ggml-dflash_conv-op-for-the-dflash2-drafter-s-dynamic-grouped-convolution.patch\n ggml-cuda-top-k-for-small-k-over-long-rows-without-cub.patch\n llama-dflash2-drafting-in-the-batched-serving-path.patch\n llama-mtp-verify-steps-flagged-by-the-caller.patch\n+ggml-fit-q2_0-block-scales-to-the-weights-and-the-importance-matrix.patch"
+    },
+    {
+      "sha": "32a9ee361cd3d9ef3e13c5654e86706f1b1b8c5f",
+      "filename": "src/asr/CMakeLists.txt",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 1,
+      "changes": 3,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fasr%2FCMakeLists.txt",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fasr%2FCMakeLists.txt",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/src%2Fasr%2FCMakeLists.txt?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -91,10 +91,11 @@ target_include_directories(nemo_speech_asr_c PUBLIC\n     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>\n     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)\n target_compile_definitions(nemo_speech_asr_c PRIVATE NEMO_SPEECH_ASR_BUILD)\n+# SOVERSION 2: nemo_speech_asr_salm_config grew (n_cpu_moe, batched)\n set_target_properties(nemo_speech_asr_c PROPERTIES\n     CXX_VISIBILITY_PRESET hidden\n     VISIBILITY_INLINES_HIDDEN ON\n-    SOVERSION 1)\n+    SOVERSION 2)\n if(UNIX AND NOT APPLE)\n     target_link_options(nemo_speech_asr_c PRIVATE\n         \"-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/c_api.map\")"
+    },
+    {
+      "sha": "184d0cc1174e8e2d7005b1838239c132f0521458",
+      "filename": "src/asr/c_api.cpp",
+      "status": "modified",
+      "additions": 5,
+      "deletions": 0,
+      "changes": 5,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fasr%2Fc_api.cpp",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fasr%2Fc_api.cpp",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/src%2Fasr%2Fc_api.cpp?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -195,6 +195,10 @@ to_config(const nemo_speech_asr_recognizer_config* c) {\n             cfg.salm.max_sequences = s->max_sequences;\n         if (HAS_FIELD(s, nemo_speech_asr_salm_config, mtp_draft) && s->mtp_draft >= 0)\n             cfg.salm.mtp_draft = s->mtp_draft;\n+        if (HAS_FIELD(s, nemo_speech_asr_salm_config, n_cpu_moe) && s->n_cpu_moe > 0)\n+            cfg.salm.n_cpu_moe = s->n_cpu_moe;\n+        if (HAS_FIELD(s, nemo_speech_asr_salm_config, batched) && s->batched >= 0)\n+            cfg.salm.batched = s->batched != 0;\n     }\n     return cfg;\n }\n@@ -298,6 +302,7 @@ nemo_speech_asr_salm_config_default(void) {\n     std::memset(&c, 0, sizeof(c));\n     c.size = sizeof(c);\n     c.mtp_draft = -1;  // library default\n+    c.batched = -1;\n     return c;\n }\n "
+    },
+    {
+      "sha": "0b0f804e554d6e7845b514455155efe4f3940322",
+      "filename": "src/asr/recognizer.h",
+      "status": "modified",
+      "additions": 9,
+      "deletions": 0,
+      "changes": 9,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fasr%2Frecognizer.h",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fasr%2Frecognizer.h",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/src%2Fasr%2Frecognizer.h?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -54,6 +54,8 @@ struct SalmBackendConfig {\n     int max_new_tokens = 1024;\n     int mtp_draft = 7;\n     std::string dflash_path;\n+    int n_cpu_moe = 0;\n+    bool batched = true;\n     void Register(common::ParameterParser& p) {\n         p.Register(\n             \"encoder_path\", &encoder_path,\n@@ -76,6 +78,13 @@ struct SalmBackendConfig {\n         p.Register(\n             \"dflash_path\", &dflash_path,\n             \"SALM DFlash2 drafter GGUF: drafts mtp_draft tokens per step instead of MTP\");\n+        p.Register(\n+            \"n_cpu_moe\", &n_cpu_moe,\n+            \"SALM decoder blocks whose MoE expert weights stay in system RAM (0 = all on the GPU)\");\n+        p.Register(\n+            \"batched\", &batched,\n+            \"SALM batched CUDA path where available (false: the upstream llama.cpp path, less GPU \"\n+            \"memory, no MTP)\");\n     }\n };\n "
+    },
+    {
+      "sha": "4d4d3892fa252f5579a66d5663b83e87bd8151ea",
+      "filename": "src/speechlm/salm_engine.cpp",
+      "status": "modified",
+      "additions": 22,
+      "deletions": 8,
+      "changes": 30,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fspeechlm%2Fsalm_engine.cpp",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fspeechlm%2Fsalm_engine.cpp",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/src%2Fspeechlm%2Fsalm_engine.cpp?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -180,7 +180,8 @@ constexpr size_t kEncoderAhead = 256;\n \n struct SalmEngine::Impl {\n     SalmConfig cfg;\n-    llama_model_tensor_buft_override embedding_overrides[2] = {};\n+    std::vector<llama_model_tensor_buft_override> buft_overrides;  // null-terminated when set\n+    std::vector<std::string> cpu_moe_patterns;   // the n_cpu_moe overrides' patterns, owned here\n     ggml_backend_dev_t decoder_devices[2] = {};  // the decoder's GPU (null-terminated list)\n     ggml_runtime::BackendManager bm;\n     // Batched serving path (SALM_FAST_PATH builds on a CUDA GPU with a Nemotron-H MoE decoder):\n@@ -366,8 +367,10 @@ struct SalmEngine::Impl {\n     explicit Impl(SalmConfig c)\n         : cfg(std::move(c)), bm(make_params(cfg)), pee(bm, cfg.encoder_path, false, cfg.ctc_path) {\n #if SALM_FAST_PATH\n-        // the serving kernels need an NVIDIA GPU of compute capability 8.0 or newer\n-        fast = cfg.gpu >= 0 && bm.gpu_backend_handle() != nullptr &&\n+        // the serving kernels need an NVIDIA GPU of compute capability 8.0 or newer, and every\n+        // decoder weight on it\n+        fast = cfg.batched && cfg.gpu >= 0 && cfg.n_cpu_moe == 0 &&\n+               bm.gpu_backend_handle() != nullptr &&\n                ggml_backend_is_cuda(bm.gpu_backend_handle()) &&\n                ggml_backend_cuda_serving_supported(bm.gpu_backend_handle());\n #endif\n@@ -443,9 +446,20 @@ struct SalmEngine::Impl {\n         if (fast) {  // token embeddings on the GPU (mixed text/audio rows are looked up there)\n             if (!decoder_devices[0])\n                 throw std::runtime_error(\"embedding GPU device not found\");\n-            embedding_overrides[0] = {\n-                \"token_embd\\\\.weight\", ggml_backend_dev_buffer_type(decoder_devices[0])};\n-            mp.tensor_buft_overrides = embedding_overrides;\n+            buft_overrides.push_back(\n+                {\"token_embd\\\\.weight\", ggml_backend_dev_buffer_type(decoder_devices[0])});\n+        }\n+        if (cfg.gpu >= 0 && cfg.n_cpu_moe > 0) {\n+            // llm_add_n_cpu_ffn_overrides, with per-engine strings instead of a shared static list\n+            cpu_moe_patterns.reserve(cfg.n_cpu_moe);\n+            for (int i = 0; i < cfg.n_cpu_moe; ++i)\n+                cpu_moe_patterns.push_back(llm_ffn_block_regex(i, LLM_FFN_EXPS_REGEX));\n+            for (const auto& pattern : cpu_moe_patterns)\n+                buft_overrides.push_back({pattern.c_str(), ggml_backend_cpu_buffer_type()});\n+        }\n+        if (!buft_overrides.empty()) {\n+            buft_overrides.push_back({nullptr, nullptr});\n+            mp.tensor_buft_overrides = buft_overrides.data();\n         }\n         model = llama_model_load_from_file(cfg.llm_path.c_str(), mp);\n         if (!model)\n@@ -666,9 +680,9 @@ struct SalmEngine::Impl {\n     // The path the engine runs and its main settings.\n     void log_configuration() const {\n         std::fprintf(\n-            stderr, \"[salm] path=%s mtp_draft=%d%s slots=%d n_batch=%d\\n\",\n+            stderr, \"[salm] path=%s mtp_draft=%d%s slots=%d n_batch=%d n_cpu_moe=%d\\n\",\n             fast ? \"batched (patched ggml, CUDA)\" : \"upstream llama.cpp\", cfg.mtp_draft,\n-            model_dft ? \" (DFlash2 drafter)\" : \"\", cfg.max_sequences, cfg.n_batch);\n+            model_dft ? \" (DFlash2 drafter)\" : \"\", cfg.max_sequences, cfg.n_batch, cfg.n_cpu_moe);\n     }\n \n     // The tokenized form of a user turn (kept while in use or computed, plus a bounded number of"
+    },
+    {
+      "sha": "12e116e1f2f428958a54029411ce456668f13920",
+      "filename": "src/speechlm/salm_engine.h",
+      "status": "modified",
+      "additions": 8,
+      "deletions": 0,
+      "changes": 8,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fspeechlm%2Fsalm_engine.h",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fspeechlm%2Fsalm_engine.h",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/src%2Fspeechlm%2Fsalm_engine.h?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -64,6 +64,14 @@ struct SalmConfig {\n     // DFlash2 drafter GGUF (block drafter reading 6 target layers); when set it drafts the\n     // mtp_draft tokens per step instead of the model's MTP head.\n     std::string dflash_path;\n+    // MoE expert weights of the first n_cpu_moe decoder blocks stay in system RAM (llama.cpp's\n+    // --n-cpu-moe), for GPUs smaller than the decoder; decoding runs on the upstream llama.cpp\n+    // path (no MTP), slower than with every weight on the GPU.\n+    int n_cpu_moe = 0;\n+    // The batched CUDA path where available; false decodes on the upstream llama.cpp path, which\n+    // needs less GPU memory (no MTP, prompt cache or device-side token embeddings) for one request\n+    // at a time.\n+    bool batched = true;\n     int encoder_max_batch = 16;  // windows per encoder graph launch\n     // Audio seconds encoded but not yet admitted (ready queue + encoder calls in flight). Their\n     // projection stays on the device (n_embd floats per 80 ms frame, about 134 KB per second), so"
+    },
+    {
+      "sha": "5759484db44b52bc71d427703a3af5406852c67a",
+      "filename": "src/speechlm/salm_recognizer.cpp",
+      "status": "modified",
+      "additions": 3,
+      "deletions": 1,
+      "changes": 4,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fspeechlm%2Fsalm_recognizer.cpp",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/src%2Fspeechlm%2Fsalm_recognizer.cpp",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/src%2Fspeechlm%2Fsalm_recognizer.cpp?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -53,7 +53,7 @@ engine_config(const asr::RecognizerConfig& c) {\n     constexpr int kMaxMtpDraft = 15;\n     if (s.max_sequences < 1 || s.n_ctx_per_sequence < 1 || s.max_context < 1 || s.n_batch < 1 ||\n         s.encoder_max_batch < 1 || s.encoder_ahead_seconds < 0 || s.max_new_tokens < 1 ||\n-        s.mtp_draft < 0 || s.mtp_draft > kMaxMtpDraft)\n+        s.mtp_draft < 0 || s.mtp_draft > kMaxMtpDraft || s.n_cpu_moe < 0)\n         throw std::invalid_argument(\"invalid SALM scheduling configuration\");\n     SalmConfig out;\n     out.encoder_path = s.encoder_path;\n@@ -75,6 +75,8 @@ engine_config(const asr::RecognizerConfig& c) {\n     out.max_new_tokens = s.max_new_tokens;\n     out.mtp_draft = s.mtp_draft;\n     out.dflash_path = s.dflash_path;\n+    out.n_cpu_moe = s.n_cpu_moe;\n+    out.batched = s.batched;\n     return out;\n }\n "
+    },
+    {
+      "sha": "8d833f33865c8da53f9d5f1459696f87b2b71e9b",
+      "filename": "tests/c/asr_c_dlopen.c",
+      "status": "modified",
+      "additions": 4,
+      "deletions": 1,
+      "changes": 5,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/tests%2Fc%2Fasr_c_dlopen.c",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/tests%2Fc%2Fasr_c_dlopen.c",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/tests%2Fc%2Fasr_c_dlopen.c?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -12,9 +12,12 @@\n #if defined(_WIN32)\n #include <windows.h>\n #define DL_DEFAULT \"nemo_speech_asr_c.dll\"\n+#elif defined(__APPLE__)\n+#include <dlfcn.h>\n+#define DL_DEFAULT \"libnemo_speech_asr_c.2.dylib\"\n #else\n #include <dlfcn.h>\n-#define DL_DEFAULT \"libnemo_speech_asr_c.so.1\"\n+#define DL_DEFAULT \"libnemo_speech_asr_c.so.2\"\n #endif\n \n typedef const char* (*ver_fn)(void);"
+    },
+    {
+      "sha": "573c59175b37cc640189a97bf3f34891860ed07f",
+      "filename": "tests/c/asr_c_smoke.c",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 1,
+      "changes": 2,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/tests%2Fc%2Fasr_c_smoke.c",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/tests%2Fc%2Fasr_c_smoke.c",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/tests%2Fc%2Fasr_c_smoke.c?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -53,7 +53,7 @@ static int\n check_salm_config(void) {\n     nemo_speech_asr_salm_config salm = nemo_speech_asr_salm_config_default();\n     if (salm.size != sizeof(salm) || salm.encoder_path || salm.max_sequences != 0 ||\n-        salm.mtp_draft >= 0) {\n+        salm.mtp_draft >= 0 || salm.n_cpu_moe != 0 || salm.batched >= 0) {\n         fprintf(stderr, \"nemo_speech_asr_salm_config_default does not keep the defaults\\n\");\n         return 1;\n     }"
+    },
+    {
+      "sha": "1092204b82d31b475b9414fc88f70aec8a03d508",
+      "filename": "tests/conversion/converter_contract_test.py",
+      "status": "modified",
+      "additions": 93,
+      "deletions": 2,
+      "changes": 95,
+      "blob_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/536b17a41bef62d2a67a40ed3df61df26a4389fe/tests%2Fconversion%2Fconverter_contract_test.py",
+      "raw_url": "https://github.com/NVIDIA/NeMo-Speech.cpp/raw/536b17a41bef62d2a67a40ed3df61df26a4389fe/tests%2Fconversion%2Fconverter_contract_test.py",
+      "contents_url": "https://api.github.com/repos/NVIDIA/NeMo-Speech.cpp/contents/tests%2Fconversion%2Fconverter_contract_test.py?ref=536b17a41bef62d2a67a40ed3df61df26a4389fe",
+      "patch": "@@ -57,6 +57,8 @@\n from conversion.salm import decoder_keys as salm_decoder_keys\n from conversion.salm import encoder_file_name as salm_encoder_file_name\n from conversion.salm import encoder_type as salm_encoder_type\n+from conversion.salm import kept_expert_layers as salm_kept_expert_layers\n+from conversion.salm import q2_0_uses_top_level as salm_q2_0_uses_top_level\n from conversion.salm import stage as stage_salm\n from conversion.salm import tensor_rules as salm_tensor_rules\n from conversion.source import extract_archive\n@@ -287,6 +289,7 @@ def test_output_type_defaults_and_validation(self) -> None:\n             _normalized_outtype(\"s2s\", \"q8_0\")\n         self.assertEqual(_normalized_outtype(\"salm\", \"auto\"), \"nvfp4\")\n         self.assertEqual(_normalized_outtype(\"salm\", \"IQ4_NL\"), \"iq4_nl\")\n+        self.assertEqual(_normalized_outtype(\"salm\", \"Q2_0\"), \"q2_0\")\n         for unsupported in (\"bf16\", \"q4_k_m\"):\n             with self.assertRaises(ValueError):\n                 _normalized_outtype(\"salm\", unsupported)\n@@ -304,8 +307,35 @@ def test_salm_quantization_rules(self) -> None:\n                 \".=bf16\",\n             ],\n         )\n-        # dense linears: Q8_0 with IQ4_NL experts, BF16 with NVFP4 experts\n-        self.assertEqual(SALM_DENSE_TYPE, {\"nvfp4\": \"bf16\", \"iq4_nl\": \"q8_0\"})\n+        # q2_0: the experts of the last MoE layers stay IQ4_NL; embeddings and output head Q8_0\n+        self.assertEqual(\n+            salm_tensor_rules(\"q2_0\", \"q8_0\", [43, 45, 47, 49, 51]),\n+            [\n+                r\"blk\\.(43|45|47|49|51)\\.ffn_(up|down|gate)_exps=iq4_nl\",\n+                \"ffn_(up|down|gate)_exps=q2_0\",\n+                \"ssm_(in|out)=q8_0\",\n+                \"ffn_(up|down)_shexp=q8_0\",\n+                \"attn_(q|k|v|output)=q8_0\",\n+                r\"^token_embd\\.weight=q8_0\",\n+                r\"^output\\.weight=q8_0\",\n+                \".=bf16\",\n+            ],\n+        )\n+        blocks = [\"mamba\", \"moe\"] * 3 + [\"attention\", \"moe\", \"mamba\", \"moe\", \"mamba\", \"moe\"]\n+        self.assertEqual(\n+            salm_kept_expert_layers(\"q2_0\", {\"layers_block_type\": blocks}), [3, 5, 7, 9, 11]\n+        )\n+        self.assertEqual(salm_kept_expert_layers(\"iq4_nl\", {\"layers_block_type\": blocks}), [])\n+        with self.assertRaises(RuntimeError):\n+            salm_kept_expert_layers(\"q2_0\", {})\n+        # stock Q2_0 rounding never reaches code 3 (+2 x scale); the fitted scales of patches/ do\n+        scale = b\"\\x00\\x3c\"\n+        self.assertFalse(salm_q2_0_uses_top_level(scale + bytes([0b10_01_00_01] * 16)))\n+        self.assertTrue(\n+            salm_q2_0_uses_top_level(scale + bytes([0b10_01_00_01] * 15 + [0b00_00_11_00]))\n+        )\n+        # dense linears: Q8_0 with IQ4_NL and Q2_0 experts, BF16 with NVFP4 experts\n+        self.assertEqual(SALM_DENSE_TYPE, {\"nvfp4\": \"bf16\", \"iq4_nl\": \"q8_0\", \"q2_0\": \"q8_0\"})\n         # one F16 encoder file serves every profile; \"none\" writes the decoder alone\n         self.assertEqual(salm_encoder_type(\"nvfp4\"), \"f16\")\n         self.assertEqual(salm_encoder_type(\"iq4_nl\"), \"f16\")\n@@ -625,6 +655,67 @@ def test_s2s_nvfp4_quantizer_requires_nvfp4_capability(self) -> None:\n                     quantizer,\n                 )\n \n+    def test_q2_0_uses_only_the_converter_managed_quantizer(self) -> None:\n+        with tempfile.TemporaryDirectory() as temporary:\n+            llama_cpp = Path(temporary) / \"llama.cpp\"\n+            for build in (\"build\", \"build-quantize\"):\n+                quantizer = llama_cpp / build / \"bin\" / \"llama-quantize\"\n+                quantizer.parent.mkdir(parents=True)\n+                quantizer.write_text(\"#!/bin/sh\\n\", encoding=\"utf-8\")\n+                quantizer.chmod(0o755)\n+            with mock.patch(\n+                \"conversion.s2s_components.voicechat_source.shutil.which\",\n+                return_value=None,\n+            ):\n+                self.assertEqual(\n+                    find_quantizer(llama_cpp, profile=\"q2_0\"), default_quantizer_path(llama_cpp)\n+                )\n+                self.assertEqual(\n+                    find_quantizer(llama_cpp, profile=\"iq4_nl\"),\n+                    (llama_cpp / \"build\" / \"bin\" / \"llama-quantize\").resolve(),\n+                )\n+                default_quantizer_path(llama_cpp).unlink()\n+                with self.assertRaises(FileNotFoundError):\n+                    find_quantizer(llama_cpp, profile=\"q2_0\")\n+\n+    def test_q2_0_quantizer_is_rebuilt_from_patches(self) -> None:\n+        with tempfile.TemporaryDirectory() as temporary:\n+            root = Path(temporary)\n+            llama_cpp = root / \"llama.cpp\"\n+            llama_cpp.mkdir()\n+            (llama_cpp / \"CMakeLists.txt\").touch()\n+            (llama_cpp / \"convert_hf_to_gguf.py\").touch()\n+            materialize = root / \"cmake\" / \"llama_cpp.cmake\"\n+            materialize.parent.mkdir()\n+            materialize.touch()\n+            built = default_quantizer_path(llama_cpp)\n+            built.parent.mkdir(parents=True)\n+            built.touch(mode=0o755)\n+            commands = []\n+\n+            def fake_run(command, **_kwargs):\n+                commands.append(command)\n+                return subprocess.CompletedProcess(command, 0)\n+\n+            def fake_which(name):\n+                return f\"/usr/bin/{name}\" if name in {\"cmake\", \"ninja\"} else None\n+\n+            with mock.patch(\n+                \"conversion.s2s_components.voicechat_source.shutil.which\",\n+                side_effect=fake_which,\n+            ), mock.patch(\n+                \"conversion.s2s_components.voicechat_source.subprocess.run\",\n+                side_effect=fake_run,\n+            ):\n+                # an existing managed quantizer is rebuilt from the current patches/\n+                self.assertEqual(ensure_quantizer(llama_cpp, profile=\"q2_0\", repo_root=root), built)\n+                self.assertTrue(any(\"--build\" in command for command in commands))\n+                other = root / \"other-llama.cpp\"\n+                other.mkdir()\n+                (other / \"convert_hf_to_gguf.py\").touch()\n+                with self.assertRaisesRegex(RuntimeError, \"patches/\"):\n+                    ensure_quantizer(other, profile=\"q2_0\", repo_root=root)\n+\n     def test_pinned_llama_checkout_is_initialized_automatically(self) -> None:\n         with tempfile.TemporaryDirectory() as temporary:\n             root = Path(temporary)"
+    }
+  ]
+}

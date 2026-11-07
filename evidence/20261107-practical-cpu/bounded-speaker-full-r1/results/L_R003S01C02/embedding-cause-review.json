@@ -1,0 +1,3900 @@
+{
+  "at": "2026-11-07T12:01:27+08:00",
+  "state": "POSTHOC_FEATURE_AND_FRAGMENTATION_DIAGNOSTIC_ONLY",
+  "meeting": "L_R003S01C02",
+  "referenceOpenedOnlyAfterExitedFullSpeakerScore": true,
+  "referenceNeverPassedBackToInference": true,
+  "neuralModelsLoaded": 0,
+  "neuralItemsComputed": 0,
+  "clusteringThresholdUnchanged": 0.5,
+  "candidatePairs": 3327,
+  "referenceDominantEligiblePairs": 2511,
+  "referenceWindowScreen": {
+    "dominantSpeakerFraction": 0.9,
+    "minimumAnnotatedCoverageFraction": 0.5,
+    "scope": "Fixed posthoc screen only. Overlap/quiet/ambiguous windows excluded from this descriptive diagnosis, never from the complete quality score."
+  },
+  "perPersonFragmentation": [
+    {
+      "referenceSpeaker": "002-F",
+      "eligibleLocalEmbeddings": 388,
+      "distinctGlobalClusters": 62,
+      "largestClusterShare": 0.211340206185567,
+      "globalClusterWindowCounts": {
+        "1": 1,
+        "37": 1,
+        "39": 10,
+        "41": 8,
+        "42": 3,
+        "44": 15,
+        "45": 7,
+        "46": 1,
+        "47": 4,
+        "56": 6,
+        "58": 29,
+        "60": 82,
+        "61": 10,
+        "64": 7,
+        "71": 16,
+        "73": 16,
+        "75": 2,
+        "77": 1,
+        "79": 4,
+        "81": 1,
+        "83": 9,
+        "86": 8,
+        "87": 2,
+        "91": 2,
+        "92": 1,
+        "93": 19,
+        "98": 3,
+        "114": 6,
+        "172": 1,
+        "174": 2,
+        "176": 2,
+        "177": 3,
+        "186": 5,
+        "198": 6,
+        "199": 1,
+        "210": 3,
+        "216": 1,
+        "220": 1,
+        "179": 9,
+        "237": 4,
+        "239": 1,
+        "241": 1,
+        "242": 1,
+        "248": 7,
+        "251": 1,
+        "238": 1,
+        "259": 5,
+        "264": 23,
+        "269": 1,
+        "272": 2,
+        "277": 1,
+        "278": 2,
+        "282": 2,
+        "286": 2,
+        "302": 5,
+        "322": 4,
+        "324": 3,
+        "328": 2,
+        "344": 1,
+        "357": 8,
+        "362": 2,
+        "383": 1
+      }
+    },
+    {
+      "referenceSpeaker": "003-F",
+      "eligibleLocalEmbeddings": 34,
+      "distinctGlobalClusters": 10,
+      "largestClusterShare": 0.29411764705882354,
+      "globalClusterWindowCounts": {
+        "3": 1,
+        "129": 4,
+        "131": 6,
+        "135": 2,
+        "181": 10,
+        "218": 1,
+        "267": 1,
+        "281": 2,
+        "347": 6,
+        "385": 1
+      }
+    },
+    {
+      "referenceSpeaker": "004-M",
+      "eligibleLocalEmbeddings": 335,
+      "distinctGlobalClusters": 34,
+      "largestClusterShare": 0.5194029850746269,
+      "globalClusterWindowCounts": {
+        "0": 1,
+        "9": 4,
+        "11": 174,
+        "13": 44,
+        "16": 1,
+        "62": 3,
+        "67": 3,
+        "68": 1,
+        "72": 16,
+        "141": 13,
+        "144": 1,
+        "145": 1,
+        "225": 18,
+        "228": 1,
+        "232": 1,
+        "234": 2,
+        "235": 1,
+        "240": 1,
+        "63": 6,
+        "243": 6,
+        "258": 7,
+        "261": 2,
+        "262": 1,
+        "263": 6,
+        "289": 8,
+        "297": 1,
+        "299": 1,
+        "301": 1,
+        "304": 1,
+        "303": 1,
+        "306": 2,
+        "318": 1,
+        "319": 4,
+        "335": 1
+      }
+    },
+    {
+      "referenceSpeaker": "005-M",
+      "eligibleLocalEmbeddings": 712,
+      "distinctGlobalClusters": 126,
+      "largestClusterShare": 0.1151685393258427,
+      "globalClusterWindowCounts": {
+        "18": 3,
+        "19": 15,
+        "21": 1,
+        "17": 1,
+        "22": 36,
+        "23": 1,
+        "24": 1,
+        "25": 35,
+        "26": 11,
+        "27": 74,
+        "28": 1,
+        "29": 1,
+        "30": 1,
+        "31": 1,
+        "32": 35,
+        "33": 1,
+        "36": 6,
+        "38": 1,
+        "40": 2,
+        "48": 1,
+        "50": 1,
+        "52": 5,
+        "53": 2,
+        "54": 1,
+        "55": 5,
+        "57": 5,
+        "59": 1,
+        "66": 15,
+        "69": 6,
+        "70": 1,
+        "95": 1,
+        "96": 2,
+        "97": 1,
+        "99": 1,
+        "100": 4,
+        "101": 23,
+        "102": 1,
+        "103": 2,
+        "104": 15,
+        "105": 7,
+        "106": 7,
+        "107": 1,
+        "108": 1,
+        "109": 1,
+        "110": 1,
+        "113": 4,
+        "115": 1,
+        "116": 1,
+        "117": 6,
+        "118": 1,
+        "119": 17,
+        "120": 2,
+        "121": 4,
+        "122": 1,
+        "124": 2,
+        "127": 12,
+        "130": 2,
+        "136": 7,
+        "139": 1,
+        "142": 7,
+        "147": 4,
+        "148": 1,
+        "149": 4,
+        "150": 6,
+        "152": 1,
+        "153": 1,
+        "155": 10,
+        "156": 1,
+        "157": 3,
+        "158": 1,
+        "159": 5,
+        "160": 1,
+        "161": 3,
+        "162": 3,
+        "163": 7,
+        "168": 3,
+        "170": 1,
+        "171": 9,
+        "188": 10,
+        "190": 82,
+        "191": 1,
+        "192": 1,
+        "196": 1,
+        "193": 1,
+        "200": 4,
+        "201": 2,
+        "202": 3,
+        "203": 3,
+        "206": 1,
+        "208": 1,
+        "209": 1,
+        "244": 3,
+        "247": 4,
+        "249": 1,
+        "250": 1,
+        "252": 2,
+        "253": 19,
+        "254": 1,
+        "256": 8,
+        "257": 1,
+        "270": 5,
+        "271": 6,
+        "280": 15,
+        "283": 6,
+        "284": 1,
+        "285": 1,
+        "287": 2,
+        "288": 1,
+        "290": 2,
+        "291": 1,
+        "292": 1,
+        "311": 2,
+        "326": 2,
+        "327": 2,
+        "329": 2,
+        "330": 14,
+        "331": 1,
+        "332": 1,
+        "333": 1,
+        "334": 1,
+        "365": 1,
+        "366": 1,
+        "368": 10,
+        "369": 1,
+        "380": 10,
+        "381": 1
+      }
+    },
+    {
+      "referenceSpeaker": "006-M",
+      "eligibleLocalEmbeddings": 944,
+      "distinctGlobalClusters": 53,
+      "largestClusterShare": 0.2944915254237288,
+      "globalClusterWindowCounts": {
+        "5": 1,
+        "7": 88,
+        "8": 8,
+        "10": 2,
+        "14": 4,
+        "15": 5,
+        "20": 1,
+        "35": 2,
+        "74": 10,
+        "76": 19,
+        "78": 278,
+        "84": 57,
+        "85": 1,
+        "90": 7,
+        "94": 1,
+        "214": 4,
+        "215": 128,
+        "217": 1,
+        "221": 172,
+        "222": 1,
+        "223": 5,
+        "224": 37,
+        "59": 1,
+        "226": 1,
+        "227": 8,
+        "231": 3,
+        "233": 3,
+        "236": 1,
+        "238": 1,
+        "245": 6,
+        "246": 1,
+        "314": 11,
+        "320": 1,
+        "321": 19,
+        "325": 1,
+        "260": 8,
+        "336": 1,
+        "339": 1,
+        "340": 5,
+        "354": 1,
+        "356": 2,
+        "358": 1,
+        "361": 3,
+        "363": 1,
+        "364": 6,
+        "370": 6,
+        "273": 2,
+        "378": 5,
+        "379": 2,
+        "382": 1,
+        "387": 3,
+        "388": 6,
+        "389": 1
+      }
+    },
+    {
+      "referenceSpeaker": "007-M",
+      "eligibleLocalEmbeddings": 98,
+      "distinctGlobalClusters": 9,
+      "largestClusterShare": 0.6020408163265306,
+      "globalClusterWindowCounts": {
+        "173": 1,
+        "175": 6,
+        "178": 9,
+        "180": 1,
+        "213": 6,
+        "275": 7,
+        "342": 59,
+        "345": 7,
+        "349": 2
+      }
+    }
+  ],
+  "predictedClusterPurity": [
+    {
+      "predictedCluster": 0,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 1,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 3,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 1,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 5,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 7,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 88,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 8,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 8,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 9,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 4,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 10,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 2,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 11,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 174,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 13,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 44,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 14,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 4,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 15,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 5,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 16,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 17,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 18,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 19,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 15,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 20,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 21,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 22,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 36,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 23,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 24,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 25,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 35,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 26,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 11,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 27,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 74,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 28,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 29,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 30,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 31,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 32,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 35,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 33,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 35,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 2,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 36,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 6,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 37,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 38,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 39,
+      "dominantReferenceWindows": {
+        "002-F": 10,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 40,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 41,
+      "dominantReferenceWindows": {
+        "002-F": 8,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 42,
+      "dominantReferenceWindows": {
+        "002-F": 3,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 44,
+      "dominantReferenceWindows": {
+        "002-F": 15,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 45,
+      "dominantReferenceWindows": {
+        "002-F": 7,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 46,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 47,
+      "dominantReferenceWindows": {
+        "002-F": 4,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 48,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 50,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 52,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 5,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 53,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 54,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 55,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 5,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 56,
+      "dominantReferenceWindows": {
+        "002-F": 6,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 57,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 5,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 58,
+      "dominantReferenceWindows": {
+        "002-F": 29,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 59,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 0.5
+    },
+    {
+      "predictedCluster": 60,
+      "dominantReferenceWindows": {
+        "002-F": 82,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 61,
+      "dominantReferenceWindows": {
+        "002-F": 10,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 62,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 3,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 63,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 6,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 64,
+      "dominantReferenceWindows": {
+        "002-F": 7,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 66,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 15,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 67,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 3,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 68,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 69,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 6,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 70,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 71,
+      "dominantReferenceWindows": {
+        "002-F": 16,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 72,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 16,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 73,
+      "dominantReferenceWindows": {
+        "002-F": 16,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 74,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 10,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 75,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 76,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 19,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 77,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 78,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 278,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 79,
+      "dominantReferenceWindows": {
+        "002-F": 4,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 81,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 83,
+      "dominantReferenceWindows": {
+        "002-F": 9,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 84,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 57,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 85,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 86,
+      "dominantReferenceWindows": {
+        "002-F": 8,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 87,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 90,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 7,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 91,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 92,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 93,
+      "dominantReferenceWindows": {
+        "002-F": 19,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 94,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 95,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 96,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 97,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 98,
+      "dominantReferenceWindows": {
+        "002-F": 3,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 99,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 100,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 4,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 101,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 23,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 102,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 103,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 104,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 15,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 105,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 7,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 106,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 7,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 107,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 108,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 109,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 110,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 113,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 4,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 114,
+      "dominantReferenceWindows": {
+        "002-F": 6,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 115,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 116,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 117,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 6,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 118,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 119,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 17,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 120,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 121,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 4,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 122,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 124,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 127,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 12,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 129,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 4,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 130,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 131,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 6,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 135,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 2,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 136,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 7,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 139,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 141,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 13,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 142,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 7,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 144,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 145,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 147,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 4,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 148,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 149,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 4,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 150,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 6,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 152,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 153,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 155,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 10,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 156,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 157,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 158,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 159,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 5,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 160,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 161,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 162,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 163,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 7,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 168,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 170,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 171,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 9,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 172,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 173,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 1
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 174,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 175,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 6
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 176,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 177,
+      "dominantReferenceWindows": {
+        "002-F": 3,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 178,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 9
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 179,
+      "dominantReferenceWindows": {
+        "002-F": 9,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 180,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 1
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 181,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 10,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 186,
+      "dominantReferenceWindows": {
+        "002-F": 5,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 188,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 10,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 190,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 82,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 191,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 192,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 193,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 196,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 198,
+      "dominantReferenceWindows": {
+        "002-F": 6,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 199,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 200,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 4,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 201,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 202,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 203,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 206,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 208,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 209,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 210,
+      "dominantReferenceWindows": {
+        "002-F": 3,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 213,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 6
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 214,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 4,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 215,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 128,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 216,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 217,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 218,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 1,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 220,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 221,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 172,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 222,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 223,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 5,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 224,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 37,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 225,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 18,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 226,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 227,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 8,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 228,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 231,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 3,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 232,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 233,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 3,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 234,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 2,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 235,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 236,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 237,
+      "dominantReferenceWindows": {
+        "002-F": 4,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 238,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 0.5
+    },
+    {
+      "predictedCluster": 239,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 240,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 241,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 242,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 243,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 6,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 244,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 3,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 245,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 6,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 246,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 247,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 4,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 248,
+      "dominantReferenceWindows": {
+        "002-F": 7,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 249,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 250,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 251,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 252,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 253,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 19,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 254,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 256,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 8,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 257,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 258,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 7,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 259,
+      "dominantReferenceWindows": {
+        "002-F": 5,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 260,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 8,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 261,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 2,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 262,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 263,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 6,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 264,
+      "dominantReferenceWindows": {
+        "002-F": 23,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 267,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 1,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 269,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 270,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 5,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 271,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 6,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 272,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 273,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 2,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 275,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 7
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 277,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 278,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 280,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 15,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 281,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 2,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 282,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 283,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 6,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 284,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 285,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 286,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 287,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 288,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 289,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 8,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 290,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 291,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 292,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 297,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 299,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 301,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 302,
+      "dominantReferenceWindows": {
+        "002-F": 5,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 303,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 304,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 306,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 2,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 311,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 314,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 11,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 318,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 319,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 4,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 320,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 321,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 19,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 322,
+      "dominantReferenceWindows": {
+        "002-F": 4,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 324,
+      "dominantReferenceWindows": {
+        "002-F": 3,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 325,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 326,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 327,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 328,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 329,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 2,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 330,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 14,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 331,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 332,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 333,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 334,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 335,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 1,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 336,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 339,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 340,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 5,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 342,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 59
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 344,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 345,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 7
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 347,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 6,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 349,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 2
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 354,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 356,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 2,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 357,
+      "dominantReferenceWindows": {
+        "002-F": 8,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 358,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 361,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 3,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 362,
+      "dominantReferenceWindows": {
+        "002-F": 2,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 363,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 364,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 6,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 365,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 366,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 368,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 10,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 369,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 370,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 6,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 378,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 5,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 379,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 2,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 380,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 10,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 381,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 1,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 382,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 383,
+      "dominantReferenceWindows": {
+        "002-F": 1,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 385,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 1,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 0,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 387,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 3,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 388,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 6,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    },
+    {
+      "predictedCluster": 389,
+      "dominantReferenceWindows": {
+        "002-F": 0,
+        "003-F": 0,
+        "004-M": 0,
+        "005-M": 0,
+        "006-M": 1,
+        "007-M": 0
+      },
+      "windowPurity": 1.0
+    }
+  ],
+  "cosineDistanceDiagnostic": {
+    "randomSeed": 20261107,
+    "sameSpeakerPairs": 5284,
+    "differentSpeakerPairs": 14705,
+    "sameSpeakerQuantiles": {
+      "0.1": 0.21939452886581423,
+      "0.5": 0.4083455801010132,
+      "0.9": 0.7732986152172086
+    },
+    "differentSpeakerQuantiles": {
+      "0.1": 0.7089072346687317,
+      "0.5": 0.8558386564254761,
+      "0.9": 0.9843628644943238
+    },
+    "scope": "References describe cached embeddings only; not an identity predictor or accepted recognition score."
+  },
+  "limits": {
+    "pid": 26240,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 154353664,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "qualified": false
+}

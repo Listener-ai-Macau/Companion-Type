@@ -1,0 +1,28 @@
+Usage: nemo-speech diarize INPUT [--model MODEL] [options]
+
+Diarize one WAV file or every WAV file in a directory. Concurrent
+directory work shares one model and batches compatible GPU steps.
+
+Options:
+  -m, --model MODEL         Sortformer GGUF path or indexed HF repo
+                            (default: nvidia/Nemotron-3-Diarization)
+  --device, --backend DEVICE
+                            auto, cpu, cuda[:N], metal, or vulkan[:N]
+  --offline                 Full-attention mode for short audio
+  --preset NAME             V2: streaming/offline; V3: v3-streaming/v3-offline
+  --config FILE             Load diarization YAML configuration
+  --format text|json|rttm   Output format (default: text)
+  --recording-id NAME       RTTM recording id
+  -o, --output PATH         Write output instead of stdout
+  --output-dir DIR          Preserve directory layout under DIR
+  -c, --concurrency N       Concurrent files; one shared model
+  -r, --recursive           Recurse into input directories
+  --onset VALUE             Speaker activation threshold
+  --offset VALUE            Speaker deactivation threshold
+  --pad-onset SECONDS       Extend segment starts
+  --pad-offset SECONDS      Extend segment ends
+  --min-duration-on SEC     Remove shorter speech segments
+  --min-duration-off SEC    Fill shorter silence gaps
+  --no-batching             Disable dynamic batching
+  --force                   Replace existing output files
+
