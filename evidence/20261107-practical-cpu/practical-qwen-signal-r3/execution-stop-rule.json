@@ -1,0 +1,14 @@
+{
+  "declaredAt": "2026-11-07T16:19:24+08:00",
+  "state": "DECLARED_BEFORE_FIRST_COMPLETE_NEW_MEETING_SCORE",
+  "ordinaryMeeting": "S_R004S03C01",
+  "baselineStrictCer": 0.06954954954954955,
+  "futilityRule": "If full ordinary raw CER is not lower than the existing6.95495% baseline, reject this pipeline as a default improvement and stop further complex inference. Do not hide the failed ordinary score or mark unrun complex/identity/facts/holdout qualified.",
+  "neuralProtocolChanged": false,
+  "originallyPlannedMeetings": [
+    "S_R004S03C01",
+    "L_R003S01C02"
+  ],
+  "fullNewQualityScoreAvailableAtDeclaration": false,
+  "sourceSha256": "7a9a55782faccbd91680b0b5429ae545af829f68724ccaab169ecf79dbab4a0d"
+}

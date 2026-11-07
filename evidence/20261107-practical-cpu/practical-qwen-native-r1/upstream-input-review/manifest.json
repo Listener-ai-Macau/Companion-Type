@@ -1,0 +1,26 @@
+[
+  {
+    "name": "qwen_asr/inference/utils.py",
+    "revision": "7c6daf77a2421100f5fb066495372c00129d39ff",
+    "gitBlob": "405b3d9c799c7ed1f9af96ae462241d63e51f237",
+    "sha256": "b37fb4140e6d9be85f2ecb1552ed16136eb98a57f44b402f8b0b213cb6df2a82"
+  },
+  {
+    "name": "qwen_asr/inference/qwen3_asr.py",
+    "revision": "7c6daf77a2421100f5fb066495372c00129d39ff",
+    "gitBlob": "d99b91512a5bbc1c15897d97752cfd86ea68d46e",
+    "sha256": "0b1770f8e907b6c5a0a1e9ebce037cb63f48555f3cd15eaf6ea2078e9df41a7b"
+  },
+  {
+    "name": "qwen_asr/core/transformers_backend/processing_qwen3_asr.py",
+    "revision": "7c6daf77a2421100f5fb066495372c00129d39ff",
+    "gitBlob": "b63f0c0f64636695981d39f7b4e184c620c599cf",
+    "sha256": "a61f1fbfc06e3dfc63a2b8d15e3b29e98b032792c3fb7d0e01c04ca9c2181ffb"
+  },
+  {
+    "name": "LICENSE",
+    "revision": "7c6daf77a2421100f5fb066495372c00129d39ff",
+    "gitBlob": "c347eb5ec781d2702623e8e2b5923fa1a766a64d",
+    "sha256": "a44a6081c73ad75f0255bb2bb5cab74ef1829565a895a24e53a4f11290ab7655"
+  }
+]

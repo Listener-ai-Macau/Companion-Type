@@ -14,8 +14,26 @@ proof=read(parent/'short-native-state.json');assert proof['state']=='PASS_OFFICI
 assert proof['sourceSha256']==sha(Path(__file__).with_name('practical_qwen_native_worker_20261107.py'))
 target=C/'run.json';prior=[]
 if target.exists():
-    assert a.resume_after_low_ram;old=read(target);assert old['state'] in ['STOPPED_ACTUAL_WINDOWS_LOW_RAM','DEFERRED_ACTUAL_WINDOWS_LOW_RAM'] and old.get('finishedAt') and not old.get('activePid')
-    prior=old.get('priorAttemptReceipts',[]);archive=C/('attempt-%04d.json'%(len(prior)+1));assert not archive.exists();archive.write_bytes(target.read_bytes());prior=prior+[str(archive)]
+    assert a.resume_after_low_ram;old=read(target)
+    refused_before_launch=old['state']=='CONTROLLER_ERROR_RETAINED_NO_AUTOMATIC_RETRY' and old.get('error','').startswith("AssertionError('Wait for actual external memory recovery") and not old['results']
+    assert (old['state'] in ['STOPPED_ACTUAL_WINDOWS_LOW_RAM','DEFERRED_ACTUAL_WINDOWS_LOW_RAM'] or refused_before_launch) and old.get('finishedAt') and not old.get('activePid')
+    prior=old.get('priorAttemptReceipts',[])
+    latest_real=read(prior[-1]) if refused_before_launch else old
+    if latest_real['results'] and (C/'resources.jsonl').exists():
+        last=json.loads((C/'resources.jsonl').read_text().splitlines()[-1]);peak=latest_real['results'][-1]['sampledPrivatePeakBytes'];available=psutil.virtual_memory().available
+        test=SystemRamPressure();low=test.low();test.close()
+        # More than our entire released private peak must have returned, so
+        # release/reload alone is not counted as external recovery. Requiring
+        # twice that peak wrongly blocked a genuinely recovered3.5GB machine.
+        if low or available<=last['availableBytes']+peak:
+            receipt=C/('preflight-refusal-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.json')
+            atomic_json(receipt,{'state':'DEFERRED_ACTUAL_EXTERNAL_MEMORY_RECOVERY','currentAvailableBytes':available,'previousAvailableBytes':last['availableBytes'],'releasedOwnPrivatePeakUpperBound':peak,'actualWindowsLowRam':low,'noModelLaunched':True,'originalRunUnchanged':True});print(receipt);raise SystemExit(0)
+        recovery={'previousAvailableBytes':last['availableBytes'],'releasedOwnPrivatePeakUpperBound':peak,'currentAvailableBytes':available,'actualWindowsLowRam':False,'externalRecoveryBeyondOwnRelease':True,'noFixedFreeRamFloor':True}
+    else:recovery={'actualWindowsLowRam':False,'noPreviousModelAllocated':True}
+    if refused_before_launch:
+        archive=C/'preflight-controller-error-0001.json';assert not archive.exists();archive.write_bytes(target.read_bytes())
+    else:
+        archive=C/('attempt-%04d.json'%(len(prior)+1));assert not archive.exists();archive.write_bytes(target.read_bytes());prior=prior+[str(archive)]
 else:
     assert not a.resume_after_low_ram
     cases=sorted(read(base/'practical-text-first-r1/audio-only.json'),key=lambda c:c['meeting'].startswith('L_'))
@@ -24,9 +42,7 @@ state={'state':'PREPARING_FROZEN_TWO_NATIVE_FULL_MEETINGS','pid':os.getpid(),'st
 atomic_json(target,state);pressure=SystemRamPressure();child=None;process=None
 try:
     if prior and (C/'resources.jsonl').exists() and read(prior[-1])['results']:
-        last=json.loads((C/'resources.jsonl').read_text().splitlines()[-1]);last_run=read(prior[-1]);peak=last_run['results'][-1]['sampledPrivatePeakBytes'];available=psutil.virtual_memory().available
-        assert not pressure.low() and available>last['availableBytes']+2*peak,'Wait for actual external memory recovery; no unchanged reload'
-        state['recoveryObservation']={'previousAvailableBytes':last['availableBytes'],'priorPrivatePeakBytes':peak,'currentAvailableBytes':available,'noFixedFreeRamFloor':True}
+        state['recoveryObservation']=recovery
     for p in psutil.process_iter(['cmdline']):
         try:assert not any(Path(arg).name in ['practical_qwen_native_worker_20261107.py','practical_qwen_full_worker_20261107.py','practical_transcript_worker_20261107.py','practical_nemotron_worker_20261107.py','moss_night_gpu_worker_20261104.py'] for arg in p.info['cmdline'] or []),'Another native stage is still running'
         except (psutil.NoSuchProcess,psutil.AccessDenied):pass

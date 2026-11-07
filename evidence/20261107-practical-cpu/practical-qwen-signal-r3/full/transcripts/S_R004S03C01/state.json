@@ -1,16 +1,17 @@
 {
-  "state": "RUNNING_FULL_OFFICIAL_NATIVE_ASR",
-  "pid": 14144,
-  "startedAt": "2026-11-07T16:10:04+08:00",
+  "state": "LOADING_OFFICIAL_NATIVE_FULL_ASR",
+  "pid": 17864,
+  "startedAt": "2026-11-07T16:43:35+08:00",
   "meeting": "S_R004S03C01",
   "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
   "audioSeconds": 2327.119,
-  "modelLoaded": true,
-  "newNeuralWindows": 4,
-  "reusedWindows": 0,
+  "modelLoaded": false,
+  "newNeuralWindows": 0,
+  "reusedWindows": 69,
   "referencePassedToWorker": false,
   "speakerJournalPending": true,
   "priorAttemptSeconds": 0.0,
+  "completedCacheOnly": false,
   "binding": {
     "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
     "protocolSha256": "4fbfc1f1b074762937524562575c170d59178706f8cacc8f1ea2c8395e540dfa",
@@ -18,14 +19,14 @@
     "officialShortWorkerSourceSha256": "c7bdf59e86e26833450cf36ee7c8a3135d7ec0529eb93fb35001fb84f7e2b402"
   },
   "limits": {
-    "pid": 14144,
+    "pid": 17864,
     "cpuRate": 500,
     "cpuControlFlags": 5,
     "cpuPercentMaximum": 5.0,
     "inLimitedJob": true,
     "jobPrivateCommitLimitBytes": 2147483648,
     "jobMemoryLimitEnabled": true,
-    "jobPeakPrivateCommitBytes": 1243619328,
+    "jobPeakPrivateCommitBytes": 474775552,
     "cpuPriorityClass": 64,
     "memoryPagePriority": 1,
     "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -34,10 +35,10 @@
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
   "totalWindows": 78,
-  "completedWindows": 4,
-  "gpu": "AMD Radeon RX 6800 XT",
-  "transformersVersion": "5.22.1",
-  "modelLoadSeconds": 14.490572599985171,
+  "completedWindows": 69,
   "first30sNativeShortExactIdsAndText": true,
-  "completedSample": 1920000
+  "completedSample": 33120000,
+  "exactDigitalZeroWindows": 2,
+  "gpu": "AMD Radeon RX 6800 XT",
+  "transformersVersion": "5.22.1"
 }

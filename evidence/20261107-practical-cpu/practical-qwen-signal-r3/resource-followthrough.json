@@ -1,0 +1,53 @@
+{
+  "state": "STOPPED_RAM_CONTINUATION_WITHOUT_DURABLE_PROGRESS",
+  "startedAt": "2026-11-07T16:27:26+08:00",
+  "pid": 22660,
+  "modelFailureRetries": 0,
+  "lowMemoryContinuations": 4,
+  "futilityStopRequested": false,
+  "limitsChanged": false,
+  "sourceSha256": "88d2c965cb67dee46bb98cecb2f6a05e51595cedd2593d1ed98ed711c7cdf2b5",
+  "events": [
+    {
+      "at": "2026-11-07T16:27:26+08:00",
+      "state": "CONTINUE_AFTER_OBSERVED_RAM_RECOVERY",
+      "durableWindowsBefore": 9,
+      "availableBytes": 4655575040,
+      "actualWindowsLowRam": false,
+      "controllerPid": 23204
+    },
+    {
+      "at": "2026-11-07T16:36:49+08:00",
+      "state": "CONTINUE_AFTER_OBSERVED_RAM_RECOVERY",
+      "durableWindowsBefore": 48,
+      "availableBytes": 2865774592,
+      "actualWindowsLowRam": false,
+      "controllerPid": 23100
+    },
+    {
+      "at": "2026-11-07T16:40:43+08:00",
+      "state": "CONTINUE_AFTER_OBSERVED_RAM_RECOVERY",
+      "durableWindowsBefore": 59,
+      "availableBytes": 2736435200,
+      "actualWindowsLowRam": false,
+      "controllerPid": 17764
+    },
+    {
+      "at": "2026-11-07T16:43:34+08:00",
+      "state": "CONTINUE_AFTER_OBSERVED_RAM_RECOVERY",
+      "durableWindowsBefore": 69,
+      "availableBytes": 2614640640,
+      "actualWindowsLowRam": false,
+      "controllerPid": 14452
+    }
+  ],
+  "durableWindows": 69,
+  "resourceObservation": {
+    "availableBytes": 1879678976,
+    "actualWindowsLowRam": false,
+    "lastAvailableBytes": 920797184,
+    "releasedOwnPrivatePeakUpperBound": 1239773184
+  },
+  "controllerState": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "finishedAt": "2026-11-07T16:43:51+08:00"
+}

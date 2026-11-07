@@ -1,0 +1,30 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "pid": 23204,
+  "startedAt": "2026-11-07T16:27:26+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0001.json",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0002.json"
+  ],
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 549.4265998999763,
+      "accumulatedProcessFamilySeconds": 740.887201799982,
+      "sampledPrivatePeakBytes": 1237921792
+    }
+  ],
+  "recoveryObservation": {
+    "previousAvailableBytes": 953327616,
+    "releasedOwnPrivatePeakUpperBound": 1239519232,
+    "currentAvailableBytes": 4625244160,
+    "actualWindowsLowRam": false,
+    "externalRecoveryBeyondOwnRelease": true,
+    "noFixedFreeRamFloor": true
+  },
+  "finishedAt": "2026-11-07T16:36:36+08:00"
+}

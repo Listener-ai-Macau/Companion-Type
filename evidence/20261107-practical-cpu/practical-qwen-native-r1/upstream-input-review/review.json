@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-07T16:41:03.465866+08:00",
+  "state": "SOURCE_INPUT_RULES_REVIEWED_NO_RUNTIME_CHANGE",
+  "originalOfficialRevision": "7c6daf77a2421100f5fb066495372c00129d39ff",
+  "checked": {
+    "mono16kFloat32Pcm": true,
+    "inRangeFloatAudioNotPeakNormalizedByOriginal": true,
+    "emptySystemMessageStillInsertedByNativeTemplate": true,
+    "forcedChineseLanguagePrefill": true,
+    "cnnFrameLength13Per100MelFrames": true,
+    "rawTokenizerDecodeKeepsAllGeneratedRepetitions": true
+  },
+  "limits": "Source-level preparation-rule review; not a full bitwise comparison to the original package model. Native GPU features independently match the reference recipe; official-HF tensors were roundtrip-verified. No speculative gain normalization, new prompts or filters applied to the running frozen meeting.",
+  "neuralInferenceAdded": 0,
+  "qualityQualified": false
+}

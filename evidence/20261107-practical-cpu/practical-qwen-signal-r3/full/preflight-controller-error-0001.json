@@ -1,0 +1,15 @@
+{
+  "state": "CONTROLLER_ERROR_RETAINED_NO_AUTOMATIC_RETRY",
+  "pid": 2400,
+  "startedAt": "2026-11-07T16:14:55+08:00",
+  "priorAttemptReceipts": [
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\full\\attempt-0001.json"
+  ],
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "results": [],
+  "error": "AssertionError('Wait for actual external memory recovery; no unchanged reload')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_practical_qwen_full_20261107.py\", line 28, in <module>\n    assert not pressure.low() and available>last['availableBytes']+2*peak,'Wait for actual external memory recovery; no unchanged reload'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Wait for actual external memory recovery; no unchanged reload\n",
+  "finishedAt": "2026-11-07T16:14:55+08:00"
+}
