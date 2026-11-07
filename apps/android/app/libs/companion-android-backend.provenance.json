@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T10:36:36+08:00",
-  "aarSha256": "ab1a0be25e8f18025faa0fef23c07dbc3e2a38da194b22c6e3d1befdec1aa112",
-  "backendSourceCommit": "6fed4d8c5fad09791db19ed5c43f9c5c695bd1eb",
+  "at": "2026-11-07T11:13:59+08:00",
+  "aarSha256": "232fb259ab78072f98f0f64f4a88d8816b8bcdcf125c87027afe461db545cc90",
+  "backendSourceCommit": "ee712a2e4439466a99bdbb0afd3aff2bbf736b54",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "FW66703+ opt-in consecutive catalogue pages in unchanged248B GATT attribute; old peers and clients paged. Exact directory request/page metrics, nonce/generation retries unchanged. Fix captured BUSY invalid CCQ2 capacity incorrectly rejected as unsupported unlimited recording. START alone waits for valid same-peer snapshot without command replay; query/legacy unchanged. One-time reuse of same-link immutable complete selected-session directory; live/incomplete/pending/mutated sessions reread. Both resume entry points transfer retained connection. Single ownership transfer from visible activity to foreground sync, exact address/descriptor binding, fresh fallback on saved-task process recovery, explicit reusedConnections counter. Only selected local audio hashed on open/export, current CRC/SHA and malformed metadata still checked. No command replay, adapter/bond/reset change. Native/models unchanged; actual latency pending.",
-  "javaSourceCommit": "6fed4d8c5fad09791db19ed5c43f9c5c695bd1eb",
+  "scope": "Explicit current Companion WBA static random LE address onAPI33+, same bonded device and private protocol validation; pre33 original route. Uses existing finite stopped-batch fast interval preference once, live/old-peer unchanged, no command replay. Separates local durable proof, consume write and exact receipt arrival using metadata timestamps; original payload and durable receipt endpoints unchanged. JNI/models/assets untouched; physical acceptance pending.",
+  "javaSourceCommit": "ee712a2e4439466a99bdbb0afd3aff2bbf736b54",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device085\\build\\inherited-provenance084.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device086\\build\\inherited-provenance085.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -156,5 +156,22 @@
     "com/denzic/companion/mobile/RecordingTransferMetrics$Segment.class",
     "com/denzic/companion/mobile/RecordingTransferMetrics.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo084": true
+  "allNonClassAarEntriesByteIdenticalTo084": true,
+  "javaClassesChangedFrom085": [
+    "com/denzic/companion/mobile/AndroidGattLink$1.class",
+    "com/denzic/companion/mobile/AndroidGattLink$2.class",
+    "com/denzic/companion/mobile/AndroidGattLink$Event.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/DurableConsume$Pending.class",
+    "com/denzic/companion/mobile/DurableConsume.class",
+    "com/denzic/companion/mobile/RecorderWire$Catalog.class",
+    "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
+    "com/denzic/companion/mobile/RecorderWire$Descriptor.class",
+    "com/denzic/companion/mobile/RecorderWire$Peer.class",
+    "com/denzic/companion/mobile/RecorderWire.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics$Segment.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo085": true
 }
