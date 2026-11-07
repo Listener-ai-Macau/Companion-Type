@@ -39,7 +39,7 @@ if chain_path.exists() and read(chain_path).get('state')=='COMPLETE_TWO_MEETING_
         if not (chain_path.parent/'results'/case['meeting']/'embedding-cause-review.json').exists():
             posthoc(['E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe',str(M/'src/practical_speaker_cause_20261107.py'),'--control',str(chain_path.parent),'--meeting',case['meeting']],'cause-'+case['meeting'])
     posthoc([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(chain_path.parent),'--backlog',str(R/'docs/product_backlog.json')],'assessment')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -55,6 +55,11 @@ record['native8FullRun']=optional(base/'native8-full-r1/native-run.json')
 if record['native8FullRun']:record['state']=record['native8FullRun']['state']
 elif record['native8ShortRun']:record['state']=record['native8ShortRun']['state']
 record['boundedFullFirstMeetingRejected']=any(r.get('components',{}).get('diarization error rate',0)>.15 for r in record['boundedSpeakerReviews'])
+record['native8VulkanShortRun']=optional(base/'native8-vulkan-smoke-r1/native-run.json')
+record['native8VulkanFullRun']=optional(base/'native8-vulkan-full-r1/native-run.json')
+record['native8GeometryCorrection']=optional(base/'nemotron-speaker-20261107-prep/geometry-correction.json')
+if record['native8VulkanFullRun']:record['state']=record['native8VulkanFullRun']['state']
+elif record['native8VulkanShortRun']:record['state']=record['native8VulkanShortRun']['state']
 record['next']='继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。'
 if record['native8Preparation']:
     record['next']='原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。'
