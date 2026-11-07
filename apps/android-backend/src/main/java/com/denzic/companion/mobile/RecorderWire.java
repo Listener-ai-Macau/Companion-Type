@@ -32,8 +32,8 @@ public final class RecorderWire {
         private final byte[] uid;
         public final long epoch;
         public final int capacity, maxValueBytes;
-        private final boolean overlapProbe;
-        private Peer(byte[] uid,long epoch,int capacity,int maxValueBytes,boolean overlapProbe) {this.uid=uid;this.epoch=epoch;this.capacity=capacity;this.maxValueBytes=maxValueBytes;this.overlapProbe=overlapProbe;}
+        private final boolean overlapProbe,streamDirectory;
+        private Peer(byte[] uid,long epoch,int capacity,int maxValueBytes,boolean overlapProbe,boolean streamDirectory) {this.uid=uid;this.epoch=epoch;this.capacity=capacity;this.maxValueBytes=maxValueBytes;this.overlapProbe=overlapProbe;this.streamDirectory=streamDirectory;}
         public byte[] uid() {return uid.clone();}
 
         /** Require actual V2 publication; an absent suffix is not V1 support. */
@@ -52,7 +52,7 @@ public final class RecorderWire {
             // Product-private extension, like the existing FW801+ unlimited
             // contract. It is enabled only by the exact negotiation echo;
             // unchanged CRV2 flags keep old Windows/phone readers compatible.
-            return new Peer(uid,epoch,capacity,max,u32(status,4)>=66697L);
+            return new Peer(uid,epoch,capacity,max,u32(status,4)>=66697L,u32(status,4)>=66703L);
         }
         public byte[] negotiate(long nonce,int mtu) throws IOException {
             if(nonce<=0||nonce>0xffffffffL)throw invalid("invalid negotiation nonce");
@@ -141,7 +141,8 @@ public final class RecorderWire {
         private final ArrayList<Descriptor> entries=new ArrayList<>(); private final Set<Long> ids=new HashSet<>(); private final Map<Long,byte[]> pages=new HashMap<>();
         public Catalog(Peer peer,long nonce) throws IOException {if(peer==null||nonce<=0||nonce>0xffffffffL)throw invalid("invalid catalog nonce");this.peer=peer;this.nonce=nonce;}
         public void calendar(boolean value){if(total!=-1)throw new IllegalStateException("catalog already started");calendar=value;}
-        public byte[] request() {byte[] p=new byte[16];p[0]=2;p[1]=0x20;p[2]=(byte)(calendar?1:0);put32(p,4,snapshot);put32(p,8,nonce);put32(p,12,entries.size());return p;}
+        boolean requestNeeded(){return !peer.streamDirectory||total==-1;}
+        public byte[] request() {byte[] p=new byte[16];p[0]=2;p[1]=0x20;p[2]=(byte)((calendar?1:0)|(peer.streamDirectory?2:0));put32(p,4,snapshot);put32(p,8,nonce);put32(p,12,entries.size());return p;}
         /** Returns false for an unrelated nonce, otherwise accepts exactly the next page. */
         public boolean accept(byte[] p) throws IOException {
             if(p==null)throw invalid("missing directory response");

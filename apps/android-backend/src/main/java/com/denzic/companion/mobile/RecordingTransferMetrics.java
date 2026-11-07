@@ -13,6 +13,7 @@ final class RecordingTransferMetrics {
     private long firstWindowNanos,completedNanos,windows;
     private long firstConnectNanos,firstDirectoryDelayNanos=-1,reconnectStartedNanos,maxReconnectDirectoryDelayNanos=-1;
     private int connectionAttempts,connectionsEstablished,reconnectSequences,unexpectedDisconnections,reusedConnections,reusedCatalogues;
+    private int directoryRequests,directoryPages,streamDirectoryRequests;
     private boolean reconnectPending;
     RecordingTransferMetrics(){this(System::nanoTime);}
     RecordingTransferMetrics(Clock clock){this.clock=clock;}
@@ -53,6 +54,8 @@ final class RecordingTransferMetrics {
     synchronized void connected(){connectionsEstablished++;}
     synchronized void reusedConnection(){reusedConnections++;}
     synchronized void reusedCatalogue(){reusedCatalogues++;}
+    synchronized void directoryRequest(boolean streaming){directoryRequests++;if(streaming)streamDirectoryRequests++;}
+    synchronized void directoryPage(){directoryPages++;}
     synchronized void connectionClosed(boolean unexpected){if(unexpected)unexpectedDisconnections++;}
     synchronized void reconnecting(){if(!reconnectPending){reconnectPending=true;reconnectStartedNanos=clock.nanoTime();reconnectSequences++;}}
     synchronized void directoryAvailable(){
@@ -96,6 +99,7 @@ final class RecordingTransferMetrics {
             ",\"verifiedNewBytes\":"+verified+",\"acceptedNewBytes\":"+accepted+",\"initialCachedBytes\":"+cached+
             ",\"confirmedKiBps\":"+(rate==null?"null":Double.toString(rate))+
             ",\"connectionAttempts\":"+connectionAttempts+",\"connectionsEstablished\":"+connectionsEstablished+",\"reusedConnections\":"+reusedConnections+",\"reusedCatalogues\":"+reusedCatalogues+
+            ",\"directoryRequests\":"+directoryRequests+",\"directoryPages\":"+directoryPages+",\"streamDirectoryRequests\":"+streamDirectoryRequests+
             ",\"reconnectSequences\":"+reconnectSequences+",\"unexpectedDisconnections\":"+unexpectedDisconnections+
             ",\"firstPrivateDirectoryDelayNanos\":"+(firstDirectoryDelayNanos<0?"null":Long.toString(firstDirectoryDelayNanos))+
             ",\"maxReconnectDirectoryDelayNanos\":"+(maxReconnectDirectoryDelayNanos<0?"null":Long.toString(maxReconnectDirectoryDelayNanos))+

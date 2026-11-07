@@ -175,9 +175,12 @@ public final class RecordingClient implements Closeable {
                 while(!catalog.complete()){
                     ensureOpen();
                     if(Thread.currentThread().isInterrupted())throw new IOException("recording directory interrupted");
-                    link.write(RECORDING_CONTROL,catalog.request());
+                    if(catalog.requestNeeded()){
+                        byte[] request=catalog.request();link.write(RECORDING_CONTROL,request);
+                        if(transferMetrics!=null)transferMetrics.directoryRequest((request[2]&2)!=0);
+                    }
                     long deadline=Math.min(overallDeadline,System.nanoTime()+8_000_000_000L);
-                    while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording directory timed out");if(catalog.accept(link.await(RECORDING_LIST,remaining)))break;}
+                    while(true){long remaining=(deadline-System.nanoTime())/1_000_000L;if(remaining<=0)throw new java.net.SocketTimeoutException("recording directory timed out");if(catalog.accept(link.await(RECORDING_LIST,remaining))){if(transferMetrics!=null)transferMetrics.directoryPage();break;}}
                 }
                 current=catalog.entries();catalogueReusable=true;if(transferMetrics!=null)transferMetrics.directoryAvailable();return current;
             } catch(RecorderWire.CatalogChanged changed) {
