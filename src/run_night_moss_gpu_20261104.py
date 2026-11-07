@@ -22,10 +22,16 @@ state={'state':'RUNNING_NATIVE_GPU_MODEL','startedAt':now(),'protocolSha256':has
 def save():
  p=target.with_suffix('.tmp');p.write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf8');p.replace(target)
 env={k:v for k,v in os.environ.items() if not k.startswith(('COMPANION_','LISTENER_','OPENAI_','DEEPSEEK_','VOLC_','HF_TOKEN','HUGGING_FACE_HUB_TOKEN','PYTHONPATH'))}
-env.update(HF_HOME=str(root/'hf-cache'),HF_MODULES_CACHE=str(root/'hf-modules'),HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',
+cache=Path(settings['runtime'].get('rebuildableCacheRoot',str(root)))
+env.update(HF_HOME=str(cache/'hf-cache'),HF_MODULES_CACHE=str(cache/'hf-modules'),HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',
  HF_HUB_DISABLE_TELEMETRY='1',HF_HUB_DISABLE_IMPLICIT_TOKEN='1',HF_HUB_DISABLE_PROGRESS_BARS='1',OMP_NUM_THREADS='2',
  MKL_NUM_THREADS='2',OPENBLAS_NUM_THREADS='2',NUMBA_NUM_THREADS='2',TOKENIZERS_PARALLELISM='false',
- PYTHONUNBUFFERED='1',HIP_CACHE_DIR=str(root/'hip-cache'),TRITON_CACHE_DIR=str(root/'triton-cache'))
+ PYTHONUNBUFFERED='1',HIP_CACHE_DIR=str(cache/'hip-cache'),TRITON_CACHE_DIR=str(cache/'triton-cache'))
+if 'hipVisibleDeviceOrdinal' in settings['runtime']:
+ ordinal=settings['runtime']['hipVisibleDeviceOrdinal']
+ assert type(ordinal) is int and 0<=ordinal<16,'Declared physical GPU ordinal only'
+ for key in ['CUDA_VISIBLE_DEVICES','ROCR_VISIBLE_DEVICES','GPU_DEVICE_ORDINAL','HIP_VISIBLE_DEVICES']:env.pop(key,None)
+ env['HIP_VISIBLE_DEVICES']=str(ordinal)
 save();psutil.cpu_percent(interval=None);ram_pressure=SystemRamPressure()
 try:
  for index,case in enumerate(cases):

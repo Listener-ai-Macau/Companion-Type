@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-07T08:08:54+08:00",
+  "state": "PASS_MODEL_FREE_SINGLE_GPU_VISIBILITY_AND_ARITHMETIC",
+  "modelLoaded": false,
+  "automaticRetries": 0,
+  "exitCode": 0,
+  "seconds": 10.345720700002857,
+  "finishedAt": "2026-11-07T08:09:04+08:00",
+  "noModelInferenceRun": true,
+  "systemDriverChanged": false,
+  "dllPatched": false,
+  "limitation": "A successful small kernel probe does not establish hours-long model stability or a fixed crash root cause.",
+  "legacyLauncherOnlyPrivatePeakBytes": 847872,
+  "legacyPeakCounterWithdrawnReason": "Venv launcher spawns the native worker; the original parent sampler omitted descendants. Preserve original counter as launcher-only, not model RAM. Source supervisor now accounts for verified descendants.",
+  "nativeWorkerJobPeakPrivateCommitBytes": 602144768
+}

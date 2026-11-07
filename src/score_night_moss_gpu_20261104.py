@@ -94,7 +94,12 @@ report={'at':datetime.now(ZoneInfo('Asia/Shanghai')).isoformat(timespec='seconds
  'overlapActivity':overlap,'runtime':{k:state.get(k) for k in ['actualGpu','gpuIndex','torchVersion','hipVersion','actualDtype',
   'modelLoadSeconds','inputPreparationSeconds','audioEncodingSeconds','firstGeneratedTokenSeconds','generationSeconds',
   'wholeWorkerSeconds','gpuPeakAllocatedBytes','gpuPeakReservedBytes','executionAdapters','cooperativeGpuPacing','resourceLimitsAfterGpuInit']},
- 'resources':result,'realTimeFactor':result['wholeProcessFamilySeconds']/case['audioSeconds'],
+ 'resources':result,'priorInferenceAttemptProcessFamilySeconds':state.get('priorInferenceAttemptProcessFamilySeconds',0),
+ 'totalInferenceAttemptProcessFamilySeconds':result['wholeProcessFamilySeconds']+state.get('priorInferenceAttemptProcessFamilySeconds',0),
+ 'currentAttemptRealTimeFactor':result['wholeProcessFamilySeconds']/case['audioSeconds'],
+ 'realTimeFactor':(result['wholeProcessFamilySeconds']+state.get('priorInferenceAttemptProcessFamilySeconds',0))/case['audioSeconds'],
+ 'resumedPrefixTokens':state.get('resumedPrefixTokens',0),
+ 'timeAccountingScope':'Sum of this exited attempt and verified prior inference attempts, including failed work; excludes between-attempt waiting. Generation timing fields refer to this attempt.',
  'speakerTextUnder5PercentOnThisCase':score['characterErrorRate']<.05,'productQualified':False,
  'limits':'Frozen development recordings, not the final unseen holdout. Full input and all output streams retained, no reference text/count/hotwords in inference. Sentence timestamps are not verified word alignment; physical card, phone, critical-fact/minutes and commercial acceptance are separate.'}
 (folder/'review.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')

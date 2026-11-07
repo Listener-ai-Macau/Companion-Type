@@ -124,7 +124,7 @@ try:
     # retains its actual progress and peak allocations, without changing math.
     prefill_handles=[]
     def prefill_layer_finished(module, values, result):
-        if state['generatedTokens']==0:
+        if state.get('newGeneratedTokens',state['generatedTokens'])==0:
             if protocol['runtime'].get('releaseUnusedModelAllocations'):
                 torch.cuda.empty_cache()
                 state['unusedAllocatorReleases']=state.get('unusedAllocatorReleases',0)+1
@@ -184,6 +184,40 @@ try:
         messages=build_transcription_messages(case['audio'])
         inputs=prepare_inputs(processor,messages,max_length=protocol['runtime']['maxLength'],device=device).to(device)
     prompt_len=int(inputs['attention_mask'][0].sum().item())
+    resume_prefix=[];generation_ledger=None
+    if protocol['runtime'].get('generationCheckpointing'):
+        from moss_generation_checkpoint_20261107 import TokenLedger,make_binding,restore,digest
+        assert list(inputs['input_ids'].shape)==[1,prompt_len],'Single unpadded full prompt required for prefix recovery'
+        prompt_bytes=inputs['input_ids'].detach().cpu().contiguous().numpy().tobytes()
+        generation_binding=make_binding(case,protocol,prompt_sha256=digest(prompt_bytes),prompt_tokens=prompt_len,
+            generation_config_sha256=hashlib.sha256((assets/'model/generation_config.json').read_bytes()).hexdigest())
+        del prompt_bytes
+        eos=model.generation_config.eos_token_id;eos_set={eos} if type(eos) is int else set(eos or [])
+        if protocol['runtime'].get('resumeGeneration'):
+            resume_prefix,resume_receipt=restore(protocol['runtime']['resumeGeneration'],expected_binding=generation_binding,
+                vocab_size=model.vocab_size,eos_ids=eos_set)
+            assert model.config.audio_token_id not in resume_prefix,'Generated prefix must not add audio placeholders'
+            if not case.get('smokeOnly'):
+                # Full-meeting time accounting needs the exited source attempt
+                # receipt. Short execution controls are never speed/quality gates.
+                recovery=protocol['runtime']['resumeGeneration'];report_path=Path(recovery['sourceReport'])
+                assert hashlib.sha256(report_path.read_bytes()).hexdigest()==recovery['sourceReportSha256']
+                report=read(report_path)
+                assert report['recoveryManifestSha256']==recovery['sha256'] and report['decodedTextExactlyMatchesOriginal']
+                source_run=Path(report['sourceControl'])/'full-L-owner-resume.json'
+                assert hashlib.sha256(source_run.read_bytes()).hexdigest()==report['sourceRunSha256']
+                source=read(source_run);assert source['finishedAt'] and not source.get('activePid')
+                state['priorInferenceAttemptProcessFamilySeconds']=report['priorInferenceAttemptProcessFamilySeconds']
+                assert state['priorInferenceAttemptProcessFamilySeconds']>=source['results'][0]['wholeProcessFamilySeconds']
+            state.update(generationResume=resume_receipt,resumedPrefixTokens=len(resume_prefix),newGeneratedTokens=0,generatedTokens=len(resume_prefix))
+            prefix_tensor=torch.tensor([resume_prefix],dtype=inputs['input_ids'].dtype,device=device)
+            inputs['input_ids']=torch.cat([inputs['input_ids'],prefix_tensor],dim=-1)
+            inputs['attention_mask']=torch.cat([inputs['attention_mask'],torch.ones_like(prefix_tensor,dtype=inputs['attention_mask'].dtype)],dim=-1)
+            del prefix_tensor
+        generation_ledger=TokenLedger(out/'generation-checkpoints',binding=generation_binding,vocab_size=model.vocab_size,eos_ids=eos_set)
+        state['generationPromptTokens']=int(inputs['input_ids'].shape[-1])
+    elif protocol['runtime'].get('resumeGeneration'):
+        raise ValueError('Generation recovery requires durable checkpointing')
     state.update(inputPreparationSeconds=time.perf_counter()-tick,inputTokens=prompt_len,
         acousticChunks=int(inputs['input_features'].shape[0]),audioFeatureTokenLengths=inputs['audio_feature_lengths'].tolist(),
         inputFeatureShape=list(inputs['input_features'].shape),state='STARTING_GENERATION');save()
@@ -191,11 +225,12 @@ try:
     if pacer is not None:pacer.begin()
     generation_start=time.perf_counter()
     class RetainedStreamer(BaseStreamer):
-        def __init__(self):self.seen_prompt=False;self.tokens=[];self.written=0
+        def __init__(self):self.seen_prompt=False;self.tokens=list(resume_prefix);self.written=0
         def put(self,value):
             if not self.seen_prompt:self.seen_prompt=True;return
             self.tokens.extend(value.detach().cpu().reshape(-1).tolist())
             state['generatedTokens']=len(self.tokens)
+            if generation_ledger is not None:state['newGeneratedTokens']=len(self.tokens)-len(resume_prefix)
             if 'firstGeneratedTokenSeconds' not in state:state['firstGeneratedTokenSeconds']=time.perf_counter()-generation_start
             if len(self.tokens)%32==0:self.checkpoint()
         def checkpoint(self):
@@ -203,25 +238,39 @@ try:
                 if protocol['runtime'].get('releaseUnusedModelAllocations'):
                     torch.cuda.empty_cache()
                     state['unusedAllocatorReleases']=state.get('unusedAllocatorReleases',0)+1
-                with (out/'generated-token-ids.jsonl').open('a',encoding='utf8') as f:f.write(json.dumps(self.tokens[self.written:])+'\n')
+                delta=self.tokens[self.written:]
+                if generation_ledger is not None and delta:
+                    manifest,checkpoint=generation_ledger.append(delta,finished=self.tokens[-1] in eos_set)
+                    state['generationCheckpoint']={'manifest':str(manifest),'sha256':hashlib.sha256(manifest.read_bytes()).hexdigest(),'tokenCount':checkpoint['tokenCount'],'tokenBytesFsyncedBeforePublication':True}
+                if delta:
+                    with (out/'generated-token-ids.jsonl').open('a',encoding='utf8') as f:
+                        f.write(json.dumps(delta)+'\n')
+                        if protocol['runtime'].get('durableProgressWrites'):f.flush();os.fsync(f.fileno())
                 self.written=len(self.tokens)
                 text=processor.tokenizer.decode(self.tokens,skip_special_tokens=True)
                 (out/'partial-transcript.txt').write_text(text,encoding='utf8')
                 parsed=parse_transcript(text)
                 state.update(state='DECODING',lastCompletedSegmentEndSeconds=max((r.end for r in parsed),default=None),completedSegments=len(parsed),generationElapsedSeconds=time.perf_counter()-generation_start)
-            except OSError:state['progressWriteDeferrals']+=1
+            except OSError as error:
+                if generation_ledger is not None:raise RuntimeError('Checkpoint publication failed; stop with prior prefix retained') from error
+                state['progressWriteDeferrals']+=1
             save()
         def end(self):self.checkpoint()
     class ExplicitStop(StoppingCriteria):
         def __call__(self,input_ids,scores,**kwargs):return (root/'stop.request').exists()
     streamer=RetainedStreamer();config=model.generation_config
-    config.do_sample=False;config.max_new_tokens=protocol['runtime']['maxNewTokensSmoke' if case.get('smokeOnly') else 'maxNewTokensFull']
+    config.do_sample=False;config.max_new_tokens=protocol['runtime']['maxNewTokensSmoke' if case.get('smokeOnly') else 'maxNewTokensFull']-len(resume_prefix)
+    assert config.max_new_tokens>0,'Original declared generation budget exhausted'
+    if resume_prefix:
+        streamer.checkpoint()
+        state.update(state='REBUILDING_COMPLETE_CONTEXT_WITH_RETAINED_PREFIX',newGeneratedTokens=0);save()
     with torch.inference_mode():
         output=model.generate(**inputs,generation_config=config,streamer=streamer,
             stopping_criteria=StoppingCriteriaList([ExplicitStop()]))
     torch.cuda.synchronize(device)
     state['generationSeconds']=time.perf_counter()-generation_start
     ids=output[0][prompt_len:].detach().cpu().tolist()
+    if generation_ledger is not None:assert ids==streamer.tokens,'Recovered prefix duplicated or missing from full generated stream'
     text=processor.tokenizer.decode(ids,skip_special_tokens=True).strip()
     (out/'raw-transcript.txt').write_text(text,encoding='utf8');(out/'generated-ids.json').write_text(json.dumps(ids),encoding='utf8')
     parsed=parse_transcript(text)
