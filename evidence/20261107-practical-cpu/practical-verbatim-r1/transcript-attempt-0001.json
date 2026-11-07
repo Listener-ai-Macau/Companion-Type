@@ -1,0 +1,32 @@
+{
+  "state": "STOPPED_ACTUAL_WINDOWS_LOW_RAM",
+  "startedAt": "2026-11-07T15:04:07+08:00",
+  "pid": 16556,
+  "automaticRetries": 0,
+  "referencePassedToInference": false,
+  "results": [
+    {
+      "meeting": "S_R004S03C01",
+      "exitCode": 15,
+      "wholeProcessFamilySeconds": 35.888645500002895,
+      "privatePeakBytes": 446128128,
+      "rssPeakBytes": 449347584,
+      "workerState": null,
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcripts\\S_R004S03C01",
+      "priorAttemptProcessFamilySeconds": 0,
+      "accumulatedProcessFamilySeconds": 35.888645500002895
+    }
+  ],
+  "priorAttemptReceipts": [],
+  "speakerJournalPending": true,
+  "sourceSha256": {
+    "practical_transcript_20261107.py": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+    "practical_transcript_worker_20261107.py": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+    "run_practical_transcript_20261107.py": "beaced82b27c8315d7a478d5c9fa8203f15ef6bfa5c9acee7316b1c8584d08a1",
+    "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+    "test_practical_transcript_20261107.py": "d48e697218fd4100921fcfa5731603eb32797efa719ddffd84c90d2da1ec7706",
+    "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+  },
+  "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
+  "finishedAt": "2026-11-07T15:04:44+08:00"
+}

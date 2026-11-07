@@ -1,6 +1,6 @@
 {
-  "at": "2026-11-07T13:36:53+08:00",
-  "phase": "finished",
+  "at": "2026-11-07T15:08:40+08:00",
+  "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
     "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "PRACTICAL_CANDIDATE_BOUNDARY_PASSED_CROSS_CORPUS_AND_TEXT_QUALITY_OPEN",
+  "state": "NATIVE_VERBATIM_CONTROL_RUNNING_COMPLETE_CPU_TRANSCRIPT_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -8051,5 +8051,58 @@
     "qualityQualified": false,
     "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
   },
-  "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
+  "next": "先收尾已冻结useItn=False的同两场完整S/L，不改模型/30秒边界/严格含语气词和儿化评分；当前原8段实际低RAM中断已保存，依据实际恢复后续作，不关其它程序或扩大内存。对照原useItn=True，逐场保留回退/金额实词差，完成后再决定是否保留；不得用数字格式或删儿化冒充语音能力提升。普通<5%、复杂分人/重叠内容、纪要事实/独立集/手机/实卡/售卖门继续OPEN。",
+  "lastOwnerQuote": "继续推进一下, 达到可售卖标准才行, 要在正确方向上行走",
+  "nativeVerbatimPreparation": {
+    "at": "2026-11-07T15:04:06+08:00",
+    "state": "FROZEN_NATIVE_VERBATIM_CONTROL_PREPARED_NO_INFERENCE",
+    "sourceBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1",
+    "baselineOutputSha256": {
+      "S_R004S03C01": "4da042a561a9d0136691e67a42d2d44923727318d6bbb685f4abce3e07f3adbe",
+      "L_R003S01C02": "581d108f8a536823a1960dff0feaf338bd5b8cb70fb24903486598bb34f3a40e"
+    },
+    "hypothesis": "Native ITN changes IDs/amounts and suppresses literal spoken forms; disable native formatting to measure raw recognition rather than rewriting outputs using the reference. Known semantic amount error8899/89.9 cannot be declared harmless formatting.",
+    "onlyChangedNeuralSetting": {
+      "useItn": {
+        "before": true,
+        "after": false
+      }
+    },
+    "retentionRule": "No product switch on CER alone. Report both full meetings, real words and semantic number failures, ordinary non-overlap and overlapping text separately. Keep strict scoring including fillers/er suffix, original audio, unknown attribution, formal5% and cross-corpus gates.",
+    "stopRule": "Once per two complete exposed meetings; retain any regression and stop this flag experiment. No flag sweep/per-meeting mode selection or reference-conditioned correction.",
+    "knownOldRoutes": "Previous ad-hoc voting/adaptive/VAD/long-window trials are not repeated. This control tests a measured output-style mismatch in the actual recovered runtime; no new ASR family or training claimed.",
+    "workerSourceSha256": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+    "qualified": false
+  },
+  "nativeVerbatimRun": {
+    "state": "RUNNING_COMPLETE_CPU_TRANSCRIPT",
+    "startedAt": "2026-11-07T15:06:00+08:00",
+    "pid": 15292,
+    "automaticRetries": 0,
+    "referencePassedToInference": false,
+    "results": [],
+    "priorAttemptReceipts": [
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcript-attempt-0001.json"
+    ],
+    "resourceRecoveryObservation": {
+      "previousLastAvailableBytes": 823140352,
+      "priorModelPrivatePeakBytes": 446128128,
+      "currentAvailableBytes": 3980042240,
+      "actualWindowsLowRam": false,
+      "criterion": "Current available > last low-pressure sample + twice measured own private peak. Dynamic measured recovery, no fixed free-RAM floor. Raw completed windows reused, no blind native-crash retry."
+    },
+    "speakerJournalPending": true,
+    "sourceSha256": {
+      "practical_transcript_20261107.py": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+      "practical_transcript_worker_20261107.py": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+      "run_practical_transcript_20261107.py": "beaced82b27c8315d7a478d5c9fa8203f15ef6bfa5c9acee7316b1c8584d08a1",
+      "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+      "test_practical_transcript_20261107.py": "d48e697218fd4100921fcfa5731603eb32797efa719ddffd84c90d2da1ec7706",
+      "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
+    "activeMeeting": "S_R004S03C01",
+    "activePid": 14024
+  },
+  "nativeVerbatimReview": null
 }

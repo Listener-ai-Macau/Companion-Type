@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-07T15:04:06+08:00",
+  "state": "FROZEN_NATIVE_VERBATIM_CONTROL_PREPARED_NO_INFERENCE",
+  "sourceBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1",
+  "baselineOutputSha256": {
+    "S_R004S03C01": "4da042a561a9d0136691e67a42d2d44923727318d6bbb685f4abce3e07f3adbe",
+    "L_R003S01C02": "581d108f8a536823a1960dff0feaf338bd5b8cb70fb24903486598bb34f3a40e"
+  },
+  "hypothesis": "Native ITN changes IDs/amounts and suppresses literal spoken forms; disable native formatting to measure raw recognition rather than rewriting outputs using the reference. Known semantic amount error8899/89.9 cannot be declared harmless formatting.",
+  "onlyChangedNeuralSetting": {
+    "useItn": {
+      "before": true,
+      "after": false
+    }
+  },
+  "retentionRule": "No product switch on CER alone. Report both full meetings, real words and semantic number failures, ordinary non-overlap and overlapping text separately. Keep strict scoring including fillers/er suffix, original audio, unknown attribution, formal5% and cross-corpus gates.",
+  "stopRule": "Once per two complete exposed meetings; retain any regression and stop this flag experiment. No flag sweep/per-meeting mode selection or reference-conditioned correction.",
+  "knownOldRoutes": "Previous ad-hoc voting/adaptive/VAD/long-window trials are not repeated. This control tests a measured output-style mismatch in the actual recovered runtime; no new ASR family or training claimed.",
+  "workerSourceSha256": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+  "qualified": false
+}

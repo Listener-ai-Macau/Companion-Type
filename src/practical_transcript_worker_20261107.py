@@ -38,7 +38,9 @@ try:
         journal_sha=sha(journal_file);assert journal_sha==protocol['speakerJournals'][case['meeting']]
         journal,speaker_display_map=normalized_journal(journal)
     binding={'audioSha256':case['audioSha256'],'protocolSha256':sha(C/'asr-protocol.json'),'journalSha256':journal_sha,'workerSha256':sha(__file__),'attributionSha256':sha(Path(__file__).with_name('practical_transcript_20261107.py'))}
-    raw_binding={'audioSha256':case['audioSha256'],'modelFiles':protocol['modelFiles'],'runtimeVersion':protocol['runtimeVersion'],'nativeExtensionSha256':protocol['nativeExtensionSha256'],'windowSamples':protocol['maximumWindowSamples'],'language':'zh','useItn':True,'provider':'cpu','numThreads':1}
+    use_itn=protocol.get('useItn',True)
+    assert type(use_itn) is bool,'useItn must be an explicit boolean when present'
+    raw_binding={'audioSha256':case['audioSha256'],'modelFiles':protocol['modelFiles'],'runtimeVersion':protocol['runtimeVersion'],'nativeExtensionSha256':protocol['nativeExtensionSha256'],'windowSamples':protocol['maximumWindowSamples'],'language':'zh','useItn':use_itn,'provider':'cpu','numThreads':1}
     canonical=lambda obj:json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf8')
     for record in protocol['modelFiles'].values():assert sha(record['file'])==record['sha256']
     rec=None
@@ -62,7 +64,7 @@ try:
                     import sherpa_onnx.lib._sherpa_onnx as native
                     assert sherpa_onnx.__version__==protocol['runtimeVersion'] and sha(native.__file__)==protocol['nativeExtensionSha256']
                     before_load=time.perf_counter()
-                    rec=sherpa_onnx.OfflineRecognizer.from_sense_voice(model=protocol['modelFiles']['model.int8.onnx']['file'],tokens=protocol['modelFiles']['tokens.txt']['file'],num_threads=1,provider='cpu',language='zh',use_itn=True)
+                    rec=sherpa_onnx.OfflineRecognizer.from_sense_voice(model=protocol['modelFiles']['model.int8.onnx']['file'],tokens=protocol['modelFiles']['tokens.txt']['file'],num_threads=1,provider='cpu',language='zh',use_itn=use_itn)
                     state['modelLoaded']=True
                     state['modelLoadSeconds']=time.perf_counter()-before_load
                 audio.setpos(start);samples=np.frombuffer(audio.readframes(end-start),dtype='<i2').astype(np.float32)/32768
