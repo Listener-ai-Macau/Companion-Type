@@ -20,6 +20,10 @@ class PracticalAttribution(unittest.TestCase):
     def test_mismatched_tokenization_preserves_whole_original_as_unknown(self):
         raw={'index':0,'startSample':16000,'endSample':32000,'text':'原话不能改','tokens':['错'],'timestamps':[.5]}
         out=align_window(raw,[],audio_seconds=3);self.assertFalse(out['alignmentAvailable']);self.assertEqual(out['utterances'][0]['text'],raw['text']);self.assertIsNone(out['utterances'][0]['speaker'])
+    def test_space_only_token_never_becomes_an_invalid_empty_utterance(self):
+        raw={'index':0,'startSample':0,'endSample':16000,'text':'甲 ','tokens':['甲','▁'],'timestamps':[.2,.8]}
+        out=align_window(raw,[{'start':0.,'end':.5,'speaker':0}],audio_seconds=1)
+        self.assertEqual(len(out['utterances']),1);self.assertEqual(out['utterances'][0]['text'],'甲 ')
     def test_window_offsets_applied_once_and_bad_timing_rejected(self):
         raw={'index':1,'startSample':16000,'endSample':32000,'text':'话','tokens':['话'],'timestamps':[.5]}
         out=align_window(raw,[{'start':1.,'end':2.,'speaker':4}],audio_seconds=3);self.assertEqual(out['tokenEstimates'][0]['estimatedOnsetSeconds'],1.5)

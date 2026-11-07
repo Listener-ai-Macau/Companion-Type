@@ -25,7 +25,7 @@ try:
     cases=read(C/'audio-only.json');probe=read(C/'asr-smoke.json');assert probe['state']=='EXISTING_ASR_CONTROL_COMPLETE'
     protocol={'runtimeVersion':probe['runtime'],'nativeExtensionSha256':read(C/'protocol.json')['runtime']['nativeExtensionSha256'],'modelFiles':probe['modelFiles'],'maximumWindowSamples':30*16000,'provider':'cpu','language':'zh','useItn':True,'modelOrHotwordsChanged':False,'speakerJournals':{case['meeting']:sha(C/'results'/case['meeting']/'speaker-journal.json') for case in cases},'onsetUncertaintyMarginSeconds':.06,'scope':'Existing SenseVoice baseline on complete disjoint30s windows, preserving every input sample. Per-token estimated-onset attribution; unknown/overlap is unconfirmed. No forced participant count or real names. No reference read by worker.'}
     assert not (C/'asr-protocol.json').exists();(C/'asr-protocol.json').write_text(json.dumps(protocol,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-    state['sourceSha256']={p.name:sha(p) for p in Path(__file__).parent.glob('*practical_transcript*20261107.py')};state['protocolSha256']=sha(C/'asr-protocol.json');save()
+    state['sourceSha256']={p.name:sha(p) for p in Path(__file__).parent.glob('*practical_transcript*20261107.py')};state['sourceSha256']['practical_io_20261107.py']=sha(Path(__file__).with_name('practical_io_20261107.py'));state['protocolSha256']=sha(C/'asr-protocol.json');save()
     for index,case in enumerate(cases):
         if pressure.low():state['state']='DEFERRED_ACTUAL_WINDOWS_LOW_RAM';break
         if (C/'stop.request').exists():state['state']='STOPPED_EXPLICITLY';break

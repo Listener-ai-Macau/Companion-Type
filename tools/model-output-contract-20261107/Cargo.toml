@@ -1,0 +1,9 @@
+[package]
+name = "companion-model-output-contract-check"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+companion-meeting-transcript = { path = "../../../companion-device-closure055/packages/meeting-transcript" }
+serde_json = "1"

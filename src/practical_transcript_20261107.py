@@ -45,10 +45,15 @@ def align_window(raw,journal,*,audio_seconds):
         key=(row['speaker'],row['attribution'],tuple(row['candidateSpeakers']))
         if groups and groups[-1]['key']==key:groups[-1]['rows'].append(row)
         else:groups.append({'key':key,'rows':[row]})
-    utterances=[]
+    utterances=[];leading=''
     for group in groups:
         first=group['rows'][0];last=group['rows'][-1];fragment=text[first['textStart']:last['textEnd']]
         if not fragment:continue
+        if not fragment.strip():
+            if utterances:utterances[-1]['text']+=fragment
+            else:leading+=fragment
+            continue
+        fragment=leading+fragment;leading=''
         utterances.append({'text':fragment,'startMs':round(first['estimatedOnsetSeconds']*1000),'endMs':max(round(first['estimatedOnsetSeconds']*1000)+1,round(min(end,last['estimatedOnsetSeconds']+.06)*1000)),'speaker':first['speaker'],'approximateTiming':True,'attribution':first['attribution'],'candidateSpeakers':first['candidateSpeakers'],'sourceWindow':raw['index'],'timeScope':'Native token onset estimates; end is last onset plus one60ms frame, not verified word duration.'})
     assert ''.join(r['text'] for r in utterances)==text,'Attribution must never drop or rewrite ASR text'
     return {'alignmentAvailable':True,'rawText':text,'tokenEstimates':rows,'utterances':utterances}

@@ -1,0 +1,16 @@
+{
+  "result": {
+    "allWithinAudio": true,
+    "approximateRows": 10,
+    "characters": 72,
+    "scope": "Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.",
+    "state": "PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY",
+    "unknownSpeakerRows": 4,
+    "utterances": 10
+  },
+  "windowsSourceSha256": "f8f5b87017ebf10616b93d36520bab388f7e63033187bc289dfa1034b3af1684",
+  "androidSourceSha256": "e896c81cda5d6296b5ad0b79594c768ab5df6c34889683159aa6838c353b0f0c",
+  "sourceEqualAfterNewlineNormalization": true,
+  "androidDeviceRun": false,
+  "windowUiRun": false
+}

@@ -1,0 +1,18 @@
+{
+  "state": "RUNNING_COMPLETE_MEETING_DIARIZATION",
+  "startedAt": "2026-11-07T10:40:35+08:00",
+  "pid": 18960,
+  "results": [],
+  "protocolSha256": "c25306d5b28efa27bd3c862f158c51143b655c9700a95d7eda38f717dd9bf77a",
+  "sourceSha256": {
+    "practical_cpu_worker_20261107.py": "b2e45bfef306f482dc32b19629aad5b4fce5977e377825771e4a9b609dc6c7c0",
+    "run_practical_cpu_20261107.py": "3d56711830a9bb986b40f221124133334fec2d14c0ce51d4b5ea2becbf717d3c",
+    "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "score_cross_corpus_diarization_20261103.py": "99756dd111ba154432604cf61236a7ad49e97274492bbc8c6737e6063fc8ccec",
+    "reference_textgrid_20261104.py": "8f43fd26b67851714feb5530c3b321d0cca0c650b63ab8b2e0ca78e15715dc60"
+  },
+  "referencePassedToInference": false,
+  "automaticRetries": 0,
+  "activeMeeting": "L_R003S01C02",
+  "activePid": 23144
+}
