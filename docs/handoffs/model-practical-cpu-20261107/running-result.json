@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T13:29:18+08:00",
+  "at": "2026-11-07T15:08:40+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "F16_TWO_FULL_DEVELOPMENT_MEETINGS_STAGE15_PASSED_QUALIFICATION_OPEN",
+  "state": "NATIVE_VERBATIM_CONTROL_RUNNING_COMPLETE_CPU_TRANSCRIPT_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -7272,9 +7272,839 @@
     "qualification": "Known project validation, original cache/manifest deleted. Fresh source hashes frozen now; not claimed byte-compared to deleted old cache, new final blind data, Chinese ASR or product acceptance.",
     "finishedAt": "2026-11-07T13:26:21+08:00"
   },
-  "native8AmiRun": null,
-  "native8AmiChain": null,
-  "next": "采用FP16作新的分人研究基线，原产品默认未改：同源360张量/语义配置精确重建Q8后，FP16完整L/S标准DER13.4642%/3.8556%，实际6/6与5/5、每人正确覆盖>0；仅两完整开发会达到15%阶段，复杂正式10%仍OPEN。L非重叠11.1501%/重叠25.0128%/三人40.0100%，同一全场身份映射；短轮64.5886%且60/209完全未正确。部署量化的长期身份影响已有同源证据，不再按单会扫参/盲训练。先完成原EN2002a跨语料恢复和同一冻结模型验证；随后优先原QM04文字<5%及重叠逐路内容，普通原文7.6997%、逐人10.2583%，复杂逐人40.9751%，不拿说话人DER当CER。独立调用已支持原文草稿/本地8人后处理/0ASR重跑回填、完整缓存重开0模型、真实中途取消保草稿且重放声音时计入旧耗时；实际共享Rust边界通过。手机/实卡/事实/最终未见集/售卖门继续OPEN。",
-  "sourceAndEvidenceCommit": "1c6a68ada6a98aba4c3afb8e6927fced95643061",
+  "native8AmiRun": {
+    "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+    "pid": 21880,
+    "startedAt": "2026-11-07T13:29:28+08:00",
+    "results": [
+      {
+        "meeting": "EN2002a",
+        "phase": "activity",
+        "exitCode": 0,
+        "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+        "wholeProcessFamilySeconds": 77.82847720000427,
+        "privatePeakBytes": 1780920320,
+        "scoringExitCode": 0,
+        "qualityReview": {
+          "at": "2026-11-07T13:30:50+08:00",
+          "corpus": "AMI",
+          "meeting": "EN2002a",
+          "referenceParser": "original_rttm_parser",
+          "audioSeconds": 2142.709375,
+          "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+          "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+          "referenceKind": "rttm_only_words",
+          "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+          "referenceSpeakers": 4,
+          "predictedSpeakers": 4,
+          "components": {
+            "correct": 1773.9039389999996,
+            "total": 2530.259999999997,
+            "missed detection": 724.8935189999996,
+            "false alarm": 29.96351900000063,
+            "confusion": 31.462541999998344,
+            "diarization error rate": 0.310766316505023
+          },
+          "perReferenceSpeakerForEvaluationOnly": {
+            "FEO070": {
+              "referenceSeconds": 526.9500000000015,
+              "correctlyAttributedSeconds": 341.25819700000034,
+              "attributionRecall": 0.6476102040041737,
+              "matchedAnonymousGroup": "speaker_3"
+            },
+            "FEO072": {
+              "referenceSeconds": 879.5699999999997,
+              "correctlyAttributedSeconds": 691.1189370000011,
+              "attributionRecall": 0.7857463726593692,
+              "matchedAnonymousGroup": "speaker_2"
+            },
+            "MEE071": {
+              "referenceSeconds": 511.06999999999977,
+              "correctlyAttributedSeconds": 341.53824600000087,
+              "attributionRecall": 0.6682807560608156,
+              "matchedAnonymousGroup": "speaker_0"
+            },
+            "MEE073": {
+              "referenceSeconds": 612.6699999999995,
+              "correctlyAttributedSeconds": 399.9885589999974,
+              "attributionRecall": 0.6528613429741912,
+              "matchedAnonymousGroup": "speaker_1"
+            }
+          },
+          "macroReferenceAttributionRecall": 0.6886246689246374,
+          "uncoveredReferenceSpeakers": [],
+          "shortReferenceSpans": {
+            "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+            "count": 419,
+            "referenceSeconds": 290.56999999999977,
+            "correctSeconds": 199.38681000000284,
+            "zeroCorrectSpans": 63
+          },
+          "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb"
+        }
+      }
+    ],
+    "automaticRetries": 0,
+    "referencePassedToWorker": false,
+    "protocolSha256": "dcd5b2bffa4799ae574741ee1010051421838a406bfe63e37a893fc2d412f492",
+    "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+    "finishedAt": "2026-11-07T13:30:50+08:00"
+  },
+  "native8AmiChain": {
+    "state": "COMPLETE_ONE_AMI_DIARIZATION_REVIEW_REQUIRED",
+    "startedAt": "2026-11-07T13:29:28+08:00",
+    "automaticRetries": 0,
+    "asrAndProductQualification": false,
+    "controllerExitCode": 0,
+    "run": {
+      "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+      "pid": 21880,
+      "startedAt": "2026-11-07T13:29:28+08:00",
+      "results": [
+        {
+          "meeting": "EN2002a",
+          "phase": "activity",
+          "exitCode": 0,
+          "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+          "wholeProcessFamilySeconds": 77.82847720000427,
+          "privatePeakBytes": 1780920320,
+          "scoringExitCode": 0,
+          "qualityReview": {
+            "at": "2026-11-07T13:30:50+08:00",
+            "corpus": "AMI",
+            "meeting": "EN2002a",
+            "referenceParser": "original_rttm_parser",
+            "audioSeconds": 2142.709375,
+            "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+            "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+            "referenceKind": "rttm_only_words",
+            "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+            "referenceSpeakers": 4,
+            "predictedSpeakers": 4,
+            "components": {
+              "correct": 1773.9039389999996,
+              "total": 2530.259999999997,
+              "missed detection": 724.8935189999996,
+              "false alarm": 29.96351900000063,
+              "confusion": 31.462541999998344,
+              "diarization error rate": 0.310766316505023
+            },
+            "perReferenceSpeakerForEvaluationOnly": {
+              "FEO070": {
+                "referenceSeconds": 526.9500000000015,
+                "correctlyAttributedSeconds": 341.25819700000034,
+                "attributionRecall": 0.6476102040041737,
+                "matchedAnonymousGroup": "speaker_3"
+              },
+              "FEO072": {
+                "referenceSeconds": 879.5699999999997,
+                "correctlyAttributedSeconds": 691.1189370000011,
+                "attributionRecall": 0.7857463726593692,
+                "matchedAnonymousGroup": "speaker_2"
+              },
+              "MEE071": {
+                "referenceSeconds": 511.06999999999977,
+                "correctlyAttributedSeconds": 341.53824600000087,
+                "attributionRecall": 0.6682807560608156,
+                "matchedAnonymousGroup": "speaker_0"
+              },
+              "MEE073": {
+                "referenceSeconds": 612.6699999999995,
+                "correctlyAttributedSeconds": 399.9885589999974,
+                "attributionRecall": 0.6528613429741912,
+                "matchedAnonymousGroup": "speaker_1"
+              }
+            },
+            "macroReferenceAttributionRecall": 0.6886246689246374,
+            "uncoveredReferenceSpeakers": [],
+            "shortReferenceSpans": {
+              "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+              "count": 419,
+              "referenceSeconds": 290.56999999999977,
+              "correctSeconds": 199.38681000000284,
+              "zeroCorrectSpans": 63
+            },
+            "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb"
+          }
+        }
+      ],
+      "automaticRetries": 0,
+      "referencePassedToWorker": false,
+      "protocolSha256": "dcd5b2bffa4799ae574741ee1010051421838a406bfe63e37a893fc2d412f492",
+      "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+      "finishedAt": "2026-11-07T13:30:50+08:00"
+    },
+    "finishedAt": "2026-11-07T13:30:50+08:00",
+    "preservationExitCode": 0
+  },
+  "native8AmiRegions": {
+    "at": "2026-11-07T13:34:41+08:00",
+    "state": "COMPLETE_FULL_MAPPING_OVERLAP_BREAKDOWN_NO_NEW_INFERENCE",
+    "results": [
+      {
+        "at": "2026-11-07T13:34:41+08:00",
+        "meeting": "EN2002a",
+        "referenceParser": "original_rttm_parser",
+        "referenceKind": "rttm_only_words",
+        "referenceSha256": "a93919ae5f18e476614b7e5a2713c4dc6bba23e95149fba18dbe68602b13ee40",
+        "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb",
+        "frozenFullMeetingMappingForEvaluationOnly": {
+          "speaker_3": "FEO070",
+          "speaker_2": "FEO072",
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073"
+        },
+        "mappingNeverReturnedToInference": true,
+        "fullOriginalComponentsReproduced": true,
+        "collarSeconds": 0.0,
+        "overlapIncluded": true,
+        "regionSpecificRemapping": false,
+        "regions": {
+          "nonOverlapIncludingSilence": {
+            "audioRegionSeconds": 1623.129375,
+            "referenceSpeakerSeconds": 1375.3199999999986,
+            "derWithFrozenGlobalAssignment": 0.22926744321321582,
+            "components": {
+              "missed detection": 282.4609180000016,
+              "false alarm": 22.503627000000584,
+              "correct": 1082.5075269999993,
+              "total": 1375.3199999999986,
+              "confusion": 10.351554999997521,
+              "identification error rate": 0.22926744321321582
+            }
+          },
+          "twoOrMore": {
+            "audioRegionSeconds": 519.5799999999999,
+            "referenceSpeakerSeconds": 1154.939999999999,
+            "derWithFrozenGlobalAssignment": 0.4078164060470668,
+            "components": {
+              "missed detection": 442.43260099999804,
+              "false alarm": 7.459892000000046,
+              "correct": 691.396412,
+              "total": 1154.939999999999,
+              "confusion": 21.110987000000822,
+              "identification error rate": 0.4078164060470668
+            }
+          },
+          "threeOrMore": {
+            "audioRegionSeconds": 109.4500000000001,
+            "referenceSpeakerSeconds": 334.6800000000002,
+            "derWithFrozenGlobalAssignment": 0.4590368919564956,
+            "components": {
+              "missed detection": 146.3202590000002,
+              "false alarm": 0.6599549999998997,
+              "correct": 181.70948800000008,
+              "total": 334.6800000000002,
+              "confusion": 6.650252999999935,
+              "identification error rate": 0.4590368919564956
+            }
+          }
+        },
+        "neuralInferenceAdded": 0,
+        "overlapWordsRecovered": false,
+        "qualified": false
+      }
+    ],
+    "limits": {
+      "pid": 24588,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 101777408,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "practicalReleaseReview": {
+    "at": "2026-11-07T13:36:31+08:00",
+    "state": "PRACTICAL_CANDIDATE_BOUNDARY_PASSED_CROSS_CORPUS_AND_TEXT_QUALITY_OPEN",
+    "qualification": "NOT_QUALIFIED: Chinese exposed full recordings improve to DER13.4642%/3.8556%, but identical frozen FP16 protocol fails AMI EN2002a DER31.0766% (4/4 people, mostly missed activity). No cross-corpus15% or formal10% acceptance. Ordinary raw CER7.6997% and joint10.2583%, complex joint40.9751% remain above5%. Command/cancel/cache recovery work; no complete overlapping words, factual-minute, installed mobile/card, final holdout or sale acceptance.",
+    "results": [
+      {
+        "meeting": "L_R003S01C02",
+        "corpus": "AISHELL-4",
+        "audioSeconds": 2362.945,
+        "referenceSpeakers": 6,
+        "predictedSpeakers": 6,
+        "speakerDer": 0.13464234040692016,
+        "speakerProcessFamilySeconds": 85.92526459999499,
+        "jobPrivatePeakBytes": 1909493760,
+        "regions": {
+          "nonOverlapIncludingSilence": {
+            "audioRegionSeconds": 2174.5856119324885,
+            "referenceSpeakerSeconds": 1926.0326800506082,
+            "derWithFrozenGlobalAssignment": 0.11150141272365624,
+            "components": {
+              "correct": 1801.5838707403277,
+              "false alarm": 90.30655546729218,
+              "missed detection": 65.135035088527,
+              "confusion": 59.313774221753434,
+              "total": 1926.0326800506082,
+              "identification error rate": 0.11150141272365623
+            }
+          },
+          "twoOrMore": {
+            "audioRegionSeconds": 188.3593880675116,
+            "referenceSpeakerSeconds": 385.93638746322654,
+            "derWithFrozenGlobalAssignment": 0.25012816763771195,
+            "components": {
+              "correct": 291.26468441635836,
+              "false alarm": 1.861858374026724,
+              "missed detection": 73.91245526662628,
+              "confusion": 20.759247780241864,
+              "total": 385.93638746322654,
+              "identification error rate": 0.25012816763771195
+            }
+          },
+          "threeOrMore": {
+            "audioRegionSeconds": 9.217611328203304,
+            "referenceSpeakerSeconds": 27.652833984609913,
+            "derWithFrozenGlobalAssignment": 0.40009966128590474,
+            "components": {
+              "correct": 16.58894447377213,
+              "false alarm": 0.0,
+              "missed detection": 10.96793301083784,
+              "confusion": 0.09595649999994293,
+              "total": 27.652833984609913,
+              "identification error rate": 0.40009966128590474
+            }
+          }
+        },
+        "rawTextDiagnosticCer": 0.2676348547717842,
+        "rawTextMetricScope": "Mixed chronological diagnostic only; not strict per-person CER",
+        "jointCpCerDiagnostic": 0.40975103734439833,
+        "productDocumentContractPassed": true,
+        "newAsrNeuralWindows": 0,
+        "allOriginalRawAsrUnchanged": true,
+        "qualityQualified": false
+      },
+      {
+        "meeting": "S_R004S03C01",
+        "corpus": "AISHELL-4",
+        "audioSeconds": 2327.119,
+        "referenceSpeakers": 5,
+        "predictedSpeakers": 5,
+        "speakerDer": 0.03855615562340746,
+        "speakerProcessFamilySeconds": 87.9218494000088,
+        "jobPrivatePeakBytes": 1908023296,
+        "regions": {
+          "nonOverlapIncludingSilence": {
+            "audioRegionSeconds": 2327.119,
+            "referenceSpeakerSeconds": 2074.389489999999,
+            "derWithFrozenGlobalAssignment": 0.038556155623407466,
+            "components": {
+              "correct": 2007.1044930000003,
+              "false alarm": 12.695487000001684,
+              "missed detection": 65.91499699999912,
+              "confusion": 1.3699999999999992,
+              "total": 2074.389489999999,
+              "identification error rate": 0.03855615562340746
+            }
+          },
+          "twoOrMore": {
+            "audioRegionSeconds": 0.0,
+            "state": "NOT_APPLICABLE_NO_REFERENCE_REGION"
+          },
+          "threeOrMore": {
+            "audioRegionSeconds": 0.0,
+            "state": "NOT_APPLICABLE_NO_REFERENCE_REGION"
+          }
+        },
+        "rawTextDiagnosticCer": 0.076996996996997,
+        "rawTextMetricScope": "Whole ordinary text CER",
+        "jointCpCerDiagnostic": 0.10258258258258258,
+        "productDocumentContractPassed": true,
+        "newAsrNeuralWindows": 0,
+        "allOriginalRawAsrUnchanged": true,
+        "qualityQualified": false
+      },
+      {
+        "meeting": "EN2002a",
+        "corpus": "AMI",
+        "audioSeconds": 2142.709375,
+        "referenceKind": "rttm_only_words",
+        "referenceSpeakers": 4,
+        "predictedSpeakers": 4,
+        "speakerDer": 0.310766316505023,
+        "speakerProcessFamilySeconds": 77.82847720000427,
+        "jobPrivatePeakBytes": 1909555200,
+        "missShareOfAllErrors": 0.9218815573688257,
+        "regions": {
+          "nonOverlapIncludingSilence": {
+            "audioRegionSeconds": 1623.129375,
+            "referenceSpeakerSeconds": 1375.3199999999986,
+            "derWithFrozenGlobalAssignment": 0.22926744321321582,
+            "components": {
+              "missed detection": 282.4609180000016,
+              "false alarm": 22.503627000000584,
+              "correct": 1082.5075269999993,
+              "total": 1375.3199999999986,
+              "confusion": 10.351554999997521,
+              "identification error rate": 0.22926744321321582
+            }
+          },
+          "twoOrMore": {
+            "audioRegionSeconds": 519.5799999999999,
+            "referenceSpeakerSeconds": 1154.939999999999,
+            "derWithFrozenGlobalAssignment": 0.4078164060470668,
+            "components": {
+              "missed detection": 442.43260099999804,
+              "false alarm": 7.459892000000046,
+              "correct": 691.396412,
+              "total": 1154.939999999999,
+              "confusion": 21.110987000000822,
+              "identification error rate": 0.4078164060470668
+            }
+          },
+          "threeOrMore": {
+            "audioRegionSeconds": 109.4500000000001,
+            "referenceSpeakerSeconds": 334.6800000000002,
+            "derWithFrozenGlobalAssignment": 0.4590368919564956,
+            "components": {
+              "missed detection": 146.3202590000002,
+              "false alarm": 0.6599549999998997,
+              "correct": 181.70948800000008,
+              "total": 334.6800000000002,
+              "confusion": 6.650252999999935,
+              "identification error rate": 0.4590368919564956
+            }
+          }
+        },
+        "asrMeasured": false,
+        "qualityQualified": false
+      }
+    ],
+    "speakerMetric": "Continuous-time standard DER, zero collar, overlap included; not text CER. All regions retain one global full-meeting identity mapping.",
+    "scope": "Three complete exposed validation meetings across two corpora. AMI only_words boundary policy differs from AISHELL TextGrid. No average can close a failed individual meeting. Public pretraining overlap unknown. English text was not evaluated.",
+    "neuralProtocolFrozenAcrossThree": true,
+    "audioOrReferenceFedBackToInference": false,
+    "speakerWorkerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+    "nativePrecisionProvenance": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-precision-preparation\\weight-provenance-proof.json",
+    "retainedResearchBaseline": "Exact-source FP16 native8; Q8 and all failures retained; not a product-default promotion.",
+    "rejectedRoutes": [
+      "Unchanged long HIP decoder retry: repeat native C0000005, no full text result.",
+      "Stock CPU dense reconstruction: bad allocation under existing2GiB private cap.",
+      "Faithful bounded complete-link:190/6 active groups on L, DER78.0445%; S30/5,25.6591%.",
+      "Predicted-count cached fusion: L19.4545%,S10.5782%; ordinary regression; reject default mixing.",
+      "Q8 as universal speaker default: complex24.5373%; keep comparison, use same-source FP16 research baseline."
+    ],
+    "commandProofs": {
+      "command-proof.json": {
+        "at": "2026-11-07T13:20:17+08:00",
+        "state": "PASS_ACTUAL_PUBLIC_NATIVE8_COMMAND_DRAFT_FINAL_AND_ZERO_MODEL_RESUME",
+        "publicAudioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+        "originalAudioBytesUnchanged": true,
+        "task": {
+          "state": "COMPLETE_LOCAL_CANDIDATE_QUALITY_UNQUALIFIED",
+          "startedAt": "2026-11-07T13:19:59+08:00",
+          "binding": {
+            "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+            "audioSeconds": 61.0,
+            "modelPackSha256": "19d66466370a3ff618c97c69a5a22c9f812ab1f16dfc1daf23d272aa0a92ad90"
+          },
+          "attempts": [
+            {
+              "control": "E:\\CodexData\\Companion\\.model-cache\\native8-command-20261107\\public61-r1\\attempt-0001",
+              "startedAt": "2026-11-07T13:19:59+08:00",
+              "stages": [
+                {
+                  "phase": "TRANSCRIBING_DRAFT",
+                  "exitCode": 0,
+                  "wholeProcessFamilySeconds": 9.097066799993627,
+                  "privatePeakBytes": 438579200,
+                  "finishedAt": "2026-11-07T13:20:10+08:00"
+                },
+                {
+                  "phase": "DIARIZING_NATIVE8",
+                  "exitCode": 0,
+                  "wholeProcessFamilySeconds": 4.093728000007104,
+                  "privatePeakBytes": 1773383680,
+                  "finishedAt": "2026-11-07T13:20:15+08:00"
+                },
+                {
+                  "phase": "TRANSCRIBING",
+                  "exitCode": 0,
+                  "wholeProcessFamilySeconds": 1.0213764999934938,
+                  "privatePeakBytes": 1507328,
+                  "finishedAt": "2026-11-07T13:20:17+08:00"
+                }
+              ]
+            }
+          ],
+          "privateAudioNeverUploaded": true,
+          "meeting": "recording-c503b7334e26b9ef",
+          "updatedAt": "2026-11-07T13:20:16+08:00",
+          "textDraft": "E:\\CodexData\\Companion\\.model-cache\\native8-command-20261107\\public61-r1\\attempt-0001\\text-draft.json",
+          "textDraftReadyAt": "2026-11-07T13:20:10+08:00",
+          "finishedAt": "2026-11-07T13:20:17+08:00",
+          "output": "E:\\CodexData\\Companion\\.model-cache\\native8-command-20261107\\public61-r1\\attempt-0001\\transcripts\\recording-c503b7334e26b9ef\\model-output.json",
+          "outputSha256": "f919af8298938ec4f51f6bd80f37cd6ea4526045856d9f37529b887d5ca5b8cf",
+          "sourceAudioUnchanged": true
+        },
+        "finalAttributionReceipt": {
+          "state": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
+          "pid": 17080,
+          "startedAt": "2026-11-07T13:20:16+08:00",
+          "meeting": "recording-c503b7334e26b9ef",
+          "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+          "referencePassedToWorker": false,
+          "gpuUsed": false,
+          "completedWindows": 3,
+          "newNeuralWindows": 0,
+          "modelLoaded": false,
+          "priorAttemptSeconds": 8.324614100012695,
+          "limits": {
+            "pid": 17080,
+            "cpuRate": 500,
+            "cpuControlFlags": 5,
+            "cpuPercentMaximum": 5.0,
+            "inLimitedJob": true,
+            "jobPrivateCommitLimitBytes": 2147483648,
+            "jobMemoryLimitEnabled": true,
+            "jobPeakPrivateCommitBytes": 12812288,
+            "cpuPriorityClass": 64,
+            "memoryPagePriority": 1,
+            "memoryPagePriorityIsReclaimHintNotRamCap": true,
+            "gpuPriorityClass": 0,
+            "gpuUtilizationHardCapped": false,
+            "scope": "This worker and its descendants only; no global or other-app changes."
+          },
+          "priorAttemptTimeIncomplete": false,
+          "cachedOnly": true,
+          "audioSeconds": 61.0,
+          "totalWindows": 3,
+          "reusedDurableWindows": 3,
+          "completedSample": 976000,
+          "newAttemptSeconds": 0.24234149997937493,
+          "speakerJournalPending": false,
+          "allAudioSamplesCoveredOnce": true,
+          "allAsrTextPreserved": true,
+          "unconfirmedTokens": 3,
+          "overlapTokensRequiringRecovery": 0,
+          "modelOutputSha256": "f919af8298938ec4f51f6bd80f37cd6ea4526045856d9f37529b887d5ca5b8cf",
+          "attributionReviewSha256": "d87dd291c71edcf04585e13c96e0a11fbe7a4d8360b0081a302a5e8ef7bd196a",
+          "finishedAt": "2026-11-07T13:20:16+08:00",
+          "wholeWorkerSeconds": 0.2614340999862179
+        },
+        "speakerReceipt": {
+          "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+          "pid": 7664,
+          "startedAt": "2026-11-07T13:20:11+08:00",
+          "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+          "referencePassedToWorker": false,
+          "gpuUsed": true,
+          "automaticRetries": 0,
+          "sourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+          "nativeGeometry": "author-offline-explicit",
+          "newNeuralPushes": 3,
+          "completedNeuralFrames": 6101,
+          "limits": {
+            "pid": 7664,
+            "cpuRate": 500,
+            "cpuControlFlags": 5,
+            "cpuPercentMaximum": 5.0,
+            "inLimitedJob": true,
+            "jobPrivateCommitLimitBytes": 2147483648,
+            "jobMemoryLimitEnabled": true,
+            "jobPeakPrivateCommitBytes": 1905848320,
+            "cpuPriorityClass": 64,
+            "memoryPagePriority": 1,
+            "memoryPagePriorityIsReclaimHintNotRamCap": true,
+            "gpuPriorityClass": 0,
+            "gpuUtilizationHardCapped": false,
+            "scope": "This worker and its descendants only; no global or other-app changes."
+          },
+          "nativeDeviceInventory": [
+            {
+              "registryIndex": 0,
+              "name": "Vulkan0",
+              "description": "AMD Radeon RX 6800 XT",
+              "type": 1,
+              "gpuOrdinal": 0
+            },
+            {
+              "registryIndex": 1,
+              "name": "Vulkan1",
+              "description": "AMD Radeon 780M Graphics",
+              "type": 2,
+              "gpuOrdinal": 1
+            },
+            {
+              "registryIndex": 2,
+              "name": "CPU",
+              "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+              "type": 0
+            }
+          ],
+          "selectedNativeDevice": {
+            "registryIndex": 0,
+            "name": "Vulkan0",
+            "description": "AMD Radeon RX 6800 XT",
+            "type": 1,
+            "gpuOrdinal": 0
+          },
+          "backend": "vulkan",
+          "appliedExplicitGeometry": {
+            "spkcache_len": 264,
+            "fifo_len": 40,
+            "chunk_len": 340,
+            "right_context": 40,
+            "update_period": 300,
+            "left_context": 0
+          },
+          "submittedSamples": 976000,
+          "totalAudioSamples": 976000,
+          "nativeFrameProbabilitiesStart": 0,
+          "nativeOutputSpeakers": 8,
+          "nativeSecondsPerFrame": 0.009999999776482582,
+          "meeting": "recording-c503b7334e26b9ef",
+          "audioSeconds": 61.0,
+          "predictedSpeakers": 4,
+          "segments": 9,
+          "rttmSha256": "28665edb360067cd8ae9b4f6527cf99eb65940f40f4430494d6dc0e4a7d0a21e",
+          "allOriginalAudioSamplesSubmitted": true,
+          "oneContinuousSpeakerState": true,
+          "probabilityManifestSha256": "394df9d61b2497652dd20f16565e3cbb09b77d1fb72096e6c0d5a93ebc17762b",
+          "finishedAt": "2026-11-07T13:20:14+08:00",
+          "wholeWorkerSeconds": 3.420354400004726
+        },
+        "finalOutputSha256": "f919af8298938ec4f51f6bd80f37cd6ea4526045856d9f37529b887d5ca5b8cf",
+        "resumeAddedNeuralStages": 0,
+        "resumeOutputBytesIdentical": true,
+        "textDraftBeforeSpeakerStage": true,
+        "sharedProductRustParser": {
+          "exitCode": 0,
+          "stdout": "{\"allWithinAudio\":true,\"approximateRows\":11,\"characters\":196,\"scope\":\"Real shared Rust parser/validator only. No app UI, phone inference or model quality qualification.\",\"state\":\"PASS_ACTUAL_SHARED_PRODUCT_DOCUMENT_BOUNDARY\",\"unknownSpeakerRows\":3,\"utterances\":11}\n",
+          "currentSourceSha256": "f8f5b87017ebf10616b93d36520bab388f7e63033187bc289dfa1034b3af1684"
+        },
+        "wholeCheckSecondsIncludingCacheAndVerifier": 17.771421899989946,
+        "scope": "Functional public61s integration, not full-meeting accuracy/performance or installed app/phone/card acceptance. Generic private runtime task directories must never enter research publication.",
+        "qualityQualified": false
+      },
+      "cancel-resume-proof.json": {
+        "at": "2026-11-07T13:24:16+08:00",
+        "state": "PASS_ACTUAL_NATIVE_CANCEL_DRAFT_RETAINED_RAW_ASR_REUSED_AND_VOICE_REPLAY",
+        "publicAudioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+        "observedPartialNativeStage": {
+          "state": "NATIVE8_STREAMING_FULL_AUDIO",
+          "pid": 24060,
+          "startedAt": "2026-11-07T13:24:05+08:00",
+          "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+          "referencePassedToWorker": false,
+          "gpuUsed": true,
+          "automaticRetries": 0,
+          "sourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+          "nativeGeometry": "author-offline-explicit",
+          "newNeuralPushes": 2,
+          "completedNeuralFrames": 5440,
+          "limits": {
+            "pid": 24060,
+            "cpuRate": 500,
+            "cpuControlFlags": 5,
+            "cpuPercentMaximum": 5.0,
+            "inLimitedJob": true,
+            "jobPrivateCommitLimitBytes": 2147483648,
+            "jobMemoryLimitEnabled": true,
+            "jobPeakPrivateCommitBytes": 1892327424,
+            "cpuPriorityClass": 64,
+            "memoryPagePriority": 1,
+            "memoryPagePriorityIsReclaimHintNotRamCap": true,
+            "gpuPriorityClass": 0,
+            "gpuUtilizationHardCapped": false,
+            "scope": "This worker and its descendants only; no global or other-app changes."
+          },
+          "nativeDeviceInventory": [
+            {
+              "registryIndex": 0,
+              "name": "Vulkan0",
+              "description": "AMD Radeon RX 6800 XT",
+              "type": 1,
+              "gpuOrdinal": 0
+            },
+            {
+              "registryIndex": 1,
+              "name": "Vulkan1",
+              "description": "AMD Radeon 780M Graphics",
+              "type": 2,
+              "gpuOrdinal": 1
+            },
+            {
+              "registryIndex": 2,
+              "name": "CPU",
+              "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+              "type": 0
+            }
+          ],
+          "selectedNativeDevice": {
+            "registryIndex": 0,
+            "name": "Vulkan0",
+            "description": "AMD Radeon RX 6800 XT",
+            "type": 1,
+            "gpuOrdinal": 0
+          },
+          "backend": "vulkan",
+          "appliedExplicitGeometry": {
+            "spkcache_len": 264,
+            "fifo_len": 40,
+            "chunk_len": 340,
+            "right_context": 40,
+            "update_period": 300,
+            "left_context": 0
+          },
+          "submittedSamples": 972800,
+          "totalAudioSamples": 976000,
+          "nativeFrameProbabilitiesStart": 0,
+          "nativeOutputSpeakers": 8,
+          "nativeSecondsPerFrame": 0.009999999776482582
+        },
+        "interruptedStageTimeRetained": {
+          "phase": "DIARIZING_NATIVE8",
+          "exitCode": 15,
+          "wholeProcessFamilySeconds": 3.121585099986987,
+          "privatePeakBytes": 1725386752,
+          "finishedAt": "2026-11-07T13:24:08+08:00",
+          "interrupted": true,
+          "priorElapsedMustRemainInTotal": true
+        },
+        "textDraftRetained": true,
+        "rawAsrWindowsUnchanged": 3,
+        "newAsrNeuralWindowsOnResume": 0,
+        "nativeSpeakerStateExported": false,
+        "nativeVoiceReplayedFromOriginalAudio": true,
+        "accumulatedOwnedStagesSecondsIncludingInterruptedAttempt": 17.292621099972166,
+        "finalAttempts": [
+          {
+            "control": "E:\\CodexData\\Companion\\.model-cache\\native8-command-20261107\\public61-stop-r1\\attempt-0001",
+            "startedAt": "2026-11-07T13:23:54+08:00",
+            "stages": [
+              {
+                "phase": "TRANSCRIBING_DRAFT",
+                "exitCode": 0,
+                "wholeProcessFamilySeconds": 9.101610699988669,
+                "privatePeakBytes": 437121024,
+                "finishedAt": "2026-11-07T13:24:04+08:00"
+              },
+              {
+                "phase": "DIARIZING_NATIVE8",
+                "exitCode": 15,
+                "wholeProcessFamilySeconds": 3.121585099986987,
+                "privatePeakBytes": 1725386752,
+                "finishedAt": "2026-11-07T13:24:08+08:00",
+                "interrupted": true,
+                "priorElapsedMustRemainInTotal": true
+              }
+            ]
+          },
+          {
+            "control": "E:\\CodexData\\Companion\\.model-cache\\native8-command-20261107\\public61-stop-r1\\attempt-0002",
+            "startedAt": "2026-11-07T13:24:08+08:00",
+            "stages": [
+              {
+                "phase": "DIARIZING_NATIVE8",
+                "exitCode": 0,
+                "wholeProcessFamilySeconds": 4.047654299996793,
+                "privatePeakBytes": 1773969408,
+                "finishedAt": "2026-11-07T13:24:13+08:00"
+              },
+              {
+                "phase": "TRANSCRIBING",
+                "exitCode": 0,
+                "wholeProcessFamilySeconds": 1.0217709999997169,
+                "privatePeakBytes": 1433600,
+                "finishedAt": "2026-11-07T13:24:16+08:00"
+              }
+            ],
+            "rawTranscriptReusedFrom": "E:\\CodexData\\Companion\\.model-cache\\native8-command-20261107\\public61-stop-r1\\attempt-0001\\transcripts\\recording-c503b7334e26b9ef",
+            "priorNativeCacheRetainedAt": "E:\\CodexData\\Companion\\.model-cache\\native8-command-20261107\\public61-stop-r1\\attempt-0001\\native-speaker-cache",
+            "nativeSpeakerStateExported": false,
+            "nativeSpeakerReplayRequired": true
+          }
+        ],
+        "currentRustBoundaryPassed": true,
+        "scope": "Functional cancellation/recovery only, not an accuracy or interrupted-native-state-restoration claim. Only verified owned processes stopped; original audio unchanged.",
+        "qualityQualified": false
+      },
+      "legacy-cache-compatibility.json": {
+        "at": "2026-11-07T13:34:38.285111+08:00",
+        "state": "PASS_LEGACY_CACHED_COMMAND_READBACK_AFTER_NATIVE8_ADAPTER",
+        "sameOutputSha256": "1d2ef9b1b47a848af73b4743075ebed55df35721e62f69a8def8e510f73e2301",
+        "newStages": 0,
+        "newNeuralInference": 0,
+        "sourceSha256": "404a33866dab99fd5af77f9f91861f09c1ea6f1710406a4c32597633aea24cce",
+        "qualityQualified": false
+      }
+    },
+    "timingScope": "Speaker process-family seconds only, includes cooperative1s pauses; excludes ASR, transfer, low-memory recovery waiting, minutes, and app end-to-end. Original ASR interrupted-time receipts retained separately.",
+    "responsiveness": "One neural stage at a time in this batch; hard5% CPU and2GiB own-process-family private-commit limit, memory page priority1 and actual low-RAM stop. GPU scheduling idle plus cooperative pauses, not a hard GPU utilization cap. No other-app closure/global settings changed.",
+    "defaultProductChanged": false,
+    "trainingPerformed": false,
+    "finalHoldoutOpened": false,
+    "phoneOrCardOperatedThisBatch": false,
+    "realCustomerValidationThisBatch": false,
+    "qualityQualified": false,
+    "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
+  },
+  "next": "先收尾已冻结useItn=False的同两场完整S/L，不改模型/30秒边界/严格含语气词和儿化评分；当前原8段实际低RAM中断已保存，依据实际恢复后续作，不关其它程序或扩大内存。对照原useItn=True，逐场保留回退/金额实词差，完成后再决定是否保留；不得用数字格式或删儿化冒充语音能力提升。普通<5%、复杂分人/重叠内容、纪要事实/独立集/手机/实卡/售卖门继续OPEN。",
+  "lastOwnerQuote": "继续推进一下, 达到可售卖标准才行, 要在正确方向上行走",
+  "nativeVerbatimPreparation": {
+    "at": "2026-11-07T15:04:06+08:00",
+    "state": "FROZEN_NATIVE_VERBATIM_CONTROL_PREPARED_NO_INFERENCE",
+    "sourceBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1",
+    "baselineOutputSha256": {
+      "S_R004S03C01": "4da042a561a9d0136691e67a42d2d44923727318d6bbb685f4abce3e07f3adbe",
+      "L_R003S01C02": "581d108f8a536823a1960dff0feaf338bd5b8cb70fb24903486598bb34f3a40e"
+    },
+    "hypothesis": "Native ITN changes IDs/amounts and suppresses literal spoken forms; disable native formatting to measure raw recognition rather than rewriting outputs using the reference. Known semantic amount error8899/89.9 cannot be declared harmless formatting.",
+    "onlyChangedNeuralSetting": {
+      "useItn": {
+        "before": true,
+        "after": false
+      }
+    },
+    "retentionRule": "No product switch on CER alone. Report both full meetings, real words and semantic number failures, ordinary non-overlap and overlapping text separately. Keep strict scoring including fillers/er suffix, original audio, unknown attribution, formal5% and cross-corpus gates.",
+    "stopRule": "Once per two complete exposed meetings; retain any regression and stop this flag experiment. No flag sweep/per-meeting mode selection or reference-conditioned correction.",
+    "knownOldRoutes": "Previous ad-hoc voting/adaptive/VAD/long-window trials are not repeated. This control tests a measured output-style mismatch in the actual recovered runtime; no new ASR family or training claimed.",
+    "workerSourceSha256": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+    "qualified": false
+  },
+  "nativeVerbatimRun": {
+    "state": "RUNNING_COMPLETE_CPU_TRANSCRIPT",
+    "startedAt": "2026-11-07T15:06:00+08:00",
+    "pid": 15292,
+    "automaticRetries": 0,
+    "referencePassedToInference": false,
+    "results": [],
+    "priorAttemptReceipts": [
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcript-attempt-0001.json"
+    ],
+    "resourceRecoveryObservation": {
+      "previousLastAvailableBytes": 823140352,
+      "priorModelPrivatePeakBytes": 446128128,
+      "currentAvailableBytes": 3980042240,
+      "actualWindowsLowRam": false,
+      "criterion": "Current available > last low-pressure sample + twice measured own private peak. Dynamic measured recovery, no fixed free-RAM floor. Raw completed windows reused, no blind native-crash retry."
+    },
+    "speakerJournalPending": true,
+    "sourceSha256": {
+      "practical_transcript_20261107.py": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+      "practical_transcript_worker_20261107.py": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+      "run_practical_transcript_20261107.py": "beaced82b27c8315d7a478d5c9fa8203f15ef6bfa5c9acee7316b1c8584d08a1",
+      "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+      "test_practical_transcript_20261107.py": "d48e697218fd4100921fcfa5731603eb32797efa719ddffd84c90d2da1ec7706",
+      "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
+    "activeMeeting": "S_R004S03C01",
+    "activePid": 14024
+  },
+  "nativeVerbatimReview": null,
+  "sourceAndEvidenceCommit": "9c71305d168563398bcd664a43112aacd8743a82",
   "remoteReadbackConfirmed": true
 }

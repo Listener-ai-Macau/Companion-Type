@@ -41507,9 +41507,9 @@
             "summary": "四场默认严格连续DER 10.9524%、21.8103%、17.2624%、23.6961%；人数6/6、4/4、4/4、4/4，短轮仍弱。1秒仅一场微升、三场更差，不采用。不能当文字准确率或整集官方基准。"
           },
           "native8Fp16Development20261107": {
-            "at": "2026-11-07T13:36:53+08:00",
+            "at": "2026-11-07T15:08:40+08:00",
             "state": "STAGE15_PASSED_ON_TWO_EXPOSED_FULL_MEETINGS_FORMAL10_OPEN",
-            "modelEvidenceCommit": "1743c9a5c4fdc2a6a14900fc31b8538ab68c7dcf",
+            "modelEvidenceCommit": "9c71305d168563398bcd664a43112aacd8743a82",
             "assessment": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\candidate-assessment.json",
             "der": {
               "L_R003S01C02": 0.13464234040692016,
@@ -130994,24 +130994,24 @@
   "owner_module_execution": {
     "embedded": {
       "schema": "companion.embedded-execution.v1",
-      "updatedAt": "2026-11-07T12:53:56+08:00",
+      "updatedAt": "2026-11-07T13:39:08+08:00",
       "scope": "嵌入式录音、存储、连接、升级和设备交互；电脑/手机UI、模型及纪要沿各自模块。",
       "sourceOfTruth": "docs/product_backlog.json#/owner_module_execution/embedded",
       "active": "CP23-10",
       "baseline": {
-        "firmwareVersion": 66702,
+        "firmwareVersion": 66706,
         "uiGeneration": 85,
         "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
-        "sourceCommit": "a43893f4cf7e684f7577728ea69f52655ce479a3",
-        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\candidate.json",
-        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ordinary-phone080-ota.json",
-        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\phone080-session279\\after279-board.json",
+        "sourceCommit": "f43a85c5dc9d6a818ebd087257c441037efc5245",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\build-result.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\after-ota.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\runtime\\after299-board.json",
         "recordedOnly": true,
         "buildEntry": "python tools/build_current_firmware.py",
         "recipeVersion": 66685,
         "product": "companion",
         "buildEntryCommit": "055cd916",
-        "sourceRootAvailability": "CURRENT_DIAGNOSTIC_BUILD_INSTALLED_SCOPED_FUNCTIONS_ONLY",
+        "sourceRootAvailability": "CURRENT_FUNCTIONAL_FIRMWARE_INSTALLED_NOT_WHOLE_QUALIFIED",
         "evidenceAvailability": "Current source/UI85/full build/signed OTA and scoped physical receipts retained on C; deleted E historical receipts remain historical",
         "qualificationProduct": "Companion",
         "screenEnabled": false,
@@ -131482,7 +131482,7 @@
         "previousProductLabel": "Capture",
         "screenReason": "Current Companion screen physically disconnected; screen work remains paused. Existing no-screen profile is a temporary shared-core test configuration."
       },
-      "next": "Fix same single initial133 retry using Android public background-connect scheduling instead of another direct request; keep first direct path/paired UID validation/5s gate/no product command replay. Then finish short50/radio10/final longevity. Do not claim literal any-length50 from five-minute52.723. Existing explicit hardware/production blocks remain.",
+      "next": "Short10s25.57–25.78 still FAIL50 including physical reclaim; do not repeat high-priority/scan/background-connection trial branches. Next separate actual PULL selection/first packet/radio delivery versus NOR erase using existing observability, optimize only demonstrated fixed cost; preserve scope and5s/10s gates. Current-version radio10/final longevity pending, explicit physical/production blocks unchanged.",
       "disconnectAcceptanceClarification": {
         "at": "2026-11-04T20:40:11+08:00",
         "ownerRaw": "这个东西不就是蓝牙断链吗",
@@ -131741,13 +131741,12 @@
         "decision": "当前外部电池采样链路异常挂起，未定为ADC芯片损坏；保持正常参数化ADC/低电保存接口，关闭旧名义分压工程观测默认值，不以未知电量阻断当前录音。"
       },
       "candidateFirmware": {
-        "version": 66696,
+        "version": 66706,
         "installed": true,
-        "runtimeCodeCommit": "778f5c45277918d9763585f8e40d4435c74c5ad3",
-        "sourceCommit": "778f5c45277918d9763585f8e40d4435c74c5ad3",
-        "appBytes": 410572,
-        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66696\\candidate.json",
-        "reason": "Same source/runtime as695; forward version solely to execute ordinary phone OTA. Not a new feature or new size growth."
+        "sourceCommit": "f43a85c5dc9d6a818ebd087257c441037efc5245",
+        "appBytes": 412832,
+        "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\candidate.json",
+        "reason": "Actual PULL/consume lookup shortcut with mandatory physical exact-row recheck and full-search fallback. No RAM/persistent layout increase."
       },
       "deliveryReceipt": {
         "at": "2026-11-07T10:02:37+08:00",
@@ -131975,12 +131974,12 @@
         ]
       },
       "releaseReadiness": {
-        "at": "2026-11-07T12:53:56+08:00",
-        "firmware": 66705,
-        "coreDelivery": "FIVE_MINUTE_RATE52_723_PASS_SHORT23_198_43_894_FAIL_IDLE_PHONE133_REPRODUCED",
+        "at": "2026-11-07T13:39:08+08:00",
+        "firmware": 66706,
+        "coreDelivery": "SHORT_RATE_IMPROVED_STILL_FAIL_090_FAILED_AND_ROLLED_BACK",
         "wholeCaptureSale": "NOT_QUALIFIED",
         "nonBlockedWorkAllComplete": false,
-        "openSoftware": "五分钟705/088新样本52.723KiB/s/16.882秒动态通过，不能替代任意长度。705十秒22.865和一分钟43.894仍FAIL50；089系统HIGH请求accepted后十秒23.198仍FAIL，不能以参数请求成功冒称优化完成。完成条目自动隐藏/原音WAV完整已验。089空闲后手机用刚扫描到的random设备仍initial133，未开始新录音；板705随后正常读取，无pair失败/bondlost、无采音错误、core61439820Hz/栈余4344B。需修现有一次重试的连接调度，不叠加次数或清配对/复位。原412216应用预算对705+464仍待差异评估，RAM/栈不增。radio10秒/最终长录与已明确物理/生产block保持。",
+        "openSoftware": "任意长度50含回收仍未过；两次十秒25.779/25.574。090空闲background超时，OTA传后108.180>100，已源头撤回并装回089；不追改旧失败、不复位或清配对。冷5秒/恢复10秒稳定性、当前最终长录、资源差异仍未关闭。",
         "knownSaleGaps": [
           "实际电池采样/充电/低电保存与耗电续航",
           "屏幕/触摸现为Owner暂停，当前仅共用录音核心验收",
@@ -131993,7 +131992,7 @@
           "当前结论仅覆盖嵌软已有证据，不替代前后端整机交付结果",
           "blocked仅表示暂时不能推进，不代表完成或免除售卖缺口"
         ],
-        "completionScope": "704/08710秒、一分钟、五分钟均动态等待/原音完整通过，含回收速率全部未过。完成条目无需刷新自动隐藏且其他旧条目保留，实机290/291/292过。明确物理/生产block不免售卖门。",
+        "completionScope": "706本轮精确新增录音297/298/299原音/WAV及物理回收通过，动态等待按每场精确字节判；速率见收据逐场判。旧34不变，blocked不等于完成。",
         "qualificationProduct": "Companion",
         "wholeCompanionSale": "NOT_QUALIFIED",
         "futureCaptureHardware": "新板未到；LED/MCU/整机实测在独立Capture仓库后续推进，不新增为Companion当前的硬件适配任务。",
@@ -133893,12 +133892,12 @@
         }
       },
       "metricAcceptance": {
-        "at": "2026-11-07T12:53:56+08:00",
+        "at": "2026-11-07T13:39:08+08:00",
         "requirements": "docs/product_backlog.json#/quality_targets/embedded_current_20261106",
-        "currentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json",
-        "verdict": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ota-current-contract-verdict.json",
-        "result": "FAIL_REQUIRED_ANY_LENGTH_RATE_AND_IDLE_PHONE_CONNECTION_CURRENT_RESOURCE_DIFF_OPEN",
-        "functionalOtaResult": "PASS_ORDINARY705_PHONE088_EXACT_IDENTITY_RETAIN_VERIFY_FAILURES",
+        "currentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json",
+        "verdict": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json",
+        "result": "NOT_SALE_QUALIFIED_ANY_LENGTH_RATE_AND_IDLE_CONNECTION_OPEN",
+        "functionalOtaResult": "PASS_EXACT_INSTALLED706_UI85_PAYLOAD_AND_SPACE_RELEASE",
         "ownerQuotes": [
           "然后你测手机的时候，你 OTA 同时要测一下那些指标，不要说测。过了就算了，你有记录下之前那些指标吗？就欠软这个东西主要是根据指标去做优化。",
           "是的，让像嵌入式这样的功能，它虽然说可以，但是如果是。那个要求的指标不及格的话，你也是报失败。之前指标好像都有列吧，如果没有列的话就列一个合适"
@@ -133906,34 +133905,34 @@
         "next": "沿embedded.next，不复用旧手机065的PASS。",
         "latestValues": {
           "payload_rate_kib_s": {
-            "value": 55.290132799274076,
-            "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+            "value": 54.246047507776,
+            "status": "PASS_PHONE090_OTA706_ONLY",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "total_seconds": {
-            "value": 115.995858342,
-            "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+            "value": 134.298245938,
+            "status": "PASS_PHONE090_OTA706_ONLY",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "post_finish_verify_seconds": {
-            "value": 90.538611372,
-            "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+            "value": 108.180417511,
+            "status": "FAIL_PHONE090_ACTUAL_POSTPAYLOAD_GT100_ROLLED_BACK",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "application_bytes": {
-            "value": 412680,
-            "status": "FAIL",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+            "value": 412832,
+            "status": "FAIL_ORIGINAL412216_BUDGET_DIFF_ASSESSMENT_OPEN",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "static_data_bss_bytes": {
             "value": 69328,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "stack_reserved_bytes": {
             "value": 21504,
             "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "stack_guard_faults": {
             "value": 0,
@@ -133956,9 +133955,9 @@
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
           },
           "cold_private_directory_seconds": {
-            "value": 4.6238832,
-            "status": "PASS",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\device084\\cold-scanned-first\\cold-connection.json"
+            "value": null,
+            "status": "FAIL_IDLE090_NO_PRIVATE_DIRECTORY_089_SINGLE_COLD2_174_NOT_RELIABILITY_CLOSURE",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "resume_first_new_payload_seconds": {
             "value": 3.311999999990803,
@@ -133966,9 +133965,9 @@
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\pause702-083-r2\\controlled-reconnect.json"
           },
           "recording_receive_payload_rate_kib_s": {
-            "value": 50.396224421107476,
-            "status": "PASS_SCOPED_FIVE_MINUTE_SAMPLE",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\device083\\five300\\result.json"
+            "value": 25.779201608295924,
+            "status": "FAIL_CURRENT10S_ANY_LENGTH50_REQUIRED",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           },
           "recording_integrity_mismatch_count": {
             "value": 0,
@@ -133981,9 +133980,9 @@
             "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\batch-result.json"
           },
           "stop_to_full_audio_seconds": {
-            "value": 18.86615359999996,
-            "status": "PASS_SCOPED_DYNAMIC_REMAINING_BYTES",
-            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\device083\\five300\\dynamic-verdict.json"
+            "value": 4.9930913000000015,
+            "status": "PASS_THIS_FRESH10S_DYNAMIC_ONLY",
+            "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
           }
         },
         "existingRequirementsReview": "只收紧用户体验：速度50KiB/s、冷5秒/恢复10秒/控制400ms/首PCM1.5秒/OTA150秒和传后100秒；停止至完整音频按剩余编码及音频生成量动态计算，不再固定五分钟25秒。CPU仅观察，完整性/零异常/资源预算保持。",
@@ -134028,7 +134027,7 @@
         "fiveMinuteWaitVerdict": "HISTORICAL_SAMPLE_REJUDGED_BY_DYNAMIC_RULE_NOT_FIXED25",
         "endpointCorrection": "以原生首PULL至最终真实设备回执计新字节，缓存/故障注入/live等待不代替正常50KiB/s。27351.2275在50门过；27747.8773未过；不取旧峰值抵消。",
         "longConcurrentCurrentFacts": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66699\\phone076\\long274\\acceptance.json",
-        "sourceSummary": "当前0.1.84/FW66702；083实机60.54/300.42秒动态8.816/18.866≤10.865/22.172，五分钟50.396KiB/s；084十秒7.876/6.906≤8.506/8.500。083暂停续收3.312秒、084冷4.624秒通过。短录严格含回收速率仍失败，radio旧10.735秒>10、正式资源/最终长期未关闭；不把CPU观测当硬门。",
+        "sourceSummary": "FW706/手机089：297/298十秒25.779/25.574KiB/s，299一分钟见本收据，均按50含回收原口径判；原音/WAV有效。090空闲195秒background超时、OTA传后108.180秒>100实败，已撤回该分支并装回精确089。原34/4608000B/17段不变，MCU时钟/栈/异常见本批运行收据；整机未可售。",
         "sourceReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ota-measurements.json",
         "recordingCompletionEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\stop-wait-081-083\\batch-result.json",
         "comparisonScope": "New observations have explicit firmware/phone versions. No old failure or unmeasured current variant is promoted to PASS; CPU% diagnostic only."
@@ -134044,19 +134043,20 @@
         "windowsEngineeringPreservationSummary": "Installed067 raw wrapper reports recordingDrain remainingMicrophoneSegments0 even though engineering-preserve actually kept33 original mic segments. Embedded receipt annotates actual log and unchanged catalogue; original Windows module should label engineering preservation separately."
       },
       "runningWork": {
-        "at": "2026-11-07T12:53:56+08:00",
-        "state": "705_089_INSTALLED_IDLE_CURRENT_PHONE_INITIAL133_NOT_SOLVED_BY_REDISCOVERY",
-        "firmwareInstalled": 66705,
+        "at": "2026-11-07T13:39:08+08:00",
+        "state": "706_INSTALLED_090_REVERTED_EXACT089_INSTALLED_IDLE_NO_JOB_RUNNING",
+        "firmwareInstalled": 66706,
         "phoneInstalled": "0.1.89",
-        "firmwareSource": "81ad65518a11d7264815312be7ce3c5b043f9ca8",
+        "firmwareSource": "f43a85c5dc9d6a818ebd087257c441037efc5245",
         "phoneSourceCommit": "e8acd9d12de075093777e0049cb372d9df40d5fb",
         "backendSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
-        "boardLease": true,
-        "boardItem": "Companion703目录连续返回与正式资源验收",
+        "backendRollbackCommit": "ba71c6c8c38339e1cd8b9a9bef6a4f574b02d81c",
+        "boardLease": false,
+        "boardItem": null,
         "liveRecording": false,
         "liveReceive": false,
         "liveUpgrade": false,
-        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+        "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json"
       },
       "offlineCpuCandidate700": {
         "at": "2026-11-07T04:54:58+08:00",
@@ -134420,7 +134420,8 @@
         "allLengths": true,
         "includesPhysicalReclaim": true,
         "dynamicDeadlineAlsoRequired": true,
-        "policy": "Every observed length includes firstPULL through exact durable original and physical-reclaim receipt. Short failure stays FAIL even if dynamic waiting passes. No cached bytes, early ACK, size exemption or wait deduction."
+        "policy": "Every observed length includes firstPULL through exact durable original and physical-reclaim receipt. Short failure stays FAIL even if dynamic waiting passes. No cached bytes, early ACK, size exemption or wait deduction.",
+        "latestExplicitConfirmation": "任何长度都要平均 ≥50，包含回收"
       },
       "recordingCompletionProgress704": {
         "at": "2026-11-07T12:09:57+08:00",
@@ -134758,6 +134759,192 @@
         "oldAudioConsumed": false,
         "wholeSaleQualified": false,
         "next": "Fix same single initial133 retry using Android public background-connect scheduling instead of another direct request; keep first direct path/paired UID validation/5s gate/no product command replay. Then finish short50/radio10/final longevity. Do not claim literal any-length50 from five-minute52.723. Existing explicit hardware/production blocks remain."
+      },
+      "baselineBefore706": {
+        "firmwareVersion": 66702,
+        "uiGeneration": 85,
+        "sourceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\firmware-recovery",
+        "sourceCommit": "a43893f4cf7e684f7577728ea69f52655ce479a3",
+        "buildReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\candidate.json",
+        "installationReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\ordinary-phone080-ota.json",
+        "idleReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66702\\phone080-session279\\after279-board.json",
+        "recordedOnly": true,
+        "buildEntry": "python tools/build_current_firmware.py",
+        "recipeVersion": 66685,
+        "product": "companion",
+        "buildEntryCommit": "055cd916",
+        "sourceRootAvailability": "CURRENT_DIAGNOSTIC_BUILD_INSTALLED_SCOPED_FUNCTIONS_ONLY",
+        "evidenceAvailability": "Current source/UI85/full build/signed OTA and scoped physical receipts retained on C; deleted E historical receipts remain historical",
+        "qualificationProduct": "Companion",
+        "screenEnabled": false,
+        "historicalCompileProfile": "product=companion, screen disabled independently"
+      },
+      "recordingCompletionProgress706": {
+        "at": "2026-11-07T13:39:08+08:00",
+        "result": "NOT_SALE_QUALIFIED_ANY_LENGTH_RATE_AND_IDLE_CONNECTION_OPEN",
+        "firmware": 66706,
+        "firmwareSource": "f43a85c5dc9d6a818ebd087257c441037efc5245",
+        "phoneInstalled": "0.1.89",
+        "phoneSource": "e8acd9d12de075093777e0049cb372d9df40d5fb",
+        "backendTreeSource": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
+        "backendRollbackCommit": "ba71c6c8c38339e1cd8b9a9bef6a4f574b02d81c",
+        "apkSha256": "1a112c1c402c6f1c769979707edbad357a48a3743b716a53de07c40781a2837c",
+        "ownerAllLengthRate": {
+          "quote": "任何长度都要平均 ≥50，包含回收",
+          "minimumKiBps": 50,
+          "shortExemption": false,
+          "reclaimWaitIncluded": true
+        },
+        "cases": [
+          {
+            "case": "short706-r2",
+            "session": "297",
+            "firmware": 66706,
+            "phoneVersion": "0.1.89",
+            "bytes": 22362,
+            "confirmedKiBps": 25.779201608295924,
+            "rateResult": "FAIL",
+            "dynamicSeconds": 4.9930913000000015,
+            "dynamicMaximumSeconds": 8.500303802490235,
+            "dynamicResult": "PASS",
+            "wavDurationErrorMs": 10,
+            "reusedConnections": 1,
+            "reusedCatalogues": 1
+          },
+          {
+            "case": "short706-hit",
+            "session": "298",
+            "firmware": 66706,
+            "phoneVersion": "0.1.89",
+            "bytes": 22610,
+            "confirmedKiBps": 25.574491388551937,
+            "rateResult": "FAIL",
+            "dynamicSeconds": 5.2399511,
+            "dynamicMaximumSeconds": 8.505513763427736,
+            "dynamicResult": "PASS",
+            "wavDurationErrorMs": 10,
+            "reusedConnections": 1,
+            "reusedCatalogues": 1
+          },
+          {
+            "case": "minute706",
+            "session": "299",
+            "firmware": 66706,
+            "phoneVersion": "0.1.89",
+            "bytes": 127514,
+            "confirmedKiBps": 46.51028543247047,
+            "rateResult": "FAIL",
+            "dynamicSeconds": 7.9591533999999955,
+            "dynamicMaximumSeconds": 10.859534759521486,
+            "dynamicResult": "PASS",
+            "wavDurationErrorMs": 20,
+            "reusedConnections": 1,
+            "reusedCatalogues": 1
+          }
+        ],
+        "ota": {
+          "phoneVersion": "0.1.90",
+          "functionalResult": "PASS_EXACT_INSTALLED706_UI85_PAYLOAD_AND_SPACE_RELEASE",
+          "payloadKiBps": 54.246047507776,
+          "payloadResult": "PASS",
+          "totalSeconds": 134.298245938,
+          "totalResult": "PASS",
+          "postPayloadSeconds": 108.180417511,
+          "postPayloadResult": "FAIL",
+          "verifyAttempts": 6,
+          "verifyFailures": 5,
+          "lastErrorRetained": "Bluetooth connection timed out",
+          "scope": "090 actual normal full OTA; rollback089/current706 same-version OTA not relabeled as passed."
+        },
+        "phone090Rejection": {
+          "idleSeconds": 195.29699999999139,
+          "failure": {
+            "schema": 1,
+            "stage": "wait_connection",
+            "startedNanos": 56301416942428,
+            "closedNanos": 56317197707734,
+            "connectedOnce": false,
+            "initialConnectionStatus": -1,
+            "callbackStatus": -1,
+            "callbackState": -1,
+            "mtu": 23,
+            "inputAddressType": 1,
+            "requestedAddressType": -1,
+            "connectionMode": "background",
+            "disconnectAcknowledged": false,
+            "closeElapsedNanos": 751887656,
+            "connectError": "Bluetooth connection timed out"
+          },
+          "ownProcessRestartSeconds": 2.8870999999940397,
+          "decision": "Background scheduling did not fix idle failure and this OTA postpayload exceeded100s. Reverted only840d8c5; ba71c6c production tree equals089. Reinstalled exact immutable089 APK without clearing data. No board reset, pairing clear or radio toggle. Process restart is setup/diagnosis, not natural recovery PASS."
+        },
+        "resources": {
+          "at": "2026-11-07T13:25:54+08:00",
+          "applicationBytes": 412832,
+          "applicationDeltaFrom705": 152,
+          "applicationDeltaFrom699": 616,
+          "staticBytes": 69328,
+          "staticDeltaFrom705": 0,
+          "stackReservedBytes": 21504,
+          "productLinkBytes": 1008,
+          "appCapacityBytes": 499712,
+          "appRemainingBytes": 86880,
+          "originalMaximumBytes": 412216,
+          "originalBudgetResult": "FAIL",
+          "newBaselineApproved": false,
+          "scope": "Re-read recent logical slot before full lookup for PULL and exact consume; stale/empty/unrelated hints fall back. No cached descriptor/early receipt/persistent format/static RAM added. Physical performance not yet measured."
+        },
+        "runtime": {
+          "memory": {
+            "sampled": true,
+            "guardFailed": false,
+            "lowLatched": false,
+            "stackReservedBytes": 21504,
+            "minimumFreeBytes": 4616,
+            "coreHz": 61439820,
+            "uptimeMs": 508046
+          },
+          "audioTiming": {
+            "validMask": 15,
+            "mediaReady": true,
+            "running": false,
+            "encodeSamples": 3024,
+            "pdmSamples": 6047,
+            "encodeP95UpperMs": 5.0,
+            "encodePeakUpperMs": 5.421,
+            "pdmP95UpperMs": 3.0,
+            "pdmPeakUpperMs": 2.808,
+            "encodeP95UpperUs": 5000,
+            "encodePeakUpperUs": 5421,
+            "pdmP95UpperUs": 3000,
+            "pdmPeakUpperUs": 2808,
+            "wireUnits": "CONSERVATIVE_UPPER_MICROSECONDS_SCHEMA2"
+          },
+          "audioFaults": {
+            "initialized": true,
+            "running": false,
+            "overflows": 0,
+            "staleDmaHalves": 0,
+            "processingRejections": 0,
+            "deadlineFaults": 0
+          },
+          "audioService": {
+            "initialized": true,
+            "processedDmaHalves": 8134,
+            "errorIrqs": 0,
+            "maxCaptureForegroundMs": 6,
+            "microphoneMaxPollMs": 3
+          },
+          "cpuDuty": "NOT_EVALUATED_OBSERVER_COMPILED_OFF"
+        },
+        "old34Unchanged": true,
+        "freeBytes": 4608000,
+        "allocatableSegments": 17,
+        "oldAudioRead": false,
+        "oldAudioConsumed": false,
+        "boardState": "IDLE_HANDLES_CLOSED",
+        "wholeCompanionSaleQualified": false,
+        "next": "Short10s25.57–25.78 still FAIL50 including physical reclaim; do not repeat high-priority/scan/background-connection trial branches. Next separate actual PULL selection/first packet/radio delivery versus NOR erase using existing observability, optimize only demonstrated fixed cost; preserve scope and5s/10s gates. Current-version radio10/final longevity pending, explicit physical/production blocks unchanged."
       }
     },
     "firmwareBuildEntry": "python tools/build_current_firmware.py --show",
@@ -134809,7 +134996,7 @@
         "ownerAccepted": false,
         "wholeProductQualified": false,
         "modelsRun": false,
-        "currentBoardLeaseHeld": true,
+        "currentBoardLeaseHeld": false,
         "customerResult": null,
         "ordinaryPhoneContinuation": {
           "at": "2026-11-06T11:48:03+08:00",
@@ -135022,13 +135209,13 @@
           "wholeProductQualified": false
         },
         "latestInstalledVersionObservation": {
-          "at": "2026-11-07T12:53:56+08:00",
+          "at": "2026-11-07T13:39:08+08:00",
           "version": "0.1.89",
-          "firmware": 66705,
+          "firmware": 66706,
           "sourceCommit": "e8acd9d12de075093777e0049cb372d9df40d5fb",
           "backendSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
           "apkSha256": "1a112c1c402c6f1c769979707edbad357a48a3743b716a53de07c40781a2837c",
-          "scope": "Exact installed089, actual705 WSI4/UI85/payload independently confirmed; latest minute attempt failed beforeSTART133 after exact rediscovery. No active recording/receive/OTA; five-minute088≥50 is not all-length PASS."
+          "scope": "090 ineffective background scheduling reverted and exact089 reinstalled without data clear. Actual706 UI85/payload/old34/free17 independently verified. Current short speed still FAIL50; no recording/receive/OTA running."
         },
         "ownerPriority12": {
           "at": "2026-11-06T13:50:38+08:00",
@@ -136147,6 +136334,12 @@
           "at": "2026-11-07T12:53:56+08:00",
           "result": "INSTALLED_TRANSFER_SCOPE_HIGH_ACCEPTED_SHORT_RATE_STILL_FAIL_CACHED_COLD133_REPRODUCED",
           "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66705\\progress-705-089.json"
+        },
+        "embeddedConnection090": {
+          "at": "2026-11-07T13:39:08+08:00",
+          "result": "FAILED_IDLE_BACKGROUND_TIMEOUT_AND_POSTPAYLOAD108_GT100_REVERTED_TO089",
+          "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261106-companion-device-management\\full-media66706\\progress-706-090.json",
+          "backendRevert": "ba71c6c8c38339e1cd8b9a9bef6a4f574b02d81c"
         }
       },
       "ownerAndroidMaterialExports054": {
@@ -140227,11 +140420,11 @@
           },
           "at": "2026-11-04T19:26:19+08:00",
           "ownerQuote": "可以的，然后的话，现在你还是晚上的话就专注于做这个。模型端的事情，然后白天没有那个显卡的时候呢，你就做那个别的事情啊。现在你去把那个模型的事情做一下先。",
-          "status": "PRACTICAL_CANDIDATE_BOUNDARY_PASSED_CROSS_CORPUS_AND_TEXT_QUALITY_OPEN",
+          "status": "NATIVE_VERBATIM_CONTROL_RUNNING_COMPLETE_CPU_TRANSCRIPT_SALE_OPEN",
           "previousWorkpoint": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\previous-workpoint.json",
           "nonModelWorkRetained": true,
           "supersedesExecutionGateOnly": "Owner now explicitly prioritizes model work while RX6800XT is attached. This changes execution order; it does not mark software/hardware acceptance passed or cancel unfinished tasks.",
-          "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。",
+          "next": "先收尾已冻结useItn=False的同两场完整S/L，不改模型/30秒边界/严格含语气词和儿化评分；当前原8段实际低RAM中断已保存，依据实际恢复后续作，不关其它程序或扩大内存。对照原useItn=True，逐场保留回退/金额实词差，完成后再决定是否保留；不得用数字格式或删儿化冒充语音能力提升。普通<5%、复杂分人/重叠内容、纪要事实/独立集/手机/实卡/售卖门继续OPEN。",
           "batch": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104",
           "ownerGpuReconnected20261106": {
             "at": "2026-11-06T21:44:06+08:00",
@@ -141555,8 +141748,8 @@
               "remoteReadbackConfirmed": true
             },
             "practicalContinuation": {
-              "at": "2026-11-07T13:36:53+08:00",
-              "phase": "finished",
+              "at": "2026-11-07T15:08:40+08:00",
+              "phase": "running",
               "ownerQuote": "继续推进一下, 把模型做到可实用",
               "stockCpuR1": {
                 "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
@@ -144364,7 +144557,7 @@
               "defaultProductBackendChanged": false,
               "finalHoldoutOpened": false,
               "qualityQualified": false,
-              "state": "PRACTICAL_CANDIDATE_BOUNDARY_PASSED_CROSS_CORPUS_AND_TEXT_QUALITY_OPEN",
+              "state": "NATIVE_VERBATIM_CONTROL_RUNNING_COMPLETE_CPU_TRANSCRIPT_SALE_OPEN",
               "candidateAssessment": {
                 "at": "2026-11-07T12:30:53+08:00",
                 "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -149607,8 +149800,61 @@
                 "qualityQualified": false,
                 "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。"
               },
-              "next": "原QM04优先：沿已暴露完整普通S的原音和严格原字评分，将现有7.6997%压到<5%，先按错词/数字金额/否定/边界漏字分类和核音，不删语气词或按参考纠词；只在核对历史失败/作者中文完整会议能力后冻结一个有根据的ASR对照，不盲训练、逐会调参或重跑失败HIP。并保留原QM05：FP16中文分人研究基线13.4642%/3.8556%，AMI31.0766%跨域失败，漏检占错误约92%，需独立域和真实重叠逐路文字证据；当前未知保持未知，不用正确人数冒充角色/身份或两路分离。依赖模型的纪要事实、手机/实卡、最终未见集与售卖门均未完。",
-              "sourceAndEvidenceCommit": "1743c9a5c4fdc2a6a14900fc31b8538ab68c7dcf",
+              "next": "先收尾已冻结useItn=False的同两场完整S/L，不改模型/30秒边界/严格含语气词和儿化评分；当前原8段实际低RAM中断已保存，依据实际恢复后续作，不关其它程序或扩大内存。对照原useItn=True，逐场保留回退/金额实词差，完成后再决定是否保留；不得用数字格式或删儿化冒充语音能力提升。普通<5%、复杂分人/重叠内容、纪要事实/独立集/手机/实卡/售卖门继续OPEN。",
+              "lastOwnerQuote": "继续推进一下, 达到可售卖标准才行, 要在正确方向上行走",
+              "nativeVerbatimPreparation": {
+                "at": "2026-11-07T15:04:06+08:00",
+                "state": "FROZEN_NATIVE_VERBATIM_CONTROL_PREPARED_NO_INFERENCE",
+                "sourceBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-text-first-r1",
+                "baselineOutputSha256": {
+                  "S_R004S03C01": "4da042a561a9d0136691e67a42d2d44923727318d6bbb685f4abce3e07f3adbe",
+                  "L_R003S01C02": "581d108f8a536823a1960dff0feaf338bd5b8cb70fb24903486598bb34f3a40e"
+                },
+                "hypothesis": "Native ITN changes IDs/amounts and suppresses literal spoken forms; disable native formatting to measure raw recognition rather than rewriting outputs using the reference. Known semantic amount error8899/89.9 cannot be declared harmless formatting.",
+                "onlyChangedNeuralSetting": {
+                  "useItn": {
+                    "before": true,
+                    "after": false
+                  }
+                },
+                "retentionRule": "No product switch on CER alone. Report both full meetings, real words and semantic number failures, ordinary non-overlap and overlapping text separately. Keep strict scoring including fillers/er suffix, original audio, unknown attribution, formal5% and cross-corpus gates.",
+                "stopRule": "Once per two complete exposed meetings; retain any regression and stop this flag experiment. No flag sweep/per-meeting mode selection or reference-conditioned correction.",
+                "knownOldRoutes": "Previous ad-hoc voting/adaptive/VAD/long-window trials are not repeated. This control tests a measured output-style mismatch in the actual recovered runtime; no new ASR family or training claimed.",
+                "workerSourceSha256": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+                "qualified": false
+              },
+              "nativeVerbatimRun": {
+                "state": "RUNNING_COMPLETE_CPU_TRANSCRIPT",
+                "startedAt": "2026-11-07T15:06:00+08:00",
+                "pid": 15292,
+                "automaticRetries": 0,
+                "referencePassedToInference": false,
+                "results": [],
+                "priorAttemptReceipts": [
+                  "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-verbatim-r1\\transcript-attempt-0001.json"
+                ],
+                "resourceRecoveryObservation": {
+                  "previousLastAvailableBytes": 823140352,
+                  "priorModelPrivatePeakBytes": 446128128,
+                  "currentAvailableBytes": 3980042240,
+                  "actualWindowsLowRam": false,
+                  "criterion": "Current available > last low-pressure sample + twice measured own private peak. Dynamic measured recovery, no fixed free-RAM floor. Raw completed windows reused, no blind native-crash retry."
+                },
+                "speakerJournalPending": true,
+                "sourceSha256": {
+                  "practical_transcript_20261107.py": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+                  "practical_transcript_worker_20261107.py": "1f070e6e11d63150730ecef87913e18322072e9908eaa0d4896b6d3e61ff98cb",
+                  "run_practical_transcript_20261107.py": "beaced82b27c8315d7a478d5c9fa8203f15ef6bfa5c9acee7316b1c8584d08a1",
+                  "score_practical_transcript_20261107.py": "ace2fa60e7545f523e6999ef289c98bab46c519803ccdeacdb43913910a202c3",
+                  "test_practical_transcript_20261107.py": "d48e697218fd4100921fcfa5731603eb32797efa719ddffd84c90d2da1ec7706",
+                  "practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+                },
+                "protocolSha256": "42ea6cfff60129ddc363b5dcaae1149409cfa103d59063572525be2270b4aa5a",
+                "activeMeeting": "S_R004S03C01",
+                "activePid": 14024
+              },
+              "nativeVerbatimReview": null,
+              "sourceAndEvidenceCommit": "9c71305d168563398bcd664a43112aacd8743a82",
               "remoteReadbackConfirmed": true
             }
           }
