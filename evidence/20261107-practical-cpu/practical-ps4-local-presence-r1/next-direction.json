@@ -1,0 +1,59 @@
+{
+  "at": "2026-11-07T21:42:56+08:00",
+  "state": "FULL_MEETING_AND_LOCAL_IDENTITY_REJECTED_NEXT_ACTIVITY_MODEL_FEASIBILITY_ONLY",
+  "completed": [
+    "39:23 six-person real development meeting: all57 predicted-overlap roots/168 target lanes separated,159 admitted lanes transcribed,9 raw rejected lanes retained; full-reference total regression rejected.",
+    "All3021 fixed3s windows on159 admitted lanes: native matching encoder local identity hypothesis rejected, no words filtered.",
+    "Failure cause traced to partial-time target absence and extra attributed speech; ordinary bypass byte-identical."
+  ],
+  "fullFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1\\review.json",
+  "localFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-ps4-local-presence-r1\\review.json",
+  "cause": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-conditioned-ps4-full-r1\\insertion-cause-review.json",
+  "doNotRepeat": [
+    "PS4 unchanged full routing + whole-lane top1",
+    "Same encoder local3s/1.5s-hop top1, or a window/cosine cutoff sweep on this exposed meeting",
+    "Hard-mask by old diarization activity, which misses23.684s of true005 speech in root29",
+    "Delete fillers/repeats or choose GT activity/words to manufacture<5%",
+    "Repeat failed VoxLock or fixed8-slot TS-SEP unchanged",
+    "Reuse192d PS4 ECAPA vectors as192d ERes2NetV2 enrollment vectors"
+  ],
+  "nextFeasibilityCandidate": {
+    "name": "tuya/nomo-pvad",
+    "version": "release-1.1",
+    "publicWeightsAndInferenceDeclared": true,
+    "trainingCodeReleased": false,
+    "actualNewModelLoadedOrScored": false,
+    "statedTask": "Target-specific probability every160ms from original16k stream and matching ERes2NetV2 enrollment.",
+    "sourceDeclaredCodeAndDerivativeLicense": "Apache-2.0; separate original ERes2NetV2 attribution/license must be verified with actual pinned files.",
+    "knownScopeRisks": [
+      "Far-field/mismatched room recordings and similar same-gender voices are explicitly difficult.",
+      "Standalone target detection is not proof of recovering both overlapping voices.",
+      "Author recommends>=10s enrollment; existing PS4 eight-second cap is not silently reused as matched enrollment.",
+      "Wrapper uses strict=False; actual parameter coverage must be checked, not hidden by permissive loading."
+    ],
+    "sources": [
+      "https://github.com/tuya/nomo-pvad",
+      "https://raw.githubusercontent.com/tuya/nomo-pvad/release-1.1/nomo_pvad.py",
+      "https://raw.githubusercontent.com/tuya/nomo-pvad/release-1.1/requirements.txt"
+    ]
+  },
+  "otherSourceChecks": [
+    {
+      "url": "https://www.isca-archive.org/interspeech_2023/zhang23k_interspeech.pdf",
+      "finding": "TSEJoint explicitly distinguishes target presence/absence and uses separate detection/extraction branches. This supports the task definition, not a verified production implementation."
+    },
+    {
+      "url": "https://www.merl.com/research/downloads/TS-SEP",
+      "finding": "Official joint diarization/separation task uses TS-VAD first-stage training and TS-SEP second stage; our previous exact fixed8-slot trial failed, so the label alone does not justify rerunning it."
+    },
+    {
+      "url": "https://github.com/TonnyTran/TSVAD",
+      "finding": "Published evaluation recipe lists separate WavLM/ECAPA/TS-VAD weights and a gated pyannote segmentation dependency. It is not a verified drop-in ungated commercial package here."
+    }
+  ],
+  "next": "原RM-OVERLAP最高可执行项：独立目标讲话活动检测，先在原始混音上判定指定人物的存在/缺席，再考虑与分离融合；停止PS4整段声纹门及固定3秒局部门的原样扩展/窗口阈值扫描。先核实公开nomo-pvad release-1.1与其完整ERes2NetV2登记权重/许可/严格加载/160ms时间语义的可复现性，只把它当有限假设验证，作者明确远场和相似音色限制，不能预设能解决会议重叠。推理只用自动登记原音和预测人物，不借参考活动删字、不复用另一个模型同维192d向量；冻结开发协议及单人/目标缺席/短轮/重叠门后方可做下一次模型调用。若独立活动仍不过门，停止堆补丁，转向有真实不同房间训练/验证隔离的目标活动与分离联合适配；最终未见会议保持关闭。普通ASR和全部<5%/事实/双端实卡/售卖门保留。",
+  "finalHoldoutOpened": false,
+  "productDefaultsChanged": false,
+  "newDeploymentOrCustomerAcceptance": false,
+  "qualityQualified": false
+}

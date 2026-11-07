@@ -1,0 +1,159 @@
+{
+  "at": "2026-11-07T21:39:39+08:00",
+  "state": "LOCAL_IDENTITY_ACTIVITY_HYPOTHESIS_REJECTED_NO_THRESHOLD_SWEEP",
+  "meeting": "L_R003S01C02",
+  "parentFullCandidateRejected": true,
+  "protocolSha256": "bc6f07cda2902f60807985b2d2927fd50435e44a37a4382b0adee0644f0b601f",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "referenceSha256": "a7e060c87f76f6ad51ca1bcd6ae7243942757f25bdcbfc9a628c552d03dcbc4c",
+  "fixedRule": "One frozen3s/1.5s-hop native matching192d encoder, all6 same automatic anchors, cosine top1 only, exact-digital-zero negative.",
+  "allAdmittedLanes": 159,
+  "allWindows": 3021,
+  "summary": {
+    "TP": 1414,
+    "FN": 141,
+    "FP": 1138,
+    "TN": 328,
+    "positiveWindows": 1555,
+    "absentWindows": 1466,
+    "positiveWindowRecall": 0.9093247588424437,
+    "absentWindowFalseAcceptance": 0.7762619372442019
+  },
+  "perReferencePersonForScoringOnly": {
+    "002-F": {
+      "TP": 362,
+      "FN": 19,
+      "FP": 366,
+      "TN": 89,
+      "positiveWindows": 381,
+      "absentWindows": 455,
+      "positiveWindowRecall": 0.9501312335958005,
+      "absentWindowFalseAcceptance": 0.8043956043956044
+    },
+    "003-F": {
+      "TP": 160,
+      "FN": 1,
+      "FP": 431,
+      "TN": 35,
+      "positiveWindows": 161,
+      "absentWindows": 466,
+      "positiveWindowRecall": 0.9937888198757764,
+      "absentWindowFalseAcceptance": 0.924892703862661
+    },
+    "004-M": {
+      "TP": 183,
+      "FN": 1,
+      "FP": 152,
+      "TN": 6,
+      "positiveWindows": 184,
+      "absentWindows": 158,
+      "positiveWindowRecall": 0.9945652173913043,
+      "absentWindowFalseAcceptance": 0.9620253164556962
+    },
+    "005-M": {
+      "TP": 310,
+      "FN": 20,
+      "FP": 115,
+      "TN": 68,
+      "positiveWindows": 330,
+      "absentWindows": 183,
+      "positiveWindowRecall": 0.9393939393939394,
+      "absentWindowFalseAcceptance": 0.6284153005464481
+    },
+    "006-M": {
+      "TP": 336,
+      "FN": 96,
+      "FP": 39,
+      "TN": 80,
+      "positiveWindows": 432,
+      "absentWindows": 119,
+      "positiveWindowRecall": 0.7777777777777778,
+      "absentWindowFalseAcceptance": 0.3277310924369748
+    },
+    "007-M": {
+      "TP": 63,
+      "FN": 4,
+      "FP": 35,
+      "TN": 50,
+      "positiveWindows": 67,
+      "absentWindows": 85,
+      "positiveWindowRecall": 0.9402985074626866,
+      "absentWindowFalseAcceptance": 0.4117647058823529
+    }
+  },
+  "activityDurationStrataForDiagnosisOnly": {
+    "absent": {
+      "TP": 0,
+      "FN": 0,
+      "FP": 1138,
+      "TN": 328,
+      "positiveWindows": 0,
+      "absentWindows": 1466,
+      "positiveWindowRecall": null,
+      "absentWindowFalseAcceptance": 0.7762619372442019
+    },
+    "targetAtMost1Second": {
+      "TP": 283,
+      "FN": 46,
+      "FP": 0,
+      "TN": 0,
+      "positiveWindows": 329,
+      "absentWindows": 0,
+      "positiveWindowRecall": 0.8601823708206687,
+      "absentWindowFalseAcceptance": null
+    },
+    "targetMoreThan1Second": {
+      "TP": 1131,
+      "FN": 95,
+      "FP": 0,
+      "TN": 0,
+      "positiveWindows": 1226,
+      "absentWindows": 0,
+      "positiveWindowRecall": 0.9225122349102773,
+      "absentWindowFalseAcceptance": null
+    }
+  },
+  "wholeLaneAdmissionAllWindowsPositiveBaseline": {
+    "positiveWindowRecall": 1.0,
+    "absentWindowFalseAcceptance": 1.0
+  },
+  "predeclaredResearchCriteria": {
+    "minimumPositiveWindowRecall": 0.95,
+    "maximumAbsentWindowFalseAcceptance": 0.05,
+    "passed": false,
+    "notProductQualityGates": true
+  },
+  "wholeOwnedProcessFamilySecondsIncludingInterruptions": 225.60005989999627,
+  "sampledPrivatePeakBytes": 864686080,
+  "newLocalEncoderForwardBatchesLastAttempt": 189,
+  "sourcePrototypeEncodingsPerAttempt": 6,
+  "priorAttemptCount": 0,
+  "activityLabelsOnlyOpenedAfterAllInferenceExited": true,
+  "noOracleTextFiltering": true,
+  "newAsrOrSeparationCalls": 0,
+  "allAudioAndRawWordsRetained": true,
+  "ordinaryAsrAndDefaultUnchanged": true,
+  "wordTimingMeasured": false,
+  "standardDerOrCerMeasuredByThisAudit": false,
+  "scope": "Overlapping3s windows are correlated and the six-speaker anonymous-to-reference mapping is frozen from the previous whole-meeting DER evaluation. This is a local audio identity/activity falsification diagnostic, not an independent corpus or standard DER/word metric. Any target speech intersecting a window is positive; no silence-tier labels counted as speech.",
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "defaultProductChanged": false,
+  "next": "原RM-OVERLAP：整段身份核对与固定局部声纹假设均不能可靠判断目标是否正在说话，停止同配置、窗口与阈值扫描，不把旧分人活动或参考标注用于删字。保留原普通ASR与失败证据。下一项需独立验证真正的目标条件活动检测/分离联合输出，要求匹配的可用开源完整权重、目标缺席/短轮/重叠监督与独立真实会议；先核实能力和许可，未满足则保留未知/重叠标记与原音，不能宣称复杂多人达标。原文字5%、跨域、事实、双端实卡和售卖门继续OPEN。",
+  "posthocLimits": {
+    "pid": 12668,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 60010496,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

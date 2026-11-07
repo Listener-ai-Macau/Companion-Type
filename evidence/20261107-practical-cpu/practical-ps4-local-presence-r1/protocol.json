@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-07T21:31:41+08:00",
+  "state": "FROZEN_BEFORE_TIME_LOCAL_NATIVE_IDENTITY_AUDIT",
+  "workerSourceSha256": "4668f9e53b201c2b363f34c74754e09423e7a96b2c3eb50daddea98a9c1d4e18",
+  "inputPlanSha256": "de3364c25a70989cf9ca485b838927f61431f6e2fcc4d82c9e1451046cb01a33",
+  "parentFullFailureSha256": "7cfa8ac81832780f236e0f765208a8b82a23a0659ab30e14b228af9975b6dd1f",
+  "windowSamples": 48000,
+  "hopSamples": 24000,
+  "batchSize": 16,
+  "rule": "One fixed3s/1.5s-hop native192d ECAPA crop audit on every admitted separated track, all6 unchanged automatic same-meeting anchors, FP32/eval, top1 only. No absolute cutoff and no tuning alternate windows. No ASR text/reference in inference; all raw outputs retained.",
+  "researchSuitabilityCriterion": "Posthoc lexical target activity intersecting the3s window is positive, no activity is negative. Require >=95% positive-window recall and <=5% absent-window false acceptance before considering an identity gate; otherwise reject this simple crop hypothesis. These are only engineering falsification criteria, not CER/product gates.",
+  "scope": "Target identity in a crop is not a trained target-activity detector. Test whether it is sufficient before building a transcript filter. No ASR/separation rerun, no words removed, no product default or formal quality promotion.",
+  "qualityQualified": false
+}

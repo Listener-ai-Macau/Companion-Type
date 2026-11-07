@@ -1,10 +1,14 @@
 {
-  "at": "2026-11-07T21:09:38+08:00",
-  "state": "FOLLOWING_OWNED_FULL_COMPLEX_TRIAL",
+  "at": "2026-11-07T21:18:25+08:00",
+  "state": "COMPLETE_SCORED_AND_REMOTE_PROTECTED",
   "ownedControllerPid": 18672,
   "ownedControllerCreateTime": 1794056968.1165357,
   "scorerSourceSha256": "2e691c36ccd20948d0a685e6698fd3e6644dc19a03639b3f69cc4bd7c6bdc296",
   "publisherSourceSha256": "a6ac3fc3479bbe68dbb35ffbdbdce0e049c45d17afc1cfdd2011fc5aebcbfb8f",
   "modelFailureRetries": 0,
-  "qualityQualified": false
+  "qualityQualified": false,
+  "neuralRunState": "COMPLETE_TARGET_SEPARATION_AND_ASR_REVIEW_REQUIRED",
+  "neuralRunFinishedAt": "2026-11-07T21:17:23+08:00",
+  "scoringExitCode": 0,
+  "publishExitCode": 0
 }

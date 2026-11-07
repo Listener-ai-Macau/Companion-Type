@@ -1,0 +1,426 @@
+{
+  "binding": {
+    "protocolSha256": "bc6f07cda2902f60807985b2d2927fd50435e44a37a4382b0adee0644f0b601f",
+    "inputPlanSha256": "de3364c25a70989cf9ca485b838927f61431f6e2fcc4d82c9e1451046cb01a33"
+  },
+  "selected": [
+    {
+      "startSample": 360000,
+      "endSample": 408000,
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000032-speaker-5.wav",
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000
+    },
+    {
+      "startSample": 384000,
+      "endSample": 432000,
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000032-speaker-5.wav",
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000
+    },
+    {
+      "startSample": 408000,
+      "endSample": 456000,
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000032-speaker-5.wav",
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000
+    },
+    {
+      "startSample": 432000,
+      "endSample": 480000,
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000032-speaker-5.wav",
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000
+    },
+    {
+      "startSample": 0,
+      "endSample": 48000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 24000,
+      "endSample": 72000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 48000,
+      "endSample": 96000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 72000,
+      "endSample": 120000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 96000,
+      "endSample": 144000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 120000,
+      "endSample": 168000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 144000,
+      "endSample": 192000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 168000,
+      "endSample": 216000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 192000,
+      "endSample": 240000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 216000,
+      "endSample": 264000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 240000,
+      "endSample": 288000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    },
+    {
+      "startSample": 264000,
+      "endSample": 312000,
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\full-L-extracted\\L_R003S01C02-root-000033-speaker-1.wav",
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000
+    }
+  ],
+  "results": [
+    {
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "startSample": 360000,
+      "endSample": 408000,
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000,
+      "scores": {
+        "0": 0.184236079454422,
+        "1": 0.2073744237422943,
+        "2": 0.2251918464899063,
+        "3": 0.23505288362503052,
+        "4": 0.33382391929626465,
+        "5": 0.5332632064819336
+      },
+      "top1Speaker": 5,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "startSample": 384000,
+      "endSample": 432000,
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000,
+      "scores": {
+        "0": 0.1477966457605362,
+        "1": 0.2898581624031067,
+        "2": 0.18031638860702515,
+        "3": 0.42611223459243774,
+        "4": 0.31509849429130554,
+        "5": 0.5309603810310364
+      },
+      "top1Speaker": 5,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "startSample": 408000,
+      "endSample": 456000,
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000,
+      "scores": {
+        "0": 0.07440324872732162,
+        "1": 0.21681757271289825,
+        "2": 0.1991463601589203,
+        "3": 0.2994389235973358,
+        "4": 0.2544594705104828,
+        "5": 0.4731174409389496
+      },
+      "top1Speaker": 5,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000032-speaker-5",
+      "startSample": 432000,
+      "endSample": 480000,
+      "requestedSpeaker": 5,
+      "sourceRootStartSample": 15360000,
+      "scores": {
+        "0": 0.08170586079359055,
+        "1": 0.2126457840204239,
+        "2": 0.22069929540157318,
+        "3": 0.23868179321289062,
+        "4": 0.24638527631759644,
+        "5": 0.5354577898979187
+      },
+      "top1Speaker": 5,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 0,
+      "endSample": 48000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.08163268119096756,
+        "1": 0.49201783537864685,
+        "2": 0.21056728065013885,
+        "3": 0.4265725910663605,
+        "4": 0.2026047557592392,
+        "5": 0.39175644516944885
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 24000,
+      "endSample": 72000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.16766761243343353,
+        "1": 0.5031311511993408,
+        "2": 0.19042618572711945,
+        "3": 0.45192909240722656,
+        "4": 0.20795713365077972,
+        "5": 0.4007764160633087
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 48000,
+      "endSample": 96000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.15841862559318542,
+        "1": 0.2831903100013733,
+        "2": 0.1536741852760315,
+        "3": 0.2664864659309387,
+        "4": 0.20593978464603424,
+        "5": 0.29095396399497986
+      },
+      "top1Speaker": 5,
+      "targetIsTop1": false,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 72000,
+      "endSample": 120000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.14787623286247253,
+        "1": 0.4266086518764496,
+        "2": 0.1399681568145752,
+        "3": 0.37570270895957947,
+        "4": 0.22336888313293457,
+        "5": 0.23256909847259521
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 96000,
+      "endSample": 144000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.12001585215330124,
+        "1": 0.5566794276237488,
+        "2": 0.1872054636478424,
+        "3": 0.4241924583911896,
+        "4": 0.21972961723804474,
+        "5": 0.2820451557636261
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 120000,
+      "endSample": 168000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.13726207613945007,
+        "1": 0.42692121863365173,
+        "2": 0.2224636673927307,
+        "3": 0.2636926472187042,
+        "4": 0.19516132771968842,
+        "5": 0.212819904088974
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 144000,
+      "endSample": 192000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.14657095074653625,
+        "1": 0.45411252975463867,
+        "2": 0.17781253159046173,
+        "3": 0.40082666277885437,
+        "4": 0.19805161654949188,
+        "5": 0.2810899317264557
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 168000,
+      "endSample": 216000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.11439110338687897,
+        "1": 0.5113479495048523,
+        "2": 0.1233799159526825,
+        "3": 0.3834178149700165,
+        "4": 0.07439772039651871,
+        "5": 0.18361221253871918
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 192000,
+      "endSample": 240000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.06819300353527069,
+        "1": 0.6249229907989502,
+        "2": 0.15979686379432678,
+        "3": 0.38235223293304443,
+        "4": 0.07635781913995743,
+        "5": 0.14942637085914612
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 216000,
+      "endSample": 264000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.1441575139760971,
+        "1": 0.6111211776733398,
+        "2": 0.2251986861228943,
+        "3": 0.46512874960899353,
+        "4": 0.11489827185869217,
+        "5": 0.3159651458263397
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 240000,
+      "endSample": 288000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.17156873643398285,
+        "1": 0.7151063680648804,
+        "2": 0.1886056661605835,
+        "3": 0.389799028635025,
+        "4": 0.1250673234462738,
+        "5": 0.21001602709293365
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    },
+    {
+      "id": "L_R003S01C02-root-000033-speaker-1",
+      "startSample": 264000,
+      "endSample": 312000,
+      "requestedSpeaker": 1,
+      "sourceRootStartSample": 15840000,
+      "scores": {
+        "0": 0.1145855262875557,
+        "1": 0.491581529378891,
+        "2": 0.19861826300621033,
+        "3": 0.26709556579589844,
+        "4": 0.04501389339566231,
+        "5": 0.05447261407971382
+      },
+      "top1Speaker": 1,
+      "targetIsTop1": true,
+      "exactDigitalZero": false
+    }
+  ]
+}
