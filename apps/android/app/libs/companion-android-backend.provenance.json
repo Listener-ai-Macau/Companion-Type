@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T11:56:44+08:00",
-  "aarSha256": "02469020e146b79968d6693108e1225eb1bfcd0875fcd39a3317e25ffe510b95",
-  "backendSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
+  "at": "2026-11-07T12:31:43+08:00",
+  "aarSha256": "4f45df5e5e7a46fdccec5203974dc0ee8f1b14558bcd82bc6214b7d7e23972b2",
+  "backendSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "After initial pre-command133, one exact-address filtered rediscovery within existing1s retry delay, independent of missing/custom name. Preserve scanned device for one retry, no bond clear or command replay. Direct first attempt and permissions/private validation retained; ordinary physical acceptance pending. Native/assets/models unchanged.",
-  "javaSourceCommit": "71e276603f1b4641b785db41b0142f0248d6549f",
+  "scope": "Central HIGH only during actual available recording or verified OTA data transfer, balanced on success/failure and no-data follow stays normal. Optional rejection does not fake negotiation or block data; primary storage errors survive cleanup. No extra delay, data/CRC/SHA/durable reclaim endpoints unchanged. Board FW705 unchanged, MCU61.44MHz, JNI/assets/models unchanged. Physical acceptance pending.",
+  "javaSourceCommit": "d9252a6b716bfe94faf5dec4c7362c37cb8769e7",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device088\\build\\inherited-provenance087.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device089\\build\\inherited-provenance088.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -189,5 +189,17 @@
     "com/denzic/companion/mobile/AndroidDevices.class",
     "com/denzic/companion/mobile/DeviceNames.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo087": true
+  "allNonClassAarEntriesByteIdenticalTo087": true,
+  "javaClassesChangedFrom088": [
+    "com/denzic/companion/mobile/AndroidGattLink$2.class",
+    "com/denzic/companion/mobile/AndroidGattLink.class",
+    "com/denzic/companion/mobile/RecordingClient$DeviceStatus.class",
+    "com/denzic/companion/mobile/RecordingClient$Link.class",
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics$Segment.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics.class",
+    "com/denzic/companion/mobile/SystemUpdateClient.class",
+    "com/denzic/companion/mobile/TransferPriorityScope.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo088": true
 }
