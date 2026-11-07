@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T17:52:16+08:00",
+  "at": "2026-11-07T18:06:49+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -2808,7 +2808,7 @@
   "defaultProductBackendChanged": false,
   "finalHoldoutOpened": false,
   "qualityQualified": false,
-  "state": "OFFICIAL_NATIVE_ASR_MODEL_PREPARATION_SALE_UNQUALIFIED",
+  "state": "OFFICIAL_NATIVE_ASR_RUNNING_BOUNDED_NATIVE_FULL_SALE_OPEN",
   "candidateAssessment": {
     "at": "2026-11-07T12:30:53+08:00",
     "state": "COMPLETE_DEVELOPMENT_CANDIDATE_NOT_QUALIFIED",
@@ -8316,7 +8316,18 @@
     },
     "short-run.json": null,
     "short-native-state.json": null,
-    "full/run.json": null,
+    "full/run.json": {
+      "state": "RUNNING_BOUNDED_NATIVE_FULL",
+      "pid": 17804,
+      "startedAt": "2026-11-07T17:57:11+08:00",
+      "priorAttemptReceipts": [],
+      "results": [],
+      "referencePassedToWorker": false,
+      "qualityQualified": false,
+      "automaticModelFailureRetries": 0,
+      "activePid": 20460,
+      "activeMeeting": "S_R004S03C01"
+    },
     "cache-recovery-proof.json": null,
     "concurrency-proof.json": null,
     "execution-stop-rule.json": null,
@@ -8518,8 +8529,74 @@
         "inferenceStarted": false,
         "qualityQualified": false
       },
-      "pilotRun": null,
-      "pilotState": null,
+      "pilotRun": {
+        "state": "COMPLETE_BOUNDED_NATIVE_PILOT_REVIEW_REQUIRED",
+        "pid": 5848,
+        "startedAt": "2026-11-07T17:53:24+08:00",
+        "priorAttemptReceipts": [],
+        "results": [
+          {
+            "meeting": "pilot",
+            "exitCode": 0,
+            "wholeProcessFamilySeconds": 123.97364320000634,
+            "accumulatedProcessFamilySeconds": 123.97364320000634,
+            "sampledPrivatePeakBytes": 1243369472
+          }
+        ],
+        "referencePassedToWorker": false,
+        "qualityQualified": false,
+        "automaticModelFailureRetries": 0,
+        "finishedAt": "2026-11-07T17:55:28+08:00"
+      },
+      "pilotState": {
+        "state": "PASS_BOUNDED_NATIVE_PILOT_FULL_QUALITY_UNMEASURED",
+        "pid": 5076,
+        "startedAt": "2026-11-07T17:53:25+08:00",
+        "binding": {
+          "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+          "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+          "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+          "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9"
+        },
+        "phase": "pilot",
+        "modelLoaded": true,
+        "newNeuralCalls": 3,
+        "inheritedRootNodes": 0,
+        "reusedNodeFiles": 0,
+        "completedCacheOnly": false,
+        "referencePassedToWorker": false,
+        "speakerJournalPending": true,
+        "limits": {
+          "pid": 5076,
+          "cpuRate": 500,
+          "cpuControlFlags": 5,
+          "cpuPercentMaximum": 5.0,
+          "inLimitedJob": true,
+          "jobPrivateCommitLimitBytes": 2147483648,
+          "jobMemoryLimitEnabled": true,
+          "jobPeakPrivateCommitBytes": 1283616768,
+          "cpuPriorityClass": 64,
+          "memoryPagePriority": 1,
+          "memoryPagePriorityIsReclaimHintNotRamCap": true,
+          "gpuPriorityClass": 0,
+          "gpuUtilizationHardCapped": false,
+          "scope": "This worker and its descendants only; no global or other-app changes."
+        },
+        "gpu": "AMD Radeon RX 6800 XT",
+        "modelLoadSeconds": 44.54926420000265,
+        "ordinaryExactGeneratedIdsAndText": true,
+        "ordinaryComparisonScope": "Fresh1.7B default versus bounded stop, not equality to0.6B checkpoint output.",
+        "prior06FailureReproduced": false,
+        "recoveredLeafCount": 1,
+        "recoveredText": "内嘛，对吧？对对对，你看着有了，你都得及时把它清理喽，扫喽。这这都是咱们自己的这个管理方式问题了。对。嗯，关于宠物这块儿，你还真没有太好的办法，太好的办法去跟业主沟通。嗯，对，嗯，像这干活的，到时候有几个人在那勤巡逻一点，要不那个他底下这扫垃圾这工作人员他偷懒儿，都有时候楼道里边儿人家业主。",
+        "exactZeroPipelineGuardPassed": true,
+        "bareModelSilenceNotMeasured": true,
+        "allOriginalSamplesCoveredByAcceptedLeavesOnce": true,
+        "repeatedWordsDeleted": false,
+        "qualityQualified": false,
+        "finishedAt": "2026-11-07T17:55:27+08:00",
+        "wholeWorkerSeconds": 121.93565040000249
+      },
       "comparisonRule": {
         "declaredAt": "2026-11-07T17:48:56+08:00",
         "state": "FROZEN_BEFORE_NEW_CHECKPOINT_INFERENCE",
@@ -8712,7 +8789,48 @@
         "posthocRepeatedWordRemoval": false,
         "fillerOrErRemovedToScore": false,
         "qualification": "NOT_QUALIFIED: exposed development full text only. Strict5%/person-aligned text/separated overlap/factual minutes/cross-corpus final holdout/installed phone-card and sale remain unqualified. Prior AMI31.0766% speaker failure is retained."
-      }
+      },
+      "independentPack": {
+        "version": 1,
+        "backend": "qwen-native-bounded",
+        "createdAt": "2026-11-07T18:04:03+08:00",
+        "sourceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5",
+        "pinnedFiles": {
+          "protocol.json": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+          "native-protocol.json": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+          "seed-manifest.json": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+          "audio-only.json": "c6a436d9fca9f6d18feb6662e9c080c2b0fcfd1bba5d786fe4a05f125f49b198",
+          "pilot-extra-audio-only.json": "52d186ecbc030a9a4ccb4e9c0d0209370f639b5d957db47365d15c38cde494ad",
+          "pilot/state.json": "6d341d6d5e5d17cf07ce08a0065d3472653fe58f91ceed7874bf9a7cbc52ffcc",
+          "model-ready.json": "c8aa35ebee8558218793c66f1a9a1109fc269050df4e6808edf9628c9db01999",
+          "hip-inventory.json": "354df12137fbc0e09480a8984a66428e34c588d2fa9bccb8d66b32d625a992d9"
+        },
+        "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+        "pythonExecutable": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+        "recoverySourceSha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+        "modelId": "Qwen/Qwen3-ASR-1.7B-hf",
+        "capabilities": {
+          "localAsr": true,
+          "wordTimestamps": false,
+          "speakerAttribution": false,
+          "overlapVoiceSeparation": false,
+          "minutes": false
+        },
+        "qualityQualified": false,
+        "installedAppDefaultChanged": false,
+        "scope": "Explicit local research candidate pack. A passed short control is not full quality, phone/card or sale qualification. Private task contents never enter public evidence."
+      },
+      "independentBusyProof": {
+        "state": "PASS_INDEPENDENT_NATIVE_COMMAND_REFUSES_REAL_CONCURRENT_MODEL_ZERO_NEURAL_CHILDREN",
+        "exitCode": 1,
+        "refusal": "AssertionError('已有模型正在处理，请待该任务结束后继续。')",
+        "neuralChildrenLaunched": 0,
+        "publicAudioOnly": true,
+        "privateDataUploaded": false,
+        "originalFullRunNotStopped": true,
+        "qualityQualified": false
+      },
+      "independentCommandProof": null
     }
   }
 }

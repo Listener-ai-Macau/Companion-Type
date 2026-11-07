@@ -1,0 +1,10 @@
+{
+  "state": "PASS_INDEPENDENT_NATIVE_COMMAND_REFUSES_REAL_CONCURRENT_MODEL_ZERO_NEURAL_CHILDREN",
+  "exitCode": 1,
+  "refusal": "AssertionError('已有模型正在处理，请待该任务结束后继续。')",
+  "neuralChildrenLaunched": 0,
+  "publicAudioOnly": true,
+  "privateDataUploaded": false,
+  "originalFullRunNotStopped": true,
+  "qualityQualified": false
+}

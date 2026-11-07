@@ -1,0 +1,19 @@
+{
+  "state": "COMPLETE_BOUNDED_NATIVE_PILOT_REVIEW_REQUIRED",
+  "pid": 5848,
+  "startedAt": "2026-11-07T17:53:24+08:00",
+  "priorAttemptReceipts": [],
+  "results": [
+    {
+      "meeting": "pilot",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 123.97364320000634,
+      "accumulatedProcessFamilySeconds": 123.97364320000634,
+      "sampledPrivatePeakBytes": 1243369472
+    }
+  ],
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "automaticModelFailureRetries": 0,
+  "finishedAt": "2026-11-07T17:55:28+08:00"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 18,
+    "startSample": 8640000,
+    "endSample": 9120000,
+    "text": "那个啥，他有可能就是专门的去买这种促销菜去，呃，有可能到五六点那他们就都过来了，看看这个有没有出仓的清仓的菜。其实这个清仓的菜它都不坏，就是也也那个什么呃不那么滞冷了，然后那个不不是太新鲜，但是吃是肯定没有问题的，质量没有问题。所以好多人还专门的，就是说跑到这个超市去找这些这个呃清仓的菜、出清的菜。每天的话，我们每天都有。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 8640000,
+        "endSample": 9120000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "5f7e1cdef561c2ee3cfe7a2ec66fe4e04f281aad5e7b4797893dec9e8c08f7bb"
+}
