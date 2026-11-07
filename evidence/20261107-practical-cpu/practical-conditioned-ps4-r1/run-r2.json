@@ -1,5 +1,5 @@
 {
-  "state": "RUNNING_PS4_ASR",
+  "state": "COMPLETE_TARGET_SEPARATION_AND_ASR_REVIEW_REQUIRED",
   "pid": 23752,
   "startedAt": "2026-11-07T20:07:04+08:00",
   "priorAttemptReceipts": [],
@@ -9,10 +9,16 @@
       "exitCode": 0,
       "wholeProcessFamilySeconds": 47.483598400023766,
       "privatePeakBytes": 1040818176
+    },
+    {
+      "stage": "asr",
+      "exitCode": 0,
+      "wholeProcessFamilySeconds": 156.62421989999712,
+      "privatePeakBytes": 1244774400
     }
   ],
   "automaticModelFailureRetries": 0,
   "qualityQualified": false,
   "stage": "asr",
-  "activePid": 18108
+  "finishedAt": "2026-11-07T20:10:28+08:00"
 }

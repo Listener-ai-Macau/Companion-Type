@@ -1,0 +1,232 @@
+{
+  "at": "2026-11-07T20:15:15+08:00",
+  "state": "PS4_CACHED_ACTIVITY_AND_ENROLLMENT_CAUSE_AUDIT_NO_NEW_MODEL",
+  "enrollmentReferenceCoverageForPosthocAuditOnly": [
+    {
+      "meeting": "S_R004S03C01",
+      "predictedSpeaker": 0,
+      "expectedReferenceForPosthocAuditOnly": "001-M",
+      "sourceStartSeconds": 168.015,
+      "sourceEndSeconds": 176.015,
+      "referenceActivitySeconds": {
+        "001-M": 8.0,
+        "002-F": 8.0,
+        "003-F": 8.0,
+        "004-F": 8.0,
+        "005-F": 8.0
+      },
+      "expectedPersonReferenceActivityFraction": 1.0,
+      "otherPersonReferenceActivitySeconds": 32.0,
+      "neverUsedToReselectEnrollmentOrGateInference": true
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "predictedSpeaker": 2,
+      "expectedReferenceForPosthocAuditOnly": "004-M",
+      "sourceStartSeconds": 160.7,
+      "sourceEndSeconds": 168.7,
+      "referenceActivitySeconds": {
+        "002-F": 8.0,
+        "003-F": 8.0,
+        "004-M": 8.0,
+        "005-M": 8.0,
+        "006-M": 8.0,
+        "007-M": 8.0
+      },
+      "expectedPersonReferenceActivityFraction": 1.0,
+      "otherPersonReferenceActivitySeconds": 40.0,
+      "neverUsedToReselectEnrollmentOrGateInference": true
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "predictedSpeaker": 3,
+      "expectedReferenceForPosthocAuditOnly": "003-F",
+      "sourceStartSeconds": 800.32,
+      "sourceEndSeconds": 808.32,
+      "referenceActivitySeconds": {
+        "002-F": 8.0,
+        "003-F": 8.0,
+        "004-M": 8.0,
+        "005-M": 8.0,
+        "006-M": 8.0,
+        "007-M": 8.0
+      },
+      "expectedPersonReferenceActivityFraction": 1.0,
+      "otherPersonReferenceActivitySeconds": 40.0,
+      "neverUsedToReselectEnrollmentOrGateInference": true
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "predictedSpeaker": 4,
+      "expectedReferenceForPosthocAuditOnly": "006-M",
+      "sourceStartSeconds": 81.92,
+      "sourceEndSeconds": 89.92,
+      "referenceActivitySeconds": {
+        "002-F": 8.0,
+        "003-F": 8.0,
+        "004-M": 8.0,
+        "005-M": 8.0,
+        "006-M": 8.0,
+        "007-M": 8.0
+      },
+      "expectedPersonReferenceActivityFraction": 1.0,
+      "otherPersonReferenceActivitySeconds": 40.0,
+      "neverUsedToReselectEnrollmentOrGateInference": true
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "predictedSpeaker": 5,
+      "expectedReferenceForPosthocAuditOnly": "005-M",
+      "sourceStartSeconds": 275.835,
+      "sourceEndSeconds": 283.835,
+      "referenceActivitySeconds": {
+        "002-F": 8.0,
+        "003-F": 8.0,
+        "004-M": 8.0,
+        "005-M": 8.0,
+        "006-M": 8.0,
+        "007-M": 8.0
+      },
+      "expectedPersonReferenceActivityFraction": 1.0,
+      "otherPersonReferenceActivitySeconds": 40.0,
+      "neverUsedToReselectEnrollmentOrGateInference": true
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "predictedSpeaker": 0,
+      "expectedReferenceForPosthocAuditOnly": "007-M",
+      "sourceStartSeconds": 1940.8599375,
+      "sourceEndSeconds": 1948.8599375,
+      "referenceActivitySeconds": {
+        "002-F": 8.0,
+        "003-F": 8.0,
+        "004-M": 8.0,
+        "005-M": 8.0,
+        "006-M": 8.0,
+        "007-M": 8.0
+      },
+      "expectedPersonReferenceActivityFraction": 1.0,
+      "otherPersonReferenceActivitySeconds": 40.0,
+      "neverUsedToReselectEnrollmentOrGateInference": true
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "predictedSpeaker": 1,
+      "expectedReferenceForPosthocAuditOnly": "002-F",
+      "sourceStartSeconds": 429.405,
+      "sourceEndSeconds": 437.405,
+      "referenceActivitySeconds": {
+        "002-F": 8.0,
+        "003-F": 8.0,
+        "004-M": 8.0,
+        "005-M": 8.0,
+        "006-M": 8.0,
+        "007-M": 8.0
+      },
+      "expectedPersonReferenceActivityFraction": 1.0,
+      "otherPersonReferenceActivitySeconds": 40.0,
+      "neverUsedToReselectEnrollmentOrGateInference": true
+    }
+  ],
+  "allExtractedLaneActivityEnergy": [
+    {
+      "id": "S_R004S03C01-root-000001-speaker-0",
+      "predictedSpeaker": 0,
+      "predictedActiveSeconds": 29.21,
+      "predictedInactiveSeconds": 0.79,
+      "outputEnergyWhilePredictedInactiveFraction": 5.9697368695929847e-05,
+      "activeRms": 0.113166364059897,
+      "inactiveRms": 0.005316920337886142,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    },
+    {
+      "id": "L_R003S01C02-root-000029-speaker-2",
+      "predictedSpeaker": 2,
+      "predictedActiveSeconds": 1.6,
+      "predictedInactiveSeconds": 28.4,
+      "outputEnergyWhilePredictedInactiveFraction": 0.19282484061247376,
+      "activeRms": 0.05485901944568042,
+      "inactiveRms": 0.00636423867603732,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    },
+    {
+      "id": "L_R003S01C02-root-000029-speaker-3",
+      "predictedSpeaker": 3,
+      "predictedActiveSeconds": 8.62,
+      "predictedInactiveSeconds": 21.38,
+      "outputEnergyWhilePredictedInactiveFraction": 0.23796545985854703,
+      "activeRms": 0.027575476604108622,
+      "inactiveRms": 0.009784585754775631,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    },
+    {
+      "id": "L_R003S01C02-root-000029-speaker-4",
+      "predictedSpeaker": 4,
+      "predictedActiveSeconds": 17.67,
+      "predictedInactiveSeconds": 12.33,
+      "outputEnergyWhilePredictedInactiveFraction": 0.3637605087153262,
+      "activeRms": 0.015096592577540612,
+      "inactiveRms": 0.0136651100706466,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    },
+    {
+      "id": "L_R003S01C02-root-000029-speaker-5",
+      "predictedSpeaker": 5,
+      "predictedActiveSeconds": 4.51,
+      "predictedInactiveSeconds": 25.49,
+      "outputEnergyWhilePredictedInactiveFraction": 0.8397411244582653,
+      "activeRms": 0.10433037806439781,
+      "inactiveRms": 0.10045598118857003,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    },
+    {
+      "id": "L_R003S01C02-root-000031-speaker-0",
+      "predictedSpeaker": 0,
+      "predictedActiveSeconds": 8.18,
+      "predictedInactiveSeconds": 21.82,
+      "outputEnergyWhilePredictedInactiveFraction": 0.018456228146119146,
+      "activeRms": 0.06298864938287266,
+      "inactiveRms": 0.005288447704144545,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    },
+    {
+      "id": "L_R003S01C02-root-000031-speaker-1",
+      "predictedSpeaker": 1,
+      "predictedActiveSeconds": 18.39,
+      "predictedInactiveSeconds": 11.61,
+      "outputEnergyWhilePredictedInactiveFraction": 0.025032227288593698,
+      "activeRms": 0.08249445535370661,
+      "inactiveRms": 0.016636199924881336,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    },
+    {
+      "id": "L_R003S01C02-root-000031-speaker-3",
+      "predictedSpeaker": 3,
+      "predictedActiveSeconds": 7.04,
+      "predictedInactiveSeconds": 22.96,
+      "outputEnergyWhilePredictedInactiveFraction": 0.01617736560678357,
+      "activeRms": 0.05718593933919704,
+      "inactiveRms": 0.004060552615024338,
+      "scope": "Predicted activity, not true target absence; diarizer misses can make true target speech appear inactive."
+    }
+  ],
+  "noNewNeuralCalls": true,
+  "sourceAudioAndOutputsUnchanged": true,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 19488,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 36249600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

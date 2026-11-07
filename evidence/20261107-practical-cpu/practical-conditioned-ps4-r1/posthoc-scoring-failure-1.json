@@ -1,0 +1,7 @@
+{
+  "state": "POSTHOC_IMPORT_PRIVATE_MEMORY_LIMIT_HIT_BEFORE_SCORING",
+  "error": "MemoryError while scipy import initialized NumPy testing/logging;512MiB private Job cap active, no thread limits set in original entry.",
+  "neuralStagesAlreadyComplete": true,
+  "newNeuralCallsForRepair": 0,
+  "correction": "Set OMP/MKL/OpenBLAS_NUM_THREADS=1 before scientific imports, retain512MiB cap. Reuse exact saved separation/ASR outputs, no model rerun."
+}

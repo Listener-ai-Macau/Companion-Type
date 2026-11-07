@@ -1,0 +1,8 @@
+{
+  "state": "REFERENCE_COVERAGE_R1_INVALID_SILENT_TEXTGRID_INTERVALS_COUNTED",
+  "affectedSectionOnly": "enrollmentReferenceCoverageForPosthocAuditOnly",
+  "unaffected": "Predicted activity energy, all model outputs and primary full-reference CER scores are unchanged.",
+  "sourceSha256": "37c384634d926ecf100a329d80caa5e56f1b744e1264e4e85d3fee73e525374e",
+  "resultSha256": "1ace3970bc2994ac6d1f33abb607f21ad69cf174119ea8d285152642bf8bb1aa",
+  "correction": "Use the same lexical normalize predicate as primary scoring; reference silent intervals must not count as active voices. No model rerun or enrollment reselection."
+}

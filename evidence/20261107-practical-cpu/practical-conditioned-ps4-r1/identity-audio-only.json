@@ -1,0 +1,154 @@
+[
+  {
+    "id": "S_R004S03C01-anchor-0",
+    "meeting": "S_R004S03C01",
+    "kind": "anchor",
+    "predictedSpeaker": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\S_R004S03C01-anchor-0.wav",
+    "audioSha256": "3a1596ba1bfbae02a91150763338a5dcfde3837e2cc8eb570d69cdd49a9842c3"
+  },
+  {
+    "id": "S_R004S03C01-anchor-1",
+    "meeting": "S_R004S03C01",
+    "kind": "anchor",
+    "predictedSpeaker": 1,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\S_R004S03C01-anchor-1.wav",
+    "audioSha256": "8d57123f2855b94432bfff66b370e5f1283cff596900a1843b70843297dec0b6"
+  },
+  {
+    "id": "S_R004S03C01-anchor-2",
+    "meeting": "S_R004S03C01",
+    "kind": "anchor",
+    "predictedSpeaker": 2,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\S_R004S03C01-anchor-2.wav",
+    "audioSha256": "0b46a7032a3c792fdb45fc4d46605363685c4ef8f2805ee27ceb34f324e689d2"
+  },
+  {
+    "id": "S_R004S03C01-anchor-3",
+    "meeting": "S_R004S03C01",
+    "kind": "anchor",
+    "predictedSpeaker": 3,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\S_R004S03C01-anchor-3.wav",
+    "audioSha256": "419e949451310feae9c210b7971304f2b835480b770848861439e37b020bcba8"
+  },
+  {
+    "id": "S_R004S03C01-anchor-4",
+    "meeting": "S_R004S03C01",
+    "kind": "anchor",
+    "predictedSpeaker": 4,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\S_R004S03C01-anchor-4.wav",
+    "audioSha256": "b180ba140644d31d05231497e936b6a1d5cbcfe598cc62082cc93dd27c37d382"
+  },
+  {
+    "id": "L_R003S01C02-anchor-0",
+    "meeting": "L_R003S01C02",
+    "kind": "anchor",
+    "predictedSpeaker": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-0.wav",
+    "audioSha256": "75e712e27eeee4710a99d21f0dc53f66d5649ffdbade8fab7982f25493d863cc"
+  },
+  {
+    "id": "L_R003S01C02-anchor-1",
+    "meeting": "L_R003S01C02",
+    "kind": "anchor",
+    "predictedSpeaker": 1,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-1.wav",
+    "audioSha256": "e8cfbbb764819dff26fa13dad5bf872dda95b2423e8623ef659c9e04d321a226"
+  },
+  {
+    "id": "L_R003S01C02-anchor-2",
+    "meeting": "L_R003S01C02",
+    "kind": "anchor",
+    "predictedSpeaker": 2,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-2.wav",
+    "audioSha256": "508b3a7c0376aadadbbf50df8d3d9bd0c2f6f91d336b6885907b27a7258e0be3"
+  },
+  {
+    "id": "L_R003S01C02-anchor-3",
+    "meeting": "L_R003S01C02",
+    "kind": "anchor",
+    "predictedSpeaker": 3,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-3.wav",
+    "audioSha256": "680c8534c7f4a1d53c4101fe180feeff25f1a6d454d8630884a16610c3c4be84"
+  },
+  {
+    "id": "L_R003S01C02-anchor-4",
+    "meeting": "L_R003S01C02",
+    "kind": "anchor",
+    "predictedSpeaker": 4,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-4.wav",
+    "audioSha256": "488c7bc733f7f792a7d1895d672437572b673059cbd3ba260e467d498b7ec26b"
+  },
+  {
+    "id": "L_R003S01C02-anchor-5",
+    "meeting": "L_R003S01C02",
+    "kind": "anchor",
+    "predictedSpeaker": 5,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\audio\\L_R003S01C02-anchor-5.wav",
+    "audioSha256": "12e1335a36e3da96752debe84d8b436232906a2ad91b3eda81ccc45edda93347"
+  },
+  {
+    "id": "S_R004S03C01-root-000001-speaker-0",
+    "meeting": "S_R004S03C01",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\S_R004S03C01-root-000001-speaker-0.wav",
+    "audioSha256": "d4443c1e697adc3245877abdd9f9e0d8fbde99e506a9b9cf27d0b1105628d3dc"
+  },
+  {
+    "id": "L_R003S01C02-root-000029-speaker-2",
+    "meeting": "L_R003S01C02",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 2,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\L_R003S01C02-root-000029-speaker-2.wav",
+    "audioSha256": "108989e4fba73716c4caeecee0b8f80554a12512975a006acc631c006ded78ae"
+  },
+  {
+    "id": "L_R003S01C02-root-000029-speaker-3",
+    "meeting": "L_R003S01C02",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 3,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\L_R003S01C02-root-000029-speaker-3.wav",
+    "audioSha256": "e12e4f8488f1d791fe9b759349cc6517fee7ae26a96a748d1fdbd9c44587fd13"
+  },
+  {
+    "id": "L_R003S01C02-root-000029-speaker-4",
+    "meeting": "L_R003S01C02",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 4,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\L_R003S01C02-root-000029-speaker-4.wav",
+    "audioSha256": "7ba3b24a63642942e96bce22f996a6c3340955461a2ed4ef4799876eec227b09"
+  },
+  {
+    "id": "L_R003S01C02-root-000029-speaker-5",
+    "meeting": "L_R003S01C02",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 5,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\L_R003S01C02-root-000029-speaker-5.wav",
+    "audioSha256": "8230a1aad57c109ed2cfa14d23e69baab7e51f049e5a131af084d0313ed8fb89"
+  },
+  {
+    "id": "L_R003S01C02-root-000031-speaker-0",
+    "meeting": "L_R003S01C02",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 0,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\L_R003S01C02-root-000031-speaker-0.wav",
+    "audioSha256": "2536e138ef06ed23ae83acbe9c4faef84e9fcc34d6951e1f7c84d56d8da9479c"
+  },
+  {
+    "id": "L_R003S01C02-root-000031-speaker-1",
+    "meeting": "L_R003S01C02",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 1,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\L_R003S01C02-root-000031-speaker-1.wav",
+    "audioSha256": "9f417e8174e73386eecb86fc9b8792efd3c378c9be6dc47cd90768e4c2f75810"
+  },
+  {
+    "id": "L_R003S01C02-root-000031-speaker-3",
+    "meeting": "L_R003S01C02",
+    "kind": "extracted-lane",
+    "predictedSpeaker": 3,
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ps4-target-extraction-20261107\\extracted-r2\\L_R003S01C02-root-000031-speaker-3.wav",
+    "audioSha256": "ca5de87cb5e796de723a0385ea912300f87904303f84093907819535f08870a5"
+  }
+]

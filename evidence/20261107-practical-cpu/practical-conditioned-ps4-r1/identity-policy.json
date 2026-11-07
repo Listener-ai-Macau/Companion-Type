@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-07T20:21:19+08:00",
+  "state": "FROZEN_BEFORE_MATCHING_ENCODER_IDENTITY_PROBE",
+  "workerSourceSha256": "f2346bf4a928e8bfd62bfe3397cb423c94518d2c3e9511cd3785fa1ad6bff810",
+  "modelReadySha256": "d9d0b2e2dc82a566af356fe8268c526629a8b2fa02670ab00ed445b3a6920b83",
+  "audioPlanSha256": "b6e584843ae1ec8244532c372c22b7cc10491071afb747a9e14b6095654bba61",
+  "model": "The exact frozen PS4 embedded ECAPA encoder. Same author peak normalization/pre-emphasis/mel/log mean normalization,192d unit embeddings, whole saved lane against all frozen same-meeting anchors. No new anchor choice or incompatible external speaker model.",
+  "rule": "Predeclared top1 cosine identity only, no absolute cutoff or threshold sweep. Record every lane, including contradictions; no reference/text/speaker names passed. A later opt-in cached candidate can admit only self-matching target lanes and bypass ordinary single-person extraction. Do not reinterpret the failed original forced-extraction gate as passed.",
+  "limitations": "Whole-lane embedding cannot prove every word is the target or detect all unseen speakers. Development audio overlap with pretraining unknown; no new full qualification.",
+  "newAsrOrSeparationCallsAllowed": 0,
+  "qualityQualified": false
+}

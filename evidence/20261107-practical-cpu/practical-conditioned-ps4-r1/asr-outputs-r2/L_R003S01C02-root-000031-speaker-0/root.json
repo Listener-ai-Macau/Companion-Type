@@ -1,0 +1,49 @@
+{
+  "binding": {
+    "protocolSha256": "a2f8f6c1ab9ad33fbe779b9bb9f2d9129843d435516034f7b5ec043d3a39c30b",
+    "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
+    "workerSourceSha256": "54b466f4108097c5c2485c8633b4dc2dc33a90f75dd3e27ed8e04ce43bf3ed8d"
+  },
+  "audioSha256": "2536e138ef06ed23ae83acbe9c4faef84e9fcc34d6951e1f7c84d56d8da9479c",
+  "raw": {
+    "startSample": 0,
+    "endSample": 480000,
+    "text": "就是还有那投诉的宠物的，宠物它随地大小便，然后也是乱跑，也有咬人的。对对。",
+    "generatedIds": [
+      99486,
+      100626,
+      99212,
+      104943,
+      9370,
+      105787,
+      9370,
+      3837,
+      105787,
+      99652,
+      99411,
+      29490,
+      92032,
+      99364,
+      3837,
+      101889,
+      100000,
+      100397,
+      99803,
+      3837,
+      103943,
+      105118,
+      103947,
+      1773,
+      32664,
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "就是还有那投诉的宠物的，宠物它随地大小便，然后也是乱跑，也有咬人的。对对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.694868199992925
+  },
+  "rawSha256": "b426c82c08a1791a55fbefdd722afac34aba3db53705f921e621700bceef4015"
+}

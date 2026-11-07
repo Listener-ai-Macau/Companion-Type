@@ -1,0 +1,178 @@
+{
+  "metric": "FULL_MEETING_CPCER_EDIT_ATTRIBUTION_TO_COMPLETE_REFERENCE_UTTERANCES",
+  "primaryCpCer": {
+    "metric": "cpCER",
+    "audioSeconds": 2362.945,
+    "referenceCharacters": 8676,
+    "referenceSpeakers": 6,
+    "predictedTextStreams": 7,
+    "edits": {
+      "replace": 803,
+      "delete": 1387,
+      "insert": 1074
+    },
+    "totalEdits": 3264,
+    "characterErrorRate": 0.37621023513139695,
+    "anonymousAssignmentForEvaluationOnly": [
+      {
+        "referenceSpeaker": "002-F",
+        "hypothesisSpeaker": "1",
+        "edits": 571
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "hypothesisSpeaker": "__unconfirmed__",
+        "edits": 745
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "hypothesisSpeaker": "2",
+        "edits": 282
+      },
+      {
+        "referenceSpeaker": "005-M",
+        "hypothesisSpeaker": "5",
+        "edits": 550
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "hypothesisSpeaker": "4",
+        "edits": 886
+      },
+      {
+        "referenceSpeaker": "007-M",
+        "hypothesisSpeaker": "0",
+        "edits": 65
+      },
+      {
+        "referenceSpeaker": null,
+        "hypothesisSpeaker": "3",
+        "edits": 165
+      }
+    ],
+    "limits": "Full-meeting per-speaker text concatenation with optimal anonymous assignment; not temporal accuracy or verified real identity. Reference-only text is not a model input."
+  },
+  "overlapContextUtterances": {
+    "referenceCharacters": 4278,
+    "referenceUtterances": 318,
+    "edits": {
+      "delete": 1117,
+      "replace": 451,
+      "insert": 719
+    },
+    "totalEdits": 2287,
+    "characterErrorRate": 0.5345956054230949
+  },
+  "singleSpeakerOnlyUtterances": {
+    "referenceCharacters": 4398,
+    "referenceUtterances": 194,
+    "edits": {
+      "delete": 270,
+      "replace": 352,
+      "insert": 190
+    },
+    "totalEdits": 812,
+    "characterErrorRate": 0.1846293769895407
+  },
+  "shortUtterances": {
+    "referenceCharacters": 542,
+    "referenceUtterances": 209,
+    "edits": {
+      "delete": 242,
+      "replace": 102,
+      "insert": 371
+    },
+    "totalEdits": 715,
+    "characterErrorRate": 1.3191881918819188
+  },
+  "unassignedExtraStreamEdits": {
+    "insert": 165
+  },
+  "unassignedExtraStreamTotalEdits": 165,
+  "perReferenceSpeaker": [
+    {
+      "referenceSpeaker": "002-F",
+      "anonymousHypothesisSpeaker": "1",
+      "referenceCharacters": 1581,
+      "edits": {
+        "delete": 491,
+        "replace": 74,
+        "insert": 6
+      },
+      "totalEdits": 571,
+      "characterErrorRate": 0.3611638203668564
+    },
+    {
+      "referenceSpeaker": "003-F",
+      "anonymousHypothesisSpeaker": "__unconfirmed__",
+      "referenceCharacters": 331,
+      "edits": {
+        "insert": 543,
+        "replace": 202
+      },
+      "totalEdits": 745,
+      "characterErrorRate": 2.2507552870090635
+    },
+    {
+      "referenceSpeaker": "004-M",
+      "anonymousHypothesisSpeaker": "2",
+      "referenceCharacters": 1470,
+      "edits": {
+        "replace": 52,
+        "insert": 22,
+        "delete": 208
+      },
+      "totalEdits": 282,
+      "characterErrorRate": 0.19183673469387755
+    },
+    {
+      "referenceSpeaker": "005-M",
+      "anonymousHypothesisSpeaker": "5",
+      "referenceCharacters": 1821,
+      "edits": {
+        "delete": 346,
+        "replace": 124,
+        "insert": 80
+      },
+      "totalEdits": 550,
+      "characterErrorRate": 0.30203185063152116
+    },
+    {
+      "referenceSpeaker": "006-M",
+      "anonymousHypothesisSpeaker": "4",
+      "referenceCharacters": 3167,
+      "edits": {
+        "delete": 300,
+        "replace": 329,
+        "insert": 257
+      },
+      "totalEdits": 886,
+      "characterErrorRate": 0.27976002526049887
+    },
+    {
+      "referenceSpeaker": "007-M",
+      "anonymousHypothesisSpeaker": "0",
+      "referenceCharacters": 306,
+      "edits": {
+        "insert": 1,
+        "delete": 42,
+        "replace": 22
+      },
+      "totalEdits": 65,
+      "characterErrorRate": 0.21241830065359477
+    }
+  ],
+  "referenceOverlapSeconds": 188.3593880675116,
+  "shortUtteranceMaximumSeconds": 2.0,
+  "allPrimaryEditsAccountedFor": true,
+  "referenceUsedForScoringOnly": true,
+  "pureOverlapWordsMeasured": false,
+  "limitations": [
+    "Overlap-context category retains full utterances, including their nonoverlapping parts; never label it pure overlap-word CER.",
+    "Anonymous speaker assignment and edit operations come from the original complete cpCER streams; no reference-activity filtering of model words, oracle count, sentence clipping or local reassignment.",
+    "Insertion at a reference boundary uses the following character, or final character at stream end. Levenshtein ties are deterministic library alignment, not proven word timing.",
+    "Unmatched hypothesis streams remain explicit insertion errors; they are not silently allocated to an easier category or discarded.",
+    "Short utterances overlap the other two categories and are not a third disjoint partition. No short reference yields null, not zero error.",
+    "Reference speakers are anonymous evaluation labels, not confirmed real identities or meeting roles."
+  ]
+}

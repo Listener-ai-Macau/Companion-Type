@@ -1,5 +1,5 @@
 {
-  "state": "IMPORTING_NATIVE_TORCH",
+  "state": "COMPLETE_PS4_ASR_UNQUALIFIED",
   "pid": 22112,
   "startedAt": "2026-11-07T20:07:51+08:00",
   "stage": "asr",
@@ -8,9 +8,9 @@
     "audioOnlySha256": "577c24e1e7cad585f6d4c7f8383901082a328a8652996e54decd0f84059004ee",
     "workerSourceSha256": "54b466f4108097c5c2485c8633b4dc2dc33a90f75dd3e27ed8e04ce43bf3ed8d"
   },
-  "newNeuralCalls": 0,
+  "newNeuralCalls": 8,
   "reusedOutputs": 0,
-  "completedInputs": 0,
+  "completedInputs": 8,
   "referencePassedToWorker": false,
   "qualityQualified": false,
   "limits": {
@@ -21,7 +21,7 @@
     "inLimitedJob": true,
     "jobPrivateCommitLimitBytes": 2147483648,
     "jobMemoryLimitEnabled": true,
-    "jobPeakPrivateCommitBytes": 336793600,
+    "jobPeakPrivateCommitBytes": 1279868928,
     "cpuPriorityClass": 64,
     "memoryPagePriority": 1,
     "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -29,5 +29,8 @@
     "gpuUtilizationHardCapped": false,
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
-  "gpu": "AMD Radeon RX 6800 XT"
+  "gpu": "AMD Radeon RX 6800 XT",
+  "modelLoaded": true,
+  "finishedAt": "2026-11-07T20:10:26+08:00",
+  "wholeWorkerSeconds": 154.49691450002138
 }
