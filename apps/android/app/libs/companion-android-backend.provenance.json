@@ -1,7 +1,7 @@
 {
-  "at": "2026-11-07T09:16:03+08:00",
-  "aarSha256": "ca2759c289e7ea1cef5d9cc6623648d373d333feacbf989c7ded46b35cd40760",
-  "backendSourceCommit": "fb3d0989c55016adf62494f80312e6f472e424dc",
+  "at": "2026-11-07T09:35:06+08:00",
+  "aarSha256": "ae58f9306f469b2574f1b57146505b211108e63848e1ae32e866e098d7ccfe02",
+  "backendSourceCommit": "0c4e365674542ff4cec14ec03a55b19b37c4a385",
   "backendSourceWorkspace": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-android-device-closure055",
   "remoteSourceVerified": false,
   "nativeSourceCommit": "4d86908f27e6789459f5d97caf3405148febb3b9",
@@ -22,8 +22,8 @@
   "ordinaryPhoneAcceptance": false,
   "modelsRun": false,
   "speechRuntimeBinariesAndWeightsChanged": false,
-  "scope": "Single ownership transfer from visible activity to foreground sync, exact address/descriptor binding, fresh fallback on saved-task process recovery, explicit reusedConnections counter. Only selected local audio hashed on open/export, current CRC/SHA and malformed metadata still checked. No command replay, adapter/bond/reset change. Native/models unchanged; actual latency pending.",
-  "javaSourceCommit": "fb3d0989c55016adf62494f80312e6f472e424dc",
+  "scope": "One-time reuse of same-link immutable complete selected-session directory; live/incomplete/pending/mutated sessions reread. Both resume entry points transfer retained connection. Single ownership transfer from visible activity to foreground sync, exact address/descriptor binding, fresh fallback on saved-task process recovery, explicit reusedConnections counter. Only selected local audio hashed on open/export, current CRC/SHA and malformed metadata still checked. No command replay, adapter/bond/reset change. Native/models unchanged; actual latency pending.",
+  "javaSourceCommit": "0c4e365674542ff4cec14ec03a55b19b37c4a385",
   "javaClassesChangedFrom070": [
     "com/denzic/companion/mobile/RecorderWire$Catalog.class",
     "com/denzic/companion/mobile/RecorderWire$CatalogChanged.class",
@@ -110,7 +110,7 @@
     "com/denzic/companion/mobile/RecordingSyncRunner.class"
   ],
   "allNonClassAarEntriesByteIdenticalTo078r1": true,
-  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device082\\build\\inherited-provenance079.json",
+  "inherited078r1Receipt": "E:\\CodexData\\Companion\\.build-cache\\device083\\build\\inherited-provenance082.json",
   "javaClassesChangedFrom078": [
     "com/denzic/companion/mobile/AndroidGattLink$1.class",
     "com/denzic/companion/mobile/AndroidGattLink$2.class",
@@ -134,5 +134,13 @@
     "com/denzic/companion/mobile/RecordingSyncService.class",
     "com/denzic/companion/mobile/RecordingTransferMetrics.class"
   ],
-  "allNonClassAarEntriesByteIdenticalTo079": true
+  "allNonClassAarEntriesByteIdenticalTo079": true,
+  "javaClassesChangedFrom082": [
+    "com/denzic/companion/mobile/RecordingClient.class",
+    "com/denzic/companion/mobile/RecordingSyncService$2.class",
+    "com/denzic/companion/mobile/RecordingSyncService$3.class",
+    "com/denzic/companion/mobile/RecordingSyncService.class",
+    "com/denzic/companion/mobile/RecordingTransferMetrics.class"
+  ],
+  "allNonClassAarEntriesByteIdenticalTo082": true
 }

@@ -857,7 +857,9 @@ public final class MainActivity extends Activity {
             case "resume": {
                 String saved=getSharedPreferences("companion_recording_sync",MODE_PRIVATE).getString("directory",null);
                 if(saved==null||!saved.equals(recordings().getFileName().toString()))throw new java.io.IOException("原接收任务属于另一份资料，请先切回原资料。");
-                RecordingSyncService.resume(this);return syncStatus();
+                String savedAddress=getSharedPreferences("companion_recording_sync",MODE_PRIVATE).getString("address",null);
+                if(savedAddress==null)closeSelectedDevice();
+                RecordingSyncService.resume(this,savedAddress==null?null:deviceConnection.take(savedAddress));return syncStatus();
             }
             case "pendingConfirmation": {
                 boolean invalid=false; RecorderWire.Descriptor pending=null;
@@ -887,7 +889,7 @@ public final class MainActivity extends Activity {
             }
             case "resumeConfirmation": {
                 if (selectedDevice == null) throw new IllegalStateException("请先选择原录音卡。");
-                RecordingSyncService.resumePending(this, selectedDevice, recordings().toFile());
+                RecordingSyncService.resumePending(this,selectedDevice,recordings().toFile(),deviceConnection.take(selectedDevice.getAddress()));
                 return syncStatus();
             }
             case "stopSync": RecordingSyncService.stop(this); return syncStatus();
