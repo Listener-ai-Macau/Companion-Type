@@ -33,5 +33,10 @@
   "ordinaryAsrAndDefaultUnchanged": true,
   "actualProductAccuracyImprovementDelivered": false,
   "qualified": false,
-  "next": "原RM-OVERLAP：停止被拒PS4/整段或局部声纹门及nomo默认目标活动配置的扩展与扫参；保留NativeFP16分人研究基线和普通ASR，不把这次活动检测当文字/纪要改善。已排除本次合并重复输入，多个原始人物轨已产生长段相同文字，分离共享声源/目标缺席与残留触发ASR仍需联合解决。下一项先核对真实远场会议训练数据与可复现训练实现，区分训练/开发/最终集（不拿本轮已见L/S/AMI或补齐三人片训练），再为目标活动/分离中已证失败模块选择定向适配方案；nomo官方示例可复现但会议域跨三场失败，只有9个长且无标注他人声登记中8个仍失败的证据，不把延长登记或换同类权重当主线。补齐的中文真实三人重叠30s仅为后续曝光诊断样例，不重跑失败候选、不当独立验收。没有不同因果依据不启动备选、不从零训练。普通严格<5%、复杂逐人/短句/重叠文字、跨域、事实、双端实卡与售卖门继续OPEN。"
+  "next": "原RM-OVERLAP：四步短筛选已执行并拒绝候选，第4步整场条件未成立。继续定向适配准备：已核实真实会议的文本/讲话活动标注可用于训练目标活动，混音通道不能当逐人干净分离标签；已核实nomo公开代码仅推理且forward禁用梯度，不能直接把推理脚本叫微调。下一项准备发布方正式训练split中的独立真实会议与可训练小型活动模块，先核实人员/房间/会话划分并保持当前L/S/AMI与最终未见集只作评价，先梯度和CPU5%/private2GiB/单模型资源小检再训练。冻结声纹/主干、先适配条件融合与活动头的可行性需实际验证，不能预先承诺效果；分离改进另需正确的监督/代理目标，保留其未解决状态。停止既败PS4/声纹门/nomo默认配置扩展，不扫阈值、不追加同类名单、不从零训练。原普通模型/原字/原音、严格<5%、复杂逐人/重叠文字、跨域/纪要事实/双端实卡/售卖门继续OPEN。",
+  "trainingFeasibility": {
+    "evidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-target-activity-r1\\training-feasibility.json",
+    "state": "REAL_MEETING_ACTIVITY_ADAPTATION_PREREQUISITES_IDENTIFIED_NOT_TRAINING",
+    "newTrainingRuns": 0
+  }
 }
