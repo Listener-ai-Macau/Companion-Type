@@ -38,7 +38,11 @@ if chain_path.exists() and read(chain_path).get('state')=='COMPLETE_TWO_MEETING_
     for case in read(chain_path.parent/'audio-only.json'):
         if not (chain_path.parent/'results'/case['meeting']/'embedding-cause-review.json').exists():
             posthoc(['E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe',str(M/'src/practical_speaker_cause_20261107.py'),'--control',str(chain_path.parent),'--meeting',case['meeting']],'cause-'+case['meeting'])
-    posthoc([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(chain_path.parent),'--backlog',str(R/'docs/product_backlog.json')],'assessment')
+    if not (chain_path.parent/'candidate-assessment.json').exists():posthoc([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(chain_path.parent),'--backlog',str(R/'docs/product_backlog.json')],'assessment')
+native_chain=base/'native8-vulkan-full-r1/chain-state.json'
+if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
+    r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
+    (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1']
 for name in names:
     folder=base/name
@@ -58,11 +62,15 @@ record['boundedFullFirstMeetingRejected']=any(r.get('components',{}).get('diariz
 record['native8VulkanShortRun']=optional(base/'native8-vulkan-smoke-r1/native-run.json')
 record['native8VulkanFullRun']=optional(base/'native8-vulkan-full-r1/native-run.json')
 record['native8GeometryCorrection']=optional(base/'nemotron-speaker-20261107-prep/geometry-correction.json')
+record['native8VulkanChain']=optional(base/'native8-vulkan-full-r1/chain-state.json')
+record['native8VulkanAssessment']=optional(base/'native8-vulkan-full-r1/candidate-assessment.json')
 if record['native8VulkanFullRun']:record['state']=record['native8VulkanFullRun']['state']
 elif record['native8VulkanShortRun']:record['state']=record['native8VulkanShortRun']['state']
+if record['native8VulkanChain']:record['state']=record['native8VulkanChain']['state']
+elif record['native8VulkanShortRun'] and record['native8VulkanShortRun']['state']=='COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED':record['state']='NATIVE8_SHORT_PASSED_FULL_MEETINGS_PENDING'
 record['next']='继续原QM05：完整L/S说话人、短句覆盖和重叠活动评分；用已保存原始ASR零神经重跑回填人物，保留未知与全部原文。依真实整会结果决定组件去留，再补文字准确率<5%、重叠逐路文字与事实纪要；保留最终未见集/手机/实卡/售卖门。禁止原样重跑失败HIP或stockCPU高内存流程、不扫阈值、不扩大内存、不关闭用户应用。'
 if record['native8Preparation']:
-    record['next']='原QM05继续：旧complete-link完整L已失败（190组/6人、标准DER78.0445%），不替换产品、不逐会扫阈值。只验证一个新官方8路端到端分人候选：固定Q8权重和v0.3.0 CPU库，61秒连续状态/C ABI对原版CLI同规则结果门，通过后同一L/S整会、标准零collar含重叠/逐人短句评价；再将旧完整ASR原字零神经回填到共享Document。原文字<5%、重叠逐路文字、事实纪要、独立集和双端/实卡门保持。模型顺序执行，CPU5%/private2GiB/实际低RAM保护，不重跑失败HIP、不扩大预算。'
+    record['next']='原QM05继续：旧complete-link整会L/S均失败（标准DER78.0445%/25.6591%），不替换产品、不逐会扫阈值。一个新官方8路端到端候选：固定Q8权重、官方v0.3.0 Vulkan运行库、每次按真实6800XT型号选择，C ABI/CLI均显式应用同一作者6项geometry，保留首次CPU接入参数错误。修复后61秒连续状态/原版CLI同编号同时间门已过，下一步同一L/S整会、标准零collar含重叠/逐人短句评分，再将旧完整ASR原字零神经回填共享Document。原文字<5%、重叠逐路文字、事实、独立集和双端/实卡门保持。顺序模型，CPU5%/private2GiB/实际低RAM保护，块间1s让出资源（非GPU利用率硬限），不重跑失败HIP、不扩大预算。'
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','tools/model-output-contract-20261107','upstream-speaker']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
@@ -79,6 +87,8 @@ dest=S/'docs/handoffs/model-practical-cpu-20261107';dest.mkdir(parents=True,exis
 for file in [path,R/'docs/development_log.md']:shutil.copyfile(file,S/'docs'/file.name)
 (dest/(a.phase+'-result.json')).write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8');shutil.copyfile(__file__,dest/Path(__file__).name)
 chain=Path(__file__).with_name('run_bounded_model_chain_20261107.py')
+if chain.exists():shutil.copyfile(chain,dest/chain.name)
+chain=Path(__file__).with_name('run_native8_model_chain_20261107.py')
 if chain.exists():shutil.copyfile(chain,dest/chain.name)
 main=ship(S,['docs/product_backlog.json','docs/development_log.md','docs/handoffs/model-practical-cpu-20261107'],'Record complete meeting pipeline '+a.phase)
 print(json.dumps({'state':record['state'],'modelCommit':head,'mainCommit':main,'remoteReadbackConfirmed':True}),flush=True)
