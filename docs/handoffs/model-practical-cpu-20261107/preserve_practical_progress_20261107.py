@@ -44,7 +44,7 @@ for native_name in ['native8-vulkan-full-r1','native8-f16-full-r1']:
     if native_chain.exists() and read(native_chain).get('state')=='COMPLETE_TWO_MEETING_CANDIDATE_QUALITY_REVIEW_REQUIRED' and not (native_chain.parent/'candidate-assessment.json').exists():
         r=subprocess.run([__import__('sys').executable,str(M/'src/assess_practical_candidate_20261107.py'),'--control',str(native_chain.parent),'--backlog',str(R/'docs/product_backlog.json')],capture_output=True,text=True)
         (native_chain.parent/'assessment-status.json').write_text(json.dumps({'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr,'preservationContinuesEvenIfAnalysisFails':True},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
-names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6','practical-alignment-r1','practical-conditioned-ps4-r1']
+names=['practical-cpu-r1','practical-cpu-r2','practical-smoke-r2','practical-text-first-r1','bounded-speaker-smoke-r1','bounded-speaker-smoke-r2','bounded-speaker-full-r1','nemotron-speaker-20261107-prep','native8-smoke-r1','native8-full-r1','native8-vulkan-smoke-r1','native8-vulkan-full-r1','native8-count-control-r1','native8-precision-preparation','native8-f16-smoke-r1','native8-f16-full-r1','native8-command-r1','native8-ami-r1','native8-release-review-r1','practical-verbatim-r1','practical-qwen-native-r1','practical-qwen-streamed-r2','practical-qwen-signal-r3','practical-qwen-bounded-r4','practical-qwen-native17-r5','practical-qwen-author-boundaries-r6','practical-alignment-r1','practical-conditioned-ps4-r1','practical-conditioned-ps4-full-r1']
 for name in names:
     folder=base/name
     for file in folder.rglob('*'):
@@ -161,6 +161,14 @@ if ps4['review.json']:
     record['state']=ps4['review.json']['state'];record['next']=ps4['review.json']['next']
 if ps4['verified-review.json']:
     record['state']=ps4['verified-review.json']['state'];record['next']=ps4['verified-review.json']['next']
+full_ps4_root=base/'practical-conditioned-ps4-full-r1'
+full_ps4={name:optional(full_ps4_root/name) for name in ['protocol-r2.json','full-route-plan.json','seed-manifest.json','run-r2.json','separation-state-r2.json','asr-state-r2.json','review.json']}
+ps4['fullMeetingFollowthrough']=full_ps4
+if full_ps4['protocol-r2.json']:
+    record['state']=(full_ps4['run-r2.json'] or full_ps4['protocol-r2.json'])['state']+'_QUALITY_AND_SALE_OPEN'
+    record['next']='完成当前已冻结39分23秒L整场路由验证：79根中57个预测重叠根、168条预测目标路，使用同一PS4/原生声纹Top1身份核对与普通原音旁路。7条同源组件缓存明确复用，全部新提取/身份核对结束退出后才逐路转写；不使用旧分人活动硬静音，以免丢掉真实005讲话。以完整原标注/固定全局映射看总错字、逐人/短句/重叠上下文，任何总回退拒绝整个候选，不按段挑赢家；003短声退化显式保留。CPU5%/private2GiB/实际低RAM保护，原<5%与全部跨域/事实/双端实卡/售卖门保持。'
+if full_ps4['review.json']:
+    record['state']=full_ps4['review.json']['state'];record['next']=full_ps4['review.json']['next']
 (ev/'observed-result.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 paths=['.gitattributes','README.md','evidence/20261107-practical-cpu','src/companion_local_meeting_20261107.py','src/companion_native_asr_20261107.py','tools/model-output-contract-20261107','upstream-speaker','upstream-tse']
 paths += [str(f.relative_to(M)).replace('\\','/') for f in (M/'src').glob('*practical*20261107.py')]
