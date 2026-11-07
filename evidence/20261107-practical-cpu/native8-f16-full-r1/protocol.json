@@ -4,7 +4,7 @@
   "modelSha256": "5c7947680e6060e0d88cbbdd432bcee2b3edd2d3ea04c242326b067947e2027e",
   "modelRepository": "nvidia/Nemotron-3-Diarization",
   "modelRevision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
-  "precision": "FP16 converted from same exact official checkpoint;359 publishedQ8 tensors reproduced before this conversion",
+  "precision": "FP16 converted from same exact official checkpoint;all360 tensors including the acoustic filterbank reproduced in publishedQ8 before this conversion",
   "runtimeRelease": "NVIDIA/NeMo-Speech.cpp v0.3.0",
   "nativeLibrary": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\runtime-0.3.0-vulkan\\nemo-speech-0.3.0-windows-x86_64-vulkan\\bin\\nemo_speech_asr_c.dll",
   "nativeLibrarySha256": "6cd9e60baa18668426a7f56a143c187278011609fe615914a1b6cd74483b3eb2",

@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+  "pid": 24052,
+  "startedAt": "2026-11-07T12:57:51+08:00",
+  "results": [
+    {
+      "meeting": "public61-native8-control",
+      "phase": "activity",
+      "exitCode": 0,
+      "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "wholeProcessFamilySeconds": 4.097481300006621,
+      "privatePeakBytes": 1783590912
+    },
+    {
+      "meeting": "public61-native8-control",
+      "phase": "cli-control",
+      "exitCode": 0,
+      "workerState": "PASS_NATIVE61_C_ABI_AND_OFFICIAL_CLI_SEGMENTS",
+      "wholeProcessFamilySeconds": 2.033676299994113,
+      "privatePeakBytes": 1800790016
+    }
+  ],
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "protocolSha256": "e328ed27bb56bbc184e54bff2ced72ed5bb3472bb05d2cf064744da8cf183928",
+  "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+  "finishedAt": "2026-11-07T12:57:58+08:00"
+}
