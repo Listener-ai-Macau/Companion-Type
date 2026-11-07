@@ -1,5 +1,5 @@
 {
-  "state": "ENCODING_COMPLETE_AUDIO",
+  "state": "COMPLETE_AUDIO_FEATURE_PRECOMPUTATION_ONLY",
   "startedAt": "2026-11-07T08:59:31+08:00",
   "pid": 20928,
   "meeting": "L_R003S01C02",
@@ -61,10 +61,10 @@
     "gpuUtilizationHardCapped": false,
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
-  "gpuAllocatedBytes": 806536192,
-  "gpuReservedBytes": 1210056704,
-  "gpuPeakAllocatedBytes": 1171916288,
-  "gpuPeakReservedBytes": 1210056704,
+  "gpuAllocatedBytes": 795315712,
+  "gpuReservedBytes": 1923088384,
+  "gpuPeakAllocatedBytes": 1386120704,
+  "gpuPeakReservedBytes": 1923088384,
   "pcm16RamLoader": {
     "nativePcm16Loads": 0,
     "fallbackLoads": 0,
@@ -114,9 +114,9 @@
   "cooperativeGpuPacing": {
     "targetActiveTimeFraction": 0.25,
     "quantumSeconds": 0.025,
-    "checkpoints": 26,
-    "synchronizedWorkSeconds": 5.1426220999710495,
-    "yieldedSeconds": 15.441886899934616,
+    "checkpoints": 163,
+    "synchronizedWorkSeconds": 29.767070399961085,
+    "yieldedSeconds": 89.38667999989411,
     "maximumCheckpointWorkSeconds": 0.6207846999895992,
     "hardwareUtilizationHardCap": false,
     "limitations": "Cannot preempt one kernel; includes CPU dispatch/wait time in conservative work estimate.",
@@ -129,8 +129,8 @@
     "maxKeyTokens": 0,
     "encoderCalls": 1,
     "encoderChunks": 79,
-    "encoderMicrobatches": 11,
-    "encoderNativeSdpaCalls": 264,
+    "encoderMicrobatches": 79,
+    "encoderNativeSdpaCalls": 1896,
     "queryBlock": 128,
     "keyBlock": 256,
     "keyStreamedCalls": 0,
@@ -146,9 +146,9 @@
     "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a",
     "source": "Exact original author processor in previous exited process"
   },
-  "completedAcousticChunks": 11,
+  "completedAcousticChunks": 79,
   "totalAcousticChunks": 79,
-  "lastAcousticChunkAt": "2026-11-07T09:00:09+08:00",
+  "lastAcousticChunkAt": "2026-11-07T09:01:46+08:00",
   "resourceLimitsAtEncoderProgress": {
     "pid": 20928,
     "cpuRate": 500,
@@ -164,5 +164,13 @@
     "gpuPriorityClass": 0,
     "gpuUtilizationHardCapped": false,
     "scope": "This worker and its descendants only; no global or other-app changes."
-  }
+  },
+  "audioEncodingSeconds": 119.60927529999753,
+  "encodedFeatureManifest": "E:\\CodexData\\Companion\\.model-cache\\full-generation-recovery-20261107\\full-L-disjoint-recovery-20261107-r25-encoded\\manifest.json",
+  "encodedFeatureManifestSha256": "8d511f02349bcf059f77d913a91396069bedf42caca37d1029bd35301f0407e5",
+  "encodedFeatureBytes": 60491776,
+  "languageWeightsNeverLoaded": true,
+  "audioSeconds": 2362.945,
+  "finishedAt": "2026-11-07T09:01:48+08:00",
+  "wholeWorkerSeconds": 137.210390799999
 }
