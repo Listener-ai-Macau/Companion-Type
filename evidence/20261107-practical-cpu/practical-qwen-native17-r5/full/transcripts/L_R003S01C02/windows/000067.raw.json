@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 67,
+    "startSample": 32160000,
+    "endSample": 32640000,
+    "text": "是吧？呃，这块儿也还也也是不错的。嗯，对。别的那就是看看对安全这块儿，还有年关了，嗯，各个设备的一些检查，包括电梯啦，啊，都做了检查工作没有？啊，还是定期检查，没有检查，包括消防。咱们近期不是今年完了，各部门儿那什么都。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 32160000,
+        "endSample": 32640000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a14acf93a1d5d00e4df917d18e6122a8c8a833abfb063f8d80cda4af5205c653"
+}

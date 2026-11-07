@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 22,
+    "startSample": 10560000,
+    "endSample": 11040000,
+    "text": "是外来车的话，呃，及时给他打电话，让他清理走，要不我就实行收费制度。对。看别的对停车这块还有什么意见吗？没什么意见了，就说说绿化，就说说外边的绿化，外边那个绿化就有的请检查一点，有的那个花浇不到的，有的就去浇，完了那个花干枯的那个就把它踢出来，然后看来年再种成什么样子是吧？把小区的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 10560000,
+        "endSample": 11040000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "6b0654dc856778cf95f83f42e027426bae0f675ad56a4c74fa8dd1ebc18d7ce4"
+}

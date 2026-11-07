@@ -1,0 +1,34 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 52,
+    "startSample": 24960000,
+    "endSample": 25440000,
+    "text": "咱看能找个什么措施？这个挺普遍，咱们小区、其他小区也有。啊，其他小区怎么做的呀？这个看看是不是咱们本小区的？对，本小区。\n就是本小区的，像像像这不是本小区的，有的是。像这种事儿还真避免不了，还真没办法。就是啊，真没办法。你说你说都有门禁卡，都有门禁卡，他跟着那个开门的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": null,
+    "isAggregatedRecovery": true,
+    "acceptedLeaves": [
+      {
+        "startSample": 24960000,
+        "endSample": 25200000,
+        "naturalEos": true,
+        "nodeKey": "roota"
+      },
+      {
+        "startSample": 25200000,
+        "endSample": 25440000,
+        "naturalEos": true,
+        "nodeKey": "rootb"
+      }
+    ]
+  },
+  "rawSha256": "c7e177547dd27426e34e2f65ab78217d831e95cf22842d18e813fbed214a6866"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 60,
+    "startSample": 28800000,
+    "endSample": 29280000,
+    "text": "业主一找他，咱就难管。对，对对，不能把什么责任都揽到自己身上。咱物业也不是万能，是吧？哎，对，白对业主，他不可能做的。你家的东西放外边了，你给丢了，你来找物业去赔，你找物业赔，你自己没有保管好自己的财物。咱物业只能给他提供一些这个，比如你袋儿放这了，我给你提供监控，对吧？嗯，对对对。这些人，对，什么时候进来的，什么时候出去的，我给你提供。嗯。至于你这个电车不是锁着，你锁没锁，咱谁知道啊？你要没锁。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 28800000,
+        "endSample": 29280000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "309e7a52844a5786383bf93dde554a5b0d90bfdf730b6266eedda585bff31a7e"
+}

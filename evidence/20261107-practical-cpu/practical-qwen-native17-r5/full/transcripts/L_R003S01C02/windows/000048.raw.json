@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 48,
+    "startSample": 23040000,
+    "endSample": 23520000,
+    "text": "检查一下子，看有没有那个啥坏的。啊，出门儿、进门儿，是吧？咱们就是说门口这一块儿，还得说安保同志，还得多操心，多观察。还有吗？这个咱，那个摄像系统，咱们不是，嗯，这不是都是才检修了的吗？",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 23040000,
+        "endSample": 23520000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "9e16cbbeade808965e5790083f1b93f8bd3d5acc098094a17c0b03310486471c"
+}

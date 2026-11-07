@@ -1,5 +1,5 @@
 {
-  "state": "FOLLOWING_RUNNING_NATIVE_TRIAL",
+  "state": "CONCRETE_NATIVE_TRIAL_TERMINAL_REVIEW_REQUIRED",
   "startedAt": "2026-11-07T17:58:43+08:00",
   "pid": 22248,
   "modelFailureRetries": 0,
@@ -17,12 +17,14 @@
       "controllerPid": 26376
     }
   ],
-  "durableWindows": 94,
+  "durableWindows": 157,
   "resourceObservation": {
     "availableBytes": 557993984,
     "actualWindowsLowRam": true,
     "lastAvailableBytes": 769351680,
     "releasedOwnPrivatePeakUpperBound": 1271988224
   },
-  "ordinaryStrictCer": 0.05765765765765766
+  "ordinaryStrictCer": 0.05765765765765766,
+  "controllerState": "COMPLETE_TWO_BOUNDED_NATIVE_FULL_MEETINGS_REVIEW_REQUIRED",
+  "finishedAt": "2026-11-07T18:46:24+08:00"
 }

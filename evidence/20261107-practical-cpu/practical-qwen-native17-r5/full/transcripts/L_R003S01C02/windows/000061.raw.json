@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 61,
+    "startSample": 29280000,
+    "endSample": 29760000,
+    "text": "人家骑就走了，最起码自身的一些这个防盗意识都没有。对。咱这个物业也在这里不管了，哎，对，咱就提示业主贵重的物品不要放到外边，你要自己看好。对，温馨提示。咱们哪一年都都会做一批这个这个提示的牌子啊什么的，嗯，还有什么也是滚动播放。嗯。基本上咱们这一块做的还是不错的，其他小区。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 29280000,
+        "endSample": 29760000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "2116af32a78af7b086ee06d1cf87f141ce867496d8b3968764edc4a2ca89c0a8"
+}

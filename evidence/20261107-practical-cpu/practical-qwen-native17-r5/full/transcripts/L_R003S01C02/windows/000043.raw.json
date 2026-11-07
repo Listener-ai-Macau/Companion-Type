@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 43,
+    "startSample": 20640000,
+    "endSample": 21120000,
+    "text": "物业呃，这个业主们说，这小区的管理就是你们物业的，对吧？咱们物业都都都来了。是。也要进行监督，从业也要看到这个业主他们，嗯，一些行为，咱们也要及时，呃，进行一个沟通，不要说上去，是吧？以这个，呃，这个检讨的，是不是让人家说，你看这东西给我捡起来，咱不要说，你看，但是说话要委婉一些，你看。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 20640000,
+        "endSample": 21120000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "d88356a26e044b4f911ba57406b8de6fe050cd7d75d593e143ad449052afbd53"
+}

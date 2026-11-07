@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 47,
+    "startSample": 22560000,
+    "endSample": 23040000,
+    "text": "保障，看看咱小区这个安全这块儿，啊，物业有那些呃业主给你们提的那些建议或者想法儿呢，啊，都可以把咱这个安全落实下去。严管主要是安全。叫保安晚上多巡视，多巡视。晚上就是保安两三个小时就在小区里边儿转一点儿，还有咱那个那个影像啥的那个角落监。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 22560000,
+        "endSample": 23040000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "01bfc32ef045a833ecf0dac7cd271de2ba8e91e1dccf5931102540b2cd2d79dd"
+}

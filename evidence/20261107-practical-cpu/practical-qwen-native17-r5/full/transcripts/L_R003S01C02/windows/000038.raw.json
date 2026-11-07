@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 38,
+    "startSample": 18240000,
+    "endSample": 18720000,
+    "text": "不能老请那外面技术人员过来进行那个维护、整治，这样的话增加咱物业的成本。呃，这个校园这个咱这社区这个安这个卫生这块啊，像小狗见了那些客户了，一见牵狗就适当的提醒一下啊，呃，让他多注意一下。对对对。这块的话，咱是没法完美这个业主之间人家。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 18240000,
+        "endSample": 18720000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "25cecb41bbaacb1b66b5d879c9b1943f30f2c2bd011604a4c30b74a27b8c3266"
+}

@@ -18,7 +18,9 @@ def main():
     read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
     audio=Path(a.audio).resolve();pack_path=Path(a.model_pack).resolve();root=Path(a.work_dir).resolve();pack=read(pack_path)
     assert pack['version']==1 and pack['backend']=='qwen-native-bounded'
-    source=Path(pack['sourceControl']).resolve();worker=Path(__file__).with_name('practical_qwen_checkpoint_worker_20261107.py')
+    source=Path(pack['sourceControl']).resolve();module=pack.get('workerModule','practical_qwen_checkpoint_worker_20261107.py')
+    assert module in ['practical_qwen_checkpoint_worker_20261107.py','practical_qwen_boundaries_worker_20261107.py'],'Unknown native inference entry'
+    worker=Path(__file__).with_name(module)
     assert checksum(worker)==pack['workerSourceSha256']
     assert checksum(Path(__file__).with_name('practical_qwen_bounded_decode_20261107.py'))==pack['recoverySourceSha256']
     for file,digest in pack['pinnedFiles'].items():
@@ -50,7 +52,7 @@ def main():
     out=control/'full/transcripts'/task['meeting'];atomic_json(task_path,task)
     pressure=SystemRamPressure();child=None;owned=None;attempt=None
     try:
-        names=['practical_qwen_checkpoint_worker_20261107.py','practical_qwen_bounded_worker_20261107.py','practical_qwen_full_worker_20261107.py','practical_qwen_native_worker_20261107.py','practical_transcript_worker_20261107.py','practical_nemotron_worker_20261107.py','moss_night_gpu_worker_20261104.py','run_practical_qwen_checkpoint_20261107.py','run_practical_qwen_bounded_20261107.py']
+        names=['practical_qwen_boundaries_worker_20261107.py','practical_qwen_checkpoint_worker_20261107.py','practical_qwen_bounded_worker_20261107.py','practical_qwen_full_worker_20261107.py','practical_qwen_native_worker_20261107.py','practical_transcript_worker_20261107.py','practical_nemotron_worker_20261107.py','moss_night_gpu_worker_20261104.py','run_practical_qwen_boundaries_20261107.py','run_practical_qwen_checkpoint_20261107.py','run_practical_qwen_bounded_20261107.py']
         for member in psutil.process_iter(['cmdline']):
             try:assert not any(Path(arg).name in names for arg in member.info['cmdline'] or []),'已有模型正在处理，请待该任务结束后继续。'
             except (psutil.NoSuchProcess,psutil.AccessDenied):pass

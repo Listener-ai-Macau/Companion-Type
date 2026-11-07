@@ -1,5 +1,5 @@
 {
-  "state": "RUNNING_BOUNDED_NATIVE_FULL_ASR",
+  "state": "COMPLETE_RECOVERABLE_CPU_TRANSCRIPT_UNQUALIFIED",
   "pid": 15752,
   "startedAt": "2026-11-07T18:21:47+08:00",
   "binding": {
@@ -11,7 +11,7 @@
   },
   "phase": "full",
   "modelLoaded": true,
-  "newNeuralCalls": 16,
+  "newNeuralCalls": 81,
   "inheritedRootNodes": 0,
   "reusedNodeFiles": 0,
   "completedCacheOnly": false,
@@ -28,7 +28,7 @@
     "inLimitedJob": true,
     "jobPrivateCommitLimitBytes": 2147483648,
     "jobMemoryLimitEnabled": true,
-    "jobPeakPrivateCommitBytes": 1283948544,
+    "jobPeakPrivateCommitBytes": 1284194304,
     "cpuPriorityClass": 64,
     "memoryPagePriority": 1,
     "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -37,9 +37,20 @@
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
   "totalWindows": 79,
-  "completedWindows": 16,
+  "completedWindows": 79,
   "gpu": "AMD Radeon RX 6800 XT",
   "modelLoadSeconds": 34.803593600023305,
-  "completedSample": 7680000,
-  "recoveredRootIndices": []
+  "completedSample": 37807120,
+  "recoveredRootIndices": [
+    52
+  ],
+  "allAudioSamplesCoveredOnce": true,
+  "allAsrTextPreserved": true,
+  "qualityQualified": false,
+  "modelOutputSha256": "1c37e298213dac10217dbcf50f2874e5fa7bad8d0cc4d56943405be0dde70a0e",
+  "attributionReviewSha256": "d20cde7127bfd47d8ec16e0669548c8e216557e0886c2006ae10a097be8f8670",
+  "acceptedLeafCount": 80,
+  "differentCheckpointOutputComparedByStrictScorerNotByteEquality": true,
+  "finishedAt": "2026-11-07T18:46:18+08:00",
+  "wholeWorkerSeconds": 1471.0677222000086
 }

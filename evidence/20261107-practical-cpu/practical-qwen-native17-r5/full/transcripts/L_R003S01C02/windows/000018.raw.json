@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 18,
+    "startSample": 8640000,
+    "endSample": 9120000,
+    "text": "呃，买的咱公共车位，那怎么办？啊，咱怎么来办法来解决这块问题？啊，我这边啊，就是有一个就是，嗯，谁先来谁先停，早来早停，这个是一个呃原则。你来早，这个车位就属于你来停。还有个咱会呃增加设备，比如呃你家两三辆车，我只是给你。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 8640000,
+        "endSample": 9120000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "ff73381ba1f118481003c322707d2a9fe0983e58ea429d7e926422e2ff7ebf9e"
+}

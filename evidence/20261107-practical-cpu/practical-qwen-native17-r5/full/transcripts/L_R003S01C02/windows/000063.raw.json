@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 63,
+    "startSample": 30240000,
+    "endSample": 30720000,
+    "text": "就是刚才说的那几点呗，呃，像早起，像早起这天没没亮呢，呃，来回的摸东西这个，呃，是不是咱咱保安要走动走，去转去转？有的是咱本小区的，这避免不了，有些外小区的过来，呃，偷摸的这些，咱也不知道人家翻啥，可能也是呃收破烂的，在翻东西的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 30240000,
+        "endSample": 30720000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "e0e7721d3b2d1d4a5fd6c5f52b73811f6c005016f9be3b5c93d5094362a85b04"
+}

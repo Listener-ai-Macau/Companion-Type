@@ -1,0 +1,71 @@
+{
+  "at": "2026-11-07T18:33:41+08:00",
+  "state": "PASS_BOUNDED_WAV_AUTHOR_BOUNDARY_MATH_ONLY_NO_ASR_QUALITY_RESULT",
+  "upstreamRevision": "7c6daf77a2421100f5fb066495372c00129d39ff",
+  "upstreamSourceSha256": "b37fb4140e6d9be85f2ecb1552ed16136eb98a57f44b402f8b0b213cb6df2a82",
+  "portSourceSha256": "708ff9bcaa37b4b70789635601830cba04b4fb60ea763501509dfd39d62eca82",
+  "controls": [
+    {
+      "label": "synthetic-pcm-boundary-math-not-speech-quality",
+      "samples": 1488000,
+      "spanCount": 4,
+      "allSpanSamplesAndPaddingEqualToExactAuthorFunction": true
+    },
+    {
+      "label": "short-upstream-early-return-no-padding",
+      "samples": 4000,
+      "spanCount": 1,
+      "allSpanSamplesAndPaddingEqualToExactAuthorFunction": true
+    },
+    {
+      "label": "public-original120s-boundary-math-not-asr-quality",
+      "samples": 1920000,
+      "spanCount": 4,
+      "allSpanSamplesAndPaddingEqualToExactAuthorFunction": true
+    }
+  ],
+  "localTargetSeconds": 30.0,
+  "authorDefaultAsrTargetSeconds": 1200.0,
+  "searchExpandSeconds": 5.0,
+  "energyWindowMilliseconds": 100.0,
+  "sameBoundaryRuleDifferentMemoryBudget": true,
+  "allOriginalSamplesCoveredOnce": true,
+  "noiseOrSpeechRemoved": false,
+  "fullPublicSpans": [
+    {
+      "meeting": "S_R004S03C01",
+      "spans": 79,
+      "minSeconds": 0.4891875,
+      "maxSeconds": 34.80675,
+      "paddingSamples": 173
+    },
+    {
+      "meeting": "L_R003S01C02",
+      "spans": 80,
+      "minSeconds": 11.5794375,
+      "maxSeconds": 34.86775,
+      "paddingSamples": 0
+    }
+  ],
+  "modelInferenceAdded": 0,
+  "activeNative17NeuralProtocolChanged": false,
+  "referencesOpened": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 22456,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 36159488,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "scope": "Exact mathematical boundary equality on public120s and synthetic non-speech controls. Full real-meeting manifests prepared without neural scoring. No evidence yet of lower CER; not the authors1200s end-to-end configuration or a completed new quality experiment."
+}

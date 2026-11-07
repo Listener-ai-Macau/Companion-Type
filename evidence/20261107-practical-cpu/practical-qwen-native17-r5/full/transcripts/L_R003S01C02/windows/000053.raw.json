@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 53,
+    "startSample": 25440000,
+    "endSample": 25920000,
+    "text": "他进来了。这个，这是门卫呀，咱门卫也不是干吃干饭的呀。啊，看咱这物业的工作，也不是说特别好做，真的都是有难度。对，也得串串门啊，走亲戚也得走。对，您说现在比较紧，但是业主就业主就业主就这么反映这个事儿了。反正咱这工作也是确实不好做。嗯，对。要不到咱这儿还有个莱克登记制度，你朝团里的纪律什么？",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 25440000,
+        "endSample": 25920000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "106ebe38d5ed62df16ebfdf35a51cf0926b2e650f9a13790ecbdf2c93af5ea85"
+}

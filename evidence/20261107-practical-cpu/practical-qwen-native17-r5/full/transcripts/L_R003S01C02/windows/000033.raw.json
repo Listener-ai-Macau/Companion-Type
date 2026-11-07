@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 33,
+    "startSample": 15840000,
+    "endSample": 16320000,
+    "text": "随地大小便，你这个东西也不好说，你不能强制人家，对吧？罚也没法罚。嗯，只能靠靠自觉，靠自觉。对，靠一个自觉，一个人咱多说说来，是吧？再一个，咱们这儿这个清洁人员，对，只能说受欺负。也也需要就是说，呃，勤巡视，呃，勤那什么？你看，工作时间之。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 15840000,
+        "endSample": 16320000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "98c5c079906b09f6524ebbcd4a23c233b606043dd0c2a903c92a7c0d1f4ae72b"
+}

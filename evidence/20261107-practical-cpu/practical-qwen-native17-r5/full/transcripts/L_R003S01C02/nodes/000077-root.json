@@ -1,0 +1,47 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 77,
+    "startSample": 36960000,
+    "endSample": 37440000,
+    "text": "都听，三，啊，都听。嗯。这 number 三对吧？嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      71268,
+      49187,
+      3837,
+      44991,
+      3837,
+      103924,
+      3837,
+      71268,
+      49187,
+      1773,
+      106287,
+      1773,
+      43288,
+      1372,
+      220,
+      44991,
+      32664,
+      100003,
+      11319,
+      106287,
+      1773,
+      151645
+    ],
+    "rawDecoded": "都听，三，啊，都听。嗯。这 number 三对吧？嗯。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.563723600003868,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true
+  },
+  "rawSha256": "84ae103aac17bf7775990c365c3bbd8113dbacb87e06ed44f4ef7e522fbb8550"
+}

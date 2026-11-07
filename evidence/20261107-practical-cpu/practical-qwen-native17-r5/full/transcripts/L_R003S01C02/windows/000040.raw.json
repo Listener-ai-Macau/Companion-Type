@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 40,
+    "startSample": 19200000,
+    "endSample": 19680000,
+    "text": "咱这都要进行，所以说一一旦有些业主牵着这个无狗证的狗来小区，呃，遛弯儿、遛狗之类的，咱这个物业及时要向上向上报，啊，然后物业这块儿也会跟这个当地的这个呃派出所要进行联系，然后物业如果再不住多了一些无狗证这个呃住户。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 19200000,
+        "endSample": 19680000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "c17c90261a41f1d1f3def8a1953100061aed53fb3e2ea8fa04746e73be72f51d"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b0f6ca1482e7237892cc904036baea64fbf2266131d61638ac02448636d6cd75",
+    "seedManifestSha256": "0bda68cc1e28d91aa58fb6d4dccdeb73c3ad1d9d905894ef7ba8b27997b460a2",
+    "workerSourceSha256": "631ad2a338e627ce7945efabe681c4bf1ad5e51e605846a1028e17b597ca351d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "768574317a1054afe52a098f8b2630185974a57eb42144ecdf249e929807fc1a"
+  },
+  "raw": {
+    "index": 57,
+    "startSample": 27360000,
+    "endSample": 27840000,
+    "text": "啊，操点心儿，把好东西你放家里面。呃，过年确实这种情况就多了，咱们得把之前的东西不要外放。嗯，对。有些有些事儿，你说也避免这个生人儿，也也避免不了人家进来。对，咱们把这个话，关心的话，替业主操心的话，咱们说到前面，是吧？咱们第二方面就是说加强咱们这方面的一个管理，一个监督，然后真出问题以后，你你你你这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 27360000,
+        "endSample": 27840000,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "ee10c122baae212b2a92f21cf0b7b56eafc9a1a4dbe32ff8eb5dffa531868f49"
+}
