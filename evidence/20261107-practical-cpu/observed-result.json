@@ -1,5 +1,5 @@
 {
-  "at": "2026-11-07T19:16:33+08:00",
+  "at": "2026-11-07T19:29:13+08:00",
   "phase": "running",
   "ownerQuote": "继续推进一下, 把模型做到可实用",
   "stockCpuR1": {
@@ -8894,7 +8894,275 @@
         "factualMinutesMeasured": false,
         "qualification": "NOT_QUALIFIED: exposed development chronological text only. Non-overlap-only/time-constrained per-person, separated overlap, factual minutes, final cross-domain holdout and actual installed phone/card/sale gates remain open. Prior AMI speaker failure retained.",
         "noTrainingReferenceHotwordsOrFillerErDeletion": true
+      },
+      "priorNative17IndependentCommandProof": {
+        "at": "2026-11-07T18:57:41+08:00",
+        "state": "PASS_INDEPENDENT_NATIVE_INPUT_CANCEL_RESUME_CACHE_AND_SHARED_DOCUMENT",
+        "audioSeconds": 60.0,
+        "publicOriginalSourceAudioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "publicInputSha256": "9405f586f3e4908725aa278a21e06654e7abae99c63240850d09c945b533c4c5",
+        "cliSourceSha256": "01f64dd284c07b0adf083a722dd76048bd9cb71092ac0dbf22316fee7781d7b8",
+        "modelPackSha256": "a3726424dc74f929c44433d35387f883e5dd1bd16242d60733b5427ffd29dcc2",
+        "outputSha256": "bf129c791bffab0e3509a6d277925b2456a1c02278851f1a9fc9e3776e96233e",
+        "actualCancellationAfterCommittedFirstRoot": true,
+        "firstRootRawBytesReusedUnchanged": true,
+        "independentNativeIdsAndTextMatchResearchOnSameAudio": true,
+        "actualSharedRustProductDocumentPassed": true,
+        "completeCacheZeroModelExactOutput": true,
+        "missingCommittedNodeRefusedTwiceZeroModel": true,
+        "restoredOriginalNodeReopensZeroModel": true,
+        "originalAudioUnchanged": true,
+        "knownOwnedWorkerAttempts": [
+          {
+            "startedAt": "2026-11-07T18:50:11+08:00",
+            "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0001.log",
+            "wholeProcessFamilySeconds": 62.833705299999565,
+            "privatePeakBytes": 1238175744,
+            "interrupted": true,
+            "exitCode": 15,
+            "finishedAt": "2026-11-07T18:51:13+08:00",
+            "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+          },
+          {
+            "startedAt": "2026-11-07T18:51:15+08:00",
+            "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0002.log",
+            "wholeProcessFamilySeconds": 55.471261600003345,
+            "privatePeakBytes": 1087918080,
+            "interrupted": true,
+            "exitCode": 15,
+            "finishedAt": "2026-11-07T18:52:10+08:00",
+            "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+          },
+          {
+            "startedAt": "2026-11-07T18:56:11+08:00",
+            "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0003.log",
+            "wholeProcessFamilySeconds": 79.50375920001534,
+            "privatePeakBytes": 1238736896,
+            "cacheOnlyExpected": false,
+            "exitCode": 0,
+            "finishedAt": "2026-11-07T18:57:31+08:00"
+          },
+          {
+            "startedAt": "2026-11-07T18:57:32+08:00",
+            "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0004.log",
+            "wholeProcessFamilySeconds": 1.0254825000010896,
+            "privatePeakBytes": 1445888,
+            "cacheOnlyExpected": true,
+            "exitCode": 0,
+            "finishedAt": "2026-11-07T18:57:33+08:00"
+          },
+          {
+            "startedAt": "2026-11-07T18:57:35+08:00",
+            "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0005.log",
+            "wholeProcessFamilySeconds": 1.0206046999956015,
+            "privatePeakBytes": 1638400,
+            "cacheOnlyExpected": true,
+            "exitCode": 1,
+            "finishedAt": "2026-11-07T18:57:36+08:00",
+            "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+          },
+          {
+            "startedAt": "2026-11-07T18:57:37+08:00",
+            "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0006.log",
+            "wholeProcessFamilySeconds": 1.018027499987511,
+            "privatePeakBytes": 581632,
+            "cacheOnlyExpected": true,
+            "exitCode": 1,
+            "finishedAt": "2026-11-07T18:57:38+08:00",
+            "error": "AssertionError('转写未完成，原音和已保存段落保留。')"
+          },
+          {
+            "startedAt": "2026-11-07T18:57:39+08:00",
+            "log": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\independent-public60-control\\task\\native-attempt-0007.log",
+            "wholeProcessFamilySeconds": 1.0187988999823574,
+            "privatePeakBytes": 1626112,
+            "cacheOnlyExpected": true,
+            "exitCode": 0,
+            "finishedAt": "2026-11-07T18:57:40+08:00"
+          }
+        ],
+        "controlEvents": [
+          {
+            "label": "independent-real-resume-after-resource-3",
+            "exitCode": 0,
+            "wholeControllerFamilySeconds": 80.89987220001058,
+            "cancelRequestedAfterFirstCommittedRoot": false
+          },
+          {
+            "label": "independent-complete-cache-reopen",
+            "exitCode": 0,
+            "wholeControllerFamilySeconds": 2.409045699983835,
+            "cancelRequestedAfterFirstCommittedRoot": false
+          },
+          {
+            "label": "independent-missing-node-refusal",
+            "exitCode": 1,
+            "wholeControllerFamilySeconds": 2.408750400005374,
+            "cancelRequestedAfterFirstCommittedRoot": false
+          },
+          {
+            "label": "independent-missing-node-refusal-again",
+            "exitCode": 1,
+            "wholeControllerFamilySeconds": 2.407951700006379,
+            "cancelRequestedAfterFirstCommittedRoot": false
+          },
+          {
+            "label": "independent-restored-node-cache-reopen",
+            "exitCode": 0,
+            "wholeControllerFamilySeconds": 2.408296199981123,
+            "cancelRequestedAfterFirstCommittedRoot": false
+          }
+        ],
+        "continuedExistingFixtureAfterRealLowRam": true,
+        "privateAudioUploaded": false,
+        "privateTaskPublished": false,
+        "publicFixtureOnly": true,
+        "installedAppOrPhoneCardPassed": false,
+        "qualityQualified": false
+      },
+      "exactGitByteRecoveryProof": {
+        "at": "2026-11-07T19:11:15+08:00",
+        "state": "PASS_EXACT_GIT_CHECKOUT_FILTER_FOR_HASH_BOUND_MODEL_SOURCE_AND_PROTOCOL",
+        "observations": [
+          {
+            "path": "src/practical_qwen_boundaries_worker_20261107.py",
+            "diskSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+            "checkoutBeforeSha256": "7a471b0c366eb28a037408e7b355ab89355063cf0f2260c83a18dfc503710800",
+            "differentBefore": true,
+            "checkoutAfterSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+            "exactAfter": true
+          },
+          {
+            "path": "evidence/20261107-practical-cpu/practical-qwen-native17-r5/native-protocol.json",
+            "diskSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+            "checkoutBeforeSha256": "21d712648fdeff611ef5da682f076b018c9dd0fe200ff6219fc27855b870b091",
+            "differentBefore": true,
+            "checkoutAfterSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+            "exactAfter": true
+          }
+        ],
+        "runtimeSourceBytesChanged": false,
+        "globalGitSettingsChanged": false,
+        "recognitionQualityImprovementClaimed": false,
+        "scope": "Repository-only byte preservation prevents newline conversion from invalidating recorded source/protocol SHA256 after cleanup and restore."
       }
     }
+  },
+  "nativeAlignment": {
+    "preparation.json": {
+      "at": "2026-11-07T19:22:03+08:00",
+      "state": "PINNED_NATIVE_ALIGNER_READY_NO_INFERENCE",
+      "modelId": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
+      "revision": "c07281df297b9905d24a508279258cccf987a064",
+      "inferenceStarted": false,
+      "qualityQualified": false,
+      "ranges": [
+        {
+          "index": 0,
+          "start": 0,
+          "end": 458886489,
+          "bytes": 458886490,
+          "resumedPrefixBytes": 0,
+          "sha256": "cc99a659cb4c6f6b94c90ff4f660dadf51c60b0a9403da3975919dcb25836ca7",
+          "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-0.part"
+        },
+        {
+          "index": 2,
+          "start": 917772980,
+          "end": 1376659469,
+          "bytes": 458886490,
+          "resumedPrefixBytes": 0,
+          "sha256": "13b35f5534eb98a6deb484ccabfaa428540815d51dc49deea5e588938efe14a9",
+          "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-2.part"
+        },
+        {
+          "index": 1,
+          "start": 458886490,
+          "end": 917772979,
+          "bytes": 458886490,
+          "resumedPrefixBytes": 0,
+          "sha256": "78cf878c5043d6da8031da4cd7e95afe4a43aa49a1cfb50b83ea1482c2a5a294",
+          "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-1.part"
+        },
+        {
+          "index": 3,
+          "start": 1376659470,
+          "end": 1835545959,
+          "bytes": 458886490,
+          "resumedPrefixBytes": 0,
+          "sha256": "41ca06abc6f497caa723be1b344d64e6e6afbfea9fa8327a53a85d80aff1f2ae",
+          "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\aligner-range-3.part"
+        }
+      ],
+      "finishedAt": "2026-11-07T19:22:39+08:00",
+      "weightBytes": 1835545960,
+      "weightSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+      "limits": {
+        "pid": 20020,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 268435456,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 27668480,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      },
+      "sourceSha256": "28f9dca05b3f4086081dbde1d2d61ee2d87563aeb279dfcccf3a12db6ac323c6",
+      "scope": "Download and source verification only. No true word timestamps, person attribution, overlap separation or lower CER established."
+    },
+    "protocol.json": {
+      "at": "2026-11-07T19:28:38+08:00",
+      "state": "FROZEN_BEFORE_NATIVE_ALIGNMENT_INFERENCE",
+      "workerSourceSha256": "30ee26053270ebf229c74cd391e2f712b94e00571b03751d456fa07ad4107978",
+      "helperSources": {
+        "practical_alignment_loader_20261107.py": "5f31f7dece1798af66982dfcf9583f20d770dd487cb124842c66f96f1976d0f8",
+        "practical_alignment_text_20261107.py": "006aed03ba02ae339dd75ca75771614aa53fc407f5229774b70cf8692bec59bd",
+        "moss_streamed_weights_20261104.py": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+      },
+      "runtimeSources": {
+        "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\processing_qwen3_asr.py": "5ff7ace057ae959fb0cd551775cbbfdad8c003eb731bf0f1f39bfc6452ce86fa",
+        "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\modeling_qwen3_asr.py": "f6247469bc82ee40aa83909c530053d6bfbb1cfa8d34e74ff842f81f6c0bb2a4"
+      },
+      "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508",
+      "inputPlanSha256": "6fa8f96272dcf83baf8114f774d26ed4bd08fbd2bc318a98066f875cd1953050",
+      "inputSelection": "Both existing complete fixed30s native17 outputs, chosen before new boundary result. No new ASR, no per-meeting backend choice.",
+      "inference": "Official native timestamp classifier, BF16/eager/batch1/use_cache=False. No text/reference/person count/hotwords supplied except unchanged recognized raw text.",
+      "pilotRule": "Exact tiny standard/streamed logits first; then original recognized first30s must preserve every character and retain all audio features, emit multiple timestamp units with at least one positive in-bound interval. Invalid or zero-duration units remain explicitly unresolved. This is an execution gate, not word-time accuracy acceptance.",
+      "fullRule": "Only after pilot execution passes, align both complete existing recordings with the same pinned model/policy. Preserve raw predicted classes and author monotonic repairs, original text, invalid times and failures. No threshold sweep or claimed source separation.",
+      "timeAccuracyNotAutomaticallyQualified": true,
+      "referencePassedToWorker": false,
+      "speakerLabelsPassedToWorker": false,
+      "cpuPercentMaximum": 5,
+      "privateCommitLimitBytes": 2147483648,
+      "qualityQualified": false,
+      "defaultProductChanged": false
+    },
+    "run.json": null,
+    "tiny-loader-proof.json": null,
+    "pilot-state.json": null,
+    "full-state.json": null,
+    "review.json": null
+  },
+  "native17ConcurrentCacheProof": {
+    "at": "2026-11-07T19:23:51+08:00",
+    "state": "PASS_COMPLETE_PUBLIC_CACHE_READ_DURING_OTHER_NEURAL_STAGE_ZERO_NEW_MODEL",
+    "activeWorkerPid": 13372,
+    "activeWorkerIdentityUnchanged": true,
+    "cacheReadWholeControllerSeconds": 2.261800400010543,
+    "newNeuralCalls": 0,
+    "modelLoaded": false,
+    "outputSha256": "bf129c791bffab0e3509a6d277925b2456a1c02278851f1a9fc9e3776e96233e",
+    "stdoutIsValidUtf8SharedDocument": true,
+    "publicFixtureOnly": true,
+    "privateTaskPublished": false,
+    "installedAppOrPhoneCardPassed": false,
+    "cliSourceSha256": "01f64dd284c07b0adf083a722dd76048bd9cb71092ac0dbf22316fee7781d7b8",
+    "qualityQualified": false
   }
 }

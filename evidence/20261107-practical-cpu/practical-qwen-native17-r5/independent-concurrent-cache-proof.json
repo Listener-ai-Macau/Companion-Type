@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-07T19:23:51+08:00",
+  "state": "PASS_COMPLETE_PUBLIC_CACHE_READ_DURING_OTHER_NEURAL_STAGE_ZERO_NEW_MODEL",
+  "activeWorkerPid": 13372,
+  "activeWorkerIdentityUnchanged": true,
+  "cacheReadWholeControllerSeconds": 2.261800400010543,
+  "newNeuralCalls": 0,
+  "modelLoaded": false,
+  "outputSha256": "bf129c791bffab0e3509a6d277925b2456a1c02278851f1a9fc9e3776e96233e",
+  "stdoutIsValidUtf8SharedDocument": true,
+  "publicFixtureOnly": true,
+  "privateTaskPublished": false,
+  "installedAppOrPhoneCardPassed": false,
+  "cliSourceSha256": "01f64dd284c07b0adf083a722dd76048bd9cb71092ac0dbf22316fee7781d7b8",
+  "qualityQualified": false
+}

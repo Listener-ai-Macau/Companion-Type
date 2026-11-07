@@ -11,7 +11,7 @@
   },
   "phase": "full",
   "modelLoaded": true,
-  "newNeuralCalls": 24,
+  "newNeuralCalls": 69,
   "inheritedRootNodes": 0,
   "reusedNodeFiles": 0,
   "completedCacheOnly": false,
@@ -28,7 +28,7 @@
     "inLimitedJob": true,
     "jobPrivateCommitLimitBytes": 2147483648,
     "jobMemoryLimitEnabled": true,
-    "jobPeakPrivateCommitBytes": 1285140480,
+    "jobPeakPrivateCommitBytes": 1289113600,
     "cpuPriorityClass": 64,
     "memoryPagePriority": 1,
     "memoryPagePriorityIsReclaimHintNotRamCap": true,
@@ -37,10 +37,10 @@
     "scope": "This worker and its descendants only; no global or other-app changes."
   },
   "totalWindows": 79,
-  "completedWindows": 24,
+  "completedWindows": 72,
   "rootBoundaryPolicy": "author-low-energy-local30s-budget",
   "gpu": "AMD Radeon RX 6800 XT",
   "modelLoadSeconds": 34.27830450001056,
-  "completedSample": 11372383,
+  "completedSample": 34307651,
   "recoveredRootIndices": []
 }

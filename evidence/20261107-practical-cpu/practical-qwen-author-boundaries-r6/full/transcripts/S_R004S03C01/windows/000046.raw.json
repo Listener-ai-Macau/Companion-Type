@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "b41c1be09d2426c6a42b782f9bcd06987dd4f9e0659134ecdb9d41324f17f9e8",
+    "seedManifestSha256": "5398d81f6afc6d307054013d7dd1431d44027daca57af2bc7a582f2de6e605a2",
+    "workerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 46,
+    "startSample": 21758204,
+    "endSample": 22249896,
+    "text": "个位数的话可以抹零，满二百以上，呃，消费那个十位数也抹零，就是不打折。要是要是打折的话，你以后肯定也还是总是跟他打折，嗯，就是抹个零，就是这样的，是一个不错的促销方式，还能拉动这个客单价，嗯，一举两得。这样消费者他也愿意来来你这儿买，嗯嗯，这个这样话，这种咱这个店儿的销量也会上去。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 21758204,
+        "endSample": 22249896,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "fca8df22a512ac978a7df16035211a9f3837936ae8f55cb4b85ba998e8fe0e19"
+}

@@ -1,0 +1,148 @@
+{
+  "_id": "6a3e3b595e9462d0ece032fa",
+  "id": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
+  "private": false,
+  "pipeline_tag": "token-classification",
+  "library_name": "transformers",
+  "tags": [
+    "transformers",
+    "safetensors",
+    "qwen3_asr",
+    "token-classification",
+    "zh",
+    "en",
+    "yue",
+    "fr",
+    "de",
+    "it",
+    "ja",
+    "ko",
+    "pt",
+    "ru",
+    "es",
+    "arxiv:2601.21337",
+    "license:apache-2.0",
+    "endpoints_compatible",
+    "region:us"
+  ],
+  "downloads": 79111,
+  "likes": 51,
+  "modelId": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
+  "author": "Qwen",
+  "sha": "c07281df297b9905d24a508279258cccf987a064",
+  "lastModified": "2026-06-26T08:42:38.000Z",
+  "gated": false,
+  "disabled": false,
+  "widgetData": [
+    {
+      "text": "我叫沃尔夫冈，我住在柏林。"
+    },
+    {
+      "text": "我叫萨拉，我住在伦敦。"
+    },
+    {
+      "text": "我叫克拉拉，我住在加州伯克利。"
+    }
+  ],
+  "model-index": null,
+  "config": {
+    "architectures": [
+      "Qwen3ASRForTokenClassification"
+    ],
+    "model_type": "qwen3_asr",
+    "tokenizer_config": {
+      "bos_token": null,
+      "eos_token": "<|im_end|>",
+      "unk_token": null,
+      "pad_token": "<|endoftext|>"
+    },
+    "chat_template_jinja": "{%- set ns = namespace(audio_tokens='', words=[]) -%}{%- for m in messages -%}{%- if m.content is not string -%}{%- for c in m.content -%}{%- if c.type == 'audio' or ('audio' in c) or ('audio_url' in c) -%}{%- set ns.audio_tokens = ns.audio_tokens + '<|audio_start|><|audio_pad|><|audio_end|>' -%}{%- endif -%}{%- if c.type == 'text' and (c.text is defined) -%}{%- set ns.words = ns.words + [c.text] -%}{%- endif -%}{%- endfor -%}{%- endif -%}{%- endfor -%}{{- ns.audio_tokens + ns.words | join('<timestamp><timestamp>') + '<timestamp><timestamp>' -}}"
+  },
+  "cardData": {
+    "license": "apache-2.0",
+    "library_name": "transformers",
+    "language": [
+      "zh",
+      "en",
+      "yue",
+      "fr",
+      "de",
+      "it",
+      "ja",
+      "ko",
+      "pt",
+      "ru",
+      "es"
+    ]
+  },
+  "transformersInfo": {
+    "auto_model": "AutoModelForTokenClassification",
+    "pipeline_tag": "token-classification",
+    "processor": "AutoProcessor"
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "52373fe24473b1aa44333d318f578ae6bf04b49b",
+      "size": 1570
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "21455f653fd7f7963ee042f2dcb2709530bc6d71",
+      "size": 9419
+    },
+    {
+      "rfilename": "chat_template.jinja",
+      "blobId": "1d6020e0ee6f66499d674a3fc2bbae5a99482c0e",
+      "size": 551
+    },
+    {
+      "rfilename": "config.json",
+      "blobId": "74b91ca23584bdebd82ffaaeb21f72444baa2dd8",
+      "size": 248029
+    },
+    {
+      "rfilename": "model.safetensors",
+      "blobId": "f47aed77de1296c66adbe322cacd24c31d5d7ff9",
+      "size": 1835545960,
+      "lfs": {
+        "sha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+        "size": 1835545960,
+        "pointerSize": 135
+      }
+    },
+    {
+      "rfilename": "processor_config.json",
+      "blobId": "a07dff48032bed341260501d6688036c6fd7f3ef",
+      "size": 487
+    },
+    {
+      "rfilename": "tokenizer.json",
+      "blobId": "d277e20fe75ad0cf1aee524c9074c4529ed28e89",
+      "size": 11429842,
+      "lfs": {
+        "sha256": "cadfb9cbd9ff8f4e309075ec6a71b063295ff796afb4b5dbc0fd2873fbb301f2",
+        "size": 11429842,
+        "pointerSize": 133
+      }
+    },
+    {
+      "rfilename": "tokenizer_config.json",
+      "blobId": "aa62b6c06ab8a704dc0895420fb1d2515954a49c",
+      "size": 998
+    }
+  ],
+  "spaces": [
+    "hugging-apps/qwen3-forced-aligner",
+    "boiior/asr",
+    "ayazzxcss/quvirl-worker"
+  ],
+  "createdAt": "2026-06-26T08:42:01.000Z",
+  "safetensors": {
+    "parameters": {
+      "BF16": 917728896
+    },
+    "total": 917728896
+  },
+  "usedStorage": 1846975802
+}
